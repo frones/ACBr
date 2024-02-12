@@ -383,7 +383,7 @@ begin
       begin
         Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
+          Resp.ProcessarCobGerada(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -436,7 +436,7 @@ begin
       begin
         Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobCompleta);
+          Resp.ProcessarCobCompleta(PIXCDDM.ACBrPixCD1.PSP.epCob.CobCompleta);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -493,7 +493,7 @@ begin
       begin
         Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
+          Resp.ProcessarCobGerada(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -552,7 +552,7 @@ begin
       begin
         Resp := TLibPIXCDCobResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
+          Resp.ProcessarCobGerada(PIXCDDM.ACBrPixCD1.PSP.epCob.CobGerada);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -609,7 +609,7 @@ begin
       begin
         Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
+          Resp.ProcessarCobVGerada(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -662,7 +662,7 @@ begin
       begin
         Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVCompleta);
+          Resp.ProcessarCobVCompleta(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVCompleta);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -719,7 +719,7 @@ begin
       begin
         Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
+          Resp.ProcessarCobVGerada(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;
@@ -778,7 +778,7 @@ begin
       begin
         Resp := TLibPIXCDCobVResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
-          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
+          Resp.ProcessarCobVGerada(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobVGerada);
           Resposta := Resp.Gerar;
         finally
           Resp.Free;

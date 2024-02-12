@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2024
+-- ACBrLibPIXCDBase, ACBrLibPIXCDResposta --
+[*] Ajustes nas nomenclaturas de algumas funções visando trazer maior clareza no código e evitar possíveis problemas.
+   Por: Diego Folieni
+
 26/01/2024
 --- ACBrLibPIXCDBase, ACBrLibPIXCDRespostas, ACBrLibPIXCDConsts ---
 [*] Ajustes unit ACBrLibPIXCDRespostas e nos métodos ACBrLibPIXCDBase - #TK-4998

@@ -41,7 +41,10 @@ uses
   ACBrDFe, ACBrDFeWebService,
   ACBrDFeConsts,
   ACBrDFeUtil,
-  pcteCTe, pcnRetConsReciDFe, pcnRetConsCad, pcnConversao,
+  pcteCTe,
+  pcnRetConsReciDFe,
+  ACBrDFeComum.RetConsCad,
+  pcnConversao,
   pcteConversaoCTe, pcteProcCte, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
   pcteRetConsSitCTe, pcteRetEnvCTe, pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes, pcteConsts;
@@ -585,7 +588,9 @@ uses
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrCTe,
-  pcnGerador, pcnLeitor, pcnConsCad, pcnConsStatServ, pcnRetConsStatServ,
+  pcnGerador, pcnLeitor,
+  ACBrDFeComum.ConsCad,
+  pcnConsStatServ, pcnRetConsStatServ,
   pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcnConsReciDFe;
 
 { TCTeWebService }
@@ -2814,13 +2819,11 @@ begin
     ConCadCTe.CNPJ := FCNPJ;
     ConCadCTe.CPF := FCPF;
     ConCadCTe.Versao := FPVersaoServico;
-    AjustarOpcoes( ConCadCTe.Gerador.Opcoes );
-    ConCadCTe.GerarXML;
 
-    FPDadosMsg := ConCadCTe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConCadCTe.GerarXML;
 
     if (FPConfiguracoesCTe.Geral.VersaoDF >= ve300) and
-      (UpperCase(FUF) = 'MT') then
+       (UpperCase(FUF) = 'MT') then
     begin
       FPDadosMsg := '<nfeDadosMsg>' + FPDadosMsg + '</nfeDadosMsg>';
     end;
@@ -2855,7 +2858,7 @@ begin
 
   VerificarSemResposta;
 
-  FRetConsCad.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetConsCad.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
   FRetConsCad.LerXml;
 
   Fversao := FRetConsCad.versao;

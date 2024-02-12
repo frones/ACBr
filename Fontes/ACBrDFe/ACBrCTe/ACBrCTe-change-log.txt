@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2024
+-- ACBrCTeServicos --
+[+] Incluída as URLs de homologação do CTeOS e GTVe de MS e a URL de
+    homologação de Inutilização de SP.
+-- ACBrCTeWebServices --
+[*] Refactoring visando a utilizar as units: ACBrDFeComum.ConsCad e 
+    ACBrDFeComum.RetConsCad.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.
@@ -57,7 +66,8 @@ Símbolo : Significado
 
 29/01/2024
 -- ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5 --
-[*] Remoção da coluna Valor Complementado da seção CTe-Complementado, pois não há tag correspondente para preencher a informação
+[*] Remoção da coluna Valor Complementado da seção CTe-Complementado, 
+    pois não há tag correspondente para preencher a informação.
   Por: Diego Folieni
 
 08/01/2023

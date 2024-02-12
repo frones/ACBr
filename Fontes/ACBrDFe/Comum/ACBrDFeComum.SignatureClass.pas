@@ -49,15 +49,19 @@ type
     FDigestValue: string;
     FSignatureValue: string;
     FX509Certificate: string;
+    FIdSignature: string;
+    FIdSignatureValue: string;
   public
     procedure Assign(Source: TPersistent); override;
 
     procedure Clear;
   published
-    property URI: string             read FURI             write FURI;
-    property DigestValue: string     read FDigestValue     write FDigestValue;
-    property SignatureValue: string  read FSignatureValue  write FSignatureValue;
-    property X509Certificate: string read FX509Certificate write FX509Certificate;
+    property URI: string              read FURI              write FURI;
+    property DigestValue: string      read FDigestValue      write FDigestValue;
+    property SignatureValue: string   read FSignatureValue   write FSignatureValue;
+    property X509Certificate: string  read FX509Certificate  write FX509Certificate;
+    property IdSignature: string      read FIdSignature      write FIdSignature;
+    property IdSignatureValue: string read FIdSignatureValue write FIdSignatureValue;
   end;
 
 implementation
@@ -70,6 +74,8 @@ begin
   FDigestValue := '';
   FSignatureValue := '';
   FX509Certificate := '';
+  FIdSignature := '';
+  FIdSignatureValue := '';
 end;
 
 procedure TSignature.Assign(Source: TPersistent);
@@ -80,6 +86,8 @@ begin
     DigestValue := TSignature(Source).DigestValue;
     SignatureValue := TSignature(Source).SignatureValue;
     X509Certificate := TSignature(Source).X509Certificate;
+    IdSignature := TSignature(Source).IdSignature;
+    IdSignatureValue := TSignature(Source).IdSignatureValue;
   end
   else
     inherited; 

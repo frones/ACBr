@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, contnrs,
-  pcnRetConsCad,
+  ACBrDFeComum.RetConsCad,
   ACBrLibResposta;
 
 type

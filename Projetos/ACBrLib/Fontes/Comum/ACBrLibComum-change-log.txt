@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2024
+-- ACBrLibConsultaCadastro --
+[*] Substitui pcnRetConsCad por ACBrDFeComum.RetConsCad visando compatibilização com o processo de remoção da pcn.
+  Por: Diego Folieni
+
 06/02/2022
 --- ACBrLibComum ---
 [+] Adicionado o método 'ConverterUTF8ParaAnsi', converter a resposta de UTF8

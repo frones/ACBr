@@ -42,7 +42,9 @@ uses
   ACBrDFe, ACBrDFeWebService,
   ACBrDFeUtil,
   blcksock, synacode,
-  pcnNFe, pcnRetConsReciDFe, pcnRetConsCad, pcnConversao,
+  pcnNFe, pcnRetConsReciDFe,
+  ACBrDFeComum.RetConsCad,
+  pcnConversao,
   ACBrDFeConsts,
   pcnNFeConsts,
   pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe, 
@@ -629,7 +631,8 @@ uses
   ACBrCompress, ACBrNFe, ACBrConsts,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciDFe,
-  pcnConsCad, pcnLeitor, ACBrIntegrador;
+  ACBrDFeComum.ConsCad,
+  pcnLeitor, ACBrIntegrador;
 
 { TNFeWebService }
 
@@ -2924,15 +2927,12 @@ begin
     ConCadNFe.IE := FIE;
     ConCadNFe.CNPJ := FCNPJ;
     ConCadNFe.CPF := FCPF;
-    ConCadNFe.Versao :=  '2.00';
+    ConCadNFe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConCadNFe.Gerador.Opcoes );
-    ConCadNFe.GerarXML;
-
-    FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConCadNFe.GerarXML;
 
     if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) and
-      (UpperCase(FUF) = 'MT') then
+       (UpperCase(FUF) = 'MT') then
     begin
       FPDadosMsg := '<nfeDadosMsg>' + FPDadosMsg + '</nfeDadosMsg>';
     end;
@@ -2950,7 +2950,7 @@ begin
 
   VerificarSemResposta;
 
-  FRetConsCad.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetConsCad.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
   FRetConsCad.LerXml;
 
   Fversao := FRetConsCad.versao;

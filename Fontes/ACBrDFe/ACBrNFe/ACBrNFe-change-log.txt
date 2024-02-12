@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2024
+-- ACBrNFeServicos --
+[+] Incluída as URLs de produção e homologação do ConsultaCadastro versão 4
+    de SP.
+-- ACBrNFeWebServices --
+[*] Refactoring visando a utilizar as units: ACBrDFeComum.ConsCad e 
+    ACBrDFeComum.RetConsCad.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

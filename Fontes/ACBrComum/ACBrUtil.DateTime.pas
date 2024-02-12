@@ -1150,4 +1150,12 @@ begin
   end;
 end;
 
+initialization
+  TimeZoneConfInstance := nil;
+  OnAjustarDataHoraParaUf := nil;
+
+finalization;
+  if Assigned( TimeZoneConfInstance ) then
+    TimeZoneConfInstance.Free;
+
 end.

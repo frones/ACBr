@@ -505,7 +505,9 @@ uses
   ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrMDFe, pmdfeConsts,
-  pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
+  pcnGerador, pcnLeitor,
+  ACBrDFeComum.ConsStatServ,
+  ACBrDFeComum.RetConsStatServ,
   pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc;
 
 { TMDFeWebService }
@@ -611,14 +613,8 @@ begin
   try
     ConsStatServ.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
-//    ConsStatServ.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
-
-    ConsStatServ.GerarXML;
-
-    // Atribuindo o XML para propriedade interna //
-    FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsStatServ.GerarXML;
   finally
     ConsStatServ.Free;
   end;
@@ -632,11 +628,11 @@ begin
 
   MDFeRetorno := TRetConsStatServ.Create('MDFe');
   try
-    MDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    MDFeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
     MDFeRetorno.LerXml;
 
     Fversao := MDFeRetorno.versao;
-    FtpAmb := MDFeRetorno.tpAmb;
+    FtpAmb := TpcnTipoAmbiente(MDFeRetorno.tpAmb);
     FverAplic := MDFeRetorno.verAplic;
     FcStat := MDFeRetorno.cStat;
     FxMotivo := MDFeRetorno.xMotivo;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/02/2024
+-- ACBrDFeComum.RetEnvio --
+[+] Nova Unit para ler o retorno do Envio do DFe em modo Assíncrono.
+  Por: Italo Giurizzato Junior
 -- ACBrDFeComum.RetConsCad --
 [*] Removido uma variável que estava definida mas sem utilização.
   Por: Italo Giurizzato Junior

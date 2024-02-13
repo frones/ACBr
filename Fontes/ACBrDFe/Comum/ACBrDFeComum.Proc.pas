@@ -137,7 +137,7 @@ var
   i: Integer;
   ProtLido: Boolean; //Protocolo lido do arquivo
   Document: TACBrXmlDocument;
-  ANode, AnodeAux: TACBrXmlNode;
+  ANode: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
 begin
   XMLDFe := TStringList.Create;

@@ -353,7 +353,9 @@ uses
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrBPe, pcnBPeConsts, ACBrDFeConsts,
-  pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
+  pcnGerador, pcnLeitor,
+  ACBrDFeComum.ConsStatServ,
+  ACBrDFeComum.RetConsStatServ,
   pcnConsSitBPe;
 
 { TBPeWebService }
@@ -470,11 +472,7 @@ begin
     ConsStatServ.TpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesBPe.WebServices.UFCodigo;
 
-    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
-    ConsStatServ.GerarXML;
-
-    // Atribuindo o XML para propriedade interna //
-    FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsStatServ.GerarXML;
   finally
     ConsStatServ.Free;
   end;
@@ -486,15 +484,13 @@ var
 begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeStatusServicoBPResult'], FPRetornoWS );
 
-  FPRetWS := TiraAcentos(FPRetWS);
-
   BPeRetorno := TRetConsStatServ.Create('BPe');
   try
-    BPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    BPeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
     BPeRetorno.LerXml;
 
     Fversao := BPeRetorno.versao;
-    FtpAmb := BPeRetorno.tpAmb;
+    FtpAmb := TpcnTipoAmbiente(BPeRetorno.tpAmb);
     FverAplic := BPeRetorno.verAplic;
     FcStat := BPeRetorno.cStat;
     FxMotivo := BPeRetorno.xMotivo;

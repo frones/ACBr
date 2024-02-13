@@ -13,7 +13,8 @@ uses
   ACBrXmlWriter, ACBrXmlBase, ACBrXmlDocument, ACBrDFeConsts, ACBrDFeComum.ConsCad, 
   ACBrDFeComum.RetConsCad, ACBrDFeComum.ConsReciDFe, ACBrDFeComum.RetConsReciDFe, 
   ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ, ACBrDFeComum.Proc,
-  ACBrDFeComum.DistDFeInt, ACBrDFeComum.RetDistDFeInt, ACBrDFeComum.SignatureClass;
+  ACBrDFeComum.DistDFeInt, ACBrDFeComum.RetDistDFeInt, ACBrDFeComum.SignatureClass,
+  ACBrDFeComum.RetEnvio;
 
 implementation
 

@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -750,7 +750,7 @@ begin
 
     MemoDados.Lines.Add('');
     MemoDados.Lines.Add('Envio NF3e');
-    MemoDados.Lines.Add('tpAmb: '+ TpAmbToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
+    MemoDados.Lines.Add('tpAmb: '+ TipoAmbienteToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
     MemoDados.Lines.Add('verAplic: '+ ACBrNF3e1.WebServices.Retorno.verAplic);
     MemoDados.Lines.Add('cStat: '+ IntToStr(ACBrNF3e1.WebServices.Retorno.cStat));
     MemoDados.Lines.Add('cUF: '+ IntToStr(ACBrNF3e1.WebServices.Retorno.cUF));
@@ -882,7 +882,7 @@ begin
 
     MemoDados.Lines.Add('');
     MemoDados.Lines.Add('Envio NF3e');
-    MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
+    MemoDados.Lines.Add('tpAmb: ' + TipoAmbienteToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
     MemoDados.Lines.Add('verAplic: ' + ACBrNF3e1.WebServices.Retorno.verAplic);
     MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrNF3e1.WebServices.Retorno.cStat));
     MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrNF3e1.WebServices.Retorno.cUF));
@@ -948,11 +948,12 @@ begin
     ACBrNF3e1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU)
   else
     ACBrNF3e1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
-
+  {
   MemoResp.Lines.Text := ACBrNF3e1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrNF3e1.WebServices.DistribuicaoDFe.RetornoWS;
 
   LoadXML(ACBrNF3e1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
+  }
 end;
 
 procedure TfrmACBrNF3e.btnEnviarEmailClick(Sender: TObject);

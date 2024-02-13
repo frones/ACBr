@@ -1855,6 +1855,8 @@ object frmACBrNF3e: TfrmACBrNF3e
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrNF3e = ACBrNF3e1
     TipoDANF3e = tiSemGeracao
     Cancelada = False

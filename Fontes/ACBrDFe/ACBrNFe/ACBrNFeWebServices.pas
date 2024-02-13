@@ -629,9 +629,11 @@ uses
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
   ACBrCompress, ACBrNFe, ACBrConsts,
-  pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
-  pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciDFe,
+  pcnGerador,
   ACBrDFeComum.ConsCad,
+  ACBrDFeComum.ConsStatServ,
+  ACBrDFeComum.RetConsStatServ,
+  pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciDFe,
   pcnLeitor, ACBrIntegrador;
 
 { TNFeWebService }
@@ -835,12 +837,7 @@ begin
     ConsStatServ.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesNFe.WebServices.UFCodigo;
 
-//    ConsStatServ.Versao := FPVersaoServico;
-    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
-    ConsStatServ.GerarXML;
-
-    // Atribuindo o XML para propriedade interna //
-    FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsStatServ.GerarXML;
   finally
     ConsStatServ.Free;
   end;
@@ -858,11 +855,11 @@ begin
 
   NFeRetorno := TRetConsStatServ.Create('');
   try
-    NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    NFeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
     NFeRetorno.LerXml;
 
     Fversao := NFeRetorno.versao;
-    FtpAmb := NFeRetorno.tpAmb;
+    FtpAmb := TpcnTipoAmbiente(NFeRetorno.tpAmb);
     FverAplic := NFeRetorno.verAplic;
     FcStat := NFeRetorno.cStat;
     FxMotivo := NFeRetorno.xMotivo;

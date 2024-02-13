@@ -590,7 +590,8 @@ uses
   ACBrCompress, ACBrCTe,
   pcnGerador, pcnLeitor,
   ACBrDFeComum.ConsCad,
-  pcnConsStatServ, pcnRetConsStatServ,
+  ACBrDFeComum.ConsStatServ,
+  ACBrDFeComum.RetConsStatServ,
   pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcnConsReciDFe;
 
 { TCTeWebService }
@@ -723,12 +724,7 @@ begin
     ConsStatServ.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesCTe.WebServices.UFCodigo;
 
-    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
-
-    ConsStatServ.GerarXML;
-
-    // Atribuindo o XML para propriedade interna //
-    FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsStatServ.GerarXML;
   finally
     ConsStatServ.Free;
   end;
@@ -744,11 +740,11 @@ begin
   CTeRetorno := TRetConsStatServ.Create('CTe');
 
   try
-    CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    CTeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
     CTeRetorno.LerXml;
 
     Fversao := CTeRetorno.versao;
-    FtpAmb := CTeRetorno.tpAmb;
+    FtpAmb := TpcnTipoAmbiente(CTeRetorno.tpAmb);
     FverAplic := CTeRetorno.verAplic;
     FcStat := CTeRetorno.cStat;
     FxMotivo := CTeRetorno.xMotivo;

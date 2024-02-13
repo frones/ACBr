@@ -61,6 +61,7 @@ contains
   ACBrDFeComum.DistDFeInt in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.DistDFeInt.pas',
   ACBrDFeComum.RetDistDFeInt in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetDistDFeInt.pas',
   ACBrDFeComum.SignatureClass in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.SignatureClass.pas',
+  ACBrDFeComum.RetEnvio in '..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetEnvio.pas',
 
   {$IfNDef DFE_SEM_MSXML}
     ACBrMSXML2_TLB in '..\..\..\Fontes\Terceiros\Ole\ACBrMSXML2_TLB.pas',

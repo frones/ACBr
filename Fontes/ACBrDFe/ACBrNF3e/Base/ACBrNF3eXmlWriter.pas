@@ -1991,7 +1991,7 @@ begin
 
   xmlNode.AddChild('verAplic').Content := NF3e.procNF3e.verAplic;
 
-  xmlNode.AddChild('chNF3e').Content := NF3e.procNF3e.chNF3e;
+  xmlNode.AddChild('chNF3e').Content := NF3e.procNF3e.chDFe;
 
   xmlNode.AddChild('dhRecbto').Content :=
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', NF3e.procNF3e.dhRecbto) +

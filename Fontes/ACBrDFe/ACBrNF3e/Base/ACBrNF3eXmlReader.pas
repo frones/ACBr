@@ -685,7 +685,6 @@ end;
 
 procedure TNF3eXmlReader.LerTotal(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
@@ -898,7 +897,7 @@ begin
 
   NF3e.procNF3e.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   NF3e.procNF3e.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
-  NF3e.procNF3e.chNF3e    := ObterConteudo(ANode.Childrens.Find('chNF3e'), tcStr);
+  NF3e.procNF3e.chDFe    := ObterConteudo(ANode.Childrens.Find('chNF3e'), tcStr);
   NF3e.procNF3e.dhRecbto := ObterConteudo(ANode.Childrens.Find('dhRecbto'), tcDatHor);
   NF3e.procNF3e.nProt    := ObterConteudo(ANode.Childrens.Find('nProt'), tcStr);
   NF3e.procNF3e.digVal   := ObterConteudo(ANode.Childrens.Find('digVal'), tcStr);

@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2024
+-- ACBrNF3eWebServices/ACBrNFe3Class/ACBrNF3eXmlReader/
+   ACBrNF3eXmlWriter/ACBrNF3eRetConsSit --
+[*] Refactoring visando a utilizar as units: ACBrDFeComum.Proc.
+-- ACBrNF3eEnvEvento --
+[-] Correção pois a variável de indice não estava sendo inicializada corretamente.
+-- ACBrNF3eProc/ACBrDFeConsStatServ/ACBrDFeDistDFeInt/
+   ACBrDFeRetConsStatServ/ACBrDFeRetDistDFeInt --
+[*] As units acima foram removidas, pois agora vai usar as units 
+    ACBrDFeComum.Proc, ACBrDFeComum.ConsStatServ, ACBrDFeComum.DistDFeInt,
+    ACBrDFeComum.RetConsStatServ, ACBrDFeComum.RetDistDFeInt.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

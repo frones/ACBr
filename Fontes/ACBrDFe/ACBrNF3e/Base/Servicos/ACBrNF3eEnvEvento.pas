@@ -177,79 +177,80 @@ end;
 function TEventoNF3e.GerarXML: string;
 var
   i: Integer;
-  sDoc, sModelo, CNPJCPF, xEvento: String;
+  sDoc, CNPJCPF, xEvento: String;
 begin
-  sModelo := Copy(OnlyNumber(Evento.Items[i].InfEvento.chNF3e), 21, 2);
-
-  Evento.Items[i].InfEvento.id := 'ID'+
+  for i := 0 to Evento.Count - 1 do
+  begin
+    Evento.Items[i].InfEvento.id := 'ID'+
                                     Evento.Items[i].InfEvento.TipoEvento +
                                     OnlyNumber(Evento.Items[i].InfEvento.chNF3e) +
                                     Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
 
-//  if Length(Evento.Items[i].InfEvento.id) < 54 then
-//    wAlerta('FP04', 'ID', '', 'ID de Evento inválido');
+  //  if Length(Evento.Items[i].InfEvento.id) < 54 then
+  //    wAlerta('FP04', 'ID', '', 'ID de Evento inválido');
 
-  sDoc := OnlyNumber(Evento.Items[i].InfEvento.CNPJ);
+    sDoc := OnlyNumber(Evento.Items[i].InfEvento.CNPJ);
 
-  if EstaVazio(sDoc) then
-    sDoc := ExtrairCNPJChaveAcesso(Evento.Items[i].InfEvento.chNF3e);
+    if EstaVazio(sDoc) then
+      sDoc := ExtrairCNPJChaveAcesso(Evento.Items[i].InfEvento.chNF3e);
 
-  case Length( sDoc ) of
-    14: begin
-          CNPJCPF := '<CNPJ>' + sDoc + '</CNPJ>';
+    case Length( sDoc ) of
+      14: begin
+            CNPJCPF := '<CNPJ>' + sDoc + '</CNPJ>';
 
-//          if not ValidarCNPJ( sDoc ) then
-//            Gerador.wAlerta('FP07', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+  //          if not ValidarCNPJ( sDoc ) then
+  //            Gerador.wAlerta('FP07', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+          end;
+      11: begin
+            CNPJCPF := '<CPF>' + sDoc + '</CPF>';
+
+  //          if not ValidarCPF( sDoc ) then
+  //            Gerador.wAlerta('FP07', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+          end;
+    end;
+
+  //    if not ValidarChave(Evento.Items[i].InfEvento.chNF3e) then
+  //      Gerador.wAlerta('FP08', 'chNF3e', '', 'Chave de NF3e inválida');
+
+    case Evento.Items[i].InfEvento.tpEvento of
+      teCancelamento:
+        begin
+          xEvento := '<nProt>' + Evento.Items[i].InfEvento.detEvento.nProt + '</nProt>' +
+                     '<xJust>' + Evento.Items[i].InfEvento.detEvento.xJust + '</xJust>';
         end;
-    11: begin
-          CNPJCPF := '<CPF>' + sDoc + '</CPF>';
+    else
+      xEvento := '';
+    end;
 
-//          if not ValidarCPF( sDoc ) then
-//            Gerador.wAlerta('FP07', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-        end;
-  end;
+    Xml := '<eventoNF3e ' + NAME_SPACE_NF3e + ' versao="' + versao + '">' +
+             '<infEvento Id="' + Evento.Items[i].InfEvento.id + '">' +
+               '<cOrgao>' + IntToStr(FEvento.Items[i].FInfEvento.cOrgao) + '</cOrgao>' +
+               '<tpAmb>' + TipoAmbienteToStr(Evento.Items[i].InfEvento.tpAmb) + '</tpAmb>' +
+               CNPJCPF +
+               '<chNF3e>' + Evento.Items[i].InfEvento.chNF3e + '</chNF3e>' +
+               '<dhEvento>' +
+                  FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',
+                                 Evento.Items[i].InfEvento.dhEvento) +
+                              GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.cOrgao),
+                                     Evento.Items[i].InfEvento.dhEvento) +
+               '</dhEvento>' +
+               '<tpEvento>' + Evento.Items[i].InfEvento.TipoEvento + '</tpEvento>' +
+               '<nSeqEvento>' + IntToStr(Evento.Items[i].InfEvento.nSeqEvento) + '</nSeqEvento>' +
 
-//    if not ValidarChave(Evento.Items[i].InfEvento.chNF3e) then
-//      Gerador.wAlerta('FP08', 'chNF3e', '', 'Chave de NF3e inválida');
+               '<detEvento versaoEvento="' + Versao + '">' +
+                 '<descEvento>' + Evento.Items[i].InfEvento.DescEvento + '</descEvento>' +
+                   xEvento +
+               '</detEvento>' +
 
-  case Evento.Items[i].InfEvento.tpEvento of
-    teCancelamento:
-      begin
-        xEvento := '<nProt>' + Evento.Items[i].InfEvento.detEvento.nProt + '</nProt>' +
-                   '<xJust>' + Evento.Items[i].InfEvento.detEvento.xJust + '</xJust>';
-      end;
-  else
-    xEvento := '';
-  end;
-
-  Xml := '<eventoNF3e ' + NAME_SPACE_NF3e + ' versao="' + versao + '">' +
-           '<infEvento Id="' + Evento.Items[i].InfEvento.id + '">' +
-             '<cOrgao>' + IntToStr(FEvento.Items[i].FInfEvento.cOrgao) + '</cOrgao>' +
-             '<tpAmb>' + TipoAmbienteToStr(Evento.Items[i].InfEvento.tpAmb) + '</tpAmb>' +
-             CNPJCPF +
-             '<chNF3e>' + Evento.Items[i].InfEvento.chNF3e + '</chNF3e>' +
-             '<dhEvento>' +
-                FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',
-                               Evento.Items[i].InfEvento.dhEvento) +
-                            GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.cOrgao),
-                                   Evento.Items[i].InfEvento.dhEvento) +
-             '</dhEvento>' +
-             '<tpEvento>' + Evento.Items[i].InfEvento.TipoEvento + '</tpEvento>' +
-             '<nSeqEvento>' + IntToStr(Evento.Items[i].InfEvento.nSeqEvento) + '</nSeqEvento>' +
-
-             '<detEvento versaoEvento="' + Versao + '">' +
-               '<descEvento>' + Evento.Items[i].InfEvento.DescEvento + '</descEvento>' +
-                 xEvento +
-             '</detEvento>' +
-
-           '</infEvento>' +
-         '</eventoNF3e>';
+             '</infEvento>' +
+           '</eventoNF3e>';
 
 
-  if Evento.Items[i].signature.URI <> '' then
-  begin
-    Evento.Items[i].signature.GerarXML;
-    Xml := Xml + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+    if Evento.Items[i].signature.URI <> '' then
+    begin
+      Evento.Items[i].signature.GerarXML;
+      Xml := Xml + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+    end;
   end;
 
   Result := Xml;

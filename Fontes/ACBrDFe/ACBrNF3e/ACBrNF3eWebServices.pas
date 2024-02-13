@@ -43,10 +43,10 @@ uses
   ACBrXmlBase,
   ACBrNF3eNotasFiscais, ACBrNF3eConfiguracoes,
   ACBrNF3eClass, ACBrNF3eConversao,
-  ACBrNF3eProc,
   ACBrNF3eEnvEvento, ACBrNF3eRetEnvEvento, ACBrNF3eRetEnv,
   ACBrNF3eRetConsSit,
   ACBrDFeComum.RetConsReciDFe,
+  ACBrDFeComum.Proc,
 //  ACBrDFeComum.DistDFeInt, ACBrDFeComum.RetDistDFeInt,
   pcnConversao;
 
@@ -287,7 +287,7 @@ type
     FcUF: integer;
     FRetNF3eDFe: String;
 
-    FprotNF3e: TProcNF3e;
+    FprotNF3e: TProcDFe;
     FprocEventoNF3e: TRetEventoNF3eCollection;
 
     procedure SetNF3eChave(const AValue: String);
@@ -318,7 +318,7 @@ type
     property cUF: integer read FcUF;
     property RetNF3eDFe: String read FRetNF3eDFe;
 
-    property protNF3e: TProcNF3e read FprotNF3e;
+    property protNF3e: TProcDFe read FprotNF3e;
     property procEventoNF3e: TRetEventoNF3eCollection read FprocEventoNF3e;
   end;
 
@@ -884,7 +884,7 @@ function TNF3eRecepcao.TratarResposta: Boolean;
 var
   I: integer;
   chNF3e, AXML, NomeXMLSalvo: String;
-  AProcNF3e: TProcNF3e;
+  AProcNF3e: TProcDFe;
   SalvarXML: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['nf3eResultMsg'], FPRetornoWS );
@@ -914,7 +914,7 @@ begin
     // Consta no Retorno da NFC-e
     FRecibo := FNF3eRetornoSincrono.nRec;
     FcUF := FNF3eRetornoSincrono.cUF;
-    chNF3e := FNF3eRetornoSincrono.ProtNF3e.chNF3e;
+    chNF3e := FNF3eRetornoSincrono.ProtNF3e.chDFe;
 
     if (FNF3eRetornoSincrono.protNF3e.cStat > 0) then
       FcStat := FNF3eRetornoSincrono.protNF3e.cStat
@@ -954,18 +954,17 @@ begin
             NF3e.procNF3e.cStat := FNF3eRetornoSincrono.protNF3e.cStat;
             NF3e.procNF3e.tpAmb := FNF3eRetornoSincrono.tpAmb;
             NF3e.procNF3e.verAplic := FNF3eRetornoSincrono.verAplic;
-            NF3e.procNF3e.chNF3e := FNF3eRetornoSincrono.ProtNF3e.chNF3e;
+            NF3e.procNF3e.chDFe := FNF3eRetornoSincrono.ProtNF3e.chDFe;
             NF3e.procNF3e.dhRecbto := FNF3eRetornoSincrono.protNF3e.dhRecbto;
             NF3e.procNF3e.nProt := FNF3eRetornoSincrono.ProtNF3e.nProt;
             NF3e.procNF3e.digVal := FNF3eRetornoSincrono.protNF3e.digVal;
             NF3e.procNF3e.xMotivo := FNF3eRetornoSincrono.protNF3e.xMotivo;
 
-            AProcNF3e := TProcNF3e.Create;
+            AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
             try
               // Processando em UTF8, para poder gravar arquivo corretamente //
-              AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(XMLAssinado);
+              AProcNF3e.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
               AProcNF3e.XML_Prot := FNF3eRetornoSincrono.XMLprotNF3e;
-              AProcNF3e.Versao := FPVersaoServico;
               XMLOriginal := AProcNF3e.GerarXML;
 
               if FPConfiguracoesNF3e.Arquivos.Salvar then
@@ -1147,7 +1146,7 @@ begin
         if OnlyNumber(FNF3eRetorno.ProtDFe.Items[i].chDFe) = FNotasFiscais.Items[J].NumID then
         begin
           FNotasFiscais.Items[j].NF3e.procNF3e.verAplic := '';
-          FNotasFiscais.Items[j].NF3e.procNF3e.chNF3e    := '';
+          FNotasFiscais.Items[j].NF3e.procNF3e.chDFe    := '';
           FNotasFiscais.Items[j].NF3e.procNF3e.dhRecbto := 0;
           FNotasFiscais.Items[j].NF3e.procNF3e.nProt    := '';
           FNotasFiscais.Items[j].NF3e.procNF3e.digVal   := '';
@@ -1296,7 +1295,7 @@ end;
 function TNF3eRetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: integer;
-  AProcNF3e: TProcNF3e;
+  AProcNF3e: TProcDFe;
   AInfProt: TProtDFeCollection;
   SalvarXML: Boolean;
   NomeXMLSalvo: String;
@@ -1330,7 +1329,7 @@ begin
         begin
           NF3e.procNF3e.tpAmb := TACBrTipoAmbiente(AInfProt.Items[I].tpAmb);
           NF3e.procNF3e.verAplic := AInfProt.Items[I].verAplic;
-          NF3e.procNF3e.chNF3e := AInfProt.Items[I].chDFe;
+          NF3e.procNF3e.chDFe := AInfProt.Items[I].chDFe;
           NF3e.procNF3e.dhRecbto := AInfProt.Items[I].dhRecbto;
           NF3e.procNF3e.nProt := AInfProt.Items[I].nProt;
           NF3e.procNF3e.digVal := AInfProt.Items[I].digVal;
@@ -1343,11 +1342,10 @@ begin
            (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) or
            (AInfProt.Items[I].cStat = 302) or (AInfProt.Items[I].cStat = 303) then
         begin
-          AProcNF3e := TProcNF3e.Create;
+          AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
           try
-            AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
+            AProcNF3e.XML_DFe := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
             AProcNF3e.XML_Prot := AInfProt.Items[I].XMLprotDFe;
-            AProcNF3e.Versao := FPVersaoServico;
 
             with FNotasFiscais.Items[J] do
             begin
@@ -1677,7 +1675,7 @@ begin
   if Assigned(FprocEventoNF3e) then
     FprocEventoNF3e.Free;
 
-  FprotNF3e := TProcNF3e.Create;
+  FprotNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
   FprocEventoNF3e := TRetEventoNF3eCollection.Create;
 end;
 
@@ -1805,7 +1803,7 @@ var
   NF3eRetorno: TRetConsSitNF3e;
   SalvarXML, NFCancelada, Atualiza: Boolean;
   aEventos, sPathNF3e, NomeXMLSalvo: String;
-  AProcNF3e: TProcNF3e;
+  AProcNF3e: TProcDFe;
   I, J, Inicio, Fim: integer;
   dhEmissao: TDateTime;
 begin
@@ -1837,18 +1835,17 @@ begin
 
     // <protNF3e> - Retorno dos dados do ENVIO da NF3-e
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotNF3e.PathNF3e := NF3eRetorno.protNF3e.PathNF3e;
-    FprotNF3e.PathRetConsReciNF3e := NF3eRetorno.protNF3e.PathRetConsReciNF3e;
-    FprotNF3e.PathRetConsSitNF3e := NF3eRetorno.protNF3e.PathRetConsSitNF3e;
+    FprotNF3e.PathDFe := NF3eRetorno.protNF3e.PathDFe;
+    FprotNF3e.PathRetConsReciDFe := NF3eRetorno.protNF3e.PathRetConsReciDFe;
+    FprotNF3e.PathRetConsSitDFe := NF3eRetorno.protNF3e.PathRetConsSitDFe;
     FprotNF3e.tpAmb := NF3eRetorno.protNF3e.tpAmb;
     FprotNF3e.verAplic := NF3eRetorno.protNF3e.verAplic;
-    FprotNF3e.chNF3e := NF3eRetorno.protNF3e.chNF3e;
+    FprotNF3e.chDFe := NF3eRetorno.protNF3e.chDFe;
     FprotNF3e.dhRecbto := NF3eRetorno.protNF3e.dhRecbto;
     FprotNF3e.nProt := NF3eRetorno.protNF3e.nProt;
     FprotNF3e.digVal := NF3eRetorno.protNF3e.digVal;
     FprotNF3e.cStat := NF3eRetorno.protNF3e.cStat;
     FprotNF3e.xMotivo := NF3eRetorno.protNF3e.xMotivo;
-    FprotNF3e.Versao := NF3eRetorno.protNF3e.Versao;
 
     {(*}
     if Assigned(NF3eRetorno.procEventoNF3e) and (NF3eRetorno.procEventoNF3e.Count > 0) then
@@ -1995,37 +1992,31 @@ begin
                 begin
                   NF3e.procNF3e.tpAmb := NF3eRetorno.tpAmb;
                   NF3e.procNF3e.verAplic := NF3eRetorno.verAplic;
-                  NF3e.procNF3e.chNF3e := NF3eRetorno.chNF3e;
+                  NF3e.procNF3e.chDFe := NF3eRetorno.chNF3e;
                   NF3e.procNF3e.dhRecbto := FDhRecbto;
                   NF3e.procNF3e.nProt := FProtocolo;
                   NF3e.procNF3e.digVal := NF3eRetorno.protNF3e.digVal;
                   NF3e.procNF3e.cStat := NF3eRetorno.cStat;
                   NF3e.procNF3e.xMotivo := NF3eRetorno.xMotivo;
-                  NF3e.procNF3e.Versao := NF3eRetorno.protNF3e.Versao;
-
+   
                   GerarXML;
                 end
                 else
                 begin
                   NF3e.procNF3e.tpAmb := NF3eRetorno.protNF3e.tpAmb;
                   NF3e.procNF3e.verAplic := NF3eRetorno.protNF3e.verAplic;
-                  NF3e.procNF3e.chNF3e := NF3eRetorno.protNF3e.chNF3e;
+                  NF3e.procNF3e.chDFe := NF3eRetorno.protNF3e.chDFe;
                   NF3e.procNF3e.dhRecbto := NF3eRetorno.protNF3e.dhRecbto;
                   NF3e.procNF3e.nProt := NF3eRetorno.protNF3e.nProt;
                   NF3e.procNF3e.digVal := NF3eRetorno.protNF3e.digVal;
                   NF3e.procNF3e.cStat := NF3eRetorno.protNF3e.cStat;
                   NF3e.procNF3e.xMotivo := NF3eRetorno.protNF3e.xMotivo;
-                  NF3e.procNF3e.Versao := NF3eRetorno.protNF3e.Versao;
 
                   // O código abaixo é bem mais rápido que "GerarXML" (acima)...
-                  AProcNF3e := TProcNF3e.Create;
+                  AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
                   try
-                    AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(XMLOriginal);
+                    AProcNF3e.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                     AProcNF3e.XML_Prot := NF3eRetorno.XMLprotNF3e;
-                    AProcNF3e.Versao := NF3eRetorno.protNF3e.Versao;
-
-                    if AProcNF3e.Versao = '' then
-                      AProcNF3e.Versao := FPVersaoServico;
 
                     XMLOriginal := AProcNF3e.GerarXML;
                   finally

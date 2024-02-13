@@ -46,7 +46,8 @@ uses
   ACBrBase,
   ACBrXmlBase,
   ACBrNF3eConversao,
-  ACBrNF3eProc,
+  ACBrNF3eConsts,
+  ACBrDFeComum.Proc,
   pcnSignature;
 
 type
@@ -1196,7 +1197,7 @@ type
     FinfRespTec: TinfRespTec;
     FinfNF3eSupl: TinfNF3eSupl;
     FSignature: TSignature;
-    FprocNF3e: TProcNF3e;
+    FprocNF3e: TProcDFe;
     FNFDet: TNFDetCollection;
 
     procedure SetgGrContrat(const Value: TgGrContratCollection);
@@ -1229,7 +1230,7 @@ type
     property infRespTec: TinfRespTec           read FinfRespTec  write FinfRespTec;
     property infNF3eSupl: TinfNF3eSupl         read FinfNF3eSupl write FinfNF3eSupl;
     property Signature: TSignature             read FSignature   write FSignature;
-    property procNF3e: TProcNF3e               read FprocNF3e    write FprocNF3e;
+    property procNF3e: TProcDFe                read FprocNF3e    write FprocNF3e;
   end;
 
 const
@@ -2313,7 +2314,7 @@ begin
   FinfRespTec  := TinfRespTec.Create;
   FinfNF3eSupl := TinfNF3eSupl.Create;
   FSignature   := TSignature.Create;
-  FprocNF3e    := TProcNF3e.Create;
+  FprocNF3e    := TProcDFe.Create('1.00', NAME_SPACE_NF3e, 'NF3e');
 
   FinfNF3e.Versao := 0;
   FIde.nSiteAutoriz := sa0;

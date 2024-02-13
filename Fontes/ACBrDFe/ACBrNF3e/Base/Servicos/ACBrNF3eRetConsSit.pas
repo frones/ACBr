@@ -44,7 +44,8 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  ACbrNF3eProc, ACBrNF3eRetEnvEvento;
+  ACBrDFeComum.Proc,
+  ACBrNF3eRetEnvEvento;
 
 type
 
@@ -76,7 +77,7 @@ type
     FcUF: Integer;
     FdhRecbto: TDateTime;
     FchNF3e: String;
-    FprotNF3e: TProcNF3e;
+    FprotNF3e: TProcDFe;
     FprocEventoNF3e: TRetEventoNF3eCollection;
     FnRec: String;
     FXMLprotNF3e: String;
@@ -96,7 +97,7 @@ type
     property cUF: Integer                             read FcUF            write FcUF;
     property dhRecbto: TDateTime                      read FdhRecbto       write FdhRecbto;
     property chNF3e: String                           read FchNF3e         write FchNF3e;
-    property protNF3e: TProcNF3e                      read FprotNF3e       write FprotNF3e;
+    property protNF3e: TProcDFe                       read FprotNF3e       write FprotNF3e;
     property procEventoNF3e: TRetEventoNF3eCollection read FprocEventoNF3e write FprocEventoNF3e;
     property nRec: String                             read FnRec           write FnRec;
     property XMLprotNF3e: String                      read FXMLprotNF3e    write FXMLprotNF3e;
@@ -107,6 +108,7 @@ type
 implementation
 
 uses
+  ACBrNF3eConsts,
   ACBrXmlDocument;
 
 { TRetEventoCollection }
@@ -150,7 +152,7 @@ constructor TRetConsSitNF3e.Create;
 begin
   inherited Create;
 
-  FprotNF3e := TProcNF3e.create;
+  FprotNF3e := TProcDFe.Create(Versao, NAME_SPACE_NF3e, 'NF3e');
 end;
 
 destructor TRetConsSitNF3e.Destroy;
@@ -207,7 +209,7 @@ begin
               begin
                 protNF3e.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
                 protNF3e.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-                protNF3e.chNF3e := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNF3e'), tcStr);
+                protNF3e.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNF3e'), tcStr);
                 protNF3e.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
                 protNF3e.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
                 protNF3e.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);

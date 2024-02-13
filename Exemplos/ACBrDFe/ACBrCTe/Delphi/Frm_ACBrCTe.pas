@@ -876,6 +876,8 @@ begin
     end;
 
     {Dados do Emitente}
+    // crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
+    // crtSimplesNacionalMEI
     Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
     Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
     Emit.IE                := Trim(edtEmitIE.Text);
@@ -1804,6 +1806,7 @@ end;
 procedure TfrmACBrCTe.btnConsCadClick(Sender: TObject);
 var
   UF, Documento: String;
+  i: Integer;
 begin
  if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:',    UF)) then
     exit;
@@ -1836,6 +1839,34 @@ begin
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.cStat));
   MemoDados.Lines.Add('xMotivo: ' + ACBrCTe1.WebServices.ConsultaCadastro.xMotivo);
   MemoDados.Lines.Add('DhCons: ' + DateTimeToStr(ACBrCTe1.WebServices.ConsultaCadastro.DhCons));
+  MemoDados.Lines.Add('Dados da Empresa:');
+
+  for i := 0 to ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Count -1 do
+  begin
+    MemoDados.Lines.Add('IE: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].IE);
+    MemoDados.Lines.Add('CNPJ: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CNPJ);
+    MemoDados.Lines.Add('CPF: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CPF);
+    MemoDados.Lines.Add('cSit: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].cSit));
+    MemoDados.Lines.Add('indCredNFe: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].indCredNFe));
+    MemoDados.Lines.Add('indCredCTe: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].indCredCTe));
+    MemoDados.Lines.Add('Nome: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xNome);
+    MemoDados.Lines.Add('Fantasia: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xFant);
+    MemoDados.Lines.Add('Reg. Apuração: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xRegApur);
+    MemoDados.Lines.Add('CNAE: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CNAE));
+    MemoDados.Lines.Add('dIniAtiv: ' + DateToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dIniAtiv));
+    MemoDados.Lines.Add('dUltSit: ' + DateToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dUltSit));
+    MemoDados.Lines.Add('dBaixa: ' + DateToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dBaixa));
+    MemoDados.Lines.Add('IEUnica: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].IEUnica);
+    MemoDados.Lines.Add('IEAtual: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].IEAtual);
+
+    MemoDados.Lines.Add('xLgr: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xLgr);
+    MemoDados.Lines.Add('nro: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].nro);
+    MemoDados.Lines.Add('xCpl: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xCpl);
+    MemoDados.Lines.Add('xBairro: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xBairro);
+    MemoDados.Lines.Add('cMun: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].cMun));
+    MemoDados.Lines.Add('xMun: ' + ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xMun);
+    MemoDados.Lines.Add('CEP: ' + IntToStr(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CEP));
+  end;
 end;
 
 procedure TfrmACBrCTe.btnConsultarChaveClick(Sender: TObject);
@@ -3298,8 +3329,12 @@ begin
     ACBrCTe1.DACTe.MargemSuperior := 5;
     ACBrCTe1.DACTe.MargemInferior := 5;
 
+    {
+     Canhoto na posição Cabeçalho, layout Padrão e Barra funcionando perfeitamente
+     Canhoto na posição Rodape, Layout Padrão e Barra não esta funcionando
+    }
     // (prCabecalho, prRodape);
-    ACBrCTe1.DACTE.PosCanhoto := prRodape;
+    ACBrCTe1.DACTE.PosCanhoto := prCabecalho;
     // (prlPadrao, prlBarra);
     ACBrCTe1.DACTE.PosCanhotoLayout := prlPadrao;
   end;

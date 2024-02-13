@@ -279,6 +279,7 @@ type
     edtPathPDF: TEdit;
     btnManifDestCiencia: TButton;
     btnManifDestOperNaoRealizada: TButton;
+    btnEventoEPEC: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -343,6 +344,7 @@ type
     procedure btnDistrDFePorNSUClick(Sender: TObject);
     procedure btnDistrDFePorChaveClick(Sender: TObject);
     procedure sbPathPDFClick(Sender: TObject);
+    procedure btnEventoEPECClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -2049,6 +2051,7 @@ end;
 procedure TfrmACBrNFe.btnConsCadClick(Sender: TObject);
 var
   UF, Documento: String;
+  i: Integer;
 begin
   UF := '';
   if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:', UF)) then
@@ -2082,6 +2085,35 @@ begin
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.cStat));
   MemoDados.Lines.Add('xMotivo: ' + ACBrNFe1.WebServices.ConsultaCadastro.xMotivo);
   MemoDados.Lines.Add('DhCons: ' + DateTimeToStr(ACBrNFe1.WebServices.ConsultaCadastro.DhCons));
+  MemoDados.Lines.Add('');
+  MemoDados.Lines.Add('Dados da Empresa:');
+
+  for i := 0 to ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Count -1 do
+  begin
+    MemoDados.Lines.Add('IE: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].IE);
+    MemoDados.Lines.Add('CNPJ: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CNPJ);
+    MemoDados.Lines.Add('CPF: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CPF);
+    MemoDados.Lines.Add('cSit: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].cSit));
+    MemoDados.Lines.Add('indCredNFe: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].indCredNFe));
+    MemoDados.Lines.Add('indCredCTe: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].indCredCTe));
+    MemoDados.Lines.Add('Nome: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xNome);
+    MemoDados.Lines.Add('Fantasia: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xFant);
+    MemoDados.Lines.Add('Reg. Apuração: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xRegApur);
+    MemoDados.Lines.Add('CNAE: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CNAE));
+    MemoDados.Lines.Add('dIniAtiv: ' + DateToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dIniAtiv));
+    MemoDados.Lines.Add('dUltSit: ' + DateToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dUltSit));
+    MemoDados.Lines.Add('dBaixa: ' + DateToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dBaixa));
+    MemoDados.Lines.Add('IEUnica: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].IEUnica);
+    MemoDados.Lines.Add('IEAtual: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].IEAtual);
+
+    MemoDados.Lines.Add('xLgr: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xLgr);
+    MemoDados.Lines.Add('nro: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].nro);
+    MemoDados.Lines.Add('xCpl: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xCpl);
+    MemoDados.Lines.Add('xBairro: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xBairro);
+    MemoDados.Lines.Add('cMun: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].cMun));
+    MemoDados.Lines.Add('xMun: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xMun);
+    MemoDados.Lines.Add('CEP: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CEP));
+  end;
 end;
 
 procedure TfrmACBrNFe.btnConsultarChaveClick(Sender: TObject);
@@ -2518,6 +2550,62 @@ begin
     Evento.Free;
   end;
 
+end;
+
+procedure TfrmACBrNFe.btnEventoEPECClick(Sender: TObject);
+var
+  Chave, idLote, CNPJ, IE, ValorNF, CNPJDest, UFDest, Titulo: string;
+begin
+  Titulo := 'Evento EPEC';
+  Chave := '';
+  if not(InputQuery(Titulo, 'Chave da NF-e', Chave)) then
+     exit;
+  Chave := Trim(OnlyNumber(Chave));
+  idLote := '1';
+  if not(InputQuery(Titulo, 'Identificador de controle do Lote de envio do Evento', idLote)) then
+     exit;
+  CNPJ := copy(Chave,7,14);
+  if not(InputQuery(Titulo, 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+     exit;
+  IE:='';
+  if not(InputQuery(Titulo, 'Insc. Estadual', IE)) then
+     exit;
+  ValorNF:='';
+  if not(InputQuery(Titulo, 'Valor da Nota', ValorNF)) then
+     exit;
+  CNPJDest := '';
+  if not(InputQuery(Titulo, 'CNPJ ou o CPF do Destinatario', CNPJDest)) then
+     exit;
+  UFDest:='';
+  if not(InputQuery(Titulo, 'UF do Destinatario', UFDest)) then
+     exit;
+
+  ACBrNFe1.EventoNFe.Evento.Clear;
+
+  with ACBrNFe1.EventoNFe.Evento.New do
+  begin
+    infEvento.chNFe := Chave;
+    infEvento.CNPJ   := CNPJ;
+    infEvento.dhEvento := now;
+    infEvento.tpEvento := teEPECNFe;
+
+    infEvento.detEvento.cOrgaoAutor := ACBrNFe1.Configuracoes.WebServices.UFCodigo;
+    infEvento.detEvento.tpAutor := taEmpresaEmitente;
+    infEvento.detEvento.verAplic := '1.00';
+    infEvento.detEvento.dhEmi := now;
+    infEvento.detEvento.tpNF := tnSaida;
+    infEvento.detEvento.IE := IE;
+    infEvento.detEvento.vNF := StrToFloatDef(ValorNF, 0);
+
+    InfEvento.detEvento.dest.UF := UFDest;
+    InfEvento.detEvento.dest.CNPJCPF := CNPJDest;
+  end;
+
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
+  LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
 end;
 
 procedure TfrmACBrNFe.btnGerarPDFClick(Sender: TObject);

@@ -1593,7 +1593,7 @@ object frmACBrNFe: TfrmACBrNFe
       Top = 1
       Width = 567
       Height = 197
-      ActivePage = tsDistribuicao
+      ActivePage = tsEnvios
       Align = alTop
       TabOrder = 0
       object tsEnvios: TTabSheet
@@ -1832,6 +1832,15 @@ object frmACBrNFe: TfrmACBrNFe
           TabOrder = 3
           OnClick = btnAtorInterNFeTranspClick
         end
+        object btnEventoEPEC: TButton
+          Left = 191
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'EPEC'
+          TabOrder = 6
+          OnClick = btnEventoEPECClick
+        end
       end
       object tsInutilizacao: TTabSheet
         Caption = 'Inutiliza'#231#227'o'
@@ -2060,6 +2069,8 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.vUnCom = 4
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFe = ACBrNFe1
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
@@ -2083,6 +2094,8 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     TipoDANFE = tiSemGeracao
     ImprimeNomeFantasia = True
     FormularioContinuo = True
@@ -2111,6 +2124,8 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.vUnCom = 4
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     TipoDANFE = tiSemGeracao
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
@@ -2175,6 +2190,8 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     FormularioContinuo = True
     Left = 528
     Top = 344

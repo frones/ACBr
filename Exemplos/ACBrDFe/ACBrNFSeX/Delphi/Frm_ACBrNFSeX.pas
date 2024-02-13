@@ -516,8 +516,6 @@ end;
 
 procedure TfrmACBrNFSe.Alimentar_Componente_layout_PadraoNacional(NumDFe,
   NumLote: String);
-var
-  vValorISS: Double;
 begin
   with ACBrNFSeX1 do
   begin
@@ -525,7 +523,7 @@ begin
 
     with NotasFiscais.New.NFSe do
     begin
-      // Numero do RPS a ser gerado e enviado para o WebService
+      // Numero do DPS a ser gerado e enviado para o WebService
       Numero := NumDFe;
 
       verAplic := 'ACBrNFSeX-1.00';
@@ -552,41 +550,32 @@ begin
       }
       RegimeEspecialTributacao := retNenhum;
 
+      // TOptanteSN = (osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP)
+      OptanteSN := osnOptanteMEI;
+
       {=========================================================================
+        Dados do Serviço
+      =========================================================================}
+
+      Servico.ItemListaServico := '010601';
+
+      Servico.CodigoNBS := '';
+      Servico.Discriminacao := 'discriminacao I; discriminacao II';
+
+      Servico.CodigoTributacaoMunicipio := '';
+
+      Servico.CodigoMunicipio := edtCodCidade.Text;
+      Servico.CodigoPais := 1058; // Brasil
+
+     {=========================================================================
         Dados do Serviço (valores)
       =========================================================================}
 
       Servico.Valores.ValorServicos := 100.35;
       Servico.Valores.ValorDeducoes := 0.00;
-      Servico.Valores.AliquotaPis := 0.00;
-      Servico.Valores.ValorPis := 0.00;
-      Servico.Valores.AliquotaCofins := 2.00;
-      Servico.Valores.ValorCofins := 2.00;
-      Servico.Valores.ValorInss := 0.00;
-      Servico.Valores.ValorIr := 0.00;
-      Servico.Valores.ValorCsll := 0.00;
 
-      // TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
-      // stRetencao = snSim
-      // stNormal   = snNao
-
-      // Neste exemplo não temos ISS Retido ( stNormal = Não )
-      // Logo o valor do ISS Retido é igual a zero.
-      Servico.Valores.IssRetido := stNormal;
-      Servico.Valores.ValorIssRetido := 0.00;
-
-      Servico.Valores.OutrasRetencoes := 0.00;
       Servico.Valores.DescontoIncondicionado := 0.00;
       Servico.Valores.DescontoCondicionado := 0.00;
-
-      Servico.Valores.BaseCalculo := Servico.Valores.ValorServicos -
-      Servico.Valores.ValorDeducoes - Servico.Valores.DescontoIncondicionado;
-
-      Servico.Valores.Aliquota := 2;
-
-      // Provedor PadraoNacional
-      // TOptanteSN = (osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP)
-      OptanteSN := osnOptanteMEI;
 
       Servico.Valores.tribMun.cPaisResult := 0;
       // TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
@@ -602,8 +591,13 @@ begin
       end;
 
       {
+         Só devem ser informados se o Prestador não for Simples Nacional
+
       Servico.Valores.tribFed.CST := cst01;
-      Servico.Valores.tribFed.vBCPisCofins := Servico.Valores.BaseCalculo;
+      Servico.Valores.tribFed.vBCPisCofins := Servico.Valores.ValorServicos -
+                                         Servico.Valores.ValorDeducoes -
+                                         Servico.Valores.DescontoIncondicionado;
+
       Servico.Valores.tribFed.pAliqPis := 1.65;
       Servico.Valores.tribFed.pAliqCofins := 7.60;
       Servico.Valores.tribFed.vPis := Servico.Valores.tribFed.vBCPisCofins *
@@ -617,51 +611,6 @@ begin
       Servico.Valores.totTrib.vTotTribEst := 0;
       Servico.Valores.totTrib.vTotTribMun := 0;
       }
-
-      vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
-
-      // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
-      // parametro se refere ao numero de casas decimais.
-      // exemplos: RoundTo5(50.532, -2) ==> 50.53
-      // exemplos: RoundTo5(50.535, -2) ==> 50.54
-      // exemplos: RoundTo5(50.536, -2) ==> 50.54
-
-      Servico.Valores.ValorISS := RoundTo5(vValorISS, -2);
-
-      Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
-        Servico.Valores.ValorPis - Servico.Valores.ValorCofins -
-        Servico.Valores.ValorInss - Servico.Valores.ValorIr -
-        Servico.Valores.ValorCsll - Servico.Valores.OutrasRetencoes -
-        Servico.Valores.ValorIssRetido - Servico.Valores.DescontoIncondicionado
-        - Servico.Valores.DescontoCondicionado;
-
-      {=========================================================================
-        Dados do Serviço
-      =========================================================================}
-
-      DeducaoMateriais := snSim;
-      with Servico.Deducao.New do
-      begin
-        DeducaoPor := dpValor;
-        TipoDeducao := tdMateriais;
-        ValorDeduzir := 10.00;
-      end;
-
-      Servico.ItemListaServico := '010601';
-
-//      Servico.CodigoNBS := '123456789';
-      Servico.Discriminacao := 'discriminacao I; discriminacao II';
-
-      // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
-      //                              '1',       '',          '2',             ''
-      Servico.ResponsavelRetencao := rtTomador;
-
-      Servico.CodigoTributacaoMunicipio := '';
-
-      // código com 7 digitos
-      Servico.CodigoCnae := '6203100';
-      Servico.CodigoMunicipio := edtCodCidade.Text;
-      Servico.CodigoPais := 1058; // Brasil
 
       {=========================================================================
         Dados do Prestador de Serviço
@@ -878,6 +827,7 @@ begin
         with Servico.ItemServico.New do
         begin
           Descricao := 'Desc. do Serv. 1';
+
           ItemListaServico := '09.01';
 
           // infisc, EL
@@ -1037,7 +987,7 @@ begin
         Servico.ItemListaServico := '09.01';
       end;
 
-//      servico.CodigoNBS := '123456789';
+//      Servico.CodigoNBS := '123456789';
       Servico.Discriminacao := 'discriminacao I; discriminacao II';
 
       // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
@@ -1444,23 +1394,6 @@ begin
           Servico.Valores.totTrib.pTotTribSN := 2.01;
         end;
 
-        {
-        Servico.Valores.tribFed.CST := cst01;
-        Servico.Valores.tribFed.vBCPisCofins := Servico.Valores.BaseCalculo;
-        Servico.Valores.tribFed.pAliqPis := 1.65;
-        Servico.Valores.tribFed.pAliqCofins := 7.60;
-        Servico.Valores.tribFed.vPis := Servico.Valores.tribFed.vBCPisCofins *
-                                        Servico.Valores.tribFed.pAliqPis / 100;
-        Servico.Valores.tribFed.vCofins := Servico.Valores.tribFed.vBCPisCofins *
-                                      Servico.Valores.tribFed.pAliqCofins / 100;
-        Servico.Valores.tribFed.tpRetPisCofins := trpcNaoRetido;
-
-        Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribFed.vPis +
-                                               Servico.Valores.tribFed.vCofins;
-        Servico.Valores.totTrib.vTotTribEst := 0;
-        Servico.Valores.totTrib.vTotTribMun := 0;
-        }
-
         vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
         // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
@@ -1493,7 +1426,8 @@ begin
       end;
 
 //      servico.CodigoNBS := '123456789';
-      Servico.Discriminacao := 'discriminacao I; discriminacao II';
+      Servico.Discriminacao := 'discriminacao I; discriminacao II;' +
+                               'discriminacao III; discriminacao IV';
 
       // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
       //                              '1',       '',          '2',             ''
@@ -1554,7 +1488,7 @@ begin
       Prestador.Endereco.xPais := 'BRASIL';
       Prestador.Endereco.CEP := edtEmitCEP.Text;
 
-      Prestador.Contato.Telefone := '1633224455';
+      Prestador.Contato.Telefone := '33224455';
       Prestador.Contato.Email := 'nome@provedor.com.br';
 
       {=========================================================================
@@ -1582,7 +1516,7 @@ begin
       Tomador.Endereco.CodigoPais := 0;
       Tomador.Endereco.CEP := '14800000';
       Tomador.Endereco.xPais := 'BRASIL';
-      Tomador.Contato.Telefone := '1622223333';
+      Tomador.Contato.Telefone := '22223333';
       Tomador.Contato.Email := 'nome@provedor.com.br';
 
       {=========================================================================

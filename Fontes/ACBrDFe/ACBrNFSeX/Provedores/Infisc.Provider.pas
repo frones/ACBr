@@ -776,7 +776,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := '';
-      AErro.Descricao := ACBrStr(Descricao);
+      AErro.Descricao := Descricao;
       AErro.Correcao := '';
     end;
 
@@ -784,7 +784,7 @@ begin
     begin
       AAlerta := Response.Alertas.New;
       AAlerta.Codigo := '';
-      AAlerta.Descricao := ACBrStr(Descricao);
+      AAlerta.Descricao := Descricao;
       AAlerta.Correcao := '';
     end;
   end;

@@ -86,6 +86,7 @@ begin
   begin
     Rps := True;
     LoteRps := True;
+    RpsGerarNFSe := True;
   end;
 end;
 

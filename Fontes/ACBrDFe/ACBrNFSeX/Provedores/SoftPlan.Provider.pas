@@ -207,9 +207,7 @@ procedure TACBrNFSeProviderSoftPlan.ProcessarMensagemErros(
   RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse; const AListTag,
   AMessageTag: string);
 var
-//  I: Integer;
   ANode: TACBrXmlNode;
-//  ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
@@ -218,25 +216,9 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '';
-    AErro.Descricao := ACBrStr(ANode.AsString);
+    AErro.Descricao := ANode.AsString;
     AErro.Correcao := '';
   end;
-  {
-  if (ANode = nil) then
-    ANode := RootNode;
-
-  ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
-
-  if not Assigned(ANodeArray) then Exit;
-
-  for I := Low(ANodeArray) to High(ANodeArray) do
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := '';
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ERRO'), tcStr);
-    AErro.Correcao := '';
-  end;
-  }
 end;
 
 procedure TACBrNFSeProviderSoftPlan.ProcessarMensagemDeErros(
@@ -253,7 +235,7 @@ begin
 
   AErro := Response.Erros.New;
   AErro.Codigo := Codigo;
-  AErro.Descricao := ACBrStr(Descricao);
+  AErro.Descricao := Descricao;
   AErro.Correcao := '';
 end;
 

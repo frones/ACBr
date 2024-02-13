@@ -2828,8 +2828,8 @@ begin
     Exit;
 
   Item.Codigo := ACodigo;
-  Item.Descricao := ACBrStr(AMensagem);
-  Item.Correcao := ACBrStr(ObterConteudoTag(ErrorNode.Childrens.FindAnyNs('Correcao'), tcStr));
+  Item.Descricao := AMensagem;
+  Item.Correcao := ObterConteudoTag(ErrorNode.Childrens.FindAnyNs('Correcao'), tcStr);
 end;
 
 procedure ProcessarErros;
@@ -2888,8 +2888,8 @@ begin
         begin
           AAlerta := Response.Alertas.New;
           AAlerta.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-          AAlerta.Descricao := ACBrStr(Mensagem);
-          AAlerta.Correcao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr));
+          AAlerta.Descricao := Mensagem;
+          AAlerta.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
         end;
       end;
     end
@@ -2901,8 +2901,8 @@ begin
       begin
         AAlerta := Response.Alertas.New;
         AAlerta.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
-        AAlerta.Descricao := ACBrStr(Mensagem);
-        AAlerta.Correcao := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr));
+        AAlerta.Descricao := Mensagem;
+        AAlerta.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
   end;

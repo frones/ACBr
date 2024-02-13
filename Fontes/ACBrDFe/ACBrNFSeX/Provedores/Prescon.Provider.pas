@@ -211,7 +211,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := vRetorno;
-        AErro.Descricao := ACBrStr(GetDescricaoErro(vRetorno));
+        AErro.Descricao := GetDescricaoErro(vRetorno);
         AErro.Correcao := '';
       end;
     end;

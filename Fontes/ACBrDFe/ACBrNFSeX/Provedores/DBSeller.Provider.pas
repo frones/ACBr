@@ -294,7 +294,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
-        AErro.Descricao := ACBrStr(Mensagem);
+        AErro.Descricao := Mensagem;
         AErro.Correcao := '';
       end;
     end;
@@ -557,7 +557,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
-        AErro.Descricao := ACBrStr(Mensagem);
+        AErro.Descricao := Mensagem;
         AErro.Correcao := '';
       end;
     end;

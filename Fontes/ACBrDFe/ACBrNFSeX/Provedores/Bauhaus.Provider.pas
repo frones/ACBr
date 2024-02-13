@@ -194,11 +194,11 @@ begin
 
   AErro := Response.Erros.New;
   AErro.Codigo := Trim(Copy(JSonErro.AsString['Code'], 6, 3));
-  AErro.Descricao := ACBrStr(TrimRight(JSonErro.AsString['Message'] + #13 +
-                               JSonErro.AsString['MessageDev']));
-  AErro.Correcao :=  ACBrStr(TrimRight(JSonErro.AsString['Detail'] + #13 +
+  AErro.Descricao := TrimRight(JSonErro.AsString['Message'] + #13 +
+                               JSonErro.AsString['MessageDev']);
+  AErro.Correcao :=  TrimRight(JSonErro.AsString['Detail'] + #13 +
                                JSonErro.AsString['DetailDev'] + #13 +
-                               xDetailError));
+                               xDetailError);
 end;
 
 function TACBrNFSeProviderBauhaus.PrepararRpsParaLote(const aXml: string): string;

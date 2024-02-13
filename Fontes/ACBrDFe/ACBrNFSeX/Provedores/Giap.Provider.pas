@@ -200,7 +200,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := ObterConteudoTag(ANodeArray[I].Attributes.Items['code']);
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Attributes.Items['message']));
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Attributes.Items['message']);
       AErro.Correcao := '';
     end;
   end;
@@ -552,7 +552,6 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -572,7 +571,6 @@ begin
               '</nfeReposta>';
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-    Result := String(NativeStringToUTF8(Result));
   end;
 end;
 

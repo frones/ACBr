@@ -412,7 +412,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Codigo;
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mensagem'), tcStr));
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mensagem'), tcStr);
       AErro.Correcao := '';
     end;
   end;

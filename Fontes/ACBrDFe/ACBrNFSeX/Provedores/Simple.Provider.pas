@@ -193,7 +193,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := '';
-      AErro.Descricao := ACBrStr(vDescricao);
+      AErro.Descricao := vDescricao;
       AErro.Correcao := '';
     end;
   end;

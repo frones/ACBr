@@ -475,7 +475,6 @@ begin
               '</a>';
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-    Result := String(NativeStringToUTF8(Result));
   end;
 end;
 

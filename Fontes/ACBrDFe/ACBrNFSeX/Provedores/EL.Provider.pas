@@ -579,10 +579,10 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '';
-    AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mensagens'), tcStr));
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mensagens'), tcStr);
 
     if AErro.Descricao = '' then
-      AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+      AErro.Descricao := ANodeArray[I].AsString;
 
     AErro.Correcao := '';
   end;

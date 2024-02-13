@@ -195,10 +195,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
 begin
-//  ANode := RootNode.Childrens.FindAnyNs(AListTag);
-
-//  if (ANode = nil) then
-    ANode := RootNode;
+  ANode := RootNode;
 
   ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
 
@@ -208,7 +205,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Erro'), tcStr);
-    AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr));
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr);
     AErro.Correcao := '';
   end;
 end;
@@ -838,10 +835,9 @@ function TACBrNFSeXWebserviceGeisWeb.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := StrToXml(Result);
+  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
-  Result := string(NativeStringToUTF8(Result));
 end;
 
 end.

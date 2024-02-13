@@ -483,7 +483,17 @@ end;
 function TACBrNFSeXWebserviceiiBrasil204.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  if not StringIsXML(aXML) then
+  if StringIsXML(aXML) then
+  begin
+    Result := inherited TratarXmlRetornado(aXML);
+
+    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := RemoverCDATA(Result);
+    Result := RemoverDeclaracaoXML(Result);
+    Result := RemoverCaracteresDesnecessarios(Result);
+    Result := RemoverIdentacao(Result);
+  end
+  else
   begin
     Result := '<a>' +
                 '<ListaMensagemRetorno>' +
@@ -496,17 +506,6 @@ begin
               '</a>';
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-    Result := String(NativeStringToUTF8(Result));
-  end
-  else
-  begin
-    Result := inherited TratarXmlRetornado(aXML);
-
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-    Result := RemoverCDATA(Result);
-    Result := RemoverDeclaracaoXML(Result);
-    Result := RemoverCaracteresDesnecessarios(Result);
-    Result := RemoverIdentacao(Result);
   end;
 end;
 

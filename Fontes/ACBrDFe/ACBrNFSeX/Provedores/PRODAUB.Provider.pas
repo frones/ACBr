@@ -97,7 +97,22 @@ begin
     DadosCabecalho := GetCabecalho('');
   end;
 
-  ConfigAssinar.LoteRps := True;
+  with ConfigAssinar do
+  begin
+    Rps               := True;
+    LoteRps           := True;
+    ConsultarSituacao := False;
+    ConsultarLote     := False;
+    ConsultarNFSeRps  := False;
+    ConsultarNFSe     := False;
+    CancelarNFSe      := False;
+    RpsGerarNFSe      := False;
+    LoteGerarNFSe     := False;
+    RpsSubstituirNFSe := False;
+    SubstituirNFSe    := False;
+
+    IdSignatureValue := 'ID_ASSINATURA_';
+  end;
 end;
 
 function TACBrNFSeProviderPRODAUB204.CriarGeradorXml(

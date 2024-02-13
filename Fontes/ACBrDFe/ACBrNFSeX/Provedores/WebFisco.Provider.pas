@@ -184,11 +184,11 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr));
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
     AErro.Correcao := '';
 
     if AErro.Descricao = '' then
-      AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+      AErro.Descricao := ANodeArray[I].AsString;
   end;
 end;
 
@@ -227,10 +227,6 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
-
-      //ProcessarMensagemErros(ANode, Response, '', 'okk');
-
-      //Response.Sucesso := (Response.Erros.Count = 0);
 
       with Response do
       begin
@@ -506,8 +502,6 @@ begin
 
       ANode := Document.Root;
 
-//      ProcessarMensagemErros(ANode, Response, '', 'okk');
-
       with Response do
       begin
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
@@ -665,10 +659,6 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
-
-      //ProcessarMensagemErros(ANode, Response, '', 'okk');
-
-      //Response.Sucesso := (Response.Erros.Count = 0);
 
       Response.RetCancelamento.MsgCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
       Response.RetCancelamento.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);

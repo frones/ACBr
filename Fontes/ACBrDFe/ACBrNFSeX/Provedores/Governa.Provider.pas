@@ -184,11 +184,11 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Codigo;
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('tsDesOco'), tcStr));
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('tsDesOco'), tcStr);
       AErro.Correcao := '';
 
       if AErro.Descricao = '' then
-        AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+        AErro.Descricao := ANodeArray[I].AsString;
     end;
   end;
 end;

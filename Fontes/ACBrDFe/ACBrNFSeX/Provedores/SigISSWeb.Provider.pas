@@ -193,7 +193,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
-    AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('descricao'), tcStr));
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('descricao'), tcStr);
     AErro.Correcao := '';
   end;
 end;
@@ -583,7 +583,7 @@ end;
 
 function TACBrNFSeXWebserviceSigISSWeb.Cancelar(ACabecalho, AMSG: String): string;
 var
-  Request{, xCabecalho}: string;
+  Request: string;
 begin
   AjustaSetHeader := True;
   FPMsgOrig := AMSG;
@@ -591,18 +591,6 @@ begin
   Request := AMSG;
 
   Result := Executar('', Request, [], []);
-  {
-  xCabecalho := StringReplace(ACabecalho, 'cabecalhoNfseLote',
-                     'cabecalhoCancelamentoNfseLote', [rfReplaceAll]);
-
-  Request := '<wsn:executar>';
-  Request := Request + '<arg0>' + XmlToStr(xCabecalho) + '</arg0>';
-  Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';
-  Request := Request + '</wsn:executar>';
-
-  Result := Executar('', Request, ['return', 'retornoCancelamentoNfseLote'],
-                     ['xmlns:wsn="http://wsnfselote.SigISSWeb.com.br/"']);
-  }
 end;
 
 function TACBrNFSeXWebserviceSigISSWeb.TratarXmlRetornado(
@@ -612,7 +600,6 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -632,7 +619,6 @@ begin
                 '</erros>' +
               '</a>';
 
-    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   end;
 end;

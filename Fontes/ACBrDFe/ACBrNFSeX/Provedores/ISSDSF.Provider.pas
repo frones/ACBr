@@ -365,11 +365,11 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Codigo;
-      AErro.Descricao := ACBrStr(Descricao);
+      AErro.Descricao := Descricao;
       AErro.Correcao := RPS;
 
       if AErro.Descricao = '' then
-        AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+        AErro.Descricao := ANodeArray[I].AsString;
     end;
   end;
 
@@ -389,11 +389,11 @@ begin
     begin
       AAlerta := Response.Alertas.New;
       AAlerta.Codigo := Codigo;
-      AAlerta.Descricao := ACBrStr(Descricao);
+      AAlerta.Descricao := Descricao;
       AAlerta.Correcao := '';
 
       if AAlerta.Descricao = '' then
-        AAlerta.Descricao := ACBrStr(ANodeArray[I].AsString);
+        AAlerta.Descricao := ANodeArray[I].AsString;
     end;
   end;
 end;

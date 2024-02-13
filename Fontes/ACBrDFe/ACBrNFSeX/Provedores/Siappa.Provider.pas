@@ -200,7 +200,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs(AMessageTag + '_out_codigo_retorno'), tcStr);
-      AErro.Descricao := ACBrStr(vDescricao);
+      AErro.Descricao := vDescricao;
       AErro.Correcao := '';
     end;
   end;

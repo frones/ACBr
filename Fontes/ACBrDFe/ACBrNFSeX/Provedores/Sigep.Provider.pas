@@ -378,7 +378,6 @@ begin
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
-  Result := string(NativeStringToUTF8(Result));
 end;
 
 end.

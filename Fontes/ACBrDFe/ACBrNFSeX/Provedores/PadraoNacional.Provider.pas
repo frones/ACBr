@@ -241,8 +241,8 @@ var
     begin
       AItem := Collection.New;
       AItem.Codigo := Codigo;
-      AItem.Descricao := ACBrStr(JSonItem.AsString['Descricao']);
-      AItem.Correcao := ACBrStr(JSonItem.AsString['Complemento']);
+      AItem.Descricao := JSonItem.AsString['Descricao'];
+      AItem.Correcao := JSonItem.AsString['Complemento'];
     end
     else
     begin
@@ -252,8 +252,8 @@ var
       begin
         AItem := Collection.New;
         AItem.Codigo := Codigo;
-        AItem.Descricao := ACBrStr(JSonItem.AsString['descricao']);
-        AItem.Correcao := ACBrStr(JSonItem.AsString['complemento']);
+        AItem.Descricao := JSonItem.AsString['descricao'];
+        AItem.Correcao := JSonItem.AsString['complemento'];
       end;
     end;
   end;

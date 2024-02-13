@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/02/2024
+-- Diversos --
+[*] Removido do ProcessarMensagemErros a função ACBrStr ao atribuir a descrição e
+    correção de erros e alertas retornados pelo webservice do provedor, pois essa
+    função estava apresentando as vogais acentuadas de forma errada no Lazarus.
+[*] Removido do TratarXmlRetornado a função NativeStringToUTF8, pois estava sendo
+    executado em duplicidade e consequentemente não convertendo as vogais acentuadas
+    de forma correta.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

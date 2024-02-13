@@ -788,7 +788,7 @@ begin
 
     AErro := Response.Erros.New;
     AErro.Codigo := '';
-    AErro.Descricao := ACBrStr(Mensagem);
+    AErro.Descricao := Mensagem;
     AErro.Correcao := '';
   end;
 
@@ -802,7 +802,7 @@ begin
 
     AAlerta := Response.Alertas.New;
     AAlerta.Codigo := '';
-    AAlerta.Descricao := ACBrStr(Mensagem);
+    AAlerta.Descricao := Mensagem;
     AAlerta.Correcao := '';
   end;
 end;

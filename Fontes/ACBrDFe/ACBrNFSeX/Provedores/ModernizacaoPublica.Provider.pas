@@ -165,21 +165,9 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroID'), tcStr);
-    AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroMensagem'), tcStr));
-    AErro.Correcao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroSolucao'), tcStr));
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroMensagem'), tcStr);
+    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroSolucao'), tcStr);
   end;
-
-{
-  As tag que contem o código, mensagem e correção do erro são diferentes do padrão
-
-	<ListaMensagemRetorno>
-		<Erro>
-			<ErroID>ID Rps:xxxxx</ErroID>
-			<ErroMensagem>xxxxxxxxxx</ErroMensagem>
-			<ErroSolucao>xxxxxxx</ErroSolucao>
-		</Erro>
-	</ListaMensagemRetorno>
-}
 end;
 
 { TACBrNFSeXWebserviceModernizacaoPublica202 }

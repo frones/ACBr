@@ -207,7 +207,7 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := xId;
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr));
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
       AErro.Correcao := '';
     end;
 
@@ -215,7 +215,7 @@ begin
     begin
       AAlerta := Response.Alertas.New;
       AAlerta.Codigo := xId;
-      AAlerta.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr));
+      AAlerta.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
       AAlerta.Correcao := '';
     end;
   end;

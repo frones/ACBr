@@ -271,11 +271,11 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := '';
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('return'), tcStr));
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('return'), tcStr);
       AErro.Correcao := '';
 
       if AErro.Descricao = '' then
-        AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+        AErro.Descricao := ANodeArray[I].AsString;
     end
     else
     begin
@@ -286,11 +286,11 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Codigo;
-        AErro.Descricao := ACBrStr(Descricao);
+        AErro.Descricao := Descricao;
         AErro.Correcao := '';
 
         if AErro.Descricao = '' then
-          AErro.Descricao := ACBrStr(ANodeArray[I].AsString);
+          AErro.Descricao := ANodeArray[I].AsString;
       end;
     end;
   end;

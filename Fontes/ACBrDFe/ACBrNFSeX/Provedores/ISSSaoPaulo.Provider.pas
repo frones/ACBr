@@ -368,14 +368,14 @@ begin
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-      AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr));
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
 
       ANode := ANodeArray[I].Childrens.FindAnyNs('ChaveRPS');
 
       if ANode <> nil then
-        AErro.Correcao := ACBrStr('Numero/Série Rps: ' +
+        AErro.Correcao := 'Numero/Série Rps: ' +
           ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr) + '/' +
-          ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr));
+          ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
     end;
   end;
 
@@ -391,14 +391,14 @@ begin
       begin
         AAlerta := Response.Alertas.New;
         AAlerta.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-        AAlerta.Descricao := ACBrStr(Mensagem);
+        AAlerta.Descricao := Mensagem;
 
         ANode := ANodeArray[I].Childrens.FindAnyNs('ChaveRPS');
 
         if ANode <> nil then
-          AAlerta.Correcao := ACBrStr('Numero/Série Rps: ' +
+          AAlerta.Correcao := 'Numero/Série Rps: ' +
             ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr) + '/' +
-            ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr));
+            ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
       end;
     end;
   end

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2024
+-- ACBrDFeComum.RetConsCad --
+[*] Removido uma variável que estava definida mas sem utilização.
+  Por: Italo Giurizzato Junior
+
 12/02/2024
 -- ACBrDFeComum.SignatureClass --
 [+] Incluído na classe TSignature os campos IdSignature e IdSignatureValue.

@@ -285,9 +285,9 @@ uses
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrUtil.Strings,
-  ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeConversao,
+  ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL,
   ACBrXmlBase,
-  pcnAuxiliar, pcnConversao,
+  pcnConversao,
   ACBrNFComConversao,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
 
@@ -1239,7 +1239,7 @@ begin
       if ACBrNFCom1.NotasFiscais.Items[0].Alertas <> '' then
         memoLog.Lines.Add('Alertas: ' + ACBrNFCom1.NotasFiscais.Items[0].Alertas);
 
-      ShowMessage('Nota Fiscal Eletrônica Valida');
+      ShowMessage('Nota Fiscal de Comunicação Valida');
     except
       on E: Exception do
       begin

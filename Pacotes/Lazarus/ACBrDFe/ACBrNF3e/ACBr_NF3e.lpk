@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal de Energia Elétrica Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="18">
+    <Files Count="16">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3e.pas"/>
         <UnitName Value="ACBrNF3e"/>
@@ -55,8 +55,8 @@
         <UnitName Value="ACBrNF3eEnvEvento"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEvento.pas"/>
-        <UnitName Value="ACBrNF3eEvento"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEventoClass.pas"/>
+        <UnitName Value="ACBrNF3eEventoClass"/>
       </Item9>
       <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eClass.pas"/>
@@ -71,29 +71,21 @@
         <UnitName Value="ACBrNF3eXmlWriter"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eProc.pas"/>
-        <UnitName Value="ACBrNF3eProc"/>
-      </Item13>
-      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetConsSit.pas"/>
         <UnitName Value="ACBrNF3eRetConsSit"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetEnvEvento.pas"/>
         <UnitName Value="ACBrNF3eRetEnvEvento"/>
-      </Item15>
-      <Item16>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetEnv.pas"/>
-        <UnitName Value="ACBrNF3eRetEnv"/>
-      </Item16>
-      <Item17>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConversao.pas"/>
         <UnitName Value="ACBrNF3eConversao"/>
-      </Item17>
-      <Item18>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConsts.pas"/>
         <UnitName Value="ACBrNF3eConsts"/>
-      </Item18>
+      </Item16>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

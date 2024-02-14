@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2024
+-- ACBrDFeComum.RetEnvio --
+[*] Removido o parâmentro do Create, pois não se faz necessário.
+  Por: Italo Giurizzato Junior
+
 13/02/2024
 -- ACBrDFeComum.RetEnvio --
 [+] Nova Unit para ler o retorno do Envio do DFe em modo Assíncrono.

@@ -61,8 +61,6 @@ type
 
   TretEnvDFe = class(TObject)
   private
-    FtagGrupoMsg: string;
-
     Fversao: string;
     FtpAmb: TACBrTipoAmbiente;
     FcStat: Integer;
@@ -72,7 +70,7 @@ type
     FinfRec: TInfRec;
     FXmlRetorno: string;
   public
-    constructor Create(const AtagGrupoMsg: string);
+    constructor Create;
     destructor Destroy; override;
 
     function LerXml: Boolean;
@@ -96,11 +94,10 @@ uses
 
 { TretEnvDFe }
 
-constructor TretEnvDFe.Create(const AtagGrupoMsg: string);
+constructor TretEnvDFe.Create;
 begin
   inherited Create;
 
-  FtagGrupoMsg := AtagGrupoMsg;
   FinfRec := TInfREC.Create
 end;
 

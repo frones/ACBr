@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
+  pcnSignature,
   ACBrXmlDocument;
 
 type
@@ -85,6 +86,8 @@ function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
 
 function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
+
+procedure LerSignature(ASignatureNode: TACBrXmlNode; Signature: TSignature);
 
 implementation
 
@@ -401,6 +404,23 @@ end;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
+end;
+
+procedure LerSignature(ASignatureNode: TACBrXmlNode; Signature: TSignature);
+var
+  ReferenceNode, X509DataNode: TACBrXmlNode;
+begin
+  if not Assigned(ASignatureNode) or (ASignatureNode = nil) then Exit;
+
+  ReferenceNode := ASignatureNode.Childrens.FindAnyNs('SignedInfo')
+                                .Childrens.FindAnyNs('Reference');
+  X509DataNode :=  ASignatureNode.Childrens.FindAnyNs('KeyInfo')
+                                .Childrens.FindAnyNs('X509Data');
+
+  Signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
+  Signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
+  Signature.SignatureValue := ObterConteudoTag(ASignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
+  Signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
 end;
 
 end.

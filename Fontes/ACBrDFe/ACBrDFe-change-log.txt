@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2024
+-- ACBrXmlBase --
+[+] Implementado a procedure LerSignature.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

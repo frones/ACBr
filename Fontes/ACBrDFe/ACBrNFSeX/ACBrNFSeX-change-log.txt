@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/02/2024
+-- ACBrNFSeXNotasFiscais --
+[*] Adiciona o campo InformacoesComplementares para os leiautes ABRASF nas rotinas de leitura e geração do INI.
+  Por: Diego Folieni
 -- Isaneto.Provider --
 [*] Ajustes para que o webservice processe com sucesso o RPS enviado.
   Por: Diogo Rodrigues

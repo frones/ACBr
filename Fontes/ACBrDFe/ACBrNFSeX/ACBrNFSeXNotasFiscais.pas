@@ -373,6 +373,8 @@ begin
 
         //Provedor Governa
         RegRec := StrToRegRec(Ok, INIRec.ReadString(sSecao, 'RegRec', ''));
+
+        InformacoesComplementares := INIRec.ReadString(sSecao, 'InformacoesComplementares', '');
       end;
 
       sSecao := 'RpsSubstituido';
@@ -982,6 +984,8 @@ begin
 
       //Provedor Governa
       INIRec.WriteString(sSecao, 'RegRec', RegRecToStr(RegRec));
+
+      INIRec.WriteString(sSecao, 'InformacoesComplementares', InformacoesComplementares);
 
       if RpsSubstituido.Numero <> '' then
       begin

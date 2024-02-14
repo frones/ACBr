@@ -1561,8 +1561,8 @@ begin
         I := 1;
         while true do
         begin
-          // de 01 até 10
-          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 2);
+          // de 01 até 999
+          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 3);
           sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
 
           if (sFim = 'FIM') or (Length(sFim) <= 0) then

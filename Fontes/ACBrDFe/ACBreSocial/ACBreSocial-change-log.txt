@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2024
+-- pcesS2299 --
+[*] Alterada leitura do ini para permitir 3 dígítos no remunOutrEmpr do S2299.
+  Por: IMATECH
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

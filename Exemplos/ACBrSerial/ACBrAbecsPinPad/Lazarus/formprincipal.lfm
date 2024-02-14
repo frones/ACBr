@@ -96,10 +96,10 @@ object frMain: TfrMain
       Height = 272
       Top = 0
       Width = 840
-      ActivePage = tsMultimidia
+      ActivePage = tsConfig
       Align = alClient
       Images = ImageList1
-      TabIndex = 4
+      TabIndex = 0
       TabOrder = 0
       object tsConfig: TTabSheet
         Caption = 'Config'
@@ -282,6 +282,18 @@ object frMain: TfrMain
           ImageIndex = 5
           OnClick = btActivateClick
           TabOrder = 4
+        end
+        object btDetectPinPad: TBitBtn
+          Left = 552
+          Height = 45
+          Top = 173
+          Width = 109
+          Anchors = [akTop, akRight]
+          Caption = 'Detect PinPad'
+          Images = ImageList1
+          ImageIndex = 12
+          OnClick = btDetectPinPadClick
+          TabOrder = 5
         end
       end
       object tsOpen: TTabSheet
@@ -837,9 +849,9 @@ object frMain: TfrMain
           Height = 244
           Top = 0
           Width = 534
-          ActivePage = tsImage
+          ActivePage = tsQRCode
           Align = alClient
-          TabIndex = 0
+          TabIndex = 1
           TabOrder = 1
           object tsImage: TTabSheet
             Caption = 'Image'

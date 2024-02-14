@@ -2,8 +2,8 @@ object frMain: TfrMain
   Left = 522
   Top = 227
   Caption = 'Teste ABECS PinPad'
-  ClientHeight = 586
-  ClientWidth = 938
+  ClientHeight = 588
+  ClientWidth = 936
   Color = clBtnFace
   Constraints.MinWidth = 640
   Font.Charset = DEFAULT_CHARSET
@@ -71,25 +71,25 @@ object frMain: TfrMain
   object Splitter2: TSplitter
     Left = 0
     Top = 332
-    Width = 938
+    Width = 936
     Height = 8
     Cursor = crVSplit
     Align = alTop
+    ExplicitWidth = 938
   end
   object pLogs: TPanel
     Left = 0
     Top = 340
-    Width = 938
-    Height = 246
+    Width = 936
+    Height = 248
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 936
     ExplicitHeight = 242
     object sbCleanMemoLog: TSpeedButton
-      Left = 914
+      Left = 912
       Top = 58
       Width = 23
-      Height = 159
+      Height = 161
       Align = alRight
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -125,20 +125,19 @@ object frMain: TfrMain
     object mLog: TMemo
       Left = 1
       Top = 58
-      Width = 913
-      Height = 159
+      Width = 911
+      Height = 161
       Align = alClient
       ReadOnly = True
       ScrollBars = ssVertical
       TabOrder = 0
       WordWrap = False
-      ExplicitWidth = 911
       ExplicitHeight = 155
     end
     object sbResponse: TStatusBar
       Left = 1
-      Top = 217
-      Width = 936
+      Top = 219
+      Width = 934
       Height = 28
       Panels = <
         item
@@ -150,22 +149,20 @@ object frMain: TfrMain
           Width = 40
         end>
       ExplicitTop = 213
-      ExplicitWidth = 934
     end
     object pCancelar: TPanel
       Left = 1
       Top = 1
-      Width = 936
+      Width = 934
       Height = 57
       Align = alTop
       TabOrder = 2
       Visible = False
-      ExplicitWidth = 934
       DesignSize = (
-        936
+        934
         57)
       object btCancel: TButton
-        Left = 2
+        Left = 1
         Top = 1
         Width = 933
         Height = 55
@@ -173,48 +170,46 @@ object frMain: TfrMain
         Caption = 'Cancel Operation'
         TabOrder = 0
         OnClick = btCancelClick
-        ExplicitLeft = 1
       end
     end
   end
   object pCommands: TPanel
     Left = 0
     Top = 0
-    Width = 938
+    Width = 936
     Height = 332
     Align = alTop
     BevelOuter = bvNone
     Constraints.MinHeight = 264
     TabOrder = 1
-    ExplicitWidth = 936
     object pgcCommands: TPageControl
       Left = 0
       Top = 0
-      Width = 938
+      Width = 936
       Height = 332
-      ActivePage = tsMultimidia
+      ActivePage = tsConfig
       Align = alClient
       Images = ImageList1
       TabOrder = 0
-      ExplicitWidth = 936
       object tsConfig: TTabSheet
         Caption = 'Config'
         DesignSize = (
-          930
+          928
           302)
         object gbConfig: TGroupBox
           Left = 0
           Top = 0
-          Width = 930
+          Width = 928
           Height = 70
           Align = alTop
           Caption = 'Serial Port'
           TabOrder = 0
+          ExplicitWidth = 930
           DesignSize = (
-            930
+            928
             70)
           object btSerial: TSpeedButton
-            Left = 549
+            Left = 547
             Top = 27
             Width = 25
             Height = 22
@@ -247,9 +242,10 @@ object frMain: TfrMain
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             OnClick = btSerialClick
+            ExplicitLeft = 549
           end
           object btSearchSerialPorts: TSpeedButton
-            Left = 580
+            Left = 578
             Top = 27
             Width = 25
             Height = 22
@@ -282,34 +278,38 @@ object frMain: TfrMain
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             OnClick = btSearchSerialPortsClick
+            ExplicitLeft = 580
           end
           object cbxPort: TComboBox
             Left = 19
             Top = 27
-            Width = 521
+            Width = 519
             Height = 23
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
+            ExplicitWidth = 521
           end
         end
         object pConfigLogMsg: TPanel
           Left = 0
           Top = 70
-          Width = 930
+          Width = 928
           Height = 77
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 930
           object gbConfig1: TGroupBox
             Left = 0
             Top = 0
-            Width = 675
+            Width = 673
             Height = 77
             Align = alClient
             Caption = 'Log'
             TabOrder = 0
+            ExplicitWidth = 675
             DesignSize = (
-              675
+              673
               77)
             object Label13: TLabel
               Left = 19
@@ -322,7 +322,7 @@ object frMain: TfrMain
               ParentColor = False
             end
             object sbShowLogFile: TSpeedButton
-              Left = 551
+              Left = 549
               Top = 40
               Width = 25
               Height = 22
@@ -335,9 +335,10 @@ object frMain: TfrMain
               Font.Style = []
               ParentFont = False
               OnClick = sbShowLogFileClick
+              ExplicitLeft = 551
             end
             object Label14: TLabel
-              Left = 599
+              Left = 597
               Top = 21
               Width = 50
               Height = 15
@@ -346,18 +347,20 @@ object frMain: TfrMain
               Caption = 'Log.Level'
               Color = clBtnFace
               ParentColor = False
+              ExplicitLeft = 599
             end
             object edLogFile: TEdit
               Left = 19
               Top = 40
-              Width = 522
+              Width = 520
               Height = 23
               Cursor = crIBeam
               Anchors = [akLeft, akTop, akRight]
               TabOrder = 0
+              ExplicitWidth = 522
             end
             object seLogLevel: TSpinEdit
-              Left = 599
+              Left = 597
               Top = 40
               Width = 50
               Height = 24
@@ -366,16 +369,18 @@ object frMain: TfrMain
               MinValue = 0
               TabOrder = 1
               Value = 2
+              ExplicitLeft = 599
             end
           end
           object GroupBox2: TGroupBox
-            Left = 675
+            Left = 673
             Top = 0
             Width = 255
             Height = 77
             Align = alRight
             Caption = 'Msg Align'
             TabOrder = 1
+            ExplicitLeft = 675
             object cbxMsgAlign: TComboBox
               Left = 16
               Top = 40
@@ -468,7 +473,7 @@ object frMain: TfrMain
           OnClick = btReadParmsClick
         end
         object btActivate: TBitBtn
-          Left = 775
+          Left = 773
           Top = 173
           Width = 109
           Height = 45
@@ -503,6 +508,20 @@ object frMain: TfrMain
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
           TabOrder = 4
           OnClick = btActivateClick
+          ExplicitLeft = 775
+        end
+        object btDetectPinPad: TBitBtn
+          Left = 614
+          Top = 173
+          Width = 109
+          Height = 45
+          Anchors = [akTop, akRight]
+          Caption = 'Detect PinPad'
+          ImageIndex = 12
+          Images = ImageList1
+          TabOrder = 5
+          OnClick = btDetectPinPadClick
+          ExplicitLeft = 616
         end
       end
       object tsOpen: TTabSheet
@@ -528,13 +547,14 @@ object frMain: TfrMain
         object pKeys: TPanel
           Left = 160
           Top = 0
-          Width = 770
+          Width = 768
           Height = 302
           Align = alRight
           Anchors = [akLeft, akTop, akRight, akBottom]
           BevelOuter = bvNone
           Enabled = False
           TabOrder = 2
+          ExplicitWidth = 770
           object sbGenerateKeys: TSpeedButton
             Left = 0
             Top = 0
@@ -572,13 +592,14 @@ object frMain: TfrMain
             OnClick = sbGenerateKeysClick
           end
           object gbExponent: TGroupBox
-            Left = 669
+            Left = 667
             Top = 0
             Width = 101
             Height = 302
             Align = alRight
             Caption = 'Exponent'
             TabOrder = 0
+            ExplicitLeft = 669
             object mExponent: TMemo
               Left = 2
               Top = 17
@@ -594,15 +615,16 @@ object frMain: TfrMain
           object gbModulus: TGroupBox
             Left = 23
             Top = 0
-            Width = 646
+            Width = 644
             Height = 302
             Align = alClient
             Caption = 'Modulus'
             TabOrder = 1
+            ExplicitWidth = 646
             object mModulus: TMemo
               Left = 2
               Top = 17
-              Width = 642
+              Width = 640
               Height = 283
               Align = alClient
               Lines.Strings = (
@@ -630,6 +652,7 @@ object frMain: TfrMain
                 'D')
               ScrollBars = ssVertical
               TabOrder = 0
+              ExplicitWidth = 642
             end
           end
         end
@@ -638,27 +661,30 @@ object frMain: TfrMain
         Caption = 'Information'
         ImageIndex = 15
         object Splitter1: TSplitter
-          Left = 462
+          Left = 460
           Top = 0
           Width = 5
           Height = 302
           Align = alRight
+          ExplicitLeft = 462
         end
         object Splitter3: TSplitter
-          Left = 731
+          Left = 729
           Top = 0
           Width = 5
           Height = 302
           Align = alRight
+          ExplicitLeft = 731
         end
         object gbGIN: TGroupBox
-          Left = 736
+          Left = 734
           Top = 0
           Width = 194
           Height = 302
           Align = alRight
           Caption = 'GIN (obsolete)'
           TabOrder = 0
+          ExplicitLeft = 736
           object mGINResponse: TMemo
             Left = 2
             Top = 55
@@ -708,11 +734,12 @@ object frMain: TfrMain
         object gbGIX: TGroupBox
           Left = 0
           Top = 0
-          Width = 462
+          Width = 460
           Height = 302
           Align = alClient
           Caption = 'GIX'
           TabOrder = 1
+          ExplicitWidth = 462
           object pGIXParams: TPanel
             Left = 2
             Top = 17
@@ -828,22 +855,24 @@ object frMain: TfrMain
           object mGIXResponse: TMemo
             Left = 113
             Top = 17
-            Width = 347
+            Width = 345
             Height = 283
             Align = alClient
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 1
+            ExplicitWidth = 347
           end
         end
         object gbACBrPinPadCapabilities: TGroupBox
-          Left = 467
+          Left = 465
           Top = 0
           Width = 264
           Height = 302
           Align = alRight
           Caption = 'ACBr PinPad Capabilities'
           TabOrder = 2
+          ExplicitLeft = 467
           object btACBrPinPadCapabilities: TButton
             Left = 2
             Top = 17
@@ -950,13 +979,14 @@ object frMain: TfrMain
         object gbDSX: TGroupBox
           Left = 235
           Top = 0
-          Width = 695
+          Width = 693
           Height = 302
           Align = alClient
           Caption = 'DEX'
           TabOrder = 1
+          ExplicitWidth = 695
           DesignSize = (
-            695
+            693
             302)
           object Label6: TLabel
             Left = 19
@@ -968,7 +998,7 @@ object frMain: TfrMain
           object mDEX: TMemo
             Left = 19
             Top = 46
-            Width = 646
+            Width = 644
             Height = 110
             Anchors = [akLeft, akTop, akRight]
             Font.Charset = DEFAULT_CHARSET
@@ -985,6 +1015,7 @@ object frMain: TfrMain
               '-+-+-+-+-+-+-+-+')
             ParentFont = False
             TabOrder = 0
+            ExplicitWidth = 646
           end
           object btDEX: TButton
             Left = 134
@@ -996,7 +1027,7 @@ object frMain: TfrMain
             OnClick = btDEXClick
           end
           object btDEXClear: TButton
-            Left = 368
+            Left = 367
             Top = 180
             Width = 96
             Height = 31
@@ -1004,6 +1035,7 @@ object frMain: TfrMain
             Caption = 'Clear Display'
             TabOrder = 2
             OnClick = btDEXClearClick
+            ExplicitLeft = 368
           end
         end
       end
@@ -1082,32 +1114,33 @@ object frMain: TfrMain
         object pgMedia: TPageControl
           Left = 298
           Top = 0
-          Width = 632
+          Width = 630
           Height = 302
           ActivePage = tsQRCode
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 630
           object tsImage: TTabSheet
             Caption = 'Image'
             object pMedia: TPanel
               Left = 0
               Top = 0
-              Width = 624
+              Width = 622
               Height = 272
               Align = alClient
               TabOrder = 0
+              ExplicitWidth = 624
               object sbMedia: TScrollBox
                 Left = 1
                 Top = 1
-                Width = 622
+                Width = 620
                 Height = 223
                 Align = alClient
                 TabOrder = 0
+                ExplicitWidth = 622
                 object imgMedia: TImage
                   Left = 0
                   Top = 0
-                  Width = 618
+                  Width = 616
                   Height = 219
                   Align = alClient
                   AutoSize = True
@@ -1593,15 +1626,16 @@ object frMain: TfrMain
               object pMediaLoad: TPanel
                 Left = 1
                 Top = 224
-                Width = 622
+                Width = 620
                 Height = 47
                 Align = alBottom
                 TabOrder = 1
+                ExplicitWidth = 622
                 DesignSize = (
-                  622
+                  620
                   47)
                 object btSearchSerialPorts1: TSpeedButton
-                  Left = 369
+                  Left = 367
                   Top = 14
                   Width = 25
                   Height = 22
@@ -1634,9 +1668,10 @@ object frMain: TfrMain
                     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
                     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
                   OnClick = btSearchSerialPorts1Click
+                  ExplicitLeft = 369
                 end
                 object btMediaLoad: TButton
-                  Left = 528
+                  Left = 526
                   Top = 12
                   Width = 75
                   Height = 25
@@ -1644,18 +1679,20 @@ object frMain: TfrMain
                   Caption = 'Media Load'
                   TabOrder = 0
                   OnClick = btMediaLoadClick
+                  ExplicitLeft = 528
                 end
                 object edMediaLoad: TEdit
                   Left = 5
                   Top = 13
-                  Width = 358
+                  Width = 356
                   Height = 23
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                   Text = 'LOGOACBR'
+                  ExplicitWidth = 358
                 end
                 object pMediaInfo: TPanel
-                  Left = 401
+                  Left = 399
                   Top = 13
                   Width = 112
                   Height = 23
@@ -1663,6 +1700,7 @@ object frMain: TfrMain
                   BevelInner = bvRaised
                   BevelOuter = bvLowered
                   TabOrder = 2
+                  ExplicitLeft = 401
                 end
               end
             end
@@ -1672,11 +1710,10 @@ object frMain: TfrMain
             object pQREGerado: TPanel
               Left = 0
               Top = 0
-              Width = 624
+              Width = 622
               Height = 272
               Align = alClient
               TabOrder = 0
-              ExplicitWidth = 622
               object imgQRCode: TImage
                 Left = 1
                 Top = 1
@@ -1690,16 +1727,15 @@ object frMain: TfrMain
               object pQREMemo: TPanel
                 Left = 256
                 Top = 1
-                Width = 367
+                Width = 365
                 Height = 231
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
-                ExplicitWidth = 365
                 object mQRCode: TMemo
                   Left = 0
                   Top = 0
-                  Width = 367
+                  Width = 365
                   Height = 231
                   Align = alClient
                   Alignment = taCenter
@@ -1720,11 +1756,10 @@ object frMain: TfrMain
               object Panel1: TPanel
                 Left = 1
                 Top = 232
-                Width = 622
+                Width = 620
                 Height = 39
                 Align = alBottom
                 TabOrder = 1
-                ExplicitWidth = 620
                 object edQRCodeImgName: TEdit
                   Left = 8
                   Top = 8
@@ -1941,11 +1976,12 @@ object frMain: TfrMain
         object gbCEX: TGroupBox
           Left = 602
           Top = 0
-          Width = 328
+          Width = 326
           Height = 302
           Align = alClient
           Caption = 'CEX (Wait for event)'
           TabOrder = 2
+          ExplicitWidth = 328
           object Label17: TLabel
             Left = 188
             Top = 74
@@ -2018,7 +2054,7 @@ object frMain: TfrMain
           object mCEXResponse: TMemo
             Left = 2
             Top = 170
-            Width = 324
+            Width = 322
             Height = 130
             Align = alBottom
             Anchors = [akLeft, akTop, akRight, akBottom]
@@ -2041,6 +2077,7 @@ object frMain: TfrMain
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 7
+            ExplicitWidth = 324
           end
         end
         object Panel2: TPanel
@@ -2222,16 +2259,17 @@ object frMain: TfrMain
         object gbCLX: TGroupBox
           Left = 235
           Top = 0
-          Width = 695
+          Width = 693
           Height = 302
           Align = alClient
           Caption = 'CLX'
           TabOrder = 1
+          ExplicitWidth = 695
           DesignSize = (
-            695
+            693
             302)
           object btCLX: TButton
-            Left = 304
+            Left = 303
             Top = 243
             Width = 88
             Height = 38
@@ -2239,21 +2277,23 @@ object frMain: TfrMain
             Caption = 'Close (CLX)'
             TabOrder = 0
             OnClick = btCLXClick
+            ExplicitLeft = 304
           end
           object pgCLX: TPageControl
             Left = 2
             Top = 17
-            Width = 691
+            Width = 689
             Height = 204
             ActivePage = tsCLOMedia
             Align = alTop
             TabOrder = 1
+            ExplicitWidth = 691
             object tsCLOLines: TTabSheet
               Caption = 'Lines'
               object mCLX: TMemo
                 Left = 0
                 Top = 0
-                Width = 683
+                Width = 681
                 Height = 174
                 Align = alClient
                 Anchors = [akLeft, akTop, akRight]
@@ -2272,6 +2312,7 @@ object frMain: TfrMain
                 ParentFont = False
                 ScrollBars = ssVertical
                 TabOrder = 0
+                ExplicitWidth = 683
               end
             end
             object tsCLOMedia: TTabSheet
@@ -2279,17 +2320,18 @@ object frMain: TfrMain
               object lbCLXMedias: TListBox
                 Left = 0
                 Top = 31
-                Width = 683
+                Width = 681
                 Height = 143
                 Align = alClient
                 Columns = 2
                 ItemHeight = 15
                 TabOrder = 0
+                ExplicitWidth = 683
               end
               object pCLXMediaTitle: TPanel
                 Left = 0
                 Top = 0
-                Width = 683
+                Width = 681
                 Height = 31
                 Align = alTop
                 Caption = 'Media Files'
@@ -2300,6 +2342,7 @@ object frMain: TfrMain
                 Font.Style = []
                 ParentFont = False
                 TabOrder = 1
+                ExplicitWidth = 683
               end
             end
           end

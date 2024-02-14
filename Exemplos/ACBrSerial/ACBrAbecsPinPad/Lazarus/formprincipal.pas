@@ -21,6 +21,7 @@ type
     ACBrAbecsPinPad1: TACBrAbecsPinPad;
     ApplicationProperties1: TApplicationProperties;
     btActivate: TBitBtn;
+    btDetectPinPad: TBitBtn;
     btCancel: TButton;
     btCEX: TButton;
     btCLO: TButton;
@@ -187,6 +188,7 @@ type
     procedure btDEXClearClick(Sender: TObject);
     procedure btDSPClearClick(Sender: TObject);
     procedure btDSPClick(Sender: TObject);
+    procedure btDetectPinPadClick(Sender: TObject);
     procedure btGCDClick(Sender: TObject);
     procedure btGINClick(Sender: TObject);
     procedure btGIXClick(Sender: TObject);
@@ -808,6 +810,44 @@ end;
 procedure TfrMain.btDSPClick(Sender: TObject);
 begin
   ACBrAbecsPinPad1.DSP(edtDSPMsg1.Text, edtDSPMsg2.Text);
+end;
+
+procedure TfrMain.btDetectPinPadClick(Sender: TObject);
+var
+  sl: TStringList;
+  PortFound: String;
+  i: Integer;
+begin
+  sl := TStringList.Create;
+  try
+    ACBrAbecsPinPad1.Device.AcharPortasSeriais( sl );
+    i := 0;
+    PortFound := '';
+    while (i < sl.Count) and (PortFound = '') do
+    begin
+      try
+        ACBrAbecsPinPad1.Disable;
+        ACBrAbecsPinPad1.Port := sl[i];
+        ACBrAbecsPinPad1.Enable;
+        try
+          ACBrAbecsPinPad1.OPN;
+          ACBrAbecsPinPad1.CLO;
+          PortFound := ACBrAbecsPinPad1.Port;
+        finally
+          ACBrAbecsPinPad1.Disable;
+        end;
+      except
+      end;
+      Inc(i);
+    end;
+
+    if (PortFound <> '') then
+      ShowMessage('PinPad Found on '+PortFound)
+    else
+      ShowMessage('PinPad not Found');
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrMain.btGCDClick(Sender: TObject);

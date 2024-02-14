@@ -74,12 +74,15 @@ implementation
 
 uses
   ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
   ACBrDFeException,
   Isaneto.GravarXml, Isaneto.LerXml;
 
 { TACBrNFSeProviderIsaneto203 }
 
 procedure TACBrNFSeProviderIsaneto203.Configuracao;
+const
+  NameSpace = 'http://www.abrasf.org.br/nfse.xsd" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#';
 begin
   inherited Configuracao;
 
@@ -90,14 +93,14 @@ begin
     AtribVerLote := 'versao';
   end;
 
+  SetXmlNameSpace(NameSpace);
+
   with ConfigAssinar do
   begin
-    Rps               := True;
-    LoteRps           := True;
-    CancelarNFSe      := True;
-    RpsGerarNFSe      := True;
+    LoteRps := True;
+    CancelarNFSe := True;
     RpsSubstituirNFSe := True;
-    SubstituirNFSe    := True;
+    SubstituirNFSe := True;
   end;
 end;
 
@@ -142,6 +145,7 @@ var
 begin
   FPMsgOrig := AMSG;
 
+  {
   Request := '<nfse:RecepcionarLoteRpsRequest>';
   Request := Request + SeparaDados(AMSG, 'EnviarLoteRpsEnvio');
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
@@ -149,6 +153,15 @@ begin
   Result := Executar('', Request, ['', ''],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"',
                       'xmlns="http://www.abrasf.org.br/nfse.xsd"']);
+  }
+  Request := '<nfse:RecepcionarLoteRpsRequest xmlns="http://www.abrasf.org.br/nfse.xsd" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">';
+  Request := Request + SeparaDados(AMSG, 'EnviarLoteRpsEnvio');
+  Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
+
+  Result := Executar('', Request, ['', ''],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"',
+                      'xmlns:nfse1="http://www.abrasf.org.br/nfse.xsd"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceIsaneto203.RecepcionarSincrono(ACabecalho,
@@ -302,6 +315,7 @@ begin
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
   Result := RemoverIdentacao(Result);
+  Result := TiraAcentos(Result);
 end;
 
 end.

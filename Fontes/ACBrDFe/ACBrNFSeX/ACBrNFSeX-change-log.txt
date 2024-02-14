@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/02/2024
+-- Isaneto.Provider --
+[*] Ajustes para que o webservice processe com sucesso o RPS enviado.
+  Por: Diogo Rodrigues
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alteração visando imprimir o conteudo da tag xInfComp (informações complementares)
     do Padrão Nacional.

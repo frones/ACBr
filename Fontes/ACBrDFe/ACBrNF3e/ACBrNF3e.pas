@@ -489,7 +489,7 @@ begin
     try
       EnviarEvento(ALote);
     except
-      GerarException(WebServices.EnvEvento.EventoRetorno.xMotivo);
+      GerarException(WebServices.EnvEvento.EventoRetorno.retInfEvento.xMotivo);
     end;
   end;
 

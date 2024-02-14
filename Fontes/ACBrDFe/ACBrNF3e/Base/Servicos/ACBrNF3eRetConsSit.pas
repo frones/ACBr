@@ -237,7 +237,7 @@ begin
             AnodeAux := ANodeArray[i];
 
             procEventoNF3e.New;
-            procEventoNF3e.Items[i].RetEventoNF3e.Leitor.Arquivo := AnodeAux.OuterXml;
+            procEventoNF3e.Items[i].RetEventoNF3e.XmlRetorno := AnodeAux.OuterXml;
             procEventoNF3e.Items[i].RetEventoNF3e.XML := AnodeAux.OuterXml;
             procEventoNF3e.Items[i].RetEventoNF3e.LerXml;
           end;

@@ -44,102 +44,39 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  pcnConversao, pcnLeitor, ACBrNF3eEvento, pcnSignature;
+  pcnSignature,
+  ACBrNF3eEventoClass;
 
 type
-
-  TRetInfEventoCollectionItem = class(TObject)
-  private
-    FRetInfEvento: TRetInfEvento;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
-  end;
-
-  TRetInfEventoCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TRetInfEventoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TRetInfEventoCollectionItem);
-  public
-    function New: TRetInfEventoCollectionItem;
-    property Items[Index: Integer]: TRetInfEventoCollectionItem read GetItem write SetItem; default;
-  end;
-
   TRetEventoNF3e = class(TObject)
   private
-    FidLote: Int64;
-    Fversao: String;
-    FtpAmb: TACBrTipoAmbiente;
-    FverAplic: String;
-    FLeitor: TLeitor;
-    FcStat: Integer;
-    FcOrgao: Integer;
-    FxMotivo: String;
-    FretEvento: TRetInfEventoCollection;
-    FInfEvento: TInfEvento;
+    Fversao: string;
+    FretInfEvento: TRetInfEvento;
     Fsignature: Tsignature;
-    FXML: AnsiString;
+
+    FXML: string;
+    FXmlRetorno: string;
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: Boolean;
 
-    property idLote: Int64                      read FidLote    write FidLote;
-    property Leitor: TLeitor                    read FLeitor    write FLeitor;
-    property versao: String                     read Fversao    write Fversao;
-    property tpAmb: TACBrTipoAmbiente           read FtpAmb     write FtpAmb;
-    property verAplic: String                   read FverAplic  write FverAplic;
-    property cOrgao: Integer                    read FcOrgao    write FcOrgao;
-    property cStat: Integer                     read FcStat     write FcStat;
-    property xMotivo: String                    read FxMotivo   write FxMotivo;
-    property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
-    property signature: Tsignature              read Fsignature write Fsignature;
-    property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
-    property XML: AnsiString                    read FXML       write FXML;
-  end;
+    property versao: string read Fversao write Fversao;
+    property retInfEvento: TRetInfEvento read FretInfEvento write FretInfEvento;
+    property signature: Tsignature read Fsignature write Fsignature;
 
+    property XML: string read FXML write FXML;
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
+  end;
 
 implementation
 
 uses
-  ACBrNF3eConversao;
-
-{ TRetInfEventoCollection }
-
-function TRetInfEventoCollection.GetItem(Index: Integer): TRetInfEventoCollectionItem;
-begin
-  Result := TRetInfEventoCollectionItem(inherited Items[Index]);
-end;
-
-procedure TRetInfEventoCollection.SetItem(Index: Integer;
-  Value: TRetInfEventoCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-
-function TRetInfEventoCollection.New: TRetInfEventoCollectionItem;
-begin
-  Result := TRetInfEventoCollectionItem.Create;
-  Self.Add(Result);
-end;
-
-{ TRetInfEventoCollectionItem }
-
-constructor TRetInfEventoCollectionItem.Create;
-begin
-  inherited Create;
-
-  FRetInfEvento := TRetInfEvento.Create;
-end;
-
-destructor TRetInfEventoCollectionItem.Destroy;
-begin
-  FRetInfEvento.Free;
-
-  inherited;
-end;
+  ACBrNF3eConversao,
+  ACBrUtil.Strings,
+  ACBrXmlDocument,
+  ACBrXmlReader;
 
 { TRetEventoNF3e }
 
@@ -147,17 +84,11 @@ constructor TRetEventoNF3e.Create;
 begin
   inherited Create;
 
-  FLeitor := TLeitor.Create;
-  FretEvento := TRetInfEventoCollection.Create;
-  FInfEvento := TInfEvento.Create;
   Fsignature := Tsignature.Create;
 end;
 
 destructor TRetEventoNF3e.Destroy;
 begin
-  FLeitor.Free;
-  FretEvento.Free;
-  FInfEvento.Free;
   Fsignature.Free;
 
   inherited;
@@ -165,90 +96,65 @@ end;
 
 function TRetEventoNF3e.LerXml: Boolean;
 var
+  Document: TACBrXmlDocument;
+  ANode, ANodeAux, SignatureNode{, ReferenceNode, X509DataNode}: TACBrXmlNode;
   ok: Boolean;
-  i: Integer;
 begin
-  Result := False;
+  Document := TACBrXmlDocument.Create;
 
-  i:=0;
   try
-    if (Leitor.rExtrai(1, 'evento') <> '') then
-    begin
-      if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
-      begin
-        infEvento.ID           := Leitor.rAtributo('Id');
-        InfEvento.cOrgao       := Leitor.rCampo(tcInt, 'cOrgao');
-        infEvento.tpAmb        := StrToTipoAmbiente(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-        infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CNPJ');
-        infEvento.chNF3e       := Leitor.rCampo(tcStr, 'chNF3e');
-        infEvento.dhEvento     := Leitor.rCampo(tcDatHor, 'dhEvento');
-        infEvento.tpEvento     := StrToTpEventoNF3e(ok,Leitor.rCampo(tcStr, 'tpEvento'));
-        infEvento.nSeqEvento   := Leitor.rCampo(tcInt, 'nSeqEvento');
+    try
+      Document.LoadFromXml(XmlRetorno);
 
-        if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
+      ANode := Document.Root;
+
+      if ANode <> nil then
+      begin
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+
+        ANodeAux := ANode.Childrens.FindAnyNs('infEvento');
+
+        if ANodeAux <> nil then
         begin
-          infEvento.DetEvento.descEvento := Leitor.rCampo(tcStr, 'descEvento');
-          infEvento.DetEvento.nProt      := Leitor.rCampo(tcStr, 'nProt');
-          infEvento.DetEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
+          RetInfEvento.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
+          RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+          RetInfEvento.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+          retInfEvento.cOrgao := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cOrgao'), tcInt);
+          retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+          retInfEvento.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+          RetInfEvento.chNF3e := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNF3e'), tcStr);
+          RetInfEvento.tpEvento := StrToTpEventoNF3e(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
+          RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
+          retInfEvento.nSeqEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+          retInfEvento.dhRegEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
+          RetInfEvento.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
         end;
-      end;
 
-      if Leitor.rExtrai(2, 'Signature', '', i + 1) <> '' then
-      begin
-        signature.URI             := Leitor.rAtributo('Reference URI=');
-        signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
-        signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
-        signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+        SignatureNode := ANode.Childrens.FindAnyNs('Signature');
+
+        LerSignature(SignatureNode, signature);
+        {
+        if SignatureNode <> nil then
+        begin
+          ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo')
+                                        .Childrens.FindAnyNs('Reference');
+          X509DataNode :=  SignatureNode.Childrens.FindAnyNs('KeyInfo')
+                                        .Childrens.FindAnyNs('X509Data');
+
+          signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
+          signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
+          signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
+          signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
+        end;
+        }
       end;
 
       Result := True;
+    except
+      Result := False;
     end;
-
-    if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
-       (Leitor.rExtrai(1, 'retEvento') <> '') then
-    begin
-      Fversao   := Leitor.rAtributo('versao');
-      FidLote   := Leitor.rCampo(tcInt64, 'idLote');
-      FtpAmb    := StrToTipoAmbiente(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      FcOrgao   := Leitor.rCampo(tcInt, 'cOrgao');
-      FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-
-      i := 0;
-      while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
-       begin
-         FretEvento.New;
-
-         FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
-
-         FretEvento.Items[i].FRetInfEvento.Id         := Leitor.rAtributo('Id');
-         FretEvento.Items[i].FRetInfEvento.tpAmb      := StrToTipoAmbiente(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-         FretEvento.Items[i].FRetInfEvento.verAplic   := Leitor.rCampo(tcStr, 'verAplic');
-         FretEvento.Items[i].FRetInfEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
-         FretEvento.Items[i].FRetInfEvento.cStat      := Leitor.rCampo(tcInt, 'cStat');
-         FretEvento.Items[i].FRetInfEvento.xMotivo    := Leitor.rCampo(tcStr, 'xMotivo');
-         FretEvento.Items[i].FRetInfEvento.chNF3e      := Leitor.rCampo(tcStr, 'chNF3e');
-         FretEvento.Items[i].FRetInfEvento.tpEvento   := StrToTpEventoNF3e(ok,Leitor.rCampo(tcStr, 'tpEvento'));
-         FretEvento.Items[i].FRetInfEvento.xEvento    := Leitor.rCampo(tcStr, 'xEvento');
-         FretEvento.Items[i].FRetInfEvento.nSeqEvento := Leitor.rCampo(tcInt, 'nSeqEvento');
-         FretEvento.Items[i].FRetInfEvento.CNPJDest   := Leitor.rCampo(tcStr, 'CNPJDest');
-
-         if FretEvento.Items[i].FRetInfEvento.CNPJDest = '' then
-           FretEvento.Items[i].FRetInfEvento.CNPJDest  := Leitor.rCampo(tcStr, 'CPFDest');
-
-         FretEvento.Items[i].FRetInfEvento.emailDest   := Leitor.rCampo(tcStr, 'emailDest');
-         FretEvento.Items[i].FRetInfEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
-         FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
-         FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
-
-         inc(i);
-       end;
-
-      Result := True;
-    end;
-  except
-    result := False;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 

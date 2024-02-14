@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNF3eEvento;
+unit ACBrNF3eEventoClass;
 
 interface
 

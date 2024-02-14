@@ -46,7 +46,7 @@ uses
   ACBrBase,
   pcnConversao,
   pcnSignature,
-  ACBrNF3eEvento, ACBrNF3eConsts;
+  ACBrNF3eEventoClass, ACBrNF3eConsts;
 
 type
   EventoException = class(Exception);
@@ -280,47 +280,45 @@ var
 begin
   RetEventoNF3e := TRetEventoNF3e.Create;
   try
-    RetEventoNF3e.Leitor.Arquivo := AXML;
+    RetEventoNF3e.XmlRetorno := AXML;
     Result := RetEventoNF3e.LerXml;
+
     with FEvento.New do
     begin
-      infEvento.ID            := RetEventoNF3e.InfEvento.id;
-      infEvento.cOrgao        := RetEventoNF3e.InfEvento.cOrgao;
-      infEvento.tpAmb         := RetEventoNF3e.InfEvento.tpAmb;
-      infEvento.CNPJ          := RetEventoNF3e.InfEvento.CNPJ;
-      infEvento.chNF3e         := RetEventoNF3e.InfEvento.chNF3e;
-      infEvento.dhEvento      := RetEventoNF3e.InfEvento.dhEvento;
-      infEvento.tpEvento      := RetEventoNF3e.InfEvento.tpEvento;
-      infEvento.nSeqEvento    := RetEventoNF3e.InfEvento.nSeqEvento;
+      infEvento.ID            := RetEventoNF3e.RetInfEvento.id;
+      infEvento.cOrgao        := RetEventoNF3e.RetInfEvento.cOrgao;
+      infEvento.tpAmb         := RetEventoNF3e.RetInfEvento.tpAmb;
+//      infEvento.CNPJ          := RetEventoNF3e.RetInfEvento.CNPJ;
+      infEvento.chNF3e        := RetEventoNF3e.RetInfEvento.chNF3e;
+//      infEvento.dhEvento      := RetEventoNF3e.RetInfEvento.dhEvento;
+      infEvento.tpEvento      := RetEventoNF3e.RetInfEvento.tpEvento;
+      infEvento.nSeqEvento    := RetEventoNF3e.RetInfEvento.nSeqEvento;
 
-      infEvento.DetEvento.descEvento := RetEventoNF3e.InfEvento.DetEvento.descEvento;
-      infEvento.DetEvento.nProt      := RetEventoNF3e.InfEvento.DetEvento.nProt;
-      infEvento.DetEvento.xJust      := RetEventoNF3e.InfEvento.DetEvento.xJust;
+      infEvento.DetEvento.descEvento := RetEventoNF3e.RetInfEvento.xEvento;
+      infEvento.DetEvento.nProt      := RetEventoNF3e.RetInfEvento.nProt;
+//      infEvento.DetEvento.xJust      := RetEventoNF3e.RetInfEvento.xJust;
 
       signature.URI             := RetEventoNF3e.signature.URI;
       signature.DigestValue     := RetEventoNF3e.signature.DigestValue;
       signature.SignatureValue  := RetEventoNF3e.signature.SignatureValue;
       signature.X509Certificate := RetEventoNF3e.signature.X509Certificate;
 
-      if RetEventoNF3e.retEvento.Count > 0 then
-      begin
-        FRetInfEvento.Id := RetEventoNF3e.retEvento.Items[0].RetInfEvento.Id;
-        FRetInfEvento.tpAmb := RetEventoNF3e.retEvento.Items[0].RetInfEvento.tpAmb;
-        FRetInfEvento.verAplic := RetEventoNF3e.retEvento.Items[0].RetInfEvento.verAplic;
-        FRetInfEvento.cOrgao := RetEventoNF3e.retEvento.Items[0].RetInfEvento.cOrgao;
-        FRetInfEvento.cStat := RetEventoNF3e.retEvento.Items[0].RetInfEvento.cStat;
-        FRetInfEvento.xMotivo := RetEventoNF3e.retEvento.Items[0].RetInfEvento.xMotivo;
-        FRetInfEvento.chNF3e := RetEventoNF3e.retEvento.Items[0].RetInfEvento.chNF3e;
-        FRetInfEvento.tpEvento := RetEventoNF3e.retEvento.Items[0].RetInfEvento.tpEvento;
-        FRetInfEvento.xEvento := RetEventoNF3e.retEvento.Items[0].RetInfEvento.xEvento;
-        FRetInfEvento.nSeqEvento := RetEventoNF3e.retEvento.Items[0].RetInfEvento.nSeqEvento;
-        FRetInfEvento.cOrgaoAutor := RetEventoNF3e.retEvento.Items[0].RetInfEvento.cOrgaoAutor;
-        FRetInfEvento.CNPJDest := RetEventoNF3e.retEvento.Items[0].RetInfEvento.CNPJDest;
-        FRetInfEvento.emailDest := RetEventoNF3e.retEvento.Items[0].RetInfEvento.emailDest;
-        FRetInfEvento.dhRegEvento := RetEventoNF3e.retEvento.Items[0].RetInfEvento.dhRegEvento;
-        FRetInfEvento.nProt := RetEventoNF3e.retEvento.Items[0].RetInfEvento.nProt;
-        FRetInfEvento.XML := RetEventoNF3e.retEvento.Items[0].RetInfEvento.XML;
-      end;
+      FRetInfEvento.Id := RetEventoNF3e.RetInfEvento.Id;
+      FRetInfEvento.tpAmb := RetEventoNF3e.RetInfEvento.tpAmb;
+      FRetInfEvento.verAplic := RetEventoNF3e.RetInfEvento.verAplic;
+      FRetInfEvento.cOrgao := RetEventoNF3e.RetInfEvento.cOrgao;
+      FRetInfEvento.cStat := RetEventoNF3e.RetInfEvento.cStat;
+      FRetInfEvento.xMotivo := RetEventoNF3e.RetInfEvento.xMotivo;
+      FRetInfEvento.chNF3e := RetEventoNF3e.RetInfEvento.chNF3e;
+      FRetInfEvento.tpEvento := RetEventoNF3e.RetInfEvento.tpEvento;
+      FRetInfEvento.xEvento := RetEventoNF3e.RetInfEvento.xEvento;
+      FRetInfEvento.nSeqEvento := RetEventoNF3e.RetInfEvento.nSeqEvento;
+      FRetInfEvento.cOrgaoAutor := RetEventoNF3e.RetInfEvento.cOrgaoAutor;
+      FRetInfEvento.CNPJDest := RetEventoNF3e.RetInfEvento.CNPJDest;
+      FRetInfEvento.emailDest := RetEventoNF3e.RetInfEvento.emailDest;
+      FRetInfEvento.dhRegEvento := RetEventoNF3e.RetInfEvento.dhRegEvento;
+      FRetInfEvento.nProt := RetEventoNF3e.RetInfEvento.nProt;
+      FRetInfEvento.XML := RetEventoNF3e.RetInfEvento.XML;
     end;
   finally
     RetEventoNF3e.Free;

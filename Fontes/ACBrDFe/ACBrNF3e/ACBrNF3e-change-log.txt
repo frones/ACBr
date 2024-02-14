@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2024
+-- Diversos --
+[*] Realizado diversos ajustes para poder usar a nova unit: ACBrDFeComum.RetEnvio
+    e outras diversas correções.
+    Remoção da unit ACBrNF3eRetEnv e renomeado a unit ACBrNF3eEvento para
+    ACBrNF3eEventoClass.
+  Por: Italo Giurizzato Junior
+
 13/02/2024
 -- ACBrNF3eWebServices/ACBrNFe3Class/ACBrNF3eXmlReader/
    ACBrNF3eXmlWriter/ACBrNF3eRetConsSit --

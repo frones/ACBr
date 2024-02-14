@@ -40,8 +40,7 @@ uses
   Classes, SysUtils, StrUtils,
   ACBrXmlBase,
   ACBrNF3eConfiguracoes, ACBrNF3eClass,
-  ACBrNF3eXmlReader, ACBrNF3eXmlWriter,
-  pcnConversao, pcnLeitor;
+  ACBrNF3eXmlReader, ACBrNF3eXmlWriter;
 
 type
 
@@ -173,8 +172,9 @@ uses
   synautil,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  ACBrNF3e, ACBrDFeUtil, ACBrNF3eConversao;
-
+  ACBrDFeUtil,
+  ACBrNF3e, ACBrNF3eConversao,
+  ACBrXmlDocument;
 { NotaFiscal }
 
 constructor NotaFiscal.Create(Collection2: TCollection);
@@ -233,7 +233,8 @@ procedure NotaFiscal.Assinar;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
-  Leitor: TLeitor;
+  Document: TACBrXmlDocument;
+  ANode, SignatureNode, ReferenceNode, X509DataNode: TACBrXmlNode;
 begin
   with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
   begin
@@ -253,15 +254,30 @@ begin
     // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
-    Leitor := TLeitor.Create;
+    Document := TACBrXmlDocument.Create;
     try
-      leitor.Grupo := FXMLAssinado;
-      NF3e.signature.URI := Leitor.rAtributo('Reference URI=');
-      NF3e.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-      NF3e.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-      NF3e.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      try
+        Document.LoadFromXml(FXMLOriginal);
+        ANode := Document.Root;
+
+        if ANode <> nil then
+        begin
+          SignatureNode := ANode.Childrens.FindAnyNs('Signature');
+          ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo')
+                                        .Childrens.FindAnyNs('Reference');
+          X509DataNode :=  SignatureNode.Childrens.FindAnyNs('KeyInfo')
+                                        .Childrens.FindAnyNs('X509Data');
+
+          NF3e.signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
+          NF3e.signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
+          NF3e.signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
+          NF3e.signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
+        end;
+      except
+        //Result := False;
+      end;
     finally
-      Leitor.Free;
+      FreeAndNil(Document);
     end;
 
     with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
@@ -452,7 +468,7 @@ begin
       Ide.nNF     := INIRec.ReadInteger( sSecao,'Numero' ,INIRec.ReadInteger( sSecao,'nNF' ,0));
       Ide.dhEmi   := StringToDateTime(INIRec.ReadString( sSecao,'Emissao',INIRec.ReadString( sSecao,'dhEmi',INIRec.ReadString( sSecao,'dhEmi','0'))));
       Ide.tpEmis  := StrToTipoEmissao( OK,INIRec.ReadString( sSecao,'tpEmis',IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
-      Ide.tpAmb   := StrToTipoAmbiente(  OK, INIRec.ReadString( sSecao,'tpAmb', TpAmbToStr(FConfiguracoes.WebServices.Ambiente)));
+      Ide.tpAmb   := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
       Ide.finNF3e := StrToFinNF3e( OK,INIRec.ReadString( sSecao,'Finalidade',INIRec.ReadString( sSecao,'finNF3e','0')));
       Ide.verProc := INIRec.ReadString(  sSecao, 'verProc' ,'ACBrNF3e');
       Ide.dhCont  := StringToDateTime(INIRec.ReadString( sSecao,'dhCont'  ,'0'));

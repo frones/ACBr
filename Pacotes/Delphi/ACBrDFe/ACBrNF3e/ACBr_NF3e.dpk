@@ -77,20 +77,13 @@ contains
   ACBrNF3eClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eClass.pas',
   ACBrNF3eConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConsts.pas',
   ACBrNF3eConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConversao.pas',
-  ACBrNF3eProc in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eProc.pas',
   ACBrNF3eXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eXmlReader.pas',
   ACBrNF3eXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eXmlWriter.pas',
   ACBrNF3eConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eConsSit.pas',
   ACBrNF3eRetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetConsSit.pas',
-  ACBrNF3eEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEvento.pas',
+  ACBrNF3eEventoClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEventoClass.pas',
   ACBrNF3eEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEnvEvento.pas',
   ACBrNF3eRetEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetEnvEvento.pas',
-  ACBrNF3eRetEnv in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetEnv.pas',
-
-  ACBrDFeConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrDFeConsStatServ.pas',
-  ACBrDFeRetConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrDFeRetConsStatServ.pas',
-  ACBrDFeDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrDFeDistDFeInt.pas',
-  ACBrDFeRetDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrDFeRetDistDFeInt.pas',
 
   ACBrNF3eDANF3eClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\ACBrNF3eDANF3eClass.pas';
 

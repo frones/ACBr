@@ -88,9 +88,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.BAL.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.BALMT.csproj">
       <Project>{3989a535-1e78-4e45-b3ae-47335ea6a359}</Project>
-      <Name>ACBrLib.BAL</Name>
+      <Name>ACBrLib.BALMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

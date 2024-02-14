@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Projeto ACBr</Company>
-    <Product>ACBrLib.BAL</Product>
+    <Product>ACBrLib.GNRe</Product>
     <Authors>Projeto ACBr</Authors>
     <Copyright>Copyright © Projeto ACBr 2018 - 2021</Copyright>
     <PackageProjectUrl>http://projetoacbr.com.br/</PackageProjectUrl>
@@ -15,11 +15,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.0.0</Version>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ProJetoACBr.snk</AssemblyOriginatorKeyFile>
+    <Version>1.0.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -32,30 +28,38 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
     <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.BAL.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.GNRe.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|AnyCPU'">
     <OutputPath>..\..\bin\Release\</OutputPath>
-    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.BAL.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.GNRe.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.BAL.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.GNRe.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <OutputPath>..\..\bin\Release\</OutputPath>
-    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.BAL.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.GNRe.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\BALConfig.cs" Link="BALConfig.cs" />
+    <Compile Include="..\Shared\GNReConfig.cs" Link="GNReConfig.cs" />
+    <Compile Include="..\Shared\GuiaConfig.cs" Link="GuiaConfig.cs" />
+	<Compile Include="..\Shared\GerarGuia\GerarGuia.cs" Link="GerarGuia\GerarGuia.cs" />
+	<Compile Include="..\Shared\GerarGuia\EmitenteGNRe.cs" Link="GerarGuia\EmitenteGNRe.cs" />
+	<Compile Include="..\Shared\GerarGuia\ComplementoGNRe.cs" Link="GerarGuia\ComplementoGNRe.cs" />
+	<Compile Include="..\Shared\GerarGuia\ReferenciaGNRe.cs" Link="GerarGuia\ReferenciaGNRe.cs" />
+	<Compile Include="..\Shared\GerarGuia\DestinatarioGNRe.cs" Link="GerarGuia\DestinatarioGNRe.cs" />
+	<Compile Include="..\Shared\GerarGuia\CampoExtraGNRe.cs" Link="GerarGuia\CampoExtraGNRe.cs" />
+	<Compile Include="..\Shared\Respostas\ConsultaGNReResposta.cs" Link="Respostas\ConsultaGNReResposta.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
   </ItemGroup>
-  
+
 </Project>

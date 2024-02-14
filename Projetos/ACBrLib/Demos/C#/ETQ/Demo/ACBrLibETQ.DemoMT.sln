@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibETQMT.Demo", "ACBrLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.ETQ", "..\Imports\Dinamico\MT\ACBrLib.ETQ.csproj", "{8DBE4EE3-F18F-4E21-A445-F706C5D9948B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.ETQMT", "..\Imports\Dinamico\MT\ACBrLib.ETQMT.csproj", "{8DBE4EE3-F18F-4E21-A445-F706C5D9948B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

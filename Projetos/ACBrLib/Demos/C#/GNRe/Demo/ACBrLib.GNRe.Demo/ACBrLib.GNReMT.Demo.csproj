@@ -114,9 +114,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.GNRe.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.GNReMT.csproj">
       <Project>{c839513c-378b-43d0-b9eb-183d5d55bec8}</Project>
-      <Name>ACBrLib.GNRe</Name>
+      <Name>ACBrLib.GNReMT</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

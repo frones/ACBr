@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using ACBrLib.CTe.Demo;
 
 namespace ACBrLib.MDFe.Demo
 {

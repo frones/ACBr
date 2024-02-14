@@ -78,9 +78,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.Mail.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.MailMT.csproj">
       <Project>{02d092d2-d066-48a1-aa12-a044c03353e0}</Project>
-      <Name>ACBrLib.Mail</Name>
+      <Name>ACBrLib.MailMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

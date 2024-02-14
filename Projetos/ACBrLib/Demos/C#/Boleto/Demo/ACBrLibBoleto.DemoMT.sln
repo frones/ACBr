@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibBoletoMT.Demo", "ACB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Boleto", "..\Imports\Dinamico\MT\ACBrLib.Boleto.csproj", "{57CA3420-213A-443A-9A17-75B8B0838905}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.BoletoMT", "..\Imports\Dinamico\MT\ACBrLib.BoletoMT.csproj", "{57CA3420-213A-443A-9A17-75B8B0838905}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

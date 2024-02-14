@@ -154,9 +154,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.Sedex.csproj">
+    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.SedexMT.csproj">
       <Project>{0F5F029E-416E-4340-9CCC-072B04BBBF31}</Project>
-      <Name>ACBrLib.Sedex</Name>
+      <Name>ACBrLib.SedexMT</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

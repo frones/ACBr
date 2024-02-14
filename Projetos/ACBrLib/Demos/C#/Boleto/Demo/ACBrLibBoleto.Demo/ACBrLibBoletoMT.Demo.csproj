@@ -102,9 +102,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.Boleto.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.BoletoMT.csproj">
       <Project>{57ca3420-213a-443a-9a17-75b8b0838905}</Project>
-      <Name>ACBrLib.Boleto</Name>
+      <Name>ACBrLib.BoletoMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

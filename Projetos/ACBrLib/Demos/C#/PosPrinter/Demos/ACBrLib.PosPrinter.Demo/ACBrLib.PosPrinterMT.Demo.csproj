@@ -109,9 +109,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.PosPrinter.csproj">
+    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.PosPrinterMT.csproj">
       <Project>{f44a03bc-e5aa-45da-a2b1-5d000d513152}</Project>
-      <Name>ACBrLib.PosPrinter</Name>
+      <Name>ACBrLib.PosPrinterMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

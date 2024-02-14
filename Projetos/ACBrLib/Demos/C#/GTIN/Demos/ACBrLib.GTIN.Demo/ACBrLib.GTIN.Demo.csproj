@@ -134,9 +134,9 @@
       <Project>{D7A15051-F5B5-4F6D-A452-08138852375A}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Import\Dinamico\ST\ACBrLib.GTIN.csproj">
+    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.GTINMT.csproj">
       <Project>{3181BF4F-2F5F-4F19-A543-AD43699B9019}</Project>
-      <Name>ACBrLib.GTIN</Name>
+      <Name>ACBrLib.GTINMT</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -149,9 +149,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.MDFe.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.MDFeMT.csproj">
       <Project>{e9463292-54c9-4290-bf95-0f4a35025715}</Project>
-      <Name>ACBrLib.MDFe</Name>
+      <Name>ACBrLib.MDFeMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

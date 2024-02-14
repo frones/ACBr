@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CEPMT.Demo", "ACBrLib.CEP.Demo\ACBrLib.CEPMT.Demo.csproj", "{C6AAB316-8B0B-41EC-A5E1-A4A0C543A53B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.CEP", "..\Import\Dinamico\MT\ACBrLib.CEP.csproj", "{F44A03BC-E5AA-45DA-A2B1-5D000D513152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.CEPMT", "..\Import\Dinamico\MT\ACBrLib.CEPMT.csproj", "{F44A03BC-E5AA-45DA-A2B1-5D000D513152}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject

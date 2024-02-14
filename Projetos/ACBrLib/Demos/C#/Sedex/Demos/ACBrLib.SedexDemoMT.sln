@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Sedex", "..\Import\Dinamico\MT\ACBrLib.Sedex.csproj", "{0F5F029E-416E-4340-9CCC-072B04BBBF31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.SedexMT", "..\Import\Dinamico\MT\ACBrLib.SedexMT.csproj", "{0F5F029E-416E-4340-9CCC-072B04BBBF31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.SedexMT.Demo", "ACBrLib.Sedex.Demo\ACBrLib.SedexMT.Demo.csproj", "{96BA2555-3EB2-48D9-B4BC-163FD6B8EE66}"
 EndProject

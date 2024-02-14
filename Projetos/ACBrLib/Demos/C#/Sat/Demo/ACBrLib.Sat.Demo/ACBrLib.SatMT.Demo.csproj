@@ -97,9 +97,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.Sat.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.SatMT.csproj">
       <Project>{84bc69d8-a7ae-4b5e-a8d9-73540f869e78}</Project>
-      <Name>ACBrLib.Sat</Name>
+      <Name>ACBrLib.SatMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

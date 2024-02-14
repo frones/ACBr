@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Projeto ACBr</Company>
-    <Product>ACBrLib.CEP</Product>
+    <Product>ACBrLib.PosPrinter</Product>
     <Authors>Projeto ACBr</Authors>
     <Copyright>Copyright © Projeto ACBr 2018 - 2021</Copyright>
     <PackageProjectUrl>http://projetoacbr.com.br/</PackageProjectUrl>
@@ -15,10 +15,11 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <AssemblyVersion>1.0.0.65</AssemblyVersion>
-    <FileVersion>1.0.0.65</FileVersion>
-    <Version>1.0.0.65</Version>
-    <Platforms>AnyCPU</Platforms>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2.0</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ProJetoACBr.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -31,27 +32,30 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
     <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.CEP.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\net452\ACBrLib.PosPrinter.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net452|AnyCPU'">
     <OutputPath>..\..\bin\Release\</OutputPath>
-    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.CEP.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\net452\ACBrLib.PosPrinter.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.CEP.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\netstandard2.0\ACBrLib.PosPrinter.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <OutputPath>..\..\bin\Release\</OutputPath>
-    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.CEP.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\netstandard2.0\ACBrLib.PosPrinter.xml</DocumentationFile>
   </PropertyGroup>
-  
+
+  <ItemGroup>
+    <Compile Include="..\Shared\PosPrinterConfig.cs" Link="PosPrinterConfig.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
   </ItemGroup>
-	
   
 </Project>

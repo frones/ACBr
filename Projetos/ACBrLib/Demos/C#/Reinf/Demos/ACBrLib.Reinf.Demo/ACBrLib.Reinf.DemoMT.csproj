@@ -141,9 +141,9 @@
       <Project>{D7A15051-F5B5-4F6D-A452-08138852375A}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.Reinf.csproj">
+    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.ReinfMT.csproj">
       <Project>{3181BF4F-2F5F-4F19-A543-AD43699B9019}</Project>
-      <Name>ACBrLib.Reinf</Name>
+      <Name>ACBrLib.ReinfMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.SatMT.Demo", "ACBrL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Sat", "..\Imports\Dinamico\MT\ACBrLib.Sat.csproj", "{84BC69D8-A7AE-4B5E-A8D9-73540F869E78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.SatMT", "..\Imports\Dinamico\MT\ACBrLib.SatMT.csproj", "{84BC69D8-A7AE-4B5E-A8D9-73540F869E78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

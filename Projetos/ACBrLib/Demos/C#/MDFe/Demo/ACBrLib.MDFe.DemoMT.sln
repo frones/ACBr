@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.MDFeMT.Demo", "ACBr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.MDFe", "..\Imports\Dinamico\MT\ACBrLib.MDFe.csproj", "{E9463292-54C9-4290-BF95-0F4A35025715}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.MDFeMT", "..\Imports\Dinamico\MT\ACBrLib.MDFeMT.csproj", "{E9463292-54C9-4290-BF95-0F4A35025715}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

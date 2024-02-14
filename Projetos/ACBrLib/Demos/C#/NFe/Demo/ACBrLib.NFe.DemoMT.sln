@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.NFe.Demo", "ACBrLib.NFe.Demo\ACBrLib.NFeMT.Demo.csproj", "{DEC71CEC-9CA9-4F8E-A150-765137FC54B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.NFeMT.Demo", "ACBrLib.NFe.Demo\ACBrLib.NFeMT.Demo.csproj", "{DEC71CEC-9CA9-4F8E-A150-765137FC54B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.NFe", "..\Imports\Dinamico\MT\ACBrLib.NFe.csproj", "{FD128F90-7A85-4431-8853-0F7DF7301E7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.NFeMT", "..\Imports\Dinamico\MT\ACBrLib.NFeMT.csproj", "{FD128F90-7A85-4431-8853-0F7DF7301E7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTe.DemoMT", "ACBrL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTe", "..\Imports\Dinamico\MT\ACBrLib.CTe.csproj", "{F06A5296-B362-47B7-939F-49FCDE534763}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.CTeMT", "..\Imports\Dinamico\MT\ACBrLib.CTeMT.csproj", "{F06A5296-B362-47B7-939F-49FCDE534763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibBal.Demo", "ACBrLibBal.Demo\ACBrLibBal.DemoMT.csproj", "{57A2A87A-17B9-427D-8798-8FDD529190DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibBal.DemoMT", "ACBrLibBal.Demo\ACBrLibBal.DemoMT.csproj", "{57A2A87A-17B9-427D-8798-8FDD529190DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.BAL", "..\Imports\Dinamico\MT\ACBrLib.BAL.csproj", "{3989A535-1E78-4E45-B3AE-47335EA6A359}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.BALMT", "..\Imports\Dinamico\MT\ACBrLib.BALMT.csproj", "{3989A535-1E78-4E45-B3AE-47335EA6A359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.GNReMT.Demo", "ACBr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{9B79E20D-34E2-4442-886C-242AC657E3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.GNRe", "..\Imports\Dinamico\MT\ACBrLib.GNRe.csproj", "{C839513C-378B-43D0-B9EB-183D5D55BEC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.GNReMT", "..\Imports\Dinamico\MT\ACBrLib.GNReMT.csproj", "{C839513C-378B-43D0-B9EB-183D5D55BEC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

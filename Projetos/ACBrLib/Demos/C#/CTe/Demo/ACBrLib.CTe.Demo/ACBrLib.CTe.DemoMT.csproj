@@ -95,9 +95,9 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.CTe.csproj">
+    <ProjectReference Include="..\..\Imports\Dinamico\MT\ACBrLib.CTeMT.csproj">
       <Project>{f06a5296-b362-47b7-939f-49fcde534763}</Project>
-      <Name>ACBrLib.CTe</Name>
+      <Name>ACBrLib.CTeMT</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

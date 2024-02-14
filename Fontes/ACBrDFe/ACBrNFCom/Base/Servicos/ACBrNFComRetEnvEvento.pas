@@ -96,53 +96,61 @@ end;
 function TRetEventoNFCom.LerXml: Boolean;
 var
   Document: TACBrXmlDocument;
-  ANode, ANodeAux: TACBrXmlNode;
+  ANode, ANodeAux, SignatureNode, ReferenceNode, X509DataNode: TACBrXmlNode;
   ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
 
   try
-    Document.LoadFromXml(XmlRetorno);
+    try
+      Document.LoadFromXml(XmlRetorno);
 
-    ANode := Document.Root;
+      ANode := Document.Root;
 
-    if ANode <> nil then
-    begin
-      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-
-      ANodeAux := ANode.Childrens.FindAnyNs('infEvento');
-
-      if ANodeAux <> nil then
+      if ANode <> nil then
       begin
-        RetInfEvento.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
-        RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-        RetInfEvento.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-        retInfEvento.cOrgao := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cOrgao'), tcInt);
-        retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-        retInfEvento.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
-        RetInfEvento.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
-        RetInfEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
-        RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
-        retInfEvento.nSeqEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nSeqEvento'), tcInt);
-        retInfEvento.dhRegEvento := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
-        RetInfEvento.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+
+        ANodeAux := ANode.Childrens.FindAnyNs('infEvento');
+
+        if ANodeAux <> nil then
+        begin
+          RetInfEvento.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
+          RetInfEvento.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+          RetInfEvento.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+          retInfEvento.cOrgao := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cOrgao'), tcInt);
+          retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+          retInfEvento.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+          RetInfEvento.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
+          RetInfEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
+          RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
+          retInfEvento.nSeqEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+          retInfEvento.dhRegEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
+          RetInfEvento.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+        end;
+
+        SignatureNode := ANode.Childrens.FindAnyNs('Signature');
+
+        if SignatureNode <> nil then
+        begin
+          ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo')
+                                        .Childrens.FindAnyNs('Reference');
+          X509DataNode :=  SignatureNode.Childrens.FindAnyNs('KeyInfo')
+                                        .Childrens.FindAnyNs('X509Data');
+
+          signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
+          signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
+          signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
+          signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
+        end;
       end;
 
-      ANodeAux := ANode.Childrens.FindAnyNs('Signature');
-
-      if ANodeAux <> nil then
-      begin
-        signature.URI := ObterConteudoTag(ANodeAux.Attributes.Items['URI']);
-        signature.DigestValue := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('DigestValue'), tcStr);
-        signature.SignatureValue := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('SignatureValue'), tcStr);
-        signature.X509Certificate := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('X509Certificate'), tcStr);
-      end;
+      Result := True;
+    except
+      Result := False;
     end;
-
+  finally
     FreeAndNil(Document);
-    Result := True;
-  except
-    Result := False;
   end;
 end;
 

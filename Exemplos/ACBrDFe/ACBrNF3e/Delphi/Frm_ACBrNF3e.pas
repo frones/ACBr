@@ -707,7 +707,7 @@ begin
     memoRespWS.Lines.Text := ACBrNF3e1.WebServices.EnvEvento.RetornoWS;
     LoadXML(ACBrNF3e1.WebServices.EnvEvento.RetornoWS, WBResposta);
     ShowMessage(IntToStr(ACBrNF3e1.WebServices.EnvEvento.cStat));
-    ShowMessage(ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.RetInfEvento.nProt);
   end;
 end;
 

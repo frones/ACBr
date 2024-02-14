@@ -342,7 +342,10 @@ begin
       Json.Add('numeroConvenio').Value.AsNumber                         := StrToInt64Def(OnlyNumber(Boleto.Cedente.Convenio),0);
       Json.Add('numeroCarteira').Value.AsInteger                        := StrToIntDef(OnlyNumber(ATitulo.Carteira),0);
       Json.Add('numeroVariacaoCarteira').Value.AsInteger                := StrToIntDef(OnlyNumber(Boleto.Cedente.Modalidade),0);
-      Json.Add('codigoModalidade').Value.AsInteger                      := 1;
+      if Boleto.Cedente.CaracTitulo = tcVinculada then
+        Json.Add('codigoModalidade').Value.AsInteger                    := 4
+      else
+        Json.Add('codigoModalidade').Value.AsInteger                    := 1;
 
       Json.Add('dataEmissao').Value.AsString                            := FormatDateBr(ATitulo.DataDocumento, 'DD.MM.YYYY');
       Json.Add('dataVencimento').Value.AsString                         := FormatDateBr(ATitulo.Vencimento, 'DD.MM.YYYY');

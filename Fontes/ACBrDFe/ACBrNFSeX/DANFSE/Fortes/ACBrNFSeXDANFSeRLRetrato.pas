@@ -309,6 +309,9 @@ begin
   if fpNFSe.InformacoesComplementares <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
+  if fpNFSe.Servico.infoCompl.xInfComp <> '' then
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.Servico.infoCompl.xInfComp, FQuebradeLinha, #13#10, [rfReplaceAll]));
+
   if fpNFSe.Link <> '' then
   begin
     rlmDadosAdicionais.Width := 643;

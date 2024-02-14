@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/02/2024
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração visando imprimir o conteudo da tag xInfComp (informações complementares)
+    do Padrão Nacional.
+  Por: Renato Chiari
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade: Taquarituba/SP o provedor é Fiorilli.
   Por: Willians wsac

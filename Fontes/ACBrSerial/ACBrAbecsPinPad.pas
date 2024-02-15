@@ -100,6 +100,7 @@ const
   OPN_MODLEN = 256;
 
   TIMEOUT_ACK = 2000;
+  TIMEOUT_SYN = 1000;
   TIMEOUT_RSP = 10000;
   MAX_ACK_TRIES = 3;
 
@@ -1685,9 +1686,8 @@ begin
     RegisterLog('SetIsEnabled( '+BoolToStr(AValue, True)+' )');
 
   Self.Device.Ativo := AValue;
-  fSPEKmod := '';
-  fSPEKpub := '';
-  fPinpadKSec := '';
+  ClearCacheData;
+  ClearSecureData;
 end;
 
 procedure TACBrAbecsPinPad.Enable;
@@ -1843,6 +1843,8 @@ begin
         if (AckByte = NAK) then
         begin
           Inc(ACKFails);
+          if (Self.LogLevel > 2) then
+            RegisterLog(Format('      ACK Fail: %d', [ACKFails]));
           if (ACKFails >= MAX_ACK_TRIES) then
             DoException(CERR_READING_ACK);
         end
@@ -1960,46 +1962,61 @@ procedure TACBrAbecsPinPad.WaitForResponse;
   var
     TimeToTimeOut: TDateTime;
     b: Byte;
-    Cancel: Boolean;
+    Cancel, OldRaiseExcept: Boolean;
   begin
     TimeToTimeOut := IncMilliSecond(Now, Self.TimeOut);
     if (Self.LogLevel > 2) then
       RegisterLog('  WaitForSYN');
 
-    repeat
-      if not fCommand.IsBlocking then
-      begin
-        if (Now > TimeToTimeOut) then
-          DoException(EACBrAbecsPinPadTimeout.Create(CERR_TIMEOUT_RSP));
-      end
-      else
-      begin
-        if Assigned(fOnWaitForResponse) then
+    if Self.Device.IsSerialPort then
+    begin
+      OldRaiseExcept := Self.Device.Serial.RaiseExcept;
+      Self.Device.Serial.RaiseExcept := False;
+    end;
+    try
+      repeat
+        if not fCommand.IsBlocking then
         begin
-          Cancel := False;
-          fOnWaitForResponse(Cancel);
-          fIsBusy := not Cancel;
-        end;
-
-        if UserCancelled then
-        begin
-          if (Self.LogLevel > 1) then
-            RegisterLog('    UserCancelled');
-
-          if SendCAN then
-            DoException(CERR_CANCELLED_BY_USER)
+          if (Now > TimeToTimeOut) then
+            DoException(EACBrAbecsPinPadTimeout.Create(CERR_TIMEOUT_RSP))
           else
-            DoException(CERR_READING_CAN);
-        end;
-      end;
+          begin
+            if (Self.LogLevel > 4) then
+              RegisterLog(Format('    TL: %s sec', [FormatFloat('##0.000',SecondSpan(Now, TimeToTimeOut))]));
+          end;
+        end
+        else
+        begin
+          if Assigned(fOnWaitForResponse) then
+          begin
+            Cancel := False;
+            fOnWaitForResponse(Cancel);
+            fIsBusy := not Cancel;
+          end;
 
-      try
-        b := Self.Device.LeByte(500);
-        if (Self.LogLevel > 2) then
-          RegisterLog(Format('    RX <- %d', [b]));
-      except
-      end;
-    until (b = SYN);
+          if UserCancelled then
+          begin
+            if (Self.LogLevel > 1) then
+              RegisterLog('    UserCancelled');
+
+            if SendCAN then
+              DoException(CERR_CANCELLED_BY_USER)
+            else
+              DoException(CERR_READING_CAN);
+          end;
+        end;
+
+        b := Self.Device.LeByte(TIMEOUT_SYN);
+        if (b > 0) then
+        begin
+          if (Self.LogLevel > 2) then
+            RegisterLog(Format('    RX <- %d', [b]));
+        end;
+      until (b = SYN);
+    finally
+      if Self.Device.IsSerialPort then
+        Self.Device.Serial.RaiseExcept := OldRaiseExcept;
+    end;
 
     if (Self.LogLevel > 3) then
       RegisterLog('  SYN received');
@@ -2102,9 +2119,12 @@ end;
 
 procedure TACBrAbecsPinPad.CancelWaiting;
 begin
-  if (Self.LogLevel > 0) then
-    RegisterLog('  CancelWaiting');
-  fIsBusy := False;
+  if fIsBusy then
+  begin
+    if (Self.LogLevel > 0) then
+      RegisterLog('  CancelWaiting');
+    fIsBusy := False;
+  end;
 end;
 
 procedure TACBrAbecsPinPad.OPN;

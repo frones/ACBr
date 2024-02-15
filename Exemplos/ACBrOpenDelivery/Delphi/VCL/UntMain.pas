@@ -345,16 +345,16 @@ begin
   begin
     DM.cdsOptions.Append;
 
-    DM.cdsOptionsID.AsString := ACBrOpenDelivery1.Order.items[I].options[I].id;
-    DM.cdsOptionsName.AsString := ACBrOpenDelivery1.Order.items[I].options[I].name;
-    DM.cdsOptionsexternalCode.AsString := ACBrOpenDelivery1.Order.items[I].options[I].externalCode;
-    DM.cdsOptionsUnit.AsString := ACBrOpenDelivery1.Order.items[I].options[I]._unit;
-    DM.cdsOptionsQuantity.AsFloat := ACBrOpenDelivery1.Order.items[I].options[I].quantity;
-    DM.cdsOptionsunitPriceValue.AsCurrency := ACBrOpenDelivery1.Order.items[I].options[I].unitPrice.value;
-    DM.cdsOptionsunitPriceCurrency.AsString := ACBrOpenDelivery1.Order.items[I].options[I].unitPrice.currency;
-    DM.cdsOptionstotalPriceValue.AsCurrency := ACBrOpenDelivery1.Order.items[I].options[I].totalPrice.value;
-    DM.cdsOptionstotalPriceCurrency.AsString := ACBrOpenDelivery1.Order.items[I].options[I].totalPrice.currency;
-    DM.cdsOptionsspecialInstructions.AsString := ACBrOpenDelivery1.Order.items[I].options[I].specialInstructions;
+    DM.cdsOptionsID.AsString := ACBrOpenDelivery1.Order.items[0].options[I].id;
+    DM.cdsOptionsName.AsString := ACBrOpenDelivery1.Order.items[0].options[I].name;
+    DM.cdsOptionsexternalCode.AsString := ACBrOpenDelivery1.Order.items[0].options[I].externalCode;
+    DM.cdsOptionsUnit.AsString := ACBrOpenDelivery1.Order.items[0].options[I]._unit;
+    DM.cdsOptionsQuantity.AsFloat := ACBrOpenDelivery1.Order.items[0].options[I].quantity;
+    DM.cdsOptionsunitPriceValue.AsCurrency := ACBrOpenDelivery1.Order.items[0].options[I].unitPrice.value;
+    DM.cdsOptionsunitPriceCurrency.AsString := ACBrOpenDelivery1.Order.items[0].options[I].unitPrice.currency;
+    DM.cdsOptionstotalPriceValue.AsCurrency := ACBrOpenDelivery1.Order.items[0].options[I].totalPrice.value;
+    DM.cdsOptionstotalPriceCurrency.AsString := ACBrOpenDelivery1.Order.items[0].options[I].totalPrice.currency;
+    DM.cdsOptionsspecialInstructions.AsString := ACBrOpenDelivery1.Order.items[0].options[I].specialInstructions;
 
     DM.cdsOptions.Post;
   end;

@@ -49,6 +49,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+
+15/02/2024
+-- ACBrBancoSantander --
+[-] Corrigido qtde registros qdo existir informação Seguimento Y03
+https://www.projetoacbr.com.br/forum/topic/76214-homologa%C3%A7%C3%A3o-santander-d%C3%BAvidas-c%C3%B3digo-da-remessa/#comment-492912
+  Por: Daniel Morais InfoCotidiano
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

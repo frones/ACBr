@@ -634,6 +634,10 @@ begin
         fpQtdRegsLote := 3
       else
         fpQtdRegsLote := 4;
+
+      if (ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX <> tchNenhuma) then
+        fpQtdRegsLote := fpQtdRegsLote + 1;
+
     end;
 
     ISequencia := (ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo) * fpQtdRegsLote) + 1;

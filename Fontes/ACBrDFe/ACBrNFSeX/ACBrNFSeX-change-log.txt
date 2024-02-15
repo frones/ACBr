@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/02/2024
+-- Diversos --
+[+] Implementado a Classe Endereco dentro da Classe Servico para poder informar
+    corretamente o local da prestação do serviço.
+    A principio o unico provedor a fazer uso dessa classe é o Giap.
+  Por: Italo Giurizzato Junior
+
 14/02/2024
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona o campo InformacoesComplementares para os leiautes ABRASF nas rotinas de leitura e geração do INI.

@@ -826,6 +826,7 @@ type
     FIdentifNaoExigibilidade: string;
     FxMunicipioIncidencia: string;
     FCFPS: string;
+    FEndereco: TEndereco;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -880,6 +881,8 @@ type
     property Imposto: TImpostoCollection read FImposto write SetImposto;
     // Provedor SoftPlan
     property CFPS: string read FCFPS write FCFPS;
+    // Provedor Giap
+    property Endereco: TEndereco read FEndereco write FEndereco;
   end;
 
   TDadosPessoa = class(TObject)
@@ -1575,6 +1578,8 @@ begin
 
   FDescricao := '';
   FPrestadoEmViasPublicas := False;
+
+  FEndereco := TEndereco.Create;
 end;
 
 destructor TDadosServico.Destroy;
@@ -1588,6 +1593,7 @@ begin
   FExplRod.Free;
   FinfoCompl.Free;
   FImposto.Free;
+  FEndereco.Free;
 
   inherited Destroy;
 end;

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 15/02/2024
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade: Santa Cecilia do Sul/RS o provedor é DataSmart.
+  Por: Mateus Brunelli
+[+] Inclusão da cidade: Bom Retido do Sul/RS o provedor é Tecnos.
+  Por: Daniel Ostoic - DNA
 -- Diversos --
 [+] Implementado a Classe Endereco dentro da Classe Servico para poder informar
     corretamente o local da prestação do serviço.

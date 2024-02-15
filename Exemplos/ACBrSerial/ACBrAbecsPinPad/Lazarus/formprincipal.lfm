@@ -20,7 +20,7 @@ object frMain: TfrMain
     TabOrder = 0
     object mLog: TMemo
       Left = 4
-      Height = 175
+      Height = 180
       Top = 61
       Width = 809
       Align = alClient
@@ -32,7 +32,7 @@ object frMain: TfrMain
     end
     object sbCleanMemoLog: TSpeedButton
       Left = 816
-      Height = 181
+      Height = 186
       Top = 58
       Width = 23
       Align = alRight
@@ -42,8 +42,8 @@ object frMain: TfrMain
     end
     object sbResponse: TStatusBar
       Left = 1
-      Height = 28
-      Top = 239
+      Height = 23
+      Top = 244
       Width = 838
       Panels = <      
         item
@@ -849,9 +849,9 @@ object frMain: TfrMain
           Height = 244
           Top = 0
           Width = 534
-          ActivePage = tsQRCode
+          ActivePage = tsImage
           Align = alClient
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 1
           object tsImage: TTabSheet
             Caption = 'Image'

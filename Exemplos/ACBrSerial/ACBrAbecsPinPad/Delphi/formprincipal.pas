@@ -603,7 +603,8 @@ begin
   ConfigPanelsCommands(ACBrAbecsPinPad1.IsEnabled);
   if ACBrAbecsPinPad1.IsEnabled then
   begin
-    LoadMediaNames;
+    if (ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows > 0) then
+      LoadMediaNames;
     pgcCommands.ActivePageIndex := 1;
   end;
 end;
@@ -829,7 +830,11 @@ begin
     end;
 
     if (PortFound <> '') then
-      ShowMessage('PinPad Found on '+PortFound)
+    begin
+      ShowMessage('PinPad Found on '+PortFound);
+      cbxPort.Items.Assign(sl);
+      cbxPort.Text := PortFound;
+    end
     else
       ShowMessage('PinPad not Found');
   finally

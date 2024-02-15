@@ -84,7 +84,8 @@ object frMain: TfrMain
     Height = 248
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 242
+    ExplicitWidth = 934
+    ExplicitHeight = 244
     object sbCleanMemoLog: TSpeedButton
       Left = 912
       Top = 58
@@ -132,7 +133,8 @@ object frMain: TfrMain
       ScrollBars = ssVertical
       TabOrder = 0
       WordWrap = False
-      ExplicitHeight = 155
+      ExplicitWidth = 909
+      ExplicitHeight = 157
     end
     object sbResponse: TStatusBar
       Left = 1
@@ -148,7 +150,8 @@ object frMain: TfrMain
           Text = 'ERROR:'
           Width = 40
         end>
-      ExplicitTop = 213
+      ExplicitTop = 215
+      ExplicitWidth = 932
     end
     object pCancelar: TPanel
       Left = 1
@@ -158,6 +161,7 @@ object frMain: TfrMain
       Align = alTop
       TabOrder = 2
       Visible = False
+      ExplicitWidth = 932
       DesignSize = (
         934
         57)
@@ -170,6 +174,7 @@ object frMain: TfrMain
         Caption = 'Cancel Operation'
         TabOrder = 0
         OnClick = btCancelClick
+        ExplicitLeft = 0
       end
     end
   end
@@ -182,6 +187,7 @@ object frMain: TfrMain
     BevelOuter = bvNone
     Constraints.MinHeight = 264
     TabOrder = 1
+    ExplicitWidth = 934
     object pgcCommands: TPageControl
       Left = 0
       Top = 0
@@ -191,6 +197,7 @@ object frMain: TfrMain
       Align = alClient
       Images = ImageList1
       TabOrder = 0
+      ExplicitWidth = 934
       object tsConfig: TTabSheet
         Caption = 'Config'
         DesignSize = (
@@ -204,7 +211,7 @@ object frMain: TfrMain
           Align = alTop
           Caption = 'Serial Port'
           TabOrder = 0
-          ExplicitWidth = 930
+          ExplicitWidth = 926
           DesignSize = (
             928
             70)
@@ -287,7 +294,7 @@ object frMain: TfrMain
             Height = 23
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
-            ExplicitWidth = 521
+            ExplicitWidth = 517
           end
         end
         object pConfigLogMsg: TPanel
@@ -298,7 +305,7 @@ object frMain: TfrMain
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 930
+          ExplicitWidth = 926
           object gbConfig1: TGroupBox
             Left = 0
             Top = 0
@@ -307,7 +314,7 @@ object frMain: TfrMain
             Align = alClient
             Caption = 'Log'
             TabOrder = 0
-            ExplicitWidth = 675
+            ExplicitWidth = 671
             DesignSize = (
               673
               77)
@@ -357,7 +364,7 @@ object frMain: TfrMain
               Cursor = crIBeam
               Anchors = [akLeft, akTop, akRight]
               TabOrder = 0
-              ExplicitWidth = 522
+              ExplicitWidth = 518
             end
             object seLogLevel: TSpinEdit
               Left = 597
@@ -369,7 +376,7 @@ object frMain: TfrMain
               MinValue = 0
               TabOrder = 1
               Value = 2
-              ExplicitLeft = 599
+              ExplicitLeft = 595
             end
           end
           object GroupBox2: TGroupBox
@@ -380,7 +387,7 @@ object frMain: TfrMain
             Align = alRight
             Caption = 'Msg Align'
             TabOrder = 1
-            ExplicitLeft = 675
+            ExplicitLeft = 671
             object cbxMsgAlign: TComboBox
               Left = 16
               Top = 40
@@ -508,7 +515,7 @@ object frMain: TfrMain
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
           TabOrder = 4
           OnClick = btActivateClick
-          ExplicitLeft = 775
+          ExplicitLeft = 771
         end
         object btDetectPinPad: TBitBtn
           Left = 614
@@ -521,7 +528,7 @@ object frMain: TfrMain
           Images = ImageList1
           TabOrder = 5
           OnClick = btDetectPinPadClick
-          ExplicitLeft = 616
+          ExplicitLeft = 612
         end
       end
       object tsOpen: TTabSheet
@@ -554,7 +561,6 @@ object frMain: TfrMain
           BevelOuter = bvNone
           Enabled = False
           TabOrder = 2
-          ExplicitWidth = 770
           object sbGenerateKeys: TSpeedButton
             Left = 0
             Top = 0
@@ -599,7 +605,6 @@ object frMain: TfrMain
             Align = alRight
             Caption = 'Exponent'
             TabOrder = 0
-            ExplicitLeft = 669
             object mExponent: TMemo
               Left = 2
               Top = 17
@@ -620,7 +625,6 @@ object frMain: TfrMain
             Align = alClient
             Caption = 'Modulus'
             TabOrder = 1
-            ExplicitWidth = 646
             object mModulus: TMemo
               Left = 2
               Top = 17
@@ -652,7 +656,6 @@ object frMain: TfrMain
                 'D')
               ScrollBars = ssVertical
               TabOrder = 0
-              ExplicitWidth = 642
             end
           end
         end
@@ -684,7 +687,6 @@ object frMain: TfrMain
           Align = alRight
           Caption = 'GIN (obsolete)'
           TabOrder = 0
-          ExplicitLeft = 736
           object mGINResponse: TMemo
             Left = 2
             Top = 55
@@ -739,7 +741,6 @@ object frMain: TfrMain
           Align = alClient
           Caption = 'GIX'
           TabOrder = 1
-          ExplicitWidth = 462
           object pGIXParams: TPanel
             Left = 2
             Top = 17
@@ -861,7 +862,6 @@ object frMain: TfrMain
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 1
-            ExplicitWidth = 347
           end
         end
         object gbACBrPinPadCapabilities: TGroupBox
@@ -872,7 +872,6 @@ object frMain: TfrMain
           Align = alRight
           Caption = 'ACBr PinPad Capabilities'
           TabOrder = 2
-          ExplicitLeft = 467
           object btACBrPinPadCapabilities: TButton
             Left = 2
             Top = 17
@@ -984,7 +983,6 @@ object frMain: TfrMain
           Align = alClient
           Caption = 'DEX'
           TabOrder = 1
-          ExplicitWidth = 695
           DesignSize = (
             693
             302)
@@ -1015,7 +1013,6 @@ object frMain: TfrMain
               '-+-+-+-+-+-+-+-+')
             ParentFont = False
             TabOrder = 0
-            ExplicitWidth = 646
           end
           object btDEX: TButton
             Left = 134
@@ -1035,7 +1032,6 @@ object frMain: TfrMain
             Caption = 'Clear Display'
             TabOrder = 2
             OnClick = btDEXClearClick
-            ExplicitLeft = 368
           end
         end
       end
@@ -1128,7 +1124,6 @@ object frMain: TfrMain
               Height = 272
               Align = alClient
               TabOrder = 0
-              ExplicitWidth = 624
               object sbMedia: TScrollBox
                 Left = 1
                 Top = 1
@@ -1136,7 +1131,6 @@ object frMain: TfrMain
                 Height = 223
                 Align = alClient
                 TabOrder = 0
-                ExplicitWidth = 622
                 object imgMedia: TImage
                   Left = 0
                   Top = 0
@@ -1630,7 +1624,6 @@ object frMain: TfrMain
                 Height = 47
                 Align = alBottom
                 TabOrder = 1
-                ExplicitWidth = 622
                 DesignSize = (
                   620
                   47)
@@ -1679,7 +1672,6 @@ object frMain: TfrMain
                   Caption = 'Media Load'
                   TabOrder = 0
                   OnClick = btMediaLoadClick
-                  ExplicitLeft = 528
                 end
                 object edMediaLoad: TEdit
                   Left = 5
@@ -1689,7 +1681,6 @@ object frMain: TfrMain
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 1
                   Text = 'LOGOACBR'
-                  ExplicitWidth = 358
                 end
                 object pMediaInfo: TPanel
                   Left = 399
@@ -1700,7 +1691,6 @@ object frMain: TfrMain
                   BevelInner = bvRaised
                   BevelOuter = bvLowered
                   TabOrder = 2
-                  ExplicitLeft = 401
                 end
               end
             end
@@ -1981,7 +1971,6 @@ object frMain: TfrMain
           Align = alClient
           Caption = 'CEX (Wait for event)'
           TabOrder = 2
-          ExplicitWidth = 328
           object Label17: TLabel
             Left = 188
             Top = 74
@@ -2077,7 +2066,6 @@ object frMain: TfrMain
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 7
-            ExplicitWidth = 324
           end
         end
         object Panel2: TPanel
@@ -2264,7 +2252,6 @@ object frMain: TfrMain
           Align = alClient
           Caption = 'CLX'
           TabOrder = 1
-          ExplicitWidth = 695
           DesignSize = (
             693
             302)
@@ -2277,7 +2264,6 @@ object frMain: TfrMain
             Caption = 'Close (CLX)'
             TabOrder = 0
             OnClick = btCLXClick
-            ExplicitLeft = 304
           end
           object pgCLX: TPageControl
             Left = 2
@@ -2287,7 +2273,6 @@ object frMain: TfrMain
             ActivePage = tsCLOMedia
             Align = alTop
             TabOrder = 1
-            ExplicitWidth = 691
             object tsCLOLines: TTabSheet
               Caption = 'Lines'
               object mCLX: TMemo
@@ -2312,7 +2297,6 @@ object frMain: TfrMain
                 ParentFont = False
                 ScrollBars = ssVertical
                 TabOrder = 0
-                ExplicitWidth = 683
               end
             end
             object tsCLOMedia: TTabSheet
@@ -2326,7 +2310,6 @@ object frMain: TfrMain
                 Columns = 2
                 ItemHeight = 15
                 TabOrder = 0
-                ExplicitWidth = 683
               end
               object pCLXMediaTitle: TPanel
                 Left = 0
@@ -2342,7 +2325,6 @@ object frMain: TfrMain
                 Font.Style = []
                 ParentFont = False
                 TabOrder = 1
-                ExplicitWidth = 683
               end
             end
           end

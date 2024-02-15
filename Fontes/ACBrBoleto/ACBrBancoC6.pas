@@ -146,7 +146,7 @@ begin
    fpNumero                     := 336;
    fpTamanhoMaximoNossoNum      := 10;
    fpTamanhoAgencia             := 4;
-   fpTamanhoConta               := 7;
+   fpTamanhoConta               := 11;
    fpTamanhoCarteira            := 2;
    fpLayoutVersaoArquivo        := 22;
    fpLayoutVersaoLote           := 0;

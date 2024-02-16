@@ -2033,6 +2033,201 @@ type
     property currencies: TSplitResult read fcurrencies write fcurrencies;
   end;
 
+  { TMateraaliasHolderAddress }
+
+  TMateraaliasHolderAddress = class(TACBrPIXSchema)
+  private
+    fcity: String;
+    fstreet: String;
+    fuf: String;
+    fzipCode: String;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraaliasHolderAddress);
+
+    property street: String read fstreet write fstreet;
+    property zipCode: String read fzipCode write fzipCode;
+    property city: String read fcity write fcity;
+    property uf: String read fuf write fuf;
+  end;
+
+  { TMateraentries }
+
+  TMateraentries = class(TACBrPIXSchema)
+  private
+    fregisteredAccounts: integer;
+    fwatermark: string;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraentries);
+
+    property watermark: string read fwatermark write fwatermark;
+    property registeredAccounts: integer read fregisteredAccounts write fregisteredAccounts;
+  end;
+
+  { TMateraValues }
+
+  TMateraValues = class(TACBrPIXSchema)
+  private
+    fd90: integer;
+    fm12: integer;
+    fm60: integer;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraValues);
+
+    property d90: integer read fd90 write fd90;
+    property m12: integer read fm12 write fm12;
+    property m60: integer read fm60 write fm60;
+  end;
+
+  { TMateraFraudMarkers }
+
+  TMateraFraudMarkers = class(TACBrPIXSchema)
+  private
+    fapplicationFrauds: TMateraValues;
+    fdistinctFraudReporters: TMateraValues;
+    fmuleAccounts: TMateraValues;
+    fotherFrauds: TMateraValues;
+    fscammerAccounts: TMateraValues;
+    ftotalFrauds: TMateraValues;
+    ftotalFraudTransactionAmount: TMateraValues;
+    fwatermark: string;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraFraudMarkers);
+
+    property watermark: string read fwatermark write fwatermark;
+    property applicationFrauds: TMateraValues read fapplicationFrauds write fapplicationFrauds;
+    property muleAccounts: TMateraValues read fmuleAccounts write fmuleAccounts;
+    property scammerAccounts: TMateraValues read fscammerAccounts write fscammerAccounts;
+    property otherFrauds: TMateraValues read fotherFrauds write fotherFrauds;
+    property totalFrauds: TMateraValues read ftotalFrauds write ftotalFrauds;
+    property totalFraudTransactionAmount: TMateraValues read ftotalFraudTransactionAmount write ftotalFraudTransactionAmount;
+    property distinctFraudReporters: TMateraValues  read fdistinctFraudReporters write fdistinctFraudReporters;
+  end;
+
+  { TMaterainfractionReports }
+
+  TMaterainfractionReports = class(TACBrPIXSchema)
+  private
+    fopenReports: integer;
+    fopenReportsDistinctReporters: integer;
+    frejectedReports: TMateraValues;
+    fwatermark: string;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMaterainfractionReports);
+
+    property watermark: string read fwatermark write fwatermark;
+    property openReports: integer read fopenReports write fopenReports;
+    property openReportsDistinctReporters: integer read fopenReportsDistinctReporters write fopenReportsDistinctReporters;
+    property rejectedReports: TMateraValues read frejectedReports write frejectedReports;
+  end;
+
+  { TMateraspi }
+
+  TMateraspi = class(TACBrPIXSchema)
+  private
+    fsettlements: TMateraValues;
+    fwatermark: string;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraspi);
+
+    property watermark: string read fwatermark write fwatermark;
+    property settlements: TMateraValues read fsettlements write fsettlements;
+  end;
+
+  { TMateraaliasStatistics }
+
+  TMateraaliasStatistics = class(TACBrPIXSchema)
+  private
+    fentries: TMateraentries;
+    ffraudMarkers: TMateraFraudMarkers;
+    finfractionReports: TMaterainfractionReports;
+    fspi: TMateraspi;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraaliasStatistics);
+
+    property spi: TMateraspi read fspi write fspi;
+    property fraudMarkers: TMateraFraudMarkers read ffraudMarkers write ffraudMarkers;
+    property infractionReports: TMaterainfractionReports read finfractionReports write finfractionReports;
+    property entries: TMateraentries read fentries write fentries;
+  end;
+
+  { TMaterapersonStatistics }
+
+  TMaterapersonStatistics = class(TACBrPIXSchema)
+  private
+    fentries: TMateraentries;
+    ffraudMarkers: TMateraFraudMarkers;
+    finfractionReports: TMaterainfractionReports;
+    fspi: TMateraspi;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMaterapersonStatistics);
+
+    property spi: TMateraspi read fspi write fspi;
+    property fraudMarkers: TMateraFraudMarkers read ffraudMarkers write ffraudMarkers;
+    property infractionReports: TMaterainfractionReports read finfractionReports write finfractionReports;
+    property entries: TMateraentries read fentries write fentries;
+  end;
+
   { TMateraAliasResponse }
 
   TMateraAliasResponse = class(TACBrPIXSchema)
@@ -2065,6 +2260,32 @@ type
     property creationDate: TDateTime read fcreationDate write fcreationDate;
     property antiFraudClearingInfo: TMateraAntiFraudClearingInfo read fantiFraudClearingInfo write fantiFraudClearingInfo;
   end;
+
+  { TMateraAliasResponseV2 }
+
+  TMateraAliasResponseV2 = class(TMateraAliasResponse)
+  private
+    faliasHolderAddress: TMateraaliasHolderAddress;
+    faliasStatistics: TMateraaliasStatistics;
+    fpersonStatistics: TMaterapersonStatistics;
+    fstatus: TMateraAliasStatus;
+  protected
+    procedure AssignSchema(aSource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    destructor destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TMateraAliasResponseV2);
+
+    property status: TMateraAliasStatus read fstatus write fstatus;
+    property aliasHolderAddress: TMateraaliasHolderAddress read faliasHolderAddress write faliasHolderAddress;
+    property personStatistics: TMaterapersonStatistics read fpersonStatistics write fpersonStatistics;
+    property aliasStatistics: TMateraaliasStatistics read faliasStatistics write faliasStatistics;
+  end;
+
 
   { TMateraUtilitiesBasic }
 
@@ -6060,6 +6281,504 @@ begin
   fcurrencies := aSource.currencies;
 end;
 
+{ TMateraaliasHolderAddress }
+
+procedure TMateraaliasHolderAddress.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraaliasHolderAddress) then
+      Assign(TMateraaliasHolderAddress(ASource));
+end;
+
+procedure TMateraaliasHolderAddress.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('street', fstreet)
+    .AddPair('zipCode', fzipCode)
+    .AddPair('city', fcity)
+    .AddPair('uf', fuf);
+end;
+
+procedure TMateraaliasHolderAddress.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .Value('street', fstreet)
+    .Value('zipCode', fzipCode)
+    .Value('city', fcity)
+    .Value('uf', fuf);
+end;
+
+constructor TMateraaliasHolderAddress.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  Clear;
+end;
+
+procedure TMateraaliasHolderAddress.Clear;
+begin
+  fstreet := EmptyStr;
+  fzipCode := EmptyStr;
+  fcity := EmptyStr;
+  fuf := EmptyStr;
+end;
+
+function TMateraaliasHolderAddress.IsEmpty: Boolean;
+begin
+  Result :=
+    EstaVazio(fstreet) and
+    EstaVazio(fzipCode) and
+    EstaVazio(fcity) and
+    EstaVazio(fuf);
+end;
+
+procedure TMateraaliasHolderAddress.Assign(aSource: TMateraaliasHolderAddress);
+begin
+  fstreet := aSource.street;
+  fzipCode := aSource.zipCode;
+  fcity := aSource.city;
+  fuf := aSource.uf;
+end;
+
+{ TMateraentries }
+
+procedure TMateraentries.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraentries) then
+        Assign(TMateraentries(ASource));
+end;
+
+procedure TMateraentries.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('watermark', fwatermark)
+    .AddPair('registeredAccounts', fregisteredAccounts);
+end;
+
+procedure TMateraentries.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .Value('watermark', fwatermark)
+    .Value('registeredAccounts', fregisteredAccounts);
+end;
+
+constructor TMateraentries.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  Clear;
+end;
+
+procedure TMateraentries.Clear;
+begin
+  fwatermark := EmptyStr;
+  fregisteredAccounts := 0;
+end;
+
+function TMateraentries.IsEmpty: Boolean;
+begin
+  Result :=
+    EstaVazio(fwatermark) and
+    EstaZerado(fregisteredAccounts);
+end;
+
+procedure TMateraentries.Assign(aSource: TMateraentries);
+begin
+  fwatermark := aSource.watermark;
+  fregisteredAccounts := aSource.registeredAccounts;
+end;
+
+{ TMateraValues }
+
+procedure TMateraValues.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraValues) then
+        Assign(TMateraValues(ASource));
+end;
+
+procedure TMateraValues.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('d90', fd90)
+    .AddPair('m12', fm12)
+    .AddPair('m60', fm60);
+end;
+
+procedure TMateraValues.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .Value('d90', fd90)
+    .Value('m12', fm12)
+    .Value('m60', fm60);
+end;
+
+constructor TMateraValues.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  Clear;
+end;
+
+procedure TMateraValues.Clear;
+begin
+  fd90 := 0;
+  fm12 := 0;
+  fm60 := 0;
+end;
+
+function TMateraValues.IsEmpty: Boolean;
+begin
+  Result := EstaZerado(fd90) and
+   EstaZerado(fm12) and
+   EstaZerado(fm60);
+end;
+
+procedure TMateraValues.Assign(aSource: TMateraValues);
+begin
+  fd90 := aSource.d90;
+  fm12 := aSource.m12;
+  fm60 := aSource.m60;
+end;
+
+{ TMateraFraudMarkers }
+
+procedure TMateraFraudMarkers.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraFraudMarkers) then
+        Assign(TMateraFraudMarkers(ASource));
+end;
+
+procedure TMateraFraudMarkers.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon.AddPair('watermark', fwatermark);
+  fapplicationFrauds.WriteToJSon(aJSon);
+  fmuleAccounts.WriteToJSon(aJSon);
+  fscammerAccounts.WriteToJSon(aJSon);
+  fotherFrauds.WriteToJSon(aJSon);
+  ftotalFrauds.WriteToJSon(aJSon);
+  ftotalFraudTransactionAmount.WriteToJSon(aJSon);
+  fdistinctFraudReporters.WriteToJSon(aJSon);
+end;
+
+procedure TMateraFraudMarkers.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon.Value('watermark', fwatermark);
+  fapplicationFrauds.ReadFromJSon(aJSon);
+  fmuleAccounts.ReadFromJSon(aJSon);
+  fscammerAccounts.ReadFromJSon(aJSon);
+  fotherFrauds.ReadFromJSon(aJSon);
+  ftotalFrauds.ReadFromJSon(aJSon);
+  ftotalFraudTransactionAmount.ReadFromJSon(aJSon);
+  fdistinctFraudReporters.ReadFromJSon(aJSon);
+end;
+
+constructor TMateraFraudMarkers.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  fapplicationFrauds := TMateraValues.Create('applicationFrauds');
+  fdistinctFraudReporters := TMateraValues.Create('distinctFraudReporters');
+  fmuleAccounts := TMateraValues.Create('muleAccounts');
+  fotherFrauds := TMateraValues.Create('otherFrauds');
+  fscammerAccounts := TMateraValues.Create('scammerAccounts');
+  ftotalFrauds := TMateraValues.Create('totalFrauds');
+  ftotalFraudTransactionAmount := TMateraValues.Create('totalFraudTransactionAmount');
+  Clear;
+end;
+
+destructor TMateraFraudMarkers.Destroy;
+begin
+  fapplicationFrauds.Free;
+  fmuleAccounts.Free;
+  fscammerAccounts.Free;
+  fotherFrauds.Free;
+  ftotalFrauds.Free;
+  ftotalFraudTransactionAmount.Free;
+  fdistinctFraudReporters.Free;
+  inherited Destroy;
+end;
+
+procedure TMateraFraudMarkers.Clear;
+begin
+  fwatermark := EmptyStr;
+  fapplicationFrauds.Clear;
+  fmuleAccounts.Clear;
+  fscammerAccounts.Clear;
+  fotherFrauds.Clear;
+  ftotalFrauds.Clear;
+  ftotalFraudTransactionAmount.Clear;
+  fdistinctFraudReporters.Clear;
+end;
+
+function TMateraFraudMarkers.IsEmpty: Boolean;
+begin
+  Result := EstaVazio(fwatermark) and
+    fapplicationFrauds.IsEmpty and
+    fmuleAccounts.IsEmpty and
+    fscammerAccounts.IsEmpty and
+    fotherFrauds.IsEmpty and
+    ftotalFrauds.IsEmpty and
+    ftotalFraudTransactionAmount.IsEmpty and
+    fdistinctFraudReporters.IsEmpty;
+end;
+
+procedure TMateraFraudMarkers.Assign(aSource: TMateraFraudMarkers);
+begin
+  fwatermark := aSource.watermark;
+  fapplicationFrauds.Assign(aSource.applicationFrauds);
+  fmuleAccounts.Assign(aSource.muleAccounts);
+  fscammerAccounts.Assign(aSource.scammerAccounts);
+  fotherFrauds.Assign(aSource.otherFrauds);
+  ftotalFrauds.Assign(aSource.totalFrauds);
+  ftotalFraudTransactionAmount.Assign(aSource.totalFraudTransactionAmount);
+  fdistinctFraudReporters.Assign(aSource.distinctFraudReporters);
+end;
+
+{ TMaterainfractionReports }
+
+procedure TMaterainfractionReports.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMaterainfractionReports) then
+        Assign(TMaterainfractionReports(ASource));
+end;
+
+procedure TMaterainfractionReports.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('watermark', fwatermark)
+    .AddPair('openReports', fopenReports)
+    .AddPair('openReportsDistinctReporters', fopenReportsDistinctReporters);
+  frejectedReports.WriteToJSon(aJSon);
+end;
+
+procedure TMaterainfractionReports.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .Value('watermark', fwatermark)
+    .Value('openReports', fopenReports)
+    .Value('openReportsDistinctReporters', fopenReportsDistinctReporters);
+  frejectedReports.ReadFromJSon(aJSon);
+end;
+
+constructor TMaterainfractionReports.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  frejectedReports := TMateraValues.Create('rejectedReports');
+  Clear;
+end;
+
+destructor TMaterainfractionReports.Destroy;
+begin
+  frejectedReports.Free;
+  inherited Destroy;
+end;
+
+procedure TMaterainfractionReports.Clear;
+begin
+  fwatermark := EmptyStr;
+  fopenReports := 0;
+  fopenReportsDistinctReporters := 0;
+  frejectedReports.Clear;
+end;
+
+function TMaterainfractionReports.IsEmpty: Boolean;
+begin
+  Result := EstaVazio(fwatermark) and
+    EstaZerado(fopenReports) and
+    EstaZerado(fopenReportsDistinctReporters) and
+    frejectedReports.IsEmpty;
+end;
+
+procedure TMaterainfractionReports.Assign(aSource: TMaterainfractionReports);
+begin
+  fwatermark := aSource.watermark;
+  fopenReports := aSource.openReports;
+  fopenReportsDistinctReporters := aSource.openReportsDistinctReporters;
+  frejectedReports.Assign(aSource.rejectedReports);
+end;
+
+{ TMateraspi }
+
+procedure TMateraspi.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraspi) then
+     Assign(TMateraspi(ASource));
+end;
+
+procedure TMateraspi.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('watermark', fwatermark);
+  fsettlements.WriteToJSon(aJSon);
+end;
+
+procedure TMateraspi.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .Value('watermark', fwatermark);
+  fsettlements.ReadFromJSon(aJSon);
+end;
+
+constructor TMateraspi.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  fsettlements := TMateraValues.Create('settlements');
+  Clear;
+end;
+
+destructor TMateraspi.Destroy;
+begin
+  fsettlements.Free;
+  inherited Destroy;
+end;
+
+procedure TMateraspi.Clear;
+begin
+  fwatermark := EmptyStr;
+  fsettlements.Clear;
+end;
+
+function TMateraspi.IsEmpty: Boolean;
+begin
+  Result := EstaVazio(fwatermark) and
+    fsettlements.IsEmpty;
+end;
+
+procedure TMateraspi.Assign(aSource: TMateraspi);
+begin
+  fwatermark := aSource.watermark;
+  fsettlements.Assign(aSource.settlements);
+end;
+
+{ TMateraaliasStatistics }
+
+procedure TMateraaliasStatistics.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraaliasStatistics) then
+      Assign(TMateraaliasStatistics(ASource));
+end;
+
+procedure TMateraaliasStatistics.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  fspi.WriteToJSon(aJSon);
+  ffraudMarkers.WriteToJSon(aJSon);
+  finfractionReports.WriteToJSon(aJSon);
+  fentries.WriteToJSon(aJSon);
+end;
+
+procedure TMateraaliasStatistics.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  fspi.ReadFromJSon(aJSon);
+  ffraudMarkers.ReadFromJSon(aJSon);
+  finfractionReports.ReadFromJSon(aJSon);
+  fentries.ReadFromJSon(aJSon);
+end;
+
+constructor TMateraaliasStatistics.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  fspi := TMateraspi.Create('spi');
+  ffraudMarkers := TMateraFraudMarkers.Create('fraudMarkers');
+  finfractionReports := TMaterainfractionReports.Create('infractionReports');
+  fentries := TMateraentries.Create('entries');
+  Clear;
+end;
+
+destructor TMateraaliasStatistics.Destroy;
+begin
+  fspi.Free;
+  ffraudMarkers.Free;
+  finfractionReports.Free;
+  fentries.Free;
+  inherited Destroy;
+end;
+
+procedure TMateraaliasStatistics.Clear;
+begin
+  fspi.Clear;
+  ffraudMarkers.Clear;
+  finfractionReports.Clear;
+  fentries.Clear;
+end;
+
+function TMateraaliasStatistics.IsEmpty: Boolean;
+begin
+  Result := fspi.IsEmpty and
+    ffraudMarkers.IsEmpty and
+    finfractionReports.IsEmpty and
+    fentries.IsEmpty;
+end;
+
+procedure TMateraaliasStatistics.Assign(aSource: TMateraaliasStatistics);
+begin
+  fspi.Assign(aSource.spi);
+  ffraudMarkers.Assign(aSource.fraudMarkers);
+  finfractionReports.Assign(aSource.infractionReports);
+  fentries.Assign(aSource.entries);
+end;
+
+{ TMaterapersonStatistics }
+
+procedure TMaterapersonStatistics.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMaterapersonStatistics) then
+      Assign(TMaterapersonStatistics(ASource));
+end;
+
+procedure TMaterapersonStatistics.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  fspi.WriteToJSon(aJSon);
+  ffraudMarkers.WriteToJSon(aJSon);
+  finfractionReports.WriteToJSon(aJSon);
+  fentries.WriteToJSon(aJSon);
+end;
+
+procedure TMaterapersonStatistics.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  fspi.ReadFromJSon(aJSon);
+  ffraudMarkers.ReadFromJSon(aJSon);
+  finfractionReports.ReadFromJSon(aJSon);
+  fentries.ReadFromJSon(aJSon);
+end;
+
+constructor TMaterapersonStatistics.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  fspi := TMateraspi.Create('spi');
+  ffraudMarkers := TMateraFraudMarkers.Create('fraudMarkers');
+  finfractionReports := TMaterainfractionReports.Create('infractionReports');
+  fentries := TMateraentries.Create('entries');
+  Clear;
+end;
+
+destructor TMaterapersonStatistics.Destroy;
+begin
+  fspi.Free;
+  ffraudMarkers.Free;
+  finfractionReports.Free;
+  fentries.Free;
+  inherited Destroy;
+end;
+
+procedure TMaterapersonStatistics.Clear;
+begin
+  fspi.Clear;
+  ffraudMarkers.Clear;
+  finfractionReports.Clear;
+  fentries.Clear;
+end;
+
+function TMaterapersonStatistics.IsEmpty: Boolean;
+begin
+  Result := fspi.IsEmpty and
+    ffraudMarkers.IsEmpty and
+    finfractionReports.IsEmpty and
+    fentries.IsEmpty;
+end;
+
+procedure TMaterapersonStatistics.Assign(aSource: TMaterapersonStatistics);
+begin
+  fspi.Assign(aSource.spi);
+  ffraudMarkers.Assign(aSource.fraudMarkers);
+  finfractionReports.Assign(aSource.infractionReports);
+  fentries.Assign(aSource.entries);
+end;
+
 { TMateraCounter }
 
 procedure TMateraCounter.AssignSchema(aSource: TACBrPIXSchema);
@@ -6564,6 +7283,124 @@ begin
   faccountDestination.Assign(aSource.accountDestination);
   faliasAccountHolder.Assign(aSource.aliasAccountHolder);
   fantiFraudClearingInfo.Assign(aSource.antiFraudClearingInfo);
+end;
+
+{ TMateraAliasResponseV2 }
+
+procedure TMateraAliasResponseV2.AssignSchema(aSource: TACBrPIXSchema);
+begin
+  if (ASource is TMateraAliasResponseV2) then
+      Assign(TMateraAliasResponseV2(ASource));
+end;
+
+procedure TMateraAliasResponseV2.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  aJSon
+    .AddPair('alias', falias_)
+    .AddPair('aliasType', MateraAliasTypeToString(faliasType))
+    .AddPair('status', MateraAliasStatusToString(fstatus));
+  faliasAccountHolder.WriteToJson(aJson);
+  fpsp.WriteToJson(aJson);
+  faccountDestination.WriteToJson(aJson);
+  aJSon.AddPair('endToEndId', fendtoEndId);
+  faliasHolderAddress.WriteToJson(aJson);
+  aJSon.AddPair('creationDate', fcreationDate);
+  fpersonStatistics.WriteToJson(aJson);
+  faliasStatistics.WriteToJson(aJson);
+end;
+
+procedure TMateraAliasResponseV2.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  s: String;
+begin
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+
+  aJSon
+    .Value('alias', falias_)
+    .Value('aliasType', s);
+
+  faliasType := StringToMateraAliasType(s);
+
+  aJSon.Value('status', s);
+
+  fstatus := StringToMateraAliasStatus(s);
+
+  faliasAccountHolder.ReadFromJson(aJson);
+  fpsp.ReadFromJson(aJson);
+  faccountDestination.ReadFromJson(aJson);
+  aJSon.Value('endToEndId', fendtoEndId);
+  faliasHolderAddress.ReadFromJson(aJson);
+  aJSon.ValueISODateTime('creationDate', fcreationDate);
+  fpersonStatistics.ReadFromJson(aJson);
+  faliasStatistics.ReadFromJson(aJson);
+end;
+
+constructor TMateraAliasResponseV2.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  faliasAccountHolder := TMateraAliasAccountHolder.Create('aliasAccountHolder');
+  fpsp := TMateraPSP.Create('psp');
+  faccountDestination := TMateraDestinationAccount.Create('accountDestination');
+  faliasHolderAddress := TMateraaliasHolderAddress.Create('aliasHolderAddress');
+  fpersonStatistics := TMaterapersonStatistics.Create('personStatistics');
+  faliasStatistics := TMateraaliasStatistics.Create('aliasStatistics');
+  Clear;
+end;
+
+destructor TMateraAliasResponseV2.destroy;
+begin
+  faliasAccountHolder.Free;
+  fpsp.Free;
+  faccountDestination.Free;
+  faliasHolderAddress.Free;
+  fpersonStatistics.Free;
+  faliasStatistics.Free;
+end;
+
+procedure TMateraAliasResponseV2.Clear;
+begin
+  inherited Clear;
+  falias_ := EmptyStr;
+  faliasType := malNone;
+  fstatus := mastNone;
+  faliasAccountHolder.Clear;
+  fpsp.Clear;
+  faccountDestination.Clear;
+  endtoEndId := EmptyStr;
+  faliasHolderAddress.Clear;
+  fcreationDate := 0;
+  fpersonStatistics.Clear;
+  faliasStatistics.Clear;
+end;
+
+function TMateraAliasResponseV2.IsEmpty: Boolean;
+begin
+  Result := EstaVazio(falias_) and
+    (faliasType = malNone) and
+    (fstatus = mastNone) and
+    faliasAccountHolder.IsEmpty and
+    fpsp.IsEmpty and
+    faccountDestination.IsEmpty and
+    EstaVazio(endtoEndId) and
+    faliasHolderAddress.IsEmpty and
+    EstaZerado(fcreationDate) and
+    fpersonStatistics.IsEmpty and
+    faliasStatistics.IsEmpty;
+end;
+
+procedure TMateraAliasResponseV2.Assign(aSource: TMateraAliasResponseV2);
+begin
+  falias_ := aSource.alias_;
+  faliasType := aSource.aliasType;
+  fstatus := aSource.status;
+  faliasAccountHolder.Assign(aSource.aliasAccountHolder);
+  fpsp.Assign(aSource.psp);
+  faccountDestination.Assign(aSource.accountDestination);
+  endtoEndId := aSource.endtoEndId;
+  faliasHolderAddress.Assign(aSource.aliasHolderAddress);
+  fcreationDate := aSource.creationDate;
+  fpersonStatistics.Assign(aSource.personStatistics);
+  faliasStatistics.Assign(aSource.aliasStatistics);
 end;
 
 { TMateraDevolucaoResponse }

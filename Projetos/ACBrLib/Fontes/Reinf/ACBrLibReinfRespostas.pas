@@ -939,11 +939,11 @@ type
 
     procedure RespostaConsultaregOcorrs(const ACont: Integer; const AItem: TIdeStatus);
     procedure RespostaConsultainfoCR_CNR(const AItem: TinfoCR_CNR);
-    procedure RespostaConsultatotApurMen(const ACont: Integer; const AItem: TtotApurMenCollection);
-    procedure RespostaConsultatotApurQui(const ACont: Integer; const AItem: TtotApurQuiCollection);
-    procedure RespostaConsultatotApurDec(const ACont: Integer; const AItem: TtotApurDecCollection);
-    procedure RespostaConsultatotApurSem(const ACont: Integer; const AItem: TtotApurSemCollection);
-    procedure RespostaConsultatotApurDia(const ACont: Integer; const AItem: TtotApurDiaCollection);
+    procedure RespostaConsultatotApurMen(const ACont: Integer; const AItem: TtotApurMenCollection; const APrefixo: String);
+    procedure RespostaConsultatotApurQui(const ACont: Integer; const AItem: TtotApurQuiCollection; const APrefixo: String);
+    procedure RespostaConsultatotApurDec(const ACont: Integer; const AItem: TtotApurDecCollection; const APrefixo: String);
+    procedure RespostaConsultatotApurSem(const ACont: Integer; const AItem: TtotApurSemCollection; const APrefixo: String);
+    procedure RespostaConsultatotApurDia(const ACont: Integer; const AItem: TtotApurDiaCollection; const APrefixo: String);
     procedure RespostaConsultainfoTotalCR;
     procedure RespostaConsultaideStatus;
     procedure RespostaConsultainfoRecEv;
@@ -1538,11 +1538,12 @@ begin
   end;
 end;
 
-procedure TRespostas.RespostaConsultatotApurMen(const ACont: Integer; const AItem: TtotApurMenCollection);
+procedure TRespostas.RespostaConsultatotApurMen(const ACont: Integer; const AItem: TtotApurMenCollection;
+ const APrefixo: String);
 var
   Resp: TConsultaRespostatotApurMen;
 begin
-  Resp := TConsultaRespostatotApurMen.Create(CSessaoResptottotApurMen +
+  Resp := TConsultaRespostatotApurMen.Create(APrefixo + CSessaoResptottotApurMen +
             IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     Resp.Processar(ACont, AItem);
@@ -1552,12 +1553,12 @@ begin
   end;
 end;
 
-procedure TRespostas.RespostaConsultatotApurQui(const ACont: Integer;
- const AItem: TtotApurQuiCollection);
+procedure TRespostas.RespostaConsultatotApurQui(const ACont: Integer; const AItem: TtotApurQuiCollection;
+ const APrefixo: String);
 var
   Resp: TConsultaRespostatotApurQui;
 begin
-  Resp := TConsultaRespostatotApurQui.Create(CSessaoResptottotApurQui +
+  Resp := TConsultaRespostatotApurQui.Create(APrefixo + CSessaoResptottotApurQui +
             IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     Resp.Processar(ACont, AItem);
@@ -1567,12 +1568,12 @@ begin
   end;
 end;
 
-procedure TRespostas.RespostaConsultatotApurDec(const ACont: Integer;
- const AItem: TtotApurDecCollection);
+procedure TRespostas.RespostaConsultatotApurDec(const ACont: Integer; const AItem: TtotApurDecCollection;
+ const APrefixo: String);
 var
   Resp: TConsultaRespostatotApurDec;
 begin
-  Resp := TConsultaRespostatotApurDec.Create(CSessaoResptottotApurDec +
+  Resp := TConsultaRespostatotApurDec.Create(APrefixo + CSessaoResptottotApurDec +
             IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     Resp.Processar(ACont, AItem);
@@ -1582,12 +1583,12 @@ begin
   end;
 end;
 
-procedure TRespostas.RespostaConsultatotApurSem(const ACont: Integer;
- const AItem: TtotApurSemCollection);
+procedure TRespostas.RespostaConsultatotApurSem(const ACont: Integer; const AItem: TtotApurSemCollection;
+ const APrefixo: String);
 var
   Resp: TConsultaRespostatotApurSem;
 begin
-  Resp := TConsultaRespostatotApurSem.Create(CSessaoResptottotApurSem +
+  Resp := TConsultaRespostatotApurSem.Create(APrefixo + CSessaoResptottotApurSem +
             IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     Resp.Processar(ACont, AItem);
@@ -1597,12 +1598,12 @@ begin
   end;
 end;
 
-procedure TRespostas.RespostaConsultatotApurDia(const ACont: Integer;
- const AItem: TtotApurDiaCollection);
+procedure TRespostas.RespostaConsultatotApurDia(const ACont: Integer; const AItem: TtotApurDiaCollection;
+ const APrefixo: String);
 var
   Resp: TConsultaRespostatotApurDia;
 begin
-  Resp := TConsultaRespostatotApurDia.Create(CSessaoResptottotApurDia +
+  Resp := TConsultaRespostatotApurDia.Create(APrefixo + CSessaoResptottotApurDia +
             IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     Resp.Processar(ACont, AItem);
@@ -1920,36 +1921,36 @@ begin
       RespostaConsultainfoCR_CNR(infoCR_CNR);
 
       for i := 0 to infoCR_CNR.totApurMen.Count -1 do
-        RespostaConsultatotApurMen(i, infoCR_CNR.totApurMen);
+        RespostaConsultatotApurMen(i, infoCR_CNR.totApurMen, 'infoCR_CNR.');
 
       for i := 0 to infoCR_CNR.totApurQui.Count -1 do
-        RespostaConsultatotApurQui(i, infoCR_CNR.totApurQui);
+        RespostaConsultatotApurQui(i, infoCR_CNR.totApurQui, 'infoCR_CNR.');
 
       for i := 0 to infoCR_CNR.totApurDec.Count -1 do
-        RespostaConsultatotApurDec(i, infoCR_CNR.totApurDec);
+        RespostaConsultatotApurDec(i, infoCR_CNR.totApurDec, 'infoCR_CNR.');
 
       for i := 0 to infoCR_CNR.totApurSem.Count -1 do
-        RespostaConsultatotApurSem(i, infoCR_CNR.totApurSem);
+        RespostaConsultatotApurSem(i, infoCR_CNR.totApurSem, 'infoCR_CNR.');
 
       for i := 0 to infoCR_CNR.totApurDia.Count -1 do
-        RespostaConsultatotApurDia(i, infoCR_CNR.totApurDia);
+        RespostaConsultatotApurDia(i, infoCR_CNR.totApurDia, 'infoCR_CNR.');
 
       RespostaConsultainfoTotalCR;
 
       for i := 0 to infoTotalCR.totApurMen.Count -1 do
-        RespostaConsultatotApurMen(i, infoTotalCR.totApurMen);
+        RespostaConsultatotApurMen(i, infoTotalCR.totApurMen, 'infoTotalCR.');
 
       for i := 0 to infoTotalCR.totApurQui.Count -1 do
-        RespostaConsultatotApurQui(i, infoTotalCR.totApurQui);
+        RespostaConsultatotApurQui(i, infoTotalCR.totApurQui, 'infoTotalCR.');
 
       for i := 0 to infoTotalCR.totApurDec.Count -1 do
-        RespostaConsultatotApurDec(i, infoTotalCR.totApurDec);
+        RespostaConsultatotApurDec(i, infoTotalCR.totApurDec, 'infoTotalCR.');
 
       for i := 0 to infoTotalCR.totApurSem.Count -1 do
-        RespostaConsultatotApurSem(i, infoTotalCR.totApurSem);
+        RespostaConsultatotApurSem(i, infoTotalCR.totApurSem, 'infoTotalCR.');
 
       for i := 0 to infoTotalCR.totApurDia.Count -1 do
-        RespostaConsultatotApurDia(i, infoTotalCR.totApurDia);
+        RespostaConsultatotApurDia(i, infoTotalCR.totApurDia, 'infoTotalCR.');
     end;
   end;
 

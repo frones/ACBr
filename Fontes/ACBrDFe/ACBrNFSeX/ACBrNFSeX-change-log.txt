@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/02/2024
+-- ACBrNFSeXServicos --
+[*] A cidade: Cambé/PR tinha sido alterada de forma fixa para o PadraoNacional
+    sendo que ela não migrou por completo somente quem é MEI.
+-- ISSCambe.GravarXml/ISSCambe.Provider --
+[-] Correções para gerar o XML do RPS da forma correta e correções nas procedures
+    que tratam o retornos dos serviços implementados pelo provedor.
+  Por: Italo Giurizzato Junior
+
 15/02/2024
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade: Santa Cecilia do Sul/RS o provedor é DataSmart.

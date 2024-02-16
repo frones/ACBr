@@ -87,7 +87,7 @@ function TNFSeW_ISSCambe.GerarDadosPrestador: TACBrXmlNode;
 begin
    Result := CreateElement('dadosPrestador');
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'prestadorCMC', 1, 9, 1,
+   Result.AppendChild(AddNode(tcStr, '#1', 'prestadorCMC', 1, 9, 1,
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
 end;
 
@@ -104,7 +104,7 @@ begin
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorInscricaoEstadual', 1,15, 0,
                       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, ''));
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'tomadorCMC', 1, 9, 0,
+   Result.AppendChild(AddNode(tcStr, '#1', 'tomadorCMC', 1, 9, 0,
                      NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
 
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorRazaoSocial', 1, 60, 0,
@@ -125,7 +125,7 @@ begin
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorCEP', 1, 8, 0,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'tomadorMunicipio', 1, 9, 0,
+   Result.AppendChild(AddNode(tcStr, '#1', 'tomadorMunicipio', 1, 9, 0,
                         OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), ''));
 
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorUF', 1, 2, 0,
@@ -145,7 +145,7 @@ var
 begin
    Result := CreateElement('demaisDados');
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'servicoISS', 1, 9, 1,
+   Result.AppendChild(AddNode(tcStr, '#1', 'servicoISS', 1, 9, 1,
                                 OnlyNumber(NFSe.Servico.ItemListaServico), ''));
 
    Result.AppendChild(AddNode(tcStr, '#1', 'codigoObra', 1, 15, 0,
@@ -168,7 +168,7 @@ begin
    Result.AppendChild(AddNode(FormatoAliq, '#1', 'aliquota', 1, 6, 1,
                                                                  Aliquota, ''));
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'ISSDevido', 1, 1, 1,
+   Result.AppendChild(AddNode(tcStr, '#1', 'ISSDevido', 1, 1, 1,
                             FpAOwner.SituacaoTribToStr(NFSe.SituacaoTrib), ''));
 
    Result.AppendChild(AddNode(tcInt, '#1', 'paisPrestacao', 1, 5, 0,
@@ -183,7 +183,7 @@ begin
    Result.AppendChild(AddNode(tcDe2, '#1', 'valorBaseCalculo', 1, 15, 1,
                                          NFSe.Servico.Valores.BaseCalculo, ''));
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'tipoDeducao', 1, 1, 1, '1', ''));
+   Result.AppendChild(AddNode(tcStr, '#1', 'tipoDeducao', 1, 1, 1, '1', ''));
 
    Result.AppendChild(AddNode(tcDe2, '#1', 'valorDeducao', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
@@ -212,7 +212,7 @@ function TNFSeW_ISSCambe.GerarRPS: TACBrXmlNode;
 begin
    Result := CreateElement('RPS');
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'RPSNumero', 1, 10, 1,
+   Result.AppendChild(AddNode(tcStr, '#1', 'RPSNumero', 1, 10, 1,
                                              NFSe.IdentificacaoRps.Numero, ''));
 
    Result.AppendChild(AddNode(tcDat, '#1', 'RPSDataEmissao', 1, 10, 1,

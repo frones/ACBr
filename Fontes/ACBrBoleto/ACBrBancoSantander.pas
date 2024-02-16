@@ -692,9 +692,10 @@ begin
       {SEGMENTO P - FIM}
 
       Inc(ISequencia);
+
       if sCodMovimento = '01' then
-       begin
-      {SEGMENTO Q}
+      begin
+        {SEGMENTO Q}
         ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)     + // 001 - 003 / Código do Banco na compensação
                 '0001'                                           + // 004 - 007 / Numero do lote remessa
                 '3'                                              + // 008 - 008 / Tipo de registro
@@ -719,12 +720,13 @@ begin
                 '000'                                            + // 216 – 218 / Quantidade total de parcelas
                 '000'                                            + // 219 – 221 / Número do plano
                 Space(19)                                        ); // 230 – 240 / Reservado (uso Banco)
-      {SEGMENTO Q - FIM}
+        {SEGMENTO Q - FIM}
 
-      if (PercentualMulta > 0) then
-      begin
-        Inc(ISequencia);
-        {SEGMENTO R}
+        if (PercentualMulta > 0) then
+        begin
+          Inc(ISequencia);
+
+          {SEGMENTO R}
           ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)               + // 001 - 003 / Código do Banco na compensação
                   '0001'                                                     + // 004 - 007 / Numero do lote remessa
                   '3'                                                        + // 008 - 008 / Tipo de registro
@@ -748,20 +750,21 @@ begin
                   MontaInstrucoes1CNAB240(ACBrTitulo)                        + // 100 - 139 / Mensagem 3
                                                                                // 140 - 179 / Mensagem 4
                   Space(61)                                                  ); // 180 - 240 / Reservado (uso Banco)
-        {SEGMENTO R - FIM}
-      end;
-
-      if (ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX <> tchNenhuma) then
-      begin
-        Inc(ISequencia);
-        {SEGMENTO Y03}
-        case ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX of
-          tchCPF       : LTipoChaveDICT := '1';
-          tchCNPJ      : LTipoChaveDICT := '2';
-          tchCelular   : LTipoChaveDICT := '3';
-          tchEmail     : LTipoChaveDICT := '4';
-          tchAleatoria : LTipoChaveDICT := '5';
         end;
+        {SEGMENTO R - FIM}
+
+        if (ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX <> tchNenhuma) then
+        begin
+          Inc(ISequencia);
+
+          {SEGMENTO Y03}
+          case ACBrTitulo.ACBrBoleto.Cedente.PIX.TipoChavePIX of
+            tchCPF       : LTipoChaveDICT := '1';
+            tchCNPJ      : LTipoChaveDICT := '2';
+            tchCelular   : LTipoChaveDICT := '3';
+            tchEmail     : LTipoChaveDICT := '4';
+            tchAleatoria : LTipoChaveDICT := '5';
+          end;
 
           ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)               +  // 001 - 003 Código do Banco na compensação
                   '0001'                                                     +  // 004 - 007 Numero do lote remessa
@@ -776,11 +779,13 @@ begin
                   PadRight(ACBrTitulo.ACBrBoleto.Cedente.PIX.Chave,77,' ')   +  // 082 - 158 Chave Pix
                   PadRight(QrCode.txId,35,' ')                               +  // 159 - 193 Código identificação do QR Code
                   Space(47)                                                 );  // 194 - 240 Reservado (uso Banco)
+
+        end;
         {SEGMENTO Y03 - FIM}
-      end;
-      Inc(ISequencia);
-      {SEGMENTO S}
-      // Existe um Formmulário 1 - Especial, que não será implementado, erá implementado do Formulário 2
+
+        Inc(ISequencia);
+        {SEGMENTO S}
+        // Existe um Formulário 1 - Especial, que não será implementado, erá implementado do Formulário 2
         ListTransacao.Add( IntToStrZero(ACBrBanco.Numero, 3)     + // 001 - 003 / Código do Banco na compensação
                 '0001'                                           + // 004 - 007 / Numero do lote remessa
                 '3'                                              + // 008 - 008 / Tipo de registro
@@ -795,11 +800,11 @@ begin
                                                                    // 139 - 178 / Mensagem 8
                                                                    // 179 - 218 / Mensagem 9
                 Space(22)                                        ); // 219 - 240 / Reservado (uso Banco)
-      {SEGMENTO S - FIM}
+
       end;
+      {SEGMENTO S - FIM}
 
-       Result := RemoverQuebraLinhaFinal(ListTransacao.Text);
-
+      Result := RemoverQuebraLinhaFinal(ListTransacao.Text);
     finally
       ListTransacao.Free;
     end;

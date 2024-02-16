@@ -54,7 +54,7 @@ type
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
-
+    function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     function  GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String; override;
 
@@ -127,6 +127,13 @@ begin
    fpModuloMultiplicadorInicial:= 2;
    fpModuloMultiplicadorFinal  := 7;
    fpCodParametroMovimento     := 'MX';
+end;
+
+function TACBrBancoBradescoMoneyPlus.MontarCampoCodigoCedente( const ACBrTitulo: TACBrTitulo): String;
+begin
+  Result := RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia,4)+' / '+
+            IntToStr(StrToInt64Def(ACBrTitulo.ACBrBoleto.Cedente.Conta,0))+'-'+
+            ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
 function TACBrBancoBradescoMoneyPlus.MontarCampoNossoNumero (
@@ -211,7 +218,7 @@ begin
         ATipoOcorrencia                                      + //Código de Movimento Remessa 16 17 2 - Num *C004
         PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Agencia), 5, '0') + //18 a 22 - Agência mantenedora da conta
         PadRight(ACBrBoleto.Cedente.AgenciaDigito, 1 , '0')  + //23 -Dígito verificador da agência
-        PadLeft(ACBrBoleto.Cedente.conta, 12, '0')           + //24 a 35 - Número da Conta Corrente
+        PadLeft(ACBrBoleto.Cedente.Conta, 12, '0')           + //24 a 35 - Número da Conta Corrente
         Padleft(ACBrBoleto.Cedente.ContaDigito, 1 , '0')     + //36 a 36 Dígito Verificador da Conta Alfa *G011
         ' '                                                  + //Retornaram que deve gravar vazio .. contrario ao layout
         //PadLeft(Copy(Fconta,Length(Fconta) ,1 ),1, ' ')    + //37-37Dígito Verificador da Ag/Conta 37 37 1 - Alfa *G012
@@ -455,7 +462,7 @@ begin
           PadRight('', 290, ' ')                                            + // 077 a 366 - Reserva
           PadLeft(ACBrTitulo.Carteira, 3, '0')                              + // 367 a 369 - Carteira
           PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Agencia), 5, '0')+ // 370 a 374 - Agência mantenedora da conta
-          PadLeft(ACBrBoleto.Cedente.conta, 7, '0')                         + // 375 a 381 - Número da Conta Corrente
+          PadLeft(ACBrBoleto.Cedente.Conta, 7, '0')                         + // 375 a 381 - Número da Conta Corrente
           Padleft(ACBrBoleto.Cedente.ContaDigito, 1 , '0')                  + // 382 a 382 - Dígito Verificador da Conta Alfa
           PadLeft(NossoNumero, 11, '0')                                     + // 383 a 393 - Nosso Número
           PadLeft(sDigitoNossoNumero ,1,'0')                                + // 394 a 394 - Digito Nosso Número

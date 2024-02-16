@@ -287,24 +287,22 @@ begin
     end;
 
     i01 := 0;
-    I := 0;
     CTe.Compl.ObsCont.Clear;
     while Leitor.rExtrai(2, 'ObsCont', '', i01 + 1) <> '' do
     begin
       CTe.Compl.obsCont.New;
-      CTe.Compl.obsCont[i].xCampo := Leitor.rAtributo('xCampo');
-      CTe.Compl.obsCont[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+      CTe.Compl.obsCont[i01].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.obsCont[i01].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i01);
     end;
 
     i01 := 0;
-    I := 0;
     CTe.Compl.ObsFisco.Clear;
     while Leitor.rExtrai(2, 'ObsFisco', '', i01 + 1) <> '' do
     begin
       CTe.Compl.obsCont.New;
-      CTe.Compl.obsCont[i].xCampo := Leitor.rAtributo('xCampo');
-      CTe.Compl.obsCont[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+      CTe.Compl.obsCont[i01].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.obsCont[i01].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i01);
     end;
   end;

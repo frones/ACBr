@@ -310,7 +310,7 @@ begin
           OcorrenciaOriginal.Tipo     := LTipoOcorrencia;
           
           MotivoLinha := 319;
-          for i := 0 to 4 do
+          for i := 1 to 4 do
           begin
             codInstrucao := IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2));
             MotivoRejeicaoComando.Add(codInstrucao);

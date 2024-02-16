@@ -116,9 +116,13 @@ var
 begin
   Supports(BorlandIDEServices,IOTAAboutBoxServices, AboutBoxServices);
   Assert(Assigned(AboutBoxServices), '');
-  ProductImage := LoadBitmap(FindResourceHInstance(HInstance), 'ACBR');
-  AboutBoxIndex := AboutBoxServices.AddPluginInfo(cACBrSobreTitulo , cACBrSobreDescricao,
-    ProductImage, False, cACBrSobreLicencaStatus);
+
+  if FindResource(HInstance, 'ACBR', RT_RCDATA) <> 0 then
+  begin
+    ProductImage := LoadBitmap(FindResourceHInstance(HInstance), 'ACBR');
+    AboutBoxIndex := AboutBoxServices.AddPluginInfo(cACBrSobreTitulo , cACBrSobreDescricao,
+      ProductImage, False, cACBrSobreLicencaStatus);
+  end;
 end;
 
 procedure UnregisterAboutBox;
@@ -136,9 +140,15 @@ var
   bmp: TBitmap;
 begin
   bmp := TBitmap.Create;
-  bmp.LoadFromResourceName(HInstance, 'ACBR');
-  SplashScreenServices.AddPluginBitmap(cACBrSobreDialogoTitulo,bmp.Handle,false,cACBrSobreLicencaStatus,'');
-  bmp.Free;
+  try
+    if FindResource(HInstance, 'ACBR', RT_RCDATA) <> 0 then
+    begin
+      bmp.LoadFromResourceName(HInstance, 'ACBR');
+      SplashScreenServices.AddPluginBitmap(cACBrSobreDialogoTitulo,bmp.Handle,false,cACBrSobreLicencaStatus,'');
+    end;
+  finally
+    bmp.Free;
+  end;
 end;
 {$ENDIF}
 

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2024
+-- ACBrReg.pas -- 
+[*] Ajuste para leitura correta do resource ACBR se existir ou não
+    por: Régys Silveira
+
 12/02/2024
 -- ACBrUtil.DateTime --
 [*] Ajuste para não ocorrer vazamento de memória.

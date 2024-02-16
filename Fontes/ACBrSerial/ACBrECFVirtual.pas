@@ -290,6 +290,7 @@ TACBrECFVirtualQuandoCancelarCupom = procedure(const NumCOOCancelar: Integer;
   CupomVirtual: TACBrECFVirtualClassCupom; var PermiteCancelamento: Boolean) of object;
 TACBrECFVirtualQuandoMudarEstado = procedure(const EstadoAtual: TACBrECFEstado;
   var NovoEstado: TACBrECFEstado) of object;
+TACBrECFVirtualQuandoImprimirLinha = procedure(const ALinha: string) of object;
 
 { TACBrECFVirtual }
   {$IFDEF RTL230_UP}
@@ -322,6 +323,8 @@ TACBrECFVirtualQuandoMudarEstado = procedure(const EstadoAtual: TACBrECFEstado;
     procedure SetQuandoGravarArqINI(AValue: TACBrECFVirtualLerGravarINI);
     procedure SetQuandoLerArqINI(AValue: TACBrECFVirtualLerGravarINI);
     procedure SetQuandoMudarEstado(AValue: TACBrECFVirtualQuandoMudarEstado);
+    function GetQuandoImprimirLinha: TACBrECFVirtualQuandoImprimirLinha;
+    procedure SetQuandoImprimirLinha(const AValue: TACBrECFVirtualQuandoImprimirLinha);
   protected
     fpECFVirtualClass: TACBrECFVirtualClass;
 
@@ -357,6 +360,8 @@ TACBrECFVirtualQuandoMudarEstado = procedure(const EstadoAtual: TACBrECFEstado;
       read GetQuandoCancelarCupom write SetQuandoCancelarCupom ;
     property QuandoMudarEstado : TACBrECFVirtualQuandoMudarEstado read GetQuandoMudarEstado
       write SetQuandoMudarEstado;
+    property QuandoImprimirLinha : TACBrECFVirtualQuandoImprimirLinha read GetQuandoImprimirLinha
+      write SetQuandoImprimirLinha;
 end ;
 
 { Classe filha de TACBrECFClass com implementaçao para Virtual }
@@ -370,6 +375,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fsQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
     fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
     fsQuandoMudarEstado: TACBrECFVirtualQuandoMudarEstado;
+    fsQuandoImprimirLinha: TACBrECFVirtualQuandoImprimirLinha;
 
     function GetChaveCupom: String;
     procedure SetChaveCupom(const AValue: String);
@@ -533,6 +539,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
       read fsQuandoCancelarCupom write fsQuandoCancelarCupom ;
     property QuandoMudarEstado : TACBrECFVirtualQuandoMudarEstado read fsQuandoMudarEstado
       write fsQuandoMudarEstado;
+    property QuantoImprimirLinha: TACBrECFVirtualQuandoImprimirLinha read fsQuandoImprimirLinha
+      write fsQuandoImprimirLinha;
 
     property ECFVirtual : TACBrECFVirtual read fsECFVirtualOwner ;
     property Device     : TACBrDevice     read GetDevice write SetDevice;
@@ -1548,6 +1556,11 @@ begin
   Result := fpECFVirtualClass.QuandoGravarArqINI;
 end;
 
+function TACBrECFVirtual.GetQuandoImprimirLinha: TACBrECFVirtualQuandoImprimirLinha;
+begin
+  Result := fpECFVirtualClass.QuantoImprimirLinha;
+end;
+
 function TACBrECFVirtual.GetQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
 begin
   Result := fpECFVirtualClass.QuandoLerArqINI;
@@ -1606,6 +1619,11 @@ end;
 procedure TACBrECFVirtual.SetQuandoGravarArqINI(AValue: TACBrECFVirtualLerGravarINI);
 begin
   fpECFVirtualClass.QuandoGravarArqINI := AValue;
+end;
+
+procedure TACBrECFVirtual.SetQuandoImprimirLinha(const AValue: TACBrECFVirtualQuandoImprimirLinha);
+begin
+  fpECFVirtualClass.fsQuandoImprimirLinha := AValue;
 end;
 
 procedure TACBrECFVirtual.SetQuandoLerArqINI(AValue: TACBrECFVirtualLerGravarINI);

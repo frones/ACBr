@@ -224,6 +224,9 @@ begin
   try
     fsECFVirtualPrinter.PosPrinter.Imprimir(AString);
 
+    if Assigned(QuantoImprimirLinha) then
+      QuantoImprimirLinha(AString);
+
     if not fsECFVirtualPrinter.PosPrinter.ControlePorta then
     begin
       repeat

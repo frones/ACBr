@@ -49,11 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+19/02/2024
+-- ACBrBoletoRet_Itau_API --
+[-]TK-5129 Corrigido para ler a reposta da API em Producao e Homologacao que tem inicio diferentes.
+https://www.projetoacbr.com.br/forum/topic/75906-boleto-hibrido-itau-bolecode/?do=findComment&comment=493377&_rid=1706
+  Por: Daniel Morais InfoCotidiano
 
 15/02/2024
 -- ACBrBancoSantander --
-[-] Corrigido qtde registros qdo existir informação Seguimento Y03
+[-]TK-5113 Corrigido qtde registros qdo existir informação Seguimento Y03
 https://www.projetoacbr.com.br/forum/topic/76214-homologa%C3%A7%C3%A3o-santander-d%C3%BAvidas-c%C3%B3digo-da-remessa/#comment-492912
   Por: Daniel Morais InfoCotidiano
 

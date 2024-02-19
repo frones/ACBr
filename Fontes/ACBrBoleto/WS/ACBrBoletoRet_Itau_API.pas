@@ -141,10 +141,11 @@ begin
           else
           begin
             AJSonData := AJson.Values['data'].AsObject;
-            if AJson.Values['data'].IsEmpty then
-              AJSonDadoBoleto := AJSon.Values['dado_boleto'].AsObject
+            if AJson.IsJsonObject('data') then
+              AJSonDadoBoleto  := AJson.Values['data'].AsObject.Values['dado_boleto'].AsObject
             else
-              AJSonDadoBoleto  := AJson.Values['data'].AsObject.Values['dado_boleto'].AsObject;
+              AJSonDadoBoleto := AJSon.Values['dado_boleto'].AsObject;
+
 
             ARetornoWS.DadosRet.TituloRet.Carteira       := AJSonDadoBoleto.Values['codigo_carteira'].AsString;
             ARetornoWS.DadosRet.TituloRet.ValorDocumento := StrToFloatDef( AJSonDadoBoleto.Values['valor_total_titulo'].AsString, 0)/100;

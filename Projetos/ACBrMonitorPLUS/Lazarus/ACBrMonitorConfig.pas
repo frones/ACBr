@@ -162,6 +162,12 @@ type
     IBGEUTF8          : Boolean;
   end;
 
+  TConsultaCNPJ = record
+    Provedor          : integer;
+    Usuario           : string;
+    Senha             : string;
+  end;
+
   TTC = record
     Modelo            : Integer;
     TCP_Porta         : Integer;
@@ -757,9 +763,7 @@ type
     CNPJPrefeitura: string;
   end;
 
-  TConsultaCNPJ = record
-    ProvedorCnpjWS: integer;
-  end;
+
 
 
   EDFeException = class(Exception);
@@ -998,6 +1002,13 @@ begin
       Ini.WriteBool( CSecCEP, CKeyCEPIBGEAcentos, IBGEAcentos );
       Ini.WriteBool( CSecCEP, CKeyCEPIBGEUTF8, IBGEUTF8 );
       GravaINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, Proxy_Pass, _C);
+    end;
+
+    with ConsultaCNPJ do
+    begin
+      ini.WriteInteger( CSecConsultaCNPJ,CKeyConsultaCNPJProvedor, Provedor);
+      GravaINICrypt(Ini,CSecConsultaCNPJ,CKeyConsultaCNPJUsuario , Usuario, _C);
+      GravaINICrypt(Ini,CSecConsultaCNPJ,CKeyConsultaCNPJSenha   , Senha  , _C);
     end;
 
     with TC do
@@ -1598,11 +1609,6 @@ begin
       Ini.WriteString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura );
     end;
 
-    with ConsultaCNPJ do
-    begin
-       Ini.WriteInteger( CSecProvedorCNPJ, CKeyProvedorCNPJProvedor, ProvedorCnpjWS );
-    end;
-
     SL := TStringList.Create;
     try
       Ini.GetStrings(SL);
@@ -1786,6 +1792,14 @@ begin
       IBGEUTF8                  := Ini.ReadBool( CSecCEP, CKeyCEPIBGEUTF8, IBGEUTF8 );
       Proxy_Pass                := LeINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, _C);
     end;
+
+    with ConsultaCNPJ do
+    begin
+      Provedor                  := Ini.ReadInteger( CSecConsultaCNPJ, CKeyConsultaCNPJProvedor, Provedor );
+      Usuario                   := LeINICrypt(Ini, CSecConsultaCNPJ, CKeyConsultaCNPJUsuario, _C );
+      Senha                     := LeINICrypt(Ini, CSecConsultaCNPJ, CKeyConsultaCNPJSenha, _C );
+    end;
+
 
     with TC do
     begin
@@ -2390,10 +2404,7 @@ begin
       CNPJPrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura);
     end;
 
-    with ConsultaCNPJ do
-    begin
-      ProvedorCnpjWS := ini.ReadInteger( CSecProvedorCNPJ, CKeyProvedorCNPJProvedor, ProvedorCnpjWS);
-    end;
+
 
 
   finally
@@ -2556,6 +2567,13 @@ begin
     Proxy_Pass                := '';
     IBGEAcentos               := False;
     IBGEUTF8                  := False;
+  end;
+
+  with ConsultaCNPJ do
+  begin
+    Provedor := 0;
+    Usuario:='';
+    Senha:='';
   end;
 
   with TC do
@@ -3145,13 +3163,6 @@ begin
     NomePrefeitura := '';
     CNPJPrefeitura := '';
   end;
-
-
-  with ConsultaCNPJ do
-  begin
-    ProvedorCnpjWS := 0;
-  end;
-
 end;
 
 procedure TMonitorConfig.ValidarNomeCaminho(Salvar: Boolean);

@@ -718,6 +718,7 @@ const
   CMetodoConsultar = 'consultar';
   CMetodoRastrear  = 'rastrear';
   CMetodoConsultarCaptcha = 'consultarcaptcha';
+  CMetodoSetProvedor       = 'setprovedor';
 
   CMetodoSetPorta          = 'setporta';
   CMetodoTemperatura       = 'temperatura';
@@ -913,6 +914,11 @@ const
   CKeyCEPProxy_Pass =                'Proxy_Pass';
   CKeyCEPIBGEAcentos =               'IBGEAcentos';
   CKeyCEPIBGEUTF8 =                  'IBGEUTF8';
+
+  CSecConsultaCNPJ =                 'ConsultaCNPJ';
+  CKeyConsultaCNPJProvedor =         'Provedor';
+  CKeyConsultaCNPJUsuario =          'Usuario';
+  CKeyConsultaCNPJSenha =            'Senha';
 
   CSecTC =                           'TC';
   CKeyTCModelo =                     'Modelo';
@@ -1435,9 +1441,6 @@ const
   CKeyNFSeConsultarAposCancelar =           'ConsultarAposCancelar';
   CKeyNFSeNomePrefeitura =                  'NomePrefeitura';
   CKeyNFSeCNPJPrefeitura =                  'CNPJPrefeitura';
-
-  CSecProvedorCNPJ =                        'ProvedorCNPJ';
-  CKeyProvedorCNPJProvedor =                'Provedor';
 
 
 implementation

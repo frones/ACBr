@@ -483,7 +483,7 @@ type
     ckMemoria: TCheckBox;
     ckNFCeUsarIntegrador: TCheckBox;
     ckSalvar: TCheckBox;
-    cbxBolProvedorCNPJ: TComboBox;
+    cbxConsCNPJProvedor: TComboBox;
     deBOLDirArquivo: TDirectoryEdit;
     deBOLDirLogo: TDirectoryEdit;
     deBolDirRemessa: TDirectoryEdit;
@@ -523,7 +523,9 @@ type
     edtBolMargemDireita: TEdit;
     edtCodigoCidade: TEdit;
     edtCNPJPrefeitura: TEdit;
+    edtConsCNPJUsuario: TEdit;
     edtNomeCidade: TEdit;
+    edtConsCNPJSenha: TEdit;
     edtUFCidade: TEdit;
     edtEmailAssuntoNFSe: TEdit;
     edtLogoMarcaPrefeitura: TEdit;
@@ -754,6 +756,7 @@ type
     GrbDadosBeneficiarioBoletoWeb: TGroupBox;
     grbWsConfig: TGroupBox;
     grbMargem: TGroupBox;
+    gbConsCNPJ: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -858,12 +861,14 @@ type
     Label284: TLabel;
     Label285: TLabel;
     Label286: TLabel;
-    lblBolProvedorConsultaCNPJ: TLabel;
+    lblConsCNPJProvedor: TLabel;
+    lblConCNPJSenha: TLabel;
     lbConsultarGTIN: TLabel;
     Label254: TLabel;
     lblBOLChavePix: TLabel;
     lblBolMotorRelatorio: TLabel;
     lblBOLTipoChavePix: TLabel;
+    lblConCNPJUsuario: TLabel;
     lblPrefixRemessa: TLabel;
     Label255: TLabel;
     Label256: TLabel;
@@ -1287,6 +1292,7 @@ type
     sbBALSerial: TSpeedButton;
     sbCHQBemafiINI: TSpeedButton;
     sbCHQSerial: TSpeedButton;
+    sbConsCNPJVerUsuario: TSpeedButton;
     sbConsultaCEP: TSpeedButton;
     sbConsultaCNPJBoleto: TSpeedButton;
     sbDirRFD: TSpeedButton;
@@ -1315,6 +1321,7 @@ type
     sbtnNumSerie: TSpeedButton;
     sbVerSenhaCertificado: TSpeedButton;
     sbVerSenhaEmail: TSpeedButton;
+    sbConsCNPJVerSenha: TSpeedButton;
     sbVerSenhaProxySAT: TSpeedButton;
     sbVerSenhaProxy: TSpeedButton;
     ScrollBox: TScrollBox;
@@ -1615,8 +1622,8 @@ type
     procedure cbxBOLF_JChange(Sender: TObject);
     procedure cbCEPWebServiceChange(Sender: TObject);
     procedure cbxBolMotorRelatorioChange(Sender: TObject);
-    procedure cbxBolProvedorCNPJChange(Sender: TObject);
     procedure cbxBOLUFChange(Sender: TObject);
+    procedure cbxConsCNPJProvedorChange(Sender: TObject);
     procedure cbxEmitCidadeChange(Sender: TObject);
     procedure cbxExibeResumoChange(Sender: TObject);
     procedure cbxImpDescPorcChange(Sender: TObject);
@@ -1738,6 +1745,8 @@ type
     procedure sbArquivoWebServicesNFSeClick(Sender: TObject);
     procedure sbArquivoWebServicesReinfClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
+    procedure sbConsCNPJVerSenhaClick(Sender: TObject);
+    procedure sbConsCNPJVerUsuarioClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
     procedure sbConsultaCNPJBoletoClick(Sender: TObject);
     procedure sbLogoMarca1Click(Sender: TObject);
@@ -2118,6 +2127,7 @@ var
   SPosReciboLayout: String;
 
   IBanco: TACBrTipoCobranca;
+  IConsCnpj : TACBrCNPJProvedorWS;
   ITipoChavePix: TACBrPIXTipoChave;
 
   iSAT: TACBrSATModelo;
@@ -2313,12 +2323,14 @@ begin
     Inc(IBanco);
   end;
 
-  {Criando a lista de Provedor Consulta CNPJ}
-  cbxBolProvedorCNPJ.Items.Clear;
-  for ProvedorCnpj := Low(TACBrCNPJProvedorWS) to High(TACBrCNPJProvedorWS) do
-     cbxBolProvedorCNPJ.Items.Add( GetEnumName(TypeInfo(TACBrCNPJProvedorWS), integer(ProvedorCnpj) ));
-  cbxBolProvedorCNPJ.ItemIndex := 1;
-
+  {Criando a Lista de Provedores Consulta CNPJ}
+  cbxConsCNPJProvedor.Items.Clear;
+  IConsCnpj := Low(TACBrCNPJProvedorWS);
+  while IConsCnpj <= High(TACBrCNPJProvedorWS) do
+  begin
+    cbxConsCNPJProvedor.Items.Add(GetEnumName(TypeInfo(TACBrCNPJProvedorWS), integer(IConsCnpj)));
+    Inc(IConsCnpj);
+  end;
 
   { Criando lista de chave pix disponiveis }
   cbxBOLTipoChavePix.Items.Clear;
@@ -4429,11 +4441,6 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.cbxBolProvedorCNPJChange(Sender: TObject);
-begin
-  ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbxBolProvedorCNPJ.ItemIndex);
-end;
-
 procedure TFrmACBrMonitor.cbxBOLUFChange(Sender: TObject);
 var
   cUF: Integer;
@@ -4451,6 +4458,11 @@ begin
       CarregarListaDeCidades(cUF);
     end;
   end;
+end;
+
+procedure TFrmACBrMonitor.cbxConsCNPJProvedorChange(Sender: TObject);
+begin
+  ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbxConsCNPJProvedor.ItemIndex);
 end;
 
 procedure TFrmACBrMonitor.cbxEmitCidadeChange(Sender: TObject);
@@ -5666,6 +5678,15 @@ begin
     ckIBGEUTF8.Checked                := IBGEUTF8;
   end;
 
+  { Parametros da Consulta CNPJ }
+  with FMonitorConfig.ConsultaCNPJ do
+  begin
+    cbxConsCNPJProvedor.ItemIndex     := Provedor;
+    cbxConsCNPJProvedorChange(Self);
+    edtConsCNPJUsuario.Text           := Usuario;
+    edtConsCNPJSenha.Text             := Senha;
+  end;
+
     with ACBrIBGE1 do
     begin
       ProxyHost := edCONProxyHost.Text;
@@ -5833,11 +5854,6 @@ begin
   begin
     edtSedexContrato.Text              := Contrato;
     edtSedexSenha.Text                 := SenhaSedex;
-  end;
-  {Parametro ConsultaCNPJ}
-  with FMonitorConfig.ConsultaCNPJ do
-  begin
-    cbxBolProvedorCNPJ.ItemIndex := ProvedorCnpjWS;
   end;
 
   {Parametro NCM}
@@ -6611,6 +6627,13 @@ begin
     ProxyPass := edCONProxyPass.Text;
   end;
 
+  with ACBrConsultaCNPJ1 do
+  begin
+    Provedor := TACBrCNPJProvedorWS(cbxConsCNPJProvedor.ItemIndex);
+    Usuario  := edtConsCNPJUsuario.Text;
+    Senha    := edtConsCNPJSenha.Text;
+  end;
+
   with ACBrMail1 do
   begin
     FromName := edEmailNome.Text;
@@ -6995,11 +7018,7 @@ begin
       ControlePorta               := chECFControlePorta.Checked;
       ArqLog                      := edECFLog.Text;
     end;
-    { Parametros do CNPJ1 }
-    with ACBrConsultaCNPJ1 do
-    begin
-      Provedor := TACBrCNPJProvedorWS(cbxBolProvedorCNPJ.ItemIndex) ;
-    end;
+
 
     { Parametros do CHQ }
     with FMonitorConfig.CHQ do
@@ -7095,6 +7114,14 @@ begin
       IBGEUTF8                    := ckIBGEUTF8.Checked;
     end;
 
+    with FMonitorConfig.ConsultaCNPJ do
+    begin
+      Provedor := cbxConsCNPJProvedor.ItemIndex;
+      Usuario  := edtConsCNPJUsuario.Text;
+      Senha    := edtConsCNPJSenha.Text;
+    end;
+
+
     { Parametros do TC }
     with FMonitorConfig.TC do
     begin
@@ -7130,9 +7157,6 @@ begin
       Contrato                := edtSedexContrato.Text;
       SenhaSedex              := edtSedexSenha.Text;
     end;
-
-    with FMonitorConfig.ConsultaCNPJ do
-      ProvedorCnpjWS := Integer(cbxBolProvedorCNPJ.ItemIndex);
 
     { Parametros NCM }
     with FMonitorConfig.NCM do
@@ -8757,6 +8781,22 @@ begin
 
 end;
 
+procedure TFrmACBrMonitor.sbConsCNPJVerSenhaClick(Sender: TObject);
+begin
+  if sbConsCNPJVerSenha.Down then
+    edtConsCNPJSenha.EchoMode := emNormal
+  else
+    edtConsCNPJSenha.EchoMode := emPassword;
+end;
+
+procedure TFrmACBrMonitor.sbConsCNPJVerUsuarioClick(Sender: TObject);
+begin
+  if sbConsCNPJVerUsuario.Down then
+    edtConsCNPJUsuario.EchoMode := emNormal
+  else
+    edtConsCNPJUsuario.EchoMode := emPassword;
+end;
+
 procedure TFrmACBrMonitor.sbConsultaCEPClick(Sender: TObject);
 var
   EndAchado: TACBrCEPEndereco;
@@ -8789,11 +8829,9 @@ var
   AServico : string;
   cUF: Integer;
 begin
-    ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbxBolProvedorCNPJ.ItemIndex);
-
-    if ACBrConsultaCNPJ1.Provedor = cwsNenhum then
-       raise Exception.Create('Por favor selecione um provedor de consulta CNPJ abaixo.');
-
+    ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbxConsCNPJProvedor.ItemIndex);
+    ACBrConsultaCNPJ1.Usuario  := edtConsCNPJUsuario.text;
+    ACBrConsultaCNPJ1.Senha    := edtConsCNPJSenha.text;
     if ACBrConsultaCNPJ1.Consulta(edtBOLCNPJ.Text) then
     begin
       //EditTipo.Text := ACBrConsultaCNPJ1.EmpresaTipo;

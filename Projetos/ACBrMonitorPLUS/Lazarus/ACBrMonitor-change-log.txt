@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2024
+-- ACBrMonitorConfig, ACBrMonitor1 (pas, lfm), ACBrMonitorConsts, DoCNPJUnit--
+[*] TK-5014 Ajustado para funcionar com a nova consulta CNPJ
+  Por: Daniel Morais InfoCotidiano
+
 02/02/2024
 -- DoBoletoUnit, ACBrMonitor.hnd --
 [*] Ajustado o metodo BOLETO.EnviarEmailBoleto para tambem receber parametro de assunto e mensagem

@@ -59,7 +59,13 @@ type
     FCNAE1: String;
     FCNAE2: String;
     FNaturezaJuridica: String;
+    FProvedor : TACBrCNPJProvedorWS;
+    FSenha: string;
+    FUsuario: string;
 
+    FChaveCrypt: AnsiString;
+    function GetSenha: String;
+    function Getusuario: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -81,7 +87,9 @@ type
     property CNAE1: String read FCNAE1 write FCNAE1;
     property CNAE2: String read FCNAE2 write FCNAE2;
     property NaturezaJuridica: String read FNaturezaJuridica write FNaturezaJuridica;
-
+    property Provedor : TACBrCNPJProvedorWS read FProvedor write FProvedor;
+    property Usuario: String read Getusuario write FUsuario;
+    property Senha: String read GetSenha write FSenha;
   end;
 
   { TLibConsultaCNPJConfig }
@@ -111,6 +119,16 @@ uses
 
 { TConsultaCNPJConfig }
 
+function TConsultaCNPJConfig.GetSenha: String;
+begin
+  Result :=B64CryptToString(FSenha, FChaveCrypt);
+end;
+
+function TConsultaCNPJConfig.Getusuario: String;
+begin
+  Result :=B64CryptToString(FUsuario, FChaveCrypt);
+end;
+
 constructor TConsultaCNPJConfig.Create;
 begin
   FEmpresaTipo:= '';
@@ -128,6 +146,9 @@ begin
   FCNAE1:= '';
   FCNAE2:= '';
   FNaturezaJuridica:= '';
+  FProvedor:=cwsNenhum;
+  FUsuario:='';
+  FSenha:='';
 end;
 
 destructor TConsultaCNPJConfig.Destroy;
@@ -151,6 +172,9 @@ begin
   FCNAE1:=             AIni.ReadString(CSessaoConsultaCNPJ, CChaveCNAE1, FCNAE1);
   FCNAE2:=             AIni.ReadString(CSessaoConsultaCNPJ, CChaveCNAE2, FCNAE2);
   FNaturezaJuridica:=  AIni.ReadString(CSessaoConsultaCNPJ, CChaveNaturezaJuridica, FNaturezaJuridica);
+  FProvedor:=          TACBrCNPJProvedorWS(AIni.ReadInteger(CSessaoConsultaCNPJ, CChaveProvedor, integer(FProvedor)));
+  FUsuario:=           AIni.ReadString(CSessaoConsultaCNPJ, CChaveUsuario, FUsuario);
+  FSenha:=             AIni.ReadString(CSessaoConsultaCNPJ, CChaveSenha, FSenha);
 end;
 
 procedure TConsultaCNPJConfig.GravarIni(const AIni: TCustomIniFile);
@@ -169,6 +193,9 @@ begin
   AIni.WriteString(CSessaoConsultaCNPJ, CChaveCNAE1, FCNAE1);
   AIni.WriteString(CSessaoConsultaCNPJ, CChaveCNAE2, FCNAE2);
   AIni.WriteString(CSessaoConsultaCNPJ, CChaveNaturezaJuridica, FNaturezaJuridica);
+  AIni.WriteInteger(CSessaoConsultaCNPJ,CChaveProvedor,integer(FProvedor));
+  AIni.WriteString(CSessaoConsultaCNPJ, CChaveUsuario, FUsuario);
+  AIni.WriteString(CSessaoConsultaCNPJ, CChaveSenha, FSenha);
 end;
 
 { TLibConsultaCNPJConfig }

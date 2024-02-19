@@ -98,7 +98,7 @@ const
  function CNPJ_ConsultarCaptcha(const libHandle: TLibHandle; ePathDownload: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_Consultar(const libHandle: TLibHandle; eCNPJ: PChar; eCaptcha: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+ function CNPJ_Consultar(const libHandle: TLibHandle; eCNPJ: PChar; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
  {%endregion}

@@ -57,6 +57,8 @@ const
   CChaveCNAE1 = 'CNAE1';
   CChaveCNAE2 = 'CNAE2';
   CChaveNaturezaJuridica = 'NaturezaJuridica';
+  CChaveProvedor = 'Provedor';
+
 
 implementation
 

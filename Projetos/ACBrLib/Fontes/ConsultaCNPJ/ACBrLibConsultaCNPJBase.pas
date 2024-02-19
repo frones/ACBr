@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrLibComum, ACBrLibConsultaCNPJDataModule, ACBrTCP, ACBrConsultaCNPJ;
+  ACBrLibComum, ACBrLibConsultaCNPJDataModule, ACBrTCP, ACBrConsultaCNPJ, ACBrUtil.Base;
 
 Const
   CCAPTCHA_CNPJ = 'CaptchaCNPJ';
@@ -61,7 +61,8 @@ type
       property ConsultaCNPJDM: TLibConsultaCNPJDM read FConsultaCNPJDM;
 
       function ConsultarCaptcha (ePathDownload: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function Consultar (eCNPJ: PChar; eServico: LongInt; const sResposta: PChar; var esTamanho: longint):longint;
+      function Consultar (eCNPJ: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+
 
   end;
 
@@ -150,30 +151,24 @@ begin
   end;
 end;
 
-function TACBrLibConsultaCNPJ.Consultar(eCNPJ: PChar; eServico: LongInt; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibConsultaCNPJ.Consultar(eCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   AResposta: String;
   CNPJ: AnsiString;
-  Captcha: AnsiString;
-  AServico: integer;
   Resp: TLibConsultaCNPJConsulta;
 begin
   try
     //Captcha:= ConverterAnsiParaUTF8(eCaptcha);
     CNPJ:= ConverterAnsiParaUTF8(eCNPJ);
-    AServico:= eServico;
 
     if Config.Log.Nivel > logNormal then
-       GravarLog('CNPJ_Consultar ( ' + CNPJ + ',' + IntToStr(AServico) + ' )', logCompleto, True)
+       GravarLog('CNPJ_Consultar (' + CNPJ + ' - Provedor:' + IntToStr(integer(ConsultaCNPJDM.ACBrConsultaCNPJ1.Provedor)) + ' )', logCompleto, True)
     else
        GravarLog('CNPJ_Consultar', logNormal);
 
-    if ((AServico <> 1) and (AServico <> 2)) then
-       raise EACBrLibException.Create(ErrParametroInvalido ,'Por favor selecione um serviço válido ! ('+IntToStr(AServico)+') ');
-
     ConsultaCNPJDM.Travar;
     try
-      ConsultaCNPJDM.ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(AServico);
+  
 
       ConsultaCNPJDM.ACBrConsultaCNPJ1.Consulta(CNPJ);
       AResposta:= '';

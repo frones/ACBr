@@ -86,6 +86,14 @@ var
   pLibConfig: TLibConsultaCNPJConfig;
 begin
   pLibConfig := TLibConsultaCNPJConfig(TACBrLibConsultaCNPJ(Lib).Config);
+
+  with ACBrConsultaCNPJ1 do
+  begin
+    Provedor      := pLibConfig.ConsultaCNPJConfig.Provedor;
+    Usuario       := pLibConfig.ConsultaCNPJConfig.Usuario;
+    Senha         := pLibConfig.ConsultaCNPJConfig.Senha;
+  end;
+
 end;
 
 procedure TLibConsultaCNPJDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

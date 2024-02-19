@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ACBrLibConfig, ACBrLibConsts--
 [*] TK-5014 Ajustado para criptografar Usuario e Senha do Provedor ConsultaCNPJ
   Por: Daniel Morais InfoCotidiano
+-- Diversos --
+[+] Scripts para compilação dos nugets para c# com cake
+  Por: Renato Rubinho
 
 14/02/2024
 -- Diversos --

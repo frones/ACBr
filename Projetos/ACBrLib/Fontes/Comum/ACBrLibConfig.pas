@@ -1031,6 +1031,9 @@ begin
               ( (ASessao = CSessaoProxy) or
                 (ASessao = CSessaoEmail) or
                 (ASessao = CSessaoDFe)
+
+              ) or (
+              (ASessao = CSessaoConsultaCNPJ) and ((AChave = CChaveSenha) or (AChave = CChaveUsuario))
               );
 
     if (Config.Log.Nivel > logCompleto) then
@@ -1047,7 +1050,6 @@ begin
   TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
                                                           + ASessao + ',' + AChave + ',' + IfThen(Criptografar,
                                                           StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
-
   Result := AValor;
   if Criptografar then
   begin

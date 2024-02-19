@@ -66,6 +66,8 @@ const
   CChavePorta = 'Porta';
   CChaveDevice = 'Device';
 
+  CSessaoConsultaCNPJ = 'ConsultaCNPJ';
+
   CSessaoSistema = 'Sistema';
   CChaveVersao = 'Versao';
   CChaveDescricao = 'Descricao';

@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: Victor H Gonzales - Pandaaa                     }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -35,7 +35,10 @@ unit ACBrConsultaCNPJ.WS;
 
 interface
 uses
-  ACBrJSON, SysUtils, ACBrValidador, httpsend,
+  ACBrJSON,
+  SysUtils,
+  ACBrValidador,
+  httpsend,
   Classes;
 type
   TParams =

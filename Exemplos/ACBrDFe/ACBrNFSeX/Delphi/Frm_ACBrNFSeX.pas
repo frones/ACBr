@@ -912,6 +912,16 @@ begin
       end
       else
       begin
+        // Provedor Giap
+        Servico.Endereco.Bairro := 'Bairro onde o serviço foi prestado';
+        Servico.Endereco.CEP := 'cep do local da prestação do serviço';
+        Servico.Endereco.xMunicipio := 'município do local da prestação do serviço';
+        Servico.Endereco.Complemento := 'complemento do local da prestação do serviço';
+        Servico.Endereco.Endereco := 'endereço do local da prestação do serviço';
+        Servico.Endereco.Numero := 'numero do local da prestação do serviço';
+        Servico.Endereco.xPais := 'pais do local da prestação do serviço';
+        Servico.Endereco.UF := 'UF do local da prestação do serviço';
+
         Servico.Valores.ValorServicos := 100.35;
         Servico.Valores.ValorDeducoes := 0.00;
         Servico.Valores.AliquotaPis := 0.00;

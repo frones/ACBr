@@ -506,9 +506,18 @@ begin
         altContratual.InfoRegimeTrab.InfoCeletista.dtBase            := INIRec.ReadInteger(sSecao, 'dtBase', 0);
         altContratual.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := INIRec.ReadString(sSecao, 'cnpjSindCategProf', '');
 
-        sSecao := 'trabTemp';
-        if INIRec.ReadString(sSecao, 'justProrr', '') <> '' then
-          altContratual.InfoRegimeTrab.InfoCeletista.trabTemporario.justProrr := INIRec.ReadString(sSecao, 'justProrr', '');
+        sSecao := 'trabTemporario';
+        sFim := INIRec.ReadString(sSecao, 'justProrr', '');
+        if sFim <> '' then
+          altContratual.InfoRegimeTrab.InfoCeletista.trabTemporario.justProrr := sFim
+        else
+        begin
+          sSecao := 'trabTemp';
+          sFim := INIRec.ReadString(sSecao, 'justProrr', '');
+
+          if sFim <> '' then
+            altContratual.InfoRegimeTrab.InfoCeletista.trabTemporario.justProrr := sFim;
+        end;
 
         sSecao := 'aprend';
 

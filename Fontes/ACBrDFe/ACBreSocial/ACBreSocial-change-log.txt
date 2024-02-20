@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2024
+-- pcesS2206, S2206.ini --
+[*] Ajustes na leitura do ini do evento S-2206
+  Por: Renato Rubinho
+
 14/02/2024
 -- pcesS2299 --
 [*] Alterada leitura do ini para permitir 3 dígítos no remunOutrEmpr do S2299.

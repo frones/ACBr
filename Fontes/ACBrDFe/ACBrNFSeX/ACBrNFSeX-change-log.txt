@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/02/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Cravinhos/SP o provedor é PriMax.
+  Por: Heraldo
 -- Diversos --
 [+] Incluída na classe ItemServico o campo ValorTributavel, pois o provedor IPM
     possui a tag <valor_tributavel> na lista de itens de serviços.

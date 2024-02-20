@@ -93,6 +93,7 @@ resourcestring
   DSC_NNFFIN = 'Numero final';
   DSC_XJUST = 'Justificativa';
   DSC_QRCODE = 'Assinatura Digital para uso em QRCODE';
+  DSC_QRCODDFe = 'Texto do QR-Code para consulta';
 
   // Descrição de Dados da Pessoa Física ou Jurídica
   DSC_CRT = 'Código de Regime Tributário';

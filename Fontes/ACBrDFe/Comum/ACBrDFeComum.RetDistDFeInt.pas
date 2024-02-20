@@ -298,7 +298,7 @@ type
 
   TRetDistDFeInt = class(TObject)
   private
-    FAOwner: TACBrDFe;
+    FOwner: TACBrDFe;
 
     Fversao: string;
     FtpAmb: TpcnTipoAmbiente;
@@ -475,10 +475,7 @@ begin
 
   FdocZip := TdocZipCollection.Create();
 
-  FAOwner := AOwner;
-  if not Assigned(FAOwner) then
-    raise EACBrDFeException.Create('Componente ACBrDFe não informado');
-
+  FOwner := AOwner;
   FptpDFe := AtpDFe;
 end;
 
@@ -614,7 +611,6 @@ end;
 procedure TRetDistDFeInt.LerDocumento(const ANode: TACBrXmlNode; Indice: Integer);
 var
   AuxNode: TACBrXmlNode;
-  Ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -670,7 +666,6 @@ procedure TRetDistDFeInt.LerGrupo_detEvento_emit(const ANode: TACBrXmlNode;
   Indice: Integer);
 var
   AuxNode: TACBrXmlNode;
-  Ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -777,7 +772,6 @@ end;
 
 procedure TRetDistDFeInt.LerDocumentoDecodificado(const DocDecod: AnsiString; Indice: Integer);
 var
-  ok: boolean;
   Document: TACBrXmlDocument;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
@@ -912,14 +906,14 @@ function TRetDistDFeInt.GerarPathDistribuicao(
 begin
   case AItem.schema of
     schresEvento:
-      Result := FAOwner.Configuracoes.Arquivos.GetPathDownloadEvento(AItem.resEvento.tpEvento,
+      Result := FOwner.Configuracoes.Arquivos.GetPathDownloadEvento(AItem.resEvento.tpEvento,
                                                       AItem.resDFe.xNome,
                                                       AItem.resEvento.CNPJCPF,
                                                       AItem.resDFe.IE,
                                                       AItem.resEvento.dhEvento);
 
     schprocEventoNFe:
-      Result := FAOwner.Configuracoes.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
+      Result := FOwner.Configuracoes.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
                                                      AItem.resDFe.xNome,
                                                      AItem.procEvento.CNPJ,
                                                      AItem.resDFe.IE,
@@ -927,7 +921,7 @@ begin
 
     schresNFe,
     schprocNFe:
-      Result := FAOwner.Configuracoes.Arquivos.GetPathDownload(AItem.resDFe.xNome,
+      Result := FOwner.Configuracoes.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                            AItem.resDFe.CNPJCPF,
                                                            AItem.resDFe.IE,
                                                            AItem.resDFe.dhEmi);

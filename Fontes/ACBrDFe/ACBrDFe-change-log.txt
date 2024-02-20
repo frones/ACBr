@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2024
+-- ACBrDFeConsts --
+[+] Incluido a constante DSC_QRCODDFe.
+-- ACBrDFeComum.Proc --
+[+] Incluido o campo Id.
+  Por: Italo Giurizzato Junior
+
 14/02/2024
 -- ACBrXmlBase --
 [+] Implementado a procedure LerSignature.

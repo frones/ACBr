@@ -118,13 +118,10 @@ begin
         FResposta.CNAE2.Add(LJsonArray.ItemAsJSONObject[Z].AsString['id'] + ' ' +
                             LJsonArray.ItemAsJSONObject[Z].AsString['descricao']);
 
-
-      if LJson.IsJSONArray('inscricoes_estaduais') then
-      begin
-         LJsonArray := LJson.AsJSONArray['inscricoes_estaduais'];
-         if LJsonArray.ItemAsJSONObject[0].AsBoolean['ativo'] then
-            FResposta.InscricaoEstadual := LJsonArray.ItemAsJSONObject[0].AsString['inscricao_estadual'];
-      end;
+      LJsonArray := LJsonObject.AsJSONArray['inscricoes_estaduais'];
+      for Z := 0 to Pred(LJsonArray.Count) do
+         if (LJsonArray.ItemAsJSONObject[Z].AsBoolean['ativo']) then
+            FResposta.InscricaoEstadual := LJsonArray.ItemAsJSONObject[Z].AsString['inscricao_estadual'];
 
       LJsonObject := LJson.AsJSONObject['motivo_situacao_cadastral'];
       if LJson.IsJSONObject('motivo_situacao_cadastral' ) then

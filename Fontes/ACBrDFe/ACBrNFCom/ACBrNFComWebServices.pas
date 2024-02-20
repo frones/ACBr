@@ -45,7 +45,6 @@ uses
   ACBrXmlBase,
   ACBrNFComNotasFiscais, ACBrNFComConfiguracoes,
   ACBrNFComClass, ACBrNFComConversao,
-//  ACBrNFComProc,
   ACBrDFeComum.Proc,
   ACBrNFComRetConsSit,
   ACBrNFComEnvEvento, ACBrNFComRetEnvEvento,
@@ -165,6 +164,7 @@ type
     property NFComRetornoSincrono: TRetConsSitNFCom read FNFComRetornoSincrono;
   end;
 
+  (*
   { TNFComRetRecepcao }
 
   TNFComRetRecepcao = class(TNFComWebService)
@@ -219,7 +219,7 @@ type
 
 //    property NFComRetorno: TRetConsReciDFe read FNFComRetorno;
   end;
-
+  *)
   { TNFComConsulta }
 
   TNFComConsulta = class(TNFComWebService)
@@ -344,7 +344,7 @@ type
     FACBrNFCom: TACBrDFe;
     FStatusServico: TNFComStatusServico;
     FEnviar: TNFComRecepcao;
-    FRetorno: TNFComRetRecepcao;
+//    FRetorno: TNFComRetRecepcao;
     FConsulta: TNFComConsulta;
     FEnvEvento: TNFComEnvEvento;
     FEnvioWebService: TNFComEnvioWebService;
@@ -358,7 +358,7 @@ type
     property StatusServico: TNFComStatusServico read FStatusServico
       write FStatusServico;
     property Enviar: TNFComRecepcao read FEnviar write FEnviar;
-    property Retorno: TNFComRetRecepcao read FRetorno write FRetorno;
+//    property Retorno: TNFComRetRecepcao read FRetorno write FRetorno;
     property Consulta: TNFComConsulta read FConsulta write FConsulta;
     property EnvEvento: TNFComEnvEvento read FEnvEvento write FEnvEvento;
     property EnvioWebService: TNFComEnvioWebService read FEnvioWebService
@@ -375,8 +375,8 @@ uses
   ACBrCompress, ACBrNFCom, ACBrIntegrador,
   ACBrNFComConsts,
   ACBrNFComConsSit,
-  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ,
-  pcnConsReciDFe;
+//  pcnConsReciDFe,
+  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ;
 
 { TNFComWebService }
 
@@ -882,6 +882,7 @@ begin
   end;
 end;
 
+(*
 { TNFComRetRecepcao }
 
 constructor TNFComRetRecepcao.Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
@@ -1261,7 +1262,7 @@ function TNFComRetRecepcao.GerarPrefixoArquivo: string;
 begin
   Result := Recibo;
 end;
-
+*)
 { TNFComConsulta }
 
 constructor TNFComConsulta.Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);

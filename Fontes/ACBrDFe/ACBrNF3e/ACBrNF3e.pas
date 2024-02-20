@@ -665,7 +665,6 @@ end;
 function TACBrNF3e.Distribuicao(AcUFAutor: integer; const ACNPJCPF, AultNSU, ANSU,
   chNF3e: String): Boolean;
 begin
-  {
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
@@ -676,7 +675,6 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
-  }
 end;
 
 function TACBrNF3e.DistribuicaoDFePorUltNSU(AcUFAutor: integer; const ACNPJCPF,

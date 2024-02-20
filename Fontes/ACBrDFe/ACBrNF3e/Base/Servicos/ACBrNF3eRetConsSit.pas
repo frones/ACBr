@@ -176,83 +176,84 @@ begin
   Document := TACBrXmlDocument.Create;
 
   try
-    Document.LoadFromXml(XmlRetorno);
+    try
+      Document.LoadFromXml(XmlRetorno);
 
-    ANode := Document.Root;
+      ANode := Document.Root;
 
-    if ANode <> nil then
-    begin
-      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
-      cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
-      nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
-      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
-      dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-      chNF3e := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNF3e'), tcStr);
+      if ANode <> nil then
+      begin
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+        verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+        tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
+        nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
+        cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+        xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+        dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        chNF3e := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNF3e'), tcStr);
 
-      case cStat of
-        100,101,104,110,150,151,155,301,302,303:
-          begin
-            ANodeAux := ANode.Childrens.FindAnyNs('protNF3e');
-
-            if ANodeAux <> nil then
+        case cStat of
+          100,101,104,110,150,151,155,301,302,303:
             begin
-              // A propriedade XMLprotNF3e contem o XML que traz o resultado do
-              // processamento da NF3-e.
-              XMLprotNF3e := ANodeAux.OuterXml;
-
-              ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
+              ANodeAux := ANode.Childrens.FindAnyNs('protNF3e');
 
               if ANodeAux <> nil then
               begin
-                protNF3e.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-                protNF3e.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-                protNF3e.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNF3e'), tcStr);
-                protNF3e.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-                protNF3e.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
-                protNF3e.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
-                protNF3e.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-                protNF3e.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
-                protNF3e.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
-                protNF3e.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
+                // A propriedade XMLprotNF3e contem o XML que traz o resultado do
+                // processamento da NF3-e.
+                XMLprotNF3e := ANodeAux.OuterXml;
+
+                ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
+
+                if ANodeAux <> nil then
+                begin
+                  protNF3e.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+                  protNF3e.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+                  protNF3e.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNF3e'), tcStr);
+                  protNF3e.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+                  protNF3e.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+                  protNF3e.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
+                  protNF3e.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+                  protNF3e.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
+                  protNF3e.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
+                  protNF3e.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
+                end;
               end;
             end;
-          end;
-      end;
-
-      if Assigned(procEventoNF3e) then
-        procEventoNF3e.Free;
-
-      procEventoNF3e := TRetEventoNF3eCollection.Create;
-
-      try
-        ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoNF3e');
-
-        if Assigned(ANodeArray) then
-        begin
-          for i := Low(ANodeArray) to High(ANodeArray) do
-          begin
-            AnodeAux := ANodeArray[i];
-
-            procEventoNF3e.New;
-            procEventoNF3e.Items[i].RetEventoNF3e.XmlRetorno := AnodeAux.OuterXml;
-            procEventoNF3e.Items[i].RetEventoNF3e.XML := AnodeAux.OuterXml;
-            procEventoNF3e.Items[i].RetEventoNF3e.LerXml;
-          end;
         end;
 
-        Result := True;
-      except
-        Result := False;
-      end;
-    end;
+        if Assigned(procEventoNF3e) then
+          procEventoNF3e.Free;
 
+        procEventoNF3e := TRetEventoNF3eCollection.Create;
+
+        try
+          ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoNF3e');
+
+          if Assigned(ANodeArray) then
+          begin
+            for i := Low(ANodeArray) to High(ANodeArray) do
+            begin
+              AnodeAux := ANodeArray[i];
+
+              procEventoNF3e.New;
+              procEventoNF3e.Items[i].RetEventoNF3e.XmlRetorno := AnodeAux.OuterXml;
+              procEventoNF3e.Items[i].RetEventoNF3e.XML := AnodeAux.OuterXml;
+              procEventoNF3e.Items[i].RetEventoNF3e.LerXml;
+            end;
+          end;
+        except
+          // Continua
+        end;
+      end;
+
+      Result := True;
+    except
+      Result := False;
+    end;
+  finally
     FreeAndNil(Document);
-    Result := True;
-  except
-    Result := False;
   end;
 end;
 

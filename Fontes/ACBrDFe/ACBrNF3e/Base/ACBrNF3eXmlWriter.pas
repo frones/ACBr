@@ -93,6 +93,7 @@ type
     function Gerar_gSCEE: TACBrXmlNode;
     function Gerar_gSCEE_gConsumidor: TACBrXmlNodeArray;
     function Gerar_gSCEE_gSaldoCred: TACBrXmlNodeArray;
+    function Gerar_gSCEE_gTipoSaldo: TACBrXmlNodeArray;
 
     function Gerar_NFdet: TACBrXmlNodeArray;
     function Gerar_NFdet_det(aNFdet: Integer): TACBrXmlNodeArray;
@@ -778,7 +779,7 @@ var
 begin
   Result := nil;
 
-  if (NF3e.gSCEE.gSaldoCred.Count > 0) then
+  if (NF3e.gSCEE.gConsumidor.Count > 0) then
   begin
     Result := FDocument.CreateElement('gSCEE');
 
@@ -791,10 +792,21 @@ begin
       Result.AppendChild(nodeArray[i]);
     end;
 
-    nodeArray := Gerar_gSCEE_gSaldoCred;
-    for i := 0 to NF3e.gSCEE.gSaldoCred.Count - 1 do
+    if (NF3e.gSCEE.gSaldoCred.Count > 0) then
     begin
-      Result.AppendChild(nodeArray[i]);
+      nodeArray := Gerar_gSCEE_gSaldoCred;
+      for i := 0 to NF3e.gSCEE.gSaldoCred.Count - 1 do
+      begin
+        Result.AppendChild(nodeArray[i]);
+      end;
+    end
+    else
+    begin
+      nodeArray := Gerar_gSCEE_gTipoSaldo;
+      for i := 0 to NF3e.gSCEE.gTipoSaldo.Count - 1 do
+      begin
+        Result.AppendChild(nodeArray[i]);
+      end;
     end;
   end;
 end;
@@ -882,6 +894,62 @@ begin
 
   if NF3e.gSCEE.gSaldoCred.Count > 3 then
     wAlerta('#098', 'gSaldoCred', '', ERR_MSG_MAIOR_MAXIMO + '3');
+end;
+
+function TNF3eXmlWriter.Gerar_gSCEE_gTipoSaldo: TACBrXmlNodeArray;
+var
+  i: integer;
+begin
+  Result := nil;
+  SetLength(Result, NF3e.gSCEE.gTipoSaldo.Count);
+
+  for i := 0 to NF3e.gSCEE.gTipoSaldo.Count - 1 do
+  begin
+    Result[i] := FDocument.CreateElement('gTipoSaldo');
+
+    Result[i].SetAttribute('nTipoSaldo', FormatFloat('00', i + 1));
+
+    Result[i].AppendChild(AddNode(tcStr, '#99', 'tpPosTar', 1, 1, 1,
+     tpPosTarToStr(NF3e.gSCEE.gTipoSaldo[i].tpPosTar), DSC_TPPOSTAR));
+
+    if Frac(NF3e.gSCEE.gTipoSaldo[i].vSaldAnt) > 0 then
+      Result[i].AppendChild(AddNode(tcDe4, '#100', 'vSaldAnt', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[i].vSaldAnt, DSC_VSALDANT))
+    else
+      Result[i].AppendChild(AddNode(tcInt, '#100', 'vSaldAnt', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[i].vSaldAnt, DSC_VSALDANT));
+
+    if Frac(NF3e.gSCEE.gTipoSaldo[i].vCredExpirado) > 0 then
+      Result[i].AppendChild(AddNode(tcDe4, '#101', 'vCredExpirado', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[i].vCredExpirado, DSC_VCREDEXPIRADO))
+    else
+      Result[i].AppendChild(AddNode(tcInt, '#101', 'vCredExpirado', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[i].vCredExpirado, DSC_VCREDEXPIRADO));
+
+    if Frac(NF3e.gSCEE.gTipoSaldo[i].vSaldAtual) > 0 then
+      Result[i].AppendChild(AddNode(tcDe4, '#102', 'vSaldAtual', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[i].vSaldAtual, DSC_VSALDATUAL))
+    else
+      Result[i].AppendChild(AddNode(tcInt, '#102', 'vSaldAtual', 1, 15, 1,
+       NF3e.gSCEE.gTipoSaldo[i].vSaldAtual, DSC_VSALDATUAL));
+
+      if (NF3e.gSCEE.gTipoSaldo[i].vCredExpirar > 0) or
+         (NF3e.gSCEE.gTipoSaldo[i].CompetExpirar > 0) then
+      begin
+        if Frac(NF3e.gSCEE.gTipoSaldo[i].vCredExpirar) > 0 then
+          Result[i].AppendChild(AddNode(tcDe4, '#103', 'vCredExpirar', 1, 15, 1,
+           NF3e.gSCEE.gTipoSaldo[i].vCredExpirar, DSC_VCREDEXPIRAR))
+        else
+          Result[i].AppendChild(AddNode(tcInt, '#103', 'vCredExpirar', 1, 15, 1,
+           NF3e.gSCEE.gTipoSaldo[i].vCredExpirar, DSC_VCREDEXPIRAR));
+
+        Result[i].AppendChild(AddNode(tcStr, '#104', 'CompetExpirar', 6, 6, 1,
+         FormatDateTime('yyyymm', NF3e.gSCEE.gTipoSaldo[i].CompetExpirar), DSC_COMPETEXPIRAR));
+      end;
+  end;
+
+  if NF3e.gSCEE.gTipoSaldo.Count > 10 then
+    wAlerta('#098', 'gTipoSaldo', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 function TNF3eXmlWriter.Gerar_NFdet: TACBrXmlNodeArray;
@@ -1014,7 +1082,10 @@ begin
      (NF3e.NFDet[aNFDet].Det[aDet].detItemAnt.retTrib.vRetCSLL > 0) or
      (NF3e.NFDet[aNFDet].Det[aDet].detItemAnt.retTrib.vBCIRRF > 0) or
      (NF3e.NFDet[aNFDet].Det[aDet].detItemAnt.retTrib.vIRRF > 0) then
-    Result.AppendChild(Gerar_NFdet_det_DetItemAnt_retTrib(aNFdet, aDet))
+    Result.AppendChild(Gerar_NFdet_det_DetItemAnt_retTrib(aNFdet, aDet));
+
+  if NF3e.NFDet[aNFdet].Det[aDet].detItemAnt.indDevolucao = tiSim then
+    Result.AppendChild(AddNode(tcStr, '#153', 'indDevolucao', 1, 1, 1, '1', ''));
 end;
 
 function TNF3eXmlWriter.Gerar_NFdet_det_DetItemAnt_retTrib(aNFdet,
@@ -1302,6 +1373,7 @@ function TNF3eXmlWriter.Gerar_NFdet_det_DetItem_Imposto_ICMS(aNFdet,
       cst40,
       cst41: result := '40';
       cst51: result := '51';
+      cst60: result := '60';
       cst90: result := '90';
     end;
   end;
@@ -1317,64 +1389,81 @@ begin
     Result := FDocument.CreateElement('ICMS' + sTagTemp);
 
     Result.AppendChild(AddNode(tcStr, '#174', 'CST', 2, 2, 1,
-      CSTICMSTOStr(CST), DSC_CST));
+                                                   CSTICMSTOStr(CST), DSC_CST));
 
     case CST of
       cst00:
         begin
-          Result.AppendChild(AddNode(tcDe2, '#175', 'vBC', 1, 15, 1, vBC, DSC_VBC));
+          Result.AppendChild(AddNode(tcDe2, '#175', 'vBC', 1, 15, 1,
+                                                                 vBC, DSC_VBC));
 
-          Result.AppendChild(AddNode(tcDe2, '#176', 'pICMS', 1, 5, 1, pICMS, DSC_PICMS));
+          Result.AppendChild(AddNode(tcDe2, '#176', 'pICMS', 1, 5, 1,
+                                                             pICMS, DSC_PICMS));
 
-          Result.AppendChild(AddNode(tcDe2, '#177', 'vICMS', 1, 15, 1, vICMS, DSC_VICMS));
+          Result.AppendChild(AddNode(tcDe2, '#177', 'vICMS', 1, 15, 1,
+                                                             vICMS, DSC_VICMS));
 
           if (pFCP > 0) or (vFCP > 0) then
           begin
-            Result.AppendChild(AddNode(tcDe2, '#178', 'pFCP', 1, 5, 1, pFCP, DSC_PFCP));
+            Result.AppendChild(AddNode(tcDe2, '#178', 'pFCP', 1, 5, 1,
+                                                               pFCP, DSC_PFCP));
 
-            Result.AppendChild(AddNode(tcDe2, '#179', 'vFCP', 1, 15, 1, vFCP, DSC_VFCP));
+            Result.AppendChild(AddNode(tcDe2, '#179', 'vFCP', 1, 15, 1,
+                                                               vFCP, DSC_VFCP));
           end;
         end;
 
       cst10:
         begin
-          Result.AppendChild(AddNode(tcDe2, '#182', 'vBCST', 1, 15, 1, vBCST, DSC_VBCST));
+          Result.AppendChild(AddNode(tcDe2, '#182', 'vBCST', 1, 15, 1,
+                                                             vBCST, DSC_VBCST));
 
-          Result.AppendChild(AddNode(tcDe2, '#183', 'pICMSST', 1, 5, 1, pICMSST, DSC_PICMSST));
+          Result.AppendChild(AddNode(tcDe2, '#183', 'pICMSST', 1, 5, 1,
+                                                         pICMSST, DSC_PICMSST));
 
-          Result.AppendChild(AddNode(tcDe2, '#184', 'vICMSST', 1, 15, 1, vICMSST, DSC_VICMSST));
+          Result.AppendChild(AddNode(tcDe2, '#184', 'vICMSST', 1, 15, 1,
+                                                         vICMSST, DSC_VICMSST));
 
           if (pFCP > 0) or (vFCP > 0) then
           begin
-            Result.AppendChild(AddNode(tcDe2, '#185', 'pFCPST', 1, 5, 1, pFCPST, DSC_PFCPST));
+            Result.AppendChild(AddNode(tcDe2, '#185', 'pFCPST', 1, 5, 1,
+                                                           pFCPST, DSC_PFCPST));
 
-            Result.AppendChild(AddNode(tcDe2, '#186', 'vFCPST', 1, 15, 1, vFCPST, DSC_VFCPST));
+            Result.AppendChild(AddNode(tcDe2, '#186', 'vFCPST', 1, 15, 1,
+                                                           vFCPST, DSC_VFCPST));
           end;
         end;
 
       cst20:
         begin
-          Result.AppendChild(AddNode(tcDe2, '#189', 'pRedBC', 1, 5, 1, pRedBC, DSC_PREDBC));
+          Result.AppendChild(AddNode(tcDe2, '#189', 'pRedBC', 1, 5, 1,
+                                                           pRedBC, DSC_PREDBC));
 
-          Result.AppendChild(AddNode(tcDe2, '#190', 'vBC', 1, 15, 1, vBC, DSC_VBC));
+          Result.AppendChild(AddNode(tcDe2, '#190', 'vBC', 1, 15, 1,
+                                                                 vBC, DSC_VBC));
 
-          Result.AppendChild(AddNode(tcDe2, '#191', 'pICMS ', 1, 5, 1, pICMS, DSC_PICMS));
+          Result.AppendChild(AddNode(tcDe2, '#191', 'pICMS', 1, 5, 1,
+                                                             pICMS, DSC_PICMS));
 
-          Result.AppendChild(AddNode(tcDe2, '#192', 'vICMS ', 1, 15, 1, vICMS, DSC_VICMS));
+          Result.AppendChild(AddNode(tcDe2, '#192', 'vICMS', 1, 15, 1,
+                                                             vICMS, DSC_VICMS));
 
           if vICMSDeson > 0 then
           begin
             Result.AppendChild(AddNode(tcDe2, '#193', 'vICMSDeson', 1, 15, 1,
-              vICMSDeson, DSC_VICMSDESON));
+                                                   vICMSDeson, DSC_VICMSDESON));
 
-            Result.AppendChild(AddNode(tcStr, '#194', 'cBenef', 10, 10, 1, cBenef, DSC_CBENEF));
+            Result.AppendChild(AddNode(tcStr, '#194', 'cBenef', 10, 10, 1,
+                                                           cBenef, DSC_CBENEF));
           end;
 
           if (pFCP > 0) or (vFCP > 0) then
           begin
-            Result.AppendChild(AddNode(tcDe2, '#195', 'pFCP', 1, 5, 1, pFCP, DSC_PFCP));
+            Result.AppendChild(AddNode(tcDe2, '#195', 'pFCP', 1, 5, 1,
+                                                               pFCP, DSC_PFCP));
 
-            Result.AppendChild(AddNode(tcDe2, '#196', 'vFCP', 1, 15, 1, vFCP, DSC_VFCP));
+            Result.AppendChild(AddNode(tcDe2, '#196', 'vFCP', 1, 15, 1,
+                                                               vFCP, DSC_VFCP));
           end;
         end;
 
@@ -1384,9 +1473,10 @@ begin
           if vICMSDeson > 0 then
           begin
             Result.AppendChild(AddNode(tcDe2, '#199', 'vICMSDeson', 1, 15, 1,
-              vICMSDeson, DSC_VICMSDESON));
+                                                   vICMSDeson, DSC_VICMSDESON));
 
-            Result.AppendChild(AddNode(tcStr, '#200', 'cBenef', 10, 10, 1, cBenef, DSC_CBENEF));
+            Result.AppendChild(AddNode(tcStr, '#200', 'cBenef', 10, 10, 1,
+                                                           cBenef, DSC_CBENEF));
           end;
         end;
 
@@ -1395,9 +1485,65 @@ begin
           if vICMSDeson > 0 then
           begin
             Result.AppendChild(AddNode(tcDe2, '#203', 'vICMSDeson', 1, 15, 1,
-              vICMSDeson, DSC_VICMSDESON));
+                                                   vICMSDeson, DSC_VICMSDESON));
 
-            Result.AppendChild(AddNode(tcStr, '#204', 'cBenef', 10, 10, 1, cBenef, DSC_CBENEF));
+            Result.AppendChild(AddNode(tcStr, '#204', 'cBenef', 10, 10, 1,
+                                                           cBenef, DSC_CBENEF));
+          end;
+        end;
+
+      cst60:
+        begin
+          if (vBCSTRET > 0) or (vICMSSTRET > 0) then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '246', 'vBCSTRet', 1, 15, 1,
+                                                       vBCSTRET, DSC_VBCSTRET));
+
+            Result.AppendChild(AddNode(tcDe2, '247', 'pICMSSTRet', 1, 5, 1,
+                                                   vICMSSTRET, DSC_PICMSSTRET));
+
+            Result.AppendChild(AddNode(tcDe2, '248', 'vICMSSubstituto', 1, 15, 0,
+                                                         vICMSST, DSC_VICMSST));
+
+            Result.AppendChild(AddNode(tcDe2, '249', 'vICMSSTRet', 1, 15, 1,
+                                                   vICMSSTRET, DSC_VICMSSTRET));
+          end;
+
+          if (vBCFCPSTRet > 0) or (pFCPSTRet > 0) or (vFCPSTRet > 0) then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '251', 'vBCFCPSTRet', 1, 15, 1,
+                                                    vBCFCPSTRet, DSC_VBCFCPST));
+
+            Result.AppendChild(AddNode(tcDe2, '252', 'pFCPSTRet', 1, 5, 1,
+                                                     pFCPSTRet, DSC_PFCPSTRET));
+
+            Result.AppendChild(AddNode(tcDe2, '253', 'vFCPSTRet', 1, 15, 1,
+                                                     vFCPSTRet, DSC_VFCPSTRET));
+          end;
+
+          if (pRedBCEfet > 0) or (vBCEfet > 0) or (pICMSEfet > 0) or
+             (vICMSEfet > 0) then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '254', 'pRedBCEfet', 1, 5, 1,
+                                                   pRedBCEfet, DSC_PREDBCEFET));
+
+            Result.AppendChild(AddNode(tcDe2, '255', 'vBCEfet', 1, 15, 1,
+                                                         vBCEfet, DSC_VBCEFET));
+
+            Result.AppendChild(AddNode(tcDe2, '256', 'pICMSEfet', 1, 5, 1,
+                                                     pICMSEfet, DSC_PICMSEFET));
+
+            Result.AppendChild(AddNode(tcDe2, '257', 'vICMSEfet', 1, 15, 1,
+                                                     vICMSEfet, DSC_VICMSEFET));
+          end;
+
+          if vICMSDeson > 0 then
+          begin
+            Result.AppendChild(AddNode(tcDe2, '#258', 'vICMSDeson', 1, 15, 1,
+                                                   vICMSDeson, DSC_VICMSDESON));
+
+            Result.AppendChild(AddNode(tcStr, '#259', 'cBenef', 10, 10, 1,
+                                                           cBenef, DSC_CBENEF));
           end;
         end;
 
@@ -1405,26 +1551,32 @@ begin
         begin
           if vBC > 0 then
           begin
-            Result.AppendChild(AddNode(tcDe2, '#207', 'vBC', 1, 15, 1, vBC, DSC_VBC));
+            Result.AppendChild(AddNode(tcDe2, '#207', 'vBC', 1, 15, 1,
+                                                                 vBC, DSC_VBC));
 
-            Result.AppendChild(AddNode(tcDe2, '#208', 'pICMS', 1, 5, 1, pICMS, DSC_PICMS));
+            Result.AppendChild(AddNode(tcDe2, '#208', 'pICMS', 1, 5, 1,
+                                                             pICMS, DSC_PICMS));
 
-            Result.AppendChild(AddNode(tcDe2, '#209', 'vICMS', 1, 15, 1, vICMS, DSC_VICMS));
+            Result.AppendChild(AddNode(tcDe2, '#209', 'vICMS', 1, 15, 1,
+                                                             vICMS, DSC_VICMS));
           end;
 
           if vICMSDeson > 0 then
           begin
             Result.AppendChild(AddNode(tcDe2, '#210', 'vICMSDeson', 1, 15, 1,
-              vICMSDeson, DSC_VICMSDESON));
+                                                   vICMSDeson, DSC_VICMSDESON));
 
-            Result.AppendChild(AddNode(tcStr, '#211', 'cBenef', 10, 10, 1, cBenef, DSC_CBENEF));
+            Result.AppendChild(AddNode(tcStr, '#211', 'cBenef', 10, 10, 1,
+                                                           cBenef, DSC_CBENEF));
           end;
 
           if (pFCP > 0) or (vFCP > 0) then
           begin
-            Result.AppendChild(AddNode(tcDe2, '#195', 'pFCP', 1, 5, 1, pFCP, DSC_PFCP));
+            Result.AppendChild(AddNode(tcDe2, '#195', 'pFCP', 1, 5, 1,
+                                                               pFCP, DSC_PFCP));
 
-            Result.AppendChild(AddNode(tcDe2, '#196', 'vFCP', 1, 15, 1, vFCP, DSC_VFCP));
+            Result.AppendChild(AddNode(tcDe2, '#196', 'vFCP', 1, 15, 1,
+                                                               vFCP, DSC_VFCP));
           end;
         end;
     end;

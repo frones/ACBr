@@ -168,6 +168,16 @@ const
   DSC_DVENC = 'Data de vencimento';
   DSC_NFAT = 'Número da fatura';
   DSC_QTDE = 'Quantidade';
+  DSC_VBCSTRET = 'Valor da BC do ICMS ST Retido';
+  DSC_PICMSSTRET = 'Alíquota do ICMS Substituição Tributaria Retido';
+  DSC_VICMSSTRET = 'Valor do ICMS Substituição Tributaria Retido';
+  DSC_VBCFCPST = 'Valor da Base de Cálculo do FCP por Substituição Tributária';
+  DSC_PFCPSTRET = 'Percentual do FCP retido anteriormente por Substituição Tributária';
+  DSC_VFCPSTRET = 'Valor do FCP retido por Substituição Tributária';
+  DSC_PREDBCEFET = 'Percentual de redução da base de cálculo efetiva';
+  DSC_VBCEFET = 'Valor da base de cálculo efetiva';
+  DSC_PICMSEFET = 'Alíquota do ICMS efetiva';
+  DSC_VICMSEFET = 'Valor do ICMS efetivo';
 
 implementation
 

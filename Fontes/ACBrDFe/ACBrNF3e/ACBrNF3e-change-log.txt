@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2024
+-- Diversos --
+[*] Realizado diversos ajustes para atender NT 2024/001.
+    Atenção: o ambiente de homologação só vai estar disponível em 26/02/2024
+    e o de produção em 13/03/2024
+  Por: Italo Giurizzato Junior
+
 14/02/2024
 -- Diversos --
 [*] Realizado diversos ajustes para poder usar a nova unit: ACBrDFeComum.RetEnvio

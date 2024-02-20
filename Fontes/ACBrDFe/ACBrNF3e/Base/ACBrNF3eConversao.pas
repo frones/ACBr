@@ -65,12 +65,12 @@ const
 type
   TLayOut = (LayNF3eStatusServico, LayNF3eRecepcao, LayNF3eRecepcaoSinc,
              LayNF3eRetRecepcao, LayNF3eConsulta, LayNF3eEvento,
-             LayNF3eQRCode, LayNF3eURLConsulta);
+             LayNF3eQRCode, LayNF3eURLConsulta, LayNF3eDistDFeInt);
 
 const
   TLayOutNF3eArrayStrings: array[TLayOut] of string = ('NF3eStatusServico',
     'NF3eRecepcao', 'NF3eRecepcaoSinc', 'NF3eRetRecepcao', 'NF3eConsulta',
-    'NFComRecepcaoEvento', 'URL-QRCode', 'URL-ConsultaNF3e');
+    'NFComRecepcaoEvento', 'URL-QRCode', 'URL-ConsultaNF3e', 'NF3eDistDFeInt');
 
 type
   TVersaoQrCode = (veqr000, veqr100, veqr200);
@@ -305,128 +305,50 @@ const
   TIndicadorArrayStrings: array[TIndicador] of string = ('1', '0');
 
 type
-  TCSTCofins = (cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09,
-                cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60,
-                cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71,
-                cof72, cof73, cof74, cof75, cof98, cof99);
+  TCSTCofins = (cof01, cof02, cof06, cof07, cof08, cof09, cof49);
 
 const
-  TCSTCofinsArrayStrings: array[TCSTCofins] of string = ('01', '02', '03', '04',
-    '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56',
-    '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74',
-    '75', '98', '99');
+  TCSTCofinsArrayStrings: array[TCSTCofins] of string = ('01', '02', '06', '07',
+    '08', '09', '49');
   TCSTCofinsDescArrayStrings: array[TCSTCofins] of string = (
     '01 - Operação Tributável com Alíquota Básica',
     '02 - Operação Tributável com Alíquota Diferenciada',
-    '03 - Operação Tributável com Alíquota por Unidade de Medida de Produto',
-    '04 - Operação Tributável Monofásica - Revenda a Alíquota Zero',
-    '05 - Operação Tributável por Substituição Tributária',
     '06 - Operação Tributável a Alíquota Zero',
     '07 - Operação Isenta da Contribuição',
     '08 - Operação sem Incidência da Contribuição',
     '09 - Operação com Suspensão da Contribuição',
-    '49 - Outras Operações de Saída',
-    '50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
-    '51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno',
-    '52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação',
-    '53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
-    '54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
-    '55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
-    '56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
-    '60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
-    '61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno',
-    '62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação',
-    '63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
-    '64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
-    '65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
-    '66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
-    '67 - Crédito Presumido - Outras Operações',
-    '70 - Operação de Aquisição sem Direito a Crédito',
-    '71 - Operação de Aquisição com Isenção',
-    '72 - Operação de Aquisição com Suspensão',
-    '73 - Operação de Aquisição a Alíquota Zero',
-    '74 - Operação de Aquisição sem Incidência da Contribuição',
-    '75 - Operação de Aquisição por Substituição Tributária',
-    '98 - Outras Operações de Entrada',
-    '99 - Outras Operações');
+    '49 - Outras Operações de Saída');
 
 type
-  TCSTPis = (pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09,
-             pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60,
-             pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71,
-             pis72, pis73, pis74, pis75, pis98, pis99);
+  TCSTPis = (pis01, pis02, pis06, pis07, pis08, pis09, pis49);
 
 const
-  TCSTPisArrayStrings: array[TCSTPis] of string = ('01', '02', '03', '04', '05',
-    '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60',
-    '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75',
-    '98', '99');
+  TCSTPisArrayStrings: array[TCSTPis] of string = ('01', '02', '06', '07', '08',
+    '09', '49');
   TCSTPisDescArrayStrings: array[TCSTPis] of string = (
     '01 - Operação Tributável com Alíquota Básica',
     '02 - Operação Tributável com Alíquota Diferenciada',
-    '03 - Operação Tributável com Alíquota por Unidade de Medida de Produto',
-    '04 - Operação Tributável Monofásica - Revenda a Alíquota Zero',
-    '05 - Operação Tributável por Substituição Tributária',
     '06 - Operação Tributável a Alíquota Zero',
     '07 - Operação Isenta da Contribuição',
     '08 - Operação sem Incidência da Contribuição',
     '09 - Operação com Suspensão da Contribuição',
-    '49 - Outras Operações de Saída',
-    '50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
-    '51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno',
-    '52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação',
-    '53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
-    '54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
-    '55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
-    '56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
-    '60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
-    '61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno',
-    '62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação',
-    '63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
-    '64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
-    '65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
-    '66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
-    '67 - Crédito Presumido - Outras Operações',
-    '70 - Operação de Aquisição sem Direito a Crédito',
-    '71 - Operação de Aquisição com Isenção',
-    '72 - Operação de Aquisição com Suspensão',
-    '73 - Operação de Aquisição a Alíquota Zero',
-    '74 - Operação de Aquisição sem Incidência da Contribuição',
-    '75 - Operação de Aquisição por Substituição Tributária',
-    '98 - Outras Operações de Entrada',
-    '99 - Outras Operações');
+    '49 - Outras Operações de Saída');
 
 type
-  TCSTIcms = (cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
-              cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
-              cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60);
+  TCSTIcms = (cst00, cst10, cst20, cst40, cst41, cst51, cst60, cst90);
 
 const
-  TCSTIcmsArrayStrings: array[TCSTIcms] of string = ('', '00', '10', '20', '30',
-    '40', '41', '45', '50', '51', '60', '70', '80', '81', '90', '90', 'SN', '10',
-    '90', '41', '60');
+  TCSTIcmsArrayStrings: array[TCSTIcms] of string = ('00', '10', '20', '40',
+    '41', '51', '60', '90');
   TCSTIcmsDescArrayStrings: array[TCSTIcms] of string = (
-    'VAZIO',
-    '00 - TRIBUTAÇÃO NORMAL DO ICMS',
-    '10 - TRIBUTAÇÃO COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
-    '20 - TRIBUTAÇÃO COM REDUÇÃO DE BC DO ICMS',
-    '30 - TRIBUTAÇÃO ISENTA E COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
-    '40 - ICMS ISENÇÃO',
-    '41 - ICMS NÃO TRIBUTADO',
-    '45 - ICMS ISENTO, NÃO TRIBUTADO OU DIFERIDO',
-    '50 - ICMS SUSPENSÃO',
-    '51 - ICMS DIFERIDO',
-    '60 - ICMS COBRADO POR SUBSTITUIÇÃO TRIBUTÁRIA',
-    '70 - TRIBUTAÇÃO COM REDUÇÃO DE BC E COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
-    '80 - RESPONSABILIDADE DO RECOLHIMENTO DO ICMS ATRIBUÍDO AO TOMADOR OU 3° POR ST',
-    '81 - ICMS DEVIDO À OUTRA UF',
-    '90 - ICMS OUTROS',
-    '90 - ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
-    '90 - SIMPLES NACIONAL',
-    '10 - TRIBUTADA E COM COBRANÇA DO ICMS POR SUBSTITUIÇÃO TRIBUTÁRIA - PARTILHA',
-    '90 - OUTROS - PARTILHA',
-    '41 - NÃO TRIBUTADO - REPASSE',
-    '60 - COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA - REPASSE');
+    '00 - Tributado Integralmente',
+    '10 - Tributada e com cobrança do ICMS por substituição tributária',
+    '20 - Tributação com BC reduzida do ICMS',
+    '40 - Tributação Isenta',
+    '41 - ICMS não Tributado',
+    '51 - Diferimento',
+    '60 - ICMS cobrado anteriormente por substituição tributária',
+    '90 - ICMS Outros');
 
 type
   TindIEDest = (inContribuinte, inIsento, inNaoContribuinte);

@@ -65,6 +65,7 @@ type
     procedure LergSCEE(const ANode: TACBrXmlNode);
     procedure LergConsumidor(const ANode: TACBrXmlNode);
     procedure LergSaldoCred(const ANode: TACBrXmlNode);
+    procedure LergTipoSaldo(const ANode: TACBrXmlNode);
     procedure LerNFDet(const ANode: TACBrXmlNode);
 
     procedure LerTotal(const ANode: TACBrXmlNode);
@@ -279,6 +280,27 @@ begin
   Item.CompetExpirar :=  StrToDate(xData);
 end;
 
+procedure TNF3eXmlReader.LergTipoSaldo(const ANode: TACBrXmlNode);
+var
+  Item: TgTipoSaldoCollectionItem;
+  ok: Boolean;
+  xData: string;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  Item := NF3e.gSCEE.gTipoSaldo.New;
+
+  Item.tpPosTar := StrTotpPosTar(ok, ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
+  Item.vSaldAnt := ObterConteudo(ANode.Childrens.Find('vSaldAnt'), tcDe4);
+  Item.vCredExpirado := ObterConteudo(ANode.Childrens.Find('vCredExpirado'), tcDe4);
+  Item.vSaldAtual := ObterConteudo(ANode.Childrens.Find('vSaldAtual'), tcDe4);
+  Item.vCredExpirar := ObterConteudo(ANode.Childrens.Find('vCredExpirar'), tcDe4);
+
+  xData := ObterConteudo(ANode.Childrens.Find('CompetExpirar'), tcStr);
+  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+  Item.CompetExpirar :=  StrToDate(xData);
+end;
+
 procedure TNF3eXmlReader.LergSCEE(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
@@ -299,6 +321,12 @@ begin
   for i := 0 to Length(ANodes) - 1 do
   begin
     LergSaldoCred(ANodes[i]);
+  end;
+
+  ANodes := ANode.Childrens.FindAll('gTipoSaldo');
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    LergTipoSaldo(ANodes[i]);
   end;
 end;
 
@@ -424,6 +452,15 @@ var
     ANodeImposto.ICMS.pRedBC     := ObterConteudo(ANodeNivel5.Childrens.Find('pRedBC'), tcDe2);
     ANodeImposto.ICMS.vICMSDeson := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSDeson'), tcDe2);
     ANodeImposto.ICMS.cBenef     := ObterConteudo(ANodeNivel5.Childrens.Find('cBenef'), tcStr);
+    ANodeImposto.ICMS.vBCSTRET := ObterConteudo(ANodeNivel5.Childrens.Find('vBCSTRET'), tcDe2);
+    ANodeImposto.ICMS.vICMSSTRET := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSSTRET'), tcDe2);
+    ANodeImposto.ICMS.vBCFCPSTRet := ObterConteudo(ANodeNivel5.Childrens.Find('vBCFCPSTRet'), tcDe2);
+    ANodeImposto.ICMS.pFCPSTRet := ObterConteudo(ANodeNivel5.Childrens.Find('pFCPSTRet'), tcDe2);
+    ANodeImposto.ICMS.vFCPSTRet := ObterConteudo(ANodeNivel5.Childrens.Find('vFCPSTRet'), tcDe2);
+    ANodeImposto.ICMS.pRedBCEfet := ObterConteudo(ANodeNivel5.Childrens.Find('pRedBCEfet'), tcDe2);
+    ANodeImposto.ICMS.vBCEfet := ObterConteudo(ANodeNivel5.Childrens.Find('vBCEfet'), tcDe2);
+    ANodeImposto.ICMS.pICMSEfet := ObterConteudo(ANodeNivel5.Childrens.Find('pICMSEfet'), tcDe2);
+    ANodeImposto.ICMS.vICMSEfet := ObterConteudo(ANodeNivel5.Childrens.Find('vICMSEfet'), tcDe2);
   end;
 begin
   Item := NF3e.NFDet.New;
@@ -468,6 +505,7 @@ begin
         detItemAnt.vPISEfet    := ObterConteudo(ANodeNivel3.Childrens.Find('vPISEfet'), tcDe2);
         detItemAnt.vCOFINS     := ObterConteudo(ANodeNivel3.Childrens.Find('vCOFINS'), tcDe2);
         detItemAnt.vCOFINSEfet := ObterConteudo(ANodeNivel3.Childrens.Find('vCOFINSEfet'), tcDe2);
+        detItemAnt.indDevolucao := StrToTIndicador(Ok, ObterConteudo(ANodeNivel3.Childrens.Find('indDevolucao'), tcStr));
 
         ANodeNivel4 := ANodeNivel3.Childrens.Find('retTrib');
 
@@ -578,6 +616,7 @@ begin
           LerICMS('ICMS20', detItem.Imposto);
           LerICMS('ICMS40', detItem.Imposto);
           LerICMS('ICMS51', detItem.Imposto);
+          LerICMS('ICMS60', detItem.Imposto);
           LerICMS('ICMS90', detItem.Imposto);
 
           ANodeNivel5 := ANodeNivel4.Childrens.Find('PIS');

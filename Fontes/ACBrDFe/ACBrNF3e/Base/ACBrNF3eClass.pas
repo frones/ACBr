@@ -55,58 +55,58 @@ type
 
   TinfNF3eSupl = class(TObject)
   private
-    FqrCodNF3e: String;
+    FqrCodNF3e: string;
   public
     procedure Assign(Source: TinfNF3eSupl);
 
-    property qrCodNF3e: String read FqrCodNF3e write FqrCodNF3e;
+    property qrCodNF3e: string read FqrCodNF3e write FqrCodNF3e;
   end;
 
   { TinfRespTec }
 
   TinfRespTec = class(TObject)
   private
-    FCNPJ: String;
-    FxContato: String;
-    Femail: String;
-    Ffone: String;
+    FCNPJ: string;
+    FxContato: string;
+    Femail: string;
+    Ffone: string;
     FidCSRT: Integer;
-    FhashCSRT: String;
+    FhashCSRT: string;
   public
     procedure Assign(Source: TinfRespTec);
 
-    property CNPJ: String     read FCNPJ     write FCNPJ;
-    property xContato: String read FxContato write FxContato;
-    property email: String    read Femail    write Femail;
-    property fone: String     read Ffone     write Ffone;
+    property CNPJ: string     read FCNPJ     write FCNPJ;
+    property xContato: string read FxContato write FxContato;
+    property email: string    read Femail    write Femail;
+    property fone: string     read Ffone     write Ffone;
     property idCSRT: Integer  read FidCSRT   write FidCSRT;
-    property hashCSRT: String read FhashCSRT write FhashCSRT;
+    property hashCSRT: string read FhashCSRT write FhashCSRT;
   end;
 
   { TInfAdic }
 
   TInfAdic = class(TObject)
   private
-    FinfAdFisco: String;
-    FinfCpl: String;
+    FinfAdFisco: string;
+    FinfCpl: string;
   public
     procedure Assign(Source: TInfAdic);
 
-    property infAdFisco: String read FinfAdFisco write FinfAdFisco;
+    property infAdFisco: string read FinfAdFisco write FinfAdFisco;
     // o campo abaixo precisa ser alterado pois ele pode aparecer até 5 vezes
     // no XML portanto é uma lista
-    property infCpl: String read FinfCpl write FinfCpl;
+    property infCpl: string read FinfCpl write FinfCpl;
   end;
 
   { TautXMLCollectionItem }
 
   TautXMLCollectionItem = class(TObject)
   private
-    FCNPJCPF: String;
+    FCNPJCPF: string;
   public
     procedure Assign(Source: TautXMLCollectionItem);
 
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
   end;
 
   { TautXMLCollection }
@@ -167,40 +167,40 @@ type
 
   TEndereco = class(TObject)
   private
-    FxLgr: String;
-    Fnro: String;
-    fxCpl: String;
-    FxBairro: String;
+    FxLgr: string;
+    Fnro: string;
+    fxCpl: string;
+    FxBairro: string;
     FcMun: Integer;
-    FxMun: String;
+    FxMun: string;
     FCEP: Integer;
-    FUF: String;
-    Ffone: String;
-    Femail: String;
+    FUF: string;
+    Ffone: string;
+    Femail: string;
   public
     procedure Assign(Source: TEndereco);
 
-    property xLgr: String    read FxLgr    write FxLgr;
-    property nro: String     read Fnro     write Fnro;
-    property xCpl: String    read FxCpl    write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
+    property xLgr: string    read FxLgr    write FxLgr;
+    property nro: string     read Fnro     write Fnro;
+    property xCpl: string    read FxCpl    write FxCpl;
+    property xBairro: string read FxBairro write FxBairro;
     property cMun: Integer   read FcMun    write FcMun;
-    property xMun: String    read FxMun    write FxMun;
-    property UF: String      read FUF      write FUF;
+    property xMun: string    read FxMun    write FxMun;
+    property UF: string      read FUF      write FUF;
     property CEP: Integer    read FCEP     write FCEP;
-    property fone: String    read Ffone    write Ffone;
-    property email: String   read Femail   write Femail;
+    property fone: string    read Ffone    write Ffone;
+    property email: string   read Femail   write Femail;
   end;
 
   { TgPIX }
 
   TgPIX = class(TObject)
   private
-    FurlQRCodePIX: String;
+    FurlQRCodePIX: string;
   public
     procedure Assign(Source: TgPIX);
 
-    property urlQRCodePIX: String read FurlQRCodePIX write FurlQRCodePIX;
+    property urlQRCodePIX: string read FurlQRCodePIX write FurlQRCodePIX;
   end;
 
   { TgFat }
@@ -211,11 +211,11 @@ type
     FdVencFat: TDateTime;
     FdApresFat: TDateTime;
     FdProxLeitura: TDateTime;
-    FnFat: String;
-    FcodBarras: String;
-    FcodDebAuto: String;
-    FcodBanco: String;
-    FcodAgencia: String;
+    FnFat: string;
+    FcodBarras: string;
+    FcodDebAuto: string;
+    FcodBanco: string;
+    FcodAgencia: string;
     FenderCorresp: TEndereco;
     FgPIX: TgPIX;
   public
@@ -228,11 +228,11 @@ type
     property dVencFat: TDateTime     read FdVencFat     write FdVencFat;
     property dApresFat: TDateTime    read FdApresFat    write FdApresFat;
     property dProxLeitura: TDateTime read FdProxLeitura write FdProxLeitura;
-    property nFat: String            read FnFat         write FnFat;
-    property codBarras: String       read FcodBarras    write FcodBarras;
-    property codDebAuto: String      read FcodDebAuto   write FcodDebAuto;
-    property codBanco: String        read FcodBanco     write FcodBanco;
-    property codAgencia: String      read FcodAgencia   write FcodAgencia;
+    property nFat: string            read FnFat         write FnFat;
+    property codBarras: string       read FcodBarras    write FcodBarras;
+    property codDebAuto: string      read FcodDebAuto   write FcodDebAuto;
+    property codBanco: string        read FcodBanco     write FcodBanco;
+    property codAgencia: string      read FcodAgencia   write FcodAgencia;
     property enderCorresp: TEndereco read FenderCorresp write FenderCorresp;
     property gPIX: TgPIX             read FgPIX         write FgPIX;
   end;
@@ -269,7 +269,7 @@ type
 
   TgHistFatCollectionItem = class(TObject)
   private
-    FxGrandFat: String;
+    FxGrandFat: string;
     FgGrandFat: TgGrandFatCollection;
     procedure SetgGrandFat(const Value: TgGrandFatCollection);
   public
@@ -278,7 +278,7 @@ type
 
     procedure Assign(Source: TgHistFatCollectionItem);
 
-    property xGrandFat: String read FxGrandFat write FxGrandFat;
+    property xGrandFat: string read FxGrandFat write FxGrandFat;
     property gGrandFat: TgGrandFatCollection read FgGrandFat write SetgGrandFat;
   end;
 
@@ -312,15 +312,15 @@ type
 
   TgContabCollectionItem = class(TObject)
   private
-    FcContab: String;
-    FxContab: String;
+    FcContab: string;
+    FxContab: string;
     FvContab: Double;
     FtpLanc: TtpLanc;
   public
     procedure Assign(Source: TgContabCollectionItem);
 
-    property cContab: String read FcContab write FcContab;
-    property xContab: String read FxContab write FxContab;
+    property cContab: string read FcContab write FcContab;
+    property xContab: string read FxContab write FxContab;
     property vContab: Double read FvContab write FvContab;
     property tpLanc: TtpLanc read FtpLanc  write FtpLanc;
   end;
@@ -341,12 +341,12 @@ type
   TgProcCollectionItem = class(TObject)
   private
     FtpProc: TtpProc;
-    FnProcesso: String;
+    FnProcesso: string;
   public
     procedure Assign(Source: TgProcCollectionItem);
 
     property tpProc: TtpProc   read FtpProc    write FtpProc;
-    property nProcesso: String read FnProcesso write FnProcesso;
+    property nProcesso: string read FnProcesso write FnProcesso;
   end;
 
   { TgProcCollection }
@@ -512,8 +512,17 @@ type
     FvFCPST: Double;
     FpRedBC: Double;
     FvICMSDeson: Double;
-    FcBenef: String;
+    FcBenef: string;
     FindSemCST: TIndicador;
+    FvBCSTRET: Double;
+    FvICMSSTRET: Double;
+    FvBCFCPSTRet: Double;
+    FpFCPSTRet: Double;
+    FvFCPSTRet: Double;
+    FpICMSEfet: Double;
+    FvICMSEfet: Double;
+    FvBCEfet: Double;
+    FpRedBCEfet: Double;
   public
     procedure Assign(Source: TICMS);
 
@@ -530,8 +539,17 @@ type
     property vFCPST: Double     read FvFCPST     write FvFCPST;
     property pRedBC: Double     read FpRedBC     write FpRedBC;
     property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
-    property cBenef: String     read FcBenef     write FcBenef;
+    property cBenef: string     read FcBenef     write FcBenef;
     property indSemCST: TIndicador read FindSemCST write FindSemCST;
+    property vBCSTRET: Double   read FvBCSTRET   write FvBCSTRET;
+    property vICMSSTRET: Double read FvICMSSTRET write FvICMSSTRET;
+    property vBCFCPSTRet: Double read FvBCFCPSTRet write FvBCFCPSTRet;
+    property pFCPSTRet: Double read FpFCPSTRet write FpFCPSTRet;
+    property vFCPSTRet: Double read FvFCPSTRet write FvFCPSTRet;
+    property pRedBCEfet: Double read FpRedBCEfet write FpRedBCEfet;
+    property vBCEfet: Double read FvBCEfet write FvBCEfet;
+    property pICMSEfet: Double read FpICMSEfet write FpICMSEfet;
+    property vICMSEfet: Double read FvICMSEfet write FvICMSEfet;
   end;
 
   { TImposto }
@@ -668,7 +686,7 @@ type
     FdIniTarif: TDateTime;
     FdFimTarif: TDateTime;
     FtpAto: TtpAto;
-    FnAto: String;
+    FnAto: string;
     FanoAto: Integer;
     FtpTarif: TtpTarif;
     FcPosTarif: TcPosTarif;
@@ -682,7 +700,7 @@ type
     property dIniTarif: TDateTime      read FdIniTarif     write FdIniTarif;
     property dFimTarif: TDateTime      read FdFimTarif     write FdFimTarif;
     property tpAto: TtpAto             read FtpAto         write FtpAto;
-    property nAto: String              read FnAto          write FnAto;
+    property nAto: string              read FnAto          write FnAto;
     property anoAto: Integer           read FanoAto        write FanoAto;
     property tpTarif: TtpTarif         read FtpTarif      write FtpTarif;
     property cPosTarif: TcPosTarif     read FcPosTarif     write FcPosTarif;
@@ -712,7 +730,7 @@ type
     FgAdBand: TgAdBandCollection;
     FProd: TProd;
     FImposto: TImposto;
-    FinfAdProd: String;
+    FinfAdProd: string;
     FgProcRef: TgProcRef;
     FgContab: TgContabCollection;
 
@@ -732,7 +750,7 @@ type
     property Imposto: TImposto           read FImposto   write FImposto;
     property gProcRef: TgProcRef         read FgProcRef  write FgProcRef;
     property gContab: TgContabCollection read FgContab   write SetgContab;
-    property infAdProd: String           read FinfAdProd write FinfAdProd;
+    property infAdProd: string           read FinfAdProd write FinfAdProd;
   end;
 
   { TdetItemAnt }
@@ -756,6 +774,7 @@ type
     FvFCPST: Double;
     FvPISEfet: Double;
     FvCOFINSEfet: Double;
+    FindDevolucao: TIndicador;
   public
     procedure Assign(Source: TdetItemAnt);
 
@@ -776,6 +795,7 @@ type
     property vFCPST: Double      read FvFCPST      write FvFCPST;
     property vPISEfet: Double    read FvPISEfet    write FvPISEfet;
     property vCOFINSEfet: Double read FvCOFINSEfet write FvCOFINSEfet;
+    property indDevolucao: TIndicador read FindDevolucao write FindDevolucao;
   end;
 
   { TgAjusteNF3eAnt }
@@ -827,8 +847,8 @@ type
 
   TNFDetCollectionItem = class(TObject)
   private
-    FchNF3eAnt: String;
-    Fmod6HashAnt: String;
+    FchNF3eAnt: string;
+    Fmod6HashAnt: string;
     FDet: TDetCollection;
 
     procedure SetDet(const Value: TDetCollection);
@@ -838,8 +858,8 @@ type
 
     procedure Assign(Source: TNFDetCollectionItem);
 
-    property chNF3eAnt: String   read FchNF3eAnt   write FchNF3eAnt;
-    property mod6HashAnt: String read Fmod6HashAnt write Fmod6HashAnt;
+    property chNF3eAnt: string   read FchNF3eAnt   write FchNF3eAnt;
+    property mod6HashAnt: string read Fmod6HashAnt write Fmod6HashAnt;
     property Det: TDetCollection read FDet         write SetDet;
   end;
 
@@ -886,11 +906,43 @@ type
     property Items[Index: Integer]: TgSaldoCredCollectionItem read GetItem write SetItem; default;
   end;
 
+  { TgTipoSaldoCollectionItem }
+
+  TgTipoSaldoCollectionItem = class(TObject)
+  private
+    FtpPosTar: TtpPosTar;
+    FvSaldAnt: Double;
+    FvCredExpirado: Double;
+    FvSaldAtual: Double;
+    FvCredExpirar: Double;
+    FCompetExpirar: TDateTime;
+  public
+    procedure Assign(Source: TgTipoSaldoCollectionItem);
+
+    property tpPosTar: TtpPosTar      read FtpPosTar      write FtpPosTar;
+    property vSaldAnt: Double         read FvSaldAnt      write FvSaldAnt;
+    property vCredExpirado: Double    read FvCredExpirado write FvCredExpirado;
+    property vSaldAtual: Double       read FvSaldAtual    write FvSaldAtual;
+    property vCredExpirar: Double     read FvCredExpirar  write FvCredExpirar;
+    property CompetExpirar: TDateTime read FCompetExpirar write FCompetExpirar;
+  end;
+
+  { TgTipoSaldoCollection }
+
+  TgTipoSaldoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TgTipoSaldoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TgTipoSaldoCollectionItem);
+  public
+    function New: TgTipoSaldoCollectionItem;
+    property Items[Index: Integer]: TgTipoSaldoCollectionItem read GetItem write SetItem; default;
+  end;
+
   { TgConsumidorCollectionItem }
 
   TgConsumidorCollectionItem = class(TObject)
   private
-    FidAcessGer: String;
+    FidAcessGer: string;
     FvPotInst: Double;
     FtpFonteEnergia: TtpFonteEnergia;
     FenerAloc: Double;
@@ -898,7 +950,7 @@ type
   public
     procedure Assign(Source: TgConsumidorCollectionItem);
 
-    property idAcessGer: String  read FidAcessGer write FidAcessGer;
+    property idAcessGer: string  read FidAcessGer write FidAcessGer;
     property vPotInst: Double    read FvPotInst   write FvPotInst;
     property tpFonteEnergia: TtpFonteEnergia read FtpFonteEnergia write FtpFonteEnergia;
     property enerAloc: Double    read FenerAloc   write FenerAloc;
@@ -923,9 +975,11 @@ type
     FtpPartComp: TtpPartComp;
     FgConsumidor: TgConsumidorCollection;
     FgSaldoCred: TgSaldoCredCollection;
+    FgTipoSaldo: TgTipoSaldoCollection;
 
     procedure SetgConsumidor(const Value: TgConsumidorCollection);
     procedure SetgSaldoCred(const Value: TgSaldoCredCollection);
+    procedure SetgTipoSaldo(const Value: TgTipoSaldoCollection);
   public
     constructor Create();
     destructor Destroy; override;
@@ -935,6 +989,7 @@ type
     property tpPartComp: TtpPartComp             read FtpPartComp  write FtpPartComp;
     property gConsumidor: TgConsumidorCollection read FgConsumidor write SetgConsumidor;
     property gSaldoCred: TgSaldoCredCollection   read FgSaldoCred  write SetgSaldoCred;
+    property gTipoSaldo: TgTipoSaldoCollection   read FgTipoSaldo  write SetgTipoSaldo;
   end;
 
   { TgMedCollectionItem }
@@ -942,14 +997,14 @@ type
   TgMedCollectionItem = class(TObject)
   private
     FnMed: Integer;
-    FidMedidor: String;
+    FidMedidor: string;
     FdMedAnt: TDateTime;
     FdMedAtu: TDateTime;
   public
     procedure Assign(Source: TgMedCollectionItem);
 
     property nMed: Integer      read FnMed      write FnMed;
-    property idMedidor: String  read FidMedidor write FidMedidor;
+    property idMedidor: string  read FidMedidor write FidMedidor;
     property dMedAnt: TDateTime read FdMedAnt   write FdMedAnt;
     property dMedAtu: TDateTime read FdMedAtu   write FdMedAtu;
   end;
@@ -997,35 +1052,35 @@ type
 
   TgJudic = class(TObject)
   private
-    FchNF3e: String;
+    FchNF3e: string;
   public
     procedure Assign(Source: TgJudic);
 
-    property chNF3e: String read FchNF3e write FchNF3e;
+    property chNF3e: string read FchNF3e write FchNF3e;
   end;
 
   { TgSub }
 
   TgSub = class(TObject)
   private
-    FchNF3e: String;
-    FCNPJ: String;
-    Fserie: String;
+    FchNF3e: string;
+    FCNPJ: string;
+    Fserie: string;
     FnNF: Integer;
     FCompetEmis: TDateTime;
     FCompetApur: TDateTime;
-    Fhash115: String;
+    Fhash115: string;
     FmotSub: TmotSub;
   public
     procedure Assign(Source: TgSub);
 
-    property chNF3e: String        read FchNF3e     write FchNF3e;
-    property CNPJ: String          read FCNPJ       write FCNPJ;
-    property serie: String         read Fserie      write Fserie;
+    property chNF3e: string        read FchNF3e     write FchNF3e;
+    property CNPJ: string          read FCNPJ       write FCNPJ;
+    property serie: string         read Fserie      write Fserie;
     property nNF: Integer          read FnNF        write FnNF;
     property CompetEmis: TDateTime read FCompetEmis write FCompetEmis;
     property CompetApur: TDateTime read FCompetApur write FCompetApur;
-    property hash115: String       read Fhash115    write Fhash115;
+    property hash115: string       read Fhash115    write Fhash115;
     property motSub: TmotSub       read FmotSub     write FmotSub;
   end;
 
@@ -1033,48 +1088,48 @@ type
 
   Tacessante = class(TObject)
   private
-    FidAcesso: String;
-    FidCodCliente: String;
+    FidAcesso: string;
+    FidCodCliente: string;
     FtpAcesso: TtpAcesso;
-    FxNomeUC: String;
+    FxNomeUC: string;
     FtpClasse: TtpClasse;
     FtpSubClasse: TtpSubClasse;
     FtpFase: TtpFase;
     FtpGrpTensao: TtpGrpTensao;
     FtpModTar: TtpModTar;
-    FlatGPS: String;
-    FlongGPS: String;
-    FcodRoteiroLeitura: String;
+    FlatGPS: string;
+    FlongGPS: string;
+    FcodRoteiroLeitura: string;
   public
     procedure Assign(Source: Tacessante);
 
-    property idAcesso: String          read FidAcesso          write FidAcesso;
-    property idCodCliente: String      read FidCodCliente      write FidCodCliente;
+    property idAcesso: string          read FidAcesso          write FidAcesso;
+    property idCodCliente: string      read FidCodCliente      write FidCodCliente;
     property tpAcesso: TtpAcesso       read FtpAcesso          write FtpAcesso;
-    property xNomeUC: String           read FxNomeUC           write FxNomeUC;
+    property xNomeUC: string           read FxNomeUC           write FxNomeUC;
     property tpClasse: TtpClasse       read FtpClasse          write FtpClasse;
     property tpSubClasse: TtpSubClasse read FtpSubClasse       write FtpSubClasse;
     property tpFase: TtpFase           read FtpFase            write FtpFase;
     property tpGrpTensao: TtpGrpTensao read FtpGrpTensao       write FtpGrpTensao;
     property tpModTar: TtpModTar       read FtpModTar          write FtpModTar;
-    property latGPS: String            read FlatGPS            write FlatGPS;
-    property longGPS: String           read FlongGPS           write FlongGPS;
-    property codRoteiroLeitura: String read FcodRoteiroLeitura write FcodRoteiroLeitura;
+    property latGPS: string            read FlatGPS            write FlatGPS;
+    property longGPS: string           read FlongGPS           write FlongGPS;
+    property codRoteiroLeitura: string read FcodRoteiroLeitura write FcodRoteiroLeitura;
   end;
 
   { TEmit }
 
   TDest = class(TObject)
   private
-    FxNome: String;
-    FCNPJCPF: String;
-    FidOutros: String;
+    FxNome: string;
+    FCNPJCPF: string;
+    FidOutros: string;
     FindIEDest: TindIEDest;
-    FIE: String;
-    FIM: String;
-    FcNIS: String;
-    FNB: String;
-    FxNomeAdicional: String;
+    FIE: string;
+    FIM: string;
+    FcNIS: string;
+    FNB: string;
+    FxNomeAdicional: string;
     FEnderDest: TEndereco;
   public
     constructor Create();
@@ -1082,15 +1137,15 @@ type
 
     procedure Assign(Source: TDest);
 
-    property CNPJCPF: String        read FCNPJCPF        write FCNPJCPF;
-    property idOutros: String       read FidOutros       write FidOutros;
-    property xNome: String          read FxNome          write FxNome;
+    property CNPJCPF: string        read FCNPJCPF        write FCNPJCPF;
+    property idOutros: string       read FidOutros       write FidOutros;
+    property xNome: string          read FxNome          write FxNome;
     property indIEDest: TindIEDest  read FindIEDest      write FindIEDest;
-    property IE: String             read FIE             write FIE;
-    property cNIS: String           read FcNIS           write FcNIS;
-    property NB: String             read FNB             write FNB;
-    property IM: String             read FIM             write FIM;
-    property xNomeAdicional: String read FxNomeAdicional write FxNomeAdicional;
+    property IE: string             read FIE             write FIE;
+    property cNIS: string           read FcNIS           write FcNIS;
+    property NB: string             read FNB             write FNB;
+    property IM: string             read FIM             write FIM;
+    property xNomeAdicional: string read FxNomeAdicional write FxNomeAdicional;
     property EnderDest: TEndereco   read FEnderDest      write FEnderDest;
   end;
 
@@ -1098,10 +1153,10 @@ type
 
   TEmit = class(TObject)
   private
-    FCNPJ: String;
-    FIE: String;
-    FxNome: String;
-    FxFant: String;
+    FCNPJ: string;
+    FIE: string;
+    FxNome: string;
+    FxFant: string;
     FenderEmit: TEndereco;
   public
     constructor Create();
@@ -1109,10 +1164,10 @@ type
 
     procedure Assign(Source: TEmit);
 
-    property CNPJ: String         read FCNPJ write FCNPJ;
-    property IE: String           read FIE write FIE;
-    property xNome: String        read FxNome write FxNome;
-    property xFant: String        read FxFant write FxFant;
+    property CNPJ: string         read FCNPJ write FCNPJ;
+    property IE: string           read FIE write FIE;
+    property xNome: string        read FxNome write FxNome;
+    property xFant: string        read FxFant write FxFant;
     property EnderEmit: TEndereco read FEnderEmit write FEnderEmit;
   end;
 
@@ -1120,7 +1175,7 @@ type
 
   TIde = class(TObject)
   private
-    FxJust: String;
+    FxJust: string;
     FfinNF3e: TFinalidadeNF3e;
     FtpEmis: TACBrTipoEmissao;
     FnSiteAutoriz: TSiteAutorizador;
@@ -1134,7 +1189,7 @@ type
     FcUF: Integer;
     FcNF: Integer;
     FdhCont: TDateTime;
-    FverProc: String;
+    FverProc: string;
 
   public
     procedure Assign(Source: TIde);
@@ -1151,27 +1206,27 @@ type
     property nSiteAutoriz: TSiteAutorizador read FnSiteAutoriz write FnSiteAutoriz default sa0;
     property cMunFG: Integer             read FcMunFG  write FcMunFG;
     property finNF3e: TFinalidadeNF3e read FfinNF3e write FfinNF3e default fnNormal;
-    property verProc: String             read FverProc write FverProc;
+    property verProc: string             read FverProc write FverProc;
     property dhCont: TDateTime           read FdhCont  write FdhCont;
-    property xJust: String               read FxJust   write FxJust;
+    property xJust: string               read FxJust   write FxJust;
   end;
 
   { TinfNF3e }
 
   TinfNF3e = class(TObject)
   private
-    FID: String;
+    FID: string;
     FVersao: Real;
 
-    function GetVersaoStr: String;
+    function GetVersaoStr: string;
     function GetVersao: Real;
-    function GetID: String;
+    function GetID: string;
   public
     procedure Assign(Source: TinfNF3e);
 
-    property ID: String        read GetID       write FID;
+    property ID: string        read GetID       write FID;
     property Versao: Real      read GetVersao write FVersao;
-    property VersaoStr: String read GetVersaoStr;
+    property VersaoStr: string read GetVersaoStr;
   end;
 
   { TNF3e }
@@ -1613,6 +1668,15 @@ begin
   pRedBC     := Source.pRedBC;
   vICMSDeson := Source.vICMSDeson;
   cBenef     := Source.cBenef;
+  vBCSTRET   := Source.vBCSTRET;
+  vICMSSTRET := Source.vICMSSTRET;
+  vBCFCPSTRet := Source.vBCFCPSTRet;
+  pFCPSTRet  := Source.pFCPSTRet;
+  vFCPSTRet  := Source.vFCPSTRet;
+  pRedBCEfet := Source.pRedBCEfet;
+  vBCEfet    := Source.vBCEfet;
+  pICMSEfet  := Source.pICMSEfet;
+  vICMSEfet  := Source.vICMSEfet;
 end;
 
 { TImposto }
@@ -1843,6 +1907,8 @@ begin
   vCOFINSEfet := Source.vCOFINSEfet;
 
   retTrib.Assign(Source.retTrib);
+
+  indDevolucao := Source.indDevolucao;
 end;
 
 { TgAjusteNF3eAnt }
@@ -2018,6 +2084,7 @@ begin
 
   gConsumidor.Assign(Source.gConsumidor);
   gSaldoCred.Assign(Source.gSaldoCred);
+  gTipoSaldo.Assign(Source.gTipoSaldo);
 end;
 
 constructor TgSCEE.Create;
@@ -2026,12 +2093,14 @@ begin
 
   FgConsumidor := TgConsumidorCollection.Create;
   FgSaldoCred := TgSaldoCredCollection.Create;
+  FgTipoSaldo := TgTipoSaldoCollection.Create;
 end;
 
 destructor TgSCEE.Destroy;
 begin
   FgConsumidor.Free;
   FgSaldoCred.Free;
+  FgTipoSaldo.Free;
 
   inherited Destroy;
 end;
@@ -2044,6 +2113,11 @@ end;
 procedure TgSCEE.SetgSaldoCred(const Value: TgSaldoCredCollection);
 begin
   FgSaldoCred := Value;
+end;
+
+procedure TgSCEE.SetgTipoSaldo(const Value: TgTipoSaldoCollection);
+begin
+  FgTipoSaldo := Value;
 end;
 
 { TgMedCollectionItem }
@@ -2244,7 +2318,7 @@ begin
   Versao := Source.Versao;
 end;
 
-function TinfNF3e.GetID: String;
+function TinfNF3e.GetID: string;
 begin
   Result := Copy(FID, 5, 44);
 end;
@@ -2257,7 +2331,7 @@ begin
      Result := FVersao;
 end;
 
-function TinfNF3e.GetVersaoStr: String;
+function TinfNF3e.GetVersaoStr: string;
 begin
   if FVersao <= 0 then
     FVersao := 2;
@@ -2382,6 +2456,38 @@ end;
 procedure TgPIX.Assign(Source: TgPIX);
 begin
   urlQRCodePIX := Source.urlQRCodePIX;
+end;
+
+{ TgTipoSaldoCollectionItem }
+
+procedure TgTipoSaldoCollectionItem.Assign(Source: TgTipoSaldoCollectionItem);
+begin
+  tpPosTar      := Source.tpPosTar;
+  vSaldAnt      := Source.vSaldAnt;
+  vCredExpirado := Source.vCredExpirado;
+  vSaldAtual    := Source.vSaldAtual;
+  vCredExpirar  := Source.vCredExpirar;
+  CompetExpirar := Source.CompetExpirar;
+end;
+
+{ TgTipoSaldoCollection }
+
+function TgTipoSaldoCollection.GetItem(
+  Index: Integer): TgTipoSaldoCollectionItem;
+begin
+  Result := TgTipoSaldoCollectionItem(inherited Items[Index]);
+end;
+
+function TgTipoSaldoCollection.New: TgTipoSaldoCollectionItem;
+begin
+  Result := TgTipoSaldoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TgTipoSaldoCollection.SetItem(Index: Integer;
+  Value: TgTipoSaldoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

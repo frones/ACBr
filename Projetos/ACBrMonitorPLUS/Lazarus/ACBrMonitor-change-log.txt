@@ -48,6 +48,9 @@ Símbolo : Significado
 -- ACBrMonitorConfig, ACBrMonitor1 (pas, lfm), ACBrMonitorConsts, DoCNPJUnit--
 [*] TK-5014 Ajustado para funcionar com a nova consulta CNPJ
   Por: Daniel Morais InfoCotidiano
+-- ACBrMonitor.hnd, Diversos inis --
+[+] Enviados arquivos ini de modelo da versão 1.2 do e-Social e configurado help do monitor
+  Por: Renato Rubinho
 
 02/02/2024
 -- DoBoletoUnit, ACBrMonitor.hnd --

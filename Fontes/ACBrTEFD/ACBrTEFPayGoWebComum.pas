@@ -1149,6 +1149,7 @@ end;
 destructor TACBrTEFPGWebAPI.Destroy;
 begin
   //GravarLog('TACBrTEFPGWebAPI.Destroy');
+  fOnGravarLog := nil;
   DesInicializar;
   fDadosTransacao.Free;
   fParametrosAdicionais.Free;
@@ -1362,13 +1363,18 @@ begin
   if (AStr <> '') then
   begin
     AnoStr := IntToStr(YearOf(Agora));
-    IdleProcTime := EncodeDateTime( StrToIntDef(Copy(AnoStr,1,2)+copy(AStr,1,2),0),  // YYYY
-                                    StrToIntDef(copy(AStr, 3,2),0),  // MM
-                                    StrToIntDef(copy(AStr, 5,2),0),  // DD
-                                    StrToIntDef(copy(AStr, 7,2),0),  // hh
-                                    StrToIntDef(copy(AStr, 9,2),0),  // nn
-                                    StrToIntDef(copy(AStr,11,2),0),  // ss
-                                    0 );
+    try
+      IdleProcTime := EncodeDateTime( StrToIntDef(Copy(AnoStr,1,2)+copy(AStr,1,2),0),  // YYYY
+                                      StrToIntDef(copy(AStr, 3,2),0),  // MM
+                                      StrToIntDef(copy(AStr, 5,2),0),  // DD
+                                      StrToIntDef(copy(AStr, 7,2),0),  // hh
+                                      StrToIntDef(copy(AStr, 9,2),0),  // nn
+                                      StrToIntDef(copy(AStr,11,2),0),  // ss
+                                      0 );
+    except
+      IdleProcTime := 0;
+    end;
+
     if (IdleProcTime <> 0) then
     begin
       if (IdleProcTime <= Agora) then
@@ -1377,7 +1383,7 @@ begin
       else if (IdleProcTime <> fTempoOcioso) then
       begin
         fTimerOcioso.Enabled := False;
-        fTimerOcioso.Interval := MilliSecondsBetween(Agora, IdleProcTime);
+        fTimerOcioso.Interval := min(MilliSecondsBetween(Agora, IdleProcTime), CMilissegundosOcioso);
         fTimerOcioso.Enabled := True;
       end;
 

@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2024
+-- ACBrTEFPayGoWebComum --
+[*] TACBrTEFPGWebAPI.AjustarTempoOcioso, melhoria para evitar "Range Error",
+    quando PWINFO_IDLEPROCTIME contém um valor inválido
+    (por: DSA)
+
 25/01/2024
 -- ACBrTEFPayGoWebComum --
 [*] Modificações para suportar nova DLL 4.1.25.3, PayGo Windows no modo atualizador da

@@ -82,18 +82,19 @@ contains
   ACBrBPeBilhetes in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeBilhetes.pas',
   ACBrBPeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeConfiguracoes.pas',
   ACBrBPeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeWebServices.pas',
-  pcnBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPe.pas',
-  pcnBPeR in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeR.pas',
-  pcnBPeW in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeW.pas',
-  pcnBPeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeConsts.pas',
-  pcnConversaoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConversaoBPe.pas',
-  pcnProcBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnProcBPe.pas',
-  pcnConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsSitBPe.pas',
-  pcnEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEventoBPe.pas',
-  pcnEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEnvEventoBPe.pas',
-  pcnRetEnvBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvBPe.pas',
-  pcnRetConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas',
-  pcnRetEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas',
+  
+  ACBrBPeClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeClass.pas',
+  ACBrBPeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeConsts.pas',
+  ACBrBPeConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeConversao.pas',
+  ACBrBPeXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeXmlReader.pas',
+  ACBrBPeXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeXmlWriter.pas',
+  
+  ACBrBPeConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeConsSit.pas',
+  ACBrBPeEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeEnvEvento.pas',
+  ACBrBPeEventoClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeEventoClass.pas',
+  ACBrBPeRetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeRetConsSit.pas',
+  ACBrBPeRetEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeRetEnvEvento.pas',
+  
   ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas';
 
 end.

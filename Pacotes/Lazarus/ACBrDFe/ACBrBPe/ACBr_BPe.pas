@@ -4,19 +4,20 @@
 
 unit ACBr_BPe;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  pcnBPe, pcnBPeR, pcnBPeW, pcnConsSitBPe, pcnConversaoBPe, pcnEnvEventoBPe, pcnEventoBPe, 
-  pcnProcBPe, pcnRetConsSitBPe, pcnRetEnvBPe, pcnRetEnvEventoBPe, ACBrBPe, ACBrBPeBilhetes, 
-  ACBrBPeConfiguracoes, ACBrBPeReg, ACBrBPeWebServices, ACBrBPeDABPEClass, 
-  pcnBPeConsts, LazarusPackageIntf;
+  ACBrBPeClass, ACBrBPeXmlReader, ACBrBPeXmlWriter, ACBrBPeConsSit, 
+  ACBrBPeConversao, pcnEnvEventoBPe, ACBrBPeEnvEvento, ACBrBPeRetConsSit, 
+  ACBrBPeRetEnvEvento, ACBrBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes, 
+  ACBrBPeReg, ACBrBPeWebServices, ACBrBPeDABPEClass, ACBrBPeConsts, 
+  LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrBPeReg', @ACBrBPeReg.Register);
 end;
 
 initialization

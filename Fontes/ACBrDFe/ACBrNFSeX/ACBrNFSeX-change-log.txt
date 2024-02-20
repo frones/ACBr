@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/02/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Nova Hartz/RS o provedor é Tecnos.
+  Por: Marco Moreira
+[*] Incluído para a cidade: Osório/RS o Params: ParametroExtra:eletron=1
+  Por: Mario Inacio
+
 16/02/2024
 -- ACBrNFSeXServicos --
 [*] A cidade: Cambé/PR tinha sido alterada de forma fixa para o PadraoNacional

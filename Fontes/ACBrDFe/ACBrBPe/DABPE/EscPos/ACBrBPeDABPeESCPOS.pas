@@ -40,7 +40,7 @@ uses
   Classes, SysUtils,
   {$IFDEF FPC} LResources, {$ENDIF}
   ACBrBPeDABPEClass, ACBrPosPrinter, ACBrBase,
-  pcnBPe, pcnEnvEventoBPe;
+  ACBrBPeClass, ACBrBPeEnvEvento;
 
 const
   CLarguraRegiaoEsquerda = 270;
@@ -100,11 +100,13 @@ implementation
 
 uses
   strutils, Math,
+  ACBrXmlBase,
   ACBrBPe, ACBrValidador,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrDFeUtil, ACBrConsts,
-  pcnConversao, pcnConversaoBPe;
+//  pcnConversao,
+  ACBrBPeConversao;
 
 { TACBrBPeDABPeESCPOS }
 
@@ -161,7 +163,7 @@ begin
     FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
 
   // se diferente de normal imprimir a emissão em contingência
-  if (FpBPe.ide.tpEmis <> teNormal) and EstaVazio(FpBPe.procBPe.nProt) then
+  if (FpBPe.ide.tpEmis <> ACBrXmlBase.teNormal) and EstaVazio(FpBPe.procBPe.nProt) then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('</c></ce><e><n>EMITIDA EM CONTINGÊNCIA</n></e>'));
     FPosPrinter.Buffer.Add(ACBrStr('<c><n>' + PadCenter('Pendente de autorização',
@@ -431,7 +433,7 @@ begin
 
   FPosPrinter.Buffer.Add(' ');
   // protocolo de autorização
-  if (FpBPe.Ide.tpEmis <> teOffLine) or
+  if (FpBPe.Ide.tpEmis <> ACBrXmlBase.teOffLine) or
      NaoEstaVazio(FpBPe.procBPe.nProt) then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('<c><n>Protocolo de Autorização:</n> ')+Trim(FpBPe.procBPe.nProt));
@@ -606,8 +608,8 @@ begin
      DateTimeToStr(FpEvento.Evento[0].InfEvento.dhEvento) );
   FPosPrinter.Buffer.Add( PadRight('Sequencia:', TAMCOLDESCR) +
      IntToStr(FpEvento.Evento[0].InfEvento.nSeqEvento) );
-  FPosPrinter.Buffer.Add( ACBrStr( PadRight('Versão:', TAMCOLDESCR)) +
-     FpEvento.Evento[0].InfEvento.versaoEvento );
+//  FPosPrinter.Buffer.Add( ACBrStr( PadRight('Versão:', TAMCOLDESCR)) +
+//     FpEvento.Evento[0].InfEvento.versaoEvento );
   FPosPrinter.Buffer.Add( PadRight('Status:', TAMCOLDESCR) +
      FpEvento.Evento[0].RetInfEvento.xMotivo );
   FPosPrinter.Buffer.Add( PadRight('Protocolo:', TAMCOLDESCR) +
@@ -637,8 +639,8 @@ begin
     FPosPrinter.Buffer.Add('</fn></ce><n>JUSTIFICATIVA</n>');
     FPosPrinter.Buffer.Add('</fn></ae>' +
        FpEvento.Evento[0].InfEvento.detEvento.xJust );
-  end
-
+  end;
+  {
   else if FpEvento.Evento[0].InfEvento.detEvento.xCorrecao <> '' then
   begin
     FPosPrinter.Buffer.Add('</linha_simples>');
@@ -646,6 +648,7 @@ begin
     FPosPrinter.Buffer.Add('</fn></ae>' +
        FpEvento.Evento[0].InfEvento.detEvento.xCorrecao );
   end;
+  }
 end;
 
 procedure TACBrBPeDABPeESCPOS.ImprimirDABPECancelado(BPe: TBPe);

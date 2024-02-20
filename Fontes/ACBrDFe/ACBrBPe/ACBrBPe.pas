@@ -38,9 +38,13 @@ interface
 
 uses
   Classes, SysUtils, synautil,
-  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase, 
+  ACBrXmlBase,
+  ACBrBase,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrBPeConfiguracoes, ACBrBPeWebServices, ACBrBPeBilhetes, ACBrBPeDABPEClass,
-  pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe;
+  ACBrBPeClass,
+  pcnConversao,
+  ACBrBPeConversao, ACBrBPeEnvEvento;
 
 const
   ACBRBPE_NAMESPACE = 'http://www.portalfiscal.inf.br/bpe';
@@ -102,8 +106,8 @@ type
     function LerVersaoDeParams(LayOutServico: TLayOutBPe): String; reintroduce; overload;
 
     function GetURLConsultaBPe(const CUF: Integer;
-      const TipoAmbiente: TpcnTipoAmbiente): String;
-    function GetURLQRCode(const CUF: Integer; const TipoAmbiente: TpcnTipoAmbiente;
+      const TipoAmbiente: TACBrTipoAmbiente): String;
+    function GetURLQRCode(const CUF: Integer; const TipoAmbiente: TACBrTipoAmbiente;
       const AChaveBPe: String): String;
 
     function IdentificaSchema(const AXML: String): TSchemaBPe;
@@ -185,7 +189,7 @@ begin
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamBPe, NomeArq,
       sReplyTo, sBCC);
   finally
-    SetStatus( stIdleBPe );
+    SetStatus( stBPeIdle );
   end;
 end;
 
@@ -312,6 +316,7 @@ begin
   NomeServico := LayOutBPeToServico(ALayOut);
   NomeSchema := NomeServicoToNomeSchema(NomeServico);
   ArqSchema := '';
+
   if NaoEstaVazio(NomeSchema) then
   begin
     Versao := VersaoServico;
@@ -374,17 +379,18 @@ begin
 end;
 
 function TACBrBPe.GetURLConsultaBPe(const CUF: Integer;
-  const TipoAmbiente: TpcnTipoAmbiente): String;
+  const TipoAmbiente: TACBrTipoAmbiente): String;
 begin
-  Result := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaBPe', 0);
+  Result := LerURLDeParams('BPe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
+    'URL-ConsultaBPe', 0);
 end;
 
 function TACBrBPe.GetURLQRCode(const CUF: Integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const AChaveBPe: String): String;
+  const TipoAmbiente: TACBrTipoAmbiente; const AChaveBPe: String): String;
 var
   Passo1, Passo2, urlUF, idBPe, tpEmis, sign: String;
 begin
-  urlUF := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('BPe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-QRCode', 0);
   idBPe := OnlyNumber(AChaveBPe);
   tpEmis := Copy(idBPe, 35, 1);
 
@@ -392,7 +398,7 @@ begin
   if Pos('?', urlUF) = 0 then
     Passo1 := Passo1 + '?';
 
-  Passo1 := Passo1 + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+  Passo1 := Passo1 + 'chBPe=' + idBPe + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
   Result := Passo1;
 
   if tpEmis <> '1' then
@@ -408,11 +414,11 @@ end;
 
 function TACBrBPe.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoBPe.Gerador.ArquivoFormatoXML) then
+  if EstaVazio(FEventoBPe.Xml) then
     FEventoBPe.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoBPe.Gerador.ArquivoFormatoXML));
+  WriteStrToStream(AStream, AnsiString(FEventoBPe.Xml));
   Result := True;
 end;
 
@@ -455,7 +461,7 @@ begin
     try
       EnviarEvento(ALote);
     except
-      GerarException(WebServices.EnvEvento.EventoRetorno.xMotivo);
+      GerarException(WebServices.EnvEvento.EventoRetorno.retInfEvento.xMotivo);
     end;
   end;
   Result := True;
@@ -541,7 +547,7 @@ begin
     if EventoBPe.Evento.Items[i].infEvento.nSeqEvento = 0 then
       EventoBPe.Evento.Items[i].infEvento.nSeqEvento := 1;
 
-    FEventoBPe.Evento.Items[i].infEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+    FEventoBPe.Evento.Items[i].infEvento.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
 
     if Bilhetes.Count > 0 then
     begin
@@ -595,15 +601,11 @@ begin
 end;
 
 function TACBrBPe.NomeServicoToNomeSchema(const NomeServico: String): String;
-Var
-  ok: Boolean;
+var
   ALayout: TLayOutBPe;
 begin
-  ALayout := ServicoToLayOutBPe(ok, NomeServico);
-  if ok then
-    Result := SchemaBPeToStr( LayOutToSchema( ALayout ) )
-  else
-    Result := '';
+  ALayout := ServicoToLayOutBPe(NomeServico);
+  Result := SchemaBPeToStr( LayOutToSchema( ALayout ) )
 end;
 
 procedure TACBrBPe.ImprimirEvento;
@@ -625,6 +627,7 @@ end;
 function TACBrBPe.Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
   chBPe: String): Boolean;
 begin
+{
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
@@ -635,6 +638,7 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
+  }
 end;
 
 function TACBrBPe.DistribuicaoDFe(AcUFAutor: Integer;

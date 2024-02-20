@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnBPe;
+unit ACBrBPeClass;
 
 interface
 
@@ -46,7 +46,12 @@ uses
    Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnConversaoBPe, pcnSignature, pcnProcBPe, pcnGerador;
+  ACBrXmlBase,
+//  ACBrDFeConversao,
+  ACBrBPeConversao,
+  ACBrDFeComum.Proc,
+//  ACBrDFeComum.Signature,
+  pcnSignature;
 
 type
 
@@ -239,7 +244,7 @@ type
     Ftotal: Ttotal;
 
     FSignature: TSignature;
-    FProcBPe: TProcBPe;
+    FProcBPe: TProcDFe;
 
     procedure SetInfViagem(const Value: TInfViagemCollection);
     procedure SetPag(Value: TpagCollection);
@@ -250,7 +255,8 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TBPe);
-    procedure SetXMLString(const AValue : AnsiString) ;
+//    procedure SetXMLString(const AValue : AnsiString);
+
     property infBPe: TinfBPe read FinfBPe write FinfBPe;
     property Ide: TIde read FIde write FIde;
     property Emit: TEmit read FEmit write FEmit;
@@ -270,7 +276,7 @@ type
     property total: Ttotal read Ftotal write Ftotal;
 
     property Signature: TSignature read FSignature write FSignature;
-    property procBPe: TProcBPe read FProcBPe write FProcBPe;
+    property procBPe: TProcDFe read FProcBPe write FProcBPe;
   end;
 
   TinfBPe = class(TObject)
@@ -291,7 +297,7 @@ type
   TIde = class(TObject)
   private
     FcUF: Integer;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     Fmodelo: Integer;
     Fserie: Integer;
     FnBP: Integer;
@@ -300,10 +306,10 @@ type
     Fmodal: TModalBPe;
     FdhEmi: TDateTime;
     FdCompet: TDateTime;
-    FtpEmis: TTipoEmissao;
+    FtpEmis: TACBrTipoEmissao;
     FverProc: String;
     FtpBPe: TTipoBPe;
-    FindPres: TpcnPresencaComprador;
+    FindPres: TPresencaComprador;
     FUFIni: String;
     FcMunIni: Integer;
     FUFFim: String;
@@ -316,7 +322,7 @@ type
     procedure Assign(Source: TIde);
 
     property cUF: Integer read FcUF write FcUF;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb default taHomologacao;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb default taHomologacao;
     property modelo: Integer read Fmodelo write Fmodelo;
     property serie: Integer read Fserie write Fserie;
     property nBP: Integer read FnBP write FnBP;
@@ -325,10 +331,10 @@ type
     property modal: TModalBPe read Fmodal write Fmodal;
     property dhEmi: TDateTime read FdhEmi write FdhEmi;
     property dCompet: TDateTime read FdCompet write FdCompet;
-    property tpEmis: TTipoEmissao read FtpEmis write FtpEmis default teNormal;
+    property tpEmis: TACBrTipoEmissao read FtpEmis write FtpEmis;
     property verProc: String read FverProc write FverProc;
     property tpBPe: TTipoBPe read FtpBPe write FtpBPe default tbNormal;
-    property indPres: TpcnPresencaComprador read FindPres write FindPres;
+    property indPres: TPresencaComprador read FindPres write FindPres;
     property UFIni: String read FUFIni write FUFIni;
     property cMunIni: Integer read FcMunIni write FcMunIni;
     property UFFim: String read FUFFim write FUFFim;
@@ -347,7 +353,7 @@ type
     FxFant: String;
     FIM: String;
     FCNAE: String;
-    FCRT: TpcnCRT;
+    FCRT: TCRT;
     FenderEmit: TenderEmit;
     FTAR: String;
   public
@@ -362,7 +368,7 @@ type
     property xFant: String read FxFant write FxFant;
     property IM: String read FIM write FIM;
     property CNAE: String read FCNAE write FCNAE;
-    property CRT: TpcnCRT read FCRT write FCRT;
+    property CRT: TCRT read FCRT write FCRT;
     property EnderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
     property TAR: String read FTAR write FTAR;
   end;
@@ -636,7 +642,7 @@ type
 
   TICMS = class(TObject)
   private
-    FCST: TpcnCSTIcms;
+    FCST: TCSTIcms;
     FvBC: Currency;
     FpICMS: Currency;
     FvICMS: Currency;
@@ -646,9 +652,12 @@ type
     FvBCOutraUF: Currency;
     FpICMSOutraUF: Currency;
     FvICMSOutraUF: Currency;
+    FvICMSDeson: Currency;
+    FcBenef: string;
   public
     procedure Assign(Source: TICMS);
-    property CST: TpcnCSTIcms read FCST write FCST default cst00;
+
+    property CST: TCSTIcms read FCST write FCST default cst00;
     property vBC: Currency read FvBC write FvBC;
     property pICMS: Currency read FpICMS write FpICMS;
     property vICMS: Currency read FvICMS write FvICMS;
@@ -658,6 +667,8 @@ type
     property vBCOutraUF: Currency read FvBCOutraUF write FvBCOutraUF;
     property pICMSOutraUF: Currency read FpICMSOutraUF write FpICMSOutraUF;
     property vICMSOutraUF: Currency read FvICMSOutraUF write FvICMSOutraUF;
+    property vICMSDeson: Currency read FvICMSDeson write FvICMSDeson;
+    property cBenef: string read FcBenef write FcBenef;
   end;
 
   TICMSUFFim = class(TObject)
@@ -712,6 +723,7 @@ type
     FinfAdCard: String;
   public
     procedure Assign(Source: TpagCollectionItem);
+
     property tPag: TFormaPagamento read FtPag write FtPag;
     property xPag: String read FxPag write FxPag;
     property nDocPag: String read FnDocPag write FnDocPag;
@@ -765,15 +777,11 @@ type
     property boardPassBPe: String read FboardPassBPe write FboardPassBPe;
   end;
 
-const
-  CMUN_EXTERIOR = 9999999;
-  XMUN_EXTERIOR = 'EXTERIOR';
-  UF_EXTERIOR = 'EX';
-
 implementation
 
 uses
-  ACBrUtil.Base, pcnBPeR;
+  ACBrUtil.Base,
+  ACBrBPeConsts;
 
 procedure TBPe.Assign(Source: TBPe);
 begin
@@ -799,11 +807,13 @@ begin
   procBPe.Assign(Source.procBPe);
 end;
 
+{
 procedure TBPe.SetXMLString(const AValue: AnsiString);
 var
  LocBPeR : TBPeR;
 begin
   LocBPeR := TBPeR.Create(Self);
+
   try
     LocBPeR.Leitor.Arquivo := AValue;
     LocBPeR.LerXml;
@@ -811,10 +821,11 @@ begin
     LocBPeR.Free
   end;
 end;
-
+}
 constructor TBPe.Create;
 begin
   inherited Create;
+
   FinfBPe      := TinfBPe.Create;
   FIde         := TIde.Create;
   FEmit        := TEmit.Create;
@@ -834,7 +845,7 @@ begin
   Ftotal       := Ttotal.Create;
 
   FSignature   := TSignature.create;
-  FProcBPe     := TProcBPe.create;
+  FProcBPe    := TProcDFe.Create('1.00', NAME_SPACE_BPe, 'BPe');
 
   FinfBPe.Versao := 0;
 end;
@@ -904,9 +915,9 @@ end;
 function TinfBPe.GetVersaoStr: String;
 begin
   if FVersao <= 0 then
-     Result := V1_00
-  else
-     Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
+    FVersao := 1;
+
+  Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
 
 {Ide}
@@ -1243,16 +1254,18 @@ end;
 
 procedure TICMS.Assign(Source: TICMS);
 begin
-  CST           := Source.CST;
-  vBC           := Source.vBC;
-  pICMS         := Source.pICMS;
-  vICMS         := Source.vICMS;
-  pRedBC        := Source.pRedBC;
-  vCred         := Source.vCred;
+  CST := Source.CST;
+  vBC := Source.vBC;
+  pICMS := Source.pICMS;
+  vICMS := Source.vICMS;
+  pRedBC := Source.pRedBC;
+  vCred := Source.vCred;
   pRedBCOutraUF := Source.pRedBCOutraUF;
-  vBCOutraUF    := Source.vBCOutraUF;
-  pICMSOutraUF  := Source.pICMSOutraUF;
-  vICMSOutraUF  := Source.vICMSOutraUF;
+  vBCOutraUF := Source.vBCOutraUF;
+  pICMSOutraUF := Source.pICMSOutraUF;
+  vICMSOutraUF := Source.vICMSOutraUF;
+  vICMSDeson := Source.vICMSDeson;
+  cBenef := Source.cBenef;
 end;
 
 { TICMSUFFim }

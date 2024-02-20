@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,59 +32,49 @@
 
 {$I ACBr.inc}
 
-unit pcnConsSitBPe;
+unit ACBrBPeConsSit;
 
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador,
-  ACBrDFeConsts,
-  pcnBPeConsts;
+  SysUtils, Classes,
+  ACBrXmlBase, ACBrBPeConsts;
 
 type
 
   TConsSitBPe = class
   private
-    FGerador: TGerador;
-    FtpAmb: TpcnTipoAmbiente;
-    FchBPe: String;
-    FVersao: String;
+    FtpAmb: TACBrTipoAmbiente;
+    FchBPe: string;
+    FVersao: string;
   public
-    constructor Create;
-    destructor Destroy; override;
-    function GerarXML: Boolean;
-    property Gerador: TGerador       read FGerador write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property chBPe: String           read FchBPe   write FchBPe;
-    property Versao: String          read FVersao  write FVersao;
+    function GerarXML: string;
+    function ObterNomeArquivo: string;
+
+    property tpAmb: TACBrTipoAmbiente read FtpAmb  write FtpAmb;
+    property chBPe: string            read FchBPe  write FchBPe;
+    property Versao: string           read FVersao write FVersao;
   end;
 
 implementation
 
+uses
+  ACBrUtil.Strings;
+
 { TConsSitBPe }
 
-constructor TConsSitBPe.Create;
+function TConsSitBPe.ObterNomeArquivo: string;
 begin
-  FGerador := TGerador.Create;
+  Result := OnlyNumber(FchBPe) + '-ped-sit.xml';
 end;
 
-destructor TConsSitBPe.Destroy;
+function TConsSitBPe.GerarXML: string;
 begin
-  FGerador.Free;
-  inherited;
-end;
-
-function TConsSitBPe.GerarXML: Boolean;
-begin
-  Gerador.ArquivoFormatoXML := '';
-
-  Gerador.wGrupo('consSitBPe ' + NAME_SPACE_BPE + ' versao="' + Versao + '"');
-  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'CP04', 'xServ', 09, 09, 1, 'CONSULTAR');
-  Gerador.wCampo(tcEsp, 'CP05', 'chBPe', 44, 44, 1, FchBPe, DSC_CHBPE);
-  Gerador.wGrupo('/consSitBPe');
-
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+  Result := '<consSitBPe ' + NAME_SPACE_BPe + ' versao="' + versao + '">' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
+              '<xServ>CONSULTAR</xServ>' +
+              '<chBPe>' + chBPe + '</chBPe>' +
+            '</consSitBPe>';
 end;
 
 end.

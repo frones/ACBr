@@ -54,7 +54,7 @@ uses
   ACBrBPe, 
   pcnConversao, 
   StrUtils, 
-  pcnConversaoBPe,
+  ACBrBPeConversao,
   Graphics, 
   ACBrDFe;
 

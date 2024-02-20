@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnBPeConsts;
+unit ACBrBPeConsts;
 
 interface
 
@@ -122,6 +122,8 @@ const
   DSC_PICMS = 'Alíquota do imposto';
   DSC_VICMS = 'Valor do ICMS';
   DSC_PREDBC = 'Percentual da Redução de BC';
+  DSC_VICMSDESON = 'Valor do ICMS Desoneração';
+  DSC_CBENEF = 'Código de Benefício Fiscal na UF aplicado';
 
   DSC_TPAG = 'Forma de Pagamento';
   DSC_VPAG = 'Valor do Pagamento';

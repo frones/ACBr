@@ -332,7 +332,7 @@ begin
                            NFSe.Servico.ItemServico[I].SituacaoTributaria, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_tributavel', 1, 15, 0,
-                                   NFSe.Servico.ItemServico[I].ValorTotal, ''));
+                              NFSe.Servico.ItemServico[I].ValorTributavel, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_deducao', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));

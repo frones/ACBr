@@ -653,6 +653,7 @@ begin
             CodMunPrestacao := INIRec.ReadString(sSecao, 'CodMunPrestacao', '');
             SituacaoTributaria := INIRec.ReadInteger(sSecao, 'SituacaoTributaria', 0);
             ValorISSRetido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorISSRetido', ''), 0);
+            ValorTributavel := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTributavel', ''), 0);
           end;
 
           Inc(i);

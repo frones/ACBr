@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 20/02/2024
+-- Diversos --
+[+] Incluída na classe ItemServico o campo ValorTributavel, pois o provedor IPM
+    possui a tag <valor_tributavel> na lista de itens de serviços.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade: Nova Hartz/RS o provedor é Tecnos.
   Por: Marco Moreira

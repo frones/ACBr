@@ -554,6 +554,8 @@ type
     FCodMunPrestacao: string;
     FSituacaoTributaria: Integer;
     FCodCNO: string;
+    FValorTributavel: Double;
+
     FDadosProfissionalParceiro: TDadosProfissionalParceiro;
   public
     constructor Create;
@@ -627,6 +629,7 @@ type
     property CodMunPrestacao: string read FCodMunPrestacao write FCodMunPrestacao;
     property SituacaoTributaria: Integer read FSituacaoTributaria write FSituacaoTributaria;
     property CodCNO: string read FCodCNO write FCodCNO;
+    property ValorTributavel: Double read FValorTributavel write FValorTributavel;
 
     // Provedor Agili
     property DadosProfissionalParceiro: TDadosProfissionalParceiro read FDadosProfissionalParceiro write FDadosProfissionalParceiro;

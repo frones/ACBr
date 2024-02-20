@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2024
+-- ACBrLibPIXCDConfig --
+[*] Corrige a informação do ArqPFX no GravarIni para o PSP Bradesco.
+  Por: Eduardo Telles
+
 12/02/2024
 -- ACBrLibPIXCDBase, ACBrLibPIXCDResposta --
 [*] Ajustes nas nomenclaturas de algumas funções visando trazer maior clareza no código e evitar possíveis problemas.

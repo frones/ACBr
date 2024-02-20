@@ -696,7 +696,7 @@ begin
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChavePIXBradesco, ChavePIX);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveClientIDBradesco, ClientID);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveClientSecretBradesco, ClientSecret);
-  AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveArqPFXBradesco, CChaveArqPFXBradesco);
+  AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveArqPFXBradesco, ArqPFX);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveSenhaPFXBradesco, SenhaPFX);
 end;
 

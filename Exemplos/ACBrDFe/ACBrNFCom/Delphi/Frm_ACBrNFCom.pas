@@ -787,19 +787,19 @@ begin
 
 //    MemoResp.Lines.Text := ACBrNFCom1.WebServices.Retorno.RetWS;
 //    memoRespWS.Lines.Text := ACBrNFCom1.WebServices.Retorno.RetornoWS;
-    LoadXML(ACBrNFCom1.WebServices.Retorno.RetornoWS, wbXmlRetorno);
+    LoadXML(ACBrNFCom1.WebServices.Enviar.RetWS, wbXmlRetorno);
 
     memoLog.Lines.Add('');
     memoLog.Lines.Add('Envio NFCom');
-    memoLog.Lines.Add('tpAmb: '+ TipoAmbienteToStr(ACBrNFCom1.WebServices.Retorno.TpAmb));
-    memoLog.Lines.Add('verAplic: '+ ACBrNFCom1.WebServices.Retorno.verAplic);
-    memoLog.Lines.Add('cStat: '+ IntToStr(ACBrNFCom1.WebServices.Retorno.cStat));
-    memoLog.Lines.Add('cUF: '+ IntToStr(ACBrNFCom1.WebServices.Retorno.cUF));
-    memoLog.Lines.Add('xMotivo: '+ ACBrNFCom1.WebServices.Retorno.xMotivo);
-    memoLog.Lines.Add('cMsg: '+ IntToStr(ACBrNFCom1.WebServices.Retorno.cMsg));
-    memoLog.Lines.Add('xMsg: '+ ACBrNFCom1.WebServices.Retorno.xMsg);
-    memoLog.Lines.Add('Recibo: '+ ACBrNFCom1.WebServices.Retorno.Recibo);
-    memoLog.Lines.Add('Protocolo: '+ ACBrNFCom1.WebServices.Retorno.Protocolo);
+    memoLog.Lines.Add('tpAmb: '+ TipoAmbienteToStr(ACBrNFCom1.WebServices.Enviar.TpAmb));
+    memoLog.Lines.Add('verAplic: '+ ACBrNFCom1.WebServices.Enviar.verAplic);
+    memoLog.Lines.Add('cStat: '+ IntToStr(ACBrNFCom1.WebServices.Enviar.cStat));
+    memoLog.Lines.Add('cUF: '+ IntToStr(ACBrNFCom1.WebServices.Enviar.cUF));
+    memoLog.Lines.Add('xMotivo: '+ ACBrNFCom1.WebServices.Enviar.xMotivo);
+//    memoLog.Lines.Add('cMsg: '+ IntToStr(ACBrNFCom1.WebServices.Enviar.cMsg));
+//    memoLog.Lines.Add('xMsg: '+ ACBrNFCom1.WebServices.Enviar.xMsg);
+    memoLog.Lines.Add('Recibo: '+ ACBrNFCom1.WebServices.Enviar.Recibo);
+//    memoLog.Lines.Add('Protocolo: '+ ACBrNFCom1.WebServices.Enviar.Protocolo);
   end;
 end;
 

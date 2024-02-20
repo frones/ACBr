@@ -948,12 +948,11 @@ begin
     ACBrNF3e1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU)
   else
     ACBrNF3e1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
-  {
+
   MemoResp.Lines.Text := ACBrNF3e1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrNF3e1.WebServices.DistribuicaoDFe.RetornoWS;
 
   LoadXML(ACBrNF3e1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
-  }
 end;
 
 procedure TfrmACBrNF3e.btnEnviarEmailClick(Sender: TObject);

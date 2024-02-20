@@ -515,6 +515,8 @@ begin
     BPe.Imp.ICMS.vBCOutraUF := ObterConteudo(AuxNode.Childrens.Find('vBCOutraUF'), tcDe2);
     BPe.Imp.ICMS.pICMSOutraUF := ObterConteudo(AuxNode.Childrens.Find('pICMSOutraUF'), tcDe2);
     BPe.Imp.ICMS.vICMSOutraUF := ObterConteudo(AuxNode.Childrens.Find('vICMSOutraUF'), tcDe2);
+    BPe.Imp.ICMS.vICMSDeson := ObterConteudo(AuxNode.Childrens.Find('vICMSDeson'), tcDe2);
+    BPe.Imp.ICMS.cBenef := ObterConteudo(AuxNode.Childrens.Find('cBenef'), tcStr);
 
     AuxNode2 := AuxNode.Childrens.Find('ICMSSN');
 

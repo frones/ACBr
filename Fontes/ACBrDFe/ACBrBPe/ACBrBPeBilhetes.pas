@@ -770,6 +770,8 @@ begin
       INIRec.WriteFloat('ICMS', 'vICMS', Imp.ICMS.vICMS);
       INIRec.WriteFloat('ICMS', 'pRedBC', Imp.ICMS.pRedBC);
       INIRec.WriteFloat('ICMS', 'vCred', Imp.ICMS.vCred);
+      INIRec.WriteFloat('ICMS', 'vICMSDeson', Imp.ICMS.vICMSDeson);
+      INIRec.WriteString('ICMS', 'cBenef', Imp.ICMS.cBenef);
       INIRec.WriteFloat('ICMS', 'vTotTrib', Imp.vTotTrib);
       INIRec.WriteString('ICMS', 'infAdFisco', Imp.infAdFisco);
 
@@ -1246,6 +1248,9 @@ begin
             vBCOutraUF    := StringToFloatDef(INIRec.ReadString(sSecao, 'vBCOutraUF', ''), 0);
             pICMSOutraUF  := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMSOutraUF', ''), 0);
             vICMSOutraUF  := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSOutraUF', ''), 0);
+
+            vICMSDeson := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSDeson', ''), 0);
+            cBenef     := INIRec.ReadString(sSecao, 'cBenef', '');
           end;
 
           vTotTrib   := StringToFloatDef(INIRec.ReadString(sSecao, 'vTotTrib', ''), 0);

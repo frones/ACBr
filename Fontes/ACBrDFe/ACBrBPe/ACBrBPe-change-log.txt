@@ -47,6 +47,11 @@ Símbolo : Significado
 
 20/02/2024
 -- Diversos --
+[*] Ajustes para atender a NT 2024/001.
+    Atenção: o ambiente de homologação só vai estar liberado em 26/02/2024
+    e o de produção em 11/03/2024.
+  Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Refactoring geral no componente.
   Por: Italo Giurizzato Junior
 

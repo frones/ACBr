@@ -10,10 +10,8 @@ object frmACBrBPe: TfrmACBrBPe
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1869,6 +1867,8 @@ object frmACBrBPe: TfrmACBrBPe
     CasasDecimais.vUnCom = 4
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrBPe = ACBrBPe1
     TipoDABPE = tiSemGeracao
     Cancelada = False

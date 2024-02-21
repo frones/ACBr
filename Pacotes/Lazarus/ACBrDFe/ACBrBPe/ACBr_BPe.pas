@@ -9,9 +9,9 @@ interface
 
 uses
   ACBrBPeClass, ACBrBPeXmlReader, ACBrBPeXmlWriter, ACBrBPeConsSit, 
-  ACBrBPeConversao, pcnEnvEventoBPe, ACBrBPeEnvEvento, ACBrBPeRetConsSit, 
-  ACBrBPeRetEnvEvento, ACBrBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes, 
-  ACBrBPeReg, ACBrBPeWebServices, ACBrBPeDABPEClass, ACBrBPeConsts, 
+  ACBrBPeConversao, ACBrBPeEnvEvento, ACBrBPeRetConsSit, ACBrBPeRetEnvEvento, 
+  ACBrBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes, ACBrBPeReg, 
+  ACBrBPeWebServices, ACBrBPeDABPEClass, ACBrBPeConsts, ACBrBPeEventoClass, 
   LazarusPackageIntf;
 
 implementation

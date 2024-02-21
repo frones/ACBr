@@ -37,48 +37,48 @@
         <UnitName Value="ACBrBPeConversao"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\pcnEnvEventoBPe.pas"/>
-        <UnitName Value="pcnEnvEventoBPe"/>
-      </Item6>
-      <Item7>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeEnvEvento.pas"/>
         <UnitName Value="ACBrBPeEnvEvento"/>
-      </Item7>
-      <Item8>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeRetConsSit.pas"/>
         <UnitName Value="ACBrBPeRetConsSit"/>
-      </Item8>
-      <Item9>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeRetEnvEvento.pas"/>
         <UnitName Value="ACBrBPeRetEnvEvento"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas"/>
         <UnitName Value="ACBrBPe"/>
-      </Item10>
-      <Item11>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeBilhetes.pas"/>
         <UnitName Value="ACBrBPeBilhetes"/>
-      </Item11>
-      <Item12>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeConfiguracoes.pas"/>
         <UnitName Value="ACBrBPeConfiguracoes"/>
-      </Item12>
-      <Item13>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeReg.pas"/>
         <UnitName Value="ACBrBPeReg"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeWebServices.pas"/>
         <UnitName Value="ACBrBPeWebServices"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas"/>
         <UnitName Value="ACBrBPeDABPEClass"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\ACBrBPeConsts.pas"/>
         <UnitName Value="ACBrBPeConsts"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\Base\Servicos\ACBrBPeEventoClass.pas"/>
+        <UnitName Value="ACBrBPeEventoClass"/>
       </Item16>
     </Files>
     <RequiredPkgs Count="1">

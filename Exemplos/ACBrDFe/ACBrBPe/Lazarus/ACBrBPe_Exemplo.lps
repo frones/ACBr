@@ -4,11 +4,11 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="ACBrBPe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -20,8 +20,9 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="289"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="675"/>
+        <CursorPos Y="684"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -31,7 +32,7 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
@@ -39,7 +40,7 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -50,7 +51,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="22" Y="8"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
@@ -109,8 +110,15 @@
         <CursorPos X="27" Y="102"/>
         <UsageCount Value="10"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\..\..\..\Fontes\PCNComum\pcnConversao.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="564"/>
+        <CursorPos X="11" Y="573"/>
+        <UsageCount Value="10"/>
+      </Unit13>
     </Units>
-    <JumpHistory Count="10" HistoryIndex="9">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="Frm_ACBrBPe.pas"/>
         <Caret Line="793" Column="16" TopLine="781"/>
@@ -149,8 +157,60 @@
       </Position9>
       <Position10>
         <Filename Value="Frm_ACBrBPe.pas"/>
-        <Caret TopLine="289"/>
+        <Caret Line="100" Column="46" TopLine="92"/>
       </Position10>
+      <Position11>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="354" Column="14" TopLine="340"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="444" TopLine="430"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="455" TopLine="445"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="337" TopLine="325"/>
+      </Position14>
+      <Position15>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="346" TopLine="334"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="869" Column="62" TopLine="860"/>
+      </Position16>
+      <Position17>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="1006" Column="52" TopLine="1001"/>
+      </Position17>
+      <Position18>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="1049" Column="4" TopLine="1045"/>
+      </Position18>
+      <Position19>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="435" Column="34" TopLine="423"/>
+      </Position19>
+      <Position20>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="317" Column="22" TopLine="308"/>
+      </Position20>
+      <Position21>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="316" Column="30" TopLine="309"/>
+      </Position21>
+      <Position22>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="670" TopLine="675"/>
+      </Position22>
+      <Position23>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="315" TopLine="309"/>
+      </Position23>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

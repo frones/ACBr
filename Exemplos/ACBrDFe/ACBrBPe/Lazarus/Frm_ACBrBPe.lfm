@@ -12,7 +12,7 @@ object frmACBrBPe: TfrmACBrBPe
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 612
@@ -2028,8 +2028,8 @@ object frmACBrBPe: TfrmACBrBPe
     Configuracoes.WebServices.TimeOut = 20000
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    left = 330
-    top = 239
+    Left = 330
+    Top = 239
   end
   object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2037,18 +2037,26 @@ object frmACBrBPe: TfrmACBrBPe
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 4
     CasasDecimais.vUnCom = 4
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     TipoDABPE = tiSemGeracao
     Cancelada = False
     ViaConsumidor = True
     ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
-    left = 497
-    top = 239
+    Left = 497
+    Top = 239
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -2062,8 +2070,8 @@ object frmACBrBPe: TfrmACBrBPe
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
-    left = 409
-    top = 287
+    Left = 409
+    Top = 287
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2073,21 +2081,21 @@ object frmACBrBPe: TfrmACBrBPe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    left = 330
-    top = 287
+    Left = 330
+    Top = 287
   end
   object OpenDialog1: TOpenDialog
     Title = 'Selecione a BPe'
     DefaultExt = '.*-bpe.XML'
     Filter = 'Arquivos BPe (*-bpe.XML)|*-bpe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 499
-    top = 287
+    Left = 499
+    Top = 287
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'Documento XML (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 500
-    top = 348
+    Left = 500
+    Top = 348
   end
 end

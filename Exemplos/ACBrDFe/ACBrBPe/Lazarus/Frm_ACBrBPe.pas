@@ -312,8 +312,9 @@ type
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
     procedure ConfigurarEmail;
-    procedure AlimentarBPe(NumDFe: String);
     Procedure AlimentarComponente(NumDFe: String);
+    procedure AlimentarBPe(NumDFe: String);
+    procedure AlimentarBPeTM(NumDFe: String);
     procedure LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
     procedure PrepararImpressao;
@@ -327,12 +328,23 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, blcksock, Grids,
-  Printers,
-  pcnAuxiliar, pcnBPe, pcnConversao, pcnConversaoBPe,
+  strutils, math, TypInfo, DateUtils, blcksock, Grids, Printers,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.XMLHTML,
+  ACBrXmlBase,
+  pcnAuxiliar, ACBrBPeClass, pcnConversao, ACBrBPeConversao,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrBPeBilhetes, ACBrBPeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
+
+{
+synacode, FileCtrl, IniFiles,
+ACBrDFeSSL, ACBrDFeOpenSSL,
+ACBrDFeComum.ConsReciDFe,
+}
 
 const
   SELDIRHELP = 1000;
@@ -351,7 +363,7 @@ end;
 procedure TfrmACBrBPe.ACBrBPe1StatusChange(Sender: TObject);
 begin
   case ACBrBPe1.Status of
-    stIdleBPe:
+    stBPeIdle:
       begin
         if ( frmStatus <> nil ) then
           frmStatus.Hide;
@@ -425,7 +437,11 @@ procedure TfrmACBrBPe.AlimentarComponente(NumDFe: String);
 begin
   ACBrBPe1.Bilhetes.Clear;
 
-  AlimentarBPe(NumDFe)
+  case ACBrBPe1.Configuracoes.Geral.ModeloDF of
+    moBPeTM: AlimentarBPeTM(NumDFe);
+  else
+    AlimentarBPe(NumDFe);
+  end;
 end;
 
 procedure TfrmACBrBPe.AlimentarBPe(NumDFe: String);
@@ -439,8 +455,8 @@ begin
 
     // TpcnTipoAmbiente = (taProducao, taHomologacao);
     case rgTipoAmb.ItemIndex of
-      0: Ide.tpAmb := taProducao;
-      1: Ide.tpAmb := taHomologacao;
+      0: Ide.tpAmb := TACBrTipoAmbiente(taProducao);
+      1: Ide.tpAmb := TACBrTipoAmbiente(taHomologacao);
     end;
 
     Ide.modelo  := 63;
@@ -451,7 +467,7 @@ begin
     Ide.modal   := moRodoviario;
     Ide.dhEmi   := Now;
     // TpcnTipoEmissao = (teNormal, teOffLine);
-    Ide.tpEmis  := teNormal;
+    Ide.tpEmis  := TACBrTipoEmissao(teNormal);
     Ide.verProc := '1.0.0.0'; //Versão do seu sistema
     Ide.indPres := pcPresencial;
     Ide.UFIni   := 'SP';
@@ -650,8 +666,156 @@ begin
     infAdic.infAdFisco := '';
     infAdic.infCpl     := 'Informações Complementares';
   end;
+end;
 
-// ACBrBPe1.Bilhetes.GerarBPe;
+procedure TfrmACBrBPe.AlimentarBPeTM(NumDFe: String);
+begin
+  with ACBrBPe1.Bilhetes.Add.BPe do
+  begin
+    //
+    // Dados de Identificação do BP-e TM
+    //
+    Ide.cUF := UFtoCUF(edtEmitUF.Text);
+
+    // TpcnTipoAmbiente = (taProducao, taHomologacao);
+    case rgTipoAmb.ItemIndex of
+      0: Ide.tpAmb := TACBrTipoAmbiente(taProducao);
+      1: Ide.tpAmb := TACBrTipoAmbiente(taHomologacao);
+    end;
+
+    Ide.modelo  := 63;
+    Ide.serie   := 1;
+    Ide.nBP    := StrToIntDef(NumDFe, 0);
+    Ide.cBP    := GerarCodigoDFe(Ide.nBP);
+    // ( moRodoviario, moAquaviario, moFerroviario );
+    Ide.modal   := moRodoviario;
+    Ide.dhEmi   := Now;
+    Ide.dCompet := Date;
+    // TpcnTipoEmissao = (teNormal, teOffLine);
+    Ide.tpEmis  := TACBrTipoEmissao(teNormal);
+    Ide.verProc := '1.0.0.0'; //Versão do seu sistema
+    Ide.indPres := pcPresencial;
+    Ide.UFIni   := 'SP';
+    Ide.cMunIni := 3503208;
+    Ide.UFFim   := 'SP';
+    Ide.cMunFim := 3550308;
+    Ide.tpBPe   := tbBPeTM;
+    Ide.CFOP    := 5104;
+
+//   Ide.dhCont  := Now;
+//   Ide.xJust   := 'Motivo da Contingência';
+
+    //
+    // Dados do Emitente
+    //
+    Emit.CNPJ  := edtEmitCNPJ.Text;
+    Emit.IE    := edtEmitIE.Text;
+    Emit.IEST  := '';
+    Emit.xNome := edtEmitRazao.Text;
+    Emit.xFant := edtEmitFantasia.Text;
+    Emit.IM    := '123';
+    Emit.CNAE  := '1234567';
+    Emit.CRT   := crtRegimeNormal;
+    Emit.TAR   := '';
+
+    Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
+    Emit.EnderEmit.Nro     := edtEmitNumero.Text;
+    Emit.EnderEmit.xCpl    := edtEmitComp.Text;
+    Emit.EnderEmit.xBairro := edtEmitBairro.Text;
+    Emit.EnderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.EnderEmit.xMun    := edtEmitCidade.Text;
+    Emit.EnderEmit.CEP     := StrToIntDef(edtEmitCEP.Text, 0);
+    Emit.EnderEmit.UF      := edtEmitUF.Text;
+    Emit.EnderEmit.fone    := edtEmitFone.Text;
+    Emit.enderEmit.email   := 'endereco@provedor.com.br';
+
+    //
+    // Informações sobre o Detalhamento do BPe TM
+    //
+    with detBPeTM.New do
+    begin
+      idEqpCont := 1;
+      UFIniViagem := 'SP';
+      UFFimViagem := 'SP';
+      Placa := 'XYZ1234';
+      Prefixo := '123';
+
+      //
+      // Detalhamento da viagem por trechos do BPe TM
+      //
+      with detBPeTM[0].det.New do
+      begin
+        nViagem := 1;
+        cMunIni := 3554003;
+        cMunFim := 3554003;
+        nContInicio := '1';
+        nContFim := '2';
+        qPass := '10';
+        vBP := 100;
+
+        //
+        // Informações sobre o Imposto
+        //
+        Imp.ICMS.CST   := cst00;
+        Imp.ICMS.vBC   := 98.00;
+        Imp.ICMS.pICMS := 18.00;
+        Imp.ICMS.vICMS := 17.64;
+
+        Imp.infAdFisco := '';
+
+        //
+        // Informações sobre os Componentes da Viagem
+        //
+        with detBPeTM[0].det[0].Comp.New do
+        begin
+          xNome := 'IDOSOS';
+          qComp := 1;
+        end;
+
+        with detBPeTM[0].det[0].Comp.New do
+        begin
+          xNome := 'VT';
+          qComp := 9;
+        end;
+      end;
+    end;
+
+    //
+    // Informações sobre o Total de Valores
+    //
+    total.qPass := 10;
+    total.vBP   := 100;
+    total.vBC   := 100;
+    total.vICMS := 18;
+
+    //
+    // Autorizados para o Download do XML do BPe
+    //
+    (*
+    with autXML.New do
+    begin
+      CNPJCPF := '00000000000000';
+    end;
+
+    with autXML.New do
+    begin
+      CNPJCPF := '11111111111111';
+    end;
+    *)
+
+    //
+    // Informações Adicionais
+    //
+    infAdic.infAdFisco := '';
+    infAdic.infCpl     := 'Informações Complementares';
+
+    //
+    // Informações do Responsável Técnico pela emissão do DF-e
+    //
+    infRespTec.xContato := '';
+    infRespTec.email    := '';
+    infRespTec.fone     := '';
+  end;
 end;
 
 procedure TfrmACBrBPe.AtualizarSSLLibsCombo;
@@ -855,7 +1019,7 @@ begin
     memoRespWS.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetornoWS;
     LoadXML(MemoResp, WBResposta);
     ShowMessage(IntToStr(ACBrBPe1.WebServices.EnvEvento.cStat));
-    ShowMessage(ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(ACBrBPe1.WebServices.EnvEvento.EventoRetorno.RetInfEvento.nProt);
   end;
 end;
 
@@ -992,7 +1156,7 @@ begin
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Envio BPe');
-  MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrBPe1.WebServices.Enviar.TpAmb));
+  MemoDados.Lines.Add('tpAmb: ' + TipoAmbienteToStr(ACBrBPe1.WebServices.Enviar.TpAmb));
   MemoDados.Lines.Add('verAplic: ' + ACBrBPe1.WebServices.Enviar.verAplic);
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrBPe1.WebServices.Enviar.cStat));
   MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrBPe1.WebServices.Enviar.cUF));
@@ -1035,11 +1199,12 @@ begin
      exit;
 
   ACBrBPe1.DistribuicaoDFe(StrToInt(cUFAutor), CNPJ, ultNSU, ANSU);
-
+  {
   MemoResp.Lines.Text := ACBrBPe1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrBPe1.WebServices.DistribuicaoDFe.RetornoWS;
 
   LoadXML(MemoResp, WBResposta);
+  }
 end;
 
 procedure TfrmACBrBPe.btnEnviarEmailClick(Sender: TObject);
@@ -1388,7 +1553,7 @@ begin
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Status Serviço');
-  MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrBPe1.WebServices.StatusServico.tpAmb));
+  MemoDados.Lines.Add('tpAmb: '    +TipoAmbienteToStr(ACBrBPe1.WebServices.StatusServico.tpAmb));
   MemoDados.Lines.Add('verAplic: ' +ACBrBPe1.WebServices.StatusServico.verAplic);
   MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrBPe1.WebServices.StatusServico.cStat));
   MemoDados.Lines.Add('xMotivo: '  +ACBrBPe1.WebServices.StatusServico.xMotivo);

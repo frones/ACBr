@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2024
+-- ACBrLib.hnd, Diversos inis --
+[+] Enviados arquivos ini da versão 1.2 do e-Social com correção do Encoding e configurado help da Lib
+  Por: Renato Rubinho
+
 19/02/2024
 -- ACBrLibConfig, ACBrLibConsts--
 [*] TK-5014 Ajustado para criptografar Usuario e Senha do Provedor ConsultaCNPJ

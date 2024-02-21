@@ -2236,6 +2236,7 @@ begin
                 ICMS.motRedAdRem := StrTomotRedAdRem(OK, INIRec.ReadString(sSecao,'motRedAdRem','0'));
                 ICMS.qBCMonoRet := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoRet','') ,0);
                 ICMS.vICMSMonoOp := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoOp','') ,0);
+                ICMS.indDeduzDeson := StrToTIndicador(OK, INIRec.ReadString(sSecao,'indDeduzDeson','0'));
               end;
             end;
 
@@ -2588,6 +2589,11 @@ begin
           tPag  := StrToFormaPagamento(OK,sFim);
           xPag  := INIRec.ReadString(sSecao,'xPag','');
           vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0);
+          dPag  := StringToDateTime(INIRec.ReadString( sSecao,'dPag','0'));
+
+          CNPJPag := INIRec.ReadString(sSecao,'CNPJPag','');
+          UFPag   := INIRec.ReadString(sSecao,'UFPag','');
+
           // Se não for informado 0=Pagamento à Vista ou 1=Pagamento à Prazo
           // a tag <indPag> não deve ser gerada.
           indPag:= StrToIndpag(OK,INIRec.ReadString(sSecao, 'indPag', ''));
@@ -2596,6 +2602,9 @@ begin
           CNPJ  := INIRec.ReadString(sSecao,'CNPJ','');
           tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand','99'));
           cAut  := INIRec.ReadString(sSecao,'cAut','');
+
+          CNPJReceb := INIRec.ReadString(sSecao,'CNPJReceb','');
+          idTermPag := INIRec.ReadString(sSecao,'idTermPag','');
         end;
         cVTroco:= StringToFloatDef( INIRec.ReadString(sSecao,'vTroco','') ,0);
         if (cVTroco > 0) then
@@ -3257,6 +3266,7 @@ begin
               INIRec.WriteString(sSecao, 'motRedAdRem', motRedAdRemToStr(ICMS.motRedAdRem));
               INIRec.WriteFloat(sSecao, 'qBCMonoRet', ICMS.qBCMonoRet);
               INIRec.WriteFloat(sSecao, 'vICMSMonoOp', ICMS.vICMSMonoOp);
+              INIRec.WriteString(sSecao, 'indDeduzDeson', TIndicadorToStr(ICMS.indDeduzDeson));
             end;
             sSecao := 'ICMSUFDEST' + IntToStrZero(I + 1, 3);
             with ICMSUFDest do
@@ -3554,11 +3564,17 @@ begin
           INIRec.WriteString(sSecao, 'tPag', FormaPagamentoToStr(tPag));
           INIRec.WriteString(sSecao, 'xPag', xPag);
           INIRec.WriteFloat(sSecao, 'vPag', vPag);
+          INIRec.WriteString(sSecao, 'dPag', DateToStr(dPag));
+          INIRec.WriteString(sSecao, 'CNPJPag', CNPJPag);
+          INIRec.WriteString(sSecao, 'UFPag', UFPag);
+
           INIRec.WriteString(sSecao, 'indPag', IndpagToStr(indPag));
           INIRec.WriteString(sSecao, 'tpIntegra', tpIntegraToStr(tpIntegra));
           INIRec.WriteString(sSecao, 'CNPJ', CNPJ);
           INIRec.WriteString(sSecao, 'tBand', BandeiraCartaoToStr(tBand));
           INIRec.WriteString(sSecao, 'cAut', cAut);
+          INIRec.WriteString(sSecao, 'CNPJReceb', CNPJReceb);
+          INIRec.WriteString(sSecao, 'idTermPag', idTermPag);
         end;
       end;
       INIRec.WriteFloat(sSecao, 'vTroco', pag.vTroco);

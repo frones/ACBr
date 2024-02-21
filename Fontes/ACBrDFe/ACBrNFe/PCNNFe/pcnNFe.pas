@@ -1215,6 +1215,7 @@ type
     FmotRedAdRem: TmotRedAdRem;
     FvICMSMonoOp: Currency;
     FqBCMonoRet: Currency;
+    FindDeduzDeson: TIndicador;
   public
     procedure Assign(Source: TICMS);
 
@@ -1283,6 +1284,8 @@ type
     property adRemICMSRet: Currency read FadRemICMSRet write FadRemICMSRet;
     property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
     property qBCMonoRet: Currency read FqBCMonoRet write FqBCMonoRet;
+
+    property indDeduzDeson: TIndicador read FindDeduzDeson write FindDeduzDeson default tiNao;
   end;
 
   TIPI = class(TObject)
@@ -1849,6 +1852,11 @@ type
     FtBand: TpcnBandeiraCartao;
     FcAut: String;
     FindPag: TpcnIndicadorPagamento;
+    FdPag: TDateTime;
+    FCNPJPag: String;
+    FUFPag: String;
+    FCNPJReceb: String;
+    FidTermPag: String;
   public
     constructor Create;
     procedure Assign(Source: TpagCollectionItem);
@@ -1861,6 +1869,11 @@ type
     property CNPJ: String read FCNPJ write FCNPJ;
     property tBand: TpcnBandeiraCartao read FtBand write FtBand;
     property cAut: String read FcAut write FcAut;
+    property dPag: TDateTime read FdPag write FdPag;
+    property CNPJPag: String read FCNPJPag write FCNPJPag;
+    property UFPag: String read FUFPag write FUFPag;
+    property CNPJReceb: String read FCNPJReceb write FCNPJReceb;
+    property idTermPag: String read FidTermPag write FidTermPag;
   end;
 
   TinfIntermed = class(TObject)
@@ -3715,6 +3728,7 @@ begin
   motRedAdRem := Source.motRedAdRem;
   FvICMSMonoOp := Source.FvICMSMonoOp;
   qBCMonoRet := Source.qBCMonoRet;
+  indDeduzDeson := Source.indDeduzDeson;
 end;
 
 { TIPI }
@@ -3974,6 +3988,11 @@ begin
   CNPJ      := Source.CNPJ;
   tBand     := Source.tBand;
   cAut      := Source.cAut;
+  dPag      := Source.dPag;
+  CNPJPag   := Source.CNPJPag;
+  UFPag     := Source.UFPag;
+  CNPJReceb := Source.CNPJReceb;
+  idTermPag := Source.idTermPag;
 end;
 
 constructor TpagCollectionItem.Create;

@@ -889,6 +889,7 @@ begin
             Item.Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, ObterConteudo(AuxNode.Childrens.Find('motRedAdRem'), tcStr));
             Item.Imposto.ICMS.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
             Item.Imposto.ICMS.vICMSMonoOp := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoOp'), tcDe2);
+            Item.Imposto.ICMS.indDeduzDeson := StrToTIndicador(ok, ObterConteudo(AuxNode.Childrens.Find('indDeduzDeson'), tcStr));
 
     if (AuxNode.Name = 'ICMSPart') then
     begin
@@ -1283,6 +1284,10 @@ begin
      (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, ObterConteudo(ANodes[i].Childrens.Find('tPag'), tcStr));
      (*YA02a*)NFe.pag[i].xPag := ObterConteudo(ANodes[i].Childrens.Find('xPag'), tcStr));
      (*YA03*)NFe.pag[i].vPag := ObterConteudo(ANodes[i].Childrens.Find('vPag'), tcDe2);
+             NFe.pag[i].dPag := ObterConteudo(ANodes[i].Childrens.Find('dPag'), tcDat);
+
+             NFe.pag[i].CNPJPag := ObterConteudo(ANodes[i].Childrens.Find('CNPJPag'), tcStr));
+             NFe.pag[i].UFPag := ObterConteudo(ANodes[i].Childrens.Find('UFPag'), tcStr));
 
      AuxNode := ANode.Childrens.Find('card');
      if (AuxNode <> nil) then
@@ -1291,6 +1296,9 @@ begin
         (*YA05*)NFe.pag[i].CNPJ  := ObterConteudo(AuxNode.Childrens.Find('CNPJ'), tcStr);
         (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, ObterConteudo(AuxNode.Childrens.Find('tBand'), tcStr));
         (*YA07*)NFe.pag[i].cAut  := ObterConteudo(AuxNode.Childrens.Find('cAut'), tcStr);
+
+               NFe.pag[i].CNPJReceb := ObterConteudo(AuxNode.Childrens.Find('CNPJReceb'), tcStr));
+               NFe.pag[i].idTermPag := ObterConteudo(AuxNode.Childrens.Find('idTermPag'), tcStr));
      end;
    end;
 end;

@@ -97,7 +97,8 @@ type
 
   TindIntermed = (iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador);
 
-  TtpAto = (taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica);
+  TtpAto = (taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica,
+            taAjusteSNIEF, taConvenioICMS);
 
   TindImport = (iiNacional, iiImportado);
 
@@ -668,14 +669,16 @@ end;
 
 function tpAtoToStr(const t: TtpAto): string;
 begin
-  Result := EnumeradoToStr(t, ['', '08', '10', '12'],
-       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica]);
+  Result := EnumeradoToStr(t, ['', '08', '10', '12', '14', '15'],
+       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica,
+            taAjusteSNIEF, taConvenioICMS]);
 end;
 
 function StrTotpAto(out ok: boolean; const s: string): TtpAto;
 begin
-  Result := StrToEnumerado(ok, s, ['', '08', '10', '12'],
-       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica]);
+  Result := StrToEnumerado(ok, s, ['', '08', '10', '12', '14', '15'],
+       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica,
+            taAjusteSNIEF, taConvenioICMS]);
 end;
 
 function indImportToStr(const t: TindImport): string;

@@ -714,6 +714,8 @@ begin
 
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 
+             NFe.Det[i].Imposto.ICMS.indDeduzDeson := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indDeduzDeson'));
+
       if Leitor.rExtrai(4, 'ICMSPart') <> '' then
       begin
         case NFe.Det[i].Imposto.ICMS.CST of
@@ -1047,12 +1049,20 @@ begin
       (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
               NFe.pag[i].xPag := Leitor.rCampo(tcStr, 'xPag');
       (*YA03*)NFe.pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
+              NFe.pag[i].dPag := Leitor.rCampo(tcDat, 'dPag');
+
+              NFe.pag[i].CNPJPag := Leitor.rCampo(tcStr, 'CNPJPag');
+              NFe.pag[i].UFPag := Leitor.rCampo(tcStr, 'UFPag');
+
       if Leitor.rExtrai(2, 'card') <> '' then
        begin
         (*YA04a*)NFe.pag[i].tpIntegra := StrTotpIntegra(ok, Leitor.rCampo(tcStr, 'tpIntegra'));
         (*YA05*)NFe.pag[i].CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
         (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
         (*YA07*)NFe.pag[i].cAut  := Leitor.rCampo(tcStr, 'cAut');
+
+                NFe.pag[i].CNPJReceb := Leitor.rCampo(tcStr, 'CNPJReceb');
+                NFe.pag[i].idTermPag := Leitor.rCampo(tcStr, 'idTermPag');
        end;
       inc(i);
     end;

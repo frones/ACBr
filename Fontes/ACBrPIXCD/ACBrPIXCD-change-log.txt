@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2024
+-- ACBrPIXPSPShipay --
+[*] Alteração para Renovar o Token quando necessário.
+    por: Robert Marx
+
 15/02/2024
 -- ACBrPIXPSPMatera, ACBrSchemasMatera --
 [+] Adição da consulta de Alias V2

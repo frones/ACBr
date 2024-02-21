@@ -137,6 +137,7 @@ type
 
     procedure Autenticar; override;
     procedure RenovarToken; override;
+    procedure VerificarValidadeToken; override;
 
     procedure PostOrder(IsEOrder: Boolean = False);
     procedure PostOrderV(IsEOrder: Boolean = False);
@@ -349,6 +350,29 @@ begin
   Http.Headers.Insert(0, ChttpHeaderAuthorization + ChttpAuthorizationBearer+' '+fpRefreshToken);
   TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
   ProcessarAutenticacao(AURL, ResultCode, RespostaHttp);
+end;
+
+procedure TACBrPSPShipay.VerificarValidadeToken;
+begin
+  if (ValidadeToken <> 0) and (ValidadeToken < Now) then
+  begin
+    if EstaVazio(fpRefreshToken) then
+    begin
+      if (NivelLog > 2) then
+        RegistrarLog('Autenticar');
+
+      Autenticar;
+
+      if Assigned(fpOnDepoisAutenticar) then
+        fpOnDepoisAutenticar(fpToken, fpValidadeToken);
+    end
+    else
+    begin
+      if (NivelLog > 2) then
+        RegistrarLog('RenovarToken');
+      RenovarToken;
+    end;
+  end;
 end;
 
 procedure TACBrPSPShipay.PostOrder(IsEOrder: Boolean);
@@ -723,7 +747,6 @@ var
   ia: TACBrPIXInfoAdicional;
   sl: TStringList;
   i: Integer;
-  item: TShipayItem;
   s: String;
 begin
   fOrder.Clear;
@@ -943,7 +966,7 @@ begin
     if NaoEstaVazio(fOrderInfo.wallet_payment_id) then
     with cob.pix.New do
     begin
-      endToEndId := fOrderInfo.order_id;
+      endToEndId := fOrderInfo.wallet_payment_id;
       txid := fOrderInfo.order_id;
       componentesValor.original.valor := fOrderInfo.total_order;
       valor := fOrderInfo.paid_amount;

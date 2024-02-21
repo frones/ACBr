@@ -18,6 +18,7 @@ implementation
 
 procedure Register;
 begin
+  RegisterUnit('ACBrBPeReg', @ACBrBPeReg.Register);
 end;
 
 initialization

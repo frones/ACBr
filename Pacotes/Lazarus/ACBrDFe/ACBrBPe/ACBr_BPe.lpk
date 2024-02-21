@@ -62,6 +62,7 @@
       </Item11>
       <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeReg.pas"/>
+        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrBPeReg"/>
       </Item12>
       <Item13>

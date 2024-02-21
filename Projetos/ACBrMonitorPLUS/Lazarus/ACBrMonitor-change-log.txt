@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2024
+-- DoACBrBpeUnit, ACBrMonitor1 --
+[*] Alterações visando compatibilização com o refactory feito no componente ACBrBPe.
+  Por: Diego Folieni / Italo Giurizzato Junior
+
 19/02/2024
 -- ACBrMonitorConfig, ACBrMonitor1 (pas, lfm), ACBrMonitorConsts, DoCNPJUnit--
 [*] TK-5014 Ajustado para funcionar com a nova consulta CNPJ

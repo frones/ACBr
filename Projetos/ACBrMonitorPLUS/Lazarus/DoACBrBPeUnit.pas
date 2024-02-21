@@ -38,7 +38,7 @@ uses
   Classes, SysUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Math,
   ACBrLibBPeRespostas, ACBrBPe, ACBrLibResposta, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
-  CmdUnit;
+  CmdUnit, ACBrXmlBase, ACBrBPeEventoClass;
 
 type
 
@@ -62,7 +62,6 @@ public
   procedure RespostaCancelamento;
 
   procedure RespostaEvento;
-  procedure RespostaItensEvento(ItemID: integer = 0);
 
   procedure RespostaDistribuicaoDFe;
   procedure RespostaItensDistribuicaoDFeResBPe(ItemID: integer = 0);
@@ -322,8 +321,8 @@ implementation
 uses
   IniFiles, DateUtils, Forms, strutils,
   ACBrDFeConfiguracoes,
-  pcnConversao, pcnConversaoBPe,
-  pcnAuxiliar, pcnBPeR, DoACBrUnit, pcnBPe;
+  pcnConversao, ACBrBPeConversao,
+  pcnAuxiliar, ACBrBPeXmlReader, DoACBrUnit, ACBrBPeClass;
 
 { TACBrObjetoBPe }
 
@@ -460,7 +459,7 @@ begin
     with fACBrBPe.WebServices.Enviar do
     begin
       Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
+      Resp.TpAmb := TipoAmbienteToStr(TpAmb);
       Resp.verAplic := verAplic;
       Resp.CStat := cStat;
       Resp.XMotivo := xMotivo;
@@ -531,7 +530,7 @@ begin
     with fACBrBPe.WebServices.StatusServico do
     begin
       Resp.Versao := versao;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
+      Resp.TpAmb := TipoAmbienteToStr(TpAmb);
       Resp.VerAplic := VerAplic;
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
@@ -559,7 +558,7 @@ begin
     with fACBrBPe.WebServices.Consulta do
     begin
       Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
+      Resp.TpAmb := TipoAmbienteToStr(TpAmb);
       Resp.VerAplic := VerAplic;
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
@@ -584,10 +583,10 @@ var
 begin
   Resp := TCancelamentoResposta.Create(TpResp, codUTF8);
   try
-    with fACBrBPe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento do
+    with fACBrBPe.WebServices.EnvEvento.EventoRetorno.retInfEvento do
     begin
       Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
+      Resp.TpAmb := TipoAmbienteToStr(TpAmb);
       Resp.VerAplic := VerAplic;
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
@@ -612,55 +611,33 @@ end;
 
 procedure TACBrObjetoBPe.RespostaEvento;
 var
-  Resp: TEventoResposta;
-begin
-  Resp := TEventoResposta.Create(TpResp, codUTF8);
-  try
-    with fACBrBPe.WebServices.EnvEvento.EventoRetorno do
-    begin
-      Resp.VerAplic := VerAplic;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.idLote := IdLote;
-      Resp.cOrgao := cOrgao;
-
-      fpCmd.Resposta := Resp.Gerar;
-//      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoBPe.RespostaItensEvento(ItemID: integer);
-var
   Resp: TEventoItemResposta;
+  LTipoEvento: TpcnTpEvento;
+  LRetInfEvento: TRetInfEvento;
 begin
+  LTipoEvento := fACBrBPe.WebServices.EnvEvento.EventoRetorno.retInfEvento.tpEvento;
   Resp := TEventoItemResposta.Create(
-    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
+    'EVENTO' + TpEventoToStr(LTipoEvento), TpResp, codUTF8);
   try
-    with fACBrBPe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfevento do
-    begin
-      Resp.Id := Id;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.verAplic := verAplic;
-      Resp.cOrgao := cOrgao;
-      Resp.cStat := cStat;
-      Resp.xMotivo := xMotivo;
-      Resp.chBPe := chBPe;
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.xEvento := xEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.CNPJDest := CNPJDest;
-      Resp.emailDest := emailDest;
-      Resp.dhRegEvento := dhRegEvento;
-      Resp.nProt := nProt;
-      Resp.Arquivo := NomeArquivo;
-      Resp.XML := XML;
+    LRetInfEvento := fACBrBPe.WebServices.EnvEvento.EventoRetorno.retInfEvento;
+    Resp.Id := LRetInfEvento.Id;
+    Resp.tpAmb := TipoAmbienteToStr(LRetInfEvento.tpAmb);
+    Resp.verAplic := LRetInfEvento.verAplic;
+    Resp.cOrgao := LRetInfEvento.cOrgao;
+    Resp.cStat := LRetInfEvento.cStat;
+    Resp.xMotivo := LRetInfEvento.xMotivo;
+    Resp.chBPe := LRetInfEvento.chBPe;
+    Resp.tpEvento := TpEventoToStr(LTipoEvento);
+    Resp.xEvento := LRetInfEvento.xEvento;
+    Resp.nSeqEvento := LRetInfEvento.nSeqEvento;
+    Resp.CNPJDest := LRetInfEvento.CNPJDest;
+    Resp.emailDest := LRetInfEvento.emailDest;
+    Resp.dhRegEvento := LRetInfEvento.dhRegEvento;
+    Resp.nProt := LRetInfEvento.nProt;
+    Resp.Arquivo := LRetInfEvento.NomeArquivo;
+    Resp.XML := LRetInfEvento.XML;
 
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -671,64 +648,66 @@ var
   Resp: TDistribuicaoDFeResposta;
   sTemMais: String;
 begin
-  Resp := TDistribuicaoDFeResposta.Create(TpResp, codUTF8);
-  try
-    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt do
-    begin
-      Resp.Versao := versao;
-      Resp.VerAplic := VerAplic;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.dhResp := dhResp;
-      Resp.ultNSU := ultNSU;
-      Resp.maxNSU := maxNSU;
-      Resp.arquivo := fACBrBPe.WebServices.DistribuicaoDFe.NomeArq;
-
-      if cStat = 137 then
-        sTemMais := '1'  // Sim
-      else
-        sTemMais := '0'; // Não
-
-      Resp.indCont := sTemMais;
-
-      fpCmd.Resposta := Resp.Gerar;
-//      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
+  fpCmd.Resposta := 'Serviço ainda não disponibilizado pela Sefaz';
+//  Resp := TDistribuicaoDFeResposta.Create(TpResp, codUTF8);
+//  try
+//    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt do
+//    begin
+//      Resp.Versao := versao;
+//      Resp.VerAplic := VerAplic;
+//      Resp.tpAmb := TipoAmbienteToStr(tpAmb);
+//      Resp.CStat := cStat;
+//      Resp.XMotivo := XMotivo;
+//      Resp.dhResp := dhResp;
+//      Resp.ultNSU := ultNSU;
+//      Resp.maxNSU := maxNSU;
+//      Resp.arquivo := fACBrBPe.WebServices.DistribuicaoDFe.NomeArq;
+//
+//      if cStat = 137 then
+//        sTemMais := '1'  // Sim
+//      else
+//        sTemMais := '0'; // Não
+//
+//      Resp.indCont := sTemMais;
+//
+//      fpCmd.Resposta := Resp.Gerar;
+////      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+//    end;
+//  finally
+//    Resp.Free;
+//  end;
 end;
 
 procedure TACBrObjetoBPe.RespostaItensDistribuicaoDFeResBPe(ItemID: integer);
 var
   Resp: TDistribuicaoDFeItemResposta;
 begin
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResBPe' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
-  try
-    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
-    begin
-      Resp.NSU := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chBPe := chDFe;
-      Resp.CNPJCPF := CNPJCPF;
-      Resp.xNome := xNome;
-      Resp.IE := IE;
-      Resp.dhEmi := dhEmi;
-      Resp.vNF := vNF;
-      Resp.digVal := digVal;
-      Resp.dhRecbto := dhRecbto;
-      Resp.cSitBPe := SituacaoDFeToStr(cSitDFe);
-      Resp.nProt := nProt;
-      Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaDFeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
+  fpCmd.Resposta := 'Serviço ainda não disponibilizado pela Sefaz';
+  //Resp := TDistribuicaoDFeItemResposta.Create(
+  //  'ResBPe' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
+  //try
+  //  with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
+  //  begin
+  //    Resp.NSU := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
+  //    Resp.chBPe := chDFe;
+  //    Resp.CNPJCPF := CNPJCPF;
+  //    Resp.xNome := xNome;
+  //    Resp.IE := IE;
+  //    Resp.dhEmi := dhEmi;
+  //    Resp.vNF := vNF;
+  //    Resp.digVal := digVal;
+  //    Resp.dhRecbto := dhRecbto;
+  //    Resp.cSitBPe := SituacaoDFeToStr(cSitDFe);
+  //    Resp.nProt := nProt;
+  //    Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
+  //    Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
+  //    Resp.schema := SchemaDFeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+  //
+  //    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+  //  end;
+  //finally
+  //  Resp.Free;
+  //end;
 end;
 
 procedure TACBrObjetoBPe.RespostaItensDistribuicaoDFeResEve(ItemID: integer);
@@ -743,88 +722,90 @@ procedure TACBrObjetoBPe.RespostaItensDistribuicaoDFeProEve(ItemID: integer);
 var
   Resp: TDistribuicaoDFeItemResposta;
 begin
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
-  try
-    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
-    begin
-      Resp.NSU := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chBPe := chDFe;
-      Resp.cOrgao := cOrgao;
-      Resp.CNPJ := CNPJ;
-      Resp.Id := Id;
-      Resp.dhEvento := dhEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.verEvento := verEvento;
-
-      with detEvento do
-      begin
-        Resp.descEvento := descEvento;
-        Resp.xJust := xJust;
-        Resp.EmiCnpj := emit.CNPJ;
-        Resp.EmiIE := emit.IE;
-        Resp.EmixNome := emit.xNome;
-//        Resp.cteNProt := BPe.nProt;
-//        Resp.cteChvCte := BPe.chBPe;
-//        Resp.cteDhemi := BPe.dhEmi;
-//        Resp.cteModal := TpModalToStr(BPe.modal);
-//        Resp.cteDhRebcto := BPe.dhRecbto;
-      end;
-
-      Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaDFeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
+  fpCmd.Resposta := 'Serviço ainda não disponibilizado pela Sefaz';
+//  Resp := TDistribuicaoDFeItemResposta.Create(
+//    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
+//  try
+//    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
+//    begin
+//      Resp.NSU := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
+//      Resp.chBPe := chDFe;
+//      Resp.cOrgao := cOrgao;
+//      Resp.CNPJ := CNPJ;
+//      Resp.Id := Id;
+//      Resp.dhEvento := dhEvento;
+//      Resp.nSeqEvento := nSeqEvento;
+//      Resp.tpAmb := TipoAmbienteToStr(tpAmb);
+//      Resp.tpEvento := TpEventoToStr(tpEvento);
+//      Resp.verEvento := verEvento;
+//
+//      with detEvento do
+//      begin
+//        Resp.descEvento := descEvento;
+//        Resp.xJust := xJust;
+//        Resp.EmiCnpj := emit.CNPJ;
+//        Resp.EmiIE := emit.IE;
+//        Resp.EmixNome := emit.xNome;
+////        Resp.cteNProt := BPe.nProt;
+////        Resp.cteChvCte := BPe.chBPe;
+////        Resp.cteDhemi := BPe.dhEmi;
+////        Resp.cteModal := TpModalToStr(BPe.modal);
+////        Resp.cteDhRebcto := BPe.dhRecbto;
+//      end;
+//
+//      Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
+//      Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
+//      Resp.schema := SchemaDFeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+//
+//      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+//    end;
+//  finally
+//    Resp.Free;
+//  end;
 end;
 
 procedure TACBrObjetoBPe.RespostaItensDistribuicaoDFeInfeve(ItemID: integer);
 var
   Resp: TDistribuicaoDFeItemResposta;
 begin
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
-  try
-    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento.RetInfevento do
-    begin
-      Resp.Id := Id;
-      Resp.VerAplic := VerAplic;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.cOrgao := cOrgao;
-      Resp.chBPe := chDFe;
-      Resp.CStat := cStat;
-      Resp.CNPJDest := CNPJDest;
-      Resp.cOrgaoAutor := cOrgaoAutor;
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.xEvento := xEvento;
-      Resp.XMotivo := XMotivo;
-      Resp.dhRegEvento := dhRegEvento;
-      Resp.emailDest := emailDest;
-      Resp.nProt := nProt;
-
-      Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaDFeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
+  fpCmd.Resposta := 'Serviço ainda não disponibilizado pela Sefaz';
+  //Resp := TDistribuicaoDFeItemResposta.Create(
+  //  'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), TpResp, codUTF8);
+  //try
+  //  with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento.RetInfevento do
+  //  begin
+  //    Resp.Id := Id;
+  //    Resp.VerAplic := VerAplic;
+  //    Resp.tpAmb := TipoAmbienteToStr(tpAmb);
+  //    Resp.cOrgao := cOrgao;
+  //    Resp.chBPe := chDFe;
+  //    Resp.CStat := cStat;
+  //    Resp.CNPJDest := CNPJDest;
+  //    Resp.cOrgaoAutor := cOrgaoAutor;
+  //    Resp.tpEvento := TpEventoToStr(tpEvento);
+  //    Resp.nSeqEvento := nSeqEvento;
+  //    Resp.xEvento := xEvento;
+  //    Resp.XMotivo := XMotivo;
+  //    Resp.dhRegEvento := dhRegEvento;
+  //    Resp.emailDest := emailDest;
+  //    Resp.nProt := nProt;
+  //
+  //    Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
+  //    Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
+  //    Resp.schema := SchemaDFeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+  //
+  //    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+  //  end;
+  //finally
+  //  Resp.Free;
+  //end;
 end;
 
 function TACBrObjetoBPe.GerarBPeIni(XML: string): string;
 var
   INIRec: TMemIniFile;
   IniBPe: TStringList;
-  LocBPeR: TBPeR;
+  LocBPeR: TBPeXmlReader;
 begin
   INIRec := TMemIniFile.Create('BPe.ini');
 
@@ -835,11 +816,11 @@ begin
       fACBrBPe.Bilhetes.LoadFromFile(XML)
     else
     begin
-      LocBPeR := TBPeR.Create(fACBrBPe.Bilhetes.Add.BPe);
+      LocBPeR := TBPeXmlReader.Create(fACBrBPe.Bilhetes.Add.BPe);
       try
-        LocBPeR.Leitor.Arquivo := ConvertStrRecived(XML);
+        LocBPeR.Arquivo := ConvertStrRecived(XML);
         LocBPeR.LerXml;
-        fACBrBPe.Bilhetes.Items[0].XML := LocBPeR.Leitor.Arquivo;
+        fACBrBPe.Bilhetes.Items[0].XML := LocBPeR.Arquivo;
         fACBrBPe.Bilhetes.GerarBPe;
       finally
         LocBPeR.Free;
@@ -1018,10 +999,10 @@ var
   AVersao: String;
 begin
   AVersao := fpCmd.Params(0);
-  VersaoDFe := StrToVersaoBPe(OK, AVersao);
+  VersaoDFe := StrToVersaoBPe(AVersao);
 
-  if not OK then
-    raise Exception.Create('Versão Inválida.');
+  //if not VersaoDFe then
+  //  raise Exception.Create('Versão Inválida.');
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
@@ -1797,9 +1778,6 @@ begin
     ACBrBPe.EnviarEvento(ACBrBPe.EventoBPe.idLote);
 
     RespostaEvento;
-
-    for I := 0 to ACBrBPe.WebServices.EnvEvento.EventoRetorno.retEvento.Count - 1 do
-       RespostaItensEvento(I);
   end;
 end;
 
@@ -1829,9 +1807,6 @@ begin
     end;
 
     RespostaEvento;
-
-    for I := 0 to ACBrBPe.WebServices.EnvEvento.EventoRetorno.retEvento.Count - 1 do
-       RespostaItensEvento(I);
   end;
 end;
 
@@ -1861,17 +1836,17 @@ begin
 
     RespostaDistribuicaoDFe;
 
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResBPe(I);
-
     //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      //RespostaItensDistribuicaoDFeResEve(I);
-
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeProEve(I);
-
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeInfEve(I);
+    //  RespostaItensDistribuicaoDFeResBPe(I);
+    //
+    ////for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  //RespostaItensDistribuicaoDFeResEve(I);
+    //
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  RespostaItensDistribuicaoDFeProEve(I);
+    //
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  RespostaItensDistribuicaoDFeInfEve(I);
   end;
 end;
 
@@ -1901,17 +1876,17 @@ begin
 
     RespostaDistribuicaoDFe;
 
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResBPe(I);
-
     //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      //RespostaItensDistribuicaoDFeResEve(I);
-
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeProEve(I);
-
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeInfeve(I);
+    //  RespostaItensDistribuicaoDFeResBPe(I);
+    //
+    ////for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  //RespostaItensDistribuicaoDFeResEve(I);
+    //
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  RespostaItensDistribuicaoDFeProEve(I);
+    //
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  RespostaItensDistribuicaoDFeInfeve(I);
   end;
 end;
 
@@ -1941,17 +1916,17 @@ begin
 
     RespostaDistribuicaoDFe;
 
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResBPe(I);
-
     //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      //RespostaItensDistribuicaoDFeResEve(I);
-
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeProEve(I);
-
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeInfeve(I);
+    //  RespostaItensDistribuicaoDFeResBPe(I);
+    //
+    ////for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  //RespostaItensDistribuicaoDFeResEve(I);
+    //
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  RespostaItensDistribuicaoDFeProEve(I);
+    //
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+    //  RespostaItensDistribuicaoDFeInfeve(I);
   end;
 end;
 
@@ -2034,7 +2009,8 @@ begin
           tipoEvento := ACBrBPe.EventoBPe.Evento[0].Infevento.tpEvento;
           ArqEvento  := ACBrBPe.EventoBPe.ObterNomeArquivo(tipoEvento);
           ArqEvento  := PathWithDelim(ACBrBPe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
-          ACBrBPe.EventoBPe.Gerador.SalvarArquivo(ArqEvento);
+          //ACBrBPe.EventoBPe.Gerador.SalvarArquivo(ArqEvento);
+          WriteToTxt(ArqEvento, ACBrBPe.EventoBPe.Evento[0].RetInfEvento.XML, False, False);
         end;
         slAnexos.Add(ArqEvento);
 

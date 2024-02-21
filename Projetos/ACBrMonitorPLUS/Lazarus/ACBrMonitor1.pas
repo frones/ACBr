@@ -49,7 +49,7 @@ uses
   ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, LazHelpHTML,
   SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml, TreeFilterEdit,
   ACBrNFSeXConversao, pcnConversao, pcnConversaoNFe, pcteConversaoCTe,
-  pcnConversaoBPe, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
+  ACBrBPeConversao, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrSATClass, pcnRede, pgnreConversao, ACBrDFeSSL, ACBrGNRE2,
   ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
   ACBrCTeDACTeRLClass, types, fileinfo, ACBrDFeConfiguracoes, ACBrBPe,
@@ -11964,7 +11964,7 @@ begin
   else if Configuracoes is TConfiguracoesBPe then
   begin
     TConfiguracoesBPe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoBPe.ItemIndex + 1));
-    TConfiguracoesBPe(Configuracoes).Geral.VersaoDF     := StrToVersaoBPe(ok, cbVersaoWSBPe.Text);
+    TConfiguracoesBPe(Configuracoes).Geral.VersaoDF     := StrToVersaoBPe(cbVersaoWSBPe.Text);
 
     TConfiguracoesBPe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesBPe.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.EmissaoPathBPe := cbxEmissaoPathNFe.Checked;

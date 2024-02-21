@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2024
+-- ACBrBPeRetEnvEvento --
+[-] Correção de erro AV ao processar o retorno de envio de um evento.
+  Por: Italo Giurizzato Junior
+
 20/02/2024
 -- Diversos --
 [*] Ajustes para atender a NT 2024/001.

@@ -471,17 +471,17 @@ begin
      else
        LChaveNFe := '';
 
+     MensagemCedente := '';
+
      with ACBrBoleto do
      begin
-       {if Sacado.SacadoAvalista.CNPJCPF <> '' then
+       if Sacado.SacadoAvalista.CNPJCPF <> '' then
        begin
          MensagemCedente := PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0') +  // 335 a 349 - CNPJ do beneficiário final
          '  ' +                                                                            // 350 a 351 - Brancos
          PadRight(Sacado.SacadoAvalista.NomeAvalista, 43);                                 // 352 a 394 - Nome do beneficiário final
        end
-       else if Mensagem.Text <> '' then} // Informado no Registro Tipo 7
-
-       if Mensagem.Text <> '' then
+       else if Mensagem.Text <> '' then
           MensagemCedente := Mensagem[0];
 
        wLinha:= '1'                                             +  // 001 a 001 - ID Registro

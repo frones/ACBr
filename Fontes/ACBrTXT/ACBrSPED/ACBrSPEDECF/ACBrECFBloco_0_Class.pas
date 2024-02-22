@@ -353,152 +353,180 @@ end;
 
 procedure  TBloco_0.WriteRegistro0020;
 begin
-  if Assigned(FRegistro0020) then
-  begin
-    with FRegistro0020 do
-    begin
-      case FRegistro0000.COD_VER of
-        ECFVersao100, ECFVersao200:
-          Add( LFill('0020') +
-               LFill(IND_ALIQ_CSLL) +
-               LFill(IND_QTE_SCP, 3) +
-               LFill(IND_ADM_FUN_CLU) +
-               LFill(IND_PART_CONS) +
-               LFill(IND_OP_EXT) +
-               LFill(IND_OP_VINC) +
-               LFill(IND_PJ_ENQUAD) +
-               LFill(IND_PART_EXT) +
-               LFill(IND_ATIV_RURAL) +
-               LFill(IND_LUC_EXP) +
-               LFill(IND_RED_ISEN) +
-               LFill(IND_FIN) +
-               LFill(IND_DOA_ELEIT) +
-               LFill(IND_PART_COLIG) +
-               LFill(IND_VEND_EXP) +
-               LFill(IND_REC_EXT) +
-               LFill(IND_ATIV_EXT) +
-               LFill(IND_COM_EXP) +
-               LFill(IND_PGTO_EXT) +
-               LFill(IND_ECOM_TI) +
-               LFill(IND_ROY_REC) +
-               LFill(IND_ROY_PAG) +
-               LFill(IND_REND_SERV) +
-               LFill(IND_PGTO_REM) +
-               LFill(IND_INOV_TEC) +
-               LFill(IND_CAP_INF) +
-               LFill(IND_PJ_HAB) +
-               LFill(IND_POLO_AM) +
-               LFill(IND_ZON_EXP) +
-               LFill(IND_AREA_COM)  );
+   if Assigned(FRegistro0020) then
+   begin
+      with FRegistro0020 do
+      begin
+         case FRegistro0000.COD_VER of
+           ECFVersao100, ECFVersao200:
+              Add( LFill('0020') +
+                   LFill(IND_ALIQ_CSLL) +
+                   LFill(IND_QTE_SCP, 3) +
+                   LFill(IND_ADM_FUN_CLU) +
+                   LFill(IND_PART_CONS) +
+                   LFill(IND_OP_EXT) +
+                   LFill(IND_OP_VINC) +
+                   LFill(IND_PJ_ENQUAD) +
+                   LFill(IND_PART_EXT) +
+                   LFill(IND_ATIV_RURAL) +
+                   LFill(IND_LUC_EXP) +
+                   LFill(IND_RED_ISEN) +
+                   LFill(IND_FIN) +
+                   LFill(IND_DOA_ELEIT) +
+                   LFill(IND_PART_COLIG) +
+                   LFill(IND_VEND_EXP) +
+                   LFill(IND_REC_EXT) +
+                   LFill(IND_ATIV_EXT) +
+                   LFill(IND_COM_EXP) +
+                   LFill(IND_PGTO_EXT) +
+                   LFill(IND_ECOM_TI) +
+                   LFill(IND_ROY_REC) +
+                   LFill(IND_ROY_PAG) +
+                   LFill(IND_REND_SERV) +
+                   LFill(IND_PGTO_REM) +
+                   LFill(IND_INOV_TEC) +
+                   LFill(IND_CAP_INF) +
+                   LFill(IND_PJ_HAB) +
+                   LFill(IND_POLO_AM) +
+                   LFill(IND_ZON_EXP) +
+                   LFill(IND_AREA_COM)  );
 
-        ECFVersao300:
-          Add( LFill('0020') +
-               LFill(IND_ALIQ_CSLL) +
-               LFill(IND_QTE_SCP, 3) +
-               LFill(IND_ADM_FUN_CLU) +
-               LFill(IND_PART_CONS) +
-               LFill(IND_OP_EXT) +
-               LFill(IND_OP_VINC) +
-               LFill(IND_PJ_ENQUAD) +
-               LFill(IND_PART_EXT) +
-               LFill(IND_ATIV_RURAL) +
-               LFill(IND_LUC_EXP) +
-               LFill(IND_RED_ISEN) +
-               LFill(IND_FIN) +
-               LFill(IND_DOA_ELEIT) +
-               LFill(IND_PART_COLIG) +
-               LFill(IND_VEND_EXP) +
-               LFill(IND_REC_EXT) +
-               LFill(IND_ATIV_EXT) +
-               LFill(IND_COM_EXP) +
-               LFill(IND_PGTO_EXT) +
-               LFill(IND_ECOM_TI) +
-               LFill(IND_ROY_REC) +
-               LFill(IND_ROY_PAG) +
-               LFill(IND_REND_SERV) +
-               LFill(IND_PGTO_REM) +
-               LFill(IND_INOV_TEC) +
-               LFill(IND_CAP_INF) +
-               LFill(IND_PJ_HAB) +
-               LFill(IND_POLO_AM) +
-               LFill(IND_ZON_EXP) +
-               LFill(IND_AREA_COM) +
-               LFill(IND_PAIS_A_PAIS));
+           ECFVersao300:
+              Add( LFill('0020') +
+                   LFill(IND_ALIQ_CSLL) +
+                   LFill(IND_QTE_SCP, 3) +
+                   LFill(IND_ADM_FUN_CLU) +
+                   LFill(IND_PART_CONS) +
+                   LFill(IND_OP_EXT) +
+                   LFill(IND_OP_VINC) +
+                   LFill(IND_PJ_ENQUAD) +
+                   LFill(IND_PART_EXT) +
+                   LFill(IND_ATIV_RURAL) +
+                   LFill(IND_LUC_EXP) +
+                   LFill(IND_RED_ISEN) +
+                   LFill(IND_FIN) +
+                   LFill(IND_DOA_ELEIT) +
+                   LFill(IND_PART_COLIG) +
+                   LFill(IND_VEND_EXP) +
+                   LFill(IND_REC_EXT) +
+                   LFill(IND_ATIV_EXT) +
+                   LFill(IND_COM_EXP) +
+                   LFill(IND_PGTO_EXT) +
+                   LFill(IND_ECOM_TI) +
+                   LFill(IND_ROY_REC) +
+                   LFill(IND_ROY_PAG) +
+                   LFill(IND_REND_SERV) +
+                   LFill(IND_PGTO_REM) +
+                   LFill(IND_INOV_TEC) +
+                   LFill(IND_CAP_INF) +
+                   LFill(IND_PJ_HAB) +
+                   LFill(IND_POLO_AM) +
+                   LFill(IND_ZON_EXP) +
+                   LFill(IND_AREA_COM) +
+                   LFill(IND_PAIS_A_PAIS));
 
-        ECFVersao400, ECFVersao500,ECFVersao600:
-          Add( LFill('0020') +
-               LFill(IND_ALIQ_CSLL) +
-               LFill(IND_QTE_SCP, 3) +
-               LFill(IND_ADM_FUN_CLU) +
-               LFill(IND_PART_CONS) +
-               LFill(IND_OP_EXT) +
-               LFill(IND_OP_VINC) +
-               LFill(IND_PJ_ENQUAD) +
-               LFill(IND_PART_EXT) +
-               LFill(IND_ATIV_RURAL) +
-               LFill(IND_LUC_EXP) +
-               LFill(IND_RED_ISEN) +
-               LFill(IND_FIN) +
-               LFill(IND_DOA_ELEIT) +
-               LFill(IND_PART_COLIG) +
-               LFill(IND_VEND_EXP) +
-               LFill(IND_REC_EXT) +
-               LFill(IND_ATIV_EXT) +
-               LFill(IND_COM_EXP) +
-               LFill(IND_PGTO_EXT) +
-               LFill(IND_ECOM_TI) +
-               LFill(IND_ROY_REC) +
-               LFill(IND_ROY_PAG) +
-               LFill(IND_REND_SERV) +
-               LFill(IND_PGTO_REM) +
-               LFill(IND_INOV_TEC) +
-               LFill(IND_CAP_INF) +
-               LFill(IND_PJ_HAB) +
-               LFill(IND_POLO_AM) +
-               LFill(IND_ZON_EXP) +
-               LFill(IND_AREA_COM) +
-               LFill(IND_PAIS_A_PAIS) +
-               LFill(IND_DEREX));
-			   
-    // Mantido ECFVersao700 em diante no else para não precisar de nova manutenção
-    //   enquanto o leiaute não mudar
-    else
-          Add( LFill('0020') +
-               LFill(IND_ALIQ_CSLL) +
-               LFill(IND_QTE_SCP, 3) +
-               LFill(IND_ADM_FUN_CLU) +
-               LFill(IND_PART_CONS) +
-               LFill(IND_OP_EXT) +
-               LFill(IND_OP_VINC) +
-               LFill(IND_PJ_ENQUAD) +
-               LFill(IND_PART_EXT) +
-               LFill(IND_ATIV_RURAL) +
-               LFill(IND_LUC_EXP) +
-               LFill(IND_RED_ISEN) +
-               LFill(IND_FIN) +               
-               LFill(IND_PART_COLIG) +               
-               LFill(IND_REC_EXT) +
-               LFill(IND_ATIV_EXT) +               
-               LFill(IND_PGTO_EXT) +
-               LFill(IND_ECOM_TI) +
-               LFill(IND_ROY_REC) +
-               LFill(IND_ROY_PAG) +
-               LFill(IND_REND_SERV) +
-               LFill(IND_PGTO_REM) +
-               LFill(IND_INOV_TEC) +
-               LFill(IND_CAP_INF) +
-               LFill(IND_PJ_HAB) +
-               LFill(IND_POLO_AM) +
-               LFill(IND_ZON_EXP) +
-               LFill(IND_AREA_COM) +
-               LFill(IND_PAIS_A_PAIS) +
-               LFill(IND_DEREX));		   
-			   
+           ECFVersao400, ECFVersao500,ECFVersao600:
+              Add( LFill('0020') +
+                   LFill(IND_ALIQ_CSLL) +
+                   LFill(IND_QTE_SCP, 3) +
+                   LFill(IND_ADM_FUN_CLU) +
+                   LFill(IND_PART_CONS) +
+                   LFill(IND_OP_EXT) +
+                   LFill(IND_OP_VINC) +
+                   LFill(IND_PJ_ENQUAD) +
+                   LFill(IND_PART_EXT) +
+                   LFill(IND_ATIV_RURAL) +
+                   LFill(IND_LUC_EXP) +
+                   LFill(IND_RED_ISEN) +
+                   LFill(IND_FIN) +
+                   LFill(IND_DOA_ELEIT) +
+                   LFill(IND_PART_COLIG) +
+                   LFill(IND_VEND_EXP) +
+                   LFill(IND_REC_EXT) +
+                   LFill(IND_ATIV_EXT) +
+                   LFill(IND_COM_EXP) +
+                   LFill(IND_PGTO_EXT) +
+                   LFill(IND_ECOM_TI) +
+                   LFill(IND_ROY_REC) +
+                   LFill(IND_ROY_PAG) +
+                   LFill(IND_REND_SERV) +
+                   LFill(IND_PGTO_REM) +
+                   LFill(IND_INOV_TEC) +
+                   LFill(IND_CAP_INF) +
+                   LFill(IND_PJ_HAB) +
+                   LFill(IND_POLO_AM) +
+                   LFill(IND_ZON_EXP) +
+                   LFill(IND_AREA_COM) +
+                   LFill(IND_PAIS_A_PAIS) +
+                   LFill(IND_DEREX));
+
+           ECFVersao700, ECFVersao800,ECFVersao900:
+              Add( LFill('0020') +
+                   LFill(IND_ALIQ_CSLL) +
+                   LFill(IND_QTE_SCP, 3) +
+                   LFill(IND_ADM_FUN_CLU) +
+                   LFill(IND_PART_CONS) +
+                   LFill(IND_OP_EXT) +
+                   LFill(IND_OP_VINC) +
+                   LFill(IND_PJ_ENQUAD) +
+                   LFill(IND_PART_EXT) +
+                   LFill(IND_ATIV_RURAL) +
+                   LFill(IND_LUC_EXP) +
+                   LFill(IND_RED_ISEN) +
+                   LFill(IND_FIN) +
+                   LFill(IND_PART_COLIG) +
+                   LFill(IND_REC_EXT) +
+                   LFill(IND_ATIV_EXT) +
+                   LFill(IND_PGTO_EXT) +
+                   LFill(IND_ECOM_TI) +
+                   LFill(IND_ROY_REC) +
+                   LFill(IND_ROY_PAG) +
+                   LFill(IND_REND_SERV) +
+                   LFill(IND_PGTO_REM) +
+                   LFill(IND_INOV_TEC) +
+                   LFill(IND_CAP_INF) +
+                   LFill(IND_PJ_HAB) +
+                   LFill(IND_POLO_AM) +
+                   LFill(IND_ZON_EXP) +
+                   LFill(IND_AREA_COM) +
+                   LFill(IND_PAIS_A_PAIS) +
+                   LFill(IND_DEREX));
+           else // ECFVersao1000
+              Add( LFill('0020') +
+                   LFill(IND_ALIQ_CSLL) +
+                   LFill(IND_QTE_SCP, 3) +
+                   LFill(IND_ADM_FUN_CLU) +
+                   LFill(IND_PART_CONS) +
+                   LFill(IND_OP_EXT) +
+                   LFill(IND_OP_VINC) +
+                   LFill(IND_PJ_ENQUAD) +
+                   LFill(IND_PART_EXT) +
+                   LFill(IND_ATIV_RURAL) +
+                   LFill(IND_LUC_EXP) +
+                   LFill(IND_RED_ISEN) +
+                   LFill(IND_FIN) +
+                   LFill(IND_PART_COLIG) +
+                   LFill(IND_REC_EXT) +
+                   LFill(IND_ATIV_EXT) +
+                   LFill(IND_PGTO_EXT) +
+                   LFill(IND_ECOM_TI) +
+                   LFill(IND_ROY_REC) +
+                   LFill(IND_ROY_PAG) +
+                   LFill(IND_REND_SERV) +
+                   LFill(IND_PGTO_REM) +
+                   LFill(IND_INOV_TEC) +
+                   LFill(IND_CAP_INF) +
+                   LFill(IND_PJ_HAB) +
+                   LFill(IND_POLO_AM) +
+                   LFill(IND_ZON_EXP) +
+                   LFill(IND_AREA_COM) +
+                   LFill(IND_PAIS_A_PAIS) +
+                   LFill(IND_DEREX) +
+                   LFill(IND_PR_TRANSF));
+         end;
+         FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
       end;
-
-      FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
-    end;
-  end;
+   end;
 end;
 
 procedure TBloco_0.WriteRegistro0021;

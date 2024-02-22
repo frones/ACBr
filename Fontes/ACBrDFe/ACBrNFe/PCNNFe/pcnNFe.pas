@@ -1217,6 +1217,7 @@ type
     FqBCMonoRet: Currency;
     FindDeduzDeson: TIndicador;
   public
+    constructor Create;
     procedure Assign(Source: TICMS);
 
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
@@ -3729,6 +3730,12 @@ begin
   FvICMSMonoOp := Source.FvICMSMonoOp;
   qBCMonoRet := Source.qBCMonoRet;
   indDeduzDeson := Source.indDeduzDeson;
+end;
+
+constructor TICMS.Create;
+begin
+  inherited Create;
+  FindDeduzDeson := tiNao;
 end;
 
 { TIPI }

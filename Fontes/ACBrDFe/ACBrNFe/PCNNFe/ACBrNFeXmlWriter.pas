@@ -2011,13 +2011,14 @@ begin
               xmlNode.AppendChild(AddNode(tcStr, 'N28', 'motDesICMS',
                 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS),
                 DSC_MOTDESICMS));
+
+              if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
+              begin
+                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
+                  1, 2, 1, '1'));
+              end;
             end;
 
-            if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
-            begin
-              xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
-                1, 2, 1, '1'));
-            end;
           end;
           cst30:
           begin

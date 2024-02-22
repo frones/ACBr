@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2024
+-- pcnNFe, ACBrNFeXmlWriter, pcnNFeW --
+[-] Ajuste no valor padrão e geração da tag "indDeduzDeson" no XML para evitar erro de validação. (NT 2023/004)
+  Por: BigWings
+
 21/02/2024
 -- Diversos --
 [*] Alterações em várias units para atender a NT 2023/004 versão 1.10

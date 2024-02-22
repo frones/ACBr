@@ -29,8 +29,8 @@
         <UnitName Value="ACBrONEWebServices"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConversaoONE.pas"/>
-        <UnitName Value="pcnConversaoONE"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\ACBrONEConversao.pas"/>
+        <UnitName Value="ACBrONEConversao"/>
       </Item4>
       <Item5>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnDistLeitura.pas"/>

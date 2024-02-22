@@ -73,8 +73,9 @@ contains
   ACBrONE in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONE.pas',
   ACBrONEConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEConfiguracoes.pas',
   ACBrONEWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEWebServices.pas',
+  
   pcnONEConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnONEConsts.pas',
-  pcnConversaoONE in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConversaoONE.pas',
+  ACBrONEConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\ACBrONEConversao.pas',
   pcnEnvManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvManutencaoEQP.pas',
   pcnRetManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetManutencaoEQP.pas',
   pcnEnvRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvRecepcaoLeitura.pas',

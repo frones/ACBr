@@ -8,7 +8,7 @@ unit ACBr_ONE;
 interface
 
 uses
-  ACBrONE, ACBrONEConfiguracoes, ACBrONEWebServices, pcnConversaoONE, 
+  ACBrONE, ACBrONEConfiguracoes, ACBrONEWebServices, ACBrONEConversao, 
   pcnDistLeitura, pcnEnvManutencaoEQP, pcnEnvRecepcaoLeitura, pcnONEConsts, 
   pcnRetDistLeitura, pcnRetManutencaoEQP, pcnRetRecepcaoLeitura, ACBrONEReg, 
   LazarusPackageIntf;

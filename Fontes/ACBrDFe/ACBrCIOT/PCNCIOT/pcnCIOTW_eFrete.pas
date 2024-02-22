@@ -50,11 +50,11 @@ uses
   ACBrConsts,
   pcnCIOTW, 
   pcnCIOTR,
-  pcnConversao, 
-  pcnGerador, 
+  pcnConversao,
+  pcnGerador,
   pcnLeitor,
   pcnCIOT,
-  pcnConversaoCIOT;
+  ACBrCIOTConversao;
 
 type
   { TCIOTW_eFrete }

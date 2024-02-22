@@ -40,7 +40,7 @@ uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrCIOTConfiguracoes, ACBrCIOTWebServices, ACBrCIOTContratos,
-  pcnConversao, pcnConversaoCIOT;
+  ACBrCIOTConversao;
 
 const
   ACBRCIOT_VERSAO = '1.0.0';

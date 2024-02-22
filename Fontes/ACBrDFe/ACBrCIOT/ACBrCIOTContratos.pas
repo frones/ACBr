@@ -44,7 +44,6 @@ uses
   pcnCIOT, 
   pcnCIOTR, 
   pcnCIOTW, 
-  pcnConversao, 
   pcnLeitor;
 
 type

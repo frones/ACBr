@@ -37,7 +37,8 @@ unit pcnRetEnvCIOT;
 interface
  uses
   SysUtils, Classes,
-  pcnConversao, pcnLeitor, pcnCIOT, pcnConversaoCIOT, synacode;
+  pcnConversao,
+  pcnLeitor, pcnCIOT, ACBrCIOTConversao, synacode;
 
 type
   TRetornoEnvio = class;
@@ -84,7 +85,6 @@ end;
 
 function TRetornoEnvio.LerRetorno_eFrete: Boolean;
 var
-  ok: Boolean;
   i: Integer;
 begin
   Result := False;
@@ -144,17 +144,17 @@ begin
           QuantidadeViagens           := leitor.rCampo(tcInt, 'QuantidadeViagens');
           QuantidadePagamentos        := leitor.rCampo(tcInt, 'QuantidadePagamentos');
           IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
-          EstadoCiot                  := StrToEstadoCIOT(ok, leitor.rCampo(tcStr, 'EstadoCiot'));
+          EstadoCiot                  := StrToEstadoCIOT(leitor.rCampo(tcStr, 'EstadoCiot'));
 
           if (leitor.rExtrai(3, 'Proprietario') <> '') then
           begin
             With Proprietario do
             begin
               CNPJ              := leitor.rCampo(tcStr, 'CNPJ');
-              TipoPessoa        := StrToTipoPessoa(ok, leitor.rCampo(tcStr, 'TipoPessoa'));
+              TipoPessoa        := StrToTipoPessoa(leitor.rCampo(tcStr, 'TipoPessoa'));
               RazaoSocial       := leitor.rCampo(tcStr, 'RazaoSocial');
               RNTRC             := leitor.rCampo(tcStr, 'RNTRC');
-              Tipo              := StrToTipoProprietario(ok, leitor.rCampo(tcStr, 'Tipo'));
+              Tipo              := StrToTipoProprietario(leitor.rCampo(tcStr, 'Tipo'));
               TACouEquiparado   := StrToBool(leitor.rCampo(tcStr, 'TACouEquiparado'));
               DataValidadeRNTRC := leitor.rCampo(tcDat, 'DataValidadeRNTRC');
               RNTRCAtivo        := StrToBool(leitor.rCampo(tcStr, 'RNTRCAtivo'));
@@ -216,8 +216,8 @@ begin
               Tara            := leitor.rCampo(tcInt, 'Tara');
               CapacidadeKg    := leitor.rCampo(tcInt, 'CapacidadeKg');
               CapacidadeM3    := leitor.rCampo(tcInt, 'CapacidadeM3');
-              TipoRodado      := StrToTipoRodado(ok, leitor.rCampo(tcStr, 'TipoRodado'));
-              TipoCarroceria  := StrToTipoCarroceria(ok, leitor.rCampo(tcStr, 'TipoCarroceria'));
+              TipoRodado      := StrToTipoRodado(leitor.rCampo(tcStr, 'TipoRodado'));
+              TipoCarroceria  := StrToTipoCarroceria(leitor.rCampo(tcStr, 'TipoCarroceria'));
             end;
           end;
 
@@ -304,7 +304,7 @@ begin
               with TipoCarga.New do
               begin
                 Codigo    := Leitor.rCampo(tcStr, 'CodigoTipoCarga');
-                Descricao := StrToTipoCarga(ok, leitor.rCampo(tcStr, 'DescricaoTipoCarga'));
+                Descricao := StrToTipoCarga(leitor.rCampo(tcStr, 'DescricaoTipoCarga'));
               end;
               inc(i);
             end;

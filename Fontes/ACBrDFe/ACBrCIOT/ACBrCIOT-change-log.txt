@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2024
+-- Diversos --
+[*] Refactoring na unit pcnConversaoCIOT e a alteração do seu nome para
+    ACBrCIOTConversao. Ajustes nas demais units por conta da alteração
+    do nome da unit.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

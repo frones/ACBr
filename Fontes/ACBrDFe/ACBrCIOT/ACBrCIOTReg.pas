@@ -37,7 +37,7 @@ unit ACBrCIOTReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrCIOT, pcnConversao,
+  SysUtils, Classes, ACBrCIOT,
   {$IFDEF FPC}
      LResources, LazarusPackageIntf, PropEdits, componenteditors
   {$ELSE}

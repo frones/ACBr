@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2024
+-- pmdfeConversaoMDFe --
+[*] Refactoring na unit pmdfeConversaoMDFe.
+  Por: Italo Giurizzato Junior
+
 13/02/2024
 -- ACBrMDFeWebServices --
 [*] Refactoring visando a utilizar as units: ACBrDFeComum.ConsStatServ e 

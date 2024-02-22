@@ -74,12 +74,13 @@ contains
   ACBrCIOTConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTConfiguracoes.pas',
   ACBrCIOTContratos in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTContratos.pas',
   ACBrCIOTWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTWebServices.pas',
+  
   pcnCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOT.pas',
   pcnCIOTR in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTR.pas',
   pcnCIOTW in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW.pas',
   pcnCIOTW_eFrete in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_eFrete.pas',
   pcnCIOTW_REPOM in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_REPOM.pas',
-  pcnConversaoCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnConversaoCIOT.pas',
+  ACBrCIOTConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\ACBrCIOTConversao.pas',
   pcnRetEnvCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnRetEnvCIOT.pas',
   pcnCIOTW_Pamcard in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_Pamcard.pas';
 

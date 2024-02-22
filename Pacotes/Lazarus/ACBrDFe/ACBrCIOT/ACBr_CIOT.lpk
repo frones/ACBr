@@ -62,8 +62,8 @@
         <UnitName Value="pcnCIOTW_REPOM"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnConversaoCIOT.pas"/>
-        <UnitName Value="pcnConversaoCIOT"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\ACBrCIOTConversao.pas"/>
+        <UnitName Value="ACBrCIOTConversao"/>
       </Item12>
     </Files>
     <RequiredPkgs Count="1">

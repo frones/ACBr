@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, ACBrBase,
   ACBrUtil.Base, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrONEConfiguracoes, ACBrONEWebServices,
-  pcnConversao, pcnConversaoONE;
+  pcnConversao, ACBrONEConversao;
 
 const
   ACBRONE_NAMESPACE = 'http://www.portalfiscal.inf.br/one';
@@ -299,14 +299,10 @@ end;
 }
 function TACBrONE.NomeServicoToNomeSchema(const NomeServico: String): String;
 var
-  ok: Boolean;
   ALayout: TLayOutONE;
 begin
-  ALayout := ServicoToLayOutONE(ok, NomeServico);
-  if ok then
-    Result := SchemaONEToStr( LayOutToSchema( ALayout ) )
-  else
-    Result := '';
+  ALayout := ServicoToLayOutONE(NomeServico);
+  Result := SchemaONEToStr( LayOutToSchema( ALayout ) )
 end;
 
 function TACBrONE.DistLeiturasPorCNPJ(TipoDist: TtpDist; const ultNSU,

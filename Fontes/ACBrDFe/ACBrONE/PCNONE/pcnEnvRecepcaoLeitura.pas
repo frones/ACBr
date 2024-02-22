@@ -46,7 +46,7 @@ uses
   ACBrBase,
   ACBrDFeConsts,
   pcnConversao, pcnGerador,
-  pcnConversaoONE, pcnONEConsts;
+  ACBrONEConversao, pcnONEConsts;
 
 type
   { TinfLeitura }
@@ -216,7 +216,6 @@ function TRecepcaoLeitura.LerFromIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   sSecao: String;
-  ok: Boolean;
 begin
   Result := True;
 
@@ -228,7 +227,7 @@ begin
     if INIRec.SectionExists(sSecao) then
     begin
       verAplic := INIRec.ReadString(sSecao, 'verAplic', '');
-      tpTransm := StrTotpTransm(ok, INIRec.ReadString(sSecao, 'tpTransm', '1'));
+      tpTransm := StrTotpTransm(INIRec.ReadString(sSecao, 'tpTransm', '1'));
       dhTransm := StringToDateTime(INIRec.ReadString(sSecao, 'dhTransm', ''));
 
       with infLeitura do
@@ -239,16 +238,16 @@ begin
         cEQP            := INIRec.ReadString(sSecao, 'cEQP', '');
         latitude        := INIRec.ReadFloat(sSecao, 'latitude', 0);
         longitude       := INIRec.ReadFloat(sSecao, 'longitude', 0);
-        tpSentido       := StrTotpSentido(ok,INIRec.ReadString(sSecao, 'tpSentido', 'E'));
+        tpSentido       := StrTotpSentido(INIRec.ReadString(sSecao, 'tpSentido', 'E'));
         placa           := INIRec.ReadString(sSecao, 'placa', '');
-        tpVeiculo       := StrTotpVeiculo(ok,INIRec.ReadString(sSecao, 'tpVeiculo', 'E'));
+        tpVeiculo       := StrTotpVeiculo(INIRec.ReadString(sSecao, 'tpVeiculo', 'E'));
         velocidade      := INIRec.ReadInteger(sSecao, 'velocidade', 0);
         foto            := INIRec.ReadString(sSecao, 'foto', '');
         indiceConfianca := INIRec.ReadInteger(sSecao, 'indiceConfianca', 0);
         pesoBrutoTotal  := INIRec.ReadInteger(sSecao, 'pesoBrutoTotal', 0);
         nroEixos        := INIRec.ReadInteger(sSecao, 'nroEixos', 0);
         xEQP            := INIRec.ReadString(sSecao, 'xEQP', '');
-        tpEQP           := StrTotpEQP(ok,INIRec.ReadString(sSecao, 'tpEQP', '1'));
+        tpEQP           := StrTotpEQP(INIRec.ReadString(sSecao, 'tpEQP', '1'));
         xRefCompl       := INIRec.ReadString(sSecao, 'xRefCompl', '');
       end;
     end;

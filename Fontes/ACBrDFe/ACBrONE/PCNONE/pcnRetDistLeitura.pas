@@ -44,7 +44,10 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, synacode,
-  pcnConversao, pcnLeitor, pcnConversaoONE, pcnEnvRecepcaoLeitura;
+  pcnConversao,
+  pcnLeitor,
+  ACBrONEConversao,
+  pcnEnvRecepcaoLeitura;
 
 type
   TinfMDFeCollectionItem = class(TObject)
@@ -357,7 +360,7 @@ begin
               Versao   := Leitor.rAtributo('versao', 'oneRecepLeitura');
               tpAmb    := StrToTpAmb(Ok, Leitor.rCampo(tcStr, 'tpAmb'));
               verAplic := Leitor.rCampo(tcStr, 'verAplic');
-              tpTransm := StrtotpTransm(Ok, Leitor.rCampo(tcStr, 'tpTransm'));
+              tpTransm := StrtotpTransm(Leitor.rCampo(tcStr, 'tpTransm'));
               dhTransm := Leitor.rCampo(tcDatHor, 'dhTransm');
 
               if (Leitor.rExtrai(3, 'infLeitura')) <> '' then
@@ -370,9 +373,9 @@ begin
                   cEQP            := Leitor.rCampo(tcStr, 'cEQP');
                   latitude        := Leitor.rCampo(tcDe6, 'latitude');
                   longitude       := Leitor.rCampo(tcDe6, 'longitude');
-                  tpSentido       := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
+                  tpSentido       := StrTotpSentido(Leitor.rCampo(tcStr, 'tpSentido'));
                   placa           := Leitor.rCampo(tcStr, 'placa');
-                  tpVeiculo       := StrTotpVeiculo(Ok, Leitor.rCampo(tcStr, 'tpVeiculo'));
+                  tpVeiculo       := StrTotpVeiculo(Leitor.rCampo(tcStr, 'tpVeiculo'));
                   velocidade      := Leitor.rCampo(tcInt, 'velocidade');
                   foto            := Leitor.rCampo(tcStr, 'foto');
                   indiceConfianca := Leitor.rCampo(tcInt, 'indiceConfianca');
@@ -396,12 +399,12 @@ begin
           begin
             with infCompl do
             begin
-              tpLeitura  := StrTotpLeitura(Ok, Leitor.rCampo(tcStr, 'tpLeitura'));
+              tpLeitura  := StrTotpLeitura(Leitor.rCampo(tcStr, 'tpLeitura'));
               xEQP       := Leitor.rCampo(tcStr, 'xEQP');
               latitude   := Leitor.rCampo(tcDe6, 'latitude');
               longitude  := Leitor.rCampo(tcDe6, 'longitude');
               placa      := Leitor.rCampo(tcStr, 'placa');
-              tpSentido  := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
+              tpSentido  := StrTotpSentido(Leitor.rCampo(tcStr, 'tpSentido'));
               NSULeitura := Leitor.rCampo(tcStr, 'NSULeitura');
             end;
           end;
@@ -425,20 +428,20 @@ begin
           begin
             with infLeitura do
             begin
-              tpTransm       := StrtotpTransm(Ok, Leitor.rCampo(tcStr, 'tpTransm'));
+              tpTransm       := StrtotpTransm(Leitor.rCampo(tcStr, 'tpTransm'));
               dhTransm       := Leitor.rCampo(tcDatHor, 'dhTransm');
               cUF            := Leitor.rCampo(tcInt, 'cUF');
               dhPass         := Leitor.rCampo(tcDatHor, 'dhPass');
               CNPJOper       := Leitor.rCampo(tcStr, 'CNPJOper');
               xOper          := Leitor.rCampo(tcStr, 'xOper');
-              tpLeitura      := StrTotpLeitura(Ok, Leitor.rCampo(tcStr, 'tpLeitura'));
+              tpLeitura      := StrTotpLeitura(Leitor.rCampo(tcStr, 'tpLeitura'));
               cEQP           := Leitor.rCampo(tcStr, 'cEQP');
               xEQP           := Leitor.rCampo(tcStr, 'xEQP');
               latitude       := Leitor.rCampo(tcDe6, 'latitude');
               longitude      := Leitor.rCampo(tcDe6, 'longitude');
-              tpSentido      := StrTotpSentido(Ok, Leitor.rCampo(tcStr, 'tpSentido'));
+              tpSentido      := StrTotpSentido(Leitor.rCampo(tcStr, 'tpSentido'));
               placa          := Leitor.rCampo(tcStr, 'placa');
-              tpVeiculo      := StrTotpVeiculo(Ok, Leitor.rCampo(tcStr, 'tpVeiculo'));
+              tpVeiculo      := StrTotpVeiculo(Leitor.rCampo(tcStr, 'tpVeiculo'));
               velocidade     := Leitor.rCampo(tcInt, 'velocidade');
               pesoBrutoTotal := Leitor.rCampo(tcInt, 'pesoBrutoTotal');
               nroEixos       := Leitor.rCampo(tcInt, 'nroEixos');

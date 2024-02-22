@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, dateutils, blcksock,
   ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
-  pcnConversao, pcnConversaoONE,
+  pcnConversao, ACBrONEConversao,
   pcnEnvManutencaoEQP, pcnRetManutencaoEQP,
   pcnEnvRecepcaoLeitura, pcnRetRecepcaoLeitura,
   pcnDistLeitura, pcnRetDistLeitura,
@@ -363,7 +363,7 @@ procedure TONEWebService.Clear;
 begin
   inherited Clear;
 
-  FPStatus := stIdleONE;
+  FPStatus := stONEIdle;
   FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
@@ -415,7 +415,7 @@ begin
   FPDFeOwner.SSL.SSLType := FOldSSLType;
   FPHeaderElement := FOldHeaderElement;
 
-  TACBrONE(FPDFeOwner).SetStatus(stIdleONE);
+  TACBrONE(FPDFeOwner).SetStatus(stONEIdle);
 end;
 
 { TWebServices }

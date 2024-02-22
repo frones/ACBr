@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrDFeConsts,
-  pcnConversao, pcnGerador, pcnConversaoONE;
+  pcnConversao, pcnGerador, ACBrONEConversao;
 
 type
 

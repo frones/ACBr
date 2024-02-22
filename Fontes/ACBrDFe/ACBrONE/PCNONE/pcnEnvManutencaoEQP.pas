@@ -46,7 +46,7 @@ uses
   ACBrBase,
   ACBrDFeConsts,
   pcnConversao, pcnGerador,
-  pcnConversaoONE, pcnONEConsts;
+  ACBrONEConversao, pcnONEConsts;
 
 type
   { TManutencaoEQP }
@@ -155,7 +155,6 @@ function TManutencaoEQP.LerFromIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   sSecao: String;
-  ok: Boolean;
 begin
   Result := True;
 
@@ -167,16 +166,16 @@ begin
     if INIRec.SectionExists(sSecao) then
     begin
       verAplic  := INIRec.ReadString(sSecao, 'verAplic', '');
-      tpMan     := StrToTpMan(ok, INIRec.ReadString(sSecao, 'tpMan', '1'));
+      tpMan     := StrToTpMan(INIRec.ReadString(sSecao, 'tpMan', '1'));
       dhReg     := StringToDateTime(INIRec.ReadString(sSecao, 'dhReg', ''));
       CNPJOper  := INIRec.ReadString(sSecao, 'CNPJOper', '');
       cEQP      := INIRec.ReadString(sSecao, 'cEQP', '');
       xEQP      := INIRec.ReadString(sSecao, 'xEQP', '');
       cUF       := INIRec.ReadInteger(sSecao, 'cUF', 0);
-      tpSentido := StrTotpSentido(ok,INIRec.ReadString(sSecao, 'tpSentido', 'E'));
+      tpSentido := StrTotpSentido(INIRec.ReadString(sSecao, 'tpSentido', 'E'));
       latitude  := INIRec.ReadFloat(sSecao, 'latitude', 0);
       longitude := INIRec.ReadFloat(sSecao, 'longitude', 0);
-      tpEQP     := StrTotpEQP(ok,INIRec.ReadString(sSecao, 'tpEQP', '1'));
+      tpEQP     := StrTotpEQP(INIRec.ReadString(sSecao, 'tpEQP', '1'));
     end;
   finally
     INIRec.Free;

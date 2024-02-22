@@ -44,7 +44,8 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnLeitor;
+  pcnConversao,
+  pcnLeitor;
 
 type
   { TRetRecepcaoLeitura }
@@ -82,7 +83,7 @@ type
 implementation
 
 uses
-  pcnConversaoONE;
+  ACBrONEConversao;
 
 { TRetRecepcaoLeitura }
 

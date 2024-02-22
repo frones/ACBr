@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2024
+-- Diversos --
+[*] Refactoring na unit pcnConversaoONE e a alteração do seu nome para
+    ACBrONEConversao. Ajustes nas demais units por conta da alteração
+    do nome da unit.
+[*] Remoção da unit pcnConversaoONE, pois agora esta sedo usada a nova unit
+    ACBrONEConversao.
+  Por: Italo Giurizzato Junior
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

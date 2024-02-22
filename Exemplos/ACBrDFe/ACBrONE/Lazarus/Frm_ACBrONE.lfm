@@ -12,7 +12,7 @@ object frmACBrONE: TfrmACBrONE
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 612
@@ -1572,15 +1572,15 @@ object frmACBrONE: TfrmACBrONE
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    left = 330
-    top = 296
+    Left = 330
+    Top = 296
   end
   object OpenDialog1: TOpenDialog
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 467
-    top = 243
+    Left = 467
+    Top = 243
   end
   object ACBrONE1: TACBrONE
     MAIL = ACBrMail1
@@ -1596,14 +1596,14 @@ object frmACBrONE: TfrmACBrONE
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    left = 330
-    top = 243
+    Left = 330
+    Top = 243
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'Documento XML (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 467
-    top = 296
+    Left = 467
+    Top = 296
   end
 end

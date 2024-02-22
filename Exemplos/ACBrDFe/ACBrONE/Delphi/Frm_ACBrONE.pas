@@ -258,7 +258,8 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  pcnConversao, pcnConversaoONE,
+  pcnConversao,
+  ACBrONEConversao,
   ACBrUtil.DateTime, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.Base,
   ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   Frm_Status, Frm_SelecionarCertificado;
@@ -280,7 +281,7 @@ end;
 procedure TfrmACBrONE.ACBrONE1StatusChange(Sender: TObject);
 begin
   case ACBrONE1.Status of
-    stIdleONE:
+    stONEIdle:
       begin
         if ( frmStatus <> nil ) then
           frmStatus.Hide;

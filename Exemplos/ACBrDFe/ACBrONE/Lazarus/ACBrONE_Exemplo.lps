@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="220"/>
-        <CursorPos X="14" Y="243"/>
+        <TopLine Value="257"/>
+        <CursorPos X="40" Y="266"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -75,7 +75,7 @@
         <UsageCount Value="10"/>
       </Unit7>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="11" HistoryIndex="10">
       <Position1>
         <Filename Value="Frm_ACBrONE.pas"/>
       </Position1>
@@ -103,6 +103,22 @@
         <Filename Value="Frm_ACBrONE.pas"/>
         <Caret Line="243" Column="14" TopLine="220"/>
       </Position7>
+      <Position8>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="264" Column="46" TopLine="255"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="265" Column="3" TopLine="255"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="490" TopLine="464"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="41" Column="3" TopLine="32"/>
+      </Position11>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

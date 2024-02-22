@@ -38,7 +38,7 @@ uses
   IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
   SynEdit, SynHighlighterXML,
-  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, 
+  ACBrMail, ACBrDFe, ACBrDFeSSL,
   ACBrONE;
 
 type
@@ -261,7 +261,9 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
-  pcnAuxiliar, pcnConversao, pcnConversaoONE,
+  pcnConversao,
+  ACBrONEConversao,
+  ACBrUtil.DateTime, ACBrUtil.FilesIO, ACBrUtil.Base,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   Frm_Status, Frm_SelecionarCertificado;
 
@@ -282,7 +284,7 @@ end;
 procedure TfrmACBrONE.ACBrONE1StatusChange(Sender: TObject);
 begin
   case ACBrONE1.Status of
-    stIdleONE:
+    stONEIdle:
       begin
         if ( frmStatus <> nil ) then
           frmStatus.Hide;
@@ -463,23 +465,27 @@ procedure TfrmACBrONE.btnRecepcaoLeituraClick(Sender: TObject);
 begin
   with ACBrONE1.WebServices.EnvLeitura.EnvRecepcaoLeitura do
   begin
-    verAplic        := ACBrONE1.Configuracoes.Geral.verAplic;
-    CNPJOper        := ACBrONE1.Configuracoes.Geral.CNPJOper;
-    cUF             := ACBrONE1.Configuracoes.WebServices.UFCodigo;
-    tpTransm        := ttNormal;
-    dhTransm        := Now;
-    dhPass          := Now;
-    cEQP            := '123';
-    latitude        := 10;
-    longitude       := 20;
-    tpSentido       := tsEntrada;
-    placa           := 'ABC1234';
-    tpVeiculo       := tvCarga;
-    velocidade      := 80;
-    foto            := '';
-    indiceConfianca := 84;
-    pesoBrutoTotal  := 5;
-    nroEixos        := 3;
+    verAplic := ACBrONE1.Configuracoes.Geral.verAplic;
+    tpTransm := ttNormal;
+    dhTransm := Now;
+
+    with infLeitura do
+    begin
+      CNPJOper        := ACBrONE1.Configuracoes.Geral.CNPJOper;
+      cUF             := ACBrONE1.Configuracoes.WebServices.UFCodigo;
+      dhPass          := Now;
+      cEQP            := '123';
+      latitude        := 10;
+      longitude       := 20;
+      tpSentido       := tsEntrada;
+      placa           := 'ABC1234';
+      tpVeiculo       := tvCarga;
+      velocidade      := 80;
+      foto            := '';
+      indiceConfianca := 84;
+      pesoBrutoTotal  := 5;
+      nroEixos        := 3;
+    end;
   end;
 
   ACBrONE1.WebServices.EnvLeitura.Executar;

@@ -103,7 +103,8 @@ type
   TpcnCstCofins = (cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53,
                    cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72,
                    cof73, cof74, cof75, cof98, cof99);
-  TpcnIndicadorProcesso = (ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros);
+  TpcnIndicadorProcesso = (ipSEFAZ, ipJusticaFederal, ipJusticaEstadual,
+                           ipSecexRFB, ipCONFAZ, ipOutros);
   TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
   TpcnIndicadorTotal = (itSomaTotalNFe, itNaoSomaTotalNFe );
 
@@ -1023,7 +1024,8 @@ end;
 // 401i - Indicador da origem do processo **************************************
 function indProcToStr(const t: TpcnIndicadorProcesso): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '9'], [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
+  [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipCONFAZ, ipOutros]);
 end;
 
 function indProcToDescrStr(const t: TpcnIndicadorProcesso): string;
@@ -1033,13 +1035,15 @@ begin
     ipJusticaFederal  : result  := 'JUSTIÇA FEDERAL';
     ipJusticaEstadual : result  := 'JUSTIÇA ESTADUAL';
     ipSecexRFB        : result  := 'SECEX / RFB';
+    ipCONFAZ          : Result  := 'CONFAZ';
     ipOutros          : result  := 'OUTROS';
   end;
 end;
 
 function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '9'], [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '9'],
+  [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipCONFAZ, ipOutros]);
 end;
 
 // 49a - Código do Regime Tributário **************************************

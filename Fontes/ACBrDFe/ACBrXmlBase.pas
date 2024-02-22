@@ -42,11 +42,6 @@ uses
   ACBrXmlDocument;
 
 type
-  TACBrTipoAmbiente = (taProducao, taHomologacao);
-
-  TACBrTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN,
-                      teSVCRS, teSVCSP, teOffLine);
-
   TACBrTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
                         taSomenteParaNaoAssinada);
 
@@ -54,6 +49,19 @@ type
                     tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
                     tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig,
                     tcNumStr, tcDatUSA);
+
+  TACBrTipoAmbiente = (taProducao, taHomologacao);
+
+const
+  TACBrTipoAmbienteArrayStrings: array[TACBrTipoAmbiente] of string = ('1', '2');
+
+type
+  TACBrTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN,
+                      teSVCRS, teSVCSP, teOffLine);
+
+const
+  TACBrTipoEmissaoArrayStrings: array[TACBrTipoEmissao] of string = ('1', '2',
+    '3', '4', '5', '6', '7', '8', '9');
 
 const
   LineBreak = #13#10;
@@ -93,6 +101,7 @@ implementation
 
 uses
   StrUtilsEx,
+  ACBrBase,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
@@ -384,26 +393,48 @@ end;
 
 function TipoEmissaoToStr(const t: TACBrTipoEmissao): string;
 begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-                              [teNormal, teContingencia, teSCAN, teDPEC, teFSDA,
-                               teSVCAN, teSVCRS, teSVCSP, teOffLine]);
+ result := TACBrTipoEmissaoArrayStrings[t];
 end;
 
 function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
+var
+  idx: TACBrTipoEmissao;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-                              [teNormal, teContingencia, teSCAN, teDPEC, teFSDA,
-                               teSVCAN, teSVCRS, teSVCSP, teOffLine]);
+  ok := True;
+
+  for idx := Low(TACBrTipoEmissaoArrayStrings) to High(TACBrTipoEmissaoArrayStrings) do
+  begin
+    if (TACBrTipoEmissaoArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TACBrTipoEmissao: %s', [s]);
 end;
 
 function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 begin
-  result := EnumeradoToStr(t, ['1', '2'], [taProducao, taHomologacao]);
+ result := TACBrTipoAmbienteArrayStrings[t];
 end;
 
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
+var
+  idx: TACBrTipoAmbiente;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
+  ok := True;
+
+  for idx := Low(TACBrTipoAmbienteArrayStrings) to High(TACBrTipoAmbienteArrayStrings) do
+  begin
+    if (TACBrTipoAmbienteArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TACBrTipoAmbiente: %s', [s]);
 end;
 
 procedure LerSignature(ASignatureNode: TACBrXmlNode; Signature: TSignature);

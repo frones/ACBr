@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2024
+-- ACBrXmlBase --
+[*] Refactoring nas funções de conversão dos tipos: TipoEmissaoToStr, 
+    StrToTipoEmissao, TipoAmbienteToStr e StrToTipoAmbiente.
+  Por: Italo Giurizzato Junior
+
 20/02/2024
 -- ACBrDFeConsts --
 [+] Incluido a constante DSC_QRCODDFe.

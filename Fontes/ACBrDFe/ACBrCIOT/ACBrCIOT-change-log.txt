@@ -40,6 +40,10 @@ Símbolo : Significado
 
 22/02/2024
 -- Diversos --
+[*] Remoção da unit pcnConversaoCIOT, pois agora esta sedo usada a nova unit
+    ACBrCIOTConversao.
+  Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Refactoring na unit pcnConversaoCIOT e a alteração do seu nome para
     ACBrCIOTConversao. Ajustes nas demais units por conta da alteração
     do nome da unit.

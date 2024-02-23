@@ -48,6 +48,7 @@ uses
   ACBrNF3eConversao,
   ACBrNF3eConsts,
   ACBrDFeComum.Proc,
+//  ACBrDFeComum.SignatureClass;
   pcnSignature;
 
 type

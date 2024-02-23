@@ -371,12 +371,12 @@ function SchemaEventoToStr(const t: TSchemaNF3e): string;
 function StrToVersaoNF3e(out ok: Boolean; const s: string): TVersaoNF3e;
 function VersaoNF3eToStr(const t: TVersaoNF3e): string;
 
-function DblToVersaoNF3e(out ok: Boolean; const d: Real): TVersaoNF3e;
-function VersaoNF3eToDbl(const t: TVersaoNF3e): Real;
+function DblToVersaoNF3e(out ok: Boolean; const d: Double): TVersaoNF3e;
+function VersaoNF3eToDbl(const t: TVersaoNF3e): Double;
 
 function VersaoQrCodeToStr(const t: TVersaoQrCode): string;
 function StrToVersaoQrCode(out ok: Boolean; const s: string): TVersaoQrCode;
-function VersaoQrCodeToDbl(const t: TVersaoQrCode): Real;
+function VersaoQrCodeToDbl(const t: TVersaoQrCode): Double;
 
 function finNF3eToStr(const t: TFinalidadeNF3e): string;
 function StrTofinNF3e(out ok: Boolean; const s: string): TFinalidadeNF3e;
@@ -572,26 +572,26 @@ begin
   result := TVersaoNF3eArrayStrings[t];
 end;
 
- function DblToVersaoNF3e(out ok: Boolean; const d: Real): TVersaoNF3e;
- begin
-   ok := True;
+ function DblToVersaoNF3e(out ok: Boolean; const d: Double): TVersaoNF3e;
+var
+  idx: TVersaoNF3e;
+begin
+  for idx := Low(TVersaoNF3eArrayDouble) to High(TVersaoNF3eArrayDouble) do
+  begin
+    if (TVersaoNF3eArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
 
-   if (d = 1.0) then
-     Result := ve100
-   else
-   begin
-     Result := ve100;
-     ok := False;
-   end;
- end;
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoNF3e: %s',
+    [FormatFloat('0.00', d)]);
+end;
 
- function VersaoNF3eToDbl(const t: TVersaoNF3e): Real;
+ function VersaoNF3eToDbl(const t: TVersaoNF3e): Double;
  begin
-   case t of
-     ve100: Result := 1.00;
-   else
-     Result := 0;
-   end;
+  result := TVersaoNF3eArrayDouble[t];
  end;
 
 function VersaoQrCodeToStr(const t: TVersaoQrCode): string;
@@ -615,15 +615,9 @@ begin
   raise EACBrException.CreateFmt('Valor string inválido para TVersaoQrCode: %s', [s]);
 end;
 
-function VersaoQrCodeToDbl(const t: TVersaoQrCode): Real;
+function VersaoQrCodeToDbl(const t: TVersaoQrCode): Double;
 begin
-  case t of
-    veqr000: Result := 0;
-    veqr100: Result := 1;
-    veqr200: Result := 2;
-  else
-    Result := 0;
-  end;
+  result := TVersaoQrCodeArrayDouble[t];
 end;
 
 function SchemaEventoToStr(const t: TSchemaNF3e): string;

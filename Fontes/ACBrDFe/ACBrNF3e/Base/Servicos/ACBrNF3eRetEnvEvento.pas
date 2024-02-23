@@ -44,6 +44,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
+//  ACBrDFeComum.SignatureClass,
   pcnSignature,
   ACBrNF3eEventoClass;
 

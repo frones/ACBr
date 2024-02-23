@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrNF3eConversao --
+[*] Ajustes nas funções: DblToVersaoNF3e, VersaoNF3eToDbl e VersaoQrCodeToDbl.
+  Por: Italo Giurizzato Junior
+
 20/02/2024
 -- Diversos --
 [*] Realizado diversos ajustes para atender NT 2024/001.

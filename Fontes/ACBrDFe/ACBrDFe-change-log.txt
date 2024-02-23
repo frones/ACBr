@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+23/02/2024
+-- ACBrDFeSSL/ACBrDFeXsLibXml2/ACBrDFeXsMsXml/ACBrDFeXsMsXmlCapicom/ACBrDFeXsXmlSec --
+[*] Alteração visando gerar um atributo Id na tag SignatureValue.
+    Esse Id esta sendo exigido pelo provedor PRODAUB da cidade de Uberlância/MG.
+  Por: Italo Giurizzato Junior
+
 22/02/2024
 -- ACBrXmlBase --
 [*] Refactoring nas funções de conversão dos tipos: TipoEmissaoToStr, 

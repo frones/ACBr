@@ -250,7 +250,8 @@ type
     FpDFeSSL: TDFeSSL;
 
     function AdicionarSignatureElement( const ConteudoXML: String; AddX509Data: Boolean;
-      const docElement, IdSignature: String; const IdAttr: String = ''): String;
+      const docElement, IdSignature: String; const IdAttr: String = '';
+      const IdSignatureValue: string = ''): String;
     function AjustarXMLAssinado(const ConteudoXML: String; const X509DER: String = ''): String;
     function GetSignDigestAlgorithm(const SignatureNode: String): TSSLDgst;
   public
@@ -258,7 +259,8 @@ type
 
     function Assinar(const ConteudoXML, docElement, infElement: String;
       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
-      const IdSignature: String = ''; const IdAttr: String = ''): String; virtual;
+      const IdSignature: String = ''; const IdAttr: String = '';
+      const IdSignatureValue: string = ''): String; virtual;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; virtual;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
@@ -367,7 +369,8 @@ type
     // Nota: ConteudoXML, DEVE estar em UTF8 //
     function Assinar(const ConteudoXML, docElement, infElement: String;
       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
-      const IdSignature: String = ''; const IdAttr: String = ''): String;
+      const IdSignature: String = ''; const IdAttr: String = '';
+      const IdSignatureValue: string = ''): String;
     // Envia por SoapAction o ConteudoXML (em UTF8) para URL. Retorna a resposta do Servico //
     function Enviar(var ConteudoXML: String; const AURL: String;
       const ASoapAction: String; AMimeType: String = ''; 
@@ -1105,12 +1108,17 @@ end;
 
 function TDFeSSLXmlSignClass.AdicionarSignatureElement(const ConteudoXML: String;
   AddX509Data: Boolean; const docElement, IdSignature: String;
-  const IdAttr: String = ''): String;
+  const IdAttr: String = ''; const IdSignatureValue: string = ''): String;
 var
-  URI, TagEndDocElement: String;
+  URI, TagEndDocElement, aIdSignatureValue: String;
   I: Integer;
 begin
   URI := EncontrarURI(ConteudoXML, docElement, IdAttr);
+
+  if IdSignatureValue <> '' then
+    aIdSignatureValue := ' Id="' + IdSignatureValue + URI + '"'
+  else
+    aIdSignatureValue := '';
 
   TagEndDocElement := '</' + docElement + '>';
   I := PosLast(TagEndDocElement, ConteudoXML);
@@ -1118,7 +1126,7 @@ begin
     raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
 
   Result := copy(ConteudoXML, 1, I - 1) +
-            SignatureElement(URI, AddX509Data, IdSignature, FpDFeSSL.SSLDgst) +
+            SignatureElement(URI, AddX509Data, IdSignature, FpDFeSSL.SSLDgst, aIdSignatureValue) +
             copy(ConteudoXML, I, Length(ConteudoXML));
 end;
 
@@ -1239,7 +1247,7 @@ end;
 
 function TDFeSSLXmlSignClass.Assinar(const ConteudoXML, docElement,
   infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
-  const IdSignature: String; const IdAttr: String): String;
+  const IdSignature: String; const IdAttr: String; const IdSignatureValue: string): String;
 begin
   {$IFDEF FPC}
   Result := '';
@@ -1342,7 +1350,7 @@ end;
 
 function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String;
   const SignatureNode: String; const SelectionNamespaces: String; const IdSignature: String;
-  const IdAttr: String ): String;
+  const IdAttr: String; const IdSignatureValue: string): String;
 Var
   XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois: String;
   Assinado: Boolean;
@@ -1368,7 +1376,7 @@ begin
   begin
     XmlAss := FSSLXmlSignClass.Assinar( ConteudoXML, docElement, infElement,
                                         SignatureNode, SelectionNamespaces,
-                                        IdSignature, IdAttr);
+                                        IdSignature, IdAttr, IdSignatureValue);
 
     // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
     if (DeclaracaoXMLAntes <> '') then

@@ -54,7 +54,8 @@ type
    public
      function Assinar(const ConteudoXML, docElement, infElement: String;
        const SignatureNode: String = ''; const SelectionNamespaces: String = '';
-       const IdSignature: String = ''; const IdAttr: String = ''): String; override;
+       const IdSignature: String = ''; const IdAttr: String = '';
+       const IdSignatureValue: string = ''): String; override;
      function Validar(const ConteudoXML, ArqSchema: String;
        out MsgErro: String): Boolean; override;
      function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
@@ -92,7 +93,8 @@ end;
 
 function TDFeSSLXmlSignMsXml.Assinar(const ConteudoXML, docElement,
   infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
-  const IdSignature: String; const IdAttr: String): String;
+  const IdSignature: String; const IdAttr: String;
+  const IdSignatureValue: string): String;
 var
   AXml, XmlAss: AnsiString;
   xmldoc: IXMLDOMDocument3;
@@ -133,7 +135,7 @@ begin
 
     // Inserindo Template da Assinatura digital //
     if (not XmlEstaAssinado(AXml)) or (vSignatureNode <> CSIGNATURE_NODE) then
-      AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr);
+      AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr, IdSignatureValue);
 
     // DEBUG
     //WriteToFile('c:\temp\XmlDocWithSignatureTag.xml', AXml);

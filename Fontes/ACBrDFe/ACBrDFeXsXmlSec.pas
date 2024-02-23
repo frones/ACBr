@@ -120,7 +120,8 @@ type
       const NameSpace: String): boolean;
     function XmlSecSign(aDoc: xmlDocPtr;
       const SignatureNode, SelectionNamespaces: string;
-      const InfElement, URI, IdSignature, docElement: String): String;
+      const InfElement, URI, IdSignature, docElement: String;
+      const IdSignatureValue: string = ''): String;
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String);
   public
@@ -435,7 +436,8 @@ end;
 
 function TDFeSSLXmlSignXmlSec.XmlSecSign(aDoc: xmlDocPtr;
   const SignatureNode, SelectionNamespaces: string;
-  const InfElement, URI, IdSignature, docElement: String): String;
+  const InfElement, URI, IdSignature, docElement: String;
+  const IdSignatureValue: string): String;
 var
   SignNode: xmlNodePtr;
   buffer: PAnsiChar;
@@ -449,7 +451,7 @@ begin
     // Inserindo Template da Assinatura digital //
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     if (SignNode = nil) then
-      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst), docElement);
+      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst, IdSignatureValue), docElement);
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);

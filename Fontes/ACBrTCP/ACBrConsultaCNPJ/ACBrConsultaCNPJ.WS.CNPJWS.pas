@@ -65,7 +65,7 @@ var
   LJson, LJsonObject : TACBrJSONObject;
   LJsonArray: TACBrJSONArray;
   LRetorno : String;
-  I, Z : Integer;
+  I : Integer;
   LURL : String;
 begin
   inherited Executar;
@@ -114,14 +114,15 @@ begin
                          LJsonObject.AsJSONObject['atividade_principal'].AsString['descricao'];
 
       LJsonArray := LJsonObject.AsJSONArray['atividades_secundarias'];
-      for Z := 0 to Pred(LJsonArray.Count) do
-        FResposta.CNAE2.Add(LJsonArray.ItemAsJSONObject[Z].AsString['id'] + ' ' +
-                            LJsonArray.ItemAsJSONObject[Z].AsString['descricao']);
+      for I := 0 to Pred(LJsonArray.Count) do
+        FResposta.CNAE2.Add(LJsonArray.ItemAsJSONObject[I].AsString['id'] + ' ' +
+                            LJsonArray.ItemAsJSONObject[I].AsString['descricao']);
 
       LJsonArray := LJsonObject.AsJSONArray['inscricoes_estaduais'];
-      for Z := 0 to Pred(LJsonArray.Count) do
-         if (LJsonArray.ItemAsJSONObject[Z].AsBoolean['ativo']) then
-            FResposta.InscricaoEstadual := LJsonArray.ItemAsJSONObject[Z].AsString['inscricao_estadual'];
+      for I := 0 to Pred(LJsonArray.Count) do
+         if (LJsonArray.ItemAsJSONObject[I].AsBoolean['ativo']) and
+            (LJsonArray.ItemAsJSONObject[I].AsJSONObject['estado'].AsString['sigla'] = LJsonObject.AsJSONObject['estado'].AsString['sigla']) then
+            FResposta.InscricaoEstadual := LJsonArray.ItemAsJSONObject[I].AsString['inscricao_estadual'];
 
       LJsonObject := LJson.AsJSONObject['motivo_situacao_cadastral'];
       if LJson.IsJSONObject('motivo_situacao_cadastral' ) then

@@ -395,19 +395,20 @@ begin
 end;
 
 function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
+var
+  idx: TVersaoMDFe;
 begin
-  ok := True;
-
-  if d = 1.0 then
-    Result := ve100
-  else
-  if d = 3.0 then
-    Result := ve300
-  else
+  for idx := Low(TVersaoMDFeArrayDouble) to High(TVersaoMDFeArrayDouble) do
   begin
-    Result := ve100;
-    ok := False;
+    if (TVersaoMDFeArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
   end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoMDFe: %s',
+    [FormatFloat('0.00', d)]);
 end;
 
 function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;

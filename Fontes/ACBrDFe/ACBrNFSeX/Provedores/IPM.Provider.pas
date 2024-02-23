@@ -70,6 +70,9 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function GerarXMLNota(const AXmlRps: String; const Response: TNFSeWebserviceResponse): String;
+    procedure MontarXMLNFSe(const ANode: TACBrXmlNode; const Response: TNFSeWebserviceResponse);
+
     function PrepararRpsParaLote(const aXml: string): string; override;
 
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
@@ -164,7 +167,7 @@ implementation
 
 uses
   synacode,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO, ACBrUtil.DateTime,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts, ACBrJSON,
   IPM.GravarXml, IPM.LerXml;
@@ -233,6 +236,97 @@ function TACBrNFSeProviderIPM.CriarLeitorXml(
 begin
   Result := TNFSeR_IPM.Create(Self);
   Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderIPM.GerarXMLNota(const AXmlRps: String; const Response: TNFSeWebserviceResponse): String;
+var
+  LXML: TACBrXmlDocument;
+  LNodeNF, LNode: TACBrXmlNode;
+  LDataNFSe: String;
+begin
+  Result := '';
+
+  if AXMLRps = '' then
+    exit;
+
+  LXML := TACBrXmlDocument.Create;
+  try
+    LXML.LoadFromXml(AXmlRps);
+    LNodeNF := LXML.Root.Childrens.FindAnyNs('nf');
+
+    if not Assigned(LNodeNF) then
+      Exit;
+
+    //Adiciono as tags que vieram no retorno
+    LNodeNF.AddChild('cod_verificador_autenticidade');
+    LNodeNF.AddChild('link_nfse');
+    LNodeNF.AddChild('numero_nfse');
+    LNodeNF.AddChild('serie_nfse');
+    LNodeNF.AddChild('data_nfse');
+    LNodeNF.AddChild('hora_nfse');
+
+    //Alimento as informações
+    LNode := LNodeNF.Childrens.FindAnyNs('cod_verificador_autenticidade');
+    if Assigned(LNode) then
+      LNode.Content := Response.Protocolo;
+
+    LNode := LNodeNF.Childrens.FindAnyNs('link_nfse');
+    if Assigned(LNode) then
+      LNode.Content := Response.Link;
+
+    LNode := LNodeNF.Childrens.FindAnyNs('numero_nfse');
+    if Assigned(LNode) then
+      LNode.Content := Response.NumeroNota;
+
+    LNode := LNodeNF.Childrens.FindAnyNs('serie_nfse');
+    if Assigned(LNode) then
+      LNode.Content := Response.SerieNota;
+
+    LDataNFSe := FormatDateTimeBr(Response.Data);
+    LNode := LNodeNF.Childrens.FindAnyNs('data_nfse');
+    if Assigned(LNode) then
+      LNode.Content := Copy(LDataNFSe, 0, 10);
+
+    LNode := LNodeNF.Childrens.FindAnyNs('hora_nfse');
+    if Assigned(LNode) then
+      LNode.Content := Copy(LDataNFSe, 12, Length(LDataNFSe));
+
+    Result := LXML.Xml;
+
+  finally
+    LXML.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderIPM.MontarXMLNFSe(const ANode: TACBrXmlNode; const Response: TNFSeWebserviceResponse);
+var
+  AuxNode: TACBrXmlNode;
+  NumRps, LXmlNota: String;
+  ANota: TNotaFiscal;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('rps');
+  if Assigned(AuxNode) then
+  begin
+    NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nro_recibo_provisorio'), tcStr);
+    if NumRps <> '' then
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+    else
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+
+    if Assigned(ANota) then
+    begin
+      if ANota.XmlRps = '' then
+        LXmlNota := GerarXMLNota(ANota.XmlNfse, Response)
+      else
+        LXmlNota := GerarXMLNota(ANota.XmlRps, Response);
+
+      if LXmlNota <> '' then
+      begin
+        ANota.XmlNfse := LXmlNota;
+        SalvarXmlNfse(ANota);
+      end;
+    end;
+  end;
 end;
 
 function TACBrNFSeProviderIPM.CriarServiceClient(
@@ -470,6 +564,9 @@ begin
         AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
+
+        MontarXMLNFSe(ANode, Response);
+
       end;
     except
       on E:Exception do
@@ -615,6 +712,8 @@ begin
         AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
+
+        MontarXMLNFSe(ANode, Response);
       end;
     except
       on E:Exception do
@@ -788,6 +887,9 @@ begin
         AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
+
+        MontarXMLNFSe(ANode, Response);
+
       end;
     except
       on E:Exception do
@@ -980,6 +1082,9 @@ begin
         AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
+
+        MontarXMLNFSe(ANode, Response);
+
       end;
     except
       on E:Exception do
@@ -1238,6 +1343,9 @@ begin
         AResumo.CodigoVerificacao := Response.CodigoVerificacao;
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
+
+        MontarXMLNFSe(ANode, Response);
+
       end;
     except
       on E:Exception do

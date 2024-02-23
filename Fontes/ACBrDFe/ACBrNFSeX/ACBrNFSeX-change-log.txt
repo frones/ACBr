@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- IPM.Provider --
+[*] Adiciona rotina para geração do XML da NFSe a partir do RPS quando provedor não devolver XML no retorno.
+  Por: Diego Folieni
 
 20/02/2024
 -- ACBrNFSeXServicos --

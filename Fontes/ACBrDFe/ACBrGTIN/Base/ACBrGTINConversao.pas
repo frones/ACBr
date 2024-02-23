@@ -173,16 +173,20 @@ begin
 end;
 
 function DblToVersaoGTIN(out ok: Boolean; const d: Double): TVersaoGTIN;
+var
+  idx: TVersaoGTIN;
 begin
-  ok := True;
-
-  if d = 1.0 then
-    Result := ve100
-  else
+  for idx := Low(TVersaoGTINArrayDouble) to High(TVersaoGTINArrayDouble) do
   begin
-    Result := ve100;
-    ok := False;
+    if (TVersaoGTINArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
   end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoGTIN: %s',
+    [FormatFloat('0.00', d)]);
 end;
 
 function VersaoGTINToDbl(const t: TVersaoGTIN): Double;

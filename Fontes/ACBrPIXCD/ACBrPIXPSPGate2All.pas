@@ -151,7 +151,7 @@ begin
     wPixSolicitado.description := IfThen(NaoEstaVazio(
       epCob.CobSolicitada.solicitacaoPagador),
       epCob.CobSolicitada.solicitacaoPagador, 'Produto/Servico');
-    wPixSolicitado.amount := epCob.CobSolicitada.valor.original;
+    wPixSolicitado.amount := epCob.CobSolicitada.valor.original*100;
     wPixSolicitado.payment.pix.provider := gppC6Bank;
     wPixSolicitado.payment.pix.key := gpkRandomKey;
     wPixSolicitado.payment.pix.expirationDateTime := IncSecond(Now, epCob.CobSolicitada.calendario.expiracao);
@@ -177,7 +177,7 @@ begin
       SecondsBetween(wPixGerado.dtTransaction, wPixGerado.payment.pix.expirationDateTime);
     wCob.status := TransactionStatusParaCosStatus(wPixGerado.status);
     wCob.pixCopiaECola := wPixGerado.payment.pix.qrcode;
-    wCob.valor.original := wPixGerado.amount;
+    wCob.valor.original := wPixGerado.amount/100;
 
     wQRCode := TACBrPIXQRCodeDinamico.Create;
     try
@@ -212,7 +212,7 @@ begin
       SecondsBetween(wPixConsultado.dtTransaction, wPixConsultado.payment.pix.expirationDateTime);
     wCob.status := TransactionStatusParaCosStatus(wPixConsultado.status);
     wCob.pixCopiaECola := wPixConsultado.payment.pix.qrcode;
-    wCob.valor.original := wPixConsultado.amount;
+    wCob.valor.original := wPixConsultado.amount/100;
 
     if (wPixConsultado.payment.pix.paymentAmount > 0) then
     with wCob.pix.New do
@@ -220,7 +220,7 @@ begin
       txid := wPixConsultado.transactionId;
       endToEndId := wPixConsultado.transactionId;
       horario := wPixConsultado.payment.pix.paymentDate;
-      valor := wPixConsultado.payment.pix.paymentAmount;
+      valor := wPixConsultado.payment.pix.paymentAmount/100;
     end;
 
     wQRCode := TACBrPIXQRCodeDinamico.Create;
@@ -254,7 +254,7 @@ begin
       wPix.txid := wPixConsultado.transactionId;
       wPix.endToEndId := wPixConsultado.transactionId;
       wPix.horario := wPixConsultado.payment.pix.paymentDate;
-      wPix.valor := wPixConsultado.payment.pix.paymentAmount;
+      wPix.valor := wPixConsultado.payment.pix.paymentAmount/100;
     end;
 
     Result := wPix.AsJSON;

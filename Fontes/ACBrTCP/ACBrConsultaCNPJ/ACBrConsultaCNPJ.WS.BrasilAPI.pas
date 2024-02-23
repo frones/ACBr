@@ -100,7 +100,7 @@ begin
         FResposta.CEP                  := IntToStr( LJsonObject.AsInteger['cep']);
         FResposta.Bairro               := LJsonObject.AsString['bairro'];
         FResposta.Cidade               := LJsonObject.AsString['municipio'];
-        FResposta.CodigoIBGE           := IntToStr(LJsonObject.AsInteger['codigo_municipio']);
+        FResposta.CodigoIBGE           := IntToStr(LJsonObject.AsInteger['codigo_municipio_ibge']);
         FResposta.UF                   := LJsonObject.AsString['uf'];
         FResposta.Situacao             := LJsonObject.AsString['descricao_situacao_cadastral'];
         FResposta.SituacaoEspecial     := LJsonObject.AsString['situacao_especial'];

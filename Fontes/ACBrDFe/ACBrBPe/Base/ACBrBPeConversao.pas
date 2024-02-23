@@ -257,8 +257,8 @@ function StrToTpBPe(const s: string): TTipoBPe;
 function ModalBPeToStr(const t: TModalBPe): string;
 function StrToModalBPe(const s: string): TModalBPe;
 
-function DblToVersaoBPe(const d: Real): TVersaoBPe;
-function VersaoBPeToDbl(const t: TVersaoBPe): Real;
+function DblToVersaoBPe(const d: Double): TVersaoBPe;
+function VersaoBPeToDbl(const t: TVersaoBPe): Double;
 
 function LayOutToSchema(const t: TLayOutBPe): TSchemaBPe;
 
@@ -364,23 +364,26 @@ begin
   result := TVersaoBPeArrayStrings[t];
 end;
 
-function DblToVersaoBPe(const d: Real): TVersaoBPe;
+function DblToVersaoBPe(const d: Double): TVersaoBPe;
+var
+  idx: TVersaoBPe;
 begin
-  if (d = 1.0)  then
-    Result := ve100
-  else
+  for idx := Low(TVersaoBPeArrayDouble) to High(TVersaoBPeArrayDouble) do
   begin
-    Result := ve100;
+    if (TVersaoBPeArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
   end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoBPe: %s',
+    [FormatFloat('0.00', d)]);
 end;
 
-function VersaoBPeToDbl(const t: TVersaoBPe): Real;
+function VersaoBPeToDbl(const t: TVersaoBPe): Double;
 begin
-  case t of
-    ve100: Result := 1.00;
-  else
-    Result := 0;
-  end;
+  result := TVersaoBPeArrayDouble[t];
 end;
 
 function tpBPeToStr(const t: TTipoBPe): string;

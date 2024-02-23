@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrBPeWebServices --
+[*] Alteração nos parâmetros do ParseText usado nos retornos de diversos métodos.
+-- ACBrBPeConversao --
+[*] Ajustes nas funções: DblToVersaoBPe e VersaoBPeToDbl.
+  Por: Italo Giurizzato Junior
+
 21/02/2024
 -- ACBrBPeRetEnvEvento --
 [-] Correção de erro AV ao processar o retorno de envio de um evento.

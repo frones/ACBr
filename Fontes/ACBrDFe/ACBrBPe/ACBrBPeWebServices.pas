@@ -762,7 +762,7 @@ begin
 
   FPRetWS := TiraAcentos(FPRetWS);
 
-  FBPeRetorno.XmlRetorno := ParseText(FPRetWS);
+  FBPeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
   FBPeRetorno.LerXml;
 
   Fversao   := FBPeRetorno.versao;
@@ -1060,7 +1060,7 @@ begin
 
     FPRetWS := TiraAcentos(FPRetWS);
 
-    BPeRetorno.XmlRetorno := ParseText(FPRetWS);
+    BPeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
     BPeRetorno.LerXML;
 
     BPCancelado := False;
@@ -1592,7 +1592,7 @@ begin
 
   FPRetWS := TiraAcentos(FPRetWS);
 
-  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
+  EventoRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.retInfEvento.cStat;
@@ -1823,7 +1823,7 @@ begin
 
   FPRetWS := TiraAcentos(FPRetWS);
 
-  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
+  FretDistDFeInt.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do

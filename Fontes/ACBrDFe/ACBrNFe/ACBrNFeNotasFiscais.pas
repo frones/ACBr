@@ -2600,7 +2600,7 @@ begin
 
           tpIntegra  := StrTotpIntegra(OK,INIRec.ReadString(sSecao,'tpIntegra',''));
           CNPJ  := INIRec.ReadString(sSecao,'CNPJ','');
-          tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand','99'));
+          tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand',''));
           cAut  := INIRec.ReadString(sSecao,'cAut','');
 
           CNPJReceb := INIRec.ReadString(sSecao,'CNPJReceb','');

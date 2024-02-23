@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrNotasFiscais --
+[*] Altera a leitura da informação do tBand na LoadFromIni para pegar o valor vazio ao invés de 99.
+  Por: Diego Folieni/ Antonio Carlos Junior
+
 22/02/2024
 -- pcnNFe, ACBrNFeXmlWriter, pcnNFeW --
 [-] Ajuste no valor padrão e geração da tag "indDeduzDeson" no XML para evitar erro de validação. (NT 2023/004)

@@ -51,6 +51,7 @@ type
 
 const
   TVersaoONEArrayStrings: array[TVersaoONE] of string = ('2.00');
+  TVersaoONEArrayDouble: array[TVersaoONE] of Double = (2.00);
 
 type
   TLayOutONE = (LayManutencao, LayRecepcaoLeitura, LayDistLeitura, LayConsFoto,
@@ -108,8 +109,8 @@ const
 function StrToVersaoONE(const s: string): TVersaoONE;
 function VersaoONEToStr(const t: TVersaoONE): string;
 
-function DblToVersaoONE(const d: Real): TVersaoONE;
-function VersaoONEToDbl(const t: TVersaoONE): Real;
+function DblToVersaoONE(const d: Double): TVersaoONE;
+function VersaoONEToDbl(const t: TVersaoONE): Double;
 
 function LayOutToSchema(const t: TLayOutONE): TSchemaONE;
 
@@ -169,23 +170,26 @@ begin
   result := TVersaoONEArrayStrings[t];
 end;
 
-function DblToVersaoONE(const d: Real): TVersaoONE;
+function DblToVersaoONE(const d: Double): TVersaoONE;
+var
+  idx: TVersaoONE;
 begin
-  if (d = 2.0)  then
-    Result := ve200
-  else
+  for idx := Low(TVersaoONEArrayDouble) to High(TVersaoONEArrayDouble) do
   begin
-    Result := ve200;
+    if (TVersaoONEArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
   end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoONE: %s',
+    [FormatFloat('0.00', d)]);
 end;
 
-function VersaoONEToDbl(const t: TVersaoONE): Real;
+function VersaoONEToDbl(const t: TVersaoONE): Double;
 begin
-  case t of
-    ve200: Result := 2.00;
-  else
-    Result := 0;
-  end;
+  result := TVersaoONEArrayDouble[t];
 end;
 
 function LayOutToSchema(const t: TLayOutONE): TSchemaONE;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrONEConversao --
+[*] Ajustes nas funções: DblToVersaoONE, VersaoONEToDbl.
+  Por: Italo Giurizzato Junior
+
 22/02/2024
 -- Diversos --
 [*] Refactoring na unit pcnConversaoONE e a alteração do seu nome para

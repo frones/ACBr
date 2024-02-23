@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/02/2024
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/
+   ACBrNFSeXProviderBase/ACBrNFSeXProviderProprio --
+[*] Alteração visando gerar um atributo Id na tag SignatureValue.
+    Esse Id esta sendo exigido pelo provedor PRODAUB da cidade de Uberlância/MG.
+  Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Adiciona rotina para geração do XML da NFSe a partir do RPS quando provedor não devolver XML no retorno.
   Por: Diego Folieni

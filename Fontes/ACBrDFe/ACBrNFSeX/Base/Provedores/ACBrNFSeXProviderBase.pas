@@ -3102,7 +3102,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarLinkNFSe.DocElemento,
-      ConfigMsgDados.ConsultarLinkNFSe.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarLinkNFSe.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3134,7 +3135,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.CancelarNFSe.DocElemento,
-      ConfigMsgDados.CancelarNFSe.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.CancelarNFSe.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3166,7 +3168,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarLote.DocElemento,
-      ConfigMsgDados.ConsultarLote.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarLote.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3213,23 +3216,25 @@ begin
       tcPorFaixa:
         Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
           Prefixo + ConfigMsgDados.ConsultarNFSePorFaixa.DocElemento,
-          ConfigMsgDados.ConsultarNFSePorFaixa.InfElemento, '', '', '', IdAttr);
+          ConfigMsgDados.ConsultarNFSePorFaixa.InfElemento, '', '', '', IdAttr,
+          ConfigAssinar.IdSignatureValue);
 
       tcServicoPrestado:
         Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
           Prefixo + ConfigMsgDados.ConsultarNFSeServicoPrestado.DocElemento,
           ConfigMsgDados.ConsultarNFSeServicoPrestado.InfElemento, '', '', '',
-          IdAttr);
+          IdAttr, ConfigAssinar.IdSignatureValue);
 
       tcServicoTomado:
         Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
           Prefixo + ConfigMsgDados.ConsultarNFSeServicoTomado.DocElemento,
           ConfigMsgDados.ConsultarNFSeServicoTomado.InfElemento, '', '', '',
-          IdAttr);
+          IdAttr, ConfigAssinar.IdSignatureValue);
     else
       Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
         Prefixo + ConfigMsgDados.ConsultarNFSe.DocElemento,
-        ConfigMsgDados.ConsultarNFSe.InfElemento, '', '', '', IdAttr);
+        ConfigMsgDados.ConsultarNFSe.InfElemento, '', '', '', IdAttr,
+        ConfigAssinar.IdSignatureValue);
     end;
   except
     on E:Exception do
@@ -3262,7 +3267,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSeRps.DocElemento,
-      ConfigMsgDados.ConsultarNFSeRps.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarNFSeRps.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3294,7 +3300,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarEvento.DocElemento,
-      ConfigMsgDados.ConsultarEvento.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarEvento.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3326,7 +3333,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarParam.DocElemento,
-      ConfigMsgDados.ConsultarParam.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarParam.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3357,7 +3365,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarSituacao.DocElemento,
-      ConfigMsgDados.ConsultarSituacao.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarSituacao.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3403,19 +3412,19 @@ begin
         Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
           Prefixo + ConfigMsgDados.LoteRpsSincrono.DocElemento,
           Prefixo + ConfigMsgDados.LoteRpsSincrono.InfElemento, '', '', '',
-          IdAttr);
+          IdAttr, ConfigAssinar.IdSignatureValue);
 
       meTeste,
       meLoteAssincrono:
         Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
           Prefixo + ConfigMsgDados.LoteRps.DocElemento,
           {Prefixo + }ConfigMsgDados.LoteRps.InfElemento, '', '', '',
-          IdAttr);
+          IdAttr, ConfigAssinar.IdSignatureValue);
     else
       Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
         Prefixo + ConfigMsgDados.GerarNFSe.DocElemento,
         PrefixoTS + ConfigMsgDados.GerarNFSe.InfElemento, '', '', '',
-        IdAttr);
+        IdAttr, ConfigAssinar.IdSignatureValue);
     end;
   except
     on E:Exception do
@@ -3447,7 +3456,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.SubstituirNFSe.DocElemento,
-      ConfigMsgDados.SubstituirNFSe.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.SubstituirNFSe.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3479,7 +3489,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.GerarToken.DocElemento,
-      ConfigMsgDados.GerarToken.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.GerarToken.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3511,7 +3522,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.EnviarEvento.DocElemento,
-      ConfigMsgDados.EnviarEvento.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.EnviarEvento.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3543,7 +3555,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarDFe.DocElemento,
-      ConfigMsgDados.ConsultarDFe.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarDFe.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -3575,7 +3588,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarParam.DocElemento,
-      ConfigMsgDados.ConsultarParam.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarParam.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin

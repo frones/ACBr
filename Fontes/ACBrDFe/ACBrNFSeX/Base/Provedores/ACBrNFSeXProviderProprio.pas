@@ -314,7 +314,7 @@ begin
       Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
                                          PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
                                          ConfigMsgDados.XmlRps.InfElemento, '', '', '',
-                                         IdAttr);
+                                         IdAttr, ConfigAssinar.IdSignatureValue);
     end;
 
     SalvarXmlRps(Nota);
@@ -532,7 +532,8 @@ begin
   try
     Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSePorChave.DocElemento,
-      ConfigMsgDados.ConsultarNFSePorChave.InfElemento, '', '', '', IdAttr);
+      ConfigMsgDados.ConsultarNFSePorChave.InfElemento, '', '', '', IdAttr,
+      ConfigAssinar.IdSignatureValue);
   except
     on E:Exception do
     begin
@@ -752,7 +753,7 @@ begin
     Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
                                        PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
                                        ConfigMsgDados.XmlRps.InfElemento, '', '', '',
-                                       IdAttr);
+                                       IdAttr, ConfigAssinar.IdSignatureValue);
   end;
 
   SalvarXmlRps(Nota);

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrCIOTConversao --
+[*] Ajustes nas funções: VersaoCIOTToDbl e DblToVersaoCIOT.
+  Por: Italo Giurizzato Junior
+
 22/02/2024
 -- Diversos --
 [*] Remoção da unit pcnConversaoCIOT, pois agora esta sedo usada a nova unit

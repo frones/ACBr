@@ -53,6 +53,7 @@ type
 
 const
   TVersaoCIOTArrayStrings: array[TVersaoCIOT] of string = ('5.00');
+  TVersaoCIOTArrayDouble: array[TVersaoCIOT] of Double = (5.00);
 
 type
   TCIOTIntegradora = (iNone, ieFrete, iRepom, iPamcard);
@@ -414,21 +415,24 @@ end;
 
 function VersaoCIOTToDbl(const t: TVersaoCIOT): Double;
 begin
-  case t of
-    ve500: Result := 5;
-  else
-    Result := 0;
-  end;
+  result := TVersaoCIOTArrayDouble[t];
 end;
 
 function DblToVersaoCIOT(const d: Double): TVersaoCIOT;
+var
+  idx: TVersaoCIOT;
 begin
-  if d = 5.0 then
-    Result := ve500
-  else
+  for idx := Low(TVersaoCIOTArrayDouble) to High(TVersaoCIOTArrayDouble) do
   begin
-    Result := ve500;
+    if (TVersaoCIOTArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
   end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoCIOT: %s',
+    [FormatFloat('0.00', d)]);
 end;
 
 function TipoContaToStr(const t: tpTipoConta): string;

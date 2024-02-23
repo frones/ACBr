@@ -190,7 +190,7 @@ const
 function VersaoNFComToStr(const t: TVersaoNFCom): string;
 function StrToVersaoNFCom(const s: string): TVersaoNFCom;
 
-function DblToVersaoNFCom(out ok: Boolean; const d: Double): TVersaoNFCom;
+function DblToVersaoNFCom(const d: Double): TVersaoNFCom;
 function VersaoNFComToDbl(const t: TVersaoNFCom): Double;
 
 function SchemaNFComToStr(const t: TSchemaNFCom): string;
@@ -280,18 +280,22 @@ begin
   raise EACBrException.CreateFmt('Valor string inválido para TVersaoNFCom: %s', [s]);
 end;
 
- function DblToVersaoNFCom(out ok: Boolean; const d: Double): TVersaoNFCom;
- begin
-   ok := True;
+ function DblToVersaoNFCom(const d: Double): TVersaoNFCom;
+var
+  idx: TVersaoNFCom;
+begin
+  for idx := Low(TVersaoNFComArrayDouble) to High(TVersaoNFComArrayDouble) do
+  begin
+    if (TVersaoNFComArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
 
-   if (d = 1.0) then
-     Result := ve100
-   else
-   begin
-     Result := ve100;
-     ok := False;
-   end;
- end;
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoNFCom: %s',
+    [FormatFloat('0.00', d)]);
+end;
 
  function VersaoNFComToDbl(const t: TVersaoNFCom): Double;
  begin
@@ -393,13 +397,7 @@ end;
 
 function VersaoQrCodeToDbl(const t: TVersaoQrCode): Double;
 begin
-  case t of
-    veqr000: Result := 0;
-    veqr100: Result := 1;
-    veqr200: Result := 2;
-  else
-    Result := 0;
-  end;
+  result := TVersaoQrCodeArrayDouble[t];
 end;
 
 function SiteAutorizadorToStr(const t: TSiteAutorizador): string;

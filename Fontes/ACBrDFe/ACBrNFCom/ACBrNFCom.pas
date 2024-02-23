@@ -376,9 +376,8 @@ function TACBrNFCom.GetURLConsultaNFCom(const CUF: integer;
 var
   VersaoDFe: TVersaoNFCom;
   VersaoQrCode: TVersaoQrCode;
-  ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoNFCom(ok, Versao);
+  VersaoDFe := DblToVersaoNFCom(Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
   Result := LerURLDeParams('NFCom', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
@@ -392,9 +391,8 @@ var
   idNFCom, sEntrada, urlUF, Passo2, sign: string;
   VersaoDFe: TVersaoNFCom;
   VersaoQrCode: TVersaoQrCode;
-  Ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoNFCom(Ok, Versao);
+  VersaoDFe := DblToVersaoNFCom(Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
   urlUF := LerURLDeParams('NFCom', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),

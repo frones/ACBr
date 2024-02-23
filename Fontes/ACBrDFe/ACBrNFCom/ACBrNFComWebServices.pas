@@ -39,13 +39,13 @@ interface
 uses
   Classes, SysUtils, dateutils,
   blcksock, synacode,
+  ACBrXmlBase,
   ACBrDFe, ACBrDFeWebService,
   ACBrDFeUtil,
+  ACBrDFeComum.Proc,
 //  ACBrDFeConversao,
-  ACBrXmlBase,
   ACBrNFComNotasFiscais, ACBrNFComConfiguracoes,
   ACBrNFComClass, ACBrNFComConversao,
-  ACBrDFeComum.Proc,
   ACBrNFComRetConsSit,
   ACBrNFComEnvEvento, ACBrNFComRetEnvEvento,
   pcnConversao;
@@ -369,14 +369,14 @@ implementation
 
 uses
   StrUtils, Math,
-//  ACBrDFeConsts,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrNFCom, ACBrIntegrador,
+  ACBrCompress, ACBrIntegrador,
+  ACBrDFeComum.ConsStatServ,
+  ACBrDFeComum.RetConsStatServ,
+  ACBrNFCom,
   ACBrNFComConsts,
-  ACBrNFComConsSit,
-//  pcnConsReciDFe,
-  ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ;
+  ACBrNFComConsSit;
 
 { TNFComWebService }
 
@@ -641,12 +641,10 @@ begin
 end;
 
 procedure TNFComRecepcao.InicializarServico;
-var
-  ok: Boolean;
 begin
   // Tem NFCom ? Se SIM, use as informações do XML
   if FNotasFiscais.Count > 0 then
-    FVersaoDF := DblToVersaoNFCom(ok, FNotasFiscais.Items[0].NFCom.infNFCom.Versao)
+    FVersaoDF := DblToVersaoNFCom(FNotasFiscais.Items[0].NFCom.infNFCom.Versao)
   else
     FVersaoDF := FPConfiguracoesNFCom.Geral.VersaoDF;
 

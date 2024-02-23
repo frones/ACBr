@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrNFComConversao --
+[*] Ajustes na função: DblToVersaoNFCom.
+  Por: Italo Giurizzato Junior
+
 20/02/2024
 -- ACBrNFComWebServices/ACBrNFComClass --
 [*] Pequenas correções e desativação da consulta ao recibo.

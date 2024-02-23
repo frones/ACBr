@@ -45,7 +45,7 @@ uses
   {$IFEND}
   ACBrBase,
   pcnConversao,
-  pcnSignature,
+  ACBrDFeComum.SignatureClass,
   ACBrDCeEventoClass,
   ACBrDCeConsts;
 

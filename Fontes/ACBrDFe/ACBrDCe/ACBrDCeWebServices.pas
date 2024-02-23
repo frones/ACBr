@@ -38,15 +38,17 @@ interface
 
 uses
   Classes, SysUtils, synacode,
+  ACBrXmlBase,
   pcnConversao,
   ACBrDFe, ACBrDFeWebService,
+  ACBrDFeComum.RetConsReciDFe,
+  ACBrDFecomum.Proc,
+  ACBrDFecomum.DistDFeInt,
+  ACBrDFecomum.RetDistDFeInt,
   ACBrDCeClass,
-  ACBrXmlBase,
-//  pcnRetConsReciDFe,
-  ACBrDCeConversao, ACBrDCeProc,
+  ACBrDCeConversao,
 //  pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
 //  pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
-  pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrDCeDeclaracoes, ACBrDCeConfiguracoes;
 
 type
@@ -502,13 +504,14 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrDCe, ACBrDCeConsts,
+  ACBrCompress,
   ACBrDFeUtil,
-  pcnLeitor,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
 //  pmdfeConsSitDCe,
-  pcnConsReciDFe;
+  ACBrDFeComum.ConsReciDFe,
+  ACBrDCe,
+  ACBrDCeConsts;
 
 { TDCeWebService }
 
@@ -1212,13 +1215,8 @@ begin
   try
     ConsReciDCe.tpAmb := FPConfiguracoesDCe.WebServices.Ambiente;
     ConsReciDCe.nRec := FRecibo;
-//    ConsReciDCe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConsReciDCe.Gerador.Opcoes );
-
-    ConsReciDCe.GerarXML;
-
-    FPDadosMsg := ConsReciDCe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsReciDCe.GerarXML;
   finally
     ConsReciDCe.Free;
   end;
@@ -1513,13 +1511,8 @@ begin
   try
     ConsReciDCe.tpAmb := FTpAmb;
     ConsReciDCe.nRec := FRecibo;
-//    ConsReciDCe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConsReciDCe.Gerador.Opcoes );
-
-    ConsReciDCe.GerarXML;
-
-    FPDadosMsg := ConsReciDCe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsReciDCe.GerarXML;
   finally
     ConsReciDCe.Free;
   end;

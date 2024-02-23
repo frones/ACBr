@@ -47,7 +47,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  pcnSignature,
+  ACBrDFeComum.SignatureClass,
   ACBrDCeConversao,
   ACBrDCeProc;
 

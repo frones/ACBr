@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2024
+-- ACBrDCeConversao --
+[*] Refactoring na unit.
+-- Diversos --
+[*] Ajustes nas demais units.
+  Por: Italo Giurizzato Junior
+
 12/02/2024
 -- ACBrDCeWebServices --
 [*] Refactoring visando a utilizar as units: ACBrDFeComum.ConsStatServ e 

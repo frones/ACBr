@@ -45,7 +45,7 @@ uses
   {$IFEND}
   ACBrBase, ACBrXmlBase,
   ACBrDCeEventoClass,
-  pcnSignature;
+  ACBrDFeComum.SignatureClass;
 
 type
 

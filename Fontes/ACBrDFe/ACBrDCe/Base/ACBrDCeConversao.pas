@@ -38,28 +38,54 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-//  ACBrDFeConversao,
-  pcnConversao,
-  ACBrXmlBase;
+  pcnConversao;
 
 type
-  TVersaoDCe = (ve100);
-
   TStatusDCe = (stDCeIdle, stDCeStatusServico, stDCeRecepcao, stDCeRetRecepcao,
                 stDCeConsulta, stDCeRecibo, stDCeEmail, stDCeEvento,
                 stDCeDistDFeInt, stDCeEnvioWebService);
 
+  TVersaoDCe = (ve100);
+
+const
+  TVersaoDCeArrayStrings: array[TVersaoDCe] of string = ('1.00');
+  TVersaoDCeArrayDouble: array[TVersaoDCe] of Double = (1.00);
+
+type
   TSchemaDCe = (schErroDCe, schDCe, schEventoDCe, schconsReciDCe,
                 schconsSitDCe, schconsStatServDCe, schevCancDCe,
                 schdistDFeInt);
 
+const
+  TSchemaDCeArrayStrings: array[TSchemaDCe] of string = ('', '', '', '', '', '',
+    'evCancDCe', 'distDFeInt');
+
+type
   TLayOutDCe = (LayDCeRecepcao, LayDCeRetRecepcao, LayDCeConsulta,
                 LayDCeStatusServico, LayDCeEvento, LayDCeConsNaoEnc,
                 LayDCeDistDFeInt, LayDCeRecepcaoSinc);
 
+const
+  TLayOutDCeArrayStrings: array[TLayOutDCe] of string = ('DCeRecepcao',
+    'DCeRetRecepcao', 'DCeConsultaProtocolo', 'DCeStatusServico',
+    'RecepcaoEvento', 'DCeConsNaoEnc', 'DCeDistDFeInt', 'DCeRecepcaoSinc');
+
+type
   TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);
 
+const
+  TEmitenteDCeArrayStrings: array[TEmitenteDCe] of string = ('0', '1', '2', '3');
+
+type
   TModTrans = (mtCorreios, mtPropria, mtTransportadora);
+
+const
+  TModTransArrayStrings: array[TModTrans] of string = ('0', '1', '2');
+
+{
+  Declaração das funções de conversão
+}
+function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
 
 function StrToVersaoDCe(out ok: Boolean; const s: String): TVersaoDCe;
 function VersaoDCeToStr(const t: TVersaoDCe): String;
@@ -81,43 +107,63 @@ function StrToEmitenteDCe(out ok: Boolean; const s: String): TEmitenteDCe;
 function ModTransToStr(const t: TModTrans): String;
 function StrToModTrans(out ok: Boolean; const s: String): TModTrans;
 
-function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
-
 implementation
 
 uses
-  typinfo;
+  typinfo,
+  ACBrBase;
+
+function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
+begin
+  Result := StrToEnumerado(ok, s,
+            ['-99999', '110111', '110112', '110114', '110115', '110116',
+             '310112', '510620'],
+            [teNaoMapeado, teCancelamento, teEncerramento, teInclusaoCondutor,
+             teInclusaoDFe, tePagamentoOperacao, teEncerramentoFisco,
+             teRegistroPassagemBRId]);
+end;
 
 function StrToVersaoDCe(out ok: Boolean; const s: String): TVersaoDCe;
+var
+  idx: TVersaoDCe;
 begin
-  Result := StrToEnumerado(ok, s, ['1.00'], [ve100]);
+  for idx := Low(TVersaoDCeArrayStrings) to High(TVersaoDCeArrayStrings) do
+  begin
+    if (TVersaoDCeArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoDCe: %s', [s]);
 end;
 
 function VersaoDCeToStr(const t: TVersaoDCe): String;
 begin
-  Result := EnumeradoToStr(t, ['1.00'], [ve100]);
+  result := TVersaoDCeArrayStrings[t];
 end;
 
 function DblToVersaoDCe(out ok: Boolean; const d: Double): TVersaoDCe;
+var
+  idx: TVersaoDCe;
 begin
-  ok := True;
-
-  if d = 1.0 then
-    Result := ve100
-  else
+  for idx := Low(TVersaoDCeArrayDouble) to High(TVersaoDCeArrayDouble) do
   begin
-    Result := ve100;
-    ok := False;
+    if (TVersaoDCeArrayDouble[idx] = d) then
+    begin
+      result := idx;
+      exit;
+    end;
   end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoDCe: %s',
+    [FormatFloat('0.00', d)]);
 end;
 
 function VersaoDCeToDbl(const t: TVersaoDCe): Double;
 begin
-  case t of
-    ve100: Result := 1.0;
-  else
-    Result := 0;
-  end;
+  result := TVersaoDCeArrayDouble[t];
 end;
 
 function SchemaDCeToStr(const t: TSchemaDCe): String;
@@ -167,58 +213,65 @@ end;
 
 function LayOutDCeToServico(const t: TLayOutDCe): String;
 begin
-  Result := EnumeradoToStr(t,
-    ['DCeRecepcao', 'DCeRetRecepcao', 'DCeConsultaProtocolo', 'DCeStatusServico',
-     'RecepcaoEvento', 'DCeConsNaoEnc', 'DCeDistDFeInt', 'DCeRecepcaoSinc'],
-    [LayDCeRecepcao, LayDCeRetRecepcao, LayDCeConsulta, LayDCeStatusServico,
-     LayDCeEvento, LayDCeConsNaoEnc, LayDCeDistDFeInt, LayDCeRecepcaoSinc]);
+  result := TLayOutDCeArrayStrings[t];
 end;
 
 function ServicoToLayOutDCe(out ok: Boolean; const s: String): TLayOutDCe;
+var
+  idx: TLayOutDCe;
 begin
-  Result := StrToEnumerado(ok, s,
-    ['DCeRecepcao', 'DCeRetRecepcao', 'DCeConsultaProtocolo', 'DCeStatusServico',
-     'RecepcaoEvento', 'DCeConsNaoEnc', 'DCeDistDFeInt', 'DCeRecepcaoSinc'],
-    [LayDCeRecepcao, LayDCeRetRecepcao, LayDCeConsulta, LayDCeStatusServico,
-     LayDCeEvento, LayDCeConsNaoEnc, LayDCeDistDFeInt, LayDCeRecepcaoSinc]);
+  for idx := Low(TLayOutDCeArrayStrings) to High(TLayOutDCeArrayStrings) do
+  begin
+    if (TLayOutDCeArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TLayOutDCe: %s', [s]);
 end;
 
 function EmitenteDCeToStr(const t: TEmitenteDCe): String;
 begin
-  result := EnumeradoToStr(t,
-                           ['0', '1', '2', '3'],
-                           [teFisco, teMarketplace, teEmissorProprio,
-                            teTransportadora]);
+  result := TEmitenteDCeArrayStrings[t];
 end;
 
 function StrToEmitenteDCe(out ok: Boolean; const s: String): TEmitenteDCe;
+var
+  idx: TEmitenteDCe;
 begin
-  result := StrToEnumerado(ok, s,
-                           ['0', '1', '2', '3'],
-                           [teFisco, teMarketplace, teEmissorProprio,
-                            teTransportadora]);
+  for idx := Low(TEmitenteDCeArrayStrings) to High(TEmitenteDCeArrayStrings) do
+  begin
+    if (TEmitenteDCeArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TEmitenteDCe: %s', [s]);
 end;
 
 function ModTransToStr(const t: TModTrans): String;
 begin
-  Result := EnumeradoToStr(t, ['0', '1', '2'],
-                              [mtCorreios, mtPropria, mtTransportadora]);
+  result := TModTransArrayStrings[t];
 end;
 
 function StrToModTrans(out ok: Boolean; const s: String): TModTrans;
+var
+  idx: TModTrans;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
-                                  [mtCorreios, mtPropria, mtTransportadora]);
-end;
+  for idx := Low(TModTransArrayStrings) to High(TModTransArrayStrings) do
+  begin
+    if (TModTransArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
 
-function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
-begin
-  Result := StrToEnumerado(ok, s,
-            ['-99999', '110111', '110112', '110114', '110115', '110116',
-             '310112', '510620'],
-            [teNaoMapeado, teCancelamento, teEncerramento, teInclusaoCondutor,
-             teInclusaoDFe, tePagamentoOperacao, teEncerramentoFisco,
-             teRegistroPassagemBRId]);
+  raise EACBrException.CreateFmt('Valor string inválido para TModTrans: %s', [s]);
 end;
 
 initialization

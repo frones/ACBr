@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -276,7 +276,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrUtil.XMLHTML,
   pcnConversao,
-  pcnConversaoCIOT,
+  ACBrCIOTConversao,
   ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   Frm_Status, Frm_SelecionarCertificado;
 
@@ -1268,14 +1268,12 @@ procedure TfrmACBrCIOT.Button2Click(Sender: TObject);
 var
   vAux : String;
   Nome: string;
-  Codigo: Integer;
 begin
   vAux := '';
   if not (InputQuery('Consultar por Codigo', 'Codigo da Cidade', vAux)) then
     exit;
 
-  Codigo := StrToInt(vAux);
-  Nome := ObterNomeMunicipio('SP', Codigo,'C:\Erp\Txt\Blt' );
+  Nome := ObterNomeMunicipio(UFparaCodigoUF('SP'), vAux, 'C:\Erp\Txt\Blt' );
 
   ShowMessage('Nome: ' + Nome);
 end;
@@ -1636,7 +1634,7 @@ begin
     FormatoAlerta    := edtFormatoAlerta.Text;
     FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
     VersaoDF         := TVersaoCIOT(cbVersaoDF.ItemIndex);
-    Integradora      := StrToIntegradora(Ok, cbbIntegradora.text);
+    Integradora      := StrToIntegradora(cbbIntegradora.text);
     Usuario          := edtUsuarioWebService.Text;
     Senha            := edtSenhaWebService.Text;
     HashIntegrador   := edtHashIntegrador.Text;

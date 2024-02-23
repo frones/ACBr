@@ -10,10 +10,8 @@ object frmACBrCIOT: TfrmACBrCIOT
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1318,7 +1316,7 @@ object frmACBrCIOT: TfrmACBrCIOT
       Top = 1
       Width = 567
       Height = 248
-      ActivePage = tsOperacao
+      ActivePage = tsEnvios
       Align = alTop
       TabOrder = 0
       object tsOperacao: TTabSheet

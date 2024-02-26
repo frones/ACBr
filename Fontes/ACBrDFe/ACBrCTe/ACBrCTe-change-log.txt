@@ -46,6 +46,9 @@ Símbolo : Significado
 
 26/02/2024
 -- pcteConversaoCTe --
+[-] Correção: na função de conversão: StrToTpRspSeguro.
+  Por: Italo Giurizzato Junior
+-- pcteConversaoCTe --
 [-] Correção: estava faltando os valores: URL-QRCode e URL-ConsultaCTe do
     Layout.
   Por: Italo Giurizzato Junior

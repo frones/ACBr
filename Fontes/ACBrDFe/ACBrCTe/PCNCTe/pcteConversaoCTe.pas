@@ -1049,9 +1049,9 @@ function StrToTpRspSeguro(out ok: boolean; const s: string ): TpcteRspSeg;
 var
   idx: TpcteRspSeg;
 begin
-  for idx := Low(TRspSegDescArrayStrings) to High(TRspSegDescArrayStrings) do
+  for idx := Low(TRspSegArrayStrings) to High(TRspSegArrayStrings) do
   begin
-    if (TRspSegDescArrayStrings[idx] = s) then
+    if (TRspSegArrayStrings[idx] = s) then
     begin
       result := idx;
       exit;

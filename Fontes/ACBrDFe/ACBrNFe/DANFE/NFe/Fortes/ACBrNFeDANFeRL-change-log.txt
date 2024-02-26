@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2024
+-- ACBrNFeDANFeRLSimplificado --
+[*] TK-5143 - Ajuste para ExibeInforAdicProduto na DANF Simplificada
+  por : Daniel de Morais InfoCotidiano
+
+
 12/09/2023
 -- ACBrNFeDANFeRLPaisangem --
 [*] TK-4407 - Alteração visando a descrição do produto não sobrepor a coluna do NCM.

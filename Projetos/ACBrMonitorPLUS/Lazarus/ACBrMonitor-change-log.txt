@@ -45,10 +45,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/02/2024
+-- AsciiToHex --
+[*] TK-5014-1  Ajuste para utilizar função existente em math AsciiToHex para exibir a criptografia
+  Por: Daniel Morais InfoCotidiano
+
+26/02/2024
 -- ACBrMonitor1 --
 [*] TK-5014-1  Ajuste para não ser exibidos na tela ou log senhas de métodos / comando 
   Por: Daniel Morais InfoCotidiano
-
 
 21/02/2024
 -- DoACBrBpeUnit, ACBrMonitor1 --

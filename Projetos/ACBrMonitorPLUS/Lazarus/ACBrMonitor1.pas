@@ -2016,10 +2016,6 @@ type
     procedure ConfigPainelMenu(Edicao: Boolean);
 
     function TrataDadosSensiveis(aString : String):string;
-    function StringToHex(const AString: string): string;
-
-
-
 
   protected
     procedure MostraLogoBanco;
@@ -12716,17 +12712,10 @@ var
   LString : string;
 begin
    if NaoEstaVazio(aString) then
-      begin
-        LString:= StrCrypt(aString,_C);
-        Result := StringToHex(LString);
-      end;
-end;
-
-
-function TFrmACBrMonitor.StringToHex(const AString: string): string;
-begin
-  SetLength(Result, Length(AString) * 2);
-  BinToHex(PAnsiChar(AString), PChar(Result), Length(AString));
+     begin
+      LString:= StrCrypt(aString,_C);
+      Result := AsciiToHex(LString);
+     end;
 end;
 
 procedure TFrmACBrMonitor.MostraLogoBanco;

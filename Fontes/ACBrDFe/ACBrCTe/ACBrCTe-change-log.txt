@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2024
+-- pcteConversaoCTe --
+[-] Correção: estava faltando os valores: URL-QRCode e URL-ConsultaCTe do
+    Layout.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- pcteConversaoCTe --
 [*] Refactoring na unit.

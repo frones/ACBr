@@ -76,14 +76,14 @@ type
                 LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
                 LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
                 LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc,
-                LayCTeRecepcaoGTVe);
+                LayCTeRecepcaoGTVe, LayCTeURLQRCode, LayURLConsultaCTe);
 
 const
   TLayOutCTeArrayStrings: array[TLayOutCTe] of string = ('CTeRecepcao',
     'CTeRetRecepcao', 'CTeCancelamento', 'CTeInutilizacao',
     'CTeConsultaProtocolo', 'CTeStatusServico', 'CTeConsultaCadastro',
     'RecepcaoEvento', 'RecepcaoEventoAN', 'CTeDistribuicaoDFe', 'CTeRecepcaoOS',
-    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe');
+    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe', 'CTeURLQRCode', 'URLConsultaCTe');
 
 type
   TModeloCTe = (moCTe, moCTeOS, moGTVe);

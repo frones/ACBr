@@ -2015,6 +2015,12 @@ type
 
     procedure ConfigPainelMenu(Edicao: Boolean);
 
+    function TrataDadosSensiveis(aString : String):string;
+    function StringToHex(const AString: string): string;
+
+
+
+
   protected
     procedure MostraLogoBanco;
     procedure AtualizarTela(AMonitorConfig: TMonitorConfig);
@@ -7893,7 +7899,8 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.Processar;
 var
-  Linha, Objeto: String;
+  Linha,Linha2, Objeto: String;
+
 begin
   if NewLines <> '' then
     fsProcessar.Add(NewLines);
@@ -7969,8 +7976,38 @@ begin
         //Validar Erros de configuração dos Componentes
         VerificarErrosConfiguracaoComponentes(fsCmd);
 
-        //Log Comando
-        AddLinesLog(Linha);
+        // Tratamento dos metodos para não exibir senhas no log e na tela.
+        if pos('CNPJ.SETPROVEDOR',uppercase(Linha)) > 0 then
+           Linha2 := 'CNPJ.SetProvedor('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+', '+  TrataDadosSensiveis(fscmd.Params(2))+')';
+
+        if pos('BOLETO.GERARPDFCOMSENHA',uppercase(Linha)) > 0 then
+           Linha2 := 'BOLETO.GerarPDFComSenha('+ TrataDadosSensiveis(fscmd.Params(0))+', '+fscmd.Params(1)+')';
+
+        if pos('BOLETO.GERARPDFBOLETOCOMSENHA',uppercase(Linha)) > 0 then
+           Linha2 := 'BOLETO.GerarPDFBoletoComSenha('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1)) +')';
+
+        if pos('NFE.SETCERTIFICADO',uppercase(Linha)) > 0 then
+           Linha2 := 'NFe.SetCertificado('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+')';
+
+        if pos('CTE.SETCERTIFICADO',uppercase(Linha)) > 0 then
+           Linha2 := 'CTe.SetCertificado('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+')';
+
+        if pos('NFSE.SETCERTIFICADO',uppercase(Linha)) > 0 then
+           Linha2 := 'NFSe.SetCertificado('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+')';
+
+        if pos('MDFE.SETCERTIFICADO',uppercase(Linha)) > 0 then
+           Linha2 := 'MDFE.SetCertificado('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+')';
+
+        if pos('NFSE.SETAUTENTICACAONFSE',uppercase(Linha)) > 0 then
+           Linha2 := 'NFSE.SETAUTENTICACAONFSE('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+', '+
+                  TrataDadosSensiveis(fscmd.Params(2))+', '+ TrataDadosSensiveis(fscmd.Params(3))+', '+ TrataDadosSensiveis(fscmd.Params(4))+')';
+
+
+        //Log Comando Linha2 contem dados sensiveis
+        if NaoEstaVazio(Linha2) then
+           AddLinesLog(Linha2)
+        else
+           AddLinesLog(Linha);
 
         if fsCmd.Objeto = 'ACBR' then
           FDoACBr.Executar(fsCmd)
@@ -12672,6 +12709,24 @@ begin
     pgConfig.ActivePageIndex := 0;
   end;
 
+end;
+
+function TFrmACBrMonitor.TrataDadosSensiveis(aString: String): string;
+var
+  LString : string;
+begin
+   if NaoEstaVazio(aString) then
+      begin
+        LString:= StrCrypt(aString,_C);
+        Result := StringToHex(LString);
+      end;
+end;
+
+
+function TFrmACBrMonitor.StringToHex(const AString: string): string;
+begin
+  SetLength(Result, Length(AString) * 2);
+  BinToHex(PAnsiChar(AString), PChar(Result), Length(AString));
 end;
 
 procedure TFrmACBrMonitor.MostraLogoBanco;

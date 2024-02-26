@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2024
+-- ACBrMonitor1 --
+[*] TK-5014-1  Ajuste para não ser exibidos na tela ou log senhas de métodos / comando 
+  Por: Daniel Morais InfoCotidiano
+
+
 21/02/2024
 -- DoACBrBpeUnit, ACBrMonitor1 --
 [*] Alterações visando compatibilização com o refactory feito no componente ACBrBPe.

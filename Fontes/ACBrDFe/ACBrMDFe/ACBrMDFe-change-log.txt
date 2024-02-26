@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2024
+-- pmdfeConversaoMDFe --
+[-] Correção: estava faltando os valores: URL-QRCode e URL-ConsultaMDFe do
+    Layout.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- pmdfeConversaoMDFe --
 [*] Ajustes na função: DblToVersaoMDFe

@@ -70,12 +70,14 @@ const
 type
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
                      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
-                     LayMDFeDistDFeInt, LayMDFeRecepcaoSinc);
+                     LayMDFeDistDFeInt, LayMDFeRecepcaoSinc,
+                     LayMDFeURLQRCode, LayURLConsultaMDFe);
 
 const
   TLayOutMDFeArrayStrings: array[TLayOutMDFe] of string = ('MDFeRecepcao',
     'MDFeRetRecepcao', 'MDFeConsultaProtocolo', 'MDFeStatusServico',
-    'RecepcaoEvento', 'MDFeConsNaoEnc', 'MDFeDistDFeInt', 'MDFeRecepcaoSinc');
+    'RecepcaoEvento', 'MDFeConsNaoEnc', 'MDFeDistDFeInt', 'MDFeRecepcaoSinc',
+    'URL-QRCode', 'URL-ConsultaMDFe');
 
 type
   TTpEmitenteMDFe = (teTransportadora, teTranspCargaPropria,

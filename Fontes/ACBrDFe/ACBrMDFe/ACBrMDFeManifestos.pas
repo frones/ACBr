@@ -580,7 +580,6 @@ begin
     begin
       INIRec.WriteInteger('ide', 'cUF', Ide.cUF);
       INIRec.WriteString('ide', 'tpEmit', TpEmitenteToStr(Ide.tpEmit));
-      INIRec.WriteString('ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp));
       INIRec.WriteString('ide', 'mod', Ide.modelo);
       INIRec.WriteInteger('ide', 'serie', Ide.serie);
       INIRec.WriteInteger('ide', 'nMDF', Ide.nMDF);

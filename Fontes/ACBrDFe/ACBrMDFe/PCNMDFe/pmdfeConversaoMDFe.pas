@@ -96,7 +96,7 @@ type
   TTransportadorMDFe = (ttNenhum, ttETC, ttTAC, ttCTC);
 
 const
-  TTransportadorMDFeArrayStrings: array[TTransportadorMDFe] of string = ('0',
+  TTransportadorMDFeArrayStrings: array[TTransportadorMDFe] of string = ('',
     '1', '2', '3');
 
 type

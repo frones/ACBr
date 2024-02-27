@@ -83,7 +83,7 @@ const
     'CTeRetRecepcao', 'CTeCancelamento', 'CTeInutilizacao',
     'CTeConsultaProtocolo', 'CTeStatusServico', 'CTeConsultaCadastro',
     'RecepcaoEvento', 'RecepcaoEventoAN', 'CTeDistribuicaoDFe', 'CTeRecepcaoOS',
-    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe', 'CTeURLQRCode', 'URLConsultaCTe');
+    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe', 'URL-QRCode', 'URL-ConsultaCTe');
 
 type
   TModeloCTe = (moCTe, moCTeOS, moGTVe);
@@ -599,9 +599,9 @@ function StrTotpforPag(out ok: boolean; const s: string): TpcteFormaPagamento;
 var
   idx: TpcteFormaPagamento;
 begin
-  for idx := Low(TFormaPagamentoDescArrayStrings) to High(TFormaPagamentoDescArrayStrings) do
+  for idx := Low(TFormaPagamentoArrayStrings) to High(TFormaPagamentoArrayStrings) do
   begin
-    if (TFormaPagamentoDescArrayStrings[idx] = s) then
+    if (TFormaPagamentoArrayStrings[idx] = s) then
     begin
       result := idx;
       exit;

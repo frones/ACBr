@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- pcteConversaoCTe, pcteCTeR --
+[*] Ajustes visando evitar exceção de conversão com valor inválido.
+  Por: Diego Folieni 
+
 26/02/2024
 -- pcteConversaoCTe --
 [-] Correção: na função de conversão: StrToTpRspSeguro.

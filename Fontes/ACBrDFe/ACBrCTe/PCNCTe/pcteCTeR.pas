@@ -1127,7 +1127,11 @@ begin
     begin
       CTe.infCTeNorm.rodo.RNTRC := Leitor.rCampo(tcStr,'RNTRC');
       CTe.infCTeNorm.rodo.dPrev := Leitor.rCampo(tcDat,'dPrev');
-      CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, Leitor.rCampo(tcStr,'lota'));
+      sAux := Leitor.rCampo(tcStr,'lota');
+      if sAux <> '' then
+        CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, sAux)
+      else
+        CTe.infCTeNorm.rodo.lota := ltNao;
       CTe.infCTeNorm.rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
       if VersaoDF < ve200 then

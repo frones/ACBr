@@ -63,12 +63,14 @@ const
 type
   TLayOutDCe = (LayDCeRecepcao, LayDCeRetRecepcao, LayDCeConsulta,
                 LayDCeStatusServico, LayDCeEvento, LayDCeConsNaoEnc,
-                LayDCeDistDFeInt, LayDCeRecepcaoSinc);
+                LayDCeDistDFeInt, LayDCeRecepcaoSinc, LayDCeURLQRCode,
+                LayURLConsultaDCe);
 
 const
   TLayOutDCeArrayStrings: array[TLayOutDCe] of string = ('DCeRecepcao',
     'DCeRetRecepcao', 'DCeConsultaProtocolo', 'DCeStatusServico',
-    'RecepcaoEvento', 'DCeConsNaoEnc', 'DCeDistDFeInt', 'DCeRecepcaoSinc');
+    'RecepcaoEvento', 'DCeConsNaoEnc', 'DCeDistDFeInt', 'DCeRecepcaoSinc',
+    'DCeURLQRCode',  'URLConsultaDCe');
 
 type
   TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);

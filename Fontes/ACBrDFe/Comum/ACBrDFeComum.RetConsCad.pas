@@ -226,9 +226,9 @@ begin
 
           verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
           cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
-          xMotivo := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr));
-          UF := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('UF'), tcStr));
-          IE := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('IE'), tcStr));
+          xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
+          UF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
+          IE := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
           dhCons := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhCons'), tcDatHor);
           cUF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
 
@@ -253,31 +253,31 @@ begin
               if (CPF <> '') and (length(CPF) < 11) then
                 CPF := PadLeft(CPF, 11, '0');
 
-              IE := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('IE'), tcStr));
-              UF := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('UF'), tcStr));
+              IE := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('IE'), tcStr);
+              UF := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('UF'), tcStr);
               cSit := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('cSit'), tcInt);
               indCredNFe := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('indCredNFe'), tcInt);
               indCredCTe := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('indCredCTe'), tcInt);
-              xNome := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('xNome'), tcStr));
-              xFant := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('xFant'), tcStr));
-              xRegApur := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('xRegApur'), tcStr));
+              xNome := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('xNome'), tcStr);
+              xFant := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('xFant'), tcStr);
+              xRegApur := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('xRegApur'), tcStr);
               CNAE := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('CNAE'), tcInt);
               dIniAtiv := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('dIniAtiv'), tcDat);
               dUltSit := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('dUltSit'), tcDat);
               dBaixa := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('dBaixa'), tcDat);
-              IEUnica := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('IEUnica'), tcStr));
-              IEAtual := ACBrStr(ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('IEAtual'), tcStr));
+              IEUnica := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('IEUnica'), tcStr);
+              IEAtual := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('IEAtual'), tcStr);
 
               AuxNode := ANodes[i].Childrens.FindAnyNs('ender');
 
               if AuxNode <> nil then
               begin
-                xLgr := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr));
-                nro := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nro'), tcStr));
-                xCpl := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr));
-                xBairro := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr));
+                xLgr := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
+                nro := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
+                xCpl := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
+                xBairro := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
                 cMun := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
-                xMun := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMun'), tcStr));
+                xMun := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
                 CEP := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CEP'), tcInt);
               end;
             end;

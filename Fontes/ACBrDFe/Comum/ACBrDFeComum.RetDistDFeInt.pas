@@ -709,9 +709,9 @@ begin
 
   docZip[Indice].procEvento.detEvento.versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
   docZip[Indice].procEvento.detEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
-  docZip[Indice].procEvento.detEvento.xJust := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xJust'), tcStr));
-  docZip[Indice].procEvento.detEvento.xCorrecao := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xCorrecao'), tcStr));
-  docZip[Indice].procEvento.detEvento.descEvento := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('descEvento'), tcStr));
+  docZip[Indice].procEvento.detEvento.xJust := ObterConteudoTag(ANode.Childrens.FindAnyNs('xJust'), tcStr);
+  docZip[Indice].procEvento.detEvento.xCorrecao := ObterConteudoTag(ANode.Childrens.FindAnyNs('xCorrecao'), tcStr);
+  docZip[Indice].procEvento.detEvento.descEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('descEvento'), tcStr);
   docZip[Indice].procEvento.detEvento.tpAutor := ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAutor'), tcInt);
   docZip[Indice].procEvento.detEvento.verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
 
@@ -779,32 +779,34 @@ begin
   Document := TACBrXmlDocument.Create;
 
   try
-    XML := DocDecod;
-    Document.LoadFromXml(DocDecod);
+    try
+      XML := DocDecod;
+      Document.LoadFromXml(DocDecod);
 
-    ANode := Document.Root;
+      ANode := Document.Root;
 
-    if ANode <> nil then
-    begin
-      AuxNode := ANode.Childrens.FindAnyNs('res' + FptpDFe);
-      LerResumo(AuxNode, Indice);
+      if ANode <> nil then
+      begin
+        AuxNode := ANode.Childrens.FindAnyNs('res' + FptpDFe);
+        LerResumo(AuxNode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs('resEvento');
-      LerResumoEvento(AuxNode, Indice);
+        AuxNode := ANode.Childrens.FindAnyNs('resEvento');
+        LerResumoEvento(AuxNode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'Proc');
-      LerDocumento(AuxNode, Indice);
+        AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'Proc');
+        LerDocumento(AuxNode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'OSProc');
-      LerDocumento(AuxNode, Indice);
+        AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'OSProc');
+        LerDocumento(AuxNode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs('procEvento' + FptpDFe);
-      LerEvento(AuxNode, Indice);
+        AuxNode := ANode.Childrens.FindAnyNs('procEvento' + FptpDFe);
+        LerEvento(AuxNode, Indice);
+      end;
+    except
+      //    Result := False;
     end;
-
+  finally
     FreeAndNil(Document);
-  except
-//    Result := False;
   end;
 end;
 

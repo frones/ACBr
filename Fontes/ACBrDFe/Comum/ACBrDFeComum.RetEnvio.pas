@@ -44,7 +44,6 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase;
-//  pcnConversao;
 
 type
 
@@ -129,7 +128,7 @@ begin
         cUF := ObterConteudoTag(Anode.Childrens.FindAnyNs('cUF'), tcInt);
         verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-        xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
+        xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
 
         AuxNode := ANode.Childrens.FindAnyNs('infRec');
 

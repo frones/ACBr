@@ -123,12 +123,12 @@ begin
         tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
         verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-        xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
+        xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
         cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
         dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
         tMed := ObterConteudoTag(ANode.Childrens.FindAnyNs('tMed'), tcInt);
         dhRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRetorno'), tcDatHor);
-        xObs := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xObs'), tcStr));
+        xObs := ObterConteudoTag(ANode.Childrens.FindAnyNs('xObs'), tcStr);
       end;
 
       Result := True;

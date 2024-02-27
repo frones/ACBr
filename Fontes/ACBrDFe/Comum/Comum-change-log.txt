@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- Diversos --
+[*] Removido o uso da função ACBrStr ao ler uma mensagem.
+  Por: Italo Giurizzato Junior
+
 14/02/2024
 -- ACBrDFeComum.RetEnvio --
 [*] Removido o parâmentro do Create, pois não se faz necessário.

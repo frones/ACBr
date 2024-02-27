@@ -186,10 +186,10 @@ begin
         verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
         nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-        xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
+        xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
         cUF := ObterConteudoTag(Anode.Childrens.FindAnyNs('cUF'), tcInt);
         cMsg := ObterConteudoTag(Anode.Childrens.FindAnyNs('cMsg'), tcInt);
-        xMsg := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMsg'), tcStr));
+        xMsg := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMsg'), tcStr);
 
         ANodes := ANode.Childrens.FindAllAnyNs('prot' + FtagGrupoMsg);
 
@@ -216,9 +216,9 @@ begin
               nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
               digVal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('digVal'), tcStr);
               cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
-              xMotivo := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr));
+              xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
               cMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMsg'), tcInt);
-              xMsg := ACBrStr(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMsg'), tcStr));
+              xMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMsg'), tcStr);
             end;
           end;
         end;

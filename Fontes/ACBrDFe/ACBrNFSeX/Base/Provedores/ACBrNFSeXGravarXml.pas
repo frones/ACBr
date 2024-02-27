@@ -168,6 +168,7 @@ implementation
 
 uses
   ACBrUtil.Strings,
+  ACBrDFeConsts,
   ACBrDFeException;
 
 { TNFSeWClass }

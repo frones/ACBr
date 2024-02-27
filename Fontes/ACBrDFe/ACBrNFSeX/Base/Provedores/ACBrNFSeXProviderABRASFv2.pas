@@ -2307,6 +2307,17 @@ begin
       Ret := Response.RetCancelamento;
       Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
+      if Ret.DataHora > 0 then
+      begin
+        Ret.Sucesso := 'Sim';
+        Ret.Situacao := 'Cancelado';
+      end
+      else
+      begin
+        Ret.Sucesso := '';
+        Ret.Situacao := '';
+      end;
+
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
       else

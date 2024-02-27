@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- ACBrNFSeXGravarXml/ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Alteração visando alimentar o campo de retorno Situacao com a mensagem:
+    Cancelado quando o pedido de cancelamento foi realizado com sucesso.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/
    ACBrNFSeXProviderBase/ACBrNFSeXProviderProprio --

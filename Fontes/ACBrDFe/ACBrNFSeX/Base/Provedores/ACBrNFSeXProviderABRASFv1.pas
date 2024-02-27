@@ -1531,6 +1531,11 @@ begin
       if Ret.DataHora = 0 then
         Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
+      if Ret.DataHora > 0 then
+        Ret.Situacao := 'Cancelado'
+      else
+        Ret.Situacao := '';
+
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
       else
@@ -1562,6 +1567,11 @@ begin
       begin
         Ret.Sucesso := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('Sucesso'), tcStr);
         Ret.DataHora := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
+
+        if Ret.DataHora > 0 then
+          Ret.Situacao := 'Cancelado'
+        else
+          Ret.Situacao := '';
       end;
     except
       on E:Exception do

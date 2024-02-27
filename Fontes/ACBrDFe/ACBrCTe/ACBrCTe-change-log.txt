@@ -46,6 +46,9 @@ Símbolo : Significado
 
 27/02/2024
 -- pcteConversaoCTe --
+[*] Valores da constante: TModeloCTeArrayStrings estavam invertidos.
+  Por: Italo Giurizzato Junior
+-- pcteConversaoCTe --
 [*] Ajustes visando retornar um valor para o parâmetro Ok que exite em algumas
     funções de conversão.
   Por: Italo Giurizzato Junior

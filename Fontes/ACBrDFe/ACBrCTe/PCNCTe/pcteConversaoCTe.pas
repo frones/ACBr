@@ -89,7 +89,7 @@ type
   TModeloCTe = (moCTe, moCTeOS, moGTVe);
 
 const
-  TModeloCTeArrayStrings: array[TModeloCTe] of string = ('57', '64', '67');
+  TModeloCTeArrayStrings: array[TModeloCTe] of string = ('57', '67', '64');
 
 type
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);

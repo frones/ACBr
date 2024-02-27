@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2024
+-- ACBrMDFe --
+[*] Ajuste visando sanar problema de identificação de Schema
+  Por: Diego Folieni
+
 -- pmdfeConversaoMDFe --
 [-] Correção: na lista de valores do: TTransportadorMDFeArrayStrings.
   Por: Italo Giurizzato Junior

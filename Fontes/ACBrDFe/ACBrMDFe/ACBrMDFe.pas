@@ -516,10 +516,7 @@ Var
   ALayout: TLayOutMDFe;
 begin
   ALayout := ServicoToLayOut(ok, NomeServico);
-  if ok then
-    Result := SchemaMDFeToStr( LayOutToSchema( ALayout ) )
-  else
-    Result := '';
+  Result := SchemaMDFeToStr( LayOutToSchema( ALayout ) )
 end;
 
 procedure TACBrMDFe.LerServicoDeParams(LayOutServico: TLayOutMDFe;

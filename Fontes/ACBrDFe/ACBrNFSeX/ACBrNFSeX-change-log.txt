@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2024
+-- ACBrNFSeXServicos --
+[*] A cidade: Itaquaquecetuba/SP trocou de provedor, agora é SilTecnologia.
+  Por: Fabio Tellini
+[*] Alteração na url de produção da cidade: Ourinhos/SP o provedor continua o mesmo.
+  Por: Fabio Tellini
 -- ACBrNFSeXGravarXml/ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Alteração visando alimentar o campo de retorno Situacao com a mensagem:
     Cancelado quando o pedido de cancelamento foi realizado com sucesso.

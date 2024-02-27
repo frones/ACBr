@@ -201,7 +201,7 @@ begin
               if ANodeAux <> nil then
               begin
                 // A propriedade XMLprotBPe contem o XML que traz o resultado do
-                // processamento da NF3-e.
+                // processamento da BP-e.
                 XMLprotBPe := ANodeAux.OuterXml;
 
                 ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');

@@ -89,10 +89,10 @@ const
 }
 function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
 
-function StrToVersaoDCe(out ok: Boolean; const s: String): TVersaoDCe;
+function StrToVersaoDCe(const s: String): TVersaoDCe;
 function VersaoDCeToStr(const t: TVersaoDCe): String;
 
-function DblToVersaoDCe(out ok: Boolean; const d: Double): TVersaoDCe;
+function DblToVersaoDCe(const d: Double): TVersaoDCe;
 function VersaoDCeToDbl(const t: TVersaoDCe): Double;
 
 function SchemaDCeToStr(const t: TSchemaDCe): String;
@@ -104,10 +104,10 @@ function LayOutDCeToServico(const t: TLayOutDCe): String;
 function ServicoToLayOutDCe(out ok: Boolean; const s: String): TLayOutDCe;
 
 function EmitenteDCeToStr(const t: TEmitenteDCe): String;
-function StrToEmitenteDCe(out ok: Boolean; const s: String): TEmitenteDCe;
+function StrToEmitenteDCe(const s: String): TEmitenteDCe;
 
 function ModTransToStr(const t: TModTrans): String;
-function StrToModTrans(out ok: Boolean; const s: String): TModTrans;
+function StrToModTrans(const s: String): TModTrans;
 
 implementation
 
@@ -125,7 +125,7 @@ begin
              teRegistroPassagemBRId]);
 end;
 
-function StrToVersaoDCe(out ok: Boolean; const s: String): TVersaoDCe;
+function StrToVersaoDCe(const s: String): TVersaoDCe;
 var
   idx: TVersaoDCe;
 begin
@@ -146,7 +146,7 @@ begin
   result := TVersaoDCeArrayStrings[t];
 end;
 
-function DblToVersaoDCe(out ok: Boolean; const d: Double): TVersaoDCe;
+function DblToVersaoDCe(const d: Double): TVersaoDCe;
 var
   idx: TVersaoDCe;
 begin
@@ -239,7 +239,7 @@ begin
   result := TEmitenteDCeArrayStrings[t];
 end;
 
-function StrToEmitenteDCe(out ok: Boolean; const s: String): TEmitenteDCe;
+function StrToEmitenteDCe(const s: String): TEmitenteDCe;
 var
   idx: TEmitenteDCe;
 begin
@@ -260,7 +260,7 @@ begin
   result := TModTransArrayStrings[t];
 end;
 
-function StrToModTrans(out ok: Boolean; const s: String): TModTrans;
+function StrToModTrans(const s: String): TModTrans;
 var
   idx: TModTrans;
 begin

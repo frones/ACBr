@@ -44,6 +44,9 @@ Símbolo : Significado
 
 27/02/2024
 -- ACBrDCeConversao --
+[*] Remoção do parâmentro Ok de alumas funções de conversão.
+  Por: Italo Giurizzato Junior
+-- ACBrDCeConversao --
 [*] Acrescentado no tipo TLayOutDCe os valores: LayDCeURLQRCode e LayURLConsultaDCe.
   Por: Italo Giurizzato Junior
 

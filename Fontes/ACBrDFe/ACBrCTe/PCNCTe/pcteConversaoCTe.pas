@@ -474,6 +474,8 @@ function ServicoToLayOut(out ok: Boolean; const s: string): TLayOutCTe;
 var
   idx: TLayOutCTe;
 begin
+  ok := True;
+
   for idx := Low(TLayOutCTeArrayStrings) to High(TLayOutCTeArrayStrings) do
   begin
     if (TLayOutCTeArrayStrings[idx] = s) then
@@ -520,6 +522,8 @@ var
   P: Integer;
   SchemaStr: string;
 begin
+  ok := True;
+
   P := pos('_', s);
   if P > 0 then
     SchemaStr := copy(s, 1, P-1)
@@ -536,6 +540,8 @@ function StrToVersaoCTe(out ok: Boolean; const s: string): TVersaoCTe;
 var
   idx: TVersaoCTe;
 begin
+  ok := True;
+
   for idx := Low(TVersaoCTeArrayStrings) to High(TVersaoCTeArrayStrings) do
   begin
     if (TVersaoCTeArrayStrings[idx] = s) then
@@ -557,6 +563,8 @@ function DblToVersaoCTe(out ok: Boolean; const d: Double): TVersaoCTe;
 var
   idx: TVersaoCTe;
 begin
+  ok := True;
+
   for idx := Low(TVersaoCTeArrayDouble) to High(TVersaoCTeArrayDouble) do
   begin
     if (TVersaoCTeArrayDouble[idx] = d) then
@@ -599,6 +607,8 @@ function StrTotpforPag(out ok: boolean; const s: string): TpcteFormaPagamento;
 var
   idx: TpcteFormaPagamento;
 begin
+  ok := True;
+
   for idx := Low(TFormaPagamentoArrayStrings) to High(TFormaPagamentoArrayStrings) do
   begin
     if (TFormaPagamentoArrayStrings[idx] = s) then
@@ -620,6 +630,8 @@ function StrTotpCTe(out ok: boolean; const s: string): TpcteTipoCTe;
 var
   idx: TpcteTipoCTe;
 begin
+  ok := True;
+
   for idx := Low(TTipoCTeArrayStrings) to High(TTipoCTeArrayStrings) do
   begin
     if (TTipoCTeArrayStrings[idx] = s) then
@@ -646,6 +658,8 @@ function StrToTpServ(out ok: boolean; const s: string): TpcteTipoServico;
 var
   idx: TpcteTipoServico;
 begin
+  ok := True;
+
   for idx := Low(TTipoServicoArrayStrings) to High(TTipoServicoArrayStrings) do
   begin
     if (TTipoServicoArrayStrings[idx] = s) then
@@ -667,6 +681,8 @@ function StrToTpRetira(out ok: boolean; const s: string): TpcteRetira;
 var
   idx: TpcteRetira;
 begin
+  ok := True;
+
   for idx := Low(TRetiraArrayStrings) to High(TRetiraArrayStrings) do
   begin
     if (TRetiraArrayStrings[idx] = s) then
@@ -698,6 +714,8 @@ function StrToTpTomador(out ok: boolean; const s: string ): TpcteTomador;
 var
   idx: TpcteTomador;
 begin
+  ok := True;
+
   for idx := Low(TTomadorArrayStrings) to High(TTomadorArrayStrings) do
   begin
     if (TTomadorArrayStrings[idx] = s) then
@@ -719,6 +737,8 @@ function StrToTpLotacao(out ok: boolean; const s: string ): TpcteLotacao;
 var
   idx: TpcteLotacao;
 begin
+  ok := True;
+
   for idx := Low(TLotacaoArrayStrings) to High(TLotacaoArrayStrings) do
   begin
     if (TLotacaoArrayStrings[idx] = s) then
@@ -740,6 +760,8 @@ function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
 var
   idx: TpcteDirecao;
 begin
+  ok := True;
+
   for idx := Low(TDirecaoArrayStrings) to High(TDirecaoArrayStrings) do
   begin
     if (TDirecaoArrayStrings[idx] = s) then
@@ -761,6 +783,8 @@ function StrToTpTrafego(out ok: boolean; const s: string): TpcteTipoTrafego;
 var
   idx: TpcteTipoTrafego;
 begin
+  ok := True;
+
   for idx := Low(TTipoTrafegoArrayStrings) to High(TTipoTrafegoArrayStrings) do
   begin
     if (TTipoTrafegoArrayStrings[idx] = s) then
@@ -782,6 +806,8 @@ function StrToTpDataPeriodo(out ok: boolean; const s: string): TpcteTipoDataPeri
 var
   idx: TpcteTipoDataPeriodo;
 begin
+  ok := True;
+
   for idx := Low(TTipoDataPeriodoArrayStrings) to High(TTipoDataPeriodoArrayStrings) do
   begin
     if (TTipoDataPeriodoArrayStrings[idx] = s) then
@@ -803,6 +829,8 @@ function StrToTpHorarioIntervalo(out ok: boolean; const s: string): TpcteTipoHor
 var
   idx: TpcteTipoHorarioIntervalo;
 begin
+  ok := True;
+
   for idx := Low(TTipoHorarioIntervaloArrayStrings) to High(TTipoHorarioIntervaloArrayStrings) do
   begin
     if (TTipoHorarioIntervaloArrayStrings[idx] = s) then
@@ -824,6 +852,8 @@ function StrToTpDocumento(out ok: boolean; const s: string): TpcteTipoDocumento;
 var
   idx: TpcteTipoDocumento;
 begin
+  ok := True;
+
   for idx := Low(TTipoDocumentoArrayStrings) to High(TTipoDocumentoArrayStrings) do
   begin
     if (TTipoDocumentoArrayStrings[idx] = s) then
@@ -845,6 +875,8 @@ function StrToTpDocumentoAnterior(out ok: boolean; const s: string): TpcteTipoDo
 var
   idx: TpcteTipoDocumentoAnterior;
 begin
+  ok := True;
+
   for idx := Low(TTipoDocumentoAnteriorArrayStrings) to High(TTipoDocumentoAnteriorArrayStrings) do
   begin
     if (TTipoDocumentoAnteriorArrayStrings[idx] = s) then
@@ -866,6 +898,8 @@ function StrToRspPagPedagio(out ok: boolean; const s: string): TpcteRspPagPedagi
 var
   idx: TpcteRspPagPedagio;
 begin
+  ok := True;
+
   for idx := Low(TRspPagPedagioArrayStrings) to High(TRspPagPedagioArrayStrings) do
   begin
     if (TRspPagPedagioArrayStrings[idx] = s) then
@@ -887,6 +921,8 @@ function StrToTpDispositivo(out ok: boolean; const s: string): TpcteTipoDisposit
 var
   idx: TpcteTipoDispositivo;
 begin
+  ok := True;
+
   for idx := Low(TTipoDispositivoArrayStrings) to High(TTipoDispositivoArrayStrings) do
   begin
     if (TTipoDispositivoArrayStrings[idx] = s) then
@@ -908,6 +944,8 @@ function StrToTpPropriedade(out ok: boolean; const s: string): TpcteTipoPropried
 var
   idx: TpcteTipoPropriedade;
 begin
+  ok := True;
+
   for idx := Low(TTipoPropriedadeArrayStrings) to High(TTipoPropriedadeArrayStrings) do
   begin
     if (TTipoPropriedadeArrayStrings[idx] = s) then
@@ -929,6 +967,8 @@ function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
 var
   idx: TpcteTrafegoMutuo;
 begin
+  ok := True;
+
   for idx := Low(TTrafegoMutuoArrayStrings) to High(TTrafegoMutuoArrayStrings) do
   begin
     if (TTrafegoMutuoArrayStrings[idx] = s) then
@@ -950,6 +990,8 @@ function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel
 var
   idx: TpcnindNegociavel;
 begin
+  ok := True;
+
   for idx := Low(TindNegociavelArrayStrings) to High(TindNegociavelArrayStrings) do
   begin
     if (TindNegociavelArrayStrings[idx] = s) then
@@ -971,6 +1013,8 @@ function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
 var
   idx: TpcteTipoVeiculo;
 begin
+  ok := True;
+
   for idx := Low(TTipoVeiculoArrayStrings) to High(TTipoVeiculoArrayStrings) do
   begin
     if (TTipoVeiculoArrayStrings[idx] = s) then
@@ -992,6 +1036,8 @@ function StrToModeloCTe(out ok: Boolean; const s: string): TModeloCTe;
 var
   idx: TModeloCTe;
 begin
+  ok := True;
+
   for idx := Low(TModeloCTeArrayStrings) to High(TModeloCTeArrayStrings) do
   begin
     if (TModeloCTeArrayStrings[idx] = s) then
@@ -1023,6 +1069,8 @@ function StrToTEspecie(out ok: Boolean; const s: string): TEspecie;
 var
   idx: TEspecie;
 begin
+  ok := True;
+
   for idx := Low(TEspecieArrayStrings) to High(TEspecieArrayStrings) do
   begin
     if (TEspecieArrayStrings[idx] = s) then
@@ -1049,6 +1097,8 @@ function StrToTpRspSeguro(out ok: boolean; const s: string ): TpcteRspSeg;
 var
   idx: TpcteRspSeg;
 begin
+  ok := True;
+
   for idx := Low(TRspSegArrayStrings) to High(TRspSegArrayStrings) do
   begin
     if (TRspSegArrayStrings[idx] = s) then
@@ -1070,6 +1120,8 @@ function StrToTpInfManu(out ok: boolean; const s: string): TpInfManu;
 var
   idx: TpInfManu;
 begin
+  ok := True;
+
   for idx := Low(TpInfManuArrayStrings) to High(TpInfManuArrayStrings) do
   begin
     if (TpInfManuArrayStrings[idx] = s) then
@@ -1091,6 +1143,8 @@ function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
 var
   idx: TpInfManu;
 begin
+  ok := True;
+
   for idx := Low(TpInfManuV2ArrayStrings) to High(TpInfManuV2ArrayStrings) do
   begin
     if (TpInfManuV2ArrayStrings[idx] = s) then
@@ -1112,6 +1166,8 @@ function StrToUniMed(out ok: Boolean; const s: string): TpUniMed;
 var
   idx: TpUniMed;
 begin
+  ok := True;
+
   for idx := Low(TpUniMedArrayStrings) to High(TpUniMedArrayStrings) do
   begin
     if (TpUniMedArrayStrings[idx] = s) then
@@ -1133,6 +1189,8 @@ function StrToTpFretamento(out ok: Boolean; const s: string): TtpFretamento;
 var
   idx: TtpFretamento;
 begin
+  ok := True;
+
   for idx := Low(TtpFretamentoArrayStrings) to High(TtpFretamentoArrayStrings) do
   begin
     if (TtpFretamentoArrayStrings[idx] = s) then
@@ -1154,6 +1212,8 @@ function StrTotpComp(out ok: Boolean; const s: string): TtpComp;
 var
   idx: TtpComp;
 begin
+  ok := True;
+
   for idx := Low(TtpCompArrayStrings) to High(TtpCompArrayStrings) do
   begin
     if (TtpCompArrayStrings[idx] = s) then
@@ -1175,6 +1235,8 @@ function StrTotpNumerario(out ok: Boolean; const s: string): TtpNumerario;
 var
   idx: TtpNumerario;
 begin
+  ok := True;
+
   for idx := Low(TtpNumerarioArrayStrings) to High(TtpNumerarioArrayStrings) do
   begin
     if (TtpNumerarioArrayStrings[idx] = s) then
@@ -1196,6 +1258,8 @@ function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
 var
   idx: TCRT;
 begin
+  ok := True;
+
   for idx := Low(TCRTArrayStrings) to High(TCRTArrayStrings) do
   begin
     if (TCRTArrayStrings[idx] = s) then
@@ -1217,6 +1281,8 @@ function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
 var
   idx: TtpMotivo;
 begin
+  ok := True;
+
   for idx := Low(TtpMotivoArrayStrings) to High(TtpMotivoArrayStrings) do
   begin
     if (TtpMotivoArrayStrings[idx] = s) then

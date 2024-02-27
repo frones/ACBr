@@ -635,7 +635,7 @@ begin
 
   NF3eRetorno := TRetConsStatServ.Create('NF3e');
   try
-    NF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+    NF3eRetorno.XmlRetorno := ParseText(FPRetWS);
     NF3eRetorno.LerXml;
 
     Fversao := NF3eRetorno.versao;
@@ -907,7 +907,7 @@ begin
     else
       AXML := FPRetWS;
 
-    FNF3eRetornoSincrono.XmlRetorno := ParseText(AXML, True, False);
+    FNF3eRetornoSincrono.XmlRetorno := ParseText(AXML);
     FNF3eRetornoSincrono.LerXml;
 
     Fversao := FNF3eRetornoSincrono.versao;
@@ -999,7 +999,7 @@ begin
   end
   else
   begin
-    FNF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+    FNF3eRetorno.XmlRetorno := ParseText(FPRetWS);
     FNF3eRetorno.LerXml;
 
     Fversao := FNF3eRetorno.versao;
@@ -1279,7 +1279,7 @@ begin
 
   RemoverNameSpace;
 
-  FNF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+  FNF3eRetorno.XmlRetorno := ParseText(FPRetWS);
   FNF3eRetorno.LerXML;
 
   Fversao := FNF3eRetorno.versao;
@@ -1597,7 +1597,7 @@ begin
 
   RemoverNameSpace;
 
-  FNF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+  FNF3eRetorno.XmlRetorno := ParseText(FPRetWS);
   FNF3eRetorno.LerXML;
 
   Fversao := FNF3eRetorno.versao;
@@ -1819,7 +1819,7 @@ begin
 
     RemoverNameSpace;
 
-    NF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+    NF3eRetorno.XmlRetorno := ParseText(FPRetWS);
     NF3eRetorno.LerXML;
 
     NFCancelada := False;
@@ -2400,7 +2400,7 @@ begin
 
   RemoverNameSpace;
 
-  EventoRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.retInfEvento.cStat;
@@ -2463,7 +2463,7 @@ begin
               end;
 
               { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-              Texto := ParseText(Texto, True, False);
+              Texto := ParseText(Texto);
             end;
 
             // Se o evento for rejeitado a propriedade XML conterá uma string vazia
@@ -2614,7 +2614,7 @@ begin
   RemoverNameSpace;
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
-  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS, True, False);
+  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
 
   FPMsg := FretDistDFeInt.xMotivo;

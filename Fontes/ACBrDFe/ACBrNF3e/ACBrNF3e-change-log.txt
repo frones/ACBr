@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- ACBrNF3eRetEnvEvento --
+[*] Removido o uso da função ACBrStr ao ler uma mensagem.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- ACBrNF3eConversao --
 [*] Ajustes nas funções: DblToVersaoNF3e, VersaoNF3eToDbl e VersaoQrCodeToDbl.

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- DoACBrCTeUnit --
+[*] Corrige a rotina do comando EnviarCTe que estava consultando recibo independente do modo de envio.
+  Por: Diego Folieni
+
 26/02/2024
 -- AsciiToHex --
 [*] TK-5014-1  Ajuste para utilizar função existente em math AsciiToHex para exibir a criptografia

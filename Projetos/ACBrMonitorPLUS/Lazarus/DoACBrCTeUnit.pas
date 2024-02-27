@@ -1762,9 +1762,7 @@ begin
          RespEnvio.Free;
       end;
 
-      ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
-      ACBrCTe.WebServices.Retorno.Executar;
-      if (ACBrCTe.WebServices.Enviar.Recibo <> '') then //Assincrono
+      if (ACBrCTe.WebServices.Enviar.Recibo <> '') and (not (Assincrono)) then //Assincrono
       begin
         ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
         ACBrCTe.WebServices.Retorno.Executar;

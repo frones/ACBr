@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- pcesS2299 --
+[*] Alterada condição de preenchimento do nrProcTrab, no S-2299, para considerar somente se ele foi preenchido.
+  Por: Andergoncalves
+
 19/02/2024
 -- pcesS2206, S2206.ini --
 [*] Ajustes na leitura do ini do evento S-2206

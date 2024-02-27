@@ -833,7 +833,7 @@ begin
     if ((obj.mtvDeslig='09') or (obj.mtvDeslig='10')) then
       Gerador.wCampo(tcStr, '', 'nrCertObito', 1, 32, 0, obj.nrCertObito);
 
-  if (obj.mtvDeslig='17') then
+  if obj.nrProcTrab <> '' then
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
 
   if VersaoDF >= veS01_02_00 then

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2024
+-- ACBrNFComWebServices/ACBrNFComRetConsSit/ACBrNFComRetEnvEvento --
+[*] Removido o uso da função ACBrStr ao ler uma mensagem.
+    Deixado o ParseText somente com o primeiro parâmetro.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- ACBrNFComConversao --
 [*] Ajustes na função: DblToVersaoNFCom.

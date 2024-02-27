@@ -96,7 +96,7 @@ end;
 function TRetEventoNFCom.LerXml: Boolean;
 var
   Document: TACBrXmlDocument;
-  ANode, ANodeAux, SignatureNode, ReferenceNode, X509DataNode: TACBrXmlNode;
+  ANode, ANodeAux, SignatureNode{, ReferenceNode, X509DataNode}: TACBrXmlNode;
   ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -120,7 +120,7 @@ begin
           RetInfEvento.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
           retInfEvento.cOrgao := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cOrgao'), tcInt);
           retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-          retInfEvento.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+          retInfEvento.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
           RetInfEvento.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
           RetInfEvento.tpEvento := StrToTpEventoNFCom(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
           RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
@@ -131,6 +131,8 @@ begin
 
         SignatureNode := ANode.Childrens.FindAnyNs('Signature');
 
+        LerSignature(SignatureNode, signature);
+        {
         if SignatureNode <> nil then
         begin
           ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo')
@@ -143,6 +145,7 @@ begin
           signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
           signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
         end;
+        }
       end;
 
       Result := True;

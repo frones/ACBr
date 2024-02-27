@@ -519,7 +519,7 @@ begin
 
   NFComRetorno := TRetConsStatServ.Create('NFCom');
   try
-    NFComRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+    NFComRetorno.XmlRetorno := ParseText(FPRetWS);
     NFComRetorno.LerXml;
 
     Fversao := NFComRetorno.versao;
@@ -754,7 +754,7 @@ begin
   else
     AXML := FPRetWS;
 
-  FNFComRetornoSincrono.XmlRetorno := ParseText(AXML, True, False);
+  FNFComRetornoSincrono.XmlRetorno := ParseText(AXML);
   FNFComRetornoSincrono.LerXml;
 
   Fversao := FNFComRetornoSincrono.versao;
@@ -1084,7 +1084,7 @@ begin
 
   RemoverNameSpace;
   {
-  FNFComRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
+  FNFComRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFComRetorno.LerXML;
 
   Fversao := FNFComRetorno.versao;
@@ -1452,7 +1452,7 @@ begin
 
     RemoverNameSpace;
 
-    NFComRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+    NFComRetorno.XmlRetorno := ParseText(FPRetWS);
     NFComRetorno.LerXML;
 
     NFCancelada := False;
@@ -1969,7 +1969,7 @@ begin
 
   RemoverNameSpace;
 
-  EventoRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.retInfEvento.cStat;
@@ -2033,7 +2033,7 @@ begin
               end;
 
               { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-              Texto := ParseText(Texto, True, False);
+              Texto := ParseText(Texto);
             end;
 
             // Se o evento for rejeitado a propriedade XML conterá uma string vazia

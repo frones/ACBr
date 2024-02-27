@@ -175,90 +175,93 @@ begin
   Document := TACBrXmlDocument.Create;
 
   try
-    Document.LoadFromXml(XmlRetorno);
+    try
+      Document.LoadFromXml(XmlRetorno);
 
-    ANode := Document.Root;
+      ANode := Document.Root;
 
-    if ANode <> nil then
-    begin
-      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
-      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-      xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
-      cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
-      nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
-      dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-      chNFCom := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
+      if ANode <> nil then
+      begin
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+        tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+        cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+        xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+        cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
+        nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
+        dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        chNFCom := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
 
-      case cStat of
-        100, // Autorizado o Uso da NFCom
-        101, // Cancelamento de NFCom homologado
-        102, // Substituição da NFCom homologado
-        150: // Autorizado o Uso da NFCom, autorização fora de prazo
-          begin
-            ANodeAux := ANode.Childrens.FindAnyNs('protNFCom');
-
-            if ANodeAux <> nil then
+        case cStat of
+          100, // Autorizado o Uso da NFCom
+          101, // Cancelamento de NFCom homologado
+          102, // Substituição da NFCom homologado
+          150: // Autorizado o Uso da NFCom, autorização fora de prazo
             begin
-              // A propriedade XMLprotNFCom contem o XML que traz o resultado do
-              // processamento da NFCom.
-              XMLprotNFCom := ANodeAux.OuterXml;
-
-              ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
+              ANodeAux := ANode.Childrens.FindAnyNs('protNFCom');
 
               if ANodeAux <> nil then
               begin
-                protNFCom.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
-                protNFCom.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-                protNFCom.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-                protNFCom.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
-                protNFCom.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-                protNFCom.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
-                protNFCom.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
-                protNFCom.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-                protNFCom.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+                // A propriedade XMLprotNFCom contem o XML que traz o resultado do
+                // processamento da NFCom.
+                XMLprotNFCom := ANodeAux.OuterXml;
 
-                ANodeAux := ANodeAux.Childrens.FindAnyNs('infFisco');
+                ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
 
                 if ANodeAux <> nil then
                 begin
-                  protNFCom.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
-                  protNFCom.xMsg := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr));
+                  protNFCom.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
+                  protNFCom.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+                  protNFCom.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+                  protNFCom.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
+                  protNFCom.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+                  protNFCom.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+                  protNFCom.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
+                  protNFCom.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+                  protNFCom.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
+
+                  ANodeAux := ANodeAux.Childrens.FindAnyNs('infFisco');
+
+                  if ANodeAux <> nil then
+                  begin
+                    protNFCom.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
+                    protNFCom.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
+                  end;
                 end;
               end;
             end;
-          end;
-      end;
-
-      if Assigned(procEventoNFCom) then
-        procEventoNFCom.Free;
-
-      procEventoNFCom := TRetEventoNFComCollection.Create;
-
-      try
-        ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoNFCom');
-
-        if Assigned(ANodeArray) then
-        begin
-          for i := Low(ANodeArray) to High(ANodeArray) do
-          begin
-            AnodeAux := ANodeArray[i];
-
-            procEventoNFCom.New;
-            procEventoNFCom.Items[i].RetEventoNFCom.XmlRetorno := AnodeAux.OuterXml;
-            procEventoNFCom.Items[i].RetEventoNFCom.LerXml;
-          end;
         end;
-      except
-        Result := False;
-      end;
-    end;
 
+        if Assigned(procEventoNFCom) then
+          procEventoNFCom.Free;
+
+        procEventoNFCom := TRetEventoNFComCollection.Create;
+
+        try
+          ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoNFCom');
+
+          if Assigned(ANodeArray) then
+          begin
+            for i := Low(ANodeArray) to High(ANodeArray) do
+            begin
+              AnodeAux := ANodeArray[i];
+
+              procEventoNFCom.New;
+              procEventoNFCom.Items[i].RetEventoNFCom.XmlRetorno := AnodeAux.OuterXml;
+              procEventoNFCom.Items[i].RetEventoNFCom.LerXml;
+            end;
+          end;
+        except
+          // Continua
+        end;
+      end;
+
+      Result := True;
+    except
+      Result := False;
+    end;
+  finally
     FreeAndNil(Document);
-    Result := True;
-  except
-    Result := False;
   end;
 end;
 

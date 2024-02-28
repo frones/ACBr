@@ -130,7 +130,8 @@ type
 
     function Assinar(const ConteudoXML, docElement, InfElement: String;
       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
-      const IdSignature: String = ''; const IdAttr: String = ''): String; override;
+      const IdSignature: String = ''; const IdAttr: String = '';
+      const IdSignatureValue: string = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String; out MsgErro: String)
       : Boolean; override;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
@@ -449,9 +450,12 @@ begin
   CreateCtx;
   try
     // Inserindo Template da Assinatura digital //
-    SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
+    SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces,
+                                        infElement);
+
     if (SignNode = nil) then
-      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst, IdSignatureValue), docElement);
+      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature,
+                               FpDFeSSL.SSLDgst, IdSignatureValue), docElement);
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
@@ -481,7 +485,8 @@ end;
 
 function TDFeSSLXmlSignXmlSec.Assinar(const ConteudoXML, docElement,
   InfElement: String; const SignatureNode: String; const SelectionNamespaces: String;
-  const IdSignature: String; const IdAttr: String): String;
+  const IdSignature: String; const IdAttr: String;
+  const IdSignatureValue: string): String;
 var
   doc: xmlDocPtr;
   AXml, XmlAss, DTD, URI: String;
@@ -511,7 +516,6 @@ begin
 
   URI := EncontrarURI(aXML, docElement, IdAttr_temp);
 
-
   { load template }
   doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
   if (doc = nil) then
@@ -523,7 +527,7 @@ begin
     // WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
     XmlAss := XmlSecSign(doc, SignatureNode, SelectionNamespaces, InfElement,
-                         URI, IdSignature, docElement);
+                         URI, IdSignature, docElement, IdSignatureValue);
 
     // DEBUG
     // WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);

@@ -41,6 +41,9 @@ Símbolo : Significado
 
 
 28/02/2024
+-- ACBrDFeXsXmlSec --
+[-] Correção, estava faltando um parâmetro no método Assinar.
+  Por: Italo Giurizzato Junior
 -- ACBrDFeSSL --
 [*] Removido a definição do conteudo do campo IdSignatureValue, agora
     a função AdicionarSignatureElement vai receber esse campo pré-definido ou

@@ -248,6 +248,8 @@ function StrToTpEmitente(out ok: Boolean; const s: string): TTpEmitenteMDFe;
 var
   idx: TTpEmitenteMDFe;
 begin
+  ok := True;
+
   for idx := Low(TTpEmitenteMDFeArrayStrings) to High(TTpEmitenteMDFeArrayStrings) do
   begin
     if (TTpEmitenteMDFeArrayStrings[idx] = s) then
@@ -287,6 +289,8 @@ function StrToModal(out ok: Boolean; const s: string): TModalMDFe;
 var
   idx: TModalMDFe;
 begin
+  ok := True;
+
   for idx := Low(TModalMDFeArrayStrings) to High(TModalMDFeArrayStrings) do
   begin
     if (TModalMDFeArrayStrings[idx] = s) then
@@ -332,6 +336,8 @@ function ServicoToLayOut(out ok: Boolean; const s: string): TLayOutMDFe;
 var
   idx: TLayOutMDFe;
 begin
+  ok := True;
+
   for idx := Low(TLayOutMDFeArrayStrings) to High(TLayOutMDFeArrayStrings) do
   begin
     if (TLayOutMDFeArrayStrings[idx] = s) then
@@ -379,6 +385,8 @@ function StrToVersaoMDFe(out ok: Boolean; const s: string): TVersaoMDFe;
 var
   idx: TVersaoMDFe;
 begin
+  ok := True;
+
   for idx := Low(TVersaoMDFeArrayStrings) to High(TVersaoMDFeArrayStrings) do
   begin
     if (TVersaoMDFeArrayStrings[idx] = s) then
@@ -400,6 +408,8 @@ function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
 var
   idx: TVersaoMDFe;
 begin
+  ok := True;
+
   for idx := Low(TVersaoMDFeArrayDouble) to High(TVersaoMDFeArrayDouble) do
   begin
     if (TVersaoMDFeArrayDouble[idx] = d) then
@@ -427,6 +437,8 @@ function StrToTTransportador(out ok: Boolean; const s: string): TTransportadorMD
 var
   idx: TTransportadorMDFe;
 begin
+  ok := True;
+
   for idx := Low(TTransportadorMDFeArrayStrings) to High(TTransportadorMDFeArrayStrings) do
   begin
     if (TTransportadorMDFeArrayStrings[idx] = s) then
@@ -453,6 +465,8 @@ function StrToRspSeguroMDFe(out ok: boolean; const s: string ): TRspSegMDFe;
 var
   idx: TRspSegMDFe;
 begin
+  ok := True;
+
   for idx := Low(TRspSegMDFeArrayStrings) to High(TRspSegMDFeArrayStrings) do
   begin
     if (TRspSegMDFeArrayStrings[idx] = s) then
@@ -474,6 +488,8 @@ function StrToTCarga(out ok: Boolean; const s: string): TCarga;
 var
   idx: TCarga;
 begin
+  ok := True;
+
   for idx := Low(TCargaArrayStrings) to High(TCargaArrayStrings) do
   begin
     if (TCargaArrayStrings[idx] = s) then
@@ -495,6 +511,8 @@ function StrToTIndPag(out ok: Boolean; const s: string): TIndPag;
 var
   idx: TIndPag;
 begin
+  ok := True;
+
   for idx := Low(TIndPagArrayStrings) to High(TIndPagArrayStrings) do
   begin
     if (TIndPagArrayStrings[idx] = s) then
@@ -516,6 +534,8 @@ function StrToTComp(out ok: Boolean; const s: string): TComp;
 var
   idx: TComp;
 begin
+  ok := True;
+
   for idx := Low(TCompArrayStrings) to High(TCompArrayStrings) do
   begin
     if (TCompArrayStrings[idx] = s) then
@@ -537,6 +557,8 @@ function StrToindAltoDesemp(out ok: Boolean; const s: string): TIndicador;
 var
   idx: TIndicador;
 begin
+  ok := True;
+
   for idx := Low(TIndicadorArrayStrings) to High(TIndicadorArrayStrings) do
   begin
     if (TIndicadorArrayStrings[idx] = s) then
@@ -563,6 +585,8 @@ function StrTotpValePed(out ok: Boolean; const s: string): TtpValePed;
 var
   idx: TtpValePed;
 begin
+  ok := True;
+
   for idx := Low(TtpValePedArrayStrings) to High(TtpValePedArrayStrings) do
   begin
     if (TtpValePedArrayStrings[idx] = s) then
@@ -589,6 +613,8 @@ function StrTocategCombVeic(out ok: Boolean; const s: string): TcategCombVeic;
 var
   idx: TcategCombVeic;
 begin
+  ok := True;
+
   for idx := Low(TcategCombVeicArrayStrings) to High(TcategCombVeicArrayStrings) do
   begin
     if (TcategCombVeicArrayStrings[idx] = s) then
@@ -610,6 +636,8 @@ function StrTotpAntecip(out ok: Boolean; const s: string): TtpAntecip;
 var
   idx: TtpAntecip;
 begin
+  ok := True;
+
   for idx := Low(TtpAntecipArrayStrings) to High(TtpAntecipArrayStrings) do
   begin
     if (TtpAntecipArrayStrings[idx] = s) then

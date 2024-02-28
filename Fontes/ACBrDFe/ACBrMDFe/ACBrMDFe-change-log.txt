@@ -42,11 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2024
+-- pmdfeConversaoMDFe --
+[*] Como ainda não foi removido o parâmetro de saída (Ok) das funções de
+    conversão foi incluído nas funções a linha para atribuir um valor para
+    o parâmetro Ok.
+  Por: Italo Giurizzato Junior
+
 27/02/2024
 -- ACBrMDFe --
 [*] Ajuste visando sanar problema de identificação de Schema
   Por: Diego Folieni
-
 -- pmdfeConversaoMDFe --
 [-] Correção: na lista de valores do: TTransportadorMDFeArrayStrings.
   Por: Italo Giurizzato Junior

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2024
+-- Bauhaus.GravarJson --
+[*] Alteração visando gerar corretamente onde o serviço foi prestado.
+  Por: Celo G
 -- Giap.Provider --
 [*] Alteração visando a leitura dos erros quando estes são retornados em tags ou
     atributos.

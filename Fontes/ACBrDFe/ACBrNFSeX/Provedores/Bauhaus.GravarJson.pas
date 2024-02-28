@@ -116,7 +116,7 @@ begin
     AJSon
       .AddPairJSONObject('DadosNota', EmptyStr)
       .AsJSONObject['DadosNota']
-        .AddPair('MunicipioPrestacao', StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0))
+        .AddPair('MunicipioPrestacao', StrToIntDef(NFSe.Servico.CodigoMunicipio, 0))
         .AddPair('NaturezaOperacao', StrToIntDef(NaturezaOperacaoToStr(NFSe.NaturezaOperacao), 0))
         .AddPair('IssRetido', IfThen((NFSe.Servico.Valores.IssRetido = stRetencao), 'S' , 'N'))
         .AddPair('Observacoes', NFSe.OutrasInformacoes)

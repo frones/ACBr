@@ -68,13 +68,14 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function SetIdSignatureValue(const ConteudoXml, docElement, IdAttr: string): string;  override;
   end;
 
 implementation
 
 uses
   ACBrUtil.XMLHTML, //ACBrUtil.Strings,
-  ACBrDFeException,
+  ACBrDFeException, ACBrDFeUtil,
   PRODAUB.GravarXml, PRODAUB.LerXml;
 
 { TACBrNFSeProviderPRODAUB204 }
@@ -145,6 +146,23 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderPRODAUB204.SetIdSignatureValue(const ConteudoXml,
+  docElement, IdAttr: string): string;
+var
+  URI: string;
+  i: Integer;
+begin
+  URI := EncontrarURI(ConteudoXml, docElement, IdAttr);
+
+  i := Pos('_', URI);
+  URI := Copy(URI, i + 1, Length(URI));
+
+  if ConfigAssinar.IdSignatureValue <> '' then
+    Result := ' Id="' + ConfigAssinar.IdSignatureValue + URI + '"'
+  else
+    Result := '';
 end;
 
 { TACBrNFSeXWebservicePRODAUB204 }

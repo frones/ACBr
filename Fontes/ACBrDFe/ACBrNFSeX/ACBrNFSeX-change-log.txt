@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2024
+-- Diversos --
+[*] Alteração visando gerar corretamente o atributo para o SignatureValue exigido
+    pelo provedor PRODAUB.
+  Por: Italo Giurizzato Junior
 -- Bauhaus.GravarJson --
 [*] Alteração visando gerar corretamente onde o serviço foi prestado.
   Por: Celo G

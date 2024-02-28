@@ -117,7 +117,12 @@ begin
     (*B05*)CTe.Ide.natOp    := Leitor.rCampo(tcStr, 'natOp');
 
     if VersaoDF < ve300 then
-      (*B06*)CTe.Ide.forPag   := StrTotpforPag(ok, Leitor.rCampo(tcStr, 'forPag'));
+    begin
+      sAux := Leitor.rCampo(tcStr, 'forPag');
+
+      if sAux <> '' then
+        (*B06*)CTe.Ide.forPag := StrTotpforPag(ok, sAux);
+    end;
 
     (*B07*)CTe.Ide.modelo   := Leitor.rCampo(tcStr, 'mod');
     (*B08*)CTe.Ide.serie    := Leitor.rCampo(tcInt, 'serie');
@@ -151,9 +156,12 @@ begin
     (*B24*)CTe.Ide.cMunFim  := Leitor.rCampo(tcInt, 'cMunFim');
     (*B25*)CTe.Ide.xMunFim  := Leitor.rCampo(tcStr, 'xMunFim');
     (*B26*)CTe.Ide.UFFim    := Leitor.rCampo(tcStr, 'UFFim');
+
     sAux := Leitor.rCampo(tcStr, 'retira');
+
     if sAux <> '' then
-      (*B27*)CTe.Ide.retira   := StrToTpRetira(ok, sAux);
+      (*B27*)CTe.Ide.retira := StrToTpRetira(ok, sAux);
+
     (*B27a*)CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
     (*#57*)CTe.Ide.dhCont   := Leitor.rCampo(tcDatHor, 'dhCont');
     (*#58*)CTe.Ide.xJust    := Leitor.rCampo(tcStr, 'xJust');
@@ -1129,10 +1137,13 @@ begin
     begin
       CTe.infCTeNorm.rodo.RNTRC := Leitor.rCampo(tcStr,'RNTRC');
       CTe.infCTeNorm.rodo.dPrev := Leitor.rCampo(tcDat,'dPrev');
-      sAux := Leitor.rCampo(tcStr,'lota');
+
+      sAux := Leitor.rCampo(tcStr, 'lota');
+
       if sAux <> '' then
-        CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, sAux);
-      CTe.infCTeNorm.rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
+        CTe.infCTeNorm.rodo.lota := StrToTpLotacao(ok, sAux);
+
+      CTe.infCTeNorm.rodo.CIOT := Leitor.rCampo(tcStr, 'CIOT');
 
       if VersaoDF < ve200 then
       begin

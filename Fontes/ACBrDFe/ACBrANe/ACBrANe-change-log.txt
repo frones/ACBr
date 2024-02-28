@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2024
+-- ACBrANeServicos --
+[*] As URLs da AT&M mudaram de HTTP para HTTPS.
+   Por: Centrodata Sistemas
+
 09/02/2024
 -- Diversos --
 [*] Refactoring visando deixar de usar a unit pcnAuxiliar.

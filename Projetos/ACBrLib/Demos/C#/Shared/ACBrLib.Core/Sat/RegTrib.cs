@@ -2,7 +2,7 @@
 {
     public enum RegTrib
     {
-        RTSimplesNacional = 0,
-        RTRegimeNormal = 1
+        RTSimplesNacional = 1,
+        RTRegimeNormal = 3
     }
 }

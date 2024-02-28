@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- pcteCTeR --
+[*] Alteração visando evitar exceção quando ler e tentar converter campo retira quando não tiver no XML.
+  Por: Diego Folieni
+
 27/02/2024
 -- pcteConversaoCTe --
 [*] Valores da constante: TModeloCTeArrayStrings estavam invertidos.

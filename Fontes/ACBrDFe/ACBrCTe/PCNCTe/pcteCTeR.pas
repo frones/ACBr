@@ -151,7 +151,9 @@ begin
     (*B24*)CTe.Ide.cMunFim  := Leitor.rCampo(tcInt, 'cMunFim');
     (*B25*)CTe.Ide.xMunFim  := Leitor.rCampo(tcStr, 'xMunFim');
     (*B26*)CTe.Ide.UFFim    := Leitor.rCampo(tcStr, 'UFFim');
-    (*B27*)CTe.Ide.retira   := StrToTpRetira(ok, Leitor.rCampo(tcStr, 'retira'));
+    sAux := Leitor.rCampo(tcStr, 'retira');
+    if sAux <> '' then
+      (*B27*)CTe.Ide.retira   := StrToTpRetira(ok, sAux);
     (*B27a*)CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
     (*#57*)CTe.Ide.dhCont   := Leitor.rCampo(tcDatHor, 'dhCont');
     (*#58*)CTe.Ide.xJust    := Leitor.rCampo(tcStr, 'xJust');
@@ -1129,9 +1131,7 @@ begin
       CTe.infCTeNorm.rodo.dPrev := Leitor.rCampo(tcDat,'dPrev');
       sAux := Leitor.rCampo(tcStr,'lota');
       if sAux <> '' then
-        CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, sAux)
-      else
-        CTe.infCTeNorm.rodo.lota := ltNao;
+        CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, sAux);
       CTe.infCTeNorm.rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
       if VersaoDF < ve200 then

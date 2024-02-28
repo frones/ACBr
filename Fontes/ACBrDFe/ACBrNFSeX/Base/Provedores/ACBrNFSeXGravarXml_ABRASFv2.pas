@@ -681,7 +681,7 @@ begin
     Result.AppendChild(AddNode(tcInt, '#35', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
                                            NFSe.Servico.CodigoPais, DSC_CPAIS));
 
-    Result.AppendChild(AddNode(tcStr, '#36', 'ExigibilidadeISS',
+    Result.AppendChild(AddNode(tcInt, '#36', 'ExigibilidadeISS',
                                NrMinExigISS, NrMaxExigISS, NrOcorrExigibilidadeISS,
     StrToInt(FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
 

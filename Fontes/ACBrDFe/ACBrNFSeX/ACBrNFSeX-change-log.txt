@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2024
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Corrigido o tipo de conversão para gerar a tag ExigibilidadeISS.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluído o Params: ParametroExtra na cidade: Rio Negrinho/SC.
   Por: C4Dev

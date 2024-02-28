@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/02/2024
+-- ACBrNFSeXServicos --
+[*] Incluído o Params: ParametroExtra na cidade: Rio Negrinho/SC.
+  Por: C4Dev
 -- Diversos --
 [*] Alteração visando gerar corretamente o atributo para o SignatureValue exigido
     pelo provedor PRODAUB.

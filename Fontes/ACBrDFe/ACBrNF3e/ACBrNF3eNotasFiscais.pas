@@ -469,7 +469,7 @@ begin
       Ide.dhEmi   := StringToDateTime(INIRec.ReadString( sSecao,'Emissao',INIRec.ReadString( sSecao,'dhEmi',INIRec.ReadString( sSecao,'dhEmi','0'))));
       Ide.tpEmis  := StrToTipoEmissao( OK,INIRec.ReadString( sSecao,'tpEmis',IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
       Ide.tpAmb   := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
-      Ide.finNF3e := StrToFinNF3e( OK,INIRec.ReadString( sSecao,'Finalidade',INIRec.ReadString( sSecao,'finNF3e','0')));
+      Ide.finNF3e := StrToFinNF3e(INIRec.ReadString( sSecao,'Finalidade',INIRec.ReadString( sSecao,'finNF3e','0')));
       Ide.verProc := INIRec.ReadString(  sSecao, 'verProc' ,'ACBrNF3e');
       Ide.dhCont  := StringToDateTime(INIRec.ReadString( sSecao,'dhCont'  ,'0'));
       Ide.xJust   := INIRec.ReadString(  sSecao,'xJust' ,'' );

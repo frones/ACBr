@@ -102,28 +102,24 @@ begin
 end;
 
 procedure TNF3eXmlReader.LerAcessante(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   NF3e.acessante.idAcesso := ObterConteudo(ANode.Childrens.Find('idAcesso'), tcStr);
   NF3e.acessante.idCodCliente := ObterConteudo(ANode.Childrens.Find('idCodCliente'), tcStr);
-  NF3e.acessante.tpAcesso := StrTotpAcesso(ok, ObterConteudo(ANode.Childrens.Find('tpAcesso'), tcStr));
+  NF3e.acessante.tpAcesso := StrTotpAcesso(ObterConteudo(ANode.Childrens.Find('tpAcesso'), tcStr));
   NF3e.acessante.xNomeUC := ObterConteudo(ANode.Childrens.Find('xNomeUC'), tcStr);
-  NF3e.acessante.tpClasse := StrTotpClasse(ok, ObterConteudo(ANode.Childrens.Find('tpClasse'), tcStr));
-  NF3e.acessante.tpSubClasse := StrTotpSubClasse(ok, ObterConteudo(ANode.Childrens.Find('tpSubClasse'), tcStr));
-  NF3e.acessante.tpFase := StrTotpFase(ok, ObterConteudo(ANode.Childrens.Find('tpFase'), tcStr));
-  NF3e.acessante.tpGrpTensao := StrTotpGrpTensao(ok, ObterConteudo(ANode.Childrens.Find('tpGrpTensao'), tcStr));
-  NF3e.acessante.tpModTar := StrTotpModTar(ok, ObterConteudo(ANode.Childrens.Find('tpModTar'), tcStr));
+  NF3e.acessante.tpClasse := StrTotpClasse(ObterConteudo(ANode.Childrens.Find('tpClasse'), tcStr));
+  NF3e.acessante.tpSubClasse := StrTotpSubClasse(ObterConteudo(ANode.Childrens.Find('tpSubClasse'), tcStr));
+  NF3e.acessante.tpFase := StrTotpFase(ObterConteudo(ANode.Childrens.Find('tpFase'), tcStr));
+  NF3e.acessante.tpGrpTensao := StrTotpGrpTensao(ObterConteudo(ANode.Childrens.Find('tpGrpTensao'), tcStr));
+  NF3e.acessante.tpModTar := StrTotpModTar(ObterConteudo(ANode.Childrens.Find('tpModTar'), tcStr));
   NF3e.acessante.latGPS := ObterConteudo(ANode.Childrens.Find('latGPS'), tcStr);
   NF3e.acessante.longGPS := ObterConteudo(ANode.Childrens.Find('longGPS'), tcStr);
   NF3e.acessante.codRoteiroLeitura := ObterConteudo(ANode.Childrens.Find('codRoteiroLeitura'), tcStr);
 end;
 
 procedure TNF3eXmlReader.LerDest(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   NF3e.Dest.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
 
@@ -132,7 +128,7 @@ begin
   if NF3e.Dest.CNPJCPF = '' then
     NF3e.Dest.idOutros := ObterConteudo(ANode.Childrens.Find('idOutros'), tcStr);
 
-  NF3e.Dest.indIEDest := StrToindIEDest(Ok, ObterConteudo(ANode.Childrens.Find('indIEDest'), tcStr));
+  NF3e.Dest.indIEDest := StrToindIEDest(ObterConteudo(ANode.Childrens.Find('indIEDest'), tcStr));
   NF3e.Dest.IE := ObterConteudo(ANode.Childrens.Find('IE'), tcStr);
   NF3e.Dest.IM := ObterConteudo(ANode.Childrens.Find('IM'), tcStr);
   NF3e.Dest.cNIS := ObterConteudo(ANode.Childrens.Find('cNIS'), tcStr);
@@ -189,15 +185,14 @@ end;
 procedure TNF3eXmlReader.LergGrContrat(const ANode: TACBrXmlNode);
 var
   Item: TgGrContratCollectionItem;
-  ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   Item := NF3e.gGrContrat.New;
 
   Item.nContrat := StrToInt(ObterConteudoTag(ANode.Attributes.Items['nContrat']));
-  Item.tpGrContrat := StrTotpGrContrat(ok, ObterConteudo(ANode.Childrens.Find('tpGrContrat'), tcStr));
-  Item.tpPosTar := StrTotpPosTar(ok, ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
+  Item.tpGrContrat := StrTotpGrContrat(ObterConteudo(ANode.Childrens.Find('tpGrContrat'), tcStr));
+  Item.tpPosTar := StrTotpPosTar(ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
   Item.qUnidContrat := ObterConteudo(ANode.Childrens.Find('qUnidContrat'), tcStr);
 end;
 
@@ -246,7 +241,6 @@ end;
 procedure TNF3eXmlReader.LergConsumidor(const ANode: TACBrXmlNode);
 var
   Item: TgConsumidorCollectionItem;
-  ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -254,22 +248,21 @@ begin
 
   Item.idAcessGer := ObterConteudo(ANode.Childrens.Find('idAcessGer'), tcStr);
   Item.vPotInst := ObterConteudo(ANode.Childrens.Find('vPotInst'), tcDe3);
-  Item.tpFonteEnergia := StrTotpFonteEnergia(ok, ObterConteudo(ANode.Childrens.Find('tpFonteEnergia'), tcStr));
+  Item.tpFonteEnergia := StrTotpFonteEnergia(ObterConteudo(ANode.Childrens.Find('tpFonteEnergia'), tcStr));
   Item.enerAloc := ObterConteudo(ANode.Childrens.Find('enerAloc'), tcDe3);
-  Item.tpPosTar := StrTotpPosTar(ok, ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
+  Item.tpPosTar := StrTotpPosTar(ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
 end;
 
 procedure TNF3eXmlReader.LergSaldoCred(const ANode: TACBrXmlNode);
 var
   Item: TgSaldoCredCollectionItem;
-  ok: Boolean;
   xData: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   Item := NF3e.gSCEE.gSaldoCred.New;
 
-  Item.tpPosTar := StrTotpPosTar(ok, ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
+  Item.tpPosTar := StrTotpPosTar(ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
   Item.vSaldAnt := ObterConteudo(ANode.Childrens.Find('vSaldAnt'), tcDe4);
   Item.vCredExpirado := ObterConteudo(ANode.Childrens.Find('vCredExpirado'), tcDe4);
   Item.vSaldAtual := ObterConteudo(ANode.Childrens.Find('vSaldAtual'), tcDe4);
@@ -283,14 +276,13 @@ end;
 procedure TNF3eXmlReader.LergTipoSaldo(const ANode: TACBrXmlNode);
 var
   Item: TgTipoSaldoCollectionItem;
-  ok: Boolean;
   xData: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   Item := NF3e.gSCEE.gTipoSaldo.New;
 
-  Item.tpPosTar := StrTotpPosTar(ok, ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
+  Item.tpPosTar := StrTotpPosTar(ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
   Item.vSaldAnt := ObterConteudo(ANode.Childrens.Find('vSaldAnt'), tcDe4);
   Item.vCredExpirado := ObterConteudo(ANode.Childrens.Find('vCredExpirado'), tcDe4);
   Item.vSaldAtual := ObterConteudo(ANode.Childrens.Find('vSaldAtual'), tcDe4);
@@ -303,13 +295,12 @@ end;
 
 procedure TNF3eXmlReader.LergSCEE(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  NF3e.gSCEE.tpPartComp := StrTotpPartComp(ok, ObterConteudo(ANode.Childrens.Find('tpPartComp'), tcStr));
+  NF3e.gSCEE.tpPartComp := StrTotpPartComp(ObterConteudo(ANode.Childrens.Find('tpPartComp'), tcStr));
 
   ANodes := ANode.Childrens.FindAll('gConsumidor');
   for i := 0 to Length(ANodes) - 1 do
@@ -331,13 +322,11 @@ begin
 end;
 
 procedure TNF3eXmlReader.LergSub(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   NF3e.gSub.chNF3e := ObterConteudo(ANode.Childrens.Find('chNF3e'), tcStr);
-  NF3e.gSub.motSub := StrToMotSub(ok, ObterConteudo(ANode.Childrens.Find('motSub'), tcStr));
+  NF3e.gSub.motSub := StrToMotSub(ObterConteudo(ANode.Childrens.Find('motSub'), tcStr));
 
   LergNF(ANode.Childrens.Find('gNF'));
 end;
@@ -357,9 +346,9 @@ begin
   NF3e.Ide.cDV := ObterConteudo(ANode.Childrens.Find('cDV'), tcInt);
   NF3e.ide.dhEmi := ObterConteudo(ANode.Childrens.Find('dhEmi'), tcDatHor);
   NF3e.Ide.tpEmis := StrToTipoEmissao(ok, ObterConteudo(ANode.Childrens.Find('tpEmis'), tcStr));
-  NF3e.Ide.nSiteAutoriz := StrToSiteAutorizator(ok, ObterConteudo(ANode.Childrens.Find('nSiteAutoriz'), tcStr));
+  NF3e.Ide.nSiteAutoriz := StrToSiteAutorizator(ObterConteudo(ANode.Childrens.Find('nSiteAutoriz'), tcStr));
   NF3e.ide.cMunFG := ObterConteudo(ANode.Childrens.Find('cMunFG'), tcInt);
-  NF3e.Ide.finNF3e := StrToFinNF3e(ok, ObterConteudo(ANode.Childrens.Find('finNF3e'), tcStr));
+  NF3e.Ide.finNF3e := StrToFinNF3e(ObterConteudo(ANode.Childrens.Find('finNF3e'), tcStr));
   NF3e.Ide.verProc := ObterConteudo(ANode.Childrens.Find('verProc'), tcStr);
   NF3e.Ide.dhCont := ObterConteudo(ANode.Childrens.Find('dhCont'), tcDatHor);
   NF3e.Ide.xJust := ObterConteudo(ANode.Childrens.Find('xJust'), tcStr);
@@ -424,7 +413,6 @@ var
   ADetChildrensNodes: TACBrXmlNodeArray;
   i: Integer;
   j: Integer;
-  ok: Boolean;
   ANodeNivel3: TACBrXmlNode;
   ANodeNivel4: TACBrXmlNode;
   ANodeNivel5: TACBrXmlNode;
@@ -438,7 +426,7 @@ var
     if NodeNaoEncontrado(ANodeNivel5) then
       Exit;
 
-    ANodeImposto.ICMS.CST        := StrToCSTICMS(ok, ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
+    ANodeImposto.ICMS.CST        := StrToCSTICMS(ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
     ANodeImposto.ICMS.vBC        := ObterConteudo(ANodeNivel5.Childrens.Find('vBC'), tcDe2);
     ANodeImposto.ICMS.pICMS      := ObterConteudo(ANodeNivel5.Childrens.Find('pICMS'), tcDe2);
     ANodeImposto.ICMS.vICMS      := ObterConteudo(ANodeNivel5.Childrens.Find('vICMS'), tcDe2);
@@ -481,8 +469,8 @@ begin
         gAjusteNF3eAnt.tpAjuste := taNenhum
       else
       begin
-        gAjusteNF3eAnt.tpAjuste := StrTotpAjuste(Ok,ObterConteudo(ANodeNivel3.Childrens.Find('tpAjuste'), tcStr));
-        gAjusteNF3eAnt.motAjuste := StrToMotAjuste(Ok,ObterConteudo(ANodeNivel3.Childrens.Find('motAjuste'), tcStr));
+        gAjusteNF3eAnt.tpAjuste := StrTotpAjuste(ObterConteudo(ANodeNivel3.Childrens.Find('tpAjuste'), tcStr));
+        gAjusteNF3eAnt.motAjuste := StrToMotAjuste(ObterConteudo(ANodeNivel3.Childrens.Find('motAjuste'), tcStr));
       end;
 
       ANodeNivel3 := ADetNodes[i].Childrens.Find('detItemAnt');
@@ -505,7 +493,7 @@ begin
         detItemAnt.vPISEfet    := ObterConteudo(ANodeNivel3.Childrens.Find('vPISEfet'), tcDe2);
         detItemAnt.vCOFINS     := ObterConteudo(ANodeNivel3.Childrens.Find('vCOFINS'), tcDe2);
         detItemAnt.vCOFINSEfet := ObterConteudo(ANodeNivel3.Childrens.Find('vCOFINSEfet'), tcDe2);
-        detItemAnt.indDevolucao := StrToTIndicador(Ok, ObterConteudo(ANodeNivel3.Childrens.Find('indDevolucao'), tcStr));
+        detItemAnt.indDevolucao := StrToTIndicador(ObterConteudo(ANodeNivel3.Childrens.Find('indDevolucao'), tcStr));
 
         ANodeNivel4 := ANodeNivel3.Childrens.Find('retTrib');
 
@@ -538,15 +526,15 @@ begin
           begin
             dIniTarif   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dIniTarif'), tcDat);
             dFimTarif   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dFimTarif'), tcDat);
-            tpAto       := StrTotpAto(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpAto'), tcStr));
+            tpAto       := StrTotpAto(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpAto'), tcStr));
             nAto        := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('nAto'), tcStr);
             anoAto      := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('anoAto'), tcInt);
-            tpTarif     := StrTotpTarif(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpTarif'), tcStr));
-            cPosTarif   := StrTocPosTarif(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('cPosTarif'), tcStr));
-            uMed        := StrTouMed(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('uMed'), tcStr));
+            tpTarif     := StrTotpTarif(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpTarif'), tcStr));
+            cPosTarif   := StrTocPosTarif(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('cPosTarif'), tcStr));
+            uMed        := StrTouMed(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('uMed'), tcStr));
             vTarifHom   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vTarifHom'), tcDe8);
             vTarifAplic := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vTarifAplic'), tcDe8);
-            motDifTarif := StrTomotDifTarif(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('motDifTarif'), tcStr));
+            motDifTarif := StrTomotDifTarif(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('motDifTarif'), tcStr));
           end;
         end;
 
@@ -558,10 +546,10 @@ begin
           begin
             dIniAdBand   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dIniAdBand'), tcDat);
             dFimAdBand   := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('dFimAdBand'), tcDat);
-            tpBand       := StrTotpBand(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpBand'), tcStr));
+            tpBand       := StrTotpBand(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpBand'), tcStr));
             vAdBand      := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vAdBand'), tcDe10);
             vAdBandAplic := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vAdBandAplic'), tcDe10);
-            motDifBand   := StrTomotDifBand(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('motDifBand'), tcStr));
+            motDifBand   := StrTomotDifBand(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('motDifBand'), tcStr));
           end;
         end;
 
@@ -574,12 +562,12 @@ begin
           detItem.Prod.xProd        := ObterConteudo(ANodeNivel4.Childrens.Find('xProd'), tcStr);
           detItem.Prod.cClass       := ObterConteudo(ANodeNivel4.Childrens.Find('cClass'), tcInt);
           detItem.Prod.CFOP         := ObterConteudo(ANodeNivel4.Childrens.Find('CFOP'), tcInt);
-          detItem.Prod.uMed         := StrTouMedFat(ok, ObterConteudo(ANodeNivel4.Childrens.Find('uMed'), tcStr));
+          detItem.Prod.uMed         := StrTouMedFat(ObterConteudo(ANodeNivel4.Childrens.Find('uMed'), tcStr));
           detItem.Prod.qFaturada    := ObterConteudo(ANodeNivel4.Childrens.Find('qFaturada'), tcDe4);
           detItem.Prod.vItem        := ObterConteudo(ANodeNivel4.Childrens.Find('vItem'), tcDe10);
           detItem.Prod.vProd        := ObterConteudo(ANodeNivel4.Childrens.Find('vProd'), tcDe10);
-          detItem.Prod.indDevolucao := StrToTIndicador(ok, ObterConteudo(ANodeNivel4.Childrens.Find('indDevolucao'), tcStr));
-          detItem.Prod.indPrecoACL  := StrToTIndicador(ok, ObterConteudo(ANodeNivel4.Childrens.Find('indPrecoACL'), tcStr));
+          detItem.Prod.indDevolucao := StrToTIndicador(ObterConteudo(ANodeNivel4.Childrens.Find('indDevolucao'), tcStr));
+          detItem.Prod.indPrecoACL  := StrToTIndicador(ObterConteudo(ANodeNivel4.Childrens.Find('indPrecoACL'), tcStr));
 
           ANodeNivel5 := ANodeNivel4.Childrens.Find('gMedicao');
 
@@ -587,15 +575,15 @@ begin
           begin
             detItem.Prod.gMedicao.nMed            := ObterConteudo(ANodeNivel5.Childrens.Find('nMed'), tcInt);
             detItem.Prod.gMedicao.nContrat        := ObterConteudo(ANodeNivel5.Childrens.Find('nContrat'), tcInt);
-            detItem.Prod.gMedicao.tpMotNaoLeitura := StrTotpMotNaoLeitura(ok, ObterConteudo(ANodeNivel5.Childrens.Find('tpMotNaoLeitura'), tcStr));
+            detItem.Prod.gMedicao.tpMotNaoLeitura := StrTotpMotNaoLeitura(ObterConteudo(ANodeNivel5.Childrens.Find('tpMotNaoLeitura'), tcStr));
 
             ANodeNivel6 := ANodeNivel5.Childrens.Find('gMedida');
 
             if not(NodeNaoEncontrado(ANodeNivel6)) then
             begin
-              detItem.Prod.gMedicao.tpGrMed         := StrTotpGrMed(ok, ObterConteudo(ANodeNivel6.Childrens.Find('tpGrMed'), tcStr));
-              detItem.Prod.gMedicao.cPosTarif       := StrTocPosTarif(ok, ObterConteudo(ANodeNivel6.Childrens.Find('cPosTarif'), tcStr));
-              detItem.Prod.gMedicao.uMed            := StrTouMedFat(ok, ObterConteudo(ANodeNivel6.Childrens.Find('uMed'), tcStr));
+              detItem.Prod.gMedicao.tpGrMed         := StrTotpGrMed(ObterConteudo(ANodeNivel6.Childrens.Find('tpGrMed'), tcStr));
+              detItem.Prod.gMedicao.cPosTarif       := StrTocPosTarif(ObterConteudo(ANodeNivel6.Childrens.Find('cPosTarif'), tcStr));
+              detItem.Prod.gMedicao.uMed            := StrTouMedFat(ObterConteudo(ANodeNivel6.Childrens.Find('uMed'), tcStr));
               detItem.Prod.gMedicao.vMedAnt         := ObterConteudo(ANodeNivel6.Childrens.Find('vMedAnt'), tcDe2);
               detItem.Prod.gMedicao.vMedAtu         := ObterConteudo(ANodeNivel6.Childrens.Find('vMedAtu'), tcDe2);
               detItem.Prod.gMedicao.vConst          := ObterConteudo(ANodeNivel6.Childrens.Find('vConst'), tcDe6);
@@ -623,7 +611,7 @@ begin
 
           if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            detItem.Imposto.PIS.CST  := StrToCSTPIS(ok, ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
+            detItem.Imposto.PIS.CST  := StrToCSTPIS(ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
             detItem.Imposto.PIS.vBC  := ObterConteudo(ANodeNivel5.Childrens.Find('vBC'), tcDe2);
             detItem.Imposto.PIS.pPIS := ObterConteudo(ANodeNivel5.Childrens.Find('pPIS'), tcDe4);
             detItem.Imposto.PIS.vPIS := ObterConteudo(ANodeNivel5.Childrens.Find('vPIS'), tcDe2);
@@ -642,7 +630,7 @@ begin
 
           if not(NodeNaoEncontrado(ANodeNivel5)) then
           begin
-            detItem.Imposto.COFINS.CST     := StrToCSTCOFINS(ok, ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
+            detItem.Imposto.COFINS.CST     := StrToCSTCOFINS(ObterConteudo(ANodeNivel5.Childrens.Find('CST'), tcStr));
             detItem.Imposto.COFINS.vBC     := ObterConteudo(ANodeNivel5.Childrens.Find('vBC'), tcDe2);
             detItem.Imposto.COFINS.pCOFINS := ObterConteudo(ANodeNivel5.Childrens.Find('pCOFINS'), tcDe4);
             detItem.Imposto.COFINS.vCOFINS := ObterConteudo(ANodeNivel5.Childrens.Find('vCOFINS'), tcDe2);
@@ -676,7 +664,7 @@ begin
           detItem.gProcRef.vItem        := ObterConteudo(ANodeNivel4.Childrens.Find('vItem'), tcDe10);
           detItem.gProcRef.qFaturada    := ObterConteudo(ANodeNivel4.Childrens.Find('qFaturada'), tcDe4);
           detItem.gProcRef.vProd        := ObterConteudo(ANodeNivel4.Childrens.Find('vProd'), tcDe10);
-          detItem.gProcRef.indDevolucao := StrToTIndicador(ok, ObterConteudo(ANodeNivel4.Childrens.Find('indDevolucao'), tcStr));
+          detItem.gProcRef.indDevolucao := StrToTIndicador(ObterConteudo(ANodeNivel4.Childrens.Find('indDevolucao'), tcStr));
           detItem.gProcRef.vBC          := ObterConteudo(ANodeNivel4.Childrens.Find('vBC'), tcDe2);
           detItem.gProcRef.pICMS        := ObterConteudo(ANodeNivel4.Childrens.Find('pICMS'), tcDe2);
           detItem.gProcRef.vICMS        := ObterConteudo(ANodeNivel4.Childrens.Find('vICMS'), tcDe2);
@@ -714,7 +702,7 @@ begin
             cContab := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('cContab'), tcStr);
             xContab := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('xContab'), tcStr);
             vContab := ObterConteudo(ADetChildrensNodes[j].Childrens.Find('vContab'), tcDe2);
-            tpLanc  := StrTotpLanc(ok, ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpLanc'), tcStr));
+            tpLanc  := StrTotpLanc(ObterConteudo(ADetChildrensNodes[j].Childrens.Find('tpLanc'), tcStr));
           end;
         end;
       end;
@@ -841,7 +829,6 @@ procedure TNF3eXmlReader.LergGrandFat(const ANode: TACBrXmlNode; I: Integer);
 var
   Item: TgGrandFatCollectionItem;
   xData: string;
-  ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -852,7 +839,7 @@ begin
   Item.CompetFat := StrToDate(xData);
 
   Item.vFat := ObterConteudo(ANode.Childrens.Find('vFat'), tcDe2);
-  Item.uMed := StrTouMedFat(ok, ObterConteudo(ANode.Childrens.Find('uMed'), tcStr));
+  Item.uMed := StrTouMedFat(ObterConteudo(ANode.Childrens.Find('uMed'), tcStr));
   Item.qtdDias := ObterConteudo(ANode.Childrens.Find('qtdDias'), tcInt);
 end;
 

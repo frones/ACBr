@@ -763,11 +763,9 @@ begin
 end;
 
 procedure TNF3eRecepcao.InicializarServico;
-var
-  ok: Boolean;
 begin
   if FNotasFiscais.Count > 0 then    // Tem NF3e ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoNF3e(ok, FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
+    FVersaoDF := DblToVersaoNF3e(FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
   else
     FVersaoDF := FPConfiguracoesNF3e.Geral.VersaoDF;
 
@@ -1101,11 +1099,9 @@ begin
 end;
 
 procedure TNF3eRetRecepcao.InicializarServico;
-var
-  ok: Boolean;
 begin
   if FNotasFiscais.Count > 0 then    // Tem NF3e ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoNF3e(ok, FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
+    FVersaoDF := DblToVersaoNF3e(FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
   else
     FVersaoDF := FPConfiguracoesNF3e.Geral.VersaoDF;
 
@@ -1498,11 +1494,9 @@ begin
 end;
 
 procedure TNF3eRecibo.InicializarServico;
-var
-  ok: Boolean;
 begin
   if FNotasFiscais.Count > 0 then    // Tem NF3e ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoNF3e(ok, FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
+    FVersaoDF := DblToVersaoNF3e(FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
   else
     FVersaoDF := FPConfiguracoesNF3e.Geral.VersaoDF;
 

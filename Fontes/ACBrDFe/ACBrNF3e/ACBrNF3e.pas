@@ -392,9 +392,8 @@ function TACBrNF3e.GetURLConsultaNF3e(const CUF: integer;
 var
   VersaoDFe: TVersaoNF3e;
   VersaoQrCode: TVersaoQrCode;
-  ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoNF3e(ok, Versao);
+  VersaoDFe := DblToVersaoNF3e(Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
   Result := LerURLDeParams('NF3e', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
@@ -408,9 +407,8 @@ var
   idNF3e, sEntrada, urlUF, Passo2, sign: String;
   VersaoDFe: TVersaoNF3e;
   VersaoQrCode: TVersaoQrCode;
-  Ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoNF3e(Ok, Versao);
+  VersaoDFe := DblToVersaoNF3e(Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
   urlUF := LerURLDeParams('NF3e', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
@@ -635,15 +633,11 @@ end;
 
 function TACBrNF3e.NomeServicoToNomeSchema(const NomeServico: String): String;
 var
-  ok: Boolean;
   ALayout: TLayOut;
 begin
-  ALayout := ServicoToLayOut(ok, NomeServico);
+  ALayout := ServicoToLayOut(NomeServico);
 
-  if ok then
-    Result := SchemaNF3eToStr( LayOutToSchema( ALayout ) )
-  else
-    Result := '';
+  Result := SchemaNF3eToStr( LayOutToSchema( ALayout ) )
 end;
 
 procedure TACBrNF3e.ImprimirEvento;

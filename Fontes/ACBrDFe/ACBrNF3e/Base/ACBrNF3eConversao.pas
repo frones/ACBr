@@ -50,8 +50,8 @@ type
   TVersaoNF3e = (ve100);
 
 const
-  TVersaoNF3eArrayStrings: array[TVersaoNF3e] of string = ('1.00');
-  TVersaoNF3eArrayDouble: array[TVersaoNF3e] of Double = (1.00);
+  TVersaoArrayStrings: array[TVersaoNF3e] of string = ('1.00');
+  TVersaoArrayDouble: array[TVersaoNF3e] of Double = (1.00);
 
 type
   TSchemaNF3e = (schErro, schconsStatServNF3e, schNF3e, schconsReciNF3e,
@@ -59,8 +59,8 @@ type
                  schCancNF3e);
 
 const
-  TSchemaNF3eArrayStrings: array[TSchemaNF3e] of string = ('', '', '', '',
-    '', '', '', 'evCancNF3e');
+  TSchemaArrayStrings: array[TSchemaNF3e] of string = ('', '', '', '',  '', '',
+    '', 'evCancNF3e');
 
 type
   TLayOut = (LayNF3eStatusServico, LayNF3eRecepcao, LayNF3eRecepcaoSinc,
@@ -68,7 +68,7 @@ type
              LayNF3eQRCode, LayNF3eURLConsulta, LayNF3eDistDFeInt);
 
 const
-  TLayOutNF3eArrayStrings: array[TLayOut] of string = ('NF3eStatusServico',
+  TLayOutArrayStrings: array[TLayOut] of string = ('NF3eStatusServico',
     'NF3eRecepcao', 'NF3eRecepcaoSinc', 'NF3eRetRecepcao', 'NF3eConsulta',
     'NFComRecepcaoEvento', 'URL-QRCode', 'URL-ConsultaNF3e', 'NF3eDistDFeInt');
 
@@ -90,8 +90,7 @@ type
   TFinalidadeNF3e = (fnNormal, fnSubstituicao, fnAjuste);
 
 const
-  TFinalidadeNF3eArrayStrings: array[TFinalidadeNF3e] of string = ('1', '2',
-    '3');
+  TFinalidadeArrayStrings: array[TFinalidadeNF3e] of string = ('1', '2', '3');
 
 type
   TtpAcesso = (taGerador, taCativo, taLivre, taParcialmenteLivre,
@@ -359,8 +358,10 @@ const
 {
   Declaração das funções de conversão
 }
+function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
+
 function LayOutToServico(const t: TLayOut): string;
-function ServicoToLayOut(out ok: Boolean; const s: string): TLayOut;
+function ServicoToLayOut(const s: string): TLayOut;
 
 function LayOutToSchema(const t: TLayOut): TSchemaNF3e;
 
@@ -368,123 +369,121 @@ function SchemaNF3eToStr(const t: TSchemaNF3e): string;
 function StrToSchemaNF3e(const s: string): TSchemaNF3e;
 function SchemaEventoToStr(const t: TSchemaNF3e): string;
 
-function StrToVersaoNF3e(out ok: Boolean; const s: string): TVersaoNF3e;
+function StrToVersaoNF3e(const s: string): TVersaoNF3e;
 function VersaoNF3eToStr(const t: TVersaoNF3e): string;
 
-function DblToVersaoNF3e(out ok: Boolean; const d: Double): TVersaoNF3e;
+function DblToVersaoNF3e(const d: Double): TVersaoNF3e;
 function VersaoNF3eToDbl(const t: TVersaoNF3e): Double;
 
 function VersaoQrCodeToStr(const t: TVersaoQrCode): string;
-function StrToVersaoQrCode(out ok: Boolean; const s: string): TVersaoQrCode;
+function StrToVersaoQrCode(const s: string): TVersaoQrCode;
 function VersaoQrCodeToDbl(const t: TVersaoQrCode): Double;
 
 function finNF3eToStr(const t: TFinalidadeNF3e): string;
-function StrTofinNF3e(out ok: Boolean; const s: string): TFinalidadeNF3e;
+function StrTofinNF3e(const s: string): TFinalidadeNF3e;
 
 function tpAcessoToStr(const t: TtpAcesso): string;
-function StrTotpAcesso(out ok: Boolean; const s: string): TtpAcesso;
+function StrTotpAcesso(const s: string): TtpAcesso;
 
 function tpClasseToStr(const t: TtpClasse): string;
-function StrTotpClasse(out ok: Boolean; const s: string): TtpClasse;
+function StrTotpClasse(const s: string): TtpClasse;
 function tpClasseToDesc(const t: TtpClasse): string;
 
 function tpSubClasseToStr(const t: TtpSubClasse): string;
-function StrTotpSubClasse(out ok: Boolean; const s: string): TtpSubClasse;
+function StrTotpSubClasse(const s: string): TtpSubClasse;
 
 function tpFaseToStr(const t: TtpFase): string;
-function StrTotpFase(out ok: Boolean; const s: string): TtpFase;
+function StrTotpFase(const s: string): TtpFase;
 function tpFaseToDesc(const t: TtpFase): string;
 
 function tpGrpTensaoToStr(const t: TtpGrpTensao): string;
-function StrTotpGrpTensao(out ok: Boolean; const s: string): TtpGrpTensao;
+function StrTotpGrpTensao(const s: string): TtpGrpTensao;
 
 function tpModTarToStr(const t: TtpModTar): string;
-function StrTotpModTar(out ok: Boolean; const s: string): TtpModTar;
+function StrTotpModTar(const s: string): TtpModTar;
 
 function MotSubToStr(const t: TmotSub): string;
-function StrToMotSub(out ok: Boolean; const s: string): TmotSub;
+function StrToMotSub(const s: string): TmotSub;
 
 function tpGrContratToStr(const t: TtpGrContrat): string;
-function StrTotpGrContrat(out ok: Boolean; const s: string): TtpGrContrat;
+function StrTotpGrContrat(const s: string): TtpGrContrat;
 
 function tpPosTarToStr(const t: TtpPosTar): string;
-function StrTotpPosTar(out ok: Boolean; const s: string): TtpPosTar;
+function StrTotpPosTar(const s: string): TtpPosTar;
 
 function tpPartCompToStr(const t: TtpPartComp): string;
-function StrTotpPartComp(out ok: Boolean; const s: string): TtpPartComp;
+function StrTotpPartComp(const s: string): TtpPartComp;
 
 function tpAjusteToStr(const t: TtpAjuste): string;
-function StrTotpAjuste(out ok: Boolean; const s: string): TtpAjuste;
+function StrTotpAjuste(const s: string): TtpAjuste;
 
 function MotAjusteToStr(const t: TmotAjuste): string;
-function StrToMotAjuste(out ok: Boolean; const s: string): TmotAjuste;
+function StrToMotAjuste(const s: string): TmotAjuste;
 
 function tpAtoToStr(const t: TtpAto): string;
-function StrTotpAto(out ok: Boolean; const s: string): TtpAto;
+function StrTotpAto(const s: string): TtpAto;
 
 function tpTarifToStr(const t: TtpTarif): string;
-function StrTotpTarif(out ok: Boolean; const s: string): TtpTarif;
+function StrTotpTarif(const s: string): TtpTarif;
 
 function cPosTarifToStr(const t: TcPosTarif): string;
-function StrTocPosTarif(out ok: Boolean; const s: string): TcPosTarif;
+function StrTocPosTarif(const s: string): TcPosTarif;
 
 function uMedToStr(const t: TuMed): string;
-function StrTouMed(out ok: Boolean; const s: string): TuMed;
+function StrTouMed(const s: string): TuMed;
 
 function uMedFatToStr(const t: TuMedFat): string;
-function StrTouMedFat(out ok: Boolean; const s: string): TuMedFat;
+function StrTouMedFat(const s: string): TuMedFat;
 function uMedFatToDesc(const t: TuMedFat): string;
 
 function motDifTarifToStr(const t: TmotDifTarif): string;
-function StrTomotDifTarif(out ok: Boolean; const s: string): TmotDifTarif;
+function StrTomotDifTarif(const s: string): TmotDifTarif;
 
 function tpBandToStr(const t: TtpBand): string;
-function StrTotpBand(out ok: Boolean; const s: string): TtpBand;
+function StrTotpBand(const s: string): TtpBand;
 
 function motDifBandToStr(const t: TmotDifBand): string;
-function StrTomotDifBand(out ok: Boolean; const s: string): TmotDifBand;
+function StrTomotDifBand(const s: string): TmotDifBand;
 
 function indOrigemQtdToStr(const t: TindOrigemQtd): string;
-function StrToindOrigemQtd(out ok: Boolean; const s: string): TindOrigemQtd;
+function StrToindOrigemQtd(const s: string): TindOrigemQtd;
 
 function tpGrMedToStr(const t: TtpGrMed): string;
-function StrTotpGrMed(out ok: Boolean; const s: string): TtpGrMed;
+function StrTotpGrMed(const s: string): TtpGrMed;
 
 function tpMotNaoLeituraToStr(const t: TtpMotNaoLeitura): string;
-function StrTotpMotNaoLeitura(out ok: Boolean; const s: string): TtpMotNaoLeitura;
+function StrTotpMotNaoLeitura(const s: string): TtpMotNaoLeitura;
 
 function tpProcToStr(const t: TtpProc): string;
-function StrTotpProc(out ok: Boolean; const s: string): TtpProc;
+function StrTotpProc(const s: string): TtpProc;
 
 function tpLancToStr(const t: TtpLanc): string;
-function StrTotpLanc(out ok: Boolean; const s: string): TtpLanc;
+function StrTotpLanc(const s: string): TtpLanc;
 
 function tpFonteEnergiaToStr(const t: TtpFonteEnergia): string;
-function StrTotpFonteEnergia(out ok: Boolean; const s: string): TtpFonteEnergia;
+function StrTotpFonteEnergia(const s: string): TtpFonteEnergia;
 
 function SiteAutorizadorToStr(const t: TSiteAutorizador): string;
-function StrToSiteAutorizator(out ok: Boolean; const s: string): TSiteAutorizador;
+function StrToSiteAutorizator(const s: string): TSiteAutorizador;
 
 function TIndicadorToStr(const t: TIndicador): string;
-function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+function StrToTIndicador(const s: string): TIndicador;
 
 function CSTCOFINSToStrTagPosText(const t: TCSTCofins): string;
 function CSTCOFINSToStr(const t: TCSTCofins): string;
-function StrToCSTCOFINS(out ok: boolean; const s: string): TCSTCofins;
+function StrToCSTCOFINS(const s: string): TCSTCofins;
 
 function CSTPISToStrTagPosText(const t: TCSTPis): string;
 function CSTPISToStr(const t: TCSTPis): string;
-function StrToCSTPIS(out ok: boolean; const s: string): TCSTPis;
+function StrToCSTPIS(const s: string): TCSTPis;
 
 function CSTICMSToStr(const t: TCSTIcms): string;
-function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
+function StrToCSTICMS(const s: string): TCSTIcms;
 function CSTICMSToStrTagPos(const t: TCSTIcms): string;
 function CSTICMSToStrTagPosText(const t: TCSTIcms): string;
 
 function indIEDestToStr(const t: TindIEDest ): string;
-function StrToindIEDest(out ok: boolean; const s: string): TindIEDest;
-
-function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToindIEDest(const s: string): TindIEDest;
 
 implementation
 
@@ -492,18 +491,33 @@ uses
   typinfo,
   ACBrBase;
 
-function LayOutToServico(const t: TLayOut): string;
-begin
-  result := TLayOutNF3eArrayStrings[t];
-end;
-
-function ServicoToLayOut(out ok: Boolean; const s: string): TLayOut;
+function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
-    ['NF3eStatusServico', 'NF3eRecepcao', 'NF3eRecepcaoSinc', 'NF3eRetRecepcao',
-     'NF3eConsulta', 'NF3eInutilizacao', 'NF3eRecepcaoEvento', 'NF3eDistribuicaoDFe'],
-    [LayNF3eStatusServico, LayNF3eRecepcao, LayNF3eRecepcaoSinc,
-     LayNF3eRetRecepcao, LayNF3eConsulta, LayNF3eEvento] );
+            ['-99999', '110111', '240140', '240150', '240170'],
+            [teNaoMapeado, teCancelamento, teAutorizadoSubstituicao,
+             teAutorizadoAjuste, teLiberacaoPrazoCancelado]);
+end;
+
+function LayOutToServico(const t: TLayOut): string;
+begin
+  result := TLayOutArrayStrings[t];
+end;
+
+function ServicoToLayOut(const s: string): TLayOut;
+var
+  idx: TLayOut;
+begin
+  for idx := Low(TLayOutArrayStrings) to High(TLayOutArrayStrings) do
+  begin
+    if (TLayOutArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TVersaoNF3e: %s', [s]);
 end;
 
 function LayOutToSchema(const t: TLayOut): TSchemaNF3e;
@@ -551,13 +565,13 @@ begin
   Result := TSchemaNF3e( CodSchema );
 end;
 
-function StrToVersaoNF3e(out ok: Boolean; const s: string): TVersaoNF3e;
+function StrToVersaoNF3e(const s: string): TVersaoNF3e;
 var
   idx: TVersaoNF3e;
 begin
-  for idx := Low(TVersaoNF3eArrayStrings) to High(TVersaoNF3eArrayStrings) do
+  for idx := Low(TVersaoArrayStrings) to High(TVersaoArrayStrings) do
   begin
-    if (TVersaoNF3eArrayStrings[idx] = s) then
+    if (TVersaoArrayStrings[idx] = s) then
     begin
       result := idx;
       exit;
@@ -569,16 +583,16 @@ end;
 
 function VersaoNF3eToStr(const t: TVersaoNF3e): string;
 begin
-  result := TVersaoNF3eArrayStrings[t];
+  result := TVersaoArrayStrings[t];
 end;
 
- function DblToVersaoNF3e(out ok: Boolean; const d: Double): TVersaoNF3e;
+ function DblToVersaoNF3e(const d: Double): TVersaoNF3e;
 var
   idx: TVersaoNF3e;
 begin
-  for idx := Low(TVersaoNF3eArrayDouble) to High(TVersaoNF3eArrayDouble) do
+  for idx := Low(TVersaoArrayDouble) to High(TVersaoArrayDouble) do
   begin
-    if (TVersaoNF3eArrayDouble[idx] = d) then
+    if (TVersaoArrayDouble[idx] = d) then
     begin
       result := idx;
       exit;
@@ -591,7 +605,7 @@ end;
 
  function VersaoNF3eToDbl(const t: TVersaoNF3e): Double;
  begin
-  result := TVersaoNF3eArrayDouble[t];
+  result := TVersaoArrayDouble[t];
  end;
 
 function VersaoQrCodeToStr(const t: TVersaoQrCode): string;
@@ -599,7 +613,7 @@ begin
   result := TVersaoQrCodeArrayStrings[t];
 end;
 
-function StrToVersaoQrCode(out ok: Boolean; const s: string): TVersaoQrCode;
+function StrToVersaoQrCode(const s: string): TVersaoQrCode;
 var
   idx: TVersaoQrCode;
 begin
@@ -622,21 +636,21 @@ end;
 
 function SchemaEventoToStr(const t: TSchemaNF3e): string;
 begin
-  result := TSchemaNF3eArrayStrings[t];
+  result := TSchemaArrayStrings[t];
 end;
 
 function finNF3eToStr(const t: TFinalidadeNF3e): string;
 begin
-  result := TFinalidadeNF3eArrayStrings[t];
+  result := TFinalidadeArrayStrings[t];
 end;
 
-function StrTofinNF3e(out ok: Boolean; const s: string): TFinalidadeNF3e;
+function StrTofinNF3e(const s: string): TFinalidadeNF3e;
 var
   idx: TFinalidadeNF3e;
 begin
-  for idx := Low(TFinalidadeNF3eArrayStrings) to High(TFinalidadeNF3eArrayStrings) do
+  for idx := Low(TFinalidadeArrayStrings) to High(TFinalidadeArrayStrings) do
   begin
-    if (TFinalidadeNF3eArrayStrings[idx] = s) then
+    if (TFinalidadeArrayStrings[idx] = s) then
     begin
       result := idx;
       exit;
@@ -651,7 +665,7 @@ begin
   result := TtpAcessoArrayStrings[t];
 end;
 
-function StrTotpAcesso(out ok: Boolean; const s: string): TtpAcesso;
+function StrTotpAcesso(const s: string): TtpAcesso;
 var
   idx: TtpAcesso;
 begin
@@ -672,7 +686,7 @@ begin
   result := TtpClasseArrayStrings[t];
 end;
 
-function StrTotpClasse(out ok: Boolean; const s: string): TtpClasse;
+function StrTotpClasse(const s: string): TtpClasse;
 var
   idx: TtpClasse;
 begin
@@ -698,7 +712,7 @@ begin
   result := TtpSubClasseArrayStrings[t];
 end;
 
-function StrTotpSubClasse(out ok: Boolean; const s: string): TtpSubClasse;
+function StrTotpSubClasse(const s: string): TtpSubClasse;
 var
   idx: TtpSubClasse;
 begin
@@ -719,7 +733,7 @@ begin
   result := TtpFaseArrayStrings[t];
 end;
 
-function StrTotpFase(out ok: Boolean; const s: string): TtpFase;
+function StrTotpFase(const s: string): TtpFase;
 var
   idx: TtpFase;
 begin
@@ -745,7 +759,7 @@ begin
   result := TtpGrpTensaoArrayStrings[t];
 end;
 
-function StrTotpGrpTensao(out ok: Boolean; const s: string): TtpGrpTensao;
+function StrTotpGrpTensao(const s: string): TtpGrpTensao;
 var
   idx: TtpGrpTensao;
 begin
@@ -766,7 +780,7 @@ begin
   result := TtpModTarArrayStrings[t];
 end;
 
-function StrTotpModTar(out ok: Boolean; const s: string): TtpModTar;
+function StrTotpModTar(const s: string): TtpModTar;
 var
   idx: TtpModTar;
 begin
@@ -787,7 +801,7 @@ begin
   result := TmotSubArrayStrings[t];
 end;
 
-function StrToMotSub(out ok: Boolean; const s: string): TmotSub;
+function StrToMotSub(const s: string): TmotSub;
 var
   idx: TmotSub;
 begin
@@ -808,7 +822,7 @@ begin
   result := TtpGrContratArrayStrings[t];
 end;
 
-function StrTotpGrContrat(out ok: Boolean; const s: string): TtpGrContrat;
+function StrTotpGrContrat(const s: string): TtpGrContrat;
 var
   idx: TtpGrContrat;
 begin
@@ -829,7 +843,7 @@ begin
   result := TtpPosTarArrayStrings[t];
 end;
 
-function StrTotpPosTar(out ok: Boolean; const s: string): TtpPosTar;
+function StrTotpPosTar(const s: string): TtpPosTar;
 var
   idx: TtpPosTar;
 begin
@@ -850,7 +864,7 @@ begin
   result := TtpPartCompArrayStrings[t];
 end;
 
-function StrTotpPartComp(out ok: Boolean; const s: string): TtpPartComp;
+function StrTotpPartComp(const s: string): TtpPartComp;
 var
   idx: TtpPartComp;
 begin
@@ -871,7 +885,7 @@ begin
   result := TtpAjusteArrayStrings[t];
 end;
 
-function StrTotpAjuste(out ok: Boolean; const s: string): TtpAjuste;
+function StrTotpAjuste(const s: string): TtpAjuste;
 var
   idx: TtpAjuste;
 begin
@@ -892,7 +906,7 @@ begin
   result := TmotAjusteArrayStrings[t];
 end;
 
-function StrToMotAjuste(out ok: Boolean; const s: string): TmotAjuste;
+function StrToMotAjuste(const s: string): TmotAjuste;
 var
   idx: TmotAjuste;
 begin
@@ -913,7 +927,7 @@ begin
   result := TtpAtoArrayStrings[t];
 end;
 
-function StrTotpAto(out ok: Boolean; const s: string): TtpAto;
+function StrTotpAto(const s: string): TtpAto;
 var
   idx: TtpAto;
 begin
@@ -934,7 +948,7 @@ begin
   result := TtpTarifArrayStrings[t];
 end;
 
-function StrTotpTarif(out ok: Boolean; const s: string): TtpTarif;
+function StrTotpTarif(const s: string): TtpTarif;
 var
   idx: TtpTarif;
 begin
@@ -955,7 +969,7 @@ begin
   result := TcPosTarifArrayStrings[t];
 end;
 
-function StrTocPosTarif(out ok: Boolean; const s: string): TcPosTarif;
+function StrTocPosTarif(const s: string): TcPosTarif;
 var
   idx: TcPosTarif;
 begin
@@ -976,7 +990,7 @@ begin
   result := TuMedArrayStrings[t];
 end;
 
-function StrTouMed(out ok: Boolean; const s: string): TuMed;
+function StrTouMed(const s: string): TuMed;
 var
   idx: TuMed;
 begin
@@ -997,7 +1011,7 @@ begin
   result := TuMedFatArrayStrings[t];
 end;
 
-function StrTouMedFat(out ok: Boolean; const s: string): TuMedFat;
+function StrTouMedFat(const s: string): TuMedFat;
 var
   idx: TuMedFat;
 begin
@@ -1023,7 +1037,7 @@ begin
   result := TmotDifTarifArrayStrings[t];
 end;
 
-function StrTomotDifTarif(out ok: Boolean; const s: string): TmotDifTarif;
+function StrTomotDifTarif(const s: string): TmotDifTarif;
 var
   idx: TmotDifTarif;
 begin
@@ -1044,7 +1058,7 @@ begin
   result := TtpBandArrayStrings[t];
 end;
 
-function StrTotpBand(out ok: Boolean; const s: string): TtpBand;
+function StrTotpBand(const s: string): TtpBand;
 var
   idx: TtpBand;
 begin
@@ -1065,7 +1079,7 @@ begin
   result := TmotDifBandArrayStrings[t];
 end;
 
-function StrTomotDifBand(out ok: Boolean; const s: string): TmotDifBand;
+function StrTomotDifBand(const s: string): TmotDifBand;
 var
   idx: TmotDifBand;
 begin
@@ -1086,7 +1100,7 @@ begin
   result := TindOrigemQtdArrayStrings[t];
 end;
 
-function StrToindOrigemQtd(out ok: Boolean; const s: string): TindOrigemQtd;
+function StrToindOrigemQtd(const s: string): TindOrigemQtd;
 var
   idx: TindOrigemQtd;
 begin
@@ -1107,7 +1121,7 @@ begin
   result := TtpGrMedArrayStrings[t];
 end;
 
-function StrTotpGrMed(out ok: Boolean; const s: string): TtpGrMed;
+function StrTotpGrMed(const s: string): TtpGrMed;
 var
   idx: TtpGrMed;
 begin
@@ -1128,7 +1142,7 @@ begin
   result := TtpMotNaoLeituraArrayStrings[t];
 end;
 
-function StrTotpMotNaoLeitura(out ok: Boolean; const s: string): TtpMotNaoLeitura;
+function StrTotpMotNaoLeitura(const s: string): TtpMotNaoLeitura;
 var
   idx: TtpMotNaoLeitura;
 begin
@@ -1149,7 +1163,7 @@ begin
   result := TtpProcArrayStrings[t];
 end;
 
-function StrTotpProc(out ok: Boolean; const s: string): TtpProc;
+function StrTotpProc(const s: string): TtpProc;
 var
   idx: TtpProc;
 begin
@@ -1170,7 +1184,7 @@ begin
   result := TtpLancArrayStrings[t];
 end;
 
-function StrTotpLanc(out ok: Boolean; const s: string): TtpLanc;
+function StrTotpLanc(const s: string): TtpLanc;
 var
   idx: TtpLanc;
 begin
@@ -1191,7 +1205,7 @@ begin
   result := TtpFonteEnergiaArrayStrings[t];
 end;
 
-function StrTotpFonteEnergia(out ok: Boolean; const s: string): TtpFonteEnergia;
+function StrTotpFonteEnergia(const s: string): TtpFonteEnergia;
 var
   idx: TtpFonteEnergia;
 begin
@@ -1212,7 +1226,7 @@ begin
   result := TSiteAutorizadorArrayStrings[t];
 end;
 
-function StrToSiteAutorizator(out ok: Boolean; const s: string): TSiteAutorizador;
+function StrToSiteAutorizator(const s: string): TSiteAutorizador;
 var
   idx: TSiteAutorizador;
 begin
@@ -1233,7 +1247,7 @@ begin
   result := TIndicadorArrayStrings[t];
 end;
 
-function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+function StrToTIndicador(const s: string): TIndicador;
 var
   idx: TIndicador;
 begin
@@ -1259,7 +1273,7 @@ begin
   result := TCSTCofinsArrayStrings[t];
 end;
 
-function StrToCSTCOFINS(out ok: boolean; const s: string): TCSTCofins;
+function StrToCSTCOFINS(const s: string): TCSTCofins;
 var
   idx: TCSTCofins;
 begin
@@ -1285,7 +1299,7 @@ begin
   result := TCSTPisArrayStrings[t];
 end;
 
-function StrToCSTPIS(out ok: boolean; const s: string): TCSTPIS;
+function StrToCSTPIS(const s: string): TCSTPIS;
 var
   idx: TCSTPIS;
 begin
@@ -1306,7 +1320,7 @@ begin
   result := TCSTIcmsArrayStrings[t];
 end;
 
-function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
+function StrToCSTICMS(const s: string): TCSTIcms;
 var
   idx: TCSTIcms;
 begin
@@ -1337,7 +1351,7 @@ begin
   result := TindIEDestArrayStrings[t];
 end;
 
-function StrToindIEDest(out ok: boolean; const s: string): TindIEDest;
+function StrToindIEDest(const s: string): TindIEDest;
 var
   idx: TindIEDest;
 begin
@@ -1351,14 +1365,6 @@ begin
   end;
 
   raise EACBrException.CreateFmt('Valor string inválido para TindIEDest: %s', [s]);
-end;
-
-function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
-begin
-  Result := StrToEnumerado(ok, s,
-            ['-99999', '110111', '240140', '240150', '240170'],
-            [teNaoMapeado, teCancelamento, teAutorizadoSubstituicao,
-             teAutorizadoAjuste, teLiberacaoPrazoCancelado]);
 end;
 
 initialization

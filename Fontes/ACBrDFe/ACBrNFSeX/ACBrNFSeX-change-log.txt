@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2024
+-- Giap.Provider --
+[*] Alteração visando a leitura dos erros quando estes são retornados em tags ou
+    atributos.
+-- Equiplano.Provider --
+[*] Alteração visando a leitura correta dos dados de retorno do Consultar Lote.
+  Por: Arimateia Jr
+
 27/02/2024
 -- ACBrNFSeXServicos --
 [*] A cidade: Itaquaquecetuba/SP trocou de provedor, agora é SilTecnologia.

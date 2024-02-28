@@ -656,19 +656,19 @@ begin
 
             if AuxNode <> nil then
             begin
+              ANumRps:= ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
+              ACodVer := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
+              ANumNfse := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
+              ADataHora := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDat);
+
+              AResumo := Response.Resumos.New;
+              AResumo.NumeroNota := ANumNfse;
+              AResumo.CodigoVerificacao := ACodVer;
+              AResumo.NumeroRps := ANumRps;
+              AResumo.Data := ADataHora;
+
               if j > 0 then
               begin
-                ANumRps:= ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
-                ACodVer := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
-                ANumNfse := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
-                ADataHora := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDat);
-
-                AResumo := Response.Resumos.New;
-                AResumo.NumeroNota := ANumNfse;
-                AResumo.CodigoVerificacao := ACodVer;
-                AResumo.NumeroRps := ANumRps;
-                AResumo.Data := ADataHora;
-
                 aXmlRetorno := AuxNode.OuterXml;
 
                 for k := 0 to j-1 do

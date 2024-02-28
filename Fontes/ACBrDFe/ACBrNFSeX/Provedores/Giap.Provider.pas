@@ -182,6 +182,25 @@ end;
 procedure TACBrNFSeProviderGiap.ProcessarMensagemErros(
   RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
   const AListTag, AMessageTag: string);
+
+  function ObterValor(ANode: TACBrXmlNode; const ATag: string): string;
+  var
+    Node: TACBrXmlNode;
+    Attr: TACBrXmlAttribute;
+  begin
+    Attr := ANode.Attributes.Items[ATag];
+    if Attr <> nil then
+      Result := ObterConteudoTag(Attr)
+    else
+    begin
+      Node := ANode.Childrens.FindAnyNs(ATag);
+      if Node <> nil then
+        Result := ObterConteudoTag(Node, tcStr)
+      else
+        Result := '';
+    end;
+  end;
+
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -198,9 +217,11 @@ begin
 
     for I := Low(ANodeArray) to High(ANodeArray) do
     begin
+      ANode := ANodeArray[I];
+
       AErro := Response.Erros.New;
-      AErro.Codigo := ObterConteudoTag(ANodeArray[I].Attributes.Items['code']);
-      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Attributes.Items['message']);
+      AErro.Codigo := ObterValor(ANode, 'code');
+      AErro.Descricao := ObterValor(ANode, 'message');
       AErro.Correcao := '';
     end;
   end;
@@ -552,6 +573,7 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
+    Result := String(NativeStringToUTF8(Result));
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -571,6 +593,7 @@ begin
               '</nfeReposta>';
 
     Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := String(NativeStringToUTF8(Result));
   end;
 end;
 

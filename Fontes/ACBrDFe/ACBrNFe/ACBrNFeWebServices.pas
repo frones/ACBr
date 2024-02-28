@@ -855,7 +855,7 @@ begin
 
   NFeRetorno := TRetConsStatServ.Create('');
   try
-    NFeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    NFeRetorno.XmlRetorno := ParseText(FPRetWS);
     NFeRetorno.LerXml;
 
     Fversao := NFeRetorno.versao;
@@ -2947,7 +2947,7 @@ begin
 
   VerificarSemResposta;
 
-  FRetConsCad.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  FRetConsCad.XmlRetorno := ParseText(FPRetWS);
   FRetConsCad.LerXml;
 
   Fversao := FRetConsCad.versao;
@@ -3728,7 +3728,7 @@ begin
   VerificarSemResposta;
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
-  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
+  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
@@ -3776,12 +3776,13 @@ begin
 
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
+  {
   FretDistDFeInt.Free;   // Limpando a lista
   FretDistDFeInt := TRetDistDFeInt.Create('NFe');
 
   FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
-
+  }
   FPMsg := FretDistDFeInt.xMotivo;
   Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
 end;

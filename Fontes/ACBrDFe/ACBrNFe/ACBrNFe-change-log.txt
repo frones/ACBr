@@ -44,6 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2024
+-- ACBrNFeWebServices --
+[*] Em algumas funções TratarResposta o ParseText estava com mais de 1 parâmetro,
+    foi alterado deixando somente o primeiro.
+-- ACBrNFeXmlReader --
+[-] Realizado diversas alterações e correções pois não estava compilando.
+-- pcnConversaoNFe --
+[*] Refactoring nas funções de conversão.
+-- pcnNFeR --
+[-] Imposto uma condição para a leitura da tag motRedAdRem, caso contrario vai
+    ocorrer erro na função de conversão quando a tag não esta presente no XML.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- ACBrNotasFiscais --
 [*] Altera a leitura da informação do tBand na LoadFromIni para pegar o valor vazio ao invés de 99.

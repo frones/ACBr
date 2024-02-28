@@ -708,7 +708,10 @@ begin
              NFe.Det[i].Imposto.ICMS.qBCMono := Leitor.rCampo(tcDe4, 'qBCMono');
              NFe.Det[i].Imposto.ICMS.qBCMonoReten := Leitor.rCampo(tcDe4, 'qBCMonoReten');
              NFe.Det[i].Imposto.ICMS.pRedAdRem := Leitor.rCampo(tcDe4, 'pRedAdRem');
-             NFe.Det[i].Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, Leitor.rCampo(tcStr, 'motRedAdRem'));
+
+             if NFe.Det[i].Imposto.ICMS.pRedAdRem <> 0 then
+               NFe.Det[i].Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, Leitor.rCampo(tcStr, 'motRedAdRem'));
+
              NFe.Det[i].Imposto.ICMS.qBCMonoRet := Leitor.rCampo(tcDe4, 'qBCMonoRet');
              NFe.Det[i].Imposto.ICMS.vICMSMonoOp := Leitor.rCampo(tcDe2, 'vICMSMonoOp');
 

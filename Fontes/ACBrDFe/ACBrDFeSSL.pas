@@ -1110,15 +1110,10 @@ function TDFeSSLXmlSignClass.AdicionarSignatureElement(const ConteudoXML: String
   AddX509Data: Boolean; const docElement, IdSignature: String;
   const IdAttr: String = ''; const IdSignatureValue: string = ''): String;
 var
-  URI, TagEndDocElement, aIdSignatureValue: String;
+  URI, TagEndDocElement: String;
   I: Integer;
 begin
   URI := EncontrarURI(ConteudoXML, docElement, IdAttr);
-
-  if IdSignatureValue <> '' then
-    aIdSignatureValue := ' Id="' + IdSignatureValue + URI + '"'
-  else
-    aIdSignatureValue := '';
 
   TagEndDocElement := '</' + docElement + '>';
   I := PosLast(TagEndDocElement, ConteudoXML);
@@ -1126,7 +1121,8 @@ begin
     raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
 
   Result := copy(ConteudoXML, 1, I - 1) +
-            SignatureElement(URI, AddX509Data, IdSignature, FpDFeSSL.SSLDgst, aIdSignatureValue) +
+            SignatureElement(URI, AddX509Data, IdSignature, FpDFeSSL.SSLDgst,
+                             IdSignatureValue) +
             copy(ConteudoXML, I, Length(ConteudoXML));
 end;
 

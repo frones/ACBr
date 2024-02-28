@@ -41,21 +41,6 @@ uses
   pcnSignature, ACBrXmlBase,
   ACBrXmlDocument;
 
-resourcestring
-  ERR_MSG_MAIOR = 'Tamanho maior que o máximo permitido';
-  ERR_MSG_MENOR = 'Tamanho menor que o mínimo permitido';
-  ERR_MSG_VAZIO = 'Nenhum valor informado';
-  ERR_MSG_INVALIDO = 'Conteúdo inválido';
-  ERR_MSG_MAXIMO_DECIMAIS = 'Numero máximo de casas decimais permitidas';
-  ERR_MSG_MAIOR_MAXIMO = 'Número de ocorrências maior que o máximo permitido - Máximo ';
-  ERR_MSG_GERAR_CHAVE = 'Erro ao gerar a chave da NFe!';
-  ERR_MSG_FINAL_MENOR_INICIAL = 'O numero final não pode ser menor que o inicial';
-  ERR_MSG_ARQUIVO_NAO_ENCONTRADO = 'Arquivo não encontrado';
-  ERR_MSG_SOMENTE_UM = 'Somente um campo deve ser preenchido';
-  ERR_MSG_MENOR_MINIMO = 'Número de ocorrências menor que o mínimo permitido - Mínimo ';
-  DSC_CNPJ = 'CNPJ(MF)';
-  DSC_CPF = 'CPF';
-
 type
   { TACBrXmlWriterOptions }
   TACBrXmlWriterOptions = class
@@ -127,6 +112,7 @@ implementation
 uses
   variants, dateutils,
   ACBrDFeUtil,
+  ACBrDFeConsts,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrValidador;

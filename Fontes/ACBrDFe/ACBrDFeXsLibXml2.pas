@@ -147,7 +147,7 @@ var
   aDoc: xmlDocPtr;
   SignNode, XmlNode: xmlNodePtr;
   buffer: PAnsiChar;
-  aXML, XmlAss, URI, aIdSignatureValue: String;
+  aXML, XmlAss, URI: String;
   Canon, DigestValue, Signaturevalue: AnsiString;
   TemDeclaracao: Boolean;
   XmlLength: Integer;
@@ -165,11 +165,6 @@ begin
     aXML := ConteudoXML;
 
   URI := EncontrarURI(aXML, docElement, IdAttr);
-
-  if IdSignatureValue <> '' then
-    aIdSignatureValue := ' Id="' + IdSignatureValue + URI + '"'
-  else
-    aIdSignatureValue := '';
 
   // DEBUG
   //WriteToTXT('C:\TEMP\XmlOriginal.xml', aXML, False, False, True);
@@ -204,7 +199,8 @@ begin
     // DEBUG
     //WriteToTXT('C:\TEMP\CanonDigest.xml', Canon, False, False, True);
 
-    SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst, aIdSignatureValue), docElement);
+    SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature,
+                               FpDFeSSL.SSLDgst, IdSignatureValue), docElement);
 
     // gerar o hash
     DigestValue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64);

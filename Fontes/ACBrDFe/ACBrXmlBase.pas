@@ -375,14 +375,12 @@ begin
 
     tcStrOrig:
       begin
-        // Falta implementar
-        Result := '';
+        result := ConteudoTag;
       end;
 
     tcNumStr:
       begin
-        // Falta implementar
-        Result := '';
+        result := ConteudoTag;
       end
 
   else

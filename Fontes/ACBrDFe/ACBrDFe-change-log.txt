@@ -40,6 +40,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/02/2024
+-- ACBrDFeSSL --
+[*] Removido a definição do conteudo do campo IdSignatureValue, agora
+    a função AdicionarSignatureElement vai receber esse campo pré-definido ou
+    uma string vazia (Default).
+-- ACBrDFeXsLibXml2 --
+[*] Removido a definição do conteudo do campo IdSignatureValue, agora
+    a função Assinar vai receber esse campo pré-definido ou
+    uma string vazia (Default).
+-- ACBrXmlBase --
+[*] Os tipos tcStrOrg e tcNumStr estavam retornando uma string vazia, agora
+    vão retornar o conteudo da tag.
+-- ACBrXmlWriter --
+[*] Removido a declaração de algumas constantes que estão definidas em ACBrDFeConsts.
+  Por: Italo Giurizzato Junior
+
 23/02/2024
 -- ACBrDFeSSL/ACBrDFeXsLibXml2/ACBrDFeXsMsXml/ACBrDFeXsMsXmlCapicom/ACBrDFeXsXmlSec --
 [*] Alteração visando gerar um atributo Id na tag SignatureValue.

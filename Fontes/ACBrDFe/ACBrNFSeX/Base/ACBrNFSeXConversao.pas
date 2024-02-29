@@ -207,10 +207,10 @@ const
     'Teste de Envio de Lote');
 
 type
-  TStatusNFSe = (snNormal, snCancelado, snSubstituido);
+  TStatusNFSe = (snVazio, snNormal, snCancelado, snSubstituido);
 
 const
-  TStatusNFSeArrayStrings: array[TStatusNFSe] of string = ('1', '2', '3');
+  TStatusNFSeArrayStrings: array[TStatusNFSe] of string = ('', '1', '2', '3');
 
 type
   TnfseNaturezaOperacao = (no0, no1, no2, no3, no4, no5, no6, no7, no8, no9,
@@ -253,25 +253,26 @@ const
     '');
 
 type
-  TIndicacaoCpfCnpj = (iccCPF, iccCNPJ, iccNaoInformado);
+  TIndicacaoCpfCnpj = (iccVazio, iccCPF, iccCNPJ, iccNaoInformado);
 
 const
-  TIndicacaoCpfCnpjArrayStrings: array[TIndicacaoCpfCnpj] of string = ('1', '2',
-    '3');
+  TIndicacaoCpfCnpjArrayStrings: array[TIndicacaoCpfCnpj] of string = ('', '1',
+    '2', '3');
 
 type
-  TTipoEmissao = (teNormalNFSe, teContigenciaNFSe);
+  TTipoEmissao = (teVazio, teNormalNFSe, teContigenciaNFSe);
 
 const
-  TTipoEmissaoArrayStrings: array[TTipoEmissao] of string = ('N', 'C');
-  TTipoEmissaoDescArrayStrings: array[TTipoEmissao] of string = ('N - Normal',
-    'C - Contingência');
+  TTipoEmissaoArrayStrings: array[TTipoEmissao] of string = ('', 'N', 'C');
+  TTipoEmissaoDescArrayStrings: array[TTipoEmissao] of string = ('',
+    'N - Normal', 'C - Contingência');
 
 type
-  TEmpreitadaGlobal = (EgConstrucaoCivil, EgOutros);
+  TEmpreitadaGlobal = (EgVazio, EgConstrucaoCivil, EgOutros);
 
 const
-  TEmpreitadaGlobalArrayStrings: array[TEmpreitadaGlobal] of string = ('1', '2');
+  TEmpreitadaGlobalArrayStrings: array[TEmpreitadaGlobal] of string = ('', '1',
+    '2');
 
 type
   TVersaoNFSe = (ve100, ve101, ve102, ve103,
@@ -282,16 +283,16 @@ const
     '1.02', '1.03', '2.00', '2.01', '2.02', '2.03', '2.04');
 
 type
-  TnfseFrete = (tfPrestador, tfTomador);
+  TnfseFrete = (tfVazio, tfPrestador, tfTomador);
 
 const
-  TFreteArrayStrings: array[TnfseFrete] of string = ('0', '1');
+  TFreteArrayStrings: array[TnfseFrete] of string = ('', '0', '1');
 
 type
-  TnfseCanhoto = (tcNenhum, tcCabecalho, tcRodape);
+  TnfseCanhoto = (tcVazio, tcNenhum, tcCabecalho, tcRodape);
 
 const
-  TCanhotoArrayStrings: array[TnfseCanhoto] of string = ('0', '1', '2');
+  TCanhotoArrayStrings: array[TnfseCanhoto] of string = ('', '0', '1', '2');
 
 type
   TRegRec = (regNenhum, regMovimento, regCancelado, regIsento, regImune,
@@ -312,108 +313,110 @@ const
     '05', '06', '07');
 
 type
-  TOperacao = (toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
+  TOperacao = (toVazio, toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
                toDevolucaoSimplesRemessa, toIntermediacao);
 
 const
-  TOperacaoArrayStrings: array[TOperacao] of string = ('A', 'B', 'C', 'D', 'J');
-  TOperacaoDescArrayStrings: array[TOperacao] of string = ('A - Sem Dedução',
+  TOperacaoArrayStrings: array[TOperacao] of string = ('', 'A', 'B', 'C', 'D',
+    'J');
+  TOperacaoDescArrayStrings: array[TOperacao] of string = ('', 'A - Sem Dedução',
     'B - Com Dedução/Materiais', 'C - Imune/Isenta de ISSQN',
     'D - Devolução/Simples Remessa', 'J - Intermediario');
 
 type
-  TUnidade = (tuHora, tuQtde, tuMetroQuadrado, tuMetro, tuUnidadeMigrada5,
+  TUnidade = (tuVazio, tuHora, tuQtde, tuMetroQuadrado, tuMetro, tuUnidadeMigrada5,
               tuMetroCubico, tuQuilo);
 
 const
-  TUnidadeArrayStrings: array[TUnidade] of string = ('1', '2', '3', '4', '5',
+  TUnidadeArrayStrings: array[TUnidade] of string = ('', '1', '2', '3', '4', '5',
     '6', '7');
 
 type
-  TtpConsulta = (tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado,
+  TtpConsulta = (ttcVazio, tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado,
                  tcServicoTomado, tcPorCodigoVerificacao, tcPorChave);
 
 const
-  TtpConsultaArrayStrings: array[TtpConsulta] of string = ('1', '2', '3', '4',
-    '5', '6', '7');
+  TtpConsultaArrayStrings: array[TtpConsulta] of string = ('', '1', '2', '3',
+    '4', '5', '6', '7');
 
 type
-  TtpPeriodo = (tpEmissao, tpCompetencia);
+  TtpPeriodo = (tpVazio, tpEmissao, tpCompetencia);
 
 const
-  TtpPeriodoArrayStrings: array[TtpPeriodo] of string = ('1', '2');
+  TtpPeriodoArrayStrings: array[TtpPeriodo] of string = ('', '1', '2');
 
 type
-  TtpRetorno = (trXml, trPDF);
+  TtpRetorno = (trVazio, trXml, trPDF);
 
 const
-  TtpRetornoArrayStrings: array[TtpRetorno] of string = ('XML', 'PDF');
+  TtpRetornoArrayStrings: array[TtpRetorno] of string = ('', 'XML', 'PDF');
 
 type
-  TTipoLancamento = (tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
+  TTipoLancamento = (tlVazio, tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
                      tlSimplesNacional, tlIsentoImune, tlCancelado);
 
 const
-  TTipoLancamentoArrayStrings: array[TTipoLancamento] of string = ('N', 'T',
+  TTipoLancamentoArrayStrings: array[TTipoLancamento] of string = ('', 'N', 'T',
     'P', 'R', 'C');
 
 type
-  TtpEmit = (tePrestador, teTomador, teIntermediario);
+  TtpEmit = (tteVazio, tePrestador, teTomador, teIntermediario);
 
 const
-  TtpEmitArrayStrings: array[TtpEmit] of string = ('1', '2', '3');
+  TtpEmitArrayStrings: array[TtpEmit] of string = ('', '1', '2', '3');
 
 type
-  TOptanteSN = (osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP);
+  TOptanteSN = (osnVazio, osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP);
 
 const
-  TOptanteSNArrayStrings: array[TOptanteSN] of string = ('1', '2', '3');
-  TOptanteSNDescArrayStrings: array[TOptanteSN] of string = ('Não', 'MEI',
+  TOptanteSNArrayStrings: array[TOptanteSN] of string = ('', '1', '2', '3');
+  TOptanteSNDescArrayStrings: array[TOptanteSN] of string = ('', 'Não', 'MEI',
     'ME/EPP');
 
 type
-  TRegimeApuracaoSN = (raFederaisMunicipalpeloSN, raFederaisSN,
+  TRegimeApuracaoSN = (raVazio, raFederaisMunicipalpeloSN, raFederaisSN,
                        raFederaisMunicipalforaSN);
 
 const
-  TRegimeApuracaoSNArrayStrings: array[TRegimeApuracaoSN] of string = ('1', '2',
-    '3');
+  TRegimeApuracaoSNArrayStrings: array[TRegimeApuracaoSN] of string = ('', '1',
+    '2', '3');
 
 type
-  TcMotivo = (cmDesenquadramento, cmEnquadramento, cmInclusao, cmExclusao,
-              cmRejeicao, cmOutros);
+  TcMotivo = (cmVazio, cmDesenquadramento, cmEnquadramento, cmInclusao,
+              cmExclusao, cmRejeicao, cmOutros);
 
 const
-  TcMotivoArrayStrings: array[TcMotivo] of string = ('01', '02', '03', '04',
+  TcMotivoArrayStrings: array[TcMotivo] of string = ('', '01', '02', '03', '04',
     '05', '99');
 
 type
-  TmdPrestacao = (mpDesconhecido, mpTransfronteirico, mpConsumoBrasil,
+  TmdPrestacao = (mpVazio, mpDesconhecido, mpTransfronteirico, mpConsumoBrasil,
                   mpPresencaComercialExterior, mpMovimentoTempPessoasFisicas);
 
 const
-  TmdPrestacaoArrayStrings: array[TmdPrestacao] of string = ('0', '1', '2', '3',
-    '4');
+  TmdPrestacaoArrayStrings: array[TmdPrestacao] of string = ('', '0', '1', '2',
+    '3', '4');
 
 type
-  TvincPrest = (vpSemVinculo, vpControlada, vpControladora, vpColigada, vpMatriz,
-                vpFilial, vpOutro);
+  TvincPrest = (vpVazio, vpSemVinculo, vpControlada, vpControladora, vpColigada,
+                vpMatriz, vpFilial, vpOutro);
 
 const
-  TvincPrestArrayStrings: array[TvincPrest] of string = ('0', '1', '2', '3', '4',
-    '5', '6');
+  TvincPrestArrayStrings: array[TvincPrest] of string = ('', '0', '1', '2', '3',
+    '4', '5', '6');
 
 type
-  TmecAFComexP = (mapsDesconhecido, mapsNenhum, mapsACC, mapsACE, mapsBNDESPos,
-                  mapsBNDESPre, mapsFGE, mapsPROEXEqual, mapsPROEXFinanc);
+  TmecAFComexP = (mapsVazio, mapsDesconhecido, mapsNenhum, mapsACC, mapsACE,
+                  mapsBNDESPos, mapsBNDESPre, mapsFGE, mapsPROEXEqual,
+                  mapsPROEXFinanc);
 
 const
-  TmecAFComexPArrayStrings: array[TmecAFComexP] of string = ('00', '01', '02',
+  TmecAFComexPArrayStrings: array[TmecAFComexP] of string = ('', '00', '01', '02',
     '03', '04', '05', '06', '07', '08');
 
 type
-  TmecAFComexT = (matsDesconhecido, matsNenhum, matsAdmPublica, matsAlugueis,
-                  matsArredondamento, matsComissao, matsDespesas,
+  TmecAFComexT = (matsVazio, matsDesconhecido, matsNenhum, matsAdmPublica,
+                  matsAlugueis, matsArredondamento, matsComissao, matsDespesas,
                   matsEventosFIFASubsidiaria, matsEventosFIFA, matsFretes,
                   matsMaterialAeronautico, matsPromocaoBens,
                   matsPromocaoTuristicos, matsPromocaoBrasilExt,
@@ -422,58 +425,64 @@ type
                   matsRETID, matsRoyalties, matsServicosAvaliacao, matsZPE);
 
 const
-  TmecAFComexTArrayStrings: array[TmecAFComexT] of string = ('00', '01', '02',
+  TmecAFComexTArrayStrings: array[TmecAFComexT] of string = ('', '00', '01', '02',
     '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
     '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26');
 
 type
-  TMovTempBens = (mtDesconhecido, mtNao, mtVincDeclImport, mtVincDeclExport);
+  TMovTempBens = (mtVazio, mtDesconhecido, mtNao, mtVincDeclImport,
+                  mtVincDeclExport);
 
 const
-  TMovTempBensArrayStrings: array[TMovTempBens] of string = ('0', '1', '2', '3');
+  TMovTempBensArrayStrings: array[TMovTempBens] of string = ('', '0', '1', '2',
+    '3');
 
 type
-  Tcateg = (cLocacao, cSubLocacao, cArrendamento, cDireitoPassagem, cPermissao);
+  Tcateg = (cVazio, cLocacao, cSubLocacao, cArrendamento, cDireitoPassagem,
+            cPermissao);
 
 const
-  TcategArrayStrings: array[Tcateg] of string = ('1', '2', '3', '4', '5');
+  TcategArrayStrings: array[Tcateg] of string = ('', '1', '2', '3', '4', '5');
 
 type
-  Tobjeto = (oFerrovia, oRodovia, oPostes, oCabos, oDutos, oCondutos);
+  Tobjeto = (oVazio, oFerrovia, oRodovia, oPostes, oCabos, oDutos, oCondutos);
 
 const
-  TobjetoArrayStrings: array[Tobjeto] of string = ('1', '2', '3', '4', '5', '6');
+  TobjetoArrayStrings: array[Tobjeto] of string = ('', '1', '2', '3', '4', '5',
+    '6');
 
 type
-  TcategVeic = (cvDesconhecido, cvAutomovel, cvCaminhao, cvAutomovelComSemiReboque,
-                cvCaminhaoComSemiReboque, cvAutomovelComReboque,
-                cvCaminhaoComReboque, cvCaminhaoTratorComSemiReboque,
-                cvMotocicleta, cvVeiculoEspecial, cvVeiculoIsento);
+  TcategVeic = (cvVazio, cvDesconhecido, cvAutomovel, cvCaminhao,
+                cvAutomovelComSemiReboque, cvCaminhaoComSemiReboque,
+                cvAutomovelComReboque, cvCaminhaoComReboque,
+                cvCaminhaoTratorComSemiReboque, cvMotocicleta, cvVeiculoEspecial,
+                cvVeiculoIsento);
 
 const
-  TcategVeicArrayStrings: array[TcategVeic] of string = ('00', '01', '02', '03',
-    '04', '05', '06', '07', '08', '09', '10');
+  TcategVeicArrayStrings: array[TcategVeic] of string = ('', '00', '01', '02',
+    '03', '04', '05', '06', '07', '08', '09', '10');
 
 type
-  Trodagem = (trSimples, trDupla);
+  Trodagem = (ttrVazio, trSimples, trDupla);
 
 const
-  TrodagemArrayStrings: array[Trodagem] of string = ('1', '2');
+  TrodagemArrayStrings: array[Trodagem] of string = ('', '1', '2');
 
 type
-  TtpDedRed = (drAlimentacao, drMateriais, drProducaoExt, drReembolso,
+  TtpDedRed = (drVazio, drAlimentacao, drMateriais, drProducaoExt, drReembolso,
                drRepasseConsorciado, drRepassePlanoSaude, drServicos,
                drSubEmpreitada, drOutrasDeducoes);
 
 const
-  TtpDedRedArrayStrings: array[TtpDedRed] of string = ('1', '2', '3', '4', '5',
-    '6', '7', '8', '99');
+  TtpDedRedArrayStrings: array[TtpDedRed] of string = ('', '1', '2', '3', '4',
+    '5', '6', '7', '8', '99');
 
 type
-  TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
+  TtribISSQN = (tiVazio, tiOperacaoTributavel, tiImunidade, tiExportacao,
+                tiNaoIncidencia);
 
 const
-  TtribISSQNArrayStrings: array[TtribISSQN] of string = ('1', '2', '3', '4');
+  TtribISSQNArrayStrings: array[TtribISSQN] of string = ('', '1', '2', '3', '4');
 
 type
   TtpImunidade = (timNenhum, timImunidade, timPatrimonio, timTemplos,
@@ -484,16 +493,17 @@ const
     '3', '4', '5');
 
 type
-  TtpRetISSQN = (trNaoRetido, trRetidoPeloTomador, trRetidoPeloIntermediario);
+  TtpRetISSQN = (trNenhum, trNaoRetido, trRetidoPeloTomador,
+                 trRetidoPeloIntermediario);
 
 const
-  TtpRetISSQNArrayStrings: array[TtpRetISSQN] of string = ('1', '2', '3');
+  TtpRetISSQNArrayStrings: array[TtpRetISSQN] of string = ('', '1', '2', '3');
 
 type
-  TtpBM = (tbAliquota, tbReducaoBC, tbIsencao);
+  TtpBM = (tbVazio, tbAliquota, tbReducaoBC, tbIsencao);
 
 const
-  TtpBMArrayStrings: array[TtpBM] of string = ('1', '2', '3');
+  TtpBMArrayStrings: array[TtpBM] of string = ('', '1', '2', '3');
 
 type
   TtpSusp = (tsNenhum, tsDecisaoJudicial, tsProcessoAdm);
@@ -502,11 +512,12 @@ const
   TtpSuspArrayStrings: array[TtpSusp] of string = ('', '1', '2');
 
 type
-  TCST = (cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07, cst08, cst09);
+  TCST = (cstVazio, cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07,
+          cst08, cst09);
 
 const
-  TCSTArrayStrings: array[TCST] of string = ('00', '01', '02', '03', '04', '05',
-    '06', '07', '08', '09');
+  TCSTArrayStrings: array[TCST] of string = ('', '00', '01', '02', '03', '04',
+    '05', '06', '07', '08', '09');
 
 type
   TtpRetPisCofins = (trpcRetido, trpcNaoRetido, trpcNenhum);
@@ -515,28 +526,28 @@ const
   TtpRetPisCofinsArrayStrings: array[TtpRetPisCofins] of string = ('1', '2', '');
 
 type
-  TindTotTrib = (indNao, indSim);
+  TindTotTrib = (indVazio, indNao, indSim);
 
 const
-  TindTotTribArrayStrings: array[TindTotTrib] of string = ('0', '1');
+  TindTotTribArrayStrings: array[TindTotTrib] of string = ('', '0', '1');
 
 type
-  TambGer = (agPrefeitura, agSistemaNacional);
+  TambGer = (agVazio, agPrefeitura, agSistemaNacional);
 
 const
-  TambGerArrayStrings: array[TambGer] of string = ('1', '2');
+  TambGerArrayStrings: array[TambGer] of string = ('', '1', '2');
 
 type
-  TtpEmis = (tePadraoNacional, teProprio);
+  TtpEmis = (temVazio, tePadraoNacional, teProprio);
 
 const
-  TtpEmisArrayStrings: array[TtpEmis] of string = ('1', '2');
+  TtpEmisArrayStrings: array[TtpEmis] of string = ('', '1', '2');
 
 type
-  TprocEmi = (peWebService, peWebFisco, peAppFisco);
+  TprocEmi = (peVazio, peWebService, peWebFisco, peAppFisco);
 
 const
-  TprocEmiArrayStrings: array[TprocEmi] of string = ('1', '2', '3');
+  TprocEmiArrayStrings: array[TprocEmi] of string = ('', '1', '2', '3');
 
 type
   TtpEvento = (teCancelamento, teCancelamentoSubstituicao,
@@ -573,22 +584,22 @@ const
        '');
 
 type
-  TParamMunic = (pmAliquota, pmHistoricoAliquota, pmConvenio,
+  TParamMunic = (pmVazio, pmAliquota, pmHistoricoAliquota, pmConvenio,
                  pmRegimesEspeciais, pmRetencoes, pmBeneficios);
 
 const
-  TParamMunicArrayStrings: array[TParamMunic] of string = ('Aliquota',
+  TParamMunicArrayStrings: array[TParamMunic] of string = ('', 'Aliquota',
     'HistoricoAliquota', 'Convenio', 'RegimesEspeciais', 'Retencoes',
     'Beneficios');
 
 type
-  TLayoutNFSe = (lnfsACBrNenhum, lnfsProvedor, lnfsPadraoNacionalv1);
+  TLayoutNFSe = (lnfsVazio, lnfsProvedor, lnfsPadraoNacionalv1);
 
 const
   TLayoutNFSeArrayStrings: array[TLayoutNFSe] of string = ('', '0', '1');
 
 type
-  TNaoNIF = (tnnACBrNenhum, tnnNaoInformado, tnnDispensado, tnnNaoExigencia);
+  TNaoNIF = (tnnVazio, tnnNaoInformado, tnnDispensado, tnnNaoExigencia);
 
 const
   TNaoNIFArrayStrings: array[TNaoNIF] of string = ('', '0', '1', '2');

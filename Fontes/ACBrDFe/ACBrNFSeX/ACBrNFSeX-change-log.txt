@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/02/2024
+-- ACBrNFSeXConversao.pas --
+[*] Inclusão de um enumerado para representar uma string vazia, com isso evitar
+    erros ao converter para um enumerado uma tag ausente no XML.
+  Por: Italo Giurizzato Junior
 -- PRODAUB.Provider --
 [*] Alteração visando assinar o RPS ao usar o modo de envio unitário.
   Por: Italo Giurizzato Junior

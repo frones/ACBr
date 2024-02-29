@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/02/2024
+-- ACBrNFSeXConversao.pas --
+[*] Refactoring das funções de conversão.
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2/
+   ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Remoção do teste (ANode = nil) pois o Assigned(ANode) já contempla.
+  Por: Italo Giurizzato Junior
+
 28/02/2024
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Corrigido o tipo de conversão para gerar a tag ExigibilidadeISS.

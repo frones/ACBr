@@ -240,7 +240,7 @@ begin
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
 
-    if not Assigned(Node) or (Node = nil) then Exit;
+    if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
@@ -253,10 +253,10 @@ begin
     if Node2 = nil then
       Node2 := Node.Childrens.FindAnyNs('Rps');
 
-    if not Assigned(Node2) or (Node2 = nil) then Exit;
+    if not Assigned(Node2) then Exit;
 
     Node := Node2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-    if not Assigned(Node) or (Node = nil) then Exit;
+    if not Assigned(Node) then Exit;
 
     Node := Node.Childrens.FindAnyNs('Rps');
 
@@ -321,7 +321,7 @@ begin
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
 
-    if not Assigned(Node) or (Node = nil) then Exit;
+    if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
@@ -334,10 +334,10 @@ begin
     if Node2 = nil then
       Node2 := Node.Childrens.FindAnyNs('Rps');
 
-    if not Assigned(Node2) or (Node2 = nil) then Exit;
+    if not Assigned(Node2) then Exit;
 
     Node := Node2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-    if not Assigned(Node) or (Node = nil) then Exit;
+    if not Assigned(Node) then Exit;
 
     Node := Node.Childrens.FindAnyNs('Rps');
 
@@ -689,7 +689,7 @@ begin
         begin
           ANode := ANodeArray[I];
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
 
@@ -710,17 +710,17 @@ begin
           // para <Rps>
           if AuxNode2 = nil then
             AuxNode2 := AuxNode.Childrens.FindAnyNs('Rps');
-          if not Assigned(AuxNode2) or (AuxNode2 = nil) then Exit;
+          if not Assigned(AuxNode2) then Exit;
 
           AuxNode := AuxNode2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
 
           if AuxNode <> nil then
           begin
             AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-            if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+            if not Assigned(AuxNode) then Exit;
 
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
             SerieRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
@@ -1153,7 +1153,7 @@ begin
       if AuxNode <> nil then
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
@@ -1174,17 +1174,17 @@ begin
           // para <Rps>
           if AuxNode2 = nil then
             AuxNode2 := AuxNode.Childrens.FindAnyNs('Rps');
-          if not Assigned(AuxNode2) or (AuxNode2 = nil) then Exit;
+          if not Assigned(AuxNode2) then Exit;
 
           AuxNode := AuxNode2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
 
           if AuxNode <> nil then
           begin
             AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-            if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+            if not Assigned(AuxNode) then Exit;
 
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
@@ -1493,7 +1493,7 @@ begin
       begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         if not PreencherNotaRespostaConsultaNFSe(AuxNode, ANode, Response) then
         begin
@@ -1504,10 +1504,10 @@ begin
         end;
         {
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNFSe := AuxNode.AsString;
 
@@ -1765,7 +1765,7 @@ begin
       begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         if not PreencherNotaRespostaConsultaNFSe(AuxNode, ANode, Response) then
         begin
@@ -1776,10 +1776,10 @@ begin
         end;
         {
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNFSe := AuxNode.AsString;
 
@@ -2031,7 +2031,7 @@ begin
       begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         if not PreencherNotaRespostaConsultaNFSe(AuxNode, ANode, Response) then
         begin
@@ -2042,10 +2042,10 @@ begin
         end;
         {
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNFSe := AuxNode.AsString;
 
@@ -2344,13 +2344,13 @@ begin
         ANode := AuxNode;
 
       ANode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
-      if not Assigned(ANode) or (ANode = nil) then Exit;
+      if not Assigned(ANode) then Exit;
 
       Ret.Pedido.InfID.ID := ObterConteudoTag(ANode.Attributes.Items[IdAttr]);
       Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
-      if not Assigned(ANode) or (ANode = nil) then Exit;
+      if not Assigned(ANode) then Exit;
 
       with Ret.Pedido.IdentificacaoNfse do
       begin
@@ -2561,10 +2561,10 @@ var
     end;
 
     AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-    if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+    if not Assigned(AuxNode) then Exit;
 
     AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-    if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+    if not Assigned(AuxNode) then Exit;
 
     AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
 
@@ -2635,7 +2635,7 @@ begin
         end;
 
         ANodeSubstituida := ANodeSubstituida.Childrens.FindAnyNs('Nfse');
-        if not Assigned(ANodeSubstituida) or (ANodeSubstituida = nil) then Exit;
+        if not Assigned(ANodeSubstituida) then Exit;
 
         ANodeSubstituida := ANodeSubstituida.Childrens.FindAnyNs('InfNfse');
 

@@ -198,7 +198,7 @@ begin
   if Node <> nil then
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
-    if not Assigned(Node) or (Node = nil) then Exit;
+    if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
@@ -257,7 +257,7 @@ begin
   if Node <> nil then
   begin
     Node := Node.Childrens.FindAnyNs('InfNfse');
-    if not Assigned(Node) or (Node = nil) then Exit;
+    if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('Numero'), tcStr);
     CodVerif := ObterConteudoTag(Node.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
@@ -1047,7 +1047,7 @@ begin
         if AuxNode <> nil then
         begin
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           InfNfseID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
           NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
@@ -1545,16 +1545,16 @@ begin
         IdAttr := 'ID';
 
       ANodePed := ANode.Childrens.FindAnyNs('Pedido');
-      if not Assigned(ANodePed) or (ANodePed = nil) then Exit;
+      if not Assigned(ANodePed) then Exit;
 
       ANodePed := ANodePed.Childrens.FindAnyNs('InfPedidoCancelamento');
-      if not Assigned(ANodePed) or (ANodePed = nil) then Exit;
+      if not Assigned(ANodePed) then Exit;
 
       Ret.Pedido.InfID.ID := ObterConteudoTag(ANodePed.Attributes.Items[IdAttr]);
       Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANodePed := ANodePed.Childrens.FindAnyNs('IdentificacaoNfse');
-      if not Assigned(ANodePed) or (ANodePed = nil) then Exit;
+      if not Assigned(ANodePed) then Exit;
 
       with Ret.Pedido.IdentificacaoNfse do
       begin

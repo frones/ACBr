@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/02/2024
+-- PRODAUB.Provider --
+[*] Alteração visando assinar o RPS ao usar o modo de envio unitário.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao.pas --
 [*] Refactoring das funções de conversão.
 -- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2/

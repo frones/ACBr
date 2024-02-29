@@ -107,7 +107,7 @@ begin
     ConsultarNFSeRps  := False;
     ConsultarNFSe     := False;
     CancelarNFSe      := False;
-    RpsGerarNFSe      := False;
+    RpsGerarNFSe      := True;
     LoteGerarNFSe     := False;
     RpsSubstituirNFSe := False;
     SubstituirNFSe    := False;

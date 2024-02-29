@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/02/2024
+-- ACBrCTeConhecimentos --
+[*] Valida alguns valores opcionais antes de converter para que não levante exception quando em branco.
+  Por: Diego Folieni
+
 28/02/2024
 -- pcteCTeR --
 [*] Alteração visando ler tag tipadas opcionais.

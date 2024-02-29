@@ -2680,7 +2680,9 @@ begin
       begin
         infCTeNorm.Rodo.RNTRC := INIRec.ReadString('Rodo','RNTRC','');
         infCTeNorm.Rodo.dPrev := StringToDateTime(INIRec.ReadString( 'Rodo','dPrev','0'));
-        infCTeNorm.Rodo.Lota  := StrToTpLotacao(OK,INIRec.ReadString('Rodo','lota',''));
+        sFim := INIRec.ReadString('Rodo','lota','0');
+        if sFim <> '' then
+          infCTeNorm.Rodo.Lota  := StrToTpLotacao(OK, sFim);
         infCTeNorm.Rodo.CIOT  := INIRec.ReadString('Rodo','CIOT','');
 
         I := 1;
@@ -2739,10 +2741,18 @@ begin
             tara    := INIRec.ReadInteger(sSecao,'tara',0);
             capKG   := INIRec.ReadInteger(sSecao,'capKG',0);
             capM3   := INIRec.ReadInteger(sSecao,'capM3',0);
-            tpProp  := StrToTpPropriedade(OK,INIRec.ReadString(sSecao,'tpProp',''));
-            tpVeic  := StrToTpVeiculo(OK,INIRec.ReadString(sSecao,'tpVeic',''));
-            tpRod   := StrToTpRodado(OK,INIRec.ReadString(sSecao,'tpRod',''));
-            tpCar   := StrToTpCarroceria(OK,INIRec.ReadString(sSecao,'tpCar',''));
+            sFim := INIRec.ReadString(sSecao,'tpProp','');
+            if sFim <> '' then
+              tpProp  := StrToTpPropriedade(OK, sFim);
+            sFim := INIRec.ReadString(sSecao,'tpVeic','');
+            if sFim <> '' then
+              tpVeic  := StrToTpVeiculo(OK, sFim);
+            sFim := INIRec.ReadString(sSecao,'tpRod','');
+            if sFim <> '' then
+              tpRod   := StrToTpRodado(OK, sFim);
+            sFim := INIRec.ReadString(sSecao,'tpCar','');
+            if sFim <> '' then
+              tpCar   := StrToTpCarroceria(OK, sFim);
             UF      := INIRec.ReadString(sSecao,'UF','');
 
             if INIRec.SectionExists('prop' + IntToStrZero(I,3))then

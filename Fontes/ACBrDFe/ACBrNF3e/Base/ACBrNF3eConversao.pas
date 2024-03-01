@@ -227,20 +227,20 @@ const
   TuMedArrayStrings: array[TuMed] of string = ('1', '2');
 
 type
-  TuMedFat = (umfkW, umfkWh, umfkVAr, umfkVArh);
+  TuMedFat = (umfkW, umfkWh, umfkVAr, umfkVArh, umfkUN);
 
 const
-  TuMedFatArrayStrings: array[TuMedFat] of string = ('1', '2', '3', '4');
+  TuMedFatArrayStrings: array[TuMedFat] of string = ('1', '2', '3', '4', '5');
   TuMedFatDescArrayStrings: array[TuMedFat] of string = ('kW', 'kWh', 'kVAr',
-    'kVArh');
+    'kVArh', 'UN');
 
 type
-  TmotDifTarif = (mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto,
-                  mdtAlteracao);
+  TmotDifTarif = (mdtVazio, mdtDecisaoJudicial, mdtDecisaoDistribuidora,
+                  mdtDesconto, mdtAlteracao);
 
 const
-  TmotDifTarifArrayStrings: array[TmotDifTarif] of string = ('01', '02', '03',
-    '04');
+  TmotDifTarifArrayStrings: array[TmotDifTarif] of string = ('', '01', '02',
+    '03', '04');
 
 type
   TtpBand = (tbVerde, tbAmarela, tbVermelha1, tbVermelha2, tbEscassez);
@@ -271,10 +271,11 @@ const
   TtpGrMedArrayStrings: array[TtpGrMed] of string = ('01', '02', '03', '04', '05');
 
 type
-  TtpMotNaoLeitura = (tmNenhum, tmConsumidor, tmDistribuidora, tmIndependente);
+  TtpMotNaoLeitura = (tmNenhum, tmConsumidor, tmDistribuidora,
+                      tmIndependente);
 
 const
-  TtpMotNaoLeituraArrayStrings: array[TtpMotNaoLeitura] of string = ('0', '1',
+  TtpMotNaoLeituraArrayStrings: array[TtpMotNaoLeitura] of string = ('', '1',
     '2', '3');
 
 type
@@ -298,10 +299,10 @@ const
     '4', '5', '6');
 
 type
-  TIndicador = (tiSim, tiNao);
+  TIndicador = (tiVazio, tiSim, tiNao);
 
 const
-  TIndicadorArrayStrings: array[TIndicador] of string = ('1', '0');
+  TIndicadorArrayStrings: array[TIndicador] of string = ('', '1', '0');
 
 type
   TCSTCofins = (cof01, cof02, cof06, cof07, cof08, cof09, cof49);

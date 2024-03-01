@@ -77,7 +77,7 @@ type
     procedure LerInfAdic(const ANode: TACBrXmlNode);
     procedure LergRespTec(const ANode: TACBrXmlNode);
     procedure LerInfNF3eSupl(const ANode: TACBrXmlNode);
-    procedure LerSignature(const ANode: TACBrXmlNode);
+    procedure Ler_Signature(const ANode: TACBrXmlNode);
   public
     constructor Create(AOwner: TNF3e); reintroduce;
 
@@ -577,7 +577,7 @@ begin
 
         if not(NodeNaoEncontrado(ANodeNivel4)) then
         begin
-          detItem.Prod.indOrigemQtd := ObterConteudo(ANodeNivel4.Childrens.Find('indOrigemQtd'), tcStr);
+          detItem.Prod.indOrigemQtd := StrToindOrigemQtd(ObterConteudo(ANodeNivel4.Childrens.Find('indOrigemQtd'), tcStr));
           detItem.Prod.cProd        := ObterConteudo(ANodeNivel4.Childrens.Find('cProd'), tcStr);
           detItem.Prod.xProd        := ObterConteudo(ANodeNivel4.Childrens.Find('xProd'), tcStr);
           detItem.Prod.cClass       := ObterConteudo(ANodeNivel4.Childrens.Find('cClass'), tcInt);
@@ -917,32 +917,11 @@ begin
   NF3e.infNF3eSupl.qrCodNF3e := sQrCode;
 end;
 
-procedure TNF3eXmlReader.LerSignature(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNF3eXmlReader.Ler_Signature(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.Find('SignedInfo');
-
-  if AuxNode <> nil then
-  begin
-    AuxNode := AuxNode.Childrens.Find('Reference');
-
-    if AuxNode <> nil then
-    begin
-      NF3e.signature.URI := AuxNode.Attributes.Items['URI'].Content;
-      NF3e.signature.DigestValue := ObterConteudo(AuxNode.Childrens.Find('DigestValue'), tcStr);
-    end;
-  end;
-
-  NF3e.signature.SignatureValue  := ObterConteudo(ANode.Childrens.Find('SignatureValue'), tcStr);
-
-  AuxNode := ANode.Childrens.Find('KeyInfo');
-  if AuxNode <> nil then
-  begin
-    NF3e.signature.X509Certificate := ObterConteudo(ANode.Childrens.Find('X509Certificate'), tcStr);
-  end;
+  LerSignature(ANode, NF3e.signature);
 end;
 
 procedure TNF3eXmlReader.LerProtNF3e(const ANode: TACBrXmlNode);
@@ -1008,7 +987,7 @@ begin
 
   LerInfNF3e(infNF3eNode);
   LerInfNF3eSupl(NF3eNode.Childrens.Find('infNF3eSupl'));
-  LerSignature(NF3eNode.Childrens.Find('Signature'));
+  Ler_Signature(NF3eNode.Childrens.Find('Signature'));
 
   Result := True;
 end;

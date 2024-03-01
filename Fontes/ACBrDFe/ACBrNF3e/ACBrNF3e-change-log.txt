@@ -43,8 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/03/2024
+-- ACBrNF3eConversao --
+[-] Inclusão de enumerados para atender tags opcionais.
 -- ACBrNF3eXmlReader --
-[-] Correção na leitura de tags opcionais que contem AAAA-MM .
+[*] Alteração na forma de ler a assinatura do XML.
+-- ACBrNF3eXmlWriter --
+[-] Correções diversas pois estava gerando o XML da forma errada.
+  Por: Italo Giurizzato Junior
+-- ACBrNF3eXmlReader --
+[-] Correção na leitura de tags opcionais que contem AAAA-MM.
   Por: Italo Giurizzato Junior
 
 28/02/2024

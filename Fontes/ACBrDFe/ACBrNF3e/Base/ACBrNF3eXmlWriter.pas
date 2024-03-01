@@ -547,6 +547,7 @@ begin
     Result.AppendChild(AddNode(tcStr, '#43', 'cNIS', 15, 15, 1,
       NF3e.Dest.cNIS, DSC_CNIS))
   else
+  if NF3e.Dest.NB <> '' then
     Result.AppendChild(AddNode(tcStr, '#43b', 'NB', 10, 10, 1,
       NF3e.Dest.NB, DSC_NB));
 
@@ -633,10 +634,10 @@ begin
   Result.AppendChild(AddNode(tcStr, '#65', 'tpModTar', 2, 2, 1,
     tpModTarToStr(NF3e.acessante.tpModTar), DSC_TPMODTAR));
 
-  Result.AppendChild(AddNode(tcStr, '#66', 'latGPS', 2, 6, 1,
+  Result.AppendChild(AddNode(tcStr, '#66', 'latGPS', 2, 10, 1,
     NF3e.acessante.latGPS, DSC_LATGPS));
 
-  Result.AppendChild(AddNode(tcStr, '#67', 'longGPS', 2, 6, 1,
+  Result.AppendChild(AddNode(tcStr, '#67', 'longGPS', 2, 10, 1,
     NF3e.acessante.longGPS, DSC_LONGGPS));
 
   Result.AppendChild(AddNode(tcStr, '#68', 'codRoteiroLeitura', 2, 100, 0,
@@ -1041,7 +1042,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#117', 'vProd', 1, 15, 1,
     NF3e.NFDet[aNFdet].Det[aDet].detItemAnt.vProd, DSC_VPROD));
 
-  Result.AppendChild(AddNode(tcStr, '#118', 'cClass', 7, 7, 1,
+  Result.AppendChild(AddNode(tcInt, '#118', 'cClass', 7, 7, 1,
     NF3e.NFDet[aNFdet].Det[aDet].detItemAnt.cClass, DSC_CCLASS));
 
   Result.AppendChild(AddNode(tcDe2, '#119', 'vBC', 1, 5, 0,
@@ -1127,7 +1128,7 @@ begin
   end;
 
   nodeArray := Gerar_NFdet_det_DetItem_gAdBand(aNFdet, aDet);
-  for i := 0 to NF3e.NFDet[aNFdet].Det[aDet].detItem.gTarif.Count - 1 do
+  for i := 0 to NF3e.NFDet[aNFdet].Det[aDet].detItem.gAdBand.Count - 1 do
   begin
     Result.AppendChild(nodeArray[i]);
   end;
@@ -1139,7 +1140,7 @@ begin
   Result.AppendChild(Gerar_NFdet_det_DetItem_gProcRef(aNFdet, aDet));
 
   nodeArray := Gerar_NFdet_det_DetItem_gContab(aNFdet, aDet);
-  for i := 0 to NF3e.NFDet[aNFdet].Det[aDet].detItem.gTarif.Count - 1 do
+  for i := 0 to NF3e.NFDet[aNFdet].Det[aDet].detItem.gContab.Count - 1 do
   begin
     Result.AppendChild(nodeArray[i]);
   end;
@@ -1256,7 +1257,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#163', 'xProd', 1, 120, 1,
     NF3e.NFDet[aNFdet].Det[aDet].detItem.Prod.xProd, DSC_XPROD));
 
-  Result.AppendChild(AddNode(tcStr, '#164', 'cClass', 7, 7, 1,
+  Result.AppendChild(AddNode(tcInt, '#164', 'cClass', 7, 7, 1,
     NF3e.NFDet[aNFdet].Det[aDet].detItem.Prod.cClass, DSC_CCLASS));
 
   Result.AppendChild(AddNode(tcInt, '#165', 'CFOP', 4, 4, 0,

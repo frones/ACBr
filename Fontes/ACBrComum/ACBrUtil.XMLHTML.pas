@@ -171,6 +171,11 @@ begin
     AStr := InternalStringReplace(AStr, '&ccedil;', 'ç');
     AStr := InternalStringReplace(AStr, '&Ccedil;', 'Ç');
     AStr := InternalStringReplace(AStr, '&apos;'  , '''');
+
+    if IsUTF8 then
+      Result := NativeStringToUTF8(AStr)
+    else
+      Result := AStr;
   end
   else
   begin
@@ -181,9 +186,9 @@ begin
     AStr := StringReplace(AStr, '"', '&quot;', [rfReplaceAll]);
     AStr := StringReplace(AStr, #39, '&#39;' , [rfReplaceAll]);
     AStr := StringReplace(AStr, '''','&apos;', [rfReplaceAll]);
-  end;
 
-  Result := AStr;
+    Result := AStr;
+  end;
 end;
 
 {------------------------------------------------------------------------------

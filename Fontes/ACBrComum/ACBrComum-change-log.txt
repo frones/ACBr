@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2024
+-- ACBrUtil.XMLHTML --
+[*] Alteração no ParseText pois o mesmo ao receber um XML no formato UTF-8
+    estava devolvendo-o no formato ANSI de forma indevida.
+    por: DSA
+
 16/02/2024
 -- ACBrReg.pas -- 
 [*] Ajuste para leitura correta do resource ACBR se existir ou não

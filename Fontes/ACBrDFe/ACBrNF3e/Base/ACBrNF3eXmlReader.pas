@@ -228,12 +228,22 @@ begin
   NF3e.gSub.nNF := ObterConteudo(ANode.Childrens.Find('nNF'), tcInt);
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetEmis'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  NF3e.gSub.CompetEmis := StrToDate(xData);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    NF3e.gSub.CompetEmis := StrToDate(xData);
+  end
+  else
+    NF3e.gSub.CompetEmis := 0;
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetApur'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  NF3e.gSub.CompetApur := StrToDate(xData);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    NF3e.gSub.CompetApur := StrToDate(xData);
+  end
+  else
+    NF3e.gSub.CompetApur := 0;
 
   NF3e.gSub.hash115 := ObterConteudo(ANode.Childrens.Find('hash115'), tcStr);
 end;
@@ -269,8 +279,13 @@ begin
   Item.vCredExpirar := ObterConteudo(ANode.Childrens.Find('vCredExpirar'), tcDe4);
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetExpirar'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  Item.CompetExpirar :=  StrToDate(xData);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    Item.CompetExpirar := StrToDate(xData);
+  end
+  else
+    Item.CompetExpirar := 0;
 end;
 
 procedure TNF3eXmlReader.LergTipoSaldo(const ANode: TACBrXmlNode);
@@ -289,8 +304,13 @@ begin
   Item.vCredExpirar := ObterConteudo(ANode.Childrens.Find('vCredExpirar'), tcDe4);
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetExpirar'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  Item.CompetExpirar :=  StrToDate(xData);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    Item.CompetExpirar := StrToDate(xData);
+  end
+  else
+    Item.CompetExpirar := 0;
 end;
 
 procedure TNF3eXmlReader.LergSCEE(const ANode: TACBrXmlNode);
@@ -756,8 +776,13 @@ begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetFat'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  NF3e.gFat.CompetFat := StrToDate(xData);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    NF3e.gFat.CompetFat := StrToDate(xData);
+  end
+  else
+    NF3e.gFat.CompetFat := 0;
 
   NF3e.gFat.dVencFat := ObterConteudo(ANode.Childrens.Find('dVencFat'), tcDat);
   NF3e.gFat.dApresFat := ObterConteudo(ANode.Childrens.Find('dApresFat'), tcDat);
@@ -835,8 +860,13 @@ begin
   Item := NF3e.gANEEL.gHistFat[I].gGrandFat.New;
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetFat'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  Item.CompetFat := StrToDate(xData);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    Item.CompetFat := StrToDate(xData);
+  end
+  else
+    Item.CompetFat := 0;
 
   Item.vFat := ObterConteudo(ANode.Childrens.Find('vFat'), tcDe2);
   Item.uMed := StrTouMedFat(ObterConteudo(ANode.Childrens.Find('uMed'), tcStr));

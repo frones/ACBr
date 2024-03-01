@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+01/03/2024
+-- ACBrNFComXmlReader --
+[*] Melhorias e correções na leitura do XML.
+  Por: Italo Giurizzato Junior
+
 27/02/2024
 -- ACBrNFComWebServices/ACBrNFComRetConsSit/ACBrNFComRetEnvEvento --
 [*] Removido o uso da função ACBrStr ao ler uma mensagem.

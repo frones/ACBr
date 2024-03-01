@@ -47,34 +47,33 @@ type
   private
     FNFCom: TNFCom;
 
-    procedure LerProtNFCom(const ANode: TACBrXmlNode);
-    procedure LerInfNFCom(const ANode: TACBrXmlNode);
-    procedure LerIde(const ANode: TACBrXmlNode);
-    procedure LerEmit(const ANode: TACBrXmlNode);
-    procedure LerEmitEnderEmit(const ANode: TACBrXmlNode);
-    procedure LerDest(const ANode: TACBrXmlNode);
-    procedure LerDestEnderDest(const ANode: TACBrXmlNode);
-    procedure LerAssinante(const ANode: TACBrXmlNode);
-    procedure LergSub(const ANode: TACBrXmlNode);
-    procedure LergNF(const ANode: TACBrXmlNode);
-    procedure LergCofat(const ANode: TACBrXmlNode);
-    procedure LerDet(const ANode: TACBrXmlNode);
-    procedure LerDetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-    procedure LerDetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-    procedure LerDetgProcRef(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-    procedure LerDetgProcRefgProc(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-    procedure LerDetgRessarc(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-    procedure LerTotal(const ANode: TACBrXmlNode);
-    procedure LergFidelidade(const ANode: TACBrXmlNode);
-    procedure LergFat(const ANode: TACBrXmlNode);
-    procedure LergFatEnderCorresp(const ANode: TACBrXmlNode);
-    procedure LergFatgPIX(const ANode: TACBrXmlNode);
-    procedure LergFatCentral(const ANode: TACBrXmlNode);
-    procedure LerautXML(const ANode: TACBrXmlNode);
-    procedure LerInfAdic(const ANode: TACBrXmlNode);
-    procedure LergRespTec(const ANode: TACBrXmlNode);
-    procedure LerInfNFComSupl(const ANode: TACBrXmlNode);
-    procedure LerSignature(const ANode: TACBrXmlNode);
+    procedure Ler_ProtNFCom(const ANode: TACBrXmlNode);
+    procedure Ler_InfNFCom(const ANode: TACBrXmlNode);
+    procedure Ler_Ide(const ANode: TACBrXmlNode);
+    procedure Ler_Emit(const ANode: TACBrXmlNode);
+    procedure Ler_EmitEnderEmit(const ANode: TACBrXmlNode);
+    procedure Ler_Dest(const ANode: TACBrXmlNode);
+    procedure Ler_DestEnderDest(const ANode: TACBrXmlNode);
+    procedure Ler_Assinante(const ANode: TACBrXmlNode);
+    procedure Ler_gSub(const ANode: TACBrXmlNode);
+    procedure Ler_gNF(const ANode: TACBrXmlNode);
+    procedure Ler_gCofat(const ANode: TACBrXmlNode);
+    procedure Ler_Det(const ANode: TACBrXmlNode);
+    procedure Ler_DetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure Ler_DetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure Ler_DetgProcRef(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure Ler_DetgProcRefgProc(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure Ler_DetgRessarc(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure Ler_Total(const ANode: TACBrXmlNode);
+    procedure Ler_gFidelidade(const ANode: TACBrXmlNode);
+    procedure Ler_gFat(const ANode: TACBrXmlNode);
+    procedure Ler_gFatEnderCorresp(const ANode: TACBrXmlNode);
+    procedure Ler_gFatgPIX(const ANode: TACBrXmlNode);
+    procedure Ler_gFatCentral(const ANode: TACBrXmlNode);
+    procedure Ler_autXML(const ANode: TACBrXmlNode);
+    procedure Ler_InfAdic(const ANode: TACBrXmlNode);
+    procedure Ler_gRespTec(const ANode: TACBrXmlNode);
+    procedure Ler_InfNFComSupl(const ANode: TACBrXmlNode);
   public
     constructor Create(AOwner: TNFCom); reintroduce;
 
@@ -86,7 +85,7 @@ type
 implementation
 
 uses
-  ACBrXmlBase, ACBrUtil.Base, //ACBrDFeConversao,
+  ACBrXmlBase, ACBrUtil.Base,
   ACBrNFComConversao;
 
 { TNFComXmlReader }
@@ -100,11 +99,12 @@ end;
 
 function TNFComXmlReader.LerXml: Boolean;
 var
-  NFComNode: TACBrXmlNode;
+  NFComNode, infNFComNode: TACBrXmlNode;
+  att: TACBrXmlAttribute;
 begin
   Result := False;
 
-  if not Assigned(FNFCom) or (FNFCom = nil) then
+  if not Assigned(FNFCom) then
     raise Exception.Create('Destino não informado, informe a classe [TNFCom] de destino.');
 
   if EstaVazio(Arquivo) then
@@ -115,7 +115,7 @@ begin
 
   if Document.Root.Name = 'NFComProc' then
   begin
-    LerProtNFCom(Document.Root.Childrens.FindAnyNs('protNFCom'));
+    Ler_ProtNFCom(Document.Root.Childrens.FindAnyNs('protNFCom'));
     NFComNode := Document.Root.Childrens.FindAnyNs('NFCom');
   end
   else
@@ -123,24 +123,42 @@ begin
     NFComNode := Document.Root;
   end;
 
-  if NFComNode = nil then
-    raise Exception.Create('Arquivo xml incorreto.');
-
   if NFComNode <> nil then
   begin
-    LerInfNFCom(NFComNode);
-    LerInfNFComSupl(NFComNode);
-    LerSignature(NFComNode);
+    infNFComNode := NFComNode.Childrens.Find('infNFCom');
 
-    Result := True;
+    if infNFComNode = nil then
+      raise Exception.Create('Arquivo xml incorreto.');
   end;
+
+  att := infNFComNode.Attributes.Items['Id'];
+
+  if att = nil then
+    raise Exception.Create('Não encontrei o atributo: Id');
+
+  NFCom.infNFCom.Id := att.Content;
+
+  att := infNFComNode.Attributes.Items['versao'];
+
+  if att = nil then
+    raise Exception.Create('Não encontrei o atributo: versao');
+
+  NFCom.infNFCom.Versao := StringToFloat(att.Content);
+
+  Ler_InfNFCom(infNFComNode);
+
+  Ler_InfNFComSupl(NFComNode.Childrens.Find('infNFComSupl'));
+
+  LerSignature(NFComNode.Childrens.Find('Signature'), NFCom.signature);
+
+  Result := True;
 end;
 
-procedure TNFComXmlReader.LerProtNFCom(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_ProtNFCom(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFCom.procNFCom.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
   NFCom.procNFCom.verAplic := ObterConteudo(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
@@ -154,200 +172,149 @@ begin
   NFCom.procNFCom.xMsg := ObterConteudo(ANode.Childrens.FindAnyNs('xMsg'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerInfNFCom(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_InfNFCom(const ANode: TACBrXmlNode);
 var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   AuxNode: TACBrXmlNode;
   att: TACBrXmlAttribute;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('infNFCom');
+  Ler_Ide(ANode.Childrens.Find('ide'));
+  Ler_Emit(ANode.Childrens.FindAnyNs('emit'));
+  Ler_Dest(ANode.Childrens.FindAnyNs('dest'));
+  Ler_Assinante(ANode.Childrens.FindAnyNs('assinante'));
+  Ler_gSub(ANode.Childrens.FindAnyNs('gSub'));
+  Ler_gCofat(ANode.Childrens.FindAnyNs('gCofat'));
 
-  if AuxNode = nil then
-    raise Exception.Create('Arquivo xml incorreto.');
-
-  att := AuxNode.Attributes.Items['Id'];
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: Id');
-
-  NFCom.infNFCom.Id := att.Content;
-
-  att := AuxNode.Attributes.Items['versao'];
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: versao');
-
-  NFCom.infNFCom.Versao := StringToFloat(att.Content);
-
-  LerIde(AuxNode);
-  LerEmit(AuxNode);
-  LerDest(AuxNode);
-  LerAssinante(AuxNode);
-  LergSub(AuxNode);
-  LergCofat(AuxNode);
-
-  ANodes := AuxNode.Childrens.FindAllAnyNs('det');
+  ANodes := ANode.Childrens.FindAllAnyNs('det');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    Lerdet(ANodes[i]);
+    Ler_det(ANodes[i]);
   end;
 
-  LerTotal(AuxNode);
-  LergFidelidade(AuxNode);
-  LergFat(AuxNode);
-  LergFatCentral(AuxNode);
+  Ler_Total(ANode.Childrens.FindAnyNs('total'));
+  Ler_gFidelidade(ANode.Childrens.FindAnyNs('gFidelidade'));
+  Ler_gFat(ANode.Childrens.FindAnyNs('gFat'));
+  Ler_gFatCentral(ANode.Childrens.FindAnyNs('gFatCentral'));
 
-  ANodes := AuxNode.Childrens.FindAllAnyNs('autXML');
+  ANodes := ANode.Childrens.FindAllAnyNs('autXML');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LerautXML(ANodes[i]);
+    Ler_autXML(ANodes[i]);
   end;
 
-  LerInfAdic(AuxNode);
-  LergRespTec(AuxNode);
+  Ler_InfAdic(ANode.Childrens.FindAnyNs('infAdic'));
+  Ler_gRespTec(ANode.Childrens.FindAnyNs('gRespTec'));
 end;
 
-procedure TNFComXmlReader.LerIde(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_Ide(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
-  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('ide');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.ide.cUF := ObterConteudo(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
-  NFCom.Ide.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
-  NFCom.ide.modelo := ObterConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcInt);
-  NFCom.ide.serie := ObterConteudo(AuxNode.Childrens.FindAnyNs('serie'), tcInt);
-  NFCom.ide.nNF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nNF'), tcInt);
-  NFCom.ide.cNF := ObterConteudo(AuxNode.Childrens.FindAnyNs('cNF'), tcInt);
-  NFCom.Ide.cDV := ObterConteudo(AuxNode.Childrens.FindAnyNs('cDV'), tcInt);
-  NFCom.ide.dhEmi := ObterConteudo(AuxNode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
-  NFCom.Ide.tpEmis := StrToTipoEmissao(ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpEmis'), tcStr));
-  NFCom.Ide.nSiteAutoriz := StrToSiteAutorizator(ObterConteudo(AuxNode.Childrens.FindAnyNs('nSiteAutoriz'), tcStr));
-  NFCom.ide.cMunFG := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMunFG'), tcInt);
-  NFCom.Ide.finNFCom := StrToFinNFCom(ObterConteudo(AuxNode.Childrens.FindAnyNs('finNFCom'), tcStr));
-  NFCom.Ide.verProc := ObterConteudo(AuxNode.Childrens.FindAnyNs('verProc'), tcStr);
-  NFCom.Ide.indPrePago := StrToTIndicador(ObterConteudo(AuxNode.Childrens.FindAnyNs('indPrePago'), tcStr));
-  NFCom.Ide.indCessaoMeiosRede := StrToTIndicador(ObterConteudo(AuxNode.Childrens.FindAnyNs('indCessaoMeiosRede'), tcStr));
-  NFCom.Ide.indNotaEntrada := StrToTIndicador(ObterConteudo(AuxNode.Childrens.FindAnyNs('indNotaEntrada'), tcStr));
-  NFCom.Ide.dhCont := ObterConteudo(AuxNode.Childrens.FindAnyNs('dhCont'), tcDatHor);
-  NFCom.Ide.xJust := ObterConteudo(AuxNode.Childrens.FindAnyNs('xJust'), tcStr);
+  NFCom.ide.cUF := ObterConteudo(ANode.Childrens.FindAnyNs('cUF'), tcInt);
+  NFCom.Ide.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  NFCom.ide.modelo := ObterConteudo(ANode.Childrens.FindAnyNs('mod'), tcInt);
+  NFCom.ide.serie := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcInt);
+  NFCom.ide.nNF := ObterConteudo(ANode.Childrens.FindAnyNs('nNF'), tcInt);
+  NFCom.ide.cNF := ObterConteudo(ANode.Childrens.FindAnyNs('cNF'), tcInt);
+  NFCom.Ide.cDV := ObterConteudo(ANode.Childrens.FindAnyNs('cDV'), tcInt);
+  NFCom.ide.dhEmi := ObterConteudo(ANode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
+  NFCom.Ide.tpEmis := StrToTipoEmissao(ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpEmis'), tcStr));
+  NFCom.Ide.nSiteAutoriz := StrToSiteAutorizator(ObterConteudo(ANode.Childrens.FindAnyNs('nSiteAutoriz'), tcStr));
+  NFCom.ide.cMunFG := ObterConteudo(ANode.Childrens.FindAnyNs('cMunFG'), tcInt);
+  NFCom.Ide.finNFCom := StrToFinNFCom(ObterConteudo(ANode.Childrens.FindAnyNs('finNFCom'), tcStr));
+  NFCom.Ide.verProc := ObterConteudo(ANode.Childrens.FindAnyNs('verProc'), tcStr);
+  NFCom.Ide.indPrePago := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indPrePago'), tcStr));
+  NFCom.Ide.indCessaoMeiosRede := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indCessaoMeiosRede'), tcStr));
+  NFCom.Ide.indNotaEntrada := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indNotaEntrada'), tcStr));
+  NFCom.Ide.dhCont := ObterConteudo(ANode.Childrens.FindAnyNs('dhCont'), tcDatHor);
+  NFCom.Ide.xJust := ObterConteudo(ANode.Childrens.FindAnyNs('xJust'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerEmit(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_Emit(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('emit');
+  NFCom.Emit.CNPJ := ObterCNPJCPF(ANode);
+  NFCom.Emit.IE := ObterConteudo(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  NFCom.Emit.xNome := ObterConteudo(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  NFCom.Emit.xFant := ObterConteudo(ANode.Childrens.FindAnyNs('xFant'), tcStr);
 
-  if AuxNode = nil then Exit;
-
-  NFCom.Emit.CNPJ := ObterCNPJCPF(AuxNode);
-  NFCom.Emit.IE := ObterConteudo(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
-  NFCom.Emit.xNome := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
-  NFCom.Emit.xFant := ObterConteudo(AuxNode.Childrens.FindAnyNs('xFant'), tcStr);
-
-  LerEmitEnderEmit(AuxNode);
+  Ler_EmitEnderEmit(ANode.Childrens.FindAnyNs('enderEmit'));
 end;
 
-procedure TNFComXmlReader.LerEmitEnderEmit(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_EmitEnderEmit(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('enderEmit');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.Emit.enderEmit.xLgr := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
-  NFCom.Emit.enderEmit.nro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
-  NFCom.Emit.enderEmit.xCpl := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
-  NFCom.Emit.enderEmit.xBairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
-  NFCom.Emit.EnderEmit.cMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
-  NFCom.Emit.enderEmit.xMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
-  NFCom.Emit.enderEmit.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcInt);
-  NFCom.Emit.enderEmit.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
-  NFCom.Emit.enderEmit.fone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-  NFCom.Emit.enderEmit.email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+  NFCom.Emit.enderEmit.xLgr := ObterConteudo(ANode.Childrens.FindAnyNs('xLgr'), tcStr);
+  NFCom.Emit.enderEmit.nro := ObterConteudo(ANode.Childrens.FindAnyNs('nro'), tcStr);
+  NFCom.Emit.enderEmit.xCpl := ObterConteudo(ANode.Childrens.FindAnyNs('xCpl'), tcStr);
+  NFCom.Emit.enderEmit.xBairro := ObterConteudo(ANode.Childrens.FindAnyNs('xBairro'), tcStr);
+  NFCom.Emit.EnderEmit.cMun := ObterConteudo(ANode.Childrens.FindAnyNs('cMun'), tcInt);
+  NFCom.Emit.enderEmit.xMun := ObterConteudo(ANode.Childrens.FindAnyNs('xMun'), tcStr);
+  NFCom.Emit.enderEmit.CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEP'), tcInt);
+  NFCom.Emit.enderEmit.UF := ObterConteudo(ANode.Childrens.FindAnyNs('UF'), tcStr);
+  NFCom.Emit.enderEmit.fone := ObterConteudo(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  NFCom.Emit.enderEmit.email := ObterConteudo(ANode.Childrens.FindAnyNs('email'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerDest(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_Dest(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('dest');
+  NFCom.Dest.xNome := ObterConteudo(ANode.Childrens.FindAnyNs('xNome'), tcStr);
 
-  if AuxNode = nil then Exit;
-
-  NFCom.Dest.xNome := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
-
-  NFCom.Dest.CNPJCPF := ObterCNPJCPF(AuxNode);
+  NFCom.Dest.CNPJCPF := ObterCNPJCPF(ANode);
 
   if NFCom.Dest.CNPJCPF = '' then
-    NFCom.Dest.idOutros := ObterConteudo(AuxNode.Childrens.FindAnyNs('idOutros'), tcStr);
+    NFCom.Dest.idOutros := ObterConteudo(ANode.Childrens.FindAnyNs('idOutros'), tcStr);
 
-  NFCom.Dest.indIEDest := StrToindIEDest(ObterConteudo(AuxNode.Childrens.FindAnyNs('indIEDest'), tcStr));
-  NFCom.Dest.IE := ObterConteudo(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
-  NFCom.Dest.IM := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
+  NFCom.Dest.indIEDest := StrToindIEDest(ObterConteudo(ANode.Childrens.FindAnyNs('indIEDest'), tcStr));
+  NFCom.Dest.IE := ObterConteudo(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  NFCom.Dest.IM := ObterConteudo(ANode.Childrens.FindAnyNs('IM'), tcStr);
 
-  LerDestEnderDest(AuxNode);
+  Ler_DestEnderDest(ANode.Childrens.FindAnyNs('enderDest'));
 end;
 
-procedure TNFComXmlReader.LerDestEnderDest(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_DestEnderDest(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('enderDest');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.Dest.enderDest.xLgr := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
-  NFCom.Dest.enderDest.nro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
-  NFCom.Dest.enderDest.xCpl := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
-  NFCom.Dest.enderDest.xBairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
-  NFCom.Dest.enderDest.cMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
-  NFCom.Dest.enderDest.xMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
-  NFCom.Dest.enderDest.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcInt);
-  NFCom.Dest.enderDest.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
-  NFCom.Dest.enderDest.fone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-  NFCom.Dest.enderDest.email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+  NFCom.Dest.enderDest.xLgr := ObterConteudo(ANode.Childrens.FindAnyNs('xLgr'), tcStr);
+  NFCom.Dest.enderDest.nro := ObterConteudo(ANode.Childrens.FindAnyNs('nro'), tcStr);
+  NFCom.Dest.enderDest.xCpl := ObterConteudo(ANode.Childrens.FindAnyNs('xCpl'), tcStr);
+  NFCom.Dest.enderDest.xBairro := ObterConteudo(ANode.Childrens.FindAnyNs('xBairro'), tcStr);
+  NFCom.Dest.enderDest.cMun := ObterConteudo(ANode.Childrens.FindAnyNs('cMun'), tcInt);
+  NFCom.Dest.enderDest.xMun := ObterConteudo(ANode.Childrens.FindAnyNs('xMun'), tcStr);
+  NFCom.Dest.enderDest.CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEP'), tcInt);
+  NFCom.Dest.enderDest.UF := ObterConteudo(ANode.Childrens.FindAnyNs('UF'), tcStr);
+  NFCom.Dest.enderDest.fone := ObterConteudo(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  NFCom.Dest.enderDest.email := ObterConteudo(ANode.Childrens.FindAnyNs('email'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerAssinante(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_Assinante(const ANode: TACBrXmlNode);
 var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
-  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('assinante');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.assinante.iCodAssinante := ObterConteudo(AuxNode.Childrens.FindAnyNs('iCodAssinante'), tcStr);
-  NFCom.assinante.tpAssinante := StrTotpAssinante(ObterConteudo(AuxNode.Childrens.FindAnyNs('tpAssinante'), tcStr));
-  NFCom.assinante.tpServUtil := StrTotpServUtil(ObterConteudo(AuxNode.Childrens.FindAnyNs('tpServUtil'), tcStr));
-  NFCom.assinante.nContrato := ObterConteudo(AuxNode.Childrens.FindAnyNs('nContrato'), tcStr);
-  NFCom.assinante.dContratoIni := ObterConteudo(AuxNode.Childrens.FindAnyNs('dContratoIni'), tcDat);
-  NFCom.assinante.dContratoFim := ObterConteudo(AuxNode.Childrens.FindAnyNs('dContratoFim'), tcDat);
-  NFCom.assinante.NroTermPrinc := ObterConteudo(AuxNode.Childrens.FindAnyNs('NroTermPrinc'), tcStr);
-  NFCom.assinante.cUFPrinc := ObterConteudo(AuxNode.Childrens.FindAnyNs('cUFPrinc'), tcInt);
+  NFCom.assinante.iCodAssinante := ObterConteudo(ANode.Childrens.FindAnyNs('iCodAssinante'), tcStr);
+  NFCom.assinante.tpAssinante := StrTotpAssinante(ObterConteudo(ANode.Childrens.FindAnyNs('tpAssinante'), tcStr));
+  NFCom.assinante.tpServUtil := StrTotpServUtil(ObterConteudo(ANode.Childrens.FindAnyNs('tpServUtil'), tcStr));
+  NFCom.assinante.nContrato := ObterConteudo(ANode.Childrens.FindAnyNs('nContrato'), tcStr);
+  NFCom.assinante.dContratoIni := ObterConteudo(ANode.Childrens.FindAnyNs('dContratoIni'), tcDat);
+  NFCom.assinante.dContratoFim := ObterConteudo(ANode.Childrens.FindAnyNs('dContratoFim'), tcDat);
+  NFCom.assinante.NroTermPrinc := ObterConteudo(ANode.Childrens.FindAnyNs('NroTermPrinc'), tcStr);
+  NFCom.assinante.cUFPrinc := ObterConteudo(ANode.Childrens.FindAnyNs('cUFPrinc'), tcInt);
 
   NFCom.assinante.TermAdic.Clear;
-  ANodes := AuxNode.Childrens.FindAllAnyNs('NroTermAdic');
+  ANodes := ANode.Childrens.FindAllAnyNs('NroTermAdic');
 
   for i := 0 to Length(ANodes) - 1 do
   begin
@@ -357,63 +324,52 @@ begin
   end;
 end;
 
-procedure TNFComXmlReader.LergSub(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gSub(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gSub');
+  NFCom.gSub.chNFCom := ObterConteudo(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
+  NFCom.gSub.motSub := StrToMotSub(ObterConteudo(ANode.Childrens.FindAnyNs('motSub'), tcStr));
 
-  if AuxNode = nil then Exit;
-
-  NFCom.gSub.chNFCom := ObterConteudo(AuxNode.Childrens.FindAnyNs('chNFCom'), tcStr);
-  NFCom.gSub.motSub := StrToMotSub(ObterConteudo(AuxNode.Childrens.FindAnyNs('motSub'), tcStr));
-
-  LergNF(AuxNode);
+  Ler_gNF(ANode.Childrens.FindAnyNs('gNF'));
 end;
 
-procedure TNFComXmlReader.LergNF(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_gNF(const ANode: TACBrXmlNode);
 var
   xData: string;
-  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gNF');
+  NFCom.gSub.gNF.CNPJ := ObterConteudo(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  NFCom.gSub.gNF.Modelo := ObterConteudo(ANode.Childrens.FindAnyNs('mod'), tcInt);
+  NFCom.gSub.gNF.serie := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
+  NFCom.gSub.gNF.nNF := ObterConteudo(ANode.Childrens.FindAnyNs('nNF'), tcInt);
 
-  if AuxNode = nil then Exit;
+  xData := ObterConteudo(ANode.Childrens.FindAnyNs('CompetEmis'), tcStr);
 
-  NFCom.gSub.gNF.CNPJ := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  NFCom.gSub.gNF.Modelo := ObterConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcInt);
-  NFCom.gSub.gNF.serie := ObterConteudo(AuxNode.Childrens.FindAnyNs('serie'), tcStr);
-  NFCom.gSub.gNF.nNF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nNF'), tcInt);
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    NFCom.gSub.gNF.CompetEmis := StrToDate(xData);
+  end
+  else
+    NFCom.gSub.gNF.CompetEmis := 0;
 
-  xData := ObterConteudo(AuxNode.Childrens.FindAnyNs('CompetEmis'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  NFCom.gSub.gNF.CompetEmis := StrToDate(xData);
-
-  NFCom.gSub.gNF.hash115 := ObterConteudo(AuxNode.Childrens.FindAnyNs('hash115'), tcStr);
+  NFCom.gSub.gNF.hash115 := ObterConteudo(ANode.Childrens.FindAnyNs('hash115'), tcStr);
 end;
 
-procedure TNFComXmlReader.LergCofat(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gCofat(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gCofat');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.gCofat.chNFComLocal := ObterConteudo(AuxNode.Childrens.FindAnyNs('chNFComLocal'), tcStr);
+  NFCom.gCofat.chNFComLocal := ObterConteudo(ANode.Childrens.FindAnyNs('chNFComLocal'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerDet(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_Det(const ANode: TACBrXmlNode);
 var
   Item: TDetCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NFCom.Det.New;
 
@@ -423,16 +379,16 @@ begin
 
   Item.infAdProd := ObterConteudo(ANode.Childrens.FindAnyNs('infAdProd'), tcStr);
 
-  LerDetProd(Item, ANode.Childrens.FindAnyNs('prod'));
-  LerDetImposto(Item, ANode.Childrens.FindAnyNs('imposto'));
-  LerDetgProcRef(Item, ANode.Childrens.FindAnyNs('gProcRef'));
-  LerDetgRessarc(Item, ANode.Childrens.FindAnyNs('gRessarc'));
+  Ler_DetProd(Item, ANode.Childrens.FindAnyNs('prod'));
+  Ler_DetImposto(Item, ANode.Childrens.FindAnyNs('imposto'));
+  Ler_DetgProcRef(Item, ANode.Childrens.FindAnyNs('gProcRef'));
+  Ler_DetgRessarc(Item, ANode.Childrens.FindAnyNs('gRessarc'));
 end;
 
-procedure TNFComXmlReader.LerDetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_DetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.Prod.cProd := ObterConteudo(ANode.Childrens.FindAnyNs('cProd'), tcStr);
   Item.Prod.xProd := ObterConteudo(ANode.Childrens.FindAnyNs('xProd'), tcStr);
@@ -449,20 +405,17 @@ begin
   Item.Prod.indDevolucao := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indDevolucao'), tcStr));
 end;
 
-procedure TNFComXmlReader.LerDetImposto(const Item: TDetCollectionItem;
+procedure TNFComXmlReader.Ler_DetImposto(const Item: TDetCollectionItem;
   const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('ICMS');
-
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
+  AuxNode := ANode.Childrens.Items[0];
 
   if (AuxNode <> nil) then
   begin
@@ -497,9 +450,6 @@ begin
   AuxNode := ANode.Childrens.FindAnyNs('PIS');
 
   if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
-
-  if (AuxNode <> nil) then
   begin
     Item.Imposto.PIS.CST := StrToCSTPIS(ObterConteudo(AuxNode.Childrens.FindAnyNs('CST'), tcStr));
     Item.Imposto.PIS.vBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBC'), tcDe2);
@@ -508,9 +458,6 @@ begin
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('COFINS');
-
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
 
   if (AuxNode <> nil) then
   begin
@@ -549,14 +496,14 @@ begin
   end;
 end;
 
-procedure TNFComXmlReader.LerDetgProcRef(const Item: TDetCollectionItem;
+procedure TNFComXmlReader.Ler_DetgProcRef(const Item: TDetCollectionItem;
   const ANode: TACBrXmlNode);
 var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.gProcRef.vItem := ObterConteudo(ANode.Childrens.FindAnyNs('vItem'), tcDe2);
   Item.gProcRef.qFaturada := ObterConteudo(ANode.Childrens.FindAnyNs('qFaturada'), tcDe4);
@@ -573,17 +520,17 @@ begin
   ANodes := ANode.Childrens.FindAllAnyNs('gProc');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LerDetgProcRefgProc(Item, ANodes[i]);
+    Ler_DetgProcRefgProc(Item, ANodes[i]);
   end;
 end;
 
-procedure TNFComXmlReader.LerDetgProcRefgProc(const Item: TDetCollectionItem;
+procedure TNFComXmlReader.Ler_DetgProcRefgProc(const Item: TDetCollectionItem;
   const ANode: TACBrXmlNode);
 var
   Itemaux: TgProcCollectionItem;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Itemaux := Item.gProcRef.gProc.New;
 
@@ -591,11 +538,11 @@ begin
   Itemaux.nProcesso := ObterConteudo(ANode.Childrens.FindAnyNs('nProcesso'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerDetgRessarc(const Item: TDetCollectionItem;
+procedure TNFComXmlReader.Ler_DetgRessarc(const Item: TDetCollectionItem;
   const ANode: TACBrXmlNode);
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.gRessarc.tpRessarc := StrTotpRessarc(ObterConteudo(ANode.Childrens.FindAnyNs('tpRessarc'), tcStr));
   Item.gRessarc.dRef := ObterConteudo(ANode.Childrens.FindAnyNs('dRef'), tcDat);
@@ -604,17 +551,13 @@ begin
   Item.gRessarc.xObs := ObterConteudo(ANode.Childrens.FindAnyNs('xObs'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerTotal(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_Total(const ANode: TACBrXmlNode);
 var
-  AuxNode, AuxNode2: TACBrXmlNode;
+  AuxNode2: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('total');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.Total.vProd := ObterConteudo(AuxNode.Childrens.FindAnyNs('vProd'), tcDe2);
+  NFCom.Total.vProd := ObterConteudo(ANode.Childrens.FindAnyNs('vProd'), tcDe2);
 
   AuxNode2 := ANode.Childrens.FindAnyNs('ICMSTot');
 
@@ -626,10 +569,10 @@ begin
     NFCom.Total.vFCP := ObterConteudo(AuxNode2.Childrens.FindAnyNs('vFCP'), tcDe2);
   end;
 
-  NFCom.Total.vCOFINS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vCOFINS'), tcDe2);
-  NFCom.Total.vPIS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vPIS'), tcDe2);
-  NFCom.Total.vFUNTTEL := ObterConteudo(AuxNode.Childrens.FindAnyNs('vFUNTTEL'), tcDe2);
-  NFCom.Total.vFUST := ObterConteudo(AuxNode.Childrens.FindAnyNs('vFUST'), tcDe2);
+  NFCom.Total.vCOFINS := ObterConteudo(ANode.Childrens.FindAnyNs('vCOFINS'), tcDe2);
+  NFCom.Total.vPIS := ObterConteudo(ANode.Childrens.FindAnyNs('vPIS'), tcDe2);
+  NFCom.Total.vFUNTTEL := ObterConteudo(ANode.Childrens.FindAnyNs('vFUNTTEL'), tcDe2);
+  NFCom.Total.vFUST := ObterConteudo(ANode.Childrens.FindAnyNs('vFUST'), tcDe2);
 
   AuxNode2 := ANode.Childrens.FindAnyNs('vRetTribTot');
 
@@ -641,192 +584,122 @@ begin
     NFCom.Total.vIRRF := ObterConteudo(AuxNode2.Childrens.FindAnyNs('vIRRF'), tcDe2);
   end;
 
-  NFCom.Total.vDesc := ObterConteudo(AuxNode.Childrens.FindAnyNs('vDesc'), tcDe2);
-  NFCom.Total.vOutro := ObterConteudo(AuxNode.Childrens.FindAnyNs('vOutro'), tcDe2);
-  NFCom.Total.vNF := ObterConteudo(AuxNode.Childrens.FindAnyNs('vNF'), tcDe2);
+  NFCom.Total.vDesc := ObterConteudo(ANode.Childrens.FindAnyNs('vDesc'), tcDe2);
+  NFCom.Total.vOutro := ObterConteudo(ANode.Childrens.FindAnyNs('vOutro'), tcDe2);
+  NFCom.Total.vNF := ObterConteudo(ANode.Childrens.FindAnyNs('vNF'), tcDe2);
 end;
 
-procedure TNFComXmlReader.LergFidelidade(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gFidelidade(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gFidelidade');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.gFidelidade.qtdSaldoPts := ObterConteudo(AuxNode.Childrens.FindAnyNs('qtdSaldoPts'), tcStr);
-  NFCom.gFidelidade.dRefSaldoPts := ObterConteudo(AuxNode.Childrens.FindAnyNs('dRefSaldoPts'), tcDat);
-  NFCom.gFidelidade.qtdPtsResg := ObterConteudo(AuxNode.Childrens.FindAnyNs('qtdPtsResg'), tcStr);
-  NFCom.gFidelidade.dRefResgPts := ObterConteudo(AuxNode.Childrens.FindAnyNs('dRefResgPts'), tcDat);
+  NFCom.gFidelidade.qtdSaldoPts := ObterConteudo(ANode.Childrens.FindAnyNs('qtdSaldoPts'), tcStr);
+  NFCom.gFidelidade.dRefSaldoPts := ObterConteudo(ANode.Childrens.FindAnyNs('dRefSaldoPts'), tcDat);
+  NFCom.gFidelidade.qtdPtsResg := ObterConteudo(ANode.Childrens.FindAnyNs('qtdPtsResg'), tcStr);
+  NFCom.gFidelidade.dRefResgPts := ObterConteudo(ANode.Childrens.FindAnyNs('dRefResgPts'), tcDat);
 end;
 
-procedure TNFComXmlReader.LergFat(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_gFat(const ANode: TACBrXmlNode);
 var
   xData: string;
-  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gFat');
+  xData := ObterConteudo(ANode.Childrens.FindAnyNs('CompetFat'), tcStr);
 
-  if AuxNode = nil then Exit;
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    NFCom.gFat.CompetFat := StrToDate(xData);
+  end
+  else
+    NFCom.gFat.CompetFat := 0;
 
-  xData := ObterConteudo(AuxNode.Childrens.FindAnyNs('CompetFat'), tcStr);
-  xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
-  NFCom.gFat.CompetFat := StrToDate(xData);
+  NFCom.gFat.dVencFat := ObterConteudo(ANode.Childrens.FindAnyNs('dVencFat'), tcDat);
+  NFCom.gFat.dPerUsoIni := ObterConteudo(ANode.Childrens.FindAnyNs('dPerUsoIni'), tcDat);
+  NFCom.gFat.dPerUsoFim := ObterConteudo(ANode.Childrens.FindAnyNs('dPerUsoFim'), tcDat);
+  NFCom.gFat.codBarras := ObterConteudo(ANode.Childrens.FindAnyNs('codBarras'), tcStr);
+  NFCom.gFat.codDebAuto := ObterConteudo(ANode.Childrens.FindAnyNs('codDebAuto'), tcStr);
+  NFCom.gFat.codBanco := ObterConteudo(ANode.Childrens.FindAnyNs('codBanco'), tcStr);
+  NFCom.gFat.codAgencia := ObterConteudo(ANode.Childrens.FindAnyNs('codAgencia'), tcStr);
 
-  NFCom.gFat.dVencFat := ObterConteudo(AuxNode.Childrens.FindAnyNs('dVencFat'), tcDat);
-  NFCom.gFat.dPerUsoIni := ObterConteudo(AuxNode.Childrens.FindAnyNs('dPerUsoIni'), tcDat);
-  NFCom.gFat.dPerUsoFim := ObterConteudo(AuxNode.Childrens.FindAnyNs('dPerUsoFim'), tcDat);
-  NFCom.gFat.codBarras := ObterConteudo(AuxNode.Childrens.FindAnyNs('codBarras'), tcStr);
-  NFCom.gFat.codDebAuto := ObterConteudo(AuxNode.Childrens.FindAnyNs('codDebAuto'), tcStr);
-  NFCom.gFat.codBanco := ObterConteudo(AuxNode.Childrens.FindAnyNs('codBanco'), tcStr);
-  NFCom.gFat.codAgencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('codAgencia'), tcStr);
-
-  LergFatEnderCorresp(AuxNode);
-  LergFatgPIX(AuxNode);
+  Ler_gFatEnderCorresp(ANode.Childrens.FindAnyNs('enderCorresp'));
+  Ler_gFatgPIX(ANode.Childrens.FindAnyNs('gPIX'));
 end;
 
-procedure TNFComXmlReader.LergFatEnderCorresp(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gFatEnderCorresp(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('enderCorresp');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.gFat.enderCorresp.xLgr := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
-  NFCom.gFat.enderCorresp.nro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
-  NFCom.gFat.enderCorresp.xCpl := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
-  NFCom.gFat.enderCorresp.xBairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
-  NFCom.gFat.enderCorresp.cMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
-  NFCom.gFat.enderCorresp.xMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
-  NFCom.gFat.enderCorresp.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcInt);
-  NFCom.gFat.enderCorresp.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
-  NFCom.gFat.enderCorresp.fone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-  NFCom.gFat.enderCorresp.email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+  NFCom.gFat.enderCorresp.xLgr := ObterConteudo(ANode.Childrens.FindAnyNs('xLgr'), tcStr);
+  NFCom.gFat.enderCorresp.nro := ObterConteudo(ANode.Childrens.FindAnyNs('nro'), tcStr);
+  NFCom.gFat.enderCorresp.xCpl := ObterConteudo(ANode.Childrens.FindAnyNs('xCpl'), tcStr);
+  NFCom.gFat.enderCorresp.xBairro := ObterConteudo(ANode.Childrens.FindAnyNs('xBairro'), tcStr);
+  NFCom.gFat.enderCorresp.cMun := ObterConteudo(ANode.Childrens.FindAnyNs('cMun'), tcInt);
+  NFCom.gFat.enderCorresp.xMun := ObterConteudo(ANode.Childrens.FindAnyNs('xMun'), tcStr);
+  NFCom.gFat.enderCorresp.CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEP'), tcInt);
+  NFCom.gFat.enderCorresp.UF := ObterConteudo(ANode.Childrens.FindAnyNs('UF'), tcStr);
+  NFCom.gFat.enderCorresp.fone := ObterConteudo(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  NFCom.gFat.enderCorresp.email := ObterConteudo(ANode.Childrens.FindAnyNs('email'), tcStr);
 end;
 
-procedure TNFComXmlReader.LergFatgPIX(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gFatgPIX(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gPIX');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.gFat.gPIX.urlQRCodePIX := ObterConteudo(AuxNode.Childrens.FindAnyNs('urlQRCodePIX'), tcStr);
+  NFCom.gFat.gPIX.urlQRCodePIX := ObterConteudo(ANode.Childrens.FindAnyNs('urlQRCodePIX'), tcStr);
 end;
 
-procedure TNFComXmlReader.LergFatCentral(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gFatCentral(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gFatCentral');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.gFatCentral.CNPJ := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  NFCom.gFatCentral.cUF := ObterConteudo(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
+  NFCom.gFatCentral.CNPJ := ObterConteudo(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  NFCom.gFatCentral.cUF := ObterConteudo(ANode.Childrens.FindAnyNs('cUF'), tcInt);
 end;
 
-procedure TNFComXmlReader.LerautXML(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_autXML(const ANode: TACBrXmlNode);
 var
   Item: TautXMLCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NFCom.autXML.New;
 
   Item.CNPJCPF := ObterCNPJCPF(ANode);
 end;
 
-procedure TNFComXmlReader.LerInfAdic(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_InfAdic(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('infAdic');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.InfAdic.infAdFisco := ObterConteudo(AuxNode.Childrens.FindAnyNs('infAdFisco'), tcStr);
-  NFCom.InfAdic.infCpl := ObterConteudo(AuxNode.Childrens.FindAnyNs('infCpl'), tcStr);
+  NFCom.InfAdic.infAdFisco := ObterConteudo(ANode.Childrens.FindAnyNs('infAdFisco'), tcStr);
+  NFCom.InfAdic.infCpl := ObterConteudo(ANode.Childrens.FindAnyNs('infCpl'), tcStr);
 end;
 
-procedure TNFComXmlReader.LergRespTec(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFComXmlReader.Ler_gRespTec(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('gRespTec');
-
-  if AuxNode = nil then Exit;
-
-  NFCom.infRespTec.CNPJ := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  NFCom.infRespTec.xContato := ObterConteudo(AuxNode.Childrens.FindAnyNs('xContato'), tcStr);
-  NFCom.infRespTec.email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
-  NFCom.infRespTec.fone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-  NFCom.infRespTec.idCSRT := ObterConteudo(AuxNode.Childrens.FindAnyNs('idCSRT'), tcInt);
-  NFCom.infRespTec.hashCSRT := ObterConteudo(AuxNode.Childrens.FindAnyNs('hashCSRT'), tcStr);
+  NFCom.infRespTec.CNPJ := ObterConteudo(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  NFCom.infRespTec.xContato := ObterConteudo(ANode.Childrens.FindAnyNs('xContato'), tcStr);
+  NFCom.infRespTec.email := ObterConteudo(ANode.Childrens.FindAnyNs('email'), tcStr);
+  NFCom.infRespTec.fone := ObterConteudo(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  NFCom.infRespTec.idCSRT := ObterConteudo(ANode.Childrens.FindAnyNs('idCSRT'), tcInt);
+  NFCom.infRespTec.hashCSRT := ObterConteudo(ANode.Childrens.FindAnyNs('hashCSRT'), tcStr);
 end;
 
-procedure TNFComXmlReader.LerInfNFComSupl(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_InfNFComSupl(const ANode: TACBrXmlNode);
 var
- sQrCode: string;
-  AuxNode: TACBrXmlNode;
+  sQrCode: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('infNFComSupl');
+  sQrCode := ObterConteudo(ANode.Childrens.Find('qrCodNFCom'), tcStr);
+  sQrCode := StringReplace(sQrCode, '<![CDATA[', '', []);
+  sQrCode := StringReplace(sQrCode, ']]>', '', []);
 
-  if AuxNode <> nil then
-  begin
-    sQrCode := ObterConteudo(AuxNode.Childrens.FindAnyNs('qrCodNFCom'), tcStr);
-    sQrCode := StringReplace(sQrCode, '<![CDATA[', '', []);
-    sQrCode := StringReplace(sQrCode, ']]>', '', []);
-
-    NFCom.infNFComSupl.qrCodNFCom := sQrCode;
-  end;
-end;
-
-procedure TNFComXmlReader.LerSignature(const ANode: TACBrXmlNode);
-var
-  AuxNode, AuxNode2: TACBrXmlNode;
-begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
-
-  AuxNode := ANode.Childrens.FindAnyNs('Signature');
-
-  AuxNode2 := AuxNode.Childrens.FindAnyNs('SignedInfo');
-
-  if AuxNode2 <> nil then
-  begin
-    AuxNode2 := AuxNode2.Childrens.FindAnyNs('Reference');
-
-    if AuxNode2 <> nil then
-    begin
-      NFCom.signature.URI := AuxNode2.Attributes.Items['URI'].Content;
-      NFCom.signature.DigestValue := ObterConteudo(AuxNode2.Childrens.FindAnyNs('DigestValue'), tcStr);
-    end;
-  end;
-
-  NFCom.signature.SignatureValue := ObterConteudo(AuxNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
-
-  AuxNode2 := AuxNode.Childrens.FindAnyNs('KeyInfo');
-
-  if AuxNode2 <> nil then
-    NFCom.signature.X509Certificate := ObterConteudo(AuxNode2.Childrens.FindAnyNs('X509Certificate'), tcStr);
+  NFCom.infNFComSupl.qrCodNFCom := sQrCode;
 end;
 
 end.

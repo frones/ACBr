@@ -87,10 +87,10 @@ const
     '3', '4', '5', '6', '7', '8', '9');
 
 type
-  TIndicador = (tiSim, tiNao);
+  TIndicador = (tiVazio, tiSim, tiNao);
 
 const
-  TIndicadorArrayStrings: array[TIndicador] of string = ('1', '0');
+  TIndicadorArrayStrings: array[TIndicador] of string = ('', '1', '0');
 
 type
   TFinalidadeNFCom = (fnNormal, fnSubstituicao, fnAjuste);

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/03/2024
+-- ACBrNF3eXmlReader --
+[*] Melhorias na leitura do XML.
+  Por: Italo Giurizzato Junior
 -- ACBrNF3eConversao --
 [-] Inclusão de enumerados para atender tags opcionais.
 -- ACBrNF3eXmlReader --

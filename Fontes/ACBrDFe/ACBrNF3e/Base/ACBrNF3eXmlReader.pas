@@ -49,35 +49,33 @@ type
 
     function NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
 
-    procedure LerProtNF3e(const ANode: TACBrXmlNode);
-    procedure LerInfNF3e(const ANode: TACBrXmlNode);
-    procedure LerIde(const ANode: TACBrXmlNode);
-    procedure LerEmit(const ANode: TACBrXmlNode);
-    procedure LerEmitEnderEmit(const ANode: TACBrXmlNode);
-    procedure LerDest(const ANode: TACBrXmlNode);
-    procedure LerDestEnderDest(const ANode: TACBrXmlNode);
-    procedure LerAcessante(const ANode: TACBrXmlNode);
-    procedure LergSub(const ANode: TACBrXmlNode);
-    procedure LergNF(const ANode: TACBrXmlNode);
-    procedure LergJudic(const ANode: TACBrXmlNode);
-    procedure LergGrContrat(const ANode: TACBrXmlNode);
-    procedure LergMed(const ANode: TACBrXmlNode);
-    procedure LergSCEE(const ANode: TACBrXmlNode);
-    procedure LergConsumidor(const ANode: TACBrXmlNode);
-    procedure LergSaldoCred(const ANode: TACBrXmlNode);
-    procedure LergTipoSaldo(const ANode: TACBrXmlNode);
-    procedure LerNFDet(const ANode: TACBrXmlNode);
-
-    procedure LerTotal(const ANode: TACBrXmlNode);
-    procedure LergFat(const ANode: TACBrXmlNode);
-    procedure LergANEEL(const ANode: TACBrXmlNode);
-    procedure LergHistFat(const ANode: TACBrXmlNode);
-    procedure LergGrandFat(const ANode: TACBrXmlNode; I: Integer);
-    procedure LerautXML(const ANode: TACBrXmlNode);
-    procedure LerInfAdic(const ANode: TACBrXmlNode);
-    procedure LergRespTec(const ANode: TACBrXmlNode);
-    procedure LerInfNF3eSupl(const ANode: TACBrXmlNode);
-    procedure Ler_Signature(const ANode: TACBrXmlNode);
+    procedure Ler_ProtNF3e(const ANode: TACBrXmlNode);
+    procedure Ler_InfNF3e(const ANode: TACBrXmlNode);
+    procedure Ler_Ide(const ANode: TACBrXmlNode);
+    procedure Ler_Emit(const ANode: TACBrXmlNode);
+    procedure Ler_EmitEnderEmit(const ANode: TACBrXmlNode);
+    procedure Ler_Dest(const ANode: TACBrXmlNode);
+    procedure Ler_DestEnderDest(const ANode: TACBrXmlNode);
+    procedure Ler_Acessante(const ANode: TACBrXmlNode);
+    procedure Ler_gSub(const ANode: TACBrXmlNode);
+    procedure Ler_gNF(const ANode: TACBrXmlNode);
+    procedure Ler_gJudic(const ANode: TACBrXmlNode);
+    procedure Ler_gGrContrat(const ANode: TACBrXmlNode);
+    procedure Ler_gMed(const ANode: TACBrXmlNode);
+    procedure Ler_gSCEE(const ANode: TACBrXmlNode);
+    procedure Ler_gConsumidor(const ANode: TACBrXmlNode);
+    procedure Ler_gSaldoCred(const ANode: TACBrXmlNode);
+    procedure Ler_gTipoSaldo(const ANode: TACBrXmlNode);
+    procedure Ler_NFDet(const ANode: TACBrXmlNode);
+    procedure Ler_Total(const ANode: TACBrXmlNode);
+    procedure Ler_gFat(const ANode: TACBrXmlNode);
+    procedure Ler_gANEEL(const ANode: TACBrXmlNode);
+    procedure Ler_gHistFat(const ANode: TACBrXmlNode);
+    procedure Ler_gGrandFat(const ANode: TACBrXmlNode; I: Integer);
+    procedure Ler_autXML(const ANode: TACBrXmlNode);
+    procedure Ler_InfAdic(const ANode: TACBrXmlNode);
+    procedure Ler_gRespTec(const ANode: TACBrXmlNode);
+    procedure Ler_InfNF3eSupl(const ANode: TACBrXmlNode);
   public
     constructor Create(AOwner: TNF3e); reintroduce;
 
@@ -101,9 +99,9 @@ begin
   FNF3e := AOwner;
 end;
 
-procedure TNF3eXmlReader.LerAcessante(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_Acessante(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.acessante.idAcesso := ObterConteudo(ANode.Childrens.Find('idAcesso'), tcStr);
   NF3e.acessante.idCodCliente := ObterConteudo(ANode.Childrens.Find('idCodCliente'), tcStr);
@@ -119,7 +117,7 @@ begin
   NF3e.acessante.codRoteiroLeitura := ObterConteudo(ANode.Childrens.Find('codRoteiroLeitura'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LerDest(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_Dest(const ANode: TACBrXmlNode);
 begin
   NF3e.Dest.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
 
@@ -135,12 +133,12 @@ begin
   NF3e.Dest.NB := ObterConteudo(ANode.Childrens.Find('NB'), tcStr);
   NF3e.Dest.xNomeAdicional := ObterConteudo(ANode.Childrens.Find('xNomeAdicional'), tcStr);
 
-  LerDestEnderDest(ANode.Childrens.Find('enderDest'));
+  Ler_DestEnderDest(ANode.Childrens.Find('enderDest'));
 end;
 
-procedure TNF3eXmlReader.LerDestEnderDest(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_DestEnderDest(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.Dest.enderDest.xLgr := ObterConteudo(ANode.Childrens.Find('xLgr'), tcStr);
   NF3e.Dest.enderDest.nro := ObterConteudo(ANode.Childrens.Find('nro'), tcStr);
@@ -154,21 +152,21 @@ begin
   NF3e.Dest.enderDest.email := ObterConteudo(ANode.Childrens.Find('email'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LerEmit(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_Emit(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.Emit.CNPJ := ObterCNPJCPF(ANode);
   NF3e.Emit.IE := ObterConteudo(ANode.Childrens.Find('IE'), tcStr);
   NF3e.Emit.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
   NF3e.Emit.xFant := ObterConteudo(ANode.Childrens.Find('xFant'), tcStr);
 
-  LerEmitEnderEmit(ANode.Childrens.Find('enderEmit'));
+  Ler_EmitEnderEmit(ANode.Childrens.Find('enderEmit'));
 end;
 
-procedure TNF3eXmlReader.LerEmitEnderEmit(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_EmitEnderEmit(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.Emit.enderEmit.xLgr := ObterConteudo(ANode.Childrens.Find('xLgr'), tcStr);
   NF3e.Emit.enderEmit.nro := ObterConteudo(ANode.Childrens.Find('nro'), tcStr);
@@ -182,11 +180,11 @@ begin
   NF3e.Emit.enderEmit.email := ObterConteudo(ANode.Childrens.Find('email'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LergGrContrat(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gGrContrat(const ANode: TACBrXmlNode);
 var
   Item: TgGrContratCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gGrContrat.New;
 
@@ -196,18 +194,18 @@ begin
   Item.qUnidContrat := ObterConteudo(ANode.Childrens.Find('qUnidContrat'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LergJudic(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gJudic(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.gJudic.chNF3e := ObterConteudo(ANode.Childrens.Find('chNF3e'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LergMed(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gMed(const ANode: TACBrXmlNode);
 var
   Item: TgMedCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gMed.New;
 
@@ -217,11 +215,11 @@ begin
   Item.dMedAtu := ObterConteudo(ANode.Childrens.Find('dMedAtu'), tcDat);
 end;
 
-procedure TNF3eXmlReader.LergNF(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gNF(const ANode: TACBrXmlNode);
 var
   xData: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.gSub.CNPJ := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   NF3e.gSub.serie := ObterConteudo(ANode.Childrens.Find('serie'), tcStr);
@@ -248,11 +246,11 @@ begin
   NF3e.gSub.hash115 := ObterConteudo(ANode.Childrens.Find('hash115'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LergConsumidor(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gConsumidor(const ANode: TACBrXmlNode);
 var
   Item: TgConsumidorCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gSCEE.gConsumidor.New;
 
@@ -263,12 +261,12 @@ begin
   Item.tpPosTar := StrTotpPosTar(ObterConteudo(ANode.Childrens.Find('tpPosTar'), tcStr));
 end;
 
-procedure TNF3eXmlReader.LergSaldoCred(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gSaldoCred(const ANode: TACBrXmlNode);
 var
   Item: TgSaldoCredCollectionItem;
   xData: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gSCEE.gSaldoCred.New;
 
@@ -288,12 +286,12 @@ begin
     Item.CompetExpirar := 0;
 end;
 
-procedure TNF3eXmlReader.LergTipoSaldo(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gTipoSaldo(const ANode: TACBrXmlNode);
 var
   Item: TgTipoSaldoCollectionItem;
   xData: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gSCEE.gTipoSaldo.New;
 
@@ -313,49 +311,49 @@ begin
     Item.CompetExpirar := 0;
 end;
 
-procedure TNF3eXmlReader.LergSCEE(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gSCEE(const ANode: TACBrXmlNode);
 var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.gSCEE.tpPartComp := StrTotpPartComp(ObterConteudo(ANode.Childrens.Find('tpPartComp'), tcStr));
 
   ANodes := ANode.Childrens.FindAll('gConsumidor');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergConsumidor(ANodes[i]);
+    Ler_gConsumidor(ANodes[i]);
   end;
 
   ANodes := ANode.Childrens.FindAll('gSaldoCred');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergSaldoCred(ANodes[i]);
+    Ler_gSaldoCred(ANodes[i]);
   end;
 
   ANodes := ANode.Childrens.FindAll('gTipoSaldo');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergTipoSaldo(ANodes[i]);
+    Ler_gTipoSaldo(ANodes[i]);
   end;
 end;
 
-procedure TNF3eXmlReader.LergSub(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gSub(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.gSub.chNF3e := ObterConteudo(ANode.Childrens.Find('chNF3e'), tcStr);
   NF3e.gSub.motSub := StrToMotSub(ObterConteudo(ANode.Childrens.Find('motSub'), tcStr));
 
-  LergNF(ANode.Childrens.Find('gNF'));
+  Ler_gNF(ANode.Childrens.Find('gNF'));
 end;
 
-procedure TNF3eXmlReader.LerIde(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_Ide(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.ide.cUF := ObterConteudo(ANode.Childrens.Find('cUF'), tcInt);
   NF3e.Ide.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
@@ -374,59 +372,59 @@ begin
   NF3e.Ide.xJust := ObterConteudo(ANode.Childrens.Find('xJust'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LerInfNF3e(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_InfNF3e(const ANode: TACBrXmlNode);
 var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  LerIde(ANode.Childrens.Find('ide'));
-  LerEmit(ANode.Childrens.Find('emit'));
-  LerDest(ANode.Childrens.Find('dest'));
-  LerAcessante(ANode.Childrens.Find('acessante'));
-  LergSub(ANode.Childrens.Find('gSub'));
-  LergJudic(ANode.Childrens.Find('gJudic'));
+  Ler_Ide(ANode.Childrens.Find('ide'));
+  Ler_Emit(ANode.Childrens.Find('emit'));
+  Ler_Dest(ANode.Childrens.Find('dest'));
+  Ler_Acessante(ANode.Childrens.Find('acessante'));
+  Ler_gSub(ANode.Childrens.Find('gSub'));
+  Ler_gJudic(ANode.Childrens.Find('gJudic'));
 
   ANodes := ANode.Childrens.FindAll('gGrContrat');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergGrContrat(ANodes[i]);
+    Ler_gGrContrat(ANodes[i]);
   end;
 
   ANodes := ANode.Childrens.FindAll('gMed');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergMed(ANodes[i]);
+    Ler_gMed(ANodes[i]);
   end;
 
-  LergSCEE(ANode.Childrens.Find('gSCEE'));
+  Ler_gSCEE(ANode.Childrens.Find('gSCEE'));
 
   NF3e.NFDet.Clear;
   ANodes := ANode.Childrens.FindAll('NFdet');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LerNFdet(ANodes[i]);
+    Ler_NFdet(ANodes[i]);
   end;
 
-  LerTotal(ANode.Childrens.Find('total'));
+  Ler_Total(ANode.Childrens.Find('total'));
 
-  LergFat(ANode.Childrens.Find('gFat'));
+  Ler_gFat(ANode.Childrens.Find('gFat'));
 
-  LergANEEL(ANode.Childrens.Find('gANEEL'));
+  Ler_gANEEL(ANode.Childrens.Find('gANEEL'));
 
   ANodes := ANode.Childrens.FindAll('autXML');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LerautXML(ANodes[i]);
+    Ler_autXML(ANodes[i]);
   end;
 
-  LerInfAdic(ANode.Childrens.Find('infAdic'));
+  Ler_InfAdic(ANode.Childrens.Find('infAdic'));
 
-  LergRespTec(ANode.Childrens.Find('gRespTec'));
+  Ler_gRespTec(ANode.Childrens.Find('gRespTec'));
 end;
 
-procedure TNF3eXmlReader.LerNFDet(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_NFDet(const ANode: TACBrXmlNode);
 var
   Item: TNFDetCollectionItem;
   ADetNodes: TACBrXmlNodeArray;
@@ -730,11 +728,11 @@ begin
   end;
 end;
 
-procedure TNF3eXmlReader.LerTotal(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_Total(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.Total.vProd := ObterConteudo(ANode.Childrens.Find('vProd'), tcDe2);
 
@@ -768,12 +766,12 @@ begin
   NF3e.Total.vNF := ObterConteudo(ANode.Childrens.Find('vNF'), tcDe2);
 end;
 
-procedure TNF3eXmlReader.LergFat(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gFat(const ANode: TACBrXmlNode);
 var
   xData: string;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   xData := ObterConteudo(ANode.Childrens.Find('CompetFat'), tcStr);
   if xData <> '' then
@@ -817,27 +815,27 @@ begin
   end;
 end;
 
-procedure TNF3eXmlReader.LergANEEL(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gANEEL(const ANode: TACBrXmlNode);
 var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   ANodes := ANode.Childrens.FindAll('gHistFat');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergHistFat(ANodes[i]);
+    Ler_gHistFat(ANodes[i]);
   end;
 end;
 
-procedure TNF3eXmlReader.LergHistFat(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gHistFat(const ANode: TACBrXmlNode);
 var
   Item: TgHistFatCollectionItem;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gANEEL.gHistFat.New;
 
@@ -846,16 +844,16 @@ begin
   ANodes := ANode.Childrens.FindAll('gGrandFat');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LergGrandFat(ANodes[i], NF3e.gANEEL.gHistFat.Count -1);
+    Ler_gGrandFat(ANodes[i], NF3e.gANEEL.gHistFat.Count -1);
   end;
 end;
 
-procedure TNF3eXmlReader.LergGrandFat(const ANode: TACBrXmlNode; I: Integer);
+procedure TNF3eXmlReader.Ler_gGrandFat(const ANode: TACBrXmlNode; I: Integer);
 var
   Item: TgGrandFatCollectionItem;
   xData: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.gANEEL.gHistFat[I].gGrandFat.New;
 
@@ -873,28 +871,28 @@ begin
   Item.qtdDias := ObterConteudo(ANode.Childrens.Find('qtdDias'), tcInt);
 end;
 
-procedure TNF3eXmlReader.LerautXML(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_autXML(const ANode: TACBrXmlNode);
 var
   Item: TautXMLCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NF3e.autXML.New;
 
   Item.CNPJCPF := ObterCNPJCPF(ANode);
 end;
 
-procedure TNF3eXmlReader.LerInfAdic(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_InfAdic(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.InfAdic.infAdFisco := ObterConteudo(ANode.Childrens.Find('infAdFisco'), tcStr);
   NF3e.InfAdic.infCpl := ObterConteudo(ANode.Childrens.Find('infCpl'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LergRespTec(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_gRespTec(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.infRespTec.CNPJ     := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   NF3e.infRespTec.xContato := ObterConteudo(ANode.Childrens.Find('xContato'), tcStr);
@@ -904,11 +902,11 @@ begin
   NF3e.infRespTec.hashCSRT := ObterConteudo(ANode.Childrens.Find('hashCSRT'), tcStr);
 end;
 
-procedure TNF3eXmlReader.LerInfNF3eSupl(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_InfNF3eSupl(const ANode: TACBrXmlNode);
 var
  sQrCode: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   sQrCode := ObterConteudo(ANode.Childrens.Find('qrCodNF3e'), tcStr);
   sQrCode := StringReplace(sQrCode, '<![CDATA[', '', []);
@@ -917,18 +915,11 @@ begin
   NF3e.infNF3eSupl.qrCodNF3e := sQrCode;
 end;
 
-procedure TNF3eXmlReader.Ler_Signature(const ANode: TACBrXmlNode);
-begin
-  if not Assigned(ANode) then Exit;
-
-  LerSignature(ANode, NF3e.signature);
-end;
-
-procedure TNF3eXmlReader.LerProtNF3e(const ANode: TACBrXmlNode);
+procedure TNF3eXmlReader.Ler_ProtNF3e(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NF3e.procNF3e.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   NF3e.procNF3e.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
@@ -947,7 +938,7 @@ Var
   NF3eNode, infNF3eNode: TACBrXmlNode;
   att: TACBrXmlAttribute;
 begin
-  if not Assigned(FNF3e) or (FNF3e = nil) then
+  if not Assigned(FNF3e) then
     raise Exception.Create('Destino não informado, informe a classe [TNF3e] de destino.');
 
   if EstaVazio(Arquivo) then
@@ -959,7 +950,7 @@ begin
 
   if Document.Root.Name = 'nf3eProc' then
   begin
-    LerProtNF3e(Document.Root.Childrens.Find('protNF3e').Childrens.Find('infProt'));
+    Ler_ProtNF3e(Document.Root.Childrens.Find('protNF3e').Childrens.Find('infProt'));
     NF3eNode := Document.Root.Childrens.Find('NF3e');
   end
   else
@@ -985,346 +976,18 @@ begin
 
   NF3e.infNF3e.Versao := StringToFloat(att.Content);
 
-  LerInfNF3e(infNF3eNode);
-  LerInfNF3eSupl(NF3eNode.Childrens.Find('infNF3eSupl'));
-  Ler_Signature(NF3eNode.Childrens.Find('Signature'));
+  Ler_InfNF3e(infNF3eNode);
+  Ler_InfNF3eSupl(NF3eNode.Childrens.Find('infNF3eSupl'));
+
+  LerSignature(NF3eNode.Childrens.Find('Signature'), NF3e.signature);
 
   Result := True;
 end;
 
 function TNF3eXmlReader.NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
 begin
-  Result := not Assigned(ANode) or (ANode = nil);
+  Result := not Assigned(ANode);
 end;
 
-(*
-procedure TNF3eXmlReader.LerDetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
-  ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
-begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
-  {
-  Item.Prod.cProd := ObterConteudo(ANode.Childrens.Find('cProd'), tcStr);
-  Item.Prod.cEAN  := ObterConteudo(ANode.Childrens.Find('cEAN'), tcStr);
-  Item.Prod.xProd := ObterConteudo(ANode.Childrens.Find('xProd'), tcStr);
-  Item.Prod.NCM   := ObterConteudo(ANode.Childrens.Find('NCM'), tcStr);
-  Item.Prod.CEST := ObterConteudo(ANode.Childrens.Find('CEST'), tcStr);
-  if NF3e.infNF3e.Versao >= 4 then
-  begin
-    Item.Prod.indEscala := StrToindEscala(ok, ObterConteudo(ANode.Childrens.Find('indEscala'), tcStr));
-    Item.Prod.CNPJFab   := ObterConteudo(ANode.Childrens.Find('CNPJFab'), tcStr);
-    Item.Prod.cBenef    := ObterConteudo(ANode.Childrens.Find('cBenef'), tcStr);
-  end;
-  Item.Prod.EXTIPI   := ObterConteudo(ANode.Childrens.Find('EXTIPI'), tcStr);
-  Item.Prod.CFOP     := ObterConteudo(ANode.Childrens.Find('CFOP'), tcEsp);
-  Item.Prod.uCom     := ObterConteudo(ANode.Childrens.Find('uCom'), tcStr);
-  Item.Prod.qCom     := ObterConteudo(ANode.Childrens.Find('qCom'), tcDe4);
-  Item.Prod.vUnCom  := ObterConteudo(ANode.Childrens.Find('vUnCom'), tcDe10);
-  Item.Prod.vProd    := ObterConteudo(ANode.Childrens.Find('vProd'), tcDe2);
-  Item.Prod.cEANTrib := ObterConteudo(ANode.Childrens.Find('cEANTrib'), tcStr);
-  Item.Prod.uTrib    := ObterConteudo(ANode.Childrens.Find('uTrib'), tcStr);
-  Item.Prod.qTrib    := ObterConteudo(ANode.Childrens.Find('qTrib'), tcDe4);
-  Item.Prod.vUnTrib := ObterConteudo(ANode.Childrens.Find('vUnTrib'), tcDe10);
-  Item.Prod.vFrete   := ObterConteudo(ANode.Childrens.Find('vFrete'), tcDe2);
-  Item.Prod.vSeg     := ObterConteudo(ANode.Childrens.Find('vSeg'), tcDe2);
-  Item.Prod.vDesc    := ObterConteudo(ANode.Childrens.Find('vDesc'), tcDe2);
-  Item.Prod.vOutro  := ObterConteudo(ANode.Childrens.Find('vOutro'), tcDe2);
-  Item.Prod.IndTot  := StrToindTot(ok,ObterConteudo(ANode.Childrens.Find('indTot'), tcDe2));
-  Item.Prod.xPed     := ObterConteudo(ANode.Childrens.Find('xPed'), tcStr);
-  Item.Prod.nItemPed := ObterConteudo(ANode.Childrens.Find('nItemPed'), tcStr);
-  Item.Prod.nRECOPI  := ObterConteudo(ANode.Childrens.Find('nRECOPI'), tcStr);
-  Item.Prod.nFCI     := ObterConteudo(ANode.Childrens.Find('nFCI'), tcStr);
-
-  ANodes := ANode.Childrens.FindAll('NVE');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    Item.Prod.NVE.New;
-    Item.Prod.NVE.Items[i].NVE := ObterConteudo(ANodes[i].Childrens.Find('NVE'), tcStr);
-  end;
-
-  Item.Prod.DI.Clear;
-  ANodes := ANode.Childrens.FindAll('DI');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LerDetProdDI(Item, ANodes[i]);
-  end;
-
-  Item.Prod.detExport.Clear;
-  ANodes := ANode.Childrens.FindAll('detExport');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LerDetProdDetExport(Item, ANodes[i]);
-  end;
-
-  Item.Prod.rastro.Clear;
-  ANodes := ANode.Childrens.FindAll('rastro');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LerDetProdRastro(Item, ANodes[i]);
-  end;
-
-  LerDetProdVeicProd(Item, ANode.Childrens.Find('veicProd'));
-
-  Item.Prod.med.Clear;
-  ANodes := ANode.Childrens.FindAll('med');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LerDetProdMed(Item, ANodes[i]);
-  end;
-
-  Item.Prod.arma.Clear;
-  ANodes := ANode.Childrens.FindAll('arma');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LerDetProdArma(Item, ANodes[i]);
-  end;
-  }
-  LerDetProdComb(Item, ANode.Childrens.Find('comb'));
-end;
-
-procedure TNF3eXmlReader.LerDetProdDI(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
-  ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
-//  DIItem: TDICollectionItem;
-//  AdiItem: TAdiCollectionItem;
-begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
-  {
-  DIItem := Item.Prod.DI.New;
-  DIItem.nDI        := ObterConteudo(ANode.Childrens.Find('nDI'), tcStr);
-  DIItem.dDI        := ObterConteudo(ANode.Childrens.Find('dDI'), tcDat);
-  DIItem.xLocDesemb := ObterConteudo(ANode.Childrens.Find('xLocDesemb'), tcStr);
-  DIItem.UFDesemb   := ObterConteudo(ANode.Childrens.Find('UFDesemb'), tcStr);
-  DIItem.dDesemb    := ObterConteudo(ANode.Childrens.Find('dDesemb'), tcDat);
-
-  DIItem.tpViaTransp  := StrToTipoViaTransp(Ok, ObterConteudo(ANode.Childrens.Find('tpViaTransp'), tcInt));
-  DIItem.vAFRMM       := ObterConteudo(ANode.Childrens.Find('vAFRMM'), tcDe2);
-  DIItem.tpIntermedio := StrToTipoIntermedio(Ok, ObterConteudo(ANode.Childrens.Find('tpIntermedio'), tcInt));
-  DIItem.CNPJ         := ProcessarCNPJCPF(ANode);
-  DIItem.UFTerceiro   := ObterConteudo(ANode.Childrens.Find('UFTerceiro'), tcStr);
-
-  DIItem.cExportador   := ObterConteudo(ANode.Childrens.Find('cExportador'), tcStr);
-
-  DIItem.adi.Clear;
-  ANodes := ANode.Childrens.FindAll('adi');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    AdiItem := DIItem.adi.New;
-    AdiItem.nAdicao     := ObterConteudo(ANodes[i].Childrens.Find('nAdicao'), tcInt);
-    AdiItem.nSeqAdi     := ObterConteudo(ANodes[i].Childrens.Find('nSeqAdic'), tcInt);
-    AdiItem.cFabricante := ObterConteudo(ANodes[i].Childrens.Find('cFabricante'), tcStr);
-    AdiItem.vDescDI     := ObterConteudo(ANodes[i].Childrens.Find('vDescDI'), tcDe2);
-    AdiItem.nDraw      := ObterConteudo(ANodes[i].Childrens.Find('nDraw'), tcStr);
-  end;
-  }
-end;
-
-procedure TNF3eXmlReader.LerDetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
-  ok: Boolean;
-  AuxNode, AxNode: TACBrXmlNode;
-begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
-  {
-  Item.Imposto.vTotTrib := ObterConteudo(ANode.Childrens.Find('vTotTrib'), tcDe2);
-
-  AuxNode := ANode.Childrens.Find('ICMS');
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.ICMS.orig        := StrToOrig(ok, ObterConteudo(AuxNode.Childrens.Find('orig'), tcStr));
-    Item.Imposto.ICMS.CST         := StrToCSTICMS(ok, ObterConteudo(AuxNode.Childrens.Find('CST'), tcStr));
-    Item.Imposto.ICMS.CSOSN      := StrToCSOSNIcms( ok,ObterConteudo(AuxNode.Childrens.Find('CSOSN'), tcInt));
-    Item.Imposto.ICMS.modBC       := StrToModBC(ok, ObterConteudo(AuxNode.Childrens.Find('modBC'), tcStr));
-    Item.Imposto.ICMS.pRedBC      := ObterConteudo(AuxNode.Childrens.Find('pRedBC'), tcDe2);
-    Item.Imposto.ICMS.vBC         := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.ICMS.pICMS       := ObterConteudo(AuxNode.Childrens.Find('pICMS'), tcDe2);
-    Item.Imposto.ICMS.vICMSOp    := ObterConteudo(AuxNode.Childrens.Find('vICMSOp'), tcDe2);
-    Item.Imposto.ICMS.pDif       := ObterConteudo(AuxNode.Childrens.Find('pDif'), tcDe4);
-    Item.Imposto.ICMS.vICMSDif   := ObterConteudo(AuxNode.Childrens.Find('vICMSDif'), tcDe2);
-    Item.Imposto.ICMS.vICMS       := ObterConteudo(AuxNode.Childrens.Find('vICMS'), tcDe2);
-    Item.Imposto.ICMS.vBCFCP     := ObterConteudo(AuxNode.Childrens.Find('vBCFCP'), tcDe2);
-    Item.Imposto.ICMS.pFCP       := ObterConteudo(AuxNode.Childrens.Find('pFCP'), tcDe4);
-    Item.Imposto.ICMS.vFCP       := ObterConteudo(AuxNode.Childrens.Find('vFCP'), tcDe2);
-    Item.Imposto.ICMS.modBCST     := StrToModBCST(ok, ObterConteudo(AuxNode.Childrens.Find('modBCST'), tcStr));
-    Item.Imposto.ICMS.pMVAST      := ObterConteudo(AuxNode.Childrens.Find('pMVAST'), tcDe2);
-    Item.Imposto.ICMS.pRedBCST    := ObterConteudo(AuxNode.Childrens.Find('pRedBCST'), tcDe2);
-    Item.Imposto.ICMS.vBCST       := ObterConteudo(AuxNode.Childrens.Find('vBCST'), tcDe2);
-    Item.Imposto.ICMS.pICMSST     := ObterConteudo(AuxNode.Childrens.Find('pICMSST'), tcDe2);
-    Item.Imposto.ICMS.vICMSST     := ObterConteudo(AuxNode.Childrens.Find('vICMSST'), tcDe2);
-    Item.Imposto.ICMS.vBCFCPST   := ObterConteudo(AuxNode.Childrens.Find('vBCFCPST'), tcDe2);
-    Item.Imposto.ICMS.pFCPST     := ObterConteudo(AuxNode.Childrens.Find('pFCPST'), tcDe4);
-    Item.Imposto.ICMS.vFCPST     := ObterConteudo(AuxNode.Childrens.Find('vFCPST'), tcDe2);
-    Item.Imposto.ICMS.UFST        := ObterConteudo(AuxNode.Childrens.Find('UFST'), tcStr);
-    Item.Imposto.ICMS.pBCOp       := ObterConteudo(AuxNode.Childrens.Find('pBCOp'), tcDe2);
-    Item.Imposto.ICMS.vBCSTRet    := ObterConteudo(AuxNode.Childrens.Find('vBCSTRet'), tcDe2);
-    Item.Imposto.ICMS.vICMSSTRet  := ObterConteudo(AuxNode.Childrens.Find('vICMSSTRet'), tcDe2);
-    Item.Imposto.ICMS.vICMSDeson := ObterConteudo(AuxNode.Childrens.Find('vICMSDeson'), tcDe2);
-    Item.Imposto.ICMS.vBCFCPSTRet:= ObterConteudo(AuxNode.Childrens.Find('vBCFCPSTRet'), tcDe2);
-    Item.Imposto.ICMS.pFCPSTRet  := ObterConteudo(AuxNode.Childrens.Find('pFCPSTRet'), tcDe4);
-    Item.Imposto.ICMS.vFCPSTRet  := ObterConteudo(AuxNode.Childrens.Find('vFCPSTRet'), tcDe2);
-    Item.Imposto.ICMS.pST        := ObterConteudo(AuxNode.Childrens.Find('pST'), tcDe4);
-    Item.Imposto.ICMS.motDesICMS  := StrTomotDesICMS(ok, ObterConteudo(AuxNode.Childrens.Find('motDesICMS'), tcStr));
-    Item.Imposto.ICMS.pCredSN     := ObterConteudo(AuxNode.Childrens.Find('pCredSN'), tcDe2);
-    Item.Imposto.ICMS.vCredICMSSN := ObterConteudo(AuxNode.Childrens.Find('vCredICMSSN'), tcDe2);
-    Item.Imposto.ICMS.vBCSTDest   := ObterConteudo(AuxNode.Childrens.Find('vBCSTDest'), tcDe2);
-    Item.Imposto.ICMS.vICMSSTDest := ObterConteudo(AuxNode.Childrens.Find('vICMSSTDest'), tcDe2);
-    Item.Imposto.ICMS.pRedBCEfet  := ObterConteudo(AuxNode.Childrens.Find('pRedBCEfet'), tcDe4);
-    Item.Imposto.ICMS.vBCEfet     := ObterConteudo(AuxNode.Childrens.Find('vBCEfet'), tcDe2);
-    Item.Imposto.ICMS.pICMSEfet   := ObterConteudo(AuxNode.Childrens.Find('pICMSEfet'), tcDe4);
-    Item.Imposto.ICMS.vICMSEfet   := ObterConteudo(AuxNode.Childrens.Find('vICMSEfet'), tcDe2);
-    Item.Imposto.ICMS.vICMSSubstituto := ObterConteudo(AuxNode.Childrens.Find('vICMSSubstituto'), tcDe2);
-
-    if (AuxNode.Name = 'ICMSPart') then
-    begin
-      case Item.Imposto.ICMS.CST of
-          cst10 : Item.Imposto.ICMS.CST := cstPart10;
-          cst90 : Item.Imposto.ICMS.CST := cstPart90;
-      end;
-    end
-    else if (AuxNode.Name = 'ICMSST') then
-    begin
-      case Item.Imposto.ICMS.CST of
-          cst41 : Item.Imposto.ICMS.CST := cstRep41;
-          cst60 : Item.Imposto.ICMS.CST := cstRep60;
-      end;
-    end;
-  end;
-
-  AuxNode := ANode.Childrens.Find('ICMSUFDest');
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.ICMSUFDest.vBCUFDest      := ObterConteudo(AuxNode.Childrens.Find('vBCUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.vBCFCPUFDest   := ObterConteudo(AuxNode.Childrens.Find('vBCFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.pFCPUFDest     := ObterConteudo(AuxNode.Childrens.Find('pFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.pICMSUFDest    := ObterConteudo(AuxNode.Childrens.Find('pICMSUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.pICMSInter     := ObterConteudo(AuxNode.Childrens.Find('pICMSInter'), tcDe2);
-    Item.Imposto.ICMSUFDest.pICMSInterPart := ObterConteudo(AuxNode.Childrens.Find('pICMSInterPart'), tcDe2);
-    Item.Imposto.ICMSUFDest.vFCPUFDest     := ObterConteudo(AuxNode.Childrens.Find('vFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.vICMSUFDest    := ObterConteudo(AuxNode.Childrens.Find('vICMSUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.vICMSUFRemet   := ObterConteudo(AuxNode.Childrens.Find('vICMSUFRemet'), tcDe2);
-  end;
-
-  AuxNode := ANode.Childrens.Find('IPI');
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.IPI.clEnq    := ObterConteudo(AuxNode.Childrens.Find('clEnq'), tcStr);
-    Item.Imposto.IPI.CNPJProd := ObterConteudo(AuxNode.Childrens.Find('CNPJProd'), tcStr);
-    Item.Imposto.IPI.cSelo    := ObterConteudo(AuxNode.Childrens.Find('cSelo'), tcStr);
-    Item.Imposto.IPI.qSelo    := ObterConteudo(AuxNode.Childrens.Find('qSelo'), tcInt);
-    Item.Imposto.IPI.cEnq     := ObterConteudo(AuxNode.Childrens.Find('cEnq'), tcStr);
-
-    // Inicializa CST com sendo Não tributada e conforme o TIPO entrada ou saida
-    // Caso a Tag não seja informada sera gravada com sendo não tributada
-    if NF3e.ide.tpNF = tnEntrada then
-      Item.Imposto.IPI.CST := ipi53;
-    if NF3e.ide.tpNF = tnSaida then
-      Item.Imposto.IPI.CST := ipi03;
-
-    AxNode := AuxNode.Childrens.Find('IPITrib');
-    if (AxNode <> nil) then
-    begin
-      Item.Imposto.IPI.CST   := StrToCSTIPI(ok, ObterConteudo(AxNode.Childrens.Find('CST'), tcStr));
-      Item.Imposto.IPI.vBC   := ObterConteudo(AxNode.Childrens.Find('vBC'), tcDe2);
-      Item.Imposto.IPI.qUnid := ObterConteudo(AxNode.Childrens.Find('qUnid'), tcDe4);
-      Item.Imposto.IPI.vUnid := ObterConteudo(AxNode.Childrens.Find('vUnid'), tcDe4);
-      Item.Imposto.IPI.pIPI  := ObterConteudo(AxNode.Childrens.Find('pIPI'), tcDe2);
-      Item.Imposto.IPI.vIPI  := ObterConteudo(AxNode.Childrens.Find('vIPI'), tcDe2);
-    end;
-
-    AxNode := AuxNode.Childrens.Find('IPINT');
-    if (AxNode <> nil) then
-    begin
-      Item.Imposto.IPI.CST := StrToCSTIPI(ok, ObterConteudo(AxNode.Childrens.Find('CST'), tcStr));
-    end;
-  end;
-
-  AuxNode := ANode.Childrens.Find('II');
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.II.vBc      := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.II.vDespAdu := ObterConteudo(AuxNode.Childrens.Find('vDespAdu'), tcDe2);
-    Item.Imposto.II.vII      := ObterConteudo(AuxNode.Childrens.Find('vII'), tcDe2);
-    Item.Imposto.II.vIOF     := ObterConteudo(AuxNode.Childrens.Find('vIOF'), tcDe2);
-  end;
-
-  AuxNode := ANode.Childrens.Find('PIS');
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.PIS.CST       := StrToCSTPIS(ok, ObterConteudo(AuxNode.Childrens.Find('CST'), tcStr));
-    Item.Imposto.PIS.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.PIS.pPIS      := ObterConteudo(AuxNode.Childrens.Find('pPIS'), tcDe2);
-    Item.Imposto.PIS.vPIS      := ObterConteudo(AuxNode.Childrens.Find('vPIS'), tcDe2);
-    Item.Imposto.PIS.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
-    Item.Imposto.PIS.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-  end;
-
-  AuxNode := ANode.Childrens.Find('PISST');
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.PISST.vBc       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.PISST.pPis      := ObterConteudo(AuxNode.Childrens.Find('pPIS'), tcDe2);
-    Item.Imposto.PISST.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
-    Item.Imposto.PISST.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-    Item.Imposto.PISST.vPIS      := ObterConteudo(AuxNode.Childrens.Find('vPIS'), tcDe2);
-  end;
-
-  AuxNode := ANode.Childrens.Find('COFINS');
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.COFINS.CST       := StrToCSTCOFINS(ok, ObterConteudo(AuxNode.Childrens.Find('CST'), tcStr));
-    Item.Imposto.COFINS.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.COFINS.pCOFINS   := ObterConteudo(AuxNode.Childrens.Find('pCOFINS'), tcDe2);
-    Item.Imposto.COFINS.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
-    Item.Imposto.COFINS.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-    Item.Imposto.COFINS.vCOFINS   := ObterConteudo(AuxNode.Childrens.Find('vCOFINS'), tcDe2);
-  end;
-
-  AuxNode := ANode.Childrens.Find('COFINSST');
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.COFINSST.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.COFINSST.pCOFINS   := ObterConteudo(AuxNode.Childrens.Find('pCOFINS'), tcDe2);
-    Item.Imposto.COFINSST.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
-    Item.Imposto.COFINSST.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-    Item.Imposto.COFINSST.vCOFINS   := ObterConteudo(AuxNode.Childrens.Find('vCOFINS'), tcDe2);
-  end;
-
-  AuxNode := ANode.Childrens.Find('ISSQN');
-  if (AuxNode <> nil) then
-  begin
-    Item.Imposto.ISSQN.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.ISSQN.vAliq     := ObterConteudo(AuxNode.Childrens.Find('vAliq'), tcDe2);
-    Item.Imposto.ISSQN.vISSQN    := ObterConteudo(AuxNode.Childrens.Find('vISSQN'), tcDe2);
-    Item.Imposto.ISSQN.cMunFG    := ObterConteudo(AuxNode.Childrens.Find('cMunFG'), tcInt);
-    Item.Imposto.ISSQN.cListServ := ObterConteudo(AuxNode.Childrens.Find('cListServ'), tcStr);
-    Item.Imposto.ISSQN.cSitTrib  := StrToISSQNcSitTrib( ok,  ObterConteudo(AuxNode.Childrens.Find('cSitTrib'), tcStr) ) ;
-    Item.Imposto.ISSQN.vDeducao     := ObterConteudo(AuxNode.Childrens.Find('vDeducao'), tcDe2);
-    Item.Imposto.ISSQN.vOutro       := ObterConteudo(AuxNode.Childrens.Find('vOutro'), tcDe2);
-    Item.Imposto.ISSQN.vDescIncond  := ObterConteudo(AuxNode.Childrens.Find('vDescIncond'), tcDe2);
-    Item.Imposto.ISSQN.vDescCond    := ObterConteudo(AuxNode.Childrens.Find('vDescCond'), tcDe2);
-    Item.Imposto.ISSQN.vISSRet      := ObterConteudo(AuxNode.Childrens.Find('vISSRet'), tcDe2);
-    Item.Imposto.ISSQN.indISS       := StrToindISS(Ok, ObterConteudo(AuxNode.Childrens.Find('indISS'), tcStr));
-    Item.Imposto.ISSQN.cServico     := ObterConteudo(AuxNode.Childrens.Find('cServico'), tcStr);
-    Item.Imposto.ISSQN.cMun         := ObterConteudo(AuxNode.Childrens.Find('cMun'), tcInt);
-    Item.Imposto.ISSQN.cPais        := ObterConteudo(AuxNode.Childrens.Find('cPais'), tcInt);
-    Item.Imposto.ISSQN.nProcesso    := ObterConteudo(AuxNode.Childrens.Find('nProcesso'), tcStr);
-    Item.Imposto.ISSQN.indIncentivo := StrToindIncentivo(Ok, ObterConteudo(AuxNode.Childrens.Find('indIncentivo'), tcStr));
-  end;
-  }
-end;
-*)
 end.
 

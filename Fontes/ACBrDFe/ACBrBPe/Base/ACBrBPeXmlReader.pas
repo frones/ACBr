@@ -83,7 +83,6 @@ type
     procedure Ler_infRespTec(const ANode: TACBrXmlNode);
 
     procedure Ler_InfBPeSupl(const ANode: TACBrXmlNode);
-    procedure Ler_Signature(const ANode: TACBrXmlNode);
   public
     constructor Create(AOwner: TBPe); reintroduce;
 
@@ -107,30 +106,6 @@ begin
   FBPe := AOwner;
 end;
 
-{
-procedure TBPeXmlReader.LergSCEE(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
-  ANodes: TACBrXmlNodeArray;
-  i: Integer;
-begin
-  if not Assigned(ANode) then Exit;
-
-//  BPe.gSCEE.tpPartComp := StrTotpPartComp(ok, ObterConteudo(ANode.Childrens.Find('tpPartComp'), tcStr));
-
-  ANodes := ANode.Childrens.FindAll('gConsumidor');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LergConsumidor(ANodes[i]);
-  end;
-
-  ANodes := ANode.Childrens.FindAll('gSaldoCred');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    LergSaldoCred(ANodes[i]);
-  end;
-end;
-}
 function TBPeXmlReader.NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := not Assigned(ANode);
@@ -141,7 +116,7 @@ Var
   BPeNode, infBPeNode: TACBrXmlNode;
   att: TACBrXmlAttribute;
 begin
-  if not Assigned(FBPe) or (FBPe = nil) then
+  if not Assigned(FBPe) then
     raise Exception.Create('Destino não informado, informe a classe [TBPe] de destino.');
 
   if EstaVazio(Arquivo) then
@@ -184,7 +159,8 @@ begin
 
   Ler_InfBPe(infBPeNode);
   Ler_InfBPeSupl(BPeNode.Childrens.Find('infBPeSupl'));
-  Ler_Signature(BPeNode.Childrens.Find('Signature'));
+
+  LerSignature(BPeNode.Childrens.Find('Signature'), BPe.signature);
 
   Result := True;
 end;
@@ -715,13 +691,6 @@ begin
   sQrCode := StringReplace(sQrCode, ']]>', '', []);
 
   BPe.infBPeSupl.qrCodBPe := sQrCode;
-end;
-
-procedure TBPeXmlReader.Ler_Signature(const ANode: TACBrXmlNode);
-begin
-  if not Assigned(ANode) then Exit;
-
-  LerSignature(ANode, BPe.signature);
 end;
 
 end.

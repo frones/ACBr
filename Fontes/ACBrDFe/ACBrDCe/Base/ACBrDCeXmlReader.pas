@@ -48,27 +48,26 @@ type
   private
     FDCe: TDCe;
 
-    procedure LerInfDCe(const ANode: TACBrXmlNode);
-    procedure LerIde(const ANode: TACBrXmlNode);
-    procedure LerEmit(const ANode: TACBrXmlNode);
-    procedure LerEmitEnderEmit(const ANode: TACBrXmlNode);
-    procedure LerFisco(const ANode: TACBrXmlNode);
-    procedure LerMarketplace(const ANode: TACBrXmlNode);
-    procedure LerTransportadora(const ANode: TACBrXmlNode);
-    procedure LerEmpEmisProp(const ANode: TACBrXmlNode);
-    procedure LerDest(const ANode: TACBrXmlNode);
-    procedure LerDestEnderDest(const ANode: TACBrXmlNode);
-    procedure LerDet(const ANode: TACBrXmlNode);
-    procedure LerDetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-    procedure LerTotal(const ANode: TACBrXmlNode);
-    procedure LerTransp(const ANode: TACBrXmlNode);
-    procedure LerInfAdic(const ANode: TACBrXmlNode);
-    procedure LerInfDec(const ANode: TACBrXmlNode);
-    procedure LerInfSolicDCe(const ANode: TACBrXmlNode);
+    procedure Ler_InfDCe(const ANode: TACBrXmlNode);
+    procedure Ler_Ide(const ANode: TACBrXmlNode);
+    procedure Ler_Emit(const ANode: TACBrXmlNode);
+    procedure Ler_EmitEnderEmit(const ANode: TACBrXmlNode);
+    procedure Ler_Fisco(const ANode: TACBrXmlNode);
+    procedure Ler_Marketplace(const ANode: TACBrXmlNode);
+    procedure Ler_Transportadora(const ANode: TACBrXmlNode);
+    procedure Ler_EmpEmisProp(const ANode: TACBrXmlNode);
+    procedure Ler_Dest(const ANode: TACBrXmlNode);
+    procedure Ler_DestEnderDest(const ANode: TACBrXmlNode);
+    procedure Ler_Det(const ANode: TACBrXmlNode);
+    procedure Ler_DetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure Ler_Total(const ANode: TACBrXmlNode);
+    procedure Ler_Transp(const ANode: TACBrXmlNode);
+    procedure Ler_InfAdic(const ANode: TACBrXmlNode);
+    procedure Ler_InfDec(const ANode: TACBrXmlNode);
+    procedure Ler_InfSolicDCe(const ANode: TACBrXmlNode);
 
-    procedure LerProtDCe(const ANode: TACBrXmlNode);
-    procedure LerInfDCeSupl(const ANode: TACBrXmlNode);
-    procedure LerSignature(const ANode: TACBrXmlNode);
+    procedure Ler_ProtDCe(const ANode: TACBrXmlNode);
+    procedure Ler_InfDCeSupl(const ANode: TACBrXmlNode);
   public
     constructor Create(AOwner: TDCe); reintroduce;
 
@@ -93,11 +92,11 @@ begin
   FDCe := AOwner;
 end;
 
-procedure TDCeXmlReader.LerDest(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Dest(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.dest.CNPJCPF := ObterCNPJCPF(ANode);
 
@@ -106,12 +105,12 @@ begin
 
   DCe.dest.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
 
-  LerDestEnderDest(ANode.Childrens.Find('enderDest'));
+  Ler_DestEnderDest(ANode.Childrens.Find('enderDest'));
 end;
 
-procedure TDCeXmlReader.LerDestEnderDest(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_DestEnderDest(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.dest.enderDest.xLgr := ObterConteudo(ANode.Childrens.Find('xLgr'), tcStr);
   DCe.dest.enderDest.nro := ObterConteudo(ANode.Childrens.Find('nro'), tcStr);
@@ -135,29 +134,29 @@ begin
   DCe.dest.enderDest.email := ObterConteudo(ANode.Childrens.Find('email'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerDet(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Det(const ANode: TACBrXmlNode);
 var
   Item: TDetCollectionItem;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := DCe.Det.New;
   Item.prod.nItem := DCe.Det.Count;
   Item.infAdProd := ObterConteudo(ANode.Childrens.Find('infAdProd'), tcStr);
 
-  LerDetProd(Item, ANode.Childrens.Find('prod'));
+  Ler_DetProd(Item, ANode.Childrens.Find('prod'));
 end;
 
-procedure TDCeXmlReader.LerDetProd(const Item: TDetCollectionItem;
+procedure TDCeXmlReader.Ler_DetProd(const Item: TDetCollectionItem;
   const ANode: TACBrXmlNode);
 var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.Prod.xProd := ObterConteudo(ANode.Childrens.Find('xProd'), tcStr);
   Item.Prod.NCM := ObterConteudo(ANode.Childrens.Find('NCM'), tcStr);
@@ -166,11 +165,11 @@ begin
   Item.Prod.vProd := ObterConteudo(ANode.Childrens.Find('vProd'), tcDe2);
 end;
 
-procedure TDCeXmlReader.LerEmit(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Emit(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.emit.CNPJCPF := ObterCNPJCPF(ANode);
 
@@ -179,12 +178,12 @@ begin
 
   DCe.emit.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
 
-  LerEmitEnderEmit(ANode.Childrens.Find('enderEmit'));
+  Ler_EmitEnderEmit(ANode.Childrens.Find('enderEmit'));
 end;
 
-procedure TDCeXmlReader.LerEmitEnderEmit(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_EmitEnderEmit(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.Emit.enderEmit.xLgr := ObterConteudo(ANode.Childrens.Find('xLgr'), tcStr);
   DCe.Emit.enderEmit.nro := ObterConteudo(ANode.Childrens.Find('nro'), tcStr);
@@ -207,30 +206,30 @@ begin
   DCe.Emit.enderEmit.fone := ObterConteudo(ANode.Childrens.Find('fone'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerEmpEmisProp(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_EmpEmisProp(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.EmpEmisProp.CNPJ := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   DCe.EmpEmisProp.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerFisco(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Fisco(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.Fisco.CNPJ := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   DCe.Fisco.xOrgao := ObterConteudo(ANode.Childrens.Find('xOrgao'), tcStr);
   DCe.Fisco.UF := ObterConteudo(ANode.Childrens.Find('UF'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerIde(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Ide(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.ide.cUF := ObterConteudo(ANode.Childrens.Find('cUF'), tcInt);
   DCe.ide.cDC := ObterConteudo(ANode.Childrens.Find('cDC'), tcInt);
@@ -239,20 +238,20 @@ begin
   DCe.ide.nDC := ObterConteudo(ANode.Childrens.Find('nDC'), tcInt);
   DCe.ide.dhEmi := ObterConteudo(ANode.Childrens.Find('dhEmi'), tcDatHor);
   DCe.Ide.tpEmis := StrToTipoEmissao(ok, ObterConteudo(ANode.Childrens.Find('tpEmis'), tcStr));
-  DCe.Ide.tpEmit := StrToEmitenteDCe(ok, ObterConteudo(ANode.Childrens.Find('tpEmit'), tcStr));
+  DCe.Ide.tpEmit := StrToEmitenteDCe(ObterConteudo(ANode.Childrens.Find('tpEmit'), tcStr));
   DCe.ide.nSiteAutoriz := ObterConteudo(ANode.Childrens.Find('nSiteAutoriz'), tcInt);
   DCe.ide.cDV := ObterConteudo(ANode.Childrens.Find('cDV'), tcInt);
   DCe.Ide.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   DCe.Ide.verProc := ObterConteudo(ANode.Childrens.Find('verProc'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerInfAdic(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_InfAdic(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.InfAdic.infAdFisco := ObterConteudo(ANode.Childrens.Find('infAdFisco'), tcStr);
   DCe.InfAdic.infCpl := ObterConteudo(ANode.Childrens.Find('infCpl'), tcStr);
@@ -278,20 +277,20 @@ begin
   end;
 end;
 
-procedure TDCeXmlReader.LerInfDCe(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_InfDCe(const ANode: TACBrXmlNode);
 var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  LerIde(ANode.Childrens.Find('ide'));
-  LerEmit(ANode.Childrens.Find('emit'));
-  LerFisco(ANode.Childrens.Find('Fisco'));
-  LerMarketplace(ANode.Childrens.Find('Marketplace'));
-  LerTransportadora(ANode.Childrens.Find('Transportadora'));
-  LerEmpEmisProp(ANode.Childrens.Find('EmpEmisProp'));
-  LerDest(ANode.Childrens.Find('dest'));
+  Ler_Ide(ANode.Childrens.Find('ide'));
+  Ler_Emit(ANode.Childrens.Find('emit'));
+  Ler_Fisco(ANode.Childrens.Find('Fisco'));
+  Ler_Marketplace(ANode.Childrens.Find('Marketplace'));
+  Ler_Transportadora(ANode.Childrens.Find('Transportadora'));
+  Ler_EmpEmisProp(ANode.Childrens.Find('EmpEmisProp'));
+  Ler_Dest(ANode.Childrens.Find('dest'));
 
   ANodes := ANode.Childrens.FindAll('autXML');
   for i := 0 to Length(ANodes) - 1 do
@@ -303,19 +302,19 @@ begin
   ANodes := ANode.Childrens.FindAll('det');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    LerDet(ANodes[i]);
+    Ler_Det(ANodes[i]);
   end;
 
-  LerTotal(ANode.Childrens.Find('total'));
-  LerTransp(ANode.Childrens.Find('transp'));
-  LerInfAdic(ANode.Childrens.Find('infAdic'));
-  LerInfDec(ANode.Childrens.Find('infDec'));
-  LerInfSolicDCe(ANode.Childrens.Find('infSolicDCe'));
+  Ler_Total(ANode.Childrens.Find('total'));
+  Ler_Transp(ANode.Childrens.Find('transp'));
+  Ler_InfAdic(ANode.Childrens.Find('infAdic'));
+  Ler_InfDec(ANode.Childrens.Find('infDec'));
+  Ler_InfSolicDCe(ANode.Childrens.Find('infSolicDCe'));
 end;
 
-procedure TDCeXmlReader.LerInfDCeSupl(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_InfDCeSupl(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.infDCeSupl.qrCode := ObterConteudo(ANode.Childrens.Find('qrCode'), tcStr);
   DCe.infDCeSupl.qrCode := StringReplace(DCe.infDCeSupl.qrCode, '<![CDATA[', '', []);
@@ -323,35 +322,35 @@ begin
   DCe.infDCeSupl.urlChave := ObterConteudo(ANode.Childrens.Find('urlChave'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerInfDec(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_InfDec(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.infDec.xObs1 := ObterConteudo(ANode.Childrens.Find('xObs1'), tcStr);
   DCe.infDec.xObs2 := ObterConteudo(ANode.Childrens.Find('xObs2'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerInfSolicDCe(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_InfSolicDCe(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.infSolicDCe.xSolic := ObterConteudo(ANode.Childrens.Find('xSolic'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerMarketplace(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Marketplace(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.Marketplace.CNPJ := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   DCe.Marketplace.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
   DCe.Marketplace.Site := ObterConteudo(ANode.Childrens.Find('Site'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerProtDCe(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_ProtDCe(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.procDCe.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   DCe.procDCe.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
@@ -365,59 +364,27 @@ begin
   DCe.procDCe.xMsg     := ObterConteudo(ANode.Childrens.Find('xMsg'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerSignature(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
-begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
-
-  AuxNode := ANode.Childrens.Find('SignedInfo');
-  if AuxNode <> nil then
-  begin
-
-    AuxNode := ANode.Childrens.Find('Reference');
-    if AuxNode <> nil then
-    begin
-      DCe.signature.URI := AuxNode.Attributes.Items['URI'].Content;
-      DCe.signature.DigestValue := ObterConteudo(AuxNode.Childrens.Find('DigestValue'), tcStr);
-    end;
-  end;
-
-  DCe.signature.SignatureValue  := ObterConteudo(ANode.Childrens.Find('SignatureValue'), tcStr);
-
-  AuxNode := ANode.Childrens.Find('KeyInfo');
-  if AuxNode <> nil then
-  begin
-    DCe.signature.X509Certificate := ObterConteudo(ANode.Childrens.Find('X509Certificate'), tcStr);
-  end;
-end;
-
-procedure TDCeXmlReader.LerTotal(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Total(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DCe.Total.vDC := ObterConteudo(AuxNode.Childrens.Find('vDC'), tcDe2);
 end;
 
-procedure TDCeXmlReader.LerTransp(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
-  AuxNode: TACBrXmlNode;
+procedure TDCeXmlReader.Ler_Transp(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  DCe.Transp.modTrans := StrToModTrans(ok, ObterConteudo(ANode.Childrens.Find('modTrans'), tcStr));
+  DCe.Transp.modTrans := StrToModTrans(ObterConteudo(ANode.Childrens.Find('modTrans'), tcStr));
   DCe.Transp.CNPJTrans := ObterConteudo(ANode.Childrens.Find('CNPJTrans'), tcStr);
 end;
 
-procedure TDCeXmlReader.LerTransportadora(const ANode: TACBrXmlNode);
+procedure TDCeXmlReader.Ler_Transportadora(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode)  then Exit;
 
   DCe.Transportadora.CNPJ := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   DCe.Transportadora.xNome := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
@@ -428,7 +395,7 @@ var
   DCeNode, infDCeNode: TACBrXmlNode;
   att: TACBrXmlAttribute;
 begin
-  if not Assigned(FDCe) or (FDCe = nil) then
+  if not Assigned(FDCe) then
     raise Exception.Create('Destino não informado, informe a classe [TDCe] de destino.');
 
   if EstaVazio(Arquivo) then
@@ -441,7 +408,7 @@ begin
 
   if Document.Root.Name = 'DCeProc' then
   begin
-    LerProtDCe(Document.Root.Childrens.Find('protDCe'));
+    Ler_ProtDCe(Document.Root.Childrens.Find('protDCe'));
     DCeNode := Document.Root.Childrens.Find('DCe');
   end
   else
@@ -467,9 +434,9 @@ begin
 
   DCe.infDCe.Versao := StringToFloat(att.Content);
 
-  LerInfDCe(infDCeNode);
-  LerInfDCeSupl(DCeNode.Childrens.Find('infDCeSupl'));
-  LerSignature(DCeNode.Childrens.Find('Signature'));
+  Ler_InfDCe(infDCeNode);
+  Ler_InfDCeSupl(DCeNode.Childrens.Find('infDCeSupl'));
+  LerSignature(DCeNode.Childrens.Find('Signature'), DCe.signature);
 
   Result := True;
 end;

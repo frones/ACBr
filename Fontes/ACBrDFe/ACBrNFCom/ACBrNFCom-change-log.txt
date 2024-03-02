@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/03/2024
+-- ACBrNFComXmlWriter --
+[*] Corrigido o tipo de conversão para a tag: cNF.
+  Por: Italo Giurizzato Junior
+
 01/03/2024
 -- ACBrNFComXmlReader --
 [*] Melhorias e correções na leitura do XML.

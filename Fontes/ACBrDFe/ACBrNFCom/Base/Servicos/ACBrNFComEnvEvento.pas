@@ -194,7 +194,7 @@ begin
   sDoc := OnlyNumber(Evento.Items[i].InfEvento.CNPJ);
 
   if EstaVazio(sDoc) then
-    sDoc := ExtrairCNPJChaveAcesso(Evento.Items[i].InfEvento.chNFCom);
+    sDoc := ExtrairCNPJCPFChaveAcesso(Evento.Items[i].InfEvento.chNFCom);
 
   case Length( sDoc ) of
     14: begin

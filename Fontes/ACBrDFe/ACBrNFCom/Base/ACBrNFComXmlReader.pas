@@ -129,29 +129,29 @@ begin
 
     if infNFComNode = nil then
       raise Exception.Create('Arquivo xml incorreto.');
+
+    att := infNFComNode.Attributes.Items['Id'];
+
+    if att = nil then
+      raise Exception.Create('Não encontrei o atributo: Id');
+
+    NFCom.infNFCom.Id := att.Content;
+
+    att := infNFComNode.Attributes.Items['versao'];
+
+    if att = nil then
+      raise Exception.Create('Não encontrei o atributo: versao');
+
+    NFCom.infNFCom.Versao := StringToFloat(att.Content);
+
+    Ler_InfNFCom(infNFComNode);
+
+    Ler_InfNFComSupl(NFComNode.Childrens.Find('infNFComSupl'));
+
+    LerSignature(NFComNode.Childrens.Find('Signature'), NFCom.signature);
+
+    Result := True;
   end;
-
-  att := infNFComNode.Attributes.Items['Id'];
-
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: Id');
-
-  NFCom.infNFCom.Id := att.Content;
-
-  att := infNFComNode.Attributes.Items['versao'];
-
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: versao');
-
-  NFCom.infNFCom.Versao := StringToFloat(att.Content);
-
-  Ler_InfNFCom(infNFComNode);
-
-  Ler_InfNFComSupl(NFComNode.Childrens.Find('infNFComSupl'));
-
-  LerSignature(NFComNode.Childrens.Find('Signature'), NFCom.signature);
-
-  Result := True;
 end;
 
 procedure TNFComXmlReader.Ler_ProtNFCom(const ANode: TACBrXmlNode);
@@ -176,8 +176,6 @@ procedure TNFComXmlReader.Ler_InfNFCom(const ANode: TACBrXmlNode);
 var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
-  AuxNode: TACBrXmlNode;
-  att: TACBrXmlAttribute;
 begin
   if not Assigned(ANode) then Exit;
 

@@ -355,8 +355,8 @@ begin
   Result.AppendChild(AddNode(tcInt, '#9', 'nNF', 1, 9, 1,
                                                        NFCom.ide.nNF, DSC_NDF));
 
-  Result.AppendChild(AddNode(tcStr, '#10', 'cNF', 7, 7, 1,
-                                      IntToStrZero(NFCom.ide.cNF, 7), DSC_CDF));
+  Result.AppendChild(AddNode(tcInt, '#10', 'cNF', 7, 7, 1,
+                                                       NFCom.ide.cNF, DSC_CDF));
 
   Result.AppendChild(AddNode(tcInt, '#11', 'cDV', 1, 1, 1,
                                                        NFCom.Ide.cDV, DSC_CDV));

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2024
+-- ACBrMDFeWebServices --
+[*] Alterado a chamada do ParseText, removendo o segundo e terceiro parâmetros.
+  Por: Italo Giurizzato Junior
+
 28/02/2024
 -- pmdfeConversaoMDFe --
 [*] Como ainda não foi removido o parâmetro de saída (Ok) das funções de

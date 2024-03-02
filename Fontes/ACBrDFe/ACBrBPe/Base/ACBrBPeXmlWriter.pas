@@ -368,7 +368,7 @@ begin
 
   Result.AppendChild(AddNode(tcInt, '#9', 'nBP', 1, 9, 1, BPe.ide.nBP, DSC_NDF));
 
-  Result.AppendChild(AddNode(tcStr, '#10', 'cBP', 7, 7, 1, BPe.Ide.cBP, DSC_CDF));
+  Result.AppendChild(AddNode(tcInt, '#10', 'cBP', 8, 8, 1, BPe.Ide.cBP, DSC_CDF));
 
   Result.AppendChild(AddNode(tcInt, '#11', 'cDV', 1, 1, 1, BPe.Ide.cDV, DSC_CDV));
 

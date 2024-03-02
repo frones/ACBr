@@ -491,8 +491,9 @@ begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeStatusServicoBPResult'], FPRetornoWS );
 
   BPeRetorno := TRetConsStatServ.Create('BPe');
+
   try
-    BPeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    BPeRetorno.XmlRetorno := ParseText(FPRetWS);
     BPeRetorno.LerXml;
 
     Fversao := BPeRetorno.versao;
@@ -520,7 +521,6 @@ begin
       FPConfiguracoesBPe.WebServices.AguardarConsultaRet := FTMed * 1000;
 
     Result := (FcStat = 107);
-
   finally
     BPeRetorno.Free;
   end;
@@ -760,9 +760,7 @@ begin
                                'bpeResultTMMsg', 'bpeRecepcaoTMResult'],
                                FPRetornoWS );
 
-  FPRetWS := TiraAcentos(FPRetWS);
-
-  FBPeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  FBPeRetorno.XmlRetorno := ParseText(FPRetWS);
   FBPeRetorno.LerXml;
 
   Fversao   := FBPeRetorno.versao;
@@ -1051,16 +1049,14 @@ var
   SalvarXML, BPCancelado, Atualiza: Boolean;
   aEventos, sPathBPe, NomeXMLSalvo: String;
   AProcBPe: TProcDFe;
-  I, J, Inicio, Fim: Integer;
+  I, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
 begin
   BPeRetorno := TRetConsSitBPe.Create;
   try
     FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeConsultaBPResult'], FPRetornoWS );
 
-    FPRetWS := TiraAcentos(FPRetWS);
-
-    BPeRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    BPeRetorno.XmlRetorno := ParseText(FPRetWS);
     BPeRetorno.LerXML;
 
     BPCancelado := False;
@@ -1081,7 +1077,7 @@ begin
     FprotBPe.PathDFe := BPeRetorno.protBPe.PathDFe;
     FprotBPe.PathRetConsReciDFe := BPeRetorno.protBPe.PathRetConsReciDFe;
     FprotBPe.PathRetConsSitDFe := BPeRetorno.protBPe.PathRetConsSitDFe;
-//    FprotBPe.PathRetConsSitBPe := BPeRetorno.protBPe.PathRetConsSitBPe;
+    FprotBPe.PathRetConsSitDFe := BPeRetorno.protBPe.PathRetConsSitDFe;
     FprotBPe.tpAmb := BPeRetorno.protBPe.tpAmb;
     FprotBPe.verAplic := BPeRetorno.protBPe.verAplic;
     FprotBPe.chDFe := BPeRetorno.protBPe.chDFe;
@@ -1105,22 +1101,21 @@ begin
       begin
         with FprocEventoBPe.New.RetEventoBPe.retInfEvento do
         begin
-//          idLote   := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.idLote;
+          Id       := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.Id;
           tpAmb    := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.tpAmb;
           verAplic := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.verAplic;
           cOrgao   := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.cOrgao;
           cStat    := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.cStat;
           xMotivo  := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.xMotivo;
           XML      := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.XML;
+          chBPe    := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.chBPe;
+          TpEvento   := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.TpEvento;
+          nSeqEvento := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.nSeqEvento;
 
-          ID           := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.ID;
-          tpAmb        := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.tpAmb;
 //          CNPJ         := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.CNPJ;
-          chBPe        := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.chBPe;
 //          dhEvento     := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.dhEvento;
-          TpEvento     := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.TpEvento;
-          nSeqEvento   := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.nSeqEvento;
 //          VersaoEvento := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.VersaoEvento;
+
           {
           DetEvento.xCorrecao := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.DetEvento.xCorrecao;
           DetEvento.xCondUso  := BPeRetorno.procEventoBPe.Items[I].RetEventoBPe.retInfEvento.DetEvento.xCondUso;
@@ -1228,7 +1223,7 @@ begin
               begin
                 BPe.procBPe.tpAmb := BPeRetorno.tpAmb;
                 BPe.procBPe.verAplic := BPeRetorno.verAplic;
-    //            BPe.procBPe.chBPe := BPeRetorno.chBPe;
+                BPe.procBPe.chDFe := BPeRetorno.chBPe;
                 BPe.procBPe.dhRecbto := FDhRecbto;
                 BPe.procBPe.nProt := FProtocolo;
                 BPe.procBPe.digVal := BPeRetorno.protBPe.digVal;
@@ -1583,117 +1578,83 @@ end;
 
 function TBPeEnvEvento.TratarResposta: Boolean;
 var
-  I, J: Integer;
   NomeArq, PathArq, VersaoEvento, Texto: String;
 begin
   FEvento.idLote := idLote;
 
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoEventoResult'], FPRetornoWS );
 
-  FPRetWS := TiraAcentos(FPRetWS);
-
-  EventoRetorno.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.retInfEvento.cStat;
   FxMotivo := EventoRetorno.retInfEvento.xMotivo;
   FPMsg := EventoRetorno.retInfEvento.xMotivo;
   FTpAmb := EventoRetorno.retInfEvento.tpAmb;
-{
-  if FcStat =0 then
-  begin
-    if EventoRetorno.retEvento.Count > 0 then
-    begin
-      FcStat   := EventoRetorno.retEvento.Items[0].RetinfEvento.cStat;
-      FxMotivo := EventoRetorno.retEvento.Items[0].RetinfEvento.xMotivo;
-      FPMsg    := EventoRetorno.retEvento.Items[0].RetinfEvento.xMotivo;
-      FTpAmb   := EventoRetorno.retEvento.Items[0].RetinfEvento.tpAmb;
 
-      FEventoRetorno.cStat    := FcStat;
-//      FEventoRetorno.xMotivo  := FxMotivo;
-      FEventoRetorno.xMotivo  := FPMsg;
-      FEventoRetorno.tpAmb    := FTpAmb;
-      FEventoRetorno.verAplic := EventoRetorno.retEvento.Items[0].RetinfEvento.verAplic;
-    end;
-  end;
-}
   // 135 = Evento Registrado e vinculado ao BPe
   Result := (FcStat = 135);
-  (*
+
   //gerar arquivo proc de evento
   if Result then
   begin
-    Leitor := TLeitor.Create;
-    try
-      for I := 0 to FEvento.Evento.Count - 1 do
+    if FEvento.Evento[0].infEvento.chBPe = EventoRetorno.RetinfEvento.chBPe then
+    begin
+      FEvento.Evento[0].RetinfEvento.tpAmb := EventoRetorno.RetinfEvento.tpAmb;
+      FEvento.Evento[0].RetinfEvento.nProt := EventoRetorno.RetinfEvento.nProt;
+      FEvento.Evento[0].RetinfEvento.dhRegEvento := EventoRetorno.RetinfEvento.dhRegEvento;
+      FEvento.Evento[0].RetinfEvento.cStat := EventoRetorno.RetinfEvento.cStat;
+      FEvento.Evento[0].RetinfEvento.xMotivo := EventoRetorno.RetinfEvento.xMotivo;
+
+      Texto := '';
+
+      if EventoRetorno.RetinfEvento.cStat in [135, 136, 155] then
       begin
-        for J := 0 to EventoRetorno.retEvento.Count - 1 do
+        VersaoEvento := TACBrBPe(FPDFeOwner).LerVersaoDeParams(LayBPeEvento);
+
+//        Leitor.Arquivo := FPDadosMsg;
+        Texto := '<eventoBPe versao="' + VersaoEvento + '">' +
+                   SeparaDados(FPDadosMsg, 'infEvento', True) +
+                   SeparaDados(FPDadosMsg, 'Signature', True) +
+                 '</eventoBPe>';
+                   {
+                  Leitor.rExtrai(1, 'infEvento', '', I + 1) +
+                  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                   Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
+                   Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
+                   Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
+                  '</Signature>'+}
+
+//        Leitor.Arquivo := FPRetWS;
+        Texto := Texto +
+                   '<retEventoBPe versao="' + VersaoEvento + '">' +
+                     SeparaDados(FPRetWS, 'infEvento', True) +
+                   '</retEventoBPe>';
+//                    Leitor.rExtrai(1, 'infEvento', '', J + 1) +
+
+        Texto := '<procEventoBPe versao="' + VersaoEvento + '" xmlns="' + ACBRBPE_NAMESPACE + '">' +
+                   Texto +
+                 '</procEventoBPe>';
+
+        if FPConfiguracoesBPe.Arquivos.Salvar then
         begin
-          if FEvento.Evento.Items[I].infEvento.chBPe =
-            EventoRetorno.retEvento.Items[J].RetinfEvento.chBPe then
-          begin
-            FEvento.Evento.Items[I].RetinfEvento.tpAmb :=
-              EventoRetorno.retEvento.Items[J].RetinfEvento.tpAmb;
-            FEvento.Evento.Items[I].RetinfEvento.nProt :=
-              EventoRetorno.retEvento.Items[J].RetinfEvento.nProt;
-            FEvento.Evento.Items[I].RetinfEvento.dhRegEvento :=
-              EventoRetorno.retEvento.Items[J].RetinfEvento.dhRegEvento;
-            FEvento.Evento.Items[I].RetinfEvento.cStat :=
-              EventoRetorno.retEvento.Items[J].RetinfEvento.cStat;
-            FEvento.Evento.Items[I].RetinfEvento.xMotivo :=
-              EventoRetorno.retEvento.Items[J].RetinfEvento.xMotivo;
+          NomeArq := OnlyNumber(FEvento.Evento[0].infEvento.Id) + '-procEventoBPe.xml';
+          PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento[0].infEvento.CNPJ));
 
-            Texto := '';
-
-            if EventoRetorno.retEvento.Items[J].RetinfEvento.cStat in [135, 136, 155] then
-            begin
-              VersaoEvento := TACBrBPe(FPDFeOwner).LerVersaoDeParams(LayBPeEvento);
-
-              Leitor.Arquivo := FPDadosMsg;
-              Texto := '<procEventoBPe versao="' + VersaoEvento + '" xmlns="' + ACBRBPe_NAMESPACE + '">' +
-                        '<eventoBPe versao="' + VersaoEvento + '">' +
-                         Leitor.rExtrai(1, 'infEvento', '', I + 1) +
-                         '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                          Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                          Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                          Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                         '</Signature>'+
-                        '</eventoBPe>';
-
-              Leitor.Arquivo := FPRetWS;
-              Texto := Texto +
-                         '<retEventoBPe versao="' + VersaoEvento + '">' +
-                          Leitor.rExtrai(1, 'infEvento', '', J + 1) +
-                         '</retEventoBPe>' +
-                        '</procEventoBPe>';
-
-              if FPConfiguracoesBPe.Arquivos.Salvar then
-              begin
-                NomeArq := OnlyNumber(FEvento.Evento.Items[i].infEvento.Id) + '-procEventoBPe.xml';
-                PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].infEvento.CNPJ, FEvento.Evento.Items[I].infEvento.detEvento.IE));
-
-                FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
-                FEventoRetorno.retEvento.Items[J].RetinfEvento.NomeArquivo := PathArq + NomeArq;
-                FEvento.Evento.Items[I].RetinfEvento.NomeArquivo := PathArq + NomeArq;
-              end;
-
-              { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-              Texto := ParseText(Texto);
-            end;
-
-            // Se o evento for rejeitado a propriedade XML conterá uma String vazia
-            FEventoRetorno.retEvento.Items[J].RetinfEvento.XML := Texto;
-            FEvento.Evento.Items[I].RetinfEvento.XML := Texto;
-
-            break;
-          end;
+          FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+          FEventoRetorno.RetinfEvento.NomeArquivo := PathArq + NomeArq;
+          FEvento.Evento[0].RetinfEvento.NomeArquivo := PathArq + NomeArq;
         end;
+
+        { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
+        Texto := ParseText(Texto);
       end;
-    finally
-      Leitor.Free;
+
+      // Se o evento for rejeitado a propriedade XML conterá uma String vazia
+      FEventoRetorno.RetinfEvento.XML := Texto;
+      FEvento.Evento.Items[0].RetinfEvento.XML := Texto;
     end;
   end;
-  *)
 end;
 
 function TBPeEnvEvento.GerarMsgLog: String;
@@ -1709,12 +1670,11 @@ begin
                  [FEventoRetorno.versao, TipoAmbienteToStr(FEventoRetorno.retInfEvento.tpAmb),
                   FEventoRetorno.retInfEvento.verAplic, IntToStr(FEventoRetorno.retInfEvento.cStat),
                   FEventoRetorno.retInfEvento.xMotivo]);
-  {
-  if FEventoRetorno.retEvento.Count > 0 then
-    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
-       [IfThen(FEventoRetorno.retEvento.Items[0].RetinfEvento.dhRegEvento = 0, '',
-               FormatDateTimeBr(FEventoRetorno.retEvento.Items[0].RetinfEvento.dhRegEvento))]);
-  }
+
+  aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
+     [IfThen(FEventoRetorno.RetinfEvento.dhRegEvento = 0, '',
+             FormatDateTimeBr(FEventoRetorno.RetinfEvento.dhRegEvento))]);
+
   Result := aMsg;
   {*)}
 end;
@@ -1821,9 +1781,7 @@ var
 begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeDistDFeInteresseResult'], FPRetornoWS );
 
-  FPRetWS := TiraAcentos(FPRetWS);
-
-  FretDistDFeInt.XmlRetorno := ParseText(AnsiString(FPRetWS), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
@@ -1982,7 +1940,7 @@ end;
 
 function TBPeEnvioWebService.GerarMsgErro(E: Exception): String;
 begin
-  Result := ACBrStr('WebService: '+FPServico + LineBreak +
+  Result := ACBrStr('WebService: ' + FPServico + LineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 

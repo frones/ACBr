@@ -273,8 +273,8 @@ begin
   if not ValidarCodigoUF(DCe.ide.cUF) then
     wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-  Result.AppendChild(AddNode(tcStr, 'B03', 'cDC', 6, 6, 1,
-            IntToStrZero(ExtrairCodigoChaveAcesso(DCe.infDCe.ID), 8), DSC_CDF));
+  Result.AppendChild(AddNode(tcInt, 'B03', 'cDC', 6, 6, 1,
+                                                         DCe.Ide.cDC, DSC_CDF));
 
   Result.AppendChild(AddNode(tcInt, 'B04', 'mod', 2, 2, 1, DCe.Ide.modelo, ''));
 

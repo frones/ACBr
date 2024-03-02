@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2024
+-- ACBrDCeXmlWriter --
+[*] Corrigido o tipo de conversão para a tag: cDC.
+  Por: Italo Giurizzato Junior
+
 01/03/2024
 -- ACBrDCeXmlReader --
 [*] Melhorias na leitura do XML.

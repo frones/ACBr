@@ -55,7 +55,7 @@ const
 
 type
   TSchemaNF3e = (schErro, schconsStatServNF3e, schNF3e, schconsReciNF3e,
-                 schconsSitNF3e, schInutNF3e, schenvEvento,
+                 schconsSitNF3e, schInutNF3e, schEventoNF3e,
                  schCancNF3e);
 
 const
@@ -70,7 +70,7 @@ type
 const
   TLayOutArrayStrings: array[TLayOut] of string = ('NF3eStatusServico',
     'NF3eRecepcao', 'NF3eRecepcaoSinc', 'NF3eRetRecepcao', 'NF3eConsulta',
-    'NFComRecepcaoEvento', 'URL-QRCode', 'URL-ConsultaNF3e', 'NF3eDistDFeInt');
+    'NF3eRecepcaoEvento', 'URL-QRCode', 'URL-ConsultaNF3e', 'NF3eDistDFeInt');
 
 type
   TVersaoQrCode = (veqr000, veqr100, veqr200);
@@ -529,7 +529,7 @@ begin
     LayNF3eRecepcaoSinc:  Result := schNF3e;
     LayNF3eRetRecepcao:   Result := schconsReciNF3e;
     LayNF3eConsulta:      Result := schconsSitNF3e;
-    LayNF3eEvento:        Result := schenvEvento;
+    LayNF3eEvento:        Result := schEventoNF3e;
   else
     Result := schErro;
   end;

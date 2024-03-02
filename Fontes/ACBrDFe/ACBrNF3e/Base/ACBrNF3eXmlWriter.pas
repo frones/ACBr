@@ -377,8 +377,8 @@ begin
 
   Result.AppendChild(AddNode(tcInt, '#9', 'nNF', 1, 9, 1, NF3e.ide.nNF, DSC_NDF));
 
-  Result.AppendChild(AddNode(tcStr, '#10', 'cNF', 7, 7, 1,
-    IntToStrZero(ExtrairCodigoChaveAcesso(NF3e.infNF3e.ID), 7), DSC_CDF));
+  Result.AppendChild(AddNode(tcInt, '#10', 'cNF', 7, 7, 1,
+                                                        NF3e.Ide.cNF, DSC_CDF));
 
   Result.AppendChild(AddNode(tcInt, '#11', 'cDV', 1, 1, 1, NF3e.Ide.cDV, DSC_CDV));
 

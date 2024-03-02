@@ -959,29 +959,31 @@ begin
   end;
 
   if NF3eNode <> nil then
-      infNF3eNode := NF3eNode.Childrens.Find('infNF3e');
+  begin
+    infNF3eNode := NF3eNode.Childrens.Find('infNF3e');
 
-  if infNF3eNode = nil then
-    raise Exception.Create('Arquivo xml incorreto.');
+    if infNF3eNode = nil then
+      raise Exception.Create('Arquivo xml incorreto.');
 
-  att := infNF3eNode.Attributes.Items['Id'];
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: Id');
+    att := infNF3eNode.Attributes.Items['Id'];
+    if att = nil then
+      raise Exception.Create('Não encontrei o atributo: Id');
 
-  NF3e.infNF3e.Id := att.Content;
+    NF3e.infNF3e.Id := att.Content;
 
-  att := infNF3eNode.Attributes.Items['versao'];
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: versao');
+    att := infNF3eNode.Attributes.Items['versao'];
+    if att = nil then
+      raise Exception.Create('Não encontrei o atributo: versao');
 
-  NF3e.infNF3e.Versao := StringToFloat(att.Content);
+    NF3e.infNF3e.Versao := StringToFloat(att.Content);
 
-  Ler_InfNF3e(infNF3eNode);
-  Ler_InfNF3eSupl(NF3eNode.Childrens.Find('infNF3eSupl'));
+    Ler_InfNF3e(infNF3eNode);
+    Ler_InfNF3eSupl(NF3eNode.Childrens.Find('infNF3eSupl'));
 
-  LerSignature(NF3eNode.Childrens.Find('Signature'), NF3e.signature);
+    LerSignature(NF3eNode.Childrens.Find('Signature'), NF3e.signature);
 
-  Result := True;
+    Result := True;
+  end;
 end;
 
 function TNF3eXmlReader.NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;

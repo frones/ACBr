@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2024
+-- ACBrNF3eWebServices --
+[-] Corrigido a procedure DefinirMsgDados no que se refere a eventos.
+-- ACBrNF3eConversao --
+[-] Corrigido a nomenclatura de alguns enumerados usados no envio de eventos.
+-- ACBrNF3eXmlWriter --
+[*] Corrigido o tipo de conversão para a tag: cNF.
+-- ACBrNF3eEnvEvento --
+[-] Corrigido a geração do XML de evento.
+-- ACBrNF3eRetEnvEvento --
+[-] Corrigido o erro de AV.
+  Por: Italo Giurizzato Junior
+
 01/03/2024
 -- ACBrNF3eXmlReader --
 [*] Melhorias na leitura do XML.

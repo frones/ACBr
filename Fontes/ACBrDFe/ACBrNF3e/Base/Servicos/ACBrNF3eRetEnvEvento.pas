@@ -85,11 +85,13 @@ constructor TRetEventoNF3e.Create;
 begin
   inherited Create;
 
+  FretInfEvento := TRetInfEvento.Create;
   Fsignature := Tsignature.Create;
 end;
 
 destructor TRetEventoNF3e.Destroy;
 begin
+  FretInfEvento.Free;
   Fsignature.Free;
 
   inherited;

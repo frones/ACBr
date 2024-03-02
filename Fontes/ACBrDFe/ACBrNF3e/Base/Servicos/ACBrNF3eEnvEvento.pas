@@ -216,8 +216,11 @@ begin
     case Evento.Items[i].InfEvento.tpEvento of
       teCancelamento:
         begin
-          xEvento := '<nProt>' + Evento.Items[i].InfEvento.detEvento.nProt + '</nProt>' +
-                     '<xJust>' + Evento.Items[i].InfEvento.detEvento.xJust + '</xJust>';
+          xEvento := '<evCancNF3e>' +
+                       '<descEvento>' + Evento.Items[i].InfEvento.DescEvento + '</descEvento>' +
+                       '<nProt>' + Evento.Items[i].InfEvento.detEvento.nProt + '</nProt>' +
+                       '<xJust>' + Evento.Items[i].InfEvento.detEvento.xJust + '</xJust>' +
+                     '</evCancNF3e>';
         end;
     else
       xEvento := '';
@@ -239,7 +242,6 @@ begin
                '<nSeqEvento>' + IntToStr(Evento.Items[i].InfEvento.nSeqEvento) + '</nSeqEvento>' +
 
                '<detEvento versaoEvento="' + Versao + '">' +
-                 '<descEvento>' + Evento.Items[i].InfEvento.DescEvento + '</descEvento>' +
                    xEvento +
                '</detEvento>' +
 

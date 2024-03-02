@@ -2282,95 +2282,41 @@ begin
     EventoNF3e.Versao := FPVersaoServico;
     EventoNF3e.GerarXML;
 
-    // Separa os grupos <evento> e coloca na variável Eventos
-    I := Pos('<evento ', EventoNF3e.Xml);
-    Lote := Copy(EventoNF3e.Xml, 1, I - 1);
-    Eventos := SeparaDados(EventoNF3e.Xml, 'envEvento');
-    I := Pos('<evento ', Eventos);
-    Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
+    AssinarXML(EventoNF3e.Xml, 'eventoNF3e', 'infEvento', 'Falha ao assinar o Envio de Evento ');
 
-    EventosAssinados := '';
+    // Separa o XML especifico do Evento para ser Validado.
+    AXMLEvento := SeparaDados(FPDadosMsg, 'detEvento');
 
-    // Realiza a assinatura para cada evento
-    while Eventos <> '' do
-    begin
-      F := Pos('</evento>', Eventos);
-
-      if F > 0 then
-      begin
-        Evento := Copy(Eventos, 1, F + 8);
-        Eventos := Copy(Eventos, F + 9, length(Eventos));
-
-        AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-        EventosAssinados := EventosAssinados + FPDadosMsg;
-      end
-      else
-        Break;
+    case SchemaEventoNF3e of
+      schCancNF3e:
+        begin
+          AXMLEvento := '<evCancNF3e xmlns="' + ACBRNF3E_NAMESPACE + '">' +
+//                          AXMLEvento +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancNF3e>', '</evCancNF3e>')) +
+                        '</evCancNF3e>';
+        end;
     end;
 
-    F := Pos('?>', EventosAssinados);
-    if F <> 0 then
-      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
-        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
-    else
-      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;
 
     with TACBrNF3e(FPDFeOwner) do
     begin
-      MsgEventoEhValido := SSL.Validar(FPDadosMsg,
-                                       GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico,0)),
-                                       FPMsg);
+      EventoEhValido := SSL.Validar(FPDadosMsg,
+                                    GerarNomeArqSchema(FPLayout,
+                                      StringToFloatDef(FPVersaoServico, 0)),
+                                      FPMsg) and
+                        SSL.Validar(AXMLEvento,
+                                    GerarNomeArqSchemaEvento(SchemaEventoNF3e,
+                                      StringToFloatDef(FPVersaoServico, 0)),
+                                      FPMsg);
     end;
 
-    if (not MsgEventoEhValido) or (SchemaEventoNF3e = schErro) then
+    if not EventoEhValido then
     begin
-      if (SchemaEventoNF3e = schErro) and (FPMsg='') then
-       FPMsg := 'Schema do Evento não foi definido';
-
-      FErroValidacao := ACBrStr('Falha na validação da Mensagem do Evento: ') +
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
         FPMsg;
 
       raise EACBrNF3eException.CreateDef(FErroValidacao);
-    end;
-
-    // Realiza a validação de cada evento
-    Eventos := SeparaDados(EventoNF3e.Xml, 'envEvento');
-    I := Pos('<evento ', Eventos);
-    Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
-
-    while Eventos <> '' do
-    begin
-      F := Pos('</evento>', Eventos);
-
-      if F > 0 then
-      begin
-        Evento := Copy(Eventos, 1, F + 8);
-        Eventos := Copy(Eventos, F + 9, length(Eventos));
-
-        // Separa o XML especifico do Evento para ser Validado.
-        AXMLEvento := '<detEvento versao="' + FPVersaoServico + '" xmlns="' +
-                                                      ACBRNF3e_NAMESPACE + '">' +
-                        SeparaDados(Evento, 'detEvento') +
-                      '</detEvento>';
-
-        with TACBrNF3e(FPDFeOwner) do
-        begin
-          EventoEhValido := SSL.Validar(AXMLEvento,
-                                        GerarNomeArqSchemaEvento(SchemaEventoNF3e,
-                                                             StringToFloatDef(FPVersaoServico, 0)),
-                                        FPMsg);
-        end;
-
-        if not EventoEhValido then
-        begin
-          FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
-            FPMsg;
-
-          raise EACBrNF3eException.CreateDef(FErroValidacao);
-        end;
-      end
-      else
-        Break;
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

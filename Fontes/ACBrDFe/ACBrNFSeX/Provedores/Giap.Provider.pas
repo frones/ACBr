@@ -573,8 +573,8 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := String(NativeStringToUTF8(Result));
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+//    Result := String(NativeStringToUTF8(Result));
+    Result := ParseText(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -592,8 +592,8 @@ begin
                 '</notaFiscal>' +
               '</nfeReposta>';
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
-    Result := String(NativeStringToUTF8(Result));
+    Result := ParseText(Result);
+//    Result := String(NativeStringToUTF8(Result));
   end;
 end;
 

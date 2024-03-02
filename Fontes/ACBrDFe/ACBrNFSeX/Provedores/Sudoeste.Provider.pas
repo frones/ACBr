@@ -356,7 +356,7 @@ begin
   // Remoção de lixo
   Result := Trim(StringReplace(Result, '@@RETORNO', '', [rfReplaceAll]));
 
-  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);

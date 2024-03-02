@@ -180,7 +180,6 @@ begin
 
   with ConfigGeral do
   begin
-//    UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     DetalharServico := True;
@@ -1397,7 +1396,7 @@ begin
                 '</mensagem>' +
               '</retorno>';
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
   end
   else
   begin
@@ -1405,7 +1404,7 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -1501,7 +1500,7 @@ begin
                 '</mensagem>' +
               '</retorno>';
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
   end
   else
   begin
@@ -1509,7 +1508,7 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -1806,7 +1805,7 @@ begin
                 '</MensagemRetorno>' +
               '</ListaMensagemRetorno>';
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
   end
   else
   begin
@@ -1825,7 +1824,7 @@ begin
                 '</ListaMensagemRetorno>';
     end;
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
     Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
     Result := Trim(StringReplace(Result, '&#13;', sLineBreak, [rfReplaceAll]));
   end;
@@ -1837,6 +1836,7 @@ procedure TACBrNFSeProviderIPM204.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.UseCertificateHTTP := False;
   ConfigGeral.QuebradeLinha := sLineBreak;
   ConfigGeral.Identificador := '';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2024
+-- Diversos --
+[*] Alterado a chamada do ParseText, removendo o segundo e terceiro parâmetros.
+  Por: Italo Giurizzato Junior
+
 29/02/2024
 -- ACBrNFSeXConversao.pas --
 [*] Inclusão de um enumerado para representar uma string vazia, com isso evitar

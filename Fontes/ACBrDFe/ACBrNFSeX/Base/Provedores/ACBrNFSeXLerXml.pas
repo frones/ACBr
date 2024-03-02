@@ -178,7 +178,8 @@ begin
 {$IfDef FPC}
   Result := aXml;
 {$Else}
-  Result := ParseText(aXml, True, False);
+  Result := ParseText(aXml);
+//  Result := ParseText(aXml, True, False);
   Result := FastStringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 {$EndIf}
 end;

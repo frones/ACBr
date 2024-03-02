@@ -236,7 +236,7 @@ function TACBrNFSeXWebserviceMetropolisWeb.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result));
+  Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result);
 end;
 

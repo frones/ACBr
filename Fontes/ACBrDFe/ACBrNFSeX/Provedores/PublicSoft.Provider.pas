@@ -456,7 +456,7 @@ begin
   begin
     Result := inherited TratarXmlRetornado(aXML);
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -474,7 +474,7 @@ begin
                 '</ListaMensagemRetorno>' +
               '</a>';
 
-    Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+    Result := ParseText(Result);
   end;
 end;
 

@@ -228,7 +228,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
-  Result := ParseText(AnsiString(Result), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverCDATA(Result);
   Result := RemoverIdentacao(Result);

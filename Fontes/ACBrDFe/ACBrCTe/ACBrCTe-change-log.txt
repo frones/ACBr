@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2024
+-- ACBrCTeWebServices --
+[*] Alterado a chamada do ParseText, removendo o segundo e terceiro parâmetros.
+  Por: Italo Giurizzato Junior
+
 29/02/2024
 -- ACBrCTeConhecimentos --
 [*] Valida alguns valores opcionais antes de converter para que não levante exception quando em branco.

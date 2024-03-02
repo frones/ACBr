@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2024
+-- ACBrNFeXmlWriter --
+[*] Corrigido o tipo de conversão para a tag: cNF.
+  Por: Italo Giurizzato Junior
+
 28/02/2024
 -- ACBrNFeWebServices --
 [*] Em algumas funções TratarResposta o ParseText estava com mais de 1 parâmetro,

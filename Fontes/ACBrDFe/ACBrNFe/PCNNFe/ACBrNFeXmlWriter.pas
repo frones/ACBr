@@ -408,13 +408,14 @@ var
   i: integer;
 begin
   Result := FDocument.CreateElement('ide');
+
   Result.AppendChild(AddNode(tcInt, 'B02', 'cUF', 02, 02, 1, NFe.ide.cUF, DSC_CUF));
 
   if not ValidarCodigoUF(NFe.ide.cUF) then
     wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-  Result.AppendChild(AddNode(tcStr, 'B03', 'cNF', 08, 08, 1,
-    IntToStrZero(ExtrairCodigoChaveAcesso(NFe.infNFe.ID), 8), DSC_CDF));
+  Result.AppendChild(AddNode(tcInt, 'B03', 'cNF', 08, 08, 1,
+                                                         NFe.Ide.cNF, DSC_CDF));
   Result.AppendChild(AddNode(tcStr, 'B04', 'natOp', 01, 60, 1,
     NFe.ide.natOp, DSC_NATOP));
 

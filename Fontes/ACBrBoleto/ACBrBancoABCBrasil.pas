@@ -960,7 +960,7 @@ end;
 
 function TACBrBancoABCBrasil.GetLocalPagamento: string;
 begin
-  Result := 'Pagável preferencialmente na Rede Bradesco ou Bradesco Expresso';
+  Result := CInstrucaoPagamentoTodaRede;
 end;
 
 function TACBrBancoABCBrasil.GerarRegistroTrailler240(

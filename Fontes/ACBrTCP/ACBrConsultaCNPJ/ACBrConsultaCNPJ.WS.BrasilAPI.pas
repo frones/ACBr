@@ -66,6 +66,8 @@ var
   LRetorno : String;
   I, Z, LResultCode : Integer;
 begin
+  Result := False;
+
   inherited Executar;
 
   LResultCode := SendHttp('GET',C_URL +  OnlyNumber(FCNPJ), LRetorno);
@@ -113,13 +115,15 @@ begin
 
         FResposta.MotivoSituacaoCad    := LJsonObject.AsString['motivo_situacao_cadastral'];
 
-        Result := true;
+        Result := True;
       end else
       begin
         if (Trim(LJsonObject.AsString['message']) <> '') then
           raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - ' +LJsonObject.AsString['message']);
       end;
     end;
+    if (LResultCode > 299) then
+      raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - ' +ResultString);
   finally
     LJSon.Free;
   end;

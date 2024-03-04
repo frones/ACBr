@@ -68,6 +68,8 @@ var
   I, LCodigoRetorno : Integer;
   LURL : String;
 begin
+  Result := False;
+
   inherited Executar;
 
   ClearHeaderParams;
@@ -132,7 +134,7 @@ begin
     end else
     begin
       if (Trim(LJSon.AsString['titulo']) <> '') or (LCodigoRetorno > 299) then
-        raise EACBrConsultaCNPJWSException.Create('Erro: '+LJSon.AsString['status'] + ' - ' +LJSon.AsString['detalhes'] + 'Código:' + IntToStr(LCodigoRetorno));
+        raise EACBrConsultaCNPJWSException.Create('Erro: '+LJSon.AsString['status'] + ' - ' +LJSon.AsString['detalhes'] + 'Código:' + IntToStr(LCodigoRetorno) + ' - '+ ResultString);
     end;
   finally
     LJSon.Free;

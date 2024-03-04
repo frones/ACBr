@@ -66,6 +66,8 @@ var
   LRetorno, LAuxiliar : String;
   I, Z, LResultCode : Integer;
 begin
+  Result := False;
+
   inherited Executar;
   ClearHeaderParams;
   if FUsuario <> '' then
@@ -124,6 +126,8 @@ begin
           raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - ' +LJsonObject.AsString['message']);
       end;
     end;
+    if (LResultCode > 299) then
+      raise EACBrConsultaCNPJWSException.Create('Erro:'+IntToStr(LResultCode) + ' - ' +ResultString);
   finally
     LJSon.Free;
   end;

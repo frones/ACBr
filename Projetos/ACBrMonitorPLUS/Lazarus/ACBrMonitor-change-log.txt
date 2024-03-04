@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2024
+-- DoACBrCTeUnit --
+[*] Faz um Refactoring nos comandos CriarEnviarCTe e EnviarCTe adicionando o caminho dos arquivos gerados no retorno e tornando a geração do PDF independente a impressão.
+  Por: Diego Folieni
+
 27/02/2024
 -- DoACBrCTeUnit --
 [*] Corrige a rotina do comando EnviarCTe que estava consultando recibo independente do modo de envio.

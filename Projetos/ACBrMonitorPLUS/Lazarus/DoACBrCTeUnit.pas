@@ -127,6 +127,11 @@ end;
 
 { TMetodoEnviarCTe }
 TMetodoEnviarCTe = class(TACBrMetodo)
+private
+  FAssincrono: Boolean;
+  FImpressora: String;
+  procedure TratarRetorno(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+  procedure Imprimir(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
 public
   procedure Executar; override;
 end;
@@ -139,6 +144,14 @@ end;
 
 { TMetodoCriarEnviarCTe }
 TMetodoCriarEnviarCTe = class(TACBrMetodo)
+private
+  FImpressora : String;
+  FPreview    : Boolean;
+  FCopias     : Integer;
+  FAssincrono : Boolean;
+  procedure TratarRetorno(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+  procedure Imprimir(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+  procedure GerarPDF(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
 public
   procedure Executar; override;
 end;
@@ -1210,7 +1223,7 @@ begin
 
       if (ACBrCTe.Conhecimentos.Count = 0) then
       begin
-        if ValidarChave(AXML) then
+        if ACBrDFeUtil.ValidarChave(AXML) then
           ACBrCTe.WebServices.Consulta.CTeChave := AXML
         else
           raise Exception.Create(
@@ -1462,6 +1475,108 @@ end;
 
 { TMetodoCriarEnviarCTe }
 
+
+procedure TMetodoCriarEnviarCTe.TratarRetorno(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+var
+  LRespEnvio: TEnvioResposta;
+  LRespRetorno: TRetornoResposta;
+  i, j: Integer;
+begin
+  if (FAssincrono) then
+  begin
+    ACTe.WebServices.Retorno.Recibo := ACTe.WebServices.Enviar.Recibo;
+    ACTe.WebServices.Retorno.Executar;
+    LRespRetorno := TRetornoResposta.Create('CTe', ACTeObject.TpResp, codUTF8);
+    try
+      LRespRetorno.Processar(ACTe.WebServices.Retorno.CTeRetorno,
+                           ACTe.WebServices.Retorno.Recibo,
+                           ACTe.WebServices.Retorno.Msg,
+                           ACTe.WebServices.Retorno.Protocolo,
+                           ACTe.WebServices.Retorno.ChaveCTe);
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + LRespRetorno.Msg
+                    + sLineBreak + LRespRetorno.Gerar;
+    finally
+      LRespRetorno.Free;
+    end;
+
+    for i:=0 to ACTe.WebServices.Retorno.CTeRetorno.ProtDFe.Count - 1 do
+    begin
+      for j:=0 to ACTe.Conhecimentos.Count - 1 do
+      begin
+        if ('CTe' + ACTe.WebServices.Retorno.CTeRetorno.ProtDFe[i].chDFe = ACTe.Conhecimentos.Items[j].CTe.infCTe.Id) then
+        begin
+          //Informa Mensagem de Sem Valor Fiscal para documentos emitidos em Homologação
+          if ACTe.Conhecimentos.Items[J].CTe.Ide.tpAmb = taHomologacao then
+            ACTe.Conhecimentos.Items[J].CTe.dest.xNome:= cHOM_MSG;
+        end;
+      end;
+    end;
+  end else
+  begin
+    LRespEnvio := TEnvioResposta.Create(ACTeObject.TpResp, codUTF8);
+    try
+      LRespEnvio.Processar(ACTe);
+      fpCmd.Resposta := fpCmd.Resposta + LRespEnvio.Msg + sLineBreak + LRespEnvio.Gerar;
+    finally
+      LRespEnvio.Free;
+    end;
+    if {(ACTe.Conhecimentos[0].Confirmado) and }(ACTe.Conhecimentos[0].CTe.Ide.tpAmb = taHomologacao) then
+      ACTe.Conhecimentos[0].CTe.dest.xNome := cHOM_MSG;
+  end;
+
+  for i:=0 to ACTe.Conhecimentos.Count-1 do
+    fpCmd.Resposta := fpCmd.Resposta + sLineBreak + '[CTe_Arq' + Trim(IntToStr(
+                      ACTe.Conhecimentos[i].CTe.ide.nCT))+']' + sLineBreak +
+                      'Arquivo=' + ACTe.Conhecimentos[i].NomeArq;
+end;
+
+procedure TMetodoCriarEnviarCTe.Imprimir(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+var
+  i: Integer;
+begin
+  for i:=0 to ACTe.Conhecimentos.Count -1 do
+  begin
+    if ACTe.Conhecimentos[i].Confirmado then
+    begin
+      ACTeObject.DoConfiguraDACTe(False, BoolToStr(FPreview, '1', ''));
+
+      if NaoEstaVazio(FImpressora) then
+        ACTe.DACTe.Impressora := FImpressora;
+
+      if FCopias > 0 then
+        ACTe.DACTe.NumCopias := FCopias;
+
+      try
+        ACTeObject.DoAntesDeImprimir(FPreview or (ACTeObject.MonitorConfig.DFe.Impressao.DANFE.MostrarPreview));
+        ACTe.Conhecimentos[i].Imprimir;
+      finally
+        ACTeObject.DoDepoisDeImprimir;
+      end;
+    end;
+  end;
+end;
+
+procedure TMetodoCriarEnviarCTe.GerarPDF(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+var
+  i: Integer;
+  ArqPDF: String;
+begin
+  for i:=0 to ACTe.Conhecimentos.Count - 1 do
+  begin
+    if ACTe.Conhecimentos[i].Confirmado then
+    begin
+      ACTeObject.DoConfiguraDACTe(True, BoolToStr(FPreview, '1', ''));
+
+      ACTe.Conhecimentos[i].ImprimirPDF;
+      ArqPDF := OnlyNumber(ACTe.Conhecimentos[i].CTe.infCTe.Id)+'-cte.pdf';
+
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak +
+                        'PDF='+ PathWithDelim(ACTe.DACTe.PathPDF) + ArqPDF + sLineBreak;
+
+    end;
+  end;
+end;
+
 { Params: 0 - IniFile - Uma String com um Path completo arquivo .ini CTe
                          ou Uma String com conteúdo txt do CTe
           1 - NumeroLote: Integer com número do lote a ser adicionado
@@ -1474,97 +1589,73 @@ end;
 }
 procedure TMetodoCriarEnviarCTe.Executar;
 var
-  Salva, AImprime: boolean;
-  Alertas: ansistring;
-  ArqCTe: string;
-  Resp, AIni, AImpressora: string;
-  ALote: Integer;
-  APreview: Boolean;
-  ACopias: Integer;
-  APDF: Boolean;
-  Assincrono: Boolean;
-  RespEnvio: TEnvioResposta;
-  RespRetorno: TRetornoResposta;
+  LImprimir, LPDF: Boolean;
+  LAlertas: AnsiString;
+  LArqCTe, LResposta, LArqIni: String;
+  LLote: Integer;
+  LCTe: TACBrCTe;
+  LCTeObject: TACBrObjetoCTe;
 begin
-  AIni := fpCmd.Params(0);
-  ALote := StrToIntDef(fpCmd.Params(1), 0);
-  AImprime := StrToBoolDef(fpCmd.Params(2), False);
-  AImpressora := fpCmd.Params(3);
-  APreview := StrToBoolDef(fpCmd.Params(4), False);
-  ACopias := StrToIntDef(fpCmd.Params(5), 0);
-  APDF := StrToBoolDef(fpCmd.Params(6), False);
-  Assincrono := StrToBoolDef( fpCmd.Params(7), True);
+  //Preparando paramentros de entrada
+  LArqIni     := fpCmd.Params(0);
+  LLote       := StrToIntDef(fpCmd.Params(1), 0);
+  LImprimir   := StrToBoolDef(fpCmd.Params(2), False);
+  FImpressora := fpCmd.Params(3);
+  FPreview    := StrToBoolDef(fpCmd.Params(4), False);
+  FCopias     := StrToIntDef(fpCmd.Params(5), 0);
+  LPDF        := StrToBoolDef(fpCmd.Params(6), False);
+  FAssincrono := StrToBoolDef( fpCmd.Params(7), True);
+  LCTeObject  := TACBrObjetoCTe(fpObjetoDono);
+  LCTe        := LCTeObject.ACBrCTe;
 
-  with TACBrObjetoCTe(fpObjetoDono) do
+  //Criação
+  LCTeObject.LerIniCTe(LArqIni);
+
+  if not LCTe.Configuracoes.Arquivos.Salvar then
   begin
-    LerIniCTe(AIni);
-
-    Salva := ACBrCTe.Configuracoes.Arquivos.Salvar;
-    if not Salva then
-    begin
-      ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
-      ACBrCTe.Configuracoes.Arquivos.PathSalvar :=
-        PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
-    end;
-
-    ACBrCTe.Conhecimentos.GerarCTe;
-    Alertas := ACBrCTe.Conhecimentos.Items[0].Alertas;
-
-    ACBrCTe.Conhecimentos.Assinar;
-    ACBrCTe.Conhecimentos.Validar;
-
-    ArqCTe := PathWithDelim(ACBrCTe.Configuracoes.Arquivos.PathSalvar) +
-      OnlyNumber(ACBrCTe.Conhecimentos.Items[0].CTe.infCTe.ID) + '-cte.xml';
-    ACBrCTe.Conhecimentos.GravarXML(ArqCTe);
-
-    if not FileExists(ArqCTe) then
-      raise Exception.Create('Não foi possível criar o arquivo ' + ArqCTe);
-
-    Resp := ArqCTe;
-    if (Alertas <> '') then
-      Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
-
-    fpCmd.Resposta := Resp + sLineBreak ;
-
-    if (ALote = 0) then
-      ACBrCTe.WebServices.Enviar.Lote := '1'
-    else
-      ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALote);
-
-    ACBrCTe.WebServices.Enviar.Sincrono:= not(Assincrono);
-
-    ACBrCTe.WebServices.Enviar.Executar;
-    RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
-    try
-       RespEnvio.Processar(ACBrCTe);
-       fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
-    finally
-       RespEnvio.Free;
-    end;
-
-    if (ACBrCTe.WebServices.Enviar.Recibo <> '') then //Assincrono
-    begin
-      ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
-      ACBrCTe.WebServices.Retorno.Executar;
-      RespRetorno := TRetornoResposta.Create('CTe', TpResp, codUTF8);
-      try
-        RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
-                              ACBrCTe.WebServices.Retorno.Recibo,
-                              ACBrCTe.WebServices.Retorno.Msg,
-                              ACBrCTe.WebServices.Retorno.Protocolo,
-                              ACBrCTe.WebServices.Retorno.ChaveCTe);
-        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
-                       + sLineBreak + RespRetorno.Gerar;
-      finally
-        RespRetorno.Free;
-      end;
-      RespostaConhecimentos(AImprime, AImpressora, APreview, ACopias, APDF);
-    end
-    else
-    if AImprime then //Sincrono
-      ImprimirCTe(AImpressora, BoolToStr(APreview,'1',''), ACopias, False);
-
+    ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
+    LCTe.Configuracoes.Arquivos.PathSalvar := PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
   end;
+
+  LCTe.Conhecimentos.GerarCTe;
+  LAlertas := LCTe.Conhecimentos[0].Alertas;
+
+  LCTe.Conhecimentos.Assinar;
+  LCTe.Conhecimentos.Validar;
+
+  LArqCTe := PathWithDelim(LCTe.Configuracoes.Arquivos.PathSalvar) + OnlyNumber(LCTe.Conhecimentos[0].CTe.infCTe.ID) + '-cte.xml';
+  LCTe.Conhecimentos.GravarXML(LArqCTe);
+
+  if not FileExists(LArqCTe) then
+    raise Exception.Create('Não foi possível criar o arquivo ' + LArqCTe);
+
+  LResposta := LArqCTe;
+  if (LAlertas <> '') then
+    LResposta := LResposta + sLineBreak + 'Alertas:' + LAlertas;
+
+  fpCmd.Resposta := LResposta + sLineBreak ;
+
+  //Enviando
+  if (LLote = 0) then
+    LLote := 1;
+
+  LCTe.WebServices.Enviar.Lote := IntToStr(LLote);
+
+  LCTe.WebServices.Enviar.Sincrono:= not(FAssincrono);
+
+  LCTe.WebServices.Enviar.Executar;
+
+  //Tratamento do Retorno
+
+  TratarRetorno(LCTe, LCTeObject);
+
+  //Impressão
+  if LImprimir then
+    Imprimir(LCTe, LCTeObject);
+
+  //PDF
+  if LPDF then
+    GerarPDF(LCTe, LCTeObject);
 end;
 
 { TMetodoAdicionarCTe }
@@ -1709,6 +1800,87 @@ end;
 
 { TMetodoEnviarCTe }
 
+
+procedure TMetodoEnviarCTe.TratarRetorno(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+var
+  RespEnvio: TEnvioResposta;
+  RespRetorno: TRetornoResposta;
+  i, j: Integer;
+begin
+  if (FAssincrono) then
+  begin
+    ACTe.WebServices.Retorno.Recibo := ACTe.WebServices.Enviar.Recibo;
+    ACTe.WebServices.Retorno.Executar;
+    RespRetorno := TRetornoResposta.Create('CTe', ACTeObject.TpResp, codUTF8);
+    try
+      RespRetorno.Processar(ACTe.WebServices.Retorno.CTeRetorno,
+                            ACTe.WebServices.Retorno.Recibo,
+                            ACTe.WebServices.Retorno.Msg,
+                            ACTe.WebServices.Retorno.Protocolo,
+                            ACTe.WebServices.Retorno.ChaveCTe);
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+                     + sLineBreak + RespRetorno.Gerar;
+    finally
+      RespRetorno.Free;
+    end;
+
+    for i:=0 to ACTe.WebServices.Retorno.CTeRetorno.ProtDFe.Count - 1 do
+    begin
+      for j:=0 to ACTe.Conhecimentos.Count - 1 do
+      begin
+        if ('CTe' + ACTe.WebServices.Retorno.CTeRetorno.ProtDFe[i].chDFe = ACTe.Conhecimentos.Items[j].CTe.infCTe.Id) then
+        begin
+          //Informa Mensagem de Sem Valor Fiscal para documentos emitidos em Homologação
+          if ACTe.Conhecimentos.Items[J].CTe.Ide.tpAmb = taHomologacao then
+            ACTe.Conhecimentos.Items[J].CTe.dest.xNome:= cHOM_MSG;
+        end;
+      end;
+    end;
+  end else
+  begin
+    RespEnvio := TEnvioResposta.Create(ACTeObject.TpResp, codUTF8);
+    try
+       RespEnvio.Processar(ACTe);
+       fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
+    finally
+       RespEnvio.Free;
+    end;
+    if (ACTe.Conhecimentos[0].Confirmado) and (ACTe.Conhecimentos[0].CTe.Ide.tpAmb = taHomologacao) then
+      ACTe.Conhecimentos[0].CTe.dest.xNome := cHOM_MSG;
+  end;
+
+  for i:=0 to ACTe.Conhecimentos.Count-1 do
+    fpCmd.Resposta := fpCmd.Resposta + sLineBreak + '[CTe_Arq' + Trim(IntToStr(
+                      ACTe.Conhecimentos[i].CTe.ide.nCT))+']' + sLineBreak +
+                      'Arquivo=' + ACTe.Conhecimentos[i].NomeArq;
+
+end;
+
+procedure TMetodoEnviarCTe.Imprimir(const ACTe: TACBrCTe; const ACTeObject: TACBrObjetoCTe);
+var
+  i: Integer;
+begin
+  for i:=0 to ACTe.Conhecimentos.Count -1 do
+  begin
+    if ACTe.Conhecimentos[i].Confirmado then
+    begin
+      ACTeObject.DoConfiguraDACTe(False, BoolToStr(False));
+
+      if NaoEstaVazio(FImpressora) then
+        ACTe.DACTe.Impressora := FImpressora;
+
+      ACTe.DACTe.NumCopias := 1;
+
+      try
+        ACTeObject.DoAntesDeImprimir(False);
+        ACTe.Conhecimentos[i].Imprimir;
+      finally
+        ACTeObject.DoDepoisDeImprimir;
+      end;
+    end;
+  end;
+end;
+
 { Params: 0 - PathorXML - Uma String com um Path completo arquivo XML CTe
                          ou Uma String com conteúdo XML do CTe
           1 - Lote: Integer com número do lote. Default = 1
@@ -1723,70 +1895,43 @@ var
   APathorXML, AImpressora: String;
   ALote: Integer;
   AAssina, AImprime: Boolean;
-  RespEnvio: TEnvioResposta;
-  RespRetorno: TRetornoResposta;
-  Assincrono : Boolean;
+  LCTeObject: TACBrObjetoCTe;
+  LCTe: TACBrCTe;
 begin
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AAssina := StrToBoolDef(fpCmd.Params(2), False);
   AImprime := StrToBoolDef(fpCmd.Params(3), False);
-  AImpressora := fpCmd.Params(4);
-  Assincrono := StrToBoolDef( fpCmd.Params(5), True);
+  FImpressora := fpCmd.Params(4);
+  FAssincrono := StrToBoolDef( fpCmd.Params(5), True);
+  LCTeObject := TACBrObjetoCTe(fpObjetoDono);
+  LCTe := LCTeObject.ACBrCTe;
 
-  with TACBrObjetoCTe(fpObjetoDono) do
-  begin
-    ACBrCTe.Conhecimentos.Clear;
-    CargaDFe := TACBrCarregarCTe.Create(ACBrCTe, APathorXML);
-    try
-      ACBrCTe.Conhecimentos.GerarCTe;
+  LCTeObject.ACBrCTe.Conhecimentos.Clear;
+  CargaDFe := TACBrCarregarCTe.Create(LCTe, APathorXML);
+  try
+    LCTe.Conhecimentos.GerarCTe;
 
-      if (AAssina) then
-        ACBrCTe.Conhecimentos.Assinar;
+    if (AAssina) then
+      LCTe.Conhecimentos.Assinar;
 
-      ACBrCTe.Conhecimentos.Validar;
+    LCTe.Conhecimentos.Validar;
 
-      if (ALote = 0) then
-        ACBrCTe.WebServices.Enviar.Lote := '1'
-      else
-        ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALote);
+    if (ALote = 0) then
+      LCTe.WebServices.Enviar.Lote := '1'
+    else
+      LCTe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-      ACBrCTe.WebServices.Enviar.Sincrono:= not(Assincrono);
+    LCTe.WebServices.Enviar.Sincrono:= not(FAssincrono);
 
-      ACBrCTe.WebServices.Enviar.Executar;
-      RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
-      try
-         RespEnvio.Processar(ACBrCTe);
-         fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
-      finally
-         RespEnvio.Free;
-      end;
+    LCTe.WebServices.Enviar.Executar;
 
-      if (ACBrCTe.WebServices.Enviar.Recibo <> '') and (not (Assincrono)) then //Assincrono
-      begin
-        ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
-        ACBrCTe.WebServices.Retorno.Executar;
-        RespRetorno := TRetornoResposta.Create('CTe', TpResp, codUTF8);
-        try
-          RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
-                                ACBrCTe.WebServices.Retorno.Recibo,
-                                ACBrCTe.WebServices.Retorno.Msg,
-                                ACBrCTe.WebServices.Retorno.Protocolo,
-                                ACBrCTe.WebServices.Retorno.ChaveCTe);
-          fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
-                         + sLineBreak + RespRetorno.Gerar;
-        finally
-          RespRetorno.Free;
-        end;
-        RespostaConhecimentos(AImprime, AImpressora, False, 0, False);
-      end
-      else
-      if AImprime then //Sincrono
-        ImprimirCTe(AImpressora, '', 0, False);
+    TratarRetorno(LCTe, LCTeObject);
 
-    finally
-      CargaDFe.Free;
-    end;
+    Imprimir(LCTe, LCTeObject);
+
+  finally
+    CargaDFe.Free;
   end;
 end;
 

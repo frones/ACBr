@@ -65,7 +65,7 @@ var
   LJson, LJsonObject : TACBrJSONObject;
   LJsonArray: TACBrJSONArray;
   LRetorno : String;
-  I : Integer;
+  I, LCodigoRetorno : Integer;
   LURL : String;
 begin
   inherited Executar;
@@ -78,11 +78,11 @@ begin
   end else
     LURL := C_URL_PUBLICA;
 
-  SendHttp('GET', LURL +  OnlyNumber(FCNPJ), LRetorno);
+  LCodigoRetorno := SendHttp('GET', LURL +  OnlyNumber(FCNPJ), LRetorno);
 
   LJson := TACBrJSONObject.Parse( UTF8ToNativeString(LRetorno) );
   try
-    if LJson.AsString['status'] = '' then
+    if (LJson.AsString['status'] = '') and (LCodigoRetorno < 299) then
     begin
       FResposta.RazaoSocial       := LJson.AsString['razao_social'];
       FResposta.Porte             := LJson.AsJSONObject['porte'].AsString['descricao'];
@@ -131,8 +131,8 @@ begin
       Result := true;
     end else
     begin
-      if (Trim(LJSon.AsString['titulo']) <> '') then
-        raise EACBrConsultaCNPJWSException.Create('Erro: '+LJSon.AsString['status'] + ' - ' +LJSon.AsString['detalhes']);
+      if (Trim(LJSon.AsString['titulo']) <> '') or (LCodigoRetorno > 299) then
+        raise EACBrConsultaCNPJWSException.Create('Erro: '+LJSon.AsString['status'] + ' - ' +LJSon.AsString['detalhes'] + 'Código:' + IntToStr(LCodigoRetorno));
     end;
   finally
     LJSon.Free;

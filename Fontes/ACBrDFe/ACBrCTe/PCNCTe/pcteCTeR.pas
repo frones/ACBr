@@ -325,7 +325,9 @@ begin
     CTe.emit.IEST  := Leitor.rCampo(tcStr, 'IEST');
     CTe.emit.xNome := Leitor.rCampo(tcStr, 'xNome');
     CTe.emit.xFant := Leitor.rCampo(tcStr, 'xFant');
-    CTe.emit.CRT   := StrToCRTCTe(ok, Leitor.rCampo(tcStr, 'CRT'));
+    sAux := Leitor.rCampo(tcStr, 'CRT');
+    if sAux <> '' then
+      CTe.emit.CRT   := StrToCRTCTe(ok, sAux);
 
     if Leitor.rExtrai(2, 'enderEmit') <> '' then
     begin

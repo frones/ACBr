@@ -395,7 +395,7 @@ begin
       lNumeroSerie1.Lines.Text := ACBrStr(
         'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' + sLineBreak +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' + sLineBreak +
-        FormatDateBr(Ide.dEmi) + sLineBreak +
+        FormatDateTimeBr(Ide.dEmi) + sLineBreak +
         Via
       );
     end

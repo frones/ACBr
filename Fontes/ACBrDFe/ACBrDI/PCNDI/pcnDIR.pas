@@ -143,7 +143,7 @@ begin
     oAdicao.dadosMercadoriaMedidaEstatisticaQuantidade   := Leitor.rCampo(tcDe2, 'dadosMercadoriaMedidaEstatisticaQuantidade');
     oAdicao.dadosMercadoriaMedidaEstatisticaUnidade      := Leitor.rCampo(tcStr, 'dadosMercadoriaMedidaEstatisticaUnidade');
     oAdicao.dadosMercadoriaNomeNcm                       := Leitor.rCampo(tcStr, 'dadosMercadoriaNomeNcm');
-    oAdicao.dadosMercadoriaPesoLiquido                   := Leitor.rCampo(tcDe2, 'dadosMercadoriaPesoLiquido');
+    oAdicao.dadosMercadoriaPesoLiquido                   := Leitor.rCampo(tcDe5, 'dadosMercadoriaPesoLiquido');
     oAdicao.dcrCoeficienteReducao                        := Leitor.rCampo(tcInt, 'dcrCoeficienteReducao');
     oAdicao.dcrIdentificacao                             := Leitor.rCampo(tcInt, 'dcrIdentificacao');
     oAdicao.dcrValorDevido                               := Leitor.rCampo(tcDe2, 'dcrValorDevido');
@@ -310,8 +310,8 @@ begin
   DI.cargaNumeroAgente                   := Leitor.rCampo(tcStr, 'cargaNumeroAgente');
   DI.cargaPaisProcedenciaCodigo          := Leitor.rCampo(tcInt, 'cargaPaisProcedenciaCodigo');
   DI.cargaPaisProcedenciaNome            := Leitor.rCampo(tcStr, 'cargaPaisProcedenciaNome');
-  DI.cargaPesoBruto                      := Leitor.rCampo(tcDe2, 'cargaPesoBruto');
-  DI.cargaPesoLiquido                    := Leitor.rCampo(tcDe2, 'cargaPesoLiquido');
+  DI.cargaPesoBruto                      := Leitor.rCampo(tcDe5, 'cargaPesoBruto');
+  DI.cargaPesoLiquido                    := Leitor.rCampo(tcDe5, 'cargaPesoLiquido');
   DI.cargaUrfEntradaCodigo               := Leitor.rCampo(tcInt, 'cargaUrfEntradaCodigo');
   DI.cargaUrfEntradaNome                 := Leitor.rCampo(tcStr, 'cargaUrfEntradaNome');
   DI.conhecimentoCargaEmbarqueData       := Leitor.rCampo(tcDatCFe, 'conhecimentoCargaEmbarqueData');
@@ -367,7 +367,7 @@ begin
     DI.embalagem.codigoTipoEmbalagem  := Leitor.rCampo(tcInt, 'codigoTipoEmbalagem');
     DI.embalagem.nomeEmbalagem        := Leitor.rCampo(tcStr, 'nomeEmbalagem');
     DI.embalagem.moedaNegociadaCodigo := Leitor.rCampo(tcInt, 'moedaNegociadaCodigo');
-    DI.embalagem.quantidadeVolume     := Leitor.rCampo(tcDe2, 'quantidadeVolume');
+    DI.embalagem.quantidadeVolume     := Leitor.rCampo(tcInt, 'quantidadeVolume');
   end;
   Leitor.GroupRestore;
 

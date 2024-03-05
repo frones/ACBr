@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2024
+-- pmdfeConversaoMDFe --
+[*] Diversas alterações visando eliminar erros de conversão de string para enumerado.
+  Por: Italo Giurizzato Junior
+
 02/03/2024
 -- ACBrMDFeWebServices --
 [*] Alterado a chamada do ParseText, removendo o segundo e terceiro parâmetros.

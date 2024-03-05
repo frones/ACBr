@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2024
+-- pcteConversaoCTe --
+[*] Diversas alterações visando eliminar erros de conversão de string para enumerado.
+  Por: Italo Giurizzato Junior
+
 04/03/2024
 -- pcteCTeR --
 [*] Adiciona validação do conteúdo lido de CRT antes de tentar converter para evitar exception em valor inválido.

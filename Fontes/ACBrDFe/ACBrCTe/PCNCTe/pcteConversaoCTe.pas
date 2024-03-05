@@ -41,16 +41,20 @@ uses
   pcnConversao;
 
 type
+  TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
+                    stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,
+                    stCTeRecibo, stCTeCadastro, stCTeEmail, stCTeCCe,
+                    stCTeEvento, stCTeDistDFeInt, stCTeEnvioWebService);
 
-  TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
-                LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
-                LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
-                LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc,
-                LayCTeRecepcaoGTVe);
+  TVersaoCTe = (ve200, ve300, ve400);
 
+const
+  TVersaoCTeArrayStrings: array[TVersaoCTe] of string = ('2.00', '3.00', '4.00');
+  TVersaoCTeArrayDouble: array[TVersaoCTe] of Double = (2.00, 3.00, 4.00);
+
+type
   TSchemaCTe = ( schErro, schCTe, schCTeOS, schGTVe, schcancCTe, schInutCTe,
                  schEventoCTe,
-           //      schresCTe, schresEvento, schprocCTe, schprocEventoCTe,
                  schconsReciCTe, schconsSitCTe, schconsStatServCTe, schconsCad,
                  schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
@@ -59,51 +63,239 @@ type
                  schevGTV, schevCECTe, schevCancCECTe, schevCancPrestDesacordo,
                  schevIECTe, schevCancIECTe);
 
-  TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
-                    stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,
-                    stCTeRecibo, stCTeCadastro, stCTeEmail, stCTeCCe,
-                    stCTeEvento, stCTeDistDFeInt, stCTeEnvioWebService);
+const
+  TSchemaCTeArrayStrings: array[TSchemaCTe] of string = ('', '', '', '', '', '',
+    '', '', '', '', '', '', '', '', '', '', '', 'evEPECCTe', 'evCancCTe',
+    'evRegMultimodal', 'evCCeCTe', 'distDFeInt', 'cteModalRodoviarioOS',
+    'evPrestDesacordo', 'evGTV', 'evCECTe', 'evCancCECTe',
+    'evCancPrestDesacordo', 'evIECTe', 'evCancIECTe');
 
-  TModeloCTe = (moCTe, moCTeOS, moGTVe);
-  TVersaoCTe = (ve200, ve300, ve400);
+type
+  TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
+                LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
+                LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
+                LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc,
+                LayCTeRecepcaoGTVe, LayCTeURLQRCode, LayURLConsultaCTe);
+const
+  TLayOutCTeArrayStrings: array[TLayOutCTe] of string = ('CTeRecepcao',
+    'CTeRetRecepcao', 'CTeCancelamento', 'CTeInutilizacao',
+    'CTeConsultaProtocolo', 'CTeStatusServico', 'CTeConsultaCadastro',
+    'RecepcaoEvento', 'RecepcaoEventoAN', 'CTeDistribuicaoDFe', 'CTeRecepcaoOS',
+    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe', 'URL-QRCode', 'URL-ConsultaCTe');
 
+type
+  TModeloCTe = (moCTe, moGTVe, moCTeOS);
+
+const
+  TModeloCTeArrayStrings: array[TModeloCTe] of string = ('57', '64', '67');
+
+type
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
+
+const
+  TFormaPagamentoArrayStrings: array[TpcteFormaPagamento] of string = ('0',
+    '1', '2');
+  TFormaPagamentoDescArrayStrings: array[TpcteFormaPagamento]
+     of string = ('PAGO', 'A PAGAR', 'OUTROS');
+
+type
   TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe);
+
+const
+  TTipoCTeArrayStrings: array[TpcteTipoCTe] of string = ('0', '1', '2', '3',
+    '4');
+  TTipoCTeDescArrayStrings: array[TpcteTipoCTe] of string = ('NORMAL',
+    'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO', 'GTVe');
+
+type
   TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario,
                       tsMultimodal, tsTranspPessoas, tsTranspValores,
                       tsExcessoBagagem, tsGTV);
+
+const
+  TTipoServicoArrayStrings: array[TpcteTipoServico] of string = ('0', '1',
+    '2', '3', '4', '6', '7', '8', '9');
+  TTipoServicoDescArrayStrings: array[TpcteTipoServico]
+    of string = ('NORMAL', 'SUBCONTRATAÇÃO', 'REDESPACHO',
+      'REDESP. INTERMEDIÁRIO', 'VINC. A MULTIMODAL', 'TRANSP. PESSOAS',
+      'TRANSP. VALORES', 'EXCESSO BAGAGEM', 'GTV');
+
+type
   TpcteRetira = (rtSim, rtNao);
-  TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
+
+const
+  TRetiraArrayStrings: array[TpcteRetira] of string = ('0', '1');
+
+type
+  TpcteTomador = (tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario,
+                  tmOutros);
+
+const
+  TTomadorArrayStrings: array[TpcteTomador] of string = ('0', '1', '2', '3',
+    '4');
+  TTomadorDescArrayStrings: array[TpcteTomador] of string = ('REMETENTE',
+    'EXPEDIDOR', 'RECEBEDOR', 'DESTINATARIO', 'OUTROS');
+
+type
   TpcteLotacao = (ltNao, ltSim);
+
+const
+  TLotacaoArrayStrings: array[TpcteLotacao] of string = ('0', '1');
+
+type
   TpcteDirecao = (drNorte, drLeste, drSul, drOeste);
+
+const
+  TDirecaoArrayStrings: array[TpcteDirecao] of string = ('N', 'L', 'S', 'O');
+
+type
   TpcteTipoTrafego = (ttProprio, ttMutuo, ttRodoferroviario, ttRodoviario);
-  TpcteTipoDataPeriodo = (tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado);
-  TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado);
+
+const
+  TTipoTrafegoArrayStrings: array[TpcteTipoTrafego] of string = ('0', '1',
+    '2', '3');
+
+type
+  TpcteTipoDataPeriodo = (tdSemData, tdNaData, tdAteData, tdApartirData,
+                          tdNoPeriodo, tdNaoInformado);
+
+const
+  TTipoDataPeriodoArrayStrings: array[TpcteTipoDataPeriodo] of string = ('0',
+    '1', '2', '3', '4', 'N');
+
+type
+  TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario,
+                               thApartirHorario, thNoIntervalo, thNaoInformado);
+
+const
+  TTipoHorarioIntervaloArrayStrings: array[TpcteTipoHorarioIntervalo]
+     of string = ('0', '1', '2', '3', '4', 'N');
+
+type
   TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros);
+
+const
+  TTipoDocumentoArrayStrings: array[TpcteTipoDocumento] of string = ('00',
+    '10', '59', '65', '99');
+
+type
   TpcteTipoDocumentoAnterior = (daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN,
                                 daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA,
                                 daTIF, daBL, daOutros);
-  TpcteRspPagPedagio = (rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico);
+
+const
+  TTipoDocumentoAnteriorArrayStrings: array[TpcteTipoDocumentoAnterior]
+     of string = ('00', '01', '02', '03', '04', '05', '06', '07', '08', '09',
+       '10', '11', '12', '13', '99');
+
+type
+  TpcteRspPagPedagio = (rpEmitente, rpRemetente, rpExpedidor, rpRecebedor,
+                        rpDestinatario, rpTomadorServico);
+
+const
+  TRspPagPedagioArrayStrings: array[TpcteRspPagPedagio] of string = ('0',
+    '1', '2', '3', '4', '5');
+
+type
   TpcteTipoDispositivo = (tdCartaoMagnetico, tdTAG, tdTicket);
+
+const
+  TTipoDispositivoArrayStrings: array[TpcteTipoDispositivo]
+     of string = ('1', '2', '3');
+
+type
   TpcteTipoPropriedade = (tpProprio, tpTerceiro);
+
+const
+  TTipoPropriedadeArrayStrings: array[TpcteTipoPropriedade] of string = ('P',
+    'T');
+
+type
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
+
+const
+  TTrafegoMutuoArrayStrings: array[TpcteTrafegoMutuo] of string = ('1', '2');
+
+type
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
+
+const
+  TindNegociavelArrayStrings: array[TpcnindNegociavel] of string = ('0', '1');
+
+type
   TpcteTipoVeiculo = (tvTracao, tvReboque);
-  TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
+
+const
+  TTipoVeiculoArrayStrings: array[TpcteTipoVeiculo] of string = ('0', '1');
+
+type
+  TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                 rsEmitenteCTe, rsTomadorServico);
+
+const
+  TRspSegArrayStrings: array[TpcteRspSeg] of string = ('0', '1', '2', '3',
+    '4', '5');
+  TRspSegDescArrayStrings: array[TpcteRspSeg] of string = ('REMETENTE',
+    'EXPEDIDOR', 'RECEBEDOR', 'DESTINATARIO', 'EMITENTE', 'TOMADOR SERVICO');
+
+type
   TEspecie = (teNumerario, teCheque, teMoeda, teOutros);
+
+const
+  TEspecieArrayStrings: array[TEspecie] of string = ('1', '2', '3', '4');
+
+type
   TpInfManu = (imCEEAV, imAPCDEA, imSAC, imAPDENR, imAPQI, imGSR, imNR, imAPCC,
-               imAAGA, imPI965, imPI966, imPI967, imPI968, imPI969, imPI970, imOUTRO);
+               imAAGA, imPI965, imPI966, imPI967, imPI968, imPI969, imPI970,
+               imOUTRO);
+
+const
+  TpInfManuArrayStrings: array[TpInfManu] of string = ('01', '02', '03', '04',
+    '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '99');
+  TpInfManuV2ArrayStrings: array[TpInfManu] of string = ('1', '2', '3', '4', '5',
+    '6', '7', '8', '9', '', '', '', '', '', '', '99');
+
+type
   TpUniMed = (umKG, umKGG, umLitros, umTI, umUnidades);
+
+const
+  TpUniMedArrayStrings: array[TpUniMed] of string = ('1', '2', '3', '4', '5');
+
+type
   TtpFretamento = (tfNenhum, tfEventual, tpContinuo);
 
-  TtpComp = (tcCustodia, tcEmbarque, tcTempodeespera, tcMalote, tcAdValorem, tcOutros);
+const
+  TtpFretamentoArrayStrings: array[TtpFretamento] of string = ('', '1', '2');
 
+type
+  TtpComp = (tcCustodia, tcEmbarque, tcTempodeespera, tcMalote, tcAdValorem,
+             tcOutros);
+
+const
+  TtpCompArrayStrings: array[TtpComp] of string = ('1', '2', '3', '4', '5', '6');
+
+type
   TtpNumerario = (tnNacional, tnEstrangeiro);
 
-  TCRT = (crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
-          crtSimplesNacionalMEI);
+const
+  TtpNumerarioArrayStrings: array[TtpNumerario] of string = ('1', '2');
 
+type
+  TCRT = (crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita,
+          crtRegimeNormal, crtSimplesNacionalMEI);
+const
+  TCRTArrayStrings: array[TCRT] of string = ('', '1', '2', '3', '4');
+
+type
   TtpMotivo = (tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro);
+
+const
+  TtpMotivoArrayStrings: array[TtpMotivo] of string = ('1', '2', '3', '4');
+
+{
+  Declaração das funções de conversão
+}
+function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -216,12 +408,22 @@ function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
 function tpMotivoToStr(const t: TtpMotivo): string;
 function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
 
-function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
-
 implementation
 
 uses
   typinfo;
+
+function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
+begin
+  Result := StrToEnumerado(ok, s,
+            ['-99999', '110110', '110111', '110113', '110160', '110170',
+             '110180', '110181', '610110', '310610', '310611', '610111',
+             '110190', '110191'],
+            [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
+             teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo,
+             teMDFeAutorizado2, teMDFeCancelado2, teCancPrestDesacordo,
+             teInsucessoEntregaCTe, teCancInsucessoEntregaCTe]);
+end;
 
 function LayOutToServico(const t: TLayOutCTe): String;
 begin
@@ -797,254 +999,6 @@ function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
     [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
-end;
-
-function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
-begin
-  Result := StrToEnumerado(ok, s,
-            ['-99999', '110110', '110111', '110113', '110160', '110170',
-             '110180', '110181', '610110', '310610', '310611', '610111',
-             '110190', '110191'],
-            [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
-             teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo,
-             teMDFeAutorizado2, teMDFeCancelado2, teCancPrestDesacordo,
-             teInsucessoEntregaCTe, teCancInsucessoEntregaCTe]);
-end;
-
-initialization
-  RegisterStrToTpEventoDFe(StrToTpEventoCTe, 'CTe');
-
-end.
-
-
-function StrToTEspecie(out ok: Boolean; const s: string): TEspecie;
-var
-  idx: TEspecie;
-begin
-  ok := True;
-
-  for idx := Low(TEspecieArrayStrings) to High(TEspecieArrayStrings) do
-  begin
-    if (TEspecieArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TEspecie: %s', [s]);
-end;
-
-function TpRspSeguroToStr(const t: TpcteRspSeg): string;
-begin
-  result := TRspSegArrayStrings[t];
-end;
-
-function TpRspSeguroToStrText(const t: TpcteRspSeg): string;
-begin
-  result := TRspSegDescArrayStrings[t];
-end;
-
-function StrToTpRspSeguro(out ok: boolean; const s: string ): TpcteRspSeg;
-var
-  idx: TpcteRspSeg;
-begin
-  ok := True;
-
-  for idx := Low(TRspSegArrayStrings) to High(TRspSegArrayStrings) do
-  begin
-    if (TRspSegArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcteRspSeg: %s', [s]);
-end;
-
-function TpInfManuToStr(const t: TpInfManu): string;
-begin
-  result := TpInfManuArrayStrings[t];
-end;
-
-function StrToTpInfManu(out ok: boolean; const s: string): TpInfManu;
-var
-  idx: TpInfManu;
-begin
-  ok := True;
-
-  for idx := Low(TpInfManuArrayStrings) to High(TpInfManuArrayStrings) do
-  begin
-    if (TpInfManuArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpInfManu: %s', [s]);
-end;
-
-function TpInfManuToStrV2(const t: TpInfManu): string;
-begin
-  result := TpInfManuV2ArrayStrings[t];
-end;
-
-function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
-var
-  idx: TpInfManu;
-begin
-  ok := True;
-
-  for idx := Low(TpInfManuV2ArrayStrings) to High(TpInfManuV2ArrayStrings) do
-  begin
-    if (TpInfManuV2ArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpInfManu: %s', [s]);
-end;
-
-function UniMedToStr(const t: TpUniMed): string;
-begin
-  result := TpUniMedArrayStrings[t];
-end;
-
-function StrToUniMed(out ok: Boolean; const s: string): TpUniMed;
-var
-  idx: TpUniMed;
-begin
-  ok := True;
-
-  for idx := Low(TpUniMedArrayStrings) to High(TpUniMedArrayStrings) do
-  begin
-    if (TpUniMedArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpUniMed: %s', [s]);
-end;
-
-function TpFretamentoToStr(const t: TtpFretamento): string;
-begin
-  result := TtpFretamentoArrayStrings[t];
-end;
-
-function StrToTpFretamento(out ok: Boolean; const s: string): TtpFretamento;
-var
-  idx: TtpFretamento;
-begin
-  ok := True;
-
-  for idx := Low(TtpFretamentoArrayStrings) to High(TtpFretamentoArrayStrings) do
-  begin
-    if (TtpFretamentoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TtpFretamento: %s', [s]);
-end;
-
-function tpCompToStr(const t: TtpComp): string;
-begin
-  result := TtpCompArrayStrings[t];
-end;
-
-function StrTotpComp(out ok: Boolean; const s: string): TtpComp;
-var
-  idx: TtpComp;
-begin
-  ok := True;
-
-  for idx := Low(TtpCompArrayStrings) to High(TtpCompArrayStrings) do
-  begin
-    if (TtpCompArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TtpComp: %s', [s]);
-end;
-
-function tpNumerarioToStr(const t: TtpNumerario): string;
-begin
-  result := TtpNumerarioArrayStrings[t];
-end;
-
-function StrTotpNumerario(out ok: Boolean; const s: string): TtpNumerario;
-var
-  idx: TtpNumerario;
-begin
-  ok := True;
-
-  for idx := Low(TtpNumerarioArrayStrings) to High(TtpNumerarioArrayStrings) do
-  begin
-    if (TtpNumerarioArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TtpNumerario: %s', [s]);
-end;
-
-function CRTCTeToStr(const t: TCRT): string;
-begin
-  result := TCRTArrayStrings[t];
-end;
-
-function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
-var
-  idx: TCRT;
-begin
-  ok := True;
-
-  for idx := Low(TCRTArrayStrings) to High(TCRTArrayStrings) do
-  begin
-    if (TCRTArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TCRT: %s', [s]);
-end;
-
-function tpMotivoToStr(const t: TtpMotivo): string;
-begin
-  result := TtpMotivoArrayStrings[t];
-end;
-
-function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
-var
-  idx: TtpMotivo;
-begin
-  ok := True;
-
-  for idx := Low(TtpMotivoArrayStrings) to High(TtpMotivoArrayStrings) do
-  begin
-    if (TtpMotivoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TtpMotivo: %s', [s]);
 end;
 
 initialization

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Serra/ES mudou as URLs, provedor ainda é o SmarAPD.
+  Por: Sistema Auditor
+
 02/03/2024
 -- Diversos --
 [*] Alterado a chamada do ParseText, removendo o segundo e terceiro parâmetros.

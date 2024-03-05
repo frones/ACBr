@@ -35,7 +35,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Buttons,
-  ACBrBase, ACBrSocket, ACBrConsultaCNPJ, Mask;
+  ACBrBase, ACBrSocket, ACBrConsultaCNPJ, Mask, Vcl.ComCtrls;
 
 {$IFDEF CONDITIONALEXPRESSIONS}
    {$IF CompilerVersion >= 20.0}
@@ -80,12 +80,9 @@ type
     EditCEP: TEdit;
     EditSituacao: TEdit;
     Panel1: TPanel;
-    Label1: TLabel;
-    ButBuscar: TBitBtn;
     EditFantasia: TEdit;
     Label13: TLabel;
     ACBrConsultaCNPJ1: TACBrConsultaCNPJ;
-    EditCNPJ: TMaskEdit;
     ListCNAE2: TListBox;
     Label15: TLabel;
     EditCNAE1: TEdit;
@@ -96,8 +93,22 @@ type
     Label18: TLabel;
     Label19: TLabel;
     EditPorte: TEdit;
-    cbbProvedor: TComboBox;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Label1: TLabel;
     Label14: TLabel;
+    EditCNPJ: TMaskEdit;
+    cbbProvedor: TComboBox;
+    ButBuscar: TBitBtn;
+    Proxy: TTabSheet;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    edtHost: TEdit;
+    edtPort: TEdit;
+    edtUsuario: TEdit;
+    EdtSenha: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure EditCaptchaKeyPress(Sender: TObject; var Key: Char);
@@ -137,6 +148,10 @@ var
   I: Integer;
 begin
   ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbbProvedor.Items.Objects[cbbProvedor.ItemIndex]);
+  ACBrConsultaCNPJ1.ProxyHost:= edtHost.Text;
+  ACBrConsultaCNPJ1.ProxyPort:= edtPort.Text;
+  ACBrConsultaCNPJ1.ProxyUser:= edtUsuario.Text;
+  ACBrConsultaCNPJ1.ProxyPass:= EdtSenha.Text;
   if ACBrConsultaCNPJ1.Consulta(
     EditCNPJ.Text
   ) then

@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, LCL, LCLType,
-  LCLProc, ExtCtrls, StdCtrls, Buttons, MaskEdit, ACBrConsultaCNPJ,
+  LCLProc, ExtCtrls, StdCtrls, Buttons, MaskEdit, ComCtrls, ACBrConsultaCNPJ,
   ACBrBase, ACBrSocket, TypInfo;
 
 
@@ -51,7 +51,20 @@ type
   { TF_Principal }
 
   TF_Principal = class(TForm)
-    ACBrConsultaCNPJ2: TACBrConsultaCNPJ;
+    ButBuscar: TBitBtn;
+    cbbProvedor: TComboBox;
+    edtHost: TEdit;
+    edtPort: TEdit;
+    edtUsuario: TEdit;
+    edtSenha: TEdit;
+    EditCNPJ: TMaskEdit;
+    Label1: TLabel;
+    Label14: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    PageControl1: TPageControl;
     Panel2: TPanel;
     Label2: TLabel;
     Label3: TLabel;
@@ -76,12 +89,9 @@ type
     EditCEP: TEdit;
     EditSituacao: TEdit;
     Panel1: TPanel;
-    Label1: TLabel;
-    ButBuscar: TBitBtn;
     EditFantasia: TEdit;
     Label13: TLabel;
     ACBrConsultaCNPJ1: TACBrConsultaCNPJ;
-    EditCNPJ: TMaskEdit;
     ListCNAE2: TListBox;
     Label15: TLabel;
     EditCNAE1: TEdit;
@@ -92,8 +102,8 @@ type
     Label18: TLabel;
     Label19: TLabel;
     EditPorte: TEdit;
-    cbbProvedor: TComboBox;
-    Label14: TLabel;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure EditCaptchaKeyPress(Sender: TObject; var Key: Char);
@@ -126,6 +136,10 @@ var
   I: Integer;
 begin
   ACBrConsultaCNPJ1.Provedor := TACBrCNPJProvedorWS(cbbProvedor.ItemIndex);
+  ACBrConsultaCNPJ1.ProxyHost:= edtHost.Text;
+  ACBrConsultaCNPJ1.ProxyPort:= edtPort.Text;
+  ACBrConsultaCNPJ1.ProxyUser:= edtUsuario.Text;
+  ACBrConsultaCNPJ1.ProxyPass:= edtSenha.Text;
   if ACBrConsultaCNPJ1.Provedor = cwsNenhum then
      raise EACBrConsultaCNPJException.Create('Nenhum provedor Selecionado!');
 

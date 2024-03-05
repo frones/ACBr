@@ -1,12 +1,11 @@
 program ConsultaCNPJ;
 
-{$MODE Delphi}
+{$mode objfpc}{$H+}
 
 uses
   Forms, Interfaces,
   U_Principal in 'U_Principal.pas' {F_Principal};
 
-{$R *.res}
 
 begin
   Application.Initialize;

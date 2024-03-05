@@ -1685,7 +1685,7 @@ begin
       ACBrBPe1.Bilhetes.Validar;
 
       if ACBrBPe1.Bilhetes.Items[0].Alertas <> '' then
-        MemoDados.Lines.Add('Alertas: '+ACBrBPe1.Bilhetes.Items[0].Alertas);
+        MemoDados.Lines.Add('Alertas: ' + ACBrBPe1.Bilhetes.Items[0].Alertas);
 
       ShowMessage('Bilhete de Passagem Eletrônico Valido');
     except

@@ -1890,8 +1890,8 @@ object frmACBrBPe: TfrmACBrBPe
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
-    Left = 409
-    Top = 287
+    Left = 417
+    Top = 295
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1902,7 +1902,7 @@ object frmACBrBPe: TfrmACBrBPe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 330
-    Top = 287
+    Top = 295
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-bpe.XML'
@@ -1910,7 +1910,7 @@ object frmACBrBPe: TfrmACBrBPe
       'Arquivos BPe (*-bpe.XML)|*-bpe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a BPe'
-    Left = 507
-    Top = 287
+    Left = 515
+    Top = 295
   end
 end

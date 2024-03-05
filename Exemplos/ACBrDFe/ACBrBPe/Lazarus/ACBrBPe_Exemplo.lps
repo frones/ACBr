@@ -4,11 +4,11 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="ACBrBPe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -22,7 +22,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="675"/>
         <CursorPos Y="684"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -32,7 +32,7 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
@@ -40,7 +40,7 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -51,7 +51,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="22" Y="8"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
@@ -106,8 +106,8 @@
       <Unit12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeWebServices.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="90"/>
-        <CursorPos X="27" Y="102"/>
+        <TopLine Value="484"/>
+        <CursorPos Y="498"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
@@ -117,8 +117,15 @@
         <CursorPos X="11" Y="573"/>
         <UsageCount Value="10"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\Comum\ACBrDFeComum.RetConsStatServ.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="118"/>
+        <CursorPos X="81" Y="126"/>
+        <UsageCount Value="10"/>
+      </Unit14>
     </Units>
-    <JumpHistory Count="23" HistoryIndex="22">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="Frm_ACBrBPe.pas"/>
         <Caret Line="793" Column="16" TopLine="781"/>
@@ -205,12 +212,8 @@
       </Position21>
       <Position22>
         <Filename Value="Frm_ACBrBPe.pas"/>
-        <Caret Line="670" TopLine="675"/>
-      </Position22>
-      <Position23>
-        <Filename Value="Frm_ACBrBPe.pas"/>
         <Caret Line="315" TopLine="309"/>
-      </Position23>
+      </Position22>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

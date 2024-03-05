@@ -603,9 +603,13 @@ end;
 function TACBrBPe.NomeServicoToNomeSchema(const NomeServico: String): String;
 var
   ALayout: TLayOutBPe;
+  Ok: Boolean;
 begin
-  ALayout := ServicoToLayOutBPe(NomeServico);
-  Result := SchemaBPeToStr( LayOutToSchema( ALayout ) )
+  ALayout := ServicoToLayOutBPe(Ok, NomeServico);
+  if Ok then
+    Result := SchemaBPeToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
 end;
 
 procedure TACBrBPe.ImprimirEvento;

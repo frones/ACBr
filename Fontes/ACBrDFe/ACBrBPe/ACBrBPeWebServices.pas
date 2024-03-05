@@ -605,9 +605,11 @@ begin
 end;
 
 procedure TBPeRecepcao.InicializarServico;
+var
+  Ok: Boolean;
 begin
   if FBilhetes.Count > 0 then    // Tem BPe ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoBPe(FBilhetes.Items[0].BPe.infBPe.Versao)
+    FVersaoDF := DblToVersaoBPe(Ok, FBilhetes.Items[0].BPe.infBPe.Versao)
   else
     FVersaoDF := FPConfiguracoesBPe.Geral.VersaoDF;
 
@@ -1460,7 +1462,7 @@ begin
 
   try
     EventoBPe.idLote := FidLote;
-    SchemaEventoBPe  := schErroBPe;
+    SchemaEventoBPe  := schErro;
 
     {(*}
     for I := 0 to FEvento.Evento.Count - 1 do

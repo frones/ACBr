@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2024
+-- Diversos --
+[*] Diversas alterações visando eliminar erros de conversão de string para enumerado.
+  Por: Italo Giurizzato Junior
+
 02/03/2024
 -- ACBrBPeXmlWriter --
 [*] Corrigido o tipo de conversão para a tag: cBP.

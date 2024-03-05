@@ -1033,19 +1033,19 @@ begin
       infBPe.versao := StringToFloatDef(INIRec.ReadString('infBPe', 'versao', VersaoBPeToStr(FConfiguracoes.Geral.VersaoDF)),0);
 
       versao := FloatToString(infBPe.versao, '.', '#0.00');
-      FConfiguracoes.Geral.VersaoDF := StrToVersaoBPe(versao);
+      FConfiguracoes.Geral.VersaoDF := StrToVersaoBPe(OK, versao);
 
       Ide.tpAmb   := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
       Ide.modelo  := INIRec.ReadInteger('ide', 'mod', 63);
       Ide.serie   := INIRec.ReadInteger('ide', 'serie', 1);
       Ide.nBP     := INIRec.ReadInteger('ide', 'nBP', 0);
       Ide.cBP     := INIRec.ReadInteger('ide', 'cBP', 0);
-      Ide.modal   := StrToModalBPe(INIRec.ReadString('ide', 'modal', '1'));
+      Ide.modal   := StrToModalBPe(OK, INIRec.ReadString('ide', 'modal', '1'));
       Ide.dhEmi   := StringToDateTime(INIRec.ReadString('ide', 'dhEmi', '0'));
       Ide.tpEmis  := StrToTipoEmissao(OK, INIRec.ReadString(sSecao, 'tpEmis', IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
       Ide.verProc := INIRec.ReadString('ide', 'verProc', 'ACBrBPe');
-      Ide.tpBPe   := StrTotpBPe(INIRec.ReadString('ide', 'tpBPe', '0'));
-      Ide.indPres := StrToPresencaComprador(INIRec.ReadString('ide', 'indPres', '1'));
+      Ide.tpBPe   := StrTotpBPe(OK, INIRec.ReadString('ide', 'tpBPe', '0'));
+      Ide.indPres := StrToPresencaComprador(OK, INIRec.ReadString('ide', 'indPres', '1'));
       Ide.UFIni   := INIRec.ReadString('ide', 'UFIni', '');
       Ide.cMunIni := INIRec.ReadInteger('ide', 'cMunIni', 0);
       Ide.UFFim   := INIRec.ReadString('ide', 'UFFim', '');
@@ -1063,7 +1063,7 @@ begin
       Emit.xFant := INIRec.ReadString('emit', 'xFant', '');
       Emit.IM    := INIRec.ReadString('emit', 'IM', '');
       Emit.CNAE  := INIRec.ReadString('emit', 'CNAE', '');
-      Emit.CRT   := StrToCRT(INIRec.ReadString('emit', 'CRT', '3'));
+      Emit.CRT   := StrToCRT(OK, INIRec.ReadString('emit', 'CRT', '3'));
       Emit.TAR   := INIRec.ReadString('emit', 'TAR', '');
 
       Emit.enderEmit.xLgr    := INIRec.ReadString('emit', 'xLgr', '');
@@ -1127,7 +1127,7 @@ begin
         with infBPeSub do
         begin
           chBPe := INIRec.ReadString('infBPeSub', 'chBPe', '');
-          tpSub := StrTotpSubstituicao(INIRec.ReadString('infBPeSub', 'tpSub', '1'));
+          tpSub := StrTotpSubstituicao(OK, INIRec.ReadString('infBPeSub', 'tpSub', '1'));
         end;
       end;
 
@@ -1146,7 +1146,7 @@ begin
       //
       infPassagem.infPassageiro.xNome := INIRec.ReadString('infPassageiro', 'xNome', '');
       infPassagem.infPassageiro.CPF   := INIRec.ReadString('infPassageiro', 'CPF', '');
-      infPassagem.infPassageiro.tpDoc := StrTotpDocumento(INIRec.ReadString('infPassageiro', 'tpDoc', '1'));
+      infPassagem.infPassageiro.tpDoc := StrTotpDocumento(OK, INIRec.ReadString('infPassageiro', 'tpDoc', '1'));
       infPassagem.infPassageiro.nDoc  := INIRec.ReadString('infPassageiro', 'nDoc', '');
       infPassagem.infPassageiro.xDoc  := INIRec.ReadString('infPassageiro', 'xDoc', '');
       infPassagem.infPassageiro.dNasc := StringToDateTime(INIRec.ReadString('infPassageiro', 'dNasc', '0'));
@@ -1168,10 +1168,10 @@ begin
         begin
           cPercurso    := sFim;
           xPercurso    := INIRec.ReadString(sSecao, 'xPercurso', '');
-          tpViagem     := StrTotpViagem(INIRec.ReadString(sSecao, 'tpViagem', '00'));
-          tpServ       := StrTotpServico(INIRec.ReadString(sSecao, 'tpServ', '1'));
-          tpAcomodacao := StrTotpAcomodacao(INIRec.ReadString(sSecao, 'tpAcomodacao', '1'));
-          tpTrecho     := StrTotpTrecho(INIRec.ReadString(sSecao, 'tpTrecho', '1'));
+          tpViagem     := StrTotpViagem(OK, INIRec.ReadString(sSecao, 'tpViagem', '00'));
+          tpServ       := StrTotpServico(OK, INIRec.ReadString(sSecao, 'tpServ', '1'));
+          tpAcomodacao := StrTotpAcomodacao(OK, INIRec.ReadString(sSecao, 'tpAcomodacao', '1'));
+          tpTrecho     := StrTotpTrecho(OK, INIRec.ReadString(sSecao, 'tpTrecho', '1'));
           dhViagem     := StringToDateTime(INIRec.ReadString(sSecao, 'dhViagem', '0'));
           dhConexao    := StringToDateTime(INIRec.ReadString(sSecao, 'dhConexao', '0'));
           Prefixo      := INIRec.ReadString(sSecao, 'Prefixo', '');
@@ -1185,8 +1185,8 @@ begin
           begin
             with infTravessia do
             begin
-              tpVeiculo  := StrTotpVeiculo(INIRec.ReadString(sSecao, 'tpVeiculo', '01'));
-              sitVeiculo := StrToSitVeiculo(INIRec.ReadString(sSecao, 'sitVeiculo', '01'));
+              tpVeiculo  := StrTotpVeiculo(OK, INIRec.ReadString(sSecao, 'tpVeiculo', '01'));
+              sitVeiculo := StrToSitVeiculo(OK, INIRec.ReadString(sSecao, 'sitVeiculo', '01'));
             end;
           end;
         end;
@@ -1201,7 +1201,7 @@ begin
       infValorBPe.vDesconto  := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vDesconto', ''), 0);
       infValorBPe.vPgto      := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vPgto', ''), 0);
       infValorBPe.vTroco     := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vTroco', ''), 0);
-      infValorBPe.tpDesconto := StrTotpDesconto(INIRec.ReadString('infValorBPe', 'tpDesconto', '01'));
+      infValorBPe.tpDesconto := StrTotpDesconto(OK, INIRec.ReadString('infValorBPe', 'tpDesconto', '01'));
       infValorBPe.xDesconto  := INIRec.ReadString('infValorBPe', 'xDesconto', '');
       infValorBPe.cDesconto  := INIRec.ReadString('infValorBPe', 'cDesconto', '');
 
@@ -1218,7 +1218,7 @@ begin
 
         with infValorBPe.Comp.New do
         begin
-          tpComp := StrTotpComponente(sFim);
+          tpComp := StrTotpComponente(OK, sFim);
           vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0);
         end;
 
@@ -1237,7 +1237,7 @@ begin
         begin
           with ICMS do
           begin
-            CST    := StrToCSTICMS(sFim);
+            CST    := StrToCSTICMS(OK, sFim);
             pRedBC := StringToFloatDef(INIRec.ReadString(sSecao, 'pRedBC', ''), 0);
             vBC    := StringToFloatDef(INIRec.ReadString(sSecao, 'vBC', ''), 0);
             pICMS  := StringToFloatDef(INIRec.ReadString(sSecao, 'pICMS', ''), 0);
@@ -1283,14 +1283,14 @@ begin
 
         with pag.New do
         begin
-          tPag    := StrToFormaPagamentoBPe(sFim);
+          tPag    := StrToFormaPagamentoBPe(OK, sFim);
           xPag    := INIRec.ReadString(sSecao, 'xPag', '');
           nDocPag := INIRec.ReadString(sSecao, 'nDocPag', '');
           vPag    := StringToFloatDef(INIRec.ReadString(sSecao, 'vPag', ''), 0);
 
-          tpIntegra := StrTotpIntegra(INIRec.ReadString(sSecao, 'tpIntegra', ''));
+          tpIntegra := StrTotpIntegra(Ok, INIRec.ReadString(sSecao, 'tpIntegra', ''));
           CNPJ      := INIRec.ReadString(sSecao, 'CNPJ', '');
-          tBand     := StrToBandeiraCard(INIRec.ReadString(sSecao, 'tBand', '99'));
+          tBand     := StrToBandeiraCard(OK, INIRec.ReadString(sSecao, 'tBand', '99'));
           xBand     := INIRec.ReadString(sSecao, 'xBand', '');
           cAut      := INIRec.ReadString(sSecao, 'cAut', '');
           nsuTrans  := INIRec.ReadString(sSecao, 'nsuTrans', '');

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -53,7 +53,7 @@ const
   TVersaoBPeArrayDouble: array[TVersaoBPe] of Double = (1.00);
 
 type
-  TSchemaBPe = (schErroBPe, schBPe, schBPeTM, schconsSitBPe, schconsStatServ,
+  TSchemaBPe = (schErro, schBPe, schBPeTM, schconsSitBPe, schconsStatServ,
                 schEventoBPe, schdistDFeInt, schevCancBPe, schevNaoEmbBPe,
                 schevAlteracaoPoltrona, schevExcessoBagagem);
 
@@ -248,92 +248,91 @@ const
 }
 function StrToTpEventoBPe(out ok: boolean; const s: string): TpcnTpEvento;
 
-function StrToVersaoBPe(const s: string): TVersaoBPe;
-function VersaoBPeToStr(const t: TVersaoBPe): string;
+function StrToVersaoBPe(out ok: Boolean; const s: String): TVersaoBPe;
+function VersaoBPeToStr(const t: TVersaoBPe): String;
 
-function tpBPeToStr(const t: TTipoBPe): string;
-function StrToTpBPe(const s: string): TTipoBPe;
+function tpBPeToStr(const t: TTipoBPe): String;
+function StrToTpBPe(out ok: Boolean; const s: String): TTipoBPe;
 
-function ModalBPeToStr(const t: TModalBPe): string;
-function StrToModalBPe(const s: string): TModalBPe;
+function ModalBPeToStr(const t: TModalBPe): String;
+function StrToModalBPe(out ok: Boolean; const s: String): TModalBPe;
 
-function DblToVersaoBPe(const d: Double): TVersaoBPe;
-function VersaoBPeToDbl(const t: TVersaoBPe): Double;
+function DblToVersaoBPe(out ok: Boolean; const d: Real): TVersaoBPe;
+function VersaoBPeToDbl(const t: TVersaoBPe): Real;
 
 function LayOutToSchema(const t: TLayOutBPe): TSchemaBPe;
 
-function SchemaBPeToStr(const t: TSchemaBPe): string;
-function StrToSchemaBPe(const s: string): TSchemaBPe;
+function SchemaBPeToStr(const t: TSchemaBPe): String;
+function StrToSchemaBPe(const s: String): TSchemaBPe;
 
-function LayOutBPeToServico(const t: TLayOutBPe): string;
-function ServicoToLayOutBPe(const s: string): TLayOutBPe;
+function LayOutBPeToServico(const t: TLayOutBPe): String;
+function ServicoToLayOutBPe(out ok: Boolean; const s: String): TLayOutBPe;
 
-function tpSubstituicaoToStr(const t: TTipoSubstituicao): string;
-function StrTotpSubstituicao(const s: string): TTipoSubstituicao;
+function tpSubstituicaoToStr(const t: TTipoSubstituicao): String;
+function StrTotpSubstituicao(out ok: Boolean; const s: String): TTipoSubstituicao;
 
-function tpDocumentoToStr(const t: TTipoDocumento): string;
-function StrTotpDocumento(const s: string): TTipoDocumento;
-function tpDocumentoToDesc(const t: TTipoDocumento): string;
+function tpDocumentoToStr(const t: TTipoDocumento): String;
+function StrTotpDocumento(out ok: Boolean; const s: String): TTipoDocumento;
+function tpDocumentoToDesc(const t: TTipoDocumento): String;
 
-function tpViagemToStr(const t: TTipoViagem): string;
-function StrTotpViagem(const s: string): TTipoViagem;
+function tpViagemToStr(const t: TTipoViagem): String;
+function StrTotpViagem(out ok: Boolean; const s: String): TTipoViagem;
 
-function tpServicoToStr(const t: TTipoServico): string;
-function StrTotpServico(const s: string): TTipoServico;
-function tpServicoToDesc(const t: TTipoServico): string;
+function tpServicoToStr(const t: TTipoServico): String;
+function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
+function tpServicoToDesc(const t: TTipoServico): String;
 
-function tpAcomodacaoToStr(const t: TTipoAcomodacao): string;
-function StrTotpAcomodacao(const s: string): TTipoAcomodacao;
+function tpAcomodacaoToStr(const t: TTipoAcomodacao): String;
+function StrTotpAcomodacao(out ok: Boolean; const s: String): TTipoAcomodacao;
 
-function tpTrechoToStr(const t: TTipoTrecho): string;
-function StrTotpTrecho(const s: string): TTipoTrecho;
+function tpTrechoToStr(const t: TTipoTrecho): String;
+function StrTotpTrecho(out ok: Boolean; const s: String): TTipoTrecho;
 
-function tpVeiculoToStr(const t: TTipoVeiculo): string;
-function StrTotpVeiculo(const s: string): TTipoVeiculo;
+function tpVeiculoToStr(const t: TTipoVeiculo): String;
+function StrTotpVeiculo(out ok: Boolean; const s: String): TTipoVeiculo;
 
-function SitVeiculoToStr(const t: TSitVeiculo): string;
-function StrToSitVeiculo(const s: string): TSitVeiculo;
+function SitVeiculoToStr(const t: TSitVeiculo): String;
+function StrToSitVeiculo(out ok: Boolean; const s: String): TSitVeiculo;
 
-function tpDescontoToStr(const t: TTipoDesconto): string;
-function StrTotpDesconto(const s: string): TTipoDesconto;
-function tpDescontoToDesc(const t: TTipoDesconto): string;
+function tpDescontoToStr(const t: TTipoDesconto): String;
+function StrTotpDesconto(out ok: Boolean; const s: String): TTipoDesconto;
+function tpDescontoToDesc(const t: TTipoDesconto): String;
 
-function tpComponenteToStr(const t: TTipoComponente): string;
-function StrTotpComponente(const s: string): TTipoComponente;
-function tpComponenteToDesc(const t: TTipoComponente): string;
+function tpComponenteToStr(const t: TTipoComponente): String;
+function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
+function tpComponenteToDesc(const t: TTipoComponente): String;
 
 function BandeiraCardToStr(const t: TBandeiraCard): string;
 function BandeiraCardToDescStr(const t: TBandeiraCard): string;
-function StrToBandeiraCard(const s: string): TBandeiraCard;
+function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 
 function FormaPagamentoBPeToStr(const t: TFormaPagamento): string;
 function FormaPagamentoBPeToDescricao(const t: TFormaPagamento): string;
-function StrToFormaPagamentoBPe(const s: string): TFormaPagamento;
+function StrToFormaPagamentoBPe(out ok: boolean; const s: string): TFormaPagamento;
 
-function ModeloBPeToStr(const t: TModeloBPe): string;
-function StrToModeloBPe(const s: string): TModeloBPe;
-function ModeloBPeToPrefixo(const t: TModeloBPe): string;
+function ModeloBPeToStr(const t: TModeloBPe): String;
+function StrToModeloBPe(out ok: Boolean; const s: String): TModeloBPe;
+function ModeloBPeToPrefixo(const t: TModeloBPe): String;
 
 function TpEmisBPeToStr(const t: TTipoEmissao): string;
-function StrToTpEmisBPe(const s: string): TTipoEmissao;
+function StrToTpEmisBPe(out ok: boolean; const s: string): TTipoEmissao;
 
 function CRTToStr(const t: TCRT): string;
-function StrToCRT(const s: string): TCRT;
+function StrToCRT(out ok: boolean; const s: string): TCRT;
 
 function PresencaCompradorToStr(const t: TPresencaComprador): string;
-function StrToPresencaComprador(const s: string): TPresencaComprador;
+function StrToPresencaComprador(out ok: boolean; const s: string): TPresencaComprador;
 
 function CSTICMSToStr(const t: TCSTIcms): string;
-function StrToCSTICMS(const s: string): TCSTIcms;
+function StrToCSTICMS(out ok: Boolean; const s: string): TCSTIcms;
 
 function tpIntegraToStr(const t: TtpIntegra): string;
-function StrTotpIntegra(const s: string): TtpIntegra;
+function StrTotpIntegra(out ok: Boolean; const s: string): TtpIntegra;
 
 implementation
 
 uses
-  typinfo,
-  ACBrBase;
+  typinfo;
 
 function StrToTpEventoBPe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
@@ -343,89 +342,60 @@ begin
              teExcessoBagagem]);
 end;
 
-function StrToVersaoBPe(const s: string): TVersaoBPe;
-var
-  idx: TVersaoBPe;
+function StrToVersaoBPe(out ok: Boolean; const s: String): TVersaoBPe;
 begin
-  for idx := Low(TVersaoBPeArrayStrings) to High(TVersaoBPeArrayStrings) do
+  Result := StrToEnumerado(ok, s, ['1.00'], [ve100]);
+end;
+
+function VersaoBPeToStr(const t: TVersaoBPe): String;
+begin
+  Result := EnumeradoToStr(t, ['1.00'], [ve100]);
+end;
+
+function DblToVersaoBPe(out ok: Boolean; const d: Real): TVersaoBPe;
+begin
+  ok := True;
+
+  if (d = 1.0)  then
+    Result := ve100
+  else
   begin
-    if (TVersaoBPeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
+    Result := ve100;
+    ok := False;
   end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TVersaoBPe: %s', [s]);
 end;
 
-function VersaoBPeToStr(const t: TVersaoBPe): string;
+function VersaoBPeToDbl(const t: TVersaoBPe): Real;
 begin
-  result := TVersaoBPeArrayStrings[t];
-end;
-
-function DblToVersaoBPe(const d: Double): TVersaoBPe;
-var
-  idx: TVersaoBPe;
-begin
-  for idx := Low(TVersaoBPeArrayDouble) to High(TVersaoBPeArrayDouble) do
-  begin
-    if (TVersaoBPeArrayDouble[idx] = d) then
-    begin
-      result := idx;
-      exit;
-    end;
+  case t of
+    ve100: Result := 1.00;
+  else
+    Result := 0;
   end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TVersaoBPe: %s',
-    [FormatFloat('0.00', d)]);
 end;
 
-function VersaoBPeToDbl(const t: TVersaoBPe): Double;
+function tpBPeToStr(const t: TTipoBPe): String;
 begin
-  result := TVersaoBPeArrayDouble[t];
+  Result := EnumeradoToStr(t, ['0', '3', '4'], [tbNormal, tbSubstituicao, tbBPeTM]);
 end;
 
-function tpBPeToStr(const t: TTipoBPe): string;
+function StrToTpBPe(out ok: Boolean; const s: String): TTipoBPe;
 begin
-  result := TTipoBPeArrayStrings[t];
+  Result := StrToEnumerado(ok, s, ['0', '3', '4'], [tbNormal, tbSubstituicao, tbBPeTM]);
 end;
 
-function StrToTpBPe(const s: string): TTipoBPe;
-var
-  idx: TTipoBPe;
+function ModalBPeToStr(const t: TModalBPe): String;
 begin
-  for idx := Low(TTipoBPeArrayStrings) to High(TTipoBPeArrayStrings) do
-  begin
-    if (TTipoBPeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoBPe: %s', [s]);
+  result := EnumeradoToStr(t,
+                           ['1', '3', '4'],
+                           [moRodoviario, moAquaviario, moFerroviario]);
 end;
 
-function ModalBPeToStr(const t: TModalBPe): string;
+function StrToModalBPe(out ok: Boolean; const s: String): TModalBPe;
 begin
-  result := TModalBPeArrayStrings[t];
-end;
-
-function StrToModalBPe(const s: string): TModalBPe;
-var
-  idx: TModalBPe;
-begin
-  for idx := Low(TModalBPeArrayStrings) to High(TModalBPeArrayStrings) do
-  begin
-    if (TModalBPeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TModalBPe: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '3', '4'],
+                           [moRodoviario, moAquaviario, moFerroviario]);
 end;
 
 function LayOutToSchema(const t: TLayOutBPe): TSchemaBPe;
@@ -439,20 +409,20 @@ begin
     LayBPeEventoAN:      Result := schEventoBPe;
     LayDistDFeInt:       Result := schdistDFeInt;
   else
-    Result := schErroBPe;
+    Result := schErro;
   end;
 end;
 
-function SchemaBPeToStr(const t: TSchemaBPe): string;
+function SchemaBPeToStr(const t: TSchemaBPe): String;
 begin
   Result := GetEnumName(TypeInfo(TSchemaBPe), Integer( t ) );
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaBPe(const s: string): TSchemaBPe;
+function StrToSchemaBPe(const s: String): TSchemaBPe;
 var
   P: Integer;
-  SchemaStr: string;
+  SchemaStr: String;
   CodSchema: Integer;
 begin
   P := pos('_', s);
@@ -474,331 +444,315 @@ begin
   Result := TSchemaBPe( CodSchema );
 end;
 
-function LayOutBPeToServico(const t: TLayOutBPe): string;
+function LayOutBPeToServico(const t: TLayOutBPe): String;
 begin
-  result := TLayOutBPeArrayStrings[t];
+  Result := EnumeradoToStr(t,
+    ['BPeRecepcao', 'BPeRecepcaoTM', 'BPeConsultaProtocolo', 'BPeStatusServico',
+     'BPeRetRecepcao', 'BPeRecepcaoEvento', 'BPeRecepcaoEvento', 'BPeDistribuicaoDFe'],
+    [ LayBPeRecepcao, LayBPeRecepcaoTM, LayBPeConsulta, LayBPeStatusServico,
+      LayBPeRetRecepcao, LayBPeEvento, LayBPeEventoAN, LayDistDFeInt ] );
 end;
 
-function ServicoToLayOutBPe(const s: string): TLayOutBPe;
-var
-  idx: TLayOutBPe;
+function ServicoToLayOutBPe(out ok: Boolean; const s: String): TLayOutBPe;
 begin
-  for idx := Low(TLayOutBPeArrayStrings) to High(TLayOutBPeArrayStrings) do
-  begin
-    if (TLayOutBPeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TLayOutBPe: %s', [s]);
+  Result := StrToEnumerado(ok, s,
+    ['BPeRecepcao', 'BPeRecepcaoTM', 'BPeConsultaProtocolo', 'BPeStatusServico',
+     'BPeRetRecepcao', 'BPeRecepcaoEvento', 'BPeRecepcaoEvento', 'BPeDistribuicaoDFe'],
+    [ LayBPeRecepcao, LayBPeRecepcaoTM, LayBPeConsulta, LayBPeStatusServico,
+      LayBPeRetRecepcao, LayBPeEvento, LayBPeEventoAN, LayDistDFeInt ] );
 end;
 
-function tpSubstituicaoToStr(const t: TTipoSubstituicao): string;
+function tpSubstituicaoToStr(const t: TTipoSubstituicao): String;
 begin
-  result := TTipoSubstituicaoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3'],
+                           [tsRemarcacao, tsTransferencia, tsTransfRemarcacao]);
 end;
 
-function StrTotpSubstituicao(const s: string): TTipoSubstituicao;
-var
-  idx: TTipoSubstituicao;
+function StrTotpSubstituicao(out ok: Boolean; const s: String): TTipoSubstituicao;
 begin
-  for idx := Low(TTipoSubstituicaoArrayStrings) to High(TTipoSubstituicaoArrayStrings) do
-  begin
-    if (TTipoSubstituicaoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoSubstituicao: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3'],
+                           [tsRemarcacao, tsTransferencia, tsTransfRemarcacao]);
 end;
 
-function tpDocumentoToStr(const t: TTipoDocumento): string;
+function tpDocumentoToStr(const t: TTipoDocumento): String;
 begin
-  result := TTipoDocumentoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
 end;
 
-function StrTotpDocumento(const s: string): TTipoDocumento;
-var
-  idx: TTipoDocumento;
+function StrTotpDocumento(out ok: Boolean; const s: String): TTipoDocumento;
 begin
-  for idx := Low(TTipoDocumentoArrayStrings) to High(TTipoDocumentoArrayStrings) do
-  begin
-    if (TTipoDocumentoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoDocumento: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
 end;
 
-function tpDocumentoToDesc(const t: TTipoDocumento): string;
+function tpDocumentoToDesc(const t: TTipoDocumento): String;
 begin
-  result := TTipoDocumentoDescArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['RG', 'Titulo de Eleitor', 'Passaporte', 'CNH', 'Outros'],
+                           [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
 end;
 
-function tpViagemToStr(const t: TTipoViagem): string;
+function tpViagemToStr(const t: TTipoViagem): String;
 begin
-  result := TTipoViagemArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['00', '01'],
+                           [tvRegular, tvExtra]);
 end;
 
-function StrTotpViagem(const s: string): TTipoViagem;
-var
-  idx: TTipoViagem;
+function StrTotpViagem(out ok: Boolean; const s: String): TTipoViagem;
 begin
-  for idx := Low(TTipoViagemArrayStrings) to High(TTipoViagemArrayStrings) do
-  begin
-    if (TTipoViagemArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoViagem: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['00', '01'],
+                           [tvRegular, tvExtra]);
 end;
 
-function tpServicoToStr(const t: TTipoServico): string;
+function tpServicoToStr(const t: TTipoServico): String;
 begin
-  result := TTipoServicoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                            '11'],
+                           [tsConvencionalComSanitario, tsConvencionalSemSanitario,
+                            tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
+                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                            tsMicroOnibus]);
 end;
 
-function StrTotpServico(const s: string): TTipoServico;
-var
-  idx: TTipoServico;
+function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
 begin
-  for idx := Low(TTipoServicoArrayStrings) to High(TTipoServicoArrayStrings) do
-  begin
-    if (TTipoServicoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoServico: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                            '11'],
+                           [tsConvencionalComSanitario, tsConvencionalSemSanitario,
+                            tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
+                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                            tsMicroOnibus]);
 end;
 
-function tpServicoToDesc(const t: TTipoServico): string;
+function tpServicoToDesc(const t: TTipoServico): String;
 begin
-  result := TTipoServicoDescArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['Convencional com Sanitario', 'Convencional sem Sanitario',
+                            'Semileito', 'Leito com Ar', 'Leito sem Ar', 'Executivo',
+                            'Semiurbano', 'Longitudinal', 'Travessia', 'Cama',
+                            'Micro-Onibus'],
+                           [tsConvencionalComSanitario, tsConvencionalSemSanitario,
+                            tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
+                            tsSemiurbano, tsLongitudinal, tsTravessia, tsCama,
+                            tsMicroOnibus]);
 end;
 
-function tpAcomodacaoToStr(const t: TTipoAcomodacao): string;
+function tpAcomodacaoToStr(const t: TTipoAcomodacao): String;
 begin
-  result := TTipoAcomodacaoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [taAssento, taRede, taRedeComAr, taCabine, taOutros]);
 end;
 
-function StrTotpAcomodacao(const s: string): TTipoAcomodacao;
-var
-  idx: TTipoAcomodacao;
+function StrTotpAcomodacao(out ok: Boolean; const s: String): TTipoAcomodacao;
 begin
-  for idx := Low(TTipoAcomodacaoArrayStrings) to High(TTipoAcomodacaoArrayStrings) do
-  begin
-    if (TTipoAcomodacaoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoAcomodacao: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [taAssento, taRede, taRedeComAr, taCabine, taOutros]);
 end;
 
-function tpTrechoToStr(const t: TTipoTrecho): string;
+function tpTrechoToStr(const t: TTipoTrecho): String;
 begin
-  result := TTipoTrechoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3'],
+                           [ttNormal, ttTrechoInicial, ttConexao]);
 end;
 
-function StrTotpTrecho(const s: string): TTipoTrecho;
-var
-  idx: TTipoTrecho;
+function StrTotpTrecho(out ok: Boolean; const s: String): TTipoTrecho;
 begin
-  for idx := Low(TTipoTrechoArrayStrings) to High(TTipoTrechoArrayStrings) do
-  begin
-    if (TTipoTrechoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoTrecho: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3'],
+                           [ttNormal, ttTrechoInicial, ttConexao]);
 end;
 
-function tpVeiculoToStr(const t: TTipoVeiculo): string;
+function tpVeiculoToStr(const t: TTipoVeiculo): String;
 begin
-  result := TTipoVeiculoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['00', '01', '02', '03', '04', '05', '06', '07', '08',
+                            '09', '10', '11', '12', '13', '14', '15', '16', '17',
+                            '18', '19', '20', '21', '22', '23', '24', '25', '26',
+                            '27', '28', '29', '99'],
+                           [tvNenhum, tvMotocicleta, tvAutomovel, tvAtomovelComReboque,
+                            tvCaminhonete, tvCaminhoneteComReboque, tvMicroOnibus,
+                            tvVan, tvOnibus2ou3Eixos, tvOnibus4Eixos, tvCaminhao34,
+                            tvCaminhaoToco, tvCaminhaoTruck, tvCarreta, tvBiTrem,
+                            tvRodoTrem, tvRomeuJulieta, tvJamanta6Eixos, tvJamanta5Eixos,
+                            tvJamanta4Eixos, tvTratorEsteira, tvPaMecanica, tvPatrol,
+                            tvTratorPneuGrande, tvTratorPneuComReboque, tvPneuSemReboque,
+                            tvCarroca, tvMobilete, tvBicicleta, tvPassageiro, tvOutros]);
 end;
 
-function StrTotpVeiculo(const s: string): TTipoVeiculo;
-var
-  idx: TTipoVeiculo;
+function StrTotpVeiculo(out ok: Boolean; const s: String): TTipoVeiculo;
 begin
-  for idx := Low(TTipoVeiculoArrayStrings) to High(TTipoVeiculoArrayStrings) do
-  begin
-    if (TTipoVeiculoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoVeiculo: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['00', '01', '02', '03', '04', '05', '06', '07', '08',
+                            '09', '10', '11', '12', '13', '14', '15', '16', '17',
+                            '18', '19', '20', '21', '22', '23', '24', '25', '26',
+                            '27', '28', '29', '99'],
+                           [tvNenhum, tvMotocicleta, tvAutomovel, tvAtomovelComReboque,
+                            tvCaminhonete, tvCaminhoneteComReboque, tvMicroOnibus,
+                            tvVan, tvOnibus2ou3Eixos, tvOnibus4Eixos, tvCaminhao34,
+                            tvCaminhaoToco, tvCaminhaoTruck, tvCarreta, tvBiTrem,
+                            tvRodoTrem, tvRomeuJulieta, tvJamanta6Eixos, tvJamanta5Eixos,
+                            tvJamanta4Eixos, tvTratorEsteira, tvPaMecanica, tvPatrol,
+                            tvTratorPneuGrande, tvTratorPneuComReboque, tvPneuSemReboque,
+                            tvCarroca, tvMobilete, tvBicicleta, tvPassageiro, tvOutros]);
 end;
 
-function SitVeiculoToStr(const t: TSitVeiculo): string;
+function SitVeiculoToStr(const t: TSitVeiculo): String;
 begin
-  result := TSitVeiculoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3'],
+                           [svVazio, svCarregado, svNaoSeAplica]);
 end;
 
-function StrToSitVeiculo(const s: string): TSitVeiculo;
-var
-  idx: TSitVeiculo;
+function StrToSitVeiculo(out ok: Boolean; const s: String): TSitVeiculo;
 begin
-  for idx := Low(TSitVeiculoArrayStrings) to High(TSitVeiculoArrayStrings) do
-  begin
-    if (TSitVeiculoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TSitVeiculo: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3'],
+                           [svVazio, svCarregado, svNaoSeAplica]);
 end;
 
-function tpDescontoToStr(const t: TTipoDesconto): string;
+function tpDescontoToStr(const t: TTipoDesconto): String;
 begin
-  result := TTipoDescontoArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['', '01', '02', '03', '04', '05', '06', '07', '08',
+                            '09', '10', '99'],
+                           [tdNenhum, tdTarifaPromocional, tdIdoso, tdCrianca,
+                            tdDeficiente, tdEstudante, tdAnimalDomestico,
+                            tdAcordoColetivo, tdProfissionalemDeslocamento,
+                            tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
 end;
 
-function StrTotpDesconto(const s: string): TTipoDesconto;
-var
-  idx: TTipoDesconto;
+function StrTotpDesconto(out ok: Boolean; const s: String): TTipoDesconto;
 begin
-  for idx := Low(TTipoDescontoArrayStrings) to High(TTipoDescontoArrayStrings) do
-  begin
-    if (TTipoDescontoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoDesconto: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['', '01', '02', '03', '04', '05', '06', '07', '08',
+                            '09', '10', '99'],
+                           [tdNenhum, tdTarifaPromocional, tdIdoso, tdCrianca,
+                            tdDeficiente, tdEstudante, tdAnimalDomestico,
+                            tdAcordoColetivo, tdProfissionalemDeslocamento,
+                            tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
 end;
 
-function tpDescontoToDesc(const t: TTipoDesconto): string;
+function tpDescontoToDesc(const t: TTipoDesconto): String;
 begin
-  result := TTipoDescontoDescArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['', 'Tarifa Promocional', 'Idoso', 'Criança',
+                            'Deficiente', 'Estudante', 'Animal Domestico',
+                            'Acordo Coletivo', 'Profissional em Deslocamento',
+                            'Profissional da Empresa', 'Jovem', 'Outros'],
+                           [tdNenhum, tdTarifaPromocional, tdIdoso, tdCrianca,
+                            tdDeficiente, tdEstudante, tdAnimalDomestico,
+                            tdAcordoColetivo, tdProfissionalemDeslocamento,
+                            tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
 end;
 
-function tpComponenteToStr(const t: TTipoComponente): string;
+function tpComponenteToStr(const t: TTipoComponente): String;
 begin
-  result := TTipoComponenteArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['01', '02', '03', '04', '05', '06', '99'],
+                           [tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
+                            tcSVI, tcOutros]);
 end;
 
-function StrTotpComponente(const s: string): TTipoComponente;
-var
-  idx: TTipoComponente;
+function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
 begin
-  for idx := Low(TTipoComponenteArrayStrings) to High(TTipoComponenteArrayStrings) do
-  begin
-    if (TTipoComponenteArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoComponente: %s', [s]);
+  result := StrToEnumerado(ok, s,
+                           ['01', '02', '03', '04', '05', '06', '99'],
+                           [tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
+                            tcSVI, tcOutros]);
 end;
 
-function tpComponenteToDesc(const t: TTipoComponente): string;
+function tpComponenteToDesc(const t: TTipoComponente): String;
 begin
-  result := TTipoComponenteDescArrayStrings[t];
+  result := EnumeradoToStr(t,
+                           ['Tarifa', 'Pedagio', 'Taxa Embarque', 'Seguro',
+                            'TRM', 'SVI', 'Outros'],
+                           [tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
+                            tcSVI, tcOutros]);
 end;
 
 function BandeiraCardToStr(const t: TBandeiraCard): string;
 begin
-  result := TBandeiraCardArrayStrings[t];
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
+                               '09', '99'],
+                              [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
+                              bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
+                              bcOutros]);
 end;
 
 function BandeiraCardToDescStr(const t: TBandeiraCard): string;
 begin
-  result := TBandeiraCardDescArrayStrings[t];
+  case t of
+    bcVisa:            Result := 'Visa';
+    bcMasterCard:      Result := 'MasterCard';
+    bcAmericanExpress: Result := 'AmericanExpress';
+    bcSorocred:        Result := 'Sorocred';
+    bcElo:             Result := 'Elo';
+    bcDinersClub:      Result := 'Diners Club';
+    bcHipercard:       Result := 'Hipercard';
+    bcAura:            Result := 'Aura';
+    bcCabal:           Result := 'Cabal';
+    bcOutros:          Result := 'Outros'
+  end;
 end;
 
-function StrToBandeiraCard(const s: string): TBandeiraCard;
-var
-  idx: TBandeiraCard;
+function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 begin
-  for idx := Low(TBandeiraCardArrayStrings) to High(TBandeiraCardArrayStrings) do
-  begin
-    if (TBandeiraCardArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TBandeiraCard: %s', [s]);
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08',
+                                   '09', '99'],
+                                  [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
+                                   bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
+                                   bcOutros]);
 end;
 
 function FormaPagamentoBPeToStr(const t: TFormaPagamento): string;
 begin
-  result := TFormaPagamentoArrayStrings[t];
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '99'],
+                              [fpDinheiro, fpCheque, fpCartaoCredito,
+                               fpCartaoDebito, fpValeTransporte, fpPIX,
+                               fpOutro]);
 end;
 
 function FormaPagamentoBPeToDescricao(const t: TFormaPagamento): string;
 begin
-  result := TFormaPagamentoDescArrayStrings[t];
+  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
+                                'Cartão de Débito', 'Vale Transporte', 'PIX',
+                               'Outro'],
+                               [fpDinheiro, fpCheque, fpCartaoCredito,
+                                fpCartaoDebito, fpValeTransporte, fpPIX,
+                                fpOutro]);
 end;
 
-function StrToFormaPagamentoBPe(const s: string): TFormaPagamento;
-var
-  idx: TFormaPagamento;
+function StrToFormaPagamentoBPe(out ok: boolean; const s: string): TFormaPagamento;
 begin
-  for idx := Low(TFormaPagamentoArrayStrings) to High(TFormaPagamentoArrayStrings) do
-  begin
-    if (TFormaPagamentoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TFormaPagamento: %s', [s]);
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '99'],
+                                  [fpDinheiro, fpCheque, fpCartaoCredito,
+                                   fpCartaoDebito, fpValeTransporte, fpPIX,
+                                   fpOutro]);
 end;
 
-function ModeloBPeToStr(const t: TModeloBPe): string;
+function ModeloBPeToStr(const t: TModeloBPe): String;
 begin
-  result := TModeloBPeArrayStrings[t];
+  Result := EnumeradoToStr(t, ['63', '63'], [moBPe, moBPeTM]);
 end;
 
-function StrToModeloBPe(const s: string): TModeloBPe;
-var
-  idx: TModeloBPe;
+function StrToModeloBPe(out ok: Boolean; const s: String): TModeloBPe;
 begin
-  for idx := Low(TModeloBPeArrayStrings) to High(TModeloBPeArrayStrings) do
-  begin
-    if (TModeloBPeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TModeloBPe: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['63', '63'], [moBPe, moBPeTM]);
 end;
 
-function ModeloBPeToPrefixo(const t: TModeloBPe): string;
+function ModeloBPeToPrefixo(const t: TModeloBPe): String;
 begin
   Case t of
     moBPeTM: Result := 'BPeTM';
@@ -809,107 +763,70 @@ end;
 
 function TpEmisBPeToStr(const t: TTipoEmissao): string;
 begin
-  result := TTipoEmissaoArrayStrings[t];
+  result := EnumeradoToStr(t, ['1', '2'],
+                              [teNormal, teOffLine]);
 end;
 
-function StrToTpEmisBPe(const s: string): TTipoEmissao;
-var
-  idx: TTipoEmissao;
+function StrToTpEmisBPe(out ok: boolean; const s: string): TTipoEmissao;
 begin
-  for idx := Low(TTipoEmissaoArrayStrings) to High(TTipoEmissaoArrayStrings) do
-  begin
-    if (TTipoEmissaoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TTipoEmissao: %s', [s]);
+  result := StrToEnumerado(ok, s, ['1', '2'],
+                                  [teNormal, teOffLine]);
 end;
 
 function CRTToStr(const t: TCRT): string;
 begin
-  result := TCRTArrayStrings[t];
+  result := EnumeradoToStr(t, ['1', '2', '3'],
+                              [crtSimplesNacional, crtSimplesExcessoReceita,
+                               crtRegimeNormal]);
 end;
 
-function StrToCRT(const s: string): TCRT;
-var
-  idx: TCRT;
+function StrToCRT(out ok: boolean; const s: string): TCRT;
 begin
-  for idx := Low(TCRTArrayStrings) to High(TCRTArrayStrings) do
-  begin
-    if (TCRTArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TCRT: %s', [s]);
+  result := StrToEnumerado(ok, s, ['1', '2', '3'],
+                                  [crtSimplesNacional, crtSimplesExcessoReceita,
+                                   crtRegimeNormal]);
 end;
 
 function PresencaCompradorToStr(const t: TPresencaComprador): string;
 begin
-  result := TPresencaCompradorArrayStrings[t];
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '9'],
+                              [pcNao, pcPresencial, pcInternet, pcTeleatendimento,
+                               pcEntregaDomicilio, pcPresencialForaEstabelecimento,
+                               pcOutros]);
 end;
 
-function StrToPresencaComprador(const s: string): TPresencaComprador;
-var
-  idx: TPresencaComprador;
+function StrToPresencaComprador(out ok: boolean; const s: string): TPresencaComprador;
 begin
-  for idx := Low(TPresencaCompradorArrayStrings) to High(TPresencaCompradorArrayStrings) do
-  begin
-    if (TPresencaCompradorArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TPresencaComprador: %s', [s]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '9'],
+                                  [pcNao, pcPresencial, pcInternet, pcTeleatendimento,
+                                   pcEntregaDomicilio, pcPresencialForaEstabelecimento,
+                                   pcOutros]);
 end;
 
 function CSTICMSToStr(const t: TCSTIcms): string;
 begin
-  result := TCSTIcmsArrayStrings[t];
+  result := EnumeradoToStr(t, ['00', '20', '40', '41', '51', '90', 'SN'],
+                              [cst00, cst20, cst40, cst41, cst51, cst90, cstSN]);
 end;
 
-function StrToCSTICMS(const s: string): TCSTIcms;
-var
-  idx: TCSTIcms;
+function StrToCSTICMS(out ok: Boolean; const s: string): TCSTIcms;
 begin
-  for idx := Low(TCSTIcmsArrayStrings) to High(TCSTIcmsArrayStrings) do
-  begin
-    if (TCSTIcmsArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TCSTIcms: %s', [s]);
+  result := StrToEnumerado(ok, s, ['00', '20', '40', '41', '51', '90', 'SN'],
+                                  [cst00, cst20, cst40, cst41, cst51, cst90,
+                                   cstSN]);
 end;
 
 function tpIntegraToStr(const t: TtpIntegra): string;
 begin
-  result := TtpIntegraArrayStrings[t];
+  result := EnumeradoToStr(t, ['', '1', '2'],
+                              [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
 end;
 
-function StrTotpIntegra(const s: string): TtpIntegra;
-var
-  idx: TtpIntegra;
+function StrTotpIntegra(out ok: Boolean; const s: string): TtpIntegra;
 begin
-  for idx := Low(TtpIntegraArrayStrings) to High(TtpIntegraArrayStrings) do
-  begin
-    if (TtpIntegraArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TtpIntegra: %s', [s]);
+  result := StrToEnumerado(ok, s, ['', '1', '2'],
+                                  [tiNaoInformado, tiPagIntegrado,
+                                   tiPagNaoIntegrado]);
 end;
 
 initialization

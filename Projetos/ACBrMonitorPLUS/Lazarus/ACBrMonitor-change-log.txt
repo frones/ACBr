@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2024
+-- ACBrMonitor1.lfm, ACBrMonitorConfig.pas, ACBrMonitor1.pas,  --
+[*] TK-5131-1  Ajuste para uso de Proxy na consulta CNPJ 
+  Por: Daniel Morais InfoCotidiano
+
 04/03/2024
 -- DoACBrCTeUnit --
 [*] Faz um Refactoring nos comandos CriarEnviarCTe e EnviarCTe adicionando o caminho dos arquivos gerados no retorno e tornando a geração do PDF independente a impressão.

@@ -23880,11 +23880,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object gbConsCNPJ: TGroupBox
             Left = 10
-            Height = 180
+            Height = 237
             Top = 180
             Width = 249
             Caption = 'CNPJ'
-            ClientHeight = 158
+            ClientHeight = 215
             ClientWidth = 245
             TabOrder = 3
             object edtConsCNPJSenha: TEdit
@@ -24012,6 +24012,38 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 54
               Caption = 'Provedor'
               ParentColor = False
+            end
+            object edtConsCNPJ: TEdit
+              Left = 13
+              Height = 25
+              Top = 168
+              Width = 144
+              TabOrder = 3
+            end
+            object lblConsCNPJ: TLabel
+              Left = 13
+              Height = 17
+              Top = 151
+              Width = 29
+              Caption = 'CNPJ'
+              ParentColor = False
+            end
+            object btnConsCNPJ: TButton
+              AnchorSideTop.Control = edCEPTestar
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = cbCEPWebService
+              AnchorSideRight.Side = asrBottom
+              Left = 171
+              Height = 27
+              Top = 166
+              Width = 64
+              Anchors = [akTop, akRight]
+              AutoSize = True
+              Caption = 'Buscar'
+              Font.Height = -13
+              OnClick = btnConsCNPJClick
+              ParentFont = False
+              TabOrder = 4
             end
           end
         end
@@ -35718,8 +35750,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     GNREGuia = ACBrGNREGuiaRL1
-    Left = 357
-    Top = 456
+    Left = 568
+    Top = 352
   end
   object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
     ACBrGNRE = ACBrGNRE1
@@ -35732,8 +35764,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     PrintDialog = False
-    Left = 400
-    Top = 453
+    Left = 656
+    Top = 344
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'

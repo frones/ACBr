@@ -153,6 +153,7 @@ type
     bBoletoRelatorioRetorno: TBitBtn;
     bBOLLerArqRelatorio: TBitBtn;
     bCEPTestar: TButton;
+    btnConsCNPJ: TButton;
     bCHQTestar: TBitBtn;
     bDISAnimar: TBitBtn;
     bDISLimpar: TBitBtn;
@@ -513,6 +514,7 @@ type
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
+    edtConsCNPJ: TEdit;
     edtBolMargemInferior: TEdit;
     edtArquivoWebServicesNFSe: TEdit;
     edtBOLChavePix: TEdit;
@@ -861,6 +863,7 @@ type
     Label284: TLabel;
     Label285: TLabel;
     Label286: TLabel;
+    lblConsCNPJ: TLabel;
     lblConsCNPJProvedor: TLabel;
     lblConCNPJSenha: TLabel;
     lbConsultarGTIN: TLabel;
@@ -1539,6 +1542,7 @@ type
     procedure btNCMConsultarClick(Sender: TObject);
     procedure btNCMSalvarArquivoClick(Sender: TObject);
     procedure btNCMValidadeHelpClick(Sender: TObject);
+    procedure btnConsCNPJClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnConsultarCTeClick(Sender: TObject);
     procedure btnConsultarGTINClick(Sender: TObject);
@@ -3608,6 +3612,47 @@ begin
     sLineBreak + 'Após a validade o Download será feito novamente ' +
     sLineBreak + '(Zero para sempre ler NCMs do Cache local)',
     mtInformation, [mbOK], 0);
+end;
+
+procedure TFrmACBrMonitor.btnConsCNPJClick(Sender: TObject);
+var
+  I: Integer;
+  aMSG : string;
+begin
+  ACBrConsultaCNPJ1.Provedor  := TACBrCNPJProvedorWS(cbxConsCNPJProvedor.ItemIndex);
+  ACBrConsultaCNPJ1.ProxyHost := edCONProxyHost.Text;
+  ACBrConsultaCNPJ1.ProxyPort := edCONProxyPort.Text;
+  ACBrConsultaCNPJ1.ProxyUser := edCONProxyUser.Text;
+  ACBrConsultaCNPJ1.ProxyPass := edCONProxyPass.Text;
+  if ACBrConsultaCNPJ1.Provedor = cwsNenhum then
+     raise EACBrConsultaCNPJException.Create('Nenhum provedor Selecionado!');
+  if ACBrConsultaCNPJ1.Consulta(edtConsCNPJ.Text) then
+  begin
+    aMSG :=
+    'EmpresaTipo: '+ ACBrConsultaCNPJ1.EmpresaTipo+sLineBreak+
+    'RazaoSocial: '+ ACBrConsultaCNPJ1.RazaoSocial+sLineBreak+
+    'Porte      : '+ ACBrConsultaCNPJ1.Porte+sLineBreak+
+    'Abertura   : '+ DateToStr( ACBrConsultaCNPJ1.Abertura )+sLineBreak+
+    'Fantasia   : '+ ACBrConsultaCNPJ1.Fantasia+sLineBreak+
+    'Endereco   : '+ ACBrConsultaCNPJ1.Endereco+sLineBreak+
+    'Numero     : '+ ACBrConsultaCNPJ1.Numero+sLineBreak+
+    'Complemento: '+ ACBrConsultaCNPJ1.Complemento+sLineBreak+
+    'Bairro     : '+ ACBrConsultaCNPJ1.Bairro+sLineBreak+
+    'Complemento: '+ ACBrConsultaCNPJ1.Complemento+sLineBreak+
+    'Cidade     : '+ ACBrConsultaCNPJ1.Cidade+sLineBreak+
+    'UF         : '+ ACBrConsultaCNPJ1.UF+sLineBreak+
+    'CEP        : '+ ACBrConsultaCNPJ1.CEP+sLineBreak+
+    'Situacao   : '+ ACBrConsultaCNPJ1.Situacao+sLineBreak+
+    'Email      : '+ ACBrConsultaCNPJ1.EndEletronico+sLineBreak+
+    'Telefone   : '+ ACBrConsultaCNPJ1.Telefone+sLineBreak+
+    'CNAE1      : '+ ACBrConsultaCNPJ1.CNAE1+sLineBreak;
+    for I := 0 to ACBrConsultaCNPJ1.CNAE2.Count - 1 do
+      aMSG := 'CNAE2      : '+ ACBrConsultaCNPJ1.CNAE2[I];
+     MessageDlg(AMsg, mtInformation, [mbOK], 0);
+  end;
+
+
+
 end;
 
 procedure TFrmACBrMonitor.btnConsultarClick(Sender: TObject);
@@ -5687,6 +5732,10 @@ begin
     cbxConsCNPJProvedorChange(Self);
     edtConsCNPJUsuario.Text           := Usuario;
     edtConsCNPJSenha.Text             := Senha;
+    edCONProxyHost.Text               := Proxy_Host;
+    edCONProxyPort.Text               := Proxy_Port;
+    edCONProxyUser.Text               := Proxy_User;
+    edCONProxyPass.Text               := Proxy_Pass;
   end;
 
     with ACBrIBGE1 do
@@ -6634,6 +6683,10 @@ begin
     Provedor := TACBrCNPJProvedorWS(cbxConsCNPJProvedor.ItemIndex);
     Usuario  := edtConsCNPJUsuario.Text;
     Senha    := edtConsCNPJSenha.Text;
+    ProxyHost := edCONProxyHost.Text;
+    ProxyPort := edCONProxyPort.Text;
+    ProxyUser := edCONProxyUser.Text;
+    ProxyPass := edCONProxyPass.Text;
   end;
 
   with ACBrMail1 do

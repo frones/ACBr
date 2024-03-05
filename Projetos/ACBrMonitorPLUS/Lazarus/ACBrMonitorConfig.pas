@@ -166,6 +166,10 @@ type
     Provedor          : integer;
     Usuario           : string;
     Senha             : string;
+    Proxy_Host        : String;
+    Proxy_Port        : String;
+    Proxy_User        : String;
+    Proxy_Pass        : String;
   end;
 
   TTC = record
@@ -1009,6 +1013,11 @@ begin
       ini.WriteInteger( CSecConsultaCNPJ,CKeyConsultaCNPJProvedor, Provedor);
       GravaINICrypt(Ini,CSecConsultaCNPJ,CKeyConsultaCNPJUsuario , Usuario, _C);
       GravaINICrypt(Ini,CSecConsultaCNPJ,CKeyConsultaCNPJSenha   , Senha  , _C);
+      Ini.WriteString( CSecConsultaCNPJ, CKeyCEPProxy_Host, Proxy_Host);
+      Ini.WriteString( CSecConsultaCNPJ, CKeyCEPProxy_Port, Proxy_Port );
+      Ini.WriteString( CSecConsultaCNPJ, CKeyCEPProxy_User, Proxy_User );
+      GravaINICrypt(Ini, CSecConsultaCNPJ, CKeyCEPProxy_Pass, Proxy_Pass, _C);
+
     end;
 
     with TC do
@@ -1798,6 +1807,10 @@ begin
       Provedor                  := Ini.ReadInteger( CSecConsultaCNPJ, CKeyConsultaCNPJProvedor, Provedor );
       Usuario                   := LeINICrypt(Ini, CSecConsultaCNPJ, CKeyConsultaCNPJUsuario, _C );
       Senha                     := LeINICrypt(Ini, CSecConsultaCNPJ, CKeyConsultaCNPJSenha, _C );
+      Proxy_Host                := Ini.ReadString( CSecCEP, CKeyCEPProxy_Host, Proxy_Host );
+      Proxy_Port                := Ini.ReadString( CSecCEP, CKeyCEPProxy_Port, Proxy_Port );
+      Proxy_User                := Ini.ReadString( CSecCEP, CKeyCEPProxy_User, Proxy_User );
+      Proxy_Pass                := LeINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, _C);
     end;
 
 
@@ -2574,6 +2587,10 @@ begin
     Provedor := 0;
     Usuario:='';
     Senha:='';
+    Proxy_Host                := '';
+    Proxy_Port                := '';
+    Proxy_User                := '';
+    Proxy_Pass                := '';
   end;
 
   with TC do

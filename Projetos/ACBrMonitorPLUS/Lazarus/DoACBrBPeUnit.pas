@@ -999,10 +999,10 @@ var
   AVersao: String;
 begin
   AVersao := fpCmd.Params(0);
-  VersaoDFe := StrToVersaoBPe(AVersao);
+  VersaoDFe := StrToVersaoBPe(OK, AVersao);
 
-  //if not VersaoDFe then
-  //  raise Exception.Create('Versão Inválida.');
+  if not OK then
+    raise Exception.Create('Versao Inválida: ' + VersaoBPeToStr(VersaoDFE));
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin

@@ -11997,7 +11997,7 @@ begin
   else if Configuracoes is TConfiguracoesBPe then
   begin
     TConfiguracoesBPe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoBPe.ItemIndex + 1));
-    TConfiguracoesBPe(Configuracoes).Geral.VersaoDF     := StrToVersaoBPe(cbVersaoWSBPe.Text);
+    TConfiguracoesBPe(Configuracoes).Geral.VersaoDF     := StrToVersaoBPe(OK, cbVersaoWSBPe.Text);
 
     TConfiguracoesBPe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesBPe.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.EmissaoPathBPe := cbxEmissaoPathNFe.Checked;

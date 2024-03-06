@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2024
+-- ACBrNFSeXLerXml/AssessorPublico.LerXml/Equiplano.LerXml/Governa.LerXml/
+   ISSBarueri.LerXml/SmarAPD.LerXml --
+[-] Remoção da chamada a procedure VerificarSeConteudoEhLista que foi incluida de
+    forma indevida nos provedores: AssessorPublico, Equiplano, Governa,
+    ISSBarueri e SmarAPD.
+  Por: Italo Giurizzato Junior
 -- GeisWebProvider --
 [*] Adiciona tratativa para que o & em informação devolvida em URL seja devidamente convertido.
   Por: Diego Folieni

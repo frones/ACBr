@@ -290,8 +290,6 @@ begin
 
     NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
-
-    VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
   end;
 end;
 

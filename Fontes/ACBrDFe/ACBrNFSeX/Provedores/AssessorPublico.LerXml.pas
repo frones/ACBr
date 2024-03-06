@@ -317,8 +317,6 @@ begin
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
-      VerificarSeConteudoEhLista(Discriminacao);
-
       with Valores do
       begin
         aValor := ObterConteudo(ANode.Childrens.FindAnyNs('RETIDO'), tcStr);

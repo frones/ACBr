@@ -212,21 +212,18 @@ begin
 end;
 
 procedure TNFSeRClass.VerificarSeConteudoEhLista(const aDiscriminacao: string);
-var
-  xDiscriminacao: string;
 begin
-  xDiscriminacao := NFSe.Servico.Discriminacao;
   FpAOwner.ConfigGeral.DetalharServico := False;
 
-  if (Pos('[', xDiscriminacao) > 0) and (Pos(']', xDiscriminacao) > 0) and
-     (Pos('{', xDiscriminacao) > 0) and (Pos('}', xDiscriminacao) > 0) then
+  if (Pos('[', aDiscriminacao) > 0) and (Pos(']', aDiscriminacao) > 0) and
+     (Pos('{', aDiscriminacao) > 0) and (Pos('}', aDiscriminacao) > 0) then
   begin
     FpAOwner.ConfigGeral.DetalharServico := True;
 
-    if Pos('":', xDiscriminacao) > 0 then
-      LerListaJson(xDiscriminacao)
+    if Pos('":', aDiscriminacao) > 0 then
+      LerListaJson(aDiscriminacao)
     else
-      LerListaTabulada(xDiscriminacao);
+      LerListaTabulada(aDiscriminacao);
   end;
 end;
 

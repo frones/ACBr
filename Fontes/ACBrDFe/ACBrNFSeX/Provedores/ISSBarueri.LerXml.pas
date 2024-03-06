@@ -223,8 +223,6 @@ begin
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 
-  VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
-
   NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('ObservacaoLocalTributado'), tcStr);
 
   NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(OK, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcInt));

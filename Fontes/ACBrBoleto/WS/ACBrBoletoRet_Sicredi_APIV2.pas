@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:  José M S Junior, Victor Hugo Gonzales          }
 {                                                                              }
@@ -37,15 +37,11 @@ unit ACBrBoletoRet_Sicredi_APIV2;
 interface
 
 uses
-  Classes,
   SysUtils,
-  DateUtils,
-  Jsons,
   ACBrBoleto,
-  ACBrBoletoWS,
   ACBrBoletoRetorno,
-  ACBrBoletoWS.Rest,
-  pcnConversao;
+  ACBrBoletoWS,
+  ACBrBoletoWS.Rest;
 
 type
 
@@ -67,7 +63,8 @@ type
 implementation
 
 uses
-  ACBrBoletoConversao, ACBrUtil.Strings, ACBrUtil.DateTime;
+  ACBrBoletoConversao,
+  ACBrJSON;
 
 { TRetornoEnvio }
 
@@ -95,333 +92,265 @@ end;
 
 function TRetornoEnvio_Sicredi_APIV2.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
-  AJson: TJson;
-  AJSonRejeicao: TJsonObject;
-  ARejeicao: TACBrBoletoRejeicao;
-  AJSonResp: TJsonArray;
-  Descontos: TJSONArray;
-  Desconto: TJSONObject;
-  I: Integer;
-  TipoOperacao : TOperacao;
-  Var_File : TFileStream;
+  LJsonObject: TACBrJSONObject;
+  LJsonArray: TACBrJSONArray;
+  LTipoOperacao : TOperacao;
+  LMensagemRejeicao: TACBrBoletoRejeicao;
+  I : Integer;
 begin
   Result := True;
-  TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+  LTipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
 
   ARetornoWs.JSONEnvio       := EnvWs;
   ARetornoWS.HTTPResultCode  := HTTPResultCode;
-  ARetornoWS.Header.Operacao := TipoOperacao;
+  ARetornoWS.Header.Operacao := LTipoOperacao;
 
   if RetWS <> '' then
   begin
+
     try
-      AJSon := TJson.Create;
+      LJsonObject := TACBrJSONObject.Parse(RetWS);
       try
-        //if (TipoOperacao <> tpConsultarPDF) then
-        //Begin //Não faz o parse pois vem o PDF em binario
-          AJSon.Parse(RetWS);
-          ARetornoWS.JSON           := AJson.Stringify;
-        //End;//if (TipoOperacao <> tpConsultarPDF) then
-
-        //retorna quando houver erro
-        case TipoOperacao of
-          tpInclui:
+        ARetornoWS.JSON           := LJsonObject.ToJSON;
+        if HTTPResultCode >= 400 then
+        begin
+          if (LJsonObject.AsString['error'] <> '') then
+          begin
+            LMensagemRejeicao            := ARetornoWS.CriarRejeicaoLista;
+            LMensagemRejeicao.Codigo     := LJsonObject.AsString['status'];
+            LMensagemRejeicao.Versao     := LJsonObject.AsString['error'];
+            LMensagemRejeicao.Mensagem   := LJsonObject.AsString['message'];
+          end;
+          if LJsonObject.IsJSONArray('erros') then
+          begin
+            LJsonArray := LJsonObject.AsJSONArray['erros'];
+            for I := 0 to Pred(LJsonArray.Count) do
             begin
-              case HTTPResultCode of
-                400,
-                403,
-                422,
-                500,
-                401 :
-                  begin
-                    if (AJson.Values['error'].AsString <> '') then
-                    begin
-                      ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                      ARejeicao.Codigo     := AJson.Values['status'].AsString;
-                      ARejeicao.Versao     := AJson.Values['error'].AsString;
-                      ARejeicao.Mensagem   := AJson.Values['message'].AsString;
-                    end;
-                  end;
-
-              end;
-            end;
-          tpBaixa,
-          tpAltera,
-          tpConsultaDetalhe : begin
-            case HTTPResultCode of
-              200 : begin
-                ARetornoWS.DadosRet.TituloRet.CodBarras      := aJson.Values['codigoBarras'].AsString;
-                ARetornoWS.DadosRet.TituloRet.LinhaDig       := aJson.Values['linhaDigitavel'].AsString;
-                ARetornoWS.DadosRet.TituloRet.Carteira       := aJson.Values['carteira'].AsString;
-                ARetornoWS.DadosRet.TituloRet.SeuNumero      := aJson.Values['seuNumero'].asString;
-                ARetornoWS.DadosRet.TituloRet.NossoNumero    := aJson.Values['nossoNumero'].AsString;
-                //Pagador
-                //ARetornoWS.DadosRet.TituloRet.Sacado.codigo         := aJson.Values['pagador'].asObject.Values['codigo'].asString;
-                ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado      := aJson.Values['pagador'].asObject.Values['nome'].asString;
-                ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF         := aJson.Values['pagador'].asObject.Values['documento'].asString;
-                //Datas
-                ARetornoWS.DadosRet.TituloRet.DataRegistro           := DateSicreditoDateTime( aJson.Values['dataEmissao'].asString );
-                ARetornoWS.DadosRet.TituloRet.Vencimento             := DateSicreditoDateTime( aJson.Values['dataVencimento'].asString );
-                ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(aJson.Values['dataPagamento'].AsString);
-                ARetornoWS.DadosRet.TituloRet.HoraBaixa              := timeSicreditoDateTime(AJson.Values['dataPagamento'].AsString);
-                //Valores
-                ARetornoWS.DadosRet.TituloRet.ValorDocumento         := aJson.Values['valorNominal'].AsNumber;
-                //Situação/Código da situação.
-                ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca    := UpperCase(aJson.Values['situacao'].asString);
-                if (Pos('EM CARTEIRA',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) or
-                   (Pos('VENCIDO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
-                  ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
-                if (Pos('BAIXADO POR SOLICITACAO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
-                  begin
-                    ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
-                    ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
-                    ARetornoWS.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(aJson.Values['dataBaixa'].AsString);
-
-                  end;
-                if (Pos('LIQUIDADO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
-                  ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
-                //Multa/Juros
-                ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;
-                ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := aJson.Values['abatimento'].AsNumber;
-                ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := aJson.Values['juros'].AsNumber;
-                ARetornoWS.DadosRet.TituloRet.DiasDeProtesto         := aJson.Values['diasProtesto'].AsInteger;
-                ARetornoWS.DadosRet.TituloRet.TxId                   := aJson.Values['txId'].AsString;
-                ARetornoWS.DadosRet.TituloRet.EMV                    := aJson.Values['codigoQrCode'].AsString;
-                ARetornoWS.DadosRet.TituloRet.PercentualMulta        := aJson.Values['valorMulta'].AsNumber;
-                if ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
-                begin
-                   ARetornoWS.DadosRet.TituloRet.ValorPago              := AJson.Values['dadosLiquidacao'].AsObject.Values['valor'].AsNumber;
-                   ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := AJson.Values['dadosLiquidacao'].AsObject.Values['juros'].AsNumber;
-                   ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := AJson.Values['dadosLiquidacao'].AsObject.Values['abatimento'].AsNumber;
-                   ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
-                   ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(AJson.Values['dadosLiquidacao'].AsObject.Values['data'].AsString);
-                   ARetornoWS.DadosRet.TituloRet.ValorDesconto          := AJson.Values['dadosLiquidacao'].AsObject.Values['desconto'].AsNumber;
-                end;
-                Descontos := AJson.Values['descontos'].AsArray;
-                if Assigned(Descontos) then
-                begin
-                  for I := 0 to Descontos.Count - 1 do
-                  begin
-                    if I = 0 then
-                    begin
-                      ARetornoWS.DadosRet.TituloRet.ValorDesconto:= Descontos[i].AsObject.values['ValorDesconto'].asnumber;
-                      ARetornoWS.DadosRet.TituloRet.DataDesconto := DateSicreditoDateTime(Descontos[i].AsObject.Values['dataLimite'].AsString);
-                    end;
-                    if I = 1 then
-                    begin
-                      ARetornoWS.DadosRet.TituloRet.ValorDesconto2:= Descontos[i].AsObject.Values['valorDesconto'].AsNumber;
-                      ARetornoWS.DadosRet.TituloRet.DataDesconto2 := DateSicreditoDateTime(Descontos[i].AsObject.Values['dataLimite'].AsString);
-                    end;
-                    if I = 2 then
-                    begin
-                      ARetornoWS.DadosRet.TituloRet.ValorDesconto3:= Descontos[i].AsObject.Values['valorDesconto'].AsNumber;
-                      ARetornoWS.DadosRet.TituloRet.DataDesconto3 := DateSicreditoDateTime(Descontos[i].AsObject.Values['dataLimite'].AsString);
-                    end;
-
-                  end;
-
-                end;
-
-              end;
-              400,
-              403,
-              500 :
-              begin
-                AJSonResp := AJson.Values['errors'].AsArray;
-                for I := 0 to Pred(AJSonResp.Count) do
-                begin
-                  AJSonRejeicao        := AJSonResp[I].AsObject;
-                  ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                  ARejeicao.Codigo     := AJSonRejeicao.Values['status'].AsString;
-                  ARejeicao.Mensagem   := AJSonRejeicao.Values['message'].AsString;
-                end;
-              end;
-              422,
-              401 :
-              begin
-                if (AJson.Values['error'].AsString <> '') then
-                begin
-                  ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                  ARejeicao.Codigo     := AJson.Values['status'].AsString;
-                  ARejeicao.Versao     := AJson.Values['error'].AsString;
-                  ARejeicao.Mensagem   := AJson.Values['message'].AsString;
-                end;
-              end;
+              LMensagemRejeicao            := ARetornoWS.CriarRejeicaoLista;
+              LMensagemRejeicao.Codigo     := LJsonArray.ItemAsJSONObject[I].AsString['status'];
+              LMensagemRejeicao.Mensagem   := LJsonArray.ItemAsJSONObject[I].AsString['message'];
             end;
           end;
+        end;
+
+        case LTipoOperacao of
+          tpBaixa,
+          tpAltera,
+          tpConsultaDetalhe :
+            begin
+              ARetornoWS.DadosRet.TituloRet.CodBarras      := LJsonObject.AsString['codigoBarras'];
+              ARetornoWS.DadosRet.TituloRet.LinhaDig       := LJsonObject.AsString['linhaDigitavel'];
+              ARetornoWS.DadosRet.TituloRet.Carteira       := LJsonObject.AsString['carteira'];
+              ARetornoWS.DadosRet.TituloRet.SeuNumero      := LJsonObject.AsString['seuNumero'];
+              ARetornoWS.DadosRet.TituloRet.NossoNumero    := LJsonObject.AsString['nossoNumero'];
+              //Pagador
+              //ARetornoWS.DadosRet.TituloRet.Sacado.codigo         := LJsonObject.AsJSONObject['pagador'].AsString['codigo'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado      := LJsonObject.AsJSONObject['pagador'].AsString['nome'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF         := LJsonObject.AsJSONObject['pagador'].AsString['documento'];
+              //Datas
+              ARetornoWS.DadosRet.TituloRet.DataRegistro           := DateSicreditoDateTime( LJsonObject.AsString['dataEmissao'] );
+              ARetornoWS.DadosRet.TituloRet.Vencimento             := DateSicreditoDateTime( LJsonObject.AsString['dataVencimento'] );
+              ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(LJsonObject.AsString['dataPagamento']);
+              ARetornoWS.DadosRet.TituloRet.HoraBaixa              := timeSicreditoDateTime(LJsonObject.AsString['dataPagamento']);
+              //Valores
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento         := LJsonObject.AsFloat['valorNominal'];
+              //Situação/Código da situação.
+              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca    := UpperCase(LJsonObject.AsString['situacao']);
+
+              if (Pos('EM CARTEIRA',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) or (Pos('VENCIDO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
+                ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
+
+              if (Pos('BAIXADO POR SOLICITACAO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
+              begin
+                ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
+                ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(LJsonObject.AsString['dataBaixa']);
+                ARetornoWS.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(LJsonObject.AsString['dataBaixa']);
+
+              end;
+
+              if (Pos('LIQUIDADO',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0) then
+                ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
+
+              //Multa/Juros
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta        := LJsonObject.AsFloat['valorMulta'];
+              ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := LJsonObject.AsFloat['abatimento'];
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := LJsonObject.AsFloat['juros'];
+              ARetornoWS.DadosRet.TituloRet.DiasDeProtesto         := LJsonObject.AsInteger['diasProtesto'];
+              ARetornoWS.DadosRet.TituloRet.TxId                   := LJsonObject.AsString['txId'];
+              ARetornoWS.DadosRet.TituloRet.EMV                    := LJsonObject.AsString['codigoQrCode'];
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta        := LJsonObject.AsFloat['valorMulta'];
+              if ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca = '6' then
+              begin
+                 ARetornoWS.DadosRet.TituloRet.ValorPago              := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['valor'];
+                 ARetornoWS.DadosRet.TituloRet.ValorMoraJuros         := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['juros'];
+                 ARetornoWS.DadosRet.TituloRet.ValorAbatimento        := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['abatimento'];
+                 ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(LJsonObject.AsJSONObject['dadosLiquidacao'].AsString['data']);
+                 ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(LJsonObject.AsJSONObject['dadosLiquidacao'].AsString['data']);
+                 ARetornoWS.DadosRet.TituloRet.ValorDesconto          := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['desconto'];
+              end;
+
+              if LJsonObject.IsJSONArray('descontos') then
+              begin
+                LJsonArray := LJsonObject.AsJSONArray['descontos'];
+                for I := 0 to LJsonArray.Count - 1 do
+                begin
+                  if I = 0 then
+                  begin
+                    ARetornoWS.DadosRet.TituloRet.ValorDesconto:= LJsonArray.ItemAsJSONObject[i].AsFloat['ValorDesconto'];
+                    ARetornoWS.DadosRet.TituloRet.DataDesconto := DateSicreditoDateTime(LJsonArray.ItemAsJSONObject[i].AsString['dataLimite']);
+                  end;
+                  if I = 1 then
+                  begin
+                    ARetornoWS.DadosRet.TituloRet.ValorDesconto2:= LJsonArray.ItemAsJSONObject[i].AsFloat['valorDesconto'];
+                    ARetornoWS.DadosRet.TituloRet.DataDesconto2 := DateSicreditoDateTime(LJsonArray.ItemAsJSONObject[i].AsString['dataLimite']);
+                  end;
+                  if I = 2 then
+                  begin
+                    ARetornoWS.DadosRet.TituloRet.ValorDesconto3:= LJsonArray.ItemAsJSONObject[i].AsFloat['valorDesconto'];
+                    ARetornoWS.DadosRet.TituloRet.DataDesconto3 := DateSicreditoDateTime(LJsonArray.ItemAsJSONObject[i].AsString['dataLimite']);
+                  end;
+                end;
+              end;
+            end;
         end;
 
         //retorna quando tiver sucesso
         if (ARetornoWS.ListaRejeicao.Count = 0) then
         begin
-          if (TipoOperacao = tpInclui) then
+          if (LTipoOperacao = tpInclui) then
           begin
-
-            ARetornoWS.DadosRet.IDBoleto.CodBarras      := AJson.Values['codigoBarras'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.LinhaDig       := AJson.Values['linhaDigitavel'].AsString;
-            ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.UrlPix        := '';//AJson.Values['url'].AsString;
-            ARetornoWS.DadosRet.TituloRet.TxId          := AJson.Values['txid'].AsString;
-            ARetornoWS.DadosRet.TituloRet.EMV           := AJson.Values['QrCode'].AsString;
+            ARetornoWS.DadosRet.IDBoleto.CodBarras      := LJsonObject.AsString['codigoBarras'];
+            ARetornoWS.DadosRet.IDBoleto.LinhaDig       := LJsonObject.AsString['linhaDigitavel'];
+            ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['nossoNumero'];
+            ARetornoWS.DadosRet.TituloRet.UrlPix        := '';//LJsonObject.AsString['url'];
+            ARetornoWS.DadosRet.TituloRet.TxId          := LJsonObject.AsString['txid'];
+            ARetornoWS.DadosRet.TituloRet.EMV           := LJsonObject.AsString['QrCode'];
 
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
           end else
-          if (TipoOperacao = tpBaixa) then
+          if (LTipoOperacao = tpBaixa) then
           begin
-            ARetornoWS.DadosRet.TituloRet.NossoNumero   := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataBaixa     := StrToDateDef(AJson.Values['dataMovimento'].AsString,0);
-            ARetornoWS.DadosRet.TituloRet.HoraBaixa     := timeSicreditoDateTime(AJson.Values['dataMovimento'].AsString);
+            ARetornoWS.DadosRet.TituloRet.NossoNumero   := LJsonObject.AsString['nossoNumero'];
+            ARetornoWS.DadosRet.TituloRet.DataBaixa     := StrToDateDef(LJsonObject.AsString['dataMovimento'],0);
+            ARetornoWS.DadosRet.TituloRet.HoraBaixa     := timeSicreditoDateTime(LJsonObject.AsString['dataMovimento']);
           end else
-          if (TipoOperacao in [tpAltera]) then//,tpAlteraSeuNumero
+          if (LTipoOperacao in [tpAltera]) then
           begin
-            ARetornoWS.DadosRet.TituloRet.NossoNumero      := AJson.Values['nossoNumero'].AsString;
-            ARetornoWS.DadosRet.TituloRet.DataMovimento     := DateSicreditoDateTime( AJson.Values['dataMovimento'].AsString);
-
-          end else
-          {if (TipoOperacao = tpConsultarPDF) then
-          begin
-            if Assigned(StreamRetorno) and (StreamRetorno.Size > 0) then
-            Begin
-              Try
-                Var_File := TFileStream.Create(ACBrBoleto.ACBrBoletoFC.NomeArquivo,fmCreate);
-                Var_File.CopyFrom(StreamRetorno,0);
-              Finally
-                Var_File.Free;
-              End;
-            End;
-          end ;}
+            ARetornoWS.DadosRet.TituloRet.NossoNumero      := LJsonObject.AsString['nossoNumero'];
+            ARetornoWS.DadosRet.TituloRet.DataMovimento     := DateSicreditoDateTime( LJsonObject.AsString['dataMovimento'] );
+          end;
         end;
-
       finally
-        AJson.free;
+        LJsonObject.free;
       end;
-
     except
       Result := False;
     end;
-
   end
   else
   begin
-    case TipoOperacao of
-      tpInclui,
-      tpBaixa,
-      tpAltera,
-      tpConsulta,
-      tpConsultaDetalhe,
-      tpPIXCriar,
-      tpPIXCancelar:
+    case HTTPResultCode of
+      404 :
         begin
-          case HTTPResultCode of
-            404 :
-              begin
-                ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                ARejeicao.Codigo     := '404';
-                ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
-              end;
-            503 :
-              begin
-                ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                ARejeicao.Codigo     := '503';
-                ARejeicao.Versao     := 'ERRO INTERNO SICREDI';
-                ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
-                ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Sicredi.';
-              end;
-          end;
+          LMensagemRejeicao            := ARetornoWS.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '404';
+          LMensagemRejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+        end;
+      503 :
+        begin
+          LMensagemRejeicao            := ARetornoWS.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '503';
+          LMensagemRejeicao.Versao     := 'ERRO INTERNO SICREDI';
+          LMensagemRejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+          LMensagemRejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Sicredi.';
         end;
     end;
-
   end;
-
 end;
 
 function TRetornoEnvio_Sicredi_APIV2.LerListaRetorno: Boolean;
 var
-  ListaRetorno: TACBrBoletoRetornoWS;
-  AJson: TJson;
- AJSonObject: TJsonObject;
-  ARejeicao: TACBrBoletoRejeicao;
-  AJsonBoletos: TJsonArray;
+  LJsonObject, LItemObject : TACBrJSONObject;
+  LJsonArray: TACBrJSONArray;
+  LListaRetorno: TACBrBoletoRetornoWS;
+  LMensagemRejeicao: TACBrBoletoRejeicao;
   I: Integer;
 begin
   Result := True;
 
-  ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
-  ListaRetorno.HTTPResultCode := HTTPResultCode;
-  ListaRetorno.JSONEnvio      := EnvWs;
+  LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+  LListaRetorno.HTTPResultCode := HTTPResultCode;
+  LListaRetorno.JSONEnvio      := EnvWs;
 
   if RetWS <> '' then
   begin
     try
-      AJSon := TJson.Create;
+      LJsonObject := TACBrJSONObject.Parse(RetWS);
       try
-        AJSon.Parse(RetWS);
-
-        ListaRetorno.JSON           := AJson.Stringify;
-
-
+        LListaRetorno.JSON           := LJsonObject.ToJSON;
         //retorna quando houver erro
-        case HTTPResultCode of
-          400,
-          403,
-          500,
-          503,
-          401 :
-            begin
-              if (AJson.Values['error'].AsString <> '') then
-              begin
-                ARejeicao            := ListaRetorno.CriarRejeicaoLista;
-                ARejeicao.Codigo     := AJson.Values['code'].AsString;
-                ARejeicao.Versao     := AJson.Values['error'].AsString;
-                ARejeicao.Mensagem   := AJson.Values['message'].AsString;
-              end;
-            end;
 
-        end;
-
-        //retorna quando tiver sucesso
-        if (ListaRetorno.ListaRejeicao.Count = 0) then
+        if HTTPResultCode >= 400 then
         begin
-          AJsonBoletos := AJson.Values['items'].AsArray;
-          ListaRetorno.indicadorContinuidade := AJson.Values['hasNext'].AsBoolean;
-          for I := 0 to Pred(AJsonBoletos.Count) do
+          if (LJsonObject.AsString['error'] <> '') then
           begin
-            if I > 0 then
-              ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
-
-            AJSonObject  := AJsonBoletos[I].AsObject;
-
-
-            ListaRetorno.DadosRet.IDBoleto.CodBarras      := '';
-            ListaRetorno.DadosRet.IDBoleto.LinhaDig       := '';
-            ListaRetorno.DadosRet.IDBoleto.NossoNum       := AJSonObject.Values['nossoNumero'].AsString;
-
-            ListaRetorno.DadosRet.TituloRet.CodBarras      := ListaRetorno.DadosRet.IDBoleto.CodBarras;
-            ListaRetorno.DadosRet.TituloRet.LinhaDig       := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
-
-
-            ListaRetorno.DadosRet.TituloRet.NossoNumero                := ListaRetorno.DadosRet.IDBoleto.NossoNum;
-            ListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(AJSonObject.Values['dataPagamento'].AsString);
-            ListaRetorno.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(AJSonObject.Values['dataPagamento'].AsString);
-            ListaRetorno.DadosRet.TituloRet.SeuNumero                  := AJSonObject.Values['seuNumero'].AsString;
-            ListaRetorno.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorRecebido              := AJSonObject.Values['valorLiquidado'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valorLiquidado'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorRecebido              := AJSonObject.Values['valorLiquidado'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorMoraJuros             := AJSonObject.Values['jurosLiquido'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorDesconto              := AJSonObject.Values['descontoLiquido'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorOutrosCreditos        := AJSonObject.Values['multaLiquida'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorAbatimento            := AJSonObject.Values['abatimentoLiquido'].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.Mensagem.Text              := AJSonObject.Values['tipoLiquidacao'].AsString;
+            LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+            LMensagemRejeicao.Codigo     := LJsonObject.AsString['code'];
+            LMensagemRejeicao.Versao     := LJsonObject.AsString['error'];
+            LMensagemRejeicao.Mensagem   := LJsonObject.AsString['message'];
+          end;
+          if LJsonObject.IsJSONArray('erros') then
+          begin
+            LJsonArray := LJsonObject.AsJSONArray['erros'];
+            for I := 0 to Pred(LJsonArray.Count) do
+            begin
+              LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+              LMensagemRejeicao.Codigo     := LJsonArray.ItemAsJSONObject[I].AsString['status'];
+              LMensagemRejeicao.Mensagem   := LJsonArray.ItemAsJSONObject[I].AsString['message'];
+            end;
           end;
         end;
 
-      finally
-        AJson.free;
-      end;
+        //retorna quando tiver sucesso
+        if (LListaRetorno.ListaRejeicao.Count = 0) then
+        begin
+          LJsonArray := LJsonObject.AsJSONArray['items'];
+          LListaRetorno.indicadorContinuidade := LJsonObject.AsBoolean['hasNext'];
+          for I := 0 to Pred(LJsonArray.Count) do
+          begin
+            if I > 0 then
+              LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
 
+            LItemObject  := LJsonArray.ItemAsJSONObject[I];
+
+            LListaRetorno.DadosRet.IDBoleto.CodBarras      := '';
+            LListaRetorno.DadosRet.IDBoleto.LinhaDig       := '';
+            LListaRetorno.DadosRet.IDBoleto.NossoNum       := LItemObject.AsString['nossoNumero'];
+
+            LListaRetorno.DadosRet.TituloRet.CodBarras      := LListaRetorno.DadosRet.IDBoleto.CodBarras;
+            LListaRetorno.DadosRet.TituloRet.LinhaDig       := LListaRetorno.DadosRet.IDBoleto.LinhaDig;
+
+
+            LListaRetorno.DadosRet.TituloRet.NossoNumero                := LListaRetorno.DadosRet.IDBoleto.NossoNum;
+            LListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(LItemObject.AsString['dataPagamento']);
+            LListaRetorno.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(LItemObject.AsString['dataPagamento']);
+            LListaRetorno.DadosRet.TituloRet.SeuNumero                  := LItemObject.AsString['seuNumero'];
+            LListaRetorno.DadosRet.TituloRet.ValorDocumento             := LItemObject.AsFloat['valor'];
+            LListaRetorno.DadosRet.TituloRet.ValorRecebido              := LItemObject.AsFloat['valorLiquidado'];
+            LListaRetorno.DadosRet.TituloRet.ValorPago                  := LItemObject.AsFloat['valorLiquidado'];
+            LListaRetorno.DadosRet.TituloRet.ValorRecebido              := LItemObject.AsFloat['valorLiquidado'];
+            LListaRetorno.DadosRet.TituloRet.ValorMoraJuros             := LItemObject.AsFloat['jurosLiquido'];
+            LListaRetorno.DadosRet.TituloRet.ValorDesconto              := LItemObject.AsFloat['descontoLiquido'];
+            LListaRetorno.DadosRet.TituloRet.ValorOutrosCreditos        := LItemObject.AsFloat['multaLiquida'];
+            LListaRetorno.DadosRet.TituloRet.ValorAbatimento            := LItemObject.AsFloat['abatimentoLiquido'];
+            LListaRetorno.DadosRet.TituloRet.Mensagem.Text              := LItemObject.AsString['tipoLiquidacao'];
+          end;
+        end;
+      finally
+        LJsonObject.free;
+      end;
     except
       Result := False;
     end;
@@ -430,27 +359,26 @@ begin
     case HTTPResultCode of
       400 :
         begin
-          ARejeicao            := ListaRetorno.CriarRejeicaoLista;
-          ARejeicao.Codigo     := '400';
-          ARejeicao.Mensagem   := Msg;
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '400';
+          LMensagemRejeicao.Mensagem   := Msg;
         end;
       404 :
         begin
-          ARejeicao            := ListaRetorno.CriarRejeicaoLista;
-          ARejeicao.Codigo     := '404';
-          ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '404';
+          LMensagemRejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
         end;
       503 :
         begin
-          ARejeicao            := ListaRetorno.CriarRejeicaoLista;
-          ARejeicao.Codigo     := '503';
-          ARejeicao.Versao     := 'ERRO INTERNO SICREDI';
-          ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
-          ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Sicredi.';
+          LMensagemRejeicao            := LListaRetorno.CriarRejeicaoLista;
+          LMensagemRejeicao.Codigo     := '503';
+          LMensagemRejeicao.Versao     := 'ERRO INTERNO SICREDI';
+          LMensagemRejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+          LMensagemRejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Sicredi.';
         end;
     end;
   end;
-
 end;
 
 function TRetornoEnvio_Sicredi_APIV2.RetornoEnvio(const AIndex: Integer): Boolean;
@@ -460,15 +388,14 @@ begin
 
 end;
 
-function TRetornoEnvio_Sicredi_APIV2.TimeSicreditoDateTime(
-  const AValue: String): String;
+function TRetornoEnvio_Sicredi_APIV2.TimeSicreditoDateTime(const AValue: String): String;
 var
-  hora, minuto, segundos : String;
+  LHora, LMinuto, LSegundos : String;
 begin
-  hora     := Copy( aValue, 12,2 );
-  minuto   := Copy( aValue, 15,2 );
-  segundos := Copy( aValue, 18,2 );
-  Result   := Format( '%s:%s:%s' , [hora,minuto,segundos]);
+  LHora     := Copy( AValue, 12,2 );
+  LMinuto   := Copy( AValue, 15,2 );
+  LSegundos := Copy( AValue, 18,2 );
+  Result   := Format( '%s:%s:%s' , [LHora,LMinuto,LSegundos]);
 end;
 
 end.

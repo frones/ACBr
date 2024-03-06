@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2024
+-- GeisWebProvider --
+[*] Adiciona tratativa para que o & em informação devolvida em URL seja devidamente convertido.
+  Por: Diego Folieni
 -- ISSDSFProvider --
 [*] Adiciona tratativa para que o & em informação devolvida em URL seja devidamente convertido.
   Por: Diego Folieni

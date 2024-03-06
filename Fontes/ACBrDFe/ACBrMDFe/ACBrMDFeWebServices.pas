@@ -2158,6 +2158,8 @@ begin
             infEvento.detEvento.dtEnc := FEvento.Evento[i].InfEvento.detEvento.dtEnc;
             infEvento.detEvento.cUF   := FEvento.Evento[i].InfEvento.detEvento.cUF;
             infEvento.detEvento.cMun  := FEvento.Evento[i].InfEvento.detEvento.cMun;
+
+            infEvento.detEvento.indEncPorTerceiro := FEvento.Evento[i].InfEvento.detEvento.indEncPorTerceiro;
           end;
 
           teInclusaoCondutor:

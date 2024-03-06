@@ -211,6 +211,10 @@ begin
        Gerador.wCampo(tcDat, 'EP04', 'dtEnc     ', 10, 10, 1, Evento.Items[0].InfEvento.detEvento.dtEnc);
        Gerador.wCampo(tcInt, 'EP05', 'cUF       ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.cUF);
        Gerador.wCampo(tcInt, 'EP06', 'cMun      ', 07, 07, 1, Evento.Items[0].InfEvento.detEvento.cMun);
+
+       if Evento.Items[0].InfEvento.detEvento.indEncPorTerceiro = tiSim  then
+         Gerador.wCampo(tcStr, 'EP07', 'indEncPorTerceiro', 1, 1, 1, '1');
+
        Gerador.wGrupo('/evEncMDFe');
      end;
 
@@ -471,6 +475,8 @@ begin
       infEvento.detEvento.xNome      := RetEventoMDFe.InfEvento.detEvento.xNome;
       infEvento.detEvento.CPF        := RetEventoMDFe.InfEvento.detEvento.CPF;
 
+      infEvento.detEvento.indEncPorTerceiro := RetEventoMDFe.InfEvento.detEvento.indEncPorTerceiro;
+
       infEvento.detEvento.cMunCarrega := RetEventoMDFe.InfEvento.detEvento.cMunCarrega;
       infEvento.detEvento.xMunCarrega := RetEventoMDFe.InfEvento.detEvento.xMunCarrega;
 
@@ -613,6 +619,8 @@ begin
         InfEvento.detEvento.cMun  := INIRec.ReadInteger(sSecao, 'cMun', 0);
         infEvento.detEvento.xNome := INIRec.ReadString(sSecao, 'xNome', '');
         infEvento.detEvento.CPF   := INIRec.ReadString(sSecao, 'CPF', '');
+
+        infEvento.detEvento.indEncPorTerceiro := StrToTIndicador(Ok, INIRec.ReadString(sSecao, 'indEncPorTerceiro', '0'));
 
         infEvento.detEvento.cMunCarrega := INIRec.ReadInteger(sSecao, 'cMunCarrega', 0);
         infEvento.detEvento.xMunCarrega := INIRec.ReadString(sSecao, 'xMunCarrega', '');

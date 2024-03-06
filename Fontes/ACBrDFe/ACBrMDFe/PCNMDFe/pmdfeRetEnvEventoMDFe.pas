@@ -173,6 +173,7 @@ function TRetEventoMDFe.LerXml: boolean;
 var
   ok: boolean;
   i, j: Integer;
+  sAux: string;
 begin
   Result := False;
 
@@ -201,6 +202,11 @@ begin
           infEvento.detEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
           infEvento.detEvento.xNome      := Leitor.rCampo(tcStr, 'xNome');
           infEvento.detEvento.CPF        := Leitor.rCampo(tcStr, 'CPF');
+
+          sAux := Leitor.rCampo(tcStr, 'indEncPorTerceiro');
+
+          if sAux = '1' then
+            infEvento.detEvento.indEncPorTerceiro := tiSim;
 
           infEvento.detEvento.cMunCarrega := Leitor.rCampo(tcInt, 'cMunCarrega');
           infEvento.detEvento.xMunCarrega := Leitor.rCampo(tcStr, 'xMunCarrega');

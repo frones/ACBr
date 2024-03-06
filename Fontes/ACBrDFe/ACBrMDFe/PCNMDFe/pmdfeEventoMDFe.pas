@@ -138,6 +138,7 @@ type
     FinfDoc: TInfDocCollection;
     FinfViagens: TInfViagens;
     FinfPag: TinfPagCollection;
+    FindEncPorTerceiro: TIndicador;
   public
     constructor Create;
     destructor Destroy; override;
@@ -157,6 +158,8 @@ type
     // Pagamento Operação MDF-e
     property infViagens: TInfViagens   read FinfViagens  write FinfViagens;
     property infPag: TinfPagCollection read FinfPag      write FinfPag;
+    // Encerramento MDF-e
+    property indEncPorTerceiro: TIndicador read FindEncPorTerceiro write FindEncPorTerceiro;
   end;
 
   { TRetInfEvento }
@@ -350,6 +353,8 @@ begin
   FinfDoc     := TInfDocCollection.Create;
   FinfViagens := TInfViagens.Create;
   FinfPag     := TinfPagCollection.Create;
+
+  indEncPorTerceiro := tiNao;
 end;
 
 destructor TDetEvento.Destroy;

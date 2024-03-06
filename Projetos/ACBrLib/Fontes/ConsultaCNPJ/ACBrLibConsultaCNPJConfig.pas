@@ -62,9 +62,14 @@ type
     FProvedor : TACBrCNPJProvedorWS;
     FSenha: string;
     FUsuario: string;
+    FProxyHost: string;
+    FProxyPort: string;
+    FProxyUser: string;
+    FProxyPass: string;
 
     FChaveCrypt: AnsiString;
     function GetSenha: String;
+    function GetSenhaProxy: String;
     function Getusuario: String;
   public
     constructor Create;
@@ -90,6 +95,10 @@ type
     property Provedor : TACBrCNPJProvedorWS read FProvedor write FProvedor;
     property Usuario: String read Getusuario write FUsuario;
     property Senha: String read GetSenha write FSenha;
+    property proxyHost: String read FProxyHost write FProxyHost;
+    property ProxyPort: String read FProxyPort write FProxyPort;
+    property ProxyUser: String read FProxyUser write FProxyUser;
+    property ProxyPass: String read GetSenhaProxy write FProxyPass;
   end;
 
   { TLibConsultaCNPJConfig }
@@ -124,6 +133,12 @@ begin
   Result :=B64CryptToString(FSenha, FChaveCrypt);
 end;
 
+function TConsultaCNPJConfig.GetSenhaProxy: String;
+begin
+  Result :=B64CryptToString(FProxyPass, FChaveCrypt);
+end;
+
+
 function TConsultaCNPJConfig.Getusuario: String;
 begin
   Result :=B64CryptToString(FUsuario, FChaveCrypt);
@@ -149,6 +164,10 @@ begin
   FProvedor:=cwsNenhum;
   FUsuario:='';
   FSenha:='';
+  FProxyHost:='';
+  FProxyPort:='';
+  FProxyUser:='';
+  FProxyPass:='';
 end;
 
 destructor TConsultaCNPJConfig.Destroy;
@@ -175,6 +194,13 @@ begin
   FProvedor:=          TACBrCNPJProvedorWS(AIni.ReadInteger(CSessaoConsultaCNPJ, CChaveProvedor, integer(FProvedor)));
   FUsuario:=           AIni.ReadString(CSessaoConsultaCNPJ, CChaveUsuario, FUsuario);
   FSenha:=             AIni.ReadString(CSessaoConsultaCNPJ, CChaveSenha, FSenha);
+
+  FProxyHost:=         AIni.ReadString(CSessaoProxy, CChaveServidor, FProxyHost);
+  FProxyPort:=         AIni.ReadString(CSessaoProxy, CChavePorta, FProxyPort);
+  FProxyUser:=         AIni.ReadString(CSessaoProxy, CChaveUsuario, FProxyUser);
+  FProxyPass:=         AIni.ReadString(CSessaoProxy, CChaveSenha, FProxyPass);
+
+
 end;
 
 procedure TConsultaCNPJConfig.GravarIni(const AIni: TCustomIniFile);
@@ -196,6 +222,12 @@ begin
   AIni.WriteInteger(CSessaoConsultaCNPJ,CChaveProvedor,integer(FProvedor));
   AIni.WriteString(CSessaoConsultaCNPJ, CChaveUsuario, FUsuario);
   AIni.WriteString(CSessaoConsultaCNPJ, CChaveSenha, FSenha);
+
+  AIni.WriteString(CSessaoProxy, CChaveServidor, FProxyHost);
+  AIni.WriteString(CSessaoProxy, CChavePorta,    FProxyPort);
+  AIni.WriteString(CSessaoProxy, CChaveUsuario,  FProxyUser);
+  AIni.WriteString(CSessaoProxy, CChaveSenha,    FProxyPass);
+
 end;
 
 { TLibConsultaCNPJConfig }

@@ -92,7 +92,12 @@ begin
     Provedor      := pLibConfig.ConsultaCNPJConfig.Provedor;
     Usuario       := pLibConfig.ConsultaCNPJConfig.Usuario;
     Senha         := pLibConfig.ConsultaCNPJConfig.Senha;
+    ProxyHost     := pLibConfig.ConsultaCNPJConfig.proxyHost;
+    ProxyPort     := pLibConfig.ConsultaCNPJConfig.ProxyPort;
+    ProxyUser     := pLibConfig.ConsultaCNPJConfig.ProxyUser;
+    ProxyPass     := pLibConfig.ConsultaCNPJConfig.ProxyPass;
   end;
+
 
 end;
 

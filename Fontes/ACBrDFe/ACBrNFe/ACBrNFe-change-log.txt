@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2024
+-- ACBrNFeNotasFiscais --
+[*] Alteração no nome da diretiva DFE_ACBR_LIBXML2 para USE_ACBr_XMLDOCUMENT.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajustes para contemplar a NT 2019/001 versão 1.60/1.61 - novos campos.
   Por: Italo Giurizzato Junior

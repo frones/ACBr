@@ -33,10 +33,6 @@
 
 {$I ACBr.inc}
 
-// Remover o "ponto" da linha abaixo para utilizar as novas units de escrita e
-// leitura do XML.
-{.$DEFINE DFE_ACBR_LIBXML2}
-
 unit ACBrNFeNotasFiscais;
 
 interface
@@ -44,12 +40,12 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   ACBrNFeConfiguracoes, pcnNFe,
-  {$IfDef DFE_ACBR_LIBXML2}
+  {$IfDef USE_ACBr_XMLDOCUMENT}
     ACBrNFeXmlReader, ACBrNFeXmlWriter,
   {$Else}
-     pcnNFeR, pcnNFeW,
+    pcnNFeR, pcnNFeW,
   {$EndIf}
-   pcnConversao, pcnLeitor;
+  pcnConversao, pcnLeitor;
 
 type
 
@@ -58,7 +54,7 @@ type
   NotaFiscal = class(TCollectionItem)
   private
     FNFe: TNFe;
-{$IfDef DFE_ACBR_LIBXML2}
+{$IfDef USE_ACBr_XMLDOCUMENT}
     FNFeW: TNFeXmlWriter;
     FNFeR: TNFeXmlReader;
 {$Else}
@@ -203,7 +199,7 @@ constructor NotaFiscal.Create(Collection2: TCollection);
 begin
   inherited Create(Collection2);
   FNFe := TNFe.Create;
-  {$IfDef DFE_ACBR_LIBXML2}
+  {$IfDef USE_ACBr_XMLDOCUMENT}
     FNFeW := TNFeXmlWriter.Create(FNFe);
     FNFeR := TNFeXmlReader.Create(FNFe);
 {$Else}
@@ -1564,14 +1560,14 @@ begin
 end;
 
 function NotaFiscal.LerXML(const AXML: String): Boolean;
-{$IfNDef DFE_ACBR_LIBXML2}
+{$IfNDef USE_ACBr_XMLDOCUMENT}
 var
   XMLStr: String;
 {$EndIf}
 begin
   XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
-{$IfDef DFE_ACBR_LIBXML2}
+{$IfDef USE_ACBr_XMLDOCUMENT}
   FNFeR.Arquivo := XMLOriginal;
 {$Else}
   { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
@@ -3804,7 +3800,7 @@ begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     IdAnterior := NFe.infNFe.ID;
-{$IfDef DFE_ACBR_LIBXML2}
+{$IfDef USE_ACBr_XMLDOCUMENT}
     FNFeW.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFeW.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
@@ -3832,7 +3828,7 @@ begin
     FNFeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
 
-{$IfNDef DFE_ACBR_LIBXML2}
+{$IfNDef USE_ACBr_XMLDOCUMENT}
   FNFeW.Opcoes.GerarTXTSimultaneamente := False;
 {$EndIf}
 
@@ -3841,7 +3837,7 @@ begin
   //WriteToTXT('c:\temp\Notafiscal.xml', FNFeW.Document.Xml, False, False);
   //WriteToTXT('c:\temp\Notafiscal.xml', FNFeW.Gerador.ArquivoFormatoXML, False, False);
 
-{$IfDef DFE_ACBR_LIBXML2}
+{$IfDef USE_ACBr_XMLDOCUMENT}
   XMLOriginal := FNFeW.Document.Xml;  // SetXMLOriginal() irá converter para UTF8
 {$Else}
   XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
@@ -3852,7 +3848,7 @@ begin
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
-{$IfDef DFE_ACBR_LIBXML2}
+{$IfDef USE_ACBr_XMLDOCUMENT}
   FAlertas := ACBrStr( FNFeW.ListaDeAlertas.Text );
 {$Else}
   FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
@@ -3861,13 +3857,13 @@ begin
 end;
 
 function NotaFiscal.GerarTXT: String;
-{$IfNDef DFE_ACBR_LIBXML2}
+{$IfNDef USE_ACBr_XMLDOCUMENT}
 var
   IdAnterior : String;
 {$EndIf}
 begin
   Result := '';
-{$IfNDef DFE_ACBR_LIBXML2}
+{$IfNDef USE_ACBr_XMLDOCUMENT}
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     IdAnterior                             := NFe.infNFe.ID;

@@ -53,7 +53,7 @@ type
     FForcarGerarTagRejeicao938: TForcarGeracaoTag;
     FForcarGerarTagRejeicao906: TForcarGeracaoTag;
 
-  published
+  public
     property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
     property GerarTagIPIparaNaoTributado: boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
     property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
@@ -1004,7 +1004,7 @@ const
 var
   ErroValidarGTIN: string;
   nodeArray: TACBrXmlNodeArray;
-  j: integer;
+  j, idx: integer;
 begin
   Result := FDocument.CreateElement('prod');
   Result.AppendChild(AddNode(tcStr, 'I02', 'cProd', 01, 60, 1,
@@ -1058,6 +1058,18 @@ begin
     end;
     Result.AppendChild(AddNode(tcStr, 'I05f', 'cBenef', 08, 10, 0,
       NFe.Det[i].Prod.cBenef, DSC_CBENEF));
+
+    for idx := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
+    begin
+      Result.AppendChild(AddNode(tcStr, 'I05h', 'cCredPresumido', 8, 10, 1,
+        NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido, DSC_CCREDPRESUMIDO));
+
+      Result.AppendChild(AddNode(FormatoValor4ou2, 'I05i', 'pCredPresumido', 1, IfThen(Usar_tcDe4, 07, 05), 1,
+        NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido, DSC_PCREDPRESUMIDO));
+
+      Result.AppendChild(AddNode(tcDe2, 'I05j', 'vCredPresumido', 1, 15, 1,
+        NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido, DSC_VCREDPRESUMIDO));
+    end;
   end
   else
     Result.AppendChild(AddNode(tcStr, 'I05w', 'CEST', 07, 07, 0,
@@ -2113,6 +2125,9 @@ begin
             xmlNode.AppendChild(AddNode(FormatoValor4ou2,
               'N14', 'pRedBC', 01, IfThen(Usar_tcDe4, 07, 05), 0,
               NFe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC));
+            xmlNode.AppendChild(AddNode(tcStr,
+              'N14a', 'cBenefRBC', 08, 10, 0,
+              NFe.Det[i].Imposto.ICMS.cBenefRBC, DSC_CBENEFRBC));
             xmlNode.AppendChild(AddNode(tcDe2, 'N15', 'vBC',
               01, 15, 0, NFe.Det[i].Imposto.ICMS.vBC, DSC_VBC));
             xmlNode.AppendChild(AddNode(FormatoValor4ou2,

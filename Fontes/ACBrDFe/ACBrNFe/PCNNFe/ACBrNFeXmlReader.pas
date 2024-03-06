@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -116,8 +116,6 @@ begin
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml da Nfe não carregado.');
 
-  Result := False;
-  infNFeNode := nil;
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
@@ -132,26 +130,28 @@ begin
   end;
 
   if NFeNode <> nil then
-      infNFeNode := NFeNode.Childrens.Find('infNFe');
+  begin
+    infNFeNode := NFeNode.Childrens.Find('infNFe');
 
-  if infNFeNode = nil then
-    raise Exception.Create('Arquivo xml incorreto.');
+    if infNFeNode = nil then
+      raise Exception.Create('Arquivo xml incorreto.');
 
-  att := infNFeNode.Attributes.Items['Id'];
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: Id');
+    att := infNFeNode.Attributes.Items['Id'];
+    if att = nil then
+      raise Exception.Create('Não encontrei o atributo: Id');
 
-  NFe.infNFe.Id := att.Content;
+    NFe.infNFe.Id := att.Content;
 
-  att := infNFeNode.Attributes.Items['versao'];
-  if att = nil then
-    raise Exception.Create('Não encontrei o atributo: versao');
+    att := infNFeNode.Attributes.Items['versao'];
+    if att = nil then
+      raise Exception.Create('Não encontrei o atributo: versao');
 
-  NFe.infNFe.Versao := StringToFloat(att.Content);
+    NFe.infNFe.Versao := StringToFloat(att.Content);
 
-  LerInfNFe(infNFeNode);
-  LerInfNFeSupl(NFeNode.Childrens.Find('infNFeSupl'));
-  LerSignature(NFeNode.Childrens.Find('Signature'));
+    LerInfNFe(infNFeNode);
+    LerInfNFeSupl(NFeNode.Childrens.Find('infNFeSupl'));
+    LerSignature(NFeNode.Childrens.Find('Signature'));
+  end;
 
   Result := True;
 end;
@@ -528,6 +528,25 @@ begin
     Item.Prod.indEscala := StrToindEscala(ok, ObterConteudo(ANode.Childrens.Find('indEscala'), tcStr));
     Item.Prod.CNPJFab   := ObterConteudo(ANode.Childrens.Find('CNPJFab'), tcStr);
     Item.Prod.cBenef    := ObterConteudo(ANode.Childrens.Find('cBenef'), tcStr);
+
+    ANodes := ANode.Childrens.FindAll('cCredPresumido');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Item.Prod.CredPresumido.New;
+      Item.Prod.CredPresumido[i].cCredPresumido := ANodes[i].Content;
+    end;
+
+    ANodes := ANode.Childrens.FindAll('pCredPresumido');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Item.Prod.CredPresumido[i].pCredPresumido := StringToFloat(ANodes[i].Content);
+    end;
+
+    ANodes := ANode.Childrens.FindAll('vCredPresumido');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Item.Prod.CredPresumido[i].vCredPresumido := StringToFloat(ANodes[i].Content);
+    end;
   end;
 
   Item.Prod.EXTIPI   := ObterConteudo(ANode.Childrens.Find('EXTIPI'), tcStr);
@@ -896,6 +915,7 @@ begin
     Item.Imposto.ICMS.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
     Item.Imposto.ICMS.vICMSMonoOp := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoOp'), tcDe2);
     Item.Imposto.ICMS.indDeduzDeson := StrToTIndicador(ok, ObterConteudo(AuxNode.Childrens.Find('indDeduzDeson'), tcStr));
+    Item.Imposto.ICMS.cBenefRBC := ObterConteudo(AuxNode.Childrens.Find('cBenefRBC'), tcStr);
 
     if (AuxNode.Name = 'ICMSPart') then
     begin

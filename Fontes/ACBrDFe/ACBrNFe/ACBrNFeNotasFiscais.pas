@@ -33,6 +33,10 @@
 
 {$I ACBr.inc}
 
+// Remover o "ponto" da linha abaixo para utilizar as novas units de escrita e
+// leitura do XML.
+{.$DEFINE DFE_ACBR_LIBXML2}
+
 unit ACBrNFeNotasFiscais;
 
 interface
@@ -1859,6 +1863,25 @@ begin
           Prod.indEscala:= StrToIndEscala(OK, INIRec.ReadString( sSecao,'indEscala' ,'') );
           Prod.CNPJFab  := INIRec.ReadString( sSecao,'CNPJFab'   ,'');
           Prod.cBenef   := INIRec.ReadString( sSecao,'cBenef'    ,'');
+
+          J := 1;
+          while true do
+          begin
+            sSecao := 'CredPresumido' + IntToStrZero(I,3) + IntToStrZero(J,1);
+            sFim     := INIRec.ReadString(sSecao, 'cCredPresumido', '');
+            if (sFim <> '') then
+              with Prod.CredPresumido.New do
+              begin
+                cCredPresumido := sFim;
+                pCredPresumido := StringToFloatDef(INIRec.ReadString(sSecao, 'pCredPresumido', ''), 0);
+                vCredPresumido := StringToFloatDef(INIRec.ReadString(sSecao, 'vCredPresumido', ''), 0);
+              end
+            else
+              Break;
+
+            Inc(J);
+          end;
+
           Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
           Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
           Prod.uCom     := INIRec.ReadString( sSecao,'uCom'  ,INIRec.ReadString( sSecao,'Unidade'  ,''));
@@ -2176,6 +2199,7 @@ begin
                 CSOSN           := StrToCSOSNIcms(OK, INIRec.ReadString(sSecao,'CSOSN'   ,''  ));
                 ICMS.modBC      := StrTomodBC(    OK, INIRec.ReadString(sSecao,'modBC'   ,INIRec.ReadString(sSecao,'Modalidade','0' ) ));
                 ICMS.pRedBC     := StringToFloatDef( INIRec.ReadString(sSecao,'pRedBC'   ,INIRec.ReadString(sSecao,'PercentualReducao','')) ,0);
+                ICMS.cBenefRBC  := INIRec.ReadString(sSecao, 'cBenefRBC', '');
                 ICMS.vBC        := StringToFloatDef( INIRec.ReadString(sSecao,'vBC'      ,INIRec.ReadString(sSecao,'ValorBase'  ,'')) ,0);
                 ICMS.pICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'pICMS'    ,INIRec.ReadString(sSecao,'Aliquota','')) ,0);
                 ICMS.vICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'vICMS'    ,INIRec.ReadString(sSecao,'Valor','')) ,0);
@@ -3195,6 +3219,18 @@ begin
               end;
             end;
           end;
+
+          for J := 0 to Prod.CredPresumido.Count - 1 do
+          begin
+            sSecao := 'CredPresumido' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 1);
+            with Prod.CredPresumido[J] do
+            begin
+              INIRec.WriteString(sSecao, 'cCredPresumido', cCredPresumido);
+              INIRec.WriteFloat(sSecao, 'pCredPresumido', pCredPresumido);
+              INIRec.WriteFloat(sSecao, 'vCredPresumido', vCredPresumido);
+            end;
+          end;
+
           with Imposto do
           begin
             sSecao := 'ICMS' + IntToStrZero(I + 1, 3);
@@ -3205,6 +3241,7 @@ begin
               INIRec.WriteString(sSecao, 'CSOSN', CSOSNIcmsToStr(CSOSN));
               INIRec.WriteString(sSecao, 'modBC', modBCToStr(ICMS.modBC));
               INIRec.WriteFloat(sSecao, 'pRedBC', ICMS.pRedBC);
+              INIRec.WriteString(sSecao, 'cBenefRBC', ICMS.cBenefRBC);
               INIRec.WriteFloat(sSecao, 'vBC', ICMS.vBC);
               INIRec.WriteFloat(sSecao, 'pICMS', ICMS.pICMS);
               INIRec.WriteFloat(sSecao, 'vICMS', ICMS.vICMS);
@@ -3824,8 +3861,10 @@ begin
 end;
 
 function NotaFiscal.GerarTXT: String;
+{$IfNDef DFE_ACBR_LIBXML2}
 var
   IdAnterior : String;
+{$EndIf}
 begin
   Result := '';
 {$IfNDef DFE_ACBR_LIBXML2}

@@ -1,34 +1,47 @@
-{******************************************************************************}
-{ Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
-{******************************************************************************}
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//              PCN - Projeto Cooperar NFe                                    //
+//                                                                            //
+//   Descrição: Classes para geração/leitura dos arquivos xml da NFe          //
+//                                                                            //
+//        site: www.projetocooperar.org/nfe                                   //
+//       email: projetocooperar@zipmail.com.br                                //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
+//     projeto: http://code.google.com/p/projetocooperar/                     //
+//         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
+//                                                                            //
+// Coordenação: (c) 2009 - Paulo Casagrande                                   //
+//                                                                            //
+//      Equipe: Vide o arquivo leiame.txt na pasta raiz do projeto            //
+//                                                                            //
+//      Versão: Vide o arquivo leiame.txt na pasta raiz do projeto            //
+//                                                                            //
+//     Licença: GNU Lesser General Public License (GNU LGPL)                  //
+//                                                                            //
+//              - Este programa é software livre; você pode redistribuí-lo    //
+//              e/ou modificá-lo sob os termos da Licença Pública Geral GNU,  //
+//              conforme publicada pela Free Software Foundation; tanto a     //
+//              versão 2 da Licença como (a seu critério) qualquer versão     //
+//              mais nova.                                                    //
+//                                                                            //
+//              - Este programa é distribuído na expectativa de ser útil,     //
+//              mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de  //
+//              COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM       //
+//              PARTICULAR. Consulte a Licença Pública Geral GNU para obter   //
+//              mais detalhes. Você deve ter recebido uma cópia da Licença    //
+//              Pública Geral GNU junto com este programa; se não, escreva    //
+//              para a Free Software Foundation, Inc., 59 Temple Place,       //
+//              Suite 330, Boston, MA - 02111-1307, USA ou consulte a         //
+//              licença oficial em http://www.gnu.org/licenses/gpl.txt        //
+//                                                                            //
+//    Nota (1): - Esta  licença  não  concede  o  direito  de  uso  do nome   //
+//              "PCN  -  Projeto  Cooperar  NFe", não  podendo o mesmo ser    //
+//              utilizado sem previa autorização.                             //
+//                                                                            //
+//    Nota (2): - O uso integral (ou parcial) das units do projeto esta       //
+//              condicionado a manutenção deste cabeçalho junto ao código     //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 {$I ACBr.inc}
 
@@ -207,34 +220,34 @@ const
 }
 function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
 
-function LayOutToServico(const t: TLayOut): string;
-function ServicoToLayOut(out ok: Boolean; const s: string): TLayOut;
+function LayOutToServico(const t: TLayOut): String;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 
 function LayOutToSchema(const t: TLayOut): TSchemaNFe;
 
-function SchemaNFeToStr(const t: TSchemaNFe): string;
-function StrToSchemaNFe(const s: string): TSchemaNFe;
-function SchemaEventoToStr(const t: TSchemaNFe): string;
+function SchemaNFeToStr(const t: TSchemaNFe): String;
+function StrToSchemaNFe(const s: String): TSchemaNFe;
+function SchemaEventoToStr(const t: TSchemaNFe): String;
 
-function FinNFeToStr(const t: TpcnFinalidadeNFe): string;
-function StrToFinNFe(out ok: Boolean; const s: string): TpcnFinalidadeNFe;
+function FinNFeToStr(const t: TpcnFinalidadeNFe): String;
+function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
 
-function IndicadorNFeToStr(const t: TpcnIndicadorNFe): string;
-function StrToIndicadorNFe(out ok: Boolean; const s: string): TpcnIndicadorNFe;
+function IndicadorNFeToStr(const t: TpcnIndicadorNFe): String;
+function StrToIndicadorNFe(out ok: Boolean; const s: String): TpcnIndicadorNFe;
 
-function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): string;
-function StrToVersaoQrCode(out ok: Boolean; const s: string): TpcnVersaoQrCode;
-function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Double;
+function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): String;
+function StrToVersaoQrCode(out ok: Boolean; const s: String): TpcnVersaoQrCode;
+function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Real;
 
-function ModeloDFToStr(const t: TpcnModeloDF): string;
-function StrToModeloDF(out ok: Boolean; const s: string): TpcnModeloDF;
-function ModeloDFToPrefixo(const t: TpcnModeloDF): string;
+function ModeloDFToStr(const t: TpcnModeloDF): String;
+function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
+function ModeloDFToPrefixo(const t: TpcnModeloDF): String;
 
-function StrToVersaoDF(out ok: Boolean; const s: string): TpcnVersaoDF;
-function VersaoDFToStr(const t: TpcnVersaoDF): string;
+function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;
+function VersaoDFToStr(const t: TpcnVersaoDF): String;
 
-function DblToVersaoDF(out ok: Boolean; const d: Double): TpcnVersaoDF;
-function VersaoDFToDbl(const t: TpcnVersaoDF): Double;
+function DblToVersaoDF(out ok: Boolean; const d: Real): TpcnVersaoDF;
+function VersaoDFToDbl(const t: TpcnVersaoDF): Real;
 
 function tpOPToStr(const t: TpcnTipoOperacao): string;
 function StrTotpOP(out ok: boolean; const s: string): TpcnTipoOperacao;
@@ -245,19 +258,19 @@ function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
 function tpArmaToStr(const t: TpcnTipoArma): string;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 
-function VeiculosRestricaoStr( const iRestricao :Integer ): string;
-function VeiculosCorDENATRANStr( const sCorDENATRAN : string ): string;
-function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): string;
-function VeiculosVinStr( const sVin: string ): string;
-function VeiculosEspecieStr( const iEspecie : Integer ): string;
-function VeiculosTipoStr( const iTipoVeic : Integer ): string;
-function VeiculosCombustivelStr( const sTpComb : string ): string;
-function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): string;
+function VeiculosRestricaoStr( const iRestricao :Integer ): String;
+function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
+function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
+function VeiculosVinStr( const sVin: String ): String;
+function VeiculosEspecieStr( const iEspecie : Integer ): String;
+function VeiculosTipoStr( const iTipoVeic : Integer ): String;
+function VeiculosCombustivelStr( const sTpComb : String ): String;
+function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
 
-function ArmaTipoStr( const TtpArma : TpcnTipoArma ): string;
+function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
 
-function IndEscalaToStr(const t: TpcnIndEscala): string;
-function StrToIndEscala(out ok: Boolean; const s: string): TpcnIndEscala;
+function IndEscalaToStr(const t: TpcnIndEscala): String;
+function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
 function modFreteToStr(const t: TpcnModalidadeFrete): string;
 function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 function modFreteToDesStr(const t: TpcnModalidadeFrete; versao: TpcnVersaoDF): string;
@@ -280,8 +293,7 @@ function StrTomotRedAdRem(out ok: boolean; const s: string): TmotRedAdRem;
 implementation
 
 uses
-  typinfo,
-  ACBrBase;
+  typinfo;
 
 function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
@@ -303,32 +315,34 @@ begin
              teComprEntregaCTe, teCancComprEntregaCTe, teCTeCancelado]);
 end;
 
-function SchemaEventoToStr(const t: TSchemaNFe): string;
+function LayOutToServico(const t: TLayOut): String;
 begin
-  result := TEventoArrayStrings[t];
+  Result := EnumeradoToStr(t,
+    ['NfeRecepcao', 'NfeRetRecepcao', 'NfeCancelamento', 'NfeInutilizacao',
+     'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
+     'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
+     'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', 'AdministrarCSCNFCe',
+     'NFeDistribuicaoDFe', 'EventoEPEC'],
+    [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
+      LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
+      LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
+      LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
+      LayAdministrarCSCNFCe, LayDistDFeInt, LayNFCeEPEC ] );
 end;
 
-function LayOutToServico(const t: TLayOut): string;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 begin
-  result := TLayOutArrayStrings[t];
-end;
-
-function ServicoToLayOut(out ok: Boolean; const s: string): TLayOut;
-var
-  idx: TLayOut;
-begin
-  ok := True;
-
-  for idx := Low(TLayOutArrayStrings) to High(TLayOutArrayStrings) do
-  begin
-    if (TLayOutArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TLayOut: %s', [s]);
+  Result := StrToEnumerado(ok, s,
+  ['NfeRecepcao', 'NfeRetRecepcao', 'NfeCancelamento', 'NfeInutilizacao',
+   'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
+   'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
+   'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', 'AdministrarCSCNFCe',
+   'NFeDistribuicaoDFe', 'EventoEPEC'],
+  [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
+    LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
+    LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
+    LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
+    LayAdministrarCSCNFCe, LayDistDFeInt, LayNFCeEPEC ] );
 end;
 
 function LayOutToSchema(const t: TLayOut): TSchemaNFe;
@@ -356,16 +370,16 @@ begin
   end;
 end;
 
-function SchemaNFeToStr(const t: TSchemaNFe): string;
+function SchemaNFeToStr(const t: TSchemaNFe): String;
 begin
   Result := GetEnumName(TypeInfo(TSchemaNFe), Integer( t ) );
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaNFe(const s: string): TSchemaNFe;
+function StrToSchemaNFe(const s: String): TSchemaNFe;
 var
   P: Integer;
-  SchemaStr: string;
+  SchemaStr: String;
   CodSchema: Integer;
 begin
   P := pos('_',s);
@@ -388,104 +402,64 @@ begin
 end;
 
 // B25 - Finalidade de emissão da NF-e *****************************************
-function FinNFeToStr(const t: TpcnFinalidadeNFe): string;
+function FinNFeToStr(const t: TpcnFinalidadeNFe): String;
 begin
-  result := TFinalidadeNFeArrayStrings[t];
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
+    [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
 end;
 
-function StrToFinNFe(out ok: Boolean; const s: string): TpcnFinalidadeNFe;
-var
-  idx: TpcnFinalidadeNFe;
+function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
 begin
-  ok := True;
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
+    [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
+end;
 
-  for idx := Low(TFinalidadeNFeArrayStrings) to High(TFinalidadeNFeArrayStrings) do
-  begin
-    if (TFinalidadeNFeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
+function IndicadorNFeToStr(const t: TpcnIndicadorNFe): String;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', '2'],
+    [inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia]);
+end;
+
+function StrToIndicadorNFe(out ok: Boolean; const s: String): TpcnIndicadorNFe;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
+    [inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia]);
+end;
+
+function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): String;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', '2'],
+    [veqr000, veqr100, veqr200]);
+end;
+
+function StrToVersaoQrCode(out ok: Boolean; const s: String): TpcnVersaoQrCode;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
+    [veqr000, veqr100, veqr200]);
+end;
+
+function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Real;
+begin
+  case t of
+    veqr000: Result := 0;
+    veqr100: Result := 1;
+    veqr200: Result := 2;
+  else
+    Result := 0;
   end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnFinalidadeNFe: %s', [s]);
 end;
 
-function IndicadorNFeToStr(const t: TpcnIndicadorNFe): string;
+function ModeloDFToStr(const t: TpcnModeloDF): String;
 begin
-  result := TIndicadorNFeArrayStrings[t];
+  Result := EnumeradoToStr(t, ['55', '65'], [moNFe, moNFCe]);
 end;
 
-function StrToIndicadorNFe(out ok: Boolean; const s: string): TpcnIndicadorNFe;
-var
-  idx: TpcnIndicadorNFe;
+function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
 begin
-  ok := True;
-
-  for idx := Low(TIndicadorNFeArrayStrings) to High(TIndicadorNFeArrayStrings) do
-  begin
-    if (TIndicadorNFeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnIndicadorNFe: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['55', '65'], [moNFe, moNFCe]);
 end;
 
-function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): string;
-begin
-  result := TVersaoQrCodeArrayStrings[t];
-end;
-
-function StrToVersaoQrCode(out ok: Boolean; const s: string): TpcnVersaoQrCode;
-var
-  idx: TpcnVersaoQrCode;
-begin
-  ok := True;
-
-  for idx := Low(TVersaoQrCodeArrayStrings) to High(TVersaoQrCodeArrayStrings) do
-  begin
-    if (TVersaoQrCodeArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnVersaoQrCode: %s', [s]);
-end;
-
-function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Double;
-begin
-   result := TVersaoQrCodeArrayDouble[t];
-end;
-
-function ModeloDFToStr(const t: TpcnModeloDF): string;
-begin
-  result := TModeloDFArrayStrings[t];
-end;
-
-function StrToModeloDF(out ok: Boolean; const s: string): TpcnModeloDF;
-var
-  idx: TpcnModeloDF;
-begin
-  ok := True;
-
-  for idx := Low(TModeloDFArrayStrings) to High(TModeloDFArrayStrings) do
-  begin
-    if (TModeloDFArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnModeloDF: %s', [s]);
-end;
-
-function ModeloDFToPrefixo(const t: TpcnModeloDF): string;
+function ModeloDFToPrefixo(const t: TpcnModeloDF): String;
 begin
   Case t of
     moNFCe: Result := 'NFCe';
@@ -494,126 +468,81 @@ begin
   end;
 end;
 
-function StrToVersaoDF(out ok: Boolean; const s: string): TpcnVersaoDF;
-var
-  idx: TpcnVersaoDF;
+function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;
 begin
-  ok := True;
-
-  for idx := Low(TVersaoDFArrayStrings) to High(TVersaoDFArrayStrings) do
-  begin
-    if (TVersaoDFArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnVersaoDF: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10', '4.00'], [ve200, ve300, ve310, ve400]);
 end;
 
-function VersaoDFToStr(const t: TpcnVersaoDF): string;
+function VersaoDFToStr(const t: TpcnVersaoDF): String;
 begin
-  result := TVersaoDFArrayStrings[t];
+  Result := EnumeradoToStr(t, ['2.00', '3.00', '3.10', '4.00'], [ve200, ve300, ve310, ve400]);
 end;
 
- function DblToVersaoDF(out ok: Boolean; const d: Double): TpcnVersaoDF;
-var
-  idx: TpcnVersaoDF;
-begin
-  ok := True;
+ function DblToVersaoDF(out ok: Boolean; const d: Real): TpcnVersaoDF;
+ begin
+   ok := True;
 
-  for idx := Low(TVersaoDFArrayDouble) to High(TVersaoDFArrayDouble) do
-  begin
-    if (TVersaoDFArrayDouble[idx] = d) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnVersaoDF: %s',
-    [FormatFloat('0.00', d)]);
+   if (d = 2.0) or (d < 3.0)  then
+     Result := ve200
+   else if (d >= 3.0) and (d < 3.1) then
+     Result := ve300
+   else if (d >= 3.10) and (d < 4) then
+     Result := ve310
+   else if (d >= 4) then
+     Result := ve400
+   else
+   begin
+     Result := ve310;
+     ok := False;
+   end;
  end;
 
- function VersaoDFToDbl(const t: TpcnVersaoDF): Double;
+ function VersaoDFToDbl(const t: TpcnVersaoDF): Real;
  begin
-   result := TVersaoDFArrayDouble[t];
+   case t of
+     ve200: Result := 2.00;
+     ve300: Result := 3.00;
+     ve310: Result := 3.10;
+     ve400: Result := 4.00;
+   else
+     Result := 0;
+   end;
  end;
 
 // J02 - Tipo da operação ******************************************************
  function tpOPToStr(const t: TpcnTipoOperacao): string;
 begin
-  result := TTipoOperacaoArrayStrings[t];
+  result := EnumeradoToStr(t, ['1', '2', '3', '0'], [toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros]);
 end;
 
 function StrTotpOP(out ok: boolean; const s: string): TpcnTipoOperacao;
-var
-  idx: TpcnTipoOperacao;
 begin
-  ok := True;
-
-  for idx := Low(TTipoOperacaoArrayStrings) to High(TTipoOperacaoArrayStrings) do
-  begin
-    if (TTipoOperacaoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnTipoOperacao: %s', [s]);
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '0'], [toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros]);
 end;
 
 // J22 - Condição do Veículo ***************************************************
 function condVeicToStr(const t: TpcnCondicaoVeiculo): string;
 begin
-  result := TCondicaoVeiculoArrayStrings[t];
+  result := EnumeradoToStr(t, ['1', '2', '3'], [cvAcabado, cvInacabado, cvSemiAcabado]);
 end;
 
 function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
-var
-  idx: TpcnCondicaoVeiculo;
 begin
-  ok := True;
-
-  for idx := Low(TCondicaoVeiculoArrayStrings) to High(TCondicaoVeiculoArrayStrings) do
-  begin
-    if (TCondicaoVeiculoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnCondicaoVeiculo: %s', [s]);
+  result := StrToEnumerado(ok, s, ['1', '2', '3'], [cvAcabado, cvInacabado, cvSemiAcabado]);
 end;
 
 // L02 - Indicador do tipo de arma de fogo *************************************
 function tpArmaToStr(const t: TpcnTipoArma): string;
 begin
-  result := TTipoArmaArrayStrings[t];
+  result := EnumeradoToStr(t, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
 end;
 
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
-var
-  idx: TpcnTipoArma;
 begin
-  ok := True;
-
-  for idx := Low(TTipoArmaArrayStrings) to High(TTipoArmaArrayStrings) do
-  begin
-    if (TTipoArmaArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnTipoArma: %s', [s]);
+  result := StrToEnumerado(ok, s, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
 end;
 
-function VeiculosRestricaoStr( const iRestricao : Integer ): string;
+function VeiculosRestricaoStr( const iRestricao : Integer ): String;
 begin
   case iRestricao of
     0: result := '0-NÃO HÁ';
@@ -627,7 +556,7 @@ begin
   end;
 end;
 
-function VeiculosCorDENATRANStr( const sCorDENATRAN : string ): string;
+function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
 begin
   case StrToIntDef( sCorDENATRAN, 0 ) of
      1: result := '01-AMARELO';
@@ -651,12 +580,16 @@ begin
   end;
 end;
 
-function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): string;
+function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
 begin
-  result := TCondicaoVeiculoDescArrayStrings[condVeic];
+  case condVeic of
+    cvAcabado     : result := '1-ACABADO';
+    cvInacabado   : result := '2-INACABADO';
+    cvSemiAcabado : result := '3-SEMI-ACABADO';
+  end;
 end;
 
-function VeiculosVinStr( const sVin: string ): string;
+function VeiculosVinStr( const sVin: String ): String;
 begin
   // Enumerar Vim no futuro ?
   if sVIN = 'R' then
@@ -668,7 +601,7 @@ begin
       result := 'NÃO DEFINIDA' ;
 end;
 
-function VeiculosEspecieStr( const iEspecie : Integer ): string;
+function VeiculosEspecieStr( const iEspecie : Integer ): String;
 begin
   case iEspecie of
     1: result := '01-PASSAGEIRO';
@@ -683,7 +616,7 @@ begin
     end;
 end;
 
-function VeiculosTipoStr( const iTipoVeic : Integer ): string;
+function VeiculosTipoStr( const iTipoVeic : Integer ): String;
 begin
   case iTipoVeic of
      1: result := '01-BICICLETA';
@@ -717,7 +650,7 @@ begin
     end;
 end;
 
-function VeiculosCombustivelStr( const sTpComb : string ): string;
+function VeiculosCombustivelStr( const sTpComb : String ): String;
 begin
   case StrToIntDef( stpComb, 0) of
      1: result := '01-ÁLCOOL';
@@ -743,60 +676,48 @@ begin
     end;
 end;
 
-function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): string;
+function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
 begin
-  result := TTipoOperacaoDescArrayStrings[TtpOP];
-end;
-
-function ArmaTipoStr( const TtpArma : TpcnTipoArma ): string;
-begin
-  result := TTipoArmaDescArrayStrings[TtpArma];
-end;
-
-function IndEscalaToStr(const t: TpcnIndEscala): string;
-begin
-  result := TIndEscalaArrayStrings[t];
-end;
-
-function StrToIndEscala(out ok: Boolean; const s: string): TpcnIndEscala;
-var
-  idx: TpcnIndEscala;
-begin
-  ok := True;
-
-  for idx := Low(TIndEscalaArrayStrings) to High(TIndEscalaArrayStrings) do
-  begin
-    if (TIndEscalaArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
+  case TtpOP of
+    toVendaConcessionaria : result := '1-VENDA CONCESSIONÁRIA';
+    toFaturamentoDireto   : result := '2-FAT. DIRETO CONS. FINAL';
+    toVendaDireta         : result := '3-VENDA DIRETA';
+    toOutros              : result := '0-OUTROS';
   end;
 
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnIndEscala: %s', [s]);
 end;
 
+function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+begin
+  case TtpArma of
+    taUsoPermitido: result := '0-USO PERMITIDO';
+    taUsoRestrito : result := '1-USO RESTRITO';
+  end;
+end;
+
+function IndEscalaToStr(const t: TpcnIndEscala): String;
+begin
+  result := EnumeradoToStr(t, ['S', 'N', ''],
+                              [ieRelevante, ieNaoRelevante, ieNenhum]);
+end;
+
+function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
+begin
+  result := StrToEnumerado(ok, s, ['S', 'N', ''],
+                                  [ieRelevante, ieNaoRelevante, ieNenhum]);
+end;
+
+// ??? - Modalidade do frete ***************************************************
 function modFreteToStr(const t: TpcnModalidadeFrete): string;
 begin
-  result := TModalidadeFreteArrayStrings[t];
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
+    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
 end;
 
 function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
-var
-  idx: TpcnModalidadeFrete;
 begin
-  ok := True;
-
-  for idx := Low(TModalidadeFreteArrayStrings) to High(TModalidadeFreteArrayStrings) do
-  begin
-    if (TModalidadeFreteArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TpcnModalidadeFrete: %s', [s]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2',  '3', '4', '9'],
+    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
 end;
 
 function modFreteToDesStr(const t: TpcnModalidadeFrete; versao: TpcnVersaoDF): string;
@@ -825,119 +746,77 @@ begin
   end;
 end;
 
+function SchemaEventoToStr(const t: TSchemaNFe): String;
+begin
+  result := EnumeradoToStr(t, ['e110110', 'e110111', 'e110112', 'e110140',
+                               'e111500', 'e111501', 'e111502', 'e111503',
+                               'e210200', 'e210210', 'e210220', 'e210240',
+                               'e110130', 'e110131', 'e110150'],
+    [schEnvCCe, schcancNFe, schCancSubst, schEnvEPEC,
+     schPedProrrog1, schPedProrrog2, schCanPedProrrog1, schCanPedProrrog2,
+     schManifDestConfirmacao, schManifDestCiencia, schManifDestDesconhecimento,
+     schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
+     schAtorInteressadoNFe]);
+end;
+
 function AutorizacaoToStr(const t: TAutorizacao): string;
 begin
-  result := TAutorizacaoArrayStrings[t];
+  result := EnumeradoToStr(t, ['0', '1'], [taNaoPermite, taPermite]);
 end;
 
 function StrToAutorizacao(out ok: boolean; const s: string): TAutorizacao;
-var
-  idx: TAutorizacao;
 begin
-  ok := True;
-
-  for idx := Low(TAutorizacaoArrayStrings) to High(TAutorizacaoArrayStrings) do
-  begin
-    if (TAutorizacaoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TAutorizacao: %s', [s]);
+  result := StrToEnumerado(ok, s, ['0', '1'], [taNaoPermite, taPermite]);
 end;
 
 function IndIntermedToStr(const t: TindIntermed): string;
 begin
-  result := TindIntermedArrayStrings[t];
+  Result := EnumeradoToStr(t, ['', '0', '1'],
+       [iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador]);
 end;
 
 function StrToIndIntermed(out ok: boolean; const s: string): TindIntermed;
-var
-  idx: TindIntermed;
 begin
-  ok := True;
-
-  for idx := Low(TindIntermedArrayStrings) to High(TindIntermedArrayStrings) do
-  begin
-    if (TindIntermedArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TindIntermed: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['', '0', '1'],
+       [iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador]);
 end;
 
 function tpAtoToStr(const t: TtpAto): string;
 begin
-  result := TtpAtoArrayStrings[t];
+  Result := EnumeradoToStr(t, ['', '08', '10', '12', '14', '15'],
+       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica,
+            taAjusteSNIEF, taConvenioICMS]);
 end;
 
 function StrTotpAto(out ok: boolean; const s: string): TtpAto;
-var
-  idx: TtpAto;
 begin
-  ok := True;
-
-  for idx := Low(TtpAtoArrayStrings) to High(TtpAtoArrayStrings) do
-  begin
-    if (TtpAtoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TtpAto: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['', '08', '10', '12', '14', '15'],
+       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica,
+            taAjusteSNIEF, taConvenioICMS]);
 end;
 
 function indImportToStr(const t: TindImport): string;
 begin
-  result := TindImportArrayStrings[t];
+  Result := EnumeradoToStr(t, ['0', '1'],
+       [iiNacional, iiImportado]);
 end;
 
 function StrToindImport(out ok: boolean; const s: string): TindImport;
-var
-  idx: TindImport;
 begin
-  ok := True;
-
-  for idx := Low(TindImportArrayStrings) to High(TindImportArrayStrings) do
-  begin
-    if (TindImportArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TindImport: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['0', '1'],
+       [iiNacional, iiImportado]);
 end;
 
 function motRedAdRemToStr(const t: TmotRedAdRem): string;
 begin
-  result := TmotRedAdRemArrayStrings[t];
+  Result := EnumeradoToStr(t, ['1', '9'],
+       [motTranspColetivo, motOutros]);
 end;
 
 function StrTomotRedAdRem(out ok: boolean; const s: string): TmotRedAdRem;
-var
-  idx: TmotRedAdRem;
 begin
-  ok := True;
-
-  for idx := Low(TmotRedAdRemArrayStrings) to High(TmotRedAdRemArrayStrings) do
-  begin
-    if (TmotRedAdRemArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TmotRedAdRem: %s', [s]);
+  Result := StrToEnumerado(ok, s, ['1', '9'],
+       [motTranspColetivo, motOutros]);
 end;
 
 initialization

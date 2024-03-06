@@ -99,7 +99,7 @@ end;
 function TNFeR.LerXml: Boolean;
 var
   ok: Boolean;
-  i, j, k, nItem: Integer;
+  i, j, k, nItem, idx: Integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: String;
   Aspas, tagPag: String;
 begin
@@ -417,7 +417,25 @@ begin
       (*I05d*)NFe.Det[i].Prod.indEscala := StrToindEscala(ok, Leitor.rCampo(tcStr, 'indEscala'));
       (*I05e*)NFe.Det[i].Prod.CNPJFab   := Leitor.rCampo(tcStr, 'CNPJFab');
       (*I05f*)NFe.Det[i].Prod.cBenef    := Leitor.rCampo(tcStr, 'cBenef');
+
+      idx := 0;
+      NFe.Det[i].Prod.CredPresumido.Clear;
+      while Leitor.rExtrai(2, 'cCredPresumido', '', idx + 1) <> '' do
+      begin
+        NFe.Det[i].Prod.CredPresumido.New;
+        NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido := Leitor.rCampo(tcStr, 'cCredPresumido');
+
+        Leitor.rExtrai(2, 'pCredPresumido', '', idx + 1);
+        NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido := Leitor.rCampo(tcDe2, 'pCredPresumido');
+
+        Leitor.rExtrai(2, 'vCredPresumido', '', idx + 1);
+        NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido := Leitor.rCampo(tcDe2, 'vCredPresumido');
+
+        inc(idx);
+      end;
     end;
+
+    Leitor.rExtrai(2, 'prod');
     (*I06*)NFe.Det[i].Prod.EXTIPI   := Leitor.rCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := Leitor.rCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP     := Leitor.rCampo(tcEsp, 'CFOP');
@@ -718,6 +736,8 @@ begin
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 
              NFe.Det[i].Imposto.ICMS.indDeduzDeson := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indDeduzDeson'));
+
+             NFe.Det[i].Imposto.ICMS.cBenefRBC := Leitor.rCampo(tcStr, 'cBenefRBC');
 
       if Leitor.rExtrai(4, 'ICMSPart') <> '' then
       begin

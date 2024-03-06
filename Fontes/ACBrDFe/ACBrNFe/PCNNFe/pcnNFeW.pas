@@ -870,6 +870,7 @@ const
   SEMGTIN = 'SEM GTIN';
 var
   ErroValidarGTIN: String;
+  idx: Integer;
 begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, NFe.Det[i].Prod.cProd, DSC_CPROD);
@@ -906,7 +907,18 @@ begin
       Gerador.wCampo(tcStr, 'I05d', 'indEscala', 01, 01, 0, indEscalaToStr(NFe.Det[i].Prod.indEscala), DSC_INDESCALA);
       Gerador.wCampo(tcStr, 'I05e', 'CNPJFab  ', 14, 14, 0, NFe.Det[i].Prod.CNPJFab, DSC_CNPJFAB);
     end;
+
     Gerador.wCampo(tcStr, 'I05f', 'cBenef', 08, 10, 0, NFe.Det[i].Prod.cBenef, DSC_CBENEF);
+
+    for idx := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
+    begin
+      Gerador.wCampo(tcStr, 'I05h', 'cCredPresumido', 8, 10, 1, NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido, DSC_CCREDPRESUMIDO);
+      Gerador.wCampo(FormatoValor4ou2, 'I05i', 'pCredPresumido', 1, IfThen(FUsar_tcDe4,07,05), 1, NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido, DSC_PCREDPRESUMIDO);
+      Gerador.wCampo(tcDe2, 'I05j', 'vCredPresumido', 1, 15, 1, NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido, DSC_VCREDPRESUMIDO);
+    end;
+
+    if NFe.Det[i].Prod.CredPresumido.Count > 4 then
+      Gerador.wAlerta('I05g', 'CredPresumido', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '4');
   end
   else
     Gerador.wCampo(tcStr, 'I05w', 'CEST', 07, 07, 0, OnlyNumber(NFe.Det[i].Prod.CEST), DSC_CEST);
@@ -1694,6 +1706,7 @@ begin
                         Gerador.wCampo(tcStr, 'N13', 'modBC', 01, 01, 1, modBCToStr(NFe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
 
                       Gerador.wCampo(FormatoValor4ou2, 'N14', 'pRedBC   ', 01, IfThen(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                      Gerador.wCampo(tcStr, 'N14a', 'cBenefRBC', 8, 10, 0, NFe.Det[i].Imposto.ICMS.cBenefRBC, DSC_CBENEFRBC);
                       Gerador.wCampo(tcDe2, 'N15', 'vBC      ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
                       Gerador.wCampo(FormatoValor4ou2, 'N16', 'pICMS    ', 01, IfThen(FUsar_tcDe4,07,05), 1, NFe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
                       Gerador.wCampo(tcDe2, 'N16a', 'vICMSOp ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS);

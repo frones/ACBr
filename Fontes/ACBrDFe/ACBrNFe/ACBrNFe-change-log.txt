@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2024
+-- Diversos --
+[*] Ajustes para contemplar a NT 2019/001 versão 1.60/1.61 - novos campos.
+  Por: Italo Giurizzato Junior
+
 02/03/2024
 -- ACBrNFeXmlWriter --
 [*] Corrigido o tipo de conversão para a tag: cNF.

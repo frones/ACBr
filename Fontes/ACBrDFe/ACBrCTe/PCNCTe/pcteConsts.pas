@@ -253,6 +253,9 @@ const
   DSC_DVENC = 'Data de vencimento';
   DSC_VDUP = 'Valor da duplicata';
 
+  DSC_VICMSDESON = 'Valor de ICMS de Desoneração';
+  DSC_CBENEF = 'Código do Benefício Fiscal';
+
 implementation
 
 end.

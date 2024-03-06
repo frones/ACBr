@@ -1047,19 +1047,27 @@ type
     FvBC    : Currency;
     FpICMS  : Currency;
     FvICMS  : Currency;
+    FvICMSDeson: Double;
+    FcBenef: string;
   public
     property CST: TpcnCSTIcms read FCST    write FCST default cst20;
     property pRedBC: Currency read FpRedBC write FpRedBC;
     property vBC: Currency    read FvBC    write FvBC;
     property pICMS: Currency  read FpICMS  write FpICMS;
     property vICMS: Currency  read FvICMS  write FvICMS;
+    property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
+    property cBenef: string     read FcBenef     write FcBenef;
   end;
 
   TCST45 = class(TObject)
   private
     FCST : TpcnCSTIcms;
+    FvICMSDeson: Double;
+    FcBenef: string;
   public
     property CST: TpcnCSTIcms read FCST write FCST;
+    property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
+    property cBenef: string     read FcBenef     write FcBenef;
   end;
 
   TCST60 = class(TObject)
@@ -1069,12 +1077,16 @@ type
     FvICMSSTRet : Currency;
     FpICMSSTRet : Currency;
     FvCred      : Currency;
+    FvICMSDeson: Double;
+    FcBenef: string;
   public
     property CST: TpcnCSTIcms     read FCST        write FCST default cst60;
     property vBCSTRet: Currency   read FvBCSTRet   write FvBCSTRet;
     property vICMSSTRet: Currency read FvICMSSTRet write FvICMSSTRet;
     property pICMSSTRet: Currency read FpICMSSTRet write FpICMSSTRet;
     property vCred: Currency      read FvCred      write FvCred;
+    property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
+    property cBenef: string     read FcBenef     write FcBenef;
   end;
 
   TCST90 = class(TObject)
@@ -1085,6 +1097,8 @@ type
     FpICMS  : Currency;
     FvICMS  : Currency;
     FvCred  : Currency;
+    FvICMSDeson: Double;
+    FcBenef: string;
   public
     property CST: TpcnCSTIcms read FCST    write FCST default cst90;
     property pRedBC: Currency read FpRedBC write FpRedBC;
@@ -1092,6 +1106,8 @@ type
     property pICMS: Currency  read FpICMS  write FpICMS;
     property vICMS: Currency  read FvICMS  write FvICMS;
     property vCred: Currency  read FvCred  write FvCred;
+    property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
+    property cBenef: string     read FcBenef     write FcBenef;
   end;
 
   TICMSOutraUF = class(TObject)
@@ -1101,12 +1117,16 @@ type
     FvBCOutraUF    : Currency;
     FpICMSOutraUF  : Currency;
     FvICMSOutraUF  : Currency;
+    FvICMSDeson: Double;
+    FcBenef: string;
   public
     property CST: TpcnCSTIcms        read FCST           write FCST default cst90;
     property pRedBCOutraUF: Currency read FpRedBCOutraUF write FpRedBCOutraUF;
     property vBCOutraUF: Currency    read FvBCOutraUF    write FvBCOutraUF;
     property pICMSOutraUF: Currency  read FpICMSOutraUF  write FpICMSOutraUF;
     property vICMSOutraUF: Currency  read FvICMSOutraUF  write FvICMSOutraUF;
+    property vICMSDeson: Double read FvICMSDeson write FvICMSDeson;
+    property cBenef: string     read FcBenef     write FcBenef;
   end;
 
   { TICMSSN }

@@ -1384,6 +1384,13 @@ begin
   Gerador.wCampo(tcDe2, '#224', 'vBC   ', 01, 15, 1, CTe.Imp.ICMS.ICMS20.vBC, DSC_VBC);
   Gerador.wCampo(tcDe2, '#225', 'pICMS ', 01, 05, 1, CTe.Imp.ICMS.ICMS20.pICMS, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#226', 'vICMS ', 01, 15, 1, CTe.Imp.ICMS.ICMS20.vICMS, DSC_VICMS);
+
+  if CTe.Imp.ICMS.ICMS20.vICMSDeson > 0 then
+  begin
+    Gerador.wCampo(tcDe2, '#227', 'vICMSDeson', 1, 15, 1, CTe.Imp.ICMS.ICMS20.vICMSDeson, DSC_VICMSDESON);
+    Gerador.wCampo(tcStr, '#228', 'cBenef', 10, 10, 1, CTe.Imp.ICMS.ICMS20.cBenef, DSC_CBENEF);
+  end;
+
   Gerador.wGrupo('/ICMS20');
 end;
 
@@ -1391,6 +1398,13 @@ procedure TCTeW.GerarCST45;
 begin
   Gerador.wGrupo('ICMS45', '#227');
   Gerador.wCampo(tcStr, '#228', 'CST', 02, 02, 1, CSTICMSTOStr(CTe.Imp.ICMS.ICMS45.CST), DSC_CST);
+
+  if CTe.Imp.ICMS.ICMS45.vICMSDeson > 0 then
+  begin
+    Gerador.wCampo(tcDe2, '#227', 'vICMSDeson', 1, 15, 1, CTe.Imp.ICMS.ICMS45.vICMSDeson, DSC_VICMSDESON);
+    Gerador.wCampo(tcStr, '#228', 'cBenef', 10, 10, 1, CTe.Imp.ICMS.ICMS45.cBenef, DSC_CBENEF);
+  end;
+
   Gerador.wGrupo('/ICMS45');
 end;
 
@@ -1402,6 +1416,13 @@ begin
   Gerador.wCampo(tcDe2, '#232', 'vICMSSTRet', 01, 15, 1, CTe.Imp.ICMS.ICMS60.vICMSSTRet, DSC_VICMS);
   Gerador.wCampo(tcDe2, '#233', 'pICMSSTRet', 01, 05, 1, CTe.Imp.ICMS.ICMS60.pICMSSTRet, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#234', 'vCred     ', 01, 15, 0, CTe.Imp.ICMS.ICMS60.vCred, DSC_VCRED);
+
+  if CTe.Imp.ICMS.ICMS60.vICMSDeson > 0 then
+  begin
+    Gerador.wCampo(tcDe2, '#227', 'vICMSDeson', 1, 15, 1, CTe.Imp.ICMS.ICMS60.vICMSDeson, DSC_VICMSDESON);
+    Gerador.wCampo(tcStr, '#228', 'cBenef', 10, 10, 1, CTe.Imp.ICMS.ICMS60.cBenef, DSC_CBENEF);
+  end;
+
   Gerador.wGrupo('/ICMS60');
 end;
 
@@ -1415,6 +1436,12 @@ begin
   Gerador.wCampo(tcDe2, '#240', 'vICMS ', 01, 15, 1, CTe.Imp.ICMS.ICMS90.vICMS, DSC_VICMS);
   Gerador.wCampo(tcDe2, '#241', 'vCred ', 01, 15, 0, CTe.Imp.ICMS.ICMS90.vCred, DSC_VCRED);
 
+  if CTe.Imp.ICMS.ICMS90.vICMSDeson > 0 then
+  begin
+    Gerador.wCampo(tcDe2, '#227', 'vICMSDeson', 1, 15, 1, CTe.Imp.ICMS.ICMS90.vICMSDeson, DSC_VICMSDESON);
+    Gerador.wCampo(tcStr, '#228', 'cBenef', 10, 10, 1, CTe.Imp.ICMS.ICMS90.cBenef, DSC_CBENEF);
+  end;
+
   Gerador.wGrupo('/ICMS90');
 end;
 
@@ -1426,6 +1453,13 @@ begin
   Gerador.wCampo(tcDe2, '#245', 'vBCOutraUF   ', 01, 15, 1, CTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF, DSC_VBC);
   Gerador.wCampo(tcDe2, '#246', 'pICMSOutraUF ', 01, 05, 1, CTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#247', 'vICMSOutraUF ', 01, 15, 1, CTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF, DSC_VICMS);
+
+  if CTe.Imp.ICMS.ICMSOutraUF.vICMSDeson > 0 then
+  begin
+    Gerador.wCampo(tcDe2, '#227', 'vICMSDeson', 1, 15, 1, CTe.Imp.ICMS.ICMSOutraUF.vICMSDeson, DSC_VICMSDESON);
+    Gerador.wCampo(tcStr, '#228', 'cBenef', 10, 10, 1, CTe.Imp.ICMS.ICMSOutraUF.cBenef, DSC_CBENEF);
+  end;
+
   Gerador.wGrupo('/ICMSOutraUF');
 end;
 
@@ -1446,7 +1480,7 @@ begin
   // para consumidor final, não contribuinte do ICMS.
 
   if ((CTe.Imp.ICMSUFFim.vBCUFFim <> 0) or (CTe.Imp.ICMSUFFim.pFCPUFFim <> 0) or
-     (CTe.Imp.ICMSUFFim.pICMSUFFim <> 0) or (CTe.Imp.ICMSUFFim.vFCPUFFim <> 0) or 
+     (CTe.Imp.ICMSUFFim.pICMSUFFim <> 0) or (CTe.Imp.ICMSUFFim.vFCPUFFim <> 0) or
 	 (CTe.Imp.ICMSUFFim.vICMSUFFim <> 0) or (CTe.Imp.ICMSUFFim.vICMSUFIni <> 0)) or
      ((CTe.ide.UFIni <> CTe.ide.UFFim) and (CTe.ide.indIEToma = inNaoContribuinte)) then
   begin

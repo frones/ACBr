@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2024
+-- Diversos --
+[*] Diversas alterações visando atender os novos campos de ICMS,
+    NT 2024/001 versão 1.01 que vão ser ativados em ambiente de homologação em 
+    11/03/2024 e em produção em 08/04/2024
+  Por: Italo Giurizzato Junior
+
 05/03/2024
 -- pcteConversaoCTe --
 [*] Diversas alterações visando eliminar erros de conversão de string para enumerado.

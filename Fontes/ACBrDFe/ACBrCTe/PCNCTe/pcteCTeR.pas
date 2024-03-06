@@ -643,6 +643,9 @@ begin
           CTe.Imp.ICMS.ICMS20.vBC    := Leitor.rCampo(tcDe2,'vBC');
           CTe.Imp.ICMS.ICMS20.pICMS  := Leitor.rCampo(tcDe2,'pICMS');
           CTe.Imp.ICMS.ICMS20.vICMS  := Leitor.rCampo(tcDe2,'vICMS');
+
+          CTe.Imp.ICMS.ICMS20.vICMSDeson := Leitor.rCampo(tcDe2,'vICMSDeson');
+          CTe.Imp.ICMS.ICMS20.cBenef     := Leitor.rCampo(tcStr,'cBenef');
         end;
       end;
 
@@ -655,6 +658,9 @@ begin
           if sCST='41' then CTe.Imp.ICMS.SituTrib  := cst41;
           if sCST='51' then CTe.Imp.ICMS.SituTrib  := cst51;
           CTe.Imp.ICMS.ICMS45.CST := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
+
+          CTe.Imp.ICMS.ICMS45.vICMSDeson := Leitor.rCampo(tcDe2,'vICMSDeson');
+          CTe.Imp.ICMS.ICMS45.cBenef     := Leitor.rCampo(tcStr,'cBenef');
         end;
       end;
 
@@ -668,6 +674,9 @@ begin
           CTe.Imp.ICMS.ICMS60.vICMSSTRet := Leitor.rCampo(tcDe2,'vICMSSTRet');
           CTe.Imp.ICMS.ICMS60.pICMSSTRet := Leitor.rCampo(tcDe2,'pICMSSTRet');
           CTe.Imp.ICMS.ICMS60.vCred      := Leitor.rCampo(tcDe2,'vCred');
+
+          CTe.Imp.ICMS.ICMS60.vICMSDeson := Leitor.rCampo(tcDe2,'vICMSDeson');
+          CTe.Imp.ICMS.ICMS60.cBenef     := Leitor.rCampo(tcStr,'cBenef');
         end;
       end;
 
@@ -682,6 +691,9 @@ begin
           CTe.Imp.ICMS.ICMS90.pICMS  := Leitor.rCampo(tcDe2,'pICMS');
           CTe.Imp.ICMS.ICMS90.vICMS  := Leitor.rCampo(tcDe2,'vICMS');
           CTe.Imp.ICMS.ICMS90.vCred  := Leitor.rCampo(tcDe2,'vCred');
+
+          CTe.Imp.ICMS.ICMS90.vICMSDeson := Leitor.rCampo(tcDe2,'vICMSDeson');
+          CTe.Imp.ICMS.ICMS90.cBenef     := Leitor.rCampo(tcStr,'cBenef');
         end;
       end;
 
@@ -696,6 +708,9 @@ begin
           CTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF    := Leitor.rCampo(tcDe2,'vBCOutraUF');
           CTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF  := Leitor.rCampo(tcDe2,'pICMSOutraUF');
           CTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF  := Leitor.rCampo(tcDe2,'vICMSOutraUF');
+
+          CTe.Imp.ICMS.ICMSOutraUF.vICMSDeson := Leitor.rCampo(tcDe2,'vICMSDeson');
+          CTe.Imp.ICMS.ICMSOutraUF.cBenef     := Leitor.rCampo(tcStr,'cBenef');
         end;
       end;
 

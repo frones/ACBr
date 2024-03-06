@@ -1303,6 +1303,8 @@ begin
       lbMediatoravaliable.Font.Color := clRed
     else
       lbMediatoravaliable.Font.Color := clBlack;
+    lbMediatoravaliable.Visible := True;
+    lbMediatoravaliableStr.Visible := True;
   except
     On E: Exception do
       mmLogOperacoes.Lines.Add(E.Message + sLineBreak + FormatarJson(ACBrPSPMatera1.ErroResposta.AsJSON));
@@ -1434,7 +1436,6 @@ begin
   LBillingAddress.estado      := edContaCriarUF.Text;
   LBillingAddress.cep         := edContaCriarCEP.Text;
   LBillingAddress.pais        := 'BRA';
-
 
   LAdditionalDetailsCorporate := LContaSolicitacao.additionalDetailsCorporate;
 
@@ -1578,7 +1579,7 @@ end;
 procedure TfrPixCDMatera.btContaCriarPreencherDadosClick(Sender: TObject);
 begin
   edContaCriarExternalID.Text := CriarTxId;
-  edContaCriarNomeCliente.Text := 'Pessoa Jurídica';
+  edContaCriarNomeCliente.Text := 'Pessoa Juridica';
   edContaCriarCelular.Text := '12922223893';
   edContaCriarEmail.Text := 'pessoajuridica@mp.com.br';
   edContaCriarCEP.Text := '13720000';
@@ -1586,7 +1587,7 @@ begin
   edContaCriarNumero.Text := '15';
   edContaCriarComplemento.Text := 'Casa';
   edContaCriarBairro.Text := 'Centro';
-  edContaCriarCidade.Text := 'São Paulo';
+  edContaCriarCidade.Text := 'Sao Paulo';
   edContaCriarUF.Text := 'SP';
   edCNPJ.Text := EmptyStr;
   
@@ -1594,15 +1595,15 @@ begin
   edContaCriarNomeEmpresa.Text := 'Nome da Empresa';
   edContaCriarNascimento.Date := EncodeDate(1990, 5, 28);
   edContaCriarRepresentanteNome.Text := 'Representante 1';
-  edContaCriarRepresentanteMae.Text := 'Mãe do Representante';
+  edContaCriarRepresentanteMae.Text := 'Mae do Representante';
   edContaCriarRepresentanteCPF.Text := '13585366864';
   edContaCriarRepresentanteEmail.Text := 'representante.pj@mp.com.br';
   edContaCriarRepresentanteCelular.Text := '12922223893';
   edContaCriarRepresentanteCEP.Text := '01309030';
   edContaCriarRepresentanteLogradouro.Text := 'Rua Fernando de Albuquerque';
   edContaCriarRepresentanteNumero.Text := '88';
-  edContaCriarRepresentanteBairro.Text := 'Consolação';
-  edContaCriarRepresentanteCidade.Text := 'São Paulo';
+  edContaCriarRepresentanteBairro.Text := 'Consolacao';
+  edContaCriarRepresentanteCidade.Text := 'Sao Paulo';
   edContaCriarRepresentanteUF.Text := 'SP';
   edContaCriarRepresentanteFoto.Text := 'foto.png';
   edContaCriarRepresentanteRGFotoFrente.Text := 'fotorgfrente.png';
@@ -2410,8 +2411,7 @@ begin
 
     edLogArquivo.Text := wIni.ReadString('Log', 'Arquivo', '_log.txt');
     cbLogNivel.ItemIndex := wIni.ReadInteger('Log', 'Nivel', 4);
-    
-    edCNPJ.Text := wIni.ReadString('Matera', 'CNPJ', '');
+
     edPSPClientID.Text := wIni.ReadString('Matera', 'ClientID', '');
     edPSPClientSecret.Text := wIni.ReadString('Matera', 'ClientSecret', '');
     edPSPSecretKey.Text := wIni.ReadString('Matera', 'SecretKey', '');
@@ -2512,8 +2512,7 @@ begin
 
     wIni.WriteString('Log', 'Arquivo', edLogArquivo.Text);
     wIni.WriteInteger('Log', 'Nivel', cbLogNivel.ItemIndex);
-    
-    wIni.WriteString('Matera', 'CNPJ', edCNPJ.Text);
+
     wIni.WriteString('Matera', 'ClientID', edPSPClientID.Text);
     wIni.WriteString('Matera', 'SecretKey', edPSPSecretKey.Text);
     wIni.WriteString('Matera', 'ClientSecret', edPSPClientSecret.Text);

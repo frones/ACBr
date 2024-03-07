@@ -81,21 +81,21 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Proxy"
       TabPicture(1)   =   "FrmMain.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Label5"
+      Tab(1).Control(0)=   "txtSenhaProxy"
       Tab(1).Control(0).Enabled=   0   'False
-      Tab(1).Control(1)=   "Label6"
+      Tab(1).Control(1)=   "txtUsuarioProxy"
       Tab(1).Control(1).Enabled=   0   'False
-      Tab(1).Control(2)=   "Label7"
+      Tab(1).Control(2)=   "txtPortaProxy"
       Tab(1).Control(2).Enabled=   0   'False
-      Tab(1).Control(3)=   "Label8"
+      Tab(1).Control(3)=   "txtServidorProxy"
       Tab(1).Control(3).Enabled=   0   'False
-      Tab(1).Control(4)=   "txtServidorProxy"
+      Tab(1).Control(4)=   "Label8"
       Tab(1).Control(4).Enabled=   0   'False
-      Tab(1).Control(5)=   "txtPortaProxy"
+      Tab(1).Control(5)=   "Label7"
       Tab(1).Control(5).Enabled=   0   'False
-      Tab(1).Control(6)=   "txtUsuarioProxy"
+      Tab(1).Control(6)=   "Label6"
       Tab(1).Control(6).Enabled=   0   'False
-      Tab(1).Control(7)=   "txtSenhaProxy"
+      Tab(1).Control(7)=   "Label5"
       Tab(1).Control(7).Enabled=   0   'False
       Tab(1).ControlCount=   8
       Begin VB.TextBox txtSenhaProxy 
@@ -270,10 +270,8 @@ End Sub
 
 
 Private Sub btnConsultarCNPJ_Click()
-    
-    sCNPJ = InputBox("CNPJ", "Informe o CNPJ", "")
-    
-    ret = cnpj.Consultar(sCNPJ, cmbServico.ListIndex)
+        
+    ret = cnpj.Consultar(txtCNPJ.Text)
     rtbRespostas.Text = ret
     
 End Sub

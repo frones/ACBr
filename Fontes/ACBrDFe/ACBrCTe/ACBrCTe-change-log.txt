@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/03/2024
+-- ACBrCTeServicos --
+[+] Incluído as URL de homologação e produção de Recepção de eventos Ambiente
+    Nacional.
+  Por: Italo Giurizzato Junior
+
+06/03/2024
 -- Diversos --
 [*] Diversas alterações visando atender os novos campos de ICMS,
     NT 2024/001 versão 1.01 que vão ser ativados em ambiente de homologação em 

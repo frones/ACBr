@@ -46,6 +46,9 @@ Símbolo : Significado
 --- Diversos ---
 [+] Implementado método NFSE_ConsultarLinkNFSe e configurada chamada nos programas de exemplo em c# e java.
     Por: Renato Rubinho
+--- ACBrLib.NFSeMT.csproj, ACBrLib.NFSe.csproj ---
+[*] Publicados novos pacotes nugets.
+    Por: Renato Rubinho
 
 07/02/2024
 --- ACBrLibNFSeStaticImport ---

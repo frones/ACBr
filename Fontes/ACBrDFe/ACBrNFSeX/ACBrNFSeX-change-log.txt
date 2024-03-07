@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/03/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Paranagua/PR migrou para a versão 1.01, provedor ainda é o IPM.
+  Por: Jonathas Silva
 -- ACBrNFSeXConversao --
 [*] Diversas alterações visando eliminar erros de conversão de string para enumerado.
   Por: Italo Giurizzato Junior

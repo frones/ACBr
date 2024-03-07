@@ -1088,7 +1088,7 @@ begin
                               '</Cabecalho>' +
                            '</PedidoConsultaNFePeriodo>';
 
-  ConfigMsgDados.ConsultarNFSe.DocElemento  := 'PedidoConsultaNFePeriodo';
+  ConfigMsgDados.ConsultarNFSeServicoTomado.DocElemento  := 'PedidoConsultaNFePeriodo';
 end;
 
 procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoConsultaNFSeporRps(

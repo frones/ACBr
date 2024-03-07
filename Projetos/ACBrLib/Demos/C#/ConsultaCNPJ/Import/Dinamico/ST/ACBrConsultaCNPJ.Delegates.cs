@@ -9,6 +9,8 @@ namespace ACBrLib.ConsultaCNPJ
 {
     public sealed partial class ACBrConsultaCNPJ
     {
+        public object MessageBox { get; private set; }
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CNPJ_Inicializar(string eArqConfig, string eChaveCrypt);
 
@@ -46,7 +48,7 @@ namespace ACBrLib.ConsultaCNPJ
         public delegate int CNPJ_ConsultarCaptcha(string ePathDownload, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int CNPJ_Consultar(string eCNPJ, int eProvedor, StringBuilder buffer, ref int bufferSize);
+        public delegate int CNPJ_Consultar(string eCNPJ, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {
@@ -63,7 +65,8 @@ namespace ACBrLib.ConsultaCNPJ
             AddMethod<CNPJ_ConfigGravarValor>("CNPJ_ConfigGravarValor");
             AddMethod<CNPJ_ConsultarCaptcha>("CNPJ_ConsultarCaptcha");
             AddMethod<CNPJ_Consultar>("CNPJ_Consultar");
-
         }
+
+
     }
 }

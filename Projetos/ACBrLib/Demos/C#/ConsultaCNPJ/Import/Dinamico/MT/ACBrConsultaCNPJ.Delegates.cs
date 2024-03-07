@@ -46,7 +46,7 @@ namespace ACBrLib.ConsultaCNPJ
         public delegate int CNPJ_ConsultarCaptcha(IntPtr handle, string ePathDownload, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int CNPJ_Consultar(IntPtr handle, string eCNPJ, int eProvedor, StringBuilder buffer, ref int bufferSize);
+        public delegate int CNPJ_Consultar(IntPtr handle, string eCNPJ, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {

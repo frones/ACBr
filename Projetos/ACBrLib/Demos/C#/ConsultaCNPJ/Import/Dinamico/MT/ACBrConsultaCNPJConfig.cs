@@ -13,9 +13,28 @@ namespace ACBrLib.ConsultaCNPJ
 
         }
 
+
+
         #endregion Constructors
 
         #region Properties
+
+        public int Provedor
+        {
+            get => GetProperty<int>();
+            set => SetProperty(value);
+        }
+
+        public string Usuario
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+        public string Senha
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
 
         #endregion Properties
     }

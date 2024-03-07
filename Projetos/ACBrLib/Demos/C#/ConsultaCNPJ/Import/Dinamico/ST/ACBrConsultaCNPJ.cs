@@ -25,6 +25,7 @@ namespace ACBrLib.ConsultaCNPJ
             Config = new ACBrCNPJConfig(this);
         }
 
+
         #endregion Constructors
 
         #region Properties
@@ -106,6 +107,7 @@ namespace ACBrLib.ConsultaCNPJ
             CheckResult(ret);
         }
 
+ 
         public override T ConfigLerValor<T>(ACBrSessao eSessao, string eChave)
         {
             var method = GetMethod<CNPJ_ConfigLerValor>();
@@ -147,18 +149,19 @@ namespace ACBrLib.ConsultaCNPJ
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eCNPJ, int eProvedor)
+        public string Consultar(string eCNPJ)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<CNPJ_Consultar>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eCNPJ), eProvedor, buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(eCNPJ), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
+
 
         #endregion Diversos
 

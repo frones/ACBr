@@ -35,7 +35,6 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.edtCNPJ = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.cmbServico = new System.Windows.Forms.ComboBox();
             this.btnLerINI = new System.Windows.Forms.Button();
             this.btnSalvarINI = new System.Windows.Forms.Button();
@@ -46,7 +45,6 @@
             this.label43 = new System.Windows.Forms.Label();
             this.btnConsultarCNPJ = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.textPassword = new System.Windows.Forms.TextBox();
             this.textUser = new System.Windows.Forms.TextBox();
             this.textPort = new System.Windows.Forms.TextBox();
@@ -94,7 +92,6 @@
             // 
             this.tabPage5.Controls.Add(this.label1);
             this.tabPage5.Controls.Add(this.edtCNPJ);
-            this.tabPage5.Controls.Add(this.panel1);
             this.tabPage5.Controls.Add(this.cmbServico);
             this.tabPage5.Controls.Add(this.btnLerINI);
             this.tabPage5.Controls.Add(this.btnSalvarINI);
@@ -128,15 +125,6 @@
             this.edtCNPJ.Size = new System.Drawing.Size(129, 20);
             this.edtCNPJ.TabIndex = 55;
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.DarkGray;
-            this.panel1.Location = new System.Drawing.Point(0, 174);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(288, 3);
-            this.panel1.TabIndex = 54;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
             // cmbServico
             // 
             this.cmbServico.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -150,7 +138,6 @@
             this.cmbServico.Name = "cmbServico";
             this.cmbServico.Size = new System.Drawing.Size(121, 21);
             this.cmbServico.TabIndex = 53;
-            this.cmbServico.SelectedIndexChanged += new System.EventHandler(this.cmbServico_SelectedIndexChanged);
             // 
             // btnLerINI
             // 
@@ -226,7 +213,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.textPassword);
             this.tabPage1.Controls.Add(this.textUser);
             this.tabPage1.Controls.Add(this.textPort);
@@ -242,16 +228,6 @@
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Proxy";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(149, 193);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Gravar Config";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textPassword
             // 
@@ -357,11 +333,9 @@
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label lblUsuarioWebService;
         private System.Windows.Forms.ComboBox cmbServico;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox edtCNPJ;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textPassword;
         private System.Windows.Forms.TextBox textUser;
         private System.Windows.Forms.TextBox textPort;

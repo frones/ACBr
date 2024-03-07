@@ -5,7 +5,6 @@ using ACBrLib;
 using ACBrLib.Core;
 using ACBrLib.ConsultaCNPJ;
 using System.Linq;
-using ACBrLib.Core.CNPJ;
 using static ACBrLib.ConsultaCNPJ.ACBrConsultaCNPJ;
 
 namespace ACBrLibConsultaCNPJ.Demo

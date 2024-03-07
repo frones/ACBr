@@ -106,6 +106,9 @@ namespace ACBrLib.NFSe
         public delegate int NFSE_ConsultarNFSeGenerico(IntPtr handle, string aInfConsultaNFSe, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFSE_ConsultarLinkNFSe(IntPtr handle, string aInfConsultaLinkNFSe, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFSE_EnviarEmail(IntPtr handle, string ePara, string eXmlNFSe, bool aEnviaPDF, string eAssunto, string eCc, string eAnexos, string eMensagem);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -199,6 +202,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_ConsultarNFSePorPeriodo>("NFSE_ConsultarNFSePorPeriodo");
             AddMethod<NFSE_ConsultarNFSePorFaixa>("NFSE_ConsultarNFSePorFaixa");
             AddMethod<NFSE_ConsultarNFSeGenerico>("NFSE_ConsultarNFSeGenerico");
+            AddMethod<NFSE_ConsultarLinkNFSe>("NFSE_ConsultarLinkNFSe");
             AddMethod<NFSE_EnviarEmail>("NFSE_EnviarEmail");
             AddMethod<NFSE_Imprimir>("NFSE_Imprimir");
             AddMethod<NFSE_ImprimirPDF>("NFSE_ImprimirPDF");

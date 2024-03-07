@@ -234,6 +234,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnConsultarNFSePorPeriodo = new javax.swing.JButton();
         btnConsultarNFSePorRPS = new javax.swing.JButton();
         btnConsultarNFSePorFaixa = new javax.swing.JButton();
+        btnConsultarLinkNFSe = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         btnConsultarNFSeServicoPrestadoPorNumero = new javax.swing.JButton();
         btnConsultarNFSeServicoPrestadoPorTomador = new javax.swing.JButton();
@@ -1572,6 +1573,13 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarLinkNFSe.setText("Consultar Link NFSe");
+        btnConsultarLinkNFSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarLinkNFSeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -1587,8 +1595,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnConsultarNFSePorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSePorRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSePorFaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                    .addComponent(btnConsultarNFSePorFaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarLinkNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1606,8 +1615,10 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnConsultarNFSeGenerico)
                     .addComponent(btnConsultarNFSePorFaixa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarLoteRPS)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultarLoteRPS)
+                    .addComponent(btnConsultarLinkNFSe))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Consultas", jPanel15);
@@ -2844,6 +2855,27 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarPDFActionPerformed
 
+    private void btnConsultarLinkNFSeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarLinkNFSeActionPerformed
+        try 
+        {
+            acbrNFSe.limparLista();
+            JFileChooser chooser = new JFileChooser();
+                OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo ini (*.ini)");
+                chooser.addChoosableFileFilter(filter);
+                chooser.setFileFilter(filter);
+                
+                if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+                acbrNFSe.carregarIni(chooser.getSelectedFile().getAbsolutePath());
+                
+                String ret = acbrNFSe.consultarLinkNFSe(chooser.getSelectedFile().getAbsolutePath());
+                rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarLinkNFSeActionPerformed
+
     private void loadConfig() {
         try {
             
@@ -3051,6 +3083,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultarDFe;
     private javax.swing.JButton btnConsultarDPSPorChave;
     private javax.swing.JButton btnConsultarEvento;
+    private javax.swing.JButton btnConsultarLinkNFSe;
     private javax.swing.JButton btnConsultarLoteRPS;
     private javax.swing.JButton btnConsultarNFSeGenerico;
     private javax.swing.JButton btnConsultarNFSePorChave;

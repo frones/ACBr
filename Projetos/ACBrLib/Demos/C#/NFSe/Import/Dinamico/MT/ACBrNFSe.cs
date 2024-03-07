@@ -383,6 +383,19 @@ namespace ACBrLib.NFSe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string ConsultarLinkNFSe(string aInfConsultaLinkNFSe)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<NFSE_ConsultarLinkNFSe>();
+            var ret = ExecuteMethod(() => method(libHandle, ToUTF8(aInfConsultaLinkNFSe), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public void EnviarEmail(string ePara, string eXmlNFSe, bool aEnviaPDF, string eAssunto, string eCc, string eAnexos, string eMensagem)
         {
             var method = GetMethod<NFSE_EnviarEmail>();

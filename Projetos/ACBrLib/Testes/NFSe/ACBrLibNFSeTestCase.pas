@@ -82,6 +82,7 @@ type
     procedure Test_NFSE_ConsultarNFSePorPeriodo;
     procedure Test_NFSE_ConsultarNFSePorFaixa;
     procedure Test_NFSE_ConsultarNFSeGenerico;
+    procedure Test_NFSE_ConsultarLinkNFSe;
     procedure Test_NFSE_EnviarEmail;
     procedure Test_NFSE_Imprimir;
     procedure Test_NFSE_ImprimirPDF;
@@ -706,6 +707,29 @@ begin
 
     AssertEquals('Erro ao Consultar NFSe Generico', ErrOK,
     NFSE_ConsultarNFSeGenerico(Handle, PChar(fCaminhoExec +'\NFSeConsulta.ini'), Resposta, Tamanho));
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+    AssertEquals(ErrOK, NFSE_Finalizar(Handle));
+  except
+  on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrNFSeLib.Test_NFSE_ConsultarLinkNFSe();
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+    AssertEquals(ErrOK, NFSE_Inicializar(Handle, '', ''));
+    Resposta:= '';
+    Tamanho:= 0;
+
+    AssertEquals('Erro ao Consultar Link NFSe', ErrOK,
+    NFSE_ConsultarLinkNFSe(Handle, PChar(fCaminhoExec +'\NFSeConsultaLinkNFse.ini'), Resposta, Tamanho));
     AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
     AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
 

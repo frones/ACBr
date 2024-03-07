@@ -113,6 +113,8 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_ConsultarNFSeGenerico(String aInfConsultaNFSe, ByteBuffer buffer, IntByReference bufferSize);
         
+        int NFSE_ConsultarLinkNFSe(String aInfConsultaLinkNFSe, ByteBuffer buffer, IntByReference bufferSize);
+        
         int NFSE_EnviarEmail(String ePara, String eXmlNFSe, boolean aEnviaPDF, String eAssunto, String eCc, String eAnexos, String eMensagem);
         
         int NFSE_Imprimir(String cImpressora, Integer nNumCopias, String bGerarPDF, String bMostrarPreview, String cCancelada);
@@ -412,6 +414,15 @@ public final class ACBrNFSe extends ACBrLibBase {
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
         int ret = ACBrNFSeLib.INSTANCE.NFSE_ConsultarNFSeGenerico(toUTF8(aInfConsultaNFSe), buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
+    }
+    
+    public String consultarLinkNFSe(String aInfConsultaLinkNFSe) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(8192);
+        IntByReference bufferLen = new IntByReference(8192);
+        
+        int ret = ACBrNFSeLib.INSTANCE.NFSE_ConsultarLinkNFSe(toUTF8(aInfConsultaLinkNFSe), buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }

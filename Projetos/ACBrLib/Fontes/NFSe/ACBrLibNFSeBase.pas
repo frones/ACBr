@@ -81,6 +81,7 @@ type
     function ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function ConsultarNFSeGenerico(aInfConsultaNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarLinkNFSe(aInfConsultaLinkNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
     function Imprimir(const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
     function ImprimirPDF: longint;
@@ -947,6 +948,53 @@ begin
   end;
 end;
 
+function TACBrLibNFSe.ConsultarLinkNFSe(aInfConsultaLinkNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Resp: TConsultarLinkNFSeResposta;
+  InfConsultaLinkNFSe: TInfConsultaLinkNFSe;
+  Resposta: AnsiString;
+begin
+  try
+    if Config.Log.Nivel > logNormal then
+      GravarLog('NFSE_ConsultarLinkNFSe (' + aInfConsultaLinkNFSe + ')', logCompleto, True)
+    else
+      GravarLog('NFSE_ConsultarLinkNFSe', logNormal);
+
+    if StringEhArquivo(aInfConsultaLinkNFSe) then
+      VerificarArquivoExiste(aInfConsultaLinkNFSe);
+
+    NFSeDM.Travar;
+    try
+      InfConsultaLinkNFSe:= TInfConsultaLinkNFSe.Create;
+      try
+        InfConsultaLinkNFSe.LerFromIni(aInfConsultaLinkNFSe);
+        NFSeDM.ACBrNFSeX1.ConsultarLinkNFSe(InfConsultaLinkNFSe);
+        Resp := TConsultarLinkNFSeResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaLinkNFSe);
+
+          Resposta:= Resp.Gerar;
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+
+          Result := SetRetorno(ErrOK, Resposta);
+        finally
+          Resp.Free;
+        end;
+    finally
+      InfConsultaLinkNFSe.Free;
+    end;
+    finally
+      NFSeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
 function TACBrLibNFSe.EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
 var
   Resposta, APara, AXmlNFSe, AAssunto, ACC, AAnexos, AMensagem: String;
@@ -1142,7 +1190,10 @@ begin
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial: TDateTime; aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorNumero(
+ const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime;
+ aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint
+ ): longint;
 var
   Resp: TConsultaNFSeResposta;
   Numero: String;

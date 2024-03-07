@@ -266,6 +266,26 @@ type
     property InfConsultaNFSe: TInfConsultaNFSe read FInfConsultaNFSe write FInfConsultaNFSe;
   end;
 
+  { TConsultarLinkNFSeResposta }
+  TConsultarLinkNFSeResposta = class(TLibNFSeServiceResposta)
+  private
+    FNumeroNota: string;
+    FNumeroRps: string;
+    FSerieRps: string;
+    FLink: string;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const Response: TNFSeConsultaLinkNFSeResponse); reintroduce;
+
+  published
+    property NumeroNota: string read FNumeroNota write FNumeroNota;
+    property NumeroRps: string read FNumeroRps write FNumeroRps;
+    property SerieRps: string read FSerieRps write FSerieRps;
+    property Link: string read FLink write FLink;
+  end;
+
   { TCancelarNFSeResposta }
   TCancelarNFSeResposta = class(TLibNFSeServiceResposta)
   private
@@ -753,6 +773,28 @@ begin
 
   Metodo:= Response.Metodo;
   InfConsultaNFSe:= Response.InfConsultaNFSe;
+end;
+
+{ TConsultarLinkNFSeResposta }
+
+constructor TConsultarLinkNFSeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespConsultaLinkNFSe, ATipo, AFormato);
+end;
+
+destructor TConsultarLinkNFSeResposta.Destroy;
+begin
+ inherited Destroy;
+end;
+
+procedure TConsultarLinkNFSeResposta.Processar(const Response: TNFSeConsultaLinkNFSeResponse);
+begin
+  inherited Processar(Response);
+
+  NumeroNota := Response.NumeroNota;
+  NumeroRps := Response.NumeroRps;
+  SerieRps := Response.SerieRps;
+  Link := Response.Link;
 end;
 
 { TCancelarNFSeResposta }

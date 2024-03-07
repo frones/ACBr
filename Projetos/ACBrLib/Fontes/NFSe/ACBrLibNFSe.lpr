@@ -85,6 +85,7 @@ exports
   NFSE_ConsultarNFSePorPeriodo,
   NFSE_ConsultarNFSePorFaixa,
   NFSE_ConsultarNFSeGenerico,
+  NFSE_ConsultarLinkNFSe,
   NFSE_EnviarEmail,
   NFSE_Imprimir,
   NFSE_ImprimirPDF,

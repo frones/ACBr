@@ -1234,5 +1234,25 @@ namespace ACBrLibNFSe.Demo
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnConsultarLinkNFSe_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ACBrNFSe.LimparLista();
+
+                var arquivoINI = Helpers.OpenFile("Arquivo Ini NFSe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoINI)) return;
+
+                ACBrNFSe.CarregarINI(arquivoINI);
+
+                var ret = ACBrNFSe.ConsultarLinkNFSe(arquivoINI);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

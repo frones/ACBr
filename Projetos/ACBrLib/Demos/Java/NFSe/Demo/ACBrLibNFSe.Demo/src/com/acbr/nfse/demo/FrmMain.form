@@ -2317,8 +2317,9 @@
                               <Component id="btnConsultarNFSePorPeriodo" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSePorRPS" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSePorFaixa" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnConsultarLinkNFSe" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="130" max="32767" attributes="0"/>
+                          <EmptySpace pref="138" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2341,8 +2342,11 @@
                               <Component id="btnConsultarNFSePorFaixa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnConsultarLoteRPS" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="145" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnConsultarLoteRPS" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnConsultarLinkNFSe" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="149" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2404,6 +2408,14 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarNFSePorFaixaActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnConsultarLinkNFSe">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Consultar Link NFSe"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarLinkNFSeActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

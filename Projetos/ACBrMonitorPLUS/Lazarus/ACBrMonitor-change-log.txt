@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2024
+--- Diversos ---
+[+] Implementado método NFSE_ConsultarLinkNFSe
+    Por: Renato Rubinho
+
 05/03/2024
 -- ACBrMonitor1.lfm, ACBrMonitorConfig.pas, ACBrMonitor1.pas,  --
 [*] TK-5131-1  Ajuste para uso de Proxy na consulta CNPJ 

@@ -42,7 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-07/02/2023
+06/03/2024
+--- Diversos ---
+[+] Implementado método NFSE_ConsultarLinkNFSe e configurada chamada nos programas de exemplo em c# e java.
+    Por: Renato Rubinho
+
+07/02/2024
 --- ACBrLibNFSeStaticImport ---
 [*] Correção nome do método NFSE_ConsultaNFSePorFaixa para NFSE_ConsultarNFSePorFaixa
     Por: Antonio Carlos Junior

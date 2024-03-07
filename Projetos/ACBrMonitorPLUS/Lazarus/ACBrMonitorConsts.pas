@@ -486,6 +486,7 @@ const
   CMetodoConsultarNFSeporPeriodo =     'ConsultarNFSeporPeriodo';
   CMetodoConsultarNFSeporFaixa =       'ConsultarNFSeporFaixa';
   CMetodoConsultarNFSeGenerico =       'ConsultarNFSeGenerico';
+  CMetodoConsultarLinkNFSe =           'ConsultarLinkNFSe';
   CMetodoConsultarNFSeServicoPrestadoPorNumero = 'ConsultarNFSeServicoPrestadoPorNumero';
   CMetodoConsultarNFSeServicoPrestadoPorTomador = 'ConsultarNFSeServicoPrestadoPorTomador';
   CMetodoConsultarNFSeServicoPrestadoPorIntermediario = 'ConsultarNFSeServicoPrestadoPorIntermediario';

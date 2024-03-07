@@ -148,6 +148,12 @@ public
    procedure Executar; override;
 end;
 
+{TMetodoConsultarLinkNFSe}
+TMetodoConsultarLinkNFSe = class(TACBrMetodo)
+public
+   procedure Executar; override;
+end;
+
 {TMetodoConsultarNFSeServicoPrestadoPorNumero}
 TMetodoConsultarNFSeServicoPrestadoPorNumero = class(TACBrMetodo)
 public
@@ -1063,6 +1069,37 @@ begin
   end;
 end;
 
+{ TMetodoConsultarLinkNFSe }
+
+{ Params: 0 - Path_ini: String  Path com os parametros de consulta link NFSe}
+procedure TMetodoConsultarLinkNFSe.Executar;
+var
+  APathIni: String;
+  InfConsultaLinkNFSe: TInfConsultaLinkNFSe;
+  RespConsultaLinkNFSe: TConsultarLinkNFSeResposta;
+begin
+  APathIni := fpCmd.Params(0);
+
+  with TACBrObjetoNFSe(fpObjetoDono) do
+  begin
+    InfConsultaLinkNFSe := TInfConsultaLinkNFSe.Create;
+    try
+      InfConsultaLinkNFSe.LerFromIni(APathIni);
+      ACBrNFSeX.ConsultarLinkNFSe(InfConsultaLinkNFSe);
+
+      RespConsultaLinkNFSe := TConsultarLinkNFSeResposta.Create(TpResp, codUTF8);
+      try
+        RespConsultaLinkNFSe.Processar(ACBrNFSeX.WebService.ConsultaLinkNFSe);
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespConsultaLinkNFSe.Gerar;
+      finally
+        RespConsultaLinkNFSe.Free;
+      end;
+    finally
+      InfConsultaLinkNFSe.Free;
+    end;
+  end;
+end;
+
 { TMetodoConsultarNFSeporFaixa }
 
 { Params: 0 - FaixaIni: String - Faixa NFSe de Inicio
@@ -1772,6 +1809,7 @@ begin
   ListaDeMetodos.Add(CMetodoSetCodigoMunicipio);
   ListaDeMetodos.Add(CMetodoSetEmitente);
   ListaDeMetodos.Add(CMetodoSetAutenticacaoNFSe);
+  ListaDeMetodos.Add(CMetodoConsultarLinkNFSe);
 
   // DoACBrUnit
   ListaDeMetodos.Add(CMetodoSavetofile);
@@ -1847,6 +1885,7 @@ begin
     39  : AMetodoClass := TMetodoSetCodigoMunicipio;
     40  : AMetodoClass := TMetodoSetEmitente;
     41  : AMetodoClass := TMetodoSetAutenticacaoNFSe;
+    42  : AMetodoClass := TMetodoConsultarLinkNFSe;
 
     else
     begin

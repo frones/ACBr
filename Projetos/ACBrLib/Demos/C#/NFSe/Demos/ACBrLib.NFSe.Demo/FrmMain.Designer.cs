@@ -204,6 +204,7 @@
             this.btnGerarEnviarLoteAssincrono = new System.Windows.Forms.Button();
             this.btnEmitirNota = new System.Windows.Forms.Button();
             this.tbpConsultas = new System.Windows.Forms.TabPage();
+            this.btnConsultarLinkNFSe = new System.Windows.Forms.Button();
             this.btnConsultarNFSePorFaixa = new System.Windows.Forms.Button();
             this.btnConsultarNFSePorRPS = new System.Windows.Forms.Button();
             this.btnConsultarNFSePorPeriodo = new System.Windows.Forms.Button();
@@ -2135,6 +2136,7 @@
             // 
             // tbpConsultas
             // 
+            this.tbpConsultas.Controls.Add(this.btnConsultarLinkNFSe);
             this.tbpConsultas.Controls.Add(this.btnConsultarNFSePorFaixa);
             this.tbpConsultas.Controls.Add(this.btnConsultarNFSePorRPS);
             this.tbpConsultas.Controls.Add(this.btnConsultarNFSePorPeriodo);
@@ -2148,6 +2150,16 @@
             this.tbpConsultas.TabIndex = 1;
             this.tbpConsultas.Text = "Consultas";
             this.tbpConsultas.UseVisualStyleBackColor = true;
+            // 
+            // btnConsultarLinkNFSe
+            // 
+            this.btnConsultarLinkNFSe.Location = new System.Drawing.Point(189, 93);
+            this.btnConsultarLinkNFSe.Name = "btnConsultarLinkNFSe";
+            this.btnConsultarLinkNFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarLinkNFSe.TabIndex = 15;
+            this.btnConsultarLinkNFSe.Text = "Consultar Link NFSe";
+            this.btnConsultarLinkNFSe.UseVisualStyleBackColor = true;
+            this.btnConsultarLinkNFSe.Click += new System.EventHandler(this.btnConsultarLinkNFSe_Click);
             // 
             // btnConsultarNFSePorFaixa
             // 
@@ -2724,6 +2736,7 @@
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Button btnServicosIni;
         private System.Windows.Forms.Button btnSalvarPDFStream;
+        private System.Windows.Forms.Button btnConsultarLinkNFSe;
     }
 }
 

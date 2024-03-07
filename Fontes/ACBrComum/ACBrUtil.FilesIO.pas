@@ -83,6 +83,8 @@ Uses
 type
   TFindFileSortType = (fstNone, fstDateTime, fstFileName);
   TFindFileSortDirection = (fsdNone, fsdAscending, fsdDescending);
+    //               0           1          2           3             4
+  TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
 
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;

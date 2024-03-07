@@ -36,7 +36,12 @@ unit ACBrLibDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, ACBrLibConfig, ACBrLibComum;
+  Classes,
+  SysUtils,
+  syncobjs,
+  ACBrLibConfig,
+  ACBrLibComum,
+  ACBrUtil.FilesIO;
 
 type
 

@@ -37,7 +37,10 @@ unit ACBrLibComum;
 interface
 
 uses
-  Classes, SysUtils, fileinfo,
+  Classes,
+  SysUtils,
+  fileinfo,
+  ACBrUtil.FilesIO,
   {$IFDEF Demo} ACBrLibDemo, {$ENDIF}
   ACBrLibConfig;
 
@@ -184,9 +187,11 @@ var
 implementation
 
 uses
-  strutils, strings,
-  synacode, synautil,
-  ACBrConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.DateTime, ACBrUtil.Strings,
+  strutils,
+  strings,
+  synacode,
+  synautil,
+  ACBrConsts, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.Strings,
   ACBrLibConsts, ACBrLibResposta;
 
 { EACBrLibException }

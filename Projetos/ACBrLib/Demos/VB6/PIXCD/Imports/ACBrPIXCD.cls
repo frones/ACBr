@@ -67,7 +67,7 @@ Private Declare Function PIXCD_GerarQRCodeEstatico _
 Private Declare Function PIXCD_ConsultarPix _
                 Lib "ACBrPIXCD32.dll" (ByVal Ae2eid As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                       
 Private Declare Function PIXCD_ConsultarPixRecebidos _
                 Lib "ACBrPIXCD32.dll" (ByVal ADataInicio As Date, _
@@ -77,66 +77,66 @@ Private Declare Function PIXCD_ConsultarPixRecebidos _
                                        ByVal PagAtual As Long, _
                                        ByVal ItensPorPagina As Long, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_SolicitarDevolucaoPix _
                 Lib "ACBrPIXCD32.dll" (ByVal AInfDevolucao As String, _
                                        ByVal Ae2eid As String, _
                                        ByVal AidDevolucao As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_ConsultarDevolucaoPix _
                 Lib "ACBrPIXCD32.dll" (ByVal Ae2eid As String, _
                                        ByVal AidDevolucao As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_CriarCobrancaImediata _
                 Lib "ACBrPIXCD32.dll" (ByVal AInfCobSolicitada As String, _
                                        ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_ConsultarCobrancaImediata _
                 Lib "ACBrPIXCD32.dll" (ByVal ATxId As String, _
                                        ByVal ARevisao As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_RevisarCobrancaImediata _
                 Lib "ACBrPIXCD32.dll" (ByVal AInfCobRevisada As String, _
                                        ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function PIXCD_CancelarCobrancaImediata _
                 Lib "ACBrPIXCD32.dll" (ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function PIXCD_CriarCobranca _
                 Lib "ACBrPIXCD32.dll" (ByVal AInfCobVSolicitada As String, _
                                        ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_ConsultarCobranca _
                 Lib "ACBrPIXCD32.dll" (ByVal ATxId As String, _
                                        ByVal ARevisao As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_RevisarCobranca _
                 Lib "ACBrPIXCD32.dll" (ByVal AInfCobVRevisada As String, _
                                        ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function PIXCD_CancelarCobranca _
                 Lib "ACBrPIXCD32.dll" (ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
 
 
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _

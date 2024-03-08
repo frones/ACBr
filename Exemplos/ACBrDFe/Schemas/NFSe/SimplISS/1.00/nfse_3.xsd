@@ -26,7 +26,7 @@
     </xsd:simpleType>
     <xsd:simpleType name="tsRegimeEspecialTributacao">
         <xsd:restriction base="xsd:byte">
-            <xsd:pattern value="1|2|3|4|5|6" />
+            <xsd:pattern value="1|2|3|4|5|6|8|9|10|11|12" />
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="tsSimNao">

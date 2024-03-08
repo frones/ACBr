@@ -559,6 +559,7 @@ type
     fInicializada: Boolean;
     fCarregada: Boolean;
     fEmTransacao: Boolean;
+    fIsDebug: Boolean;
     fPerguntarCartaoDigitadoAposCancelarLeitura: Boolean;
     fUsouPinPad: Boolean;
     fNomeAplicacao: String;
@@ -741,6 +742,7 @@ type
     function SetPGWebLibPermiteAtualiza(PermiteAtualizacao: Boolean): Boolean;
 
     property PathLib: String read fPathLib write SetPathLib;
+    property IsDebug: Boolean read fIsDebug write fIsDebug;
     property AtualizaPGWebLibAutomaticamente: Boolean read fAtualizaPGWebLibAutomaticamente write fAtualizaPGWebLibAutomaticamente default True;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property Carregada: Boolean read fCarregada;
@@ -1117,6 +1119,13 @@ begin
   fTempoTarefasAutomaticas := '';
   fUltimoQRCode := '';
 
+  {$IfDef DEBUG}
+   fIsDebug := True;
+  {$Else}
+   fIsDebug := False;
+  {$EndIf}
+
+  fPathLib := '';
   fSoftwareHouse := '';
   fNomeAplicacao := '';
   fVersaoAplicacao := '';
@@ -1208,7 +1217,7 @@ begin
   if GetPGWebLibAtualiza then
     GravarLog(ACBrStr(sInfoPGWebLibAtualizaTrue))
   else
-    GravarLog(sInfoPGWebLibAtualizaFalse);
+    GravarLog(ACBrStr(sInfoPGWebLibAtualizaFalse));
 
   GravarLog('PW_iInit( '+fDiretorioTrabalho+' )');
   iRet := xPW_iInit(PAnsiChar(AnsiString(fDiretorioTrabalho)));
@@ -1807,6 +1816,7 @@ begin
 
   pszData := AllocMem(max(50, MaxLen));
   try
+    iRet := xPW_iPPAbort;
     iRet := xPW_iPPGetUserData(iMessageId, MinLen, MaxLen, TimeOutSec, pszData);
     GravarLog('  '+PWRETToString(iRet));
     case iRet of
@@ -2794,6 +2804,13 @@ begin
     s := 'PathPGWebLib';
    {$EndIf}
    Result := Trim(SysUtils.GetEnvironmentVariable(s));
+
+   if IsDebug then
+   begin
+    s := StringReplace(Result, 'PGWebLib'+PathDelim, 'PGWebLib'+PathDelim+'DEBUG'+PathDelim, []);
+    if FileExists(s) then
+      Result := s;
+   end;
   {$Else}
    Result := '';
   {$EndIf}

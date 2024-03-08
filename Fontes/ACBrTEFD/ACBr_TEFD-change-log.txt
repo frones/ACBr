@@ -46,6 +46,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2024
+-- ACBrTEFPayGoWebComum --
+[+] Adicionada a propriedade "IsDebug: Boolean".
+    Se for modificada para True, a TACBrTEFPGWebAPI tentará carregar a DLL de
+    versão DEBUG, para evitar erros com a Proteção ativa do Warsaw
+[-] Correção na acentuação de Msg em Log na chamada de TACBrTEFPGWebAPI.Inicializar
+[*] Modificação em TACBrTEFPGWebAPI.ObterDadoPinPad, após sugestão da Setis, para
+    chamar  xPW_iPPAbort, antes de chamar xPW_iPPGetUserData
+    (por: DSA)
+
+22/02/2024
+-- ACBrTEFPayGoWebComum --
+[*] Tratamento de Mensagens de retorno, e Opções de Menu, para converter de ANSI
+    para a String Nativa da IDE (AnsiToNativeString)
+    (por: DSA)
+
 20/02/2024
 -- ACBrTEFPayGoWebComum --
 [*] TACBrTEFPGWebAPI.AjustarTempoOcioso, melhoria para evitar "Range Error",

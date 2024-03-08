@@ -699,7 +699,7 @@ begin
     BPe.infPassagem.dhValidade), DSC_DHVALIDADE));
 
   if BPe.infPassagem.infPassageiro.xNome <> '' then
-    Gerar_InfPassageiro;
+    Result.AppendChild(Gerar_InfPassageiro);//Gerar_InfPassageiro;
 end;
 
 function TBPeXmlWriter.Gerar_InfPassageiro: TACBrXmlNode;
@@ -1397,7 +1397,7 @@ begin
 
   if (BPe.infRespTec.CNPJ <> '') then
   begin
-    Result := FDocument.CreateElement('gRespTec');
+    Result := FDocument.CreateElement('infRespTec');
 
     Result.AppendChild(AddNodeCNPJ('#311', BPe.infRespTec.CNPJ, CODIGO_BRASIL, True));
 

@@ -4139,7 +4139,7 @@ begin
   aJSon
     .AddPairISODate('creditDate', fcreditDate, False)
     .AddPair('description', fdescription, False)
-    .AddPairISODate('entryDate', fentryDate, False)
+    .AddPairISODateTime('entryDate', fentryDate, False)
     .AddPair('historyCode', fhistoryCode, False);
 
   finstantPaymentCashValue.WriteToJSon(aJSon);
@@ -4165,9 +4165,9 @@ begin
   fcounterpart.ReadFromJSon(aJSon);
 
   aJSon
-    .AddPairISODate('creditDate', fcreditDate)
+    .ValueISODate('creditDate', fcreditDate)
     .Value('description', fdescription)
-    .AddPairISODate('entryDate', fentryDate)
+    .ValueISODateTime('entryDate', fentryDate)
     .Value('historyCode', fhistoryCode);
 
   finstantPaymentCashValue.ReadFromJSon(aJSon);

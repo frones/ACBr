@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/03/2024
+-- Conam.LerXml --
+[*] Correção visando a realização do calculo do ValorTotalNotaFiscal.
+  Por: Italo Giurizzato Junior
 -- NFSeBrasil.Provider --
 [*] Possível solução para não ocorrer erro quando ativar o parâmetro de configuração:
     ConsultaLoteAposEnvio.

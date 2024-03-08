@@ -44,6 +44,9 @@ Símbolo : Significado
 
 08/03/2024
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade de Senador Firmino/MG, de acordo com a página da prefeitura, 
+    o provedor é o Futurize na versão 2.02
+  Por: Diego Folieni
 [*] A cidade de Canoas/RS mudou para a versão 2.03 o provedor continua o mesmo.
   Por: Desenvolvimento SIG
 -- Conam.LerXml --

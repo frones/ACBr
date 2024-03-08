@@ -71,11 +71,11 @@ Private Declare Function PIXCD_ConfigGravarValor _
                                       
 Private Declare Function PIXCD_GerarQRCodeEstatico _
                 Lib "ACBrPIXCD32.dll" (ByVal libHandler As Long, _
-                                       ByVal AValor As Long, _
+                                       ByVal AValor As Double, _
                                        ByVal AinfoAdicional As String, _
                                        ByVal ATxId As String, _
                                        ByVal buffer As String, _
-                                       ByRef bufferLen As Long) As String
+                                       ByRef bufferLen As Long) As Long
                                        
 Private Declare Function PIXCD_ConsultarPix _
                 Lib "ACBrPIXCD32.dll" (ByVal libHandler As Long, _
@@ -280,7 +280,7 @@ Public Function Versao() As String
     Versao = processResult(buffer, bufferLen)
 End Function
 
-Public Function GerarQRCodeEstatico(ByVal AValor As Long, ByVal AinfoAdicional As String, ByVal ATxId As String) As String
+Public Function GerarQRCodeEstatico(ByVal AValor As Double, ByVal AinfoAdicional As String, ByVal ATxId As String) As String
 
     Dim retorno As Long
     Dim buffer As String

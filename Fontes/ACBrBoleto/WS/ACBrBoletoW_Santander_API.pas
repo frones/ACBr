@@ -125,7 +125,6 @@ begin
      tpConsultaDetalhe: FPURL := FPURL + '/bills/' +  DefinirParametros;
      tpBaixa          : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
   end;
-  BoletoWS.DoLog(' FUrl: '+FPURL);
 end;
 
 procedure TBoletoW_Santander_API.DefinirContentType;
@@ -193,7 +192,6 @@ function TBoletoW_Santander_API.GerarTokenAutenticacao: string;
 begin
   OAuth.Payload := True;
   Result := inherited GerarTokenAutenticacao;
-  BoletoWS.DoLog('Token Gerado: ' + Result);
 end;
 
 function TBoletoW_Santander_API.GetNsu: string;

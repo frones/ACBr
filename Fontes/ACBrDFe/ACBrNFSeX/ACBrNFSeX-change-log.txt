@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2024
+-- ACBrNFSeXConversao --
+[*] A cidade de Denise/MT trocou de provedor, agora é Betha
+  Por: Diego Reckziegel
+[*] Alterado as URLs e Versao da cidade de Serra/ES. O provedor continua o mesmo SmarAPD.
+  Por: Douglas Miiller
+
 07/03/2024
 -- ISSSaoPaulo.Provider --
 [*] Corrige DocElemento para que seja assinado corretamente a Consulta por Servico Tomado

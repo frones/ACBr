@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/03/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Canoas/RS mudou para a versão 2.03 o provedor continua o mesmo.
+  Por: Desenvolvimento SIG
 -- Conam.LerXml --
 [*] Correção visando a realização do calculo do ValorTotalNotaFiscal.
   Por: Italo Giurizzato Junior
@@ -54,7 +57,7 @@ Símbolo : Significado
 [*] Correção visando a leitura da tag DescontoCondicionado e a realização dos calculos
     das RetencoesFederais e ValorTotaldaNota.
   Por: Diego Reckziegel
--- ACBrNFSeXConversao --
+-- ACBrNFSeXServicos --
 [*] A cidade de Denise/MT trocou de provedor, agora é Betha
   Por: Diego Reckziegel
 [*] Alterado as URLs e Versao da cidade de Serra/ES. O provedor continua o mesmo SmarAPD.

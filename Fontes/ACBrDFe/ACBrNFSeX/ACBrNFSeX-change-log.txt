@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/03/2024
+-- Centi.LerXml --
+[*] Correção visando a leitura da tag DescontoCondicionado e a realização dos calculos
+    das RetencoesFederais e ValorTotaldaNota.
+  Por: Diego Reckziegel
 -- ACBrNFSeXConversao --
 [*] A cidade de Denise/MT trocou de provedor, agora é Betha
   Por: Diego Reckziegel
@@ -67,10 +71,10 @@ Símbolo : Significado
     forma indevida nos provedores: AssessorPublico, Equiplano, Governa,
     ISSBarueri e SmarAPD.
   Por: Italo Giurizzato Junior
--- GeisWebProvider --
+-- GeisWeb.Provider --
 [*] Adiciona tratativa para que o & em informação devolvida em URL seja devidamente convertido.
   Por: Diego Folieni
--- ISSDSFProvider --
+-- ISSDSF.Provider --
 [*] Adiciona tratativa para que o & em informação devolvida em URL seja devidamente convertido.
   Por: Diego Folieni
 

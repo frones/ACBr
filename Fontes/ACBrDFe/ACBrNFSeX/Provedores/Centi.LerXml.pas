@@ -769,13 +769,19 @@ begin
       ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
       ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
       DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);
+      DescontoCondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
 
       BaseCalculo := NFSe.ValoresNfse.BaseCalculo;
       Aliquota := NFSe.ValoresNfse.Aliquota;
       ValorIss := NFSe.ValoresNfse.ValorIss;
       ValorLiquidoNfse := NFSe.ValoresNfse.ValorLiquidoNfse;
+
       if (ValorLiquidoNfse > 0) and (ValorServicos <= 0) then
          ValorServicos := ValorLiquidoNfse;
+
+      RetencoesFederais := ValorIr + ValorInss + ValorPis + ValorCofins + ValorCsll;
+
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado - DescontoIncondicionado;
     end;
   end;
 end;

@@ -125,7 +125,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if Document.Root.Name = 'BPeProc' then
+  if (Document.Root.Name = 'BPeProc') or (Document.Root.Name = 'bpeProc') then
   begin
     Ler_ProtBPe(Document.Root.Childrens.Find('protBPe').Childrens.Find('infProt'));
     BPeNode := Document.Root.Childrens.Find('BPe');

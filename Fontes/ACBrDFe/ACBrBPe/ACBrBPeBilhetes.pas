@@ -93,8 +93,8 @@ type
     function GerarXML: String;
     function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
-    function GerarTXT: String;
-    function GravarTXT(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
+//    function GerarTXT: String;
+//    function GravarTXT(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
@@ -167,7 +167,7 @@ type
 
     function GerarIni: String;
     function GravarXML(const PathNomeArquivo: String = ''): Boolean;
-    function GravarTXT(PathNomeArquivo: String = ''): Boolean;
+//    function GravarTXT(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrBPe: TComponent read FACBrBPe;
   end;
@@ -492,7 +492,7 @@ begin
 
   Result := TACBrBPe(TBilhetes(Collection).ACBrBPe).Gravar(FNomeArq, FXMLOriginal);
 end;
-
+{
 function Bilhete.GravarTXT(const NomeArquivo: String; const PathArquivo: String): Boolean;
 var
   ATXT: String;
@@ -502,7 +502,7 @@ begin
   Result := TACBrBPe(TBilhetes(Collection).ACBrBPe).Gravar(
     ChangeFileExt(FNomeArq, '.txt'), ATXT);
 end;
-
+}
 function Bilhete.GravarStream(AStream: TStream): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
@@ -847,11 +847,11 @@ begin
   end;
 end;
 
+{
 function Bilhete.GerarTXT: String;
 var
   IdAnterior : String;
 begin
-{
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
   begin
     IdAnterior := BPe.infBPe.ID;
@@ -875,10 +875,8 @@ begin
 
   FAlertas := FBPeW.Gerador.ListaDeAlertas.Text;
   Result := FBPeW.Gerador.ArquivoFormatoTXT;
-  }
-  Result := '';
 end;
-
+}
 function Bilhete.CalcularNomeArquivo: String;
 var
   xID: String;
@@ -1577,6 +1575,9 @@ begin
     P := pos('</BPeProc>', XMLStr);
 
     if P <= 0 then
+      P := pos('</bpeProc>', XMLStr);
+
+    if P <= 0 then
       P := pos('</procBPe>', XMLStr);  // BPe obtida pelo Portal da Receita
 
     if P > 0 then
@@ -1627,7 +1628,7 @@ begin
     Inc(i);
   end;
 end;
-
+{
 function TBilhetes.GravarTXT(PathNomeArquivo: String): Boolean;
 var
   SL: TStringList;
@@ -1670,5 +1671,5 @@ begin
     SL.Free;
   end;
 end;
-
+}
 end.

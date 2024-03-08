@@ -631,6 +631,7 @@ end;
 function TACBrBPe.Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
   chBPe: String): Boolean;
 begin
+  Result := True;
 {
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;

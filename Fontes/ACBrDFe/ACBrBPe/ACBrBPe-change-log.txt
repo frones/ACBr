@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2024
+-- ACBrBPeBilhetes/ACBrBPeXmlReader --
+[*] Alterações visando a leitura de um XML cuja tag inicial é bpeProc em vez de BPeProc.
+  Por: Edson Costa
+
 05/03/2024
 -- Diversos --
 [*] Diversas alterações visando eliminar erros de conversão de string para enumerado.

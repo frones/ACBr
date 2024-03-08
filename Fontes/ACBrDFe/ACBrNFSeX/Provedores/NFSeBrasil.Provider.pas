@@ -85,6 +85,8 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'erros';
                                      const AMessageTag: string = 'erro'); override;
+
+    function MontarMensagemErros(ARetorno: string): string;
   end;
 
 implementation
@@ -246,6 +248,7 @@ begin
   inherited Configuracao;
 
   ConfigGeral.UseCertificateHTTP := False;
+  ConfigGeral.ConsultaSitLote := False;
   ConfigGeral.Autenticacao.RequerCertificado := False;
   ConfigGeral.Autenticacao.RequerChaveAcesso := True;
 
@@ -563,6 +566,8 @@ begin
 
       Response.Situacao := '3'; // Processado com Falhas
 
+      Response.ArquivoRetorno := MontarMensagemErros(Response.ArquivoRetorno);
+
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RespostaLoteRps');
@@ -667,6 +672,8 @@ begin
       end;
 
       Response.Situacao := '3'; // Processado com Falhas
+
+      Response.ArquivoRetorno := MontarMensagemErros(Response.ArquivoRetorno);
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
@@ -805,6 +812,23 @@ begin
     AAlerta.Descricao := Mensagem;
     AAlerta.Correcao := '';
   end;
+end;
+
+function TACBrNFSeProviderNFSeBrasil.MontarMensagemErros(
+  ARetorno: string): string;
+begin
+  if Pos('RespostaLoteRps', ARetorno) = 0 then
+  begin
+    Result := '<a>' +'<RespostaLoteRps>' +
+                '<erros>' +
+                  '<erro>' + SeparaDados(ARetorno, 'return') + '</erro>' +
+                '</erros>' +
+              '</RespostaLoteRps>' + '</a>';
+
+    Result := ParseText(Result);
+  end
+  else
+    Result := ARetorno;
 end;
 
 end.

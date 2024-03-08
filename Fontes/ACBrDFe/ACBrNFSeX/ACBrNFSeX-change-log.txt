@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/03/2024
+-- NFSeBrasil.Provider --
+[*] Possível solução para não ocorrer erro quando ativar o parâmetro de configuração:
+    ConsultaLoteAposEnvio.
+  Por: Italo Giurizzato Junior
 -- Centi.LerXml --
 [*] Correção visando a leitura da tag DescontoCondicionado e a realização dos calculos
     das RetencoesFederais e ValorTotaldaNota.

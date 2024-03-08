@@ -168,6 +168,9 @@ namespace ACBrLib.NFSe
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFSE_ConsultarParametros(IntPtr handle, int aTipoParametroMunicipio, string aCodigoServico, DateTime aCompetencia, string aNumeroBeneficio, StringBuilder buffer, ref int bufferSize);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFSE_ObterInformacoesProvedor(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
         protected override void InitializeMethods()
         {
             AddMethod<NFSE_Inicializar>("NFSE_Inicializar");
@@ -223,6 +226,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_ConsultarDFe>("NFSE_ConsultarDFe");
             AddMethod<NFSE_ObterDANFSE>("NFSE_ObterDANFSE");
             AddMethod<NFSE_ConsultarParametros>("NFSE_ConsultarParametros");
+            AddMethod<NFSE_ObterInformacoesProvedor>("NFSE_ObterInformacoesProvedor");
         }
     }
 }

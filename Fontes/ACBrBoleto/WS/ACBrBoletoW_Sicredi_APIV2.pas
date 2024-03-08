@@ -119,28 +119,28 @@ uses
 
 procedure TBoletoW_Sicredi_APIV2.DefinirURL;
 var
-  ID: String;
+  LId: String;
 begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
 
   if ATitulo <> nil then
-		ID      := DefinirNossoNumero;
+		LId      := DefinirNossoNumero;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui                : FPURL := FPURL + '/boletos' ;
     tpConsulta              : FPURL := FPURL + '/boletos/liquidados/dia' + '?' + DefinirParametros;
     tpConsultaDetalhe       : FPURL := FPURL + '/boletos?' + DefinirParametrosDetalhe;
-    tpBaixa                 : FPURL := FPURL + '/boletos/'+ ID + '/baixa';
+    tpBaixa                 : FPURL := FPURL + '/boletos/'+ LId + '/baixa';
     tpAltera                :
     begin
       case ATitulo.OcorrenciaOriginal.Tipo of
-        toRemessaAlterarVencimento : FPURL := FPURL + '/boletos/'+ ID + '/data-vencimento';
+        toRemessaAlterarVencimento : FPURL := FPURL + '/boletos/'+ LId + '/data-vencimento';
         toRemessaAlterarOutrosDados:
         begin
           case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
-            TCompDesconto : FPURL := FPURL + '/boletos/'+ ID + '/desconto';
-            TCompJurosDia : FPURL := FPURL + '/boletos/'+ ID + '/juros';
-            TCompDataLimiteDesconto : FPURL := FPURL + '/boletos/'+ ID + '/data-desconto';
+            TCompDesconto : FPURL := FPURL + '/boletos/'+ LId + '/desconto';
+            TCompJurosDia : FPURL := FPURL + '/boletos/'+ LId + '/juros';
+            TCompDataLimiteDesconto : FPURL := FPURL + '/boletos/'+ LId + '/data-desconto';
             else
               raise EACBrBoletoWSException.Create(ClassName +
                 ' Não Implementado DefinirURL/Operação/tpAltera para ocorrência 31 - Complemento - '+
@@ -193,20 +193,16 @@ var
   LJsonInformativoObject: TACBrJSONObject;
   I: Integer;
 begin
-  LJsonArray := TACBrJSONArray.Create;
-  try
-    if ATitulo.Informativo.Text <> '' then
-    Begin
-      for I := 0 to ATitulo.Informativo.Count - 1 do
-      begin
-        LJsonArray.AddElement(Copy(Atitulo.Informativo.Strings[I],1,80));
-        if I = 4 then
-          break;
-      end;
-      LJsonInformativoObject.AddPair('informativos', LJsonArray);
+  if ATitulo.Informativo.Text <> '' then
+  begin
+    LJsonArray := TACBrJSONArray.Create;
+    for I := 0 to ATitulo.Informativo.Count - 1 do
+    begin
+      LJsonArray.AddElement(Copy(Atitulo.Informativo.Strings[I],1,80));
+      if I = 4 then
+        break;
     end;
-  finally
-    LJsonArray.Free;
+    LJsonInformativoObject.AddPair('informativos', LJsonArray);
   end;
 end;
 
@@ -362,30 +358,30 @@ begin
 
       LJsonObject.AddPair('valor', ATitulo.ValorDocumento);
       if ((ATitulo.DataDesconto > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
+      begin
         LJsonObject.AddPair('tipoDesconto', Self.TipoDescontoToString(ATitulo.TipoDesconto) );
         LJsonObject.AddPair('valorDesconto1', ATitulo.ValorDesconto);
         LJsonObject.AddPair('dataDesconto1', FormatDateBr(ATitulo.DataDesconto, 'YYYY-MM-DD') );
-      End;
+      end;
       if ((ATitulo.DataDesconto2 > EncodeDate(2000,01,01))and(ATitulo.ValorDesconto2 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
+      begin
         LJsonObject.AddPair('tipoDesconto', Self.TipoDescontoToString(ATitulo.TipoDesconto) );
         LJsonObject.AddPair('valorDesconto2', ATitulo.ValorDesconto2);
         LJsonObject.AddPair('dataDesconto2', FormatDateBr(ATitulo.DataDesconto2, 'YYYY-MM-DD') );
-      End;
+      end;
       if ((ATitulo.DataDesconto3 > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto3 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
-      Begin
+      begin
         LJsonObject.AddPair('tipoDesconto', Self.TipoDescontoToString(ATitulo.TipoDesconto) );
         LJsonObject.AddPair('valorDesconto3', ATitulo.ValorDesconto3);
         LJsonObject.AddPair('dataDesconto3', FormatDateBr(ATitulo.DataDesconto3, 'YYYY-MM-DD') );
-      End;
+      end;
       if ATitulo.ValorDescontoAntDia > 0 then
         LJsonObject.AddPair('descontoAtencipado', ATitulo.ValorDescontoAntDia);
       if ATitulo.ValorMoraJuros > 0 then
-      Begin
+      begin
         LJsonObject.AddPair('tipoJuros', Self.TipoJuros(ATitulo.CodigoMora) );
         LJsonObject.AddPair('juros', ATitulo.ValorMoraJuros);
-      End;
+      end;
       if ATitulo.PercentualMulta > 0 then
         LJsonObject.AddPair('multa', ATitulo.PercentualMulta);
 
@@ -573,30 +569,23 @@ procedure TBoletoW_Sicredi_APIV2.GerarPagador(AJson: TACBrJSONObject);
 var
   LJsonPagadorObject : TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonPagadorObject := TACBrJSONObject.Create;
+    LJsonPagadorObject := TACBrJSONObject.Create;
 
-      try
-        LJsonPagadorObject.AddPair('tipoPessoa', IfThen(Length( OnlyNumber(ATitulo.Sacado.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA') );
-        LJsonPagadorObject.AddPair('documento', OnlyNumber(ATitulo.Sacado.CNPJCPF));
-        LJsonPagadorObject.AddPair('nome', ATitulo.Sacado.NomeSacado);
-        LJsonPagadorObject.AddPair('endereco', ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero);
-        LJsonPagadorObject.AddPair('cidade', ATitulo.Sacado.Cidade);
-        LJsonPagadorObject.AddPair('uf', ATitulo.Sacado.UF);
-        LJsonPagadorObject.AddPair('cep', OnlyNumber(ATitulo.Sacado.CEP) );
-        if ATitulo.Sacado.Fone <> '' then
-          LJsonPagadorObject.AddPair('telefone', ATitulo.Sacado.Fone);
-        if ATitulo.Sacado.Email <> '' then
-          LJsonPagadorObject.AddPair('email', ATitulo.Sacado.Email);
+    LJsonPagadorObject.AddPair('tipoPessoa', IfThen(Length( OnlyNumber(ATitulo.Sacado.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA') );
+    LJsonPagadorObject.AddPair('documento', OnlyNumber(ATitulo.Sacado.CNPJCPF));
+    LJsonPagadorObject.AddPair('nome', ATitulo.Sacado.NomeSacado);
+    LJsonPagadorObject.AddPair('endereco', ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero);
+    LJsonPagadorObject.AddPair('cidade', ATitulo.Sacado.Cidade);
+    LJsonPagadorObject.AddPair('uf', ATitulo.Sacado.UF);
+    LJsonPagadorObject.AddPair('cep', OnlyNumber(ATitulo.Sacado.CEP) );
+    if ATitulo.Sacado.Fone <> '' then
+      LJsonPagadorObject.AddPair('telefone', ATitulo.Sacado.Fone);
+    if ATitulo.Sacado.Email <> '' then
+      LJsonPagadorObject.AddPair('email', ATitulo.Sacado.Email);
 
-        AJson.AddPair('pagador', LJsonPagadorObject);
-      finally
-        LJsonPagadorObject.Free;
-      end;
-    end;
+    AJson.AddPair('pagador', LJsonPagadorObject);
   end;
 end;
 
@@ -613,33 +602,29 @@ begin
     begin
       LJsonPagadorFinalObject := TACBrJSONObject.Create;
 
-      try
-        LJsonPagadorFinalObject.AddPair('tipoPessoa', IfThen( Length( OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA') );
-        LJsonPagadorFinalObject.AddPair('documento', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF) );
-        LJsonPagadorFinalObject.AddPair('nome', ATitulo.Sacado.SacadoAvalista.NomeAvalista);
+      LJsonPagadorFinalObject.AddPair('tipoPessoa', IfThen( Length( OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11,'PESSOA_FISICA','PESSOA_JURIDICA') );
+      LJsonPagadorFinalObject.AddPair('documento', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF) );
+      LJsonPagadorFinalObject.AddPair('nome', ATitulo.Sacado.SacadoAvalista.NomeAvalista);
 
-        if ATitulo.Sacado.SacadoAvalista.Logradouro <> '' then
-          LJsonPagadorFinalObject.AddPair('logradouro', ATitulo.Sacado.SacadoAvalista.Logradouro);
-        if ATitulo.Sacado.SacadoAvalista.Complemento <> '' then
-          LJsonPagadorFinalObject.AddPair('complemento', ATitulo.Sacado.SacadoAvalista.Complemento);
-        if ATitulo.Sacado.SacadoAvalista.Numero <> '' then
-          LJsonPagadorFinalObject.AddPair('numeroEndereco', ATitulo.Sacado.SacadoAvalista.Numero);
-        if ATitulo.Sacado.SacadoAvalista.Cidade <> '' then
-          LJsonPagadorFinalObject.AddPair('cidade', ATitulo.Sacado.SacadoAvalista.Cidade);
-        if ATitulo.Sacado.SacadoAvalista.UF <> '' then
-          LJsonPagadorFinalObject.AddPair('uf', ATitulo.Sacado.SacadoAvalista.UF);
-        if ATitulo.Sacado.SacadoAvalista.CEP <> '' then
-          LJsonPagadorFinalObject.AddPair('cep', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CEP) );
-        if ATitulo.Sacado.SacadoAvalista.Fone <> '' then
-          LJsonPagadorFinalObject.AddPair('telefone', ATitulo.Sacado.SacadoAvalista.Fone);
-        if ATitulo.Sacado.SacadoAvalista.Email <> '' then
-          LJsonPagadorFinalObject.AddPair('email', ATitulo.Sacado.SacadoAvalista.Email);
+      if ATitulo.Sacado.SacadoAvalista.Logradouro <> '' then
+        LJsonPagadorFinalObject.AddPair('logradouro', ATitulo.Sacado.SacadoAvalista.Logradouro);
+      if ATitulo.Sacado.SacadoAvalista.Complemento <> '' then
+        LJsonPagadorFinalObject.AddPair('complemento', ATitulo.Sacado.SacadoAvalista.Complemento);
+      if ATitulo.Sacado.SacadoAvalista.Numero <> '' then
+        LJsonPagadorFinalObject.AddPair('numeroEndereco', ATitulo.Sacado.SacadoAvalista.Numero);
+      if ATitulo.Sacado.SacadoAvalista.Cidade <> '' then
+        LJsonPagadorFinalObject.AddPair('cidade', ATitulo.Sacado.SacadoAvalista.Cidade);
+      if ATitulo.Sacado.SacadoAvalista.UF <> '' then
+        LJsonPagadorFinalObject.AddPair('uf', ATitulo.Sacado.SacadoAvalista.UF);
+      if ATitulo.Sacado.SacadoAvalista.CEP <> '' then
+        LJsonPagadorFinalObject.AddPair('cep', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CEP) );
+      if ATitulo.Sacado.SacadoAvalista.Fone <> '' then
+        LJsonPagadorFinalObject.AddPair('telefone', ATitulo.Sacado.SacadoAvalista.Fone);
+      if ATitulo.Sacado.SacadoAvalista.Email <> '' then
+        LJsonPagadorFinalObject.AddPair('email', ATitulo.Sacado.SacadoAvalista.Email);
 
-        AJson.AddPair('beneficiarioFinal',LJsonPagadorFinalObject);
+      AJson.AddPair('beneficiarioFinal',LJsonPagadorFinalObject);
 
-      finally
-        LJsonPagadorFinalObject.Free;
-      end;
     end;
   end;
 end;
@@ -649,19 +634,16 @@ var
   LJsonMensagemArray : TACBrJSONArray;
   I: Integer;
 begin
-  LJsonMensagemArray := TACBrJSONArray.Create;
-  try
-    if ATitulo.Mensagem.Text <> '' then
-    Begin
-      for I := 0 to ATitulo.Mensagem.Count - 1 do
-      begin
-        LJsonMensagemArray.AddElement( Copy(Atitulo.Mensagem.Strings[I],1,80) );
-        if I = 3 then break;//Somente 4 infos
-      end;
-      AJson.AddPair('mensagens', LJsonMensagemArray);
+
+  if ATitulo.Mensagem.Text <> '' then
+  begin
+    LJsonMensagemArray := TACBrJSONArray.Create;
+    for I := 0 to ATitulo.Mensagem.Count - 1 do
+    begin
+      LJsonMensagemArray.AddElement( Copy(Atitulo.Mensagem.Strings[I],1,80) );
+      if I = 3 then break;//Somente 4 infos
     end;
-  finally
-    LJsonMensagemArray.Free;
+    AJson.AddPair('mensagens', LJsonMensagemArray);
   end;
 end;
 

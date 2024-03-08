@@ -76,13 +76,13 @@ end;
 
 function TRetornoEnvio_Sicredi_APIV2.DateSicreditoDateTime(const AValue: String): TDateTime;
 var
-  data, ano, mes, dia : String;
+  LData, LAno, LMes, LDia : String;
 begin
-    ano := Copy( aValue, 0,4 );
-    mes := Copy( aValue, 6,2 );
-    dia := Copy( aValue, 9,2 );
-    data := Format( '%s/%s/%s' , [dia,mes,ano]);
-    Result := StrToDateDef( data ,0 );
+    LAno := Copy( aValue, 0,4 );
+    LMes := Copy( aValue, 6,2 );
+    LDia := Copy( aValue, 9,2 );
+    LData := Format( '%s/%s/%s' , [LDia,LMes,LAno]);
+    Result := StrToDateDef( LData ,0 );
 end;
 
 destructor TRetornoEnvio_Sicredi_APIV2.Destroy;

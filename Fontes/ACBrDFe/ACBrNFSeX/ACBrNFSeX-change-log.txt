@@ -44,6 +44,8 @@ Símbolo : Significado
 
 08/03/2024
 -- ACBrNFSeXServicos --
+[*] Alteração nas URLs da cidade de São José dos Campos/SP o provedor continua o mesmo.
+  Por: SISBLU Software
 [+] Incluida a cidade de Senador Firmino/MG, de acordo com a página da prefeitura, 
     o provedor é o Futurize na versão 2.02
   Por: Diego Folieni

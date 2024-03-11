@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2024
+-- pcesS1280, Frm_ACBreSocial --
+[*] Criada propriedade ClassTrib informativa no S1280, para utilização como critério de geração do grupo infoAtivConcom 
+  Por: Renato Rubinho
+
 27/02/2024
 -- pcesS2299 --
 [*] Alterada condição de preenchimento do nrProcTrab, no S-2299, para considerar somente se ele foi preenchido.

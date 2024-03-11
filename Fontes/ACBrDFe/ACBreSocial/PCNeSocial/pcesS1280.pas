@@ -90,6 +90,7 @@ type
 
   TEvtInfoComplPer = class(TESocialEvento)
   private
+    FClassTrib: TpClassTrib;
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FInfoSubstPatr: TInfoSubstPatr;
@@ -119,6 +120,7 @@ type
     function infoSubstPatrOpPortInst(): Boolean;
     function infoPercTransf11096Inst(): Boolean;
 
+    property ClassTrib: TpClassTrib read FClassTrib write FClassTrib;
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property InfoSubstPatr: TInfoSubstPatr read getInfoSubstPatr write FInfoSubstPatr;
@@ -245,7 +247,7 @@ end;
 
 procedure TEvtInfoComplPer.GerarInfoAtivConcom;
 begin
-  if InfoAtivConcom.fatorMes <> 0 then
+  if (FClassTrib = ct03) or (InfoAtivConcom.fatorMes <> 0) then
   begin
     Gerador.wGrupo('infoAtivConcom');
 

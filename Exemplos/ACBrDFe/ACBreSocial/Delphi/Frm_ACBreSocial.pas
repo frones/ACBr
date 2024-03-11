@@ -2754,6 +2754,10 @@ begin
 
         end;
 
+        // ClassTrib apenas informativo no S1280 para aplicação de regra de preenchimento da infoAtivConcom
+        //   para Simples Nacional, preencher ClassTrib = ct03 em casos sem faturamento para gerar fatores zerados
+        //   ClassTrib := ct03;
+
         with infoAtivConcom do
         begin
           fatorMes := 9.00;
@@ -2761,7 +2765,7 @@ begin
         end;
 
         with infoPercTransf11096 do
-          percTransf := 20;
+          percTransf := 5;
       end;
     end;
   end;

@@ -2410,8 +2410,15 @@ begin
         cnpjOpPortuario := '98765432100014';
       end;
 
+      // ClassTrib apenas informativo no S1280 para aplicação de regra de preenchimento da infoAtivConcom
+      //   para Simples Nacional, preencher ClassTrib = ct03 em casos sem faturamento para gerar fatores zerados
+      //ClassTrib := ct03;
+
       InfoAtivConcom.fatorMes := 9.00;
       InfoAtivConcom.fator13 := 1.00;
+
+      with infoPercTransf11096 do
+        percTransf := 5;
     end;
   end;
 end;

@@ -1254,5 +1254,11 @@ namespace ACBrLibNFSe.Demo
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnInformacoesProvedor_Click(object sender, EventArgs e)
+        {
+            var infoProvedor = ACBrNFSe.ObterInformacoesProvedor();
+            rtbRespostas.AppendText(infoProvedor);
+        }
     }
 }

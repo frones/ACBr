@@ -36,17 +36,31 @@
 unit ACBrBoleto;
 
 interface
-uses Classes, {$IFNDEF NOGUI}Graphics,{$ENDIF} Contnrs, IniFiles,
+uses Classes,
+     {$IFNDEF NOGUI}
+       Graphics,
+     {$ENDIF}
+     Contnrs,
+     IniFiles,
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
      {$IfNDef MSWINDOWS}
        ACBrConsts,
      {$ENDIF}
-     SysUtils, typinfo, Variants,
-     ACBrBase, ACBrMail, ACBrValidador,
-     ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
-     ACBrPIXBase, ACBrPIXBRCode;
+     SysUtils,
+     typinfo,
+     Variants,
+     ACBrBase,
+     ACBrMail,
+     ACBrValidador,
+     ACBrDFeSSL,
+     pcnConversao,
+     ACBrBoletoConversao,
+     ACBrBoletoRetorno,
+     ACBrPIXBase,
+     ACBrPIXBRCode,
+     ACBrUtil.FilesIO;
 
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
@@ -116,7 +130,8 @@ type
     cobBancoSofisaItau,
     cobBancoIndustrialBrasil,
     cobBancoAthenaBradesco,
-    cobBancoQITechSCD
+    cobBancoQITechSCD,
+    cobBancoUY3
     );
 
   TACBrTitulo = class;
@@ -1005,15 +1020,17 @@ type
   {$ENDIF RTL230_UP}
   TACBrArquivos = class(TPersistent)
   private
-    fLogRegistro: Boolean;
-    fPathGravarRegistro: String;
-    fOnGravarLog : TACBrGravarLog ;
+    FLogNivel: TNivelLog;
+    FPathGravarRegistro: String;
+    FOnGravarLog : TACBrGravarLog;
+    FNomeArquivoLog : string;
   public
     Constructor Create;
     procedure Assign(Source: TPersistent); override;
 
   published
-    property LogRegistro: Boolean read fLogRegistro write fLogRegistro;
+    property LogNivel: TNivelLog read FLogNivel write FLogNivel;
+    property NomeArquivoLog : string read FNomeArquivoLog write FNomeArquivoLog;
     property PathGravarRegistro: string read fPathGravarRegistro write fPathGravarRegistro;
     property OnGravarLog : TACBrGravarLog read fOnGravarLog write fOnGravarLog;
 
@@ -2016,7 +2033,6 @@ implementation
 
 Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,ACBrUtil.XMLHTML,
-     ACBrUtil.FilesIO,
      ACBrBancoBradesco,
      ACBrBancoBrasil,
      ACBrBancoAmazonia,
@@ -2067,7 +2083,9 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoFibra,
      ACBrBancoSofisaItau,
      ACBrBancoIndustrialBrasil,
-     ACBrBancoAthenaBradesco, ACBrBancoQITech;
+     ACBrBancoAthenaBradesco, 
+     ACBrBancoQITech,
+     ACBrBancoUY3;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2253,17 +2271,19 @@ end;
 { TACBrArquivos }
 constructor TACBrArquivos.Create;
 begin
-  fLogRegistro:= False;
-  fPathGravarRegistro:= '';
-  fOnGravarLog:= Nil;
+  FLogNivel           := logNenhum;
+  FPathGravarRegistro := '';
+  FNomeArquivoLog     := '';
+  FOnGravarLog        := nil;
 end;
 
 procedure TACBrArquivos.Assign(Source: TPersistent);
 begin
   if Source is TACBrArquivos then
   begin
-    fLogRegistro := TACBrArquivos(Source).LogRegistro;
-    fPathGravarRegistro := TACBrArquivos(Source).PathGravarRegistro;
+    FLogNivel := TACBrArquivos(Source).FLogNivel;
+    FPathGravarRegistro := TACBrArquivos(Source).PathGravarRegistro;
+    FNomeArquivoLog :=  TACBrArquivos(Source).NomeArquivoLog;
   end
   else
     inherited Assign(Source);
@@ -2340,6 +2360,7 @@ end;
 
 function TACBrWebService.Enviar: Boolean;
 begin
+  Result := False;
   Raise Exception.Create(ACBrStr('Método Enviar não ' +
             'implementado no ACBrBoleto!'));
 end;
@@ -3760,6 +3781,7 @@ begin
     389: Result := cobBancoMercantil;
     399: Result := cobHSBC;
     422: Result := cobBancoSafra;
+    457: Result := cobBancoUY3;
     604: Result := cobBancoIndustrialBrasil;
     633: Result := cobBancoRendimento;
     637: begin
@@ -3947,8 +3969,9 @@ begin
 
       if IniBoletos.SectionExists('ARQUIVOS') then
       begin
-        Configuracoes.Arquivos.LogRegistro        := IniBoletos.ReadBool(CArquivos,'LogRegistro', Configuracoes.Arquivos.LogRegistro);
+        Configuracoes.Arquivos.LogNivel           := TNivelLog(IniBoletos.ReadInteger(CArquivos,'LogNivel', integer(Configuracoes.Arquivos.LogNivel)));
         Configuracoes.Arquivos.PathGravarRegistro := IniBoletos.ReadString(CArquivos,'PathGravarRegistro', Configuracoes.Arquivos.PathGravarRegistro);
+        Configuracoes.Arquivos.NomeArquivoLog     := IniBoletos.ReadString(CArquivos,'NomeArquivoLog', Configuracoes.Arquivos.NomeArquivoLog);
       end;
       if IniBoletos.SectionExists('WEBSERVICE') then
       begin
@@ -4278,8 +4301,9 @@ begin
        IniRetorno.WriteBool(CBanco,'RemoveAcentosArqRemessa',RemoveAcentosArqRemessa);
 
        { ARQUIVOS }
-       IniRetorno.WriteBool(CArquivos,'LogRegistro',Configuracoes.Arquivos.LogRegistro);
+       IniRetorno.WriteInteger(CArquivos,'LogNivel',Integer(Configuracoes.Arquivos.LogNivel));
        IniRetorno.WriteString(CArquivos,'PathGravarRegistro',Configuracoes.Arquivos.PathGravarRegistro);
+       IniRetorno.WriteString(CArquivos,'NomeArquivoLog',Configuracoes.Arquivos.NomeArquivoLog);
 
        { WEBSERVICES }
        IniRetorno.WriteString(CWebService,'ClientID',Cedente.CedenteWS.ClientID);
@@ -4615,6 +4639,7 @@ begin
      cobBancoIndustrialBrasil: fBancoClass := TACBrBancoIndustrialBrasil.Create(Self); {604}
      cobBancoAthenaBradesco  : fBancoClass := TACBrBancoAthenaBradesco.Create(Self);  {237}
      cobBancoQITechSCD       : fBancoClass := TACBrBancoQITechSCD.Create(Self);  {329}
+     cobBancoUY3             : fBancoClass := TACBrBancoUY3.create(Self);            {457}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

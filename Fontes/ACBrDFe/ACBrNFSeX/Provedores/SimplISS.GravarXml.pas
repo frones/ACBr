@@ -56,7 +56,6 @@ type
   TNFSeW_SimplISS203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
-    function GerarServico: TACBrXmlNode; override;
   end;
 
 implementation
@@ -120,6 +119,8 @@ begin
   if FpAOwner.ConfigGeral.Params.TemParametro('Aliquota4Casas') then
     FormatoAliq := tcDe4;
 
+  NrOcorrOutrasInformacoes := 0;
+
   NrOcorrValorDeducoes := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
@@ -135,17 +136,6 @@ begin
   NrOcorrCodigoPaisServico := 1;
 
   GerarIDRps := True;
-end;
-
-function TNFSeW_SimplISS203.GerarServico: TACBrXmlNode;
-begin
-  Result := inherited GerarServico;
-
-  if GerarTagServicos then
-  begin
-    Result.AppendChild(AddNode(tcStr, '#22', 'OutrasInformacoes', 0, 255, 0,
-                                        NFSe.OutrasInformacoes, DSC_OUTRASINF));
-  end;
 end;
 
 end.

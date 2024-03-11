@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2024
+-- SimplISS.GravarXml --
+[*] Ajustes para gerar a tag OutrasInformacoes no local correto.
+  Por: Italo Giurizzato Junior
+
 08/03/2024
 -- ACBrNFSeXServicos --
 [*] Alteração nas URLs da cidade de Paranagua/PR o provedor continua o mesmo.

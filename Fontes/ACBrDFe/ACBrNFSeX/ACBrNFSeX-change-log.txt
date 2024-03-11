@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/03/2024
+-- ACBrNFSeXDANFSeFR --
+[*] Alteração visando apresentar no DANFSE a tarja "NFS-e Cancelada" quando a 
+    propriedade Cancelada estiver com o valor True ou quando o campo SituacaoNfse for
+    snCancelado ou campo NfseCancelamento.DataHora for diferente de zero.
+  Por: Italo Giurizzato Junior
 -- SimplISS.GravarXml --
 [*] Ajustes para gerar a tag OutrasInformacoes no local correto.
   Por: Italo Giurizzato Junior

@@ -1195,10 +1195,11 @@ begin
   LCDS.FieldByName('Usuario').AsString := DANFSeXClassOwner.Usuario;
   LCDS.FieldByName('Site').AsString    := DANFSeXClassOwner.Site;
 
-  if Provedor = proEL then
-    LCDS.FieldByName('Mensagem0').AsString := IfThen(ANFSe.SituacaoNfse = snCancelado, 'CANCELADA', '')
-  else
-    LCDS.FieldByName('Mensagem0').AsString := IfThen(ANFSe.SituacaoNfse = snCancelado, 'NFSe CANCELADA', '');
+  if fpDANFSe.Cancelada or (fpNFSe.NfseCancelamento.DataHora <> 0) or
+    (fpNFSe.SituacaoNfse = snCancelado) or (fpNFSe.StatusRps = srCancelado) then
+  begin
+    LCDS.FieldByName('Mensagem0').AsString := 'NFSe CANCELADA';
+  end;
 
   if (ACBrNFSe.Configuracoes.WebServices.AmbienteCodigo = 2) then
     LCDS.FieldByName('Mensagem0').AsString := Trim(LCDS.FieldByName('Mensagem0').AsString + sLineBreak + ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'));

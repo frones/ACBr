@@ -206,7 +206,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Top = 74
           Width = 153
           Height = 21
-          TabOrder = 0
+          TabOrder = 1
           Text = '0000000001'
         end
         object edtValorDoc: TEdit
@@ -214,7 +214,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Top = 113
           Width = 153
           Height = 21
-          TabOrder = 1
+          TabOrder = 2
           Text = '100'
         end
         object edtDataDoc: TMaskEdit
@@ -224,7 +224,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
-          TabOrder = 2
+          TabOrder = 3
           Text = '  /  /  '
         end
         object edtVencimento: TMaskEdit
@@ -234,7 +234,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 21
           EditMask = '!99/99/00;1;_'
           MaxLength = 8
-          TabOrder = 3
+          TabOrder = 4
           Text = '  /  /  '
         end
         object edtNossoNro: TEdit
@@ -242,7 +242,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Top = 33
           Width = 153
           Height = 21
-          TabOrder = 4
+          TabOrder = 0
           Text = '12345'
         end
       end
@@ -640,7 +640,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 382
         Height = 87
         Caption = 'Impress'#227'o'
-        TabOrder = 4
+        TabOrder = 5
         object btnImpressaoHTML: TButton
           Left = 52
           Top = 22
@@ -671,7 +671,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 4
           OnClick = btnImpressaoSpoolerClick
         end
         object btnImpressaoStream: TButton
@@ -680,7 +680,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Width = 98
           Height = 25
           Caption = 'Imprimir Stream'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnImpressaoStreamClick
         end
         object btnImpressaoPDFIndividual: TButton
@@ -689,7 +689,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Width = 122
           Height = 25
           Caption = 'Gerar PDF Individual'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnImpressaoPDFIndividualClick
         end
         object btnImprimirTeste: TButton
@@ -714,7 +714,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 564
         Height = 98
         ActivePage = TabSheet6
-        TabOrder = 5
+        TabOrder = 4
         object TabSheet6: TTabSheet
           Caption = 'Motores'
           object Label80: TLabel
@@ -803,14 +803,14 @@ object frmDemoBoleto: TfrmDemoBoleto
             Height = 17
             Caption = 'Imprimir Verso da Fatura'
             Enabled = False
-            TabOrder = 2
+            TabOrder = 3
           end
           object edtSenhaPDF: TEdit
             Left = 411
             Top = 22
             Width = 135
             Height = 21
-            TabOrder = 3
+            TabOrder = 2
           end
         end
         object TabSheet7: TTabSheet
@@ -1090,6 +1090,13 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 13
           Caption = 'Prefix Remessa'
         end
+        object Label36: TLabel
+          Left = 119
+          Top = 110
+          Width = 17
+          Height = 13
+          Caption = 'CIP'
+        end
         object cbxCNAB: TComboBox
           Left = 3
           Top = 35
@@ -1136,27 +1143,12 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 21
           TabOrder = 5
         end
-      end
-      object GroupBox11: TGroupBox
-        Left = 0
-        Top = 298
-        Width = 249
-        Height = 70
-        Caption = 'Outras Configura'#231#245'es'
-        TabOrder = 2
-        object Label36: TLabel
-          Left = 3
-          Top = 16
-          Width = 17
-          Height = 13
-          Caption = 'CIP'
-        end
         object edtCIP: TEdit
-          Left = 3
-          Top = 35
+          Left = 119
+          Top = 129
           Width = 66
           Height = 21
-          TabOrder = 0
+          TabOrder = 6
         end
       end
       object GroupBox12: TGroupBox
@@ -1165,7 +1157,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 530
         Height = 175
         Caption = 'Beneficiario'
-        TabOrder = 3
+        TabOrder = 2
         object Label38: TLabel
           Left = 11
           Top = 16
@@ -1384,7 +1376,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Top = 466
         Width = 369
         Height = 21
-        TabOrder = 6
+        TabOrder = 7
       end
       object btnRetorno: TButton
         Left = 630
@@ -1392,16 +1384,16 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 32
         Height = 25
         Caption = '...'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = btnRetornoClick
       end
       object PageControlConfg: TPageControl
         Left = 0
-        Top = 374
+        Top = 298
         Width = 249
-        Height = 118
-        ActivePage = TabSheet10
-        TabOrder = 8
+        Height = 194
+        ActivePage = TabSheet11
+        TabOrder = 3
         object TabSheet8: TTabSheet
           Caption = 'Conf. A'
           object ckbImprimirMensagemPadrao: TCheckBox
@@ -1414,27 +1406,27 @@ object frmDemoBoleto: TfrmDemoBoleto
           end
           object ckbLerCedenteArquivoRetorno: TCheckBox
             Left = 3
-            Top = 37
+            Top = 41
             Width = 224
             Height = 17
             Caption = 'Ler Cedente do Arq. Retorno'
-            TabOrder = 1
+            TabOrder = 2
           end
           object ckbLerNossoNumeroCompleto: TCheckBox
             Left = 3
-            Top = 56
+            Top = 62
             Width = 224
             Height = 17
             Caption = 'Ler Nosso N'#250'mero Completo'
-            TabOrder = 2
+            TabOrder = 3
           end
           object ckbRemoverAcentuacaoRemessa: TCheckBox
             Left = 3
-            Top = 18
+            Top = 20
             Width = 224
             Height = 17
             Caption = 'Remover Acentua'#231#227'o Remessa'
-            TabOrder = 3
+            TabOrder = 1
           end
         end
         object TabSheet9: TTabSheet
@@ -1450,7 +1442,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           end
           object chkIndicadorPix: TCheckBox
             Left = 3
-            Top = 22
+            Top = 24
             Width = 151
             Height = 17
             Caption = 'Indicador de Pix'
@@ -1458,7 +1450,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           end
           object ckbEmHomologacao: TCheckBox
             Left = 3
-            Top = 41
+            Top = 45
             Width = 151
             Height = 17
             Caption = 'Boleto em Homologa'#231#227'o'
@@ -1479,7 +1471,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           end
           object cbbWSConsulta: TComboBox
             Left = 3
-            Top = 15
+            Top = 17
             Width = 166
             Height = 21
             Style = csDropDownList
@@ -1490,29 +1482,70 @@ object frmDemoBoleto: TfrmDemoBoleto
               'Consulta Lista'
               'Consulta Detalhada')
           end
-          object chkLogComponente: TCheckBox
+        end
+        object TabSheet11: TTabSheet
+          Caption = 'Conf. D'
+          ImageIndex = 3
+          object Label87: TLabel
+            Left = 3
+            Top = 0
+            Width = 114
+            Height = 13
+            Caption = 'N'#237'vel Log WebServices'
+          end
+          object Label88: TLabel
             Left = 3
             Top = 42
-            Width = 151
-            Height = 17
-            Caption = 'Ativar LOG do Webservices'
-            TabOrder = 1
+            Width = 88
+            Height = 13
+            Caption = 'Nome Arquivo Log'
+          end
+          object Label89: TLabel
+            Left = 3
+            Top = 84
+            Width = 82
+            Height = 13
+            Caption = 'Path Arquivo Log'
           end
           object edtPathLog: TEdit
             Left = 3
-            Top = 63
+            Top = 101
             Width = 197
             Height = 21
-            TabOrder = 2
+            TabOrder = 3
           end
           object Button1: TButton
             Left = 206
-            Top = 62
+            Top = 101
             Width = 32
             Height = 25
             Caption = '...'
-            TabOrder = 3
+            TabOrder = 4
             OnClick = Button1Click
+          end
+          object edtArquivoLog: TEdit
+            Left = 3
+            Top = 59
+            Width = 197
+            Height = 21
+            TabOrder = 1
+          end
+          object Button2: TButton
+            Left = 206
+            Top = 59
+            Width = 32
+            Height = 25
+            Caption = '...'
+            TabOrder = 2
+            OnClick = Button1Click
+          end
+          object cbbLogNivel: TComboBox
+            Left = 3
+            Top = 17
+            Width = 235
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 0
           end
         end
       end
@@ -1643,7 +1676,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Top = 147
         Width = 304
         Height = 24
-        TabOrder = 6
+        TabOrder = 7
       end
       object chkMostrarSenha: TCheckBox
         Left = 405
@@ -1651,7 +1684,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Width = 84
         Height = 17
         Caption = 'Mostrar?'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = chkMostrarSenhaClick
       end
       object edtPassword: TEdit

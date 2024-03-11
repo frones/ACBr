@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2024
+-- ACBrNFeNotasFiscais --
+[*] Move o bloco de leitura do grupo CredPresumido para que não confunda as seções.
+  Por: Diego Folieni
+
 06/03/2024
 -- ACBrNFeNotasFiscais --
 [*] Alteração no nome da diretiva DFE_ACBR_LIBXML2 para USE_ACBr_XMLDOCUMENT.

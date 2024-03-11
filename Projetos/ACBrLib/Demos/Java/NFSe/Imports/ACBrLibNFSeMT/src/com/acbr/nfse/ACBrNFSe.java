@@ -159,6 +159,8 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_ConsultarParametros(Pointer libHandler, Integer aTipoParametroMunicipio, String aCodigoServico, Date aCompetencia, String aNumeroBeneficio, ByteBuffer buffer, IntByReference bufferSize);
         
+        int NFSE_ObterInformacoesProvedor(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);        
+        
     }
 
     public ACBrNFSe() throws Exception {
@@ -613,6 +615,17 @@ public final class ACBrNFSe extends ACBrLibBase {
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }
+    
+    public String obterInformacoesProvedor() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        int ret = ACBrNFSeLib.INSTANCE.NFSE_ObterInformacoesProvedor(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return processResult(buffer, bufferLen);
+    }    
+    
+    
     
     public void ConfigImportar(String eArqConfig) throws Exception {
 

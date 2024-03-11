@@ -155,6 +155,8 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_ConsultarParametros(Integer aTipoParametroMunicipio, String aCodigoServico, Date aCompetencia, String aNumeroBeneficio, ByteBuffer buffer, IntByReference bufferSize);
         
+        int NFSE_ObterInformacoesProvedor(ByteBuffer buffer, IntByReference buffSize);
+        
     }
 
     public ACBrNFSe() throws Exception {
@@ -605,6 +607,15 @@ public final class ACBrNFSe extends ACBrLibBase {
         int ret = ACBrNFSeLib.INSTANCE.NFSE_ConsultarParametros(aTipoParametroMunicipio, toUTF8(aCodigoServico), aCompetencia, toUTF8(aNumeroBeneficio), buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
+    }
+    
+    public String obterInformacoesProvedor() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        int ret = ACBrNFSeLib.INSTANCE.NFSE_ObterInformacoesProvedor(buffer, bufferLen);
+        checkResult(ret);
+
+        return processResult(buffer, bufferLen);       
     }
     
     public void ConfigImportar(String eArqConfig) throws Exception {

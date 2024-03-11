@@ -80,6 +80,7 @@ public class FrmMain extends javax.swing.JFrame {
         ckbConsultarAposCancelar = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         cmbLayoutNFSe = new javax.swing.JComboBox<>();
+        btnInformacoesProvedor = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         cmbUfDestino = new javax.swing.JComboBox<>();
@@ -327,6 +328,13 @@ public class FrmMain extends javax.swing.JFrame {
         cmbLayoutNFSe.setSelectedItem("");
         cmbLayoutNFSe.setToolTipText("");
 
+        btnInformacoesProvedor.setText("Informações sobre o Provedor");
+        btnInformacoesProvedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformacoesProvedorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ckbAtualizarXMLLayout = new javax.swing.GroupLayout(ckbAtualizarXML);
         ckbAtualizarXML.setLayout(ckbAtualizarXMLLayout);
         ckbAtualizarXMLLayout.setHorizontalGroup(
@@ -355,7 +363,8 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(txtLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSelectLog, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cmbLayoutNFSe, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbLayoutNFSe, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInformacoesProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         ckbAtualizarXMLLayout.setVerticalGroup(
@@ -397,7 +406,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbLayoutNFSe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(btnInformacoesProvedor)
+                .addContainerGap(219, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Geral", ckbAtualizarXML);
@@ -2876,6 +2887,18 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConsultarLinkNFSeActionPerformed
 
+    private void btnInformacoesProvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformacoesProvedorActionPerformed
+        try
+        {                    
+            String ret = acbrNFSe.obterInformacoesProvedor();
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnInformacoesProvedorActionPerformed
+
     private void loadConfig() {
         try {
             
@@ -3113,6 +3136,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnGravarXMLNFSe;
     private javax.swing.JButton btnImprimirDANFSe;
     private javax.swing.JButton btnImprimirNFSe;
+    private javax.swing.JButton btnInformacoesProvedor;
     private javax.swing.JButton btnLimparListaNFSe;
     private javax.swing.JButton btnLinkNFSe;
     private javax.swing.JButton btnLogoMarcaPrestadorServico;

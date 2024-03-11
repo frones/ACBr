@@ -37,7 +37,7 @@ unit ACBrLibConsultaCNPJDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrConsultaCNPJ;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrConsultaCNPJ, ACBrUtil.FilesIO;
 
 type
 

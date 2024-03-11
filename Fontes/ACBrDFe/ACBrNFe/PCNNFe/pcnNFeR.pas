@@ -101,7 +101,7 @@ var
   ok: Boolean;
   i, j, k, nItem, idx: Integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: String;
-  Aspas, tagPag: String;
+  Aspas, tagPag, sAux: String;
 begin
 
   Leitor.Grupo := Leitor.Arquivo;
@@ -735,7 +735,10 @@ begin
 
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 
-             NFe.Det[i].Imposto.ICMS.indDeduzDeson := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indDeduzDeson'));
+             sAux := Leitor.rCampo(tcStr, 'indDeduzDeson');
+             NFe.Det[i].Imposto.ICMS.indDeduzDeson := tiNao;
+             if sAux = '1' then
+               NFe.Det[i].Imposto.ICMS.indDeduzDeson := tiSim;
 
              NFe.Det[i].Imposto.ICMS.cBenefRBC := Leitor.rCampo(tcStr, 'cBenefRBC');
 
@@ -947,7 +950,11 @@ begin
         (*W22d*)NFe.Total.ISSQNtot.vDescIncond := Leitor.rCampo(tcDe2, 'vDescIncond');
         (*W22e*)NFe.Total.ISSQNtot.vDescCond   := Leitor.rCampo(tcDe2, 'vDescCond');
         (*W22f*)NFe.Total.ISSQNtot.vISSRet     := Leitor.rCampo(tcDe2, 'vISSRet');
-        (*W22g*)NFe.Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN(Ok, Leitor.rCampo(tcStr, 'cRegTrib'));
+
+        sAux := Leitor.rCampo(tcStr, 'cRegTrib');
+        NFe.Total.ISSQNtot.cRegTrib := RTISSNenhum;
+        if sAux <> '' then
+          (*W22g*)NFe.Total.ISSQNtot.cRegTrib := StrToRegTribISSQN(Ok, sAux);
       end;
     end;
     

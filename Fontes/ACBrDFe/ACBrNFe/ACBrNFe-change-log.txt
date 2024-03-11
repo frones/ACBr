@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/03/2024
+-- pcnNFeR --
+[*] Ajustes para a leitura correta da tag indDeduzDeson.
+  Por: Jeanny Paiva Lopes
 -- ACBrNFeNotasFiscais --
 [*] Move o bloco de leitura do grupo CredPresumido para que não confunda as seções.
   Por: Diego Folieni

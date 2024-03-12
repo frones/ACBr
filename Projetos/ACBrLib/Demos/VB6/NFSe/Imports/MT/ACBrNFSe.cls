@@ -373,6 +373,12 @@ Private Declare Function NFSE_ConsultarParametros _
                                      ByVal aNumeroBeneficio As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
+                                     
+Private Declare Function NFSE_ObterInformacoesProvedor _
+                Lib "ACBrNFSe32.dll" (ByVal libHandler As Long, _
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
+                                     
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
 
@@ -1076,6 +1082,22 @@ Public Function ConsultarParametros(ByVal aTipoParametroMunicipio As Long, ByVal
 
 End Function
 
+
+Public Function ObterInformacoesProvedor() As String
+    
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFSE_ObterInformacoesProvedor(libHandler, buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterInformacoesProvedor = processResult(buffer, bufferLen)
+
+End Function
 
 Private Sub CheckResult(ByVal Resultado As Long)
     

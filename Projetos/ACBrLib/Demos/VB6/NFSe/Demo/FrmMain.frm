@@ -742,7 +742,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtPortaEmail"
-            BuddyDispid     =   196662
+            BuddyDispid     =   196663
             OrigLeft        =   840
             OrigTop         =   2280
             OrigRight       =   1095
@@ -925,7 +925,9 @@ Begin VB.Form FrmMain
          Tab(0).Control(19).Enabled=   0   'False
          Tab(0).Control(20)=   "btnServicosIni"
          Tab(0).Control(20).Enabled=   0   'False
-         Tab(0).ControlCount=   21
+         Tab(0).Control(21)=   "btnInformacoesProvedor"
+         Tab(0).Control(21).Enabled=   0   'False
+         Tab(0).ControlCount=   22
          TabCaption(1)   =   "WebServices"
          TabPicture(1)   =   "FrmMain.frx":0118
          Tab(1).ControlEnabled=   0   'False
@@ -956,21 +958,13 @@ Begin VB.Form FrmMain
          TabPicture(2)   =   "FrmMain.frx":0134
          Tab(2).ControlEnabled=   0   'False
          Tab(2).Control(0)=   "lblCryptLib"
-         Tab(2).Control(0).Enabled=   0   'False
          Tab(2).Control(1)=   "lblHttpLib"
-         Tab(2).Control(1).Enabled=   0   'False
          Tab(2).Control(2)=   "lblXMLSignLib"
-         Tab(2).Control(2).Enabled=   0   'False
          Tab(2).Control(3)=   "cmbCrypt"
-         Tab(2).Control(3).Enabled=   0   'False
          Tab(2).Control(4)=   "cmbHttp"
-         Tab(2).Control(4).Enabled=   0   'False
          Tab(2).Control(5)=   "cmbXmlSign"
-         Tab(2).Control(5).Enabled=   0   'False
          Tab(2).Control(6)=   "frmCertificados"
-         Tab(2).Control(6).Enabled=   0   'False
          Tab(2).Control(7)=   "btnObterCertificados"
-         Tab(2).Control(7).Enabled=   0   'False
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Emitente"
          TabPicture(3)   =   "FrmMain.frx":0150
@@ -1014,6 +1008,23 @@ Begin VB.Form FrmMain
          Tab(4).Control(6)=   "chkPastaMensal"
          Tab(4).Control(7)=   "chkSalvarArqs"
          Tab(4).ControlCount=   8
+         Begin VB.CommandButton btnInformacoesProvedor 
+            Caption         =   "Informações sobre o Provedor"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   480
+            Left            =   1320
+            TabIndex        =   195
+            Top             =   7200
+            Width           =   2775
+         End
          Begin VB.CommandButton btnServicosIni 
             Caption         =   "..."
             Height          =   260
@@ -1464,7 +1475,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtProxyPorta"
-               BuddyDispid     =   196722
+               BuddyDispid     =   196725
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1614,7 +1625,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtAguardar"
-               BuddyDispid     =   196732
+               BuddyDispid     =   196735
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1635,7 +1646,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtTentativas"
-               BuddyDispid     =   196733
+               BuddyDispid     =   196736
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1656,7 +1667,7 @@ Begin VB.Form FrmMain
                _Version        =   393216
                Value           =   5000
                BuddyControl    =   "txtIntervalo"
-               BuddyDispid     =   196734
+               BuddyDispid     =   196737
                OrigLeft        =   3960
                OrigTop         =   720
                OrigRight       =   4215
@@ -1921,7 +1932,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtTimeOut"
-            BuddyDispid     =   196705
+            BuddyDispid     =   196708
             OrigLeft        =   3960
             OrigTop         =   720
             OrigRight       =   4215
@@ -3583,6 +3594,20 @@ Private Sub btnEnviarEvento_Click()
     nfse.CarregarINI CommonDialog1.FileName
     
     ret = nfse.EnviarEvento(CommonDialog1.FileName)
+    rtbRespostas.Text = ret
+    
+Erro:
+    MsgBox Err.Description
+
+End Sub
+
+Private Sub btnInformacoesProvedor_Click()
+
+    Dim ret As String
+    
+    On Error GoTo Erro:
+    
+    ret = nfse.ObterInformacoesProvedor
     rtbRespostas.Text = ret
     
 Erro:

@@ -1627,7 +1627,7 @@ begin
       infEvento.dhEvento   := now;
       infEvento.tpEvento   := teCancInsucessoEntregaCTe;
 
-      infEvento.detEvento.nProt   := vProt; //ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProt   := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
       infEvento.detEvento.nProtIE := vProt;
     end;
 

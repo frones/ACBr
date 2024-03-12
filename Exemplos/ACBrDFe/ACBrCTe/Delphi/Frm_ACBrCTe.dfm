@@ -1439,8 +1439,8 @@ object frmACBrCTe: TfrmACBrCTe
           OnClick = btnAdicionarProtocoloClick
         end
         object btnCarregarXMLEnviar: TButton
-          Left = 8
-          Top = 40
+          Left = 375
+          Top = 9
           Width = 177
           Height = 25
           Caption = 'Carregar XML e Enviar'
@@ -1456,22 +1456,13 @@ object frmACBrCTe: TfrmACBrCTe
           TabOrder = 8
           OnClick = btnValidarAssinaturaClick
         end
-        object btnCriarEnviar: TButton
+        object btnCriarEnviarSincrono: TButton
           Left = 192
           Top = 9
           Width = 177
           Height = 25
-          Caption = 'Criar e Enviar modo Ass'#237'ncrono'
-          TabOrder = 9
-          OnClick = btnCriarEnviarClick
-        end
-        object btnCriarEnviarSincrono: TButton
-          Left = 375
-          Top = 9
-          Width = 177
-          Height = 25
           Caption = 'Criar e Enviar modo S'#237'ncrono'
-          TabOrder = 10
+          TabOrder = 9
           OnClick = btnCriarEnviarSincronoClick
         end
       end
@@ -1625,6 +1616,15 @@ object frmACBrCTe: TfrmACBrCTe
           Caption = 'Insucesso de Entrega'
           TabOrder = 10
           OnClick = btnInsucessoEntregaClick
+        end
+        object btnCancInsuc: TButton
+          Left = 191
+          Top = 103
+          Width = 177
+          Height = 25
+          Caption = 'Cancelamento de Insucesso'
+          TabOrder = 11
+          OnClick = btnCancInsucClick
         end
       end
       object tsInutilizacao: TTabSheet

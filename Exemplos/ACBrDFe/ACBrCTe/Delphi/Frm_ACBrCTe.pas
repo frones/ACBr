@@ -236,7 +236,6 @@ type
     btnStatusServ: TButton;
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
-    btnCriarEnviar: TButton;
     btnCriarEnviarSincrono: TButton;
     btnCompEntr: TButton;
     btnCancEntr: TButton;
@@ -247,6 +246,7 @@ type
     btnDistrDFePorNSU: TButton;
     btnDistrDFePorChave: TButton;
     btnInsucessoEntrega: TButton;
+    btnCancInsuc: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathCTeClick(Sender: TObject);
@@ -302,7 +302,6 @@ type
     procedure btnDistrDFePorUltNSUClick(Sender: TObject);
     procedure ACBrCTe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure ACBrCTe1StatusChange(Sender: TObject);
-    procedure btnCriarEnviarClick(Sender: TObject);
     procedure btnCriarEnviarSincronoClick(Sender: TObject);
     procedure btnCompEntrClick(Sender: TObject);
     procedure btnCancEntrClick(Sender: TObject);
@@ -313,6 +312,7 @@ type
     procedure btnDistrDFePorNSUClick(Sender: TObject);
     procedure btnDistrDFePorChaveClick(Sender: TObject);
     procedure btnInsucessoEntregaClick(Sender: TObject);
+    procedure btnCancInsucClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1597,6 +1597,53 @@ begin
   end;
 end;
 
+procedure TfrmACBrCTe.btnCancInsucClick(Sender: TObject);
+var
+  vProt: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o CTe para Cancelar o Insucesso de Entrega';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+
+    if not(InputQuery('Insucesso de Entrega:', 'Numero do Protocolo', vProt)) then
+      exit;
+
+    ACBrCTe1.EventoCTe.Evento.Clear;
+
+    with ACBrCTe1.EventoCTe.Evento.New do
+    begin
+      // Para o Evento de Cancelamento de Insucesso de Entrega:
+      // nSeqEvento sempre = 1
+      infEvento.nSeqEvento := 1;
+      infEvento.chCTe      := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.CNPJ       := edtEmitCNPJ.Text;
+      infEvento.dhEvento   := now;
+      infEvento.tpEvento   := teCancInsucessoEntregaCTe;
+
+      infEvento.detEvento.nProt   := vProt; //ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProtIE := vProt;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrCTe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := ACBrCTe1.WebServices.EnvEvento.RetWS;
+    memoRespWS.Lines.Text := ACBrCTe1.WebServices.EnvEvento.RetornoWS;
+
+    LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
+
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
+end;
+
 procedure TfrmACBrCTe.btnCarregarXMLEnviarClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione a CTe';
@@ -1630,27 +1677,28 @@ begin
       Emit.IEST              := '';
     end;
 
-    if ACBrCTe1.Conhecimentos.Items[0].CTe.Ide.modelo = 65 then
-      ACBrCTe1.Enviar(1)
-    else
-      ACBrCTe1.Enviar(1, True, True);
+    ACBrCTe1.Enviar(1, True, True);
 
-    MemoResp.Lines.Text   := ACBrCTe1.WebServices.Retorno.RetWS;
-    memoRespWS.Lines.Text := ACBrCTe1.WebServices.Retorno.RetornoWS;
+    MemoResp.Lines.Text   := ACBrCTe1.WebServices.Enviar.RetWS;
+    memoRespWS.Lines.Text := ACBrCTe1.WebServices.Enviar.RetornoWS;
 
-    LoadXML(ACBrCTe1.WebServices.Retorno.RetWS, WBResposta);
+    LoadXML(ACBrCTe1.WebServices.Enviar.RetWS, WBResposta);
 
-    MemoDados.Lines.Add('');
-    MemoDados.Lines.Add('Envio CTe');
-    MemoDados.Lines.Add('tpAmb: '+ TpAmbToStr(ACBrCTe1.WebServices.Retorno.TpAmb));
-    MemoDados.Lines.Add('verAplic: '+ ACBrCTe1.WebServices.Retorno.verAplic);
-    MemoDados.Lines.Add('cStat: '+ IntToStr(ACBrCTe1.WebServices.Retorno.cStat));
-    MemoDados.Lines.Add('cUF: '+ IntToStr(ACBrCTe1.WebServices.Retorno.cUF));
-    MemoDados.Lines.Add('xMotivo: '+ ACBrCTe1.WebServices.Retorno.xMotivo);
-    MemoDados.Lines.Add('cMsg: '+ IntToStr(ACBrCTe1.WebServices.Retorno.cMsg));
-    MemoDados.Lines.Add('xMsg: '+ ACBrCTe1.WebServices.Retorno.xMsg);
-    MemoDados.Lines.Add('Recibo: '+ ACBrCTe1.WebServices.Retorno.Recibo);
-    MemoDados.Lines.Add('Protocolo: '+ ACBrCTe1.WebServices.Retorno.Protocolo);
+    pgRespostas.ActivePageIndex := 1;
+
+    with MemoDados do
+    begin
+      Lines.Add('');
+      Lines.Add('Envio CTe');
+      Lines.Add('tpAmb: '     + TpAmbToStr(ACBrCTe1.WebServices.Enviar.tpAmb));
+      Lines.Add('verAplic: '  + ACBrCTe1.WebServices.Enviar.verAplic);
+      Lines.Add('cStat: '     + IntToStr(ACBrCTe1.WebServices.Enviar.cStat));
+      Lines.Add('xMotivo: '   + ACBrCTe1.WebServices.Enviar.xMotivo);
+      Lines.Add('cUF: '       + IntToStr(ACBrCTe1.WebServices.Enviar.cUF));
+      Lines.Add('xMsg: '      + ACBrCTe1.WebServices.Enviar.Msg);
+      Lines.Add('Recibo: '    + ACBrCTe1.WebServices.Enviar.Recibo);
+      Lines.Add('Protocolo: ' + ACBrCTe1.WebServices.Enviar.Protocolo);
+    end;
   end;
 end;
 
@@ -1937,60 +1985,6 @@ begin
   MemoDados.Lines.Add('xMsg: ' + ACBrCTe1.WebServices.Recibo.xMsg);
   MemoDados.Lines.Add('cMsg: ' + IntToStr(ACBrCTe1.WebServices.Recibo.cMsg));
   MemoDados.Lines.Add('Recibo: ' + ACBrCTe1.WebServices.Recibo.Recibo);
-end;
-
-procedure TfrmACBrCTe.btnCriarEnviarClick(Sender: TObject);
-var
-  vAux, vNumLote: String;
-begin
-  if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux)) then
-    exit;
-
-  if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
-    exit;
-
-  vNumLote := OnlyNumber(vNumLote);
-
-  if Trim(vNumLote) = '' then
-  begin
-    MessageDlg('Número do Lote inválido.', mtError,[mbok], 0);
-    exit;
-  end;
-
-  AlimentarComponente(vAux);
-
-  ACBrCTe1.Enviar(StrToInt(vNumLote));
-
-  MemoResp.Lines.Text   := ACBrCTe1.WebServices.Retorno.RetWS;
-  memoRespWS.Lines.Text := ACBrCTe1.WebServices.Retorno.RetornoWS;
-
-  LoadXML(ACBrCTe1.WebServices.Retorno.RetWS, WBResposta);
-
-  pgRespostas.ActivePageIndex := 1;
-
-  with MemoDados do
-  begin
-    Lines.Add('');
-    Lines.Add('Envio CTe');
-    Lines.Add('tpAmb: '     + TpAmbToStr(ACBrCTe1.WebServices.Retorno.tpAmb));
-    Lines.Add('verAplic: '  + ACBrCTe1.WebServices.Retorno.verAplic);
-    Lines.Add('cStat: '     + IntToStr(ACBrCTe1.WebServices.Retorno.cStat));
-    Lines.Add('xMotivo: '   + ACBrCTe1.WebServices.Retorno.xMotivo);
-    Lines.Add('cUF: '       + IntToStr(ACBrCTe1.WebServices.Retorno.cUF));
-    Lines.Add('xMsg: '      + ACBrCTe1.WebServices.Retorno.Msg);
-    Lines.Add('Recibo: '    + ACBrCTe1.WebServices.Retorno.Recibo);
-    Lines.Add('Protocolo: ' + ACBrCTe1.WebServices.Retorno.Protocolo);
-  end;
-  (*
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].tpAmb
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].verAplic
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].chCTe
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].dhRecbto
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].nProt
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].digVal
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].cStat
-  ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[0].xMotivo
-  *)
 end;
 
 procedure TfrmACBrCTe.btnCriarEnviarSincronoClick(Sender: TObject);

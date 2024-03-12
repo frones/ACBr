@@ -1167,10 +1167,8 @@ begin
 
     try
       LMunicipio := LDadosServico.xMunicipioIncidencia;
-
       if LMunicipio = '' then
         LMunicipio := 'SEM INCIDENCIA DE ISS';
-
       LCDS.FieldByName('MunicipioIncidencia').AsString := LMunicipio;
     except
       on E: Exception do
@@ -1179,8 +1177,8 @@ begin
         LUF        := '';
       end;
     end;
-
   end;
+
   LCDS.FieldByName('MunicipioPrestacao').AsString := LDadosServico.MunicipioPrestacaoServico;
   LCDS.FieldByName('CodigoObra').AsString         := ANFSe.ConstrucaoCivil.CodigoObra;
   LCDS.FieldByName('Art').AsString                := ANFSe.ConstrucaoCivil.Art;
@@ -1195,8 +1193,10 @@ begin
   LCDS.FieldByName('Usuario').AsString := DANFSeXClassOwner.Usuario;
   LCDS.FieldByName('Site').AsString    := DANFSeXClassOwner.Site;
 
-  if fpDANFSe.Cancelada or (fpNFSe.NfseCancelamento.DataHora <> 0) or
-    (fpNFSe.SituacaoNfse = snCancelado) or (fpNFSe.StatusRps = srCancelado) then
+  if FDANFSeXClassOwner.Cancelada
+    or (ANFSe.NfseCancelamento.DataHora <> 0)
+    or (ANFSe.SituacaoNfse = snCancelado)
+    or (ANFSe.StatusRps = srCancelado) then
   begin
     LCDS.FieldByName('Mensagem0').AsString := 'NFSe CANCELADA';
   end;
@@ -1431,7 +1431,7 @@ var
   vStringStream: TStringStream;
 begin
   cdsParametros.FieldByName('LogoPrefExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prefeitura
-  cdsParametros.FieldByName('Nome_Prefeitura').AsString   := Prefeitura;
+  cdsParametros.FieldByName('Nome_Prefeitura').AsString := Prefeitura;
   if NaoEstaVazio(DANFSeXClassOwner.Logo) then
   begin
     cdsParametros.FieldByName('imgPrefeitura').AsString := Logo;

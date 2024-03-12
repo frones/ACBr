@@ -3341,12 +3341,14 @@ begin
     Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                      ' xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
+    {
     Texto := Texto +   '<soap12:Header>';
     Texto := Texto +     '<cteCabecMsg xmlns="' + FPServico + '">';
     Texto := Texto +       GerarUFSoap;
     Texto := Texto +       GerarVersaoDadosSoap;
     Texto := Texto +     '</cteCabecMsg>';
     Texto := Texto +   '</soap12:Header>';
+    }
     Texto := Texto +   '<soap12:Body>';
     Texto := Texto +     '<cteDadosMsg xmlns="' + FPServico + '">';
     Texto := Texto +       FPDadosMsg;
@@ -3359,12 +3361,14 @@ begin
     Texto := Texto + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                    ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                    ' xmlns:soap="http://www.w3.org/2003/05/soap-envelope">';
+    {
     Texto := Texto +   '<soap:Header>';
     Texto := Texto +     '<cteCabecMsg xmlns="' + FPServico + '">';
     Texto := Texto +       GerarUFSoap;
     Texto := Texto +       GerarVersaoDadosSoap;
     Texto := Texto +     '</cteCabecMsg>';
     Texto := Texto +   '</soap:Header>';
+    }
     Texto := Texto +   '<soap:Body>';
     Texto := Texto +     '<cteDadosMsg xmlns="' + FPServico + '">';
     Texto := Texto +       FPDadosMsg;

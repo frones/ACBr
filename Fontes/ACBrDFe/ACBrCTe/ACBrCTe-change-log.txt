@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2024
+-- ACBrCTeServicos --
+[*] Ajustes nas URL de homologação e produção de Recepção de eventos Ambiente
+    Nacional.
+-- ACBrCTeWebServices --
+[*] Remoção do cabeçalho do Envelope no envio de eventos.
+-- pcteEventoCTe --
+[*] Alteração visando pegar a UF da chave para todos os tipos de eventos.
+  Por: Italo Giurizzato Junior
+
 06/03/2024
 -- ACBrCTeServicos --
 [+] Incluído as URL de homologação e produção de Recepção de eventos Ambiente

@@ -389,7 +389,7 @@ function TInfEvento.getcOrgao: Integer;
 begin
   Result := 0;
 
-  if FTpEvento = teEPEC then
+{  if FTpEvento = teEPEC then
   begin
     case StrToIntDef(copy(FChave, 1, 2), 0) of
       0,
@@ -424,12 +424,12 @@ begin
         Result := 43;
     end;
   end
-  else begin
+  else begin }
    if FcOrgao <> 0 then
      Result := FcOrgao
    else
      Result := StrToIntDef(copy(FChave, 1, 2), 0);
-  end;
+//  end;
 end;
 
 function TInfEvento.getDescEvento: String;

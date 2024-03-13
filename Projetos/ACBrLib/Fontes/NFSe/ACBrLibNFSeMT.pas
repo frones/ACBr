@@ -81,6 +81,9 @@ function NFSE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eCha
 function NFSE_CarregarXML(const libHandle: PLibHandle; const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function NFSE_CarregarLoteXML(const libHandle: PLibHandle; const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function NFSE_CarregarINI(const libHandle: PLibHandle; const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -296,6 +299,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibNFSe(libHandle^.Lib).CarregarXML(eArquivoOuXML);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFSE_CarregarLoteXML(const libHandle: PLibHandle; const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNFSe(libHandle^.Lib).CarregarLoteXML(eArquivoOuXML);
   except
     on E: EACBrLibException do
       Result := E.Erro;

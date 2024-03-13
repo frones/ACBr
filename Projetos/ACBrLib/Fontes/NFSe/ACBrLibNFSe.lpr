@@ -63,6 +63,7 @@ exports
 
   // Arquivos
   NFSE_CarregarXML,
+  NFSE_CarregarLoteXML,
   NFSE_CarregarINI,
   NFSE_ObterXml,
   NFSE_GravarXml,

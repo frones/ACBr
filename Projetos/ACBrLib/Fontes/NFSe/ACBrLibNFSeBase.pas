@@ -61,6 +61,7 @@ type
     property NFSeDM: TLibNFSeDM read FNFSeDM;
 
     function CarregarXML(const eArquivoOuXML: PChar): longint;
+    function CarregarLoteXML(const eArquivoOuXML: PChar): longint;
     function CarregarINI(const eArquivoOuINI: PChar): longint;
     function ObterXml(aIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function GravarXml(aIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
@@ -176,6 +177,36 @@ begin
         NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromFile(ArquivoOuXml)
       else
         NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromString(ArquivoOuXml);
+
+      Result := SetRetornoNFSeRPSCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
+    finally
+      NFSeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibNFSe.CarregarLoteXML(const eArquivoOuXML: PChar): longint;
+var
+  EhArquivo: boolean;
+  ArquivoOuXml: string;
+begin
+  try
+    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('NFSE_CarregarLoteXML(' + ArquivoOuXml + ' )', logCompleto, True)
+    else
+      GravarLog('NFSE_CarregarLoteXML', logNormal);
+
+    NFSeDM.Travar;
+    try
+      NFSeDM.ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(ArquivoOuXml);
 
       Result := SetRetornoNFSeRPSCarregadas(NFSeDM.ACBrNFSeX1.NotasFiscais.Count);
     finally

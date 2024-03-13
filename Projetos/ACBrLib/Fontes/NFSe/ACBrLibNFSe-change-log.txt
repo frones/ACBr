@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2024
+--- Diversos ---
+[+] Implementa o método NFSE_CarregarLoteXML
+    Por: Diego Folieni
+
 06/03/2024
 --- Diversos ---
 [+] Implementado método NFSE_ConsultarLinkNFSe e configurada chamada nos programas de exemplo em c# e java.

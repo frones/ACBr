@@ -98,6 +98,9 @@ function NFSE_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eCha
 function NFSE_CarregarXML(const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
+function NFSE_CarregarLoteXML(const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
+
 function NFSE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 

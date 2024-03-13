@@ -38,7 +38,7 @@ unit ACBrLibBoletoConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
+  Classes, SysUtils, IniFiles, ACBrUtil.FilesIO,
   ACBrBoleto, ACBrBoletoConversao, ACBrLibConfig, ACBrLibComum, pcnConversao, ACBrDFeConfiguracoes, ACBrPIXBase;
 
 type
@@ -260,7 +260,8 @@ type
   { TBoletoConfigWS }
   TBoletoConfigWS = class
   private
-    FLogRegistro: Boolean;
+    FLogNivel: TNivelLog;
+    FNomeArquivoLog: String;
     FPathGravarRegistro: String;
     FOperacao: TOperacao;
     FVersaoDF: String;
@@ -274,7 +275,8 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property LogRegistro: Boolean read FLogRegistro write FLogRegistro;
+    property LogNivel: TNivelLog read FLogNivel write FLogNivel;
+    property NomeArquivoLog: String read FNomeArquivoLog write FNomeArquivoLog;
     property PathGravarRegistro: String read FPathGravarRegistro write FPathGravarRegistro;
     property Operacao: TOperacao read FOperacao write FOperacao;
     property VersaoDF: String read FVersaoDF write FVersaoDF;
@@ -342,15 +344,15 @@ type
 implementation
 
 uses
-  typinfo, strutils, synacode, blcksock, ACBrLibBoletoConsts,
-  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  typinfo, strutils, synacode, blcksock, ACBrLibBoletoConsts, ACBrUtil.Strings,
   ACBrConsts, ACBrLibConsts, ACBrLibBoletoBase;
 
 { TBoletoConfigWS }
 
 constructor TBoletoConfigWS.Create;
 begin
-  FLogRegistro:= True;
+  FLogNivel := logNenhum;
+  FNomeArquivoLog:= '';
   FPathGravarRegistro:= '';
   FOperacao:= tpInclui;
   FVersaoDF:= '1.2';
@@ -362,7 +364,8 @@ end;
 
 procedure TBoletoConfigWS.LerIni(const AIni: TCustomIniFile);
 begin
-  LogRegistro:= AIni.ReadBool(CSessaoBoletoWebService, CChaveLogRegistro, LogRegistro );
+  LogNivel := TNivelLog(AIni.ReadInteger(CSessaoBoletoWebService, CChaveLogNivel, Integer(LogNivel)));
+  NomeArquivoLog:= AIni.ReadString(CSessaoBoletoWebService, CChaveNomeArquivoLog, NomeArquivoLog);
   PathGravarRegistro:= AIni.ReadString(CSessaoBoletoWebService, CChavePathGravarRegistro, PathGravarRegistro );
   Operacao:= TOperacao( AIni.ReadInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) ) );
   VersaoDF:= AIni.ReadString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
@@ -373,7 +376,8 @@ end;
 
 procedure TBoletoConfigWS.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteBool(CSessaoBoletoWebService, CChaveLogRegistro, LogRegistro );
+  AIni.WriteInteger(CSessaoBoletoWebService, CChaveLogNivel, Integer(LogNivel));
+  AIni.WriteString(CSessaoBoletoWebService, CChaveNomeArquivoLog, NomeArquivoLog);
   AIni.WriteString(CSessaoBoletoWebService, CChavePathGravarRegistro, PathGravarRegistro );
   AIni.WriteInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) );
   AIni.WriteString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );

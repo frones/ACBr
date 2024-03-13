@@ -125,7 +125,8 @@ const
   CChaveIndicadorPix= 'IndicadorPix';
 
   CSessaoBoletoWebService = 'BoletoWebSevice';
-  CChaveLogRegistro = 'LogRegistro';
+  CChaveLogNivel = 'LogNivel';
+  CChaveNomeArquivoLog = 'NomeArquivoLog';
   CChavePathGravarRegistro = 'PathGravarRegistro';
   CChaveAmbiente = 'Ambiente';
   CChaveArquivoCRT = 'ArquivoCRT';

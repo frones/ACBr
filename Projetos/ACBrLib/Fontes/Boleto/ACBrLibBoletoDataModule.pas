@@ -180,8 +180,10 @@ begin
   try
     with ACBrBoleto1.Configuracoes do
     begin
-      Arquivos.LogRegistro := LibConfig.BoletoConfigWS.LogRegistro;
+      Arquivos.LogNivel := LibConfig.BoletoConfigWS.LogNivel;
+      Arquivos.NomeArquivoLog := LibConfig.BoletoConfigWS.NomeArquivoLog;
       Arquivos.PathGravarRegistro := LibConfig.BoletoConfigWS.PathGravarRegistro;
+
       WebService.Ambiente := LibConfig.BoletoDFeConfigWS.WebServices.Ambiente;
       WebService.Operacao := LibConfig.BoletoConfigWS.Operacao;
       WebService.VersaoDF := LibConfig.BoletoConfigWS.VersaoDF;

@@ -15,7 +15,7 @@ inherited LibBoletoDM: TLibBoletoDM
     DirArqRetorno = 'C:\Temp\'
     NumeroArquivo = 0
     LeCedenteRetorno = True
-    Configuracoes.Arquivos.LogRegistro = False
+    Configuracoes.Arquivos.LogNivel = logNenhum
     Configuracoes.WebService.SSLHttpLib = httpOpenSSL
     Configuracoes.WebService.StoreName = 'My'
     Configuracoes.WebService.UseCertificateHTTP = False

@@ -72,6 +72,10 @@ Private Declare Function NFSE_ConfigGravarValor _
 Private Declare Function NFSE_CarregarXML _
                 Lib "ACBrNFSe32.dll" (ByVal libHandler As Long, _
                                       ByVal eArquivoOuXml As String) As Long
+
+Private Declare Function NFSE_CarregarLoteXML _
+                Lib "ACBrNFSe32.dll" (ByVal libHandler As Long, _
+                                      ByVal eArquivoOuXml As String) As Long
                 
 Private Declare Function NFSE_CarregarINI _
                 Lib "ACBrNFSe32.dll" (ByVal libHandler As Long, _
@@ -498,6 +502,12 @@ End Function
 Public Sub CarregarXML(ByVal eArquivoOuXml As String)
     Dim retorno   As Long
     retorno = NFSE_CarregarXML(libHandler, eArquivoOuXml)
+    CheckResult retorno
+End Sub
+
+Public Sub CarregarLoteXML(ByVal eArquivoOuXml As String)
+    Dim retorno   As Long
+    retorno = NFSE_CarregarLoteXML(libHandler, eArquivoOuXml)
     CheckResult retorno
 End Sub
 

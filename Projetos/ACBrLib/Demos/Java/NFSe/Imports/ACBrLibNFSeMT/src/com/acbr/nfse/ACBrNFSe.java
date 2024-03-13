@@ -76,6 +76,8 @@ public final class ACBrNFSe extends ACBrLibBase {
         int NFSE_ConfigGravarValor(Pointer libHandler, String eArquivoOuXML);
         
         int NFSE_CarregarXML(Pointer libHandler, String eArquivoOuXml);
+        
+        int NFSE_CarregarLoteXML(Pointer libHandler, String eArquivoOuXml);
 
         int NFSE_CarregarINI(Pointer libHandler, String eArquivoOuINI);
 
@@ -247,6 +249,11 @@ public final class ACBrNFSe extends ACBrLibBase {
         int ret = ACBrNFSeLib.INSTANCE.NFSE_CarregarXML(getHandle(), toUTF8(eArquivoOuXML));
         checkResult(ret);
     }
+    
+    public void carregarLoteXml(String eArquivoOuXML) throws Exception {
+        int ret = ACBrNFSeLib.INSTANCE.NFSE_CarregarLoteXML(getHandle(), toUTF8(eArquivoOuXML));
+        checkResult(ret);
+    }    
 
     public String obterXml(int AIndex) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);

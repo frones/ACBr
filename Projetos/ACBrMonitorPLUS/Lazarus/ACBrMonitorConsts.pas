@@ -1396,8 +1396,9 @@ const
   CKeyBOLETOKeyUser =                       'KeyUser';
   CKeyBOLETOScope =                         'Scope';
   CKeyBOLETOIndicadorPix =                  'IndicadorPix';
-  CKeyBOLETOLogRegistro =                   'LogRegistro';
+  CKeyBOLETOLogNivel =                      'LogNivel';
   CKeyBOLETOPathGravarRegistro =            'PathGravarRegistro';
+  CKeyBOLETONomeArquivoLog =                'NomeArquivoLog';
   CKeyBOLETOAmbiente =                      'Ambiente';
   CKeyBOLETOOperacao =                      'Operacao';
   CKeyBOLETOProxyHost =                     'ProxyHost';

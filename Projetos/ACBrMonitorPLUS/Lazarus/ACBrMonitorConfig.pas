@@ -35,7 +35,7 @@ unit ACBrMonitorConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, ACBrMonitorConsts, Graphics;
+  Classes, SysUtils, IniFiles, ACBrMonitorConsts, Graphics, ACBrUtil.FilesIO;
 
 type
 
@@ -717,8 +717,9 @@ type
   end;
 
   TBoletoConfig = record
-    LogRegistro                : Boolean;
+    LogNivel                   : TNivelLog;
     PathGravarRegistro         : String;
+    NomeArquivoLog             : String;
     SSL                        : TBoletoSSL;
   end;
 
@@ -1574,8 +1575,9 @@ begin
 
     with BOLETO.WS.Config do
     begin
-      ini.WriteBool( CSecBOLETO, CKeyBOLETOLogRegistro, LogRegistro);
+      ini.WriteInteger( CSecBOLETO, CKeyBOLETOLogNivel, Integer(LogNivel));
       ini.WriteString( CSecBOLETO, CKeyBOLETOPathGravarRegistro, PathGravarRegistro);
+      ini.WriteString( CSecBOLETO, CKeyBOLETONomeArquivoLog, NomeArquivoLog);
     end;
 
     with BOLETO.WS.Config.SSL do
@@ -2373,8 +2375,9 @@ begin
 
     with BOLETO.WS.Config do
     begin
-      LogRegistro := ini.ReadBool( CSecBOLETO, CKeyBOLETOLogRegistro, LogRegistro);
+      LogNivel := TNivelLog(ini.ReadInteger( CSecBOLETO, CKeyBOLETOLogNivel, Integer(LogNivel)));
       PathGravarRegistro := ini.ReadString( CSecBOLETO, CKeyBOLETOPathGravarRegistro, PathGravarRegistro);
+      NomeArquivoLog := ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoLog, NomeArquivoLog);
     end;
 
     with BOLETO.WS.Config.SSL do
@@ -3137,8 +3140,9 @@ begin
 
   with BOLETO.WS.Config do
   begin
-    LogRegistro := True;
+    LogNivel:= logNenhum;
     PathGravarRegistro := '';
+    NomeArquivoLog := '';
   end;
 
   with BOLETO.WS.Config.SSL do

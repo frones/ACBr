@@ -318,6 +318,7 @@ type
     cbHRI: TCheckBox;
     cbHttpLib: TComboBox;
     cbHttpLibBoleto: TComboBox;
+    cbNivelLogBoleto: TComboBox;
     cbIgnorarTags: TCheckBox;
     cbLayoutNFSe: TComboBox;
     cbMunicipio: TComboBox;
@@ -471,7 +472,6 @@ type
     chkLerBeneficiarioRetorno: TCheckBox;
     cbxBOLEmailMensagemHTML: TCheckBox;
     chkMostraLogNaTela: TCheckBox;
-    ChkLogBoletoWeb: TCheckBox;
     chkRemoveAcentos: TCheckBox;
     chkVerificarValidadeCertificado: TCheckBox;
     chLCBExcluirSufixo: TCheckBox;
@@ -492,6 +492,7 @@ type
     deBolDirRetornoRel: TDirectoryEdit;
     deRFDDataSwBasico: TDateEdit;
     deUSUDataCadastro: TDateEdit;
+    dlgSave: TSaveDialog;
     eAvanco: TEdit;
     eCopias: TEdit;
     edBALLog: TEdit;
@@ -528,6 +529,7 @@ type
     edtConsCNPJUsuario: TEdit;
     edtNomeCidade: TEdit;
     edtConsCNPJSenha: TEdit;
+    edtArquivoLogBoleto: TEdit;
     edtUFCidade: TEdit;
     edtEmailAssuntoNFSe: TEdit;
     edtLogoMarcaPrefeitura: TEdit;
@@ -863,6 +865,7 @@ type
     Label284: TLabel;
     Label285: TLabel;
     Label286: TLabel;
+    Label287: TLabel;
     lblConsCNPJ: TLabel;
     lblConsCNPJProvedor: TLabel;
     lblConCNPJSenha: TLabel;
@@ -872,6 +875,7 @@ type
     lblBolMotorRelatorio: TLabel;
     lblBOLTipoChavePix: TLabel;
     lblConCNPJUsuario: TLabel;
+    lblPathLogBoleto1: TLabel;
     lblPrefixRemessa: TLabel;
     Label255: TLabel;
     Label256: TLabel;
@@ -1281,6 +1285,7 @@ type
     SbArqLog3: TSpeedButton;
     SbArqLog4: TSpeedButton;
     sbArquivoCert: TSpeedButton;
+    sbArquivoLogBoleto: TSpeedButton;
     sbArquivoKEY: TSpeedButton;
     sbArquivoCRT: TSpeedButton;
     sbArquivoWebServicesBPe: TSpeedButton;
@@ -1740,6 +1745,7 @@ type
     procedure sbArquivoCertClick(Sender: TObject);
     procedure sbArquivoCRTClick(Sender: TObject);
     procedure sbArquivoKEYClick(Sender: TObject);
+    procedure sbArquivoLogBoletoClick(Sender: TObject);
     procedure sbArquivoWebServicesCTeClick(Sender: TObject);
     procedure sbArquivoWebServiceseSocialClick(Sender: TObject);
     procedure sbArquivoWebServicesGNReClick(Sender: TObject);
@@ -1905,6 +1911,7 @@ type
     function ValidaArquivo(APath:String; AArquivoDefault: String = ''): String;
     // Italo
     procedure AtualizarCidades;
+    procedure CarregaComboNivelLog;
   private
     ACBrMonitorINI: string;
     Inicio, fsMonitorarPasta: boolean;
@@ -2549,6 +2556,8 @@ begin
   For iOperacao := Low(TOperacao) to High(TOperacao) do
     cbOperacaoBoleto.Items.Add( GetEnumName(TypeInfo(TOperacao), integer(iOperacao) ) ) ;
   cbOperacaoBoleto.ItemIndex := 0 ;
+
+  CarregaComboNivelLog;
 
   {Email}
   cbSSLTypeEmail.Items.Clear ;
@@ -5499,7 +5508,9 @@ var
   //PathApplication: string;
   wDirArquivo, wNomeArquivo, wPathArquivo: string;
   OK: boolean;
+  I : Integer;
 begin
+
   //PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
 
   ECFAtivado := ACBrECF1.Ativo;
@@ -5862,8 +5873,14 @@ begin
 
      with WS.Config do
      begin
-       ChkLogBoletoWeb.Checked := LogRegistro;
+         for I := 0 to Pred(cbNivelLogBoleto.Items.Count) do
+          if Integer(cbNivelLogBoleto.Items.Objects[I]) = Ord(LogNivel) then
+          begin
+            cbNivelLogBoleto.ItemIndex        := I;
+            break
+          end;
        edtPathLogBoleto.Text := PathGravarRegistro;
+       edtArquivoLogBoleto.Text := NomeArquivoLog;
      end;
 
      with WS.Config.SSL do
@@ -6789,8 +6806,9 @@ begin
     Cedente.CedenteWS.Scope := edtScope.Text;
     Cedente.CedenteWS.IndicadorPix := ChkPix.Checked;
 
-    Configuracoes.Arquivos.LogRegistro := ChkLogBoletoWeb.Checked;
+    Configuracoes.Arquivos.LogNivel           := TNivelLog(Integer(cbNivelLogBoleto.ItemIndex));
     Configuracoes.Arquivos.PathGravarRegistro := PathWithoutDelim(edtPathLogBoleto.Text);
+    Configuracoes.Arquivos.NomeArquivoLog     := ExtractFileName(edtArquivoLogBoleto.Text);
 
     Configuracoes.WebService.Ambiente := TpcnTipoAmbiente( rgTipoAmbBoleto.ItemIndex );
     Configuracoes.WebService.Operacao := TOperacao( cbOperacaoBoleto.ItemIndex );
@@ -7802,8 +7820,9 @@ begin
 
      with WS.Config do
      begin
-       LogRegistro := ChkLogBoletoWeb.Checked;
-       PathGravarRegistro := PathWithoutDelim(edtPathLogBoleto.Text);
+       LogNivel           := TNivelLog(Integer(cbNivelLogBoleto.ItemIndex));
+       PathGravarRegistro := PathWithDelim(edtPathLogBoleto.Text);
+       NomeArquivoLog     := ExtractFileName(edtArquivoLogBoleto.Text);
      end;
 
      with WS.Config.SSL do
@@ -8738,6 +8757,15 @@ begin
     edtBolArquivoKey.Text := OpenDialog1.FileName;
   end;
 
+end;
+
+procedure TFrmACBrMonitor.sbArquivoLogBoletoClick(Sender: TObject);
+begin
+  if dlgSave.Execute then
+  begin
+    edtPathLogBoleto.Text := PathWithDelim(ExtractFilePath(dlgSave.FileName));
+    edtArquivoLogBoleto.Text := ExtractFileName(dlgSave.FileName);
+  end;
 end;
 
 procedure TFrmACBrMonitor.sbArquivoWebServicesCTeClick(Sender: TObject);
@@ -12942,6 +12970,15 @@ begin
     FreeAndNil(Cidades);
     IniCidades.Free;
   end;
+end;
+
+procedure TFrmACBrMonitor.CarregaComboNivelLog;
+var LNivelLog : TNivelLog;
+begin
+  cbNivelLogBoleto.Items.clear;
+  for LNivelLog := Low(TNivelLog) to High(TNivelLog) do
+    cbNivelLogBoleto.Items.AddObject( GetEnumName(TypeInfo(TNivelLog), Integer(LNivelLog) ), TObject(Integer(LNivelLog)) );
+  cbNivelLogBoleto.ItemIndex:= 0;
 end;
 
 end.

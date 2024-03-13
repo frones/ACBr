@@ -144,6 +144,14 @@ namespace ACBrLib.NFSe
             CheckResult(ret);
         }
 
+        public void CarregarLoteXML(string eArquivoOuXml)
+        {
+            var method = GetMethod<NFSE_CarregarLoteXML>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoOuXml)));
+
+            CheckResult(ret);
+        }
+
         public void CarregarINI(string eArquivoOuIni)
         {
             var method = GetMethod<NFSE_CarregarINI>();

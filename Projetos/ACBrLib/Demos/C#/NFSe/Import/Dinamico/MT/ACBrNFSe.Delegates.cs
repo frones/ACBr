@@ -46,6 +46,9 @@ namespace ACBrLib.NFSe
         public delegate int NFSE_CarregarXML(IntPtr handle, string eArquivoOuXml);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFSE_CarregarLoteXML(IntPtr handle, string eArquivoOuXml);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFSE_CarregarINI(IntPtr handle, string eArquivoOuIni);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -185,6 +188,7 @@ namespace ACBrLib.NFSe
             AddMethod<NFSE_ConfigLerValor>("NFSE_ConfigLerValor");
             AddMethod<NFSE_ConfigGravarValor>("NFSE_ConfigGravarValor");
             AddMethod<NFSE_CarregarXML>("NFSE_CarregarXML");
+            AddMethod<NFSE_CarregarLoteXML>("NFSE_CarregarLoteXML");
             AddMethod<NFSE_CarregarINI>("NFSE_CarregarINI");
             AddMethod<NFSE_ObterXml>("NFSE_ObterXml");
             AddMethod<NFSE_GravarXml>("NFSE_GravarXml");

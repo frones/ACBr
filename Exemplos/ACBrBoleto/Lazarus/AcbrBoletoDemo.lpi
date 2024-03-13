@@ -13,6 +13,7 @@
       <SessionStorage Value="InProjectDir"/>
       <Title Value="AcbrBoletoDemo"/>
       <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
     </General>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -32,16 +33,16 @@
         <PackageName Value="ACBrDFeComum"/>
       </Item>
       <Item>
-        <PackageName Value="ACBr_Boleto"/>
-      </Item>
-      <Item>
         <PackageName Value="ACBrTCP"/>
       </Item>
       <Item>
         <PackageName Value="ACBrComum"/>
       </Item>
       <Item>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_Boleto"/>
+      </Item>
+      <Item>
+        <PackageName Value="ACBr_BoletoFC_FPDF"/>
       </Item>
       <Item>
         <PackageName Value="LCL"/>
@@ -71,19 +72,12 @@
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
-        <IncludeAssertionCode Value="True"/>
       </SyntaxOptions>
     </Parsing>
-    <CodeGeneration>
-      <Checks>
-        <IOChecks Value="True"/>
-        <RangeChecks Value="True"/>
-        <OverflowChecks Value="True"/>
-        <StackChecks Value="True"/>
-      </Checks>
-      <VerifyObjMethodCallValidity Value="True"/>
-    </CodeGeneration>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

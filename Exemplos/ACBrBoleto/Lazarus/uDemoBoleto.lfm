@@ -1,10 +1,10 @@
 object frmDemoBoleto: TfrmDemoBoleto
-  Left = 288
-  Height = 523
-  Top = 133
+  Left = 535
+  Height = 562
+  Top = 187
   Width = 986
   Caption = 'Demo ACBrBoleto '
-  ClientHeight = 523
+  ClientHeight = 562
   ClientWidth = 986
   Color = clBtnFace
   Font.Color = clWindowText
@@ -12,9 +12,10 @@ object frmDemoBoleto: TfrmDemoBoleto
   Font.Name = 'MS Sans Serif'
   OnClose = FormClose
   OnCreate = FormCreate
+  LCLVersion = '3.2.0.0'
   object PageControl1: TPageControl
     Left = 0
-    Height = 523
+    Height = 562
     Top = 0
     Width = 986
     ActivePage = TabSheet1
@@ -23,19 +24,20 @@ object frmDemoBoleto: TfrmDemoBoleto
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Ficha de Pagamento'
-      ClientHeight = 496
+      ClientHeight = 535
       ClientWidth = 978
       object GroupBox2: TGroupBox
         Left = -2
         Height = 105
-        Top = 0
+        Top = 3
         Width = 609
         Caption = 'Acréscimos\Descontos'
         ClientHeight = 86
         ClientWidth = 605
+        ParentBackground = False
         TabOrder = 0
         object Label7: TLabel
-          Left = 9
+          Left = 7
           Height = 14
           Top = 0
           Width = 79
@@ -43,7 +45,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label8: TLabel
-          Left = 163
+          Left = 161
           Height = 14
           Top = 0
           Width = 74
@@ -51,7 +53,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label9: TLabel
-          Left = 317
+          Left = 315
           Height = 14
           Top = 0
           Width = 81
@@ -59,7 +61,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label10: TLabel
-          Left = 467
+          Left = 465
           Height = 14
           Top = 0
           Width = 38
@@ -67,7 +69,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label11: TLabel
-          Left = 9
+          Left = 7
           Height = 14
           Top = 40
           Width = 83
@@ -75,7 +77,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label12: TLabel
-          Left = 163
+          Left = 161
           Height = 14
           Top = 40
           Width = 71
@@ -83,7 +85,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label13: TLabel
-          Left = 317
+          Left = 315
           Height = 14
           Top = 40
           Width = 78
@@ -91,7 +93,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label14: TLabel
-          Left = 467
+          Left = 465
           Height = 14
           Top = 40
           Width = 65
@@ -99,7 +101,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object edtMoraJuros: TEdit
-          Left = 9
+          Left = 7
           Height = 22
           Top = 16
           Width = 135
@@ -107,7 +109,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '5'
         end
         object edtValorDesconto: TEdit
-          Left = 163
+          Left = 161
           Height = 22
           Top = 16
           Width = 135
@@ -115,7 +117,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '0'
         end
         object edtValorAbatimento: TEdit
-          Left = 317
+          Left = 315
           Height = 22
           Top = 16
           Width = 135
@@ -123,7 +125,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '0'
         end
         object edtMulta: TEdit
-          Left = 467
+          Left = 465
           Height = 22
           Top = 16
           Width = 135
@@ -131,10 +133,11 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = '5'
         end
         object edtDataMora: TMaskEdit
-          Left = 9
+          Left = 7
           Height = 22
           Top = 56
           Width = 135
+          EnableSets = False
           MaxLength = 8
           TabOrder = 4
           EditMask = '!99/99/00;1;_'
@@ -142,10 +145,11 @@ object frmDemoBoleto: TfrmDemoBoleto
           SpaceChar = '_'
         end
         object edtDataDesconto: TMaskEdit
-          Left = 163
+          Left = 161
           Height = 22
           Top = 56
           Width = 135
+          EnableSets = False
           MaxLength = 8
           TabOrder = 5
           EditMask = '!99/99/00;1;_'
@@ -153,10 +157,11 @@ object frmDemoBoleto: TfrmDemoBoleto
           SpaceChar = '_'
         end
         object edtDataAbatimento: TMaskEdit
-          Left = 317
+          Left = 315
           Height = 22
           Top = 56
           Width = 135
+          EnableSets = False
           MaxLength = 8
           TabOrder = 6
           EditMask = '!99/99/00;1;_'
@@ -164,10 +169,11 @@ object frmDemoBoleto: TfrmDemoBoleto
           SpaceChar = '_'
         end
         object edtDataProtesto: TMaskEdit
-          Left = 467
+          Left = 465
           Height = 22
           Top = 56
           Width = 135
+          EnableSets = False
           MaxLength = 8
           TabOrder = 7
           EditMask = '!99/99/00;1;_'
@@ -183,6 +189,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Caption = 'Informações Sobre a Duplicata '
         ClientHeight = 206
         ClientWidth = 165
+        ParentBackground = False
         TabOrder = 1
         object Label17: TLabel
           Left = 8
@@ -229,7 +236,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 22
           Top = 57
           Width = 153
-          TabOrder = 0
+          TabOrder = 1
           Text = '0000000001'
         end
         object edtValorDoc: TEdit
@@ -237,7 +244,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 22
           Top = 96
           Width = 153
-          TabOrder = 1
+          TabOrder = 2
           Text = '100'
         end
         object edtDataDoc: TMaskEdit
@@ -245,8 +252,9 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 22
           Top = 139
           Width = 153
+          EnableSets = False
           MaxLength = 8
-          TabOrder = 2
+          TabOrder = 3
           EditMask = '!99/99/00;1;_'
           Text = '  /  /  '
           SpaceChar = '_'
@@ -256,8 +264,9 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 22
           Top = 177
           Width = 153
+          EnableSets = False
           MaxLength = 8
-          TabOrder = 3
+          TabOrder = 4
           EditMask = '!99/99/00;1;_'
           Text = '  /  /  '
           SpaceChar = '_'
@@ -267,21 +276,22 @@ object frmDemoBoleto: TfrmDemoBoleto
           Height = 22
           Top = 16
           Width = 153
-          TabOrder = 4
+          TabOrder = 0
           Text = '12345'
         end
       end
       object GroupBox3: TGroupBox
         Left = -2
-        Height = 114
-        Top = 111
+        Height = 115
+        Top = 113
         Width = 609
         Caption = 'Mensagens \ Instruções'
-        ClientHeight = 95
+        ClientHeight = 96
         ClientWidth = 605
+        ParentBackground = False
         TabOrder = 2
         object Label15: TLabel
-          Left = 319
+          Left = 320
           Height = 14
           Top = 0
           Width = 54
@@ -289,7 +299,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label16: TLabel
-          Left = 463
+          Left = 464
           Height = 14
           Top = 0
           Width = 54
@@ -297,7 +307,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object memMensagem: TMemo
-          Left = 7
+          Left = 8
           Height = 89
           Top = 0
           Width = 305
@@ -307,21 +317,21 @@ object frmDemoBoleto: TfrmDemoBoleto
           TabOrder = 0
         end
         object edtInstrucoes1: TEdit
-          Left = 319
+          Left = 320
           Height = 22
           Top = 16
           Width = 137
           TabOrder = 1
         end
         object edtInstrucoes2: TEdit
-          Left = 463
+          Left = 464
           Height = 22
           Top = 16
           Width = 137
           TabOrder = 2
         end
         object Panel2: TPanel
-          Left = 319
+          Left = 320
           Height = 41
           Top = 48
           Width = 281
@@ -330,6 +340,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
+          ParentBackground = False
           ParentFont = False
           TabOrder = 3
         end
@@ -337,7 +348,7 @@ object frmDemoBoleto: TfrmDemoBoleto
       object PageControl2: TPageControl
         Left = 3
         Height = 157
-        Top = 231
+        Top = 240
         Width = 779
         ActivePage = TabSheet5
         TabIndex = 0
@@ -692,85 +703,86 @@ object frmDemoBoleto: TfrmDemoBoleto
       object GroupBox6: TGroupBox
         Left = 575
         Height = 87
-        Top = 405
+        Top = 425
         Width = 382
         Caption = 'Impressão'
         ClientHeight = 68
         ClientWidth = 378
-        TabOrder = 4
+        ParentBackground = False
+        TabOrder = 5
         object btnImpressaoHTML: TButton
           Left = 52
           Height = 25
-          Top = 8
+          Top = 2
           Width = 75
           Caption = 'Gerar HTML'
-          OnClick = btnImpressaoHTMLClick
           TabOrder = 0
+          OnClick = btnImpressaoHTMLClick
         end
         object btnImpressaoPDF: TButton
           Left = 133
           Height = 25
-          Top = 8
+          Top = 2
           Width = 75
           Caption = 'Gerar PDF'
-          OnClick = btnImpressaoPDFClick
           TabOrder = 1
+          OnClick = btnImpressaoPDFClick
         end
         object btnImpressaoSpooler: TButton
           Left = 151
           Height = 25
-          Top = 39
+          Top = 33
           Width = 98
           Caption = 'Imprimir'
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
-          OnClick = btnImpressaoSpoolerClick
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 4
+          OnClick = btnImpressaoSpoolerClick
         end
         object btnImpressaoStream: TButton
           Left = 214
           Height = 25
-          Top = 8
+          Top = 2
           Width = 98
           Caption = 'Imprimir Stream'
+          TabOrder = 2
           OnClick = btnImpressaoStreamClick
-          TabOrder = 3
         end
         object btnImpressaoPDFIndividual: TButton
           Left = 23
           Height = 25
-          Top = 39
+          Top = 33
           Width = 122
           Caption = 'Gerar PDF Individual'
+          TabOrder = 3
           OnClick = btnImpressaoPDFIndividualClick
-          TabOrder = 4
         end
         object btnImprimirTeste: TButton
           Left = 255
           Height = 25
-          Top = 39
+          Top = 33
           Width = 98
           Caption = 'Imprimir Teste'
           Font.Color = clRed
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
-          OnClick = btnImprimirTesteClick
           ParentFont = False
           TabOrder = 5
+          OnClick = btnImprimirTesteClick
         end
       end
       object PageControl3: TPageControl
         Left = 5
         Height = 98
-        Top = 394
+        Top = 414
         Width = 564
         ActivePage = TabSheet6
         TabIndex = 0
-        TabOrder = 5
+        TabOrder = 4
         object TabSheet6: TTabSheet
           Caption = 'Motores'
           ClientHeight = 71
@@ -778,7 +790,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           object Label80: TLabel
             Left = 2
             Height = 14
-            Top = 3
+            Top = 6
             Width = 92
             Caption = 'Motor Relatório *'
             Color = clBtnFace
@@ -793,7 +805,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           object Label31: TLabel
             Left = 224
             Height = 14
-            Top = 3
+            Top = 6
             Width = 136
             Caption = 'Layout Fortes Report / FPDF'
             Color = clBtnFace
@@ -803,7 +815,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           object Label83: TLabel
             Left = 3
             Height = 14
-            Top = 49
+            Top = 52
             Width = 200
             Caption = '*descomente no projeto o motor desejado'
             Color = clBtnFace
@@ -817,7 +829,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           object Label84: TLabel
             Left = 411
             Height = 14
-            Top = 3
+            Top = 5
             Width = 64
             Caption = 'Senha PDF **'
             ParentColor = False
@@ -839,38 +851,38 @@ object frmDemoBoleto: TfrmDemoBoleto
           object cbxMotorRelatorio: TComboBox
             Left = 2
             Height = 22
-            Top = 22
+            Top = 25
             Width = 198
             ItemHeight = 14
-            OnChange = cbxMotorRelatorioChange
             Style = csDropDownList
             TabOrder = 0
+            OnChange = cbxMotorRelatorioChange
           end
           object cbxLayOut: TComboBox
             Left = 224
             Height = 22
-            Top = 22
+            Top = 25
             Width = 161
             ItemHeight = 14
-            OnChange = cbxLayOutChange
             Style = csDropDownList
             TabOrder = 1
+            OnChange = cbxLayOutChange
           end
           object cbxImprimirVersoFatura: TCheckBox
             Left = 224
-            Height = 19
+            Height = 18
             Top = 49
-            Width = 138
+            Width = 136
             Caption = 'Imprimir Verso da Fatura'
             Enabled = False
-            TabOrder = 2
+            TabOrder = 3
           end
           object edtSenhaPDF: TEdit
             Left = 411
             Height = 22
             Top = 22
             Width = 135
-            TabOrder = 3
+            TabOrder = 2
           end
         end
         object TabSheet7: TTabSheet
@@ -879,32 +891,32 @@ object frmDemoBoleto: TfrmDemoBoleto
           ClientWidth = 556
           ImageIndex = 1
           object Label81: TLabel
-            Left = 3
+            Left = 18
             Height = 14
-            Top = 3
+            Top = 12
             Width = 19
             Caption = 'FR3'
             ParentColor = False
           end
           object Label82: TLabel
-            Left = 255
+            Left = 270
             Height = 14
-            Top = 3
+            Top = 12
             Width = 54
             Caption = 'Logomarca'
             ParentColor = False
           end
           object edtPathFR3: TEdit
-            Left = 2
+            Left = 17
             Height = 22
-            Top = 19
+            Top = 28
             Width = 247
             TabOrder = 0
           end
           object edtPathLogoMarca: TEdit
-            Left = 255
+            Left = 270
             Height = 22
-            Top = 19
+            Top = 28
             Width = 247
             TabOrder = 1
           end
@@ -913,7 +925,7 @@ object frmDemoBoleto: TfrmDemoBoleto
     end
     object TabSheet2: TTabSheet
       Caption = 'Conf. Carteira'
-      ClientHeight = 496
+      ClientHeight = 535
       ClientWidth = 978
       ImageIndex = 1
       object Label65: TLabel
@@ -940,123 +952,124 @@ object frmDemoBoleto: TfrmDemoBoleto
         Caption = 'Informações Sobre a Cobrança'
         ClientHeight = 98
         ClientWidth = 781
+        ParentBackground = False
         TabOrder = 0
         object Label1: TLabel
-          Left = 13
+          Left = 16
           Height = 14
-          Top = 8
+          Top = 3
           Width = 177
           Caption = 'Mensagem para Local de Pagamento'
           ParentColor = False
         end
         object Label2: TLabel
-          Left = 388
+          Left = 391
           Height = 14
-          Top = 8
+          Top = 3
           Width = 69
           Caption = 'Espécie Docto'
           ParentColor = False
         end
         object Label3: TLabel
-          Left = 468
+          Left = 471
           Height = 14
-          Top = 8
+          Top = 3
           Width = 73
           Caption = 'Espécie Moeda'
           ParentColor = False
         end
         object Label4: TLabel
-          Left = 549
+          Left = 552
           Height = 14
-          Top = 8
+          Top = 3
           Width = 31
           Caption = 'Aceite'
           ParentColor = False
         end
         object Label5: TLabel
-          Left = 618
+          Left = 621
           Height = 14
-          Top = 7
+          Top = 2
           Width = 38
           Caption = 'Carteira'
           ParentColor = False
         end
         object Label32: TLabel
-          Left = 13
+          Left = 16
           Height = 14
-          Top = 50
+          Top = 45
           Width = 31
           Caption = 'Banco'
           ParentColor = False
         end
         object Label49: TLabel
-          Left = 260
+          Left = 263
           Height = 14
-          Top = 50
+          Top = 45
           Width = 79
           Caption = 'Tipo Distribuição'
           ParentColor = False
         end
         object Label51: TLabel
-          Left = 516
+          Left = 519
           Height = 14
-          Top = 50
+          Top = 45
           Width = 106
           Caption = 'Responsável Emissão'
           ParentColor = False
         end
         object Label52: TLabel
-          Left = 644
+          Left = 647
           Height = 14
-          Top = 50
+          Top = 45
           Width = 76
           Caption = 'Tipo da Carteira'
           ParentColor = False
         end
         object Label64: TLabel
-          Left = 665
+          Left = 668
           Height = 14
-          Top = 7
+          Top = 2
           Width = 92
           Caption = 'Tipo da Documento'
           ParentColor = False
         end
         object Label50: TLabel
-          Left = 388
+          Left = 391
           Height = 14
-          Top = 50
+          Top = 45
           Width = 60
           Caption = 'Carac. Titulo'
           ParentColor = False
         end
         object edtLocalPag: TEdit
-          Left = 13
+          Left = 16
           Height = 22
-          Top = 24
+          Top = 19
           Width = 369
           TabOrder = 2
           Text = 'Pagar preferêncialmente nas agências do Bradesco'
         end
         object edtEspecieDoc: TEdit
-          Left = 388
+          Left = 391
           Height = 22
-          Top = 24
+          Top = 19
           Width = 73
           TabOrder = 3
           Text = 'DM'
         end
         object edtEspecieMod: TEdit
-          Left = 468
+          Left = 471
           Height = 22
-          Top = 24
+          Top = 19
           Width = 76
           TabOrder = 4
           Text = '$'
         end
         object cbxAceite: TComboBox
-          Left = 549
+          Left = 552
           Height = 22
-          Top = 24
+          Top = 19
           Width = 63
           ItemHeight = 14
           ItemIndex = 0
@@ -1068,17 +1081,17 @@ object frmDemoBoleto: TfrmDemoBoleto
           Text = 'Sim'
         end
         object edtCarteira: TEdit
-          Left = 618
+          Left = 621
           Height = 22
-          Top = 23
+          Top = 18
           Width = 41
           TabOrder = 0
           Text = '09'
         end
         object cbxBanco: TComboBox
-          Left = 13
+          Left = 16
           Height = 22
-          Top = 69
+          Top = 64
           Width = 241
           ItemHeight = 14
           Sorted = True
@@ -1086,45 +1099,45 @@ object frmDemoBoleto: TfrmDemoBoleto
           TabOrder = 6
         end
         object cbxTipoDistribuicao: TComboBox
-          Left = 260
+          Left = 263
           Height = 22
-          Top = 69
+          Top = 64
           Width = 122
           ItemHeight = 14
           Style = csDropDownList
           TabOrder = 7
         end
         object cbxResponsavelEmissao: TComboBox
-          Left = 516
+          Left = 519
           Height = 22
-          Top = 69
+          Top = 64
           Width = 122
           ItemHeight = 14
           Style = csDropDownList
           TabOrder = 9
         end
         object cbxTipoCarteira: TComboBox
-          Left = 644
+          Left = 647
           Height = 22
-          Top = 69
+          Top = 64
           Width = 122
           ItemHeight = 14
           Style = csDropDownList
           TabOrder = 10
         end
         object cbxTipoDocumento: TComboBox
-          Left = 665
+          Left = 668
           Height = 22
-          Top = 23
+          Top = 18
           Width = 101
           ItemHeight = 14
           Style = csDropDownList
           TabOrder = 1
         end
         object cbxCaracteristicaTitulo: TComboBox
-          Left = 388
+          Left = 391
           Height = 22
-          Top = 69
+          Top = 64
           Width = 122
           ItemHeight = 14
           Style = csDropDownList
@@ -1139,6 +1152,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Caption = 'CNAB'
         ClientHeight = 143
         ClientWidth = 245
+        ParentBackground = False
         TabOrder = 1
         object Label33: TLabel
           Left = 8
@@ -1186,6 +1200,14 @@ object frmDemoBoleto: TfrmDemoBoleto
           Top = 94
           Width = 76
           Caption = 'Prefix Remessa'
+          ParentColor = False
+        end
+        object Label36: TLabel
+          Left = 124
+          Height = 14
+          Top = 94
+          Width = 15
+          Caption = 'CIP'
           ParentColor = False
         end
         object cbxCNAB: TComboBox
@@ -1236,30 +1258,12 @@ object frmDemoBoleto: TfrmDemoBoleto
           Width = 101
           TabOrder = 5
         end
-      end
-      object GroupBox11: TGroupBox
-        Left = 0
-        Height = 70
-        Top = 298
-        Width = 249
-        Caption = 'Outras Configurações'
-        ClientHeight = 51
-        ClientWidth = 245
-        TabOrder = 2
-        object Label36: TLabel
-          Left = 8
-          Height = 14
-          Top = 0
-          Width = 15
-          Caption = 'CIP'
-          ParentColor = False
-        end
         object edtCIP: TEdit
-          Left = 8
+          Left = 124
           Height = 22
-          Top = 19
+          Top = 113
           Width = 66
-          TabOrder = 0
+          TabOrder = 6
         end
       end
       object GroupBox12: TGroupBox
@@ -1270,9 +1274,10 @@ object frmDemoBoleto: TfrmDemoBoleto
         Caption = 'Beneficiario'
         ClientHeight = 156
         ClientWidth = 526
-        TabOrder = 3
+        ParentBackground = False
+        TabOrder = 2
         object Label38: TLabel
-          Left = 11
+          Left = 24
           Height = 14
           Top = 0
           Width = 40
@@ -1280,7 +1285,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label39: TLabel
-          Left = 118
+          Left = 131
           Height = 14
           Top = 0
           Width = 58
@@ -1288,7 +1293,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label40: TLabel
-          Left = 225
+          Left = 238
           Height = 14
           Top = 0
           Width = 28
@@ -1296,7 +1301,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label41: TLabel
-          Left = 332
+          Left = 345
           Height = 14
           Top = 0
           Width = 46
@@ -1304,7 +1309,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label42: TLabel
-          Left = 11
+          Left = 24
           Height = 14
           Top = 51
           Width = 83
@@ -1312,7 +1317,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label43: TLabel
-          Left = 118
+          Left = 131
           Height = 14
           Top = 51
           Width = 45
@@ -1320,7 +1325,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label44: TLabel
-          Left = 225
+          Left = 238
           Height = 14
           Top = 51
           Width = 54
@@ -1328,7 +1333,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label47: TLabel
-          Left = 332
+          Left = 345
           Height = 14
           Top = 51
           Width = 48
@@ -1336,7 +1341,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object Label48: TLabel
-          Left = 11
+          Left = 24
           Height = 14
           Top = 106
           Width = 65
@@ -1344,63 +1349,63 @@ object frmDemoBoleto: TfrmDemoBoleto
           ParentColor = False
         end
         object edtAgencia: TEdit
-          Left = 11
+          Left = 24
           Height = 22
           Top = 19
           Width = 101
           TabOrder = 0
         end
         object edtAgenciaDV: TEdit
-          Left = 118
+          Left = 131
           Height = 22
           Top = 19
           Width = 101
           TabOrder = 1
         end
         object edtConta: TEdit
-          Left = 225
+          Left = 238
           Height = 22
           Top = 19
           Width = 101
           TabOrder = 2
         end
         object edtContaDV: TEdit
-          Left = 332
+          Left = 345
           Height = 22
           Top = 19
           Width = 101
           TabOrder = 3
         end
         object edtAgenciaContaDV: TEdit
-          Left = 11
+          Left = 24
           Height = 22
           Top = 70
           Width = 101
           TabOrder = 4
         end
         object edtConvenio: TEdit
-          Left = 118
+          Left = 131
           Height = 22
           Top = 70
           Width = 101
           TabOrder = 5
         end
         object edtModalidade: TEdit
-          Left = 225
+          Left = 238
           Height = 22
           Top = 70
           Width = 101
           TabOrder = 6
         end
         object edtOperacao: TEdit
-          Left = 332
+          Left = 345
           Height = 22
           Top = 70
           Width = 101
           TabOrder = 7
         end
         object edtCodigoCedente: TEdit
-          Left = 11
+          Left = 24
           Height = 22
           Top = 125
           Width = 101
@@ -1415,6 +1420,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Caption = 'WebServices '
         ClientHeight = 86
         ClientWidth = 526
+        ParentBackground = False
         TabOrder = 4
         object Label67: TLabel
           Left = 11
@@ -1506,7 +1512,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Height = 22
         Top = 466
         Width = 369
-        TabOrder = 6
+        TabOrder = 7
       end
       object btnRetorno: TButton
         Left = 630
@@ -1514,80 +1520,80 @@ object frmDemoBoleto: TfrmDemoBoleto
         Top = 464
         Width = 32
         Caption = '...'
+        TabOrder = 6
         OnClick = btnRetornoClick
-        TabOrder = 7
       end
       object PageControlConfg: TPageControl
         Left = 0
-        Height = 118
-        Top = 374
+        Height = 194
+        Top = 298
         Width = 249
         ActivePage = TabSheet8
         TabIndex = 0
-        TabOrder = 8
+        TabOrder = 3
         object TabSheet8: TTabSheet
           Caption = 'Conf. A'
-          ClientHeight = 91
+          ClientHeight = 167
           ClientWidth = 241
           object ckbImprimirMensagemPadrao: TCheckBox
             Left = 3
-            Height = 19
+            Height = 18
             Top = -1
-            Width = 216
+            Width = 214
             Caption = 'Imprimir Msg. Padrão Componente/Banco'
             TabOrder = 0
           end
           object ckbLerCedenteArquivoRetorno: TCheckBox
             Left = 3
-            Height = 19
-            Top = 37
-            Width = 159
+            Height = 18
+            Top = 41
+            Width = 157
             Caption = 'Ler Cedente do Arq. Retorno'
-            TabOrder = 1
+            TabOrder = 2
           end
           object ckbLerNossoNumeroCompleto: TCheckBox
             Left = 3
-            Height = 19
-            Top = 56
-            Width = 157
+            Height = 18
+            Top = 62
+            Width = 155
             Caption = 'Ler Nosso Número Completo'
-            TabOrder = 2
+            TabOrder = 3
           end
           object ckbRemoverAcentuacaoRemessa: TCheckBox
             Left = 3
-            Height = 19
-            Top = 18
-            Width = 173
+            Height = 18
+            Top = 20
+            Width = 171
             Caption = 'Remover Acentuação Remessa'
-            TabOrder = 3
+            TabOrder = 1
           end
         end
         object TabSheet9: TTabSheet
           Caption = 'Conf. B'
-          ClientHeight = 91
+          ClientHeight = 167
           ClientWidth = 241
           ImageIndex = 1
           object cxbEMV: TCheckBox
             Left = 3
-            Height = 19
+            Height = 18
             Top = 3
-            Width = 153
+            Width = 151
             Caption = 'Exibir EMV de testes fícticio'
             TabOrder = 0
           end
           object chkIndicadorPix: TCheckBox
             Left = 3
-            Height = 19
-            Top = 22
-            Width = 96
+            Height = 18
+            Top = 24
+            Width = 94
             Caption = 'Indicador de Pix'
             TabOrder = 1
           end
           object ckbEmHomologacao: TCheckBox
             Left = 3
-            Height = 19
-            Top = 41
-            Width = 135
+            Height = 18
+            Top = 45
+            Width = 133
             Caption = 'Boleto em Homologação'
             Checked = True
             State = cbChecked
@@ -1596,7 +1602,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         end
         object TabSheet10: TTabSheet
           Caption = 'Conf. C'
-          ClientHeight = 91
+          ClientHeight = 167
           ClientWidth = 241
           ImageIndex = 2
           object Label85: TLabel
@@ -1610,7 +1616,7 @@ object frmDemoBoleto: TfrmDemoBoleto
           object cbbWSConsulta: TComboBox
             Left = 3
             Height = 22
-            Top = 15
+            Top = 17
             Width = 166
             ItemHeight = 14
             ItemIndex = 0
@@ -1622,36 +1628,83 @@ object frmDemoBoleto: TfrmDemoBoleto
             TabOrder = 0
             Text = 'Consulta Lista'
           end
-          object chkLogComponente: TCheckBox
+        end
+        object TabSheet11: TTabSheet
+          Caption = 'Conf. D'
+          ClientHeight = 167
+          ClientWidth = 241
+          ImageIndex = 3
+          object Label87: TLabel
             Left = 3
-            Height = 19
+            Height = 14
+            Top = 0
+            Width = 112
+            Caption = 'Nível Log WebServices'
+            ParentColor = False
+          end
+          object Label88: TLabel
+            Left = 3
+            Height = 14
             Top = 42
-            Width = 156
-            Caption = 'Ativar LOG do Webservices'
-            TabOrder = 1
+            Width = 88
+            Caption = 'Nome Arquivo Log'
+            ParentColor = False
+          end
+          object Label89: TLabel
+            Left = 3
+            Height = 14
+            Top = 84
+            Width = 82
+            Caption = 'Path Arquivo Log'
+            ParentColor = False
           end
           object edtPathLog: TEdit
             Left = 3
             Height = 22
-            Top = 63
+            Top = 101
             Width = 197
-            TabOrder = 2
+            TabOrder = 3
           end
           object Button1: TButton
             Left = 206
             Height = 25
-            Top = 62
+            Top = 101
             Width = 32
             Caption = '...'
+            TabOrder = 4
             OnClick = Button1Click
-            TabOrder = 3
+          end
+          object edtArquivoLog: TEdit
+            Left = 3
+            Height = 22
+            Top = 59
+            Width = 197
+            TabOrder = 1
+          end
+          object Button2: TButton
+            Left = 206
+            Height = 25
+            Top = 59
+            Width = 32
+            Caption = '...'
+            TabOrder = 2
+            OnClick = Button1Click
+          end
+          object cbbLogNivel: TComboBox
+            Left = 3
+            Height = 22
+            Top = 17
+            Width = 235
+            ItemHeight = 14
+            Style = csDropDownList
+            TabOrder = 0
           end
         end
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'E-Mail'
-      ClientHeight = 496
+      ClientHeight = 535
       ClientWidth = 978
       Font.Color = clWindowText
       Font.Height = -13
@@ -1763,7 +1816,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Left = 488
         Height = 20
         Top = 91
-        Width = 43
+        Width = 41
         Caption = 'TLS'
         TabOrder = 4
       end
@@ -1771,7 +1824,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Left = 560
         Height = 20
         Top = 91
-        Width = 45
+        Width = 43
         Caption = 'SSL'
         TabOrder = 5
       end
@@ -1780,16 +1833,16 @@ object frmDemoBoleto: TfrmDemoBoleto
         Height = 24
         Top = 147
         Width = 304
-        TabOrder = 6
+        TabOrder = 7
       end
       object chkMostrarSenha: TCheckBox
         Left = 405
         Height = 20
         Top = 127
-        Width = 71
+        Width = 69
         Caption = 'Mostrar?'
+        TabOrder = 6
         OnClick = chkMostrarSenhaClick
-        TabOrder = 7
       end
       object edtPassword: TEdit
         Left = 336
@@ -1804,8 +1857,8 @@ object frmDemoBoleto: TfrmDemoBoleto
         Top = 147
         Width = 116
         Caption = 'Enviar Email'
-        OnClick = btnEnviarEmailClick
         TabOrder = 9
+        OnClick = btnEnviarEmailClick
       end
     end
   end
@@ -1817,33 +1870,34 @@ object frmDemoBoleto: TfrmDemoBoleto
     Caption = 'Ficha Bancária'
     ClientHeight = 94
     ClientWidth = 162
+    ParentBackground = False
     TabOrder = 1
     object Button3: TButton
-      Left = 8
+      Left = 11
       Height = 25
-      Top = 0
+      Top = 2
       Width = 145
       Caption = 'Zerar Lista de Boletos'
-      OnClick = Button3Click
       TabOrder = 0
+      OnClick = Button3Click
     end
     object btnBoletoIndividual: TButton
-      Left = 8
+      Left = 11
       Height = 25
-      Top = 30
+      Top = 32
       Width = 145
       Caption = 'Incluir Boleto'
-      OnClick = btnBoletoIndividualClick
       TabOrder = 1
+      OnClick = btnBoletoIndividualClick
     end
     object Button5: TButton
-      Left = 8
+      Left = 11
       Height = 25
-      Top = 60
+      Top = 62
       Width = 145
       Caption = 'Incluir Vários Boletos'
-      OnClick = Button5Click
       TabOrder = 2
+      OnClick = Button5Click
     end
   end
   object grpCNAB: TGroupBox
@@ -1854,24 +1908,25 @@ object frmDemoBoleto: TfrmDemoBoleto
     Caption = 'CNAB '
     ClientHeight = 67
     ClientWidth = 162
+    ParentBackground = False
     TabOrder = 2
     object btnGerarRemessa: TButton
       Left = 11
       Height = 25
-      Top = 0
+      Top = 5
       Width = 145
       Caption = 'Gerar Remessa'
-      OnClick = btnGerarRemessaClick
       TabOrder = 0
+      OnClick = btnGerarRemessaClick
     end
     object btnLerRetorno: TButton
       Left = 11
       Height = 25
-      Top = 30
+      Top = 35
       Width = 145
       Caption = 'Ler Retorno'
-      OnClick = btnLerRetornoClick
       TabOrder = 1
+      OnClick = btnLerRetornoClick
     end
   end
   object grpWebServicesApi: TGroupBox
@@ -1882,24 +1937,25 @@ object frmDemoBoleto: TfrmDemoBoleto
     Caption = 'WebServices / API '
     ClientHeight = 67
     ClientWidth = 162
+    ParentBackground = False
     TabOrder = 3
     object btnWSConsulta: TButton
-      Left = 8
+      Left = 11
       Height = 25
-      Top = 8
+      Top = 5
       Width = 145
       Caption = 'Consultar Boleto'
-      OnClick = btnWSConsultaClick
       TabOrder = 0
+      OnClick = btnWSConsultaClick
     end
     object btnWSRegistrar: TButton
-      Left = 8
+      Left = 11
       Height = 25
-      Top = 38
+      Top = 35
       Width = 145
       Caption = 'Registrar Boleto On Line'
-      OnClick = btnWSRegistrarClick
       TabOrder = 1
+      OnClick = btnWSRegistrarClick
     end
   end
   object GroupBox13: TGroupBox
@@ -1910,34 +1966,35 @@ object frmDemoBoleto: TfrmDemoBoleto
     Caption = 'Ini '
     ClientHeight = 69
     ClientWidth = 162
+    ParentBackground = False
     TabOrder = 4
     object btnConfigLer: TButton
       Left = 11
       Height = 25
-      Top = 8
+      Top = 6
       Width = 145
       Caption = 'Ler Ini Config'
-      OnClick = btnConfigLerClick
       TabOrder = 0
+      OnClick = btnConfigLerClick
     end
     object btnConfigGravar: TButton
       Left = 11
       Height = 25
-      Top = 38
+      Top = 36
       Width = 145
       Caption = 'Salvar Ini Config'
-      OnClick = btnConfigGravarClick
       TabOrder = 1
+      OnClick = btnConfigGravarClick
     end
   end
   object dlgFile: TOpenDialog
     Filter = '*.txt|*.txt|*.ret|*.ret|*.*|*.*'
     Options = []
-    Left = 608
-    Top = 352
+    Left = 711
+    Top = 371
   end
   object dlgSave: TSaveDialog
-    Left = 715
-    Top = 437
+    Left = 656
+    Top = 384
   end
 end

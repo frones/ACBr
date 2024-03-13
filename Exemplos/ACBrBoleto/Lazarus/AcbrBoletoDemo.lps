@@ -9,8 +9,8 @@
         <Filename Value="AcbrBoletoDemo.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos Y="12"/>
-        <UsageCount Value="21"/>
+        <CursorPos X="67" Y="14"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
@@ -21,9 +21,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="175"/>
-        <CursorPos X="124" Y="37"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="293"/>
+        <CursorPos X="5" Y="312"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -32,14 +32,15 @@
     <JumpHistory HistoryIndex="2">
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="AcbrBoletoDemo.lpr"/>
-        <Caret Line="14"/>
+        <Caret Line="45" Column="23" TopLine="43"/>
       </Position>
       <Position>
         <Filename Value="uDemoBoleto.pas"/>
-        <Caret Line="37" Column="125" TopLine="175"/>
+        <Caret Line="70" Column="57" TopLine="43"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemoBoleto.pas"/>
+        <Caret Line="1272" Column="111" TopLine="1284"/>
       </Position>
     </JumpHistory>
     <RunParams>

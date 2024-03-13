@@ -49,16 +49,16 @@ type
     function GetSoapAction: string;
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -158,7 +158,7 @@ begin
     Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.SoapAction;
 end;
 
-function TACBrNFSeXWebserviceDeISS203.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -175,7 +175,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -192,7 +192,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -209,7 +209,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -226,7 +226,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -243,7 +243,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -260,7 +260,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -277,7 +277,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -294,7 +294,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceDeISS203.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -310,7 +310,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceDeISS203.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceDeISS203.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

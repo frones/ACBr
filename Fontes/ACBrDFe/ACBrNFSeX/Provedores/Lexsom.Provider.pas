@@ -45,12 +45,12 @@ uses
 type
   TACBrNFSeXWebserviceLexsom = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -120,7 +120,7 @@ end;
 
 { TACBrNFSeXWebserviceLexsom }
 
-function TACBrNFSeXWebserviceLexsom.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLexsom.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -135,7 +135,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceLexsom.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLexsom.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -150,7 +150,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceLexsom.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLexsom.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -165,7 +165,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceLexsom.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLexsom.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -180,7 +180,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceLexsom.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLexsom.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -195,7 +195,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceLexsom.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLexsom.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

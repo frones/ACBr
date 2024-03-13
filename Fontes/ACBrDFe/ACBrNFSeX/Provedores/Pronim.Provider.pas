@@ -47,12 +47,12 @@ type
   TACBrNFSeXWebservicePronim = class(TACBrNFSeXWebserviceSoap11)
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -70,16 +70,16 @@ type
 
   TACBrNFSeXWebservicePronim202 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -173,7 +173,7 @@ end;
 
 { TACBrNFSeXWebservicePronim }
 
-function TACBrNFSeXWebservicePronim.Recepcionar(ACabecalho,
+function TACBrNFSeXWebservicePronim.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -190,7 +190,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim.ConsultarSituacao(ACabecalho,
+function TACBrNFSeXWebservicePronim.ConsultarSituacao(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -207,7 +207,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebservicePronim.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -224,7 +224,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebservicePronim.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -241,7 +241,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebservicePronim.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -258,7 +258,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePronim.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -381,7 +381,7 @@ end;
 
 { TACBrNFSeXWebservicePronim202 }
 
-function TACBrNFSeXWebservicePronim202.Recepcionar(ACabecalho,
+function TACBrNFSeXWebservicePronim202.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -398,7 +398,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebservicePronim202.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -415,7 +415,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebservicePronim202.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -436,7 +436,7 @@ begin
  }
 end;
 
-function TACBrNFSeXWebservicePronim202.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -453,7 +453,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -470,7 +470,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -487,7 +487,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -504,7 +504,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -521,7 +521,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePronim202.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -537,7 +537,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronim202.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebservicePronim202.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

@@ -451,21 +451,18 @@ begin
     AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.WSChaveAcesso', WSChaveAcesso);
     AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.WSChaveAutoriz', WSChaveAutoriz);
     // Dados do Emitente
-    with DadosEmitente do
-    begin
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.NomeFantasia', NomeFantasia);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.InscricaoEstadual', InscricaoEstadual);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Endereco', Endereco);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Numero', Numero);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CEP', CEP);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Bairro', Bairro);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Complemento', Complemento);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Municipio', Municipio);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.UF', UF);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CodigoMunicipio', CodigoMunicipio);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Telefone', Telefone);
-      AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Email', Email);
-    end;
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.NomeFantasia', DadosEmitente.NomeFantasia);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.InscricaoEstadual', DadosEmitente.InscricaoEstadual);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Endereco', DadosEmitente.Endereco);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Numero', DadosEmitente.Numero);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CEP', DadosEmitente.CEP);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Bairro', DadosEmitente.Bairro);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Complemento', DadosEmitente.Complemento);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Municipio', DadosEmitente.Municipio);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.UF', DadosEmitente.UF);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CodigoMunicipio', DadosEmitente.CodigoMunicipio);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Telefone', DadosEmitente.Telefone);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Email', DadosEmitente.Email);
   end;
 end;
 
@@ -494,21 +491,18 @@ begin
     WSChaveAcesso := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.WSChaveAcesso', WSChaveAcesso);
     WSChaveAutoriz := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.WSChaveAutoriz', WSChaveAutoriz);
     // Dados do Emitente
-    with DadosEmitente do
-    begin
-      NomeFantasia := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.NomeFantasia', NomeFantasia);
-      InscricaoEstadual := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.InscricaoEstadual', InscricaoEstadual);
-      Endereco := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Endereco', Endereco);
-      Numero := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Numero', Numero);
-      CEP := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CEP', CEP);
-      Bairro := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Bairro', Bairro);
-      Complemento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Complemento', Complemento);
-      Municipio := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Municipio', Municipio);
-      UF := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.UF', UF);
-      CodigoMunicipio := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CodigoMunicipio', CodigoMunicipio);
-      Telefone := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Telefone', Telefone);
-      Email := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Email', Email);
-    end;
+    DadosEmitente.NomeFantasia := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.NomeFantasia', DadosEmitente.NomeFantasia);
+    DadosEmitente.InscricaoEstadual := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.InscricaoEstadual', DadosEmitente.InscricaoEstadual);
+    DadosEmitente.Endereco := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Endereco', DadosEmitente.Endereco);
+    DadosEmitente.Numero := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Numero', DadosEmitente.Numero);
+    DadosEmitente.CEP := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CEP', DadosEmitente.CEP);
+    DadosEmitente.Bairro := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Bairro', DadosEmitente.Bairro);
+    DadosEmitente.Complemento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Complemento', DadosEmitente.Complemento);
+    DadosEmitente.Municipio := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Municipio', DadosEmitente.Municipio);
+    DadosEmitente.UF := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.UF', DadosEmitente.UF);
+    DadosEmitente.CodigoMunicipio := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.CodigoMunicipio', DadosEmitente.CodigoMunicipio);
+    DadosEmitente.Telefone := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Telefone', DadosEmitente.Telefone);
+    DadosEmitente.Email := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Emitente.Dados.Email', DadosEmitente.Email);
   end;
 end;
 
@@ -689,10 +683,7 @@ begin
   if not Assigned(TConfiguracoesNFSe(Owner).Owner) then Exit;
   if not Assigned(TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider) then Exit;
 
-  with TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider.ConfigGeral do
-  begin
-    TabServicosExt := FTabServicosExt;
-  end;
+  TACBrNFSeX(TConfiguracoesNFSe(Owner).Owner).Provider.ConfigGeral.TabServicosExt := FTabServicosExt;
 end;
 
 function TArquivosConfNFSe.GetPathNFSe(Data: TDateTime = 0;

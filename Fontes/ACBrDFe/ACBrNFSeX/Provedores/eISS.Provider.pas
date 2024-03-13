@@ -55,8 +55,8 @@ type
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
   public
-    function GerarToken(ACabecalho, AMSG: String): string; override;
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function GerarToken(const ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -407,7 +407,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceeISS.GerarToken(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceeISS.GerarToken(const ACabecalho, AMSG: String): string;
 begin
   FpMetodo := tmGerarToken;
   FPMsgOrig := AMSG;
@@ -415,7 +415,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceeISS.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceeISS.Recepcionar(const ACabecalho, AMSG: String): string;
 begin
   FpMetodo := tmRecepcionar;
   FPMsgOrig := AMSG;

@@ -51,10 +51,10 @@ type
   private
     function GetNameSpace: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -144,7 +144,7 @@ begin
   Result := 'xmlns:lot="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceSiat.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceSiat.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -160,7 +160,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiat.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSiat.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -176,7 +176,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiat.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSiat.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -191,7 +191,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiat.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSiat.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

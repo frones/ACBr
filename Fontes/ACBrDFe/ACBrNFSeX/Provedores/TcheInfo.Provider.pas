@@ -45,9 +45,9 @@ uses
 type
   TACBrNFSeXWebserviceTcheInfo204 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -166,7 +166,7 @@ end;
 
 { TACBrNFSeXWebserviceTcheInfo204 }
 
-function TACBrNFSeXWebserviceTcheInfo204.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceTcheInfo204.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -193,7 +193,7 @@ begin
   Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
-function TACBrNFSeXWebserviceTcheInfo204.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceTcheInfo204.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -211,7 +211,7 @@ begin
                      ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceTcheInfo204.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTcheInfo204.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

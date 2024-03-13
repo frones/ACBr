@@ -46,13 +46,13 @@ type
   TACBrNFSeXWebserviceBHISS = class(TACBrNFSeXWebserviceSoap11)
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -81,7 +81,7 @@ uses
 
 { TACBrNFSeXWebserviceBHISS }
 
-function TACBrNFSeXWebserviceBHISS.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -97,7 +97,7 @@ begin
                      ['xmlns:ws="http://ws.bhiss.pbh.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceBHISS.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -113,7 +113,7 @@ begin
                      ['xmlns:ws="http://ws.bhiss.pbh.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceBHISS.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -129,7 +129,7 @@ begin
                      ['xmlns:ws="http://ws.bhiss.pbh.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceBHISS.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -145,7 +145,7 @@ begin
                      ['xmlns:ws="http://ws.bhiss.pbh.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceBHISS.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -161,7 +161,7 @@ begin
                      ['xmlns:ws="http://ws.bhiss.pbh.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceBHISS.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -177,7 +177,7 @@ begin
                      ['xmlns:ws="http://ws.bhiss.pbh.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceBHISS.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBHISS.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

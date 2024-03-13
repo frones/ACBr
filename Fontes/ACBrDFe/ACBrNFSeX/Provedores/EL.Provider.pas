@@ -47,14 +47,14 @@ type
 
   TACBrNFSeXWebserviceEL = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function AbrirSessao(ACabecalho, AMSG: String): string; override;
-    function FecharSessao(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function AbrirSessao(const ACabecalho, AMSG: String): string; override;
+    function FecharSessao(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -125,16 +125,16 @@ type
 
   TACBrNFSeXWebserviceEL204 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -215,7 +215,7 @@ end;
 
 { TACBrNFSeXWebserviceEL204 }
 
-function TACBrNFSeXWebserviceEL204.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceEL204.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -234,7 +234,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceEL204.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -253,7 +253,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceEL204.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -272,7 +272,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceEL204.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -291,7 +291,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceEL204.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -310,7 +310,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceEL204.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -329,7 +329,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceEL204.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -348,7 +348,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceEL204.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -367,7 +367,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL204.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -385,7 +385,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceEL204.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceEL204.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1505,7 +1505,7 @@ begin
   Result := RemoverDeclaracaoXML(Result);
 end;
 
-function TACBrNFSeXWebserviceEL.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL.Recepcionar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1513,7 +1513,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.AbrirSessao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL.AbrirSessao(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1521,7 +1521,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.FecharSessao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL.FecharSessao(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1529,7 +1529,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.ConsultarSituacao(ACabecalho,
+function TACBrNFSeXWebserviceEL.ConsultarSituacao(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1538,7 +1538,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL.ConsultarLote(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1546,7 +1546,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceEL.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1555,7 +1555,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1563,7 +1563,7 @@ begin
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
-function TACBrNFSeXWebserviceEL.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEL.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 

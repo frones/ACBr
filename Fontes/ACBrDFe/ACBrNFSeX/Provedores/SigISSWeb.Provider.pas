@@ -54,9 +54,9 @@ type
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
   public
-    function GerarToken(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarToken(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -555,7 +555,7 @@ begin
     aHeaderReq.AddHeader('Authorization', xToken);
 end;
 
-function TACBrNFSeXWebserviceSigISSWeb.GerarToken(ACabecalho,
+function TACBrNFSeXWebserviceSigISSWeb.GerarToken(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -568,7 +568,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebserviceSigISSWeb.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigISSWeb.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -581,7 +581,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebserviceSigISSWeb.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSigISSWeb.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

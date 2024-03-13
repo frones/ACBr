@@ -45,13 +45,13 @@ uses
 type
   TACBrNFSeXWebservicePublica = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -86,7 +86,7 @@ uses
 
 { TACBrNFSeXWebservicePublica }
 
-function TACBrNFSeXWebservicePublica.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -101,7 +101,7 @@ begin
                      ['xmlns:ns2="http://service.nfse.integracao.ws.publica/"']);
 end;
 
-function TACBrNFSeXWebservicePublica.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -116,7 +116,7 @@ begin
                      ['xmlns:ns2="http://service.nfse.integracao.ws.publica/"']);
 end;
 
-function TACBrNFSeXWebservicePublica.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -131,7 +131,7 @@ begin
                      ['xmlns:ns2="http://service.nfse.integracao.ws.publica/"']);
 end;
 
-function TACBrNFSeXWebservicePublica.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -146,7 +146,7 @@ begin
                      ['xmlns:ns2="http://service.nfse.integracao.ws.publica/"']);
 end;
 
-function TACBrNFSeXWebservicePublica.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -161,7 +161,7 @@ begin
                      ['xmlns:ns2="http://service.nfse.integracao.ws.publica/"']);
 end;
 
-function TACBrNFSeXWebservicePublica.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -176,7 +176,7 @@ begin
                      ['xmlns:ns2="http://service.nfse.integracao.ws.publica/"']);
 end;
 
-function TACBrNFSeXWebservicePublica.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePublica.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

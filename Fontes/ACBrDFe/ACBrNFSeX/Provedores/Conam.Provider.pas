@@ -54,11 +54,11 @@ uses
 type
   TACBrNFSeXWebserviceConam = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarLinkNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLinkNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -1217,7 +1217,7 @@ end;
 
 { TACBrNFSeXWebserviceConam }
 
-function TACBrNFSeXWebserviceConam.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceConam.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1233,7 +1233,7 @@ begin
                      ['xmlns:nfe="NFe"']);
 end;
 
-function TACBrNFSeXWebserviceConam.ConsultarSituacao(ACabecalho,
+function TACBrNFSeXWebserviceConam.ConsultarSituacao(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1249,7 +1249,7 @@ begin
                      ['xmlns:nfe="NFe"']);
 end;
 
-function TACBrNFSeXWebserviceConam.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceConam.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1265,7 +1265,7 @@ begin
                      ['xmlns:nfe="NFe"']);
 end;
 
-function TACBrNFSeXWebserviceConam.ConsultarLinkNFSe(ACabecalho,
+function TACBrNFSeXWebserviceConam.ConsultarLinkNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1281,7 +1281,7 @@ begin
                      ['xmlns:nfe="NFe"']);
 end;
 
-function TACBrNFSeXWebserviceConam.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceConam.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

@@ -50,12 +50,12 @@ type
     function GetSoapAction: string;
     function GetAliasCidade: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -145,7 +145,7 @@ begin
   Result := 'http://' + AliasCidade + '.horusdm.com.br/service?wsdl#';
 end;
 
-function TACBrNFSeXWebserviceHorus.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceHorus.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -160,7 +160,7 @@ begin
                      [Namespace]);
 end;
 
-function TACBrNFSeXWebserviceHorus.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceHorus.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -175,7 +175,7 @@ begin
                      [Namespace]);
 end;
 
-function TACBrNFSeXWebserviceHorus.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceHorus.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -190,7 +190,7 @@ begin
                      [Namespace]);
 end;
 
-function TACBrNFSeXWebserviceHorus.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceHorus.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -205,7 +205,7 @@ begin
                      [Namespace]);
 end;
 
-function TACBrNFSeXWebserviceHorus.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceHorus.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -220,7 +220,7 @@ begin
                      [Namespace]);
 end;
 
-function TACBrNFSeXWebserviceHorus.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceHorus.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

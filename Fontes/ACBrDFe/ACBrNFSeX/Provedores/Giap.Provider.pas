@@ -51,9 +51,9 @@ type
   protected
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -597,7 +597,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceGiap.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceGiap.Recepcionar(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -605,7 +605,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceGiap.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceGiap.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -613,7 +613,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceGiap.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGiap.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 

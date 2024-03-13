@@ -47,16 +47,16 @@ type
   private
     function GetDadosUsuario: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -159,7 +159,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -176,7 +176,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -193,7 +193,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -210,7 +210,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -227,7 +227,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -244,7 +244,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -261,7 +261,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -278,7 +278,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -295,7 +295,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceFiorilli200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -311,7 +311,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli200.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

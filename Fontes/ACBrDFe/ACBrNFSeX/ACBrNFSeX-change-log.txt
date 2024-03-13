@@ -42,10 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2024
+-- Diversos --
+[*] Melhorias no código usando o FixInsight (ainda não ficou 100%).
+  Por: Italo Giurizzato Junior
+
 12/03/2024
 -- Infisc.GravarXml --
 [*] Alteração visando gerar a tag CodigoPais do tomador independente se o tomador é
-    estrageiro ou não.
+    estrangeiro ou não.
   Por: Italo Giurizzato Junior
 
 11/03/2024

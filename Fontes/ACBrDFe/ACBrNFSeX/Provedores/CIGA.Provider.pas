@@ -46,12 +46,12 @@ type
   TACBrNFSeXWebserviceCIGA = class(TACBrNFSeXWebserviceSoap11)
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
     procedure LevantarExcecaoHttp; override;
@@ -116,7 +116,7 @@ begin
   // Não executar nada aqui
 end;
 
-function TACBrNFSeXWebserviceCIGA.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCIGA.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -132,7 +132,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceCIGA.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCIGA.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -148,7 +148,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceCIGA.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCIGA.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -164,7 +164,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceCIGA.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCIGA.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -181,7 +181,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceCIGA.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCIGA.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -197,7 +197,7 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-function TACBrNFSeXWebserviceCIGA.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCIGA.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

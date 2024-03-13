@@ -45,16 +45,16 @@ uses
 type
   TACBrNFSeXWebservicefintelISS200 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -160,7 +160,7 @@ end;
 
 { TACBrNFSeXWebservicefintelISS200 }
 
-function TACBrNFSeXWebservicefintelISS200.Recepcionar(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -177,7 +177,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -194,7 +194,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -211,7 +211,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -228,7 +228,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -245,7 +245,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -262,7 +262,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -279,7 +279,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -296,7 +296,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicefintelISS200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -312,7 +312,7 @@ begin
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
 end;
 
-function TACBrNFSeXWebservicefintelISS200.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebservicefintelISS200.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

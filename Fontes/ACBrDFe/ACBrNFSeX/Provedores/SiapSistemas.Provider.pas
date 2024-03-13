@@ -48,11 +48,11 @@ type
     function GetNamespace: string;
     function GetSoapAction: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     property Namespace: string read GetNamespace;
     property SoapAction: string read GetSoapAction;
@@ -210,7 +210,7 @@ begin
     'RPSaction/';
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas203.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -226,7 +226,7 @@ begin
                      ['Enviarloterpsresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas203.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -242,7 +242,7 @@ begin
                      ['Enviarloterpssincronoresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas203.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -258,7 +258,7 @@ begin
                      ['Gerarnfseresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas203.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -274,7 +274,7 @@ begin
                      ['Consultarloterpsresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas203.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSiapSistemas203.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

@@ -51,11 +51,11 @@ type
   private
     function GetDadosUsuario: string;
   public
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -705,7 +705,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceSimple.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSimple.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -720,7 +720,7 @@ begin
   Result := Executar('', Request, ['LeRPSeGravaNotaResult'], []);
 end;
 
-function TACBrNFSeXWebserviceSimple.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceSimple.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -735,7 +735,7 @@ begin
   Result := Executar('', Request, ['ConsultaNotaporRPSResult'], []);
 end;
 
-function TACBrNFSeXWebserviceSimple.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSimple.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -749,7 +749,7 @@ begin
   Result := Executar('', Request, ['ConsultaNotaResult'], []);
 end;
 
-function TACBrNFSeXWebserviceSimple.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceSimple.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -764,7 +764,7 @@ begin
   Result := Executar('', Request, ['ListarNotasResult'], []);
 end;
 
-function TACBrNFSeXWebserviceSimple.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSimple.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

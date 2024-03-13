@@ -46,16 +46,16 @@ uses
 type
   TACBrNFSeXWebserviceModernizacaoPublica202 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -172,7 +172,7 @@ end;
 
 { TACBrNFSeXWebserviceModernizacaoPublica202 }
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -189,7 +189,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -206,7 +206,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -223,7 +223,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -240,7 +240,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -257,7 +257,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -274,7 +274,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -291,7 +291,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -308,7 +308,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceModernizacaoPublica202.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -324,7 +324,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica202.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

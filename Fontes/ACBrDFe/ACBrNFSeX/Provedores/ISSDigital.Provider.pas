@@ -48,16 +48,16 @@ uses
 type
   TACBrNFSeXWebserviceISSDigital200 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -159,7 +159,7 @@ end;
 
 { TACBrNFSeXWebserviceISSDigital200 }
 
-function TACBrNFSeXWebserviceISSDigital200.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -175,7 +175,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -191,7 +191,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -207,7 +207,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -223,7 +223,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -239,7 +239,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -255,7 +255,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -271,7 +271,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -287,7 +287,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSDigital200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -302,7 +302,7 @@ begin
                      ['xmlns:ws="http://ws.supernova.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSDigital200.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSDigital200.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

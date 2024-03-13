@@ -47,11 +47,11 @@ type
   private
     function GetNamespace: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -149,7 +149,7 @@ begin
   Result := 'xmlns="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente200.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -163,7 +163,7 @@ begin
   Result := Executar('RecepcionarLoteRps', Request, [], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -177,7 +177,7 @@ begin
   Result := Executar('GerarNfse', Request, [], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -191,7 +191,7 @@ begin
   Result := Executar('ConsultarLoteRps', Request, [], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceNotaInteligente200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -204,7 +204,7 @@ begin
   Result := Executar('CancelarNfse', Request, [], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente200.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

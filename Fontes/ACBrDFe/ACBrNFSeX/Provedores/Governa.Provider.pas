@@ -48,9 +48,9 @@ uses
 type
   TACBrNFSeXWebserviceGoverna = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -554,7 +554,7 @@ end;
 
 { TACBrNFSeXWebserviceGoverna }
 
-function TACBrNFSeXWebserviceGoverna.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceGoverna.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -570,7 +570,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGoverna.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceGoverna.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -586,7 +586,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGoverna.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGoverna.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

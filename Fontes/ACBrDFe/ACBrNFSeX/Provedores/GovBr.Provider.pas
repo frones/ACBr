@@ -45,12 +45,12 @@ uses
 type
   TACBrNFSeXWebserviceGovBr = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -120,7 +120,7 @@ end;
 
 { TACBrNFSeXWebserviceGovBr }
 
-function TACBrNFSeXWebserviceGovBr.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGovBr.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -135,7 +135,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGovBr.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGovBr.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -150,7 +150,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGovBr.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGovBr.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -165,7 +165,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGovBr.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGovBr.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -180,7 +180,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGovBr.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGovBr.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -195,7 +195,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceGovBr.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGovBr.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

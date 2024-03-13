@@ -47,16 +47,16 @@ type
   private
     function GetNameSpace: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     property NameSpace: string read GetNameSpace;
   end;
@@ -134,7 +134,7 @@ begin
   Result := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
 end;
 
-function TACBrNFSeXWebserviceMitra200.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -151,7 +151,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -168,7 +168,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -185,7 +185,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -202,7 +202,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -219,7 +219,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -236,7 +236,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -253,7 +253,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -270,7 +270,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceMitra200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -286,7 +286,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra200.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

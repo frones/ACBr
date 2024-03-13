@@ -46,11 +46,11 @@ uses
 type
   TACBrNFSeXWebserviceSystemPro201 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -140,7 +140,7 @@ end;
 
 { TACBrNFSeXWebserviceSystemPro201 }
 
-function TACBrNFSeXWebserviceSystemPro201.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSystemPro201.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -157,7 +157,7 @@ begin
                      ['xmlns:ns2="http://NFSe.wsservices.systempro.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceSystemPro201.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSystemPro201.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -174,7 +174,7 @@ begin
                      ['xmlns:ns2="http://NFSe.wsservices.systempro.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceSystemPro201.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceSystemPro201.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -191,7 +191,7 @@ begin
                      ['xmlns:ns2="http://NFSe.wsservices.systempro.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceSystemPro201.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSystemPro201.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -207,7 +207,7 @@ begin
                      ['xmlns:ns2="http://NFSe.wsservices.systempro.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceSystemPro201.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSystemPro201.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

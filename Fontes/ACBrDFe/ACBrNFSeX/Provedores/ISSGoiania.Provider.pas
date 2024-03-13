@@ -45,8 +45,8 @@ uses
 type
   TACBrNFSeXWebserviceISSGoiania200 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -394,7 +394,7 @@ end;
 
 { TACBrNFSeXWebserviceISSGoiania200 }
 
-function TACBrNFSeXWebserviceISSGoiania200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSGoiania200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -410,7 +410,7 @@ begin
                      ['xmlns:ws="http://nfse.goiania.go.gov.br/ws/"']);
 end;
 
-function TACBrNFSeXWebserviceISSGoiania200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSGoiania200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

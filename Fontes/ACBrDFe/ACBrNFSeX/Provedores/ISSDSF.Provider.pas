@@ -51,14 +51,14 @@ type
   private
     function GetNameSpace: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function TesteEnvio(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function ConsultarSeqRps(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function TesteEnvio(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSeqRps(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -1616,7 +1616,7 @@ begin
   Result := 'xmlns:lot="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceISSDSF.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSDSF.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1631,7 +1631,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceISSDSF.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1646,7 +1646,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.TesteEnvio(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSDSF.TesteEnvio(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -1660,7 +1660,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSDSF.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1674,7 +1674,7 @@ begin
   Result := Executar('', Request, ['consultarLoteReturn'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSDSF.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1688,7 +1688,7 @@ begin
   Result := Executar('', Request, ['consultarNFSeRpsReturn'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.ConsultarSeqRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSDSF.ConsultarSeqRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -1701,7 +1701,7 @@ begin
   Result := Executar('', Request, ['consultarSequencialRpsReturn'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSDSF.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -1714,7 +1714,7 @@ begin
   Result := Executar('', Request, ['consultarNotaReturn'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSDSF.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSDSF.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

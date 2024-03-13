@@ -49,10 +49,10 @@ uses
 type
   TACBrNFSeXWebserviceeGoverneISS = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -522,7 +522,7 @@ end;
 
 { TACBrNFSeXWebserviceeGoverneISS }
 
-function TACBrNFSeXWebserviceeGoverneISS.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceeGoverneISS.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -541,7 +541,7 @@ begin
                       'xmlns:eis2="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Contribuinte"']);
 end;
 
-function TACBrNFSeXWebserviceeGoverneISS.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceeGoverneISS.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -560,7 +560,7 @@ begin
                       'xmlns:eis2="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Contribuinte"']);
 end;
 
-function TACBrNFSeXWebserviceeGoverneISS.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceeGoverneISS.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -579,7 +579,7 @@ begin
                       'xmlns:eis2="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Contribuinte"']);
 end;
 
-function TACBrNFSeXWebserviceeGoverneISS.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceeGoverneISS.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

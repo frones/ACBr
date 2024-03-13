@@ -51,9 +51,9 @@ type
   private
     function GetSoapAction: string;
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -90,7 +90,7 @@ type
 
   TACBrNFSeXWebserviceSigISS103 = class(TACBrNFSeXWebserviceSigISS)
   public
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -513,7 +513,7 @@ begin
     Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.SoapAction;
 end;
 
-function TACBrNFSeXWebserviceSigISS.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigISS.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -525,7 +525,7 @@ begin
                       'xmlns:urn="' + SoapAction + '"']);
 end;
 
-function TACBrNFSeXWebserviceSigISS.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigISS.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -537,7 +537,7 @@ begin
                       'xmlns:urn="' + SoapAction + '"']);
 end;
 
-function TACBrNFSeXWebserviceSigISS.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSigISS.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -561,7 +561,7 @@ end;
 
 { TACBrNFSeXWebserviceSigISS103 }
 
-function TACBrNFSeXWebserviceSigISS103.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigISS103.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;

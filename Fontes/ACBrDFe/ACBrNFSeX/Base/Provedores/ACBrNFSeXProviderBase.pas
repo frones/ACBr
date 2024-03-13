@@ -77,7 +77,7 @@ type
 
   protected
     FAOwner: TACBrDFe;
-    PrefixoTS: string;
+    FPrefixoTS: string;
 
     procedure Configuracao; virtual;
     procedure CarregarURL; virtual;
@@ -89,7 +89,7 @@ type
     procedure SalvarPDFNfse(const aNome: string; const aPDF: AnsiString);
     procedure SalvarXmlEvento(const aNome: string; const  aEvento: AnsiString);
 
-    function CarregarXmlNfse(aNota: TNotaFiscal; aXml: string): TNotaFiscal;
+    function CarregarXmlNfse(aNota: TNotaFiscal; const aXml: string): TNotaFiscal;
 
     function GetWebServiceURL(const AMetodo: TMetodo): string;
     function SetIdSignatureValue(const ConteudoXml, docElement, IdAttr: string): string;  virtual;
@@ -634,54 +634,45 @@ begin
     FormatoArqNota := tfaXml;
     FormatoArqEvento := tfaXml;
 
-    with Autenticacao do
-    begin
-      RequerCertificado := True;
-      RequerLogin := False;
-      RequerChaveAcesso := False;
-      RequerChaveAutorizacao := False;
-      RequerFraseSecreta := False;
-    end;
+    Autenticacao.RequerCertificado := True;
+    Autenticacao.RequerLogin := False;
+    Autenticacao.RequerChaveAcesso := False;
+    Autenticacao.RequerChaveAutorizacao := False;
+    Autenticacao.RequerFraseSecreta := False;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := False;
-      EnviarLoteSincrono := False;
-      EnviarUnitario := False;
-      ConsultarSituacao := False;
-      ConsultarLote := False;
-      ConsultarRps := False;
-      ConsultarNfse := False;
-      ConsultarFaixaNfse := False;
-      ConsultarServicoPrestado := False;
-      ConsultarServicoTomado := False;
-      CancelarNfse := False;
-      SubstituirNfse := False;
-      GerarToken := False;
-      EnviarEvento := False;
-      ConsultarEvento := False;
-      ConsultarDFe := False;
-      ConsultarParam := False;
-      ConsultarSeqRps := False;
-      ConsultarLinkNfse := False;
-      ConsultarNfseChave := False;
-      TestarEnvio := False;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := False;
+    ServicosDisponibilizados.EnviarLoteSincrono := False;
+    ServicosDisponibilizados.EnviarUnitario := False;
+    ServicosDisponibilizados.ConsultarSituacao := False;
+    ServicosDisponibilizados.ConsultarLote := False;
+    ServicosDisponibilizados.ConsultarRps := False;
+    ServicosDisponibilizados.ConsultarNfse := False;
+    ServicosDisponibilizados.ConsultarFaixaNfse := False;
+    ServicosDisponibilizados.ConsultarServicoPrestado := False;
+    ServicosDisponibilizados.ConsultarServicoTomado := False;
+    ServicosDisponibilizados.CancelarNfse := False;
+    ServicosDisponibilizados.SubstituirNfse := False;
+    ServicosDisponibilizados.GerarToken := False;
+    ServicosDisponibilizados.EnviarEvento := False;
+    ServicosDisponibilizados.ConsultarEvento := False;
+    ServicosDisponibilizados.ConsultarDFe := False;
+    ServicosDisponibilizados.ConsultarParam := False;
+    ServicosDisponibilizados.ConsultarSeqRps := False;
+    ServicosDisponibilizados.ConsultarLinkNfse := False;
+    ServicosDisponibilizados.ConsultarNfseChave := False;
+    ServicosDisponibilizados.TestarEnvio := False;
 
-    with TACBrNFSeX(FAOwner) do
-    begin
-      Provedor := Configuracoes.Geral.Provedor;
-      Versao := Configuracoes.Geral.Versao;
-      xMunicipio := Configuracoes.Geral.xMunicipio;
+    Provedor := TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor;
+    Versao := TACBrNFSeX(FAOwner).Configuracoes.Geral.Versao;
+    xMunicipio := TACBrNFSeX(FAOwner).Configuracoes.Geral.xMunicipio;
 
-      if Configuracoes.WebServices.AmbienteCodigo = 1 then
-        Ambiente := taProducao
-      else
-        Ambiente := taHomologacao;
+    if TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+      Ambiente := taProducao
+    else
+      Ambiente := taHomologacao;
 
-      CodIBGE := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-      IniTabServicos := Configuracoes.Arquivos.IniTabServicos;
-    end;
+    CodIBGE := IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio);
+    IniTabServicos := TACBrNFSeX(FAOwner).Configuracoes.Arquivos.IniTabServicos;
   end;
 
   // Inicializa os parâmetros de configuração: MsgDados
@@ -694,186 +685,119 @@ begin
     UsarNumLoteConsLote := False;
 
     // Usado para geração do Xml do Rps
-    with XmlRps do
-    begin
-      xmlns := '';
-      InfElemento := 'InfRps';
-      DocElemento := 'Rps';
-    end;
+    XmlRps.xmlns := '';
+    XmlRps.InfElemento := 'InfRps';
+    XmlRps.DocElemento := 'Rps';
 
     // Usado para geração do Envio do Lote em modo assíncrono
-    with LoteRps do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsEnvio';
-    end;
+    LoteRps.xmlns := '';
+    LoteRps.InfElemento := 'LoteRps';
+    LoteRps.DocElemento := 'EnviarLoteRpsEnvio';
 
     // Usado para geração do Envio do Lote em modo Sincrono
-    with LoteRpsSincrono do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsSincronoEnvio';
-    end;
+    LoteRpsSincrono.xmlns := '';
+    LoteRpsSincrono.InfElemento := 'LoteRps';
+    LoteRpsSincrono.DocElemento := 'EnviarLoteRpsSincronoEnvio';
 
     // Usado para geração da Consulta a Situação do Lote
-    with ConsultarSituacao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarSituacaoLoteRpsEnvio';
-    end;
+    ConsultarSituacao.xmlns := '';
+    ConsultarSituacao.InfElemento := '';
+    ConsultarSituacao.DocElemento := 'ConsultarSituacaoLoteRpsEnvio';
 
     // Usado para geração da Consulta do Lote
-    with ConsultarLote do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarLoteRpsEnvio';
-    end;
+    ConsultarLote.xmlns := '';
+    ConsultarLote.InfElemento := '';
+    ConsultarLote.DocElemento := 'ConsultarLoteRpsEnvio';
 
     // Usado para geração da Consulta da NFSe por RPS
-    with ConsultarNFSeRps do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseRpsEnvio';
-    end;
+    ConsultarNFSeRps.xmlns := '';
+    ConsultarNFSeRps.InfElemento := '';
+    ConsultarNFSeRps.DocElemento := 'ConsultarNfseRpsEnvio';
 
     // Usado para geração da Consulta da NFSe
-    with ConsultarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseEnvio';
-    end;
+    ConsultarNFSe.xmlns := '';
+    ConsultarNFSe.InfElemento := '';
+    ConsultarNFSe.DocElemento := 'ConsultarNfseEnvio';
 
     // Usado para geração da Consulta da NFSe Por Chave
-    with ConsultarNFSePorChave do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    ConsultarNFSePorChave.xmlns := '';
+    ConsultarNFSePorChave.InfElemento := '';
+    ConsultarNFSePorChave.DocElemento := '';
 
     // Usado para geração da Consulta da NFSe Por Faixa
-    with ConsultarNFSePorFaixa do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseFaixaEnvio';
-    end;
+    ConsultarNFSePorFaixa.xmlns := '';
+    ConsultarNFSePorFaixa.InfElemento := '';
+    ConsultarNFSePorFaixa.DocElemento := 'ConsultarNfseFaixaEnvio';
 
     // Usado para geração da Consulta da NFSe Servico Prestado
-    with ConsultarNFSeServicoPrestado do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseServicoPrestadoEnvio';
-    end;
+    ConsultarNFSeServicoPrestado.xmlns := '';
+    ConsultarNFSeServicoPrestado.InfElemento := '';
+    ConsultarNFSeServicoPrestado.DocElemento := 'ConsultarNfseServicoPrestadoEnvio';
 
     // Usado para geração da Consulta da NFSe Servico Tomado
-    with ConsultarNFSeServicoTomado do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseServicoTomadoEnvio';
-    end;
+    ConsultarNFSeServicoTomado.xmlns := '';
+    ConsultarNFSeServicoTomado.InfElemento := '';
+    ConsultarNFSeServicoTomado.DocElemento := 'ConsultarNfseServicoTomadoEnvio';
 
     // Usado para geração do Cancelamento
-    with CancelarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'InfPedidoCancelamento';
-      DocElemento := 'Pedido';
-    end;
+    CancelarNFSe.xmlns := '';
+    CancelarNFSe.InfElemento := 'InfPedidoCancelamento';
+    CancelarNFSe.DocElemento := 'Pedido';
 
     // Usado para geração do Gerar
-    with GerarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'GerarNfseEnvio';
-    end;
+    GerarNFSe.xmlns := '';
+    GerarNFSe.InfElemento := '';
+    GerarNFSe.DocElemento := 'GerarNfseEnvio';
 
     // Usado para geração do Substituir
-    with SubstituirNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'SubstituicaoNfse';
-      DocElemento := 'SubstituirNfseEnvio';
-    end;
+    SubstituirNFSe.xmlns := '';
+    SubstituirNFSe.InfElemento := 'SubstituicaoNfse';
+    SubstituirNFSe.DocElemento := 'SubstituirNfseEnvio';
 
     // Usado para geração da Abertura de Sessão
-    with AbrirSessao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    AbrirSessao.xmlns := '';
+    AbrirSessao.InfElemento := '';
+    AbrirSessao.DocElemento := '';
 
     // Usado para geração do Fechamento de Sessão
-    with FecharSessao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    FecharSessao.xmlns := '';
+    FecharSessao.InfElemento := '';
+    FecharSessao.DocElemento := '';
 
     // Usado para geração do Gerar Token
-    with GerarToken do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    GerarToken.xmlns := '';
+    GerarToken.InfElemento := '';
+    GerarToken.DocElemento := '';
 
     // Usado para geração do Enviar Evento
-    with EnviarEvento do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    EnviarEvento.xmlns := '';
+    EnviarEvento.InfElemento := '';
+    EnviarEvento.DocElemento := '';
 
     // Usado para geração do Consultar Evento
-    with ConsultarEvento do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    ConsultarEvento.xmlns := '';
+    ConsultarEvento.InfElemento := '';
+    ConsultarEvento.DocElemento := '';
 
     // Usado para geração do Consultar Evento
-    with ConsultarDFe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    ConsultarDFe.xmlns := '';
+    ConsultarDFe.InfElemento := '';
+    ConsultarDFe.DocElemento := '';
 
     // Usado para geração do Consultar Parâmetros
-    with ConsultarParam do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    ConsultarParam.xmlns := '';
+    ConsultarParam.InfElemento := '';
+    ConsultarParam.DocElemento := '';
 
-    with ConsultarSeqRps do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    // Usado para geração do Consultar Sequencia de Rps
+    ConsultarSeqRps.xmlns := '';
+    ConsultarSeqRps.InfElemento := '';
+    ConsultarSeqRps.DocElemento := '';
 
-    with ConsultarLinkNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := '';
-    end;
+    // Usado para geração do Consultar Link da NFS-e
+    ConsultarLinkNFSe.xmlns := '';
+    ConsultarLinkNFSe.InfElemento := '';
+    ConsultarLinkNFSe.DocElemento := '';
   end;
 
   // Inicializa os parâmetros de configuração: Assinar
@@ -1025,7 +949,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXProvider.CarregarXmlNfse(aNota: TNotaFiscal; aXml: string): TNotaFiscal;
+function TACBrNFSeXProvider.CarregarXmlNfse(aNota: TNotaFiscal; const aXml: string): TNotaFiscal;
 begin
   if Assigned(ANota) then
     ANota.XmlNfse := aXml

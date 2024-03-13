@@ -45,12 +45,12 @@ uses
 type
   TACBrNFSeXWebserviceSafeWeb200 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -151,7 +151,7 @@ end;
 
 { TACBrNFSeXWebserviceSafeWeb200 }
 
-function TACBrNFSeXWebserviceSafeWeb200.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceSafeWeb200.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -167,7 +167,7 @@ begin
                      ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceSafeWeb200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSafeWeb200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -183,7 +183,7 @@ begin
                      ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceSafeWeb200.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceSafeWeb200.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -199,7 +199,7 @@ begin
                      ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceSafeWeb200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceSafeWeb200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -215,7 +215,7 @@ begin
                      ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceSafeWeb200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSafeWeb200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -230,7 +230,7 @@ begin
                      ['CancelarNfseResult', 'CancelarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceSafeWeb200.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSafeWeb200.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

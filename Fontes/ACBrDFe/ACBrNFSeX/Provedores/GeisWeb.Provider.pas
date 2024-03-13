@@ -53,10 +53,10 @@ type
     function GetSoapAction: string;
     function GetAliasCidade: string;
   public
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -752,7 +752,7 @@ begin
             '/webservice/GeisWebServiceImpl.php#';
 end;
 
-function TACBrNFSeXWebserviceGeisWeb.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceGeisWeb.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -772,7 +772,7 @@ begin
                       NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceGeisWeb.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceGeisWeb.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -792,7 +792,7 @@ begin
                       NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceGeisWeb.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGeisWeb.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -811,7 +811,7 @@ begin
                       NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceGeisWeb.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGeisWeb.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

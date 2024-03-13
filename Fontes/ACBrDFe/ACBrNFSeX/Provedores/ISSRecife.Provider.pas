@@ -45,13 +45,13 @@ uses
 type
   TACBrNFSeXWebserviceISSRecife = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -81,7 +81,7 @@ uses
 
 { TACBrNFSeXWebserviceISSRecife }
 
-function TACBrNFSeXWebserviceISSRecife.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -96,7 +96,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRecife.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
   xXml, NS1, NS2: string;
@@ -118,7 +118,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRecife.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -133,7 +133,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRecife.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -148,7 +148,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRecife.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -163,7 +163,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRecife.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -178,7 +178,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRecife.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

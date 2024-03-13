@@ -45,13 +45,13 @@ uses
 type
   TACBrNFSeXWebserviceISSRio = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -82,7 +82,7 @@ uses
 
 { TACBrNFSeXWebserviceISSRio }
 
-function TACBrNFSeXWebserviceISSRio.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -97,7 +97,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRio.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -112,7 +112,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRio.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -127,7 +127,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRio.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -142,7 +142,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRio.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -157,7 +157,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRio.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -172,7 +172,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceISSRio.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRio.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

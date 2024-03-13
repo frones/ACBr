@@ -46,8 +46,8 @@ uses
 type
   TACBrNFSeXWebserviceMegaSoft200 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -174,7 +174,7 @@ end;
 
 { TACBrNFSeXWebserviceMegaSoft200 }
 
-function TACBrNFSeXWebserviceMegaSoft200.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceMegaSoft200.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -191,7 +191,7 @@ begin
                      ['xmlns:ws="http://ws.megasoftarrecadanet.com.br"']);
 end;
 
-function TACBrNFSeXWebserviceMegaSoft200.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceMegaSoft200.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

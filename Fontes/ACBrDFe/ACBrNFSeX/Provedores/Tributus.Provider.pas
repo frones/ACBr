@@ -45,16 +45,16 @@ uses
 type
   TACBrNFSeXWebserviceTributus204 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -142,7 +142,7 @@ end;
 
 { TACBrNFSeXWebserviceTributus204 }
 
-function TACBrNFSeXWebserviceTributus204.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -159,7 +159,7 @@ begin
                      ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -176,7 +176,7 @@ begin
                      ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -193,7 +193,7 @@ begin
                      ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -211,7 +211,7 @@ begin
                       'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -229,7 +229,7 @@ begin
                       'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -247,7 +247,7 @@ begin
                       'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -265,7 +265,7 @@ begin
                       'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -283,7 +283,7 @@ begin
                       'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTributus204.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -300,7 +300,7 @@ begin
                       'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
-function TACBrNFSeXWebserviceTributus204.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceTributus204.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

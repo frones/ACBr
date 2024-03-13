@@ -49,10 +49,10 @@ type
     function GetNamespace: string;
     function GetSoapAction: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -270,7 +270,7 @@ begin
     Result := 'http://nfemwshomologacao.pmjlle.joinville.sc.gov.br/';
 end;
 
-function TACBrNFSeXWebserviceISSJoinville204.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSJoinville204.Recepcionar(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -280,7 +280,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSJoinville204.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSJoinville204.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -290,7 +290,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSJoinville204.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSJoinville204.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -300,7 +300,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSJoinville204.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSJoinville204.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 

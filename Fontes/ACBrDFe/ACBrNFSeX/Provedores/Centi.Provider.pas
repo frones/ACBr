@@ -49,9 +49,9 @@ type
     function GetOperacao: string;
 
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     property Operacao: string read GetOperacao;
   end;
@@ -520,7 +520,7 @@ begin
     Result := '';
 end;
 
-function TACBrNFSeXWebserviceCenti202.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCenti202.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -533,7 +533,7 @@ begin
                      Request, ['GerarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceCenti202.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceCenti202.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -546,7 +546,7 @@ begin
                      Request, ['ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceCenti202.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCenti202.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

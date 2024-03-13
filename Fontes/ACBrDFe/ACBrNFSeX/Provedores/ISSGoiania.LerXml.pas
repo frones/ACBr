@@ -51,7 +51,7 @@ type
   private
     function ObterNomeMunicipioISSGoiania(acMun: String; var xUF: String): String;
   protected
-    procedure LerEnderecoPrestadorServico(const ANode: TACBrXmlNode; aTag: string); override;
+    procedure LerEnderecoPrestadorServico(const ANode: TACBrXmlNode; const aTag: string); override;
     procedure LerEnderecoTomador(const ANode: TACBrXmlNode); override;
   public
 
@@ -67,7 +67,7 @@ implementation
 { TNFSeR_ISSGoiania200 }
 
 procedure TNFSeR_ISSGoiania200.LerEnderecoPrestadorServico(
-  const ANode: TACBrXmlNode; aTag: string);
+  const ANode: TACBrXmlNode; const aTag: string);
 var
   AuxNode: TACBrXmlNode;
   xUF: string;

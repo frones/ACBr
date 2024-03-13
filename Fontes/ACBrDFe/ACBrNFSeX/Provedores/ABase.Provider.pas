@@ -47,10 +47,10 @@ type
   TACBrNFSeXWebserviceABase201 = class(TACBrNFSeXWebserviceSoap11)
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -75,7 +75,7 @@ uses
 
 { TACBrNFSeXWebserviceABase201 }
 
-function TACBrNFSeXWebserviceABase201.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceABase201.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -94,7 +94,7 @@ begin
                      ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceABase201.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceABase201.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -112,7 +112,7 @@ begin
                      ['ConsultaLoteRpsResult', 'ConsultarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceABase201.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceABase201.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -128,7 +128,7 @@ begin
                      ['ConsultaNfseRpsResult', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceABase201.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceABase201.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

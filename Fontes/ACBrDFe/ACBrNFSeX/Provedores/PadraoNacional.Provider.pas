@@ -49,13 +49,13 @@ uses
 type
   TACBrNFSeXWebservicePadraoNacional = class(TACBrNFSeXWebserviceRest)
   public
-    function GerarNFSe(ACabecalho, AMSG: string): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: string): string; override;
-    function ConsultarNFSePorChave(ACabecalho, AMSG: string): string; override;
-    function EnviarEvento(ACabecalho, AMSG: string): string; override;
-    function ConsultarEvento(ACabecalho, AMSG: string): string; override;
-    function ConsultarDFe(ACabecalho, AMSG: string): string; override;
-    function ConsultarParam(ACabecalho, AMSG: string): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSePorChave(const ACabecalho, AMSG: string): string; override;
+    function EnviarEvento(const ACabecalho, AMSG: string): string; override;
+    function ConsultarEvento(const ACabecalho, AMSG: string): string; override;
+    function ConsultarDFe(const ACabecalho, AMSG: string): string; override;
+    function ConsultarParam(const ACabecalho, AMSG: string): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -348,7 +348,7 @@ begin
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
     begin
       Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
-                                         PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.DocElemento,
                                          ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
 
       Response.ArquivoEnvio := Nota.XmlRps;
@@ -1382,7 +1382,7 @@ end;
 
 { TACBrNFSeXWebservicePadraoNacional }
 
-function TACBrNFSeXWebservicePadraoNacional.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.GerarNFSe(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1394,7 +1394,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorChave(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorChave(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1406,7 +1406,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorRps(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1418,7 +1418,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.EnviarEvento(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.EnviarEvento(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1430,7 +1430,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarEvento(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarEvento(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1442,7 +1442,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarDFe(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarDFe(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1454,7 +1454,7 @@ begin
   Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarParam(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarParam(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;

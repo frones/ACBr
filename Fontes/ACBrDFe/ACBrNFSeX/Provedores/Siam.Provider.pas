@@ -45,9 +45,9 @@ uses
 type
   TACBrNFSeXWebserviceSiam200 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -123,7 +123,7 @@ end;
 
 { TACBrNFSeXWebserviceSiam200 }
 
-function TACBrNFSeXWebserviceSiam200.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSiam200.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -139,7 +139,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSiam200.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSiam200.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -155,7 +155,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSiam200.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSiam200.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

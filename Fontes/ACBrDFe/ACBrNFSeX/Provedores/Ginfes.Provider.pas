@@ -48,12 +48,12 @@ type
   private
     function GetNameSpace: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -248,7 +248,7 @@ begin
   Result := ' xmlns:ns1="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceGinfes.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGinfes.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -264,7 +264,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceGinfes.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGinfes.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -280,7 +280,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceGinfes.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGinfes.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -296,7 +296,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceGinfes.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGinfes.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -312,7 +312,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceGinfes.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGinfes.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -328,7 +328,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceGinfes.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceGinfes.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

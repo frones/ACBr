@@ -48,12 +48,12 @@ type
     function GetNameSpace: string;
     function GetSoapAction: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     property NameSpace: string read GetNameSpace;
     property SoapAction: string read GetSoapAction;
@@ -105,7 +105,7 @@ begin
     Result := 'http://www.tinus.com.br/WSNFSE.';
 end;
 
-function TACBrNFSeXWebserviceTinus.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTinus.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -120,7 +120,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceTinus.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTinus.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -135,7 +135,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceTinus.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTinus.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -150,7 +150,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceTinus.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTinus.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -165,7 +165,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceTinus.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTinus.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -180,7 +180,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceTinus.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTinus.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

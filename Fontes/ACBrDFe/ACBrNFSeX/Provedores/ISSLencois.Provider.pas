@@ -49,8 +49,8 @@ uses
 type
   TACBrNFSeXWebserviceISSLencois = class(TACBrNFSeXWebserviceSoap12)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -462,7 +462,7 @@ end;
 
 { TACBrNFSeXWebserviceISSLencois }
 
-function TACBrNFSeXWebserviceISSLencois.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSLencois.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request, DadosUsuario: string;
@@ -486,7 +486,7 @@ begin
                      ['xmlns:apl2="http://apl2.lencoispaulista.sp.gov.br/"']);
 end;
 
-function TACBrNFSeXWebserviceISSLencois.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSLencois.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request, DadosUsuario: string;
 begin

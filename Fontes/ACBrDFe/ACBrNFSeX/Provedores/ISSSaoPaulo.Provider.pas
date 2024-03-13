@@ -49,15 +49,15 @@ uses
 type
   TACBrNFSeXWebserviceISSSaoPaulo = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: string): string; override;
-    function GerarNFSe(ACabecalho, AMSG: string): string; override;
-    function TesteEnvio(ACabecalho, AMSG: string): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: string): string; override;
-    function ConsultarLote(ACabecalho, AMSG: string): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: string): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: string): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: string): string; override;
-    function Cancelar(ACabecalho, AMSG: string): string; override;
+    function Recepcionar(const ACabecalho, AMSG: string): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: string): string; override;
+    function TesteEnvio(const ACabecalho, AMSG: string): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: string): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: string): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: string): string; override;
+    function Cancelar(const ACabecalho, AMSG: string): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -1431,7 +1431,7 @@ end;
 
 { TACBrNFSeXWebserviceISSSaoPaulo }
 
-function TACBrNFSeXWebserviceISSSaoPaulo.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.Recepcionar(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1448,7 +1448,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.GerarNFSe(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1465,7 +1465,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.TesteEnvio(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.TesteEnvio(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1482,7 +1482,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarSituacao(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarSituacao(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1499,7 +1499,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarLote(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1516,7 +1516,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSePorRps(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1533,7 +1533,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1550,7 +1550,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSe(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;
@@ -1567,7 +1567,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSSaoPaulo.Cancelar(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.Cancelar(const ACabecalho,
   AMSG: string): string;
 var
   Request: string;

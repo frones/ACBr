@@ -47,8 +47,8 @@ uses
 type
   TACBrNFSeXWebserviceCTAConsult = class(TACBrNFSeXWebserviceSoap11)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -427,7 +427,7 @@ end;
 
 { TACBrNFSeXWebserviceCTAConsult }
 
-function TACBrNFSeXWebserviceCTAConsult.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCTAConsult.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -443,7 +443,7 @@ begin
                      ['xmlns:wsn="http://wsnfselote.ctaconsult.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceCTAConsult.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCTAConsult.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request, xCabecalho: string;
 begin

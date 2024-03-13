@@ -48,10 +48,10 @@ type
     function GetDadosUsuario: string;
 
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -533,7 +533,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceDataSmart202.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceDataSmart202.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -553,7 +553,7 @@ begin
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -573,7 +573,7 @@ begin
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -593,7 +593,7 @@ begin
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceDataSmart202.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceDataSmart202.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

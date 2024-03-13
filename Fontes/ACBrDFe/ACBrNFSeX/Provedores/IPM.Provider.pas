@@ -50,11 +50,11 @@ type
 
   TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceMulti1)
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function AjustarRetorno(const Retorno: string): string;
     function TratarXmlRetornado(const aXML: string): string; override;
@@ -109,10 +109,10 @@ type
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function AjustarRetorno(const Retorno: string): string;
     function TratarXmlRetornado(const aXML: string): string; override;
@@ -132,18 +132,18 @@ type
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
 //    Implementado e testado em produção usando como referencia a cidade de Camaquã
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
 //    Não foi implementado no ambiente de homologação
-//    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+//    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function AjustarRetorno(const Retorno: string): string;
     function TratarXmlRetornado(const aXML: string): string; override;
@@ -1412,14 +1412,14 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceIPM.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceIPM.GerarNFSe(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceIPM.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1427,7 +1427,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceIPM.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1435,7 +1435,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceIPM.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1443,7 +1443,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceIPM.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1516,7 +1516,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceIPM101.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceIPM101.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1524,7 +1524,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM101.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceIPM101.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1532,7 +1532,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM101.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceIPM101.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -1540,7 +1540,7 @@ begin
   Result := Executar('', AMSG, [], []);
 end;
 
-function TACBrNFSeXWebserviceIPM101.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceIPM101.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -1623,84 +1623,84 @@ begin
     Result := Retorno;
 end;
 
-function TACBrNFSeXWebserviceIPM204.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'EnviarLoteRpsEnvio');
+  AMSGaux := SeparaDados(AMSG, 'EnviarLoteRpsEnvio');
 
   Request := '<net:EnviarLoteRpsEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:EnviarLoteRpsEnvio>';
 
   Result := Executar('net.atende#EnviarLoteRpsEnvio', Request,
               ['return', 'EnviarLoteRpsResposta'], ['xmlns:net="net.atende"']);
 end;
 
-function TACBrNFSeXWebserviceIPM204.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'EnviarLoteRpsSincronoEnvio');
+  AMSGaux := SeparaDados(AMSG, 'EnviarLoteRpsSincronoEnvio');
 
   Request := '<net:EnviarLoteRpsSincronoEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:EnviarLoteRpsSincronoEnvio>';
 
   Result := Executar('net.atende#EnviarLoteRpsSincronoEnvio', Request,
               ['return', 'EnviarLoteRpsSincronoResposta'], ['xmlns:net="net.atende"']);
 end;
 
-function TACBrNFSeXWebserviceIPM204.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceIPM204.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'GerarNfseEnvio');
+  AMSGaux := SeparaDados(AMSG, 'GerarNfseEnvio');
 
   Request := '<net:GerarNfseEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:GerarNfseEnvio>';
 
   Result := Executar('net.atende#GerarNfseEnvio', Request,
               ['return', 'GerarNfseResposta'], ['xmlns:net="net.atende"']);
 end;
 
-function TACBrNFSeXWebserviceIPM204.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'ConsultarLoteRpsEnvio');
+  AMSGaux := SeparaDados(AMSG, 'ConsultarLoteRpsEnvio');
 
   Request := '<net:ConsultarLoteRpsEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:ConsultarLoteRpsEnvio>';
 
   Result := Executar('net.atende#ConsultarLoteRpsEnvio', Request,
               ['return', 'ConsultarLoteRpsResposta'], ['xmlns:net="net.atende"']);
 end;
 
-function TACBrNFSeXWebserviceIPM204.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'ConsultarNfseRpsEnvio');
+  AMSGaux := SeparaDados(AMSG, 'ConsultarNfseRpsEnvio');
 
   Request := '<net:ConsultarNfseRpsEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:ConsultarNfseRpsEnvio>';
 
   Result := Executar('net.atende#ConsultarNfseRpsEnvio', Request,
@@ -1708,73 +1708,73 @@ begin
 
 end;
 
-function TACBrNFSeXWebserviceIPM204.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'ConsultarNfseFaixaEnvio');
+  AMSGaux := SeparaDados(AMSG, 'ConsultarNfseFaixaEnvio');
 
   Request := '<net:ConsultarNfseFaixaEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:ConsultarNfseFaixaEnvio>';
 
   Result := Executar('net.atende#ConsultarNfseFaixaEnvio', Request,
               ['return', 'ConsultarNfseFaixaResposta'], ['xmlns:net="net.atende"']);
 end;
 
-function TACBrNFSeXWebserviceIPM204.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'ConsultarNfseServicoPrestadoEnvio');
+  AMSGaux := SeparaDados(AMSG, 'ConsultarNfseServicoPrestadoEnvio');
 
   Request := '<net:ConsultarNfseServicoPrestadoEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:ConsultarNfseServicoPrestadoEnvio>';
 
   Result := Executar('net.atende#ConsultarNfseServicoPrestadoEnvio', Request,
               ['return', 'ConsultarNfseServicoPrestadoResposta'], ['xmlns:net="net.atende"']);
 end;
 {
-function TACBrNFSeXWebserviceIPM204.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 begin
 
 end;
 }
-function TACBrNFSeXWebserviceIPM204.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceIPM204.Cancelar(const ACabecalho, AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'CancelarNfseEnvio');
+  AMSGaux := SeparaDados(AMSG, 'CancelarNfseEnvio');
 
   Request := '<net:CancelarNfseEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:CancelarNfseEnvio>';
 
   Result := Executar('net.atende#CancelarNfseEnvio', Request,
               ['return', 'CancelarNfseResposta'], ['xmlns:net="net.atende"']);
 end;
 
-function TACBrNFSeXWebserviceIPM204.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceIPM204.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
-  Request: string;
+  Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
 
-  AMSG := SeparaDados(AMSG, 'SubstituirNfseEnvio');
+  AMSGaux := SeparaDados(AMSG, 'SubstituirNfseEnvio');
 
   Request := '<net:SubstituirNfseEnvio>';
-  Request := Request + AMSG;
+  Request := Request + AMSGaux;
   Request := Request + '</net:SubstituirNfseEnvio>';
 
   Result := Executar('net.atende#SubstituirNfseEnvio', Request,

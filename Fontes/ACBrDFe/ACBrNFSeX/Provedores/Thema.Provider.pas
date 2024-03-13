@@ -46,13 +46,13 @@ uses
 type
   TACBrNFSeXWebserviceThema = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -82,7 +82,7 @@ uses
 
 { TACBrNFSeXWebserviceThema }
 
-function TACBrNFSeXWebserviceThema.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceThema.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request, Servico: string;
 begin
@@ -104,7 +104,7 @@ begin
                      ['return', 'EnviarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceThema.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceThema.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request, Servico: string;
@@ -127,7 +127,7 @@ begin
                      ['return', 'EnviarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceThema.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceThema.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -141,7 +141,7 @@ begin
                      ['return', 'ConsultarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceThema.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceThema.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -155,7 +155,7 @@ begin
                      ['return', 'ConsultarSituacaoLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceThema.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceThema.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -169,7 +169,7 @@ begin
                      ['return', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceThema.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceThema.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -183,7 +183,7 @@ begin
                      ['return', 'ConsultarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceThema.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceThema.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

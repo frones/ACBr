@@ -49,8 +49,8 @@ type
   private
     function GetCabecalho: string;
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -108,7 +108,7 @@ begin
 
 end;
 
-function TACBrNFSeXWebserviceISSCambe.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCambe.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -121,7 +121,7 @@ begin
   Result := Executar('', Request, Cabecalho, [], []);
 end;
 
-function TACBrNFSeXWebserviceISSCambe.ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCambe.ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

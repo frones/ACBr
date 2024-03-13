@@ -46,12 +46,12 @@ uses
 type
   TACBrNFSeXWebserviceISSCuritiba = class(TACBrNFSeXWebserviceSoap12)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -115,7 +115,7 @@ end;
 
 { TACBrNFSeXWebserviceISSCuritiba }
 
-function TACBrNFSeXWebserviceISSCuritiba.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCuritiba.Recepcionar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -129,7 +129,7 @@ begin
                      ['RecepcionarLoteRpsResult'], []);
 end;
 
-function TACBrNFSeXWebserviceISSCuritiba.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCuritiba.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -143,7 +143,7 @@ begin
                      ['ConsultarLoteRpsResult'], []);
 end;
 
-function TACBrNFSeXWebserviceISSCuritiba.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCuritiba.ConsultarSituacao(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -157,7 +157,7 @@ begin
                      ['ConsultarSituacaoLoteRpsResult'], []);
 end;
 
-function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -171,7 +171,7 @@ begin
                      ['ConsultarNfsePorRpsResult'], []);
 end;
 
-function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -185,7 +185,7 @@ begin
                      ['ConsultarNfseResult'], []);
 end;
 
-function TACBrNFSeXWebserviceISSCuritiba.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSCuritiba.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

@@ -46,15 +46,15 @@ uses
 type
   TACBrNFSeXWebserviceEloTech203 = class(TACBrNFSeXWebserviceSoap11)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -531,7 +531,7 @@ end;
 
 { TACBrNFSeXWebserviceEloTech203 }
 
-function TACBrNFSeXWebserviceEloTech203.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.Recepcionar(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -540,7 +540,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -549,7 +549,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -558,7 +558,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -567,7 +567,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -576,7 +576,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -585,7 +585,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -594,7 +594,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEloTech203.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -602,7 +602,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech203.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;

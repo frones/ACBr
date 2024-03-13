@@ -54,10 +54,10 @@ type
   private
     function GetSoapAction: string;
   public
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     property SoapActionURL: string read GetSoapActionURL;
     property SoapAction: string read GetSoapAction;
@@ -717,7 +717,7 @@ begin
     Result := 'wsnfe_teste_homologacao.php/EnvNfe';
 end;
 
-function TACBrNFSeXWebserviceWebFisco.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceWebFisco.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -733,7 +733,7 @@ begin
                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema"']);
 end;
 
-function TACBrNFSeXWebserviceWebFisco.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceWebFisco.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -749,7 +749,7 @@ begin
                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema"']);
 end;
 
-function TACBrNFSeXWebserviceWebFisco.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceWebFisco.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -765,7 +765,7 @@ begin
                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema"']);
 end;
 
-function TACBrNFSeXWebserviceWebFisco.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceWebFisco.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

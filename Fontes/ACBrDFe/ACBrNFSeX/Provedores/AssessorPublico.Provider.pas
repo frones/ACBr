@@ -51,10 +51,10 @@ type
   private
     function GetDadosUsuario: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -607,7 +607,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceAssessorPublico.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceAssessorPublico.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -623,7 +623,7 @@ begin
   Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
 end;
 
-function TACBrNFSeXWebserviceAssessorPublico.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceAssessorPublico.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -639,7 +639,7 @@ begin
   Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
 end;
 
-function TACBrNFSeXWebserviceAssessorPublico.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceAssessorPublico.ConsultarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -655,7 +655,7 @@ begin
   Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
 end;
 
-function TACBrNFSeXWebserviceAssessorPublico.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAssessorPublico.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

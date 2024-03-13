@@ -48,16 +48,16 @@ type
     function GetNamespace: string;
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
 
@@ -152,7 +152,7 @@ begin
   Result := 'xmlns:trib1="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceCoplan201.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -171,7 +171,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -190,7 +190,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.GerarNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -209,7 +209,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarLote(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -228,7 +228,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -252,7 +252,7 @@ begin
   }
 end;
 
-function TACBrNFSeXWebserviceCoplan201.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSePorRps(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -271,7 +271,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -290,7 +290,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -309,7 +309,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCoplan201.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -327,7 +327,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan201.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

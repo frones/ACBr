@@ -48,16 +48,16 @@ type
   private
 
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
   end;
 
   TACBrNFSeProviderAEG202 = class(TACBrNFSeProviderABRASFv2)
@@ -86,7 +86,7 @@ uses
 
 { TACBrNFSeXWebserviceAEG202 }
 
-function TACBrNFSeXWebserviceAEG202.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -101,7 +101,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.RecepcionarSincrono(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -116,7 +116,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -130,7 +130,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -144,7 +144,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSePorFaixa(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -159,7 +159,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSeServicoPrestado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -174,7 +174,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSeServicoTomado(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -189,7 +189,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.GerarNFSe(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -203,7 +203,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -217,7 +217,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG202.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.SubstituirNFSe(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;

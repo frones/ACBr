@@ -145,8 +145,8 @@ type
     procedure GerarMsgDadosConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
     procedure TratarRetornoConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
 
-    function AplicarXMLtoUTF8(AXMLRps: String): String; virtual;
-    function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; virtual;
+    function AplicarXMLtoUTF8(const AXMLRps: String): String; virtual;
+    function AplicarLineBreak(const AXMLRps: String; const ABreak: String): String; virtual;
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
@@ -824,12 +824,12 @@ begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;
 
-function TACBrNFSeProviderProprio.AplicarXMLtoUTF8(AXMLRps: String): String;
+function TACBrNFSeProviderProprio.AplicarXMLtoUTF8(const AXMLRps: String): String;
 begin
   Result := ConverteXMLtoUTF8(AXMLRps);
 end;
 
-function TACBrNFSeProviderProprio.AplicarLineBreak(AXMLRps: String; const ABreak: String): String;
+function TACBrNFSeProviderProprio.AplicarLineBreak(const AXMLRps: String; const ABreak: String): String;
 begin
   Result := ChangeLineBreak(AXMLRps, ABreak);
 end;

@@ -69,8 +69,8 @@ type
   private
     FBPe: TBPe;
 
-    Versao: string;
-    ChaveBPe: string;
+//    FVersao: string;
+    FChaveBPe: string;
     FIdCSRT: integer;
     FCSRT: string;
 
@@ -224,15 +224,15 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Versao := Copy(BPe.infBPe.VersaoStr, 9, 4);
+//  FVersao := Copy(BPe.infBPe.VersaoStr, 9, 4);
 
   xCNPJCPF := BPe.emit.CNPJ;
 
-  ChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, xCNPJCPF,
+  FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, xCNPJCPF,
       BPe.ide.serie, BPe.ide.nBP, StrToInt(TipoEmissaoToStr(BPe.ide.tpEmis)),
       BPe.ide.cBP, BPe.ide.modelo);
 
-  BPe.infBPe.ID := 'BPe' + ChaveBPe;
+  BPe.infBPe.ID := 'BPe' + FChaveBPe;
   BPe.ide.cDV := ExtrairDigitoChaveAcesso(BPe.infBPe.ID);
   BPe.Ide.cBP := ExtrairCodigoChaveAcesso(BPe.infBPe.ID);
 
@@ -1416,7 +1416,7 @@ begin
                                                            idCSRT, DSC_IDCSRT));
 
       Result.AppendChild(AddNode(tcStr, '#316', 'hashCSRT', 28, 28, 1,
-                               CalcularHashCSRT(CSRT, ChaveBPe), DSC_HASHCSRT));
+                               CalcularHashCSRT(CSRT, FChaveBPe), DSC_HASHCSRT));
     end;
   end;
 end;

@@ -177,6 +177,8 @@ begin
 
   try
     try
+      Result := True;
+
       Document.LoadFromXml(XmlRetorno);
 
       ANode := Document.Root;
@@ -243,12 +245,10 @@ begin
               procEventoBPe.Items[i].RetEventoBPe.LerXml;
             end;
           end;
-        finally
-          // Continua
+        except
+          Result := False;
         end;
       end;
-
-      Result := True;
     except
       Result := False;
     end;

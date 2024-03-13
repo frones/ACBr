@@ -67,8 +67,8 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesBPe;
-    function Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
-      chBPe: String): Boolean;
+//    function Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
+//      chBPe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesBPe);
     procedure SetDABPE(const Value: TACBrBPeDABPEClass);
@@ -91,7 +91,7 @@ type
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
-    function EhAutorizacao(AVersao: TVersaoBPe; AUFCodigo: Integer): Boolean;
+//    function EhAutorizacao(AVersao: TVersaoBPe; AUFCodigo: Integer): Boolean;
 
     function CstatConfirmada(AValue: Integer): Boolean;
     function CstatProcessado(AValue: Integer): Boolean;
@@ -122,7 +122,7 @@ type
     procedure SetStatus(const stNewStatus: TStatusACBrBPe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
-
+    {
     function DistribuicaoDFe(AcUFAutor: Integer; const ACNPJCPF, AultNSU,
       ANSU: String; const AchBPe: String = ''): Boolean;
     function DistribuicaoDFePorUltNSU(AcUFAutor: Integer; const ACNPJCPF,
@@ -131,7 +131,7 @@ type
       ANSU: String): Boolean;
     function DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; const ACNPJCPF,
       AchBPe: String): Boolean;
-
+    }
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmailEvento(const sPara, sAssunto: String;
@@ -165,7 +165,7 @@ constructor TACBrBPe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FBilhetes := TBilhetes.Create(Self, Bilhete);
+  FBilhetes := TBilhetes.Create(Self, TBilhete);
   FEventoBPe := TEventoBPe.Create;
   FWebServices := TWebServices.Create(Self);
 end;
@@ -268,12 +268,12 @@ begin
       Result := False;
   end;
 end;
-
+{
 function TACBrBPe.EhAutorizacao( AVersao: TVersaoBPe; AUFCodigo: Integer ): Boolean;
 begin
   Result := True;
 end;
-
+}
 function TACBrBPe.IdentificaSchema(const AXML: String): TSchemaBPe;
 var
   lTipoEvento: String;
@@ -329,7 +329,7 @@ end;
 function TACBrBPe.GerarNomeArqSchemaEvento(ASchemaEventoBPe: TSchemaBPe;
   VersaoServico: Double): String;
 begin
-  if VersaoServico = 0.0 then
+  if VersaoServico = 0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
@@ -627,12 +627,10 @@ begin
   else
     DABPE.ImprimirEVENTOPDF(nil);
 end;
-
+{
 function TACBrBPe.Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
   chBPe: String): Boolean;
 begin
-  Result := True;
-{
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
@@ -643,7 +641,6 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
-  }
 end;
 
 function TACBrBPe.DistribuicaoDFe(AcUFAutor: Integer;
@@ -669,7 +666,7 @@ function TACBrBPe.DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; const ACNPJCPF,
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchBPe);
 end;
-
+}
 procedure TACBrBPe.EnviarEmailEvento(const sPara, sAssunto: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings;
   sReplyTo: TStrings);

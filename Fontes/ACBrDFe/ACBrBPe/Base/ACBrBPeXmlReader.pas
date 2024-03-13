@@ -572,6 +572,7 @@ end;
 procedure TBPeXmlReader.Ler_detBPeTM(const ANode: TACBrXmlNode);
 var
   Item: TdetBPeTMCollectionItem;
+  ItemComp: TdetCompCollectionItem;
   i: Integer;
   j: Integer;
   ANodeNivel3: TACBrXmlNode;
@@ -649,11 +650,9 @@ begin
 
       for j := 0 to Length(CompNodes) - 1 do
       begin
-        with Comp.New do
-        begin
-          xNome := ObterConteudo(CompNodes[j].Childrens.Find('xNome'), tcStr);
-          qComp := ObterConteudo(CompNodes[j].Childrens.Find('qComp'), tcInt);
-        end;
+        ItemComp := Comp.New;
+        ItemComp.xNome := ObterConteudo(CompNodes[j].Childrens.Find('xNome'), tcStr);
+        ItemComp.qComp := ObterConteudo(CompNodes[j].Childrens.Find('qComp'), tcInt);
       end;
     end;
   end;

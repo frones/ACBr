@@ -188,14 +188,15 @@ const
 
 type
   TBandeiraCard = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcElo,
-                   bcDinersClub, bcHipercard, bcAura, bcCabal, bcOutros);
+                   bcDinersClub, bcHipercard, bcAura, bcCabal, bcOutros,
+                   bcNenhum);
 
 const
   TBandeiraCardArrayStrings: array[TBandeiraCard] of string = ('01', '02', '03',
-    '04', '05', '06', '07', '08', '09', '99');
+    '04', '05', '06', '07', '08', '09', '99', '');
   TBandeiraCardDescArrayStrings: array[TBandeiraCard] of string = ('Visa',
     'MasterCard', 'AmericanExpress', 'Sorocred', 'Elo', 'Diners Club',
-    'Hipercard', 'Aura', 'Cabal', 'Outros');
+    'Hipercard', 'Aura', 'Cabal', 'Outros', '');
 
 type
   TFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
@@ -685,10 +686,10 @@ end;
 function BandeiraCardToStr(const t: TBandeiraCard): string;
 begin
   result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
-                               '09', '99'],
+                               '09', '99', ''],
                               [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                               bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
-                              bcOutros]);
+                              bcOutros, bcNenhum]);
 end;
 
 function BandeiraCardToDescStr(const t: TBandeiraCard): string;
@@ -704,16 +705,18 @@ begin
     bcAura:            Result := 'Aura';
     bcCabal:           Result := 'Cabal';
     bcOutros:          Result := 'Outros'
+  else
+    Result := '';
   end;
 end;
 
 function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08',
-                                   '09', '99'],
+                                   '09', '99', ''],
                                   [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                                    bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
-                                   bcOutros]);
+                                   bcOutros, bcNenhum]);
 end;
 
 function FormaPagamentoBPeToStr(const t: TFormaPagamento): string;

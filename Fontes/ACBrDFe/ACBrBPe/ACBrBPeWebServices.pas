@@ -1547,6 +1547,8 @@ begin
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evExcessoBagagem>', '</evExcessoBagagem>')) +
                         '</evExcessoBagagem>';
         end;
+    else
+      AXMLEvento := '';
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;

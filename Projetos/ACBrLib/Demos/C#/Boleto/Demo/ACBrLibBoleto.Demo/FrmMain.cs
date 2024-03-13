@@ -58,6 +58,8 @@ namespace ACBrLibBoleto.Demo
                 cmbImpressora.SelectedIndex = 0;
 
             // Altera as config de log
+            boleto.Config.Webservice.LogNivel = NivelLog.logParanoico;
+
             boleto.Config.Principal.LogNivel = NivelLog.logParanoico;
 
             var logPath = Path.Combine(Application.StartupPath, "Logs");
@@ -132,9 +134,8 @@ namespace ACBrLibBoleto.Demo
             txtScope.Text = boleto.Config.CedenteWebservice.Scope;
             chkIndicadorPix.Checked = boleto.Config.CedenteWebservice.IndicadorPix;
 
-            chkGravarLog.Checked = boleto.Config.Webservice.LogRegistro;
             txtPathLog.Text = boleto.Config.Webservice.PathGravarRegistro;
-
+            txtNomeArquivoLog.Text = boleto.Config.Webservice.NomeArquivoLog;
             var ambiente = boleto.Config.Webservice.Ambiente;
             rdbProducao.Checked = ambiente == AmbienteWebservice.Homologaçao;
             rdbHomologacao.Checked = ambiente == AmbienteWebservice.Producao;
@@ -205,8 +206,8 @@ namespace ACBrLibBoleto.Demo
             boleto.Config.CedenteWebservice.Scope = txtScope.Text;
             boleto.Config.CedenteWebservice.IndicadorPix = chkIndicadorPix.Checked;
 
-            boleto.Config.Webservice.LogRegistro = chkGravarLog.Checked;
             boleto.Config.Webservice.PathGravarRegistro = txtPathLog.Text;
+            boleto.Config.Webservice.NomeArquivoLog = txtNomeArquivoLog.Text;
             boleto.Config.Webservice.Ambiente = rdbProducao.Checked ? AmbienteWebservice.Homologaçao : AmbienteWebservice.Producao;
             boleto.Config.Webservice.Operacao = cmbOperacao.GetSelectedValue<OperacaoBoleto>();
             boleto.Config.Webservice.SSLType = cmbSSlType.GetSelectedValue<SSLType>();

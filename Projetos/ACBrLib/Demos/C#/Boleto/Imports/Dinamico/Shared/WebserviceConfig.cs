@@ -17,18 +17,6 @@ namespace ACBrLib.Boleto
 
         #region Properties
 
-        public bool LogRegistro
-        {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
-        }
-
-        public string PathGravarRegistro
-        {
-            get => GetProperty<string>();
-            set => SetProperty(value);
-        }
-
         public AmbienteWebservice Ambiente
         {
             get => GetProperty<AmbienteWebservice>();
@@ -74,6 +62,24 @@ namespace ACBrLib.Boleto
         public string ArquivoKEY
         {
             get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string PathGravarRegistro
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string NomeArquivoLog
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public NivelLog LogNivel
+        {
+            get => GetProperty<NivelLog>();
             set => SetProperty(value);
         }
 

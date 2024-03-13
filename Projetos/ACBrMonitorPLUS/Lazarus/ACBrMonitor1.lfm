@@ -18594,7 +18594,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 140
                 Width = 62
-                EnableSets = False
                 Font.Height = -13
                 MaxLength = 5
                 ParentFont = False
@@ -20562,7 +20561,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 58
                   Width = 49
                   Anchors = [akTop, akRight]
-                  EnableSets = False
                   Font.Height = -13
                   MaxLength = 5
                   ParentFont = False
@@ -21547,7 +21545,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 24
                 Width = 144
-                EnableSets = False
                 Font.Height = -13
                 MaxLength = 0
                 ParentFont = False
@@ -21627,7 +21624,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 73
                 Width = 129
-                EnableSets = False
                 Font.Height = -13
                 MaxLength = 0
                 ParentFont = False

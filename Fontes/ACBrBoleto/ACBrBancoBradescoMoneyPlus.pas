@@ -339,7 +339,7 @@ var
   aPercMulta: Double;
   LBanco, LTipoEmissaoBoleto, LAvisoDebitoAuto, LQtdePagamento, LInstrucoesProtesto,
   LMensagemCedente, LDebitoAutomatico, LTipoAvalista : String;
-
+  LChaveNFE : String;
 begin
    with ACBrTitulo do
    begin
@@ -389,6 +389,10 @@ begin
                                PadRight(Sacado.SacadoAvalista.NomeAvalista, 40, ' ');      // 351 a 394 - Nome do Avalista
       end;
 
+     if ACBrTitulo.ListaDadosNFe.Count>0 then
+       LChaveNFe := ACBrTitulo.ListaDadosNFe[0].ChaveNFe
+     else
+       LChaveNFe := '';
 
      with ACBrBoleto do
      begin
@@ -466,7 +470,8 @@ begin
           Padleft(ACBrBoleto.Cedente.ContaDigito, 1 , '0')                  + // 382 a 382 - Dígito Verificador da Conta Alfa
           PadLeft(NossoNumero, 11, '0')                                     + // 383 a 393 - Nosso Número
           PadLeft(sDigitoNossoNumero ,1,'0')                                + // 394 a 394 - Digito Nosso Número
-          IntToStrZero( ARemessa.Count + 1, 6);                               // 395 a 400 - Número sequencial do registro
+          IntToStrZero( ARemessa.Count + 1, 6)                              + // 395 a 400 - Número sequencial do registro
+          LChaveNFe;                                                          // 401 a 444 Chave NFe
           ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
         end;
      end;

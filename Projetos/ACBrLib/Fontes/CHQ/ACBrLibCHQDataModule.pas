@@ -37,7 +37,7 @@ unit ACBrLibCHQDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCHQ;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCHQ, ACBrUtil.FilesIO;
 
 type
 
@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrDeviceSerial,
+  ACBrUtil.Strings, ACBrDeviceSerial,
   ACBrLibCHQConfig, ACBrLibCHQBase;
 
 {$R *.lfm}

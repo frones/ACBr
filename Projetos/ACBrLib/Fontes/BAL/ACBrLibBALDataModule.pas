@@ -37,7 +37,7 @@ unit ACBrLibBALDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrBAL;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrBAL, ACBrUtil.FilesIO;
 
 type
 
@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrDeviceSerial,
+  ACBrUtil.Strings, ACBrDeviceSerial,
   ACBrLibBALConfig;
 
 {$R *.lfm}

@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibMailDataModule, ACBrMail;
+  ACBrLibComum, ACBrLibMailDataModule, ACBrMail, ACBrUtil.FilesIO;
 
 type
   { TACBrLibMail }

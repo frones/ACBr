@@ -37,7 +37,7 @@ unit ACBrLibIBGEDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrIBGE, ACBrLibComum;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrIBGE, ACBrLibComum, ACBrUtil.FilesIO;
 
 type
 
@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrUtil.Strings,
   ACBrLibIBGEConfig, ACBrLibIBGEBase;
 
 {$R *.lfm}

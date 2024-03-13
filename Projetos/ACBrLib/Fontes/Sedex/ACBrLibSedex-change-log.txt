@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2024
+--- ACBrLibSedexDataModule --
+[*] Adicionado uses ACBrUtil.filesIO
+Por: Daniel Morais Infocotidiano
 
 11/01/2023
 --- ACBrLibSedexBase ---

@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs,
-  ACBrLibComum, ACBrSedex;
+  ACBrLibComum, ACBrSedex, ACBrUtil.FilesIO;
 
 type
 
@@ -66,7 +66,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrLibSedexConfig, ACBrLibSedexBase;
+  ACBrUtil.Strings, ACBrLibSedexConfig, ACBrLibSedexBase;
 
 {$R *.lfm}
 

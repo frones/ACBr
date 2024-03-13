@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibBALDataModule, ACBrBAL;
+  ACBrLibComum, ACBrLibBALDataModule, ACBrBAL, ACBrUtil.FilesIO;
 
 type
 

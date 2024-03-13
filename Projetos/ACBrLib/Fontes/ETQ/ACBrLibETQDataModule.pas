@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, syncobjs,
-  ACBrLibComum, ACBrLibConfig, ACBrETQ;
+  ACBrLibComum, ACBrLibConfig, ACBrETQ, ACBrUtil.FilesIO;
 
 type
 
@@ -65,7 +65,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrDeviceSerial,
+  ACBrUtil.Strings, ACBrDeviceSerial,
   ACBrLibETQConfig;
 
 {$R *.lfm}

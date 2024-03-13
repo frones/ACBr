@@ -37,7 +37,7 @@ unit ACBrLibPIXCDBase;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibComum, ACBrLibPIXCDDataModule;
+  Classes, SysUtils, ACBrLibComum, ACBrLibPIXCDDataModule, ACBrUtil.FilesIO;
 
 type
   { TACBrLibPIXCD }

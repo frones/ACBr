@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2024
+--- ACBrLibGNReDataModule --
+[*] Adicionado uses ACBrUtil.filesIO
+Por: Daniel Morais Infocotidiano
+
 10/01/2023
 --- ACBrLibGNReBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado

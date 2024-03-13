@@ -37,7 +37,7 @@ unit ACBrLibCEPDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCEP;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCEP, ACBrUtil.FilesIO;
 
 type
 

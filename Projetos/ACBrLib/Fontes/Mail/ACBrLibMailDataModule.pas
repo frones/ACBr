@@ -37,7 +37,7 @@ unit ACBrLibMailDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrMail;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrMail, ACBrUtil.FilesIO;
 
 type
 
@@ -65,7 +65,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrUtil.Strings,
   ACBrLibMailConfig;
 
 {$R *.lfm}

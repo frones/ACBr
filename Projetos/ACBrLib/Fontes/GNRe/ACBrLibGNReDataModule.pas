@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, syncobjs,
   ACBrMail, ACBrGNRE2, ACBrGNReGuiaRLClass,
-  ACBrLibComum, ACBrLibConfig;
+  ACBrLibComum, ACBrLibConfig, ACBrUtil.FilesIO;
 
 type
 
@@ -40,7 +40,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, FileUtil,
+  ACBrUtil.Base, ACBrUtil.Strings, FileUtil,
   {$IFDEF Demo}pcnConversao,{$ENDIF}
   ACBrLibGNReConfig, ACBrLibGNReBase;
 

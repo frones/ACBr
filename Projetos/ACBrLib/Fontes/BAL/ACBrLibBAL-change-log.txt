@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2024
+--- ACBrLibBALBase, ACBrLibBALDataModule ---
+[-] Inclusao em uses da unit ACBrUtil.FilesIO para novo Log
+	Por: Daniel de Morais InfoCotidiano
+
 11/01/2023
 --- ACBrLibBALBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado

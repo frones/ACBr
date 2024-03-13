@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, syncobjs,
-  ACBrLibComum, ACBrLibConfig, ACBrPosPrinter;
+  ACBrLibComum, ACBrLibConfig, ACBrPosPrinter, ACBrUtil.FilesIO;
 
 type
 
@@ -32,7 +32,7 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrDeviceSerial, ACBrLibPosPrinterConfig;
+  ACBrUtil.Strings, ACBrDeviceSerial, ACBrLibPosPrinterConfig;
 
 {$R *.lfm}
 

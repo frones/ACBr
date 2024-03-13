@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2024
+--- DoACBrBPeUnit --
+[*] Comenta as menções a DistribuicaoDFe, visto que o serviço não é disponibilizado pelo Web Service.
+   Por: Diego Folieni
+
 06/03/2024
 --- Diversos ---
 [+] Implementado método NFSE_ConsultarLinkNFSe

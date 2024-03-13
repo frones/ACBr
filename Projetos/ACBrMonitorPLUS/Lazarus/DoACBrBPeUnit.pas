@@ -1829,10 +1829,10 @@ begin
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
-    if not ValidarCNPJouCPF(ACNPJ) then
-      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
-
-    ACBrBPe.DistribuicaoDFePorChaveBPe(AUF, ACNPJ, AChave);
+    //if not ValidarCNPJouCPF(ACNPJ) then
+    //  raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
+    //
+    //ACBrBPe.DistribuicaoDFePorChaveBPe(AUF, ACNPJ, AChave);
 
     RespostaDistribuicaoDFe;
 
@@ -1869,10 +1869,10 @@ begin
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
-    if not ValidarCNPJouCPF(ACNPJ) then
-      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
-
-    ACBrBPe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU);
+    //if not ValidarCNPJouCPF(ACNPJ) then
+    //  raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
+    //
+    //ACBrBPe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU);
 
     RespostaDistribuicaoDFe;
 
@@ -1909,10 +1909,10 @@ begin
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
-    if not ValidarCNPJouCPF(ACNPJ) then
-      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
-
-    ACBrBPe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU);
+    //if not ValidarCNPJouCPF(ACNPJ) then
+    //  raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
+    //
+    //ACBrBPe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU);
 
     RespostaDistribuicaoDFe;
 

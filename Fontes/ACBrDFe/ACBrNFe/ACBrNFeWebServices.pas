@@ -2941,7 +2941,8 @@ end;
 
 function TNFeConsultaCadastro.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['consultaCadastro2Result',
+  FPRetWS := SeparaDadosArray(['consultaCadastroResult',
+                               'consultaCadastro2Result',
                                'nfeResultMsg',
                                'consultaCadastro4Result'],FPRetornoWS );
 

@@ -664,6 +664,8 @@ type
       var Tratado: Boolean);
     procedure ACBrECFVirtualSAT1QuandoLerArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
+    procedure ACBrECFVirtualSAT1QuandoMudarEstado(
+      const EstadoAtual: TACBrECFEstado; var NovoEstado: TACBrECFEstado);
     procedure ACBrECFVirtualSAT1QuandoVenderItem(Det: TDetCollectionItem);
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
@@ -1961,6 +1963,18 @@ begin
   mResp.Lines.Add( 'ECFVirtualSAT: INI será lido'  );
   if not ACBrSAT1.Inicializado then
      AjustaACBrSAT;
+end;
+
+procedure TForm1.ACBrECFVirtualSAT1QuandoMudarEstado(
+  const EstadoAtual: TACBrECFEstado; var NovoEstado: TACBrECFEstado);
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: Mudandando Estado de: '+
+                   GetEnumName(TypeInfo(TACBrECFEstado), integer(EstadoAtual))+
+                   ', para: '+
+                   GetEnumName(TypeInfo(TACBrECFEstado), integer(NovoEstado)));
+
+  if NovoEstado = estBloqueada then
+    NovoEstado := estLivre;
 end;
 
 procedure TForm1.ACBrECFVirtualSAT1QuandoVenderItem(Det: TDetCollectionItem);

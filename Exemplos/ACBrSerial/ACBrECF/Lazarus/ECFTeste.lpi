@@ -280,6 +280,7 @@
         <Filename Value="configuraserial.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frConfiguraSerial"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ConfiguraSerial"/>
       </Unit2>

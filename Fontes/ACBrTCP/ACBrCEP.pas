@@ -1273,7 +1273,7 @@ begin
   LSL := TStringList.Create;
 
   try
-    LBuffer := fOwner.RespHTTP.Text;
+    LBuffer := UTF8ToNativeString(fOwner.RespHTTP.Text);
     LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '<enderecos>', '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '</enderecos>', '', [rfReplaceAll]);
@@ -1611,7 +1611,7 @@ var
   LJson : TACBrJSONObject;
   LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
-  LJson := TACBrJSONObject.Parse(fOwner.RespHTTP.Text);
+  LJson := TACBrJSONObject.Parse( UTF8ToNativeString( fOwner.RespHTTP.Text ));
 
   try
     LACBrCEPEnderecos := fOwner.Enderecos.New;

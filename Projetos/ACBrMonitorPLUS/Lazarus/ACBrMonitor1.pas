@@ -5874,9 +5874,9 @@ begin
      with WS.Config do
      begin
          for I := 0 to Pred(cbNivelLogBoleto.Items.Count) do
-          if Integer(cbNivelLogBoleto.Items.Objects[I]) = Ord(LogNivel) then
+          if Integer(cbNivelLogBoleto.Items[I]) = Ord(LogNivel) then
           begin
-            cbNivelLogBoleto.ItemIndex        := I;
+            cbNivelLogBoleto.ItemIndex := I;
             break
           end;
        edtPathLogBoleto.Text := PathGravarRegistro;
@@ -12977,7 +12977,7 @@ var LNivelLog : TNivelLog;
 begin
   cbNivelLogBoleto.Items.clear;
   for LNivelLog := Low(TNivelLog) to High(TNivelLog) do
-    cbNivelLogBoleto.Items.AddObject( GetEnumName(TypeInfo(TNivelLog), Integer(LNivelLog) ), TObject(Integer(LNivelLog)) );
+    cbNivelLogBoleto.Items.Add( GetEnumName(TypeInfo(TNivelLog), Integer(LNivelLog) ) );
   cbNivelLogBoleto.ItemIndex:= 0;
 end;
 

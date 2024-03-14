@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/03/2024
+-- ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API --
+[-]TK-4804 Alteração do EndPoint para capturar dados necessário para consultas
+https://www.projetoacbr.com.br/forum/topic/76632-altera%C3%A7%C3%A3o-do-endpoint-api-santander-para-testes/
+https://www.projetoacbr.com.br/forum/topic/75325-retorno-boleto-com-juros-santander/
+  Por: Daniel Morais InfoCotidiano / Victor Gonzales Pandaaaa
+
 19/02/2024
 -- ACBrBoletoRet_Itau_API --
 [-]TK-5129 Corrigido para ler a reposta da API em Producao e Homologacao que tem inicio diferentes.

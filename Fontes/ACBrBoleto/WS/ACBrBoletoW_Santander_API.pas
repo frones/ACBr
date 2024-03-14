@@ -96,14 +96,17 @@ const
 
   {Para homologacao existe 2 end points SandBox e Open-h }
 
-  {URL SandBOX}
-  C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
-  C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
+  {URL SandBOX - nao devolve todas as informações necessárias no retorno}
+  //C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
+  //C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
 
 
-  {URL Homologação open-h}
-  //C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
-  //C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
+  {URL Homologação open-h
+  Atenção !
+  Para habilitar este endpoint contatar o banco, pois este endpoint retorna completo as respostas e qrcode.
+  (SandBox não faz isso segundo banco.  }
+  C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
+  C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
 
 
 implementation
@@ -122,7 +125,7 @@ begin
      tpInclui         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
      tpAltera         : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
      tpConsulta       : FPURL := FPURL + '/bills?' +  DefinirParametros;
-     tpConsultaDetalhe: FPURL := FPURL + '/bills/' +  DefinirParametros;
+     tpConsultaDetalhe: FPURL := FPURL + '/bills' +  DefinirParametros;
      tpBaixa          : FPURL := FPURL + '/workspaces/' + Boleto.Cedente.CedenteWS.KeyUser + '/bank_slips';
   end;
 end;
@@ -197,8 +200,9 @@ end;
 function TBoletoW_Santander_API.GetNsu: string;
 begin
   Result := ATitulo.NossoNumero;
-  if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
-    Result := 'TST' + Result;
+  {so utilizar se for sandbox}
+//  if Boleto.Configuracoes.WebService.Ambiente = taHomologacao then
+//     Result := 'TST' + Result;
 end;
 
 function TBoletoW_Santander_API.DefinirParametros: String;
@@ -221,6 +225,32 @@ begin
 
     Consulta := TStringList.Create;
     try
+        //bankslip: Pesquisa para informações do boleto
+        // nao retorna juros
+        if Boleto.Cedente.CedenteWS.IndicadorPix then
+           begin
+            Consulta.Add('/'+Boleto.Cedente.Convenio + '.' + ANossoNumero);
+            Consulta.Add('tipoConsulta=bankslip');  // 2 via
+            Consulta.Delimiter := '?';
+           end
+        else
+           begin
+             if Boleto.Configuracoes.WebService.Filtro.indicadorSituacao = isbBaixado then
+               begin
+                 Consulta.Add('/'+Boleto.Cedente.Convenio + '.' + ANossoNumero);
+                 Consulta.Add('tipoConsulta=settlement');    // data pgto
+                 Consulta.Delimiter := '?';
+               end
+             else
+               begin
+                 //Consulta NN
+                 Consulta.Add('?beneficiaryCode='+ Boleto.Cedente.Convenio);
+                 Consulta.Add('bankNumber='+ ANossoNumero); // juros
+                 Consulta.Delimiter := '&';
+               end;
+           end;
+        //---------------
+      {
       case Boleto.Configuracoes.WebService.Operacao of
         tpConsulta:
           case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
@@ -229,39 +259,52 @@ begin
                 //settlement: Pesquisa para informações de baixas/liquidações do boleto
                 Consulta.Add('beneficiaryCode='+ Boleto.Cedente.Convenio);
                 Consulta.Add('bankNumber='+ ANossoNumero);
-                Consulta.Add('tipoConsulta=settlement');
+                Consulta.Add('tipoConsulta=registry');  //  baixas liquidacao
               end;
             isbAberto:
               begin
                 // bankslip: Pesquisa para dados completos do boleto
                 Consulta.Add('beneficiaryCode='+ Boleto.Cedente.Convenio);
                 Consulta.Add('bankNumber='+ ANossoNumero);
-                Consulta.Add('tipoConsulta=bankslip');
+                Consulta.Add('tipoConsulta=bankslip');    // 2 via
               end;
           end;
         tpConsultaDetalhe:
           case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
+            isbNenhum:
+              begin // utilizado na consulta enq o santander nao resolve a api correta
+                Consulta.Add('?beneficiaryCode='+ Boleto.Cedente.Convenio);
+                Consulta.Add('bankNumber='+ ANossoNumero);
+              end;
             isbBaixado:
               begin
                 //settlement: Pesquisa para informações de baixas/liquidações do boleto
-                Consulta.Add(Boleto.Cedente.Convenio + '.' + ANossoNumero);
+                Consulta.Add('/'+Boleto.Cedente.Convenio + '.' + ANossoNumero);
                 Consulta.Add('tipoConsulta=settlement');
               end;
             isbAberto:
               begin
                 // bankslip: Pesquisa para dados completos do boleto
-                Consulta.Add(Boleto.Cedente.Convenio + '.' + ANossoNumero);
+                Consulta.Add('/'+Boleto.Cedente.Convenio + '.' + ANossoNumero);
                 Consulta.Add('tipoConsulta=bankslip');
               end;
           end;
       end;
+      }
     finally
+      {
       case Boleto.Configuracoes.WebService.Operacao of
          tpConsulta:
            Consulta.Delimiter := '&';
          tpConsultaDetalhe:
-           Consulta.Delimiter := '?';
+           case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
+                isbNenhum:
+                  Consulta.Delimiter := '&';
+           else
+               Consulta.Delimiter := '?';
+           end;
       end;
+      }
       result := Consulta.DelimitedText;
       Consulta.Free;
     end;
@@ -279,10 +322,14 @@ end;
 
 function TBoletoW_Santander_API.ValidaAmbiente: string;
 begin
-  if Boleto.Configuracoes.WebService.Ambiente = taProducao then
+{Deixado apenas como produção, orientado pelo SUPORTECONECTIVIDADE Data: 08/01/2024, 12:57 anexado na TK 4804 }
+//  if Boleto.Configuracoes.WebService.Ambiente = taProducao then
     Result := 'PRODUCAO'
-  else
-    Result :=  'TESTE';
+//  else
+//    Result :=  'TESTE';
+
+
+
 end;
 
 procedure TBoletoW_Santander_API.RequisicaoAltera;
@@ -991,8 +1038,43 @@ begin
 end;
 
 function TBoletoW_Santander_API.Enviar: boolean;
+var LEnvioPrincipal, LEnvioAuxiliar, LEnvioComplementar : String;
 begin
+  //Feito assim consulta subsequentes, pois conversado com o banco
+  //onde os endpoints estão incompetos, precisando pegar informações em 3 lugares
+  //por exemplo o valor do pagamento só vem na consulta nosso numero
+  //consulta do emv só vem na consulta bankslip e a data pagamento vem settlement
+
   Result := inherited Enviar;
+  LEnvioPrincipal := FRetornoWS;
+
+  if Boleto.Cedente.CedenteWS.IndicadorPix and (Boleto.Configuracoes.WebService.Operacao = tpConsultaDetalhe) then
+  begin
+    try
+      Boleto.Cedente.CedenteWS.IndicadorPix := False;
+      Boleto.Configuracoes.WebService.Filtro.indicadorSituacao := isbNenhum;
+      inherited Enviar;
+      LEnvioAuxiliar := ',' + FRetornoWS;
+    finally
+      Boleto.Cedente.CedenteWS.IndicadorPix := True;
+    end;
+  end;
+
+  if (pos('LIQUIDADO',AnsiUpperCase(LEnvioPrincipal) ) > 0) or
+     (pos('LIQUIDADO',AnsiUpperCase(LEnvioComplementar) ) > 0) or
+     (pos('BAIXADO'  ,AnsiUpperCase(LEnvioPrincipal) ) > 0) or
+     (pos('BAIXADO'  ,AnsiUpperCase(LEnvioComplementar) ) > 0) then
+
+    begin
+      Boleto.Cedente.CedenteWS.IndicadorPix := False;
+      Boleto.Configuracoes.WebService.Filtro.indicadorSituacao := isbBaixado;
+      Result := inherited Enviar;
+      LEnvioComplementar := ',' + FRetornoWS;
+      Boleto.Cedente.CedenteWS.IndicadorPix := true;
+      Boleto.Configuracoes.WebService.Filtro.indicadorSituacao := isbNenhum;
+    end;
+
+  FRetornoWS := '[ ' + LEnvioPrincipal + LEnvioAuxiliar + LEnvioComplementar + '  ]';
 end;
 
 

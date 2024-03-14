@@ -5873,12 +5873,7 @@ begin
 
      with WS.Config do
      begin
-         for I := 0 to Pred(cbNivelLogBoleto.Items.Count) do
-          if Integer(cbNivelLogBoleto.Items[I]) = Ord(LogNivel) then
-          begin
-            cbNivelLogBoleto.ItemIndex := I;
-            break
-          end;
+       cbNivelLogBoleto.ItemIndex := Integer(LogNivel);
        edtPathLogBoleto.Text := PathGravarRegistro;
        edtArquivoLogBoleto.Text := NomeArquivoLog;
      end;

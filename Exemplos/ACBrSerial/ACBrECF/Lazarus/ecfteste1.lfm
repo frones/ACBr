@@ -4992,14 +4992,11 @@ object Form1: TForm1
     Top = 370
   end
   object ACBrNFe1: TACBrNFe
-    Configuracoes.Geral.SSLLib = libCustom
+    Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
-    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.ValidarDigest = False
-    Configuracoes.Geral.VersaoDF = ve200
-    Configuracoes.Geral.VersaoQRCode = veqr000
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

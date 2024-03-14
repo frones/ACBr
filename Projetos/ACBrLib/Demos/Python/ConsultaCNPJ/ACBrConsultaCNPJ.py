@@ -2,32 +2,39 @@ import ctypes
 
 while True:
     print("Menu:")
-    print("1. cwsBrasilAPI")
-    print("2. cwsReceitaWS")
+    print("1. Consultar cwsBrasilAPI")
+    print("2. Consultar cwsReceitaWS")
+    print("3. Consultar cwsCNPJWS")
     print("Digite 0 para sair")
-
     try:
         provedor = int(input("Escolha uma opção: "))
 
         if provedor == 1:
-            print("Você escolheu a Opção 1.")
+            print("Você escolheu cwsBrasilAPI.")
         elif provedor == 2:
-            print("Você escolheu a Opção 2.")
+            print("Você escolheu cwsReceitaWS.")
+        elif provedor == 3:
+            print("Você escolheu cwsCNPJWS.")
         else:
             print("Encerrando o programa.")
             break
 
-        # Carregar a DLL
-        acbr_lib = ctypes.CDLL(r'C:\ACBrLibConsultaCNPJPython\ACBrConsultaCNPJ64.dll')
-        inicializa = acbr_lib.CNPJ_Inicializar(r'C:\ACBrLibConsultaCNPJPython\ACBrConsultaCNPJ.INI'.encode("utf-8"),"".encode("utf-8"))
+        # Carregar a DLL, ajustes os paths para seu ambiente.
+        acbr_lib = ctypes.CDLL(r'C:\ACBr\Projetos\ACBrLib\Demos\Python\ConsultaCNPJ\ACBrConsultaCNPJ64.dll')
+        inicializa = acbr_lib.CNPJ_Inicializar(r'C:\ACBr\Projetos\ACBrLib\Demos\Python\ConsultaCNPJ\ACBrConsultaCNPJ.INI'.encode("utf-8"),"".encode("utf-8"))
+        
+        # https://acbr.sourceforge.io/ACBrLib/ConfiguracoesdaBiblioteca20.html
+        # Vamos configurar abaixo o INI pela lib, configurando o provedor a partir da escolha no menu
 
+        acbr_lib.CNPJ_ConfigGravarValor("ConsultaCNPJ".encode("utf-8"), "Provedor".encode("utf-8"), str(provedor).encode("utf-8"))
+        
         # Definir a assinatura da função
-        acbr_lib.CNPJ_Consultar.argtypes = (ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.POINTER(ctypes.c_int))
+        acbr_lib.CNPJ_Consultar.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.POINTER(ctypes.c_int))
         acbr_lib.CNPJ_Consultar.restype = ctypes.c_int
 
         # Definir variáveis para armazenar os resultados
-        sResposta = ctypes.create_string_buffer(1024) 
-        esTamanho = ctypes.c_int(1024)
+        sResposta = ctypes.create_string_buffer(2048) 
+        esTamanho = ctypes.c_int(2048)
         
         # Definir o valor do CNPJ como uma string
         cnpj_valor =  input("Digite o CNPJ (somente numeros): ")
@@ -39,7 +46,7 @@ while True:
         ctypes.memmove(sCNPJ, cnpj_valor.encode('utf-8'), len(cnpj_valor))
 
         # Chamar a função CNPJ_Versao
-        resultado = acbr_lib.CNPJ_Consultar(sCNPJ,provedor,sResposta,ctypes.byref(esTamanho))
+        resultado = acbr_lib.CNPJ_Consultar(sCNPJ, sResposta, ctypes.byref(esTamanho))
 
         # Verificar o resultado
         if resultado == 0:

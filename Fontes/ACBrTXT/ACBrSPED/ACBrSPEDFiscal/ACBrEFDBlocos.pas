@@ -121,6 +121,10 @@ type
   TACBrIndEmit = (edEmissaoPropria,         // 0 - Emissão própria
                   edTerceiros               // 1 - Terceiro
                   );
+  const
+  TACBrIndEmitArrayOfStrings: array[TACBrIndEmit] of string = ('0', '1');
+
+type
   TACBrEmitente = TACBrIndEmit;
 
   /// Indicador do tipo de pagamento
@@ -923,7 +927,7 @@ end;
 
 function IndEmitToStr(AValue: TACBrIndEmit): string;
 begin
-   Result := IntToStr( Integer( AValue ) + 1 );
+   Result := TACBrIndEmitArrayOfStrings[AValue];
 end;
 
 function StrToIndEmit(const AValue: string): TACBrIndEmit;

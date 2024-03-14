@@ -554,10 +554,20 @@ end;
 procedure TACBrNFSeProviderPublica.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
+  AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   xConsulta, NameSpace, IdAttr: string;
   NumNFSeI, NumNFSeF: Int64;
 begin
+  if Response.InfConsultaNFSe.tpConsulta in [tcServicoTomado,
+     tcServicoPrestado, tcPorChave, tcPorCodigoVerificacao] then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod001;
+    AErro.Descricao := ACBrStr(Desc001);
+    Exit;
+  end;
+
   NumNFSeI := StrToInt64Def(Response.InfConsultaNFSe.NumeroIniNFSe, 0);
   Response.InfConsultaNFSe.NumeroIniNFSe := FormatFloat('000000000000000', NumNFSeI);
 

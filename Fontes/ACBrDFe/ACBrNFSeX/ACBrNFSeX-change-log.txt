@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/03/2024
+-- Publica.Provider --
+[*] Incluído no PrepararConsultarNFSe a checagem dos tipo de consulta e mostrar
+    a mensagem "Serviço não implementado pelo Provedor." para os tipos de consulta
+    que não existe no webservice do provedor.
+  Por: Italo Giurizzato Junior
+
 13/03/2024
 -- Diversos --
 [*] Melhorias no código usando o FixInsight (ainda não ficou 100%).

@@ -130,13 +130,11 @@ begin
   for i := 0 to Length(ANodes) - 1 do
   begin
     NFSe.Despesa.New;
-    with NFSe.Despesa.Items[i] do
-    begin
-      nItemDesp := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nItemDesp'), tcStr);
-      xDesp     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('xDesp'), tcStr);
-      dDesp     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('dDesp'), tcDat);
-      vDesp     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vDesp'), tcDe2);
-    end;
+
+    NFSe.Despesa.Items[i].nItemDesp := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nItemDesp'), tcStr);
+    NFSe.Despesa.Items[i].xDesp     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('xDesp'), tcStr);
+    NFSe.Despesa.Items[i].dDesp     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('dDesp'), tcDat);
+    NFSe.Despesa.Items[i].vDesp     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vDesp'), tcDe2);
   end;
 end;
 
@@ -152,20 +150,14 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Prestador do
-    begin
-      RazaoSocial  := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
-      NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('xFant'), tcStr);
+    NFSe.Prestador.RazaoSocial  := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
+    NFSe.Prestador.NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('xFant'), tcStr);
 
-      with IdentificacaoPrestador do
-      begin
-        CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
-        InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
+    NFSe.Prestador.IdentificacaoPrestador.CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+    NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
 
-        // versão 1.1
-        InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
-      end;
-    end;
+    // versão 1.1
+    NFSe.Prestador.IdentificacaoPrestador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
 
     LerEnderecoEmitente(AuxNode);
 
@@ -179,12 +171,9 @@ begin
       NFSe.RegimeEspecialTributacao := retLucroReal;
     end;
 
-    with NFSe.Prestador.Contato do
-    begin
-      Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-      Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
-      xSite    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xSite'), tcStr);
-    end;
+    NFSe.Prestador.Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+    NFSe.Prestador.Contato.Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
+    NFSe.Prestador.Contato.xSite    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xSite'), tcStr);
   end;
 end;
 
@@ -221,35 +210,29 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Prestador.Endereco do
+    NFSe.Prestador.Endereco.Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
+    NFSe.Prestador.Endereco.Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
+    NFSe.Prestador.Endereco.Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
+    NFSe.Prestador.Endereco.Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
+    NFSe.Prestador.Endereco.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
+    NFSe.Prestador.Endereco.xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
+    NFSe.Prestador.Endereco.UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
+    NFSe.Prestador.Endereco.CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
+
+    if NFSe.Prestador.Endereco.xMunicipio = '' then
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
-      Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
-      Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
-      Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
-      CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
-      xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
-      UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
-      CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
+      NFSe.Prestador.Endereco.xMunicipio := ObterNomeMunicipioUF(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0), xUF);
 
-      if xMunicipio = '' then
-      begin
-        xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
-
-        if UF = '' then
-          UF := xUF;
-      end;
-
-      // versão 1.1
-      CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
-      xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPais'), tcStr);
+      if NFSe.Prestador.Endereco.UF = '' then
+        NFSe.Prestador.Endereco.UF := xUF;
     end;
 
-    with NFSe.Prestador.Contato do
-    begin
-      Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-      Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
-    end;
+    // versão 1.1
+    NFSe.Prestador.Endereco.CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
+    NFSe.Prestador.Endereco.xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPais'), tcStr);
+
+    NFSe.Prestador.Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+    NFSe.Prestador.Contato.Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
   end;
 end;
 
@@ -262,35 +245,29 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Tomador.Endereco do
+    NFSe.Tomador.Endereco.Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
+    NFSe.Tomador.Endereco.Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
+    NFSe.Tomador.Endereco.Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
+    NFSe.Tomador.Endereco.Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
+    NFSe.Tomador.Endereco.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
+    NFSe.Tomador.Endereco.xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
+    NFSe.Tomador.Endereco.UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
+    NFSe.Tomador.Endereco.CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
+
+    if NFSe.Tomador.Endereco.xMunicipio = '' then
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
-      Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
-      Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
-      Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
-      CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
-      xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMun'), tcStr);
-      UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
-      CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
+      NFSe.Tomador.Endereco.xMunicipio := ObterNomeMunicipioUF(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0), xUF);
 
-      if xMunicipio = '' then
-      begin
-        xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
-
-        if UF = '' then
-          UF := xUF;
-      end;
-
-      // versão 1.1
-      CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
-      xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPais'), tcStr);
+      if NFSe.Tomador.Endereco.UF = '' then
+        NFSe.Tomador.Endereco.UF := xUF;
     end;
 
-    with NFSe.Tomador.Contato do
-    begin
-      Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-      Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
-    end;
+    // versão 1.1
+    NFSe.Tomador.Endereco.CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
+    NFSe.Tomador.Endereco.xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPais'), tcStr);
+
+    NFSe.Tomador.Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+    NFSe.Tomador.Contato.Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
   end;
 end;
 
@@ -321,12 +298,10 @@ begin
     for i := 0 to Length(ANodes) - 1 do
     begin
       NFSe.CondicaoPagamento.Parcelas.New;
-      with NFSe.CondicaoPagamento.Parcelas[i] do
-      begin
-        Parcela        := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nFat'), tcStr);
-        DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('dVenc'), tcDat);
-        Valor          := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vFat'), tcDe2);
-      end;
+
+      NFSe.CondicaoPagamento.Parcelas[i].Parcela        := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nFat'), tcStr);
+      NFSe.CondicaoPagamento.Parcelas[i].DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('dVenc'), tcDat);
+      NFSe.CondicaoPagamento.Parcelas[i].Valor          := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vFat'), tcDe2);
     end;
   end;
 end;
@@ -427,17 +402,14 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Servico.Valores do
-    begin
-      BaseCalculo    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCISS'), tcDe2);
-      ValorIss       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vISS'), tcDe2);
-      ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('vSTISS'), tcDe2);
+    NFSe.Servico.Valores.BaseCalculo    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBCISS'), tcDe2);
+    NFSe.Servico.Valores.ValorIss       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vISS'), tcDe2);
+    NFSe.Servico.Valores.ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('vSTISS'), tcDe2);
 
-      if ValorIssRetido > 0 then
-      begin
-        IssRetido := stRetencao;
-        NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
-      end;
+    if NFSe.Servico.Valores.ValorIssRetido > 0 then
+    begin
+      NFSe.Servico.Valores.IssRetido := stRetencao;
+      NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
     end;
   end;
 end;
@@ -484,16 +456,15 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Servico.Valores do
-    begin
-      ValorIr     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetIR'), tcDe2);
-      ValorPis    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetPISPASEP'), tcDe2);
-      ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCOFINS'), tcDe2);
-      ValorCsll   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2);
-      ValorInss   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetINSS'), tcDe2);
+    NFSe.Servico.Valores.ValorIr     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetIR'), tcDe2);
+    NFSe.Servico.Valores.ValorPis    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetPISPASEP'), tcDe2);
+    NFSe.Servico.Valores.ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCOFINS'), tcDe2);
+    NFSe.Servico.Valores.ValorCsll   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2);
+    NFSe.Servico.Valores.ValorInss   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetINSS'), tcDe2);
 
-      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
-    end;
+    NFSe.Servico.Valores.RetencoesFederais := NFSe.Servico.Valores.ValorPis +
+      NFSe.Servico.Valores.ValorCofins + NFSe.Servico.Valores.ValorInss +
+      NFSe.Servico.Valores.ValorIr + NFSe.Servico.Valores.ValorCsll;
   end;
 end;
 
@@ -593,25 +564,16 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Tomador do
-    begin
-      RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
+    NFSe.Tomador.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
 
-      with IdentificacaoTomador do
-      begin
-        CpfCnpj            := ObterCNPJCPF(AuxNode);
-        InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
-        InscricaoEstadual  := ObterConteudo(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
-      end;
-    end;
+    NFSe.Tomador.IdentificacaoTomador.CpfCnpj            := ObterCNPJCPF(AuxNode);
+    NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
+    NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual  := ObterConteudo(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
 
     LerEnderecoTomador(AuxNode);
 
-    with NFSe.Tomador.Contato do
-    begin
-      Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
-      Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
-    end;
+    NFSe.Tomador.Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+    NFSe.Tomador.Contato.Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEmail'), tcStr);
   end;
 end;
 
@@ -623,18 +585,16 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Servico.Valores do
-    begin
-      ValorServicos          := ObterConteudo(AuxNode.Childrens.FindAnyNs('vServ'), tcDe2);
-      DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vDesc'), tcDe2);
-      ValorLiquidoNfse       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtLiq'), tcDe2);
+    NFSe.Servico.Valores.ValorServicos          := ObterConteudo(AuxNode.Childrens.FindAnyNs('vServ'), tcDe2);
+    NFSe.Servico.Valores.DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vDesc'), tcDe2);
+    NFSe.Servico.Valores.ValorLiquidoNfse       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtLiq'), tcDe2);
 
-      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                              DescontoIncondicionado;
+    NFSe.Servico.Valores.ValorTotalNotaFiscal := NFSe.Servico.Valores.ValorServicos -
+      NFSe.Servico.Valores.DescontoCondicionado -
+      NFSe.Servico.Valores.DescontoIncondicionado;
 
-      // versão 1.1
-      ValorDespesasNaoTributaveis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtDespesas'), tcDe2);
-    end;
+    // versão 1.1
+    NFSe.Servico.Valores.ValorDespesasNaoTributaveis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtDespesas'), tcDe2);
 
     LerFatura(AuxNode);
     LerISS(AuxNode);
@@ -651,20 +611,17 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Transportadora do
-    begin
-      xNomeTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNomeTrans'), tcStr);
-      xCpfCnpjTrans   := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpfCnpjTrans'), tcStr);
-      xInscEstTrans   := ObterConteudo(AuxNode.Childrens.FindAnyNs('xInscEstTrans'), tcStr);
-      xPlacaTrans     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPlacaTrans'), tcStr);
-      xEndTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEndTrans'), tcStr);
-      cMunTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMunTrans'), tcStr);
-      xMunTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMunTrans'), tcStr);
-      xUFTrans        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xUfTrans'), tcStr);
-      cPaisTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisTrans'), tcStr);
-      xPaisTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPaisTrans'), tcStr);
-      vTipoFreteTrans := StrToTipoFrete(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('vTipoFreteTrans'), tcStr));
-    end;
+    NFSe.Transportadora.xNomeTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNomeTrans'), tcStr);
+    NFSe.Transportadora.xCpfCnpjTrans   := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpfCnpjTrans'), tcStr);
+    NFSe.Transportadora.xInscEstTrans   := ObterConteudo(AuxNode.Childrens.FindAnyNs('xInscEstTrans'), tcStr);
+    NFSe.Transportadora.xPlacaTrans     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPlacaTrans'), tcStr);
+    NFSe.Transportadora.xEndTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEndTrans'), tcStr);
+    NFSe.Transportadora.cMunTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMunTrans'), tcStr);
+    NFSe.Transportadora.xMunTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMunTrans'), tcStr);
+    NFSe.Transportadora.xUFTrans        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xUfTrans'), tcStr);
+    NFSe.Transportadora.cPaisTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisTrans'), tcStr);
+    NFSe.Transportadora.xPaisTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPaisTrans'), tcStr);
+    NFSe.Transportadora.vTipoFreteTrans := StrToTipoFrete(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('vTipoFreteTrans'), tcStr));
   end;
 end;
 

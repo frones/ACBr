@@ -162,14 +162,11 @@ begin
     ConsultaPorFaixa := True;
     DetalharServico := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarLote := True;
-      ConsultarFaixaNfse := True;
-      ConsultarNfseChave := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarFaixaNfse := True;
+    ServicosDisponibilizados.ConsultarNfseChave := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   with ConfigWebServices do
@@ -827,35 +824,20 @@ begin
 
   with ConfigMsgDados do
   begin
-    with LoteRps do
-    begin
-      InfElemento := 'envioLote';
-      DocElemento := 'envioLote';
-    end;
+    LoteRps.InfElemento := 'envioLote';
+    LoteRps.DocElemento := 'envioLote';
 
-    with ConsultarLote do
-    begin
-      InfElemento := 'pedidoStatusLote';
-      DocElemento := 'pedidoStatusLote';
-    end;
+    ConsultarLote.InfElemento := 'pedidoStatusLote';
+    ConsultarLote.DocElemento := 'pedidoStatusLote';
 
-    with ConsultarNFSePorFaixa do
-    begin
-      InfElemento := 'pedidoLoteNFSe';
-      DocElemento := 'pedidoLoteNFSe';
-    end;
+    ConsultarNFSePorFaixa.InfElemento := 'pedidoLoteNFSe';
+    ConsultarNFSePorFaixa.DocElemento := 'pedidoLoteNFSe';
 
-    with ConsultarNFSePorChave do
-    begin
-      InfElemento := 'pedidoNFSe';
-      DocElemento := 'pedidoNFSe';
-    end;
+    ConsultarNFSePorChave.InfElemento := 'pedidoNFSe';
+    ConsultarNFSePorChave.DocElemento := 'pedidoNFSe';
 
-    with CancelarNFSe do
-    begin
-      InfElemento := 'pedCancelaNFSe';
-      DocElemento := 'pedCancelaNFSe';
-    end;
+    CancelarNFSe.InfElemento := 'pedCancelaNFSe';
+    CancelarNFSe.DocElemento := 'pedCancelaNFSe';
   end;
 end;
 

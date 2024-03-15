@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2024
+-- Infisc.GravarXml--
+[*] Alteração visando gerar o grupo <dadosDaObra> independente do valor de
+    empreitadaGlobal.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Corrige a URL de Biguacu/SC
   Por: Diego Folieni

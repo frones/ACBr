@@ -356,10 +356,18 @@ begin
         IdentificacaoRps.Serie := INIRec.ReadString(sSecao, 'Serie', '0');
         IdentificacaoRps.Tipo := FProvider.StrToTipoRPS(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
 
-        DataEmissao := INIRec.ReadDate(sSecao, 'DataEmissao', Now);
-        Competencia := INIRec.ReadDate(sSecao, 'Competencia', Now);
-        DataEmissaoRPS := INIRec.ReadDate(sSecao, 'DataEmissao', Now);
-        Vencimento := INIRec.ReadDate(sSecao, 'Vencimento', Now);
+        sFim := INIRec.ReadString(sSecao, 'DataEmissao', '');
+        if sFim <> '' then
+          DataEmissao := StringToDateTimeDef(sFim, 0);
+
+        sFim := INIRec.ReadString(sSecao, 'Competencia', '');
+        if sFim <> '' then
+          Competencia := StringToDateTimeDef(sFim, 0);
+        DataEmissaoRPS := DataEmissao;
+
+        sFim := INIRec.ReadString(sSecao, 'Vencimento', '');
+        if sFim <> '' then
+          Vencimento := StringToDateTimeDef(sFim, 0);
         NaturezaOperacao := StrToNaturezaOperacao(Ok, INIRec.ReadString(sSecao, 'NaturezaOperacao', '0'));
 
         // Provedor Tecnos

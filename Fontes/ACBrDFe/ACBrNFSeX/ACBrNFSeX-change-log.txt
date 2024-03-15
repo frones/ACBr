@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2024
+-- IPM.Provider--
+[*] Alterado o valor padrão da propriedade UseCertificateHTTP para false para 
+    não solicitar o certificado digital.
+  Por: Datacamp
 -- Infisc.GravarXml--
 [*] Alteração visando gerar o grupo <dadosDaObra> independente do valor de
     empreitadaGlobal.

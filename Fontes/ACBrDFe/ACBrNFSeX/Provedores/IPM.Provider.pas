@@ -187,14 +187,11 @@ begin
 
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      ConsultarLote := True;
-      ConsultarRps := True;
-      ConsultarNfse := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   with ConfigAssinar do
@@ -207,17 +204,11 @@ begin
 
   with ConfigMsgDados do
   begin
-    with XmlRps do
-    begin
-      InfElemento := 'nfse';
-      DocElemento := 'nfse';
-    end;
+    XmlRps.InfElemento := 'nfse';
+    XmlRps.DocElemento := 'nfse';
 
-    with CancelarNFSe do
-    begin
-      InfElemento := 'nfse';
-      DocElemento := 'nfse';
-    end;
+    CancelarNFSe.InfElemento := 'nfse';
+    CancelarNFSe.DocElemento := 'nfse';
   end;
 
   ConfigSchemas.Validar := False;
@@ -1552,6 +1543,8 @@ end;
 procedure TACBrNFSeProviderIPM101.Configuracao;
 begin
   inherited Configuracao;
+
+  ConfigGeral.UseCertificateHTTP := False;
 
   with ConfigGeral.ServicosDisponibilizados do
   begin

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2024
+-- ACBrNFSeXServicos --
+[*] Corrige a URL de Biguacu/SC
+  Por: Diego Folieni
 -- ACBrNFSeXNotasFiscais --
 [*] Corrige a leitura dos campos DataEmissao, Competência e Vencimento na rotina de leitura de INI
   Por: Diego Folieni

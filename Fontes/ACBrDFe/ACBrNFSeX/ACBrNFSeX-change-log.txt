@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2024
+-- ACBrNFSeXServicos --
+[*] Trocado o http por https das URLs da cidade de Birigui/SP, o provedor continua o mesmo.
+  Por: FabioTellini
 -- IPM.Provider--
 [*] Alterado o valor padrão da propriedade UseCertificateHTTP para false para 
     não solicitar o certificado digital.

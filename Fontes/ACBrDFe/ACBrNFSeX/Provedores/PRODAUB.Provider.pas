@@ -69,6 +69,8 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     function SetIdSignatureValue(const ConteudoXml, docElement, IdAttr: string): string;  override;
+    function DefinirIDCancelamento(const CNPJ: string; const InscMunic: string;
+                                   const NumNfse: string): string; override;
   end;
 
 implementation
@@ -106,7 +108,7 @@ begin
     ConsultarLote     := False;
     ConsultarNFSeRps  := False;
     ConsultarNFSe     := False;
-    CancelarNFSe      := False;
+    CancelarNFSe      := True;
     RpsGerarNFSe      := True;
     LoteGerarNFSe     := False;
     RpsSubstituirNFSe := False;
@@ -146,6 +148,16 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderPRODAUB204.DefinirIDCancelamento(const CNPJ,
+  InscMunic, NumNfse: string): string;
+begin
+  if ConfigGeral.Identificador <> '' then
+    Result := ' ' + ConfigGeral.Identificador + '="ID_PEDIDO_CANCELAMENTO_' +
+              NumNfse + '"'
+  else
+    Result := '';
 end;
 
 function TACBrNFSeProviderPRODAUB204.SetIdSignatureValue(const ConteudoXml,

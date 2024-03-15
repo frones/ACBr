@@ -824,6 +824,8 @@ begin
            proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSimple,
            proSmarAPD, proWebFisco, proBauhaus, proeISS, proSoftPlan] then
       begin
+        Servico.Valores.ValorServicos := 0;
+
         with Servico.ItemServico.New do
         begin
           Descricao := 'Desc. do Serv. 1';
@@ -854,6 +856,9 @@ begin
           ValorTaxaTurismo := 0;
 
           ValorTotal := Quantidade * ValorUnitario;
+
+          Servico.Valores.ValorServicos := Servico.Valores.ValorServicos +
+                                           ValorTotal;
 
           BaseCalculo := ValorTotal - ValorDeducoes - DescontoIncondicionado;
 
@@ -3359,7 +3364,9 @@ begin
   begin
     memoLog.Lines.Add('------------------------------------');
     memoLog.Lines.Add('Informações sobre o provedor: ' + xProvedor +
-            ' - Versão: ' +VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao));
+            ' - Versão: ' + VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao) +
+            ' - Layout: ' + IfThen(ACBrNFSeX1.Configuracoes.Geral.Layout = loABRASF,
+                                   'ABRASF', 'Próprio'));
     memoLog.Lines.Add('');
     memoLog.Lines.Add('Autenticação');
     memoLog.Lines.Add('');
@@ -5075,7 +5082,7 @@ begin
   if RetWS <> '' then
   begin
     WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
-                        AnsiString(RetWS), False, False);
+                        RetWS, False, False);
 
     MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq);
 

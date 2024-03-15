@@ -111,14 +111,14 @@ object frmACBrNFSe: TfrmACBrNFSe
           Height = 478
           Top = 0
           Width = 287
-          ActivePage = TabSheet4
+          ActivePage = TabSheet12
           Align = alClient
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Tahoma'
           MultiLine = True
           ParentFont = False
-          TabIndex = 1
+          TabIndex = 3
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet

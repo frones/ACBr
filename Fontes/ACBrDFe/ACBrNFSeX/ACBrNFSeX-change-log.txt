@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2024
+-- ACBrNFSeXLerXml/Centi.LerXml--
+[*] Ajustes na leitura da tag ItemListaServico, o provedor Centi retorna no formato
+    xx.xx.xx 
+  Por: Diego Reckziegel
+-- Governa.LerXml--
+[*] Correção na leitura do XML, não estava lendo corretamente diversos campos.
+  Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] A cidade de Pontes e Lacerda/MT trocou de provedor, agora é Betha.
   Por: Diego Reckziegel

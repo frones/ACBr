@@ -162,15 +162,20 @@ var
   Item: Integer;
   xCodigo: string;
 begin
-  xCodigo := Codigo;
+  Result := Codigo;
 
-  Item := StrToIntDef(OnlyNumber(xCodigo), 0);
-  if Item < 100 then
-    Item := Item * 100 + 1;
+  if Length(Codigo) <= 5 then
+  begin
+    xCodigo := Codigo;
 
-  xCodigo := FormatFloat('0000', Item);
+    Item := StrToIntDef(OnlyNumber(xCodigo), 0);
+    if Item < 100 then
+      Item := Item * 100 + 1;
 
-  Result := Copy(xCodigo, 1, 2) + '.' + Copy(xCodigo, 3, 2);
+    xCodigo := FormatFloat('0000', Item);
+
+    Result := Copy(xCodigo, 1, 2) + '.' + Copy(xCodigo, 3, 2);
+  end;
 end;
 
 function TNFSeRClass.NormatizarXml(const aXml: string): string;

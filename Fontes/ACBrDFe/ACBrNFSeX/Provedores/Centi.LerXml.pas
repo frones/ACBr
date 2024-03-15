@@ -62,7 +62,7 @@ type
 
     procedure LerPrestador(const ANode: TACBrXmlNode);
     procedure LerIdentificacaoPrestador(const ANode: TACBrXmlNode);
-    procedure LerEnderecoPrestador(const ANode: TACBrXmlNode; aTag: string);
+    procedure LerEnderecoPrestador(const ANode: TACBrXmlNode; const aTag: string);
     procedure LerContatoPrestador(const ANode: TACBrXmlNode);
 
     procedure LerTomadorServico(const ANode: TACBrXmlNode);
@@ -210,7 +210,7 @@ begin
 end;
 
 procedure TNFSeR_Centi202.LerEnderecoPrestador(const ANode: TACBrXmlNode;
-  aTag: string);
+  const aTag: string);
 var
   AuxNode: TACBrXmlNode;
   xUF: string;
@@ -582,7 +582,10 @@ begin
         ResponsavelRetencao := FpAOwner.StrToResponsavelRetencao(Ok, Responsavel);
 
       ItemListaServico          := NormatizarItemListaServico(CodigoItemServico);
-      xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
+
+      CodigoItemServico := Copy(ItemListaServico, 1, 5);
+
+      xItemListaServico         := ItemListaServicoDescricao(CodigoItemServico);
       CodigoCnae                := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnae'), tcStr);
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr);
       Discriminacao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
@@ -598,20 +601,17 @@ begin
       MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
       NumeroProcesso      := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
 
-      with Valores do
-      begin
-        if IssRetido = stRetencao then
-          ValorIssRetido := ValorIss
-        else
-          ValorIssRetido := 0;
+      if Valores.IssRetido = stRetencao then
+        Valores.ValorIssRetido := Valores.ValorIss
+      else
+        Valores.ValorIssRetido := 0;
 
-        ValorLiq := ValorServicos - RetencoesFederais - OutrasRetencoes -
-                    ValorIssRetido -
-                    DescontoIncondicionado - DescontoCondicionado;
+      ValorLiq := Valores.ValorServicos - Valores.RetencoesFederais -
+                  Valores.OutrasRetencoes - Valores.ValorIssRetido -
+                  Valores.DescontoIncondicionado - Valores.DescontoCondicionado;
 
-        if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
-          ValorLiquidoNfse := ValorLiq;
-      end;
+      if (Valores.ValorLiquidoNfse = 0) or (Valores.ValorLiquidoNfse <> ValorLiq) then
+        Valores.ValorLiquidoNfse := ValorLiq;
     end;
   end;
 end;

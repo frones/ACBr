@@ -115,13 +115,10 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarLote := True;
-      ConsultarNfse := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;

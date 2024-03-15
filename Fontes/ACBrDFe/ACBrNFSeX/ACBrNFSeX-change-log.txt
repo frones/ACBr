@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2024
+-- AssessorPublico.LerXml--
+[*] Correção no tipo de conversão da tag SITUACAO.
+  Por: Ray Hildebrant
 -- PRODAUB.Provider --
 [*] Alteração visando assinar o pedido de cancelamento e com o ID exigido pelo 
     provedor.

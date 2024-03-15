@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Pontes e Lacerda/MT trocou de provedor, agora é Betha.
+  Por: Diego Reckziegel
+
 14/03/2024
 -- ACBrNFSeXServicos --
 [*] Remove URL de homologação indevida para o município de Nova Itaberaba/SC

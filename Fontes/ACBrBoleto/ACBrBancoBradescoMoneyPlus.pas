@@ -448,8 +448,8 @@ begin
        PadRight( Sacado.Mensagem, 12, ' ')                     +  // 315 a 326 - 1ª Mensagem
        PadRight( Sacado.CEP, 8 )                               +  // 327 a 334 - CEP + Sufixo CEP
        PadRight(LMensagemCedente,60)                           +  // 335 a 394 - 2ª Mensagem
-       IntToStrZero(aRemessa.Count + 1, 6)                     ;  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
-
+       IntToStrZero(aRemessa.Count + 1, 6)                     +  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
+       LChaveNFe;                                                          // 401 a 444 Chave NFe
        aRemessa.Add(UpperCase(wLinha));
        wLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
 
@@ -470,8 +470,8 @@ begin
           Padleft(ACBrBoleto.Cedente.ContaDigito, 1 , '0')                  + // 382 a 382 - Dígito Verificador da Conta Alfa
           PadLeft(NossoNumero, 11, '0')                                     + // 383 a 393 - Nosso Número
           PadLeft(sDigitoNossoNumero ,1,'0')                                + // 394 a 394 - Digito Nosso Número
-          IntToStrZero( ARemessa.Count + 1, 6)                              + // 395 a 400 - Número sequencial do registro
-          LChaveNFe;                                                          // 401 a 444 Chave NFe
+          IntToStrZero( ARemessa.Count + 1, 6);                               // 395 a 400 - Número sequencial do registro
+
           ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
         end;
      end;

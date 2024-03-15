@@ -1837,7 +1837,10 @@ public class FrmMain extends javax.swing.JFrame {
             if (!Files.isDirectory(pathLog)) {
                 pathLog.toFile().mkdirs();
             }
-
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, "Porta", 0);
+            acbrNFe.configGravarValor(ACBrSessao.Proxy, "Porta", 0);
+            
             acbrNFe.configGravarValor(ACBrSessao.Principal, "LogNivel", 4);
             acbrNFe.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog.toString());
             acbrNFe.configGravar();

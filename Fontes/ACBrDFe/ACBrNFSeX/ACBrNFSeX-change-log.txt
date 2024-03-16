@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2024
+-- Diversos --
+[*] Inclusão do campo infAdicional utilizado pelo provedor MegaSoft.
+  Por: Arimateia Jr
+
 15/03/2024
 -- ACBrNFSeXServicos --
 [*] Trocado o http por https das URLs da cidade de Birigui/SP, o provedor continua o mesmo.

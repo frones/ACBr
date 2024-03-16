@@ -830,6 +830,7 @@ type
     FxMunicipioIncidencia: string;
     FCFPS: string;
     FEndereco: TEndereco;
+    FInfAdicional: string;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -886,6 +887,8 @@ type
     property CFPS: string read FCFPS write FCFPS;
     // Provedor Giap
     property Endereco: TEndereco read FEndereco write FEndereco;
+    // Provedor Megasoft
+    property InfAdicional: string read FInfAdicional write FInfAdicional;
   end;
 
   TDadosPessoa = class(TObject)

@@ -106,6 +106,7 @@ resourcestring
   DSC_NPROCESSO = 'Número do Processo';
   DSC_TPAG = 'Forma de Pagamento';
   DSC_DVENC = 'Data de vencimento';
+  DSC_INFADICIONAL = 'Informação Adicional';
 
   // Descrição de Documentos - Futuramente vai para ACBrDFeConst
   DSC_CNPJ = 'CNPJ(MF)';

@@ -81,17 +81,14 @@ begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := False;
-      EnviarLoteSincrono := False;
-      ConsultarLote := False;
-      ConsultarFaixaNfse := False;
-      ConsultarServicoPrestado := False;
-      ConsultarServicoTomado := False;
-      CancelarNfse := False;
-      SubstituirNfse := False;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := False;
+    ServicosDisponibilizados.EnviarLoteSincrono := False;
+    ServicosDisponibilizados.ConsultarLote := False;
+    ServicosDisponibilizados.ConsultarFaixaNfse := False;
+    ServicosDisponibilizados.ConsultarServicoPrestado := False;
+    ServicosDisponibilizados.ConsultarServicoTomado := False;
+    ServicosDisponibilizados.CancelarNfse := False;
+    ServicosDisponibilizados.SubstituirNfse := False;
   end;
 
   ConfigAssinar.RpsGerarNFSe := True;

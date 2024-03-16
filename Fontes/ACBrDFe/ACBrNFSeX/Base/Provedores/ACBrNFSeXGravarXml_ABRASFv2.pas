@@ -146,6 +146,7 @@ type
     FNrOcorrCodigoNBS: Integer;
     FGerarTagRps: Boolean;
     FNrOcorrDataPagamento: Integer;
+    FNrOcorrInfAdicional: Integer;
 
   protected
     procedure Configuracao; override;
@@ -277,6 +278,7 @@ type
     property NrOcorrQuantDiarias: Integer read FNrOcorrQuantDiarias write FNrOcorrQuantDiarias;
     property NrOcorrCodigoNBS: Integer read FNrOcorrCodigoNBS write FNrOcorrCodigoNBS;
     property NrOcorrDataPagamento: Integer read FNrOcorrDataPagamento write FNrOcorrDataPagamento;
+    property NrOcorrInfAdicional: Integer read FNrOcorrInfAdicional write FNrOcorrInfAdicional;
 
     property GerarTagServicos: Boolean read FGerarTagServicos write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
@@ -403,6 +405,7 @@ begin
   FNrOcorrValorCpp := -1;
   FNrOcorrAliquotaCpp := -1;
   FNrOcorrRetidoCpp := -1;
+  FNrOcorrInfAdicional := -1;
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
@@ -690,6 +693,9 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#38', 'NumeroProcesso', 1, 30, NrOcorrNumProcesso,
                                    NFSe.Servico.NumeroProcesso, DSC_NPROCESSO));
+
+    Result.AppendChild(AddNode(tcStr, '#39', 'InfAdicional', 1, 255, NrOcorrInfAdicional,
+                                  NFSe.Servico.InfAdicional, DSC_INFADICIONAL));
 
     Result.AppendChild(GerarListaItensServico);
   end;

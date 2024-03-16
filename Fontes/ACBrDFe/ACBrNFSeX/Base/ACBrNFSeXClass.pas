@@ -1283,6 +1283,7 @@ type
     FCNPJ: String;
     FInscMun: String;
     FxMunicipio: String;
+    FID: String;
   public
     property Ambiente: Integer read FAmbiente write FAmbiente;
     property ProLinkURL: String read FProLinkURL write FProLinkURL;
@@ -1294,6 +1295,7 @@ type
     property CNPJ: String read FCNPJ write FCNPJ;
     property InscMun: String read FInscMun write FInscMun;
     property xMunicipio: String read FxMunicipio write FxMunicipio;
+    property ID: String read FID write FID;
   end;
 
   TNFSe = class(TPersistent)
@@ -1852,6 +1854,9 @@ begin
   if LinkNFSeParam.InscMun = '' then
     LinkNFSeParam.InscMun := Prestador.IdentificacaoPrestador.InscricaoMunicipal;
 
+  if LinkNFSeParam.ID = '' then
+    LinkNFSeParam.ID := infNFSe.ID;
+
   if LinkNFSeParam.FAmbiente = 0 then
     Texto := LinkNFSeParam.FProLinkURL
   else
@@ -1867,6 +1872,7 @@ begin
   // %InscMunic%         : Representa a Inscrição Municipal do Emitente - Configuração
   // %xMunicipio%        : Representa o Nome do Município - Configuração
   // %DataEmissao:X..X%: : Representa a Data de Emissão da NFSe com o formato preenchido após os ":" - Dados da NFSe
+  // %ID%                : Representa o conteudo do atributo Id de InfNfse
 
   Texto := StringReplace(Texto, '%CodVerif%', LinkNFSeParam.CodVerificacao, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%CodVerifSoAlfanum%',
@@ -1878,6 +1884,7 @@ begin
   Texto := StringReplace(Texto, '%CnpjComMascara%', FormatarCNPJouCPF(LinkNFSeParam.CNPJ), [rfReplaceAll]);
   Texto := StringReplace(Texto, '%InscMunic%', LinkNFSeParam.InscMun, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%xMunicipio%', LowerCase(OnlyAlphaNum(LinkNFSeParam.xMunicipio)), [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%ID%', LinkNFSeParam.ID, [rfReplaceAll]);
   PreencherData('DataEmissao',DataEmissao);
 
   Result := Texto;

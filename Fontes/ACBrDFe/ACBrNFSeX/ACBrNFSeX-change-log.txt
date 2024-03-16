@@ -44,6 +44,10 @@ Símbolo : Significado
 
 16/03/2024
 -- Diversos --
+[*] Inclusão do parâmetro AID na função LinkNFSe, que é utilizado pelo
+    provedor Infisc
+  Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Inclusão do campo infAdicional utilizado pelo provedor MegaSoft.
   Por: Arimateia Jr
 

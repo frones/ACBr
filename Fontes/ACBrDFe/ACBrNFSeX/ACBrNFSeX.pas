@@ -170,7 +170,8 @@ type
       const ANumLote: String = ''; const ACodVerificacao: String = '');
 
     function LinkNFSe(const ANumNFSe: String; const ACodVerificacao: String;
-      const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
+      const AChaveAcesso: String = ''; const AValorServico: String = '';
+      const AID: string = ''): String;
 
     // Usado pelos provedores que geram token por WebService
     procedure GerarToken;
@@ -1165,7 +1166,7 @@ begin
 end;
 
 function TACBrNFSeX.LinkNFSe(const ANumNFSe: String; const ACodVerificacao,
-  AChaveAcesso, AValorServico: String): String;
+  AChaveAcesso, AValorServico, AID: String): String;
 var
   NFSe: TNFSe;
   NFSeTemp: Boolean;
@@ -1189,6 +1190,7 @@ begin
     LinkNFSeParam.CodVerificacao := ACodVerificacao;
     LinkNFSeParam.ChaveAcesso := AChaveAcesso;
     LinkNFSeParam.ValorServico := AValorServico;
+    LinkNFSeParam.ID := AID;
     LinkNFSeParam.CNPJ := Configuracoes.Geral.Emitente.CNPJ;
     LinkNFSeParam.InscMun := Configuracoes.Geral.Emitente.InscMun;
     LinkNFSeParam.xMunicipio := Configuracoes.Geral.xMunicipio;

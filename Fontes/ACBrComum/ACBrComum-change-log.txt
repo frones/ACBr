@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2024
+-- ACBr.Inc --
+[+] Adiciona diretiva USE_ACBR_XML_DOCUMENT e validação para que ao definir a mesma use LibXML2
+  Por: Diego Folieni
+
 01/03/2024
 -- ACBrUtil.XMLHTML --
 [*] Alteração no ParseText pois o mesmo ao receber um XML no formato UTF-8

@@ -191,6 +191,32 @@ begin
             ARetornoWS.DadosRet.TituloRet.Carteira                   := LJsonObject.AsString['numeroCarteiraCobranca'];
             ARetornoWS.DadosRet.TituloRet.Modalidade                 := StrToIntDef( LJsonObject.AsString['numeroVariacaoCarteiraCobranca'] ,0 );
             ARetornoWS.DadosRet.TituloRet.codigoEstadoTituloCobranca := LJsonObject.AsString['codigoEstadoTituloCobranca'];
+            case LJsonObject.AsInteger['codigoEstadoTituloCobranca'] of
+              1  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'NORMAL';
+              2  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'MOVIMENTO CARTORIO';
+              3  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'EM CARTORIO';
+              4  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO COM OCORRENCIA DE CARTORIO';
+              5  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'PROTESTADO ELETRONICO';
+              6  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'LIQUIDADO';
+              7  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'BAIXADO';
+              8  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO COM PENDENCIA DE CARTORIO';
+              9  : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO PROTESTADO MANUAL';
+              10 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO BAIXADO/PAGO EM CARTORIO';
+              11 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO LIQUIDADO/PROTESTADO';
+              12 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO LIQUID/PGCRTO';
+              13 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO PROTESTADO AGUARDANDO BAIXA';
+              14 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO EM LIQUIDACAO';
+              15 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO AGENDADO';
+              16 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO CREDITADO';
+              17 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'PAGO EM CHEQUE - AGUARD.LIQUIDACAO';
+              18 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'PAGO PARCIALMENTE';
+              19 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'PAGO PARCIALMENTE CREDITADO';
+              21 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO AGENDADO COMPE';
+              80 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'EM PROCESSAMENTO (ESTADO TRANSITÓRIO';
+      		end;
+
+            
+
             ARetornoWS.DadosRet.TituloRet.CodigoCanalTituloCobranca  := LJsonObject.AsString['codigoCanalPagamento'];
             ARetornoWS.DadosRet.TituloRet.contrato                   := LJsonObject.AsString['numeroContratoCobranca'];
             ARetornoWS.DadosRet.TituloRet.DataMovimento              := DateBBtoDateTime(LJsonObject.AsString['dataRegistroTituloCobranca']);

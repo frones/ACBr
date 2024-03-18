@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+18/03/2024
+-- ACBrBoletoRet_BancoBrasil_API --
+[*]TK-5193 Tratamento do codigoEstadoTituloCobranca conforme manual
+https://www.projetoacbr.com.br/forum/topic/76726-como-saber-o-status-de-um-boleto-api-bb/
+  Por: Daniel Morais InfoCotidiano
+
 14/03/2024
 -- ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API --
 [-]TK-4804 Alteração do EndPoint para capturar dados necessário para consultas

@@ -355,7 +355,7 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element name="infCTe" minOccurs="0" maxOccurs="10000">
+												<xs:element name="infCTe" minOccurs="0" maxOccurs="20000">
 													<xs:annotation>
 														<xs:documentation>Conhecimentos de Tranporte - usar este grupo quando for prestador de serviço de transporte</xs:documentation>
 													</xs:annotation>
@@ -492,7 +492,7 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
-												<xs:element name="infNFe" minOccurs="0" maxOccurs="10000">
+												<xs:element name="infNFe" minOccurs="0" maxOccurs="20000">
 													<xs:annotation>
 														<xs:documentation>Nota Fiscal Eletronica</xs:documentation>
 													</xs:annotation>
@@ -610,7 +610,7 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
-												<xs:element name="infMDFeTransp" minOccurs="0" maxOccurs="10000">
+												<xs:element name="infMDFeTransp" minOccurs="0" maxOccurs="20000">
 													<xs:annotation>
 														<xs:documentation>Manifesto Eletrônico de Documentos Fiscais. Somente para modal Aquaviário (vide regras MOC)</xs:documentation>
 													</xs:annotation>

@@ -90,7 +90,11 @@ contains
   pcteConversaoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConversaoCTe.pas',
   pcteCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas',
   pcteCTeR in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeR.pas',
+  {$IFDEF USE_ACBr_XMLDOCUMENT}
+  ACBrCTeXmlHandler in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\ACBrCTeXmlHandler.pas',
+  {$ELSE}
   pcteCTeW in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas',
+  {$ENDIF}
   pcteEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEnvEventoCTe.pas',
   pcteEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEventoCTe.pas',
   pcteInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteInutCTe.pas',
@@ -102,5 +106,4 @@ contains
   pcteRetEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvEventoCTe.pas',
   pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
   ACBrCTeDACTEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas';
-
 end.

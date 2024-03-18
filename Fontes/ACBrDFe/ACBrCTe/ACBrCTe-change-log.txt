@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2024
+-- ACBrCTeConhecimentos, ACBrCTeXmlHandler --
+[+] Adiciona nova unit para leitura dos XMLs de CTe baseada na ACBrXmlDocument.
+  Por: Diego Folieni
+
 12/03/2024
 -- ACBrCTeServicos --
 [*] Ajustes nas URL de homologação e produção de Recepção de eventos Ambiente

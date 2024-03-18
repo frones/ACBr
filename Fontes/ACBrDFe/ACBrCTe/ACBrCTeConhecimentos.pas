@@ -40,7 +40,7 @@ interface
 uses
   Classes, Sysutils, StrUtils,
   ACBrCTeConfiguracoes,
-  pcteCTe, pcteCTeR, pcteCTeW, pcnConversao, pcnLeitor;
+  pcteCTe, {$IfDef USE_ACBr_XMLDOCUMENT}ACBrCTeXmlHandler{$Else}pcteCTeR{$EndIf}, pcteCTeW, pcnConversao, pcnLeitor;
 
 type
 
@@ -50,7 +50,11 @@ type
   private
     FCTe: TCTe;
     FCTeW: TCTeW;
+    {$IfDef USE_ACBr_XMLDOCUMENT}
+    FCTeR: TCTeXmlReader;
+    {$Else}
     FCTeR: TCTeR;
+    {$EndIf}
 
     FXMLAssinado: String;
     FXMLOriginal: String;
@@ -191,7 +195,14 @@ begin
 
   FCTe := TCTe.Create;
   FCTeW := TCTeW.Create(FCTe);
+
+  {$IfDef USE_ACBr_XMLDOCUMENT}
+  FCTeR := TCTeXmlReader.Create(FCTe);
+  {$Else}
   FCTeR := TCTeR.Create(FCTe);
+  {$EndIf}
+
+
   FConfiguracoes := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes;
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
@@ -555,16 +566,22 @@ begin
 end;
 
 function Conhecimento.LerXML(const AXML: String): Boolean;
+{$IfNDef USE_ACBr_XMLDOCUMENT}
 var
   XMLStr: String;
+{$EndIf}
 begin
   XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
+  {$IfDef USE_ACBr_XMLDOCUMENT}
+  FCTeR.Arquivo := XMLOriginal;
+  {$Else}
   { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
     Isso é necessário, para que as propriedades fiquem com a acentuação correta }
   XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
 
   FCTeR.Leitor.Arquivo := XMLStr;
+  {$EndIf}
   FCTeR.LerXml;
 
   Result := True;

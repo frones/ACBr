@@ -8,9 +8,9 @@ interface
 
 uses
   ACBrCTeConhecimentos, ACBrCTe, pcteConversaoCTe, ACBrCTeConfiguracoes, 
-  ACBrCTeReg, ACBrCTeWebServices, pcteConsSitCTe, pcteCTe, 
-  pcteCTeR, pcteCTeW, pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, 
-  pcteLayoutTXT, pcteModeloCTe, pcteProcCTe, ACBrCTeDACTEClass, pcteConsts, 
+  ACBrCTeReg, ACBrCTeWebServices, pcteConsSitCTe, pcteCTe, pcteCTeR, pcteCTeW, 
+  pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, pcteLayoutTXT, pcteModeloCTe, 
+  pcteProcCTe, ACBrCTeDACTEClass, pcteConsts, ACBrCTeXmlHandler, 
   LazarusPackageIntf;
 
 implementation

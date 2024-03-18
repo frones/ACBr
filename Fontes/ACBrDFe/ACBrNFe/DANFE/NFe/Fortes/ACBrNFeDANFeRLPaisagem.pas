@@ -806,11 +806,14 @@ begin
   rlsProdEAN.Visible := fpDANFe.ExibeEAN;
   LinhaProdEAN.Visible := fpDANFe.ExibeEAN;
 
+  rlmDescricao.SecondHolder := nil;
+
   if (not fpDANFe.ExibeEAN) then
   begin
     rlmDescricaoProduto.Left := rlsProd.Left + 2;
     rlmDescricaoProduto.Width := (rlsMcm.Left - rlsProd.Left) - 3;
     rlmDescricao.Left := LinhaDescricao.Left + 2;
+    rlmDescricao.Width := (LinhaNCM.Left - LinhaDescricao.Left) - 24;
   end
   else
   begin
@@ -821,9 +824,8 @@ begin
     rlmDescricaoProduto.Left := (rlsProdEAN.Left) + 2;
     rlmDescricaoProduto.Width := (rlsMcm.Left - rlsProdEAN.Left) - 3;
     rlmDescricao.Left := LinhaProdEAN.Left + 2;
+    rlmDescricao.Width := (LinhaNCM.Left - LinhaDescricao.Left - LinhaProdEAN.Left ) - 24;
   end;
-  rlmDescricao.SecondHolder := nil;
-  rlmDescricao.Width := (LinhaNCM.Left - LinhaDescricao.Left) - 24;
 
   // ajusta a posição do 'código do produto'
   if (rlmCodProd.Width > 90) then

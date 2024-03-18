@@ -46,6 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+
+18/03/2024
+-- ACBrNFeDANFeRLPaisagem --
+[*] TK-5143 - Ajuste para quebra de linha quando ExibeEAN calcular o tamanho LinhaProdEAN e ajustar a quebra de linha quando Paisagem
+https://www.projetoacbr.com.br/forum/topic/76834-erro-no-layout-da-nfe-paisagem-qdo-exibido-ean-a-descri%C3%A7%C3%A3o-esta-sobrepondo-o-ncm/
+  por : Daniel de Morais InfoCotidiano
+
 26/02/2024
 -- ACBrNFeDANFeRLSimplificado --
 [*] TK-5143 - Ajuste para ExibeInforAdicProduto na DANF Simplificada

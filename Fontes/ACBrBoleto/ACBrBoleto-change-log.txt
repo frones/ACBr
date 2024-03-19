@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2024
+-- ACBrBoletoRet_Sicredi_APIV2 --
+[*]TK-5239 Tratamento da propriedade qrCode, anexado na TK os retornos em producao. 
+  Por: Daniel Morais InfoCotidiano
 
 18/03/2024
 -- ACBrBoletoRet_BancoBrasil_API --

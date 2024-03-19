@@ -224,7 +224,7 @@ begin
             ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['nossoNumero'];
             ARetornoWS.DadosRet.TituloRet.UrlPix        := '';//LJsonObject.AsString['url'];
             ARetornoWS.DadosRet.TituloRet.TxId          := LJsonObject.AsString['txid'];
-            ARetornoWS.DadosRet.TituloRet.EMV           := LJsonObject.AsString['QrCode'];
+            ARetornoWS.DadosRet.TituloRet.EMV           := LJsonObject.AsString['qrCode'];
 
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;

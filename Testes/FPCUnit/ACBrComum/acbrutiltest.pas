@@ -21,6 +21,20 @@ type
     procedure ParseDecode;
     procedure ParseEncode;
     procedure VerificarConversaoTextoLongo;
+    procedure ParseStringSimples_SemParametros;
+    procedure ParseStringAcentuada_SemParametros;
+    procedure ParseStringAcentuada_DecodeFalse_IsUTF8False;
+    procedure ParseStringAcentuada_DecodeTrue_IsUTF8False;
+    procedure ParseStringAcentuada_DecodeFalse_IsUTF8True;
+    procedure ParseStringAcentuadaConvertidaParaAnsi_SemParametros;
+    procedure ParseStringAcentuadaConvertidaParaAnsi_DecodeFalse_IsUTF8False;
+    procedure ParseStringAcentuadaConvertidaParaAnsi_DecodeTrue_IsUTF8False;
+    procedure ParseStringAcentuadaConvertidaParaAnsi_DecodeFalse_IsUTF8True;
+    procedure ParseStringAcentuadaConvertidaParaUTF8_SemParametros;
+    procedure ParseStringAcentuadaConvertidaParaUTF8_DecodeFalse_IsUTF8False;
+    procedure ParseStringAcentuadaConvertidaParaUTF8_DecodeTrue_IsUTF8False;
+    procedure ParseStringAcentuadaConvertidaParaUTF8_DecodeFalse_IsUTF8True;
+
   end;
 
   { LerTagXMLTest }
@@ -2433,6 +2447,95 @@ begin
   CheckEquals('<&">', ParseText('&lt;&amp;&quot;&gt;'));
   CheckEquals( ACBrStr(#39'·√«‹… ’'''), ParseText('&#39;&aacute;&Atilde;&Ccedil;&Uuml;'
               + '&Eacute;&Ecirc;&Otilde;&apos;', True, False));
+end;
+
+procedure ParseTextTest.ParseStringSimples_SemParametros;
+begin
+  CheckEquals('abcdef', ParseText('abcdef'));
+end;
+
+procedure ParseTextTest.ParseStringAcentuada_SemParametros;
+begin
+  CheckEquals('·√«‹… ’', ParseText('·√«‹… ’'));
+end;
+
+procedure ParseTextTest.ParseStringAcentuada_DecodeFalse_IsUTF8False;
+begin
+  CheckEquals('·√«‹… ’', ParseText('·√«‹… ’', False, False));
+end;
+
+procedure ParseTextTest.ParseStringAcentuada_DecodeTrue_IsUTF8False;
+begin
+  CheckEquals('·√«‹… ’', ParseText('·√«‹… ’', True, False));
+end;
+
+procedure ParseTextTest.ParseStringAcentuada_DecodeFalse_IsUTF8True;
+begin
+  CheckEquals('·√«‹… ’', ParseText('·√«‹… ’', False, True));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaAnsi_SemParametros;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToAnsi('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaAnsi_DecodeFalse_IsUTF8False;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToAnsi('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr, False, False));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaAnsi_DecodeTrue_IsUTF8False;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToAnsi('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr, True, False));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaAnsi_DecodeFalse_IsUTF8True;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToAnsi('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr, False, True));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaUTF8_SemParametros;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToUTF8('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaUTF8_DecodeFalse_IsUTF8False;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToUTF8('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr, False, False));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaUTF8_DecodeTrue_IsUTF8False;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToUTF8('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr, True, False));
+end;
+
+procedure ParseTextTest.ParseStringAcentuadaConvertidaParaUTF8_DecodeFalse_IsUTF8True;
+var
+  LStr: String;
+begin
+  LStr := NativeStringToUTF8('·√«‹… ’');
+  CheckEquals(LStr, ParseText(LStr, False, true));
 end;
 
 { TruncToTest }

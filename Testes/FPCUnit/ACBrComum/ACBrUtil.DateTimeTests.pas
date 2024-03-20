@@ -1,4 +1,4 @@
-unit ACBrUtil.DateTimeTests;
+﻿unit ACBrUtil.DateTimeTests;
 
 {$I ACBr.inc}
 
@@ -125,6 +125,7 @@ type
     procedure ConverteString_DataEHoraSemMilisegundosZonaDiferenteDaLocal_Sucesso;
   end;
 
+  {$IfDef FPC}
   { StrHasTimeZone }
 
   StrHasTimeZoneTest = class(TTestCase)
@@ -132,7 +133,7 @@ type
     procedure DataComTimeZone;
     procedure DataSemTimeZone;
   end;
-
+  {$ENDIf}
 
 
 implementation
@@ -962,6 +963,8 @@ initialization
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', DTtoSTest);
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', DateTimeToIso8601Test);
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', Iso8601ToDateTimeTest);
+  {$IfDef FPC}
   _RegisterTest('ACBrComum.ACBrUtil.DateTime', StrHasTimeZoneTest);
+  {$EndIf}
 
 end.

@@ -131,7 +131,8 @@ type
     cobBancoIndustrialBrasil,
     cobBancoAthenaBradesco,
     cobBancoQITechSCD,
-    cobBancoUY3
+    cobBancoUY3,
+    cobBancoBocomBBM
     );
 
   TACBrTitulo = class;
@@ -2085,7 +2086,8 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoIndustrialBrasil,
      ACBrBancoAthenaBradesco, 
      ACBrBancoQITech,
-     ACBrBancoUY3;
+     ACBrBancoUY3,
+     ACBrBancoBocomBBM;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3765,6 +3767,7 @@ begin
     097: Result := cobCrediSIS;
     099: Result := cobUniprime;
     104: Result := cobCaixaEconomica;
+    107: Result := cobBancoBocomBBM;
     133: Result := cobBancoCresol;
     136: Result := cobUnicredES;
     174: Result := cobBancoPefisa;
@@ -4601,6 +4604,7 @@ begin
      cobUniprime             : fBancoClass := TACBrUniprime.create(Self);            {099}
      cobCaixaEconomica       : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
      cobCaixaSicob           : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
+     cobBancoBocomBBM        : fBancoClass := TACBrBancoBocomBBM.create(Self);       {107}
      cobUnicredES            : fBancoClass := TACBrBancoUnicredES.create(Self);      {136}
      cobBradesco             : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
      cobItau                 : fBancoClass := TACBrBancoItau.Create(Self);           {341}

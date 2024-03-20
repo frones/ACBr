@@ -25,7 +25,7 @@ uses
   ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, ACBrBoletoRet_Sicredi_APIV2, 
   ACBrBoletoW_Sicredi_APIV2, ACBrBoletoRet_Bancoob, ACBrBoletoW_Bancoob, ACBrBancoPefisa, ACBrBancoFibra, 
   ACBrBancoSofisaItau, ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API, ACBrBancoAthenaBradesco, 
-  ACBrBancoIndustrialBrasil, ACBrBancoQITech, ACBrBoletoRet_Itau_API, ACBrBoletoW_Itau_API, 
+  ACBrBancoIndustrialBrasil, ACBrBancoQITech, ACBrBoletoRet_Itau_API, ACBrBoletoW_Itau_API, ACBrBancoBocomBBM,
   LazarusPackageIntf;
 
 implementation

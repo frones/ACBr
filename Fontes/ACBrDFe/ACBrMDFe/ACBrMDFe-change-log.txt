@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2024
+-- pmdfeMDFeW --
+[*] Aumenta o limite dos campos infCTe, infNFe e infMDFeTransp para 20000.
+  Por: Diego Folieni
+
 06/03/2024
 -- Diversos --
 [*] Diversas alterações visando atender o novo campo no evento de encerramento,

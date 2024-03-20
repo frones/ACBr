@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2024
+-- ACBrTEFPayGoWebComum --
+[*] Applicado workaround para quando Transações de PIX é recebida, sem o flag de
+    confirmação PWINFO_CNFREQ = 0
+    (por: DSA)
+
 08/03/2024
 -- ACBrTEFPayGoWebComum --
 [+] Adicionada a propriedade "IsDebug: Boolean".

@@ -663,6 +663,7 @@ begin
     if (TipoOperacao <> opPreDatado) then
       DataPreDatado := 0;
 
+    Confirmar := Confirmar or (QRCode <> '');
     Sucesso := (LeInformacao(PWINFO_RET, 0).AsInteger = PWRET_OK);
 
     if Sucesso then

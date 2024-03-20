@@ -259,6 +259,7 @@ type
     FtxId                      : String;
     FCodigoOcorrenciaCartorio  : String;
     FCodigoCanalTituloCobranca : String;
+    FNossoNumeroCorrespondente: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -283,6 +284,7 @@ type
     property Aceite: TACBrAceiteTitulo read FAceite write FAceite;
     property DataProcessamento: TDateTime read FDataProcessamento write FDataProcessamento;
     property NossoNumero: String read FNossoNumero write FNossoNumero;
+    property NossoNumeroCorrespondente: string read FNossoNumeroCorrespondente write FNossoNumeroCorrespondente;
     property UsoBanco: String read FUsoBanco write FUsoBanco;
     property Carteira: String read FCarteira write FCarteira;
     property EspecieMod: String read FEspecieMod write FEspecieMod;

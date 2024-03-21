@@ -2727,7 +2727,7 @@ begin
   FretDistDFeInt.Free;   // Limpando a lista
   FretDistDFeInt := TRetDistDFeInt.Create('DCe');
 
-  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  FretDistDFeInt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FretDistDFeInt.LerXml;
 
   FPMsg := FretDistDFeInt.xMotivo;

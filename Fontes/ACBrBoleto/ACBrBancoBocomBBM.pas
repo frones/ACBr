@@ -73,9 +73,9 @@ implementation
 
 uses
   ACBrUtil.Base,
-  ACBrUtil.Strings,
   SysUtils,
-  StrUtils ;
+  StrUtils,
+  ACBrUtil.Strings;
 
 { TACBrBancoBocomBBM }
 

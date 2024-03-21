@@ -2300,9 +2300,7 @@ procedure TfrlDANFeRLRetrato.AdicionarInformacoesPagamento;
     for x := 0 to (Result - 1) do
     begin
       TRLLabel(FindComponent('RLPagDescricao' + IntToStr(x))).Caption :=
-        ACBrStr(
-          Copy(FormaPagamentoToDescricao(fpNFe.pag.Items[x].tPag, fpNFe.pag.Items[x].xPag),1,22)
-                  );
+        ACBrStr(FormaPagamentoToDescricao(fpNFe.pag.Items[x].tPag, fpNFe.pag.Items[x].xPag));
       TRLLabel(FindComponent('RLPagValor' + IntToStr(x))).Caption :=
         FormatFloatBr(fpNFe.pag.Items[x].vPag);
     end;

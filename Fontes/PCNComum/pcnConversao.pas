@@ -1487,7 +1487,7 @@ begin
                                'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação',
                                'Vale Refeição', 'Vale Presente', 'Vale Combustível',
                                'Boleto Bancário', 'Depósito Bancário',
-                               'Pagamento Instantâneo', 'Transferência Bancária',
+                               'Pagamento Instantâneo (PIX)', 'Transferência Bancária',
                                'Programa de Fidelidade', 'Sem Pagamento', 'Outros'],
                                [MPDinheiro, MPCheque, MPCartaodeCredito,
                                MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao,

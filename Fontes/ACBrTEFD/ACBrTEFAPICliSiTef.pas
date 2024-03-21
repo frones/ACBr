@@ -564,7 +564,13 @@ begin
 
              Validado := True;
              TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
-             RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
+
+             if Resposta = '-1' then
+               Interromper := True
+             else if Resposta = '-2' then
+               Voltar := True
+             else
+               RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
            end;
 
            31:  // Deve ser lido o número de um cheque. A coleta pode ser feita via leitura de CMC-7, digitação do CMC-7 ou pela digitação da primeira linha do cheque
@@ -579,7 +585,13 @@ begin
              Resposta := '';
              Validado := True;
              TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
-             RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
+
+             if Resposta = '-1' then
+               Interromper := True
+             else if Resposta = '-2' then
+               Voltar := True
+             else
+               RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
            end;
 
            34:  // Deve ser lido um campo monetário ou seja, aceita o delimitador de centavos e devolvido no parâmetro Buffer
@@ -595,8 +607,15 @@ begin
              Resposta := '';
              Validado := True;
              TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
-             Resposta := FormatFloatBr(StringToFloatDef(Resposta, 0));  // Garantindo que a Resposta é Float //
-             RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
+             if Resposta = '-1' then
+               Interromper := True
+             else if Resposta = '-2' then
+               Voltar := True
+             else
+             begin
+               Resposta := FormatFloatBr(StringToFloatDef(Resposta, 0));  // Garantindo que a Resposta é Float //
+               RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
+             end;
            end;
 
            35:  // Deve ser lido um código em barras ou o mesmo deve ser coletado manualmente.
@@ -611,7 +630,12 @@ begin
              Resposta := '';
              Validado := True;
              TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
-             RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
+             if Resposta = '-1' then
+               Interromper := True
+             else if Resposta = '-2' then
+               Voltar := True
+             else
+               RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
            end;
 
            41:  // Análogo ao Comando 30, porém o campo deve ser coletado de forma mascarada
@@ -626,7 +650,12 @@ begin
              Resposta := '';
              Validado := True;
              TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
-             RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
+             if Resposta = '-1' then
+               Interromper := True
+             else if Resposta = '-2' then
+               Voltar := True
+             else
+               RespCliSiTef.GravaInformacao(TipoCampo, Resposta);
            end;
 
            50:  // Exibir QRCode

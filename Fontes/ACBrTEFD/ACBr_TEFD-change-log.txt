@@ -46,6 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2024
+-- ACBrTEFAPICliSiTef --
+[*] Ajuste para permitir Voltar e Interromper o fluxo de perguntas, baseado em
+    Conteúdo da "Resposta": Interromper := (Resposta = '-1')
+                            Voltar      := (Resposta = '-2')
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=74988
+    (por: joão vitor de fraga venancio)
+
 20/03/2024
 -- ACBrTEFPayGoWebComum --
 [*] Applicado workaround para quando Transações de PIX é recebida, sem o flag de

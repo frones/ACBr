@@ -539,7 +539,8 @@ function TGNRERecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'processarResponse');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FGNRERetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FGNRERetorno.LerXml;
 
   Fcodigo            := FGNRERetorno.codigo;
@@ -721,7 +722,8 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FGNRERetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -987,7 +989,8 @@ function TGNRERecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FGNRERetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -1117,7 +1120,8 @@ function TGNREConsultaUF.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FGNRERetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FGNRERetorno.LerXML;
 
   FAmbiente                      := FGNRERetorno.Ambiente;

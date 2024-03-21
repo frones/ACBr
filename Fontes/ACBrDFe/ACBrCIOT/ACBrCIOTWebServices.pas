@@ -672,7 +672,7 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body');
 
   FRetornoEnvio.Integradora := FPConfiguracoesCIOT.Geral.Integradora;
-  FRetornoEnvio.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetornoEnvio.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetornoEnvio.LerXml;
 
   if FRetornoEnvio.RetEnvio.PDF <> '' then

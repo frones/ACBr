@@ -107,7 +107,8 @@ implementation
 
 uses
   blcksock,
-  synautil;
+  synautil,
+  ACBrUtil.XMLHTML;
 
 { TACBrConsultaCNPJWS }
 
@@ -188,7 +189,7 @@ begin
     LRetorno := ReadStrFromStream(LStream, LStream.Size);
 
     Result := FHTTPSend.ResultCode;
-    FResultString := FHTTPSend.ResultString;
+    FResultString := ParseText( FHTTPSend.ResultString );
     if (Result >= 300) then
       FResultString := FResultString +' '+ FHTTPSend.Sock.LastErrorDesc;
 

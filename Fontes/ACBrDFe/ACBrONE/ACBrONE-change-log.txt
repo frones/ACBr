@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+21/03/2024
+-- ACBrONEWebServices --
+[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
+Por: Diego Folieni
+
 23/02/2024
 -- ACBrONEConversao --
 [*] Ajustes nas funções: DblToVersaoONE, VersaoONEToDbl.

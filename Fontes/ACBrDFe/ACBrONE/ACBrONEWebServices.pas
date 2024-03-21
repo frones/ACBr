@@ -708,7 +708,8 @@ function TEnvManutencao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  FRetManutencaoEQP.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetManutencaoEQP.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FRetManutencaoEQP.LerXml;
 
   Fversao   := FRetManutencaoEQP.versao;
@@ -883,7 +884,8 @@ function TEnvLeitura.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  FRetRecepcaoLeitura.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetRecepcaoLeitura.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FRetRecepcaoLeitura.LerXml;
 
   Fversao   := FRetRecepcaoLeitura.versao;
@@ -1034,7 +1036,8 @@ begin
   FRetDistLeitura.Free;   // Limpando a lista
   FRetDistLeitura := TRetDistLeitura.Create;
 
-  FRetDistLeitura.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetDistLeitura.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FRetDistLeitura.LerXml;
 
   FPMsg := FRetDistLeitura.xMotivo;
@@ -1162,7 +1165,8 @@ function TONEConsultaFoto.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS);
 
-  FRetConsFoto.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetConsFoto.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FRetConsFoto.LerXml;
 
   Fversao   := FRetConsFoto.versao;
@@ -1265,7 +1269,8 @@ function TONEConsultaPlaca.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS);
 
-  FRetConsPlaca.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetConsPlaca.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
   FRetConsPlaca.LerXml;
 
   Fversao   := FRetConsPlaca.versao;

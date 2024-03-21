@@ -445,7 +445,8 @@ function TEnvioLote.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'EnviarLoteEventosResult');
 
-  FRetEnvioLote.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando refatorada para usar ACBrXmlDocument
+  FRetEnvioLote.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetEnvioLote.LerXml;
 
   if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
@@ -611,7 +612,8 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResult');
 
-  FRetConsultaLote.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetConsultaLote.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetConsultaLote.LerXml;
 
   for I := 0 to FRetConsultaLote.RetEventos.Count - 1 do
@@ -861,7 +863,8 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarIdentificadoresEventos' + FmetodoConsulta + 'Result');
 
-  FRetConsultaIdentEvt.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetConsultaIdentEvt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetConsultaIdentEvt.LerXml;
 
   for i := 0 to FRetConsultaIdentEvt.RetIdentEvts.Count - 1 do
@@ -1054,8 +1057,8 @@ var
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'SolicitarDownloadEventos' +FTipoDownload + 'Result');
-
-  FRetDownloadEvt.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetDownloadEvt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetDownloadEvt.LerXml;
 
   for i := 0 to FRetDownloadEvt.Arquivo.Count - 1 do

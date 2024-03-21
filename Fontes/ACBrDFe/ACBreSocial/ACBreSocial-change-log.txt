@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2024
+-- ACBreSocialWebServices --
+[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
+Por: Diego Folieni
+
 11/03/2024
 -- pcesS1280, Frm_ACBreSocial --
 [*] Criada propriedade ClassTrib informativa no S1280, para utilização como critério de geração do grupo infoAtivConcom 

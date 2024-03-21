@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2024
+-- ACBrNFeWebServices --
+[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
+  Por: Diego Folieni
+
 11/03/2024
 -- pcnNFeR --
 [*] Ajustes para a leitura correta da tag indDeduzDeson.

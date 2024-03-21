@@ -1178,7 +1178,8 @@ begin
     else
       AXML := FPRetWS;
 
-    FNFeRetornoSincrono.Leitor.Arquivo := ParseText(AXML);
+    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+    FNFeRetornoSincrono.Leitor.Arquivo := UTF8ToNativeString(ParseText(AXML));
     FNFeRetornoSincrono.LerXml;
 
     Fversao := FNFeRetornoSincrono.versao;
@@ -1281,7 +1282,8 @@ begin
   end
   else
   begin
-    FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+    FNFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     FNFeRetorno.LerXml;
 
     Fversao := FNFeRetorno.versao;
@@ -1595,7 +1597,8 @@ begin
 
   VerificarSemResposta;
 
-  FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+  FNFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FNFeRetorno.LerXML;
 
   Fversao := FNFeRetorno.versao;
@@ -1950,7 +1953,8 @@ begin
 
   VerificarSemResposta;
 
-  FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+  FNFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FNFeRetorno.LerXML;
 
   Fversao := FNFeRetorno.versao;
@@ -2205,7 +2209,8 @@ begin
 
     VerificarSemResposta;
 
-    NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+    NFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     NFeRetorno.LerXML;
 
     NFCancelada := False;
@@ -2730,7 +2735,8 @@ begin
 
     VerificarSemResposta;
 
-    NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+    NFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     NFeRetorno.LerXml;
 
     Fversao := NFeRetorno.versao;
@@ -3420,7 +3426,8 @@ begin
 
   VerificarSemResposta;
 
-  EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+  EventoRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;
@@ -3600,7 +3607,8 @@ begin
 
   VerificarSemResposta;
 
-  FretAdmCSCNFCe.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+  FretAdmCSCNFCe.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FretAdmCSCNFCe.LerXml;
 
   FPMsg := FretAdmCSCNFCe.xMotivo;
@@ -3729,7 +3737,8 @@ begin
   VerificarSemResposta;
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
-  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+  FretDistDFeInt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do

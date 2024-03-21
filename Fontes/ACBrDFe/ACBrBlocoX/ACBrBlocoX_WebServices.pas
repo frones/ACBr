@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, ACBrBase,
   ACBrDFe, pcnRetEnvBlocoX, ACBrDFeWebService,
-  ACBrUtil.XMLHTML, pcnConversao, ACBrBlocoX_Comum;
+  ACBrUtil.XMLHTML, pcnConversao, ACBrBlocoX_Comum, ACBrUtil.Strings;
 
 const
   ACBRBLOCOX_VERSAO = '1.1.0a';
@@ -498,7 +498,8 @@ function TTransmitirArquivoBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'TransmitirArquivoResult')));
 
-  FBlocoXRetorno.Leitor.Arquivo := FPRetWS;
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FBlocoXRetorno.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FBlocoXRetorno.LerXml;
 
   FRecibo          := FBlocoXRetorno.Recibo;
@@ -562,7 +563,9 @@ end;
 function TConsultarProcessamentoArquivoBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarProcessamentoArquivoResult')));
-  FRetornoConsulta.Leitor.Arquivo := FPRetWS;
+
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoConsulta.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoConsulta.LerXml;
 
   FSituacaoOperCod := FRetornoConsulta.SituacaoOperCod;
@@ -621,7 +624,8 @@ function TConsultarHistoricoArquivoBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarHistoricoArquivoResult')));
 
-  FRetornoConsulta.Leitor.Arquivo := FPRetWS;
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoConsulta.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoConsulta.LerXml;
 
   FSituacaoOperCod := FRetornoConsulta.SituacaoOperCod;
@@ -678,7 +682,8 @@ function TListarArquivosBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ListarArquivosResult')));
 
-  FRetornoConsulta.Leitor.Arquivo := FPRetWS;
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoConsulta.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoConsulta.LerXml;
 
   FSituacaoOperCod := FRetornoConsulta.SituacaoOperCod;
@@ -733,7 +738,8 @@ function TDownloadArquivoBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'DownloadArquivoResult')));
 
-  FRetornoDownload.Leitor.Arquivo := FPRetWS;
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoDownload.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoDownload.LerXml;
 
   FSituacaoOperCod := FRetornoDownload.SituacaoOperCod;
@@ -821,7 +827,9 @@ end;
 function TCancelarArquivoBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'CancelarArquivoResult')));
-  FRetornoCancelar.Leitor.Arquivo := FPRetWS;
+
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoCancelar.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoCancelar.LerXml;
   FSituacaoOperCod := FRetornoCancelar.SituacaoOperCod;
   FSituacaoOperStr := FRetornoCancelar.SituacaoOperStr;
@@ -877,7 +885,9 @@ end;
 function TReprocessarArquivoBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ReprocessarArquivoResult')));
-  FRetornoReprocessar.Leitor.Arquivo := FPRetWS;
+
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoReprocessar.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoReprocessar.LerXml;
   FRecibo := FRetornoReprocessar.Recibo;
   FSituacaoOperCod := FRetornoReprocessar.SituacaoOperCod;
@@ -935,7 +945,8 @@ function TConsultarPendenciasContribuinteBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarPendenciasContribuinteResult')));
 
-  FRetornoConsulta.Leitor.Arquivo := FPRetWS;
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoConsulta.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoConsulta.LerXml;
 
   FSituacaoOperCod := FRetornoConsulta.SituacaoOperCod;
@@ -993,7 +1004,8 @@ function TConsultarPendenciasDesenvolvedorPafEcfBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarPendenciasDesenvolvedorPafEcfResult')));
 
-  FRetornoConsulta.Leitor.Arquivo := FPRetWS;
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetornoConsulta.Leitor.Arquivo := UTF8ToNativeString(FPRetWS);
   FRetornoConsulta.LerXml;
 
   FSituacaoOperCod := FRetornoConsulta.SituacaoOperCod;

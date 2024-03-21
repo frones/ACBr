@@ -473,7 +473,8 @@ begin
 
 //  FPRetWS := SeparaDados(FPRetornoWS, 'SOAP-ENV:Body');
 
-  ANeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
+  ANeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   ANeRetorno.Seguradora := FPConfiguracoesANe.Geral.Seguradora;
   ANeRetorno.LerXml;
 

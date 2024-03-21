@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2024
+-- ACBrANeWebServices --
+[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
+  Por: Diego Folieni
+
 28/02/2024
 -- ACBrANeServicos --
 [*] As URLs da AT&M mudaram de HTTP para HTTPS.

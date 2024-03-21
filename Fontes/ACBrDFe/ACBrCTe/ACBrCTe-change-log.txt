@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2024
+-- ACBrCTeWebServices --
+[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
+  Por: Diego Folieni
+
 18/03/2024
 -- ACBrCTeConhecimentos, ACBrCTeXmlHandler --
 [+] Adiciona nova unit para leitura dos XMLs de CTe baseada na ACBrXmlDocument.

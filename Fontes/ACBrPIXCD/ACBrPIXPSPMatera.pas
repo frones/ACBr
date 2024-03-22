@@ -289,7 +289,12 @@ begin
   if (ContaSolicitacao.accountType = matNone) then
     ContaSolicitacao.accountType := matUnlimitedOrdinary;
 
+  {$IFNDEF FPC}
+  wBody := Trim(ACBrAnsiToUTF8(ContaSolicitacao.AsJSON));
+  {$ELSE}
   wBody := Trim(ContaSolicitacao.AsJSON);
+  {$ENDIF}
+
   ContaResposta.Clear;
   PrepararHTTP;
   WriteStrToStream(Http.Document, wBody);

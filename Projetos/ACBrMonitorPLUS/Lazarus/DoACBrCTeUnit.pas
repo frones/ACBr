@@ -1928,7 +1928,8 @@ begin
 
     TratarRetorno(LCTe, LCTeObject);
 
-    Imprimir(LCTe, LCTeObject);
+    if AImprime then
+      Imprimir(LCTe, LCTeObject);
 
   finally
     CargaDFe.Free;

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2024
+-- DoACBrCTeUnit --
+[*] Adiciona validação do parâmetro de Impressão para imprimir no comando EnviarCTe.
+  Por: Diego Folieni
+
 13/03/2024
 --- DoACBrBPeUnit --
 [*] Comenta as menções a DistribuicaoDFe, visto que o serviço não é disponibilizado pelo Web Service.

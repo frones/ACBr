@@ -70,6 +70,10 @@ contains
   pnfsNFSeW_AssessorPublico in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_AssessorPublico.pas',
   pnfsNFSeW_WebFisco in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_WebFisco.pas',
   pnfsNFSeW_Giap in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Giap.pas',
-  pnfsNFSeW_Lencois in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Lencois.pas';
+  pnfsNFSeW_Lencois in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Lencois.pas',
+  pnfsNFSeW_Siat in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Siat.pas',
+  pnfsNFSeW_GeisWeb in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_GeisWeb.pas',
+  pnfsNFSeW_SigISS in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SigISS.pas',
+  pnfsConsURLResposta in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsURLResposta.pas';
 
 end.

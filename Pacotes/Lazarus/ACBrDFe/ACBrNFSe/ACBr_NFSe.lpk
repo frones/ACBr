@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFSe"/>
     <Type Value="RunAndDesignTime"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="25">
+    <Files Count="29">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas"/>
         <UnitName Value="ACBrNFSe"/>
@@ -117,7 +117,24 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsts.pas"/>
         <UnitName Value="pnfsConsts"/>
       </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsURLResposta.pas"/>
+        <UnitName Value="pnfsConsURLResposta"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_GeisWeb.pas"/>
+        <UnitName Value="pnfsNFSeW_GeisWeb"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Siat.pas"/>
+        <UnitName Value="pnfsNFSeW_Siat"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SigISS.pas"/>
+        <UnitName Value="pnfsNFSeW_SigISS"/>
+      </Item29>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

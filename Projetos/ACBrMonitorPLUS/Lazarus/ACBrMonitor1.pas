@@ -53,7 +53,7 @@ uses
   ACBrSATClass, pcnRede, pgnreConversao, ACBrDFeSSL, ACBrGNRE2,
   ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
   ACBrCTeDACTeRLClass, types, fileinfo, ACBrDFeConfiguracoes, ACBrBPe,
-  ACBrBPeDABPeESCPOS, ACBrReinf, ACBreSocial, ACBrIntegrador,
+  ACBrBPeDABPeESCPOS, ACBrReinf, ACBreSocial,
   pmdfeConversaoMDFe, pcesConversaoeSocial, pcnConversaoReinf,
   ACBrMonitorConfig, ACBrMonitorConsts, DOACBrNFeUnit, DoACBrCTeUnit,
   DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit, DoBALUnit, DoEmailUnit,
@@ -127,7 +127,6 @@ type
     ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
     ACBrGTIN1: TACBrGTIN;
     ACBrIBGE1: TACBrIBGE;
-    ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
@@ -211,7 +210,7 @@ type
     btnImprimir: TButton;
     btnImprimirCTe: TButton;
     btnImprimirMDFe: TButton;
-    btnIntegrador: TPanel;
+    //btnIntegrador: TPanel;
     btnInutilizar: TButton;
     btnInutilizarCTe: TButton;
     btnSATEMAIL: TPanel;
@@ -482,7 +481,7 @@ type
     ckIBGEAcentos: TCheckBox;
     ckIBGEUTF8: TCheckBox;
     ckMemoria: TCheckBox;
-    ckNFCeUsarIntegrador: TCheckBox;
+    //ckNFCeUsarIntegrador: TCheckBox;
     ckSalvar: TCheckBox;
     cbxConsCNPJProvedor: TComboBox;
     deBOLDirArquivo: TDirectoryEdit;
@@ -551,8 +550,6 @@ type
     edLCBPreExcluir: TEdit;
     edLogArq: TEdit;
     edLogComp: TEdit;
-    edMFEInput: TEdit;
-    edMFEOutput: TEdit;
     edNomeArquivo: TEdit;
     edNomeDLL: TEdit;
     edPortaTCP: TEdit;
@@ -974,7 +971,6 @@ type
     Label186: TLabel;
     Label187: TLabel;
     Label188: TLabel;
-    Label189: TLabel;
     Label19: TLabel;
     Label190: TLabel;
     Label191: TLabel;
@@ -982,8 +978,6 @@ type
     Label193: TLabel;
     Label194: TLabel;
     Label195: TLabel;
-    Label196: TLabel;
-    Label197: TLabel;
     Label198: TLabel;
     Label199: TLabel;
     Label2: TLabel;
@@ -1373,7 +1367,6 @@ type
     seMargemEsquerda: TSpinEdit;
     seMargemFundo: TSpinEdit;
     seMargemTopo: TSpinEdit;
-    seMFETimeout: TSpinEdit;
     seNumeroCaixa: TSpinEdit;
     sePagCod: TSpinEdit;
     seQRCodeErrorLevel: TSpinEdit;
@@ -1479,7 +1472,6 @@ type
     tsImpGeralDFe: TTabSheet;
     tsImpNFCe: TTabSheet;
     tsImpressaoDFe: TTabSheet;
-    tsIntegrador: TTabSheet;
     tsLayoutBoleto: TTabSheet;
     tsLCB: TTabSheet;
     tsMonitor: TTabSheet;
@@ -1579,7 +1571,7 @@ type
     procedure btnImprimirClick(Sender: TObject);
     procedure btnImprimirCTeClick(Sender: TObject);
     procedure btnImprimirMDFeClick(Sender: TObject);
-    procedure btnIntegradorClick(Sender: TObject);
+    //procedure btnIntegradorClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarCTeClick(Sender: TObject);
     procedure btnLeitorSerialClick(Sender: TObject);
@@ -1783,6 +1775,7 @@ type
     procedure sbVerSenhaEmailClick(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
     procedure sbVerSenhaProxySATClick(Sender: TObject);
+    procedure ScrollBoxClick(Sender: TObject);
     procedure ScrollBoxMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure ScrollBoxMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -1811,6 +1804,8 @@ type
     procedure TreeViewMenuClick(Sender: TObject);
     procedure tsACBrBoletoShow(Sender: TObject);
     procedure tsCadastroShow(Sender: TObject);
+    procedure tsDadosSATContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure tsDFeShow(Sender: TObject);
     procedure tsECFShow(Sender: TObject);
     procedure Ocultar1Click(Sender: TObject);
@@ -4120,11 +4115,6 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.btnIntegradorClick(Sender: TObject);
-begin
-  SetColorButtons(Sender);
-  pgConfig.ActivePage := tsIntegrador;
-end;
 
 procedure TFrmACBrMonitor.btnInutilizarClick(Sender: TObject);
 var
@@ -4567,10 +4557,7 @@ end;
 procedure TFrmACBrMonitor.cbxModeloSATChange(Sender: TObject);
 begin
   try
-    if (cbxModeloSAT.ItemIndex = 3) then
-      ACBrSAT1.Integrador:= ACBrIntegrador1
-    else
-      ACBrSAT1.Integrador:= nil;
+    ACBrSAT1.Integrador:= nil;
     ACBrSAT1.Modelo := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
   except
     cbxModeloSAT.ItemIndex := Integer( ACBrSAT1.Modelo ) ;
@@ -6056,8 +6043,6 @@ begin
     begin
       edtIdToken.Text                    := IdToken;
       edtToken.Text                      := Token;
-      ckNFCeUsarIntegrador.Checked       := UsarIntegrador;
-
        ACBrNFe1.Configuracoes.Geral.IdCSC := IdToken;
        ACBrNFe1.Configuracoes.Geral.CSC   := Token;
     end;
@@ -6250,11 +6235,7 @@ begin
        ACBrGNRE1.GNREGuia       := ACBrGNREGuiaRL1;
        ACBrNFSeX1.DANFSE        := ACBrNFSeXDANFSeRL1;
     end;
-
-    if ckNFCeUsarIntegrador.Checked then
-       ACBrNFe1.Integrador          := ACBrIntegrador1
-    else
-       ACBrNFe1.Integrador          := nil;
+    ACBrNFe1.Integrador          := nil;
 
     ACBrCTeDACTeRL1.TamanhoPapel    := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
 
@@ -6488,14 +6469,6 @@ begin
 
     AjustaACBrSAT;
 
-  end;
-
-  {Parâmetro Integrador}
-  with FMonitorConfig.IntegradorFiscal do
-  begin
-    edMFEInput.Text           := Input;
-    edMFEOutput.Text          := Output;
-    seMFETimeout.Value        := Timeout;
   end;
 
    {Parâmetro PosPrinter}
@@ -7353,7 +7326,6 @@ begin
       begin
         IdToken                  := edtIdToken.Text;
         Token                    := edtToken.Text;
-        UsarIntegrador           := ckNFCeUsarIntegrador.Checked;
       end;
 
       with WebService.NFe do
@@ -7614,14 +7586,6 @@ begin
          MensagemSAT                   := BinaryStringToString( mmEmailMsgSAT.Lines.Text );
       end;
 
-    end;
-
-    {Parametro Integrador}
-    with FMonitorConfig.IntegradorFiscal do
-    begin
-      Input                            := edMFEInput.Text;
-      Output                           := edMFEOutput.Text;
-      Timeout                          := seMFETimeout.Value;
     end;
 
     {Parâmetros PosPrinter}
@@ -9182,6 +9146,11 @@ begin
     edRedeProxySenha.EchoMode := emPassword;
 end;
 
+procedure TFrmACBrMonitor.ScrollBoxClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFrmACBrMonitor.ScrollBoxMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
@@ -9389,6 +9358,12 @@ end;
 procedure TFrmACBrMonitor.tsCadastroShow(Sender: TObject);
 begin
   pgCadastro.ActivePageIndex := 0;
+end;
+
+procedure TFrmACBrMonitor.tsDadosSATContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+
 end;
 
 procedure TFrmACBrMonitor.tsDFeShow(Sender: TObject);
@@ -10814,16 +10789,7 @@ procedure TFrmACBrMonitor.AjustaACBrSAT;
 begin
   with ACBrSAT1 do
   begin
-    if (cbxModeloSAT.ItemIndex = 3) then
-    begin
-      ACBrIntegrador1.PastaInput  := edMFEInput.Text;
-      ACBrIntegrador1.PastaOutput := edMFEOutput.Text;
-      ACBrIntegrador1.Timeout     := seMFETimeout.Value;
-
-      Integrador := ACBrIntegrador1;
-    end
-    else
-      Integrador := Nil;
+    Integrador := Nil;
 
     Modelo  := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
     ArqLOG  := edSATLog.Text;
@@ -12256,38 +12222,15 @@ procedure TFrmACBrMonitor.ValidarIntegradorNFCe(ChaveNFe: String = '');
 var
   Modelo: Integer;
 begin
-  if (FrmACBrMonitor.ckNFCeUsarIntegrador.Checked) then
-  begin
-    if NaoEstaVazio(ChaveNFe) then
-      Modelo:= StrToIntDef(copy(OnlyNumber(ChaveNFe),21,2),55);
-    if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) and (Modelo <> 65) then
-      ACBrNFe1.Integrador := nil
-    else
-      ACBrNFe1.Integrador := ACBrIntegrador1;
-  end;
+  raise Exception.Create('Integrador depreciado');
+
 
 end;
 
 function TFrmACBrMonitor.RespostaIntegrador(): String;
 begin
    Result := '';
-   if (ACBrSAT1.Integrador= ACBrIntegrador1) or
-     (ACBrNFe1.Integrador= ACBrIntegrador1) then
-   begin
-     if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
-     begin
-       Result := sLineBreak+'[Integrador]'+sLineBreak;
-       Result := Result + 'Codigo='+ ACBrIntegrador1.ComandoIntegrador.
-                                     IntegradorResposta.Codigo + sLineBreak;
-       Result := Result + 'Valor='+ ACBrIntegrador1.ComandoIntegrador.
-                                   IntegradorResposta.Valor ;
 
-       ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo:= '';
-       ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor:= '';
-
-     end;
-
-   end;
 end;
 
 function TFrmACBrMonitor.SubstituirVariaveis(const ATexto: String): String;

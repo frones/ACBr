@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 388
+  Left = 405
   Height = 858
-  Top = 85
+  Top = 25
   Width = 1349
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.html'
@@ -317,6 +317,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
+        OnClick = ScrollBoxClick
         OnMouseWheelDown = ScrollBoxMouseWheelDown
         OnMouseWheelUp = ScrollBoxMouseWheelUp
         object btnECF: TPanel
@@ -1441,7 +1442,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
           ParentFont = False
           TabOrder = 18
           TabStop = True
-          OnClick = btnIntegradorClick
           OnMouseEnter = ACT_ButtonMouseEnter
           OnMouseLeave = ACT_ButtonMouseLeave
           OnMouseWheelDown = ScrollBoxMouseWheelDown
@@ -17382,12 +17382,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 549
         Top = 1
         Width = 1129
-        ActivePage = tsACBrBoleto
+        ActivePage = tsSat
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 11
+        TabIndex = 17
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -18594,6 +18594,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 140
                 Width = 62
+                EnableSets = False
                 Font.Height = -13
                 MaxLength = 5
                 ParentFont = False
@@ -20561,6 +20562,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 58
                   Width = 49
                   Anchors = [akTop, akRight]
+                  EnableSets = False
                   Font.Height = -13
                   MaxLength = 5
                   ParentFont = False
@@ -21545,6 +21547,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 24
                 Width = 144
+                EnableSets = False
                 Font.Height = -13
                 MaxLength = 0
                 ParentFont = False
@@ -21624,6 +21627,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 73
                 Width = 129
+                EnableSets = False
                 Font.Height = -13
                 MaxLength = 0
                 ParentFont = False
@@ -22519,9 +22523,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object lblBolMotorRelatorio: TLabel
                 Left = 593
-                Height = 13
+                Height = 14
                 Top = 144
-                Width = 97
+                Width = 92
                 Caption = 'Motor Relatório *'
                 Font.Color = clWindowText
                 Font.Height = -11
@@ -32240,6 +32244,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ClientHeight = 489
               ClientWidth = 1113
               Font.Height = -13
+              OnContextPopup = tsDadosSATContextPopup
               ParentBiDiMode = False
               ParentFont = False
               object Label113: TLabel
@@ -34198,75 +34203,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
           end
         end
-        object tsIntegrador: TTabSheet
-          Caption = 'Integrador'
-          ClientHeight = 519
-          ClientWidth = 1121
-          Font.Height = -13
-          ImageIndex = 28
-          ParentFont = False
-          object Label189: TLabel
-            Left = 8
-            Height = 17
-            Top = 16
-            Width = 80
-            Caption = 'Pasta Entrada'
-            Font.Height = -13
-            ParentColor = False
-            ParentFont = False
-          end
-          object edMFEInput: TEdit
-            Left = 8
-            Height = 25
-            Top = 32
-            Width = 264
-            Font.Height = -13
-            ParentFont = False
-            TabOrder = 0
-            Text = 'c:\Integrador\Input\'
-          end
-          object Label196: TLabel
-            Left = 8
-            Height = 17
-            Top = 56
-            Width = 89
-            Caption = 'Pasta Resposta'
-            Font.Height = -13
-            ParentColor = False
-            ParentFont = False
-          end
-          object edMFEOutput: TEdit
-            Left = 8
-            Height = 25
-            Top = 72
-            Width = 264
-            Font.Height = -13
-            ParentFont = False
-            TabOrder = 1
-            Text = 'c:\Integrador\Output\'
-          end
-          object Label197: TLabel
-            Left = 8
-            Height = 17
-            Top = 96
-            Width = 47
-            Caption = 'Timeout'
-            Font.Height = -13
-            ParentColor = False
-            ParentFont = False
-          end
-          object seMFETimeout: TSpinEdit
-            Left = 8
-            Height = 25
-            Top = 112
-            Width = 82
-            Font.Height = -13
-            MinValue = 10
-            ParentFont = False
-            TabOrder = 2
-            Value = 30
-          end
-        end
         object tsEscPos: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/PosPrinter.html'
@@ -35979,12 +35915,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     PrintDialog = False
     Left = 656
     Top = 344
-  end
-  object ACBrIntegrador1: TACBrIntegrador
-    PastaInput = 'C:\Integrador\Input\'
-    PastaOutput = 'C:\Integrador\Output\'
-    Left = 680
-    Top = 556
   end
   object ACBreSocial1: TACBreSocial
     Configuracoes.Geral.SSLLib = libNone

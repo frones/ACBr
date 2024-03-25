@@ -177,7 +177,8 @@ end;
 
 function TConsultarSATWS.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'CfeConsultarLotesResult')));
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXMlDocument
+  FPRetWS := Trim(UTF8ToNativeString(ParseText(SeparaDados(FPRetornoWS, 'CfeConsultarLotesResult'))));
 
   FConsultaRet.Leitor.Arquivo := FPRetWS;
   FConsultaRet.LerXml;

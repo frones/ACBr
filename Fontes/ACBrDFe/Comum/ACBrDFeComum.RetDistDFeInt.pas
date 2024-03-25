@@ -779,31 +779,27 @@ begin
   Document := TACBrXmlDocument.Create;
 
   try
-    try
-      XML := DocDecod;
-      Document.LoadFromXml(DocDecod);
+    XML := DocDecod;
+    Document.LoadFromXml(DocDecod);
 
-      ANode := Document.Root;
+    ANode := Document.Root;
 
-      if ANode <> nil then
-      begin
-        AuxNode := ANode.Childrens.FindAnyNs('res' + FptpDFe);
-        LerResumo(AuxNode, Indice);
+    if ANode <> nil then
+    begin
+      AuxNode := ANode.Childrens.FindAnyNs('res' + FptpDFe);
+      LerResumo(AuxNode, Indice);
 
-        AuxNode := ANode.Childrens.FindAnyNs('resEvento');
-        LerResumoEvento(AuxNode, Indice);
+      AuxNode := ANode.Childrens.FindAnyNs('resEvento');
+      LerResumoEvento(AuxNode, Indice);
 
-        AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'Proc');
-        LerDocumento(AuxNode, Indice);
+      AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'Proc');
+      LerDocumento(AuxNode, Indice);
 
-        AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'OSProc');
-        LerDocumento(AuxNode, Indice);
+      AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'OSProc');
+      LerDocumento(AuxNode, Indice);
 
-        AuxNode := ANode.Childrens.FindAnyNs('procEvento' + FptpDFe);
-        LerEvento(AuxNode, Indice);
-      end;
-    except
-      //    Result := False;
+      AuxNode := ANode.Childrens.FindAnyNs('procEvento' + FptpDFe);
+      LerEvento(AuxNode, Indice);
     end;
   finally
     FreeAndNil(Document);

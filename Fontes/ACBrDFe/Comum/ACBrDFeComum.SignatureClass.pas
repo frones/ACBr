@@ -54,6 +54,8 @@ type
   public
     procedure Assign(Source: TPersistent); override;
 
+    function GerarXML: string;
+
     procedure Clear;
   published
     property URI: string              read FURI              write FURI;
@@ -76,6 +78,31 @@ begin
   FX509Certificate := '';
   FIdSignature := '';
   FIdSignatureValue := '';
+end;
+
+function TSignature.GerarXML: string;
+begin
+  Result :=
+  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + IdSignature + '>' +
+    '<SignedInfo>' +
+      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
+      '<Reference URI="' + URI + '">' +
+        '<Transforms>' +
+          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
+          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+        '</Transforms>' +
+        '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>' +
+        '<DigestValue>' + DigestValue + '</DigestValue>' +
+      '</Reference>' +
+    '</SignedInfo>' +
+    '<SignatureValue' + IdSignatureValue + '>' + SignatureValue + '</SignatureValue>' +
+    '<KeyInfo>' +
+      '<X509Data>' +
+        '<X509Certificate>' + X509Certificate + '</X509Certificate>'+
+      '</X509Data>' +
+    '</KeyInfo>'+
+  '</Signature>';
 end;
 
 procedure TSignature.Assign(Source: TPersistent);

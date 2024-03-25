@@ -109,7 +109,7 @@ type
     function LerXML: Boolean;
 
     property versao: string              read Fversao   write Fversao;
-    property tpAmb: TACBrTipoAmbiente     read FtpAmb    write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente    read FtpAmb    write FtpAmb;
     property verAplic: string            read FverAplic write FverAplic;
     property nRec: string                read FnRec     write FnRec;
     property cStat: Integer              read FcStat    write FcStat;
@@ -211,7 +211,7 @@ begin
               Id := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
               tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
               verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
-              chDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chDFe'), tcStr);
+              chDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ch' + FtagGrupoMsg), tcStr);
               dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
               nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
               digVal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('digVal'), tcStr);

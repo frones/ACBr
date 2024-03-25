@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2024
+-- ACBrDFeComum.RetConsReciDFe --
+[*] Corrigido da tag a ser lida que contem a chave do DFe.
+-- ACBrDFeComum.RetDistDFeInt --
+[*] Alteração realizada com base no Fix Insight.
+-- ACBrDFeComum.SignatureClass --
+[+] Implementado a function GerarXml visando gerar o grupo Signature.
+  Por: Italo Giurizzato Junior
+
 27/02/2024
 -- Diversos --
 [*] Removido o uso da função ACBrStr ao ler uma mensagem.

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2024
+-- ACBrNFSeXNotasFiscais --
+[*] Altera forma como é preenchida a DataEmissao e Competencia na geração do INI e também adiciona CodigoVerificacao na geração do INI.
+  Por: Diego Folieni
+
 16/03/2024
 -- Diversos --
 [*] Inclusão do parâmetro AID na função LinkNFSe, que é utilizado pelo

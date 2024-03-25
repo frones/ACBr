@@ -886,6 +886,10 @@ begin
       sSecao:= 'IdentificacaoNFSe';
       INIRec.WriteString(sSecao, 'Numero', Numero);
 
+      //Adicionado para que a informação seja devolvida para quem usa a lib, não considerar na rotina de leitura.
+      if CodigoVerificacao <> '' then
+        INIRec.WriteString(sSecao, 'CodigoVerificacao', CodigoVerificacao);
+
       sSecao:= 'IdentificacaoRps';
       INIRec.WriteString(sSecao, 'SituacaoTrib', FProvider.SituacaoTribToStr(SituacaoTrib));
       INIRec.WriteString(sSecao, 'Producao', FProvider.SimNaoToStr(Producao));
@@ -900,8 +904,16 @@ begin
       INIRec.WriteString(sSecao, 'Numero', IdentificacaoRps.Numero);
       INIRec.WriteString(sSecao, 'Serie', IdentificacaoRps.Serie);
       INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoRPSToStr(IdentificacaoRps.Tipo));
-      INIRec.WriteDate(sSecao, 'DataEmissao', Now);
-      INIRec.WriteDate(sSecao, 'Competencia', Now);
+      if DataEmissao > 0 then
+        INIRec.WriteDate(sSecao, 'DataEmissao', DataEmissao)
+      else
+        INIRec.WriteDate(sSecao, 'DataEmissao', Now);
+
+      if Competencia > 0 then
+        INIRec.WriteDate(sSecao, 'Competencia', Competencia)
+      else
+        IniRec.WriteDate(sSecao, 'Competencia', Now);
+
       INIRec.WriteString(sSecao, 'NaturezaOperacao', NaturezaOperacaoToStr(NaturezaOperacao));
 
       // Provedor Tecnos

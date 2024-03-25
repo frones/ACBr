@@ -927,19 +927,24 @@ end;
 procedure TprotCTeHandler.LerProtCTe(const ANode: TACBrXmlNode; const procCTe: TProcCTe);
 var
   Ok: Boolean;
+  AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then exit;
 
-  procCTe.tpAmb := StrToTpAmb(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
-  procCTe.verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-  procCTe.chCTe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chCTe'), tcStr);
-  procCTe.dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-  procCTe.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
-  procCTe.digVal := ObterConteudoTag(ANode.Childrens.FindAnyNS('digVal'), tcStr);
-  procCTe.cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-  procCTe.xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNS('xMotivo'), tcStr);
-  procCTe.cMSg := ObterConteudoTag(ANode.Childrens.FindAnyNs('cMsg'), tcInt);
-  procCTe.xMsg := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMsg'), tcStr);
+  AuxNode := ANode.Childrens.FindAnyNs('infProt');
+  if Assigned(AuxNode) then
+  begin
+    procCTe.tpAmb := StrToTpAmb(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
+    procCTe.verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
+    procCTe.chCTe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chCTe'), tcStr);
+    procCTe.dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+    procCTe.nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
+    procCTe.digVal := ObterConteudoTag(AuxNode.Childrens.FindAnyNS('digVal'), tcStr);
+    procCTe.cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
+    procCTe.xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNS('xMotivo'), tcStr);
+    procCTe.cMSg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMsg'), tcInt);
+    procCTe.xMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMsg'), tcStr);
+  end;
 end;
 
 { TIdeHandler }

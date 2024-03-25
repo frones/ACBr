@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2024
+[*] Alteração para importar corretamente arquivos de Chave Privada que possuem o 
+    cabeçalho: "-----BEGIN PRIVATE KEY-----"
+    por: Elias César
+
 07/12/2023
 -- OpenSSLExt --
 [+] Adicionado novos métodos do OpenSSL3, para permitir carregar Bibliotecas

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/03/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Jacinto Machado/SC trocou de provedor, agora é IPM na versão 1.01
+  Por: Mario Inacio 
 -- ACBrNFSeXNotasFiscais --
 [*] Altera forma como é preenchida a DataEmissao e Competencia na geração do INI e também adiciona CodigoVerificacao na geração do INI.
   Por: Diego Folieni

@@ -416,7 +416,8 @@ begin
   else
     FPRetWS := SeparaDados(FPRetornoWS, 'Reinf');
 
-  FRetEnvioLote.Leitor.Arquivo := ParseText(FPRetWS);
+  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+  FRetEnvioLote.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetEnvioLote.LerXml;
 
   for i := 0 to FRetEnvioLote.evento.Count - 1 do
@@ -663,7 +664,8 @@ begin
                                  'ConsultaResultadoFechamento2099Response'],
                                  FPRetornoWS);
 
-    FRetConsulta_R5011.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument.
+    FRetConsulta_R5011.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     FRetConsulta_R5011.LerXml;
 
     AXML := FRetConsulta_R5011.XML;
@@ -684,7 +686,8 @@ begin
     if FPRetWS <> '' then
       FPRetWS := '<retornoLoteEventosAssincrono>' + FPRetWS + '</retornoLoteEventosAssincrono>';
 
-    FRetEnvioLote.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+    FRetEnvioLote.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     FRetEnvioLote.LerXml;
 
     for i := 0 to FRetEnvioLote.evento.Count - 1 do
@@ -695,14 +698,16 @@ begin
       begin
         if Pos('</evtRetCons>', AXML) > 0 then
         begin
-          FRetConsulta_R9015.Leitor.Arquivo := ParseText(AXML);
+          //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+          FRetConsulta_R9015.Leitor.Arquivo := UTF8ToNativeString(ParseText(AXML));
           FRetConsulta_R9015.LerXml;
 
           NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R9015.xml';
         end
         else if Pos('</evtTotalContrib>', AXML) > 0 then
         begin
-          FRetConsulta_R9011.Leitor.Arquivo := ParseText(AXML);
+          //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+          FRetConsulta_R9011.Leitor.Arquivo := UTF8ToNativeString(ParseText(AXML));
           FRetConsulta_R9011.LerXml;
 
           NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R9011.xml';
@@ -992,7 +997,8 @@ begin
                                  'ConsultaReciboEvento' + tpEventoStr + 'Response'],
                                  FPRetornoWS);
 
-    FRetConsulta_R5011.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+    FRetConsulta_R5011.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     FRetConsulta_R5011.LerXml;
 
     AXML := FRetConsulta_R5011.XML;
@@ -1001,7 +1007,8 @@ begin
   begin
     FPRetWS := FPRetornoWS;
 
-    FRetConsulta_R9011.Leitor.Arquivo := ParseText(FPRetWS);
+    //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
+    FRetConsulta_R9011.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
     FRetConsulta_R9011.LerXml;
 
     AXML := FRetConsulta_R9011.XML;

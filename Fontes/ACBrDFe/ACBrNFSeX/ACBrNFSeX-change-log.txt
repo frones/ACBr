@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/03/2024
+-- Infisc.Gravar --
+[*] Alterado a condição para gerar ou não o grupo DadosDaObra.
+  Por: locodosul
 -- ACBrNFSeXServicos --
 [*] A cidade de Jacinto Machado/SC trocou de provedor, agora é IPM na versão 1.01
   Por: Mario Inacio 

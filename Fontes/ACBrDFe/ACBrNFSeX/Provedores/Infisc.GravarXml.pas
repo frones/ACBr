@@ -620,15 +620,11 @@ begin
   xmlNode := GerarTomador;
   Result.AppendChild(xmlNode);
 
-  {
-    Comentado pois tem cidade que permite gerar o grupo DadosDaObra mesmo com
-    valor de EmpreitadaGlobal diferente de 1.
-  }
-//  if EmpreitadaGlobalToStr(NFSe.EmpreitadaGlobal) = '1' then
-//  begin
+  if NFSe.ConstrucaoCivil.Endereco.Endereco <> '' then
+  begin
     xmlNode := GerarDadosdaObra;
     Result.AppendChild(xmlNode);
-//  end;
+  end;
 
   if NFSe.Transportadora.xCpfCnpjTrans <> '' then
   begin

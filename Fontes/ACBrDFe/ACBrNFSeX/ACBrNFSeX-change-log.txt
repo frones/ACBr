@@ -43,8 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Ibirite/MG, o provedor é SiapNet.
+  Por: SMF
+[*] Correção na URL de consulta a nota por RPS da cidade de Birigui/SP.
+  Por: Verissimo
+[*] A cidade de Anchieta/ES trocou para versão 2.04, o provedor continua o mesmo.
+  Por: Sistema Auditor
 -- Diversos --
-[*] Ajustes para realizar a leitura e montangem correta do LinkNFSe, 
+[*] Ajustes para realizar a leitura e montagem correta do LinkNFSe, 
     que é utilizado pelo provedor Infisc.
   Por: Italo Giurizzato Junior
 

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Guarabira/PB, o provedor é Elmar.
+  Por: Prime Software
 -- Diversos --
 [+] Implementado o provedor Elmar (versão 2.02 da ABRASF) que atende a cidade 
     de Guarabira/PB. Devemos gerar o XML de envio do Lote, salvar em disco e 

@@ -760,10 +760,11 @@ begin
     }
 //    Rps := True;
     LoteRps := True;
+    ConsultarLote := True; // Incluido para a cidade de Serra/ES em 26/03/2024
+    ConsultarNFSeRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
-    ConsultarNFSeRps := True;
 
     IncluirURI := False;
   end;

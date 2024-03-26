@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2024
+-- SmarAPD --
+[+] Incluído a propridade para assinar o XML do pedido de Consulta ao Lote 
+    na versão 2.03
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Ibirite/MG, o provedor é SiapNet.
   Por: SMF

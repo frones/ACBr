@@ -271,7 +271,7 @@ begin
               if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                  ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
               begin
-                 ListaRetorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+                 ListaRetorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valorLiquidado'].AsNumber;
                  ListaRetorno.DadosRet.TituloRet.DataCredito                := DateSicrediToDateTime(AJSonObject.Values['dataliquidacao'].AsString);
               end;
 

@@ -473,6 +473,7 @@ end;
 procedure TNFSeR_ABRASFv1.LerInfNfse(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  IdAttr: string;
   Ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
@@ -481,6 +482,9 @@ begin
 
   if AuxNode <> nil then
   begin
+    IdAttr := FpAOwner.ConfigGeral.Identificador;
+    NFSe.infNFSe.ID := ObterConteudoTag(AuxNode.Attributes.Items[IdAttr]);
+
     NFSe.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
     NFSe.Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('LinkVisualizacaoNfse'), tcStr);
 

@@ -421,7 +421,7 @@ begin
                                '<NumeroLote>' + Response.NumeroLote + '</NumeroLote>' +
                                '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
                                '<InscricaoMunicipal>' +
-                                  OnlyNumber(Emitente.InscMun) +
+                                  OnlyAlphaNum(Emitente.InscMun) +
                                '</InscricaoMunicipal>' +
                                '<QuantidadeRps>' +
                                   IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +

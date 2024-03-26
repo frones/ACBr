@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2024
+-- Diversos --
+[*] Ajustes para realizar a leitura e montangem correta do LinkNFSe, 
+    que é utilizado pelo provedor Infisc.
+  Por: Italo Giurizzato Junior
+
 25/03/2024
 -- Infisc.Gravar --
 [*] Alterado a condição para gerar ou não o grupo DadosDaObra.

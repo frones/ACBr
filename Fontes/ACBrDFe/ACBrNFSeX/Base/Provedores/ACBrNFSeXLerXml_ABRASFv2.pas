@@ -596,7 +596,7 @@ begin
   if AuxNode <> nil then
   begin
     IdAttr := FpAOwner.ConfigGeral.Identificador;
-    NFSe.InfID.ID := ObterConteudoTag(AuxNode.Attributes.Items[IdAttr]);
+    NFSe.infNFSe.ID := ObterConteudoTag(AuxNode.Attributes.Items[IdAttr]);
 
     NFSe.Numero            := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);

@@ -328,7 +328,7 @@ begin
       Competencia       := ObterConteudo(AuxNode.Childrens.FindAnyNs('dEmi'), tcDat);
       refNF             := ObterConteudo(AuxNode.Childrens.FindAnyNs('refNF'), tcStr);
 
-      InfID.ID := OnlyNumber(CodigoVerificacao);
+      infNFSe.ID := OnlyNumber(CodigoVerificacao);
 
       hEmi   := ObterConteudo(AuxNode.Childrens.FindAnyNs('hEmi'), tcStr);
       Hora   := strToIntDef(Copy(hEmi, 1 , 2), 0);

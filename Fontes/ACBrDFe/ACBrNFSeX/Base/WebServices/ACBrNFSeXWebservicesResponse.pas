@@ -205,6 +205,7 @@ type
     FSerieNota: string;
     FData: TDateTime;
     FDataCanc: TDateTime;
+    FSucessoCanc: Boolean;
     FidNota: string;
     FLink: string;
     FProtocolo: string;
@@ -214,6 +215,7 @@ type
     FidEvento: string;
     FtpEvento: TtpEvento;
     FnSeqEvento: Integer;
+    FNumNotaSubstituidora: string;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
@@ -243,6 +245,7 @@ type
     property SerieNota: string read FSerieNota write FSerieNota;
     property Data: TDateTime read FData write FData;
     property DataCanc: TDateTime read FDataCanc write FDataCanc;
+    property SucessoCanc: Boolean read FSucessoCanc write FSucessoCanc;
     property idNota: string read FidNota write FidNota;
     property Link: string read FLink write FLink;
     property Protocolo: string read FProtocolo write FProtocolo;
@@ -252,6 +255,7 @@ type
     property idEvento: string read FidEvento write FidEvento;
     property tpEvento: TtpEvento read FtpEvento write FtpEvento;
     property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
+    property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
@@ -329,7 +333,6 @@ type
     FTipoRps: string;
     FCodigoVerificacao: string;
     FCancelamento: TNFSeCancelamento;
-    FNumNotaSubstituidora: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -341,7 +344,6 @@ type
     property TipoRps: string read FTipoRps write FTipoRps;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
-    property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
   end;
 
   TNFSeConsultaNFSeResponse = class(TNFSeWebserviceResponse)
@@ -610,6 +612,7 @@ begin
   DescSituacao := '';
   NumeroLote := '';
   Sucesso := False;
+  SucessoCanc := False;
   NumeroNota := '';
   SerieNota := '';
   Data := 0;
@@ -654,6 +657,7 @@ begin
   inherited Create;
 
   FSucesso := False;
+  FSucessoCanc := False;
   FAlertas := TNFSeEventoCollection.Create;
   FErros := TNFSeEventoCollection.Create;
   FResumos := TNFSeResumoCollection.Create;

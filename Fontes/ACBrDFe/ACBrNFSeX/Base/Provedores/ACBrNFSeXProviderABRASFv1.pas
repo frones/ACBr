@@ -53,7 +53,9 @@ type
     function PreencherNotaRespostaConsultaNFSe(Node, parentNode: TACBrXmlNode;
       Response: TNFSeConsultaNFSeResponse): Boolean;
     procedure LerCancelamento(ANode: TACBrXmlNode;
-      Response: TNFSeConsultaNFSeporRpsResponse);
+      Response: TNFSeWebserviceResponse);
+
+    procedure LerSubstituicao(const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
 
     procedure Configuracao; override;
 
@@ -829,6 +831,10 @@ begin
 
           if AuxNode = nil then
           begin
+            LerCancelamento(ANode, Response);
+
+            LerSubstituicao(ANode, Response);
+
             AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
             if PreencherNotaRespostaConsultaLoteRps(AuxNode, ANode, Response) then
@@ -848,6 +854,11 @@ begin
             for J := Low(AuxNodeArray) to High(AuxNodeArray) do
             begin
               ANode2 := AuxNodeArray[J];
+
+              LerCancelamento(ANode2, Response);
+
+              LerSubstituicao(ANode2, Response);
+
               AuxNode := ANode2.Childrens.FindAnyNs('Nfse');
 
               if PreencherNotaRespostaConsultaLoteRps(AuxNode, ANode2, Response) then
@@ -1026,11 +1037,15 @@ begin
         begin
           LerCancelamento(ANode, Response);
 
+          LerSubstituicao(ANode, Response);
+
           AuxNode := ANode.Childrens.FindAnyNs('Nfse')
         end
         else
         begin
           LerCancelamento(AuxNode, Response);
+
+          LerSubstituicao(AuxNode, Response);
 
           AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
         end;
@@ -1277,6 +1292,10 @@ begin
 
         if AuxNode = nil then
         begin
+          LerCancelamento(ANode, Response);
+
+          LerSubstituicao(ANode, Response);
+
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
           if PreencherNotaRespostaConsultaNFSe(AuxNode, ANode, Response) then
@@ -1296,6 +1315,11 @@ begin
           for J := Low(AuxNodeArray) to High(AuxNodeArray) do
           begin
             ANode2 := AuxNodeArray[J];
+
+            LerCancelamento(ANode2, Response);
+
+            LerSubstituicao(ANode2, Response);
+
             AuxNode := ANode2.Childrens.FindAnyNs('Nfse');
 
             if PreencherNotaRespostaConsultaNFSe(AuxNode, ANode2, Response) then
@@ -1600,7 +1624,7 @@ begin
 end;
 
 procedure TACBrNFSeProviderABRASFv1.LerCancelamento(ANode: TACBrXmlNode;
-  Response: TNFSeConsultaNFSeporRpsResponse);
+      Response: TNFSeWebserviceResponse);
 var
   AuxNodeCanc: TACBrXmlNode;
 begin
@@ -1618,19 +1642,39 @@ begin
       AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
 
       if AuxNodeCanc <> nil then
+      begin
         Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
-      if Response.DataCanc = 0 then
-        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), FpFormatoDataHora);
+        if Response.DataCanc = 0 then
+          Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHoraCancelamento'), FpFormatoDataHora);
 
-      if Response.DataCanc = 0 then
-        Response.DataCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
+        Response.SucessoCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('Sucesso'), tcBool);
+      end;
     end;
 
     Response.DescSituacao := '';
 
-    if Response.DataCanc > 0 then
+    if (Response.DataCanc > 0) and (Response.SucessoCanc) then
       Response.DescSituacao := 'Nota Cancelada';
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.LerSubstituicao(const ANode: TACBrXmlNode;
+  const Response: TNFSeWebServiceResponse);
+var
+  AuxNode, AuxNodeSubs: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
+
+  if AuxNode <> nil then
+  begin
+    AuxNodeSubs := AuxNode.Childrens.FindAnyNs('SubstituicaoNfse');
+
+    if AuxNodeSubs <> nil then
+      Response.NumNotaSubstituidora := ObterConteudoTag(AuxNodeSubs.Childrens.FindAnyNs('NfseSubstituidora'), tcStr);
+
+    if Response.NumNotaSubstituidora <> '' then
+      Response.DescSituacao := 'Nota Substituida';
   end;
 end;
 

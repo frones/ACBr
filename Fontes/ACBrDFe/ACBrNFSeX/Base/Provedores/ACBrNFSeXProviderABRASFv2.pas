@@ -50,6 +50,10 @@ type
 
     procedure Configuracao; override;
 
+    procedure LerCancelamento(const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
+
+    procedure LerSubstituicao(const ANode: TACBrXmlNode; const Response: TNFSeWebServiceResponse);
+
     function PreencherNotaRespostaConsultaLoteRps(Node, parentNode: TACBrXmlNode;
       Response: TNFSeConsultaLoteRpsResponse): Boolean;
     function PreencherNotaRespostaConsultaNFSe(Node, parentNode: TACBrXmlNode;
@@ -926,6 +930,11 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
+
+        LerCancelamento(ANode, Response);
+
+        LerSubstituicao(ANode, Response);
+
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
         if AuxNode = nil then
@@ -1107,34 +1116,9 @@ begin
         Exit;
       end;
 
-      AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+      LerCancelamento(ANode, Response);
 
-      if AuxNode <> nil then
-      begin
-        AuxNodeConf := AuxNode.Childrens.FindAnyNs('Confirmacao');
-
-        if AuxNodeConf = nil then
-          AuxNodeConf := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
-
-        Response.DataCanc := ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
-        Response.DescSituacao := '';
-
-        if Response.DataCanc > 0 then
-          Response.DescSituacao := 'Nota Cancelada';
-      end;
-
-      AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
-
-      if AuxNode <> nil then
-      begin
-        AuxNodeSubs := AuxNode.Childrens.FindAnyNs('SubstituicaoNfse');
-
-        if AuxNodeSubs <> nil then
-          Response.NumNotaSubstituidora := ObterConteudoTag(AuxNodeSubs.Childrens.FindAnyNs('NfseSubstituidora'), tcStr);
-
-        if Response.NumNotaSubstituidora <> '' then
-          Response.DescSituacao := 'Nota Substituida';
-      end;
+      LerSubstituicao(ANode, Response);
 
       AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
@@ -1480,6 +1464,11 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
+
+        LerCancelamento(ANode, Response);
+
+        LerSubstituicao(ANode, Response);
+
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         if not Assigned(AuxNode) then Exit;
 
@@ -1752,6 +1741,11 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
+
+        LerCancelamento(ANode, Response);
+
+        LerSubstituicao(ANode, Response);
+
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         if not Assigned(AuxNode) then Exit;
 
@@ -2018,6 +2012,11 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
+
+        LerCancelamento(ANode, Response);
+
+        LerSubstituicao(ANode, Response);
+
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         if not Assigned(AuxNode) then Exit;
 
@@ -2522,6 +2521,51 @@ begin
                              Xml +
                            '</' + Prefixo + 'SubstituicaoNfse>' +
                          '</' + Prefixo + TagEnvio + '>';
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv2.LerCancelamento(const ANode: TACBrXmlNode;
+  const Response: TNFSeWebserviceResponse);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+  if AuxNode <> nil then
+  begin
+    AuxNode := AuxNode.Childrens.FindAnyNs('Confirmacao');
+
+    if AuxNode = nil then
+      AuxNode := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
+    if Assigned(AuxNode) then
+    begin
+      Response.DataCanc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
+      Response.DescSituacao := '';
+    end;
+
+    if Response.DataCanc > 0 then
+      Response.DescSituacao := 'Nota Cancelada';
+
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv2.LerSubstituicao(const ANode: TACBrXmlNode;
+  const Response: TNFSeWebServiceResponse);
+var
+  AuxNode, AuxNodeSubs: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
+
+  if AuxNode <> nil then
+  begin
+    AuxNodeSubs := AuxNode.Childrens.FindAnyNs('SubstituicaoNfse');
+
+    if AuxNodeSubs <> nil then
+      Response.NumNotaSubstituidora := ObterConteudoTag(AuxNodeSubs.Childrens.FindAnyNs('NfseSubstituidora'), tcStr);
+
+    if Response.NumNotaSubstituidora <> '' then
+      Response.DescSituacao := 'Nota Substituida';
   end;
 end;
 

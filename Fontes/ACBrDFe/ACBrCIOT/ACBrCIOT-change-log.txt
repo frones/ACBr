@@ -38,9 +38,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2024
+-- pcnretEnvCIOT --
+[*] Alteração na leitura da tag EstadoCiot para não levantar erro quando a tag
+    não existe no XML.
+  Por: Cleonir
+-- Diversos --
+[*] Melhorias no código usando o FixInsight (ainda não ficou 100%).
+  Por: Italo Giurizzato Junior
+
 21/03/2024
 [*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
-Por: Diego Folieni
+  Por: Diego Folieni
 
 23/02/2024
 -- ACBrCIOTConversao --

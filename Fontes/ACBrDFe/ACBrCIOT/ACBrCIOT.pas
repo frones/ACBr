@@ -123,7 +123,7 @@ constructor TACBrCIOT.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FContratos := TContratos.Create(Self, Contrato);
+  FContratos := TContratos.Create(Self, TContrato);
   FWebServices := TWebServices.Create(Self);
 end;
 

@@ -84,7 +84,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathCIOT(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathCIOT(Data: TDateTime = 0; const CNPJ: String = ''): String;
   published
     property EmissaoPathCIOT: boolean read FEmissaoPathCIOT
       write FEmissaoPathCIOT default False;
@@ -229,7 +229,8 @@ begin
   inherited;
 end;
 
-function TArquivosConfCIOT.GetPathCIOT(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfCIOT.GetPathCIOT(Data: TDateTime = 0;
+  const CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathCIOT, 'CIOT', CNPJ, '', Data);
 end;

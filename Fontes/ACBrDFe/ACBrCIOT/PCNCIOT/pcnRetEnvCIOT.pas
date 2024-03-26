@@ -86,6 +86,8 @@ end;
 function TRetornoEnvio.LerRetorno_eFrete: Boolean;
 var
   i: Integer;
+  sAux: string;
+  ItemCarga: TConsultaTipoCargaCollectionItem;
 begin
   Result := False;
 
@@ -136,6 +138,7 @@ begin
 
           if PDF <> '' then
             PDF := DecodeBase64(PDF);
+
           PDFNomeArquivo              := '';
           CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
           Data                        := leitor.rCampo(tcDatHor, 'Data');
@@ -144,128 +147,129 @@ begin
           QuantidadeViagens           := leitor.rCampo(tcInt, 'QuantidadeViagens');
           QuantidadePagamentos        := leitor.rCampo(tcInt, 'QuantidadePagamentos');
           IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
-          EstadoCiot                  := StrToEstadoCIOT(leitor.rCampo(tcStr, 'EstadoCiot'));
+
+          sAux := leitor.rCampo(tcStr, 'EstadoCiot');
+          EstadoCiot := ecEmViagem;
+          if sAux <> '' then
+            EstadoCiot := StrToEstadoCIOT(sAux);
 
           if (leitor.rExtrai(3, 'Proprietario') <> '') then
           begin
-            With Proprietario do
-            begin
-              CNPJ              := leitor.rCampo(tcStr, 'CNPJ');
-              TipoPessoa        := StrToTipoPessoa(leitor.rCampo(tcStr, 'TipoPessoa'));
-              RazaoSocial       := leitor.rCampo(tcStr, 'RazaoSocial');
-              RNTRC             := leitor.rCampo(tcStr, 'RNTRC');
-              Tipo              := StrToTipoProprietario(leitor.rCampo(tcStr, 'Tipo'));
-              TACouEquiparado   := StrToBool(leitor.rCampo(tcStr, 'TACouEquiparado'));
-              DataValidadeRNTRC := leitor.rCampo(tcDat, 'DataValidadeRNTRC');
-              RNTRCAtivo        := StrToBool(leitor.rCampo(tcStr, 'RNTRCAtivo'));
+            Proprietario.CNPJ := leitor.rCampo(tcStr, 'CNPJ');
 
-              if (leitor.rExtrai(4, 'Endereco') <> '') then
+            sAux := leitor.rCampo(tcStr, 'TipoPessoa');
+            Proprietario.TipoPessoa := tpIndefinido;
+            if sAux <> '' then
+              Proprietario.TipoPessoa := StrToTipoPessoa(sAux);
+
+            Proprietario.RazaoSocial       := leitor.rCampo(tcStr, 'RazaoSocial');
+            Proprietario.RNTRC             := leitor.rCampo(tcStr, 'RNTRC');
+
+            sAux := leitor.rCampo(tcStr, 'Tipo');
+            Proprietario.Tipo := tpTAC;
+            if sAux <> '' then
+              Proprietario.Tipo := StrToTipoProprietario(sAux);
+
+            Proprietario.TACouEquiparado   := StrToBool(leitor.rCampo(tcStr, 'TACouEquiparado'));
+            Proprietario.DataValidadeRNTRC := leitor.rCampo(tcDat, 'DataValidadeRNTRC');
+            Proprietario.RNTRCAtivo        := StrToBool(leitor.rCampo(tcStr, 'RNTRCAtivo'));
+
+            if (leitor.rExtrai(4, 'Endereco') <> '') then
+            begin
+              Proprietario.Endereco.Bairro          := leitor.rCampo(tcStr, 'Bairro');
+              Proprietario.Endereco.Rua             := leitor.rCampo(tcStr, 'Rua');
+              Proprietario.Endereco.Numero          := leitor.rCampo(tcStr, 'Numero');
+              Proprietario.Endereco.Complemento     := leitor.rCampo(tcStr, 'Complemento');
+              Proprietario.Endereco.CEP             := leitor.rCampo(tcStr, 'CEP');
+              Proprietario.Endereco.CodigoMunicipio := leitor.rCampo(tcInt, 'CodigoMunicipio');
+            end;
+
+            if (leitor.rExtrai(4, 'Telefones') <> '') then
+            begin
+              if (leitor.rExtrai(5, 'Celular') <> '') then
               begin
-                with Endereco do
-                begin
-                  Bairro          := leitor.rCampo(tcStr, 'Bairro');
-                  Rua             := leitor.rCampo(tcStr, 'Rua');
-                  Numero          := leitor.rCampo(tcStr, 'Numero');
-                  Complemento     := leitor.rCampo(tcStr, 'Complemento');
-                  CEP             := leitor.rCampo(tcStr, 'CEP');
-                  CodigoMunicipio := leitor.rCampo(tcInt, 'CodigoMunicipio');
-                end;
+                Proprietario.Telefones.Celular.DDD    := leitor.rCampo(tcInt, 'DDD');
+                Proprietario.Telefones.Celular.Numero := leitor.rCampo(tcInt, 'Numero');
               end;
 
-              if (leitor.rExtrai(4, 'Telefones') <> '') then
+              if (leitor.rExtrai(5, 'Fixo') <> '') then
               begin
-                with Telefones do
-                begin
-                  if (leitor.rExtrai(5, 'Celular') <> '') then
-                  begin
-                    Celular.DDD    := leitor.rCampo(tcInt, 'DDD');
-                    Celular.Numero := leitor.rCampo(tcInt, 'Numero');
-                  end;
+                Proprietario.Telefones.Fixo.DDD    := leitor.rCampo(tcInt, 'DDD');
+                Proprietario.Telefones.Fixo.Numero := leitor.rCampo(tcInt, 'Numero');
+              end;
 
-                  if (leitor.rExtrai(5, 'Fixo') <> '') then
-                  begin
-                    Fixo.DDD    := leitor.rCampo(tcInt, 'DDD');
-                    Fixo.Numero := leitor.rCampo(tcInt, 'Numero');
-                  end;
-
-                  if (leitor.rExtrai(5, 'Fax') <> '') then
-                  begin
-                    Fax.DDD    := leitor.rCampo(tcInt, 'DDD');
-                    Fax.Numero := leitor.rCampo(tcInt, 'Numero');
-                  end;
-                end;
+              if (leitor.rExtrai(5, 'Fax') <> '') then
+              begin
+                Proprietario.Telefones.Fax.DDD    := leitor.rCampo(tcInt, 'DDD');
+                Proprietario.Telefones.Fax.Numero := leitor.rCampo(tcInt, 'Numero');
               end;
             end;
           end;
 
           if (leitor.rExtrai(3, 'Veiculo') <> '') then
           begin
-            With Veiculo do
-            begin
-              Placa           := leitor.rCampo(tcStr, 'Placa');
-              Renavam         := leitor.rCampo(tcStr, 'Renavam');
-              Chassi          := leitor.rCampo(tcStr, 'Chassi');
-              RNTRC           := leitor.rCampo(tcStr, 'RNTRC');
-              NumeroDeEixos   := leitor.rCampo(tcInt, 'NumeroDeEixos');
-              CodigoMunicipio := leitor.rCampo(tcInt, 'CodigoMunicipio');
-              Marca           := leitor.rCampo(tcStr, 'Marca');
-              Modelo          := leitor.rCampo(tcStr, 'Modelo');
-              AnoFabricacao   := leitor.rCampo(tcInt, 'AnoFabricacao');
-              AnoModelo       := leitor.rCampo(tcInt, 'AnoModelo');
-              Cor             := leitor.rCampo(tcStr, 'Cor');
-              Tara            := leitor.rCampo(tcInt, 'Tara');
-              CapacidadeKg    := leitor.rCampo(tcInt, 'CapacidadeKg');
-              CapacidadeM3    := leitor.rCampo(tcInt, 'CapacidadeM3');
-              TipoRodado      := StrToTipoRodado(leitor.rCampo(tcStr, 'TipoRodado'));
-              TipoCarroceria  := StrToTipoCarroceria(leitor.rCampo(tcStr, 'TipoCarroceria'));
-            end;
+            Veiculo.Placa           := leitor.rCampo(tcStr, 'Placa');
+            Veiculo.Renavam         := leitor.rCampo(tcStr, 'Renavam');
+            Veiculo.Chassi          := leitor.rCampo(tcStr, 'Chassi');
+            Veiculo.RNTRC           := leitor.rCampo(tcStr, 'RNTRC');
+            Veiculo.NumeroDeEixos   := leitor.rCampo(tcInt, 'NumeroDeEixos');
+            Veiculo.CodigoMunicipio := leitor.rCampo(tcInt, 'CodigoMunicipio');
+            Veiculo.Marca           := leitor.rCampo(tcStr, 'Marca');
+            Veiculo.Modelo          := leitor.rCampo(tcStr, 'Modelo');
+            Veiculo.AnoFabricacao   := leitor.rCampo(tcInt, 'AnoFabricacao');
+            Veiculo.AnoModelo       := leitor.rCampo(tcInt, 'AnoModelo');
+            Veiculo.Cor             := leitor.rCampo(tcStr, 'Cor');
+            Veiculo.Tara            := leitor.rCampo(tcInt, 'Tara');
+            Veiculo.CapacidadeKg    := leitor.rCampo(tcInt, 'CapacidadeKg');
+            Veiculo.CapacidadeM3    := leitor.rCampo(tcInt, 'CapacidadeM3');
+
+            sAux := leitor.rCampo(tcStr, 'TipoRodado');
+            Veiculo.TipoRodado := trNaoAplicavel;
+            if sAux <> '' then
+              Veiculo.TipoRodado := StrToTipoRodado(sAux);
+
+            sAux := leitor.rCampo(tcStr, 'TipoCarroceria');
+            Veiculo.TipoCarroceria := tcNaoAplicavel;
+            if sAux <> '' then
+              Veiculo.TipoCarroceria := StrToTipoCarroceria(sAux);
           end;
 
           if (leitor.rExtrai(3, 'Motorista') <> '') then
           begin
-            With Motorista do
-            begin
-              CPF                 := leitor.rCampo(tcStr, 'CPF');
-              Nome                := leitor.rCampo(tcStr, 'Nome');
-              CNH                 := leitor.rCampo(tcStr, 'CNH');
-              DataNascimento      := leitor.rCampo(tcDat, 'DataNascimento');
-              NomeDeSolteiraDaMae := leitor.rCampo(tcStr, 'NomeDeSolteiraDaMae');
+            Motorista.CPF                 := leitor.rCampo(tcStr, 'CPF');
+            Motorista.Nome                := leitor.rCampo(tcStr, 'Nome');
+            Motorista.CNH                 := leitor.rCampo(tcStr, 'CNH');
+            Motorista.DataNascimento      := leitor.rCampo(tcDat, 'DataNascimento');
+            Motorista.NomeDeSolteiraDaMae := leitor.rCampo(tcStr, 'NomeDeSolteiraDaMae');
 
-              if (leitor.rExtrai(4, 'Endereco') <> '') then
+            if (leitor.rExtrai(4, 'Endereco') <> '') then
+            begin
+              Motorista.Endereco.Bairro          := leitor.rCampo(tcStr, 'Bairro');
+              Motorista.Endereco.Rua             := leitor.rCampo(tcStr, 'Rua');
+              Motorista.Endereco.Numero          := leitor.rCampo(tcStr, 'Numero');
+              Motorista.Endereco.Complemento     := leitor.rCampo(tcStr, 'Complemento');
+              Motorista.Endereco.CEP             := leitor.rCampo(tcStr, 'CEP');
+              Motorista.Endereco.CodigoMunicipio := leitor.rCampo(tcInt, 'CodigoMunicipio');
+            end;
+
+            if (leitor.rExtrai(4, 'Telefones') <> '') then
+            begin
+              if (leitor.rExtrai(5, 'Celular') <> '') then
               begin
-                with Endereco do
-                begin
-                  Bairro          := leitor.rCampo(tcStr, 'Bairro');
-                  Rua             := leitor.rCampo(tcStr, 'Rua');
-                  Numero          := leitor.rCampo(tcStr, 'Numero');
-                  Complemento     := leitor.rCampo(tcStr, 'Complemento');
-                  CEP             := leitor.rCampo(tcStr, 'CEP');
-                  CodigoMunicipio := leitor.rCampo(tcInt, 'CodigoMunicipio');
-                end;
+                Motorista.Telefones.Celular.DDD    := leitor.rCampo(tcInt, 'DDD');
+                Motorista.Telefones.Celular.Numero := leitor.rCampo(tcInt, 'Numero');
               end;
 
-              if (leitor.rExtrai(4, 'Telefones') <> '') then
+              if (leitor.rExtrai(5, 'Fixo') <> '') then
               begin
-                with Telefones do
-                begin
-                  if (leitor.rExtrai(5, 'Celular') <> '') then
-                  begin
-                    Celular.DDD    := leitor.rCampo(tcInt, 'DDD');
-                    Celular.Numero := leitor.rCampo(tcInt, 'Numero');
-                  end;
+                Motorista.Telefones.Fixo.DDD    := leitor.rCampo(tcInt, 'DDD');
+                Motorista.Telefones.Fixo.Numero := leitor.rCampo(tcInt, 'Numero');
+              end;
 
-                  if (leitor.rExtrai(5, 'Fixo') <> '') then
-                  begin
-                    Fixo.DDD    := leitor.rCampo(tcInt, 'DDD');
-                    Fixo.Numero := leitor.rCampo(tcInt, 'Numero');
-                  end;
-
-                  if (leitor.rExtrai(5, 'Fax') <> '') then
-                  begin
-                    Fax.DDD    := leitor.rCampo(tcInt, 'DDD');
-                    Fax.Numero := leitor.rCampo(tcInt, 'Numero');
-                  end;
-                end;
+              if (leitor.rExtrai(5, 'Fax') <> '') then
+              begin
+                Motorista.Telefones.Fax.DDD    := leitor.rCampo(tcInt, 'DDD');
+                Motorista.Telefones.Fax.Numero := leitor.rCampo(tcInt, 'Numero');
               end;
             end;
           end;
@@ -275,10 +279,7 @@ begin
             i := 0;
             while Leitor.rExtrai(4, 'string', '', i + 1) <> '' do
             begin
-              with DocumentoViagem.New do
-              begin
-                Mensagem := Leitor.rCampo(tcStr, 'string');
-              end;
+              DocumentoViagem.New.Mensagem := Leitor.rCampo(tcStr, 'string');
               inc(i);
             end;
           end;
@@ -288,10 +289,7 @@ begin
             i := 0;
             while Leitor.rExtrai(4, 'string', '', i + 1) <> '' do
             begin
-              with DocumentoPagamento.New do
-              begin
-                Mensagem := Leitor.rCampo(tcStr, 'string');
-              end;
+              DocumentoPagamento.New.Mensagem := Leitor.rCampo(tcStr, 'string');
               inc(i);
             end;
           end;
@@ -301,23 +299,24 @@ begin
             i := 0;
             while Leitor.rExtrai(4, 'TipoCarga', '', i + 1) <> '' do
             begin
-              with TipoCarga.New do
-              begin
-                Codigo    := Leitor.rCampo(tcStr, 'CodigoTipoCarga');
-                Descricao := StrToTipoCarga(leitor.rCampo(tcStr, 'DescricaoTipoCarga'));
-              end;
+              ItemCarga := TipoCarga.New;
+
+              ItemCarga.Codigo := Leitor.rCampo(tcStr, 'CodigoTipoCarga');
+
+              sAux := leitor.rCampo(tcStr, 'DescricaoTipoCarga');
+              ItemCarga.Descricao := tpNaoAplicavel;
+              if sAux <> '' then
+                ItemCarga.Descricao := StrToTipoCarga(sAux);
+
               inc(i);
             end;
           end;
 
           if leitor.rExtrai(3, 'AlterarDataLiberacaoPagamentoResult') <> '' then
           begin
-            With AlterarDataLiberacaoPagamento do
-            begin
-              CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
-              IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
-              DataDeLiberacao             := leitor.rCampo(tcDat, 'DataLiberacao');
-            end;
+            AlterarDataLiberacaoPagamento.CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
+            AlterarDataLiberacaoPagamento.IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
+            AlterarDataLiberacaoPagamento.DataDeLiberacao             := leitor.rCampo(tcDat, 'DataLiberacao');
           end;
 
           if leitor.rExtrai(3, 'Excecao') <> '' then

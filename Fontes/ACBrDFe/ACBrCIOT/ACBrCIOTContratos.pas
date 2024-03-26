@@ -48,9 +48,9 @@ uses
 
 type
 
-  { Contrato }
+  { TContrato }
 
-  Contrato = class(TCollectionItem)
+  TContrato = class(TCollectionItem)
   private
     FCIOT: TCIOT;
     FCIOTW: TCIOTW;
@@ -67,8 +67,8 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
-    procedure SetXML(AValue: String);
-    procedure SetXMLOriginal(AValue: String);
+    procedure SetXML(const AValue: String);
+    procedure SetXMLOriginal(const AValue: String);
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -81,10 +81,10 @@ type
 
     function LerXML(const AXML: AnsiString): Boolean;
     function GerarXML: String;
-    function GravarXML(const NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -110,8 +110,8 @@ type
     FACBrCIOT: TComponent;
     FConfiguracoes: TConfiguracoesCIOT;
 
-    function GetItem(Index: integer): Contrato;
-    procedure SetItem(Index: integer; const Value: Contrato);
+    function GetItem(Index: integer): TContrato;
+    procedure SetItem(Index: integer; const Value: TContrato);
 
   public
     constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -119,18 +119,18 @@ type
     procedure GerarCIOT;
     procedure Assinar;
 
-    function Add: Contrato;
-    function Insert(Index: integer): Contrato;
+    function Add: TContrato;
+    function Insert(Index: integer): TContrato;
 
-    property Items[Index: integer]: Contrato read GetItem write SetItem; default;
+    property Items[Index: integer]: TContrato read GetItem write SetItem; default;
 
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarCIOT que determina se após carregar os dados do CIOT
     // para o componente, será gerado ou não novamente o XML do CIOT.
-    function LoadFromFile(CaminhoArquivo: String; AGerarCIOT: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarCIOT: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarCIOT: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarCIOT: Boolean = True): Boolean;
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
 
     property ACBrCIOT: TComponent read FACBrCIOT;
   end;
@@ -146,9 +146,9 @@ uses
   ACBrUtil.DateTime,
   synautil;
 
-{ Documento }
+{ TContrato }
 
-constructor Contrato.Create(Collection2: TCollection);
+constructor TContrato.Create(Collection2: TCollection);
 begin
   inherited Create(Collection2);
   FCIOT := TCIOT.Create;
@@ -165,7 +165,7 @@ begin
   end;
 end;
 
-destructor Contrato.Destroy;
+destructor TContrato.Destroy;
 begin
   FCIOT.Free;
   FCIOTW.Free;
@@ -174,7 +174,7 @@ begin
   inherited Destroy;
 end;
 
-procedure Contrato.Assinar;
+procedure TContrato.Assinar;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
@@ -201,7 +201,7 @@ begin
   end;
 end;
 
-function Contrato.LerXML(const AXML: AnsiString): Boolean;
+function TContrato.LerXML(const AXML: AnsiString): Boolean;
 var
   XMLStr: String;
 begin
@@ -217,7 +217,8 @@ begin
   Result := True;
 end;
 
-function Contrato.GravarXML(const NomeArquivo: String; PathArquivo: String): Boolean;
+function TContrato.GravarXML(const NomeArquivo: String;
+  const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -227,7 +228,7 @@ begin
   Result := TACBrCIOT(TContratos(Collection).ACBrCIOT).Gravar(FNomeArq, FXMLOriginal);
 end;
 
-function Contrato.GravarStream(AStream: TStream): Boolean;
+function TContrato.GravarStream(AStream: TStream): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -237,7 +238,7 @@ begin
   Result := True;
 end;
 
-procedure Contrato.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure TContrato.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
 //  NomeArq : String;
@@ -277,7 +278,7 @@ begin
   end;
 end;
 
-function Contrato.GerarXML: String;
+function TContrato.GerarXML: String;
 begin
   with TACBrCIOT(TContratos(Collection).ACBrCIOT) do
   begin
@@ -301,7 +302,7 @@ begin
   Result := FXMLOriginal;
 end;
 
-function Contrato.CalcularNomeArquivo: String;
+function TContrato.CalcularNomeArquivo: String;
 var
   xID: String;
 begin
@@ -313,7 +314,7 @@ begin
   Result := xID + '-CIOT.xml';
 end;
 
-function Contrato.CalcularPathArquivo: String;
+function TContrato.CalcularPathArquivo: String;
 begin
   with TACBrCIOT(TContratos(Collection).ACBrCIOT) do
   begin
@@ -321,7 +322,7 @@ begin
   end;
 end;
 
-function Contrato.CalcularNomeArquivoCompleto(NomeArquivo: String;
+function TContrato.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
 var
   PathNoArquivo: String;
@@ -343,32 +344,32 @@ begin
   Result := PathArquivo + NomeArquivo;
 end;
 
-function Contrato.GetConfirmado: Boolean;
+function TContrato.GetConfirmado: Boolean;
 begin
 //  Result := TACBrCIOT(TContratos(Collection).ACBrCIOT).cStatConfirmado(
 //    FCIOT.procCIOT.cStat);
   Result := True;
 end;
 
-function Contrato.GetProcessado: Boolean;
+function TContrato.GetProcessado: Boolean;
 begin
 //  Result := TACBrCIOT(TContratos(Collection).ACBrCIOT).cStatProcessado(
 //    FCIOT.procCIOT.cStat);
   Result := True;
 end;
 
-function Contrato.GetMsg: String;
+function TContrato.GetMsg: String;
 begin
 //  Result := FCIOT.procCIOT.xMotivo;
   Result := '';
 end;
 
-function Contrato.GetNumID: String;
+function TContrato.GetNumID: String;
 begin
   Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
-function Contrato.GetXMLAssinado: String;
+function TContrato.GetXMLAssinado: String;
 begin
   if EstaVazio(FXMLAssinado) then
     Assinar;
@@ -376,12 +377,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure Contrato.SetXML(AValue: String);
+procedure TContrato.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure Contrato.SetXMLOriginal(AValue: String);
+procedure TContrato.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin
@@ -410,9 +411,9 @@ begin
   FConfiguracoes := TACBrCIOT(FACBrCIOT).Configuracoes;
 end;
 
-function TContratos.Add: Contrato;
+function TContratos.Add: TContrato;
 begin
-  Result := Contrato(inherited Add);
+  Result := TContrato(inherited Add);
 end;
 
 procedure TContratos.Assinar;
@@ -431,9 +432,9 @@ begin
     Self.Items[i].GerarXML;
 end;
 
-function TContratos.GetItem(Index: integer): Contrato;
+function TContratos.GetItem(Index: integer): TContrato;
 begin
-  Result := Contrato(inherited Items[Index]);
+  Result := TContrato(inherited Items[Index]);
 end;
 
 function TContratos.GetNamePath: String;
@@ -441,17 +442,17 @@ begin
   Result := 'Contrato';
 end;
 
-function TContratos.Insert(Index: integer): Contrato;
+function TContratos.Insert(Index: integer): TContrato;
 begin
-  Result := Contrato(inherited Insert(Index));
+  Result := TContrato(inherited Insert(Index));
 end;
 
-procedure TContratos.SetItem(Index: integer; const Value: Contrato);
+procedure TContratos.SetItem(Index: integer; const Value: TContrato);
 begin
   Items[Index].Assign(Value);
 end;
 
-function TContratos.LoadFromFile(CaminhoArquivo: String;
+function TContratos.LoadFromFile(const CaminhoArquivo: String;
   AGerarCIOT: Boolean = True): Boolean;
 var
   XMLUTF8: AnsiString;
@@ -521,7 +522,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TContratos.GravarXML(PathNomeArquivo: String): Boolean;
+function TContratos.GravarXML(const PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq: String;

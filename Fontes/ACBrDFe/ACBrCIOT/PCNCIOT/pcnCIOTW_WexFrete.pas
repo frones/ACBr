@@ -62,7 +62,7 @@ type
   TCIOTW_WexFrete = class(TCIOTWClass)
   private
     FVersaoDF: TVersaoCIOT;
-    versao: Integer;
+    Fversao: Integer;
   protected
     procedure GerarIdentificacao(aVersao: Integer);
 
@@ -82,7 +82,7 @@ type
     procedure GerarTomadorServico;
     procedure GerarRemetente;
     procedure GerarProprietarioCarga;
-    procedure GerarVeiculos(xPrefixo: String);
+    procedure GerarVeiculos(const xPrefixo: String);
 
     procedure GerarViagemAdicViagem;
     procedure GerarPagamentosAdicViagem;
@@ -97,7 +97,6 @@ type
 
     property VersaoDF: TVersaoCIOT   read FVersaoDF write FVersaoDF;
 
-    function ObterNomeArquivo: String; override;
     function GerarXml: Boolean; override;
   end;
 
@@ -120,24 +119,18 @@ begin
   inherited Create(ACIOTW);
 end;
 
-function TCIOTW_WexFrete.ObterNomeArquivo: String;
-begin
-  Result := '';
-//  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
-
 procedure TCIOTW_WexFrete.GerarIdentificacao(aVersao: Integer);
 var
   aPrefixo: string;
 begin
   aPrefixo := Gerador.Prefixo;
   Gerador.Prefixo := 'obj1:';
-  versao := aVersao;
+  Fversao := aVersao;
 
   //ver de que forma pegar o tocken em caso de não usar certificado
   Gerador.wCampo(tcStr, 'AP03', 'Token', 01, 01, 0, CIOT.Integradora.Token);
   Gerador.wCampo(tcStr, 'AP04', 'Integrador', 01, 01, 0, CIOT.Integradora.Integrador);
-  Gerador.wCampo(tcInt, 'AP05', 'Versao', 01, 01, 1, aversao);
+  Gerador.wCampo(tcInt, 'AP05', 'Versao', 01, 01, 1, Fversao);
 
   Gerador.Prefixo := aPrefixo;
 end;
@@ -151,57 +144,52 @@ begin
     Gerador.wCampo(tcStr, 'AP08', 'RazaoSocial', 01, 01, 0, RazaoSocial);
     Gerador.wCampo(tcStr, 'AP09', 'RNTRC      ', 01, 01, 1, RNTRC);
 
-    with Endereco do
+    if Endereco.CodigoMunicipio > 0 then
     begin
-      if CodigoMunicipio > 0 then
-      begin
-        Gerador.wGrupo('Endereco', 'AP11');
-        Gerador.Prefixo := 'obj1:';
-        Gerador.wCampo(tcStr, 'AP12', 'Bairro         ', 01, 01, 0, Bairro);
-        Gerador.wCampo(tcStr, 'AP13', 'Rua            ', 01, 01, 0, Rua);
-        Gerador.wCampo(tcStr, 'AP14', 'Numero         ', 01, 01, 0, Numero);
-        Gerador.wCampo(tcStr, 'AP15', 'Complemento    ', 01, 01, 0, Complemento);
-        Gerador.wCampo(tcStr, 'AP16', 'CEP            ', 08, 08, 0, CEP);
-        Gerador.wCampo(tcInt, 'AP17', 'CodigoMunicipio', 07, 07, 1, CodigoMunicipio);
-        Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('/Endereco');
-      end;
+      Gerador.wGrupo('Endereco', 'AP11');
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wCampo(tcStr, 'AP12', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+      Gerador.wCampo(tcStr, 'AP13', 'Rua            ', 01, 01, 0, Endereco.Rua);
+      Gerador.wCampo(tcStr, 'AP14', 'Numero         ', 01, 01, 0, Endereco.Numero);
+      Gerador.wCampo(tcStr, 'AP15', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+      Gerador.wCampo(tcStr, 'AP16', 'CEP            ', 08, 08, 0, Endereco.CEP);
+      Gerador.wCampo(tcInt, 'AP17', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupo('/Endereco');
     end;
 
-    with Telefones do
+    if (Telefones.Celular.Numero > 0) or
+       (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
     begin
-      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      Gerador.wGrupo('Telefones', 'AP18');
+
+      Gerador.Prefixo := 'obj1:';
+      if Telefones.Celular.Numero > 0 then
       begin
-        Gerador.wGrupo('Telefones', 'AP18');
-
-        Gerador.Prefixo := 'obj1:';
-        if Celular.Numero > 0 then
-        begin
-          Gerador.wGrupo('Celular', 'AP19');
-          Gerador.wCampo(tcInt, 'AP20', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-          Gerador.wCampo(tcInt, 'AP21', 'Numero', 08, 09, 1, Celular.Numero, '');
-          Gerador.wGrupo('/Celular');
-        end;
-
-        if Fixo.Numero > 0 then
-        begin
-          Gerador.wGrupo('Fixo', 'AP22');
-          Gerador.wCampo(tcInt, 'AP23', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-          Gerador.wCampo(tcInt, 'AP24', 'Numero', 08, 09, 1, Fixo.Numero, '');
-          Gerador.wGrupo('/Fixo');
-        end;
-
-        if Fax.Numero > 0 then
-        begin
-          Gerador.wGrupo('Fax', 'AP25');
-          Gerador.wCampo(tcInt, 'AP26', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-          Gerador.wCampo(tcInt, 'AP27', 'Numero', 08, 09, 1, Fax.Numero, '');
-          Gerador.wGrupo('/Fax');
-        end;
-
-        Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('/Telefones');
+        Gerador.wGrupo('Celular', 'AP19');
+        Gerador.wCampo(tcInt, 'AP20', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+        Gerador.wCampo(tcInt, 'AP21', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+        Gerador.wGrupo('/Celular');
       end;
+
+      if Telefones.Fixo.Numero > 0 then
+      begin
+        Gerador.wGrupo('Fixo', 'AP22');
+        Gerador.wCampo(tcInt, 'AP23', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+        Gerador.wCampo(tcInt, 'AP24', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+        Gerador.wGrupo('/Fixo');
+      end;
+
+      if Telefones.Fax.Numero > 0 then
+      begin
+        Gerador.wGrupo('Fax', 'AP25');
+        Gerador.wCampo(tcInt, 'AP26', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+        Gerador.wCampo(tcInt, 'AP27', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+        Gerador.wGrupo('/Fax');
+      end;
+
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupo('/Telefones');
     end;
   end;
 end;
@@ -246,57 +234,52 @@ begin
     Gerador.wCampo(tcDat, 'AP09', 'DataNascimento     ', 01, 01, 1, DataNascimento);
     Gerador.wCampo(tcStr, 'AP10', 'NomeDeSolteiraDaMae', 01, 01, 0, NomeDeSolteiraDaMae);
 
-    with Endereco do
+    if Endereco.CodigoMunicipio > 0 then
     begin
-      if CodigoMunicipio > 0 then
-      begin
-        Gerador.wGrupo('Endereco', 'AP11');
-        Gerador.Prefixo := 'obj1:';
-        Gerador.wCampo(tcStr, 'AP12', 'Bairro         ', 01, 01, 0, Bairro);
-        Gerador.wCampo(tcStr, 'AP13', 'Rua            ', 01, 01, 0, Rua);
-        Gerador.wCampo(tcStr, 'AP14', 'Numero         ', 01, 01, 0, Numero);
-        Gerador.wCampo(tcStr, 'AP15', 'Complemento    ', 01, 01, 0, Complemento);
-        Gerador.wCampo(tcStr, 'AP16', 'CEP            ', 08, 08, 0, CEP);
-        Gerador.wCampo(tcInt, 'AP17', 'CodigoMunicipio', 07, 07, 1, CodigoMunicipio);
-        Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('/Endereco');
-      end;
+      Gerador.wGrupo('Endereco', 'AP11');
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wCampo(tcStr, 'AP12', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+      Gerador.wCampo(tcStr, 'AP13', 'Rua            ', 01, 01, 0, Endereco.Rua);
+      Gerador.wCampo(tcStr, 'AP14', 'Numero         ', 01, 01, 0, Endereco.Numero);
+      Gerador.wCampo(tcStr, 'AP15', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+      Gerador.wCampo(tcStr, 'AP16', 'CEP            ', 08, 08, 0, Endereco.CEP);
+      Gerador.wCampo(tcInt, 'AP17', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupo('/Endereco');
     end;
 
-    with Telefones do
+    if (Telefones.Celular.Numero > 0) or
+       (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
     begin
-      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      Gerador.wGrupo('Telefones', 'AP18');
+
+      Gerador.Prefixo := 'obj1:';
+      if Telefones.Celular.Numero > 0 then
       begin
-        Gerador.wGrupo('Telefones', 'AP18');
-
-        Gerador.Prefixo := 'obj1:';
-        if Celular.Numero > 0 then
-        begin
-          Gerador.wGrupo('Celular', 'AP19');
-          Gerador.wCampo(tcInt, 'AP20', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-          Gerador.wCampo(tcInt, 'AP21', 'Numero', 08, 09, 1, Celular.Numero, '');
-          Gerador.wGrupo('/Celular');
-        end;
-
-        if Fixo.Numero > 0 then
-        begin
-          Gerador.wGrupo('Fixo', 'AP22');
-          Gerador.wCampo(tcInt, 'AP23', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-          Gerador.wCampo(tcInt, 'AP24', 'Numero', 08, 09, 1, Fixo.Numero, '');
-          Gerador.wGrupo('/Fixo');
-        end;
-
-        if Fax.Numero > 0 then
-        begin
-          Gerador.wGrupo('Fax', 'AP25');
-          Gerador.wCampo(tcInt, 'AP26', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-          Gerador.wCampo(tcInt, 'AP27', 'Numero', 08, 09, 1, Fax.Numero, '');
-          Gerador.wGrupo('/Fax');
-        end;
-
-        Gerador.Prefixo := 'obj:';
-        Gerador.wGrupo('/Telefones');
+        Gerador.wGrupo('Celular', 'AP19');
+        Gerador.wCampo(tcInt, 'AP20', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+        Gerador.wCampo(tcInt, 'AP21', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+        Gerador.wGrupo('/Celular');
       end;
+
+      if Telefones.Fixo.Numero > 0 then
+      begin
+        Gerador.wGrupo('Fixo', 'AP22');
+        Gerador.wCampo(tcInt, 'AP23', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+        Gerador.wCampo(tcInt, 'AP24', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+        Gerador.wGrupo('/Fixo');
+      end;
+
+      if Telefones.Fax.Numero > 0 then
+      begin
+        Gerador.wGrupo('Fax', 'AP25');
+        Gerador.wCampo(tcInt, 'AP26', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+        Gerador.wCampo(tcInt, 'AP27', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+        Gerador.wGrupo('/Fax');
+      end;
+
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupo('/Telefones');
     end;
   end;
 end;
@@ -305,6 +288,7 @@ procedure TCIOTW_WexFrete.GerarViagem;
 var
   i, j: Integer;
   aPrefixo: string;
+  Item: TNotaFiscalCollectionItem;
 begin
   aPrefixo := Gerador.Prefixo;
   Gerador.Prefixo := 'adic:';
@@ -328,20 +312,17 @@ begin
       begin
         Gerador.wGrupo('Valores', 'AP19');
 
-        with Valores do
-        begin
-          Gerador.wCampo(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, TotalOperacao);
-          Gerador.wCampo(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, TotalViagem);
-          Gerador.wCampo(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, TotalDeAdiantamento);
-          Gerador.wCampo(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, TotalDeQuitacao);
-          Gerador.wCampo(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Combustivel);
-          Gerador.wCampo(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Pedagio);
-          Gerador.wCampo(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, OutrosCreditos);
-          Gerador.wCampo(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, JustificativaOutrosCreditos);
-          Gerador.wCampo(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Seguro);
-          Gerador.wCampo(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, OutrosDebitos);
-          Gerador.wCampo(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, JustificativaOutrosDebitos);
-        end;
+        Gerador.wCampo(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, Valores.TotalOperacao);
+        Gerador.wCampo(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, Valores.TotalViagem);
+        Gerador.wCampo(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, Valores.TotalDeAdiantamento);
+        Gerador.wCampo(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, Valores.TotalDeQuitacao);
+        Gerador.wCampo(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Valores.Combustivel);
+        Gerador.wCampo(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Valores.Pedagio);
+        Gerador.wCampo(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, Valores.OutrosCreditos);
+        Gerador.wCampo(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, Valores.JustificativaOutrosCreditos);
+        Gerador.wCampo(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Valores.Seguro);
+        Gerador.wCampo(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, Valores.OutrosDebitos);
+        Gerador.wCampo(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, Valores.JustificativaOutrosDebitos);
 
         Gerador.wGrupo('/Valores');
       end;
@@ -350,19 +331,17 @@ begin
 
       if TipoPagamento  = TransferenciaBancaria then
       begin
-        with InformacoesBancarias do
+        if (InformacoesBancarias.InstituicaoBancaria <> '') or
+           (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
         begin
-          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-          begin
-            Gerador.wGrupo('InformacoesBancarias', 'AP32');
+          Gerador.wGrupo('InformacoesBancarias', 'AP32');
 
-            Gerador.wCampo(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria);
-            Gerador.wCampo(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, Agencia);
-            Gerador.wCampo(tcStr, 'AP35', 'Conta              ', 01, 01, 0, Conta);
-            Gerador.wCampo(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+          Gerador.wCampo(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria);
+          Gerador.wCampo(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia);
+          Gerador.wCampo(tcStr, 'AP35', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta);
+          Gerador.wCampo(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-            Gerador.wGrupo('/InformacoesBancarias');
-          end;
+          Gerador.wGrupo('/InformacoesBancarias');
         end;
       end;  
 
@@ -373,55 +352,54 @@ begin
 
         for J := 0 to NotasFiscais.Count -1 do
         begin
-          with NotasFiscais.Items[J] do
+          Item := NotasFiscais[J];
+
+          Gerador.wGrupo('NotaFiscal', 'AP38');
+          Gerador.wCampo(tcStr, 'AP39', 'Numero                            ', 01, 01, 0, Item.Numero);
+          Gerador.wCampo(tcStr, 'AP40', 'Serie                             ', 01, 01, 0, Item.Serie);
+          Gerador.wCampo(tcDat, 'AP41', 'Data                              ', 01, 01, 0, Item.Data);
+          Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                        ', 01, 01, 1, Item.ValorTotal);
+          Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade       ', 01, 01, 1, Item.ValorDaMercadoriaPorUnidade);
+          Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga            ', 01, 04, 1, Item.CodigoNCMNaturezaCarga);
+          Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria             ', 01, 01, 0, Item.DescricaoDaMercadoria);
+          Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria       ', 01, 01, 1, TpUnMedMercToStr(Item.UnidadeDeMedidaDaMercadoria));
+          Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(Item.TipoDeCalculo));
+          Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, Item.ValorDoFretePorUnidadeDeMercadoria);
+          Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, Item.QuantidadeDaMercadoriaNoEmbarque);
+
+          if CIOT.AdicionarOperacao.TipoViagem <> TAC_Agregado then
           begin
-            Gerador.wGrupo('NotaFiscal', 'AP38');
-            Gerador.wCampo(tcStr, 'AP39', 'Numero                            ', 01, 01, 0, Numero);
-            Gerador.wCampo(tcStr, 'AP40', 'Serie                             ', 01, 01, 0, Serie);
-            Gerador.wCampo(tcDat, 'AP41', 'Data                              ', 01, 01, 0, Data);
-            Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                        ', 01, 01, 1, ValorTotal);
-            Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade       ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
-            Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga            ', 01, 04, 1, CodigoNCMNaturezaCarga);
-            Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria             ', 01, 01, 0, DescricaoDaMercadoria);
-            Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria       ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-            Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-            Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-            Gerador.wCampo(tcDe2, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
-
-            if CIOT.AdicionarOperacao.TipoViagem <> TAC_Agregado then
-            begin
-              Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP50');
-              Gerador.wCampo(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-              Gerador.wCampo(tcDe2, 'AP52', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
-              Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
-            end;
-
-            Gerador.wGrupo('DiferencaDeFrete', 'AP53');
-            Gerador.Prefixo := 'obj:';
-
-            Gerador.wCampo(tcStr, 'AP50', 'Tipo', 01, 01, 1, TpDifFreteToStr(DiferencaDeFrete.Tipo));
-            Gerador.wCampo(tcStr, 'AP51', 'Base', 01, 01, 1, TpDiferencaFreteBCToStr(DiferencaDeFrete.Base));
-
-            Gerador.wGrupo('Tolerancia', 'AP52');
-            Gerador.wCampo(tcStr, 'AP53', 'Tipo ', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.Tolerancia.Tipo));
-            Gerador.wCampo(tcDe2, 'AP54', 'Valor', 01, 01, 1, DiferencaDeFrete.Tolerancia.Valor);
-            Gerador.wGrupo('/Tolerancia');
-
-            Gerador.wGrupo('MargemGanho', 'AP55');
-            Gerador.wCampo(tcStr, 'AP56', 'Tipo ', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemGanho.Tipo));
-            Gerador.wCampo(tcDe2, 'AP57', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemGanho.Valor);
-            Gerador.wGrupo('/MargemGanho');
-
-            Gerador.wGrupo('MargemPerda', 'AP58');
-            Gerador.wCampo(tcStr, 'AP59', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemPerda.Tipo));
-            Gerador.wCampo(tcDe2, 'AP60', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemPerda.Valor);
-            Gerador.wGrupo('/MargemPerda');
-
-            Gerador.Prefixo := 'adic:';
-            Gerador.wGrupo('/DiferencaDeFrete');
-
-            Gerador.wGrupo('/NotaFiscal');
+            Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP50');
+            Gerador.wCampo(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(Item.ToleranciaDePerdaDeMercadoria.Tipo));
+            Gerador.wCampo(tcDe2, 'AP52', 'Valor', 01, 01, 1, Item.ToleranciaDePerdaDeMercadoria.Valor);
+            Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
           end;
+
+          Gerador.wGrupo('DiferencaDeFrete', 'AP53');
+          Gerador.Prefixo := 'obj:';
+
+          Gerador.wCampo(tcStr, 'AP50', 'Tipo', 01, 01, 1, TpDifFreteToStr(Item.DiferencaDeFrete.Tipo));
+          Gerador.wCampo(tcStr, 'AP51', 'Base', 01, 01, 1, TpDiferencaFreteBCToStr(Item.DiferencaDeFrete.Base));
+
+          Gerador.wGrupo('Tolerancia', 'AP52');
+          Gerador.wCampo(tcStr, 'AP53', 'Tipo ', 01, 01, 1, TpProporcaoToStr(Item.DiferencaDeFrete.Tolerancia.Tipo));
+          Gerador.wCampo(tcDe2, 'AP54', 'Valor', 01, 01, 1, Item.DiferencaDeFrete.Tolerancia.Valor);
+          Gerador.wGrupo('/Tolerancia');
+
+          Gerador.wGrupo('MargemGanho', 'AP55');
+          Gerador.wCampo(tcStr, 'AP56', 'Tipo ', 01, 01, 1, TpProporcaoToStr(Item.DiferencaDeFrete.MargemGanho.Tipo));
+          Gerador.wCampo(tcDe2, 'AP57', 'Valor', 01, 01, 1, Item.DiferencaDeFrete.MargemGanho.Valor);
+          Gerador.wGrupo('/MargemGanho');
+
+          Gerador.wGrupo('MargemPerda', 'AP58');
+          Gerador.wCampo(tcStr, 'AP59', 'Tipo', 01, 01, 1, TpProporcaoToStr(Item.DiferencaDeFrete.MargemPerda.Tipo));
+          Gerador.wCampo(tcDe2, 'AP60', 'Valor', 01, 01, 1, Item.DiferencaDeFrete.MargemPerda.Valor);
+          Gerador.wGrupo('/MargemPerda');
+
+          Gerador.Prefixo := 'adic:';
+          Gerador.wGrupo('/DiferencaDeFrete');
+
+          Gerador.wGrupo('/NotaFiscal');
         end;
 
         Gerador.wGrupo('/NotasFiscais');
@@ -485,22 +463,20 @@ begin
       // Não deve ser preenchido para TipoPagamento eFRETE.
       if TipoPagamento  = TransferenciaBancaria then
       begin
-        with InformacoesBancarias do
+        if (InformacoesBancarias.InstituicaoBancaria <> '') or
+           (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
         begin
-          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-          begin
-            Gerador.Prefixo := 'obj:';
-            Gerador.wGrupo('InformacoesBancarias', 'AP75');
+          Gerador.Prefixo := 'obj:';
+          Gerador.wGrupo('InformacoesBancarias', 'AP75');
 
-            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
-            Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+          Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+          Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+          Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta, 'Conta do contratado com dígito. ');
+          Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-            Gerador.wGrupo('/InformacoesBancarias');
-          end;
+          Gerador.wGrupo('/InformacoesBancarias');
         end;
-      end;  
+      end;
 
       Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP80', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
@@ -591,59 +567,54 @@ begin
       Gerador.wCampo(tcStr, 'AP92', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP93', 'CpfOuCnpj        ', 11, 14, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP94');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP095', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP096', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP097', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP098', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP099', 'CEP            ', 08, 08, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP100', 'CodigoMunicipio', 07, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP94');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP095', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP096', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP097', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP098', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP099', 'CEP            ', 08, 08, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP100', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP101', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP102');
+
+        Gerador.Prefixo := 'obj1:';
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP102');
-
-          Gerador.Prefixo := 'obj1:';
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP103');
-            Gerador.wCampo(tcInt, 'AP104', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP105', 'Numero', 08, 09, 1, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP106');
-            Gerador.wCampo(tcInt, 'AP107', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP108', 'Numero', 08, 09, 1, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP109');
-            Gerador.wCampo(tcInt, 'AP110', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP111', 'Numero', 08, 09, 1, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP103');
+          Gerador.wCampo(tcInt, 'AP104', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP105', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP106');
+          Gerador.wCampo(tcInt, 'AP107', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP108', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP109');
+          Gerador.wCampo(tcInt, 'AP110', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP111', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP112', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)), 'Informar se é o responsável pelo pagamento da Operação de Transporte. True = Sim. False = Não');
@@ -663,60 +634,55 @@ begin
       Gerador.wCampo(tcStr, 'AP114', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP115', 'CpfOuCnpj        ', 11, 14, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP116');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP117', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP118', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP119', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP120', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP121', 'CEP            ', 01, 09, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP122', 'CodigoMunicipio', 07, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP116');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP117', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP118', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP119', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP120', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP121', 'CEP            ', 01, 09, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP122', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP123', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP124');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP124');
-
-          Gerador.Prefixo := 'obj1:';
-
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP125');
-            Gerador.wCampo(tcInt, 'AP126', 'DDD   ', 01, 02, 0, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP127', 'Numero', 08, 09, 0, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP128');
-            Gerador.wCampo(tcInt, 'AP129', 'DDD   ', 01, 02, 0, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP130', 'Numero', 08, 09, 0, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP131');
-            Gerador.wCampo(tcInt, 'AP132', 'DDD   ', 01, 02, 0, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP133', 'Numero', 08, 09, 0, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP125');
+          Gerador.wCampo(tcInt, 'AP126', 'DDD   ', 01, 02, 0, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP127', 'Numero', 08, 09, 0, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP128');
+          Gerador.wCampo(tcInt, 'AP129', 'DDD   ', 01, 02, 0, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP130', 'Numero', 08, 09, 0, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP131');
+          Gerador.wCampo(tcInt, 'AP132', 'DDD   ', 01, 02, 0, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP133', 'Numero', 08, 09, 0, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
@@ -741,60 +707,55 @@ begin
       Gerador.wCampo(tcStr, 'AP137', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP138', 'CpfOuCnpj        ', 01, 01, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP139');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP140', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP141', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP142', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP143', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP144', 'CEP            ', 01, 09, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP145', 'CodigoMunicipio', 01, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP139');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP140', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP141', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP142', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP143', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP144', 'CEP            ', 01, 09, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP145', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP146', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP147');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP147');
-
-          Gerador.Prefixo := 'obj1:';
-
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP148');
-            Gerador.wCampo(tcInt, 'AP149', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP150', 'Numero', 08, 09, 1, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP151');
-            Gerador.wCampo(tcInt, 'AP152', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP153', 'Numero', 08, 09, 1, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP154');
-            Gerador.wCampo(tcInt, 'AP155', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP156', 'Numero', 08, 09, 1, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP148');
+          Gerador.wCampo(tcInt, 'AP149', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP150', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP151');
+          Gerador.wCampo(tcInt, 'AP152', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP153', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP154');
+          Gerador.wCampo(tcInt, 'AP155', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP156', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP157', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
@@ -818,60 +779,55 @@ begin
       Gerador.wCampo(tcStr, 'AP159', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP160', 'CpfOuCnpj        ', 01, 01, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP161');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP162', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP163', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP164', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP165', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP166', 'CEP            ', 01, 09, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP167', 'CodigoMunicipio', 01, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP161');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP162', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP163', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP164', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP165', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP166', 'CEP            ', 01, 09, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP167', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP168', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP169');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP169');
-
-          Gerador.Prefixo := 'obj1:';
-
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP170');
-            Gerador.wCampo(tcInt, 'AP171', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP172', 'Numero', 08, 09, 1, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP173');
-            Gerador.wCampo(tcInt, 'AP174', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP175', 'Numero', 08, 09, 1, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP176');
-            Gerador.wCampo(tcInt, 'AP177', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP178', 'Numero', 08, 09, 1, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP170');
+          Gerador.wCampo(tcInt, 'AP171', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP172', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP173');
+          Gerador.wCampo(tcInt, 'AP174', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP175', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP176');
+          Gerador.wCampo(tcInt, 'AP177', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP178', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP179', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
@@ -895,60 +851,55 @@ begin
       Gerador.wCampo(tcStr, 'AP181', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP182', 'CpfOuCnpj        ', 01, 01, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP183');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP184', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP185', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP186', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP187', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP188', 'CEP            ', 01, 09, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP189', 'CodigoMunicipio', 01, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP183');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP184', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP185', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP186', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP187', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP188', 'CEP            ', 01, 09, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP189', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP190', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP191');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP191');
-
-          Gerador.Prefixo := 'obj1:';
-
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP192');
-            Gerador.wCampo(tcInt, 'AP193', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP194', 'Numero', 08, 09, 1, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP195');
-            Gerador.wCampo(tcInt, 'AP196', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP197', 'Numero', 08, 09, 1, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP198');
-            Gerador.wCampo(tcInt, 'AP199', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP200', 'Numero', 08, 09, 1, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP192');
+          Gerador.wCampo(tcInt, 'AP193', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP194', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP195');
+          Gerador.wCampo(tcInt, 'AP196', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP197', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP198');
+          Gerador.wCampo(tcInt, 'AP199', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP200', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP201', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
@@ -968,60 +919,55 @@ begin
       Gerador.wCampo(tcStr, 'AP203', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP204', 'CpfOuCnpj        ', 01, 01, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP205');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP206', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP207', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP208', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP209', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP210', 'CEP            ', 01, 09, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP211', 'CodigoMunicipio', 01, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP205');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP206', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP207', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP208', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP209', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP210', 'CEP            ', 01, 09, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP211', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP212', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP213');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP213');
-
-          Gerador.Prefixo := 'obj1:';
-
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP214');
-            Gerador.wCampo(tcInt, 'AP215', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP216', 'Numero', 08, 09, 1, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP217');
-            Gerador.wCampo(tcInt, 'AP218', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP219', 'Numero', 08, 09, 1, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP220');
-            Gerador.wCampo(tcInt, 'AP221', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP222', 'Numero', 08, 09, 1, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP214');
+          Gerador.wCampo(tcInt, 'AP215', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP216', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP217');
+          Gerador.wCampo(tcInt, 'AP218', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP219', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP220');
+          Gerador.wCampo(tcInt, 'AP221', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP222', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP223', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
@@ -1041,60 +987,55 @@ begin
       Gerador.wCampo(tcStr, 'AP225', 'NomeOuRazaoSocial', 01, 01, 0, NomeOuRazaoSocial);
       Gerador.wCampo(tcStr, 'AP226', 'CpfOuCnpj        ', 01, 01, 1, CpfOuCnpj);
 
-      with Endereco do
+      if Endereco.CodigoMunicipio > 0 then
       begin
-        if CodigoMunicipio > 0 then
-        begin
-          Gerador.wGrupo('Endereco', 'AP227');
-          Gerador.Prefixo := 'obj1:';
-          Gerador.wCampo(tcStr, 'AP228', 'Bairro         ', 01, 01, 0, Bairro);
-          Gerador.wCampo(tcStr, 'AP229', 'Rua            ', 01, 01, 0, Rua);
-          Gerador.wCampo(tcStr, 'AP230', 'Numero         ', 01, 01, 0, Numero);
-          Gerador.wCampo(tcStr, 'AP231', 'Complemento    ', 01, 01, 0, Complemento);
-          Gerador.wCampo(tcStr, 'AP232', 'CEP            ', 01, 09, 0, CEP);
-          Gerador.wCampo(tcInt, 'AP233', 'CodigoMunicipio', 01, 07, 1, CodigoMunicipio);
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Endereco');
-        end;
+        Gerador.wGrupo('Endereco', 'AP227');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampo(tcStr, 'AP228', 'Bairro         ', 01, 01, 0, Endereco.Bairro);
+        Gerador.wCampo(tcStr, 'AP229', 'Rua            ', 01, 01, 0, Endereco.Rua);
+        Gerador.wCampo(tcStr, 'AP230', 'Numero         ', 01, 01, 0, Endereco.Numero);
+        Gerador.wCampo(tcStr, 'AP231', 'Complemento    ', 01, 01, 0, Endereco.Complemento);
+        Gerador.wCampo(tcStr, 'AP232', 'CEP            ', 01, 09, 0, Endereco.CEP);
+        Gerador.wCampo(tcInt, 'AP233', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Endereco');
       end;
 
       Gerador.wCampo(tcStr, 'AP234', 'EMail', 01, 01, 0, EMail);
 
-      with Telefones do
+      if (Telefones.Celular.Numero > 0) or
+         (Telefones.Fixo.Numero > 0) or (Telefones.Fax.Numero > 0) then
       begin
-        if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+        Gerador.wGrupo('Telefones', 'AP235');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Telefones.Celular.Numero > 0 then
         begin
-          Gerador.wGrupo('Telefones', 'AP235');
-
-          Gerador.Prefixo := 'obj1:';
-
-          if Celular.Numero > 0 then
-          begin
-            Gerador.wGrupo('Celular', 'AP236');
-            Gerador.wCampo(tcInt, 'AP237', 'DDD   ', 01, 02, 1, Celular.DDD, '');
-            Gerador.wCampo(tcInt, 'AP238', 'Numero', 08, 09, 1, Celular.Numero, '');
-            Gerador.wGrupo('/Celular');
-          end;
-
-          if Fixo.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fixo', 'AP239');
-            Gerador.wCampo(tcInt, 'AP240', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
-            Gerador.wCampo(tcInt, 'AP241', 'Numero', 08, 09, 1, Fixo.Numero, '');
-            Gerador.wGrupo('/Fixo');
-          end;
-
-          if Fax.Numero > 0 then
-          begin
-            Gerador.wGrupo('Fax', 'AP242');
-            Gerador.wCampo(tcInt, 'AP243', 'DDD   ', 01, 02, 1, Fax.DDD, '');
-            Gerador.wCampo(tcInt, 'AP244', 'Numero', 08, 09, 1, Fax.Numero, '');
-            Gerador.wGrupo('/Fax');
-          end;
-
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('/Telefones');
+          Gerador.wGrupo('Celular', 'AP236');
+          Gerador.wCampo(tcInt, 'AP237', 'DDD   ', 01, 02, 1, Telefones.Celular.DDD, '');
+          Gerador.wCampo(tcInt, 'AP238', 'Numero', 08, 09, 1, Telefones.Celular.Numero, '');
+          Gerador.wGrupo('/Celular');
         end;
+
+        if Telefones.Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fixo', 'AP239');
+          Gerador.wCampo(tcInt, 'AP240', 'DDD   ', 01, 02, 1, Telefones.Fixo.DDD, '');
+          Gerador.wCampo(tcInt, 'AP241', 'Numero', 08, 09, 1, Telefones.Fixo.Numero, '');
+          Gerador.wGrupo('/Fixo');
+        end;
+
+        if Telefones.Fax.Numero > 0 then
+        begin
+          Gerador.wGrupo('Fax', 'AP242');
+          Gerador.wCampo(tcInt, 'AP243', 'DDD   ', 01, 02, 1, Telefones.Fax.DDD, '');
+          Gerador.wCampo(tcInt, 'AP244', 'Numero', 08, 09, 1, Telefones.Fax.Numero, '');
+          Gerador.wGrupo('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('/Telefones');
       end;
 
       Gerador.wCampo(tcStr, 'AP245', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)));
@@ -1104,7 +1045,7 @@ begin
   end;
 end;
 
-procedure TCIOTW_WexFrete.GerarVeiculos(xPrefixo: String);
+procedure TCIOTW_WexFrete.GerarVeiculos(const xPrefixo: String);
 var
   i: Integer;
   aPrefixo: string;
@@ -1146,6 +1087,7 @@ procedure TCIOTW_WexFrete.GerarViagemAdicViagem;
 var
   i, j: Integer;
   aPrefixo: string;
+  Item: TNotaFiscalCollectionItem;
 begin
   aPrefixo := Gerador.Prefixo;
   Gerador.Prefixo := 'adic:';
@@ -1170,20 +1112,17 @@ begin
       begin
         Gerador.wGrupo('Valores', 'AP19');
 
-        with Valores do
-        begin
-          Gerador.wCampo(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, TotalOperacao);
-          Gerador.wCampo(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, TotalViagem);
-          Gerador.wCampo(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, TotalDeAdiantamento);
-          Gerador.wCampo(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, TotalDeQuitacao);
-          Gerador.wCampo(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Combustivel);
-          Gerador.wCampo(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Pedagio);
-          Gerador.wCampo(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, OutrosCreditos);
-          Gerador.wCampo(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, JustificativaOutrosCreditos);
-          Gerador.wCampo(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Seguro);
-          Gerador.wCampo(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, OutrosDebitos);
-          Gerador.wCampo(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, JustificativaOutrosDebitos);
-        end;
+        Gerador.wCampo(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, Valores.TotalOperacao);
+        Gerador.wCampo(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, Valores.TotalViagem);
+        Gerador.wCampo(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, Valores.TotalDeAdiantamento);
+        Gerador.wCampo(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, Valores.TotalDeQuitacao);
+        Gerador.wCampo(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Valores.Combustivel);
+        Gerador.wCampo(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Valores.Pedagio);
+        Gerador.wCampo(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, Valores.OutrosCreditos);
+        Gerador.wCampo(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, Valores.JustificativaOutrosCreditos);
+        Gerador.wCampo(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Valores.Seguro);
+        Gerador.wCampo(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, Valores.OutrosDebitos);
+        Gerador.wCampo(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, Valores.JustificativaOutrosDebitos);
 
         Gerador.wGrupo('/Valores');
       end;
@@ -1192,21 +1131,19 @@ begin
 
       if TipoPagamento  = TransferenciaBancaria then
       begin
-        with InformacoesBancarias do
+        if (InformacoesBancarias.InstituicaoBancaria <> '') or
+           (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
         begin
-          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-          begin
-            Gerador.wGrupo('InformacoesBancarias', 'AP32');
+          Gerador.wGrupo('InformacoesBancarias', 'AP32');
 
-            Gerador.wCampo(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria);
-            Gerador.wCampo(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, Agencia);
-            Gerador.wCampo(tcStr, 'AP35', 'Conta              ', 01, 01, 0, Conta);
-            Gerador.wCampo(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+          Gerador.wCampo(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria);
+          Gerador.wCampo(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia);
+          Gerador.wCampo(tcStr, 'AP35', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta);
+          Gerador.wCampo(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-            Gerador.wGrupo('/InformacoesBancarias');
-          end;
+          Gerador.wGrupo('/InformacoesBancarias');
         end;
-      end;  
+      end;
 
       if NotasFiscais.Count > 0 then
       begin
@@ -1214,33 +1151,31 @@ begin
 
         for J := 0 to NotasFiscais.Count -1 do
         begin
-          with NotasFiscais.Items[J] do
+          Item := NotasFiscais[J];
+          Gerador.wGrupo('NotasFiscais', 'AP38');
+          Gerador.wCampo(tcStr, 'AP39', 'Numero                            ', 01, 01, 0, Item.Numero);
+          Gerador.wCampo(tcStr, 'AP40', 'Serie                             ', 01, 01, 0, Item.Serie);
+          Gerador.wCampo(tcDat, 'AP41', 'Data                              ', 01, 01, 1, Item.Data);
+          Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                        ', 01, 01, 1, Item.ValorTotal);
+          Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade       ', 01, 01, 1, Item.ValorDaMercadoriaPorUnidade);
+          Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga            ', 01, 04, 1, Item.CodigoNCMNaturezaCarga);
+          Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria             ', 01, 01, 0, Item.DescricaoDaMercadoria);
+          Gerador.Prefixo := 'obj:';
+          Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria       ', 01, 01, 1, TpUnMedMercToStr(Item.UnidadeDeMedidaDaMercadoria));
+          Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(Item.TipoDeCalculo));
+          Gerador.Prefixo := 'adic:';
+          Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, Item.ValorDoFretePorUnidadeDeMercadoria);
+          Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, Item.QuantidadeDaMercadoriaNoEmbarque);
+
+          if Item.ToleranciaDePerdaDeMercadoria.Valor > 0 then
           begin
-            Gerador.wGrupo('NotasFiscais', 'AP38');
-            Gerador.wCampo(tcStr, 'AP39', 'Numero                            ', 01, 01, 0, Numero);
-            Gerador.wCampo(tcStr, 'AP40', 'Serie                             ', 01, 01, 0, Serie);
-            Gerador.wCampo(tcDat, 'AP41', 'Data                              ', 01, 01, 1, Data);
-            Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                        ', 01, 01, 1, ValorTotal);
-            Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade       ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
-            Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga            ', 01, 04, 1, CodigoNCMNaturezaCarga);
-            Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria             ', 01, 01, 0, DescricaoDaMercadoria);
-            Gerador.Prefixo := 'obj:';
-            Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria       ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-            Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-            Gerador.Prefixo := 'adic:';
-            Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-            Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
-
-            if ToleranciaDePerdaDeMercadoria.Valor > 0 then
-            begin
-              Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP50');
-              Gerador.wCampo(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-              Gerador.wCampo(tcDe2, 'AP52', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
-              Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
-            end;
-
-            Gerador.wGrupo('/NotasFiscais');
+            Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP50');
+            Gerador.wCampo(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(Item.ToleranciaDePerdaDeMercadoria.Tipo));
+            Gerador.wCampo(tcDe2, 'AP52', 'Valor', 01, 01, 1, Item.ToleranciaDePerdaDeMercadoria.Valor);
+            Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
           end;
+
+          Gerador.wGrupo('/NotasFiscais');
         end;
       end;
     end;
@@ -1291,22 +1226,20 @@ begin
       // Não deve ser preenchido para TipoPagamento eFRETE.
       if TipoPagamento  = TransferenciaBancaria then
       begin
-        with InformacoesBancarias do
+        if (InformacoesBancarias.InstituicaoBancaria <> '') or
+           (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
         begin
-          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-          begin
-            Gerador.Prefixo := 'obj:';
-            Gerador.wGrupo('InformacoesBancarias', 'AP75');
+          Gerador.Prefixo := 'obj:';
+          Gerador.wGrupo('InformacoesBancarias', 'AP75');
 
-            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
-            Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+          Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+          Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+          Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta, 'Conta do contratado com dígito. ');
+          Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-            Gerador.wGrupo('/InformacoesBancarias');
-          end;
+          Gerador.wGrupo('/InformacoesBancarias');
         end;
-      end;  
+      end;
 
       Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP80', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
@@ -1357,20 +1290,18 @@ begin
 
       // Preenchimento obrigatório para o TipoPagamento TransferenciaBancaria.
       // Não deve ser preenchido para TipoPagamento eFRETE.
-      with InformacoesBancarias do
+      if (InformacoesBancarias.InstituicaoBancaria <> '') or
+         (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
       begin
-        if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-        begin
-          Gerador.Prefixo := 'obj:';
-          Gerador.wGrupo('InformacoesBancarias', 'AP75');
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupo('InformacoesBancarias', 'AP75');
 
-          Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-          Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-          Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
-          Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+        Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+        Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+        Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta, 'Conta do contratado com dígito. ');
+        Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-          Gerador.wGrupo('/InformacoesBancarias');
-        end;
+        Gerador.wGrupo('/InformacoesBancarias');
       end;
 
       Gerador.Prefixo := 'adic:';
@@ -1391,6 +1322,7 @@ procedure TCIOTW_WexFrete.GerarViagemEncerramento;
 var
   i, j: Integer;
   aPrefixo: string;
+  Item : TNotaFiscalCollectionItem;
 begin
   if CIOT.EncerrarOperacao.Viagens.Count > 0 then
   begin
@@ -1417,39 +1349,34 @@ begin
         begin
           Gerador.wGrupo('Valores', 'AP19');
 
-          with Valores do
-          begin
-            Gerador.wCampo(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, TotalOperacao);
-            Gerador.wCampo(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, TotalViagem);
-            Gerador.wCampo(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, TotalDeAdiantamento);
-            Gerador.wCampo(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, TotalDeQuitacao);
-            Gerador.wCampo(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Combustivel);
-            Gerador.wCampo(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Pedagio);
-            Gerador.wCampo(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, OutrosCreditos);
-            Gerador.wCampo(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, JustificativaOutrosCreditos);
-            Gerador.wCampo(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Seguro);
-            Gerador.wCampo(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, OutrosDebitos);
-            Gerador.wCampo(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, JustificativaOutrosDebitos);
-          end;
+          Gerador.wCampo(tcDe2, 'AP20', 'TotalOperacao              ', 01, 01, 1, Valores.TotalOperacao);
+          Gerador.wCampo(tcDe2, 'AP21', 'TotalViagem                ', 01, 01, 1, Valores.TotalViagem);
+          Gerador.wCampo(tcDe2, 'AP22', 'TotalDeAdiantamento        ', 01, 01, 1, Valores.TotalDeAdiantamento);
+          Gerador.wCampo(tcDe2, 'AP23', 'TotalDeQuitacao            ', 01, 01, 1, Valores.TotalDeQuitacao);
+          Gerador.wCampo(tcDe2, 'AP24', 'Combustivel                ', 01, 01, 1, Valores.Combustivel);
+          Gerador.wCampo(tcDe2, 'AP25', 'Pedagio                    ', 01, 01, 1, Valores.Pedagio);
+          Gerador.wCampo(tcDe2, 'AP26', 'OutrosCreditos             ', 01, 01, 1, Valores.OutrosCreditos);
+          Gerador.wCampo(tcStr, 'AP27', 'JustificativaOutrosCreditos', 01, 01, 0, Valores.JustificativaOutrosCreditos);
+          Gerador.wCampo(tcDe2, 'AP28', 'Seguro                     ', 01, 01, 1, Valores.Seguro);
+          Gerador.wCampo(tcDe2, 'AP29', 'OutrosDebitos              ', 01, 01, 1, Valores.OutrosDebitos);
+          Gerador.wCampo(tcStr, 'AP30', 'JustificativaOutrosDebitos ', 01, 01, 0, Valores.JustificativaOutrosDebitos);
 
           Gerador.wGrupo('/Valores');
         end;
 
         Gerador.wCampo(tcStr, 'AP31', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento));
 
-        with InformacoesBancarias do
+        if (InformacoesBancarias.InstituicaoBancaria <> '') or
+           (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
         begin
-          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-          begin
-            Gerador.wGrupo('InformacoesBancarias', 'AP32');
+          Gerador.wGrupo('InformacoesBancarias', 'AP32');
 
-            Gerador.wCampo(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria);
-            Gerador.wCampo(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, Agencia);
-            Gerador.wCampo(tcStr, 'AP35', 'Conta              ', 01, 01, 0, Conta);
-            Gerador.wCampo(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+          Gerador.wCampo(tcStr, 'AP33', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria);
+          Gerador.wCampo(tcStr, 'AP34', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia);
+          Gerador.wCampo(tcStr, 'AP35', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta);
+          Gerador.wCampo(tcStr, 'AP36', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-            Gerador.wGrupo('/InformacoesBancarias');
-          end;
+          Gerador.wGrupo('/InformacoesBancarias');
         end;
 
         if NotasFiscais.Count > 0 then
@@ -1459,32 +1386,31 @@ begin
 
           for J := 0 to NotasFiscais.Count -1 do
           begin
-            with NotasFiscais.Items[J] do
+            Item := NotasFiscais[J];
+
+            Gerador.wGrupo('NotaFiscal', 'AP38');
+            Gerador.wCampo(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Item.Numero);
+            Gerador.wCampo(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Item.Serie);
+            Gerador.wCampo(tcDat, 'AP41', 'Data                               ', 01, 01, 1, Item.Data);
+            Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                         ', 01, 01, 1, Item.ValorTotal);
+            Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade        ', 01, 01, 1, Item.ValorDaMercadoriaPorUnidade);
+            Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga             ', 01, 04, 1, Item.CodigoNCMNaturezaCarga);
+            Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria              ', 01, 01, 0, Item.DescricaoDaMercadoria);
+            Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria        ', 01, 01, 1, TpUnMedMercToStr(Item.UnidadeDeMedidaDaMercadoria));
+            Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                      ', 01, 01, 1, TpVgTipoCalculoToStr(Item.TipoDeCalculo));
+            Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria ', 01, 01, 1, Item.ValorDoFretePorUnidadeDeMercadoria);
+            Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque   ', 01, 01, 1, Item.QuantidadeDaMercadoriaNoEmbarque);
+            Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, Item.QuantidadeDaMercadoriaNoDesembarque);
+
+            if Item.ToleranciaDePerdaDeMercadoria.Valor > 0 then
             begin
-              Gerador.wGrupo('NotaFiscal', 'AP38');
-              Gerador.wCampo(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Numero);
-              Gerador.wCampo(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Serie);
-              Gerador.wCampo(tcDat, 'AP41', 'Data                               ', 01, 01, 1, Data);
-              Gerador.wCampo(tcDe2, 'AP42', 'ValorTotal                         ', 01, 01, 1, ValorTotal);
-              Gerador.wCampo(tcDe4, 'AP43', 'ValorDaMercadoriaPorUnidade        ', 01, 01, 1, ValorDaMercadoriaPorUnidade);
-              Gerador.wCampo(tcInt, 'AP44', 'CodigoNCMNaturezaCarga             ', 01, 04, 1, CodigoNCMNaturezaCarga);
-              Gerador.wCampo(tcStr, 'AP45', 'DescricaoDaMercadoria              ', 01, 01, 0, DescricaoDaMercadoria);
-              Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria        ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-              Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                      ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-              Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria ', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-              Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque   ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
-              Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, QuantidadeDaMercadoriaNoDesembarque);
-
-              if ToleranciaDePerdaDeMercadoria.Valor > 0 then
-              begin
-                Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP50');
-                Gerador.wCampo(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-                Gerador.wCampo(tcDe2, 'AP52', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
-                Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
-              end;
-
-              Gerador.wGrupo('/NotaFiscal');
+              Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP50');
+              Gerador.wCampo(tcStr, 'AP51', 'Tipo ', 01, 01, 1, TpProporcaoToStr(Item.ToleranciaDePerdaDeMercadoria.Tipo));
+              Gerador.wCampo(tcDe2, 'AP52', 'Valor', 01, 01, 1, Item.ToleranciaDePerdaDeMercadoria.Valor);
+              Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
             end;
+
+            Gerador.wGrupo('/NotaFiscal');
           end;
           Gerador.wGrupo('/NotasFiscais');
         end;
@@ -1531,20 +1457,18 @@ begin
 
         // Preenchimento obrigatório para o TipoPagamento TransferenciaBancaria.
         // Não deve ser preenchido para TipoPagamento eFRETE.
-        with InformacoesBancarias do
+        if (InformacoesBancarias.InstituicaoBancaria <> '') or
+           (InformacoesBancarias.Agencia <> '') or (InformacoesBancarias.Conta <> '') then
         begin
-          if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
-          begin
-            Gerador.wGrupo('InformacoesBancarias', 'AP75');
-            Gerador.Prefixo := 'obj:';
+          Gerador.wGrupo('InformacoesBancarias', 'AP75');
+          Gerador.Prefixo := 'obj:';
 
-            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
-            Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
+          Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InformacoesBancarias.InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+          Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, InformacoesBancarias.Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+          Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, InformacoesBancarias.Conta, 'Conta do contratado com dígito. ');
+          Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(InformacoesBancarias.TipoConta));
 
-            Gerador.wGrupo('/InformacoesBancarias');
-          end;
+          Gerador.wGrupo('/InformacoesBancarias');
         end;
 
         Gerador.Prefixo := 'enc:';
@@ -1801,10 +1725,7 @@ begin
 
             for i := 0 to ObservacoesAoTransportador.Count -1 do
             begin
-              with ObservacoesAoTransportador.Items[i] do
-              begin
-                Gerador.wCampo(tcStr, 'AP250', 'string', 01, 01, 1, Mensagem);
-              end;
+              Gerador.wCampo(tcStr, 'AP250', 'string', 01, 01, 1, ObservacoesAoTransportador[i].Mensagem);
             end;
 
             Gerador.wGrupo('/ObservacoesAoTransportador');
@@ -1816,10 +1737,7 @@ begin
 
             for i := 0 to ObservacoesAoCredenciado.Count -1 do
             begin
-              with ObservacoesAoCredenciado.Items[i] do
-              begin
-                Gerador.wCampo(tcStr, 'AP252', 'string', 01, 01, 1, Mensagem);
-              end;
+              Gerador.wCampo(tcStr, 'AP252', 'string', 01, 01, 1, ObservacoesAoCredenciado[i].Mensagem);
             end;
 
             Gerador.wGrupo('/ObservacoesAoCredenciado');

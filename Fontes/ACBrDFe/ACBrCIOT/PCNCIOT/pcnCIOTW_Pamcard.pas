@@ -79,7 +79,6 @@ type
 
     property VersaoDF: TVersaoCIOT   read FVersaoDF write FVersaoDF;
 
-    function ObterNomeArquivo: String; override;
     function GerarXml: Boolean; override;
   end;
 
@@ -116,11 +115,6 @@ implementation
 constructor TCIOTW_Pamcard.Create(ACIOTW: TCIOTW);
 begin
   inherited Create(ACIOTW);
-end;
-
-function TCIOTW_Pamcard.ObterNomeArquivo: String;
-begin
-//  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
 procedure TCIOTW_Pamcard.GerarSubContratante;
@@ -458,12 +452,9 @@ begin
 
       //Preenchimento obrigatório para o TipoPagamento TransferenciaBancaria. Não deve ser preenchido para TipoPagamento eFRETE.
       Gerador.wGrupo('InformacoesBancarias '+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP75');
-      with InformacoesBancarias do
-      begin
-        Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 1, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-        Gerador.wCampo(tcStr, 'AP77', 'Agencia', 01, 01, 1, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-        Gerador.wCampo(tcStr, 'AP78', 'Conta', 01, 01, 1, Conta, 'Conta do contratado com dígito. ');
-      end;
+      Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 1, InformacoesBancarias.InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+      Gerador.wCampo(tcStr, 'AP77', 'Agencia', 01, 01, 1, InformacoesBancarias.Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+      Gerador.wCampo(tcStr, 'AP78', 'Conta', 01, 01, 1, InformacoesBancarias.Conta, 'Conta do contratado com dígito. ');
       Gerador.wGrupo('/InformacoesBancarias');
 
       Gerador.wCampo(tcStr, 'AP79', 'InformacaoAdicional', 01, 01, 1, InformacaoAdicional);
@@ -491,6 +482,7 @@ end;
 procedure TCIOTW_Pamcard.GerarViagem;
 var
   i, j: Integer;
+  Item: TNotaFiscalCollectionItem;
 begin
   Gerador.wGrupo('Viagens '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP16');
 
@@ -503,20 +495,17 @@ begin
       Gerador.wCampo(tcInt, 'AP19', 'CodigoMunicipioDestino', 01, 07, 1, CodigoMunicipioDestino);
 
       Gerador.wGrupo('Valores '+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP20');
-      with Valores do
-      begin
-        Gerador.wCampo(tcDe2, 'AP21', 'TotalOperacao', 01, 01, 1, TotalOperacao);
-        Gerador.wCampo(tcDe2, 'AP22', 'TotalViagem', 01, 01, 1, TotalViagem);
-        Gerador.wCampo(tcDe2, 'AP23', 'TotalDeAdiantamento', 01, 01, 1, TotalDeAdiantamento);
-        Gerador.wCampo(tcDe2, 'AP24', 'TotalDeQuitacao', 01, 01, 1, TotalDeQuitacao);
-        Gerador.wCampo(tcDe2, 'AP25', 'Combustivel', 01, 01, 1, Combustivel);
-        Gerador.wCampo(tcDe2, 'AP26', 'Pedagio', 01, 01, 1, Pedagio);
-        Gerador.wCampo(tcDe2, 'AP27', 'OutrosCreditos', 01, 01, 1, OutrosCreditos);
-        Gerador.wCampo(tcStr, 'AP28', 'JustificativaOutrosCreditos', 01, 01, 1, JustificativaOutrosCreditos);
-        Gerador.wCampo(tcDe2, 'AP29', 'Seguro', 01, 01, 1, Seguro);
-        Gerador.wCampo(tcDe2, 'AP30', 'OutrosDebitos', 01, 01, 1, OutrosDebitos);
-        Gerador.wCampo(tcStr, 'AP31', 'JustificativaOutrosDebitos', 01, 01, 1, JustificativaOutrosDebitos);
-      end;
+      Gerador.wCampo(tcDe2, 'AP21', 'TotalOperacao', 01, 01, 1, Valores.TotalOperacao);
+      Gerador.wCampo(tcDe2, 'AP22', 'TotalViagem', 01, 01, 1, Valores.TotalViagem);
+      Gerador.wCampo(tcDe2, 'AP23', 'TotalDeAdiantamento', 01, 01, 1, Valores.TotalDeAdiantamento);
+      Gerador.wCampo(tcDe2, 'AP24', 'TotalDeQuitacao', 01, 01, 1, Valores.TotalDeQuitacao);
+      Gerador.wCampo(tcDe2, 'AP25', 'Combustivel', 01, 01, 1, Valores.Combustivel);
+      Gerador.wCampo(tcDe2, 'AP26', 'Pedagio', 01, 01, 1, Valores.Pedagio);
+      Gerador.wCampo(tcDe2, 'AP27', 'OutrosCreditos', 01, 01, 1, Valores.OutrosCreditos);
+      Gerador.wCampo(tcStr, 'AP28', 'JustificativaOutrosCreditos', 01, 01, 1, Valores.JustificativaOutrosCreditos);
+      Gerador.wCampo(tcDe2, 'AP29', 'Seguro', 01, 01, 1, Valores.Seguro);
+      Gerador.wCampo(tcDe2, 'AP30', 'OutrosDebitos', 01, 01, 1, Valores.OutrosDebitos);
+      Gerador.wCampo(tcStr, 'AP31', 'JustificativaOutrosDebitos', 01, 01, 1, Valores.JustificativaOutrosDebitos);
       Gerador.wGrupo('/Valores');
 
       Gerador.wCampo(tcStr, 'AP32', 'TipoPagamento' +NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
@@ -525,51 +514,49 @@ begin
 
       for J := 0 to NotasFiscais.Count -1 do
       begin
-        with NotasFiscais.Items[J] do
+        Item := NotasFiscais[J];
+        Gerador.wGrupo('NotaFiscal', 'AP34');
+        Gerador.wCampo(tcStr, 'AP35', 'Numero', 01, 01, 1, Item.Numero);
+        Gerador.wCampo(tcStr, 'AP36', 'Serie', 01, 01, 1, Item.Serie);
+        Gerador.wCampo(tcDat, 'AP37', 'Data', 01, 01, 1, Item.Data);
+        Gerador.wCampo(tcDe2, 'AP38', 'ValorTotal', 01, 01, 1, Item.ValorTotal);
+        Gerador.wCampo(tcDe4, 'AP39', 'ValorDaMercadoriaPorUnidade', 01, 01, 1, Item.ValorDaMercadoriaPorUnidade);
+        Gerador.wCampo(tcInt, 'AP40', 'CodigoNCMNaturezaCarga', 01, 04, 1, Item.CodigoNCMNaturezaCarga);
+        Gerador.wCampo(tcStr, 'AP41', 'DescricaoDaMercadoria', 01, 01, 1, Item.DescricaoDaMercadoria, 'Descrição adicional ao código NCM.');
+        Gerador.wCampo(tcStr, 'AP42', 'UnidadeDeMedidaDaMercadoria', 01, 01, 1, TpUnMedMercToStr(Item.UnidadeDeMedidaDaMercadoria));
+        Gerador.wCampo(tcStr, 'AP43', 'TipoDeCalculo', 01, 01, 1, TpVgTipoCalculoToStr(Item.TipoDeCalculo));
+        Gerador.wCampo(tcDe4, 'AP44', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, Item.ValorDoFretePorUnidadeDeMercadoria);
+        Gerador.wCampo(tcDe4, 'AP45', 'QuantidadeDaMercadoriaNoEmbarque', 01, 01, 1, Item.QuantidadeDaMercadoriaNoEmbarque);
+
+        Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP46');
+        Gerador.wCampo(tcStr, 'AP47', 'Tipo', 01, 01, 1, TpProporcaoToStr(Item.ToleranciaDePerdaDeMercadoria.Tipo));
+        Gerador.wCampo(tcDe2, 'AP48', 'Valor', 01, 01, 1, Item.ToleranciaDePerdaDeMercadoria.Valor);
+        Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
+
+        if Item.DiferencaDeFrete.Tipo <> SemDiferenca then
         begin
-          Gerador.wGrupo('NotaFiscal', 'AP34');
-          Gerador.wCampo(tcStr, 'AP35', 'Numero', 01, 01, 1, Numero);
-          Gerador.wCampo(tcStr, 'AP36', 'Serie', 01, 01, 1, Serie);
-          Gerador.wCampo(tcDat, 'AP37', 'Data', 01, 01, 1, Data);
-          Gerador.wCampo(tcDe2, 'AP38', 'ValorTotal', 01, 01, 1, ValorTotal);
-          Gerador.wCampo(tcDe4, 'AP39', 'ValorDaMercadoriaPorUnidade', 01, 01, 1, ValorDaMercadoriaPorUnidade);
-          Gerador.wCampo(tcInt, 'AP40', 'CodigoNCMNaturezaCarga', 01, 04, 1, CodigoNCMNaturezaCarga);
-          Gerador.wCampo(tcStr, 'AP41', 'DescricaoDaMercadoria', 01, 01, 1, DescricaoDaMercadoria, 'Descrição adicional ao código NCM.');
-          Gerador.wCampo(tcStr, 'AP42', 'UnidadeDeMedidaDaMercadoria', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-          Gerador.wCampo(tcStr, 'AP43', 'TipoDeCalculo', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-          Gerador.wCampo(tcDe4, 'AP44', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-          Gerador.wCampo(tcDe4, 'AP45', 'QuantidadeDaMercadoriaNoEmbarque', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
+          Gerador.wGrupo('DiferencaDeFrete', 'AP49');
+          Gerador.wCampo(tcStr, 'AP50', 'Tipo', 01, 01, 1, TpDifFreteToStr(Item.DiferencaDeFrete.Tipo));
+          Gerador.wCampo(tcStr, 'AP51', 'Base', 01, 01, 1, TpDiferencaFreteBCToStr(Item.DiferencaDeFrete.Base));
 
-          Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP46');
-          Gerador.wCampo(tcStr, 'AP47', 'Tipo', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-          Gerador.wCampo(tcDe2, 'AP48', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
-          Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
+          Gerador.wGrupo('Tolerancia', 'AP52');
+          Gerador.wCampo(tcStr, 'AP53', 'Tipo', 01, 01, 1, TpProporcaoToStr(Item.DiferencaDeFrete.Tolerancia.Tipo));
+          Gerador.wCampo(tcDe2, 'AP54', 'Valor', 01, 01, 1, Item.DiferencaDeFrete.Tolerancia.Valor);
+          Gerador.wGrupo('/Tolerancia');
 
-          if DiferencaDeFrete.Tipo <> SemDiferenca then
-          begin
-            Gerador.wGrupo('DiferencaDeFrete', 'AP49');
-            Gerador.wCampo(tcStr, 'AP50', 'Tipo', 01, 01, 1, TpDifFreteToStr(DiferencaDeFrete.Tipo));
-            Gerador.wCampo(tcStr, 'AP51', 'Base', 01, 01, 1, TpDiferencaFreteBCToStr(DiferencaDeFrete.Base));
+          Gerador.wGrupo('MargemGanho', 'AP55');
+          Gerador.wCampo(tcStr, 'AP56', 'Tipo', 01, 01, 1, TpProporcaoToStr(Item.DiferencaDeFrete.MargemGanho.Tipo));
+          Gerador.wCampo(tcDe2, 'AP57', 'Valor', 01, 01, 1, Item.DiferencaDeFrete.MargemGanho.Valor);
+          Gerador.wGrupo('/MargemGanho');
 
-            Gerador.wGrupo('Tolerancia', 'AP52');
-            Gerador.wCampo(tcStr, 'AP53', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.Tolerancia.Tipo));
-            Gerador.wCampo(tcDe2, 'AP54', 'Valor', 01, 01, 1, DiferencaDeFrete.Tolerancia.Valor);
-            Gerador.wGrupo('/Tolerancia');
+          Gerador.wGrupo('MargemPerda', 'AP58');
+          Gerador.wCampo(tcStr, 'AP59', 'Tipo', 01, 01, 1, TpProporcaoToStr(Item.DiferencaDeFrete.MargemPerda.Tipo));
+          Gerador.wCampo(tcDe2, 'AP60', 'Valor', 01, 01, 1, Item.DiferencaDeFrete.MargemPerda.Valor);
+          Gerador.wGrupo('/MargemPerda');
 
-            Gerador.wGrupo('MargemGanho', 'AP55');
-            Gerador.wCampo(tcStr, 'AP56', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemGanho.Tipo));
-            Gerador.wCampo(tcDe2, 'AP57', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemGanho.Valor);
-            Gerador.wGrupo('/MargemGanho');
-
-            Gerador.wGrupo('MargemPerda', 'AP58');
-            Gerador.wCampo(tcStr, 'AP59', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemPerda.Tipo));
-            Gerador.wCampo(tcDe2, 'AP60', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemPerda.Valor);
-            Gerador.wGrupo('/MargemPerda');
-
-            Gerador.wGrupo('/DiferencaDeFrete');
-          end;
-          Gerador.wGrupo('/NotaFiscal');
+          Gerador.wGrupo('/DiferencaDeFrete');
         end;
+        Gerador.wGrupo('/NotaFiscal');
       end;
       Gerador.wGrupo('/NotasFiscais');
     end;

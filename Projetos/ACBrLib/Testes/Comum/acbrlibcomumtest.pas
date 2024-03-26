@@ -43,17 +43,14 @@ type
 
   { TACbrLibRespostaDescendenteSimples }
 
-  TACbrLibRespostaDescendenteSimples = class(TACBrLibResposta)
+  TACbrLibRespostaDescendenteSimples = class(TACBrLibRespostaBase)
   private
     FFonte: TFont;
-    FFs: TFontStyle;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
     destructor Destroy; override;
   published
-    property Fs: TFontStyle read FFs write FFs;
     property Fonte: TFont read FFonte write FFonte;
-
   end;
 
   TACBrLibResposta_Testes= class(TTestCase)
@@ -70,14 +67,12 @@ uses IniFiles;
 constructor TACbrLibRespostaDescendenteSimples.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo);
 begin
-  inherited;
   FFonte := TFont.Create;
 end;
 
 destructor TACbrLibRespostaDescendenteSimples.Destroy;
 begin
   FFonte.Free;
-  inherited Destroy;
 end;
 
 procedure TACBrLibResposta_Testes.GravarIni_TesteFonte;
@@ -91,8 +86,8 @@ begin
   acrds := TACbrLibRespostaDescendenteSimples.Create('Sessao', resINI);
   try
     acrds.Fonte.Name := 'Arial';
-    acrds.Fonte.Style := [fsStrikeOut, fsItalic];
-    acrds.Fs := fsUnderline;
+    acrds.Fonte.Pitch := fpFixed;
+    acrds.Fonte.Size := 8;
     Resultado := acrds.Gerar;
   finally
     acrds.Free;
@@ -104,12 +99,11 @@ begin
       STeste := AIni.ReadString('Fonte', 'Name', '');
       CheckEquals('Arial', STeste, 'Falhou Fonte.Name!');
 
-      STeste := AIni.ReadString('Fonte', 'Style', '');
-      CheckEquals('[1,3]', STeste, 'Falhou Fonte.Style!');
+      STeste := AIni.ReadString('Fonte', 'Pitch', '');
+      CheckEquals('2', STeste, 'Falhou Fonte.Pitch (enumerado)!');
 
-      ITeste := AIni.ReadInt64('Sessao', 'Fs', -1);
-      CheckEquals(2, ITeste, 'Falhou Fs (enumerado).');
-
+      ITeste := AIni.ReadInt64('Fonte', 'Size', -1);
+      CheckEquals(8, ITeste, 'Falhou Fonte.Size !');
     finally
       AIni.Free;
     end;

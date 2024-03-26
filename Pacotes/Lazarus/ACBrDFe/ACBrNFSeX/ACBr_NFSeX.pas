@@ -120,7 +120,9 @@ uses
   Virtual.LerXml, Virtual.Provider, WebFisco.GravarXml, WebFisco.LerXml, 
   WebFisco.Provider, WebISS.GravarXml, WebISS.LerXml, WebISS.Provider, 
   PRODAUB.GravarXml, PRODAUB.LerXml, PRODAUB.Provider, Isaneto.GravarXml, 
-  Isaneto.LerXml, Isaneto.Provider, LazarusPackageIntf;
+  Isaneto.LerXml, Isaneto.Provider, Elmar.GravarXml, Elmar.LerXml, 
+  Elmar.Provider, 
+  LazarusPackageIntf;
 
 implementation
 

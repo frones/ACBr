@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="417">
+    <Files Count="420">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1683,6 +1683,18 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Isaneto.Provider.pas"/>
         <UnitName Value="Isaneto.Provider"/>
       </Item417>
+      <Item418>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Elmar.GravarXml.pas"/>
+        <UnitName Value="Elmar.GravarXml"/>
+      </Item418>
+      <Item419>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Elmar.LerXml.pas"/>
+        <UnitName Value="Elmar.LerXml"/>
+      </Item419>
+      <Item420>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Elmar.Provider.pas"/>
+        <UnitName Value="Elmar.Provider"/>
+      </Item420>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

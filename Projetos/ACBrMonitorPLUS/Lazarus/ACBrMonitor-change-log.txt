@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/24
+#TK-5264 Removido a mensagem q estava hardcoded no componente. por isso nao passava pela validacao da msg por UF
+https://www.projetoacbr.com.br/forum/topic/76979-impress%C3%A3o-mfe-ceara-sua-nota-tem-valor/
+Daniel de Morais InfoCotidiano
+
+25/03/24
+#TK-4789 Removido Integrador (CE) do monitor 
+Daniel de Morais InfoCotidiano
+
 22/03/2024
 -- DoACBrCTeUnit --
 [*] Adiciona validação do parâmetro de Impressão para imprimir no comando EnviarCTe.

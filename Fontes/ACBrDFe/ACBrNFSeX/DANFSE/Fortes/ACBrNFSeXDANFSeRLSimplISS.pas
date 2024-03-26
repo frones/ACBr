@@ -701,8 +701,8 @@ var
 begin
   inherited;
 
-  Detalhar := ACBrNFSe.Provider.ConfigGeral.DetalharServico;
-
+  //Detalhar := ACBrNFSe.Provider.ConfigGeral.DetalharServico;
+  Detalhar := fpDANFSe.DetalharServico;
   RLNFSe.Title := 'NFS-e: ' + fpNFSe.Numero;
   TDFeReportFortes.AjustarMargem(RLNFSe, fpDANFSe);
   rlbItens.Visible := not Detalhar;

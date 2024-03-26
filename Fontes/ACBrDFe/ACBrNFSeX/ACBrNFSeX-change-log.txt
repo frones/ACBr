@@ -43,8 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2024
+-- ACBrNFSeXDANFSeRLSimplISS --
+[*] Alteração visando usar a propriedade DetalharServico.
+  Por: Felipe Aron
 -- SmarAPD --
-[+] Incluído a propridade para assinar o XML do pedido de Consulta ao Lote 
+[+] Incluído a propriedade para assinar o XML do pedido de Consulta ao Lote 
     na versão 2.03
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --

@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2024
+-- ACBrBancoItau --
+[-]TK-5164 Removido uppercase do registro 3 ref. aos dados para gerar qrCode
+https://www.projetoacbr.com.br/forum/topic/76549-itau-bolecode-linha-da-chave-pix-com-uppercase/
+  Por: Daniel Morais InfoCotidiano
+
+
 19/03/2024
 -- ACBrBoletoRet_Sicredi_APIV2 --
 [*]TK-5239 Tratamento da propriedade qrCode, anexado na TK os retornos em producao. 

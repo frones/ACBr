@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/03/2024
+-- Diversos --
+[+] Implementado o provedor Elmar (versão 2.02 da ABRASF) que atende a cidade 
+    de Guarabira/PB. Devemos gerar o XML de envio do Lote, salvar em disco e 
+    por fim através do portal importar o XML.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2 --
 [*] Adiciona nas rotinas de tratamento de retorno das consultas que devolvem NFSe, a leitura da informação de cancelamento e substituição das NFSes segundo layout ABRASF.
   Por: Diego Folieni

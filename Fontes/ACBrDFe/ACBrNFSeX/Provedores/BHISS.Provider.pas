@@ -231,11 +231,8 @@ begin
   begin
     ConsultarNFSe.DocElemento := 'ConsultarNfseFaixaEnvio';
 
-    with GerarNFSe do
-    begin
-      InfElemento := 'LoteRps';
-      DocElemento := 'GerarNfseEnvio';
-    end;
+    GerarNFSe.InfElemento := 'LoteRps';
+    GerarNFSe.DocElemento := 'GerarNfseEnvio';
 
     DadosCabecalho := GetCabecalho('');
   end;

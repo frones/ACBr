@@ -165,13 +165,10 @@ begin
 
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarLote := True;
-      ConsultarLinkNfse := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarLinkNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   with ConfigAssinar do
@@ -185,18 +182,12 @@ begin
 
   with ConfigMsgDados do
   begin
-    with LoteRps do
-    begin
-      InfElemento := 'nfd';
-      DocElemento := 'tbnfd';
-    end;
+    LoteRps.InfElemento := 'nfd';
+    LoteRps.DocElemento := 'tbnfd';
 
-    with CancelarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'nfdEntradaCancelar';
-      DocElemento := 'nfd';
-    end;
+    CancelarNFSe.xmlns := '';
+    CancelarNFSe.InfElemento := 'nfdEntradaCancelar';
+    CancelarNFSe.DocElemento := 'nfd';
   end;
 
   // Os schemas que se encontram na pasta SmarAPD/Proprio não é padrão para

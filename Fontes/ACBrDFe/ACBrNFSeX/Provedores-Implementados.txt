@@ -37,6 +37,7 @@ eGoverneISS          1.00  06/09/2022
 eISS                 1.00
 EL                   1.00
 EL                   2.04
+Elmar                2.02
 EloTech              2.03  10/08/2022
 Equiplano            1.00  22/11/2022
 eReceita             2.02

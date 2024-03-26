@@ -96,6 +96,7 @@ uses
   Desenvolve.Provider,
   Digifred.Provider,
   DSF.Provider,
+  Elmar.Provider,
   EloTech.Provider,
   eReceita.Provider,
   Etherium.Provider,
@@ -307,6 +308,8 @@ begin
             Result := nil;
           end;
         end;
+
+      proElmar:  Result := TACBrNFSeProviderElmar202.Create(ACBrNFSe);
 
       proEloTech:  Result := TACBrNFSeProviderEloTech203.Create(ACBrNFSe);
 

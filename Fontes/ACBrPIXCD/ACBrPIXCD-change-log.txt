@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2024
+-- ACBrSchemasMatera --
+[*] Correção no método NewSchema de algumas classes.
+    por: MatheusHenrique9
+
 22/03/2024
 -- ACBrPIXPSPMatera --
 [*] Alteração para corrigir problema de acentuação ao criar uma conta

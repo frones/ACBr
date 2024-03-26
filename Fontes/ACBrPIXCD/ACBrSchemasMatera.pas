@@ -7778,7 +7778,7 @@ end;
 
 function TMateraFixedDateDiscountArray.NewSchema: TACBrPIXSchema;
 begin
-  Result:=inherited NewSchema;
+  Result := New;
 end;
 
 function TMateraFixedDateDiscountArray.Add(aItem: TMateraFixedDateDiscount): Integer;
@@ -9353,7 +9353,7 @@ end;
 
 function TMateraRecipientsArray.NewSchema: TACBrPIXSchema;
 begin
-  Result:=inherited NewSchema;
+  Result := New;
 end;
 
 function TMateraRecipientsArray.Add(aItem: TMateraRecipient): Integer;

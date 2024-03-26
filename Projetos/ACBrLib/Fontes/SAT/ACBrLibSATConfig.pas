@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, IniFiles,
   ACBrLibConfig, ACBrDFeReport, DFeReportConfig,
   ACBrSAT, ACBrSATClass, ACBrSATExtratoClass, ACBrLibComum,
-  ACBrIntegradorConfig, ACBrDFeSSL, ACBrSATExtratoESCPOS,
+  ACBrDFeSSL, ACBrSATExtratoESCPOS,
   pcnRede, pcnConversao;
 
 type
@@ -219,7 +219,6 @@ type
     FSATCertificado: TSATCertificado;
     FRede: TRede;
     FExtrato: TExtratoConfig;
-    FIntegrador: TIntegradorConfig;
 
   protected
     procedure INIParaClasse; override;
@@ -249,8 +248,7 @@ type
     property Certificado: TSATCertificado read FSATCertificado;
     property Rede: TRede read FRede;
     property Extrato: TExtratoConfig read FExtrato;
-    property Integrador: TIntegradorConfig read FIntegrador;
-
+ 
   end;
 
 implementation
@@ -551,7 +549,6 @@ begin
   FSATCertificado := TSATCertificado.Create(AChaveCrypt);
   FRede := TRede.Create;
   FExtrato := TExtratoConfig.Create;
-  FIntegrador := TIntegradorConfig.Create;
 end;
 
 destructor TLibSATConfig.Destroy;
@@ -596,7 +593,7 @@ begin
   FConfigArquivos.LerIni(AIni);
   FSATCertificado.LerIni(AIni);
   FExtrato.LerIni(AIni);
-  FIntegrador.LerIni(AIni);
+  
 end;
 
 procedure TLibSATConfig.GravarIni(const AIni: TCustomIniFile);
@@ -630,7 +627,7 @@ begin
   FConfigArquivos.GravarIni(AIni);
   FSATCertificado.GravarIni(AIni);
   FExtrato.GravarIni(AIni);
-  FIntegrador.GravarIni(AIni);
+  
 end;
 
 procedure TLibSATConfig.INIParaClasse;

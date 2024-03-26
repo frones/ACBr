@@ -7,7 +7,6 @@ inherited LibSatDM: TLibSatDM
   Width = 210
   object ACBrSAT1: TACBrSAT[0]
     MAIL = ACBrMail1
-    Integrador = ACBrIntegrador1
     Config.infCFe_versaoDadosEnt = 0.07
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao
@@ -30,13 +29,7 @@ inherited LibSatDM: TLibSatDM
     Left = 32
     Top = 24
   end
-  object ACBrIntegrador1: TACBrIntegrador[1]
-    PastaInput = 'C:\Integrador\Input\'
-    PastaOutput = 'C:\Integrador\Output\'
-    Left = 120
-    Top = 24
-  end
-  object ACBrMail1: TACBrMail[2]
+  object ACBrMail1: TACBrMail[1]
     Host = '127.0.0.1'
     Port = '25'
     SetSSL = False
@@ -47,7 +40,7 @@ inherited LibSatDM: TLibSatDM
     Left = 120
     Top = 80
   end
-  object ACBrPosPrinter1: TACBrPosPrinter[3]
+  object ACBrPosPrinter1: TACBrPosPrinter[2]
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0

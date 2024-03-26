@@ -451,7 +451,6 @@ begin
         Resposta := Resposta + sLineBreak + Resp.Gerar;
       end;
 
-      Resposta := Resposta + SatDM.RespostaIntegrador;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -515,8 +514,7 @@ begin
           RespCanc.Free;
         end;
       end;
-
-      Resposta := Resposta + SatDM.RespostaIntegrador;
+     
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -801,7 +799,6 @@ begin
       Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
       Resp.Processar(SatDM.ACBrSAT1);
       Resposta := Resp.Gerar;
-      Resposta := Resposta + SatDM.RespostaIntegrador;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -878,7 +875,6 @@ begin
       Resp.Processar(SatDM.ACBrSAT1);
 
       Resposta := Resp.Gerar;
-      Resposta := Resposta + SatDM.RespostaIntegrador;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -920,7 +916,6 @@ begin
       Resp.Resultado := SatDM.ACBrSAT1.CancelarUltimaVenda;
       Resp.Processar(SatDM.ACBrSAT1);
       Resposta := Resp.Gerar;
-      Resposta := Resposta + SatDM.RespostaIntegrador;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally

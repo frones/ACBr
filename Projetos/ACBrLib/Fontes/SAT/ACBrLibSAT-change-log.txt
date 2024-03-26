@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2023
+-- ACBrLibSATBase, ACBrLibSATConfig, ACBrLibSATDataModule, ACBrLibSATDataModule.lfm   --
+[*] TK-4789 Removido Integrador MFe CE da Lib 
+   Por: Daniel Morais InfoCotidiano
+
 14/04/2023
 -- ACBrLibSATMT  --
 [-] corrigido a função ConsultarUltimaSessaoFiscal do SAT 

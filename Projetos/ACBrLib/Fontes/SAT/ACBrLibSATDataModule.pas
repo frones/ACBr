@@ -37,7 +37,7 @@ unit ACBrLibSatDataModule;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
+  Classes, SysUtils, ACBrLibConfig, ACBrSAT,
   ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrMail, ACBrPosPrinter, ACBrLibComum, ACBrLibDataModule, ACBrSATClass;
 
@@ -46,7 +46,6 @@ type
   { TLibSatDM }
 
   TLibSatDM = class(TLibDataModule)
-    ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrSAT1: TACBrSAT;
@@ -67,7 +66,6 @@ type
     function GerarImpressaoFiscalMFe: Ansistring;
     procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring);
     procedure CarregarDadosCancelamento(XmlArquivoOuString: Ansistring);
-    function RespostaIntegrador: String;
 
   end;
 
@@ -77,7 +75,7 @@ uses
   FileUtil, pcnConversao,
   ACBrDeviceConfig, ACBrDeviceSerial, ACBrDFeSSL,
   ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrLibSATConfig, ACBrLibIntegradorResposta;
+  ACBrLibSATConfig;
 
 {$R *.lfm}
 
@@ -177,14 +175,6 @@ begin
       proxy_porta := LibConfig.ProxyInfo.Porta;
       proxy_user := LibConfig.ProxyInfo.Usuario;
       proxy_senha := LibConfig.ProxyInfo.Senha;
-    end;
-
-    with Integrador do
-    begin
-      ArqLOG := LibConfig.Integrador.ArqLOG;
-      PastaInput := LibConfig.Integrador.PastaInput;
-      PastaOutput := LibConfig.Integrador.PastaOutput;
-      Timeout := LibConfig.Integrador.Timeout;
     end;
 
     SSL.SSLXmlSignLib := xsLibXml2;
@@ -391,22 +381,6 @@ begin
   end;
 end;
 
-function TLibSatDM.RespostaIntegrador: String;
-Var
-  Resp: TIntegradorResp;
-begin
-  Result := '';
-  if ACBrSAT1.Integrador = ACBrIntegrador1 then
-  begin
-    Resp := TIntegradorResp.Create(Lib.Config.TipoResposta, Lib.Config.CodResposta);
-    try
-      Resp.Processar(ACBrIntegrador1);
-      Result := sLineBreak + Resp.Gerar;
-    finally
-      Resp.Free;
-    end;
-  end;
-end;
 
 end.
 

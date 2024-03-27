@@ -284,6 +284,7 @@ begin
   FBoletoWS     := ABoletoWS;
   FGerador      := TGerador.Create;
   FHTTPSend     := THTTPSend.Create;
+  FHTTPSend.Protocol := '1.1';
   FTitulo       := nil;
 
   if Assigned(ABoletoWS.FBoleto.Configuracoes.WebService) then

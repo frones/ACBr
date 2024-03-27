@@ -290,7 +290,14 @@ begin
       WriteStrToStream(httpsend.Document, AnsiString(FPDadosMsg));
 
     if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-    BoletoWS.DoLog('URL: [' + MetodoHTTPToStr(FMetodoHTTP) + '] ' + FPURL);
+      BoletoWS.DoLog('URL: [' + MetodoHTTPToStr(FMetodoHTTP) + '] ' + FPURL);
+
+    if Boleto.Configuracoes.Arquivos.LogNivel >= logParanoico then
+    begin
+      BoletoWS.DoLog('Header:');
+      BoletoWS.DoLog(httpsend.Headers.Text);
+    end;
+
     httpsend.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL);
   finally
     httpsend.Document.Position := 0;
@@ -377,7 +384,7 @@ begin
     if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
     begin
       BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName);
-      BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode));
+      BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode) + ' ' + httpsend.Protocol + ' ' +  httpsend.ResultString);
     end;
     if Boleto.Configuracoes.Arquivos.LogNivel >= logParanoico then
     begin
@@ -386,6 +393,13 @@ begin
       else
         BoletoWS.DoLog('Retorno Envio: ' + IfThen(BoletoWS.RetornoBanco.CodRetorno > 0,
             sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno), '') + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS));
+
+      BoletoWS.DoLog('Cookies:');
+      BoletoWS.DoLog(httpsend.Cookies.Text);
+      BoletoWS.DoLog(httpsend.Sock.SSL.CertificateFile);
+      BoletoWS.DoLog(httpsend.Sock.SSL.PrivateKeyFile);
+      BoletoWS.DoLog('Header:');
+      BoletoWS.DoLog(httpsend.Headers.Text);
     end;
   end;
 end;

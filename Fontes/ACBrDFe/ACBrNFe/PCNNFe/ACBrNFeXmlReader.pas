@@ -78,7 +78,6 @@ type
     procedure LerCana(const ANode: TACBrXmlNode);
     procedure LerInfRespTec(const ANode: TACBrXmlNode);
     procedure LerInfNFeSupl(const ANode: TACBrXmlNode);
-    procedure LerSignature(const ANode: TACBrXmlNode);
 
   public
     constructor Create(AOwner: TNFe); reintroduce;
@@ -150,7 +149,7 @@ begin
 
     LerInfNFe(infNFeNode);
     LerInfNFeSupl(NFeNode.Childrens.Find('infNFeSupl'));
-    LerSignature(NFeNode.Childrens.Find('Signature'));
+    LerSignature(NFeNode.Childrens.Find('Signature'), NFe.Signature);
   end;
 
   Result := True;
@@ -159,19 +158,24 @@ end;
 procedure TNFeXmlReader.LerProtNFe(const ANode: TACBrXmlNode);
 Var
   ok: Boolean;
+  AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  NFe.procNFe.tpAmb    := StrToTpAmb(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
-  NFe.procNFe.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
-  NFe.procNFe.chNFe    := ObterConteudo(ANode.Childrens.Find('chNFe'), tcStr);
-  NFe.procNFe.dhRecbto := ObterConteudo(ANode.Childrens.Find('dhRecbto'), tcDatHor);
-  NFe.procNFe.nProt    := ObterConteudo(ANode.Childrens.Find('nProt'), tcStr);
-  NFe.procNFe.digVal   := ObterConteudo(ANode.Childrens.Find('digVal'), tcStr);
-  NFe.procNFe.cStat    := ObterConteudo(ANode.Childrens.Find('cStat'), tcInt);
-  NFe.procNFe.xMotivo  := ObterConteudo(ANode.Childrens.Find('xMotivo'), tcStr);
-  NFe.procNFe.cMsg     := ObterConteudo(ANode.Childrens.Find('cMsg'), tcInt);
-  NFe.procNFe.xMsg     := ObterConteudo(ANode.Childrens.Find('xMsg'), tcStr);
+  AuxNode := ANode.Childrens.FindAnyNs('infProt');
+  if Assigned(ANode) then
+  begin
+    NFe.procNFe.tpAmb    := StrToTpAmb(ok, ObterConteudo(AuxNode.Childrens.Find('tpAmb'), tcStr));
+    NFe.procNFe.verAplic := ObterConteudo(AuxNode.Childrens.Find('verAplic'), tcStr);
+    NFe.procNFe.chNFe    := ObterConteudo(AuxNode.Childrens.Find('chNFe'), tcStr);
+    NFe.procNFe.dhRecbto := ObterConteudo(AuxNode.Childrens.Find('dhRecbto'), tcDatHor);
+    NFe.procNFe.nProt    := ObterConteudo(AuxNode.Childrens.Find('nProt'), tcStr);
+    NFe.procNFe.digVal   := ObterConteudo(AuxNode.Childrens.Find('digVal'), tcStr);
+    NFe.procNFe.cStat    := ObterConteudo(AuxNode.Childrens.Find('cStat'), tcInt);
+    NFe.procNFe.xMotivo  := ObterConteudo(AuxNode.Childrens.Find('xMotivo'), tcStr);
+    NFe.procNFe.cMsg     := ObterConteudo(AuxNode.Childrens.Find('cMsg'), tcInt);
+    NFe.procNFe.xMsg     := ObterConteudo(AuxNode.Childrens.Find('xMsg'), tcStr);
+  end;
 end;
 
 procedure TNFeXmlReader.LerInfNFe(const ANode: TACBrXmlNode);
@@ -204,7 +208,7 @@ begin
 
   LerTotal(ANode.Childrens.Find('total'));
   LerTransp(ANode.Childrens.Find('transp'));
-  LerCobr(ANode.Childrens.Find('cobr'));
+  LerCobr(ANode);
   LerInfIntermed(ANode.Childrens.Find('infIntermed'));
   LerInfAdic(ANode.Childrens.Find('infAdic'));
   LerExporta(ANode.Childrens.Find('exporta'));
@@ -1253,28 +1257,32 @@ Var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
-  AuxNode: TACBrXmlNode;
+  FatNode, AuxNode: TACBrXmlNode;
   tagPag: String;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.Find('fat');
-  if (AuxNode <> nil) then
+  AuxNode := ANode.Childrens.FindAnyNs('cobr');
+  if Assigned(ANode) then
   begin
-    NFe.Cobr.Fat.nFat  := ObterConteudo(AuxNode.Childrens.Find('nFat'), tcStr);
-    NFe.Cobr.Fat.vOrig := ObterConteudo(AuxNode.Childrens.Find('vOrig'), tcDe2);
-    NFe.Cobr.Fat.vDesc := ObterConteudo(AuxNode.Childrens.Find('vDesc'), tcDe2);
-    NFe.Cobr.Fat.vLiq  := ObterConteudo(AuxNode.Childrens.Find('vLiq'), tcDe2);
-  end;
+    FatNode := AuxNode.Childrens.FindAnyNs('fat');
+    if (FatNode <> nil) then
+    begin
+      NFe.Cobr.Fat.nFat  := ObterConteudo(FatNode.Childrens.Find('nFat'), tcStr);
+      NFe.Cobr.Fat.vOrig := ObterConteudo(FatNode.Childrens.Find('vOrig'), tcDe2);
+      NFe.Cobr.Fat.vDesc := ObterConteudo(FatNode.Childrens.Find('vDesc'), tcDe2);
+      NFe.Cobr.Fat.vLiq  := ObterConteudo(FatNode.Childrens.Find('vLiq'), tcDe2);
+    end;
 
-  NFe.Cobr.Dup.Clear;
-  ANodes := ANode.Childrens.FindAll('dup');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    NFe.Cobr.Dup.New;
-    NFe.Cobr.Dup[i].nDup  := ObterConteudo(ANodes[i].Childrens.Find('nDup'), tcStr);
-    NFe.Cobr.Dup[i].dVenc := ObterConteudo(ANodes[i].Childrens.Find('dVenc'), tcDat);
-    NFe.Cobr.Dup[i].vDup  := ObterConteudo(ANodes[i].Childrens.Find('vDup'), tcDe2);
+    NFe.Cobr.Dup.Clear;
+    ANodes := AuxNode.Childrens.FindAll('dup');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      NFe.Cobr.Dup.New;
+      NFe.Cobr.Dup[i].nDup  := ObterConteudo(ANodes[i].Childrens.Find('nDup'), tcStr);
+      NFe.Cobr.Dup[i].dVenc := ObterConteudo(ANodes[i].Childrens.Find('dVenc'), tcDat);
+      NFe.Cobr.Dup[i].vDup  := ObterConteudo(ANodes[i].Childrens.Find('vDup'), tcDe2);
+    end;
   end;
 
   if NFe.infNFe.Versao >= 3 then
@@ -1282,7 +1290,7 @@ begin
     NFe.pag.Clear;
     if NFe.infNFe.Versao >= 4 then
     begin
-      AuxNode := ANode.Childrens.Find('pag');
+      AuxNode := ANode.Childrens.FindAnyNs('pag');
       if (AuxNode <> nil) then
         NFe.pag.vTroco := ObterConteudo(AuxNode.Childrens.Find('vTroco'), tcDe2);
 
@@ -1290,33 +1298,33 @@ begin
     end
     else
       tagPag := 'pag';
+  end;
+
+  ANodes := AuxNode.Childrens.FindAllAnyNs(tagPag);
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    NFe.pag.New;
+    NFe.pag[i].indPag := StrToIndpag(Ok, ObterConteudo(ANodes[i].Childrens.Find('indPag'), tcStr));
+    NFe.pag[i].tPag := StrToFormaPagamento(ok, ObterConteudo(ANodes[i].Childrens.Find('tPag'), tcStr));
+    NFe.pag[i].xPag := ObterConteudo(ANodes[i].Childrens.Find('xPag'), tcStr);
+    NFe.pag[i].vPag := ObterConteudo(ANodes[i].Childrens.Find('vPag'), tcDe2);
+    NFe.pag[i].dPag := ObterConteudo(ANodes[i].Childrens.Find('dPag'), tcDat);
+
+    NFe.pag[i].CNPJPag := ObterConteudo(ANodes[i].Childrens.Find('CNPJPag'), tcStr);
+    NFe.pag[i].UFPag := ObterConteudo(ANodes[i].Childrens.Find('UFPag'), tcStr);
+
+    AuxNode := ANode.Childrens.Find('card');
+    if (AuxNode <> nil) then
+    begin
+      NFe.pag[i].tpIntegra := StrTotpIntegra(ok, ObterConteudo(AuxNode.Childrens.Find('tpIntegra'), tcStr));
+      NFe.pag[i].CNPJ  := ObterConteudo(AuxNode.Childrens.Find('CNPJ'), tcStr);
+      NFe.pag[i].tBand := StrToBandeiraCartao(ok, ObterConteudo(AuxNode.Childrens.Find('tBand'), tcStr));
+      NFe.pag[i].cAut  := ObterConteudo(AuxNode.Childrens.Find('cAut'), tcStr);
+
+      NFe.pag[i].CNPJReceb := ObterConteudo(AuxNode.Childrens.Find('CNPJReceb'), tcStr);
+      NFe.pag[i].idTermPag := ObterConteudo(AuxNode.Childrens.Find('idTermPag'), tcStr);
     end;
-
-   ANodes := ANode.Childrens.FindAll(tagPag);
-   for i := 0 to Length(ANodes) - 1 do
-   begin
-     NFe.pag.New;
-     NFe.pag[i].indPag := StrToIndpag(Ok, ObterConteudo(ANodes[i].Childrens.Find('indPag'), tcStr));
-     NFe.pag[i].tPag := StrToFormaPagamento(ok, ObterConteudo(ANodes[i].Childrens.Find('tPag'), tcStr));
-     NFe.pag[i].xPag := ObterConteudo(ANodes[i].Childrens.Find('xPag'), tcStr);
-     NFe.pag[i].vPag := ObterConteudo(ANodes[i].Childrens.Find('vPag'), tcDe2);
-     NFe.pag[i].dPag := ObterConteudo(ANodes[i].Childrens.Find('dPag'), tcDat);
-
-     NFe.pag[i].CNPJPag := ObterConteudo(ANodes[i].Childrens.Find('CNPJPag'), tcStr);
-     NFe.pag[i].UFPag := ObterConteudo(ANodes[i].Childrens.Find('UFPag'), tcStr);
-
-     AuxNode := ANode.Childrens.Find('card');
-     if (AuxNode <> nil) then
-     begin
-       NFe.pag[i].tpIntegra := StrTotpIntegra(ok, ObterConteudo(AuxNode.Childrens.Find('tpIntegra'), tcStr));
-       NFe.pag[i].CNPJ  := ObterConteudo(AuxNode.Childrens.Find('CNPJ'), tcStr);
-       NFe.pag[i].tBand := StrToBandeiraCartao(ok, ObterConteudo(AuxNode.Childrens.Find('tBand'), tcStr));
-       NFe.pag[i].cAut  := ObterConteudo(AuxNode.Childrens.Find('cAut'), tcStr);
-
-       NFe.pag[i].CNPJReceb := ObterConteudo(AuxNode.Childrens.Find('CNPJReceb'), tcStr);
-       NFe.pag[i].idTermPag := ObterConteudo(AuxNode.Childrens.Find('idTermPag'), tcStr);
-     end;
-   end;
+  end;
 end;
 
 procedure TNFeXmlReader.LerInfAdic(const ANode: TACBrXmlNode);
@@ -1444,33 +1452,6 @@ begin
   NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, '<![CDATA[', '', []);
   NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, ']]>', '', []);
   NFe.infNFeSupl.urlChave := ObterConteudo(ANode.Childrens.Find('urlChave'), tcStr);
-end;
-
-procedure TNFeXmlReader.LerSignature(const ANode: TACBrXmlNode);
-Var
-  AuxNode: TACBrXmlNode;
-begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
-
-  AuxNode := ANode.Childrens.Find('SignedInfo');
-  if AuxNode <> nil then
-  begin
-
-    AuxNode := ANode.Childrens.Find('Reference');
-    if AuxNode <> nil then
-    begin
-      NFe.signature.URI             := AuxNode.Attributes.Items['URI'].Content;
-      NFE.signature.DigestValue     := ObterConteudo(AuxNode.Childrens.Find('DigestValue'), tcStr);
-    end;
-  end;
-
-  NFE.signature.SignatureValue  := ObterConteudo(ANode.Childrens.Find('SignatureValue'), tcStr);
-
-  AuxNode := ANode.Childrens.Find('KeyInfo');
-  if AuxNode <> nil then
-  begin
-    NFE.signature.X509Certificate := ObterConteudo(ANode.Childrens.Find('X509Certificate'), tcStr);
-  end;
 end;
 
 end.

@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/03/2024
+-- ACBrNFeXmlReader --
+[*] Correções para evitar erro de validação do XML quando carrega e re-gera o arquivo.
+  Por: Diego Folieni
 -- Diversos --
 [*] Adequa a leitura e geração dos campos do grupo gCred no INI e no XML a versão 1.62 da NT2019/001
   Por: Diego Folieni

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+27/03/2024
+--- ACBrLibBoletoRespostas ---
+[*] TK-5273 Add a propriedade CodigoEstadoTituloCobranca para retorno do mesmo na consulta
+Por: Daniel InfoCotidiano
+
 13/03/2024
 --- ACBrLibBoletoDataModule, ACBrLibBoletoConsts, ACBrLibBoletoConfig ---
 [*] TK-4361 Mudança no nivel de Log ACBrBoleto

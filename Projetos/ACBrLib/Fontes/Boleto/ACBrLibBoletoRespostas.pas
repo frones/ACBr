@@ -354,6 +354,7 @@ type
     Furl_Pix: String;
     FTx_ID: String;
     FCodigoCanalTituloCobranca: String;
+    FCodigoEstadoTituloCobranca: string;
     FEstadoTituloCobranca: String;
 
   public
@@ -430,6 +431,7 @@ type
     property Tx_ID: String read FTx_ID write FTx_ID;
     property CodigoCanalTituloCobranca: String read FCodigoCanalTituloCobranca write FCodigoCanalTituloCobranca;
     property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
+    property CodigoEstadoTituloCobranca: String read FCodigoEstadoTituloCobranca write FCodigoEstadoTituloCobranca;
 
 
 
@@ -714,6 +716,8 @@ begin
     PercentualMaxPagamento:= DadosRet.TituloRet.PercentualMaxPagamento;
     CodigoCanalTituloCobranca:=DadosRet.TituloRet.CodigoCanalTituloCobranca;
     EstadoTituloCobranca:=DadosRet.TituloRet.EstadoTituloCobranca;;
+    CodigoEstadoTituloCobranca:=DadosRet.TituloRet.CodigoEstadoTituloCobranca;
+
 
     if ( DadosRet.TituloRet.EMV  <> EmptyStr) then
     begin

@@ -127,7 +127,6 @@ const
   C_ACCEPT_PIX = 'application/json';
   C_ACCEPT     = '';
 
-  C_PROTOCOLO_PIX = '1.1';
   C_AUTHORIZATION = 'Authorization';
 
 implementation
@@ -238,7 +237,7 @@ end;
 
 procedure TBoletoW_Itau_API.DefinirAuthorization;
 begin
-  FPAuthorization := C_AUTHORIZATION + ' : Bearer ' + GerarTokenAutenticacao;
+  FPAuthorization := C_Authorization + ': ' + 'Bearer ' + GerarTokenAutenticacao;
 end;
 
 function TBoletoW_Itau_API.GerarTokenAutenticacao: string;
@@ -268,13 +267,13 @@ end;
 
 procedure TBoletoW_Itau_API.DefinirKeyUser;
 begin
-  if Boleto.Cedente.CedenteWS.IndicadorPix then
-   if Assigned(ATitulo) then
+  if Boleto.Cedente.CedenteWS.IndicadorPix and Assigned(ATitulo) then
       FPKeyUser := 'x-itau-correlationID: ' + Boleto.Cedente.CedenteWS.ClientID
   else
-    FPKeyUser := 'x-itau-apikey: ' + Boleto.Cedente.CedenteWS.ClientID + #13#10 +
-      'x-itau-flowID: 1' + #13#10 +
-      'x-itau-correlationID: ' + GerarUUID;
+  begin
+    FPHeaders.Add('x-itau-apikey: ' + Boleto.Cedente.CedenteWS.ClientID);
+    FPHeaders.Add('x-itau-correlationID: ' + Boleto.Cedente.CedenteWS.ClientID);
+  end;
 end;
 
 function TBoletoW_Itau_API.DefinirParametros: String;
@@ -317,9 +316,7 @@ begin
           begin
             LConsulta.Add('id_beneficiario=' + LId_Beneficiario);
 
-            if Boleto.Configuracoes.WebService.Filtro.carteira > 0 then
-              LConsulta.Add('codigo_carteira=' +
-                inttostr(Boleto.Configuracoes.WebService.Filtro.carteira));
+            LConsulta.Add('codigo_carteira=' + ATitulo.Carteira);
 
             if LNossoNumero <> EmptyStr then
                LConsulta.Add('nosso_numero=' + LNossoNumero);
@@ -1521,13 +1518,11 @@ end;
 function TBoletoW_Itau_API.GerarRemessa: string;
 begin
   Result := inherited GerarRemessa;
-
 end;
 
 function TBoletoW_Itau_API.Enviar: boolean;
 begin
   Result := inherited Enviar;
-
 end;
 
 function TBoletoW_Itau_API.GerarUUID: string;

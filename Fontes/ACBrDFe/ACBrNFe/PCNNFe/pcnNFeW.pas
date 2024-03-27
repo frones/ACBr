@@ -104,6 +104,7 @@ type
     procedure GerarDetProdDI(const i: Integer);
     procedure GerarDetProdDIadi(const i, j: Integer);
     procedure GerarDetProdNVE(const i : Integer);
+    procedure GerarDetProdgCred(const i: Integer);
     procedure GerarDetProddetExport(const i: Integer);
     procedure GerarDetProdRastro(const i: Integer);
     procedure GerarDetProdVeicProd(const i: Integer);
@@ -910,15 +911,7 @@ begin
 
     Gerador.wCampo(tcStr, 'I05f', 'cBenef', 08, 10, 0, NFe.Det[i].Prod.cBenef, DSC_CBENEF);
 
-    for idx := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
-    begin
-      Gerador.wCampo(tcStr, 'I05h', 'cCredPresumido', 8, 10, 1, NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido, DSC_CCREDPRESUMIDO);
-      Gerador.wCampo(FormatoValor4ou2, 'I05i', 'pCredPresumido', 1, IfThen(FUsar_tcDe4,07,05), 1, NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido, DSC_PCREDPRESUMIDO);
-      Gerador.wCampo(tcDe2, 'I05j', 'vCredPresumido', 1, 15, 1, NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido, DSC_VCREDPRESUMIDO);
-    end;
-
-    if NFe.Det[i].Prod.CredPresumido.Count > 4 then
-      Gerador.wAlerta('I05g', 'CredPresumido', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '4');
+    GerarDetProdgCred(i);
   end
   else
     Gerador.wCampo(tcStr, 'I05w', 'CEST', 07, 07, 0, OnlyNumber(NFe.Det[i].Prod.CEST), DSC_CEST);
@@ -1045,6 +1038,26 @@ begin
   end;
   if NFe.Det[i].Prod.DI[j].adi.Count > 999 then
     Gerador.wAlerta('I25', 'adi', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '999');
+end;
+
+procedure TNFeW.GerarDetProdgCred(const i: Integer);
+var
+  idx: Integer;
+begin
+
+  for idx := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
+  begin
+    Gerador.wGrupo('gCred', 'I05g');
+
+    Gerador.wCampo(tcStr, 'I05h', 'cCredPresumido', 8, 10, 1, NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido, DSC_CCREDPRESUMIDO);
+    Gerador.wCampo(FormatoValor4ou2, 'I05i', 'pCredPresumido', 1, IfThen(FUsar_tcDe4,07,05), 1, NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido, DSC_PCREDPRESUMIDO);
+    Gerador.wCampo(tcDe2, 'I05j', 'vCredPresumido', 1, 15, 1, NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido, DSC_VCREDPRESUMIDO);
+
+    Gerador.wGrupo('/gCred');
+  end;
+
+  if NFe.Det[i].Prod.CredPresumido.Count > 4 then
+    Gerador.wAlerta('I05g', 'gCred', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '4');
 end;
 
 procedure TNFeW.GerarDetProddetExport(const i: Integer);

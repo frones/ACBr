@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2024
+-- Diversos --
+[*] Adequa a leitura e geração dos campos do grupo gCred no INI e no XML a versão 1.62 da NT2019/001
+  Por: Diego Folieni
+
 21/03/2024
 -- ACBrNFeWebServices --
 [*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação

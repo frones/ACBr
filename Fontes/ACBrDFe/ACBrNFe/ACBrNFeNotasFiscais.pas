@@ -1892,7 +1892,7 @@ begin
           J := 1;
           while true do
           begin
-            sSecao := 'CredPresumido' + IntToStrZero(I,3) + IntToStrZero(J,1);
+            sSecao := 'gCred' + IntToStrZero(I,3) + IntToStrZero(J,1);
             sFim     := INIRec.ReadString(sSecao, 'cCredPresumido', '');
             if (sFim <> '') then
               with Prod.CredPresumido.New do
@@ -3218,7 +3218,7 @@ begin
 
           for J := 0 to Prod.CredPresumido.Count - 1 do
           begin
-            sSecao := 'CredPresumido' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 1);
+            sSecao := 'gCred' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 1);
             with Prod.CredPresumido[J] do
             begin
               INIRec.WriteString(sSecao, 'cCredPresumido', cCredPresumido);

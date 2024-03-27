@@ -529,23 +529,13 @@ begin
     Item.Prod.CNPJFab   := ObterConteudo(ANode.Childrens.Find('CNPJFab'), tcStr);
     Item.Prod.cBenef    := ObterConteudo(ANode.Childrens.Find('cBenef'), tcStr);
 
-    ANodes := ANode.Childrens.FindAll('cCredPresumido');
+    ANodes := ANode.Childrens.FindAll('gCred');
     for i := 0 to Length(ANodes) - 1 do
     begin
       Item.Prod.CredPresumido.New;
-      Item.Prod.CredPresumido[i].cCredPresumido := ANodes[i].Content;
-    end;
-
-    ANodes := ANode.Childrens.FindAll('pCredPresumido');
-    for i := 0 to Length(ANodes) - 1 do
-    begin
-      Item.Prod.CredPresumido[i].pCredPresumido := StringToFloat(ANodes[i].Content);
-    end;
-
-    ANodes := ANode.Childrens.FindAll('vCredPresumido');
-    for i := 0 to Length(ANodes) - 1 do
-    begin
-      Item.Prod.CredPresumido[i].vCredPresumido := StringToFloat(ANodes[i].Content);
+      Item.Prod.CredPresumido[i].cCredPresumido := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cCredPresumido'), tcStr);
+      Item.Prod.CredPresumido[i].pCredPresumido := ObterConteudo(ANodes[i].Childrens.FindAnyNs('pCredPresumido'), tcDe4);
+      Item.Prod.CredPresumido[i].vCredPresumido := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vCredPresumido'), tcDe2);
     end;
   end;
 

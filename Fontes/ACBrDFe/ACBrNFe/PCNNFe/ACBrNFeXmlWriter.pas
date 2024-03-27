@@ -101,6 +101,7 @@ type
     function GerarDetProdDI(const i: integer): TACBrXmlNodeArray;
     function GerarDetProdDIadi(const i, j: integer): TACBrXmlNodeArray;
     function GerarDetProdNVE(const i: integer): TACBrXmlNodeArray;
+    function GerarDetProdgCred(const i: integer): TACBrXmlNodeArray;
     function GerarDetProddetExport(const i: integer): TACBrXmlNodeArray;
     function GerarDetProdRastro(const i: integer): TACBrXmlNodeArray;
     function GerarDetProdVeicProd(const i: integer): TACBrXmlNode;
@@ -1059,16 +1060,10 @@ begin
     Result.AppendChild(AddNode(tcStr, 'I05f', 'cBenef', 08, 10, 0,
       NFe.Det[i].Prod.cBenef, DSC_CBENEF));
 
-    for idx := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
+    nodeArray := GerarDetProdgCred(i);
+    for j := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
     begin
-      Result.AppendChild(AddNode(tcStr, 'I05h', 'cCredPresumido', 8, 10, 1,
-        NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido, DSC_CCREDPRESUMIDO));
-
-      Result.AppendChild(AddNode(FormatoValor4ou2, 'I05i', 'pCredPresumido', 1, IfThen(Usar_tcDe4, 07, 05), 1,
-        NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido, DSC_PCREDPRESUMIDO));
-
-      Result.AppendChild(AddNode(tcDe2, 'I05j', 'vCredPresumido', 1, 15, 1,
-        NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido, DSC_VCREDPRESUMIDO));
+      Result.AppendChild(nodeArray[j]);
     end;
   end
   else
@@ -3150,6 +3145,31 @@ begin
   xmlNode := Result.AddChild('IPI');
   xmlNode.AppendChild(AddNode(tcDe2, 'U61', 'vIPIDevol', 01, 15, 1,
     NFe.Det[i].vIPIDevol, DSC_VIPIDEVOL));
+end;
+
+function TNFeXmlWriter.GerarDetProdgCred(const i: integer): TACBrXmlNodeArray;
+var
+  idx: integer;
+begin
+  Result := nil;
+  SetLength(Result, NFe.Det[i].Prod.CredPresumido.Count);
+  for idx := 0 to NFe.Det[i].Prod.CredPresumido.Count - 1 do
+  begin
+    Result[idx] := CreateElement('gCred');
+
+    Result[idx].AppendChild(AddNode(tcStr, 'I05h', 'cCredPresumido', 8, 10, 1,
+      NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido, DSC_CCREDPRESUMIDO));
+
+    Result[idx].AppendChild(AddNode(FormatoValor4ou2, 'I05i', 'pCredPresumido', 1, IfThen(Usar_tcDe4, 07, 05), 1,
+      NFe.Det[i].Prod.CredPresumido[idx].pCredPresumido, DSC_PCREDPRESUMIDO));
+
+    Result[idx].AppendChild(AddNode(tcDe2, 'I05j', 'vCredPresumido', 1, 15, 1,
+      NFe.Det[i].Prod.CredPresumido[idx].vCredPresumido, DSC_VCREDPRESUMIDO));
+  end;
+
+  if NFe.Det[i].Prod.CredPresumido.Count > 4 then
+    wAlerta('I05g', 'gCred', DSC_QNF, ERR_MSG_MAIOR_MAXIMO + '4');
+
 end;
 
 function TNFeXmlWriter.GerarDetImpostoICMSUFDest(const i: integer): TACBrXmlNode;

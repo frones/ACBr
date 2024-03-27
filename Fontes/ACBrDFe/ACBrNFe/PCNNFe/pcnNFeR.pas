@@ -420,7 +420,7 @@ begin
 
       idx := 0;
       NFe.Det[i].Prod.CredPresumido.Clear;
-      while Leitor.rExtrai(2, 'cCredPresumido', '', idx + 1) <> '' do
+      while Leitor.rExtrai(2, 'gCred', '', idx + 1) <> '' do
       begin
         NFe.Det[i].Prod.CredPresumido.New;
         NFe.Det[i].Prod.CredPresumido[idx].cCredPresumido := Leitor.rCampo(tcStr, 'cCredPresumido');

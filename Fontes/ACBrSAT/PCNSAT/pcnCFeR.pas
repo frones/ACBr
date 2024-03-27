@@ -239,6 +239,8 @@ begin
       inc(j);
     end;
 
+    (*I20*)CFe.Det[i].Prod.cANP := Leitor.rCampo(tcInt64, 'cANP');
+
     (* Grupo da TAG <det><imposto> ********************************************)
     Leitor.rExtrai(2, 'imposto');
     (*M02*)CFe.Det[i].Imposto.vItem12741 := Leitor.rCampo(tcDe2, 'vItem12741');

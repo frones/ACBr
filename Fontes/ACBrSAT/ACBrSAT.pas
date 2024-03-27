@@ -261,12 +261,15 @@ type
      property OnCalcPath: TACBrSATCalcPathEvent read fsOnCalcPath write fsOnCalcPath;
      property OnConsultarUltimaSessaoFiscal: TACBrSATEvento read fsOnConsultarUltimaSessaoFiscal
         write fsOnConsultarUltimaSessaoFiscal;
-   end;
 
-function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
-function MotivocStat(cStat: Integer): String;
-function MotivoInvalidoVenda(cod: integer): String;
-function MotivoInvalidoCancelamento(cod: integer): String;
+end;
+
+    function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
+    function MotivocStat(cStat: Integer): String;
+    function MotivoInvalidoVenda(cod: integer): String;
+    function MotivoInvalidoCancelamento(cod: integer): String;
+
+// SAT ER 2.30.03 //27/03/2024
 
 implementation
 
@@ -506,8 +509,12 @@ begin
     276: xMotivo := 'Rejeição: Diferença de dias entre a data de emissão e de recepção maior que o prazo legal';
     277: xMotivo := 'Rejeição: CNPJ do emitente não está ativo junto à Sefaz na data de emissão';
     278: xMotivo := 'Rejeição: IE do emitente não está ativa junto à Sefaz na data de emissão';
-    280: xMotivo := 'Rejeição: Certificado Transmissor Inválido';
-    281: xMotivo := 'Rejeição: Certificado Transmissor Data Validade';
+    280: xMotivo := 'Rejeição: Certificado Transmissor Inválido'+sLineBreak+
+                     ' - Certificado de Transmissor inexistente na Mensagem'+sLineBreak+
+                     ' - Certificado de Transmissor inexistente na mensagem'+sLineBreak+
+                     ' - Versão difere "3" - Se informado, Basic Constraint deve ser true (não pode ser Certificado de AC)'+sLineBreak+
+                     ' - keyUsage não define "Autenticação Cliente"';
+    281: xMotivo := 'Rejeição: Certificado Transmissor Data Validade (data de inicio e data fim)s';
     282: xMotivo := 'Rejeição: Certificado Transmissor sem CNPJ';
     283: xMotivo := 'Rejeição: Certificado Transmissor - erro Cadeia de Certificação';
     284: xMotivo := 'Rejeição: Certificado Transmissor revogado';
@@ -623,6 +630,7 @@ begin
     533: xMotivo := 'Rejeição: Valor aproximado dos tributos do CF-e-SAT – Lei 12741/12 inválido';
     534: xMotivo := 'Rejeição: Valor aproximado dos tributos do Produto ou serviço – Lei 12741/12 inválido.';
     535: xMotivo := 'Rejeição: código da credenciadora de cartão de débito ou crédito inválido';
+    536: xMotivo := 'Rejeição: código da credenciadora de cartão de débito ou crédito não informado para meio de pagamento cartão de débito ou crédito. (Ver exceções no Anexo 06)';
     537: xMotivo := 'Rejeição: Total do Desconto difere do somatório dos itens';
     539: xMotivo := 'Rejeição: Duplicidade de CF-e-SAT, com diferença na Chave de Acesso [99999999999999999999999999999999999999999]';
     540: xMotivo := 'Rejeição: CNPJ da Software House + CNPJ do emitente assinado no campo “signAC” difere do informado no campo “CNPJvalue” ';
@@ -634,6 +642,9 @@ begin
     603: xMotivo := 'Arquivo inválido';
     604: xMotivo := 'Erro desconhecido na verificação de comandos';
     605: xMotivo := 'Tamanho do arquivo inválido';
+    612: xMotivo := 'Rejeição: NCM não Informado';
+    613: xMotivo := 'Rejeição: NCM inválido, fora do range especificado';
+    614: xMotivo := 'Rejeição: NCM 00 não aceito para o GTIN informado';
     999: xMotivo := 'Rejeição: Erro não catalogado';
   else
     xMotivo := 'Rejeição não catalogada na nota técnica 2013/001.';
@@ -653,7 +664,7 @@ begin
     1450 : Result := 'Código de modelo de documento fiscal diferente de 59';
     1258 : Result := 'Data/hora inválida. Problemas com o relógio interno do SAT-CF-e';
     1224 : Result := 'CNPJ da Software House inválido';
-    1222, 1455 : Result := 'Assinatura do Aplicativo Comercial não é válida';// | Válido até 31/12/2015
+    1455, 1222 : Result := 'Assinatura do Aplicativo Comercial não é válida';// | Válido até 31/12/2015
     1207 : Result := 'CNPJ do emitente inválido';
     1203 : Result := 'Emitente não autorizado para uso do SAT';
     1229 : Result := 'IE do emitente não informada C12 IE não corresponde ao Contribuinte de uso do SAT';
@@ -667,7 +678,10 @@ begin
     1459 : Result := 'Código do produto ou serviço em branco';
     1460 : Result := 'GTIN do item (N) inválido | Validação do dígito verificador';
     1461 : Result := 'Descrição do produto ou serviço em branco';
-    1462 : Result := 'CFOP não é de Operação de saída prevista para CF-e-SAT';
+    1470 : Result := 'NCM não informado';
+    1471 : Result := 'Origem da mercadoria do Item (N) inválido (diferente de 0, 1, 2, 3, 4, 5, 6, 7, 8)';
+    1472 : Result := 'CST do Item (N) inválido (diferente de 00, 01, 12, 13, 14, 20, 21, 72, 73, 74, 90)';
+    1462 : Result := 'CFOP do item (N) inválido (Código informado não consta na tabelaCFOP)';
     1463 : Result := 'Unidade Comercial do produto ou serviço em branco';
     1464 : Result := 'Quantidade Comercial do item (N) inválido';
     1465 : Result := 'Valor Unitário do item (N) inválido';
@@ -676,17 +690,16 @@ begin
     1469 : Result := 'Valor de outras despesas acessórias do item (N) inválido';
     1535 : Result := 'Código da credenciadora de cartão de débito ou crédito inválido';
     1536 : Result := 'Código da credenciadora de cartão de débito ou crédito não informado para meio de pagamento cartão de débito ou crédito';
+    1537 : Result := 'Alerta: Código de Autenticação de Pagamento de cartão de débito ou crédito não informado para meio de pagamento cartão de débito ou crédito';
     1220 : Result := 'Valor do rateio do desconto sobre subtotal do item (N) inválido';
     1228 : Result := 'Valor do rateio do acréscimo sobre subtotal do item (N) inválido';
-    1751 : Result := 'não informado código do produto'; //| Nova redação, efeitos a partir de 01.01.17.
-    1752 : Result := 'código de produto informado fora do padrão ANP'; //| Nova redação, efeitos a partir de 01.01.17.
+    1751 : Result := 'não informado código do produto';
+    1752 : Result := 'código de produto informado fora do padrão ANP';
     1534 : Result := 'Valor aproximado dos tributos do produto negativo';
     1533 : Result := 'Valor aproximado dos tributos do CF-e_SAT negativo';
-    1471 : Result := 'Origem da mercadoria do Item (N) inválido (diferente de 0, 1, 2, 3, 4, 5, 6, 7, 8)';
-    1472 : Result := 'CST do Item (N) inválido (diferente de 00, 20, 90)';
     1473 : Result := 'Alíquota efetiva do ICMS do item (N) não é maior ou igual a zero';
     1601 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMS00';
-    1475 : Result := 'CST do Item (N) inválido (diferente de 40 e 41 e 50 e 60)';
+    1475 : Result := 'CST do Item (N) inválido (diferente de 30, 40, 41, 60, 61)';
     1602 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMS40';
     1476 : Result := 'Código de situação da operação - Simples Nacional - do Item (N) inválido (diferente de 102, 300 e 500)';
     1603 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMSSN102';

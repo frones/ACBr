@@ -101,6 +101,7 @@ resourcestring
   DSC_NSERIESAT = 'Número de série do equipamento SAT';
   DSC_DHINICIAL = 'Data e hora incial';
   DSC_DHFINAL = 'Data e Hora Final';
+  DSC_CANP = 'Código ANP referente ao Produto';
 
 implementation
 

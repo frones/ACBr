@@ -107,28 +107,20 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-
     procedure Clear;
   published
-    property infCFe_versaoDadosEnt : Real read fsinfCFe_versaoDadosEnt
-        write fsinfCFe_versaoDadosEnt ;
+    property infCFe_versaoDadosEnt : Real read fsinfCFe_versaoDadosEnt write fsinfCFe_versaoDadosEnt ;
     property ide_CNPJ : String  read fside_CNPJ write fside_CNPJ;
-    property ide_numeroCaixa : Integer read fside_numeroCaixa
-       write fside_numeroCaixa ;
+    property ide_numeroCaixa : Integer read fside_numeroCaixa write fside_numeroCaixa ;
     property ide_tpAmb : TpcnTipoAmbiente read fside_tpAmb write fside_tpAmb;
-
     property emit_CNPJ : String read fsemit_CNPJ write fsemit_CNPJ;
     property emit_IE   : String read fsemit_IE   write fsemit_IE;
     property emit_IM   : String read fsemit_IM   write fsemit_IM;
-    property emit_cRegTrib: TpcnRegTrib read fsemit_cRegTrib
-       write fsemit_cRegTrib ;
-    property emit_cRegTribISSQN: TpcnRegTribISSQN read fsemit_cRegTribISSQN
-       write fsemit_cRegTribISSQN ;
-    property emit_indRatISSQN: TpcnindRatISSQN read fsemit_indRatISSQN
-       write fsemit_indRatISSQN;
+    property emit_cRegTrib: TpcnRegTrib read fsemit_cRegTrib write fsemit_cRegTrib ;
+    property emit_cRegTribISSQN: TpcnRegTribISSQN read fsemit_cRegTribISSQN write fsemit_cRegTribISSQN ;
+    property emit_indRatISSQN: TpcnindRatISSQN read fsemit_indRatISSQN write fsemit_indRatISSQN;
     property EhUTF8: Boolean read GetEhUTF8 write SetEhUTF8;
     property PaginaDeCodigo : Word read fsPaginaDeCodigo write fsPaginaDeCodigo;
-
     property ArqSchema : String read fsArqSchema write fsArqSchema ;
     property XmlSignLib: TSSLXmlSignLib read fsXmlSignLib write SetXmlSignLib;
   end;

@@ -335,6 +335,7 @@ type
     FvRatDesc: currency;
     FvRatAcr: currency;
     FobsFiscoDet: TobsFiscoDetCollection;
+    FcANP: integer;
   public
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
@@ -358,6 +359,7 @@ type
     property vRatDesc: currency read FvRatDesc write FvRatDesc;
     property vRatAcr: currency read FvRatAcr write FvRatAcr;
     property obsFiscoDet: TobsFiscoDetCollection read FobsFiscoDet;
+    property cANP: integer read FcANP write FcANP;
   end;
 
   { TobsFiscoDetCollection }

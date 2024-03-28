@@ -117,7 +117,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsCodigoCnae">
 		<xsd:restriction base="xsd:int">
-			<xsd:totalDigits value="7" />
+			<xsd:totalDigits value="9" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="tsCodigoTributacao">

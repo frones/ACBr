@@ -140,7 +140,7 @@ begin
   LSenhaPDF := Trim(Self.PdfSenha);
 
   if LSenhaPDF <> '' then
-    FPDF.SetProtection([canPrint, canCopy],LSenhaPDF,'');
+    FPDF.SetProtection( [canPrint, canCopy], LSenhaPDF, LSenhaPDF);
 
   LPath := IncludeTrailingPathDelimiter(ExtractFilePath(Self.NomeArquivo));
   LFile := ChangeFileExt(ExtractFileName(Self.NomeArquivo),'');

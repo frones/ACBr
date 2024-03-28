@@ -30,6 +30,11 @@ namespace ACBrLib.NFSe
             set => SetProperty(value);
         }
 
+        public bool Cancelada
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
         #endregion Properties
     }
 }

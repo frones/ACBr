@@ -1307,50 +1307,54 @@ begin
             AdicionaErro('855-Rejeição: Somatório percentuais de GLP derivado do petróleo, GLGNn e GLGNi diferente de 100 [nItem: '+IntToStr(Prod.nItem)+']');
         end;
 
+        // Valores somados independentemente de IndTot
+        fsvTotTrib  := fsvTotTrib + Imposto.vTotTrib;
+        fsvFrete    := fsvFrete + Prod.vFrete;
+        fsvSeg      := fsvSeg + Prod.vSeg;
+        fsvOutro    := fsvOutro + Prod.vOutro;
+        fsvDesc     := fsvDesc + Prod.vDesc;
+        fsvII       := fsvII + Imposto.II.vII;
+        fsvIPI      := fsvIPI + Imposto.IPI.vIPI;
+        fsvIPIDevol := fsvIPIDevol + vIPIDevol;
+        fsvICMSDeson := fsvICMSDeson + Imposto.ICMS.vICMSDeson;
+
+        if bServico then
+        begin
+          fsvPISServico    := fsvPISServico + Imposto.PIS.vPIS;
+          fsvCOFINSServico := fsvCOFINSServico + Imposto.COFINS.vCOFINS;
+        end
+        else
+        begin
+          fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
+          fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
+        end;
+
+        // Valores somados se IndTot = itSomaTotalNFe
         if Prod.IndTot = itSomaTotalNFe then
         begin
-          fsvTotTrib := fsvTotTrib + Imposto.vTotTrib;
-          fsvBC      := fsvBC + Imposto.ICMS.vBC;
-          fsvICMS    := fsvICMS + Imposto.ICMS.vICMS;
-          fsvICMSDeson := fsvICMSDeson + Imposto.ICMS.vICMSDeson;
-          fsvBCST    := fsvBCST + Imposto.ICMS.vBCST;
-          fsvST      := fsvST + Imposto.ICMS.vICMSST;
-          fsvFrete   := fsvFrete + Prod.vFrete;
-          fsvSeg     := fsvSeg + Prod.vSeg;
-          fsvDesc    := fsvDesc + Prod.vDesc;
-          fsvII      := fsvII + Imposto.II.vII;
-          fsvIPI     := fsvIPI + Imposto.IPI.vIPI;
-          if bServico then
-            begin
-              fsvPISServico    := fsvPISServico + Imposto.PIS.vPIS;
-              fsvCOFINSServico := fsvCOFINSServico + Imposto.COFINS.vCOFINS;
-            end
-          else
-            begin
-              fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
-              fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
-            end;
+          fsvBC        := fsvBC + Imposto.ICMS.vBC;
+          fsvICMS      := fsvICMS + Imposto.ICMS.vICMS;
+          fsvBCST      := fsvBCST + Imposto.ICMS.vBCST;
+          fsvST        := fsvST + Imposto.ICMS.vICMSST;
+          fsvFCP       := fsvFCP + Imposto.ICMS.vFCP;
+          fsvFCPST     := fsvFCPST + Imposto.ICMS.vFCPST;
+          fsvFCPSTRet  := fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;
+
+          // Verificar se compõe PIS ST e COFINS ST
           if (Imposto.PISST.indSomaPISST = ispPISSTCompoe) then
-            fsvPISST     := fsvPISST + Imposto.PISST.vPIS;
-          if (Imposto.COFINSST.indSomaCOFINSST = iscCOFINSSTCompoe ) then
-            fsvCOFINSST  := fsvCOFINSST + Imposto.COFINSST.vCOFINS;
+            fsvPISST := fsvPISST + Imposto.PISST.vPIS;
+          if (Imposto.COFINSST.indSomaCOFINSST = iscCOFINSSTCompoe) then
+            fsvCOFINSST := fsvCOFINSST + Imposto.COFINSST.vCOFINS;
 
-          fsvOutro   := fsvOutro + Prod.vOutro;
-          fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;
-          fsvFCPST   := fsvFCPST + Imposto.ICMS.vFCPST;
-          fsvFCPSTRet:= fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;
-          fsvIPIDevol:= fsvIPIDevol + vIPIDevol;
-
-          // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
+          // Quando for serviço o produto não soma no total de produtos, quando for nota de ajuste também irá somar
           if (not bServico) or (NFe.Ide.finNFe = fnAjuste) then
             fsvProd := fsvProd + Prod.vProd;
-
         end;
 
         if Prod.veicProd.tpOP = toFaturamentoDireto then
           FaturamentoDireto := True;
 
-        if Copy(Prod.CFOP,1,1) = '3'then
+        if Copy(Prod.CFOP, 1, 1) = '3' then
           NFImportacao := True;
       end;
     end;

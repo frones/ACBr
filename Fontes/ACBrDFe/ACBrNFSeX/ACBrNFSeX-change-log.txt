@@ -44,6 +44,8 @@ Símbolo : Significado
 
 28/03/2024
 -- ACBrNFSeXServicos --
+[*] Adiciona o parametroExtra eletron=1 para a cidade de Rio Negro/PR, provedor é o IPM.
+  Por: C4Dev 
 [*] A cidade de São Felix do Araguaia/MT trocou de provedor, agora é Fiorilli.
   Por: tryideas sistemas
 [*] Alterado as URLs da cidade de Pará de Minas/MG, o provedor continua o mesmo.

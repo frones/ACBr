@@ -12222,8 +12222,8 @@ procedure TFrmACBrMonitor.ValidarIntegradorNFCe(ChaveNFe: String = '');
 var
   Modelo: Integer;
 begin
-  raise Exception.Create('Integrador depreciado');
-
+  //raise Exception.Create('Integrador depreciado');
+  ACBrNFe1.Integrador := nil;
 
 end;
 

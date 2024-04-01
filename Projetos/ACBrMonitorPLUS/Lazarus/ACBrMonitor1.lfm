@@ -35720,7 +35720,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskvUnCom = '0.0000'
     CasasDecimais.Aliquota = 2
     CasasDecimais.MaskAliquota = ',0.00'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
     Left = 589

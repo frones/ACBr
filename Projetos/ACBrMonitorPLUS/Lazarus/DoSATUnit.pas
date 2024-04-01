@@ -728,7 +728,7 @@ var
   cXMLVenda : String;
   cImpressora : String;
 begin
-  cXMLVenda := fpCmd.Params(0);
+  (*cXMLVenda := fpCmd.Params(0);
   cImpressora := fpCmd.Params(1);
 
   with TACBrObjetoSAT(fpObjetoDono) do
@@ -740,8 +740,17 @@ begin
     CarregarDadosVenda(cXMLVenda);
     fpCmd.Resposta := TACBrSATExtratoESCPOS(ACBrSAT.Extrato).GerarImpressaoFiscalMFe();
 
-  end;
+  end;*)
 
+  cXMLVenda := fpCmd.Params(0);
+  cImpressora := fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT(cImpressora);
+    CarregarDadosVenda(cXMLVenda);
+    ACBrSAT.ImprimirExtrato;
+  end;
 end;
 
 

@@ -280,6 +280,7 @@ type
     btnManifDestCiencia: TButton;
     btnManifDestOperNaoRealizada: TButton;
     btnEventoEPEC: TButton;
+    btnAdministrarCSC: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -345,6 +346,7 @@ type
     procedure btnDistrDFePorChaveClick(Sender: TObject);
     procedure sbPathPDFClick(Sender: TObject);
     procedure btnEventoEPECClick(Sender: TObject);
+    procedure btnAdministrarCSCClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1757,6 +1759,45 @@ begin
     ACBrNFe1.NotasFiscais.Items[0].GravarXML(NomeArq);
     ShowMessage('Arquivo gravado em: ' + NomeArq);
     memoLog.Lines.Add('Arquivo gravado em: ' + NomeArq);
+  end;
+end;
+
+procedure TfrmACBrNFe.btnAdministrarCSCClick(Sender: TObject);
+var
+  xTitulo, xCNPJ, xIndOp, xIdCSC, xCodigoCSC: string;
+  AIndOP: TpcnIndOperacao;
+  Ok: Boolean;
+  i: Integer;
+begin
+  xTitulo := 'Administrar CSC - Código de Segurança do Contribuinte';
+
+  xIndOp := '1';
+  if not(InputQuery(xTitulo, '1 = Consultar / 2 = Novo / 3 = Revogar', xIndOp)) then
+     exit;
+
+  xIdCSC := '';
+  if not(InputQuery(xTitulo, 'Id do CSC', xIdCSC)) then
+     exit;
+
+  xCodigoCSC := '';
+  if not(InputQuery(xTitulo, 'Código do CSC', xCodigoCSC)) then
+     exit;
+
+  xCNPJ := Copy(OnlyNumber(edtEmitCNPJ.Text), 1, 8);
+  AIndOP := StrToIndOperacao(Ok, xIndOp);
+
+  ACBrNFe1.AdministrarCSC(xCNPJ, AIndOP, StrToIntDef(xIdCSC, 0), xCodigoCSC);
+
+  MemoDados.Lines.Add('');
+  MemoDados.Lines.Add(xTitulo);
+  MemoDados.Lines.Add('tpAmb  : '+ TpAmbToStr(ACBrNFe1.WebServices.AdministrarCSCNFCe.retAdmCSCNFCe.tpAmb));
+  MemoDados.Lines.Add('cStat  : '+ IntToStr(ACBrNFe1.WebServices.AdministrarCSCNFCe.retAdmCSCNFCe.cStat));
+  MemoDados.Lines.Add('xMotivo: '+ ACBrNFe1.WebServices.AdministrarCSCNFCe.retAdmCSCNFCe.xMotivo);
+
+  for i := 0 to ACBrNFe1.WebServices.AdministrarCSCNFCe.retAdmCSCNFCe.dadosCsc.Count -1 do
+  begin
+    MemoDados.Lines.Add('idCsc    : '+ IntToStr(ACBrNFe1.WebServices.AdministrarCSCNFCe.retAdmCSCNFCe.dadosCsc[i].idCsc));
+    MemoDados.Lines.Add('codigoCsc: '+ ACBrNFe1.WebServices.AdministrarCSCNFCe.retAdmCSCNFCe.dadosCsc[i].codigoCsc);
   end;
 end;
 
@@ -3956,7 +3997,7 @@ begin
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 0;
-  PageControl1.ActivePageIndex := 0;
+  PageControl1.ActivePageIndex := 3;
   PageControl4.ActivePageIndex := 0;
 end;
 
@@ -4195,6 +4236,7 @@ end;
 procedure TfrmACBrNFe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrNFe1.Configuracoes.Certificados.URLPFX      := edtURLPFX.Text;
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
@@ -4284,14 +4326,23 @@ begin
     PathNFe          := edtPathNFe.Text;
     PathInu          := edtPathInu.Text;
     PathEvento       := edtPathEvento.Text;
-    PathSalvar       := edtPathLogs.Text;
+    PathMensal       := GetPathNFe(0);
+    PathSalvar       := PathMensal;
   end;
 
   if ACBrNFe1.DANFE <> nil then
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
-    ACBrNFe1.DANFE.Logo      := edtLogoMarca.Text;
-    ACBrNFe1.DANFE.PathPDF   := edtPathPDF.Text;
+
+    {
+      A Configuração abaixo utilizanda em conjunto com o TipoDANFE = tiSimplificado
+      para impressão do DANFE Simplificado - Etiqueta (Fortes Report)
+
+    ACBrNFeDANFeRL1.Etiqueta := True;
+    }
+
+    ACBrNFe1.DANFE.Logo    := edtLogoMarca.Text;
+    ACBrNFe1.DANFE.PathPDF := edtPathPDF.Text;
 
     ACBrNFe1.DANFE.MargemDireita  := 7;
     ACBrNFe1.DANFE.MargemEsquerda := 7;
@@ -4317,7 +4368,7 @@ end;
 procedure TfrmACBrNFe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
   ACBrUtil.FilesIO.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.XMLHTML.ConverteXMLtoUTF8(RetWS), False, False);
+                      RetWS, False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

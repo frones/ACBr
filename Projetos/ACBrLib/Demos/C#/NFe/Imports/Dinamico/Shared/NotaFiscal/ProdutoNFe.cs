@@ -12,6 +12,7 @@ namespace ACBrLib.NFe
 
         public ProdutoNFe()
         {
+
             NVE = new List<NVENFe>();
             DI = new List<DINFe>();
             DetExport = new List<DetExport>();
@@ -30,6 +31,7 @@ namespace ACBrLib.NFe
             COFINS = new COFINSProdutoNFe();
             COFINSST = new COFINSSTProdutoNFe();
             ISSQN = new ISSQNNFe();
+            gCred = new CreditoPresumidoNFe();
         }
 
         #endregion Constructors
@@ -239,6 +241,8 @@ namespace ACBrLib.NFe
         public string CNPJFab { get; set; }
 
         public string cBenef { get; set; }
+
+        public CreditoPresumidoNFe gCred { get; set; }
 
         public List<NVENFe> NVE { get; }
 

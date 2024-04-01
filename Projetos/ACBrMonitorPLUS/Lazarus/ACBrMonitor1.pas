@@ -210,6 +210,7 @@ type
     btnImprimir: TButton;
     btnImprimirCTe: TButton;
     btnImprimirMDFe: TButton;
+    btnIntegrador: TPanel;
     //btnIntegrador: TPanel;
     btnInutilizar: TButton;
     btnInutilizarCTe: TButton;
@@ -365,6 +366,7 @@ type
     cbxAdicionaLiteral: TCheckBox;
     cbxAjustarAut: TCheckBox;
     cbxBolMotorRelatorio: TComboBox;
+    cbxNomeLongoNFSe: TCheckBox;
     cbxMontarPathSchemas: TCheckBox;
     cbxAmbiente: TComboBox;
     cbxAtualizarXMLCancelado: TCheckBox;
@@ -481,6 +483,7 @@ type
     ckIBGEAcentos: TCheckBox;
     ckIBGEUTF8: TCheckBox;
     ckMemoria: TCheckBox;
+    ckNFCeUsarIntegrador: TCheckBox;
     //ckNFCeUsarIntegrador: TCheckBox;
     ckSalvar: TCheckBox;
     cbxConsCNPJProvedor: TComboBox;
@@ -1630,6 +1633,7 @@ type
     procedure cbxImpDescPorcChange(Sender: TObject);
     procedure cbXMLSignLibChange(Sender: TObject);
     procedure cbxModeloSATChange(Sender: TObject);
+    procedure cbxNomeLongoNFSeClick(Sender: TObject);
     procedure cbxPastaMensalClick(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
     procedure cbxRedeProxyChange(Sender: TObject);
@@ -4566,6 +4570,11 @@ begin
   ValidarConfigSAT;
 end;
 
+procedure TFrmACBrMonitor.cbxNomeLongoNFSeClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFrmACBrMonitor.cbxPastaMensalClick(Sender: TObject);
 begin
   cbxEmissaoPathNFe.Enabled := cbxPastaMensal.Checked;
@@ -5933,6 +5942,7 @@ begin
     cbxConsultarAposCancelar.Checked   := ConsultarAposCancelar;
     edtNomePrefeitura.Text             := NomePrefeitura;
     edtCNPJPrefeitura.Text             := CNPJPrefeitura;
+    cbxNomeLongoNFSe.Checked           := NomeLongoNFSe;
   end;
 
   {Parametro DFe}
@@ -7226,6 +7236,7 @@ begin
       ConsultarAposCancelar  := cbxConsultarAposCancelar.Checked;
       NomePrefeitura         := edtNomePrefeitura.Text;
       CNPJPrefeitura         := edtCNPJPrefeitura.Text;
+      NomeLongoNFSe          := cbxNomeLongoNFSe.Checked;
     end;
 
     { Parametros DFe }
@@ -12076,7 +12087,7 @@ begin
 
     with TConfiguracoesNFSe(Configuracoes).Arquivos do
     begin
-      NomeLongoNFSe := True;
+      NomeLongoNFSe := cbxNomeLongoNFSe.Checked;
       EmissaoPathNFSe := cbxEmissaoPathNFe.Checked;
       PathNFSe := edtPathNFe.Text;
       PathGer := edtPathNFe.Text;

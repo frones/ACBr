@@ -45,18 +45,24 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/04/24
+-- ACBrMonitor1.lfm, ACBrMonitor1.pas, ACBrMonitorConfig, ACBrMonitorConsts   --
+[*] #TK-5277 Adicionado a propriedade para parametrização NomeLongoNFSe que estava hardcoded no componente;
+https://www.projetoacbr.com.br/forum/topic/77059-como-saber-onde-est%C3%A1-o-xml-da-nfse-aprovada/
+Daniel de Morais InfoCotidiano
+
+01/04/24
 -- DoSATUnit, ACBrMonitor1 --
-#TK-5278 Removido raise integrador validador de estados;
-#TK-4789 Removido a mensagem q estava hardcoded no componente, corrigido MetodoGerarImpressaoFiscalMFe
+[-] #TK-5278 Removido raise integrador validador de estados;
+[*] #TK-4789 Removido a mensagem q estava hardcoded no componente, corrigido MetodoGerarImpressaoFiscalMFe
 Daniel de Morais InfoCotidiano
 
 26/03/24
-#TK-5264 Removido a mensagem q estava hardcoded no componente. por isso nao passava pela validacao da msg por UF
+[*] #TK-5264 Removido a mensagem q estava hardcoded no componente. por isso nao passava pela validacao da msg por UF
 https://www.projetoacbr.com.br/forum/topic/76979-impress%C3%A3o-mfe-ceara-sua-nota-tem-valor/
 Daniel de Morais InfoCotidiano
 
 25/03/24
-#TK-4789 Removido Integrador (CE) do monitor 
+[*] #TK-4789 Removido Integrador (CE) do monitor 
 Daniel de Morais InfoCotidiano
 
 22/03/2024

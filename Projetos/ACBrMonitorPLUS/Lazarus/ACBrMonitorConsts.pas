@@ -1443,6 +1443,7 @@ const
   CKeyNFSeConsultarAposCancelar =           'ConsultarAposCancelar';
   CKeyNFSeNomePrefeitura =                  'NomePrefeitura';
   CKeyNFSeCNPJPrefeitura =                  'CNPJPrefeitura';
+  CKeyNFSeNomeLongoNFSe =                   'NomeLongoNFSe';
 
 
 implementation

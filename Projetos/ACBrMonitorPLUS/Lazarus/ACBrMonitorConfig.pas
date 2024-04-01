@@ -766,6 +766,7 @@ type
     ConsultarAposCancelar: Boolean;
     NomePrefeitura: string;
     CNPJPrefeitura: string;
+    NomeLongoNFSe : boolean;
   end;
 
 
@@ -1618,6 +1619,8 @@ begin
       Ini.WriteBool( CSecNFSE, CKeyNFSeConsultarAposCancelar, ConsultarAposCancelar );
       Ini.WriteString( CSecNFSE, CKeyNFSeNomePrefeitura, NomePrefeitura );
       Ini.WriteString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura );
+      Ini.WriteBool( CSecNFSE, CKeyNFSeNomeLongoNFSe, NomeLongoNFSe );
+
     end;
 
     SL := TStringList.Create;
@@ -2418,10 +2421,8 @@ begin
       ConsultarAposCancelar := ini.ReadBool( CSecBOLETO, CKeyNFSeConsultarAposCancelar, ConsultarAposCancelar);
       NomePrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeNomePrefeitura, NomePrefeitura);
       CNPJPrefeitura := ini.ReadString( CSecNFSE, CKeyNFSeCNPJPrefeitura, CNPJPrefeitura);
+      NomeLongoNFSe  := ini.ReadBool( CSecNFSE, CKeyNFSeNomeLongoNFSe, NomeLongoNFSe);
     end;
-
-
-
 
   finally
     Ini.Free;
@@ -3183,6 +3184,7 @@ begin
     ConsultarAposCancelar := True;
     NomePrefeitura := '';
     CNPJPrefeitura := '';
+    NomeLongoNFSe := True;
   end;
 end;
 

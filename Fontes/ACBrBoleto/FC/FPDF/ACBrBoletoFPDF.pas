@@ -1021,7 +1021,7 @@ begin
     FPDF.AddPage();
     ModeloEstruturaReciboPagadorPIX(5,10);
     ModeloEstruturaReciboPagador(0,0);
-    ModeloEstruturaLinhaPontinhada(29,29);
+    ModeloEstruturaLinhaPontinhada(28.5,28);
     ModeloEstruturaFichaPagamento(0,0);
   end;
 end;

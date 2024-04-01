@@ -871,7 +871,6 @@ const
   SEMGTIN = 'SEM GTIN';
 var
   ErroValidarGTIN: String;
-  idx: Integer;
 begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, NFe.Det[i].Prod.cProd, DSC_CPROD);

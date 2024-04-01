@@ -264,8 +264,8 @@ var
         TfrlDANFeRLPaisagem.SalvarPDF(Self, ANFe, Result);
       tiSimplificado:
         TfrlDANFeRLSimplificado.SalvarPDF(Self, ANFe, Result);
-      else
-        TfrlDANFeRLRetrato.SalvarPDF(Self, ANFe, Result);
+    else
+      TfrlDANFeRLRetrato.SalvarPDF(Self, ANFe, Result);
     end;
   end;
 

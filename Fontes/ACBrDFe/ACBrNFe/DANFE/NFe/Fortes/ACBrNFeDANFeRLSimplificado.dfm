@@ -11,7 +11,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
   inherited RLNFe: TRLReport
     Tag = 1
     Left = 128
-    Top = -176
+    Top = 0
     Width = 340
     Height = 1058
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
@@ -533,7 +533,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     end
     object rlb05c_Lin_Itens: TRLBand
       Left = 38
-      Top = 970
+      Top = 987
       Width = 264
       Height = 1
       BandType = btFooter
@@ -2054,6 +2054,54 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Height = 3
         DrawKind = dkLine
         HoldStyle = hsRelatively
+      end
+    end
+    object rlb06a_Totais_Etiqueta: TRLBand
+      Left = 38
+      Top = 970
+      Width = 264
+      Height = 17
+      AutoSize = True
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = True
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      Color = clWhite
+      ParentColor = False
+      BeforePrint = rlb06a_Totais_EtiquetaBeforePrint
+      object RLLabel11: TRLLabel
+        Left = 2
+        Top = 2
+        Width = 200
+        Height = 15
+        Caption = 'VALOR TOTAL DA NOTA FISCAL:'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllValorTotalNotaFiscal: TRLLabel
+        Left = 208
+        Top = 1
+        Width = 53
+        Height = 15
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Valor Total da Nota Fiscal'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
       end
     end
   end

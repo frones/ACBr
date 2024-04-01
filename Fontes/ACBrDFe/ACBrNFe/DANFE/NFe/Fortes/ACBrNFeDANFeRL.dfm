@@ -10,10 +10,8 @@ object frlDANFeRL: TfrlDANFeRL
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   Position = poMainFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object RLNFe: TRLReport
     Left = 8

@@ -89,9 +89,10 @@ type
     FTributosPercentualPersonalizado: Double;
     FExpandirDadosAdicionaisAuto: boolean;
     FExibeCampoDePagamento: TpcnInformacoesDePagamento;
+    FEtiqueta: Boolean;
+
     procedure SetTributosPercentual(const AValue: TpcnPercentualTributos);
     procedure SetTributosPercentualPersonalizado(const AValue: Double);
-
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -135,6 +136,7 @@ type
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto default False;
     property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento default eipNunca;
     property FormularioContinuo;
+    property Etiqueta: Boolean read FEtiqueta write FEtiqueta default False;
   end;
 
 
@@ -213,7 +215,7 @@ begin
   FTributosPercentualPersonalizado := 0;
   FExpandirDadosAdicionaisAuto     := False;
   FExibeCampoDePagamento           := eipNunca;   	
-
+  FEtiqueta                        := False;
 end;
 
 procedure TACBrNFeDANFEClass.SetTributosPercentual(const AValue: TpcnPercentualTributos);
@@ -259,20 +261,19 @@ begin
   begin
     if ExibeTotalTributosItem and NaoEstaZerado(Imposto.vTotTrib) then
     begin
-      with Imposto do
-      begin
-        Result := SeparadorDetalhamentos +'Val Aprox Tributos: ' + FormatFloatBr(Imposto.vTotTrib);
+      Result := SeparadorDetalhamentos +'Val Aprox Tributos: ' + FormatFloatBr(Imposto.vTotTrib);
 
-        if (FTributosPercentual = ptValorNF) then
-        begin
-          TotalProduto := Prod.VProd + Prod.vFrete + Prod.vOutro + Prod.vSeg + IPI.vIPI + ICMS.vICMSST;
-          if NaoEstaZerado(TotalProduto) then
-            Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / TotalProduto) + '%)';
-        end
-        else
-          if NaoEstaZerado(Prod.VProd) then
-            Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / Prod.VProd) + '%)';
-      end;
+      if (FTributosPercentual = ptValorNF) then
+      begin
+        TotalProduto := Prod.VProd + Prod.vFrete + Prod.vOutro + Prod.vSeg +
+                        Imposto.IPI.vIPI + Imposto.ICMS.vICMSST;
+
+        if NaoEstaZerado(TotalProduto) then
+          Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / TotalProduto) + '%)';
+      end
+      else
+        if NaoEstaZerado(Prod.VProd) then
+          Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / Prod.VProd) + '%)';
     end;
   end;
 end;
@@ -529,8 +530,8 @@ function TACBrNFeDANFEClass.ManterDocreferenciados(aNFE: TNFe): String;
     case StrToIntDef(Copy(chave, 21, 2), 0) of
       59: Result := 'CFe-SAT Ref.:';
       65: Result := 'NFCe Ref.:';
-      else
-        Result := 'NFe Ref.:';
+    else
+      Result := 'NFe Ref.:';
     end;
   end;
 
@@ -687,7 +688,6 @@ begin
   except
     Result:= ACBrStr(FormaPagamentoToDescricao(aPagto.tPag, aPagto.xPag)) + Space(1);
   end;
-
 end;
 
 procedure TACBrNFeDANFCEClass.setImprimeEmDuasLinhas(const Value: Boolean);
@@ -710,7 +710,6 @@ begin
   begin
     FImprimeEmDuasLinhas := False;
   end;
-
 end;
 
 

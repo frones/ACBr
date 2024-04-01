@@ -489,6 +489,9 @@ begin
   cdsServicos.FieldDefs.Add('CodigoNbs', ftString, 9);
   cdsServicos.FieldDefs.Add('CodigoTributacaoMunicipio', ftString, 20);
   cdsServicos.FieldDefs.Add('Discriminacao', ftString, 4000);
+  cdsServicos.FieldDefs.Add('ExigibilidadeISS', ftString, 60);
+  cdsServicos.FieldDefs.Add('CodigoMunicipio', ftString, 60);
+  cdsServicos.FieldDefs.Add('MunicipioIncidencia', ftString, 60);
   cdsServicos.FieldDefs.Add('CodigoPais', ftString, 4);
   cdsServicos.FieldDefs.Add('NumeroProcesso', ftString, 10);
   cdsServicos.FieldDefs.Add('xItemListaServico', ftString, 300);

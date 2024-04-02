@@ -2357,7 +2357,7 @@ begin
   { Criando lista motor impressão boleto disponiveis}
   cbxBolMotorRelatorio.Items.Clear;
   cbxBolMotorRelatorio.AddItem('Fortes Reports', ACBrBoletoFCFortes1);
-  cbxBolMotorRelatorio.AddItem('FDPF', ACBrBoletoFPDF1);
+  cbxBolMotorRelatorio.AddItem('FPDF', ACBrBoletoFPDF1);
 
 
   { Criando lista de Layouts de Boleto disponiveis }
@@ -8039,6 +8039,16 @@ begin
         if pos('NFSE.SETAUTENTICACAONFSE',uppercase(Linha)) > 0 then
            Linha2 := 'NFSE.SETAUTENTICACAONFSE('+fscmd.Params(0)+', '+ TrataDadosSensiveis(fscmd.Params(1))+', '+
                   TrataDadosSensiveis(fscmd.Params(2))+', '+ TrataDadosSensiveis(fscmd.Params(3))+', '+ TrataDadosSensiveis(fscmd.Params(4))+')';
+
+        if pos('BOLETO.ENVIAREMAILBOLETO',uppercase(Linha)) > 0 then
+           Linha2 := 'BOLETO.EnviarEmailBoleto('+fscmd.Params(0)+', '+
+                                                 fscmd.Params(1)+', '+
+                                                 fscmd.Params(2)+', '+
+                                                 fscmd.Params(3)+', '+
+                                                 TrataDadosSensiveis(fscmd.Params(4))+')';
+
+
+
 
 
         //Log Comando Linha2 contem dados sensiveis

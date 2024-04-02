@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/24
+-- ACBrMonitor1, DoBoletoUnit   --
+[*] #TK-5115 Adicionado parametro Senha no metodo BOLETO.EnviarEmailBoleto. (funciona apenas em FPDF)
+Daniel de Morais InfoCotidiano
+
 01/04/24
 -- ACBrMonitor1.lfm, ACBrMonitor1.pas, ACBrMonitorConfig, ACBrMonitorConsts   --
 [*] #TK-5277 Adicionado a propriedade para parametrização NomeLongoNFSe que estava hardcoded no componente;

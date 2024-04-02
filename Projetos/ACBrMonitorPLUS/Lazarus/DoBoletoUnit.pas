@@ -1176,17 +1176,21 @@ end;
           1 - Dest : email do destinatário
           2 - Assunto : Assunto do email
           3 - Mensagem: Mensagem ao Destinatario
+          4 - Senha
 }
 procedure TMetodoEnviarEmailBoleto.Executar;
 var
   AParamIndice: Integer;
-  AParamDest, AParamAssunto ,AParamMensagem : String;
+  ASenha, AParamDest, AParamAssunto ,AParamMensagem : String;
   LMensagem: TStringList;
+  FACBrBoletoFPDF   : TACBrBoletoFPDF;
 begin
   AParamIndice  := StrToIntDef(fpCmd.Params(0),0);
   AParamDest    := Trim(fpCmd.Params(1));
   AParamAssunto := Trim(fpCmd.Params(2));
-  AParamMensagem := Trim(fpCmd.Params(3));
+  AParamMensagem:= Trim(fpCmd.Params(3));
+  ASenha        := Trim(fpCmd.Params(4));
+
 
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
@@ -1198,6 +1202,14 @@ begin
     else
       AParamDest := AParamDest;
 
+    if ASenha <> '' then
+       begin
+         FACBrBoletoFPDF   := TACBrBoletoFPDF.Create(ACBrBoleto);
+         if ACBrBoleto.ACBrBoletoFC.ClassName <> FACBrBoletoFPDF.ClassName then
+            raise Exception.Create('A Função GerarPDFComSenha() não funciona com o motor selecionado !');
+       end;
+
+
     with MonitorConfig.BOLETO.Email do
     begin
       LMensagem := TStringList.Create;
@@ -1207,6 +1219,7 @@ begin
         LMensagem.Text:= StringToBinaryString(IfThen(NaoEstaVazio(AParamMensagem), AParamMensagem, EmailMensagemBoleto));
 
         try
+          ACBrBoleto.ACBrBoletoFC.PdfSenha := ASenha;
           ACBrBoleto.MAIL.IsHTML := EmailFormatoHTML;
           ACBrBoleto.ListadeBoletos[AParamIndice].EnviarEmail(
                  AParamDest,

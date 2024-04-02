@@ -1237,7 +1237,6 @@ begin
         Result.AppendChild(AddNode(tcStr, '#1', 'indTotTrib', 1, 1, 1,
                   indTotTribToStr(NFSe.Servico.Valores.totTrib.indTotTrib), ''))
       else
-      if NFSe.Servico.Valores.totTrib.pTotTribSN > 0 then
         Result.AppendChild(AddNode(tcDe2, '#1', 'pTotTribSN', 1, 5, 1,
                                   NFSe.Servico.Valores.totTrib.pTotTribSN, ''));
     end;

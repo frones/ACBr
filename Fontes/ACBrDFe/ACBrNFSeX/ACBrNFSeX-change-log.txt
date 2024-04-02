@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2024
+-- SmarAPD.Provider --
+[+] Acrescentado a leitura do Params: SubVersao para a versão 2.04
+  Por: Italo Giurizzato Junior
+
 28/03/2024
 -- ACBrNFSeXServicos --
 [*] Adiciona o parametroExtra eletron=1 para a cidade de Rio Negro/PR, provedor é o IPM.

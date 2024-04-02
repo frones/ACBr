@@ -1105,7 +1105,7 @@ begin
       Tomador.Endereco.Numero := '100';
       Tomador.Endereco.Complemento := 'APTO 11';
       Tomador.Endereco.TipoBairro := 'BAIRRO';
-      Tomador.Endereco.Bairro := 'CENTRO';
+      Tomador.Endereco.Bairro := 'CENTRO - tamanho maior que o permitido para o nome do bairro da cidade';
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
       Tomador.Endereco.xMunicipio := 'Cidade do Tomador';
       Tomador.Endereco.UF := edtEmitUF.Text;
@@ -1267,7 +1267,7 @@ begin
       // TnfseStatusRPS = ( srNormal, srCancelado );
       StatusRps := srNormal;
 
-      // Somente Os provedores Betha, FISSLex, SimplISS e TcheInfo
+      // Somente Os provedores Betha, DataSmart, FISSLex, SimplISS e TcheInfo
       // permitem incluir no RPS a TAG: OutrasInformacoes os demais essa TAG
       // é gerada e preenchida pelo WebService do provedor.
       OutrasInformacoes := 'Pagamento a Vista';
@@ -1898,7 +1898,7 @@ procedure TfrmACBrNFSe.btnConsultarLinkNFSeClick(Sender: TObject);
 var
   InfConsultaLinkNFSe: TInfConsultaLinkNFSe;
   xTitulo, xCompetencia, xNumeroNFSe, xSerieNFSe,
-  xNumeroRps, xSerieRps: string;
+  xNumeroRps, xSerieRps, xTomador: string;
 begin
   xTitulo := 'Consultar Link da NFSe';
 
@@ -1925,6 +1925,13 @@ begin
   if not(InputQuery(xTitulo, 'Serie da NFS-e:', xSerieNFSe)) then
     exit;
 
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proGeisWeb then
+  begin
+    xTomador := '';
+    if not(InputQuery(xTitulo, 'CNPJ/CPF do Tomador:', xTomador)) then
+      exit;
+  end;
+
   InfConsultaLinkNFSe := TInfConsultaLinkNFSe.Create;
   try
     InfConsultaLinkNFSe.Competencia := StrToDateDef(xCompetencia, 0);
@@ -1932,6 +1939,7 @@ begin
     InfConsultaLinkNFSe.SerieNFSe := xSerieNFSe;
     InfConsultaLinkNFSe.NumeroRps := StrToIntDef(xNumeroRps, 1);
     InfConsultaLinkNFSe.SerieRps := xSerieRps;
+    InfConsultaLinkNFSe.CnpjCpfToma := xTomador;
 
     ACBrNFSeX1.ConsultarLinkNFSe(InfConsultaLinkNFSe);
 
@@ -3119,8 +3127,32 @@ begin
 end;
 
 procedure TfrmACBrNFSe.btnGerarArqINIPNClick(Sender: TObject);
+var
+  SaveDlg: TSaveDialog;
+  ArqINI: TStringList;
 begin
-  // Falta Implementar
+  ConfigurarComponente;
+  ACBrNFSeX1.NotasFiscais.Clear;
+  Alimentar_Componente('1', '1');
+
+  ArqINI := TStringList.Create;
+  SaveDlg := TSaveDialog.Create(nil);
+  try
+    ArqINI.Text := ACBrNFSeX1.NotasFiscais.GerarIni;
+
+    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.DefaultExt := '*.INI';
+    SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
+
+    if SaveDlg.Execute then
+      ArqINI.SaveToFile(SaveDlg.FileName);
+
+    memoLog.Lines.Add('Arquivo Salvo: ' + SaveDlg.FileName);
+
+  finally
+    SaveDlg.Free;
+    ArqINI.Free;
+  end;
 end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarLoteClick(Sender: TObject);
@@ -3555,21 +3587,55 @@ begin
 end;
 
 procedure TfrmACBrNFSe.btnLerINIPNClick(Sender: TObject);
+var
+  vNumLote: string;
 begin
-  // Falta Implementar
+  OpenDialog1.Title := 'Selecione o Arquivo INI';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFSeX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFSeX1.NotasFiscais.Clear;
+
+    // LoadFromIni - Usado para carregar o arquivo INI para gerar posteriormente
+    // o XML do Rps
+    ACBrNFSeX1.NotasFiscais.LoadFromIni(OpenDialog1.FileName);
+
+    vNumLote := '1';
+    if not(InputQuery('Gerar Lote de Envio', 'Numero do Lote', vNumLote)) then
+      exit;
+
+    ACBrNFSeX1.GerarLote(vNumLote);
+
+    ChecarResposta(tmGerarLote);
+  end;
 end;
 
 procedure TfrmACBrNFSe.btnLinkNFSeClick(Sender: TObject);
 var
-  vNumNFSe, sCodVerif, sLink: String;
+  xTitulo, xNumNFSe, xCodVerif, xID, sLink: String;
 begin
-  if not(InputQuery('Gerar o Link da NFSe', 'Numero da NFSe', vNumNFSe)) then
+  xTitulo := 'Gerar o Link da NFSe';
+
+  xNumNFSe := '';
+  if not(InputQuery(xTitulo, 'Numero da NFSe', xNumNFSe)) then
     exit;
 
-  if not(InputQuery('Gerar o Link da NFSe', 'Codigo de Verificacao', sCodVerif)) then
+  xCodVerif := '';
+  if not(InputQuery(xTitulo, 'Codigo de Verificacao', xCodVerif)) then
     exit;
 
-  sLink := ACBrNFSeX1.LinkNFSe(vNumNFSe, sCodVerif);
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proInfisc then
+  begin
+    xID := '';
+    if not(InputQuery(xTitulo, 'ID:', xID)) then
+      exit;
+  end;
+
+  sLink := ACBrNFSeX1.LinkNFSe(xNumNFSe, xCodVerif, '', '', xID);
 
   memoLog.Lines.Add('Link Gerado: ' + sLink);
 
@@ -4316,6 +4382,8 @@ var
             memoLog.Lines.Add('Código Verificação: ' + aResumos[i].CodigoVerificacao);
             memoLog.Lines.Add('Numero do Rps     : ' + aResumos[i].NumeroRps);
             memoLog.Lines.Add('Série do Rps      : ' + aResumos[i].SerieRps);
+            memoLog.Lines.Add('Id da Nota        : ' + aResumos[i].idNota);
+            memoLog.Lines.Add('Id da Rps         : ' + aResumos[i].idRps);
           end;
         end;
 
@@ -4416,6 +4484,7 @@ begin
                 memoLog.Lines.Add('Parâmetros de Retorno');
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
                 memoLog.Lines.Add('ID Nota       : ' + idNota);
+                memoLog.Lines.Add('ID Rps        : ' + idRps);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
                 ListaDeResumos(Resumos, tmConsultarLote);
@@ -4492,6 +4561,7 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
             memoLog.Lines.Add('ID Nota       : ' + idNota);
+            memoLog.Lines.Add('ID Rps        : ' + idRps);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
             ListaDeResumos(Resumos, tmConsultarLote);

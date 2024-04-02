@@ -43,13 +43,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/04/2024
+-- ACBrNFSeXServicos --
+[*] As cidades de Quatro Pontes/PR e Lindoeste/PR trocaram de provedor, agora é Publica.
+  Por: Alex Heinen
+[*] Adicionado o Params: SubVersao para a cidade de Sertaozinho/SP e alterado
+    a versão para 2.04 e a URL de produção.
+  Por: Italo Giurizzato Junior
 -- SmarAPD.Provider --
 [+] Acrescentado a leitura do Params: SubVersao para a versão 2.04
   Por: Italo Giurizzato Junior
 
 28/03/2024
 -- ACBrNFSeXServicos --
-[*] Adiciona o parametroExtra eletron=1 para a cidade de Rio Negro/PR, provedor é o IPM.
+[*] Adicionado o parametroExtra eletron=1 para a cidade de Rio Negro/PR, provedor é o IPM.
   Por: C4Dev 
 [*] A cidade de São Felix do Araguaia/MT trocou de provedor, agora é Fiorilli.
   Por: tryideas sistemas

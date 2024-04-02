@@ -177,6 +177,8 @@ begin
 
   try
     try
+      Result := True;
+
       Document.LoadFromXml(XmlRetorno);
 
       ANode := Document.Root;
@@ -244,11 +246,9 @@ begin
             end;
           end;
         except
-          // Continua
+          Result := False;
         end;
       end;
-
-      Result := True;
     except
       Result := False;
     end;

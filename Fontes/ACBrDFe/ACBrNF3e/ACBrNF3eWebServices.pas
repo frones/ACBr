@@ -2244,10 +2244,10 @@ end;
 procedure TNF3eEnvEvento.DefinirDadosMsg;
 var
   EventoNF3e: TEventoNF3e;
-  I, F: integer;
-  Lote, Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  I: integer;
+  AXMLEvento: AnsiString;
   FErroValidacao: string;
-  MsgEventoEhValido, EventoEhValido: Boolean;
+  EventoEhValido: Boolean;
   SchemaEventoNF3e: TSchemaNF3e;
 begin
   EventoNF3e := TEventoNF3e.Create;
@@ -2295,6 +2295,8 @@ begin
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evCancNF3e>', '</evCancNF3e>')) +
                         '</evCancNF3e>';
         end;
+    else
+      AXMLEvento := '';
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;

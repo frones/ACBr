@@ -1217,17 +1217,17 @@ type
   TinfNF3e = class(TObject)
   private
     FID: string;
-    FVersao: Real;
+    FVersao: Double;
 
-    function GetVersaoStr: string;
-    function GetVersao: Real;
+//    function GetVersaoStr: string;
+//    function GetVersao: Real;
     function GetID: string;
   public
     procedure Assign(Source: TinfNF3e);
 
     property ID: string        read GetID       write FID;
-    property Versao: Real      read GetVersao write FVersao;
-    property VersaoStr: string read GetVersaoStr;
+    property Versao: Double    read FVersao write FVersao;
+//    property VersaoStr: string read GetVersaoStr;
   end;
 
   { TNF3e }
@@ -2323,7 +2323,7 @@ function TinfNF3e.GetID: string;
 begin
   Result := Copy(FID, 5, 44);
 end;
-
+{
 function TinfNF3e.GetVersao: Real;
 begin
   if FVersao <= 0 then
@@ -2339,7 +2339,7 @@ begin
 
   Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
 end;
-
+}
 { TNF3e }
 
 procedure TNF3e.Assign(Source: TNF3e);
@@ -2391,7 +2391,7 @@ begin
   FSignature   := TSignature.Create;
   FprocNF3e    := TProcDFe.Create('1.00', NAME_SPACE_NF3e, 'NF3e');
 
-  FinfNF3e.Versao := 0;
+//  FinfNF3e.Versao := 0;
   FIde.nSiteAutoriz := sa0;
 end;
 

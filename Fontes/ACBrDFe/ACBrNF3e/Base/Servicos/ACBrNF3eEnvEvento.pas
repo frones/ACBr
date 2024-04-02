@@ -93,7 +93,7 @@ type
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
-    function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
+    function LerFromIni(const AIniString: String): Boolean;
 
     property idLote: Int64                read FidLote  write FidLote;
     property Evento: TInfEventoCollection read FEvento  write SetEvento;
@@ -328,7 +328,7 @@ begin
   end;
 end;
 
-function TEventoNF3e.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
+function TEventoNF3e.LerFromIni(const AIniString: String): Boolean;
 var
   I: Integer;
   sSecao, sFim: String;

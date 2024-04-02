@@ -235,11 +235,11 @@ const
     'kVArh', 'UN');
 
 type
-  TmotDifTarif = (mdtVazio, mdtDecisaoJudicial, mdtDecisaoDistribuidora,
+  TmotDifTarif = (mdtDecisaoJudicial, mdtDecisaoDistribuidora,
                   mdtDesconto, mdtAlteracao);
 
 const
-  TmotDifTarifArrayStrings: array[TmotDifTarif] of string = ('', '01', '02',
+  TmotDifTarifArrayStrings: array[TmotDifTarif] of string = ('01', '02',
     '03', '04');
 
 type
@@ -271,11 +271,11 @@ const
   TtpGrMedArrayStrings: array[TtpGrMed] of string = ('01', '02', '03', '04', '05');
 
 type
-  TtpMotNaoLeitura = (tmNenhum, tmConsumidor, tmDistribuidora,
+  TtpMotNaoLeitura = (tmConsumidor, tmDistribuidora,
                       tmIndependente);
 
 const
-  TtpMotNaoLeituraArrayStrings: array[TtpMotNaoLeitura] of string = ('', '1',
+  TtpMotNaoLeituraArrayStrings: array[TtpMotNaoLeitura] of string = ('1',
     '2', '3');
 
 type
@@ -299,10 +299,10 @@ const
     '4', '5', '6');
 
 type
-  TIndicador = (tiVazio, tiSim, tiNao);
+  TIndicador = (tiSim, tiNao);
 
 const
-  TIndicadorArrayStrings: array[TIndicador] of string = ('', '1', '0');
+  TIndicadorArrayStrings: array[TIndicador] of string = ('1', '0');
 
 type
   TCSTCofins = (cof01, cof02, cof06, cof07, cof08, cof09, cof49);

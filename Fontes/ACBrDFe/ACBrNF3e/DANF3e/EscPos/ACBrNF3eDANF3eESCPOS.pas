@@ -50,7 +50,7 @@ type
   private
     FPosPrinter: TACBrPosPrinter;
 
-    procedure MontarEnviarDANF3e(NF3e: TNF3e; const AResumido: Boolean);
+    procedure MontarEnviarDANF3e(NF3e: TNF3e);
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
   protected
     FpNF3e: TNF3e;
@@ -570,8 +570,7 @@ begin
     FPosPrinter.Buffer.Add('</pular_linhas>')
 end;
 
-procedure TACBrNF3eDANF3eESCPOS.MontarEnviarDANF3e(NF3e: TNF3e;
-  const AResumido: Boolean);
+procedure TACBrNF3eDANF3eESCPOS.MontarEnviarDANF3e(NF3e: TNF3e);
 begin
   if NF3e = nil then
   begin
@@ -603,7 +602,7 @@ end;
 procedure TACBrNF3eDANF3eESCPOS.ImprimirDANF3e(NF3e: TNF3e);
 begin
   AtivarPosPrinter;
-  MontarEnviarDANF3e(NF3e, False);
+  MontarEnviarDANF3e(NF3e);
 end;
 
 procedure TACBrNF3eDANF3eESCPOS.GerarDadosEvento;

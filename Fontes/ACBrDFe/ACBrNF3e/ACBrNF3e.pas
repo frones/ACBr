@@ -164,7 +164,7 @@ constructor TACBrNF3e.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FNotasFiscais := TNotasFiscais.Create(Self, NotaFiscal);
+  FNotasFiscais := TNotasFiscais.Create(Self, TNotaFiscal);
   FEventoNF3e := TEventoNF3e.Create;
   FWebServices := TWebServices.Create(Self);
 end;
@@ -321,7 +321,7 @@ function TACBrNF3e.GerarNomeArqSchemaEvento(ASchemaEventoNF3e: TSchemaNF3e;
 var
   xComplemento: string;
 begin
-  if VersaoServico = 0.0 then
+  if VersaoServico = 0 then
     Result := ''
   else
   begin

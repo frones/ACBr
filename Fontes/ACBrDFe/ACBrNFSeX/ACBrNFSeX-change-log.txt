@@ -44,6 +44,14 @@ Símbolo : Significado
 
 02/04/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Gramado/RS trocou de provedor, agora é IPM versão 2.04
+  Por: Enéias Rodrigo
+[+] Incluida as cidades de Carmo da Mata/MG - provedor NFSeBrasil e 
+    Rosana/SP - provedor Fiorilli.
+[*] A cidade de Alfenas/MG mudou a versão e as URLs o provedor continua o mesmo.
+  Por: Fabio Luiz Binhara
+[*] A cidade de Jaú/SP mudou o URL o provedor continua o mesmo.
+  Por: Thiago ND/Ronaldo Negreiros Danieli/Edson/Antonio Paulo Mangili
 [*] As cidades de Quatro Pontes/PR e Lindoeste/PR trocaram de provedor, agora é Publica.
   Por: Alex Heinen
 [*] Adicionado o Params: SubVersao para a cidade de Sertaozinho/SP e alterado

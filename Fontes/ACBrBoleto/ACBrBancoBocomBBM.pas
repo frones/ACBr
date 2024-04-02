@@ -65,6 +65,8 @@ type
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList); override;
+    procedure LerRetorno400(ARetorno: TStringList);override;
+    Procedure LerRetorno240(ARetorno:TStringList);override;
   public
     constructor create(AOwner: TACBrBanco);
   end;
@@ -848,4 +850,20 @@ begin
     ARemessa.Add(UpperCase(LLinha));
   end;
 end;
+procedure TACBrBancoBocomBBM.LerRetorno240(ARetorno: TStringList);
+begin
+  raise Exception.Create( ACBrStr('Não permitido para o layout deste banco.') );
+end;
+
+procedure TACBrBancoBocomBBM.LerRetorno400(ARetorno: TStringList);
+var LNome : String;
+begin
+  LNome      := fpNome;
+  fpNome     := 'BoComBBM';
+  fpNumero   := 107;
+  inherited;
+  fpNome     := LNome;
+  fpNumero   := 237;
+end;
+
 end.

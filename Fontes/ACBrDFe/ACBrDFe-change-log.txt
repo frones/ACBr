@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/04/2024
+-- ACBrXmlBase --
+[*] Implementado o evento OnObterConteudoTag para leitura customizada dos 
+    campos do XML.
+  Por: Arimateia Jr
+
 28/02/2024
 -- ACBrDFeXsXmlSec --
 [-] Correção, estava faltando um parâmetro no método Assinar.

@@ -78,6 +78,7 @@ function EnumeradoToStr(const t: variant; const AString:
 
 function RemoverIdentacao(const AXML: string): string;
 function XmlToStr(const AXML: string): string;
+function XmlToStrEx(const AXML: string): string;
 function StrToXml(const AXML: string): string;
 function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
@@ -88,6 +89,7 @@ function NormatizarBoolean(const aBool: string): string;
 
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
+function ObterConteudoTagCNPJCPF(const ANode: TACBrXmlNode): string;
 
 function TipoEmissaoToStr(const t: TACBrTipoEmissao): string;
 function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
@@ -96,6 +98,13 @@ function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 
 procedure LerSignature(ASignatureNode: TACBrXmlNode; Signature: TSignature);
+
+type
+  TObterConteudoTagProc = procedure(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo;
+    const ConteudoTag: string; var Valor: Variant; var Processado: Boolean);
+
+var
+  OnObterConteudoTag: TObterConteudoTagProc;
 
 implementation
 
@@ -179,6 +188,11 @@ begin
   Result := FaststringReplace(Result, '>', '&gt;', [rfReplaceAll]);
 end;
 
+function XmlToStrEx(const AXML: string): string;
+begin
+  Result := XmlToStr(AXML);
+  Result := FaststringReplace(Result, '&amp;', '&amp;amp;', [rfReplaceAll]);
+end;
 
 function StrToXml(const AXML: string): string;
 begin
@@ -259,6 +273,7 @@ var
   ConteudoTag: string;
   iDecimais: Integer;
   aFloatIsIntString: Boolean;
+  Processado: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then
   begin
@@ -270,6 +285,13 @@ begin
     ConteudoTag := Trim(ANode.Content);
     aFloatIsIntString := ANode.FloatIsIntString;
   end;
+
+  Processado := False;
+  if Assigned(OnObterConteudoTag) then
+    OnObterConteudoTag(ANode, Tipo, ConteudoTag, Result, Processado);
+
+  if Processado then
+    Exit;
 
   case Tipo of
     tcStr,
@@ -389,50 +411,36 @@ begin
   end;
 end;
 
+function ObterConteudoTagCNPJCPF(const ANode: TACBrXmlNode): string;
+begin
+  Result := ObterConteudoTag(ANode.Childrens.Find('CNPJ'), tcStr);
+
+  if Trim(Result) = '' then
+    Result := ObterConteudoTag(ANode.Childrens.Find('CPF'), tcStr);
+end;
+
 function TipoEmissaoToStr(const t: TACBrTipoEmissao): string;
 begin
- result := TACBrTipoEmissaoArrayStrings[t];
+  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                              [teNormal, teContingencia, teSCAN, teDPEC, teFSDA,
+                               teSVCAN, teSVCRS, teSVCSP, teOffLine]);
 end;
 
 function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
-var
-  idx: TACBrTipoEmissao;
 begin
-  ok := True;
-
-  for idx := Low(TACBrTipoEmissaoArrayStrings) to High(TACBrTipoEmissaoArrayStrings) do
-  begin
-    if (TACBrTipoEmissaoArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TACBrTipoEmissao: %s', [s]);
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                              [teNormal, teContingencia, teSCAN, teDPEC, teFSDA,
+                               teSVCAN, teSVCRS, teSVCSP, teOffLine]);
 end;
 
 function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 begin
- result := TACBrTipoAmbienteArrayStrings[t];
+  result := EnumeradoToStr(t, ['1', '2'], [taProducao, taHomologacao]);
 end;
 
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
-var
-  idx: TACBrTipoAmbiente;
 begin
-  ok := True;
-
-  for idx := Low(TACBrTipoAmbienteArrayStrings) to High(TACBrTipoAmbienteArrayStrings) do
-  begin
-    if (TACBrTipoAmbienteArrayStrings[idx] = s) then
-    begin
-      result := idx;
-      exit;
-    end;
-  end;
-
-  raise EACBrException.CreateFmt('Valor string inválido para TACBrTipoAmbiente: %s', [s]);
+  result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
 end;
 
 procedure LerSignature(ASignatureNode: TACBrXmlNode; Signature: TSignature);
@@ -451,5 +459,8 @@ begin
   Signature.SignatureValue := ObterConteudoTag(ASignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
   Signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
 end;
+
+initialization
+  OnObterConteudoTag := nil;
 
 end.

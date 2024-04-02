@@ -654,6 +654,7 @@ begin
   InfConsulta.SerieRps := AInfConsultaLinkNFSe.SerieRps;
   InfConsulta.TipoRps := AInfConsultaLinkNFSe.TipoRps;
   InfConsulta.Pagina := AInfConsultaLinkNFSe.Pagina;
+  InfConsulta.CnpjCpfToma := AInfConsultaLinkNFSe.CnpjCpfToma;
 
   FProvider.ConsultaLinkNFSe;
 end;

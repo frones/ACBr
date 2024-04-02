@@ -1078,7 +1078,7 @@ end;
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode, AuxNode2, AuxNodeConf, AuxNodeSubs: TACBrXmlNode;
+  ANode, AuxNode, AuxNode2: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: TNotaFiscal;
   NumNFSe, NumRps: String;

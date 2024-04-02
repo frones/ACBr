@@ -105,17 +105,8 @@ begin
 end;
 
 function TDistDFeInt.ObterNomeArquivo: string;
-var
-  DataHora: TDateTime;
-  Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
 begin
-  Datahora := now;
-  DecodeTime(DataHora, Hour, Min, Sec, Milli);
-  DecodeDate(DataHora, Year, Month, Day);
-  AAAAMMDDTHHMMSS := Poem_Zeros(Year, 4) + Poem_Zeros(Month, 2) + Poem_Zeros(Day, 2) +
-    Poem_Zeros(Hour, 2) + Poem_Zeros(Min, 2) + Poem_Zeros(Sec, 2);
-  Result := AAAAMMDDTHHMMSS + '-con-dist-dfe.xml';
+  Result := FormatDateTime('yyyymmddhhnnss', Now) + '-con-dist-dfe.xml';
 end;
 
 function TDistDFeInt.GerarXML: string;

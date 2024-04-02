@@ -43,7 +43,9 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrXmlBase;
+  ACBrBase,
+  ACBrXmlBase,
+  ACBrXmlDocument;
 
 type
 
@@ -102,6 +104,8 @@ type
     FXmlRetorno: string;
 
     procedure SetProtDFe(const Value: TProtDFeCollection);
+
+    procedure Ler_ProtDFe(ANode: TACBrXmlNode);
   public
     constructor Create(const AtagGrupoMsg: string);
     destructor Destroy; override;
@@ -125,8 +129,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrXmlDocument;
+  ACBrUtil.Strings;
 
 { TRetConsReciDFe }
 
@@ -167,9 +170,7 @@ function TRetConsReciDFe.LerXML: Boolean;
 var
   Document: TACBrXmlDocument;
   ANode, AuxNode: TACBrXmlNode;
-  ANodes: TACBrXmlNodeArray;
   ok: Boolean;
-  i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -191,37 +192,7 @@ begin
         cMsg := ObterConteudoTag(Anode.Childrens.FindAnyNs('cMsg'), tcInt);
         xMsg := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMsg'), tcStr);
 
-        ANodes := ANode.Childrens.FindAllAnyNs('prot' + FtagGrupoMsg);
-
-        ProtDFe.Clear;
-
-        for i := 0 to Length(ANodes) - 1 do
-        begin
-          ProtDFe.New;
-          with ProtDFe[i] do
-          begin
-            // A propriedade XMLprotDFe contem o XML que traz o resultado do
-            // processamento da NF-e.
-            XMLprotDFe := ANodes[i].OuterXml;
-
-            AuxNode := ANodes[i].Childrens.FindAnyNs('infProt');
-
-            if AuxNode <> nil then
-            begin
-              Id := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
-              tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
-              verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
-              chDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ch' + FtagGrupoMsg), tcStr);
-              dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-              nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
-              digVal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('digVal'), tcStr);
-              cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
-              xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
-              cMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMsg'), tcInt);
-              xMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMsg'), tcStr);
-            end;
-          end;
-        end;
+        Ler_ProtDFe(ANode);
       end;
 
       Result := True;
@@ -230,6 +201,46 @@ begin
     end;
   finally
     FreeAndNil(Document);
+  end;
+end;
+
+procedure TRetConsReciDFe.Ler_ProtDFe(ANode: TACBrXmlNode);
+var
+  ANodes: TACBrXmlNodeArray;
+  AuxNode: TACBrXmlNode;
+  i: Integer;
+  ok: Boolean;
+begin
+  ANodes := ANode.Childrens.FindAllAnyNs('prot' + FtagGrupoMsg);
+
+  ProtDFe.Clear;
+
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    ProtDFe.New;
+    with ProtDFe[i] do
+    begin
+      // A propriedade XMLprotDFe contem o XML que traz o resultado do
+      // processamento da NF-e.
+      XMLprotDFe := ANodes[i].OuterXml;
+
+      AuxNode := ANodes[i].Childrens.FindAnyNs('infProt');
+
+      if AuxNode <> nil then
+      begin
+        Id := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+        tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
+        chDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ch' + FtagGrupoMsg), tcStr);
+        dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
+        digVal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('digVal'), tcStr);
+        cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
+        xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
+        cMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMsg'), tcInt);
+        xMsg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMsg'), tcStr);
+      end;
+    end;
   end;
 end;
 

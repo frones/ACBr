@@ -85,18 +85,8 @@ begin
 end;
 
 function TConsStatServ.ObterNomeArquivo: string;
-var
-  DataHora: TDateTime;
-  Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
 begin
-  Datahora:=now;
-  DecodeTime(DataHora, Hour, Min, Sec, Milli);
-  DecodeDate(DataHora, Year, Month, Day);
-  AAAAMMDDTHHMMSS := Poem_Zeros(Year, 4) + Poem_Zeros(Month, 2) + Poem_Zeros(Day, 2) +
-    Poem_Zeros(Hour, 2) + Poem_Zeros(Min, 2) + Poem_Zeros(Sec, 2);
-
-  Result := AAAAMMDDTHHMMSS + '-ped-sta.xml';
+  Result := FormatDateTime('yyyymmddhhnnss', Now) + '-ped-sta.xml';
 end;
 
 function TConsStatServ.GerarXML: string;

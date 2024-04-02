@@ -1,0 +1,17 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="GeraPDFNFSe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="CnpjCpf"/>
+        <xs:element name="Baixa">
+          <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="NumeroNfse"/>
+               <xs:element type="xs:string" name="Tomador"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

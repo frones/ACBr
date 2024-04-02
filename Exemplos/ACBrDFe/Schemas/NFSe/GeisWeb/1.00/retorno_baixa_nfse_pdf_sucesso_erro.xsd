@@ -1,0 +1,21 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="GeraPDFNFSeResposta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="NumeroNfse"/>
+        <xs:element type="xs:string" name="Prestador"/>
+        <xs:element type="xs:string" name="Tomador"/>
+        <xs:element type="xs:string" name="Link"/>
+        <xs:element type="xs:string" name="Msg"/>
+        <xs:element name="Msg" maxOccurs="unbounded" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+               <xs:element type="xs:int" name="Erro"/>
+               <xs:element type="xs:string" name="Status"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

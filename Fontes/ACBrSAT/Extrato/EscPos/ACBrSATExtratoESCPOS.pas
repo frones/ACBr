@@ -55,6 +55,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrSATExtratoESCPOS = class( TACBrSATExtratoClass )
   private
+    FAjusteDeAlturaLogoLateral: Boolean;
     FImprimeChaveEmUmaLinha: TAutoSimNao;
     FPosPrinter : TACBrPosPrinter ;
 
@@ -94,9 +95,8 @@ type
   published
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
 
-    property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha
-      write FImprimeChaveEmUmaLinha default rAuto;
-
+    property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha write FImprimeChaveEmUmaLinha default rAuto;
+    property AjusteDeAlturaLogoLateral: Boolean read FAjusteDeAlturaLogoLateral write FAjusteDeAlturaLogoLateral default False;
   end ;
 
 implementation
@@ -119,6 +119,7 @@ begin
   FPosPrinter := Nil;
 
   FImprimeChaveEmUmaLinha := rAuto;
+  FAjusteDeAlturaLogoLateral := False;
 end;
 
 destructor TACBrSATExtratoESCPOS.Destroy;
@@ -173,7 +174,7 @@ begin
 
     FPosPrinter.Buffer.Add('</zera><mp>' +
                            FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda)+
-                           {StringOfChar(LF, max(LinhasTextoLateral-1,0))+} '</logo>');
+                           IfThen(AjusteDeAlturaLogoLateral, StringOfChar(LF, max(LinhasTextoLateral-1,0)), '')+'</logo>');
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                            '</ae><c>'+TextoLateral +
                            '</mp>');

@@ -127,18 +127,22 @@ begin
       try
         AJSon.Parse(RetWS);
         ARetornoWS.JSON := (aJson.Values['resultado'].Stringify);
-        aJsonViolacoes := aJson.Values['resultado'].AsArray;
-        for x := 0 to aJsonViolacoes.Count -1 do
+        if aJson.IsJsonArray('resultado') then
         begin
-          aJsonViolacao        := aJsonViolacoes[x].AsObject;
-          if (aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString <> '200') then
+          aJsonViolacoes := aJson.Values['resultado'].AsArray;
+          for x := 0 to aJsonViolacoes.Count -1 do
           begin
-            ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-            ARejeicao.Codigo     := aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString;
-            ARejeicao.mensagem   := aJSonViolacao.Values['status'].AsObject.Values['mensagem'].AsString;
+            aJsonViolacao        := aJsonViolacoes[x].AsObject;
+            if (aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString <> '200') then
+            begin
+              ARejeicao            := ARetornoWS.CriarRejeicaoLista;
+              ARejeicao.Codigo     := aJSonViolacao.Values['status'].AsObject.Values['codigo'].AsString;
+              ARejeicao.mensagem   := aJSonViolacao.Values['status'].AsObject.Values['mensagem'].AsString;
+            end;
           end;
         end;
-        if aJson.Values['resultado'].IsJsonArray('mensagens') then
+
+        if aJson.IsJsonObject('resultado') and aJson.Values['resultado'].IsJsonArray('mensagens') then
         begin
           aJsonViolacoes := aJson.Values['mensagens'].AsArray;
           for x := 0 to aJsonViolacoes.Count -1 do

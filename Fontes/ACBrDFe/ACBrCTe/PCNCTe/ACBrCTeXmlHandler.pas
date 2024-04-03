@@ -62,10 +62,12 @@ type
   TToma4Handler = class
   private
    FEnderHandler: TEnderHandler;
+   FPossuiToma4: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
     procedure LerToma4(const ANode: TACBrXmlNode; const toma4: TToma4);
+    property PossuiToma4: Boolean read FPossuiToma4;
   end;
 
   TIdeHandler = class
@@ -1019,7 +1021,8 @@ begin
   FInfPercursoHandler.LerInfPercurso(ANode, Ide.infPercurso);
   FToma03Handler.LerToma03(ANode, Ide.toma03);
   FToma4Handler.LerToma4(ANode, Ide.toma4);
-  Ide.toma03.Toma := Ide.toma4.Toma;
+  if FToma4Handler.PossuiToma4 then
+    Ide.toma03.Toma := Ide.toma4.Toma;
 end;
 
 { TToma03Handler }
@@ -1082,6 +1085,8 @@ var
   tomaNode: TACBrXmlNode;
   OK: Boolean;
 begin
+  FPossuiToma4 := False;
+
   if not Assigned(ANode) then exit;
 
   tomaNode := ANode.Childrens.FindAnyNs('toma4');
@@ -1103,6 +1108,8 @@ begin
   (*#56*)toma4.email := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('email'), tcStr);
 
   FEnderHandler.LerEnder(tomaNode.Childrens.FindAnyNs('enderToma'), toma4.enderToma);
+
+  FPossuiToma4 := True;
 end;
 
 { TComplHandler }

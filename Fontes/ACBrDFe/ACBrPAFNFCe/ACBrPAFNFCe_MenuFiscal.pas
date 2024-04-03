@@ -103,7 +103,6 @@ end;
 
 procedure TACBrPAFNFCe_MenuFiscal.GerarXMLMenuFiscal(Assinado: Boolean);
 var
-  I, X: Integer;
   sArquivoBase64: WideString;
   sAtributo: String;
 
@@ -190,8 +189,8 @@ procedure TACBrPAFNFCe_MenuFiscal.LoadFromFile(const AFileName: String);
 var
   lstArquivo: TStringList;
 begin
+  lstArquivo := TStringList.Create;
   try
-    lstArquivo := TStringList.Create;
     lstArquivo.LoadFromFile(AFileName);
     Arquivo := lstArquivo.Text;
     ArquivoBase64 := EncodeBase64(Arquivo);

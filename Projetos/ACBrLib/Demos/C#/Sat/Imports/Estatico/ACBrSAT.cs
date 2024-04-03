@@ -28,6 +28,12 @@ namespace ACBrLib.Sat
             public delegate int SAT_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_ConfigImportar(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_ConfigExportar(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -44,6 +50,9 @@ namespace ACBrLib.Sat
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_DesInicializar();
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_AtivarSAT(string CNPJValue, int cUF, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_AssociarAssinatura(string CNPJValue, string assinaturaCNPJs, StringBuilder buffer, ref int bufferSize);
@@ -67,6 +76,9 @@ namespace ACBrLib.Sat
             public delegate int SAT_ConsultarNumeroSessao(int cNumeroDeSessao, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_ConsultarUltimaSessaoFiscal(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_AtualizarSoftwareSAT(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -76,13 +88,16 @@ namespace ACBrLib.Sat
             public delegate int SAT_ExtrairLogs(string eArquivo);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int SAT_TesteFimAFim(string eArquivoXmlVenda);
+            public delegate int SAT_TesteFimAFim(string eArquivoXmlVenda, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_GerarAssinaturaSAT(string eCNPJSHW, string eCNPJEmitente, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_CriarCFe(string eArquivoIni, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_ValidarCFe(string eArquivoXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_CriarEnviarCFe(string eArquivoIni, StringBuilder buffer, ref int bufferSize);
@@ -103,6 +118,9 @@ namespace ACBrLib.Sat
             public delegate int SAT_GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_GerarPDFCancelamento(string eArqXMLVenda, string eArqXMLCancelamento, string eNomeArquivo, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_GerarImpressaoFiscalMFe(string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -111,6 +129,9 @@ namespace ACBrLib.Sat
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_EnviarEmail(string eArquivoXml, string ePara, string eAssunto, string eNomeArquivo,
                 string sMensagem, string sCC, string eAnexos);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int SAT_SalvarPDF(StringBuilder buffer, ref int bufferSize);
         }
 
         #endregion InnerTypes
@@ -127,8 +148,8 @@ namespace ACBrLib.Sat
         }
 
         #endregion Constructors
-		
-		#region Properties
+
+        #region Properties
 
         public string Nome
         {
@@ -212,7 +233,7 @@ namespace ACBrLib.Sat
 
         public void Inicializar()
         {
-            var method = GetMethod<Delegates.SAT_InicializarSAT>();
+            var method = GetMethod<SAT_InicializarSAT>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
@@ -220,144 +241,175 @@ namespace ACBrLib.Sat
 
         public void DesInicializar()
         {
-            var method = GetMethod<Delegates.SAT_DesInicializar>();
+            var method = GetMethod<SAT_DesInicializar>();
             var ret = ExecuteMethod(() => method());
 
             CheckResult(ret);
         }
 
-        public string AssociarAssinatura(string CNPJValue, string assinaturaCNPJs)
+        public AtivarSatResposta AtivarSAT(string CNPJValue, int cUF)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_AssociarAssinatura>();
+            var method = GetMethod<SAT_AtivarSAT>();
+            var ret = ExecuteMethod(() => method(ToUTF8(CNPJValue), cUF, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return AtivarSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
+        }
+
+        public AssociarAssinaturaResposta AssociarAssinatura(string CNPJValue, string assinaturaCNPJs)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_AssociarAssinatura>();
             var ret = ExecuteMethod(() => method(ToUTF8(CNPJValue), ToUTF8(assinaturaCNPJs), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return AssociarAssinaturaResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string BloquearSAT()
+        public BloquearSatResposta BloquearSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_BloquearSAT>();
+            var method = GetMethod<SAT_BloquearSAT>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return BloquearSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string DesbloquearSAT()
+        public DesbloquearSatResposta DesbloquearSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_DesbloquearSAT>();
+            var method = GetMethod<SAT_DesbloquearSAT>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return DesbloquearSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string TrocarCodigoDeAtivacao(string codigoDeAtivacaoOuEmergencia, int opcao, string novoCodigo)
+        public TrocarCodigoDeAtivacaoResposta TrocarCodigoDeAtivacao(string codigoDeAtivacaoOuEmergencia, int opcao, string novoCodigo)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_TrocarCodigoDeAtivacao>();
+            var method = GetMethod<SAT_TrocarCodigoDeAtivacao>();
             var ret = ExecuteMethod(() => method(ToUTF8(codigoDeAtivacaoOuEmergencia), opcao,
                 ToUTF8(novoCodigo), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return TrocarCodigoDeAtivacaoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarSAT()
+        public ConsultarSatResposta ConsultarSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_ConsultarSAT>();
+            var method = GetMethod<SAT_ConsultarSAT>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarStatusOperacional()
+        public ConsultarStatusOperacionalResposta ConsultarStatusOperacional()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_ConsultarStatusOperacional>();
+            var method = GetMethod<SAT_ConsultarStatusOperacional>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarStatusOperacionalResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultarNumeroSessao(int cNumeroDeSessao)
+        public ConsultarSessaoSatResposta ConsultarNumeroSessao(int cNumeroDeSessao)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_ConsultarNumeroSessao>();
+            var method = GetMethod<SAT_ConsultarNumeroSessao>();
             var ret = ExecuteMethod(() => method(cNumeroDeSessao, buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarSessaoSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string AtualizarSoftwareSAT()
+        public ConsultarUltimaSessaoFiscalResposta ConsultarUltimaSessaoFiscal()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_AtualizarSoftwareSAT>();
+            var method = GetMethod<SAT_ConsultarUltimaSessaoFiscal>();
             var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultarUltimaSessaoFiscalResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ComunicarCertificadoICPBRASIL(string certificado)
+        public AtualizarSoftwareSatResposta AtualizarSoftwareSAT()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_ComunicarCertificadoICPBRASIL>();
+            var method = GetMethod<SAT_AtualizarSoftwareSAT>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return AtualizarSoftwareSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
+        }
+
+        public ComunicarCertificadoICPBRASILResposta ComunicarCertificadoICPBRASIL(string certificado)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_ComunicarCertificadoICPBRASIL>();
             var ret = ExecuteMethod(() => method(ToUTF8(certificado), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ComunicarCertificadoICPBRASILResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void ExtrairLogs(string eArquivo)
         {
-            var method = GetMethod<Delegates.SAT_ExtrairLogs>();
+            var method = GetMethod<SAT_ExtrairLogs>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivo)));
 
             CheckResult(ret);
         }
 
-        public void TesteFimAFim(string eArquivoXmlVenda)
+        public TesteFimAFimResposta TesteFimAFim(string eArquivoXmlVenda)
         {
-            var method = GetMethod<Delegates.SAT_TesteFimAFim>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlVenda)));
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_TesteFimAFim>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlVenda), buffer, ref bufferLen));
 
             CheckResult(ret);
+
+            return TesteFimAFimResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public string GerarAssinaturaSAT(string eCNPJSHW, string eCNPJEmitente)
@@ -365,7 +417,7 @@ namespace ACBrLib.Sat
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_GerarAssinaturaSAT>();
+            var method = GetMethod<SAT_GerarAssinaturaSAT>();
             var ret = ExecuteMethod(() => method(ToUTF8(eCNPJSHW), ToUTF8(eCNPJEmitente), buffer, ref bufferLen));
 
             CheckResult(ret);
@@ -373,61 +425,73 @@ namespace ACBrLib.Sat
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string CriarCFe(string eArquivoIni)
+        public CFeResposta CriarCFe(CupomFiscal CFe) => CriarCFe(CFe.ToString());
+
+        public CFeResposta CriarCFe(string eArquivoIni)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_CriarCFe>();
+            var method = GetMethod<SAT_CriarCFe>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoIni), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return CFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string CriarEnviarCFe(string eArquivoIni)
+        public void validarCFe(string eArquivoXml)
+        {
+            var method = GetMethod<SAT_ValidarCFe>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml)));
+
+            CheckResult(ret);
+        }
+
+        public EnvioResposta CriarEnviarCFe(CupomFiscal CFe) => CriarEnviarCFe(CFe.ToString());
+
+        public EnvioResposta CriarEnviarCFe(string eArquivoIni)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_CriarEnviarCFe>();
+            var method = GetMethod<SAT_CriarEnviarCFe>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoIni), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string EnviarCFe(string eArquivoXml)
+        public EnvioResposta EnviarCFe(string eArquivoXml)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_EnviarCFe>();
+            var method = GetMethod<SAT_EnviarCFe>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string CancelarCFe(string eArquivoXml)
+        public CancelarCFeResposta CancelarCFe(string eArquivoXml)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_CancelarCFe>();
+            var method = GetMethod<SAT_CancelarCFe>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return CancelarCFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void ImprimirExtratoVenda(string eArquivoXml, string eNomeImpressora = "")
         {
-            var method = GetMethod<Delegates.SAT_ImprimirExtratoVenda>();
+            var method = GetMethod<SAT_ImprimirExtratoVenda>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), ToUTF8(eNomeImpressora)));
 
             CheckResult(ret);
@@ -435,23 +499,36 @@ namespace ACBrLib.Sat
 
         public void ImprimirExtratoResumido(string eArquivoXml, string eNomeImpressora = "")
         {
-            var method = GetMethod<Delegates.SAT_ImprimirExtratoResumido>();
+            var method = GetMethod<SAT_ImprimirExtratoResumido>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), ToUTF8(eNomeImpressora)));
 
             CheckResult(ret);
         }
 
-        public string GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo = "")
+        public PDFExtratoVendaResposta GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo = "")
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_GerarPDFExtratoVenda>();
+            var method = GetMethod<SAT_GerarPDFExtratoVenda>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), ToUTF8(eNomeArquivo), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return PDFExtratoVendaResposta.LerResposta(ProcessResult(buffer, bufferLen));
+        }
+
+        public PDFExtratoVendaResposta GerarPDFCancelamento(string eArqXMLVenda, string eArqXMLCancelamento, string eNomeArquivo)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_GerarPDFCancelamento>();
+            var ret = ExecuteMethod(() => method(ToUTF8(eArqXMLVenda), ToUTF8(eArqXMLCancelamento), ToUTF8(eNomeArquivo), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return PDFExtratoVendaResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public string GerarImpressaoFiscalMFe(string eArquivoXml)
@@ -459,7 +536,7 @@ namespace ACBrLib.Sat
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<Delegates.SAT_GerarImpressaoFiscalMFe>();
+            var method = GetMethod<SAT_GerarImpressaoFiscalMFe>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), buffer, ref bufferLen));
 
             CheckResult(ret);
@@ -469,7 +546,7 @@ namespace ACBrLib.Sat
 
         public void ImprimirExtratoCancelamento(string eArqXMLVenda, string eArqXMLCancelamento, string eNomeImpressora = "")
         {
-            var method = GetMethod<Delegates.SAT_ImprimirExtratoCancelamento>();
+            var method = GetMethod<SAT_ImprimirExtratoCancelamento>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArqXMLVenda), ToUTF8(eArqXMLCancelamento), ToUTF8(eNomeImpressora)));
 
             CheckResult(ret);
@@ -478,11 +555,27 @@ namespace ACBrLib.Sat
         public void EnviarEmail(string eArquivoXml, string ePara, string eAssunto, string eNomeArquivo,
             string sMensagem, string sCC, string eAnexos)
         {
-            var method = GetMethod<Delegates.SAT_EnviarEmail>();
+            var method = GetMethod<SAT_EnviarEmail>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), ToUTF8(ePara), ToUTF8(eAssunto),
                 ToUTF8(eNomeArquivo), ToUTF8(sMensagem), ToUTF8(sCC), ToUTF8(eAnexos)));
 
             CheckResult(ret);
+        }
+
+        public async void SalvarPDF(Stream aStream)
+        {
+            if (aStream == null) throw new ArgumentNullException(nameof(aStream));
+
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_SalvarPDF>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var pdf = ProcessResult(buffer, bufferLen);
+            Base64ToStream(pdf, aStream);
         }
 
         #region Private Methods
@@ -496,39 +589,46 @@ namespace ACBrLib.Sat
 
         protected override void InitializeMethods()
         {
-            AddMethod<Delegates.SAT_Inicializar>("SAT_Inicializar");
-            AddMethod<Delegates.SAT_Finalizar>("SAT_Finalizar");
-            AddMethod<Delegates.SAT_Nome>("SAT_Nome");
-            AddMethod<Delegates.SAT_Versao>("SAT_Versao");
-            AddMethod<Delegates.SAT_UltimoRetorno>("SAT_UltimoRetorno");
-            AddMethod<Delegates.SAT_ConfigLer>("SAT_ConfigLer");
-            AddMethod<Delegates.SAT_ConfigGravar>("SAT_ConfigGravar");
-            AddMethod<Delegates.SAT_ConfigLerValor>("SAT_ConfigLerValor");
-            AddMethod<Delegates.SAT_ConfigGravarValor>("SAT_ConfigGravarValor");
-            AddMethod<Delegates.SAT_InicializarSAT>("SAT_InicializarSAT");
-            AddMethod<Delegates.SAT_DesInicializar>("SAT_DesInicializar");
-            AddMethod<Delegates.SAT_AssociarAssinatura>("SAT_AssociarAssinatura");
-            AddMethod<Delegates.SAT_BloquearSAT>("SAT_BloquearSAT");
-            AddMethod<Delegates.SAT_DesbloquearSAT>("SAT_DesbloquearSAT");
-            AddMethod<Delegates.SAT_TrocarCodigoDeAtivacao>("SAT_TrocarCodigoDeAtivacao");
-            AddMethod<Delegates.SAT_ConsultarSAT>("SAT_ConsultarSAT");
-            AddMethod<Delegates.SAT_ConsultarStatusOperacional>("SAT_ConsultarStatusOperacional");
-            AddMethod<Delegates.SAT_ConsultarNumeroSessao>("SAT_ConsultarNumeroSessao");
-            AddMethod<Delegates.SAT_AtualizarSoftwareSAT>("SAT_AtualizarSoftwareSAT");
-            AddMethod<Delegates.SAT_ComunicarCertificadoICPBRASIL>("SAT_ComunicarCertificadoICPBRASIL");
-            AddMethod<Delegates.SAT_ExtrairLogs>("SAT_ExtrairLogs");
-            AddMethod<Delegates.SAT_TesteFimAFim>("SAT_TesteFimAFim");
-            AddMethod<Delegates.SAT_GerarAssinaturaSAT>("SAT_GerarAssinaturaSAT");
-            AddMethod<Delegates.SAT_CriarCFe>("SAT_CriarCFe");
-            AddMethod<Delegates.SAT_CriarEnviarCFe>("SAT_CriarEnviarCFe");
-            AddMethod<Delegates.SAT_EnviarCFe>("SAT_EnviarCFe");
-            AddMethod<Delegates.SAT_CancelarCFe>("SAT_CancelarCFe");
-            AddMethod<Delegates.SAT_ImprimirExtratoVenda>("SAT_ImprimirExtratoVenda");
-            AddMethod<Delegates.SAT_ImprimirExtratoResumido>("SAT_ImprimirExtratoResumido");
-            AddMethod<Delegates.SAT_GerarPDFExtratoVenda>("SAT_GerarPDFExtratoVenda");
-            AddMethod<Delegates.SAT_GerarImpressaoFiscalMFe>("SAT_GerarImpressaoFiscalMFe");
-            AddMethod<Delegates.SAT_ImprimirExtratoCancelamento>("SAT_ImprimirExtratoCancelamento");
-            AddMethod<Delegates.SAT_EnviarEmail>("SAT_EnviarEmail");
+            AddMethod<SAT_Inicializar>("SAT_Inicializar");
+            AddMethod<SAT_Finalizar>("SAT_Finalizar");
+            AddMethod<SAT_Nome>("SAT_Nome");
+            AddMethod<SAT_Versao>("SAT_Versao");
+            AddMethod<SAT_UltimoRetorno>("SAT_UltimoRetorno");
+            AddMethod<SAT_ConfigImportar>("SAT_ConfigImportar");
+            AddMethod<SAT_ConfigExportar>("SAT_ConfigExportar");
+            AddMethod<SAT_ConfigLer>("SAT_ConfigLer");
+            AddMethod<SAT_ConfigGravar>("SAT_ConfigGravar");
+            AddMethod<SAT_ConfigLerValor>("SAT_ConfigLerValor");
+            AddMethod<SAT_ConfigGravarValor>("SAT_ConfigGravarValor");
+            AddMethod<SAT_InicializarSAT>("SAT_InicializarSAT");
+            AddMethod<SAT_DesInicializar>("SAT_DesInicializar");
+            AddMethod<SAT_AtivarSAT>("SAT_AtivarSAT");
+            AddMethod<SAT_AssociarAssinatura>("SAT_AssociarAssinatura");
+            AddMethod<SAT_BloquearSAT>("SAT_BloquearSAT");
+            AddMethod<SAT_DesbloquearSAT>("SAT_DesbloquearSAT");
+            AddMethod<SAT_TrocarCodigoDeAtivacao>("SAT_TrocarCodigoDeAtivacao");
+            AddMethod<SAT_ConsultarSAT>("SAT_ConsultarSAT");
+            AddMethod<SAT_ConsultarStatusOperacional>("SAT_ConsultarStatusOperacional");
+            AddMethod<SAT_ConsultarNumeroSessao>("SAT_ConsultarNumeroSessao");
+            AddMethod<SAT_ConsultarUltimaSessaoFiscal>("SAT_ConsultarUltimaSessaoFiscal");
+            AddMethod<SAT_AtualizarSoftwareSAT>("SAT_AtualizarSoftwareSAT");
+            AddMethod<SAT_ComunicarCertificadoICPBRASIL>("SAT_ComunicarCertificadoICPBRASIL");
+            AddMethod<SAT_ExtrairLogs>("SAT_ExtrairLogs");
+            AddMethod<SAT_TesteFimAFim>("SAT_TesteFimAFim");
+            AddMethod<SAT_GerarAssinaturaSAT>("SAT_GerarAssinaturaSAT");
+            AddMethod<SAT_CriarCFe>("SAT_CriarCFe");
+            AddMethod<SAT_ValidarCFe>("SAT_ValidarCFe");
+            AddMethod<SAT_CriarEnviarCFe>("SAT_CriarEnviarCFe");
+            AddMethod<SAT_EnviarCFe>("SAT_EnviarCFe");
+            AddMethod<SAT_CancelarCFe>("SAT_CancelarCFe");
+            AddMethod<SAT_ImprimirExtratoVenda>("SAT_ImprimirExtratoVenda");
+            AddMethod<SAT_ImprimirExtratoResumido>("SAT_ImprimirExtratoResumido");
+            AddMethod<SAT_GerarPDFExtratoVenda>("SAT_GerarPDFExtratoVenda");
+            AddMethod<SAT_GerarPDFCancelamento>("SAT_GerarPDFCancelamento");
+            AddMethod<SAT_GerarImpressaoFiscalMFe>("SAT_GerarImpressaoFiscalMFe");
+            AddMethod<SAT_ImprimirExtratoCancelamento>("SAT_ImprimirExtratoCancelamento");
+            AddMethod<SAT_EnviarEmail>("SAT_EnviarEmail");
+            AddMethod<SAT_SalvarPDF>("SAT_SalvarPDF");
         }
 
         protected override string GetUltimoRetorno(int iniBufferLen = 0)

@@ -127,6 +127,9 @@ namespace ACBrLib.Sat
         public delegate int SAT_EnviarEmail(IntPtr handle, string eArquivoXml, string ePara, string eAssunto, string eNomeArquivo,
             string sMensagem, string sCC, string eAnexos);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int SAT_SalvarPDF(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
         protected override void InitializeMethods()
         {
             AddMethod<SAT_Inicializar>("SAT_Inicializar");
@@ -168,6 +171,7 @@ namespace ACBrLib.Sat
             AddMethod<SAT_GerarImpressaoFiscalMFe>("SAT_GerarImpressaoFiscalMFe");
             AddMethod<SAT_ImprimirExtratoCancelamento>("SAT_ImprimirExtratoCancelamento");
             AddMethod<SAT_EnviarEmail>("SAT_EnviarEmail");
+            AddMethod<SAT_SalvarPDF>("SAT_SalvarPDF");
         }
     }
 }

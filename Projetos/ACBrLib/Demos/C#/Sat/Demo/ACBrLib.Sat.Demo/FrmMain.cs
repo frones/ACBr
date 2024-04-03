@@ -261,6 +261,29 @@ namespace ACBrLib.Sat.Demo
             acbrSat.validarCFe(xmlPath);
         }
 
+        private async void btnSalvarPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var nomeArquivo = Helpers.SaveFile("Salvar em PDF (*.pdf)|*.pdf|Todos os Arquivos (*.*)|*.*");
+
+                using (FileStream aStream = File.Create(nomeArquivo))
+                {
+                    acbrSat.SalvarPDF(aStream);
+                    byte[] buffer = new Byte[aStream.Length];
+                    await aStream.ReadAsync(buffer, 0, buffer.Length);
+                    await aStream.FlushAsync();
+                    aStream.Seek(0, SeekOrigin.End);
+                    await aStream.WriteAsync(buffer, 0, buffer.Length);
+                }
+                rtbRespostas.AppendLine($"PDF Salvo em: {nomeArquivo}");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnClasseAltoNivel_Click(object sender, EventArgs e)
         {
             var CFeSAT = AlimentarDados();
@@ -457,6 +480,5 @@ namespace ACBrLib.Sat.Demo
         }
 
         #endregion Methods
-
     }
 }

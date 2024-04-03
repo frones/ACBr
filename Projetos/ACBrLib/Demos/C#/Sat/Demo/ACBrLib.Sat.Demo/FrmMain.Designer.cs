@@ -134,6 +134,7 @@
             this.btnGerarPDF = new System.Windows.Forms.Button();
             this.btnConsultarUltimaSessaoFiscal = new System.Windows.Forms.Button();
             this.btnGerarPDFCancelamento = new System.Windows.Forms.Button();
+            this.btnSalvarPDF = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1294,7 +1295,7 @@
             // 
             // btnGerarPDFCancelamento
             // 
-            this.btnGerarPDFCancelamento.Location = new System.Drawing.Point(12, 498);
+            this.btnGerarPDFCancelamento.Location = new System.Drawing.Point(12, 527);
             this.btnGerarPDFCancelamento.Name = "btnGerarPDFCancelamento";
             this.btnGerarPDFCancelamento.Size = new System.Drawing.Size(230, 23);
             this.btnGerarPDFCancelamento.TabIndex = 48;
@@ -1302,11 +1303,22 @@
             this.btnGerarPDFCancelamento.UseVisualStyleBackColor = true;
             this.btnGerarPDFCancelamento.Click += new System.EventHandler(this.btnGerarPDFCancelamento_Click);
             // 
+            // btnSalvarPDF
+            // 
+            this.btnSalvarPDF.Location = new System.Drawing.Point(12, 498);
+            this.btnSalvarPDF.Name = "btnSalvarPDF";
+            this.btnSalvarPDF.Size = new System.Drawing.Size(112, 23);
+            this.btnSalvarPDF.TabIndex = 49;
+            this.btnSalvarPDF.Text = "Salvar PDF (Stream)";
+            this.btnSalvarPDF.UseVisualStyleBackColor = true;
+            this.btnSalvarPDF.Click += new System.EventHandler(this.btnSalvarPDF_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 539);
+            this.ClientSize = new System.Drawing.Size(742, 557);
+            this.Controls.Add(this.btnSalvarPDF);
             this.Controls.Add(this.btnGerarPDFCancelamento);
             this.Controls.Add(this.btnConsultarUltimaSessaoFiscal);
             this.Controls.Add(this.btnGerarPDF);
@@ -1467,6 +1479,7 @@
         private System.Windows.Forms.Button btnGerarPDF;
         private System.Windows.Forms.Button btnConsultarUltimaSessaoFiscal;
         private System.Windows.Forms.Button btnGerarPDFCancelamento;
+        private System.Windows.Forms.Button btnSalvarPDF;
     }
 }
 

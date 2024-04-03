@@ -521,13 +521,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
+        <HostApplicationFilename Value="C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
+            <HostApplicationFilename Value="C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
           </local>
         </Mode0>
       </Modes>

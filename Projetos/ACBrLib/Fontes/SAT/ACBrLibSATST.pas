@@ -113,6 +113,8 @@ function SAT_ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar)
   : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar)
   : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_SalvarPDF(const sResposta: PChar; var esTamanho: longint)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
@@ -581,6 +583,21 @@ begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibSAT(pLib^.Lib).ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function SAT_SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibSAT(pLib^.Lib).SalvarPDF(sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

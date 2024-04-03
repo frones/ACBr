@@ -174,6 +174,9 @@ function SAT_ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar)
 function SAT_ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar)
   : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 
+function SAT_SalvarPDF(const sResposta: PChar; var esTamanho: longint)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
 function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda, eNomeImpressora: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 

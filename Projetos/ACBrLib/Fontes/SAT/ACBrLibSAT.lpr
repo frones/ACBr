@@ -89,6 +89,7 @@ exports
   SAT_ImprimirExtratoVenda,
   SAT_ImprimirExtratoResumido,
   SAT_ImprimirExtratoCancelamento,
+  SAT_SalvarPDF,
   SAT_GerarPDFExtratoVenda,
   SAT_GerarPDFCancelamento,
   SAT_GerarImpressaoFiscalMFe,

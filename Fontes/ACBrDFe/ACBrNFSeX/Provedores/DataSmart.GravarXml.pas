@@ -62,6 +62,8 @@ procedure TNFSeW_DataSmart202.Configuracao;
 begin
   inherited Configuracao;
 
+  NrOcorrOutrasInformacoes := 0;
+
   NrOcorrCodTribMun_1 := -1;
 
   GerarIDDeclaracao := False;

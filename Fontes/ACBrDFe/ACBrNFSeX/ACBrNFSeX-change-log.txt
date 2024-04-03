@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2024
+-- DataSmart.GravarXml --
+[*] Alteração visando deixar a tag OutrasInformacoes como opcional.
+  Por: Italo Giurizzato Junior
+
 02/04/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Itanhaem/SP mudou as URLs, mas o provedor continua o mesmo.

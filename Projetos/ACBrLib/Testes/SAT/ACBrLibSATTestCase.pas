@@ -70,6 +70,7 @@ type
     procedure Test_SAT_ImpressaoExtratoPDF_Com_NomeArquivo;
     procedure Test_SAT_ImpressaoExtratoPDF_Com_PathPDF;
     procedure Test_SAT_SetNumeroSessao;
+    procedure Test_SAT_SalvarPDF;
   end;
 
 implementation
@@ -542,6 +543,25 @@ var
 begin
   AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
   AssertEquals(ErrOK, SAT_SetNumeroSessao(Handle,'92238'));
+  AssertEquals(ErrOk, SAT_Finalizar(Handle));
+end;
+
+procedure TTestACBrSATLib.Test_SAT_SalvarPDF;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
+  Resposta:= '';
+  Tamanho:= 0;
+
+  AssertEquals('Erro ao Salvar PDF', ErrOK,
+  SAT_SalvarPDF(Handle, Resposta, Tamanho));
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
   AssertEquals(ErrOk, SAT_Finalizar(Handle));
 end;
 

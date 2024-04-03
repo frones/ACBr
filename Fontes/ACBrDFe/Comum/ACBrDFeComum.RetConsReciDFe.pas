@@ -169,7 +169,7 @@ end;
 function TRetConsReciDFe.LerXML: Boolean;
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode: TACBrXmlNode;
   ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;

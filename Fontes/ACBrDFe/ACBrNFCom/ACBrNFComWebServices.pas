@@ -1924,6 +1924,8 @@ begin
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evCancNFCom>', '</evCancNFCom>')) +
                         '</evCancNFCom>';
         end;
+    else
+      AXMLEvento := '';
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;

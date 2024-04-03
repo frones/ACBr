@@ -210,6 +210,7 @@ end;
 procedure TNFComXmlReader.Ler_Ide(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
+  sAux: string;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -226,9 +227,22 @@ begin
   NFCom.ide.cMunFG := ObterConteudo(ANode.Childrens.FindAnyNs('cMunFG'), tcInt);
   NFCom.Ide.finNFCom := StrToFinNFCom(ObterConteudo(ANode.Childrens.FindAnyNs('finNFCom'), tcStr));
   NFCom.Ide.verProc := ObterConteudo(ANode.Childrens.FindAnyNs('verProc'), tcStr);
-  NFCom.Ide.indPrePago := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indPrePago'), tcStr));
-  NFCom.Ide.indCessaoMeiosRede := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indCessaoMeiosRede'), tcStr));
-  NFCom.Ide.indNotaEntrada := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indNotaEntrada'), tcStr));
+
+  sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indPrePago'), tcStr);
+  NFCom.Ide.indPrePago := tiNao;
+  if sAux = '1' then
+    NFCom.Ide.indPrePago := tiSim;
+
+  sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indCessaoMeiosRede'), tcStr);
+  NFCom.Ide.indCessaoMeiosRede := tiNao;
+  if sAux = '1' then
+    NFCom.Ide.indCessaoMeiosRede := tiSim;
+
+  sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indNotaEntrada'), tcStr);
+  NFCom.Ide.indNotaEntrada := tiNao;
+  if sAux = '1' then
+    NFCom.Ide.indNotaEntrada := tiSim;
+
   NFCom.Ide.dhCont := ObterConteudo(ANode.Childrens.FindAnyNs('dhCont'), tcDatHor);
   NFCom.Ide.xJust := ObterConteudo(ANode.Childrens.FindAnyNs('xJust'), tcStr);
 end;
@@ -384,6 +398,8 @@ begin
 end;
 
 procedure TNFComXmlReader.Ler_DetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+var
+  sAux: string;
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
@@ -400,7 +416,11 @@ begin
   Item.Prod.vOutro := ObterConteudo(ANode.Childrens.FindAnyNs('vOutro'), tcDe2);
   Item.Prod.vProd := ObterConteudo(ANode.Childrens.FindAnyNs('vProd'), tcDe2);
   Item.Prod.dExpiracao := ObterConteudo(ANode.Childrens.FindAnyNs('dExpiracao'), tcDat);
-  Item.Prod.indDevolucao := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indDevolucao'), tcStr));
+
+  sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indDevolucao'), tcStr);
+  Item.Prod.indDevolucao := tiNao;
+  if sAux = '1' then
+    Item.Prod.indDevolucao := tiSim;
 end;
 
 procedure TNFComXmlReader.Ler_DetImposto(const Item: TDetCollectionItem;
@@ -409,40 +429,54 @@ var
   AuxNode: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
+  sAux: string;
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.Items[0];
+  sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indSemCST'), tcStr);
+  Item.Imposto.indSemCST := tiNao;
+  if sAux = '1' then
+    Item.Imposto.indSemCST := tiSim;
 
-  if (AuxNode <> nil) then
+  if Item.Imposto.indSemCST = tiNao then
   begin
-    Item.Imposto.ICMS.CST := StrToCSTICMS(ObterConteudo(AuxNode.Childrens.FindAnyNs('CST'), tcStr));
-    Item.Imposto.ICMS.vBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBC'), tcDe2);
-    Item.Imposto.ICMS.pICMS := ObterConteudo(AuxNode.Childrens.FindAnyNs('pICMS'), tcDe2);
-    Item.Imposto.ICMS.vICMS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vICMS'), tcDe2);
-    Item.Imposto.ICMS.pFCP := ObterConteudo(AuxNode.Childrens.FindAnyNs('pFCP'), tcDe4);
-    Item.Imposto.ICMS.vFCP := ObterConteudo(AuxNode.Childrens.FindAnyNs('vFCP'), tcDe2);
-    Item.Imposto.ICMS.pRedBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRedBC'), tcDe2);
-    Item.Imposto.ICMS.vICMSDeson := ObterConteudo(AuxNode.Childrens.FindAnyNs('vICMSDeson'), tcDe2);
-    Item.Imposto.ICMS.cBenef := ObterConteudo(AuxNode.Childrens.FindAnyNs('cBenef'), tcStr);
-  end;
+    AuxNode := ANode.Childrens.Items[0];
 
-  Item.Imposto.ICMSUFDest.Clear;
-  ANodes := ANode.Childrens.FindAllAnyNs('ICMSUFDest');
+    if (AuxNode <> nil) then
+    begin
+      Item.Imposto.ICMS.CST := StrToCSTICMS(ObterConteudo(AuxNode.Childrens.FindAnyNs('CST'), tcStr));
+      Item.Imposto.ICMS.vBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBC'), tcDe2);
+      Item.Imposto.ICMS.pICMS := ObterConteudo(AuxNode.Childrens.FindAnyNs('pICMS'), tcDe2);
+      Item.Imposto.ICMS.vICMS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vICMS'), tcDe2);
+      Item.Imposto.ICMS.pFCP := ObterConteudo(AuxNode.Childrens.FindAnyNs('pFCP'), tcDe4);
+      Item.Imposto.ICMS.vFCP := ObterConteudo(AuxNode.Childrens.FindAnyNs('vFCP'), tcDe2);
+      Item.Imposto.ICMS.pRedBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRedBC'), tcDe2);
+      Item.Imposto.ICMS.vICMSDeson := ObterConteudo(AuxNode.Childrens.FindAnyNs('vICMSDeson'), tcDe2);
+      Item.Imposto.ICMS.cBenef := ObterConteudo(AuxNode.Childrens.FindAnyNs('cBenef'), tcStr);
 
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    Item.Imposto.ICMSUFDest.New;
+      sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indSN'), tcStr);
+      Item.Imposto.ICMS.indSN := tiNao;
+      if sAux = '1' then
+        Item.Imposto.ICMS.indSN := tiSim;
+    end;
 
-    Item.Imposto.ICMSUFDest[i].cUFDest := StrToInt(ObterConteudoTag(ANodes[i].Attributes.Items['cUFDest']));
-    Item.Imposto.ICMSUFDest[i].vBCUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vBCUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest[i].pFCPUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('pFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest[i].pICMSUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('pICMSUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest[i].vFCPUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest[i].vICMSUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vICMSUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest[i].vICMSUFEmi := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vICMSUFEmi'), tcDe2);
-    Item.Imposto.ICMSUFDest[i].cBenefUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cBenefUFDest'), tcStr);
+    Item.Imposto.ICMSUFDest.Clear;
+    ANodes := ANode.Childrens.FindAllAnyNs('ICMSUFDest');
+
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Item.Imposto.ICMSUFDest.New;
+
+      Item.Imposto.ICMSUFDest[i].cUFDest := StrToInt(ObterConteudoTag(ANodes[i].Attributes.Items['cUFDest']));
+      Item.Imposto.ICMSUFDest[i].vBCUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vBCUFDest'), tcDe2);
+      Item.Imposto.ICMSUFDest[i].pFCPUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('pFCPUFDest'), tcDe2);
+      Item.Imposto.ICMSUFDest[i].pICMSUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('pICMSUFDest'), tcDe2);
+      Item.Imposto.ICMSUFDest[i].vFCPUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vFCPUFDest'), tcDe2);
+      Item.Imposto.ICMSUFDest[i].vICMSUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vICMSUFDest'), tcDe2);
+      Item.Imposto.ICMSUFDest[i].vICMSUFEmi := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vICMSUFEmi'), tcDe2);
+      Item.Imposto.ICMSUFDest[i].cBenefUFDest := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cBenefUFDest'), tcStr);
+    end;
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('PIS');
@@ -499,6 +533,7 @@ procedure TNFComXmlReader.Ler_DetgProcRef(const Item: TDetCollectionItem;
 var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
+  sAux: string;
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
@@ -508,7 +543,12 @@ begin
   Item.gProcRef.vProd := ObterConteudo(ANode.Childrens.FindAnyNs('vProd'), tcDe2);
   Item.gProcRef.vDesc := ObterConteudo(ANode.Childrens.FindAnyNs('vDesc'), tcDe2);
   Item.gProcRef.vOutro := ObterConteudo(ANode.Childrens.FindAnyNs('vOutro'), tcDe2);
-  Item.gProcRef.indDevolucao := StrToTIndicador(ObterConteudo(ANode.Childrens.FindAnyNs('indDevolucao'), tcStr));
+
+  sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indDevolucao'), tcStr);
+  Item.gProcRef.indDevolucao := tiNao;
+  if sAux = '1' then
+    Item.gProcRef.indDevolucao := tiSim;
+
   Item.gProcRef.vBC := ObterConteudo(ANode.Childrens.FindAnyNs('vBC'), tcDe2);
   Item.gProcRef.pICMS := ObterConteudo(ANode.Childrens.FindAnyNs('pICMS'), tcDe2);
   Item.gProcRef.vICMS := ObterConteudo(ANode.Childrens.FindAnyNs('vICMS'), tcDe2);

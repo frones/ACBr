@@ -44,6 +44,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
+//  ACBrDFeComum.SignatureClass,
   pcnSignature,
   ACBrNFComEventoClass;
 
@@ -96,7 +97,7 @@ end;
 function TRetEventoNFCom.LerXml: Boolean;
 var
   Document: TACBrXmlDocument;
-  ANode, ANodeAux, SignatureNode{, ReferenceNode, X509DataNode}: TACBrXmlNode;
+  ANode, ANodeAux, SignatureNode: TACBrXmlNode;
   ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -132,20 +133,6 @@ begin
         SignatureNode := ANode.Childrens.FindAnyNs('Signature');
 
         LerSignature(SignatureNode, signature);
-        {
-        if SignatureNode <> nil then
-        begin
-          ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo')
-                                        .Childrens.FindAnyNs('Reference');
-          X509DataNode :=  SignatureNode.Childrens.FindAnyNs('KeyInfo')
-                                        .Childrens.FindAnyNs('X509Data');
-
-          signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
-          signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
-          signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
-          signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
-        end;
-        }
       end;
 
       Result := True;

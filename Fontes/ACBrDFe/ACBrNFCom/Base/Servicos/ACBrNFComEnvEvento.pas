@@ -46,7 +46,7 @@ uses
   ACBrBase,
 //  ACBrDFeConversao,
   pcnConversao,
-  pcnSignature,
+  ACBrDFeComum.SignatureClass,
   ACBrNFComEventoClass,
   ACBrNFComConsts;
 
@@ -94,7 +94,7 @@ type
     function LerXML(const CaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
-    function LerFromIni(const AIniString: string; CCe: Boolean = True): Boolean;
+    function LerFromIni(const AIniString: string): Boolean;
 
     property idLote: Int64 read FidLote write FidLote;
     property Evento: TInfEventoCollection read FEvento write SetEvento;
@@ -257,8 +257,8 @@ begin
 
   if Evento.Items[i].signature.URI <> '' then
   begin
-    Evento.Items[i].signature.GerarXML;
-    Xml := Xml + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+    Xml := Xml + Evento.Items[i].signature.GerarXML;
+//    Xml := Xml + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
   end;
 
   Result := Xml;
@@ -333,7 +333,7 @@ begin
   end;
 end;
 
-function TEventoNFCom.LerFromIni(const AIniString: string; CCe: Boolean): Boolean;
+function TEventoNFCom.LerFromIni(const AIniString: string): Boolean;
 var
   I: Integer;
   sSecao, sFim: string;

@@ -344,7 +344,7 @@ begin
     Self.HTTPGet(fUrlConsulta +
                parametros(fsCepOrigem)   +
                parametros(fsCepDestino)  +
-               parametros(FloatToString(fnVlPeso))  +
+               parametros(FloatToString(fnVlPeso, '.', '0.000'))  +
                parametros(FloatToString(fnVlAltura))  +
                parametros(FloatToString(fnVlLargura))  +
                parametros(FloatToString(fnVlComprimento)) +

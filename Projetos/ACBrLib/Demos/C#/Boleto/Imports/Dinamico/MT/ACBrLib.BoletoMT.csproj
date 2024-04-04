@@ -15,11 +15,11 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.2.0</Version>
+    <Version>1.0.3.0</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ProJetoACBr.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <FileVersion>1.0.3.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

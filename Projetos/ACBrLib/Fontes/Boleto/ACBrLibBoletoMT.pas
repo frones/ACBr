@@ -44,10 +44,13 @@ uses
 
 function Boleto_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_Finalizar(libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_Finalizar(libHandle: PLibHandle): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -154,6 +157,12 @@ function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PChar; var es
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
+end;
+
+function Boleto_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
 function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

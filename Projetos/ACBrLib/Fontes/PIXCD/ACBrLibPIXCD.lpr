@@ -53,6 +53,7 @@ exports
   PIXCD_Finalizar,
   PIXCD_Nome,
   PIXCD_Versao,
+  PIXCD_OpenSSLInfo,
   PIXCD_UltimoRetorno,
   PIXCD_ConfigImportar,
   PIXCD_ConfigExportar,

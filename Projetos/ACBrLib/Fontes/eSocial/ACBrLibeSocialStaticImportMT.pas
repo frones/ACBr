@@ -65,7 +65,7 @@ const
 function eSocial_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_Finalizar(var libHandle: TLibHandle): longint;
+function eSocial_Finalizar(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 {%endregion}
 
@@ -74,6 +74,9 @@ function eSocial_Nome(var libHandle: TLibHandle; const sNome: PChar; var esTaman
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
 function eSocial_Versao(var libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
+
+function eSocial_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
 function eSocial_UltimoRetorno(var libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

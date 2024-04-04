@@ -52,6 +52,7 @@ exports
   IBGE_Finalizar,
   IBGE_Nome,
   IBGE_Versao,
+  IBGE_OpenSSLInfo,
   IBGE_UltimoRetorno,
   IBGE_ConfigLer,
   IBGE_ConfigGravar,

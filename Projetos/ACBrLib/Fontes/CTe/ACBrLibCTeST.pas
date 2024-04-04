@@ -50,6 +50,8 @@ function CTE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ConfigImportar(const eArqConfig: PChar): longint;
@@ -200,6 +202,12 @@ function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
+end;
+
+function CTE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
 function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;

@@ -70,6 +70,9 @@ function CTE_Nome(const sNome: PChar; var esTamanho: longint): longint;
 function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
+function NFE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
+
 function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 

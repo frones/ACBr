@@ -53,6 +53,7 @@ exports
   CNPJ_Finalizar,
   CNPJ_Nome,
   CNPJ_Versao,
+  CNPJ_OpenSSLInfo,
   CNPJ_UltimoRetorno,
   CNPJ_ConfigImportar,
   CNPJ_ConfigExportar,

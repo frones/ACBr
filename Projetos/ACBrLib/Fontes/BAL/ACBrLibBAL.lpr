@@ -53,6 +53,7 @@ exports
   BAL_Finalizar,
   BAL_Nome,
   BAL_Versao,
+  BAL_OpenSSLInfo,
   BAL_UltimoRetorno,
   BAL_ConfigImportar,
   BAL_ConfigExportar,

@@ -48,6 +48,8 @@ function IBGE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function IBGE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function IBGE_ConfigLer(const eArqConfig: PChar): longint;
@@ -95,6 +97,12 @@ function IBGE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
+end;
+
+function IBGE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
 function IBGE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;

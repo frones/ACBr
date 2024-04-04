@@ -71,6 +71,8 @@ function MDFE_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanh
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
+function MDFE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;

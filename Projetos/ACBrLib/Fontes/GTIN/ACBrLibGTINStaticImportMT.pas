@@ -65,7 +65,7 @@ const
  function GTIN_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_Finalizar (var libHandle: TLibHandle): longint;
+ function GTIN_Finalizar (const libHandle: TLibHandle): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
@@ -74,6 +74,9 @@ const
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
  function GTIN_Versao(var libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
+
+ function GTIN_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
  function GTIN_UltimoRetorno(var libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

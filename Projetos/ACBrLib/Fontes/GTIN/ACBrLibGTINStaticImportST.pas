@@ -76,6 +76,9 @@ const
  function GTIN_Versao(const sVersao: PChar; var esTamanho: longint): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
+ function GTIN_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
+
  function GTIN_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}

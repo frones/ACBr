@@ -59,6 +59,7 @@ exports
   NFE_Finalizar,
   NFE_Nome,
   NFE_Versao,
+  NFE_OpenSSLInfo,
   NFE_UltimoRetorno,
   NFE_ConfigImportar,
   NFE_ConfigExportar,

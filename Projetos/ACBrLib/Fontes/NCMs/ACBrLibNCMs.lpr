@@ -53,6 +53,7 @@ exports
   NCM_Finalizar,
   NCM_Nome,
   NCM_Versao,
+  NCM_OpenSSLInfo,
   NCM_UltimoRetorno,
   NCM_ConfigImportar,
   NCM_ConfigExportar,

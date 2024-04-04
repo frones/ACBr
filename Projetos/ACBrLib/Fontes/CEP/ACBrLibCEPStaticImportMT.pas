@@ -58,6 +58,8 @@ const
   {$EndIf}
  {$EndIf}
 
+{$I ACBrLibErros.inc}
+
 {%region Constructor/Destructor}
 function CEP_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
@@ -71,6 +73,9 @@ function CEP_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
 function CEP_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
+
+function CEP_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
 function CEP_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

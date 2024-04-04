@@ -52,6 +52,8 @@ function MAIL_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanh
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
@@ -137,6 +139,12 @@ function MAIL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTa
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
+end;
+
+function MAIL_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
 function MAIL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

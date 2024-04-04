@@ -53,6 +53,7 @@ exports
   GTIN_Finalizar,
   GTIN_Nome,
   GTIN_Versao,
+  GTIN_OpenSSLInfo,
   GTIN_UltimoRetorno,
   GTIN_ConfigImportar,
   GTIN_ConfigExportar,

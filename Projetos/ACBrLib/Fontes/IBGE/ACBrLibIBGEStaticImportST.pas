@@ -75,6 +75,9 @@ function IBGE_Nome(const sNome: PChar; var esTamanho: longint): longint;
 function IBGE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
+function IBGE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
+
 function IBGE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 {%endregion}

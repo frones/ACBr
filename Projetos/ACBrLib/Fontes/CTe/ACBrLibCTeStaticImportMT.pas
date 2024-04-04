@@ -59,6 +59,8 @@ const
   {$EndIf}
  {$EndIf}
 
+ {$I ACBrLibErros.inc}
+
 function CTE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 function CTE_Finalizar(const libHandle: TLibHandle): longint;
@@ -68,6 +70,9 @@ function CTE_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
+
+function CTE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
@@ -196,7 +201,7 @@ function CTE_ImprimirEventoPDF(const libHandle: TLibHandle;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_SalvarEventoPDF(const libHandle: TLibHandle; const eArquivoXmlCTe, eArquivoXmlEvento: PChar; sResposta: PChar; var esTamanho: longint): longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_ImprimirInutilizacao(const libHandle: TLibHandle; const eArquivoXml: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;

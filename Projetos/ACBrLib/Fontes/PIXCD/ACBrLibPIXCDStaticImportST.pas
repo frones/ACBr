@@ -76,6 +76,9 @@ const
  function PIXCD_Versao(const sVersao: PChar; var esTamanho: longint): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
 
+ function PIXCD_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
+
  function PIXCD_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPIXCDLIBName;
  {%endregion}

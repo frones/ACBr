@@ -54,6 +54,7 @@ exports
   MAIL_Inicializada,
   MAIL_Nome,
   MAIL_Versao,
+  MAIL_OpenSSLInfo,
   MAIL_UltimoRetorno,
   MAIL_ConfigImportar,
   MAIL_ConfigExportar,

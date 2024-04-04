@@ -56,6 +56,7 @@ exports
   eSocial_Finalizar,
   eSocial_Nome,
   eSocial_Versao,
+  eSocial_OpenSSLInfo,
   eSocial_UltimoRetorno,
   eSocial_ConfigImportar,
   eSocial_ConfigExportar,

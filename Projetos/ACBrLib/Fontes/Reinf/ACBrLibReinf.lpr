@@ -55,6 +55,7 @@ exports
   Reinf_Finalizar,
   Reinf_Nome,
   Reinf_Versao,
+  Reinf_OpenSSLInfo,
   Reinf_UltimoRetorno,
   Reinf_ConfigImportar,
   Reinf_ConfigExportar,

@@ -54,6 +54,7 @@ exports
   POS_Inicializada,
   POS_Nome,
   POS_Versao,
+  POS_OpenSSLInfo,
   POS_UltimoRetorno,
   POS_ConfigImportar,
   POS_ConfigExportar,

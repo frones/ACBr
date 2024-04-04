@@ -75,6 +75,9 @@ function NCM_Nome(const sNome: PChar; var esTamanho: longint): longint;
 function NCM_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
+function NCM_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
+
 function NCM_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}

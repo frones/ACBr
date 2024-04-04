@@ -76,6 +76,9 @@ function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
 function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
+function BAL_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
+
 function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}

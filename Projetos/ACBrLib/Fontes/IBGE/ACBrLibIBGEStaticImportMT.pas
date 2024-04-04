@@ -64,7 +64,7 @@ const
 function IBGE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
-function IBGE_Finalizar(libHandle: TLibHandle): longint;
+function IBGE_Finalizar(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 {%endregion}
 
@@ -73,6 +73,9 @@ function IBGE_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanh
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
 function IBGE_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
+
+function IBGE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrIBGELIBName;
 
 function IBGE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

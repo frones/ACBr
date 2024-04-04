@@ -52,6 +52,7 @@ exports
   CEP_Finalizar,
   CEP_Nome,
   CEP_Versao,
+  CEP_OpenSSLInfo,
   CEP_UltimoRetorno,
   CEP_ConfigImportar,
   CEP_ConfigExportar,

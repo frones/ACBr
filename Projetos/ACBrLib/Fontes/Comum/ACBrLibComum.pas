@@ -68,10 +68,12 @@ type
     FLogNome: String;
     FLogData: TDate;
     FNome: String;
+    FOpenSSLInfo: String;
     FDescricao: String;
     FVersao: String;
     FTraduzirUltimoRetorno: Boolean;
 
+    function GetOpenSSLInfo: String;
     function GetNome: String;
     function GetDescricao: String;
     function GetVersao: String;
@@ -96,6 +98,7 @@ type
 
     property Nome: String read GetNome;
     property Versao: String read GetVersao;
+    property OpenSSLInfo: String read GetOpenSSLInfo;
     property Descricao: String read GetDescricao;
     property TraduzirUltimoRetorno: Boolean read FTraduzirUltimoRetorno write FTraduzirUltimoRetorno;
 
@@ -108,6 +111,7 @@ type
 
     function ObterNome(const sNome: PChar; var esTamanho: longint): longint;
     function ObterVersao(const sVersao: PChar; var esTamanho: longint): longint;
+    function ObterOpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
     function UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
 
 
@@ -141,6 +145,7 @@ function LIB_Inicalizada(const libHandle: PLibHandle): Boolean;
 {%region Versao/Retorno}
 function LIB_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
 function LIB_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function LIB_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
 function LIB_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
 {%endregion}
 
@@ -191,6 +196,7 @@ uses
   strings,
   synacode,
   synautil,
+  OpenSSLExt,
   ACBrConsts, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.Strings,
   ACBrLibConsts, ACBrLibResposta;
 
@@ -270,6 +276,19 @@ begin
   Result := FNome;
 {$ENDIF}
 
+end;
+
+function TACBrLib.GetOpenSSLInfo: String;
+begin
+  if (FOpenSSLInfo = '') then
+  begin
+    FOpenSSLInfo := 'OpenSSLVersion: ' + OpenSSLExt.OpenSSLVersion(0) + sLineBreak +
+      'OpenSSLFullVersion: ' + OpenSSLExt.OpenSSLFullVersion + sLineBreak +
+      'SSLUtilFile: ' + OpenSSLExt.SSLUtilFile + sLineBreak +
+      'SSLLibFile: ' + OpenSSLExt.SSLLibFile;
+  end;
+
+  Result := FOpenSSLInfo;
 end;
 
 function TACBrLib.GetDescricao: String;
@@ -419,6 +438,26 @@ begin
     if Config.Log.Nivel >= logCompleto then
       GravarLog('   Versao:' + string(sVersao) + ', len:' + IntToStr(esTamanho), logCompleto, True);
     Result := SetRetorno(ErrOK, Versao);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLib.ObterOpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+var
+  Ret: Ansistring;
+begin
+  try
+    GravarLog('LIB_OpenSSLInfo', logNormal);
+    Ret := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(OpenSSLInfo), OpenSSLInfo);
+    MoverStringParaPChar(Ret, sOpenSSLInfo, esTamanho);
+    if Config.Log.Nivel >= logCompleto then
+      GravarLog('   OpenSSLInfo:' + string(sOpenSSLInfo) + ', len:' + IntToStr(esTamanho), logCompleto, True);
+    Result := SetRetorno(ErrOK, OpenSSLInfo);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -676,6 +715,20 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := libHandle^.Lib.ObterVersao(sVersao, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function LIB_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := libHandle^.Lib.ObterOpenSSLInfo(sOpenSSLInfo, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

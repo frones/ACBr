@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2024
+-- Diversos --
+[+] Implementado método LIB_OpenSSLInfo
+  Por: Renato Rubinho
+
 21/02/2024
 -- ACBrLib.hnd, Diversos inis --
 [+] Enviados arquivos ini da versão 1.2 do e-Social com correção do Encoding e configurado help da Lib

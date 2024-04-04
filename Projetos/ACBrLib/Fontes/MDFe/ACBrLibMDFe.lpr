@@ -54,6 +54,7 @@ exports
   MDFE_Finalizar,
   MDFE_Nome,
   MDFE_Versao,
+  MDFE_OpenSSLInfo,
   MDFE_UltimoRetorno,
   MDFE_ConfigImportar,
   MDFE_ConfigExportar,

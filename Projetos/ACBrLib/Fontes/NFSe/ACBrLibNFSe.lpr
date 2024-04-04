@@ -53,6 +53,7 @@ exports
   NFSE_Finalizar,
   NFSE_Nome,
   NFSE_Versao,
+  NFSE_OpenSSLInfo,
   NFSE_UltimoRetorno,
   NFSE_ConfigImportar,
   NFSE_ConfigExportar,

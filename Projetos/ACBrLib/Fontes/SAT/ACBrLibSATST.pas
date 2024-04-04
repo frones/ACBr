@@ -46,6 +46,8 @@ function SAT_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;{$IfDef 
 function SAT_Finalizar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_Nome(const sNome: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_Versao(const sVersao: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConfigImportar(const eArqConfig: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -157,6 +159,12 @@ function SAT_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
+end;
+
+function SAT_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
 function SAT_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;

@@ -2,226 +2,339 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="10">
+    <Units Count="27">
       <Unit0>
         <Filename Value="ProjACBrLibComumTest.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <CursorPos Y="14"/>
+        <UsageCount Value="51"/>
       </Unit0>
       <Unit1>
         <Filename Value="acbrlibcomumtest.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrLibComumTest"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="10"/>
-        <CursorPos X="27" Y="20"/>
-        <UsageCount Value="25"/>
+        <TopLine Value="179"/>
+        <CursorPos X="90" Y="193"/>
+        <UsageCount Value="51"/>
+        <Bookmarks Count="4">
+          <Item0 Y="131" ID="2"/>
+          <Item1 Y="159" ID="3"/>
+          <Item2 X="2" Y="40" ID="1"/>
+          <Item3 X="46" Y="304" ID="4"/>
+        </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\..\Fontes\Comum\ACBrLibResposta.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="47"/>
         <CursorPos X="3" Y="62"/>
-        <UsageCount Value="25"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="51"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\..\Fontes\CTe\ACBrLibCTeRespostas.pas"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="43"/>
         <CursorPos X="31" Y="46"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\..\Fontes\Comum\ACBrLibConfig.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="839"/>
         <CursorPos X="20" Y="855"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="233"/>
         <CursorPos X="13" Y="249"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\Fontes\Sedex\ACBrLibSedexRespostas.pas"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="31"/>
         <CursorPos X="29" Y="46"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\..\Fontes\Reinf\ACBrLibReinfRespostas.pas"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="65"/>
         <CursorPos X="31" Y="73"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-fpcunit\src\testutils.pp"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="8"/>
       </Unit8>
       <Unit9>
         <Filename Value="C:\lazarus\lcl\graphics.pp"/>
         <UnitName Value="Graphics"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="542"/>
         <CursorPos X="32" Y="562"/>
+        <UsageCount Value="8"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ACBrLibErros.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="6" Y="2"/>
+        <UsageCount Value="8"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\Fontes\Comum\ACBrLibComum.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="182"/>
+        <CursorPos X="3" Y="199"/>
+        <UsageCount Value="15"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\Fontes\NFSe\ACBrLibNFSeConsts.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <CursorPos X="14" Y="33"/>
+        <UsageCount Value="15"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\Fontes\NFSe\ACBrLibNFSeStaticImportMT.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="49"/>
+        <CursorPos X="49" Y="62"/>
+        <UsageCount Value="16"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\..\..\Fontes\Terceiros\synalist\synacode.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="8"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="C:\Lazarus\fpcsrc\packages\fcl-fpcunit\src\fpcunit.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="90"/>
+        <CursorPos Y="100"/>
+        <UsageCount Value="9"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\Fontes\Comum\ACBrLibErros.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="32" Y="9"/>
+        <UsageCount Value="9"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="C:\Lazarus\fpcsrc\packages\fcl-fpcunit\src\testutils.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="60"/>
+        <CursorPos X="47" Y="71"/>
+        <UsageCount Value="9"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\..\..\Exemplos\ACBrAndroid\SecondDisplay\uFrameVendaProduto.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="14"/>
+        <CursorPos X="14" Y="30"/>
+        <UsageCount Value="12"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\..\..\..\Fontes\PCNComum\pcnConsts.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="214"/>
+        <UsageCount Value="9"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\..\..\Fontes\PCNComum\pcnConversao.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="49"/>
+        <CursorPos Y="61"/>
+        <UsageCount Value="12"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\Fontes\CTe\ACBrLibCTeStaticImportMT.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
+        <CursorPos Y="63"/>
+        <UsageCount Value="12"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\..\Fontes\ConsultaCNPJ\ACBrLibConsultaCNPJStaticImportMT.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="51"/>
+        <UsageCount Value="11"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="C:\Lazarus\fpcsrc\packages\fcl-base\src\inifiles.pp"/>
+        <UnitName Value="IniFiles"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="28"/>
+        <UsageCount Value="9"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\..\Fontes\CEP\ACBrLibCEPStaticImportMT.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <CursorPos Y="62"/>
+        <UsageCount Value="9"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\..\Fontes\CTe\ACBrLibCTeBase.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1950"/>
+        <CursorPos X="19" Y="1967"/>
+        <UsageCount Value="9"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\..\Fontes\NCMs\ACBrLibNCMsStaticImportMT.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="60"/>
+        <CursorPos X="82" Y="69"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
-      </Unit9>
+      </Unit26>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
-        <Filename Value="..\..\Fontes\Comum\ACBrLibResposta.pas"/>
-        <Caret Line="74" Column="20" TopLine="59"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="156" Column="57" TopLine="138"/>
       </Position1>
       <Position2>
-        <Filename Value="..\..\Fontes\Comum\ACBrLibResposta.pas"/>
-        <Caret Line="193" Column="27" TopLine="187"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="54" Column="52" TopLine="40"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\Fontes\Comum\ACBrLibConfig.pas"/>
-        <Caret Line="855" Column="12" TopLine="840"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="155" Column="45" TopLine="138"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\Fontes\Comum\ACBrLibConfig.pas"/>
-        <Caret Line="291" Column="20" TopLine="276"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="44" Column="33" TopLine="31"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\Fontes\Comum\ACBrLibConfig.pas"/>
-        <Caret Line="324" Column="28" TopLine="310"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="189" Column="21" TopLine="172"/>
       </Position5>
       <Position6>
-        <Filename Value="..\..\Fontes\Comum\ACBrLibConfig.pas"/>
-        <Caret Line="855" Column="20" TopLine="839"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="122" Column="64" TopLine="106"/>
       </Position6>
       <Position7>
-        <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <Caret Line="159" Column="29" TopLine="144"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="155" Column="45" TopLine="138"/>
       </Position7>
       <Position8>
-        <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <Caret Line="47" Column="30" TopLine="44"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="163" Column="63" TopLine="138"/>
       </Position8>
       <Position9>
-        <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <Caret Line="66" Column="37" TopLine="44"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="155" Column="45" TopLine="138"/>
       </Position9>
       <Position10>
-        <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <Caret Line="79" Column="37" TopLine="61"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="44" Column="32" TopLine="31"/>
       </Position10>
       <Position11>
-        <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <Caret Line="248" Column="16" TopLine="233"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="45" Column="65" TopLine="31"/>
       </Position11>
       <Position12>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="14" Column="25" TopLine="2"/>
+        <Caret Line="51" Column="2" TopLine="31"/>
       </Position12>
       <Position13>
-        <Filename Value="..\..\Fontes\SAT\ACBrLibSATRespostas.pas"/>
-        <Caret Line="249" Column="13" TopLine="233"/>
+        <Filename Value="acbrlibcomumtest.pas"/>
+        <Caret Line="52" Column="2" TopLine="31"/>
       </Position13>
       <Position14>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="16" Column="52"/>
+        <Caret Line="46" Column="62" TopLine="31"/>
       </Position14>
       <Position15>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="13" Column="19"/>
+        <Caret Line="155" Column="45" TopLine="138"/>
       </Position15>
       <Position16>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="16" Column="51"/>
+        <Caret Line="165" Column="73" TopLine="138"/>
       </Position16>
       <Position17>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="27" Column="55" TopLine="8"/>
+        <Caret TopLine="46"/>
       </Position17>
       <Position18>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="8" Column="34"/>
+        <Caret Line="148" Column="49" TopLine="138"/>
       </Position18>
       <Position19>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="14" Column="46" TopLine="7"/>
+        <Caret Line="64" TopLine="112"/>
       </Position19>
       <Position20>
-        <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="33" Column="16" TopLine="9"/>
+        <Filename Value="..\..\Fontes\NCMs\ACBrLibNCMsStaticImportMT.pas"/>
+        <Caret Line="63" TopLine="58"/>
       </Position20>
       <Position21>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="35" Column="26" TopLine="13"/>
+        <Caret Line="155" Column="61" TopLine="138"/>
       </Position21>
       <Position22>
-        <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="34" Column="13" TopLine="13"/>
+        <Filename Value="..\..\Fontes\NCMs\ACBrLibNCMsStaticImportMT.pas"/>
+        <Caret Line="63" TopLine="58"/>
       </Position22>
       <Position23>
-        <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="18" Column="80"/>
+        <Filename Value="..\..\Fontes\NCMs\ACBrLibNCMsStaticImportMT.pas"/>
       </Position23>
       <Position24>
-        <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="19" Column="34" TopLine="14"/>
+        <Filename Value="..\..\Fontes\NCMs\ACBrLibNCMsStaticImportMT.pas"/>
+        <Caret Line="69" Column="82" TopLine="60"/>
       </Position24>
       <Position25>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="22" Column="27" TopLine="38"/>
+        <Caret Line="101" Column="32" TopLine="81"/>
       </Position25>
       <Position26>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="60" Column="29" TopLine="38"/>
+        <Caret Line="153" Column="22" TopLine="125"/>
       </Position26>
       <Position27>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="58" TopLine="41"/>
       </Position27>
       <Position28>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="21" Column="5" TopLine="6"/>
+        <Caret Line="153" TopLine="125"/>
       </Position28>
       <Position29>
         <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="22" Column="48" TopLine="40"/>
+        <Caret Line="180" TopLine="152"/>
       </Position29>
-      <Position30>
-        <Filename Value="acbrlibcomumtest.pas"/>
-        <Caret Line="58" Column="18" TopLine="40"/>
-      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode=""/>
+      <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
   <Debugging>
-    <Watches Count="1">
-      <Item1>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\Fontes\Comum\ACBrLibComum.pas"/>
+        <Line Value="610"/>
+      </Item>
+    </BreakPoints>
+    <Watches>
+      <Item>
         <Expression Value="Resultado"/>
-      </Item1>
+      </Item>
     </Watches>
   </Debugging>
 </CONFIG>

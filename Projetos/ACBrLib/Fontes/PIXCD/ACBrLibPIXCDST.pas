@@ -52,6 +52,9 @@ function PIXCD_Nome(const sNome: PChar; var esTamanho: longint): longint;
 function PIXCD_Versao(const sVersao: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function PIXCD_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function PIXCD_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -140,6 +143,12 @@ function PIXCD_Versao(const sVersao: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
+end;
+
+function PIXCD_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
 function PIXCD_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;

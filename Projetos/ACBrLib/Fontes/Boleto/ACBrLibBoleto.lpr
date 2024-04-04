@@ -54,6 +54,7 @@ exports
   Boleto_Finalizar,
   Boleto_Nome,
   Boleto_Versao,
+  Boleto_OpenSSLInfo,
   Boleto_UltimoRetorno,
   Boleto_ConfigImportar,
   Boleto_ConfigExportar,

@@ -53,6 +53,7 @@ exports
   SAT_Finalizar,
   SAT_Nome,
   SAT_Versao,
+  SAT_OpenSSLInfo,
   SAT_UltimoRetorno,
   SAT_ConfigImportar,
   SAT_ConfigExportar,

@@ -49,6 +49,9 @@ function PIXCD_Finalizar(libHandle: PLibHandle): longint;
 function PIXCD_Nome(const libHandle : PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function PIXCD_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function PIXCD_Versao(const libHandle : PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -134,6 +137,12 @@ function PIXCD_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTaman
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
+end;
+
+function PIXCD_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
 function PIXCD_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;

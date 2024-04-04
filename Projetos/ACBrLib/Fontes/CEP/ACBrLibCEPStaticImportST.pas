@@ -75,6 +75,9 @@ function CEP_Nome(const sNome: PChar; var esTamanho: longint): longint;
 function CEP_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
+function CEP_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
+
 function CEP_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}

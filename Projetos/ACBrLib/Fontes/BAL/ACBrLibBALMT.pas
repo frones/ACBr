@@ -51,6 +51,8 @@ function BAL_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
@@ -123,6 +125,12 @@ function BAL_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTam
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
+end;
+
+function BAL_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
 function BAL_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;

@@ -168,6 +168,8 @@ type
     rlb06a_Totais_Etiqueta: TRLBand;
     RLLabel11: TRLLabel;
     rllValorTotalNotaFiscal: TRLLabel;
+    RLBand1: TRLBand;
+    rlmDadosAdicionais: TRLMemo;
     procedure RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLb04_DestinatarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -180,6 +182,7 @@ type
     procedure RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);
     procedure rlb06a_Totais_EtiquetaBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
+    procedure RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     FNumItem: Integer;
     FTotalPages: Integer;
@@ -370,6 +373,8 @@ begin
   rlmPagValor.Lines.Clear;
   rlmPagDesc.Lines.Add('Qtde Total de Itens');
   rlmPagValor.Lines.Add(IntToStr(fpNFe.Det.Count));
+  rlmPagDesc.Lines.Add('Desconto');
+  rlmPagValor.Lines.Add(FormatFloatBr(fpNFe.Total.ICMSTot.vDesc));
   rlmPagDesc.Lines.Add('Valor Total');
   rlmPagValor.Lines.Add(FormatFloatBr(fpNFe.Total.ICMSTot.vNF));
 end;
@@ -609,6 +614,15 @@ begin
     rlmProdutoUnidade.Caption := Prod.UCom;
     rlmProdutoTotal.Caption := FormatFloatBr(Prod.vProd);
   end;
+end;
+
+procedure TfrlDANFeRLSimplificado.RLBand1BeforePrint(Sender: TObject; var
+    PrintIt: Boolean);
+begin
+  inherited;
+  rlmDadosAdicionais.Lines.Clear;
+  rlmDadosAdicionais.Lines.Add('Informações Adicionais:');
+  rlmDadosAdicionais.Lines.Add(fpNFe.infAdic.infCpl);
 end;
 
 procedure TfrlDANFeRLSimplificado.RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);

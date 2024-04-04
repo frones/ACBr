@@ -46,7 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+04/04/2024
+-- ACBrNFeDANFeRLPaisagem --
+[*] Conversao ACBrNFeDANFeRLSimplificado.dfm para lfm - foi necessario remover a linha 10 (StyleElements) q estava dando conflito no lazarus. 
+  por : Daniel de Morais InfoCotidiano
 
 18/03/2024
 -- ACBrNFeDANFeRLPaisagem --

@@ -1,15 +1,15 @@
 inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
-  Left = 276
-  Top = 47
+  Left = 487
+  Top = 95
   Caption = 'DANFe - Simplificado'
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLNFe: TRLReport
     Tag = 1
-    Left = 128
-    Height = 1058
-    Top = 0
+    Left = 416
+    Height = 1890
+    Top = 16
     Width = 340
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Background.Arrange = baCenter
@@ -17,7 +17,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     Font.Name = 'Courier New'
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 90
-    PageSetup.PaperHeight = 280
+    PageSetup.PaperHeight = 500
     UnlimitedHeight = True
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
@@ -518,7 +518,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     object rlb05c_Lin_Itens: TRLBand[2]
       Left = 38
       Height = 1
-      Top = 987
+      Top = 1121
       Width = 264
       BandType = btFooter
       Color = clWhite
@@ -1867,7 +1867,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     end
     object rlb06a_Totais_Etiqueta: TRLBand[11]
       Left = 38
-      Height = 17
+      Height = 39
       Top = 970
       Width = 264
       AutoSize = True
@@ -1881,9 +1881,9 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       ParentColor = False
       BeforePrint = rlb06a_Totais_EtiquetaBeforePrint
       object RLLabel11: TRLLabel
-        Left = 2
+        Left = 3
         Height = 15
-        Top = 2
+        Top = 24
         Width = 200
         Caption = 'VALOR TOTAL DA NOTA FISCAL:'
         Color = clWhite
@@ -1894,9 +1894,9 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         ParentFont = False
       end
       object rllValorTotalNotaFiscal: TRLLabel
-        Left = 208
+        Left = 209
         Height = 15
-        Top = 1
+        Top = 24
         Width = 53
         Alignment = taRightJustify
         AutoSize = False
@@ -1909,9 +1909,41 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         ParentFont = False
       end
     end
+    object RLBand1: TRLBand[12]
+      Left = 38
+      Height = 112
+      Top = 1009
+      Width = 264
+      AutoSize = True
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = True
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      Color = clWhite
+      ParentColor = False
+      BeforePrint = RLBand1BeforePrint
+      object rlmDadosAdicionais: TRLMemo
+        Left = 0
+        Height = 111
+        Top = 1
+        Width = 265
+        Align = faLeft
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+    end
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 528
-    Top = 112
+    Top = 128
   end
 end

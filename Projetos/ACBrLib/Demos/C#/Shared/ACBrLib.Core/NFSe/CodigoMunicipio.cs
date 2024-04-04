@@ -1473,6 +1473,10 @@ namespace ACBrLib.Core.NFSe
         [Description("Sao Vicente de Minas - MG")]
         SaoVicentedeMinas = 3165305,
 
+        [EnumValue("3165701")]
+        [Description("Senador Firmino - MG")]
+        SenadorFirmino = 3165701,
+
         [EnumValue("3167202")]
         [Description("Sete Lagoas - MG")]
         SeteLagoas = 3167202,

@@ -1018,7 +1018,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AResumo: TNFSeResumoCollectionItem;
   i, j, k: Integer;
-  ANumRps, ANumNfse, ASituacao, AidNota, aXmlNota, aXmlRetorno: string;
+  ANumRps, ANumNfse, ASituacao, AidNota, AidRps, aXmlNota, aXmlRetorno: string;
   ADataHora: TDateTime;
   ANota: TNotaFiscal;
 begin
@@ -1055,6 +1055,7 @@ begin
         begin
           Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
           idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
+          idRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idRps'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
           NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('rpsNumero'), tcStr);
@@ -1074,6 +1075,7 @@ begin
               begin
                 AResumo := Response.Resumos.New;
                 AResumo.idNota := Response.idNota;
+                AResumo.idRps := Response.idRps;
                 AResumo.NumeroNota := Response.NumeroNota;
                 AResumo.Data := Response.Data;
                 AResumo.Situacao :=  Response.Situacao;
@@ -1095,6 +1097,7 @@ begin
               if j > 0 then
               begin
                 AidNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
+                AidRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idRps'), tcStr);
                 ANumNfse := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
                 ADataHora := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
                 ASituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
@@ -1102,6 +1105,7 @@ begin
 
                 AResumo := Response.Resumos.New;
                 AResumo.idNota := AidNota;
+                AResumo.idRps := AidRps;
                 AResumo.NumeroNota := ANumNfse;
                 AResumo.Data := ADataHora;
                 AResumo.Situacao := ASituacao;

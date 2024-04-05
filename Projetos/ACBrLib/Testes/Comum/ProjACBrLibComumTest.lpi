@@ -23,19 +23,22 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
       <Item2>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="ACBrComum"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="fpcunittestrunner"/>
       </Item3>
       <Item4>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -61,7 +64,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
-      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\..\..\Fontes\ACBrOpenSSL;..\..\Fontes\BAL;..\..\Fontes\Boleto;..\..\Fontes\CEP;..\..\Fontes\ConsultaCNPJ;..\..\Fontes\CTe;..\..\Fontes\eSocial;..\..\Fontes\GTIN;..\..\Fontes\IBGE;..\..\Fontes\Mail;..\..\Fontes\MDFe;..\..\Fontes\NCMs;..\..\Fontes\NFe;..\..\Fontes\NFSe;..\..\Fontes\PIXCD;..\..\Fontes\PosPrinter;..\..\Fontes\Reinf;..\..\Fontes\SAT"/>
+      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\BAL;..\..\Fontes\Boleto;..\..\Fontes\CEP;..\..\Fontes\ConsultaCNPJ;..\..\Fontes\CTe;..\..\Fontes\eSocial;..\..\Fontes\GTIN;..\..\Fontes\IBGE;..\..\Fontes\Mail;..\..\Fontes\MDFe;..\..\Fontes\NCMs;..\..\Fontes\NFe;..\..\Fontes\NFSe;..\..\Fontes\PIXCD;..\..\Fontes\PosPrinter;..\..\Fontes\Reinf;..\..\Fontes\SAT"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

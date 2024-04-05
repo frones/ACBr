@@ -74,17 +74,17 @@ contains
   ACBrONEConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEConfiguracoes.pas',
   ACBrONEWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEWebServices.pas',
   
-  pcnONEConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnONEConsts.pas',
-  ACBrONEConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\ACBrONEConversao.pas',
-  pcnEnvManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvManutencaoEQP.pas',
-  pcnRetManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetManutencaoEQP.pas',
-  pcnEnvRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvRecepcaoLeitura.pas',
-  pcnRetRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetRecepcaoLeitura.pas',
-  pcnConsFoto in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConsFoto.pas',
-  pcnRetConsFoto in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetConsFoto.pas',
-  pcnConsPlaca in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnConsPlaca.pas',
-  pcnRetConsPlaca in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetConsPlaca.pas',
-  pcnDistLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnDistLeitura.pas',
-  pcnRetDistLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetDistLeitura.pas';
+  ACBrONE.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\ACBrONE.Consts.pas',
+  ACBrONE.Conversao in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\ACBrONE.Conversao.pas',
+  ACBrONE.EnvManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.EnvManutencaoEQP.pas',
+  ACBrONE.RetManutencaoEQP in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetManutencaoEQP.pas',
+  ACBrONE.EnvRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.EnvRecepcaoLeitura.pas',
+  ACBrONE.RetRecepcaoLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetRecepcaoLeitura.pas',
+  ACBrONE.ConsFoto in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.ConsFoto.pas',
+  ACBrONE.RetConsFoto in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetConsFoto.pas',
+  ACBrONE.ConsPlaca in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.ConsPlaca.pas',
+  ACBrONE.RetConsPlaca in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetConsPlaca.pas',
+  ACBrONE.DistLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.DistLeitura.pas',
+  ACBrONE.RetDistLeitura in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetDistLeitura.pas';
 
 end.

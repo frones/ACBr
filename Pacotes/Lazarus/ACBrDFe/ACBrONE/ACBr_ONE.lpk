@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE;..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE;..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base;..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrONE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -29,36 +29,36 @@
         <UnitName Value="ACBrONEWebServices"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\ACBrONEConversao.pas"/>
-        <UnitName Value="ACBrONEConversao"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\ACBrONE.Conversao.pas"/>
+        <UnitName Value="ACBrONE.Conversao"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnDistLeitura.pas"/>
-        <UnitName Value="pcnDistLeitura"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.DistLeitura.pas"/>
+        <UnitName Value="ACBrONE.DistLeitura"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvManutencaoEQP.pas"/>
-        <UnitName Value="pcnEnvManutencaoEQP"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.EnvManutencaoEQP.pas"/>
+        <UnitName Value="ACBrONE.EnvManutencaoEQP"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvRecepcaoLeitura.pas"/>
-        <UnitName Value="pcnEnvRecepcaoLeitura"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.EnvRecepcaoLeitura.pas"/>
+        <UnitName Value="ACBrONE.EnvRecepcaoLeitura"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnONEConsts.pas"/>
-        <UnitName Value="pcnONEConsts"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\ACBrONE.Consts.pas"/>
+        <UnitName Value="ACBrONE.Consts"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetDistLeitura.pas"/>
-        <UnitName Value="pcnRetDistLeitura"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetDistLeitura.pas"/>
+        <UnitName Value="ACBrONE.RetDistLeitura"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetManutencaoEQP.pas"/>
-        <UnitName Value="pcnRetManutencaoEQP"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetManutencaoEQP.pas"/>
+        <UnitName Value="ACBrONE.RetManutencaoEQP"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetRecepcaoLeitura.pas"/>
-        <UnitName Value="pcnRetRecepcaoLeitura"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\Base\Servicos\ACBrONE.RetRecepcaoLeitura.pas"/>
+        <UnitName Value="ACBrONE.RetRecepcaoLeitura"/>
       </Item11>
       <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEReg.pas"/>

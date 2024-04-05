@@ -8,10 +8,10 @@ unit ACBr_ONE;
 interface
 
 uses
-  ACBrONE, ACBrONEConfiguracoes, ACBrONEWebServices, ACBrONEConversao, 
-  pcnDistLeitura, pcnEnvManutencaoEQP, pcnEnvRecepcaoLeitura, pcnONEConsts, 
-  pcnRetDistLeitura, pcnRetManutencaoEQP, pcnRetRecepcaoLeitura, ACBrONEReg, 
-  LazarusPackageIntf;
+  ACBrONE, ACBrONEConfiguracoes, ACBrONEWebServices, ACBrONE.Conversao, 
+  ACBrONE.DistLeitura, ACBrONE.EnvManutencaoEQP, ACBrONE.EnvRecepcaoLeitura, 
+  ACBrONE.Consts, ACBrONE.RetDistLeitura, ACBrONE.RetManutencaoEQP, 
+  ACBrONE.RetRecepcaoLeitura, ACBrONEReg, LazarusPackageIntf;
 
 implementation
 

@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnRetConsFoto;
+unit ACBrONE.RetManutencaoEQP;
 
 interface
 
@@ -42,84 +42,73 @@ uses
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
-  {$IfEnd}
-  ACBrBase, ACBrUtil.Base, ACBrUtil.FilesIO, synacode,
-  pcnConversao, pcnLeitor;
+  {$IFEND}
+  ACBrBase,
+  ACBrXmlBase;
 
 type
+  { TRetManutencaoEQP }
 
-  TRetConsFoto = class(TObject)
+  TRetManutencaoEQP = class(TObject)
   private
-    FLeitor: TLeitor;
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    Fversao: string;
+    FtpAmb: TACBrTipoAmbiente;
+    FverAplic: string;
     FcStat: Integer;
-    FxMotivo: String;
+    FxMotivo: string;
     FdhResp: TDateTime;
-    Ffoto: String;
+    FNSUMovto: string;
+    FXML: AnsiString;
+    FXmlRetorno: string;
   public
-    constructor Create;
-    destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
 
-    property Leitor: TLeitor         read FLeitor   write FLeitor;
-    property versao: String          read Fversao   write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
-    property dhResp: TDateTime       read FdhResp   write FdhResp;
-    property foto: String            read Ffoto     write Ffoto;
+    property versao: string           read Fversao   write Fversao;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: string         read FverAplic write FverAplic;
+    property cStat: Integer           read FcStat    write FcStat;
+    property xMotivo: string          read FxMotivo  write FxMotivo;
+    property dhResp: TDateTime        read FdhResp   write FdhResp;
+    property NSUMovto: string         read FNSUMovto write FNSUMovto;
+    property XML: AnsiString          read FXML      write FXML;
+
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;
 
 implementation
 
-{ TRetConsFoto }
+uses
+  ACBrXmlDocument;
 
-constructor TRetConsFoto.Create;
-begin
-  inherited Create;
-  FLeitor     := TLeitor.Create;
-end;
+{ TRetManutencaoEQP }
 
-destructor TRetConsFoto.Destroy;
-begin
-  FLeitor.Free;
-
-  inherited;
-end;
-
-function TRetConsFoto.LerXml: boolean;
+function TRetManutencaoEQP.LerXml: Boolean;
 var
-  ok: boolean;
-  auxStr: AnsiString;
+  Document: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ok: Boolean;
 begin
-  Result := False;
-
-  FcStat := 0;
+  Document := TACBrXmlDocument.Create;
 
   try
-    if Leitor.rExtrai(1, 'retOneConsFoto') <> '' then
+    Document.LoadFromXml(XmlRetorno);
+
+    ANode := Document.Root;
+
+    if ANode <> nil then
     begin
-      versao   := Leitor.rAtributo('versao', 'retOneConsFoto');
-      tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      verAplic := Leitor.rCampo(tcStr, 'verAplic');
-      cStat    := Leitor.rCampo(tcInt, 'cStat');
-      xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-      dhResp   := Leitor.rCampo(tcDatHor, 'dhResp');
-
-      auxStr := Leitor.rCampo(tcStr, 'foto');
-
-      if auxStr <> '' then
-        foto   := UnZip(DecodeBase64(auxStr));
-
-      Result := True;
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+      dhResp := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhResp'), tcDatHor);
+      NSUMovto := ObterConteudoTag(ANode.Childrens.FindAnyNs('NSUMovto'), tcStr);
     end;
-  except
-    Result := False;
+  finally
+    Result := True;
+    FreeAndNil(Document);
   end;
 end;
 
 end.
-

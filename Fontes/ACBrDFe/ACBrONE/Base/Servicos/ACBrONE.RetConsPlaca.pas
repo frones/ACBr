@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnRetConsPlaca;
+unit ACBrONE.RetConsPlaca;
 
 interface
 
@@ -43,16 +43,17 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrUtil.Base, ACBrUtil.FilesIO, synacode,
-  pcnConversao, pcnLeitor;
+  ACBrBase,
+  ACBrXmlBase,
+  ACBrXmlDocument;
 
 type
   TinfMDFeCollectionItem = class(TObject)
   private
-    FchMDFe: String;
+    FchMDFe: string;
 
   public
-    property chMDFe: String read FchMDFe write FchMDFe;
+    property chMDFe: string read FchMDFe write FchMDFe;
   end;
 
   TinfMDFeCollection = class(TACBrObjectList)
@@ -66,36 +67,43 @@ type
 
   TRetConsPlaca = class(TObject)
   private
-    FLeitor: TLeitor;
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    Fversao: string;
+    FtpAmb: TACBrTipoAmbiente;
+    FverAplic: string;
     FcStat: Integer;
-    FxMotivo: String;
+    FxMotivo: string;
     FdhResp: TDateTime;
-    FNSU: String;
-    FleituraComp: String;
+    FNSU: string;
+    FleituraComp: string;
     FinfMDFe: TinfMDFeCollection;
+    FXmlRetorno: string;
 
     procedure SetinfMDFe(const Value: TinfMDFeCollection);
+    procedure Ler_retOneConsPorPlaca(ANode: TACBrXmlNode);
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: boolean;
 
-    property Leitor: TLeitor         read FLeitor      write FLeitor;
-    property versao: String          read Fversao      write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
-    property verAplic: String        read FverAplic    write FverAplic;
-    property cStat: Integer          read FcStat       write FcStat;
-    property xMotivo: String         read FxMotivo     write FxMotivo;
-    property dhResp: TDateTime       read FdhResp      write FdhResp;
-    property NSU: String             read FNSU         write FNSU;
-    property leituraComp: String     read FleituraComp write FleituraComp;
+    property versao: string           read Fversao      write Fversao;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb       write FtpAmb;
+    property verAplic: string         read FverAplic    write FverAplic;
+    property cStat: Integer           read FcStat       write FcStat;
+    property xMotivo: string          read FxMotivo     write FxMotivo;
+    property dhResp: TDateTime        read FdhResp      write FdhResp;
+    property NSU: string              read FNSU         write FNSU;
+    property leituraComp: string      read FleituraComp write FleituraComp;
     property infMDFe: TinfMDFeCollection read FinfMDFe  write SetinfMDFe;
+
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;
 
 implementation
+
+uses
+  synacode,
+  ACBrUtil.FilesIO;
 
 { TRetConsPlaca }
 
@@ -103,13 +111,11 @@ constructor TRetConsPlaca.Create;
 begin
   inherited Create;
 
-  FLeitor := TLeitor.Create;
   FinfMDFe := TinfMDFeCollection.Create();
 end;
 
 destructor TRetConsPlaca.Destroy;
 begin
-  FLeitor.Free;
   FinfMDFe.Free;
 
   inherited;
@@ -117,49 +123,65 @@ end;
 
 function TRetConsPlaca.LerXml: boolean;
 var
-  ok: boolean;
+  Document: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ok: Boolean;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    Document.LoadFromXml(XmlRetorno);
+
+    ANode := Document.Root;
+
+    if ANode <> nil then
+    begin
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+      dhResp := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhResp'), tcDatHor);
+
+      Ler_retOneConsPorPlaca(ANode.Childrens.FindAnyNs('retOneConsPorPlaca'));
+    end;
+  finally
+    Result := True;
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TRetConsPlaca.Ler_retOneConsPorPlaca(ANode: TACBrXmlNode);
+var
+  ANodeAux: TACBrXmlNode;
+  ANodes: TACBrXmlNodeArray;
   auxStr: AnsiString;
   i: Integer;
 begin
-  Result := False;
+  if not Assigned(ANode) then Exit;
 
-  FcStat := 0;
+  ANodeAux := ANode.Childrens.FindAnyNs('loteDistLeitura');
 
-  try
-    if Leitor.rExtrai(1, 'retOneConsPorPlaca') <> '' then
+  if ANodeAux <> nil then
+  begin
+    ANodeAux := ANodeAux.Childrens.FindAnyNs('leituraCompactada');
+
+    if ANodeAux <> nil then
     begin
-      versao   := Leitor.rAtributo('versao', 'retOneConsFoto');
-      tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      verAplic := Leitor.rCampo(tcStr, 'verAplic');
-      cStat    := Leitor.rCampo(tcInt, 'cStat');
-      xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-      dhResp   := Leitor.rCampo(tcDatHor, 'dhResp');
+      NSU := ObterConteudoTag(ANodeAux.Attributes.Items['NSU']);
+      auxStr := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('leituraComp'), tcStr);
 
-      if Leitor.rExtrai(2, 'loteDistLeitura') <> '' then
+      if auxStr <> '' then
+        leituraComp := UnZip(DecodeBase64(auxStr));
+
+      ANodes := ANodeAux.Childrens.FindAllAnyNs('infMDFe');
+
+      for i := 0 to Length(ANodes) - 1 do
       begin
-        if Leitor.rExtrai(3, 'leituraCompactada') <> '' then
-        begin
-          NSU := Leitor.rAtributo('NSU', 'leituraCompactada');
-          auxStr := Leitor.rCampo(tcStr, 'leituraComp');
-
-          if auxStr <> '' then
-            leituraComp := UnZip(DecodeBase64(auxStr));
-
-          i := 0;
-          while Leitor.rExtrai(3, 'infMDFe', '', i + 1) <> '' do
-          begin
-            FinfMDFe.New;
-            FinfMDFe.Items[i].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
-
-            Inc(i);
-          end;
-        end;
+        FinfMDFe.New;
+        FinfMDFe[i].chMDFe := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('chMDFe'), tcStr);
       end;
-
-      Result := True;
     end;
-  except
-    Result := False;
   end;
 end;
 

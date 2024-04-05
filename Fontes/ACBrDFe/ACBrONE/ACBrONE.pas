@@ -40,7 +40,8 @@ uses
   Classes, SysUtils, ACBrBase,
   ACBrUtil.Base, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrONEConfiguracoes, ACBrONEWebServices,
-  pcnConversao, ACBrONEConversao;
+  pcnConversao,
+  ACBrONE.Conversao;
 
 const
   ACBRONE_NAMESPACE = 'http://www.portalfiscal.inf.br/one';
@@ -68,30 +69,30 @@ type
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    function NomeServicoToNomeSchema(const NomeServico: string): string; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure EnviarEmail(const sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: string;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamONE: TStream = nil; const NomeArq: String = ''; 
+      StreamONE: TStream = nil; const NomeArq: string = '';
 	  sReplyTo: TStrings = nil; sBCC: TStrings = nil); override;
 
-    function GetNomeModeloDFe: String; override;
-    function GetNameSpaceURI: String; override;
+    function GetNomeModeloDFe: string; override;
+    function GetNameSpaceURI: string; override;
 
 //    function EhAutorizacao(AVersao: TVersaoONE; AUFCodigo: Integer): Boolean;
 //    function CstatConfirmada(AValue: Integer): Boolean;
 //    function CstatProcessado(AValue: Integer): Boolean;
 //    function CstatCancelada(AValue: Integer): Boolean;
-//    function IdentificaSchema(const AXML: String): TSchemaONE;
+//    function IdentificaSchema(const AXML: string): TSchemaONE;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutONE; var Versao: Double;
-      var URL: String); reintroduce; overload;
-    function LerVersaoDeParams(LayOutServico: TLayOutONE): String; reintroduce; overload;
+      var URL: string); reintroduce; overload;
+    function LerVersaoDeParams(LayOutServico: TLayOutONE): string; reintroduce; overload;
 
-    function GerarNomeArqSchema(const ALayOut: TLayOutONE; VersaoServico: Double): String;
+    function GerarNomeArqSchema(const ALayOut: TLayOutONE; VersaoServico: Double): string;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Status: TStatusACBrONE read FStatus;
@@ -171,8 +172,8 @@ begin
   inherited;
 end;
 
-procedure TACBrONE.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamONE: TStream; const NomeArq: String;
+procedure TACBrONE.EnviarEmail(const sPara, sAssunto: string; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamONE: TStream; const NomeArq: string;
   sReplyTo: TStrings; sBCC: TStrings);
 begin
 {
@@ -201,20 +202,20 @@ begin
   Result := TConfiguracoesONE.Create(Self);
 end;
 
-function TACBrONE.GetNomeModeloDFe: String;
+function TACBrONE.GetNomeModeloDFe: string;
 begin
   Result := 'ONE';
 end;
 
-function TACBrONE.GetNameSpaceURI: String;
+function TACBrONE.GetNameSpaceURI: string;
 begin
   Result := ACBRONE_NAMESPACE;
 end;
 
 function TACBrONE.GerarNomeArqSchema(const ALayOut: TLayOutONE;
-  VersaoServico: Double): String;
+  VersaoServico: Double): string;
 var
-  NomeServico, NomeSchema, ArqSchema: String;
+  NomeServico, NomeSchema, ArqSchema: string;
   Versao: Double;
 begin
   // Procura por Versão na pasta de Schemas //
@@ -240,7 +241,7 @@ begin
   FPConfiguracoes := AValue;
 end;
 
-function TACBrONE.LerVersaoDeParams(LayOutServico: TLayOutONE): String;
+function TACBrONE.LerVersaoDeParams(LayOutServico: TLayOutONE): string;
 var
   Versao: Double;
 begin
@@ -252,9 +253,9 @@ begin
 end;
 
 procedure TACBrONE.LerServicoDeParams(LayOutServico: TLayOutONE;
-  var Versao: Double; var URL: String);
+  var Versao: Double; var URL: string);
 var
-  AUF: String;
+  AUF: string;
 begin
   case Configuracoes.Geral.FormaEmissao of
     teNormal: AUF := Configuracoes.WebServices.UF;
@@ -297,7 +298,7 @@ begin
     GerarException( WebServices.EnvLeitura.Msg );
 end;
 }
-function TACBrONE.NomeServicoToNomeSchema(const NomeServico: String): String;
+function TACBrONE.NomeServicoToNomeSchema(const NomeServico: string): string;
 var
   ALayout: TLayOutONE;
 begin

@@ -32,13 +32,12 @@
 
 {$I ACBr.inc}
 
-unit ACBrONEConversao;
+unit ACBrONE.Conversao;
 
 interface
 
 uses
-  SysUtils, StrUtils, Classes,
-  pcnConversao;
+  SysUtils, StrUtils, Classes;
 
 type
   TStatusACBrONE = (stONEIdle, stManutencao, stRecepcaoLeitura,
@@ -119,8 +118,6 @@ function StrToSchemaONE(const s: string): TSchemaONE;
 
 function LayOutONEToServico(const t: TLayOutONE): string;
 function ServicoToLayOutONE(const s: string): TLayOutONE;
-
-function StrToTpEventoONE(out ok: boolean; const s: string): TpcnTpEvento;
 
 function tpManToStr(const t: TtpMan): string;
 function StrTotpMan(const s: string): TtpMan;
@@ -255,13 +252,6 @@ begin
   end;
 
   raise EACBrException.CreateFmt('Valor string inválido para TLayOutONE: %s', [s]);
-end;
-
-function StrToTpEventoONE(out ok: boolean; const s: string): TpcnTpEvento;
-begin
-  Result := StrToEnumerado(ok, s,
-            ['-99999'],
-            [teNaoMapeado]);
 end;
 
 function tpManToStr(const t: TtpMan): string;
@@ -410,10 +400,6 @@ begin
 
   raise EACBrException.CreateFmt('Valor string inválido para TtpLeitura: %s', [s]);
 end;
-
-initialization
-
-  RegisterStrToTpEventoDFe(StrToTpEventoONE, 'ONE');
 
 end.
 

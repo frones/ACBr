@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, ACBrONEConversao;
+  ACBrDFeConfiguracoes, pcnConversao, ACBrONE.Conversao;
 
 type
 
@@ -47,8 +47,8 @@ type
   TGeralConfONE = class(TGeralConf)
   private
     FVersaoDF: TVersaoONE;
-    FverAplic: String;
-    FCNPJOper: String;
+    FverAplic: string;
+    FCNPJOper: string;
 
     procedure SetVersaoDF(const Value: TVersaoONE);
   public
@@ -59,8 +59,8 @@ type
 
   published
     property VersaoDF: TVersaoONE read FVersaoDF write SetVersaoDF default ve200;
-    property verAplic: String     read FverAplic write FverAplic;
-    property CNPJOper: String     read FCNPJOper write FCNPJOper;
+    property verAplic: string     read FverAplic write FverAplic;
+    property CNPJOper: string     read FCNPJOper write FCNPJOper;
   end;
 
   { TArquivosConfONE }
@@ -68,7 +68,7 @@ type
   TArquivosConfONE = class(TArquivosConf)
   private
     FEmissaoPathONE: Boolean;
-    FPathONE: String;
+    FPathONE: string;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
@@ -76,11 +76,11 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathONE(Data: TDateTime = 0; const CNPJ: String = ''): String;
+    function GetPathONE(Data: TDateTime = 0; const CNPJ: string = ''): string;
   published
     property EmissaoPathONE: Boolean read FEmissaoPathONE
       write FEmissaoPathONE default False;
-    property PathONE: String read FPathONE write FPathONE;
+    property PathONE: string read FPathONE write FPathONE;
   end;
 
   { TConfiguracoesONE }
@@ -209,7 +209,7 @@ begin
   FPathONE                    := DeArquivosConfONE.PathONE;
 end;
 
-function TArquivosConfONE.GetPathONE(Data: TDateTime = 0; const CNPJ: String = ''): String;
+function TArquivosConfONE.GetPathONE(Data: TDateTime = 0; const CNPJ: string = ''): string;
 begin
   Result := GetPath(FPathONE, ModeloDF, CNPJ, '', Data, ModeloDF);
 end;

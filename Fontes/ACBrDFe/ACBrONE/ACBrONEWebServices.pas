@@ -39,11 +39,19 @@ interface
 uses
   Classes, SysUtils, dateutils, blcksock,
   ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
-  pcnConversao, ACBrONEConversao,
-  pcnEnvManutencaoEQP, pcnRetManutencaoEQP,
-  pcnEnvRecepcaoLeitura, pcnRetRecepcaoLeitura,
-  pcnDistLeitura, pcnRetDistLeitura,
-  pcnConsFoto, pcnRetConsFoto, pcnConsPlaca, pcnRetConsPlaca,
+  pcnConversao,
+  ACBrXmlBase,
+  ACBrONE.Conversao,
+  ACBrONE.EnvManutencaoEQP,
+  ACBrONE.RetManutencaoEQP,
+  ACBrONE.EnvRecepcaoLeitura,
+  ACBrONE.RetRecepcaoLeitura,
+  ACBrONE.DistLeitura,
+  ACBrONE.RetDistLeitura,
+  ACBrONE.ConsFoto,
+  ACBrONE.RetConsFoto,
+  ACBrONE.ConsPlaca,
+  ACBrONE.RetConsPlaca,
   ACBrONEConfiguracoes;
 
 type
@@ -53,7 +61,7 @@ type
   TONEWebService = class(TDFeWebService)
   private
     FOldSSLType: TSSLType;
-    FOldHeaderElement: String;
+    FOldHeaderElement: string;
   protected
     FPStatus: TStatusACBrONE;
     FPLayout: TLayOutONE;
@@ -62,7 +70,7 @@ type
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
-    function GerarVersaoDadosSoap: String; override;
+    function GerarVersaoDadosSoap: string; override;
     procedure FinalizarServico; override;
 
   public
@@ -77,18 +85,18 @@ type
 
   TONEEnvioWebService = class(TONEWebService)
   private
-    FXMLEnvio: String;
-    FPURLEnvio: String;
-    FVersao: String;
-    FSoapActionEnvio: String;
+    FXMLEnvio: string;
+    FPURLEnvio: string;
+    FVersao: string;
+    FSoapActionEnvio: string;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
-    function GerarMsgErro(E: Exception): String; override;
-    function GerarVersaoDadosSoap: String; override;
+    function GerarMsgErro(E: Exception): string; override;
+    function GerarVersaoDadosSoap: string; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
@@ -96,10 +104,10 @@ type
 
     function Executar: Boolean; override;
 
-    property Versao: String read FVersao;
-    property XMLEnvio: String read FXMLEnvio write FXMLEnvio;
-    property URLEnvio: String read FPURLEnvio write FPURLEnvio;
-    property SoapActionEnvio: String read FSoapActionEnvio write FSoapActionEnvio;
+    property Versao: string read FVersao;
+    property XMLEnvio: string read FXMLEnvio write FXMLEnvio;
+    property URLEnvio: string read FPURLEnvio write FPURLEnvio;
+    property SoapActionEnvio: string read FSoapActionEnvio write FSoapActionEnvio;
   end;
 
   { TEnvManutencao }
@@ -110,35 +118,35 @@ type
     FEnvManutencaoEQP: TManutencaoEQP;
     FRetManutencaoEQP: TRetManutencaoEQP;
 
-    Fversao: String;
+    Fversao: string;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FcStat: Integer;
-    FxMotivo: String;
+    FxMotivo: string;
     FdhResp: TDateTime;
-    FNSUMovto: String;
+    FNSUMovto: string;
     FcUF: Integer;
 
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
-    function GerarPrefixoArquivo: String; override;
+    function GerarPrefixoArquivo: string; override;
 
-    function GerarMsgLog: String; override;
+    function GerarMsgLog: string; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
 //    constructor Create(AOwner: TACBrDFe; AManutencao: TManutencaoEQP); reintroduce; overload;
     destructor Destroy; override;
     procedure Clear; override;
 
-    property versao: String read Fversao;
+    property versao: string read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property verAplic: String read FverAplic;
+    property verAplic: string read FverAplic;
     property cStat: Integer read FcStat;
-    property xMotivo: String read FxMotivo;
+    property xMotivo: string read FxMotivo;
     property dhResp: TDateTime read FdhResp;
-    property NSUMovto: String read FNSUMovto;
+    property NSUMovto: string read FNSUMovto;
     property cUF: Integer read FcUF;
 
     property EnvManutencaoEQP: TManutencaoEQP read FEnvManutencaoEQP write FEnvManutencaoEQP;
@@ -153,35 +161,35 @@ type
     FEnvRecepcaoLeitura: TRecepcaoLeitura;
     FRetRecepcaoLeitura: TRetRecepcaoLeitura;
 
-    Fversao: String;
+    Fversao: string;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FcStat: Integer;
-    FxMotivo: String;
+    FxMotivo: string;
     FdhResp: TDateTime;
-    FNSU: String;
+    FNSU: string;
     FcUF: Integer;
 
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
-    function GerarPrefixoArquivo: String; override;
+    function GerarPrefixoArquivo: string; override;
 
-    function GerarMsgLog: String; override;
+    function GerarMsgLog: string; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
 //    constructor Create(AOwner: TACBrDFe; ARecepcaoLeitura: TRecepcaoLeitura); reintroduce; overload;
     destructor Destroy; override;
     procedure Clear; override;
 
-    property versao: String read Fversao;
+    property versao: string read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property verAplic: String read FverAplic;
+    property verAplic: string read FverAplic;
     property cStat: Integer read FcStat;
-    property xMotivo: String read FxMotivo;
+    property xMotivo: string read FxMotivo;
     property dhResp: TDateTime read FdhResp;
-    property NSU: String read FNSU;
+    property NSU: string read FNSU;
     property cUF: Integer read FcUF;
 
     property EnvRecepcaoLeitura: TRecepcaoLeitura read FEnvRecepcaoLeitura write FRecepcaoLeitura;
@@ -192,41 +200,41 @@ type
 
   TDistLeituras = class(TONEWebService)
   private
-    FNomeArq: String;
+    FNomeArq: string;
     FlistaArqs: TStringList;
 
-    FverAplic: String;
+    FverAplic: string;
     FtpDist: TtpDist;
-    FultNSU: String;
-    FNSUFin: String;
-    FCNPJOper: String;
-    FcEQP: String;
+    FultNSU: string;
+    FNSUFin: string;
+    FCNPJOper: string;
+    FcEQP: string;
     FcUF: Integer;
 
     FRetDistLeitura: TRetDistLeitura;
 
-    function GerarPathDistribuicao: String;
+    function GerarPathDistribuicao: string;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
-    function GerarMsgLog: String; override;
-    function GerarMsgErro(E: Exception): String; override;
+    function GerarMsgLog: string; override;
+    function GerarMsgErro(E: Exception): string; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
     procedure Clear; override;
 
-    property NomeArq: String read FNomeArq;
+    property NomeArq: string read FNomeArq;
     property ListaArqs: TStringList read FlistaArqs;
 
-    property verAplic: String read FverAplic write FverAplic;
+    property verAplic: string read FverAplic write FverAplic;
     property tpDist: TtpDist  read FtpDist   write FtpDist;
-    property ultNSU: String   read FultNSU   write FultNSU;
-    property NSUFin: String   read FNSUFin   write FNSUFin;
-    property CNPJOper: String read FCNPJOper write FCNPJOper;
-    property cEQP: String     read FcEQP     write FcEQP;
+    property ultNSU: string   read FultNSU   write FultNSU;
+    property NSUFin: string   read FNSUFin   write FNSUFin;
+    property CNPJOper: string read FCNPJOper write FCNPJOper;
+    property cEQP: string     read FcEQP     write FcEQP;
     property cUF: Integer     read FcUF      write FcUF;
 
     property RetDistLeitura: TRetDistLeitura read FRetDistLeitura;
@@ -237,13 +245,13 @@ type
   TONEConsultaFoto = class(TONEWebService)
   private
     FtpAmb: TpcnTipoAmbiente;
-    Fversao: String;
-    FverAplic: String;
+    Fversao: string;
+    FverAplic: string;
     FcStat: integer;
-    FxMotivo: String;
+    FxMotivo: string;
     FdhResp: TDateTime;
-    Ffoto: String;
-    FNSULeitura: String;
+    Ffoto: string;
+    FNSULeitura: string;
 
     FRetConsFoto: TRetConsFoto;
 
@@ -252,20 +260,20 @@ type
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
-    function GerarMsgLog: String; override;
+    function GerarMsgLog: string; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
     procedure Clear; override;
 
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property versao: String read Fversao;
+    property versao: string read Fversao;
     property cStat: integer read FcStat;
-    property xMotivo: String read FxMotivo;
+    property xMotivo: string read FxMotivo;
     property dhResp: TDateTime read FdhResp;
-    property foto: String read Ffoto;
-    property verAplic: String read FverAplic;
-    property NSULeitura: String read FNSULeitura;
+    property foto: string read Ffoto;
+    property verAplic: string read FverAplic;
+    property NSULeitura: string read FNSULeitura;
 
     property RetConsFoto: TRetConsFoto read FRetConsFoto;
   end;
@@ -275,13 +283,13 @@ type
   TONEConsultaPlaca = class(TONEWebService)
   private
     FtpAmb: TpcnTipoAmbiente;
-    Fversao: String;
-    FverAplic: String;
+    Fversao: string;
+    FverAplic: string;
     FcStat: integer;
-    FxMotivo: String;
+    FxMotivo: string;
     FdhResp: TDateTime;
-    Ffoto: String;
-    FPlaca: String;
+    Ffoto: string;
+    FPlaca: string;
 
     FRetConsPlaca: TRetConsPlaca;
     FDataRef: TDateTime;
@@ -291,20 +299,20 @@ type
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
-    function GerarMsgLog: String; override;
+    function GerarMsgLog: string; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
     procedure Clear; override;
 
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property versao: String read Fversao;
+    property versao: string read Fversao;
     property cStat: integer read FcStat;
-    property xMotivo: String read FxMotivo;
+    property xMotivo: string read FxMotivo;
     property dhResp: TDateTime read FdhResp;
-    property foto: String read Ffoto;
-    property verAplic: String read FverAplic;
-    property Placa: String read FPlaca;
+    property foto: string read Ffoto;
+    property verAplic: string read FverAplic;
+    property Placa: string read FPlaca;
     property DataRef: TDateTime read FDataRef;
 
     property RetConsPlaca: TRetConsPlaca read FRetConsPlaca;
@@ -397,7 +405,7 @@ begin
 end;
 
 
-function TONEWebService.GerarVersaoDadosSoap: String;
+function TONEWebService.GerarVersaoDadosSoap: string;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -534,13 +542,13 @@ begin
   Result := True;
 end;
 
-function TONEEnvioWebService.GerarMsgErro(E: Exception): String;
+function TONEEnvioWebService.GerarMsgErro(E: Exception): string;
 begin
   Result := ACBrStr('WebService: '+FPServico + LineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
-function TONEEnvioWebService.GerarVersaoDadosSoap: String;
+function TONEEnvioWebService.GerarVersaoDadosSoap: string;
 begin
   Result := '<versaoDados>' + FVersao + '</versaoDados>';
 end;
@@ -605,13 +613,12 @@ end;
 procedure TEnvManutencao.DefinirDadosMsg;
 var
   EnvManutencao: TManutencaoEQP;
-  FErroValidacao: String;
+  FErroValidacao: string;
   DadosEhValido: Boolean;
 begin
   EnvManutencao := TManutencaoEQP.Create;
 
   try
-    {(*}
     with EnvManutencao do
     begin
       Versao    := FPVersaoServico;
@@ -627,26 +634,10 @@ begin
       Latitude  := FEnvManutencaoEQP.Latitude;
       Longitude := FEnvManutencaoEQP.Longitude;
       tpEQP     := FEnvManutencaoEQP.tpEQP;
-{
-      verAplic  := FManutencao.verAplic;
-      tpMan     := FManutencao.tpMan;
-      dhReg     := FManutencao.dhReg;
-      CNPJOper  := FManutencao.CNPJOper;
-      cEQP      := FManutencao.cEQP;
-      xEQP      := FManutencao.xEQP;
-      cUF       := FManutencao.cUF;
-      tpSentido := FManutencao.tpSentido;
-      Latitude  := FManutencao.Latitude;
-      Longitude := FManutencao.Longitude;
-      tpEQP     := FManutencao.tpEQP;
-}
+      xRefCompl := FEnvManutencaoEQP.xRefCompl;
     end;
-    {*)}
 
-    AjustarOpcoes( EnvManutencao.Gerador.Opcoes );
-    EnvManutencao.GerarXML;
-
-    FPDadosMsg := EnvManutencao.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := EnvManutencao.GerarXML;
 
     with TACBrONE(FPDFeOwner) do
     begin
@@ -669,9 +660,9 @@ begin
   end;
 end;
 
-function TEnvManutencao.GerarMsgLog: String;
+function TEnvManutencao.GerarMsgLog: string;
 var
-  aMsg: String;
+  aMsg: string;
 begin
   {(*}
   aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
@@ -681,7 +672,7 @@ begin
                          'Status Descrição: %s ' + LineBreak +
                          'Resposta: %s ' + LineBreak +
                          'NSU do Movimento: %s ' + LineBreak),
-                 [FRetManutencaoEQP.versao, TpAmbToStr(FRetManutencaoEQP.tpAmb),
+                 [FRetManutencaoEQP.versao, TipoAmbienteToStr(FRetManutencaoEQP.tpAmb),
                   FRetManutencaoEQP.verAplic, IntToStr(FRetManutencaoEQP.cStat),
                   FRetManutencaoEQP.xMotivo,
                   IfThen(FRetManutencaoEQP.dhResp = 0, '', FormatDateTimeBr(FRetManutencaoEQP.dhResp)),
@@ -691,9 +682,9 @@ begin
   {*)}
 end;
 
-function TEnvManutencao.GerarPrefixoArquivo: String;
+function TEnvManutencao.GerarPrefixoArquivo: string;
 var
-  vUF, vData, vCNPJ, vtpMan, vcEQP: String;
+  vUF, vData, vCNPJ, vtpMan, vcEQP: string;
 begin
   vUF    := Poem_Zeros(FEnvManutencaoEQP.cUF, 2);
   vData  := FormatDateTime('YYMM', FEnvManutencaoEQP.dhReg);
@@ -708,12 +699,11 @@ function TEnvManutencao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
-  FRetManutencaoEQP.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
+  FRetManutencaoEQP.XmlRetorno := ParseText(AnsiString(FPRetWS));
   FRetManutencaoEQP.LerXml;
 
   Fversao   := FRetManutencaoEQP.versao;
-  FtpAmb    := FRetManutencaoEQP.tpAmb;
+  FtpAmb    := TpcnTipoAmbiente(FRetManutencaoEQP.tpAmb);
   FverAplic := FRetManutencaoEQP.verAplic;
   FcStat    := FRetManutencaoEQP.cStat;
   FxMotivo  := FRetManutencaoEQP.xMotivo;
@@ -784,44 +774,37 @@ end;
 procedure TEnvLeitura.DefinirDadosMsg;
 var
   EnvLeitura: TRecepcaoLeitura;
-  FErroValidacao: String;
+  FErroValidacao: string;
   DadosEhValido: Boolean;
 begin
   EnvLeitura := TRecepcaoLeitura.Create;
 
   try
-    {(*}
     with EnvLeitura do
     begin
-      Versao          := FPVersaoServico;
-      tpAmb           := FPConfiguracoesONE.WebServices.Ambiente; //FManutencao.tpAmb;
-      verAplic        := FEnvRecepcaoLeitura.verAplic;
-      tpTransm        := FEnvRecepcaoLeitura.tpTransm;
-      dhTransm        := FEnvRecepcaoLeitura.dhTransm;
-      with infLeitura do
-      begin
-        cUF             := FEnvRecepcaoLeitura.infLeitura.cUF;
-        dhPass          := FEnvRecepcaoLeitura.infLeitura.dhPass;
-        CNPJOper        := FEnvRecepcaoLeitura.infLeitura.CNPJOper;
-        cEQP            := FEnvRecepcaoLeitura.infLeitura.cEQP;
-        latitude        := FEnvRecepcaoLeitura.infLeitura.latitude;
-        longitude       := FEnvRecepcaoLeitura.infLeitura.longitude;
-        tpSentido       := FEnvRecepcaoLeitura.infLeitura.tpSentido;
-        placa           := FEnvRecepcaoLeitura.infLeitura.placa;
-        tpVeiculo       := FEnvRecepcaoLeitura.infLeitura.tpVeiculo;
-        velocidade      := FEnvRecepcaoLeitura.infLeitura.velocidade;
-        foto            := FEnvRecepcaoLeitura.infLeitura.foto;
-        indiceConfianca := FEnvRecepcaoLeitura.infLeitura.indiceConfianca;
-        pesoBrutoTotal  := FEnvRecepcaoLeitura.infLeitura.pesoBrutoTotal;
-        nroEixos        := FEnvRecepcaoLeitura.infLeitura.nroEixos;
-      end;
+      Versao   := FPVersaoServico;
+      tpAmb    := TACBrTipoAmbiente(FPConfiguracoesONE.WebServices.Ambiente);
+      verAplic := FEnvRecepcaoLeitura.verAplic;
+      tpTransm := FEnvRecepcaoLeitura.tpTransm;
+      dhTransm := FEnvRecepcaoLeitura.dhTransm;
+
+      infLeitura.cUF             := FEnvRecepcaoLeitura.infLeitura.cUF;
+      infLeitura.dhPass          := FEnvRecepcaoLeitura.infLeitura.dhPass;
+      infLeitura.CNPJOper        := FEnvRecepcaoLeitura.infLeitura.CNPJOper;
+      infLeitura.cEQP            := FEnvRecepcaoLeitura.infLeitura.cEQP;
+      infLeitura.latitude        := FEnvRecepcaoLeitura.infLeitura.latitude;
+      infLeitura.longitude       := FEnvRecepcaoLeitura.infLeitura.longitude;
+      infLeitura.tpSentido       := FEnvRecepcaoLeitura.infLeitura.tpSentido;
+      infLeitura.placa           := FEnvRecepcaoLeitura.infLeitura.placa;
+      infLeitura.tpVeiculo       := FEnvRecepcaoLeitura.infLeitura.tpVeiculo;
+      infLeitura.velocidade      := FEnvRecepcaoLeitura.infLeitura.velocidade;
+      infLeitura.foto            := FEnvRecepcaoLeitura.infLeitura.foto;
+      infLeitura.indiceConfianca := FEnvRecepcaoLeitura.infLeitura.indiceConfianca;
+      infLeitura.pesoBrutoTotal  := FEnvRecepcaoLeitura.infLeitura.pesoBrutoTotal;
+      infLeitura.nroEixos        := FEnvRecepcaoLeitura.infLeitura.nroEixos;
     end;
-    {*)}
 
-    AjustarOpcoes( EnvLeitura.Gerador.Opcoes );
-    EnvLeitura.GerarXML;
-
-    FPDadosMsg := EnvLeitura.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := EnvLeitura.GerarXML;
 
     with TACBrONE(FPDFeOwner) do
     begin
@@ -844,9 +827,9 @@ begin
   end;
 end;
 
-function TEnvLeitura.GerarMsgLog: String;
+function TEnvLeitura.GerarMsgLog: string;
 var
-  aMsg: String;
+  aMsg: string;
 begin
   {(*}
   aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
@@ -856,7 +839,7 @@ begin
                          'Status Descrição: %s ' + LineBreak +
                          'Resposta: %s ' + LineBreak +
                          'NSU: %s ' + LineBreak),
-                 [FRetRecepcaoLeitura.versao, TpAmbToStr(FRetRecepcaoLeitura.tpAmb),
+                 [FRetRecepcaoLeitura.versao, TipoAmbienteToStr(FRetRecepcaoLeitura.tpAmb),
                   FRetRecepcaoLeitura.verAplic, IntToStr(FRetRecepcaoLeitura.cStat),
                   FRetRecepcaoLeitura.xMotivo,
                   IfThen(FRetRecepcaoLeitura.dhResp = 0, '', FormatDateTimeBr(FRetRecepcaoLeitura.dhResp)),
@@ -866,9 +849,9 @@ begin
   {*)}
 end;
 
-function TEnvLeitura.GerarPrefixoArquivo: String;
+function TEnvLeitura.GerarPrefixoArquivo: string;
 var
-  vUF, vData, vCNPJ, vtpTra, vcEQP, vdhPass: String;
+  vUF, vData, vCNPJ, vtpTra, vcEQP, vdhPass: string;
 begin
   vUF     := Poem_Zeros(FEnvRecepcaoLeitura.infLeitura.cUF, 2);
   vData   := FormatDateTime('YYMM', FEnvRecepcaoLeitura.dhTransm);
@@ -884,12 +867,11 @@ function TEnvLeitura.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
-  FRetRecepcaoLeitura.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
+  FRetRecepcaoLeitura.XmlRetorno := ParseText(AnsiString(FPRetWS));
   FRetRecepcaoLeitura.LerXml;
 
   Fversao   := FRetRecepcaoLeitura.versao;
-  FtpAmb    := FRetRecepcaoLeitura.tpAmb;
+  FtpAmb    := TpcnTipoAmbiente(FRetRecepcaoLeitura.tpAmb);
   FverAplic := FRetRecepcaoLeitura.verAplic;
   FcStat    := FRetRecepcaoLeitura.cStat;
   FxMotivo  := FRetRecepcaoLeitura.xMotivo;
@@ -944,7 +926,7 @@ end;
 procedure TDistLeituras.DefinirDadosMsg;
 var
   DistLeitura: TDistLeitura;
-  FErroValidacao: String;
+  FErroValidacao: string;
   DadosEhValido: Boolean;
 begin
   DistLeitura := TDistLeitura.Create;
@@ -960,10 +942,7 @@ begin
     DistLeitura.cEQP     := FcEQP;
     DistLeitura.cUF      := FcUF;
 
-    AjustarOpcoes( DistLeitura.Gerador.Opcoes );
-    DistLeitura.GerarXML;
-
-    FPDadosMsg := DistLeitura.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := DistLeitura.GerarXML;
 
     with TACBrONE(FPDFeOwner) do
     begin
@@ -989,11 +968,11 @@ end;
 function TDistLeituras.TratarResposta: Boolean;
 var
   I: Integer;
-  AXML: String;
+  AXML: string;
 
-function GerarPrefixo: String;
+function GerarPrefixo: string;
 var
-  vUF, vData, vCNPJ, vtpTra, vcEQP, vdhPass: String;
+  vUF, vData, vCNPJ, vtpTra, vcEQP, vdhPass: string;
 begin
   with FRetDistLeitura.Leitura.Items[I].RecepcaoLeitura do
   begin
@@ -1011,8 +990,7 @@ end;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS );
 
-  // Processando em UTF8, para poder gravar arquivo corretamente //
-  FRetDistLeitura.Leitor.Arquivo := FPRetWS;
+  FRetDistLeitura.XmlRetorno := FPRetWS;
   FRetDistLeitura.LerXml;
 
   for I := 0 to FRetDistLeitura.Leitura.Count - 1 do
@@ -1036,8 +1014,7 @@ begin
   FRetDistLeitura.Free;   // Limpando a lista
   FRetDistLeitura := TRetDistLeitura.Create;
 
-  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
-  FRetDistLeitura.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
+  FRetDistLeitura.XmlRetorno := ParseText(AnsiString(FPRetWS));
   FRetDistLeitura.LerXml;
 
   FPMsg := FRetDistLeitura.xMotivo;
@@ -1046,7 +1023,7 @@ begin
   Result := (FRetDistLeitura.CStat = 104) or (FRetDistLeitura.CStat = 105);
 end;
 
-function TDistLeituras.GerarMsgLog: String;
+function TDistLeituras.GerarMsgLog: string;
 begin
   Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +
@@ -1056,7 +1033,7 @@ begin
                            'Resposta: %s ' + LineBreak +
                            'Último NSU: %s ' + LineBreak +
                            'Último NSU ONE: %s ' + LineBreak),
-                   [FRetDistLeitura.versao, TpAmbToStr(FRetDistLeitura.tpAmb),
+                   [FRetDistLeitura.versao, TipoAmbienteToStr(FRetDistLeitura.tpAmb),
                     FRetDistLeitura.verAplic, IntToStr(FRetDistLeitura.cStat),
                     FRetDistLeitura.xMotivo,
                     IfThen(FRetDistLeitura.dhResp = 0, '',
@@ -1064,13 +1041,13 @@ begin
                     FRetDistLeitura.ultNSU, FRetDistLeitura.ultNSUONE]);
 end;
 
-function TDistLeituras.GerarMsgErro(E: Exception): String;
+function TDistLeituras.GerarMsgErro(E: Exception): string;
 begin
   Result := ACBrStr('WebService Distribuição de DFe:' + LineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
-function TDistLeituras.GerarPathDistribuicao: String;
+function TDistLeituras.GerarPathDistribuicao: string;
 begin
   Result := FPConfiguracoesONE.Arquivos.GetPathDownload('',
                                                         FPConfiguracoesONE.Geral.CNPJOper,
@@ -1121,11 +1098,7 @@ begin
     ConsFoto.NSULeitura := NSULeitura;
     ConsFoto.Versao     := FPVersaoServico;
 
-    AjustarOpcoes( ConsFoto.Gerador.Opcoes );
-
-    ConsFoto.GerarXML;
-
-    FPDadosMsg := ConsFoto.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsFoto.GerarXML;
   finally
     ConsFoto.Free;
   end;
@@ -1144,7 +1117,7 @@ begin
   inherited Destroy;
 end;
 
-function TONEConsultaFoto.GerarMsgLog: String;
+function TONEConsultaFoto.GerarMsgLog: string;
 begin
   Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +
@@ -1153,7 +1126,7 @@ begin
                            'Status Descrição: %s ' + LineBreak +
                            'Resposta: %s ' + LineBreak),
                    [FRetConsFoto.versao,
-                    TpAmbToStr(FRetConsFoto.TpAmb),
+                    TipoAmbienteToStr(FRetConsFoto.TpAmb),
                     FRetConsFoto.verAplic,
                     IntToStr(FRetConsFoto.cStat),
                     FRetConsFoto.xMotivo,
@@ -1165,12 +1138,11 @@ function TONEConsultaFoto.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS);
 
-  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
-  FRetConsFoto.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
+  FRetConsFoto.XmlRetorno := ParseText(AnsiString(FPRetWS));
   FRetConsFoto.LerXml;
 
   Fversao   := FRetConsFoto.versao;
-  FtpAmb    := FRetConsFoto.tpAmb;
+  FtpAmb    := TpcnTipoAmbiente(FRetConsFoto.tpAmb);
   FverAplic := FRetConsFoto.verAplic;
   FcStat    := FRetConsFoto.cStat;
   FxMotivo  := FRetConsFoto.xMotivo;
@@ -1225,11 +1197,7 @@ begin
     ConsPlaca.dtRef := DataRef;
     ConsPlaca.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConsPlaca.Gerador.Opcoes );
-
-    ConsPlaca.GerarXML;
-
-    FPDadosMsg := ConsPlaca.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsPlaca.GerarXML;
   finally
     ConsPlaca.Free;
   end;
@@ -1248,7 +1216,7 @@ begin
   inherited Destroy;
 end;
 
-function TONEConsultaPlaca.GerarMsgLog: String;
+function TONEConsultaPlaca.GerarMsgLog: string;
 begin
   Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +
@@ -1257,7 +1225,7 @@ begin
                            'Status Descrição: %s ' + LineBreak +
                            'Resposta: %s ' + LineBreak),
                    [FRetConsPlaca.versao,
-                    TpAmbToStr(FRetConsPlaca.TpAmb),
+                    TipoAmbienteToStr(FRetConsPlaca.TpAmb),
                     FRetConsPlaca.verAplic,
                     IntToStr(FRetConsPlaca.cStat),
                     FRetConsPlaca.xMotivo,
@@ -1269,12 +1237,11 @@ function TONEConsultaPlaca.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['oneResultMsg'], FPRetornoWS);
 
-  //A função UTF8ToNativeString deve ser removida quando refatorado para usar ACBrXmlDocument
-  FRetConsPlaca.Leitor.Arquivo := UTF8ToNativeString(ParseText(AnsiString(FPRetWS)));
+  FRetConsPlaca.XmlRetorno := ParseText(AnsiString(FPRetWS));
   FRetConsPlaca.LerXml;
 
   Fversao   := FRetConsPlaca.versao;
-  FtpAmb    := FRetConsPlaca.tpAmb;
+  FtpAmb    := TpcnTipoAmbiente(FRetConsPlaca.tpAmb);
   FverAplic := FRetConsPlaca.verAplic;
   FcStat    := FRetConsPlaca.cStat;
   FxMotivo  := FRetConsPlaca.xMotivo;

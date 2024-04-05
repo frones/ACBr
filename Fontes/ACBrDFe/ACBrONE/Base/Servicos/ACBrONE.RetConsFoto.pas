@@ -32,70 +32,86 @@
 
 {$I ACBr.inc}
 
-unit pcnConsFoto;
+unit ACBrONE.RetConsFoto;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrDFeConsts,
-  pcnConversao, pcnGerador, ACBrUtil.Base,
-  pcnONEConsts;
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  ACBrBase,
+  ACBrXmlBase;
 
 type
 
-  TConsFoto = class
+  TRetConsFoto = class(TObject)
   private
-    FGerador: TGerador;
-    FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
-    FNSULeitura: String;
-    FVersao: String;
+    Fversao: string;
+    FtpAmb: TACBrTipoAmbiente;
+    FverAplic: string;
+    FcStat: Integer;
+    FxMotivo: string;
+    FdhResp: TDateTime;
+    Ffoto: string;
+    FXmlRetorno: string;
   public
-    constructor Create;
-    destructor Destroy; override;
-    function GerarXML: Boolean;
+    function LerXml: boolean;
 
-    property Gerador: TGerador       read FGerador    write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
-    property verAplic: String        read FverAplic   write FverAplic;
-    property NSULeitura: String      read FNSULeitura write FNSULeitura;
-    property Versao: String          read FVersao     write FVersao;
+    property versao: string           read Fversao   write Fversao;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: string         read FverAplic write FverAplic;
+    property cStat: Integer           read FcStat    write FcStat;
+    property xMotivo: string          read FxMotivo  write FxMotivo;
+    property dhResp: TDateTime        read FdhResp   write FdhResp;
+    property foto: string             read Ffoto     write Ffoto;
+
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;
 
 implementation
 
-{ TConsFoto }
+uses
+  synacode,
+  ACBrUtil.FilesIO,
+  ACBrXmlDocument;
 
-constructor TConsFoto.Create;
-begin
-  FGerador := TGerador.Create;
-end;
+{ TRetConsFoto }
 
-destructor TConsFoto.Destroy;
-begin
-  FGerador.Free;
-
-  inherited;
-end;
-
-function TConsFoto.GerarXML: Boolean;
+function TRetConsFoto.LerXml: boolean;
 var
-  sNSULei: string;
+  Document: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ok: Boolean;
+  auxStr: AnsiString;
 begin
-  Gerador.ArquivoFormatoXML := '';
+  Document := TACBrXmlDocument.Create;
 
-  sNSULei := IntToStrZero(StrToInt64Def(NSULeitura, 0), 15);
+  try
+    Document.LoadFromXml(XmlRetorno);
 
-  Gerador.wGrupo('oneConsFoto ' + NAME_SPACE_ONE + ' versao="' + Versao + '"');
+    ANode := Document.Root;
 
-  Gerador.wCampo(tcStr, 'EP03', 'tpAmb     ', 01, 01, 1, tpAmbToStr(tpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'EP04', 'verAplic  ', 01, 20, 1, verAplic, DSC_verAplic);
-  Gerador.wCampo(tcStr, 'EP05', 'NSULeitura', 15, 15, 1, sNSULei, DSC_NSULeitura);
+    if ANode <> nil then
+    begin
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+      dhResp := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhResp'), tcDatHor);
+      auxStr := ObterConteudoTag(ANode.Childrens.FindAnyNs('foto'), tcStr);
 
-  Gerador.wGrupo('/oneConsFoto');
-
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+      if auxStr <> '' then
+        foto := UnZip(DecodeBase64(auxStr));
+    end;
+  finally
+    Result := True;
+    FreeAndNil(Document);
+  end;
 end;
 
 end.

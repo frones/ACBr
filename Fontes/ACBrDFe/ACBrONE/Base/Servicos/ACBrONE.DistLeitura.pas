@@ -32,14 +32,15 @@
 
 {$I ACBr.inc}
 
-unit pcnDistLeitura;
+unit ACBrONE.DistLeitura;
 
 interface
 
 uses
   SysUtils, Classes,
   ACBrDFeConsts,
-  pcnConversao, pcnGerador, ACBrONEConversao;
+  pcnConversao,
+  ACBrONE.Conversao;
 
 type
 
@@ -47,36 +48,30 @@ type
 
   TDistLeitura = class
   private
-    FGerador: TGerador;
-
-    FVersao: String;
+    FVersao: string;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FtpDist: TtpDist;
-    FultNSU: String;
-    FNSUFin: String;
-    FCNPJOper: String;
-    FcEQP: String;
+    FultNSU: string;
+    FNSUFin: string;
+    FCNPJOper: string;
+    FcEQP: string;
     FcUF: Integer;
     FindCompRet: TIndicador;
     FindResumo: TIndicador;
 
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    function GerarXML: boolean;
+    function GerarXML: string;
     function ObterNomeArquivo: string;
 
-    property Gerador: TGerador       read FGerador    write FGerador;
-    property versao: String          read Fversao     write Fversao;
+    property versao: string          read Fversao     write Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
-    property verAplic: String        read FverAplic   write FverAplic;
+    property verAplic: string        read FverAplic   write FverAplic;
     property tpDist: TtpDist         read FtpDist     write FtpDist;
-    property ultNSU: String          read FultNSU     write FultNSU;
-    property NSUFin: String          read FNSUFin     write FNSUFin;
-    property CNPJOper: String        read FCNPJOper   write FCNPJOper;
-    property cEQP: String            read FcEQP       write FcEQP;
+    property ultNSU: string          read FultNSU     write FultNSU;
+    property NSUFin: string          read FNSUFin     write FNSUFin;
+    property CNPJOper: string        read FCNPJOper   write FCNPJOper;
+    property cEQP: string            read FcEQP       write FcEQP;
     property cUF: Integer            read FcUF        write FcUF;
     property indCompRet: TIndicador  read FindCompRet write FindCompRet;
     property indResumo: TIndicador   read FindResumo  write FindResumo;
@@ -86,80 +81,58 @@ implementation
 
 uses
   ACBrUtil.Base,
-  pcnONEConsts;
+  ACBrONE.Consts;
 
 { TDistLeitura }
 
-constructor TDistLeitura.Create;
-begin
-  FGerador := TGerador.Create;
-end;
-
-destructor TDistLeitura.Destroy;
-begin
-  FGerador.Free;
-
-  inherited;
-end;
-
 function TDistLeitura.ObterNomeArquivo: string;
-var
-  DataHora: TDateTime;
-  Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
 begin
-  Datahora := now;
-  DecodeTime(DataHora, Hour, Min, Sec, Milli);
-  DecodeDate(DataHora, Year, Month, Day);
-  AAAAMMDDTHHMMSS := IntToStrZero(Year, 4) + IntToStrZero(Month, 2) + IntToStrZero(Day, 2) +
-    IntToStrZero(Hour, 2) + IntToStrZero(Min, 2) + IntToStrZero(Sec, 2);
-  Result := AAAAMMDDTHHMMSS + '-con-dist-lei.xml';
+  Result := FormatDateTime('yyyymmddhhnnss', Now) + '-ped-csc.xml';
 end;
 
-function TDistLeitura.GerarXML: boolean;
+function TDistLeitura.GerarXML: string;
 var
- sNSU, sNSUFin: String;
+ sNSU, sNSUFin, stpDist: string;
 begin
-  Gerador.ArquivoFormatoXML := '';
-
   sNSU := IntToStrZero(StrToInt64Def(ultNSU, 0), 15);
 
   if NSUFin <> '' then
     sNSUFin := IntToStrZero(StrToIntDef(NSUFin, 0), 15);
-
-  Gerador.wGrupo('oneDistLeitura ' + NAME_SPACE_ONE + ' versao="' + Versao + '"');
-
-  Gerador.wCampo(tcStr, 'CP03', 'tpAmb   ', 01, 01, 1, TpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'CP04', 'verAplic', 01, 20, 1, FverAplic, DSC_verAplic);
-  Gerador.wCampo(tcStr, 'CP05', 'tpDist  ', 01, 01, 1, TpDistToStr(FtpDist), DSC_tpDist);
-  Gerador.wCampo(tcStr, 'CP06', 'ultNSU  ', 01, 15, 1, sNSU, DSC_ULTNSU);
-  Gerador.wCampo(tcStr, 'CP07', 'NSUFin  ', 01, 15, 0, sNSUFin, DSC_NSUFin);
 
   case tpDist of
     tdEquipamento,
     tdOperador:
       begin
         if cEQP = '' then
-          Gerador.wCampo(tcStr, 'CP08', 'CNPJOper', 01, 14, 1, CNPJOper, DSC_CNPJOper);
-
-        if tpDist = tdEquipamento then
-          Gerador.wCampo(tcStr, 'CP09', 'cEQP', 01, 15, 0, cEQP, DSC_cEQP);
+          stpDist := '<CNPJOper>' + CNPJOper + '</CNPJOper>'
+        else
+        begin
+          if tpDist = tdEquipamento then
+            stpDist := '<cEQP>' + cEQP + '</cEQP>';
+        end;
       end;
 
     tdUFMDFe,
     tdUFCaptura:
-      Gerador.wCampo(tcInt, 'CP10', 'cUF', 01, 02, 1, FcUF, DSC_cUF);
+      stpDist := '<cUF>' + IntToStr(FcUF) + '</cUF>'
+  else
+    stpDist := '';
   end;
 
   if FindCompRet = tiSim  then
-    Gerador.wCampo(tcStr, 'CP11', 'indCompRet', 1, 1, 1, '1', '');
+    stpDist := stpDist + '<indCompRet>' + '1' + '</indCompRet>';
 
   if FindResumo = tiSim  then
-    Gerador.wCampo(tcStr, 'CP11', 'indResumo', 1, 1, 1, '1', '');
+    stpDist := stpDist + '<indResumo>' + '1' + '</indResumo>';
 
-  Gerador.wGrupo('/oneDistLeitura');
-
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+  Result := '<oneDistLeitura ' + NAME_SPACE_ONE + ' versao="' + Versao + '">' +
+              '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<verAplic>' + verAplic + '</verAplic>' +
+              '<tpDist>' + TpDistToStr(FtpDist) + '</tpDist>' +
+              '<ultNSU>' + sNSU + '</ultNSU>' +
+              '<NSUFin>' + sNSUFin + '</NSUFin>' +
+                stpDist +
+            '</oneDistLeitura>';
 end;
 
 end.

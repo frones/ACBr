@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnEnvManutencaoEQP;
+unit ACBrONE.EnvManutencaoEQP;
 
 interface
 
@@ -44,117 +44,100 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  ACBrDFeConsts,
-  pcnConversao, pcnGerador,
-  ACBrONEConversao, pcnONEConsts;
+  pcnConversao,
+  ACBrONE.Conversao;
 
 type
   { TManutencaoEQP }
 
   TManutencaoEQP = class(TObject)
   private
-    FGerador: TGerador;
-
-    FVersao: String;
+    FVersao: string;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FtpMan: TtpMan;
     FdhReg: TDateTime;
-    FCNPJOper: String;
-    FcEQP: String;
-    FxEQP: String;
+    FCNPJOper: string;
+    FcEQP: string;
+    FxEQP: string;
     FcUF: Integer;
     FtpSentido: TtpSentido;
     Flatitude: Double;
     Flongitude: Double;
     FtpEQP: TtpEQP;
-    FxRefCompl: String;
+    FxRefCompl: string;
 
   public
-    constructor Create;
-    destructor Destroy; override;
+    function GerarXML: string;
 
-    function GerarXML: Boolean;
-    function LerXML(const CaminhoArquivo: String): Boolean;
-    function LerXMLFromString(const AXML: String): Boolean;
-    function LerFromIni(const AIniString: String): Boolean;
-    function ObterNomeArquivo: String;
+    function LerXML(const CaminhoArquivo: string): Boolean;
+    function LerXMLFromString(const AXML: string): Boolean;
 
-    property Gerador: TGerador       read FGerador   write FGerador;
-    property Versao: String          read FVersao    write FVersao;
+    function LerFromIni(const AIniString: string): Boolean;
+    function ObterNomeArquivo: string;
+
+    property Versao: string          read FVersao    write FVersao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
-    property verAplic: String        read FverAplic  write FverAplic;
+    property verAplic: string        read FverAplic  write FverAplic;
     property tpMan: TtpMan           read FtpMan     write FtpMan;
     property dhReg: TDateTime        read FdhReg     write FdhReg;
-    property CNPJOper: String        read FCNPJOper  write FCNPJOper;
-    property cEQP: String            read FcEQP      write FcEQP;
-    property xEQP: String            read FxEQP      write FxEQP;
+    property CNPJOper: string        read FCNPJOper  write FCNPJOper;
+    property cEQP: string            read FcEQP      write FcEQP;
+    property xEQP: string            read FxEQP      write FxEQP;
     property cUF: Integer            read FcUF       write FcUF;
     property tpSentido: TtpSentido   read FtpSentido write FtpSentido;
     property latitude: Double        read Flatitude  write Flatitude;
     property longitude: Double       read Flongitude write Flongitude;
     property tpEQP: TtpEQP           read FtpEQP     write FtpEQP;
-    property xRefCompl: String       read FxRefCompl write FxRefCompl;
+    property xRefCompl: string       read FxRefCompl write FxRefCompl;
   end;
 
 implementation
 
 uses
   IniFiles,
-  pcnRetManutencaoEQP,
-  ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
-  ACBrDFeUtil;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrONE.RetManutencaoEQP,
+  ACBrONE.Consts;
 
 { TManutencaoEQP }
 
-constructor TManutencaoEQP.Create;
-begin
-  inherited Create;
-
-  FGerador := TGerador.Create;
-end;
-
-destructor TManutencaoEQP.Destroy;
-begin
-  FGerador.Free;
-
-  inherited;
-end;
-
-function TManutencaoEQP.GerarXML: Boolean;
+function TManutencaoEQP.GerarXML: string;
 var
- sEQP: string;
+ sEQP, xLat, xLon: string;
 begin
-  Gerador.ArquivoFormatoXML := '';
-
   sEQP := IntToStrZero(StrToInt64Def(FcEQP, 0), 15);
+  xLat := FormatFloat('0.000000', Flatitude);
+  xLat := StringReplace(xLat, ',', '.', [rfReplaceAll]);
+  xLon := FormatFloat('0.000000', Flongitude);
+  xLon := StringReplace(xLon, ',', '.', [rfReplaceAll]);
 
-  Gerador.wGrupo('oneManEQP ' + NAME_SPACE_ONE + ' versao="' + Versao + '"');
-
-  Gerador.wCampo(tcStr, 'AP03', 'tpAmb    ', 01, 001, 1, TpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'AP04', 'verAplic ', 01, 020, 1, FverAplic, DSC_verAplic);
-  Gerador.wCampo(tcStr, 'AP05', 'tpMan    ', 01, 001, 1, TpManToStr(FtpMan), DSC_tpMan);
-  Gerador.wCampo(tcStr, 'AP06', 'dhReg    ', 01, 050, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhReg) +
-                                                           GetUTC(CodigoUFparaUF(FcUF), FdhReg));
-  Gerador.wCampo(tcStr, 'AP07', 'CNPJOper ', 01, 014, 1, FCNPJOper, DSC_CNPJOper);
-  Gerador.wCampo(tcStr, 'AP08', 'cEQP     ', 01, 015, 1, sEQP, DSC_cEQP);
-  Gerador.wCampo(tcStr, 'AP09', 'xEQP     ', 01, 050, 1, FxEQP, DSC_xEQP);
-  Gerador.wCampo(tcInt, 'AP10', 'cUF      ', 01, 002, 1, FcUF, DSC_cUF);
-  Gerador.wCampo(tcStr, 'AP11', 'tpSentido', 01, 001, 1, TpSentidoToStr(FtpSentido), DSC_tpSentido);
-  Gerador.wCampo(tcDe6, 'AP12', 'latitude ', 01, 010, 1, Flatitude, DSC_latitude);
-  Gerador.wCampo(tcDe6, 'AP13', 'longitude', 01, 010, 1, Flongitude, DSC_longitude);
-  Gerador.wCampo(tcStr, 'AP14', 'tpEQP    ', 01, 001, 1, TpEQPToStr(FtpEQP), DSC_tpEQP);
-  Gerador.wCampo(tcStr, 'AP15', 'xRefCompl', 02, 200, 0, xRefCompl, DSC_xREFCOMPL);
-
-  Gerador.wGrupo('/oneManEQP');
-
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+  Result := '<oneManEQP ' + NAME_SPACE_ONE + ' versao="' + Versao + '">' +
+              '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<verAplic>' + verAplic + '</verAplic>' +
+              '<tpMan>' + TpManToStr(FtpMan) + '</tpMan>' +
+              '<dhReg>' +
+                FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhReg) +
+                  GetUTC(CodigoUFparaUF(FcUF), FdhReg) +
+              '</dhReg>' +
+              '<CNPJOper>' + FCNPJOper + '</CNPJOper>' +
+              '<cEQP>' + sEQP + '</cEQP>' +
+              '<xEQP>' + FxEQP + '</xEQP>' +
+              '<cUF>' + IntToStr(FcUF) + '</cUF>' +
+              '<tpSentido>' + TpSentidoToStr(FtpSentido) + '</tpSentido>' +
+              '<latitude>' + xLat + '</latitude>' +
+              '<longitude>' + xLon + '</longitude>' +
+              '<tpEQP>' + TpEQPToStr(FtpEQP) + '</tpEQP>' +
+              '<xRefCompl>' + xRefCompl + '</xRefCompl>' +
+            '</oneManEQP>';
 end;
 
-function TManutencaoEQP.LerFromIni(const AIniString: String): Boolean;
+function TManutencaoEQP.LerFromIni(const AIniString: string): Boolean;
 var
   INIRec: TMemIniFile;
-  sSecao: String;
+  sSecao: string;
 begin
   Result := True;
 
@@ -182,7 +165,7 @@ begin
   end;
 end;
 
-function TManutencaoEQP.LerXML(const CaminhoArquivo: String): Boolean;
+function TManutencaoEQP.LerXML(const CaminhoArquivo: string): Boolean;
 var
   ArqXML: TStringList;
 begin
@@ -195,14 +178,14 @@ begin
   end;
 end;
 
-function TManutencaoEQP.LerXMLFromString(const AXML: String): Boolean;
+function TManutencaoEQP.LerXMLFromString(const AXML: string): Boolean;
 var
   RetManutencaoEQP : TRetManutencaoEQP;
 begin
   RetManutencaoEQP := TRetManutencaoEQP.Create;
 
   try
-    RetManutencaoEQP.Leitor.Arquivo := AXML;
+    RetManutencaoEQP.XmlRetorno := AXML;
     Result := RetManutencaoEQP.LerXml;
     {
     verAplic  := RetManutencaoEQP.verAplic;
@@ -222,7 +205,7 @@ begin
   end;
 end;
 
-function TManutencaoEQP.ObterNomeArquivo: String;
+function TManutencaoEQP.ObterNomeArquivo: string;
 begin
   Result := FormatDateTime('yyyymmddhhnnss', dhReg) + '-man.xml';
 end;

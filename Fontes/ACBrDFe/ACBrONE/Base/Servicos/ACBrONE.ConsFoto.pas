@@ -30,87 +30,54 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrONE
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit ACBrONE.ConsFoto;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
+
+uses
+  SysUtils, Classes,
+  pcnConversao;
+
+type
+
+  TConsFoto = class
+  private
+    FtpAmb: TpcnTipoAmbiente;
+    FverAplic: string;
+    FNSULeitura: string;
+    FVersao: string;
+  public
+    function GerarXML: string;
+
+    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property verAplic: string        read FverAplic   write FverAplic;
+    property NSULeitura: string      read FNSULeitura write FNSULeitura;
+    property Versao: string          read FVersao     write FVersao;
+  end;
+
+implementation
+
+uses
+  ACBrUtil.Base,
+  ACBrONE.Consts;
 
 
-05/04/2024
--- Diversos --
-[*] Refatoração de todo o componente.
-  Por: Italo Giurizzato Junior
+{ TConsFoto }
 
-21/03/2024
--- ACBrONEWebServices --
-[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
-Por: Diego Folieni
+function TConsFoto.GerarXML: string;
+var
+  sNSULei: string;
+begin
+  sNSULei := IntToStrZero(StrToInt64Def(NSULeitura, 0), 15);
 
-23/02/2024
--- ACBrONEConversao --
-[*] Ajustes nas funções: DblToVersaoONE, VersaoONEToDbl.
-  Por: Italo Giurizzato Junior
+  Result := '<oneConsFoto ' + NAME_SPACE_ONE + ' versao="' + Versao + '">' +
+              '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<verAplic>' + verAplic + '</verAplic>' +
+              '<NSULeitura>' + sNSULei + '</NSULeitura>' +
+            '</oneConsFoto>';
+end;
 
-22/02/2024
--- Diversos --
-[*] Refactoring na unit pcnConversaoONE e a alteração do seu nome para
-    ACBrONEConversao. Ajustes nas demais units por conta da alteração
-    do nome da unit.
-[*] Remoção da unit pcnConversaoONE, pois agora esta sedo usada a nova unit
-    ACBrONEConversao.
-  Por: Italo Giurizzato Junior
-
-09/02/2024
--- Diversos --
-[*] Refactoring visando deixar de usar a unit pcnAuxiliar.
-  Por: Italo Giurizzato Junior
-
-01/02/2024
--- Diversos --
-[*] Refactoring visando deixar de usar a unit pcnConsts.
-  Por: Italo Giurizzato Junior
-
-31/03/2023
--- Diversos --
-[+] Implementado a inclusão e alteração de equipamentos ao transmitir a leitura
-    de placas.
-   Por: Italo Giurizzato Junior
-
-01/02/2023
--- Diversos --
-[+] Implementado a consulta por placa.
-   Por: Italo Giurizzato Junior
-
-29/03/2022
--- Diversos --
-[*] Remoção de Warnings e Hints.
-   Por: Waldir Paim
-
-21/12/2020
--- pcnRetRecepcaoLeitura --
-[+] Inclusão de um novo campo no retorno do envio da leitura.
-   Por: Italo Giurizzato Junior
-
-10/11/2020
--- Diversos --
-[+] Novo método de Consulta a Foto.
-   Por: Italo Giurizzato Junior
-
-22/07/2020
--- Diversos --
-[+] Acrescentado a unit pcnConsts em algumas units do componente.
-    Por conta da migração de algumas constantes de pcnGerador para
-    pcnConsts.
-   Por: Italo Jurisato Junior
-
-14/10/2019
-[+] Doação do componente para o Projeto ACBr
-   Por: Italo Jurisato Junior
+end.
 

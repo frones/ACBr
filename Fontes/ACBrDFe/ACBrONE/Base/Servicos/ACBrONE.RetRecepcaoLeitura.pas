@@ -30,87 +30,88 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrONE
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit ACBrONE.RetRecepcaoLeitura;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
+uses
+  SysUtils, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
+  ACBrXmlBase;
 
-05/04/2024
--- Diversos --
-[*] Refatoração de todo o componente.
-  Por: Italo Giurizzato Junior
+type
+  { TRetRecepcaoLeitura }
 
-21/03/2024
--- ACBrONEWebServices --
-[*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação
-Por: Diego Folieni
+  TRetRecepcaoLeitura = class(TObject)
+  private
+    Fversao: string;
+    FtpAmb: TACBrTipoAmbiente;
+    FverAplic: string;
+    FcStat: Integer;
+    FxMotivo: string;
+    FdhResp: TDateTime;
+    FNSU: string;
+    FindMDFeAberto: Integer;
+    FXML: AnsiString;
+    FXmlRetorno: string;
+  public
+    function LerXml: Boolean;
 
-23/02/2024
--- ACBrONEConversao --
-[*] Ajustes nas funções: DblToVersaoONE, VersaoONEToDbl.
-  Por: Italo Giurizzato Junior
+    property versao: string           read Fversao        write Fversao;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb         write FtpAmb;
+    property verAplic: string         read FverAplic      write FverAplic;
+    property cStat: Integer           read FcStat         write FcStat;
+    property xMotivo: string          read FxMotivo       write FxMotivo;
+    property dhResp: TDateTime        read FdhResp        write FdhResp;
+    property NSU: string              read FNSU           write FNSU;
+    property indMDFeAberto: Integer   read FindMDFeAberto write FindMDFeAberto;
+    property XML: AnsiString          read FXML           write FXML;
 
-22/02/2024
--- Diversos --
-[*] Refactoring na unit pcnConversaoONE e a alteração do seu nome para
-    ACBrONEConversao. Ajustes nas demais units por conta da alteração
-    do nome da unit.
-[*] Remoção da unit pcnConversaoONE, pois agora esta sedo usada a nova unit
-    ACBrONEConversao.
-  Por: Italo Giurizzato Junior
+    property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
+  end;
 
-09/02/2024
--- Diversos --
-[*] Refactoring visando deixar de usar a unit pcnAuxiliar.
-  Por: Italo Giurizzato Junior
+implementation
 
-01/02/2024
--- Diversos --
-[*] Refactoring visando deixar de usar a unit pcnConsts.
-  Por: Italo Giurizzato Junior
+uses
+  ACBrXmlDocument;
 
-31/03/2023
--- Diversos --
-[+] Implementado a inclusão e alteração de equipamentos ao transmitir a leitura
-    de placas.
-   Por: Italo Giurizzato Junior
+{ TRetRecepcaoLeitura }
 
-01/02/2023
--- Diversos --
-[+] Implementado a consulta por placa.
-   Por: Italo Giurizzato Junior
+function TRetRecepcaoLeitura.LerXml: Boolean;
+var
+  Document: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  ok: Boolean;
+begin
+  Document := TACBrXmlDocument.Create;
 
-29/03/2022
--- Diversos --
-[*] Remoção de Warnings e Hints.
-   Por: Waldir Paim
+  try
+    Document.LoadFromXml(XmlRetorno);
 
-21/12/2020
--- pcnRetRecepcaoLeitura --
-[+] Inclusão de um novo campo no retorno do envio da leitura.
-   Por: Italo Giurizzato Junior
+    ANode := Document.Root;
 
-10/11/2020
--- Diversos --
-[+] Novo método de Consulta a Foto.
-   Por: Italo Giurizzato Junior
+    if ANode <> nil then
+    begin
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+      dhResp := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhResp'), tcDatHor);
+      NSU := ObterConteudoTag(ANode.Childrens.FindAnyNs('NSU'), tcStr);
+      indMDFeAberto := ObterConteudoTag(ANode.Childrens.FindAnyNs('indMDFeAberto'), tcInt);
+    end;
+  finally
+    Result := True;
+    FreeAndNil(Document);
+  end;
+end;
 
-22/07/2020
--- Diversos --
-[+] Acrescentado a unit pcnConsts em algumas units do componente.
-    Por conta da migração de algumas constantes de pcnGerador para
-    pcnConsts.
-   Por: Italo Jurisato Junior
-
-14/10/2019
-[+] Doação do componente para o Projeto ACBr
-   Por: Italo Jurisato Junior
-
+end.

@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnONEConsts;
+unit ACBrONE.Consts;
 
 interface
 
@@ -41,6 +41,8 @@ uses
 
 const
   NAME_SPACE_ONE  = 'xmlns="http://www.portalfiscal.inf.br/one"';
+
+resourcestring
   DSC_verAplic = 'Versão do Aplicativo';
   DSC_tpMan = 'Tipo de Manutenção';
   DSC_CNPJOper = 'CNPJ do Operador';

@@ -259,7 +259,7 @@ uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
   pcnConversao,
-  ACBrONEConversao,
+  ACBrONE.Conversao,
   ACBrUtil.DateTime, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.Base,
   ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   Frm_Status, Frm_SelecionarCertificado;
@@ -521,7 +521,7 @@ begin
       placa           := 'ABC1234';
       tpVeiculo       := tvCarga;
       velocidade      := 80;
-      foto            := '';
+      foto            := 'xxxxxxxxxxx';
       indiceConfianca := 84;
       pesoBrutoTotal  := 5;
       nroEixos        := 3;

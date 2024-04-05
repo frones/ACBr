@@ -205,22 +205,23 @@ begin
 
   FConfiguracoes := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes;
 
+  FCTe.Ide.tpCTe := tcNormal;
+  FCTe.Ide.verProc := 'ACBrCTe';
+  FCTe.ide.indGlobalizado := tiNao;
+  FCTe.infCTeNorm.infCteSub.indAlteraToma := tiNao;
+  {
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     FCTe.Ide.modelo := StrToInt(ModeloCTeToStr(Configuracoes.Geral.ModeloDF));
     FCTe.infCTe.Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
 
-    FCTe.Ide.tpCTe := tcNormal;
-    FCTe.Ide.verProc := 'ACBrCTe';
     FCTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FCTe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
-    FCTe.ide.indGlobalizado := tiNao;
-    
-    FCTe.infCTeNorm.infCteSub.indAlteraToma := tiNao;
 
     if Assigned(DACTE) then
       FCTe.Ide.tpImp := DACTE.TipoDACTE;
   end;
+  }
 end;
 
 destructor Conhecimento.Destroy;
@@ -663,6 +664,7 @@ begin
   try
     with FCTe do
     begin
+      INIRec.WriteString('infCTe', 'versao', FormatFloat('0.00', infCTe.versao));
       INIRec.WriteInteger('ide', 'cCT', Ide.cCT);
       INIRec.WriteInteger('ide', 'CFOP', Ide.CFOP);
       INIRec.WriteString('ide', 'natOp', Ide.natOp);
@@ -1581,8 +1583,18 @@ begin
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
+    {
+      Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
+    }
+    FCTeW.VersaoDF := Configuracoes.Geral.VersaoDF;
+    FCTeW.ModeloDF := Configuracoes.Geral.ModeloDF;
+    FCTeW.tpAmb := Configuracoes.WebServices.Ambiente;
+    FCTeW.tpEmis := Configuracoes.Geral.FormaEmissao;
     FCTeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FCTeW.CSRT   := Configuracoes.RespTec.CSRT;
+
+    if Assigned(DACTE) then
+      FCTe.Ide.tpImp := DACTE.TipoDACTE;
   end;
 
   FCTeW.GerarXml;
@@ -1729,7 +1741,8 @@ end;
 function Conhecimento.LerArqIni(const AIniString: String): Boolean;
 var
   I, J, K, L: Integer;
-  sSecao, versao, sFim, sCampoAdic, sKey: String;
+  sSecao, //versao,
+  sFim, sCampoAdic, sKey: String;
   OK: boolean;
   INIRec: TMemIniFile;
 begin
@@ -1742,9 +1755,9 @@ begin
     with FCTe do
     begin
       infCTe.versao := StringToFloatDef( INIRec.ReadString('infCTe','versao', VersaoCTeToStr(FConfiguracoes.Geral.VersaoDF)),0) ;
-      versao        := infCTe.VersaoStr;
-      versao        := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
-      versao        := StringReplace(versao,'"','',[rfReplaceAll,rfIgnoreCase]);
+//      versao        := infCTe.VersaoStr;
+//      versao        := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
+//      versao        := StringReplace(versao,'"','',[rfReplaceAll,rfIgnoreCase]);
 
       Ide.cCT    := INIRec.ReadInteger('ide','cCT', 0);
       Ide.cUF    := INIRec.ReadInteger('ide','cUF', 0);
@@ -1753,8 +1766,8 @@ begin
       Ide.forPag := StrTotpforPag(OK,INIRec.ReadString('ide','forPag','0'));
       Ide.modelo := INIRec.ReadInteger( 'ide','mod' ,55);
 
-      FConfiguracoes.Geral.ModeloDF := StrToModeloCTe(OK, IntToStr(Ide.modelo));
-      FConfiguracoes.Geral.VersaoDF := StrToVersaoCTe(OK, versao);
+//      FConfiguracoes.Geral.ModeloDF := StrToModeloCTe(OK, IntToStr(Ide.modelo));
+//      FConfiguracoes.Geral.VersaoDF := StrToVersaoCTe(OK, versao);
 
       Ide.serie   := INIRec.ReadInteger( 'ide','serie'  ,1);
       Ide.nCT     := INIRec.ReadInteger( 'ide','nCT' ,0);

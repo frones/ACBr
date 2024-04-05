@@ -267,7 +267,7 @@ end;
 
 function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
 begin
-  Result := GetPath(FPathInu, 'Inu', CNPJ, IE);
+  Result := GetPath(FPathInu, 'Inu', CNPJ, IE, Data);
 end;
 
 function TArquivosConfCTe.GetPathEvento(tipoEvento: TpcnTpEvento;

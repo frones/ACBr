@@ -489,6 +489,8 @@ var
   P: Integer;
   SchemaStr: String;
 begin
+  ok := True;
+
   P := pos('_', s);
   if P > 0 then
     SchemaStr := copy(s, 1, P-1)
@@ -516,13 +518,13 @@ function DblToVersaoCTe(out ok: Boolean; const d: Double): TVersaoCTe;
 begin
   ok := True;
 
-  if d = 2.0 then
+  if d = 2 then
     Result := ve200
   else
-  if d = 3.0 then
+  if d = 3 then
     Result := ve300
   else
-  if d = 4.0 then
+  if d = 4 then
     Result := ve400
   else
   begin

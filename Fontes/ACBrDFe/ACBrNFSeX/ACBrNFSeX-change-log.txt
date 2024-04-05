@@ -43,12 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/04/2024
+-- ACBrNFSeXServicos --
+[*] Alterado a URL e a versão da cidade de Pomerode/SC, o provedor continua o mesmo.
+  Por: Astrogildo
+[+] Incluída a cidade de Ibirapuita/RS, o provedor é Fiorilli
+  Por: BSSoft
 -- ACBrNFSeXDANFSeRLRetrato.lfm --
 [*][*] TK-5203 / 5203-1  Ajustado a Discriminação dos Serviços para melhor exibição.
 https://www.projetoacbr.com.br/forum/topic/76760-texto-no-campo-discrimina%C3%A7%C3%A3o-dos-servi%C3%A7os-da-danfs-e-est%C3%A1-cortando/
   Por: Daniel de Morais InfoCotidiano
-
-05/04/2024
 -- ACBrNFSeXServicos --
 [*] Alterado a URL e a versão da cidade de Serra/ES, o provedor continua o mesmo.
 -- Futurize.Provider --

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2024
+-- ACBrNFSeXServicos --
+[*] Alterado a URL e a versão da cidade de Serra/ES, o provedor continua o mesmo.
+-- Futurize.Provider --
+[*] Alterado a configuração para que o modo de envio automatico seja o Unitário.
+-- SmarAPD.LerXml --
+[*] Melhorias no código usando o FixInsight (ainda não ficou 100%).
+  Por: Italo Giurizzato Junior
+
 04/04/2024
 -- ACBrNFSeXWebservicesResponse/EL.Provider --
 [+] Incluido a propriedade idRps que é utilizado pelo provedor EL.

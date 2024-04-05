@@ -89,6 +89,7 @@ begin
   end;
 
   ConfigGeral.UseCertificateHTTP := False;
+  ConfigGeral.ModoEnvio := meUnitario;
 
   with ConfigWebServices do
   begin

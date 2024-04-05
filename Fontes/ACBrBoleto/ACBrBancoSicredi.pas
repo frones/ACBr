@@ -59,6 +59,9 @@ type
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroTrailler400(ARemessa:TStringList);  override;
     procedure LerRetorno400(ARetorno: TStringList); override;
+    function DefinePosicaoNossoNumeroRetorno: Integer; override;
+    function DefineNossoNumeroRetorno(const Retorno: String): String; override;
+
     function DefineDataDesconto(const ACBrTitulo: TACBrTitulo; AFormat: String = 'ddmmyyyy'): String; override;
 
     function GerarRegistroHeader240(NumeroRemessa : Integer): String; override;
@@ -706,7 +709,9 @@ begin
         Carteira             := Copy(Linha,14,1);
         if (Carteira = '1') or (Carteira = 'A') then //Cobrança com Registro
         begin
-          NossoNumero          := Copy(Linha,48,15);
+
+          NossoNumero          := DefineNossoNumeroRetorno(Linha);
+
           Vencimento     := StringToDateTimeDef(Copy(Linha,147,2)+'/'+
                                                 Copy(Linha,149,2)+'/'+
                                                 Copy(Linha,151,2),0, 'DD/MM/YY' );
@@ -838,6 +843,19 @@ begin
 
   end;
 
+end;
+
+function TACBrBancoSicredi.DefineNossoNumeroRetorno(const Retorno: String): String;
+begin
+  if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+    Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,TamanhoMaximoNossoNum)
+  else
+    Result := Copy(Retorno,DefinePosicaoNossoNumeroRetorno,Pred(TamanhoMaximoNossoNum));
+end;
+
+function TACBrBancoSicredi.DefinePosicaoNossoNumeroRetorno: Integer;
+begin
+  Result := 48;
 end;
 
 function TACBrBancoSicredi.CodMotivoRejeicaoToDescricao(

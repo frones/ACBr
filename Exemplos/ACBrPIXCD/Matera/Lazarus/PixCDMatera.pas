@@ -620,7 +620,8 @@ type
     procedure LerMediatorFee(wIni: TIniFile; aAccountID: String);
     procedure MostraImagem(aArquivo: String);
     procedure PreencheGradeExtrato(aGrade: TStringGrid);
-    
+    procedure PreencherCabecalhoGrids(aGrid: TStringGrid);
+
     procedure InicializarAba;
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
@@ -662,12 +663,13 @@ var
 
 implementation
 
-uses 
+uses
   {$IfDef FPC}
    fpjson, jsonparser, jsonscanner, Jsons,
   {$EndIf}
   synacode, synautil, TypInfo, pcnConversao, ACBrPIXUtil, ACBrValidador,
   ACBrUtil.Compatibilidade,
+  ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.Base;
@@ -784,6 +786,10 @@ begin
   InicializarBitmaps;
   LerConfiguracao;
   InicializarAba;
+  {$IFNDEF FPC}
+    PreencherCabecalhoGrids(sgAccExtrato);
+    PreencherCabecalhoGrids(sgMediatorExtrato);
+  {$ENDIF}
 end;
 
 procedure TfrPixCDMatera.btContaCriarExternalIDClick(Sender: TObject);
@@ -963,26 +969,47 @@ end;
 
 procedure TfrPixCDMatera.btVerClientIDClick(Sender: TObject);
 begin
+  {$IfDef FPC}
   if (edPSPClientID.EchoMode = emPassword) then
     edPSPClientID.EchoMode := emNormal
   else
     edPSPClientID.EchoMode := emPassword;
+  {$Else}
+  if (edPSPClientID.PasswordChar = '*') then
+    edPSPClientID.PasswordChar := #0
+  else
+    edPSPClientID.PasswordChar := '*';
+  {$EndIf}
 end;
 
 procedure TfrPixCDMatera.btVerClientSecretClick(Sender: TObject);
 begin
+  {$IfDef FPC}
   if (edPSPClientSecret.EchoMode = emPassword) then
     edPSPClientSecret.EchoMode := emNormal
   else
     edPSPClientSecret.EchoMode := emPassword;
+  {$Else}
+  if (edPSPClientSecret.PasswordChar = '*') then
+    edPSPClientSecret.PasswordChar := #0
+  else
+    edPSPClientSecret.PasswordChar := '*';
+  {$EndIf}
 end;
 
 procedure TfrPixCDMatera.btVerSecretKeyClick(Sender: TObject);
 begin
+  {$IfDef FPC}
   if (edPSPSecretKey.EchoMode = emPassword) then
     edPSPSecretKey.EchoMode := emNormal
   else
     edPSPSecretKey.EchoMode := emPassword;
+  {$Else}
+  if (edPSPSecretKey.PasswordChar = '*') then
+    edPSPSecretKey.PasswordChar := #0
+  else
+    edPSPSecretKey.PasswordChar := '*';
+  {$EndIf}
 end;
 
 procedure TfrPixCDMatera.btAcharChavePrivadaClick(Sender: TObject);
@@ -1153,23 +1180,39 @@ begin
 end;
 
 procedure TfrPixCDMatera.PreencheGradeExtrato(aGrade: TStringGrid);
-Var
-  i: integer;
+var
+  i, Index: integer;
 begin
   if ACBrPSPMatera1.ExtratoECResposta.statement.Count > 0 then
   begin
     aGrade.Clear;
     for i := 0 to ACBrPSPMatera1.ExtratoECResposta.statement.Count-1 do
     begin
+      Index := i;
+      {$IFNDEF FPC}Index := i+1;{$ENDIF}
       aGrade.RowCount := aGrade.RowCount + 1;
-      aGrade.Cells[0,i] := FormatFloatBr(ACBrPSPMatera1.ExtratoECResposta.statement[i].amount);
-      aGrade.Cells[1,i] := ACBrPSPMatera1.ExtratoECResposta.statement[i].description;
-      aGrade.Cells[2,i] := FloatToStr(ACBrPSPMatera1.ExtratoECResposta.statement[i].historyCode);
-      aGrade.Cells[3,i] := ACBrPSPMatera1.ExtratoECResposta.statement[i].transactionId;
-      aGrade.Cells[4,i] := ACBrPSPMatera1.ExtratoECResposta.statement[i].transactionType;
-      aGrade.Cells[5,i] := MaterastatementEntryTypeToString(ACBrPSPMatera1.ExtratoECResposta.statement[i].type_);
+      aGrade.Cells[0,Index] := FormatFloatBr(ACBrPSPMatera1.ExtratoECResposta.statement[i].amount);
+      aGrade.Cells[1,Index] := FormatDateTimeBr(ACBrPSPMatera1.ExtratoECResposta.statement[i].entryDate);
+      aGrade.Cells[2,Index] := ACBrPSPMatera1.ExtratoECResposta.statement[i].description;
+      aGrade.Cells[3,Index] := FloatToStr(ACBrPSPMatera1.ExtratoECResposta.statement[i].historyCode);
+      aGrade.Cells[4,Index] := ACBrPSPMatera1.ExtratoECResposta.statement[i].transactionId;
+      aGrade.Cells[5,Index] := ACBrPSPMatera1.ExtratoECResposta.statement[i].transactionType;
+      aGrade.Cells[6,Index] := MaterastatementEntryTypeToString(ACBrPSPMatera1.ExtratoECResposta.statement[i].type_);
     end;
   end;
+end;
+
+procedure TfrPixCDMatera.PreencherCabecalhoGrids(aGrid: TStringGrid);
+begin
+  if (aGrid.RowCount < 1) then
+    aGrid.RowCount := aGrid.RowCount + 1;
+  aGrid.Cells[0,0] := 'amount';
+  aGrid.Cells[1,0] := 'entryDate';
+  aGrid.Cells[2,0] := 'description';
+  aGrid.Cells[3,0] := 'historyCode';
+  aGrid.Cells[4,0] := 'transactionId';
+  aGrid.Cells[5,0] := 'transactionType';
+  aGrid.Cells[6,0] := 'type';
 end;
 
 procedure TfrPixCDMatera.btConsultarExtratoECClick(Sender: TObject);
@@ -2936,6 +2979,9 @@ begin
 
   edConsultaStart.DateTime := Now;
   edconsultaEnding.DateTime := Now;
+
+  edConsultaStart1.DateTime := Now;
+  edconsultaEnding1.DateTime := Now;
 end;
 
 procedure TfrPixCDMatera.LigarAlertasdeErrosDeConfiguracao;
@@ -2950,10 +2996,12 @@ begin
   edFluxoClienteNome.Text := 'Nome Consumidor';
   edFluxoValor.Text := '5,00';
   edFluxotransactionID.Text := EmptyStr;
-  imFluxoQRCode.Picture.Clear;
   pnFluxoCopiaECola.Visible := False;
   pnFluxoTransactionID.Visible := False;
   lbSiteEfetuarPagto.Visible := False;
+  {$IfDef FPC}
+  imFluxoQRCode.Picture.Clear;
+  {$EndIf}
 end;
 
 procedure TfrPixCDMatera.AtualizarStatus(aStatusCobranca: TMateraTransactionStatus;

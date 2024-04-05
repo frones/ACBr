@@ -4132,23 +4132,17 @@ begin
   aJSon
     .AddPair('additionalInfo', fadditionalInfo, False)
     .AddPair('amount', famount, False)
-    .AddPair('comment', fcomment, False);
-
-  fcounterpart.WriteToJSon(aJSon);
-
-  aJSon
+    .AddPair('comment', fcomment, False)
     .AddPairISODate('creditDate', fcreditDate, False)
     .AddPair('description', fdescription, False)
     .AddPairISODateTime('entryDate', fentryDate, False)
-    .AddPair('historyCode', fhistoryCode, False);
-
-  finstantPaymentCashValue.WriteToJSon(aJSon);
-
-  aJSon
+    .AddPair('historyCode', fhistoryCode, False)
     .AddPair('transactionId', ftransactionId, False)
     .AddPair('transactionType', ftransactionType, False)
     .AddPair('type', MaterastatementEntryTypeToString(ftype_));
 
+  fcounterpart.WriteToJSon(aJSon);
+  finstantPaymentCashValue.WriteToJSon(aJSon);
 end;
 
 procedure TMaterastatementEntry.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -4160,25 +4154,18 @@ begin
   aJSon
     .Value('additionalInfo', fadditionalInfo)
     .Value('amount', famount)
-    .Value('comment', fcomment);
-
-  fcounterpart.ReadFromJSon(aJSon);
-
-  aJSon
+    .Value('comment', fcomment)
     .ValueISODate('creditDate', fcreditDate)
     .Value('description', fdescription)
     .ValueISODateTime('entryDate', fentryDate)
-    .Value('historyCode', fhistoryCode);
-
-  finstantPaymentCashValue.ReadFromJSon(aJSon);
-
-  aJSon
+    .Value('historyCode', fhistoryCode)
     .Value('transactionId', ftransactionId)
     .Value('transactionType', ftransactionType)
     .Value('type', s);
 
+  fcounterpart.ReadFromJSon(aJSon);
+  finstantPaymentCashValue.ReadFromJSon(aJSon);
   ftype_ := StringToMaterastatementEntryType(s);
-
 end;
 
 constructor TMaterastatementEntry.Create(const aObjectName: String);

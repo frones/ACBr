@@ -1579,13 +1579,19 @@ object frPixCDMatera: TfrPixCDMatera
                   Top = 0
                   Width = 658
                   Align = alClient
-                  ColCount = 6
+                  ColCount = 7
                   Columns = <                  
                     item
                       MinSize = 7
                       MaxSize = 133
                       Title.Caption = 'amount'
                       Width = 64
+                    end                  
+                    item
+                      Alignment = taCenter
+                      Title.Alignment = taCenter
+                      Title.Caption = 'entryDate'
+                      Width = 150
                     end                  
                     item
                       MinSize = 7
@@ -1621,6 +1627,7 @@ object frPixCDMatera: TfrPixCDMatera
                   TabOrder = 0
                   ColWidths = (
                     64
+                    150
                     245
                     72
                     201
@@ -1629,7 +1636,7 @@ object frPixCDMatera: TfrPixCDMatera
                   )
                   Cells = (
                     1
-                    1
+                    2
                     0
                     'amount'
                   )

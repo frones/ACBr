@@ -1699,7 +1699,7 @@ object frPixCDMatera: TfrPixCDMatera
                   Width = 658
                   Height = 363
                   Align = alClient
-                  ColCount = 6
+                  ColCount = 7
                   FixedCols = 0
                   TabOrder = 0
                   ColWidths = (

@@ -28,7 +28,7 @@ Begin VB.Form FrmMain
       Caption         =   "Carregar Configurações"
       Height          =   480
       Left            =   5760
-      TabIndex        =   142
+      TabIndex        =   141
       Top             =   3480
       Width           =   1935
    End
@@ -36,7 +36,7 @@ Begin VB.Form FrmMain
       Caption         =   "Enviar Boleto (WebService)"
       Height          =   360
       Left            =   240
-      TabIndex        =   141
+      TabIndex        =   140
       Top             =   9360
       Width           =   2175
    End
@@ -404,43 +404,83 @@ Begin VB.Form FrmMain
       TabCaption(5)   =   "WebService"
       TabPicture(5)   =   "FrmMain.frx":008C
       Tab(5).ControlEnabled=   0   'False
-      Tab(5).Control(0)=   "btnArquivoKEY"
-      Tab(5).Control(1)=   "btnArquivoCRT"
-      Tab(5).Control(2)=   "txtArquivoCRT"
-      Tab(5).Control(3)=   "txtArquivoKEY"
-      Tab(5).Control(4)=   "txtVersao"
-      Tab(5).Control(5)=   "txtTimeOut"
-      Tab(5).Control(6)=   "cmbOperacao"
-      Tab(5).Control(7)=   "cmbSSlType"
-      Tab(5).Control(8)=   "cmbHttp"
-      Tab(5).Control(9)=   "frmAmbiente"
-      Tab(5).Control(10)=   "btnPathLog"
-      Tab(5).Control(11)=   "txtPathLog"
-      Tab(5).Control(12)=   "chkGravarLog"
-      Tab(5).Control(13)=   "chkIndicadorPix"
-      Tab(5).Control(14)=   "txtScope"
-      Tab(5).Control(15)=   "txtKeyUser"
-      Tab(5).Control(16)=   "txtClientSecret"
-      Tab(5).Control(17)=   "txtClientID"
-      Tab(5).Control(18)=   "nudTimeOut"
-      Tab(5).Control(19)=   "Label9"
-      Tab(5).Control(20)=   "Label8"
-      Tab(5).Control(21)=   "Label7"
-      Tab(5).Control(22)=   "lblTimeOut(1)"
-      Tab(5).Control(23)=   "Label6"
-      Tab(5).Control(24)=   "lblSSLType"
-      Tab(5).Control(25)=   "lblHttpLib"
-      Tab(5).Control(26)=   "Label5"
-      Tab(5).Control(27)=   "Label4"
-      Tab(5).Control(28)=   "Label3"
-      Tab(5).Control(29)=   "Label2"
-      Tab(5).Control(30)=   "Label1"
-      Tab(5).ControlCount=   31
+      Tab(5).Control(0)=   "Label1"
+      Tab(5).Control(0).Enabled=   0   'False
+      Tab(5).Control(1)=   "Label2"
+      Tab(5).Control(1).Enabled=   0   'False
+      Tab(5).Control(2)=   "Label3"
+      Tab(5).Control(2).Enabled=   0   'False
+      Tab(5).Control(3)=   "Label4"
+      Tab(5).Control(3).Enabled=   0   'False
+      Tab(5).Control(4)=   "Label5"
+      Tab(5).Control(4).Enabled=   0   'False
+      Tab(5).Control(5)=   "lblHttpLib"
+      Tab(5).Control(5).Enabled=   0   'False
+      Tab(5).Control(6)=   "lblSSLType"
+      Tab(5).Control(6).Enabled=   0   'False
+      Tab(5).Control(7)=   "Label6"
+      Tab(5).Control(7).Enabled=   0   'False
+      Tab(5).Control(8)=   "lblTimeOut(1)"
+      Tab(5).Control(8).Enabled=   0   'False
+      Tab(5).Control(9)=   "Label7"
+      Tab(5).Control(9).Enabled=   0   'False
+      Tab(5).Control(10)=   "Label8"
+      Tab(5).Control(10).Enabled=   0   'False
+      Tab(5).Control(11)=   "Label9"
+      Tab(5).Control(11).Enabled=   0   'False
+      Tab(5).Control(12)=   "Label10"
+      Tab(5).Control(12).Enabled=   0   'False
+      Tab(5).Control(13)=   "nudTimeOut"
+      Tab(5).Control(13).Enabled=   0   'False
+      Tab(5).Control(14)=   "txtClientID"
+      Tab(5).Control(14).Enabled=   0   'False
+      Tab(5).Control(15)=   "txtClientSecret"
+      Tab(5).Control(15).Enabled=   0   'False
+      Tab(5).Control(16)=   "txtKeyUser"
+      Tab(5).Control(16).Enabled=   0   'False
+      Tab(5).Control(17)=   "txtScope"
+      Tab(5).Control(17).Enabled=   0   'False
+      Tab(5).Control(18)=   "chkIndicadorPix"
+      Tab(5).Control(18).Enabled=   0   'False
+      Tab(5).Control(19)=   "txtPathLog"
+      Tab(5).Control(19).Enabled=   0   'False
+      Tab(5).Control(20)=   "btnPathLog"
+      Tab(5).Control(20).Enabled=   0   'False
+      Tab(5).Control(21)=   "frmAmbiente"
+      Tab(5).Control(21).Enabled=   0   'False
+      Tab(5).Control(22)=   "cmbHttp"
+      Tab(5).Control(22).Enabled=   0   'False
+      Tab(5).Control(23)=   "cmbSSlType"
+      Tab(5).Control(23).Enabled=   0   'False
+      Tab(5).Control(24)=   "cmbOperacao"
+      Tab(5).Control(24).Enabled=   0   'False
+      Tab(5).Control(25)=   "txtTimeOut"
+      Tab(5).Control(25).Enabled=   0   'False
+      Tab(5).Control(26)=   "txtVersao"
+      Tab(5).Control(26).Enabled=   0   'False
+      Tab(5).Control(27)=   "txtArquivoKEY"
+      Tab(5).Control(27).Enabled=   0   'False
+      Tab(5).Control(28)=   "txtArquivoCRT"
+      Tab(5).Control(28).Enabled=   0   'False
+      Tab(5).Control(29)=   "btnArquivoCRT"
+      Tab(5).Control(29).Enabled=   0   'False
+      Tab(5).Control(30)=   "btnArquivoKEY"
+      Tab(5).Control(30).Enabled=   0   'False
+      Tab(5).Control(31)=   "txtNomeLogWebService"
+      Tab(5).Control(31).Enabled=   0   'False
+      Tab(5).ControlCount=   32
+      Begin VB.TextBox txtNomeLogWebService 
+         Height          =   285
+         Left            =   -70320
+         TabIndex        =   148
+         Top             =   2880
+         Width           =   3855
+      End
       Begin VB.CommandButton btnArquivoKEY 
          Caption         =   "..."
          Height          =   285
          Left            =   -71160
-         TabIndex        =   148
+         TabIndex        =   147
          Top             =   1920
          Width           =   390
       End
@@ -448,28 +488,28 @@ Begin VB.Form FrmMain
          Caption         =   "..."
          Height          =   285
          Left            =   -73320
-         TabIndex        =   147
+         TabIndex        =   146
          Top             =   1920
          Width           =   390
       End
       Begin VB.TextBox txtArquivoCRT 
          Height          =   285
          Left            =   -74880
-         TabIndex        =   144
+         TabIndex        =   143
          Top             =   1920
          Width           =   1575
       End
       Begin VB.TextBox txtArquivoKEY 
          Height          =   285
          Left            =   -72720
-         TabIndex        =   143
+         TabIndex        =   142
          Top             =   1920
          Width           =   1575
       End
       Begin VB.TextBox txtVersao 
          Height          =   285
          Left            =   -69600
-         TabIndex        =   139
+         TabIndex        =   138
          Top             =   2280
          Width           =   1575
       End
@@ -477,7 +517,7 @@ Begin VB.Form FrmMain
          Alignment       =   1  'Right Justify
          Height          =   285
          Left            =   -67800
-         TabIndex        =   136
+         TabIndex        =   135
          Text            =   "0"
          Top             =   2280
          Width           =   1050
@@ -488,7 +528,7 @@ Begin VB.Form FrmMain
          Left            =   -69600
          List            =   "FrmMain.frx":00C4
          Style           =   2  'Dropdown List
-         TabIndex        =   134
+         TabIndex        =   133
          Top             =   1560
          Width           =   1695
       End
@@ -498,7 +538,7 @@ Begin VB.Form FrmMain
          Left            =   -67800
          List            =   "FrmMain.frx":0148
          Style           =   2  'Dropdown List
-         TabIndex        =   132
+         TabIndex        =   131
          Top             =   1560
          Width           =   1335
       End
@@ -508,7 +548,7 @@ Begin VB.Form FrmMain
          Left            =   -66240
          List            =   "FrmMain.frx":01A4
          Style           =   2  'Dropdown List
-         TabIndex        =   130
+         TabIndex        =   129
          Top             =   1560
          Width           =   1335
       End
@@ -525,7 +565,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   735
          Left            =   -69600
-         TabIndex        =   127
+         TabIndex        =   126
          Top             =   480
          Width           =   4695
          Begin VB.OptionButton rdbProducao 
@@ -541,7 +581,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   255
             Left            =   240
-            TabIndex        =   129
+            TabIndex        =   128
             ToolTipText     =   "taProducao"
             Top             =   360
             Width           =   1095
@@ -559,7 +599,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   3000
-            TabIndex        =   128
+            TabIndex        =   127
             Top             =   360
             Width           =   1455
          End
@@ -568,33 +608,16 @@ Begin VB.Form FrmMain
          Caption         =   "..."
          Height          =   285
          Left            =   -70920
-         TabIndex        =   125
+         TabIndex        =   124
          Top             =   2865
          Width           =   390
       End
       Begin VB.TextBox txtPathLog 
          Height          =   285
          Left            =   -74880
-         TabIndex        =   124
+         TabIndex        =   123
          Top             =   2880
          Width           =   3855
-      End
-      Begin VB.CheckBox chkGravarLog 
-         Caption         =   "Gravar Log"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   -72360
-         TabIndex        =   123
-         Top             =   2520
-         Width           =   1335
       End
       Begin VB.CheckBox chkIndicadorPix 
          Caption         =   "Indicador Pix"
@@ -1119,7 +1142,7 @@ Begin VB.Form FrmMain
       Begin MSComCtl2.UpDown nudTimeOut 
          Height          =   285
          Left            =   -66720
-         TabIndex        =   137
+         TabIndex        =   136
          Top             =   2280
          Width           =   255
          _ExtentX        =   450
@@ -1137,6 +1160,25 @@ Begin VB.Form FrmMain
          BuddyProperty   =   0
          Enabled         =   -1  'True
       End
+      Begin VB.Label Label10 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Nome Log"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   -70320
+         TabIndex        =   149
+         Top             =   2640
+         Width           =   825
+      End
       Begin VB.Label Label9 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
@@ -1152,7 +1194,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -74880
-         TabIndex        =   146
+         TabIndex        =   145
          Top             =   1680
          Width           =   1035
       End
@@ -1171,7 +1213,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -72720
-         TabIndex        =   145
+         TabIndex        =   144
          Top             =   1680
          Width           =   1005
       End
@@ -1190,7 +1232,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -69600
-         TabIndex        =   140
+         TabIndex        =   139
          Top             =   2040
          Width           =   585
       End
@@ -1210,7 +1252,7 @@ Begin VB.Form FrmMain
          Height          =   195
          Index           =   1
          Left            =   -67800
-         TabIndex        =   138
+         TabIndex        =   137
          Top             =   2040
          Width           =   765
       End
@@ -1229,7 +1271,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -69600
-         TabIndex        =   135
+         TabIndex        =   134
          Top             =   1320
          Width           =   810
       End
@@ -1248,7 +1290,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -67800
-         TabIndex        =   133
+         TabIndex        =   132
          Top             =   1320
          Width           =   765
       End
@@ -1267,7 +1309,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -66240
-         TabIndex        =   131
+         TabIndex        =   130
          Top             =   1320
          Width           =   615
       End
@@ -1286,7 +1328,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -74880
-         TabIndex        =   126
+         TabIndex        =   125
          Top             =   2640
          Width           =   735
       End
@@ -2378,7 +2420,7 @@ Private Sub LoadConfig()
     txtKeyUser.Text = boleto.ConfigLerValor(SESSAO_BOLETOCEDENTEWS, "KeyUser")
     txtScope.Text = boleto.ConfigLerValor(SESSAO_BOLETOCEDENTEWS, "Scope")
     chkIndicadorPix.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOCEDENTEWS, "IndicadorPix"))
-    chkGravarLog.Value = CLng(boleto.ConfigLerValor(SESSAO_BOLETOWEBSERVICE, "LogRegistro"))
+    txtNomeLogWebService.Text = boleto.ConfigLerValor(SESSAO_BOLETOWEBSERVICE, "NomeArquivoLog")
     txtPathLog.Text = boleto.ConfigLerValor(SESSAO_BOLETOWEBSERVICE, "PathGravarRegistro")
     
     Dim ambiente As String
@@ -2448,7 +2490,7 @@ Private Sub SaveConfig()
     boleto.ConfigGravarValor SESSAO_BOLETOCEDENTEWS, "KeyUser", txtKeyUser.Text
     boleto.ConfigGravarValor SESSAO_BOLETOCEDENTEWS, "Scope", txtScope.Text
     boleto.ConfigGravarValor SESSAO_BOLETOCEDENTEWS, "IndicadorPix", CStr(chkIndicadorPix.Value)
-    boleto.ConfigGravarValor SESSAO_BOLETOWEBSERVICE, "LogRegistro", CStr(chkGravarLog.Value)
+    boleto.ConfigGravarValor SESSAO_BOLETOWEBSERVICE, "NomeArquivoLog", txtNomeLogWebService.Text
     boleto.ConfigGravarValor SESSAO_BOLETOWEBSERVICE, "PathGravarRegistro", txtPathLog.Text
     boleto.ConfigGravarValor SESSAO_BOLETOWEBSERVICE, "Ambiente", CStr(rdbProducao.Value)
     boleto.ConfigGravarValor SESSAO_BOLETOWEBSERVICE, "Ambiente", CStr(rdbHomologacao.Value)

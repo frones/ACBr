@@ -22,6 +22,9 @@ namespace ACBrLib.MDFe
         public delegate int MDFE_Versao(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int MDFE_OpenSSLInfo(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int MDFE_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -155,6 +158,7 @@ namespace ACBrLib.MDFe
             AddMethod<MDFE_Finalizar>("MDFE_Finalizar");
             AddMethod<MDFE_Nome>("MDFE_Nome");
             AddMethod<MDFE_Versao>("MDFE_Versao");
+            AddMethod<MDFE_OpenSSLInfo>("MDFE_OpenSSLInfo");
             AddMethod<MDFE_UltimoRetorno>("MDFE_UltimoRetorno");
             AddMethod<MDFE_ConfigImportar>("MDFE_ConfigImportar");
             AddMethod<MDFE_ConfigExportar>("MDFE_ConfigExportar");

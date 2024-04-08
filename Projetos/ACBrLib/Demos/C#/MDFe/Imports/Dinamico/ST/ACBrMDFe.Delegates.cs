@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static ACBrLib.MDFe.ACBrMDFe;
 
 namespace ACBrLib.MDFe
 {
@@ -20,6 +21,9 @@ namespace ACBrLib.MDFe
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int MDFE_Versao(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int MDFE_OpenSSLInfo(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int MDFE_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
@@ -155,6 +159,7 @@ namespace ACBrLib.MDFe
             AddMethod<MDFE_Finalizar>("MDFE_Finalizar");
             AddMethod<MDFE_Nome>("MDFE_Nome");
             AddMethod<MDFE_Versao>("MDFE_Versao");
+            AddMethod<MDFE_OpenSSLInfo>("MDFE_OpenSSLInfo");
             AddMethod<MDFE_ConfigImportar>("MDFE_ConfigImportar");
             AddMethod<MDFE_ConfigExportar>("MDFE_ConfigExportarz");
             AddMethod<MDFE_UltimoRetorno>("MDFE_UltimoRetorno");

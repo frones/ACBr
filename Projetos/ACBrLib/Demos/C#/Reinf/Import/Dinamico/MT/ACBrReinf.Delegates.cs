@@ -22,6 +22,9 @@ namespace ACBrLib.Reinf
         public delegate int Reinf_Versao(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Reinf_OpenSSLInfo(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Reinf_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -86,6 +89,7 @@ namespace ACBrLib.Reinf
             AddMethod<Reinf_Finalizar>("Reinf_Finalizar");
             AddMethod<Reinf_Nome>("Reinf_Nome");
             AddMethod<Reinf_Versao>("Reinf_Versao");
+            AddMethod<Reinf_OpenSSLInfo>("Reinf_OpenSSLInfo");
             AddMethod<Reinf_UltimoRetorno>("Reinf_UltimoRetorno");
             AddMethod<Reinf_ConfigImportar>("Reinf_ConfigImportar");
             AddMethod<Reinf_ConfigExportar>("Reinf_ConfigExportar");

@@ -22,6 +22,9 @@ namespace ACBrLib.eSocial
         public delegate int eSocial_Versao(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int eSocial_OpenSSLInfo(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int eSocial_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -93,6 +96,7 @@ namespace ACBrLib.eSocial
             AddMethod<eSocial_Finalizar>("eSocial_Finalizar");
             AddMethod<eSocial_Nome>("eSocial_Nome");
             AddMethod<eSocial_Versao>("eSocial_Versao");
+            AddMethod<eSocial_OpenSSLInfo>("eSocial_OpenSSLInfo");
             AddMethod<eSocial_UltimoRetorno>("eSocial_UltimoRetorno");
             AddMethod<eSocial_ConfigImportar>("eSocial_ConfigImportar");
             AddMethod<eSocial_ConfigExportar>("eSocial_ConfigExportar");

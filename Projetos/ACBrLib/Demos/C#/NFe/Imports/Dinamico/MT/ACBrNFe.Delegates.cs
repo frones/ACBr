@@ -19,6 +19,9 @@ namespace ACBrLib.NFe
         public delegate int NFE_Versao(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_OpenSSLInfo(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -171,6 +174,7 @@ namespace ACBrLib.NFe
             AddMethod<NFE_Finalizar>("NFE_Finalizar");
             AddMethod<NFE_Nome>("NFE_Nome");
             AddMethod<NFE_Versao>("NFE_Versao");
+            AddMethod<NFE_OpenSSLInfo>("NFE_OpenSSLInfo");
             AddMethod<NFE_UltimoRetorno>("NFE_UltimoRetorno");
             AddMethod<NFE_ConfigImportar>("NFE_ConfigImportar");
             AddMethod<NFE_ConfigExportar>("NFE_ConfigExportar");

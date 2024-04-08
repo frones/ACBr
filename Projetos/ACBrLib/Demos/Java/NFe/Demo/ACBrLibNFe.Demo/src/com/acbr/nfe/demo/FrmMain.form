@@ -1517,9 +1517,12 @@
                                               <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="cmbXmlSign" alignment="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="btnObterCertificados" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="btnOpenSSLInfo" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnObterCertificados" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="163" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1544,7 +1547,9 @@
                               <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnObterCertificados" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="86" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnOpenSSLInfo" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="39" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1754,6 +1759,14 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObterCertificadosActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnOpenSSLInfo">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="OpenSSLInfo"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenSSLInfoActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

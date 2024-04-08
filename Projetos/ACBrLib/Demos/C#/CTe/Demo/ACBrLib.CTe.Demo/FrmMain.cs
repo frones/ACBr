@@ -306,6 +306,12 @@ namespace ACBrLib.CTe.Demo
             rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
 
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrCTe.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
+
         private void btnSelectSchema_Click(object sender, EventArgs e)
         {
             txtSchemaPath.Text = Helpers.SelectFolder();

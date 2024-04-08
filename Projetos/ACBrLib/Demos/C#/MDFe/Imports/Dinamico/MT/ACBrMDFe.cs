@@ -5,6 +5,7 @@ using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 using ACBrLib.Core.Extensions;
 using ACBrLib.Core.MDFe;
+using static ACBrLib.MDFe.ACBrMDFe;
 
 namespace ACBrLib.MDFe
 {
@@ -296,6 +297,19 @@ namespace ACBrLib.MDFe
 
             var certificados = ProcessResult(buffer, bufferLen).Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
+        }
+
+        public string OpenSSLInfo()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<MDFE_OpenSSLInfo>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
         }
 
         public string GetPath(TipoPathMDFe tipo)

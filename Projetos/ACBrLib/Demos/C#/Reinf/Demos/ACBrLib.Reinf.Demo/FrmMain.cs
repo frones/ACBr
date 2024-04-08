@@ -408,6 +408,11 @@ namespace ACBrLibReinf.Demo
             rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
 
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrReinf.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
         private void btnSelectLog_Click(object sender, EventArgs e)
         {
             txtLogs.Text = Helpers.SaveFile("Arquivos Logs (*.log)|*.log|Todos os Arquivos (*.*)|*.*");

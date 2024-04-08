@@ -378,6 +378,11 @@ namespace ACBrLibNFSe.Demo
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrNFSe.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
 
         private void btnEmitirNota_Click(object sender, EventArgs e)
         {

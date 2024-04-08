@@ -175,6 +175,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.btnSalvarPDF = new System.Windows.Forms.Button();
             this.btnGerarChave = new System.Windows.Forms.Button();
             this.btnLimparLista = new System.Windows.Forms.Button();
@@ -900,6 +901,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnOpenSSLInfo);
             this.tabPage3.Controls.Add(this.btnObterCertificados);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.cmbXmlSign);
@@ -1887,6 +1889,16 @@
             this.tabPage5.Text = "Envio";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(6, 344);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
+            this.btnOpenSSLInfo.TabIndex = 21;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
+            // 
             // btnSalvarPDF
             // 
             this.btnSalvarPDF.Location = new System.Drawing.Point(130, 93);
@@ -2527,6 +2539,7 @@
         private System.Windows.Forms.Button btnGerarChave;
         private System.Windows.Forms.Button btnSalvarPDF;
         private System.Windows.Forms.Button btnClasseAltoNivel;
+        private System.Windows.Forms.Button btnOpenSSLInfo;
     }
 }
 

@@ -96,6 +96,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
             this.txtDadosPFX = new System.Windows.Forms.TextBox();
             this.btnDadosPFX = new System.Windows.Forms.Button();
@@ -909,6 +910,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnOpenSSLInfo);
             this.tabPage3.Controls.Add(this.btnObterCertificados);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.cmbXmlSign);
@@ -923,6 +925,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Certificados";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(9, 344);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
+            this.btnOpenSSLInfo.TabIndex = 22;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
             // 
             // groupBox4
             // 
@@ -1504,6 +1516,7 @@
         private System.Windows.Forms.Button btnConsultaIdentificadoresEventosTrabalhador;
         private System.Windows.Forms.Button btnConsultaIdentificadoresEventosTabela;
         private System.Windows.Forms.Button btnObterCertificados;
+        private System.Windows.Forms.Button btnOpenSSLInfo;
     }
 }
 

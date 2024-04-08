@@ -217,6 +217,12 @@ namespace ACBrLibGTIN.Demo
             txtDadosPFX.Text = Convert.ToBase64String(dados);
         }
 
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrGTIN.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
+
         private void btnArqGTIN_Click(object sender, EventArgs e)
         {
             txtArqGTIN.Text = Helpers.SelectFolder();

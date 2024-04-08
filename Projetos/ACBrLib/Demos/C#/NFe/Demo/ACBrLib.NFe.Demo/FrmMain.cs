@@ -468,6 +468,11 @@ namespace ACBrLib.NFe.Demo
             var ret = ACBrNFe.ObterCertificados();
             rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrNFe.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
 
         private void btnArqNFe_Click(object sender, EventArgs e)
         {

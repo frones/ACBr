@@ -165,6 +165,7 @@ public class FrmMain extends javax.swing.JFrame {
         txtCertNumero = new javax.swing.JTextField();
         txtCertPassword = new javax.swing.JPasswordField();
         btnObterCertificados = new javax.swing.JButton();
+        btnOpenSSLInfo = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         ckbSalvarArqs = new javax.swing.JCheckBox();
         ckbPastaMensal = new javax.swing.JCheckBox();
@@ -1176,6 +1177,13 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnOpenSSLInfo.setText("OpenSSLInfo");
+        btnOpenSSLInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenSSLInfoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -1193,8 +1201,10 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(cmbCrypt, 0, 163, Short.MAX_VALUE)
                                 .addComponent(jLabel27)
                                 .addComponent(cmbXmlSign, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(btnObterCertificados))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnOpenSSLInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnObterCertificados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 163, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -1215,7 +1225,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnObterCertificados)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOpenSSLInfo)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Certificados", jPanel7);
@@ -1380,7 +1392,7 @@ public class FrmMain extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Configurações", jPanel1);
@@ -2760,6 +2772,15 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnOpenSSLInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenSSLInfoActionPerformed
+        try {   
+            String ret = acbrNFe.openSSLInfo();
+            rtbRespostas.append(ret);   
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnOpenSSLInfoActionPerformed
+
     private void loadConfig() {
         try {
             
@@ -3007,6 +3028,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnLimparListaEvento;
     private javax.swing.JButton btnLogomarca;
     private javax.swing.JButton btnObterCertificados;
+    private javax.swing.JButton btnOpenSSLInfo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSelecionarCertificado;
     private javax.swing.JButton btnSelectLog;

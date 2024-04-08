@@ -804,6 +804,12 @@ namespace ACBrLib.MDFe.Demo
             rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
 
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrMDFe.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
+
         private void btnArqMDFe_Click(object sender, EventArgs e)
         {
             txtArqMDFe.Text = Helpers.SelectFolder();

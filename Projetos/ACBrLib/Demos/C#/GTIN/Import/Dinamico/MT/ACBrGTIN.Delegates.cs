@@ -22,6 +22,9 @@ namespace ACBrLib.GTIN
         public delegate int GTIN_Versao(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int GTIN_OpenSSLInfo(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int GTIN_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -51,6 +54,7 @@ namespace ACBrLib.GTIN
             AddMethod<GTIN_Finalizar>("GTIN_Finalizar");
             AddMethod<GTIN_Nome>("GTIN_Nome");
             AddMethod<GTIN_Versao>("GTIN_Versao");
+            AddMethod<GTIN_OpenSSLInfo>("GTIN_OpenSSLInfo");
             AddMethod<GTIN_UltimoRetorno>("GTIN_UltimoRetorno");
             AddMethod<GTIN_ConfigImportar>("GTIN_ConfigImportar");
             AddMethod<GTIN_ConfigExportar>("GTIN_ConfigExportar");

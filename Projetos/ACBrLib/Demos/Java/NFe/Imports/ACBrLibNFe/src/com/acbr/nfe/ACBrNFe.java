@@ -102,6 +102,8 @@ public final class ACBrNFe extends ACBrLibBase {
 
         int NFE_ObterCertificados(ByteBuffer buffer, IntByReference bufferSize);
 
+        int NFE_OpenSSLInfo(ByteBuffer buffer, IntByReference bufferSize);
+
         int NFE_GetPath(int tipo, ByteBuffer buffer, IntByReference bufferSize);
 
         int NFE_GetPathEvento(String aCodEvento, ByteBuffer buffer, IntByReference bufferSize);
@@ -354,6 +356,15 @@ public final class ACBrNFe extends ACBrLibBase {
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrNFeLib.INSTANCE.NFE_ObterCertificados(buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
+    }
+    
+    public String openSSLInfo() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrNFeLib.INSTANCE.NFE_OpenSSLInfo(buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }

@@ -4,6 +4,7 @@ using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.CTe;
 using ACBrLib.Core.DFe;
+using static ACBrLib.CTe.ACBrCTe;
 
 namespace ACBrLib.CTe
 {
@@ -292,6 +293,18 @@ namespace ACBrLib.CTe
 
             var certificados = ProcessResult(buffer, bufferLen).Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
+        }
+        public string OpenSSLInfo()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<CTE_OpenSSLInfo>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
         }
 
         public string GetPath(TipoPathCTe tipo)

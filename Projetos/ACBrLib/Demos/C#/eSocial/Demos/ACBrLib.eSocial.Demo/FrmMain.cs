@@ -462,6 +462,11 @@ namespace ACBrLibeSocial.Demo
             var ret = ACBreSocial.ObterCertificados();
             rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBreSocial.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
 
         private void btnSelectLog_Click(object sender, EventArgs e)
         {

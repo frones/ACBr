@@ -132,6 +132,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.btnSalvarConfiguracoes = new System.Windows.Forms.Button();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -873,6 +874,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnOpenSSLInfo);
             this.tabPage3.Controls.Add(this.btnObterCertificados);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.cmbXmlSign);
@@ -1312,6 +1314,16 @@
             this.btnSalvarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnSalvarConfiguracoes.Click += new System.EventHandler(this.btnSalvarConfiguracoes_Click);
             // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(9, 344);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
+            this.btnOpenSSLInfo.TabIndex = 22;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1468,6 +1480,7 @@
         private System.Windows.Forms.Button btnSetIDTransmissor;
         private System.Windows.Forms.Button btnObterCertificados;
         private System.Windows.Forms.Button btnConsultarRecibo;
+        private System.Windows.Forms.Button btnOpenSSLInfo;
     }
 }
 

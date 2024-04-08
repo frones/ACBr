@@ -143,6 +143,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.btnGerarChaveMDFe = new System.Windows.Forms.Button();
             this.btnLimparLista = new System.Windows.Forms.Button();
             this.btnImprimirPDF = new System.Windows.Forms.Button();
@@ -253,7 +254,7 @@
             this.tbpConfiguracoes.Controls.Add(this.tabControl3);
             this.tbpConfiguracoes.Location = new System.Drawing.Point(4, 22);
             this.tbpConfiguracoes.Name = "tbpConfiguracoes";
-            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(3);
             this.tbpConfiguracoes.Size = new System.Drawing.Size(317, 458);
             this.tbpConfiguracoes.TabIndex = 2;
             this.tbpConfiguracoes.Text = "Configurações";
@@ -291,7 +292,7 @@
             this.tabPage5.Controls.Add(this.btnSelectLog);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(303, 426);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Geral";
@@ -452,8 +453,8 @@
             this.tabPage6.Controls.Add(this.label1);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage6.Size = new System.Drawing.Size(307, 430);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(303, 426);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Webservices";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -808,6 +809,7 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.btnOpenSSLInfo);
             this.tabPage7.Controls.Add(this.btnObterCertificados);
             this.tabPage7.Controls.Add(this.groupBox4);
             this.tabPage7.Controls.Add(this.cmbXmlSign);
@@ -818,7 +820,7 @@
             this.tabPage7.Controls.Add(this.label4);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(307, 430);
+            this.tabPage7.Size = new System.Drawing.Size(303, 426);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "Certificados";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1021,7 +1023,7 @@
             this.tabPage8.Controls.Add(this.ckbSalvarArqs);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(307, 430);
+            this.tabPage8.Size = new System.Drawing.Size(303, 426);
             this.tabPage8.TabIndex = 3;
             this.tabPage8.Text = "Arquivos";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1159,7 +1161,7 @@
             this.tbpDocumentoAuxiliar.Controls.Add(this.label37);
             this.tbpDocumentoAuxiliar.Location = new System.Drawing.Point(4, 22);
             this.tbpDocumentoAuxiliar.Name = "tbpDocumentoAuxiliar";
-            this.tbpDocumentoAuxiliar.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpDocumentoAuxiliar.Padding = new System.Windows.Forms.Padding(3);
             this.tbpDocumentoAuxiliar.Size = new System.Drawing.Size(317, 458);
             this.tbpDocumentoAuxiliar.TabIndex = 1;
             this.tbpDocumentoAuxiliar.Text = "Documento Auxiliar";
@@ -1237,7 +1239,7 @@
             this.tbpEmail.Controls.Add(this.groupBox6);
             this.tbpEmail.Location = new System.Drawing.Point(4, 22);
             this.tbpEmail.Name = "tbpEmail";
-            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
             this.tbpEmail.Size = new System.Drawing.Size(317, 458);
             this.tbpEmail.TabIndex = 3;
             this.tbpEmail.Text = "Email";
@@ -1461,11 +1463,21 @@
             this.tabPage1.Controls.Add(this.btnEnviarEmail);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(394, 186);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Envio";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(6, 344);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
+            this.btnOpenSSLInfo.TabIndex = 22;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
             // 
             // btnGerarChaveMDFe
             // 
@@ -1597,7 +1609,7 @@
             this.tabPage2.Controls.Add(this.btnConsultarRecibo);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(394, 186);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Consultas";
@@ -2038,6 +2050,7 @@
         private System.Windows.Forms.Button btnGerarChaveMDFe;
         private System.Windows.Forms.Button btnIncCondutor;
         private System.Windows.Forms.Button btnEnviarManifesto;
+        private System.Windows.Forms.Button btnOpenSSLInfo;
     }
 }
 

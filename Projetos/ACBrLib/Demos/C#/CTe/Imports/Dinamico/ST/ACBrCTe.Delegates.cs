@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static ACBrLib.CTe.ACBrCTe;
 
 namespace ACBrLib.CTe
 {
@@ -20,6 +21,9 @@ namespace ACBrLib.CTe
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CTE_Versao(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int CTE_OpenSSLInfo(StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CTE_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
@@ -165,6 +169,7 @@ namespace ACBrLib.CTe
             AddMethod<CTE_Finalizar>("CTE_Finalizar");
             AddMethod<CTE_Nome>("CTE_Nome");
             AddMethod<CTE_Versao>("CTE_Versao");
+            AddMethod<CTE_OpenSSLInfo>("CTE_OpenSSLInfo");
             AddMethod<CTE_UltimoRetorno>("CTE_UltimoRetorno");
             AddMethod<CTE_ConfigImportar>("CTE_ConfigImportar");
             AddMethod<CTE_ConfigExportar>("CTE_ConfigExportar");

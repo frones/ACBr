@@ -19,6 +19,9 @@ namespace ACBrLib.CTe
         public delegate int CTE_Versao(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int CTE_OpenSSLInfo(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CTE_UltimoRetorno(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -162,6 +165,7 @@ namespace ACBrLib.CTe
             AddMethod<CTE_Finalizar>("CTE_Finalizar");
             AddMethod<CTE_Nome>("CTE_Nome");
             AddMethod<CTE_Versao>("CTE_Versao");
+            AddMethod<CTE_OpenSSLInfo>("CTE_OpenSSLInfo");
             AddMethod<CTE_UltimoRetorno>("CTE_UltimoRetorno");
             AddMethod<CTE_ConfigImportar>("CTE_ConfigImportar");
             AddMethod<CTE_ConfigExportar>("CTE_ConfigExportar");

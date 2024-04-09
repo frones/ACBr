@@ -41,7 +41,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+09/04/2024
+-- ACBrNFSeXServicos --
+[*] Atualizado cidade de Igrejinha/RS, o provedor continua o mesmo.
+  Por: Daniel Morais Infocotidiano / Validado Eneias Bickel
 09/04/2024
 -- Diversos --
 [*] Melhorias no código usando o FixInsight (ainda não ficou 100%).

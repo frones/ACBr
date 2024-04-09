@@ -2020,11 +2020,8 @@ begin
                 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS),
                 DSC_MOTDESICMS));
 
-              if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
-              begin
-                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
-                  1, 2, 1, '1'));
-              end;
+              if (NFe.infNFe.Versao >= 4) then
+                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson)));
             end;
 
           end;
@@ -2069,11 +2066,8 @@ begin
                 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS),
                 DSC_MOTDESICMS));
 
-              if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
-              begin
-                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
-                  1, 2, 1, '1'));
-              end;
+              if (NFe.infNFe.Versao >= 4) then
+                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson)));
             end;
 
           end;
@@ -2093,11 +2087,8 @@ begin
                   'motDesICMS', 01, 02, 1, motDesICMSToStr(
                   NFe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS));
 
-                if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
-                begin
-                  xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
-                    1, 2, 1, '1'));
-                end;
+                if (NFe.infNFe.Versao >= 4) then
+                  xmlNode.AppendChild(AddNode(tcStr, 'N13c', 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson)));
               end;
             end
             else
@@ -2287,6 +2278,9 @@ begin
               xmlNode.AppendChild(AddNode(tcStr, 'N28', 'motDesICMS',
                 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS),
                 DSC_MOTDESICMS));
+
+              if (NFe.infNFe.Versao >= 4) then
+                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson)));
             end;
 
             if (NFe.infNFe.Versao >= 4) then
@@ -2298,12 +2292,6 @@ begin
 
                 xmlNode.AppendChild(AddNode(tcStr, 'N33b', 'motDesICMSST', 01, 02, 1,
                   motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMSST), DSC_MOTDESICMSST));
-
-                if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
-                begin
-                  xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
-                    1, 2, 1, '1'));
-                end;
               end;
             end;
 
@@ -2386,6 +2374,8 @@ begin
               xmlNode.AppendChild(AddNode(tcStr, 'N28', 'motDesICMS',
                 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS),
                 DSC_MOTDESICMS));
+              if (NFe.infNFe.Versao >= 4) then
+                xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson)));
             end;
             if (NFe.Det[i].Imposto.ICMS.UFST <> '') or
               (NFe.Det[i].Imposto.ICMS.pBCOp <> 0) or
@@ -2407,12 +2397,6 @@ begin
 
                 xmlNode.AppendChild(AddNode(tcStr, 'N33b', 'motDesICMSST', 01, 02, 1,
                   motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMSST), DSC_MOTDESICMSST));
-
-                if (NFe.infNFe.Versao >= 4) and (NFe.Det[i].Imposto.ICMS.indDeduzDeson = tiSim) then
-                begin
-                  xmlNode.AppendChild(AddNode(tcStr, 'N28b', 'indDeduzDeson',
-                    1, 2, 1, '1'));
-                end;
               end;
             end;
 

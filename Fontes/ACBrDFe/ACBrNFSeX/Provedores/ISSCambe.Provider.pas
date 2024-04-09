@@ -161,11 +161,8 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      ConsultarFaixaNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.ConsultarFaixaNfse := True;
   end;
 
   SetNomeXSD('nfse-cambe-schema-v1_0.xsd');
@@ -244,23 +241,23 @@ begin
 
       AuxNode := ANode.Childrens.FindAnyNs('ListaDadosNFSeInfo');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('DadosNFSe');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('EspelhoXML');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('NFSe');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('identificacaoNFSe');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
 
@@ -411,26 +408,23 @@ begin
 
       AuxNode := ANode.Childrens.FindAnyNs('ListaDadosNFSeInfo');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('DadosNFSe');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('EspelhoXML');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
-
-
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('NFSe');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       AuxNode := AuxNode.Childrens.FindAnyNs('identificacaoNFSe');
 
-      if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+      if not Assigned(AuxNode) then Exit;
 
       NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
 

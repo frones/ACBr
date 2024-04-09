@@ -125,25 +125,16 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarSituacao := True;
-      ConsultarLote := True;
-      ConsultarRps := True;
-      ConsultarLinkNfse := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarSituacao := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.ConsultarLinkNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   SetXmlNameSpace('');
-{
-  with ConfigMsgDados do
-  begin
-    Prefixo := 'nfe';
-    PrefixoTS := 'nfe';
-  end;
-}
+
   ConfigSchemas.Validar := False;
 end;
 
@@ -445,6 +436,8 @@ begin
 
       exiExportacao:
         xOptante := '<TipoTrib>5</TipoTrib>';
+    else
+      xOptante := '';
     end;
   end;
 {

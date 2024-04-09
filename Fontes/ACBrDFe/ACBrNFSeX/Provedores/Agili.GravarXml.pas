@@ -54,7 +54,7 @@ type
   protected
     procedure Configuracao; override;
 
-    function FormatarCnae(Codigo: string): string;
+    function FormatarCnae(const Codigo: string): string;
 
     function GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;
     function GerarIdentificacaoPrestador: TACBrXmlNode;
@@ -116,7 +116,7 @@ begin
     FpNrOcorrItemLei116 := -1;
 end;
 
-function TNFSeW_Agili.FormatarCnae(Codigo: string): string;
+function TNFSeW_Agili.FormatarCnae(const Codigo: string): string;
 begin
   Result := OnlyNumber(Codigo);
 

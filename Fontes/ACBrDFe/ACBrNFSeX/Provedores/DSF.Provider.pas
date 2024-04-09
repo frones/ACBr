@@ -54,7 +54,7 @@ type
     function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
     function Cancelar(const ACabecalho, AMSG: String): string; override;
 
-    function AlterarNameSpace(aMsg: string): string;
+    function AlterarNameSpace(const aMsg: string): string;
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
@@ -110,7 +110,7 @@ uses
 
 { TACBrNFSeXWebserviceDSF }
 
-function TACBrNFSeXWebserviceDSF.AlterarNameSpace(aMsg: string): string;
+function TACBrNFSeXWebserviceDSF.AlterarNameSpace(const aMsg: string): string;
 begin
   Result := StringReplace(aMsg, 'http://www.abrasf.org.br/nfse.xsd',
                             'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);

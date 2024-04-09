@@ -269,7 +269,7 @@ begin
   Result := True;
   NFSe.SituacaoNfse := snNormal;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('nfdok');
 

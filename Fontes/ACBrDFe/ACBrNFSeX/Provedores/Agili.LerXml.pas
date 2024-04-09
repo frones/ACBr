@@ -311,7 +311,7 @@ procedure TNFSeR_Agili.LerIdentificacaoParceiro(const ANode: TACBrXmlNode;
 var
   AuxNode, AuxNodeCpfCnpj: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoProfissionalParceiro');
 
@@ -457,42 +457,40 @@ begin
 
     NumeroProcesso := ObterConteudo(ANode.Childrens.FindAnyNs('BeneficioProcesso'), tcStr);
 
-    with Valores do
-    begin
-      ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
-      DescontoIncondicionado := ObterConteudo(ANode.Childrens.FindAnyNs('ValorDescontos'), tcDe2);
-      ValorPis := ObterConteudo(ANode.Childrens.FindAnyNs('ValorPis'), tcDe2);
-      ValorCofins := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
-      ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorInss'), tcDe2);
-      ValorIr := ObterConteudo(ANode.Childrens.FindAnyNs('ValorIrrf'), tcDe2);
-      ValorCsll := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
-      valorOutrasRetencoes := ObterConteudo(ANode.Childrens.FindAnyNs('ValorOutrasRetencoes'), tcDe2);
-      BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('ValorBaseCalculoISSQN'), tcDe2);
-      Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('AliquotaISSQN'), tcDe3);
-      ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorISSQNCalculado'), tcDe2);
+    Valores.ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
+    Valores.DescontoIncondicionado := ObterConteudo(ANode.Childrens.FindAnyNs('ValorDescontos'), tcDe2);
+    Valores.ValorPis := ObterConteudo(ANode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+    Valores.ValorCofins := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+    Valores.ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorInss'), tcDe2);
+    Valores.ValorIr := ObterConteudo(ANode.Childrens.FindAnyNs('ValorIrrf'), tcDe2);
+    Valores.ValorCsll := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+    Valores.valorOutrasRetencoes := ObterConteudo(ANode.Childrens.FindAnyNs('ValorOutrasRetencoes'), tcDe2);
+    Valores.BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('ValorBaseCalculoISSQN'), tcDe2);
+    Valores.Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('AliquotaISSQN'), tcDe3);
+    Valores.ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorISSQNCalculado'), tcDe2);
 
-      RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+    Valores.RetencoesFederais := Valores.ValorPis + Valores.ValorCofins +
+      Valores.ValorInss + Valores.ValorIr + Valores.ValorCsll;
 
-      aValor := ObterConteudo(ANode.Childrens.FindAnyNs('ISSQNRetido'), tcStr);
+    aValor := ObterConteudo(ANode.Childrens.FindAnyNs('ISSQNRetido'), tcStr);
 
-      case FpAOwner.StrToSimNao(Ok, aValor) of
-        snSim:
-          begin
-            ValorIssRetido := ValorIss;
-            IssRetido := stRetencao;
-          end;
-        snNao:
-          begin
-            ValorIssRetido := 0;
-            IssRetido := stNormal;
-          end;
-      end;
-
-      ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('ValorLiquido'), tcDe2);
-
-      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                              DescontoIncondicionado;
+    case FpAOwner.StrToSimNao(Ok, aValor) of
+      snSim:
+        begin
+          Valores.ValorIssRetido := Valores.ValorIss;
+          Valores.IssRetido := stRetencao;
+        end;
+      snNao:
+        begin
+          Valores.ValorIssRetido := 0;
+          Valores.IssRetido := stNormal;
+        end;
     end;
+
+    Valores.ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('ValorLiquido'), tcDe2);
+
+    Valores.ValorTotalNotaFiscal := Valores.ValorServicos -
+      Valores.DescontoCondicionado - Valores.DescontoIncondicionado;
 
     NFSe.OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('Observacao'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
@@ -720,7 +718,7 @@ begin
   FpCodCNAE := '';
   FpcodLCServ := '';
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFSe.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('Numero'), tcStr);
   NFSe.CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoAutenticidade'), tcStr);
@@ -738,7 +736,7 @@ function TNFSeR_Agili.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   LerRpsDeclaracaoPrestacaoServico(ANode);
 end;

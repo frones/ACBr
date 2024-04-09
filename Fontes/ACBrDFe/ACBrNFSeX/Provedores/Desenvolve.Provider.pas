@@ -83,13 +83,10 @@ begin
     UseCertificateHTTP := False;
     ConsultaNFSe := False;
 
-    with ServicosDisponibilizados do
-    begin
-      ConsultarFaixaNfse := False;
-      ConsultarServicoPrestado := False;
-      ConsultarServicoTomado := False;
-      SubstituirNfse := False;
-    end;
+    ServicosDisponibilizados.ConsultarFaixaNfse := False;
+    ServicosDisponibilizados.ConsultarServicoPrestado := False;
+    ServicosDisponibilizados.ConsultarServicoTomado := False;
+    ServicosDisponibilizados.SubstituirNfse := False;
   end;
 
   with ConfigAssinar do

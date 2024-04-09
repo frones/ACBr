@@ -83,7 +83,7 @@ procedure TNFSeR_NFSeBrasil.LerIdentificacaoPrestador(const ANode: TACBrXmlNode)
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoPrestador');
 
@@ -96,7 +96,7 @@ end;
 
 procedure TNFSeR_NFSeBrasil.LerIdentificacaoRps(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   with NFSe.IdentificacaoRps do
   begin
@@ -110,7 +110,7 @@ procedure TNFSeR_NFSeBrasil.LerIdentificacaoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoTomador');
 
@@ -131,7 +131,7 @@ var
   Ok: Boolean;
   SCompet: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('InfNfse');
 
@@ -176,7 +176,7 @@ procedure TNFSeR_NFSeBrasil.LerPrestadorServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('PrestadorServico');
 
@@ -201,7 +201,7 @@ var
   CodigoItemServico, UFMunicipioPrestacao: string;
   CodMunicipioPrestacao: Integer;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('Servico');
 
@@ -241,7 +241,7 @@ procedure TNFSeR_NFSeBrasil.LerTomadorServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('TomadorServico');
 
@@ -262,7 +262,7 @@ var
   Ok: Boolean;
   Valor: Currency;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('Valores');
 
@@ -349,7 +349,7 @@ var
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode1 := ANode.Childrens.FindAnyNs('CompNfse');
 

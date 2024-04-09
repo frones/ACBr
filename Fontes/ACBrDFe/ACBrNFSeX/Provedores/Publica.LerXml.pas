@@ -81,13 +81,11 @@ begin
       for i := 0 to Length(ANodes) - 1 do
       begin
         CondicaoPagamento.Parcelas.New;
-        with CondicaoPagamento.Parcelas[i] do
-        begin
-          Condicao := FpAOwner.StrToCondicaoPag(Ok, ObterConteudo(ANodes[i].Childrens.FindAnyNs('Condicao'), tcStr));
-          Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Parcela'), tcStr);
-          Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Valor'), tcDe2);
-          DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DataVencimento'), tcDat);
-        end;
+
+        CondicaoPagamento.Parcelas[i].Condicao := FpAOwner.StrToCondicaoPag(Ok, ObterConteudo(ANodes[i].Childrens.FindAnyNs('Condicao'), tcStr));
+        CondicaoPagamento.Parcelas[i].Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Parcela'), tcStr);
+        CondicaoPagamento.Parcelas[i].Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Valor'), tcDe2);
+        CondicaoPagamento.Parcelas[i].DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DataVencimento'), tcDat);
       end;
     end;
   end;
@@ -99,7 +97,7 @@ var
 begin
   inherited LerInfNfse(ANode);
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('InfNfse');
 
@@ -113,7 +111,7 @@ var
 begin
   Result := inherited LerXmlRps(Anode);
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('InfRps');
 

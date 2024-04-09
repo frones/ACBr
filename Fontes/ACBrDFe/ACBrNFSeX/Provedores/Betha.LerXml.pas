@@ -92,12 +92,10 @@ begin
       for i := 0 to Length(ANodes) - 1 do
       begin
         Parcelas.New;
-        with Parcelas[i] do
-        begin
-          Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Parcela'), tcStr);
-          DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DataVencimento'), tcDat);
-          Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Valor'), tcDe2);
-        end;
+
+        Parcelas[i].Parcela := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Parcela'), tcStr);
+        Parcelas[i].DataVencimento := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DataVencimento'), tcDat);
+        Parcelas[i].Valor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Valor'), tcDe2);
       end;
     end;
   end;
@@ -109,7 +107,7 @@ var
 begin
   Result := inherited LerXmlRps(Anode);
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('InfRps');
 

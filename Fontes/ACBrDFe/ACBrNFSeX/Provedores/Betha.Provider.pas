@@ -442,7 +442,9 @@ end;
 function TACBrNFSeProviderBetha202.DefinirIDLote(const ID: string): string;
 begin
   if ConfigGeral.Identificador <> '' then
-    Result := ' ' + ConfigGeral.Identificador + '="lote' + ID + '"';
+    Result := ' ' + ConfigGeral.Identificador + '="lote' + ID + '"'
+  else
+    Result := '';
 end;
 
 { TACBrNFSeXWebserviceBetha202 }

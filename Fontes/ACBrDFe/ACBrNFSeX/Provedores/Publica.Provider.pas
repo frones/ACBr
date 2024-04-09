@@ -234,13 +234,9 @@ begin
   with ConfigMsgDados do
   begin
     ConsultarNFSe.DocElemento := 'ConsultarNfseFaixaEnvio';
-//  ConsultarNFSe.InfElemento := 'Prestador';
 
-    with GerarNFSe do
-    begin
-      InfElemento := 'InfRps';
-      DocElemento := 'Rps';
-    end;
+    GerarNFSe.InfElemento := 'InfRps';
+    GerarNFSe.DocElemento := 'Rps';
   end;
 
   ConfigWebServices.AtribVerLote := 'versao';

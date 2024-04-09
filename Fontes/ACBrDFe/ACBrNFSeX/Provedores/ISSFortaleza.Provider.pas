@@ -111,12 +111,9 @@ begin
 
     ConsultarNFSe.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
 
-    with CancelarNFSe do
-    begin
-      xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio';
-      InfElemento := 'Prestador';
-      DocElemento := 'CancelarNfseEnvio';
-    end;
+    CancelarNFSe.xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio';
+    CancelarNFSe.InfElemento := 'Prestador';
+    CancelarNFSe.DocElemento := 'CancelarNfseEnvio';
   end;
 
   with ConfigAssinar do

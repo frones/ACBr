@@ -102,22 +102,16 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   SetXmlNameSpace('NotaFiscal-Geracao.xsd');
 
   with ConfigMsgDados do
   begin
-    with LoteRps do
-    begin
-      InfElemento := 'InfDeclaracaoPrestacaoServico';
-      DocElemento := 'Rps';
-    end;
+    LoteRps.InfElemento := 'InfDeclaracaoPrestacaoServico';
+    LoteRps.DocElemento := 'Rps';
 
     CancelarNFSe.xmlns := 'NotaFiscal-Cancelamento.xsd';
   end;

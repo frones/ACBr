@@ -156,15 +156,12 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteSincrono := False;
-      EnviarUnitario := False;
-      ConsultarFaixaNfse := False;
-      ConsultarServicoPrestado := False;
-      ConsultarServicoTomado := False;
-      SubstituirNfse := False;
-    end;
+    ServicosDisponibilizados.EnviarLoteSincrono := False;
+    ServicosDisponibilizados.EnviarUnitario := False;
+    ServicosDisponibilizados.ConsultarFaixaNfse := False;
+    ServicosDisponibilizados.ConsultarServicoPrestado := False;
+    ServicosDisponibilizados.ConsultarServicoTomado := False;
+    ServicosDisponibilizados.SubstituirNfse := False;
   end;
 
   with ConfigAssinar do
@@ -266,7 +263,7 @@ begin
 
         if AuxNodeConf = nil then
           AuxNodeConf := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
-        if not Assigned(AuxNodeConf) or (AuxNodeConf = nil) then Exit;
+        if not Assigned(AuxNodeConf) then Exit;
 
 //        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), tcStr));
         Response.DataCanc := ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
@@ -281,7 +278,7 @@ begin
       if AuxNode <> nil then
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
@@ -297,7 +294,7 @@ begin
         if ANota = nil then
         begin
           AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 

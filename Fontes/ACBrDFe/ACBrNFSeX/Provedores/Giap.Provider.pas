@@ -119,29 +119,20 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerChaveAutorizacao := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarRps := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   SetXmlNameSpace('');
 
   with ConfigMsgDados do
   begin
-    with XmlRps do
-    begin
-      InfElemento := 'notaFiscal';
-      DocElemento := 'nfe';
-    end;
+    XmlRps.InfElemento := 'notaFiscal';
+    XmlRps.DocElemento := 'nfe';
 
-    with LoteRps do
-    begin
-      InfElemento := 'notaFiscal';
-      DocElemento := 'nfe';
-    end;
+    LoteRps.InfElemento := 'notaFiscal';
+    LoteRps.DocElemento := 'nfe';
   end;
 
   ConfigSchemas.Validar := False;

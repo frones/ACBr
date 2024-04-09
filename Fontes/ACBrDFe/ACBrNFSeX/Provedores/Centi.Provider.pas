@@ -360,10 +360,10 @@ begin
       end;
 
       ANode := ANode.Childrens.FindAnyNs('Nfse');
-      if not Assigned(ANode) or (ANode = nil) then Exit;
+      if not Assigned(ANode) then Exit;
 
       ANode := ANode.Childrens.FindAnyNs('InfNfse');
-      if not Assigned(ANode) or (ANode = nil) then Exit;
+      if not Assigned(ANode) then Exit;
 
       Status := ObterConteudoTag(ANode.Childrens.FindAnyNs('Status'), tcStr);
 

@@ -361,14 +361,11 @@ begin
     ConsultaNFSe := False;
     FormatoArqRecibo := tfaTxt;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarSituacao := True;
-      ConsultarLote := True;
-      ConsultarServicoTomado := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarSituacao := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarServicoTomado := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   with ConfigMsgDados do

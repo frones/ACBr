@@ -72,14 +72,14 @@ type
     fpDANFSe: TACBrNFSeXDANFSeRL;
     fpNFSe: TNFSe;
     fpSemValorFiscal: Boolean;
-    cdsItens: {$IFDEF BORLAND}TClientDataSet{$ELSE}TBufDataset{$ENDIF};
+    FcdsItens: {$IFDEF BORLAND}TClientDataSet{$ELSE}TBufDataset{$ENDIF};
 
     procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);
     property ACBrNFSe: TACBrNFSeX read GetACBrNFSe;
   public
     { Public declarations }
     class procedure Imprimir(ADANFSe: TACBrNFSeXDANFSeRL; ANotas: array of TNFSe);
-    class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AFile: String); overload;
+    class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; const AFile: String); overload;
     class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AStream: TStream); overload;
     class procedure QuebradeLinha(const sQuebradeLinha: String); virtual;
   end;
@@ -102,7 +102,7 @@ end;
 
 procedure TfrlXDANFSeRL.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil( cdsItens );
+  FreeAndNil( FcdsItens );
 end;
 
 procedure TfrlXDANFSeRL.frlSemValorFiscalPrint(sender: TObject;
@@ -200,7 +200,8 @@ begin
   // Reescrever
 end;
 
-class procedure TfrlXDANFSeRL.SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AFile: String);
+class procedure TfrlXDANFSeRL.SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL;
+  ANFSe: TNFSe; const AFile: String);
 var
   DANFSeReport: TfrlXDANFSeRL;
 begin

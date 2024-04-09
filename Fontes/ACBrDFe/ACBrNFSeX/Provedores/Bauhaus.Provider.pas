@@ -92,8 +92,7 @@ type
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
-                                     Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = 'erros');
+                                     Response: TNFSeWebserviceResponse);
   end;
 
 implementation
@@ -126,14 +125,11 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerChaveAutorizacao := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      ConsultarRps := True;
-      ConsultarNfse := True;
-      CancelarNfse := True;
-      SubstituirNFSe := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
+    ServicosDisponibilizados.SubstituirNFSe := True;
   end;
 
   SetXmlNameSpace('');
@@ -177,8 +173,7 @@ begin
 end;
 
 procedure TACBrNFSeProviderBauhaus.ProcessarMensagemDeErros(
-  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse;
-  const AListTag: string);
+  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse);
 var
   JSonErro: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;

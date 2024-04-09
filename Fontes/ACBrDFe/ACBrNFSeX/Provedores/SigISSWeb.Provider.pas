@@ -48,7 +48,7 @@ uses
 type
   TACBrNFSeXWebserviceSigISSWeb = class(TACBrNFSeXWebserviceRest)
   private
-    AjustaSetHeader:Boolean;
+    FAjustaSetHeader:Boolean;
 
   protected
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
@@ -122,12 +122,9 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      GerarToken := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.GerarToken := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   SetXmlNameSpace('');
@@ -551,7 +548,7 @@ end;
 
 procedure TACBrNFSeXWebserviceSigISSWeb.SetHeaders(aHeaderReq: THTTPHeader);
 begin
-  if AjustaSetHeader then
+  if FAjustaSetHeader then
     aHeaderReq.AddHeader('Authorization', xToken);
 end;
 
@@ -560,7 +557,7 @@ function TACBrNFSeXWebserviceSigISSWeb.GerarToken(const ACabecalho,
 var
   Request: string;
 begin
-  AjustaSetHeader := False;
+  FAjustaSetHeader := False;
   FPMsgOrig := AMSG;
 
   Request := AMSG;
@@ -573,7 +570,7 @@ function TACBrNFSeXWebserviceSigISSWeb.GerarNFSe(const ACabecalho,
 var
   Request: string;
 begin
-  AjustaSetHeader := True;
+  FAjustaSetHeader := True;
   FPMsgOrig := AMSG;
 
   Request := AMSG;
@@ -585,7 +582,7 @@ function TACBrNFSeXWebserviceSigISSWeb.Cancelar(const ACabecalho, AMSG: String):
 var
   Request: string;
 begin
-  AjustaSetHeader := True;
+  FAjustaSetHeader := True;
   FPMsgOrig := AMSG;
 
   Request := AMSG;

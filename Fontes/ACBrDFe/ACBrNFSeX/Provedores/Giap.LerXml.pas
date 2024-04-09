@@ -87,21 +87,15 @@ begin
 
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroNota'), tcStr);
 
-      with IdentificacaoRps do
-      begin
-        Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroRps'), tcStr);
-        Serie  := '';
-        Tipo   := trRPS;
-      end;
+      IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numeroRps'), tcStr);
+      IdentificacaoRps.Serie  := '';
+      IdentificacaoRps.Tipo   := trRPS;
 
       CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
 
       Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('link'), tcStr);
 
-      with Prestador.IdentificacaoPrestador do
-      begin
-        InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('im'), tcStr);
-      end;
+      Prestador.IdentificacaoPrestador.InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('im'), tcStr);
     end;
   end;
 end;
@@ -116,17 +110,14 @@ begin
   begin
     with NFSe.Servico do
     begin
-      with Endereco do
-      begin
-        Endereco    := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
-        Numero      := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
-        Bairro      := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
-        Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
-        xMunicipio  := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
-        UF          := ObterConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
-        CEP         := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
-        xPais       := ObterConteudo(AuxNode.Childrens.FindAnyNs('pais'), tcStr);
-      end;
+      Endereco.Endereco    := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
+      Endereco.Numero      := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+      Endereco.Bairro      := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
+      Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
+      Endereco.xMunicipio  := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
+      Endereco.UF          := ObterConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
+      Endereco.CEP         := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
+      Endereco.xPais       := ObterConteudo(AuxNode.Childrens.FindAnyNs('pais'), tcStr);
     end;
   end;
 end;
@@ -141,37 +132,25 @@ begin
   begin
     with NFSe do
     begin
-      with Tomador do
-      begin
-        RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nomeTomador'), tcStr);
+      Tomador.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nomeTomador'), tcStr);
 
-        with IdentificacaoTomador do
-        begin
-          InscricaoMunicipal := '';
-          CpfCnpj            := ObterConteudo(AuxNode.Childrens.FindAnyNs('documento'), tcStr);
-          InscricaoEstadual  := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
-        end;
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
+      Tomador.IdentificacaoTomador.CpfCnpj            := ObterConteudo(AuxNode.Childrens.FindAnyNs('documento'), tcStr);
+      Tomador.IdentificacaoTomador.InscricaoEstadual  := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
 
-        with Endereco do
-        begin
-          TipoLogradouro  := '';
-          Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
-          Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
-          Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
-          TipoBairro      := '';
-          Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
-          CodigoMunicipio := '0';
-          xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
-          UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
-          CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
-        end;
+      Tomador.Endereco.TipoLogradouro  := '';
+      Tomador.Endereco.Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
+      Tomador.Endereco.Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+      Tomador.Endereco.Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
+      Tomador.Endereco.TipoBairro      := '';
+      Tomador.Endereco.Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
+      Tomador.Endereco.CodigoMunicipio := '0';
+      Tomador.Endereco.xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
+      Tomador.Endereco.UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
+      Tomador.Endereco.CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
 
-        with Contato do
-        begin
-          Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
-          Telefone := '';
-        end;
-      end;
+      Tomador.Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+      Tomador.Contato.Telefone := '';
     end;
   end;
 end;
@@ -245,11 +224,8 @@ begin
 
       VerificarSeConteudoEhLista(Discriminacao);
 
-      with Valores do
-      begin
-        Aliquota      := ObterConteudo(AuxNode.Childrens.FindAnyNs('aliquota'), tcDe3);
-        ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor'), tcDe2);
-      end;
+      Valores.Aliquota      := ObterConteudo(AuxNode.Childrens.FindAnyNs('aliquota'), tcDe3);
+      Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor'), tcDe2);
     end;
   end;
 end;
@@ -296,7 +272,7 @@ begin
   Result := True;
   NFSe.SituacaoNfse := snNormal;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   LerDadosPrestador(ANode);
 

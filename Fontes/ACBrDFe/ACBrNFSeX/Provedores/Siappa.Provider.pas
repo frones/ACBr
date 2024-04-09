@@ -59,7 +59,7 @@ type
 
   TACBrNFSeProviderSiappa = class (TACBrNFSeProviderProprio)
   private
-    function GetOpcExecucao: string;
+    function GetDadosOpcExecucao: string;
   protected
     procedure Configuracao; override;
 
@@ -89,7 +89,7 @@ type
                                      const AListTag: string = '';
                                      const AMessageTag: string = ''); override;
   public
-    property DadosOpcExecucao: string read GetOpcExecucao;
+    property DadosOpcExecucao: string read GetDadosOpcExecucao;
   end;
 
 implementation
@@ -102,7 +102,7 @@ uses
 
 { TACBrNFSeProviderSiappa }
 
-function TACBrNFSeProviderSiappa.GetOpcExecucao: string;
+function TACBrNFSeProviderSiappa.GetDadosOpcExecucao: string;
 begin
   // (T)estes ou (D)efinitivo
   if ConfigGeral.Ambiente = taHomologacao then
@@ -122,13 +122,10 @@ begin
     Autenticacao.RequerLogin := True;
     Autenticacao.RequerChaveAutorizacao := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarNfse := True;
-      CancelarNfse := True;
-      GerarToken := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
+    ServicosDisponibilizados.GerarToken := True;
   end;
 
   ConfigSchemas.Validar := False;

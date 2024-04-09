@@ -72,7 +72,7 @@ var
   AuxNode: TACBrXmlNode;
   xUF: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs(aTag);
 
@@ -102,7 +102,7 @@ var
   AuxNode: TACBrXmlNode;
   xUF, xEndereco: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('Endereco');
 

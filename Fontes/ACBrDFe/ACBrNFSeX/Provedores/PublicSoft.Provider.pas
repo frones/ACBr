@@ -46,7 +46,7 @@ uses
 type
   TACBrNFSeXWebservicePublicSoft203 = class(TACBrNFSeXWebserviceSoap11)
   private
-    SetHeaderTokenPrefeitura: Boolean;
+    FSetHeaderTokenPrefeitura: Boolean;
 
   protected
     function GerarXmlHeader: string;
@@ -236,7 +236,7 @@ var
 begin
   Producao := (TConfiguracoesNFSe(FPConfiguracoes).WebServices.AmbienteCodigo = 1);
 
-  if SetHeaderTokenPrefeitura then
+  if FSetHeaderTokenPrefeitura then
     aToken := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso
   else
     aToken := xToken;
@@ -257,7 +257,7 @@ function TACBrNFSeXWebservicePublicSoft203.Recepcionar(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -277,7 +277,7 @@ function TACBrNFSeXWebservicePublicSoft203.RecepcionarSincrono(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -297,7 +297,7 @@ function TACBrNFSeXWebservicePublicSoft203.GerarNFSe(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -317,7 +317,7 @@ function TACBrNFSeXWebservicePublicSoft203.ConsultarLote(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -337,7 +337,7 @@ function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSePorRps(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -357,7 +357,7 @@ function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSeServicoPrestado(const AC
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -377,7 +377,7 @@ function TACBrNFSeXWebservicePublicSoft203.ConsultarNFSeServicoTomado(const ACab
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -396,7 +396,7 @@ function TACBrNFSeXWebservicePublicSoft203.Cancelar(const ACabecalho, AMSG: Stri
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -416,7 +416,7 @@ function TACBrNFSeXWebservicePublicSoft203.SubstituirNFSe(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := False;
+  FSetHeaderTokenPrefeitura := False;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 
@@ -436,7 +436,7 @@ function TACBrNFSeXWebservicePublicSoft203.GerarToken(const ACabecalho,
 var
   Request, xHeader: string;
 begin
-  SetHeaderTokenPrefeitura := True;
+  FSetHeaderTokenPrefeitura := True;
   FPMsgOrig := AMSG;
   xHeader := GerarXmlHeader;
 

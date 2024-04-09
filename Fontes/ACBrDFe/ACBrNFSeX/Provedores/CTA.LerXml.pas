@@ -108,7 +108,7 @@ function TNFSeR_CTA200.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   LerCampoLink;
 end;
@@ -117,7 +117,7 @@ function TNFSeR_CTA200.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
 end;
 

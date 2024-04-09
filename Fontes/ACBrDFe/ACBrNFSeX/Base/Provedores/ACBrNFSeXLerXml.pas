@@ -73,6 +73,7 @@ type
     function LerParamsTabIniServicos: AnsiString;
     function LerParamsTabInterno: AnsiString;
     function LerDescricaoServico(const ACodigo: string): string;
+    function NormatizarCodigoMunicipio(const Codigo: string): string;
 
     procedure VerificarSeConteudoEhLista(const aDiscriminacao: string);
     procedure LerListaJson(const aDiscriminacao: string);
@@ -155,6 +156,15 @@ begin
     Result := Aliquota * 100
   else
     Result := Aliquota;
+end;
+
+function TNFSeRClass.NormatizarCodigoMunicipio(const Codigo: string): string;
+begin
+  if length(Codigo) < 7 then
+    Result := Copy(Codigo, 1, 2) +
+        FormatFloat('00000', StrToIntDef(Copy(Codigo, 3, 5), 0))
+  else
+    Result := Codigo;
 end;
 
 function TNFSeRClass.NormatizarItemListaServico(const Codigo: string): string;

@@ -4,6 +4,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
   Caption = 'frlXDANFSeRLISSNet'
   ClientHeight = 750
   ClientWidth = 933
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32
@@ -2569,7 +2570,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 272
+    Left = 280
     Top = 40
   end
 end

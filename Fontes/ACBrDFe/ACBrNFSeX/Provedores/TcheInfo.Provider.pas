@@ -86,16 +86,13 @@ begin
 
     Autenticacao.RequerLogin := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := False;
-      EnviarLoteSincrono := False;
-      ConsultarLote := False;
-      ConsultarFaixaNfse := False;
-      ConsultarServicoPrestado := False;
-      ConsultarServicoTomado := False;
-      SubstituirNfse := False;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := False;
+    ServicosDisponibilizados.EnviarLoteSincrono := False;
+    ServicosDisponibilizados.ConsultarLote := False;
+    ServicosDisponibilizados.ConsultarFaixaNfse := False;
+    ServicosDisponibilizados.ConsultarServicoPrestado := False;
+    ServicosDisponibilizados.ConsultarServicoTomado := False;
+    ServicosDisponibilizados.SubstituirNfse := False;
   end;
 
   with ConfigAssinar do
@@ -115,20 +112,17 @@ begin
   begin
     GerarPrestadorLoteRps := True;
 
-    with TACBrNFSeX(FAOwner).Configuracoes.Geral do
-    begin
-      if TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-        CodigoIBGE := IntToStr(CodigoMunicipio)
-      else
-        CodigoIBGE := '9999999';
+    if TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+      CodigoIBGE := IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio)
+    else
+      CodigoIBGE := '9999999';
 
-      DadosCabecalho := '<cabecalho versao="1.00" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                        '<versaoDados>2.04</versaoDados>' +
-                        '<CodigoIBGE>' + CodigoIBGE + '</CodigoIBGE>' +
-                        '<CpfCnpj>' + Emitente.WSUser + '</CpfCnpj>' +
-                        '<Token>' + Emitente.WSSenha + '</Token>' +
-                        '</cabecalho>';
-    end;
+    DadosCabecalho := '<cabecalho versao="1.00" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+                      '<versaoDados>2.04</versaoDados>' +
+                      '<CodigoIBGE>' + CodigoIBGE + '</CodigoIBGE>' +
+                      '<CpfCnpj>' + TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSUser + '</CpfCnpj>' +
+                      '<Token>' + TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSSenha + '</Token>' +
+                      '</cabecalho>';
   end;
 end;
 

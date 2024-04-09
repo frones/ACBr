@@ -439,30 +439,29 @@ begin
   FProvider := ACBrNFSe.Provider;
 
   with fpNFSe do
-    with Servico.Valores do
-    begin
-      rllAtividade.Caption := fpNFSe.DescricaoCodigoTributacaoMunicipio;
-      rllItem.Caption := Servico.ItemListaServico;
-      rllCodNBS.Caption := Servico.CodigoNBS;
-      rllCodCNAE.Caption := Servico.CodigoCnae;
+  begin
+    rllAtividade.Caption := fpNFSe.DescricaoCodigoTributacaoMunicipio;
+    rllItem.Caption := Servico.ItemListaServico;
+    rllCodNBS.Caption := Servico.CodigoNBS;
+    rllCodCNAE.Caption := Servico.CodigoCnae;
 
-      rllAliquota.Caption := fpDANFSe.FormatarAliquota(Aliquota);
-      rllValorServicos1.Caption := FormatCurr('R$ ,0.00', ValorServicos);
-      rllDescIncondicionado1.Caption := FormatCurr('R$ ,0.00', DescontoIncondicionado);
-      rllValorDeducoes.Caption := FormatCurr('R$ ,0.00', ValorDeducoes);
-      rllBaseCalc.Caption := FormatCurr('R$ ,0.00', BaseCalculo);
-      rllValorISS.Caption := FormatCurr('R$ ,0.00', ValorIss);
-      rllISSReter.Caption := FProvider.SituacaoTributariaDescricao(IssRetido);
-      rllDescCondicionado.Caption := FormatCurr('R$ ,0.00', DescontoCondicionado);
-      rllValorPIS.Caption := FormatCurr('R$ ,0.00', ValorPis);
-      rllValorCOFINS.Caption := FormatCurr('R$ ,0.00', ValorCofins);
-      rllValorIR.Caption := FormatCurr('R$ ,0.00', ValorIr);
-      rllValorINSS.Caption := FormatCurr('R$ ,0.00', ValorInss);
-      rllValorCSLL.Caption := FormatCurr('R$ ,0.00', ValorCsll);
-      rllOutrasRetencoes.Caption := FormatCurr('R$ ,0.00', OutrasRetencoes);
-      rllValorIssRetido.Caption := FormatCurr('R$ ,0.00', ValorIssRetido);
-      rllValorLiquido.Caption := FormatCurr('R$ ,0.00', ValorLiquidoNfse);
-    end;
+    rllAliquota.Caption := fpDANFSe.FormatarAliquota(Servico.Valores.Aliquota);
+    rllValorServicos1.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorServicos);
+    rllDescIncondicionado1.Caption := FormatCurr('R$ ,0.00', Servico.Valores.DescontoIncondicionado);
+    rllValorDeducoes.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorDeducoes);
+    rllBaseCalc.Caption := FormatCurr('R$ ,0.00', Servico.Valores.BaseCalculo);
+    rllValorISS.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorIss);
+    rllISSReter.Caption := FProvider.SituacaoTributariaDescricao(Servico.Valores.IssRetido);
+    rllDescCondicionado.Caption := FormatCurr('R$ ,0.00', Servico.Valores.DescontoCondicionado);
+    rllValorPIS.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorPis);
+    rllValorCOFINS.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorCofins);
+    rllValorIR.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorIr);
+    rllValorINSS.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorInss);
+    rllValorCSLL.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorCsll);
+    rllOutrasRetencoes.Caption := FormatCurr('R$ ,0.00', Servico.Valores.OutrasRetencoes);
+    rllValorIssRetido.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorIssRetido);
+    rllValorLiquido.Caption := FormatCurr('R$ ,0.00', Servico.Valores.ValorLiquidoNfse);
+  end;
 end;
 
 procedure TfrlXDANFSeRLISSnet.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -577,55 +576,52 @@ begin
   begin
     rllTomaNome.Caption := RazaoSocial;
 
-    with IdentificacaoTomador do
+    lbIdentificacao.Caption := 'CPF/CNPJ:';
+    if (Length(IdentificacaoTomador.Nif) > 0) then
     begin
-      lbIdentificacao.Caption := 'CPF/CNPJ:';
-      if (Length(Nif) > 0) then
+      lbIdentificacao.Caption := 'NIF:';
+      rllTomaCNPJ.Caption := IdentificacaoTomador.Nif;
+    end
+    else
+    begin
+      if Length(IdentificacaoTomador.CpfCnpj) <= 11 then
+        rllTomaCNPJ.Caption := FormatarCPF(IdentificacaoTomador.CpfCnpj)
+      else
+        rllTomaCNPJ.Caption := FormatarCNPJ(IdentificacaoTomador.CpfCnpj);
+    end;
+    rllTomaInscMunicipal.Caption := IfThen(IdentificacaoTomador.InscricaoMunicipal <> '',
+      IdentificacaoTomador.InscricaoMunicipal, fpDANFSe.Tomador.InscricaoMunicipal);
+
+    rllTomaInscEstadual.Caption := IfThen(IdentificacaoTomador.InscricaoEstadual <> '',
+      IdentificacaoTomador.InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual);
+
+    if Endereco.Endereco <> '' then
+    begin
+      if Endereco.UF = 'EX' then
       begin
-        lbIdentificacao.Caption := 'NIF:';
-        rllTomaCNPJ.Caption := Nif;
+        rllTomaEndereco.Caption := Trim(Endereco.Endereco) +
+          ', Pais: ' + Trim(Endereco.xPais);
       end
       else
-      begin
-        if Length(CpfCnpj) <= 11 then
-          rllTomaCNPJ.Caption := FormatarCPF(CpfCnpj)
-        else
-          rllTomaCNPJ.Caption := FormatarCNPJ(CpfCnpj);
-      end;
-      rllTomaInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.Tomador.InscricaoMunicipal);
+        rllTomaEndereco.Caption := Trim(Endereco.Endereco) + ', ' +
+          Trim(Endereco.Numero) + ' - ' +
+          Trim(Endereco.Bairro) + ' - CEP: ' +
+          FormatarCEP(Endereco.CEP);
+    end
+    else
+      rllTomaEndereco.Caption := Trim(fpDANFSe.Tomador.Endereco) + ' - CEP: ' +
+        FormatarCEP(Endereco.CEP);
 
-      rllTomaInscEstadual.Caption := IfThen(InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual);
-    end;
+    rllTomaComplemento.Caption := IfThen(Endereco.Complemento <> '',
+      Endereco.Complemento, fpDANFSe.Tomador.Complemento);
+    rllTomaMunicipio.Caption := Endereco.xMunicipio;
+    rllTomaUF.Caption := Endereco.UF;
+    rllTomaCEP.Caption := FormatarCEP(Endereco.CEP);
 
-    with Endereco do
-    begin
-      if Endereco <> '' then
-      begin
-        if UF = 'EX' then
-        begin
-          rllTomaEndereco.Caption := Trim(Endereco) + ', Pais: ' + Trim(xPais);
-        end
-        else
-          rllTomaEndereco.Caption := Trim(Endereco) + ', ' +
-            Trim(Numero) + ' - ' +
-            Trim(Bairro) + ' - CEP: ' +
-            FormatarCEP(CEP);
-      end
-      else
-        rllTomaEndereco.Caption := Trim(fpDANFSe.Tomador.Endereco) + ' - CEP: ' +
-          FormatarCEP(CEP);
-
-      rllTomaComplemento.Caption := IfThen(Complemento <> '', Complemento, fpDANFSe.Tomador.Complemento);
-      rllTomaMunicipio.Caption := xMunicipio;
-      rllTomaUF.Caption := UF;
-      rllTomaCEP.Caption := FormatarCEP(CEP);
-    end;
-
-    with Contato do
-    begin
-      rllTomaTelefone.Caption := IfThen(Telefone <> '', FormatarFone(Telefone), FormatarFone(fpDANFSe.Tomador.Fone));
-      rllTomaEmail.Caption := IfThen(Email <> '', Email, fpDANFSe.Tomador.Email);
-    end;
+    rllTomaTelefone.Caption := IfThen(Contato.Telefone <> '',
+      FormatarFone(Contato.Telefone), FormatarFone(fpDANFSe.Tomador.Fone));
+    rllTomaEmail.Caption := IfThen(Contato.Email <> '',
+      Contato.Email, fpDANFSe.Tomador.Email);
   end;
 end;
 

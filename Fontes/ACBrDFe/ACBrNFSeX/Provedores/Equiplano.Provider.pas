@@ -122,15 +122,12 @@ begin
     FpCodigoCidade := Params.ValorParametro('CodigoCidade');
     DetalharServico := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarSituacao := True;
-      ConsultarLote := True;
-      ConsultarRps := True;
-      ConsultarNfse := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarSituacao := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   with ConfigAssinar do
@@ -150,41 +147,23 @@ begin
     Prefixo := 'es';
     UsarNumLoteConsLote := True;
 
-    with LoteRps do
-    begin
-      InfElemento := 'lote';
-      DocElemento := 'enviarLoteRpsEnvio';
-    end;
+    LoteRps.InfElemento := 'lote';
+    LoteRps.DocElemento := 'enviarLoteRpsEnvio';
 
-    with ConsultarSituacao do
-    begin
-      InfElemento := 'prestador';
-      DocElemento := 'esConsultarSituacaoLoteRpsEnvio';
-    end;
+    ConsultarSituacao.InfElemento := 'prestador';
+    ConsultarSituacao.DocElemento := 'esConsultarSituacaoLoteRpsEnvio';
 
-    with ConsultarLote do
-    begin
-      InfElemento := 'prestador';
-      DocElemento := 'esConsultarLoteRpsEnvio';
-    end;
+    ConsultarLote.InfElemento := 'prestador';
+    ConsultarLote.DocElemento := 'esConsultarLoteRpsEnvio';
 
-    with ConsultarNFSeRps do
-    begin
-      InfElemento := 'rps';
-      DocElemento := 'esConsultarNfsePorRpsEnvio';
-    end;
+    ConsultarNFSeRps.InfElemento := 'rps';
+    ConsultarNFSeRps.DocElemento := 'esConsultarNfsePorRpsEnvio';
 
-    with ConsultarNFSe do
-    begin
-      InfElemento := 'prestador';
-      DocElemento := 'esConsultarNfseEnvio';
-    end;
+    ConsultarNFSe.InfElemento := 'prestador';
+     ConsultarNFSe.DocElemento := 'esConsultarNfseEnvio';
 
-    with CancelarNFSe do
-    begin
-      InfElemento := 'prestador';
-      DocElemento := 'esCancelarNfseEnvio';
-    end;
+    CancelarNFSe.InfElemento := 'prestador';
+    CancelarNFSe.DocElemento := 'esCancelarNfseEnvio';
 
     DadosCabecalho := '1';
   end;

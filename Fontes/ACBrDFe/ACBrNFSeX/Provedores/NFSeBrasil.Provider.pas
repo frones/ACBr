@@ -86,7 +86,7 @@ type
                                      const AListTag: string = 'erros';
                                      const AMessageTag: string = 'erro'); override;
 
-    function MontarMensagemErros(ARetorno: string): string;
+    function MontarMensagemErros(const ARetorno: string): string;
   end;
 
 implementation
@@ -815,7 +815,7 @@ begin
 end;
 
 function TACBrNFSeProviderNFSeBrasil.MontarMensagemErros(
-  ARetorno: string): string;
+  const ARetorno: string): string;
 begin
   if Pos('RespostaLoteRps', ARetorno) = 0 then
   begin

@@ -108,11 +108,8 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerChaveAutorizacao := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;

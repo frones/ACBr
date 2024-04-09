@@ -119,14 +119,11 @@ begin
     Autenticacao.RequerLogin := True;
     Autenticacao.RequerChaveAutorizacao := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      ConsultarRps := True;
-      ConsultarFaixaNfse := True;
-      CancelarNfse := True;
-      GerarToken := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.ConsultarFaixaNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
+    ServicosDisponibilizados.GerarToken := True;
   end;
 
   ConfigSchemas.Validar := False;

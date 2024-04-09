@@ -48,7 +48,7 @@ type
   private
     FpVersao: string;
 
-    function GerarChaveDPS(AcMun, ACNPJCPF, ASerie, ANumero: string): string;
+    function GerarChaveDPS(const AcMun, ACNPJCPF, ASerie, ANumero: string): string;
 
   protected
     function GerarInfDps: TACBrXmlNode;
@@ -128,7 +128,7 @@ uses
 
 { TNFSeW_PadraoNacional }
 
-function TNFSeW_PadraoNacional.GerarChaveDPS(AcMun, ACNPJCPF, ASerie,
+function TNFSeW_PadraoNacional.GerarChaveDPS(const AcMun, ACNPJCPF, ASerie,
   ANumero: string): string;
 var
   cMun, vSerie, vNumero, vCNPJ, tpInsc: string;

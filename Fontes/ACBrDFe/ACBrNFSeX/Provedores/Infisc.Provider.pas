@@ -518,11 +518,11 @@ begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('infNFSe');
 
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         AuxNode := AuxNode.Childrens.FindAnyNs('Id');
 
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFS-e'), tcStr);
 
@@ -626,11 +626,11 @@ begin
         ANode := ANodeArray[i];
         AuxNode := ANode.Childrens.FindAnyNs('infNFSe');
 
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         AuxNode := AuxNode.Childrens.FindAnyNs('Id');
 
-        if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+        if not Assigned(AuxNode) then Exit;
 
         NumNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFS-e'), tcStr);
 

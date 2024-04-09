@@ -172,8 +172,7 @@ begin
                    sTomador +
                    sInter;
 
-    with TACBrNFSeX(FAOwner) do
-      NFSe.Assinatura := string(SSL.CalcHash(AnsiString(sAssinatura), dgstSHA1, outBase64, True));
+    NFSe.Assinatura := string(TACBrNFSeX(FAOwner).SSL.CalcHash(AnsiString(sAssinatura), dgstSHA1, outBase64, True));
   end;
 end;
 
@@ -187,18 +186,15 @@ begin
     QuebradeLinha := '|';
     ModoEnvio := meLoteAssincrono;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      EnviarUnitario := True;
-      TestarEnvio := True;
-      ConsultarSituacao := True;
-      ConsultarLote := True;
-      ConsultarRps := True;
-      ConsultarServicoTomado := True;
-      ConsultaNfse := True;
-      CancelarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.TestarEnvio := True;
+    ServicosDisponibilizados.ConsultarSituacao := True;
+    ServicosDisponibilizados.ConsultarLote := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.ConsultarServicoTomado := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.CancelarNfse := True;
   end;
 
   with ConfigAssinar do
@@ -223,54 +219,30 @@ begin
   begin
     UsarNumLoteConsLote := True;
 
-    with LoteRps do
-    begin
-      GerarNSLoteRps := True;
-      InfElemento := 'RPS';
-      DocElemento := 'PedidoEnvioLoteRPS';
-    end;
+    GerarNSLoteRps := True;
+    LoteRps.InfElemento := 'RPS';
+    LoteRps.DocElemento := 'PedidoEnvioLoteRPS';
 
-    with ConsultarSituacao do
-    begin
-      InfElemento := '';
-      DocElemento := 'PedidoInformacoesLote';
-    end;
+    ConsultarSituacao.InfElemento := '';
+    ConsultarSituacao.DocElemento := 'PedidoInformacoesLote';
 
-    with ConsultarLote do
-    begin
-      InfElemento := '';
-      DocElemento := 'PedidoConsultaLote';
-    end;
+    ConsultarLote.InfElemento := '';
+    ConsultarLote.DocElemento := 'PedidoConsultaLote';
 
-    with ConsultarNFSeRps do
-    begin
-      InfElemento := '';
-      DocElemento := 'PedidoConsultaNFe';
-    end;
+    ConsultarNFSeRps.InfElemento := '';
+    ConsultarNFSeRps.DocElemento := 'PedidoConsultaNFe';
 
-    with ConsultarNFSe do
-    begin
-      InfElemento := '';
-      DocElemento := 'PedidoConsultaNFe';
-    end;
+    ConsultarNFSe.InfElemento := '';
+    ConsultarNFSe.DocElemento := 'PedidoConsultaNFe';
 
-    with CancelarNFSe do
-    begin
-      InfElemento := '';
-      DocElemento := 'PedidoCancelamentoNFe';
-    end;
+    CancelarNFSe.InfElemento := '';
+    CancelarNFSe.DocElemento := 'PedidoCancelamentoNFe';
 
-    with GerarNFSe do
-    begin
-      InfElemento := '';
-      DocElemento := 'PedidoEnvioRPS';
-    end;
+    GerarNFSe.InfElemento := '';
+    GerarNFSe.DocElemento := 'PedidoEnvioRPS';
 
-    with ConsultarNFSeServicoTomado do
-    begin
-      InfElemento := '';
-      DocElemento := 'ConsultarNFSeServicoTomado';
-    end;
+    ConsultarNFSeServicoTomado.InfElemento := '';
+    ConsultarNFSeServicoTomado.DocElemento := 'ConsultarNFSeServicoTomado';
 
     DadosCabecalho := '1';
   end;
@@ -327,6 +299,7 @@ function TACBrNFSeProviderISSSaoPaulo.LerChaveNFe(ANode: TACBrXmlNode): string;
 var
   AuxNode: TACBrXmlNode;
 begin
+  Result := '';
   if ANode = nil then
     Exit;
 
@@ -340,6 +313,7 @@ function TACBrNFSeProviderISSSaoPaulo.LerChaveRPS(ANode: TACBrXmlNode): string;
 var
   AuxNode: TACBrXmlNode;
 begin
+  Result := '';
   if ANode = nil then
     Exit;
 

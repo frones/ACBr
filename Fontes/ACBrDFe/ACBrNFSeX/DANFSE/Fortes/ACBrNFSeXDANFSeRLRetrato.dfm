@@ -3,6 +3,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Top = 76
   Caption = 'frlXDANFSeRLRetrato'
   ClientHeight = 750
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32
@@ -2369,6 +2370,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 120
+    Left = 136
   end
 end

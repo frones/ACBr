@@ -144,7 +144,7 @@ var
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then
+  if not Assigned(ANode) then
     Exit;
 
   with NFSe do
@@ -202,19 +202,16 @@ begin
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
   	// <valorISSQNSubstituicao>0</valorISSQNSubstituicao>
 
-    with NFSe.Servico.Valores do
-    begin
-      if ValorIss <> 0 then
-        ValorIssRetido := ValorIss
-      else
-        ValorIssRetido := 0;
+    if NFSe.Servico.Valores.ValorIss <> 0 then
+      NFSe.Servico.Valores.ValorIssRetido := NFSe.Servico.Valores.ValorIss
+    else
+      NFSe.Servico.Valores.ValorIssRetido := 0;
 
-      ValorLiq := ValorServicos - ValorIssRetido;
+    ValorLiq := NFSe.Servico.Valores.ValorServicos - NFSe.Servico.Valores.ValorIssRetido;
 
-      ValorLiquidoNfse := ValorLiq;
+    NFSe.Servico.Valores.ValorLiquidoNfse := ValorLiq;
 
-      ValorTotalNotaFiscal := ValorServicos;
-    end;
+    NFSe.Servico.Valores.ValorTotalNotaFiscal := NFSe.Servico.Valores.ValorServicos;
   end;
 
   LerCampoLink;
@@ -224,7 +221,7 @@ function TNFSeR_SoftPlan.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then
+  if not Assigned(ANode) then
    Exit;
 
   with NFSe do

@@ -170,12 +170,9 @@ begin
 
         if Assigned(jsAux) then
         begin
-          with Servico do
-          begin
-            CodigoTributacaoMunicipio := jsAux.AsString['Codigo'];
-            CodigoCnae := jsAux.AsString['CodigoCnae'];
-            ItemListaServico := jsAux.AsString['CodigoLc116'];
-          end;
+          Servico.CodigoTributacaoMunicipio := jsAux.AsString['Codigo'];
+          Servico.CodigoCnae := jsAux.AsString['CodigoCnae'];
+          Servico.ItemListaServico := jsAux.AsString['CodigoLc116'];
         end;
       end
       else
@@ -204,39 +201,38 @@ begin
 
       if Assigned(jsAux) then
       begin
-        with Servico.Valores do
-        begin
-          if (aJson.AsString['IssRetido'] = 'N') then
-            IssRetido := stNormal
-          else
-            IssRetido := stRetencao;
+        if (aJson.AsString['IssRetido'] = 'N') then
+          Servico.Valores.IssRetido := stNormal
+        else
+          Servico.Valores.IssRetido := stRetencao;
 
-          ValorServicos := jsAux.AsFloat['ValorServicos'];
-          ValorDeducoes := jsAux.AsFloat['ValorDeducoes'];
-          ValorPis := jsAux.AsFloat['ValorPis'];
-          ValorCofins := jsAux.AsFloat['ValorCofins'];
-          ValorInss := jsAux.AsFloat['ValorInss'];
-          ValorIr := jsAux.AsFloat['ValorIr'];
-          ValorCsll := jsAux.AsFloat['ValorCsll'];
-          OutrasRetencoes := jsAux.AsFloat['OutrasRetencoes'];
-          DescontoIncondicionado := jsAux.AsFloat['DescontoIncondicionado'];
-          DescontoCondicionado := jsAux.AsFloat['DescontoCondicionado'];
-          BaseCalculo := jsAux.AsFloat['BaseCalculo'];
-          Aliquota := jsAux.AsFloat['Aliquota'];
-          ValorIss := jsAux.AsFloat['ValorIss'];
-          ValorTotalTributos := jsAux.AsFloat['ValorTotalTributos'];
-          ValorCredito := jsAux.AsFloat['ValorCredito'];
+        Servico.Valores.ValorServicos := jsAux.AsFloat['ValorServicos'];
+        Servico.Valores.ValorDeducoes := jsAux.AsFloat['ValorDeducoes'];
+        Servico.Valores.ValorPis := jsAux.AsFloat['ValorPis'];
+        Servico.Valores.ValorCofins := jsAux.AsFloat['ValorCofins'];
+        Servico.Valores.ValorInss := jsAux.AsFloat['ValorInss'];
+        Servico.Valores.ValorIr := jsAux.AsFloat['ValorIr'];
+        Servico.Valores.ValorCsll := jsAux.AsFloat['ValorCsll'];
+        Servico.Valores.OutrasRetencoes := jsAux.AsFloat['OutrasRetencoes'];
+        Servico.Valores.DescontoIncondicionado := jsAux.AsFloat['DescontoIncondicionado'];
+        Servico.Valores.DescontoCondicionado := jsAux.AsFloat['DescontoCondicionado'];
+        Servico.Valores.BaseCalculo := jsAux.AsFloat['BaseCalculo'];
+        Servico.Valores.Aliquota := jsAux.AsFloat['Aliquota'];
+        Servico.Valores.ValorIss := jsAux.AsFloat['ValorIss'];
+        Servico.Valores.ValorTotalTributos := jsAux.AsFloat['ValorTotalTributos'];
+        ValorCredito := jsAux.AsFloat['ValorCredito'];
 
-          RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+        Servico.Valores.RetencoesFederais := Servico.Valores.ValorPis +
+          Servico.Valores.ValorCofins + Servico.Valores.ValorInss +
+          Servico.Valores.ValorIr + Servico.Valores.ValorCsll;
 
-          ValorLiquidoNfse := ValorServicos -
-                              (RetencoesFederais + ValorDeducoes +
-                               DescontoCondicionado +
-                               DescontoIncondicionado + ValorIssRetido);
+        Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
+          (Servico.Valores.RetencoesFederais + Servico.Valores.ValorDeducoes +
+           Servico.Valores.DescontoCondicionado + Servico.Valores.DescontoIncondicionado +
+           Servico.Valores.ValorIssRetido);
 
-          ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                                  DescontoIncondicionado;
-        end;
+        Servico.Valores.ValorTotalNotaFiscal := Servico.Valores.ValorServicos -
+          Servico.Valores.DescontoCondicionado - Servico.Valores.DescontoIncondicionado;
       end;
     end;
   end;
@@ -271,8 +267,7 @@ begin
 
   if Assigned(jsAux) then
   begin
-    with NFSe.Prestador.IdentificacaoPrestador do
-      InscricaoMunicipal := jsAux.AsString['InscricaoMunicipal'];
+    NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal := jsAux.AsString['InscricaoMunicipal'];
   end;
 end;
 
@@ -289,12 +284,9 @@ begin
       RazaoSocial := jsAux.AsString['RazaoSocial'];
       NomeFantasia := jsAux.AsString['NomeFantasia'];
 
-      with IdentificacaoPrestador do
-      begin
-        CpfCnpj := OnlyNumber(jsAux.AsString['Cnpj']);
-        CpfCnpj := PadLeft(CpfCnpj, 14, '0');
-        InscricaoMunicipal := jsAux.AsString['InscricaoMunicipal'];
-      end;
+      IdentificacaoPrestador.CpfCnpj := OnlyNumber(jsAux.AsString['Cnpj']);
+      IdentificacaoPrestador.CpfCnpj := PadLeft(IdentificacaoPrestador.CpfCnpj, 14, '0');
+      IdentificacaoPrestador.InscricaoMunicipal := jsAux.AsString['InscricaoMunicipal'];
 
       LerEndereco(jsAux, Endereco);
       LerContato(jsAux, Contato);
@@ -316,20 +308,17 @@ begin
       RazaoSocial := jsAux.AsString['RazaoSocial'];
       NomeFantasia := jsAux.AsString['NomeFantasia'];
 
-      with IdentificacaoTomador do
-      begin
-        CpfCnpj := OnlyNumber(jsAux.AsString['NrDocumento']);
-        aValor  := jsAux.AsString['TipoPessoa'];
+      IdentificacaoTomador.CpfCnpj := OnlyNumber(jsAux.AsString['NrDocumento']);
+      aValor  := jsAux.AsString['TipoPessoa'];
 
-        if ((aValor = 'J') or (aValor = '2')) then
-        begin
-          CpfCnpj := PadLeft(CpfCnpj, 14, '0');
-        end
-        else
-        begin
-          CpfCnpj := PadLeft(CpfCnpj, 11, '0');
-          Tipo := tpPF;
-        end;
+      if ((aValor = 'J') or (aValor = '2')) then
+      begin
+        IdentificacaoTomador.CpfCnpj := PadLeft(IdentificacaoTomador.CpfCnpj, 14, '0');
+      end
+      else
+      begin
+        IdentificacaoTomador.CpfCnpj := PadLeft(IdentificacaoTomador.CpfCnpj, 11, '0');
+        IdentificacaoTomador.Tipo := tpPF;
       end;
 
       LerEndereco(jsAux, Endereco);
@@ -352,26 +341,20 @@ begin
 
   if Assigned(jsAux) then
   begin
-    with aEndereco do
-    begin
-      Endereco := jsAux.AsString['Logradouro'];
-      Numero := jsAux.AsString['Numero'];
-      Complemento := jsAux.AsString['Complemento'];
-      Bairro := jsAux.AsString['Bairro'];
+    aEndereco.Endereco := jsAux.AsString['Logradouro'];
+    aEndereco.Numero := jsAux.AsString['Numero'];
+    aEndereco.Complemento := jsAux.AsString['Complemento'];
+    aEndereco.Bairro := jsAux.AsString['Bairro'];
 
-      CodigoMunicipio := jsAux.AsString['Municipio'];
+    aEndereco.CodigoMunicipio := jsAux.AsString['Municipio'];
+    aEndereco.CodigoMunicipio := NormatizarCodigoMunicipio(aEndereco.CodigoMunicipio);
 
-      if length(CodigoMunicipio) < 7 then
-        CodigoMunicipio := Copy(CodigoMunicipio, 1, 2) +
-            FormatFloat('00000', StrToIntDef(Copy(CodigoMunicipio, 3, 5), 0));
+    aEndereco.xMunicipio := ObterNomeMunicipioUF(StrToIntDef(aEndereco.CodigoMunicipio, 0), xUF);
 
-      xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
+    if aEndereco.UF = '' then
+      aEndereco.UF := xUF;
 
-      if UF = '' then
-        UF := xUF;
-
-      CEP := jsAux.AsString['Cep'];
-    end;
+    aEndereco.CEP := jsAux.AsString['Cep'];
   end;
 end;
 
@@ -383,11 +366,8 @@ begin
 
   if Assigned(jsAux) then
   begin
-    with aContato do
-    begin
-      Telefone := jsAux.AsString['Telefone'];
-      Email := jsAux.AsString['Email'];
-    end;
+    aContato.Telefone := jsAux.AsString['Telefone'];
+    aContato.Email := jsAux.AsString['Email'];
   end;
 end;
 

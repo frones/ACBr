@@ -154,11 +154,8 @@ begin
     CancPreencherMotivo := True;
     ConsultaPorFaixaPreencherNumNfseFinal := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := False;
-      SubstituirNfse := False;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := False;
+    ServicosDisponibilizados.SubstituirNfse := False;
   end;
 
   with ConfigAssinar do
@@ -176,17 +173,11 @@ begin
 
   with ConfigMsgDados do
   begin
-    with XmlRps do
-    begin
-      InfElemento := 'InfDeclaracaoPrestacaoServico';
-      DocElemento := 'tcDeclaracaoPrestacaoServico';
-    end;
+    XmlRps.InfElemento := 'InfDeclaracaoPrestacaoServico';
+    XmlRps.DocElemento := 'tcDeclaracaoPrestacaoServico';
 
-    with LoteRps do
-    begin
-      InfElemento := 'InfDeclaracaoPrestacaoServico';
-      DocElemento := 'tcDeclaracaoPrestacaoServico';
-    end;
+    LoteRps.InfElemento := 'InfDeclaracaoPrestacaoServico';
+    LoteRps.DocElemento := 'tcDeclaracaoPrestacaoServico';
 
     DadosCabecalho := GetCabecalho('http://www.nfse-tecnos.com.br');
   end;
@@ -324,10 +315,10 @@ begin
         begin
           ANode := ANodeArray[I];
           AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
 
@@ -343,17 +334,17 @@ begin
           end;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-          if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+          if not Assigned(AuxNode) then Exit;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
 
           if AuxNode <> nil then
           begin
             AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-            if not Assigned(AuxNode) or (AuxNode = nil) then Exit;
+            if not Assigned(AuxNode) then Exit;
 
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
             SerieRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);

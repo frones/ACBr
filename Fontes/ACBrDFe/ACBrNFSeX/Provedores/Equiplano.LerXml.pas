@@ -73,7 +73,7 @@ var
   AuxNode: TACBrXmlNode;
   aValor: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('nfs');
 
@@ -157,7 +157,7 @@ var
 begin
   xUF := '';
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('tomadorServico');
 
@@ -203,7 +203,7 @@ procedure TNFSeR_Equiplano.LerIdentificacaoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('documento');
 
@@ -222,7 +222,7 @@ var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('listaServicos');
 
@@ -297,7 +297,7 @@ procedure TNFSeR_Equiplano.LerRetencoes(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('retencoes');
 
@@ -327,7 +327,7 @@ procedure TNFSeR_Equiplano.LerCancelamento(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('cancelamento');
 
@@ -383,7 +383,7 @@ begin
   Result := True;
   NFSe.SituacaoNfse := snNormal;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('nfse');
 
@@ -413,86 +413,63 @@ begin
 
   with NFSe do
   begin
-    with IdentificacaoRps do
-    begin
-      Numero := ObterConteudo(ANode.Childrens.FindAnyNs('nrRps'), tcStr);
-      Serie := ObterConteudo(ANode.Childrens.FindAnyNs('nrEmissorRps'), tcStr);
-    end;
+    IdentificacaoRps.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('nrRps'), tcStr);
+    IdentificacaoRps.Serie := ObterConteudo(ANode.Childrens.FindAnyNs('nrEmissorRps'), tcStr);
 
     DataEmissaoRps := ObterConteudo(ANode.Childrens.FindAnyNs('dtEmissaoRps'), tcDatHor);
     NaturezaOperacao := StrToNaturezaOperacao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpTributacao'), tcStr));
 
-    with Servico.Valores do
-    begin
-      IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('isIssRetido'), tcStr));
-      ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('vlTotalRps'), tcDe2);
-      ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('vlLiquidoRps'), tcDe2);
-    end;
+    Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('isIssRetido'), tcStr));
+    Servico.Valores.ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('vlTotalRps'), tcDe2);
+    Servico.Valores.ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('vlLiquidoRps'), tcDe2);
 
     AuxNode := ANode.Childrens.FindAnyNs('tomador');
 
     if AuxNode <> nil then
     begin
-      with Tomador do
+      Tomador.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmTomador'), tcStr);
+
+      Tomador.Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEmail'), tcStr);
+      Tomador.Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrTelefone'), tcStr);
+
+      Tomador.IdentificacaoTomador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoEstadual'), tcStr);
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoMunicipal'), tcStr);
+
+      Tomador.Endereco.Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
+      Tomador.Endereco.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
+      Tomador.Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsComplemento'), tcStr);
+      Tomador.Endereco.Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
+      Tomador.Endereco.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbge'), tcStr);
+      Tomador.Endereco.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
+      Tomador.Endereco.xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
+      Tomador.Endereco.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
+      Tomador.Endereco.xMunicipio := ObterNomeMunicipioUF(StrToIntDef(Tomador.Endereco.CodigoMunicipio, 0), xUF);
+
+      if Tomador.Endereco.UF = '' then
+        Tomador.Endereco.UF := xUF;
+
+      AuxNodeDoc := AuxNode.Childrens.FindAnyNs('documento');
+
+      if AuxNodeDoc <> nil then
       begin
-        RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmTomador'), tcStr);
-
-        with Contato do
-        begin
-          Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEmail'), tcStr);
-          Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrTelefone'), tcStr);
-        end;
-
-        with IdentificacaoTomador do
-        begin
-          InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoEstadual'), tcStr);
-          InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoMunicipal'), tcStr);
-        end;
-
-        with Endereco do
-        begin
-          Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
-          Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
-          Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsComplemento'), tcStr);
-          Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
-          CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbge'), tcStr);
-          UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
-          xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
-          CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
-          xMunicipio := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
-
-          if UF = '' then
-            UF := xUF;
-        end;
-
-        AuxNodeDoc := AuxNode.Childrens.FindAnyNs('documento');
-
-        if AuxNodeDoc <> nil then
-        begin
-          with IdentificacaoTomador do
-          begin
-            CpfCnpj := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('nrDocumento'), tcStr);
-            DocEstrangeiro := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
-          end;
-        end;
+        Tomador.IdentificacaoTomador.CpfCnpj := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('nrDocumento'), tcStr);
+        Tomador.IdentificacaoTomador.DocEstrangeiro := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
       end;
     end;
 
     LerListaServico(ANode);
     LerRetencoes(ANode);
 
-    with NFSe.Servico.Valores do
-    begin
-      DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlDesconto'), tcDe2);
+    Servico.Valores.DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlDesconto'), tcDe2);
 
-      if ValorLiquidoNfse = 0 then
-        ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
-                            ValorIssRetido - DescontoIncondicionado -
-                            DescontoCondicionado;
+    if Servico.Valores.ValorLiquidoNfse = 0 then
+      Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
+      Servico.Valores.RetencoesFederais - Servico.Valores.OutrasRetencoes -
+      Servico.Valores.ValorIssRetido - Servico.Valores.DescontoIncondicionado -
+      Servico.Valores.DescontoCondicionado;
 
-      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                              DescontoIncondicionado;
-    end;
+    Servico.Valores.ValorTotalNotaFiscal := Servico.Valores.ValorServicos -
+      Servico.Valores.DescontoCondicionado - Servico.Valores.DescontoIncondicionado;
   end;
 end;
 

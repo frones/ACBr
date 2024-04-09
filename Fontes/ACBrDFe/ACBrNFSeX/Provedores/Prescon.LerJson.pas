@@ -110,7 +110,7 @@ var
 begin
   Result := True;
 
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   // A tag vem com erro de grafia, prevista situação de correção por parte do provedor
   AuxNode := ANode.Childrens.FindAnyNs('NfeCabecario');

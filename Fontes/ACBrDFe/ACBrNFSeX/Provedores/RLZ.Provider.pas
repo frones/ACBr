@@ -351,11 +351,8 @@ begin
 
     Autenticacao.RequerChaveAcesso := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      ConsultarNfse := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
   end;
 
   ConfigSchemas.Validar := False;

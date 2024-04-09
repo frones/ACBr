@@ -364,12 +364,9 @@ begin
 
   with ConfigMsgDados do
   begin
-    with XmlRps do
-    begin
-      xmlns := ConfigWebServices.Producao.XMLNameSpace;
+    XmlRps.xmlns := ConfigWebServices.Producao.XMLNameSpace;
 
-      SetXmlNameSpace(xmlns);
-    end;
+    SetXmlNameSpace(XmlRps.xmlns);
 
     DadosCabecalho := GetCabecalho(XmlRps.xmlns);
   end;

@@ -79,8 +79,7 @@ type
                                      const AMessageTag: string = ''); override;
 
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
-                                     Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = 'erros');
+                                     Response: TNFSeWebserviceResponse);
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
@@ -126,15 +125,12 @@ begin
     Autenticacao.RequerChaveAutorizacao := True;
     Autenticacao.RequerChaveAcesso := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      ConsultarNfse := True;
-      ConsultarDFe := True;
-      CancelarNfse := True;
-      SubstituirNFSe := True;
-      GerarToken := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.ConsultarNfse := True;
+    ServicosDisponibilizados.ConsultarDFe := True;
+    ServicosDisponibilizados.CancelarNfse := True;
+    ServicosDisponibilizados.SubstituirNFSe := True;
+    ServicosDisponibilizados.GerarToken := True;
   end;
 
   with ConfigAssinar do
@@ -145,23 +141,14 @@ begin
 
   with ConfigMsgDados do
   begin
-    with XmlRps do
-    begin
-      InfElemento := 'xmlProcessamentoNfpse';
-      DocElemento := 'xmlProcessamentoNfpse';
-    end;
+    XmlRps.InfElemento := 'xmlProcessamentoNfpse';
+    XmlRps.DocElemento := 'xmlProcessamentoNfpse';
 
-    with CancelarNFSe do
-    begin
-      InfElemento := 'xmlCancelamentoNfpse';
-      DocElemento := 'xmlCancelamentoNfpse';
-    end;
+    CancelarNFSe.InfElemento := 'xmlCancelamentoNfpse';
+    CancelarNFSe.DocElemento := 'xmlCancelamentoNfpse';
 
-    with SubstituirNFSe do
-    begin
-      InfElemento := 'xmlProcessamentoNfpseSubstituta';
-      DocElemento := 'xmlProcessamentoNfpseSubstituta';
-    end;
+    SubstituirNFSe.InfElemento := 'xmlProcessamentoNfpseSubstituta';
+    SubstituirNFSe.DocElemento := 'xmlProcessamentoNfpseSubstituta';
   end;
 
   ConfigSchemas.Validar := False;
@@ -222,8 +209,7 @@ begin
 end;
 
 procedure TACBrNFSeProviderSoftPlan.ProcessarMensagemDeErros(
-  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse;
-  const AListTag: string);
+  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse);
 var
   Codigo, Descricao: string;
   AErro: TNFSeEventoCollectionItem;

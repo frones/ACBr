@@ -130,16 +130,13 @@ begin
     FormatoArqEnvioSoap := tfaJson;
     FormatoArqRetornoSoap := tfaJson;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarUnitario := True;
-      ConsultarNfseChave := True;
-      ConsultarRps := True;
-      EnviarEvento := True;
-      ConsultarEvento := True;
-      ConsultarDFe := True;
-      ConsultarParam := True;
-    end;
+    ServicosDisponibilizados.EnviarUnitario := True;
+    ServicosDisponibilizados.ConsultarNfseChave := True;
+    ServicosDisponibilizados.ConsultarRps := True;
+    ServicosDisponibilizados.EnviarEvento := True;
+    ServicosDisponibilizados.ConsultarEvento := True;
+    ServicosDisponibilizados.ConsultarDFe := True;
+    ServicosDisponibilizados.ConsultarParam := True;
   end;
 
   with ConfigWebServices do
@@ -157,17 +154,11 @@ begin
 
     DadosCabecalho := GetCabecalho('');
 
-    with XmlRps do
-    begin
-      InfElemento := 'infDPS';
-      DocElemento := 'DPS';
-    end;
+    XmlRps.InfElemento := 'infDPS';
+    XmlRps.DocElemento := 'DPS';
 
-    with EnviarEvento do
-    begin
-      InfElemento := 'infPedReg';
-      DocElemento := 'pedRegEvento';
-    end;
+    EnviarEvento.InfElemento := 'infPedReg';
+    EnviarEvento.DocElemento := 'pedRegEvento';
   end;
 
   with ConfigAssinar do
@@ -1338,6 +1329,11 @@ begin
           Response.ArquivoEnvio := '{"pedidoRegistroEventoXmlGZipB64":"' + Response.ArquivoEnvio + '"}';
           FpPath := '/nfse/' + FpChave + '/eventos';
         end;
+    else
+      begin
+        Response.ArquivoEnvio := '';
+        FpPath := '';
+      end;
     end;
 
     FpMethod := 'POST';

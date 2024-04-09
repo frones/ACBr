@@ -33,7 +33,7 @@ object frlXDANFSeRL: TfrlXDANFSeRL
       'FortesReport Community Edition v4.0 \251 Copyright '#169' 1999-2016 F' +
       'ortes Inform'#225'tica'
     DisplayName = 'Documento PDF'
-    Left = 104
+    Left = 112
     Top = 24
   end
 end

@@ -83,8 +83,7 @@ type
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
-                                     Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = 'erros');
+                                       Response: TNFSeWebserviceResponse);
   end;
 
 implementation
@@ -117,11 +116,8 @@ begin
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerChaveAcesso := True;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteAssincrono := True;
-      GerarToken := True;
-    end;
+    ServicosDisponibilizados.EnviarLoteAssincrono := True;
+    ServicosDisponibilizados.GerarToken := True;
   end;
 
   SetXmlNameSpace('');
@@ -166,8 +162,7 @@ begin
 end;
 
 procedure TACBrNFSeProvidereISS.ProcessarMensagemDeErros(
-  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse;
-  const AListTag: string);
+  LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse);
 var
   JSonErro: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;

@@ -91,11 +91,8 @@ begin
     ModoEnvio := meLoteAssincrono;
     Identificador := '';
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteSincrono := False;
-      EnviarUnitario := False;
-    end;
+    ServicosDisponibilizados.EnviarLoteSincrono := False;
+    ServicosDisponibilizados.EnviarUnitario := False;
   end;
 
   ConfigWebServices.AtribVerLote := '';

@@ -85,14 +85,11 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
 
-    with ServicosDisponibilizados do
-    begin
-      EnviarLoteSincrono := False;
-      ConsultarRps := False;
-      ConsultarFaixaNfse := False;
-      ConsultarServicoPrestado := False;
-      ConsultarServicoTomado := False;
-    end;
+    ServicosDisponibilizados.EnviarLoteSincrono := False;
+    ServicosDisponibilizados.ConsultarRps := False;
+    ServicosDisponibilizados.ConsultarFaixaNfse := False;
+    ServicosDisponibilizados.ConsultarServicoPrestado := False;
+    ServicosDisponibilizados.ConsultarServicoTomado := False;
   end;
 
   with ConfigAssinar do

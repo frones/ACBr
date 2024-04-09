@@ -577,6 +577,11 @@ begin
         FPArqEnv := 'con-link';
         FPArqResp := 'link';
       end;
+  else
+    begin
+      FPArqEnv := 'request';
+      FPArqResp := 'response';
+    end;
   end;
 
   FPURL := AURL;

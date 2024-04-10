@@ -308,10 +308,10 @@ begin
   Gerador.wGrupo('infoRegimeTrab');
   
   if objAltContratual.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
-    GerarInfoCeletista(objAltContratual.infoRegimeTrab.InfoCeletista)
+	GerarInfoCeletista(objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista) 
   else
     if(objAltContratual.FVinculo.tpRegPrev = rpRPPS)then
-      GerarInfoEstatutario(objAltContratual.infoRegimeTrab.InfoEstatutario);
+      GerarInfoEstatutario(objAltContratual.Vinculo.infoRegimeTrab.InfoEstatutario);
   
   Gerador.wGrupo('/infoRegimeTrab');
  

@@ -1,20 +1,18 @@
 object frPixCDMatera: TfrPixCDMatera
   Left = 431
   Top = 143
-  Width = 1058
-  Height = 815
   Caption = 'ACBrPIXCD Matera'
+  ClientHeight = 776
+  ClientWidth = 1042
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   Visible = True
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object lbUrlPIX: TLabel
     Left = 0
@@ -35,13 +33,14 @@ object frPixCDMatera: TfrPixCDMatera
     ParentFont = False
     Transparent = False
     OnClick = lbUrlPIXClick
+    ExplicitWidth = 234
   end
   object pgPrincipal: TPageControl
     Left = 0
     Top = 0
     Width = 1042
     Height = 756
-    ActivePage = tsContaEChaves
+    ActivePage = tsFluxoPagto
     Align = alClient
     Images = ImageList1
     TabHeight = 30
@@ -527,6 +526,8 @@ object frPixCDMatera: TfrPixCDMatera
               OnClick = lbSiteEfetuarPagtoClick
               OnMouseEnter = lbSiteEfetuarPagtoMouseEnter
               OnMouseLeave = lbSiteEfetuarPagtoMouseLeave
+              ExplicitWidth = 437
+              ExplicitHeight = 24
             end
           end
         end
@@ -638,7 +639,6 @@ object frPixCDMatera: TfrPixCDMatera
               Width = 151
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 2
               Text = 'Normal'
@@ -660,7 +660,6 @@ object frPixCDMatera: TfrPixCDMatera
               Width = 151
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 4
               Text = 'Reais'
@@ -931,9 +930,9 @@ object frPixCDMatera: TfrPixCDMatera
                 Top = 118
                 Width = 184
                 Height = 23
-                Date = 45114.706492662040000000
-                Time = 45114.706492662040000000
-                MaxDate = 2958465.000000000000000000
+                Date = 45114.000000000000000000
+                Time = 45114.000000000000000000
+                MaxDate = 2958465.999988426000000000
                 MinDate = -53780.000000000000000000
                 TabOrder = 0
               end
@@ -1017,9 +1016,9 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 123
                     Width = 83
                     Height = 23
-                    Date = 45114.706492662040000000
-                    Time = 45114.706492662040000000
-                    MaxDate = 2958465.000000000000000000
+                    Date = 45114.000000000000000000
+                    Time = 45114.000000000000000000
+                    MaxDate = 2958465.999988426000000000
                     MinDate = -53780.000000000000000000
                     TabOrder = 2
                   end
@@ -1327,7 +1326,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 25
                     Top = 30
                     Width = 439
-                    Height = 23
+                    Height = 21
                     TabOrder = 0
                   end
                   object btConsultarCob: TBitBtn
@@ -1395,9 +1394,9 @@ object frPixCDMatera: TfrPixCDMatera
                       Top = 32
                       Width = 130
                       Height = 23
-                      Date = 45209.651190625000000000
-                      Time = 45209.651190625000000000
-                      MaxDate = 2958465.000000000000000000
+                      Date = 45209.000000000000000000
+                      Time = 45209.000000000000000000
+                      MaxDate = 2958465.999988426000000000
                       MinDate = -53780.000000000000000000
                       TabOrder = 0
                     end
@@ -1406,9 +1405,9 @@ object frPixCDMatera: TfrPixCDMatera
                       Top = 32
                       Width = 130
                       Height = 23
-                      Date = 45209.651190625000000000
-                      Time = 45209.651190625000000000
-                      MaxDate = 2958465.000000000000000000
+                      Date = 45209.000000000000000000
+                      Time = 45209.000000000000000000
+                      MaxDate = 2958465.999988426000000000
                       MinDate = -53780.000000000000000000
                       TabOrder = 1
                     end
@@ -1501,7 +1500,7 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 0
                   Top = 0
                   Width = 658
-                  Height = 431
+                  Height = 432
                   Align = alClient
                   ColCount = 6
                   FixedCols = 0
@@ -1568,7 +1567,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 25
                     Top = 30
                     Width = 455
-                    Height = 23
+                    Height = 21
                     TabOrder = 0
                   end
                   object edConsultaStart: TDateTimePicker
@@ -1576,9 +1575,9 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 79
                     Width = 130
                     Height = 23
-                    Date = 45209.651190625000000000
-                    Time = 45209.651190625000000000
-                    MaxDate = 2958465.000000000000000000
+                    Date = 45209.000000000000000000
+                    Time = 45209.000000000000000000
+                    MaxDate = 2958465.999988426000000000
                     MinDate = -53780.000000000000000000
                     TabOrder = 1
                   end
@@ -1587,9 +1586,9 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 79
                     Width = 130
                     Height = 23
-                    Date = 45209.651190625000000000
-                    Time = 45209.651190625000000000
-                    MaxDate = 2958465.000000000000000000
+                    Date = 45209.000000000000000000
+                    Time = 45209.000000000000000000
+                    MaxDate = 2958465.999988426000000000
                     MinDate = -53780.000000000000000000
                     TabOrder = 2
                   end
@@ -1670,7 +1669,7 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 25
                     Top = 30
                     Width = 455
-                    Height = 23
+                    Height = 21
                     TabOrder = 0
                   end
                   object btConsultarSaldoMediator: TBitBtn
@@ -1697,18 +1696,19 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 0
                   Top = 0
                   Width = 658
-                  Height = 363
+                  Height = 364
                   Align = alClient
                   ColCount = 7
                   FixedCols = 0
                   TabOrder = 0
                   ColWidths = (
                     64
-                    245
-                    72
+                    131
+                    269
+                    95
                     201
-                    201
-                    35)
+                    89
+                    64)
                 end
               end
             end
@@ -1800,21 +1800,21 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 15
                 Top = 40
                 Width = 308
-                Height = 23
+                Height = 21
                 TabOrder = 0
               end
               object edDevolucaoValor: TEdit
                 Left = 176
                 Top = 89
                 Width = 147
-                Height = 23
+                Height = 21
                 TabOrder = 1
               end
               object edDevolucaoExternalID: TEdit
                 Left = 337
                 Top = 39
                 Width = 281
-                Height = 23
+                Height = 21
                 TabOrder = 2
               end
               object pnDevolucaoBotoes: TPanel
@@ -1857,7 +1857,7 @@ object frPixCDMatera: TfrPixCDMatera
                 Left = 337
                 Top = 89
                 Width = 147
-                Height = 23
+                Height = 21
                 TabOrder = 4
               end
               object cbTipoMediatorFeeDevolucao: TComboBox
@@ -1866,7 +1866,6 @@ object frPixCDMatera: TfrPixCDMatera
                 Width = 147
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
                 ItemIndex = 0
                 TabOrder = 5
                 Text = 'Reais'
@@ -1880,7 +1879,6 @@ object frPixCDMatera: TfrPixCDMatera
                 Top = 89
                 Width = 147
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 6
                 OnDropDown = cbDevolucaoReasonCodeDropDown
               end
@@ -1924,10 +1922,10 @@ object frPixCDMatera: TfrPixCDMatera
               Caption = 'Consultar alias do destinat'#225'rio'
               TabOrder = 0
               object pnConsultaAliasRetirada: TPanel
-                Left = 0
-                Top = 0
+                Left = 2
+                Top = 15
                 Width = 630
-                Height = 113
+                Height = 116
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 0
@@ -1953,14 +1951,14 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 15
                   Top = 25
                   Width = 290
-                  Height = 23
+                  Height = 21
                   TabOrder = 0
                 end
                 object edRetiradaConsultaaliasAliasDestinatario: TEdit
                   Left = 323
                   Top = 25
                   Width = 290
-                  Height = 23
+                  Height = 21
                   TabOrder = 1
                 end
                 object btConsultarAliasRetirada: TBitBtn
@@ -2009,10 +2007,10 @@ object frPixCDMatera: TfrPixCDMatera
                 Caption = 'PIX'
                 TabOrder = 0
                 object pnPIXRetirada: TPanel
-                  Left = 0
-                  Top = 0
+                  Left = 2
+                  Top = 15
                   Width = 626
-                  Height = 125
+                  Height = 128
                   Align = alClient
                   BevelOuter = bvNone
                   TabOrder = 0
@@ -2074,42 +2072,42 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 15
                     Top = 25
                     Width = 290
-                    Height = 23
+                    Height = 21
                     TabOrder = 0
                   end
                   object edRetiradaendToEndId: TEdit
                     Left = 323
                     Top = 25
                     Width = 282
-                    Height = 23
+                    Height = 21
                     TabOrder = 1
                   end
                   object edRetiradaPSPId: TEdit
                     Left = 15
                     Top = 80
                     Width = 125
-                    Height = 23
+                    Height = 21
                     TabOrder = 2
                   end
                   object edRetiradaAccountdestinationBranch: TEdit
                     Left = 153
                     Top = 80
                     Width = 152
-                    Height = 23
+                    Height = 21
                     TabOrder = 3
                   end
                   object edRetiradaAccountDestinationAccount: TEdit
                     Left = 464
                     Top = 80
                     Width = 141
-                    Height = 23
+                    Height = 21
                     TabOrder = 4
                   end
                   object edRetiradaTaxID: TEdit
                     Left = 323
                     Top = 80
                     Width = 128
-                    Height = 23
+                    Height = 21
                     TabOrder = 5
                   end
                 end
@@ -2170,7 +2168,7 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 17
                   Top = 25
                   Width = 266
-                  Height = 23
+                  Height = 21
                   TabOrder = 0
                 end
                 object cbRetiradaTipoRetirada: TComboBox
@@ -2179,7 +2177,6 @@ object frPixCDMatera: TfrPixCDMatera
                   Width = 282
                   Height = 21
                   Style = csDropDownList
-                  ItemHeight = 13
                   ItemIndex = 0
                   TabOrder = 1
                   Text = 'PIX'
@@ -2192,14 +2189,14 @@ object frPixCDMatera: TfrPixCDMatera
                   Left = 155
                   Top = 79
                   Width = 128
-                  Height = 23
+                  Height = 21
                   TabOrder = 2
                 end
                 object edRetiradaValor: TEdit
                   Left = 17
                   Top = 79
                   Width = 127
-                  Height = 23
+                  Height = 21
                   TabOrder = 3
                 end
               end
@@ -2323,35 +2320,35 @@ object frPixCDMatera: TfrPixCDMatera
                     Left = 15
                     Top = 25
                     Width = 290
-                    Height = 23
+                    Height = 21
                     TabOrder = 0
                   end
                   object edRetiradaTEDName: TEdit
                     Left = 323
                     Top = 25
                     Width = 282
-                    Height = 23
+                    Height = 21
                     TabOrder = 1
                   end
                   object edRetiradaTEDTaxID: TEdit
                     Left = 301
                     Top = 80
                     Width = 70
-                    Height = 23
+                    Height = 21
                     TabOrder = 2
                   end
                   object edRetiradaTEDBranchDestination: TEdit
                     Left = 383
                     Top = 80
                     Width = 100
-                    Height = 23
+                    Height = 21
                     TabOrder = 3
                   end
                   object edRetiradaTEDAccountDestination: TEdit
                     Left = 497
                     Top = 80
                     Width = 108
-                    Height = 23
+                    Height = 21
                     TabOrder = 4
                   end
                   object cbRetiradaPersonType: TComboBox
@@ -2359,7 +2356,6 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 80
                     Width = 125
                     Height = 21
-                    ItemHeight = 13
                     ItemIndex = 0
                     TabOrder = 5
                     Text = 'PERSON'
@@ -2372,7 +2368,6 @@ object frPixCDMatera: TfrPixCDMatera
                     Top = 80
                     Width = 135
                     Height = 21
-                    ItemHeight = 13
                     ItemIndex = 0
                     TabOrder = 6
                     Text = 'CC'
@@ -2403,6 +2398,7 @@ object frPixCDMatera: TfrPixCDMatera
           Caption = 'Log das Requisi'#231#245'es:'
           Color = clBtnFace
           ParentColor = False
+          ExplicitWidth = 102
         end
         object mmLogOperacoes: TMemo
           Left = 1
@@ -2452,7 +2448,7 @@ object frPixCDMatera: TfrPixCDMatera
         Top = 0
         Width = 674
         Height = 716
-        ActivePage = tsContaCriar
+        ActivePage = tsContaInativar
         Align = alClient
         Images = ImageList1
         TabHeight = 30
@@ -2901,9 +2897,9 @@ object frPixCDMatera: TfrPixCDMatera
                   Top = 29
                   Width = 83
                   Height = 23
-                  Date = 45114.706492662040000000
-                  Time = 45114.706492662040000000
-                  MaxDate = 2958465.000000000000000000
+                  Date = 45114.000000000000000000
+                  Time = 45114.000000000000000000
+                  MaxDate = 2958465.999988426000000000
                   MinDate = -53780.000000000000000000
                   TabOrder = 0
                 end
@@ -2912,9 +2908,9 @@ object frPixCDMatera: TfrPixCDMatera
                   Top = 29
                   Width = 111
                   Height = 23
-                  Date = 45114.706492662040000000
-                  Time = 45114.706492662040000000
-                  MaxDate = 2958465.000000000000000000
+                  Date = 45114.000000000000000000
+                  Time = 45114.000000000000000000
+                  MaxDate = 2958465.999988426000000000
                   MinDate = -53780.000000000000000000
                   TabOrder = 3
                 end
@@ -3281,7 +3277,7 @@ object frPixCDMatera: TfrPixCDMatera
               Left = 15
               Top = 40
               Width = 489
-              Height = 23
+              Height = 21
               TabOrder = 1
             end
           end
@@ -3494,6 +3490,7 @@ object frPixCDMatera: TfrPixCDMatera
           Caption = 'Log das Requisi'#231#245'es:'
           Color = clBtnFace
           ParentColor = False
+          ExplicitWidth = 102
         end
         object mmLogGerencial: TMemo
           Left = 1
@@ -3754,7 +3751,6 @@ object frPixCDMatera: TfrPixCDMatera
                     Width = 232
                     Height = 21
                     Style = csDropDownList
-                    ItemHeight = 13
                     ItemIndex = 2
                     TabOrder = 1
                     Text = 'Normal'
@@ -3816,7 +3812,6 @@ object frPixCDMatera: TfrPixCDMatera
                     Width = 164
                     Height = 21
                     Style = csDropDownList
-                    ItemHeight = 13
                     TabOrder = 0
                     OnChange = cbAmbienteChange
                   end
@@ -4160,7 +4155,6 @@ object frPixCDMatera: TfrPixCDMatera
                 Top = 49
                 Width = 601
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 0
                 OnSelect = cbAccountIdSelect
               end
@@ -4169,7 +4163,6 @@ object frPixCDMatera: TfrPixCDMatera
                 Top = 96
                 Width = 601
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 1
               end
               object edMediatorFee: TEdit
@@ -4185,7 +4178,6 @@ object frPixCDMatera: TfrPixCDMatera
                 Width = 145
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
                 ItemIndex = 0
                 TabOrder = 3
                 Text = 'Reais'
@@ -4207,7 +4199,6 @@ object frPixCDMatera: TfrPixCDMatera
                 Width = 145
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
                 ItemIndex = 0
                 TabOrder = 5
                 Text = 'Reais'
@@ -4266,135 +4257,7 @@ object frPixCDMatera: TfrPixCDMatera
     Top = 24
     Bitmap = {
       494C010122002700040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
-      000000000000360000002800000040000000A0000000010020000000000000A0
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000003600000028000000400000009000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000F2C4F200B2B2B200737373003D3D3D003D3D3D0073737300B2B2B200F5B2
       F500000000000000000000000000000000000000000000000000000000000000
@@ -5548,12 +5411,8 @@ object frPixCDMatera: TfrPixCDMatera
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000E2E2E2000000000000000000000000000000
       000000000000000000000000000000000000424D3E000000000000003E000000
-      2800000040000000A00000000100010000000000000500000000000000000000
-      000000000000000000000000FFFFFF0000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000F00FF00F00000000E187E00700000000
+      2800000040000000900000000100010000000000800400000000000000000000
+      000000000000000000000000FFFFFF00F00FF00F00000000E187E00700000000
       CFF3C663000000009FF98E71000000003FFC1C38000000003FFC3C3C00000000
       3FFC399C00000000700E3E3C00000000700E3C7C000000003FFC389C00000000
       3FFC3C1C000000003FFC1C38000000009FF98E7100000000CFF3C66300000000

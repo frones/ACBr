@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/04/2024
+-- SmarAPD.Provider --
+[*] Ajustes para a emissão correta na versão 2.04
+  Por: Claudney dbmgroup
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs da cidade de Ibitinga/SP, o provedor continua o mesmo.
   Por: Marcelo DeSoft7

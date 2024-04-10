@@ -368,4 +368,7 @@ begin
   Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
+initialization
+  Randomize;
+
 end.

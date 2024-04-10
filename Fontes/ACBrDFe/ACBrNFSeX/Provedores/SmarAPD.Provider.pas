@@ -982,11 +982,14 @@ begin
 
   with ConfigAssinar do
   begin
-    Rps := True;
     LoteRps := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
+
+    IncluirURI := False;
   end;
 
   with ConfigWebServices do

@@ -41,11 +41,21 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+
+10/04/2024
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade de Ibitinga/SP, o provedor continua o mesmo.
+  Por: Marcelo DeSoft7
+[*] Alterado as URLs da cidade de Colombo/PR, o provedor continua o mesmo.
+  Por: Valdosetes/Marcos Villatore
+[*] Alterado as URLs da cidade de Cachoeira do Sul/RS, o provedor continua o mesmo.
+  Por: C4Dev
+
 09/04/2024
 -- ACBrNFSeXServicos --
 [*] Atualizado cidade de Igrejinha/RS, o provedor continua o mesmo.
   Por: Daniel Morais Infocotidiano / Validado Eneias Bickel
-09/04/2024
 -- Diversos --
 [*] Melhorias no código usando o FixInsight (ainda não ficou 100%).
   Por: Italo Giurizzato Junior

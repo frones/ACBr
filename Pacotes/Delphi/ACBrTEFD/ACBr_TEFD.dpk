@@ -76,6 +76,6 @@ contains
   ACBrTEFDCliSiTefModular in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTefModular.pas',
   ACBrTEFDDirecao in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDirecao.pas',
   ACBrTEFDDialScopeGetcard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDialScopeGetcard.pas',
-	ACBrTEFDElgin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDElgin';
+  ACBrTEFDElgin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDElgin.pas';
 
 end.

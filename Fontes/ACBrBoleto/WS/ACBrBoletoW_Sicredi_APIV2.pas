@@ -433,19 +433,19 @@ begin
     try
       if ((ATitulo.DataDesconto > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
       begin
-        LJsonObject.AddPair('dataDesconto1', FormatDateBr(ATitulo.DataDesconto, 'YYYY-MM-DD') );
+        LJsonObject.AddPair('data1', FormatDateBr(ATitulo.DataDesconto, 'YYYY-MM-DD') );
         LDescontoErro := False;
       end;
 
       if ((ATitulo.DataDesconto2 > EncodeDate(2000,01,01))and(ATitulo.ValorDesconto2 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
       begin
-        LJsonObject.AddPair('dataDesconto2', FormatDateBr(ATitulo.DataDesconto2, 'YYYY-MM-DD') );
+        LJsonObject.AddPair('data2', FormatDateBr(ATitulo.DataDesconto2, 'YYYY-MM-DD') );
         LDescontoErro := False;
       end;
 
       if ((ATitulo.DataDesconto3 > EncodeDate(2000,01,01)) and(ATitulo.ValorDesconto3 > 0) and (ATitulo.ValorDescontoAntDia = 0)) then
       begin
-        LJsonObject.AddPair('dataDesconto3', FormatDateBr(ATitulo.DataDesconto3, 'YYYY-MM-DD') );
+        LJsonObject.AddPair('data3', FormatDateBr(ATitulo.DataDesconto3, 'YYYY-MM-DD') );
         LDescontoErro := False;
       end;
 

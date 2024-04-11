@@ -105,11 +105,11 @@ begin
 end;
 
 function TNFeXmlReader.LerXml: Boolean;
-Var
+var
   NFeNode, infNFeNode: TACBrXmlNode;
   att: TACBrXmlAttribute;
 begin
-  if not Assigned(FNFe) or (FNFe = nil) then
+  if not Assigned(FNFe) then
     raise Exception.Create('Destino não informado, informe a classe [TNFe] de destino.');
 
   if EstaVazio(Arquivo) then
@@ -156,11 +156,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerProtNFe(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('infProt');
   if Assigned(ANode) then
@@ -179,11 +179,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerInfNFe(const ANode: TACBrXmlNode);
-Var
+var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   LerIde(ANode.Childrens.Find('ide'));
   LerEmit(ANode.Childrens.Find('emit'));
@@ -191,7 +191,6 @@ begin
   LerDest(ANode.Childrens.Find('dest'));
   LerRetirada(ANode.Childrens.Find('retirada'));
   LerEntrega(ANode.Childrens.Find('entrega'));
-  ANodes := ANode.Childrens.FindAll('NFref');
 
   ANodes := ANode.Childrens.FindAll('autXML');
   for i := 0 to Length(ANodes) - 1 do
@@ -218,12 +217,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerIde(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.ide.cUF := ObterConteudo(ANode.Childrens.Find('cUF'), tcInt);
   NFe.ide.cNF := ObterConteudo(ANode.Childrens.Find('cNF'), tcInt);
@@ -278,12 +277,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerIdeNFref(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   refNode: TACBrXmlNode;
   i: Integer;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Ide.NFref.New;
   i := NFe.Ide.NFref.Count - 1;
@@ -325,10 +324,10 @@ begin
 end;
 
 procedure TNFeXmlReader.LerEmit(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Emit.CNPJCPF := ObterCNPJCPF(ANode);
   NFe.Emit.xNome   := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
@@ -344,7 +343,7 @@ end;
 
 procedure TNFeXmlReader.LerEmitEnderEmit(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Emit.enderEmit.xLgr    := ObterConteudo(ANode.Childrens.Find('xLgr'), tcStr);
   NFe.Emit.enderEmit.nro     := ObterConteudo(ANode.Childrens.Find('nro'), tcStr);
@@ -369,7 +368,7 @@ end;
 
 procedure TNFeXmlReader.LerAvulsa(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Avulsa.CNPJ    := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   NFe.Avulsa.xOrgao  := ObterConteudo(ANode.Childrens.Find('xOrgao'), tcStr);
@@ -385,10 +384,10 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDest(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then
+  if not Assigned(ANode) then
   begin
     NFe.Dest.indIEDest := inNaoContribuinte;
     Exit;
@@ -417,7 +416,7 @@ end;
 
 procedure TNFeXmlReader.LerDestEnderDest(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Dest.enderDest.xLgr    := ObterConteudo(ANode.Childrens.Find('xLgr'), tcStr);
   NFe.Dest.enderDest.nro     := ObterConteudo(ANode.Childrens.Find('nro'), tcStr);
@@ -442,7 +441,7 @@ end;
 
 procedure TNFeXmlReader.LerRetirada(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Retirada.CNPJCPF := ObterCNPJCPF(ANode);
   NFe.Retirada.xNome       := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
@@ -463,7 +462,7 @@ end;
 
 procedure TNFeXmlReader.LerEntrega(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Entrega.CNPJCPF := ObterCNPJCPF(ANode);
   NFe.Entrega.xNome       := ObterConteudo(ANode.Childrens.Find('xNome'), tcStr);
@@ -483,11 +482,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDet(const ANode: TACBrXmlNode);
-Var
+var
   Item: TDetCollectionItem;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NFe.Det.New;
      Item.prod.nItem := NFe.Det.Count;
@@ -512,13 +511,13 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.Prod.cProd := ObterConteudo(ANode.Childrens.Find('cProd'), tcStr);
   Item.Prod.cEAN  := ObterConteudo(ANode.Childrens.Find('cEAN'), tcStr);
@@ -612,15 +611,15 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdDI(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   DIItem: TDICollectionItem;
   AdiItem: TAdiCollectionItem;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DIItem := Item.Prod.DI.New;
   DIItem.nDI        := ObterConteudo(ANode.Childrens.Find('nDI'), tcStr);
@@ -652,12 +651,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdDetExport(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   AuxNode: TACBrXmlNode;
   DetExportItem: TdetExportCollectionItem;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   DetExportItem := Item.Prod.detExport.New;
   DetExportItem.nDraw := ObterConteudo(ANode.Childrens.Find('nDraw'), tcStr);
@@ -672,11 +671,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdRastro(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   RastroItem: TRastroCollectionItem;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   RastroItem := Item.Prod.rastro.New;
   RastroItem.nLote  := ObterConteudo(ANode.Childrens.Find('nLote'), tcStr);
@@ -687,11 +686,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdVeicProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.Prod.veicProd.tpOP         := StrToTpOP(ok, ObterConteudo(ANode.Childrens.Find('tpOp'), tcStr));
   Item.Prod.veicProd.chassi       := ObterConteudo(ANode.Childrens.Find('chassi'), tcStr);
@@ -721,11 +720,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdMed(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   MedItem: TMedCollectionItem;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   MedItem := Item.Prod.med.New;
   MedItem.cProdANVISA := ObterConteudo(ANode.Childrens.Find('cProdANVISA'), tcStr);
@@ -738,12 +737,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdArma(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   ArmaItem: TArmaCollectionItem;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   ArmaItem := Item.Prod.arma.New;
   ArmaItem.tpArma := StrToTpArma(ok, ObterConteudo(ANode.Childrens.Find('tpArma'), tcStr));
@@ -753,14 +752,14 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetProdComb(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   AuxNode: TACBrXmlNode;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   Ok: Boolean;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.Prod.comb.cProdANP := ObterConteudo(ANode.Childrens.Find('cProdANP'), tcInt);
   Item.Prod.comb.pMixGN  := ObterConteudo(ANode.Childrens.Find('qMixGN'), tcDe4);
@@ -829,12 +828,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerDetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   AuxNode, AxNode: TACBrXmlNode;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item.Imposto.vTotTrib := ObterConteudo(ANode.Childrens.Find('vTotTrib'), tcDe2);
 
@@ -1061,8 +1060,8 @@ var
   AuxNode: TACBrXmlNode;
   Atr: TACBrXmlAttribute;
 begin
-  if not Assigned(Item) or (Item = nil) then Exit;
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(Item) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.Find('obsCont');
 
@@ -1090,11 +1089,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerTotal(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.Find('ICMSTot');
   if (AuxNode <> nil) then
@@ -1167,13 +1166,13 @@ begin
 end;
 
 procedure TNFeXmlReader.LerTransp(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.Transp.modFrete := StrToModFrete(ok, ObterConteudo(ANode.Childrens.Find('modFrete'), tcStr));
   NFe.Transp.vagao   := ObterConteudo(ANode.Childrens.Find('vagao'), tcStr);
@@ -1228,12 +1227,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerTranspVol(const ANode: TACBrXmlNode);
-Var
+var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   Item: TVolCollectionItem;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   Item := NFe.Transp.Vol.New;
   Item.qVol  := ObterConteudo(ANode.Childrens.Find('qVol'), tcInt);
@@ -1253,17 +1252,18 @@ begin
 end;
 
 procedure TNFeXmlReader.LerCobr(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   FatNode, AuxNode: TACBrXmlNode;
   tagPag: String;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('cobr');
-  if Assigned(ANode) then
+
+  if Assigned(AuxNode) then
   begin
     FatNode := AuxNode.Childrens.FindAnyNs('fat');
     if (FatNode <> nil) then
@@ -1328,12 +1328,12 @@ begin
 end;
 
 procedure TNFeXmlReader.LerInfAdic(const ANode: TACBrXmlNode);
-Var
+var
   ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.InfAdic.infAdFisco := ObterConteudo(ANode.Childrens.Find('infAdFisco'), tcStr);
   NFe.InfAdic.infCpl     := ObterConteudo(ANode.Childrens.Find('infCpl'), tcStr);
@@ -1341,11 +1341,11 @@ begin
   NFe.InfAdic.obsCont.Clear;
   ANodes := ANode.Childrens.FindAll('obsCont');
   for i := 0 to Length(ANodes) - 1 do
-    begin
-      NFe.InfAdic.obsCont.New;
-      NFe.InfAdic.obsCont[i].xCampo := ANodes[i].Attributes.Items['xCampo'].Content;
-      NFe.InfAdic.obsCont[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
-    end;
+  begin
+    NFe.InfAdic.obsCont.New;
+    NFe.InfAdic.obsCont[i].xCampo := ANodes[i].Attributes.Items['xCampo'].Content;
+    NFe.InfAdic.obsCont[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
+  end;
 
   NFe.InfAdic.obsFisco.Clear;
   ANodes := ANode.Childrens.FindAll('obsFisco');
@@ -1369,7 +1369,7 @@ end;
 
 procedure TNFeXmlReader.LerInfIntermed(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.infIntermed.CNPJ         := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   NFe.infIntermed.idCadIntTran := ObterConteudo(ANode.Childrens.Find('idCadIntTran'), tcStr);
@@ -1377,7 +1377,7 @@ end;
 
 procedure TNFeXmlReader.LerExporta(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.exporta.UFembarq   := ObterConteudo(ANode.Childrens.Find('UFEmbarq'), tcStr);
   NFe.exporta.xLocEmbarq := ObterConteudo(ANode.Childrens.Find('xLocEmbarq'), tcStr);
@@ -1390,7 +1390,7 @@ end;
 
 procedure TNFeXmlReader.LerCompra(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.compra.xNEmp := ObterConteudo(ANode.Childrens.Find('xNEmp'), tcStr);
   NFe.compra.xPed  := ObterConteudo(ANode.Childrens.Find('xPed'), tcStr);
@@ -1398,11 +1398,11 @@ begin
 end;
 
 procedure TNFeXmlReader.LerCana(const ANode: TACBrXmlNode);
-Var
+var
   i: Integer;
   ANodes: TACBrXmlNodeArray;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.cana.safra   := ObterConteudo(ANode.Childrens.Find('safra'), tcStr);
   NFe.cana.ref     := ObterConteudo(ANode.Childrens.Find('ref'), tcStr);
@@ -1434,7 +1434,7 @@ end;
 
 procedure TNFeXmlReader.LerInfRespTec(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.infRespTec.CNPJ     := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   NFe.infRespTec.xContato := ObterConteudo(ANode.Childrens.Find('xContato'), tcStr);
@@ -1446,7 +1446,7 @@ end;
 
 procedure TNFeXmlReader.LerInfNFeSupl(const ANode: TACBrXmlNode);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   NFe.infNFeSupl.qrCode := ObterConteudo(ANode.Childrens.Find('qrCode'), tcStr);
   NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, '<![CDATA[', '', []);

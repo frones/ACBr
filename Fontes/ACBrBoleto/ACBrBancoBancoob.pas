@@ -86,7 +86,7 @@ begin
    fpTamanhoMaximoNossoNum := 7;
    fpTamanhoCarteira   := 1;
    fpTamanhoConta      := 12;
-   fpCodigosMoraAceitos:= '012';
+   fpCodigosMoraAceitos:= '0123'; {0 isento CNAB, 3 IsentoAPI}
    fpLayoutVersaoArquivo := 81;
    fpLayoutVersaoLote    := 40;
    fpValorTotalDocs := 0;

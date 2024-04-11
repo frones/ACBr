@@ -36,21 +36,17 @@ unit ACBrBoletoW_Bancoob;
 interface
 
 uses
-  Classes,
-  SysUtils,
-  pcnConversao,
-  synacode,
-  strutils,
+
+  ACBrJSON,
+  ACBrBoleto,
+  ACBrBoletoWS,
+  ACBrBoletoWS.Rest,
   DateUtils,
   ACBrDFeSSL,
   synautil,
-  ACBrBoleto,
-  Jsons,
   httpsend,
-  ACBrBoletoConversao,
-  ACBrBoletoWS,
-  ACBrBoletoWS.Rest,
   Math;
+
 
 type
 
@@ -59,8 +55,8 @@ type
   private
     function DateBancoobtoDateTime(const AValue: String): TDateTime;
     function DateTimeToDateBancoob( const AValue:TDateTime ):String;
-    procedure GerarInstrucao(AJson: TJsonObject);
-    procedure AlterarEspecie(AJson: TJsonObject);
+    procedure GerarInstrucao(AJson: TACBrJSONObject);
+    procedure AlterarEspecie(AJson: TACBrJSONObject);
   protected
     procedure DefinirURL; override;
     procedure DefinirContentType; override;
@@ -77,18 +73,18 @@ type
     procedure RequisicaoAltera;
     procedure RequisicaoBaixa;
     procedure RequisicaoConsultaDetalhe;
-    procedure GerarPagador(AJson: TJsonObject);
-    procedure GerarBenificiarioFinal(AJson: TJsonObject);
-    procedure GerarJuros(AJson: TJsonObject);
-    procedure GerarMulta(AJson: TJsonObject);
-    procedure GerarDesconto(AJson: TJsonObject);
-    procedure AlteraDataVencimento(AJson: TJsonObject);
-    procedure AtribuirDesconto(AJson: TJsonObject);
-    procedure AlteracaoDesconto(AJson: TJsonObject);
-    procedure AlterarProtesto(AJson: TJsonObject);
-    procedure AtribuirAbatimento(AJson: TJsonObject);
-    procedure AtribuirJuros(AJson: TJsonObject);
-    procedure AtribuirMulta(AJson: TJsonObject);
+    procedure GerarPagador(AJson: TACBrJSONObject);
+    procedure GerarBenificiarioFinal(AJson: TACBrJSONObject);
+    procedure GerarJuros(AJson: TACBrJSONObject);
+    procedure GerarMulta(AJson: TACBrJSONObject);
+    procedure GerarDesconto(AJson: TACBrJSONObject);
+    procedure AlteraDataVencimento(AJson: TACBrJSONObject);
+    procedure AtribuirDesconto(AJson: TACBrJSONObject);
+    procedure AlteracaoDesconto(AJson: TACBrJSONObject);
+    procedure AlterarProtesto(AJson: TACBrJSONObject);
+    procedure AtribuirAbatimento(AJson: TACBrJSONObject);
+    procedure AtribuirJuros(AJson: TACBrJSONObject);
+    procedure AtribuirMulta(AJson: TACBrJSONObject);
 
   public
     constructor Create(ABoletoWS: TBoletoWS); override;
@@ -120,7 +116,14 @@ implementation
 
 uses
   ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Base,
-  ACBrJSON;
+  SysUtils,
+  Classes,
+  Synacode,
+  StrUtils,
+
+  pcnConversao,
+  ACBrBoletoWS.Rest.OAuth,
+  ACBrBoletoConversao;
 
 { TBoletoW_Bancoob}
 
@@ -263,12 +266,11 @@ begin
   FParamsOAuth := Format( 'client_id=%s&scope=%s&grant_type=client_credentials',
                    [Boleto.Cedente.CedenteWS.ClientID,
                     Boleto.Cedente.CedenteWS.Scope] );
-  
 end;
 
 function TBoletoW_Bancoob.DateBancoobtoDateTime(const AValue: String): TDateTime;
 begin
-  Result := StrToDateDef( StringReplace( AValue,'.','/', [rfReplaceAll] ),0);
+  Result := StrToDateDef( StringReplace( AValue,'.','/', [rfReplaceAll] ),0); 
 end;
 
 function TBoletoW_Bancoob.DateTimeToDateBancoob(const AValue: TDateTime): String;
@@ -289,157 +291,151 @@ end;
 
 procedure TBoletoW_Bancoob.RequisicaoBaixa;
 var
-  Json: TJsonObject;
-  Data: string;
+  LJson: TACBrJSONObject;
+  LData: string;
 begin
   if not Assigned(aTitulo) then
     Exit;
 
-  Json := TJsonObject.Create;
+  LJson := TACBrJSONObject.Create;
   try
-    Json.Add('numeroContrato').Value.AsInteger := StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0);
-    Json.Add('modalidade').Value.AsInteger     := StrToIntDef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1);
-    Json.Add('nossoNumero').Value.AsInteger    := StrToIntDef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
-    Json.Add('seuNumero').Value.asString       := IfThen(ATitulo.SeuNumero <> '',
+    LJson.AddPair('numeroContrato',StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0));
+    LJson.AddPair('modalidade',StrToIntDef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1));
+    LJson.AddPair('nossoNumero',StrToIntDef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0));
+    LJson.AddPair('seuNumero',IfThen(ATitulo.SeuNumero <> '',
                                                     ATitulo.SeuNumero,
                                                     IfThen(ATitulo.NumeroDocumento <> '',
                                                       ATitulo.NumeroDocumento,
                                                       OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
                                                     )
-                                                  );
+                                                  ));
 
-    Data := Json.Stringify;
-    FPDadosMsg := '[' + Data + ']';
+    FPDadosMsg := '[' + LJson.ToJSON + ']';
   finally
-    Json.Free;
+    LJson.Free;
   end;
 end;
 
 procedure TBoletoW_Bancoob.RequisicaoJson;
 var
   Data: string;
-  Json: TJsonObject;
+  LJson: TACBrJSONObject;
 begin
   if not Assigned(aTitulo) then
     Exit;
 
-  Json := TJsonObject.Create;
+  LJson := TACBrJSONObject.Create;
   try
-    Json.Add('numeroContrato').Value.AsInteger                  := StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0);
-    Json.Add('modalidade').Value.AsInteger                      := strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1);
-    Json.Add('numeroContaCorrente').Value.AsInteger             := strtoInt(aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito);
-    Json.Add('especieDocumento').Value.AsString                 := aTitulo.EspecieDoc;
-    Json.Add('dataEmissao').Value.AsString                      := DateTimeToDateBancoob(aTitulo.DataDocumento);
+    LJson.AddPair('numeroContrato',StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0));
+    LJson.AddPair('modalidade',strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1));
+    LJson.AddPair('numeroContaCorrente',strtoInt(aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito));
+    LJson.AddPair('especieDocumento',aTitulo.EspecieDoc);
+    LJson.AddPair('dataEmissao',DateTimeToDateBancoob(aTitulo.DataDocumento));
     {
       Número que identifica o boleto de cobrança no Sisbr.
       Caso deseje, o beneficiário poderá informar o nossoNumero,
       Caso contrário, o sistema gerará automáticamente.
     }
     if StrToInt(ATitulo.NossoNumero) > 0 then
-      Json.Add('nossoNumero').Value.AsInteger                   := StrToIntDef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
+      LJson.AddPair('nossoNumero',StrToIntDef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0));
 
-    Json.Add('seuNumero').Value.asString                        := IfThen(ATitulo.NumeroDocumento <> '',
+    LJson.AddPair('seuNumero',IfThen(ATitulo.NumeroDocumento <> '',
                                                                      ATitulo.NumeroDocumento,
                                                                      IfThen(ATitulo.SeuNumero <> '',
                                                                        ATitulo.SeuNumero,
                                                                        OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
                                                                      )
-                                                                   );
-    Json.Add('identificacaoBoletoEmpresa').Value.AsString       := IfThen(ATitulo.SeuNumero <> '',
+                                                                   ));
+    LJson.AddPair('identificacaoBoletoEmpresa',IfThen(ATitulo.SeuNumero <> '',
                                                                      ATitulo.SeuNumero,
                                                                      OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo))
-                                                                   );
-    Json.Add('identificacaoEmissaoBoleto').Value.AsInteger      := StrToInt(IfThen(ATitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite,'1','2')); // 2 Cliente Emite - 1 Banco Emite
-    Json.Add('identificacaoDistribuicaoBoleto').Value.AsInteger := StrToInt(IfThen(ATitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite,'1','2')); // 2 Cliente Dist - 1 Banco Dist
+                                                                   ));
+    LJson.AddPair('identificacaoEmissaoBoleto',StrToInt(IfThen(ATitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite,'1','2'))); // 2 Cliente Emite - 1 Banco Emite
+    LJson.AddPair('identificacaoDistribuicaoBoleto',StrToInt(IfThen(ATitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite,'1','2'))); // 2 Cliente Dist - 1 Banco Dist
 
-
-    Json.Add('valor').Value.asNumber                            := aTitulo.ValorDocumento;
-    Json.Add('dataVencimento').Value.asString                   := DateTimeToDateBancoob(aTitulo.Vencimento);
-    Json.Add('numeroParcela').Value.AsInteger                   := max(1,ATitulo.Parcela);
-    Json.Add('aceite').Value.AsBoolean                          := ATitulo.Aceite = atSim;
+    LJson.AddPair('valor',aTitulo.ValorDocumento);
+    LJson.AddPair('dataVencimento',DateTimeToDateBancoob(aTitulo.Vencimento));
+    LJson.AddPair('numeroParcela',max(1,ATitulo.Parcela));
+    LJson.AddPair('aceite',ATitulo.Aceite = atSim);
 
     if (ATitulo.DataProtesto > 0) then
     begin
-      Json.Add('codigoProtesto').Value.AsInteger                := IfThen(ATitulo.TipoDiasProtesto = diCorridos, 1, 2);
-      Json.Add('numeroDiasProtesto').Value.AsInteger            := Trunc(ATitulo.DataProtesto - ATitulo.Vencimento);
+      LJson.AddPair('codigoProtesto',IfThen(ATitulo.TipoDiasProtesto = diCorridos, 1, 2));
+      LJson.AddPair('numeroDiasProtesto',Trunc(ATitulo.DataProtesto - ATitulo.Vencimento));
     end;
     if (ATitulo.DiasDeNegativacao > 0) then
     begin
-      Json.Add('codigoNegativacao').Value.AsInteger             := 2;
-      Json.Add('numeroDiasNegativacao').Value.AsInteger         := ATitulo.DiasDeNegativacao;
+      LJson.AddPair('codigoNegativacao',2);
+      LJson.AddPair('numeroDiasNegativacao',ATitulo.DiasDeNegativacao);
     end;
 
-    GerarDesconto(Json);
-    GerarJuros(Json);
-    GerarMulta(Json);
-    GerarPagador(Json);
-    GerarBenificiarioFinal(Json);
-    GerarInstrucao(Json);
+    GerarDesconto(LJson);
+    GerarJuros(LJson);
+    GerarMulta(LJson);
+    GerarPagador(LJson);
+    GerarBenificiarioFinal(LJson);
+    GerarInstrucao(LJson);
 
-    Json.Add('gerarPdf').Value.AsBoolean              := false;
-    Json.Add('codigoCadastrarPIX').Value.AsInteger    := StrToInt(IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'1','0'));
+    LJson.AddPair('gerarPdf',false);
+    LJson.AddPair('codigoCadastrarPIX',StrToInt(IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'1','0')));
 
-    Data := Json.Stringify;
-
-    FPDadosMsg := '['+Data+']';
+    FPDadosMsg := '['+LJson.ToJSON+']';
   finally
-    Json.Free;
+    LJson.Free;
   end;
 end;
 
 procedure TBoletoW_Bancoob.RequisicaoAltera;
 var
-  Data: string;
-  Json: TJsonObject;
-  NumeroDocumento: string;
+  LData: string;
+  LJson: TACBrJSONObject;
+  LNumeroDocumento: string;
 begin
   if not Assigned(aTitulo) then
     Exit;
 
-  Json := TJsonObject.Create;
+  LJson := TACBrJSONObject.Create;
   try
-    Json.Add('numeroContrato').Value.AsInteger := StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0);
-    Json.Add('modalidade').Value.AsInteger := strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1);
-    Json.Add('nossoNumero').Value.AsInteger := StrtoIntdef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0);
+    LJson.AddPair('numeroContrato',StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0));
+    LJson.AddPair('modalidade',strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1));
+    LJson.AddPair('nossoNumero',StrtoIntdef(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 0));
 
-    NumeroDocumento := Trim(ATitulo.SeuNumero);
-    if EstaVazio(NumeroDocumento) then
-      NumeroDocumento := Trim(ATitulo.NumeroDocumento);
-    if EstaVazio(NumeroDocumento) then
-      NumeroDocumento := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+    LNumeroDocumento := Trim(ATitulo.SeuNumero);
+    if EstaVazio(LNumeroDocumento) then
+      LNumeroDocumento := Trim(ATitulo.NumeroDocumento);
+    if EstaVazio(LNumeroDocumento) then
+      LNumeroDocumento := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
 
     case aTitulo.ACBrBoleto.ListadeBoletos.Objects[0].OcorrenciaOriginal.Tipo of
       toRemessaBaixar, toRemessaAlterarSeuNumero:
-        Json.Add('seuNumero').Value.AsString := NumeroDocumento;
+        LJson.AddPair('seuNumero',LNumeroDocumento);
       toRemessaConcederDesconto:
-        AtribuirDesconto(Json);
+        AtribuirDesconto(LJson);
       toRemessaAlterarVencimento:
-        AlteraDataVencimento(Json);
+        AlteraDataVencimento(LJson);
       toRemessaProtestar: begin
         FMetodoHTTP := htPOST;
-        AlterarProtesto(Json);
+        AlterarProtesto(LJson);
       end;
       toRemessaSustarProtesto: begin
         FMetodoHTTP :=  htDELETE;
-        AlterarProtesto(Json);
+        AlterarProtesto(LJson);
       end;
       toRemessaAlterarJurosMora, toRemessaCobrarJurosMora:
-        AtribuirJuros(Json);
+        AtribuirJuros(LJson);
       toRemessaAlterarMulta:
-        AtribuirMulta(Json);
+        AtribuirMulta(LJson);
       toRemessaAlterarDesconto:
-        AlteracaoDesconto(Json);
+        AlteracaoDesconto(LJson);
       toRemessaAlterarValorAbatimento:
-        AtribuirAbatimento(Json);
+        AtribuirAbatimento(LJson);
       toRemessaAlterarEspecieTitulo:
-        AlterarEspecie(Json);
+        AlterarEspecie(LJson);
     end;
 
-    Data := Json.Stringify;
-
-    FPDadosMsg := '['+Data+']';
+    FPDadosMsg := '['+LJson.ToJSON+']';
   finally
-    Json.Free;
+    LJson.Free;
   end;
 end;
 
@@ -448,50 +444,35 @@ begin
   FPDadosMsg := '';
 end;
 
-procedure TBoletoW_Bancoob.GerarPagador(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.GerarPagador(AJson: TACBrJSONObject);
  var
-  JsonDadosPagador: TJsonObject;
-  JsonPairPagador: TJSONPair;
+  LJsonDadosPagador: TACBrJSONObject;
+  LJsonArrayEmail: TACBrJSONArray;
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
 
-  JsonDadosPagador := TJsonObject.Create;
-  try
-    JsonDadosPagador.Add('numeroCpfCnpj').Value.asString := OnlyNumber(aTitulo.Sacado.CNPJCPF);
-    JsonDadosPagador.Add('nome').Value.asString          := aTitulo.Sacado.NomeSacado;
-    JsonDadosPagador.Add('endereco').Value.asString      := aTitulo.Sacado.Logradouro + ' ' + aTitulo.Sacado.Numero;
-    JsonDadosPagador.Add('bairro').Value.asString        := aTitulo.Sacado.Bairro;
-    JsonDadosPagador.Add('cidade').Value.asString        := aTitulo.Sacado.Cidade;
-    JsonDadosPagador.Add('cep').Value.asString           := OnlyNumber(aTitulo.Sacado.CEP);
-    JsonDadosPagador.Add('uf').Value.asString            := aTitulo.Sacado.UF;
-    //JsonDadosPagador.Add('complemento').Value.asString :=aTitulo.Sacado.Complemento;
-    //JsonDadosPagador.Add('telefone').Value.asString := IfThen(aTitulo.Sacado.Fone = '', '0', aTitulo.Sacado.Fone);
-
-    { TODO : Corrigir Escrita do Email precisa ser dentro de chaves [ ] }
-
-//        if aTitulo.Sacado.Email <> '' then
-//        begin
-//          JsonDadosPagador.Add('email').Value.asString   :=  aTitulo.Sacado.Email;
-//        end;
-
-    JsonPairPagador := TJSONPair.Create(AJson, 'pagador');
-    try
-      JsonPairPagador.Value.AsObject := JsonDadosPagador;
-      AJson.Add('pagador').Assign(JsonPairPagador);
-    finally
-      JsonPairPagador.Free;
-    end;
-  finally
-    JsonDadosPagador.Free;
+  LJsonDadosPagador := TACBrJSONObject.Create;
+  LJsonDadosPagador.AddPair('numeroCpfCnpj',OnlyNumber(aTitulo.Sacado.CNPJCPF));
+  LJsonDadosPagador.AddPair('nome',aTitulo.Sacado.NomeSacado);
+  LJsonDadosPagador.AddPair('endereco',aTitulo.Sacado.Logradouro + ' ' + aTitulo.Sacado.Numero);
+  LJsonDadosPagador.AddPair('bairro',aTitulo.Sacado.Bairro);
+  LJsonDadosPagador.AddPair('cidade',aTitulo.Sacado.Cidade);
+  LJsonDadosPagador.AddPair('cep',OnlyNumber(aTitulo.Sacado.CEP));
+  LJsonDadosPagador.AddPair('uf',aTitulo.Sacado.UF);
+  if NaoEstaVazio(ATitulo.Sacado.Email) then
+  begin
+    LJsonArrayEmail := TACBrJSONArray.Create;
+    LJsonArrayEmail.AddElement(ATitulo.Sacado.Email);
+    LJsonDadosPagador.AddPair('email', LJsonArrayEmail);
   end;
+  AJson.AddPair('pagador', LJsonDadosPagador);
 end;
 
-procedure TBoletoW_Bancoob.GerarInstrucao(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.GerarInstrucao(AJson: TACBrJSONObject);
 var
-  JsonDadosInstrucao: TJsonObject;
-  JsonArrayInstrucao: TJsonArray;
-  JsonPairInstrucao, JsonPairMensagem : TJSONPair;
+  JsonPairInstrucao, JsonDadosInstrucao: TACBrJSONObject;
+  JsonArrayInstrucao: TACBrJSONArray;
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -499,42 +480,22 @@ begin
   if ATitulo.Instrucao1 = '' then
     Exit;
 
-  JsonDadosInstrucao := TJsonObject.Create;
-  JsonArrayInstrucao := TJsonArray.Create;
-  try
-    JsonDadosInstrucao.Add('tipoInstrucao').Value.AsInteger := 1;
-
-    JsonPairMensagem := TJSONPair.Create(JsonArrayInstrucao, 'mensagens');
-
-    JsonArrayInstrucao.Add.AsString := ATitulo.Instrucao1;
-
-    if ATitulo.Instrucao2 <> '' then
-     JsonArrayInstrucao.Add.AsString := ATitulo.Instrucao2;
-
-    if ATitulo.Instrucao3 <> '' then
-     JsonArrayInstrucao.Add.AsString := ATitulo.Instrucao3;
-
-    JsonPairMensagem.Value.AsArray := JsonArrayInstrucao;
-    JsonDadosInstrucao.Add('mensagens').Assign(JsonPairMensagem);
-
-    JsonPairInstrucao := TJSONPair.Create(AJson, 'mensagensInstrucao');
-    try
-      JsonPairInstrucao.Value.AsObject := JsonDadosInstrucao;
-      AJson.Add('mensagensInstrucao').Assign(JsonPairInstrucao);
-    finally
-      JsonPairInstrucao.Free;
-    end;
-  finally
-    JsonDadosInstrucao.Free;
-    JsonArrayInstrucao.Free;
-    JsonPairMensagem.Free;
-  end;
+  JsonDadosInstrucao := TACBrJSONObject.Create;
+  JsonArrayInstrucao := TACBrJSONArray.Create;
+  JsonDadosInstrucao.AddPair('tipoInstrucao',1);
+  if NaoEstaVazio(ATitulo.Instrucao1) then
+    JsonArrayInstrucao.AddElement(ATitulo.Instrucao1);
+  if NaoEstaVazio(ATitulo.Instrucao2) then
+    JsonArrayInstrucao.AddElement(ATitulo.Instrucao2);
+  if NaoEstaVazio(ATitulo.Instrucao3) then
+    JsonArrayInstrucao.AddElement(ATitulo.Instrucao3);
+  JsonDadosInstrucao.AddPair('mensagens', JsonArrayInstrucao);
+  AJson.AddPair('mensagensInstrucao', JsonDadosInstrucao);
 end;
 
-procedure TBoletoW_Bancoob.GerarBenificiarioFinal(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.GerarBenificiarioFinal(AJson: TACBrJSONObject);
 var
-  JsonSacadorAvalista: TJsonObject;
-  JsonPairSacadorAvalista: TJSONPair;
+ LJsonPairSacadorAvalista, LJsonSacadorAvalista: TACBrJSONObject;
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -542,30 +503,19 @@ begin
   if aTitulo.Sacado.SacadoAvalista.CNPJCPF = EmptyStr then
     Exit;
 
-  JsonSacadorAvalista := TJsonObject.Create;
-  try
-    JsonSacadorAvalista.Add('nome').Value.asString       := aTitulo.Sacado.SacadoAvalista.NomeAvalista;
-    JsonSacadorAvalista.Add('cpfCnpj').Value.asString    := OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF);
-    JsonSacadorAvalista.Add('tipoPessoa').Value.asString := IfThen(Length(OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11, 'FISICA', 'JURIDICA');
-    JsonSacadorAvalista.Add('cep').Value.asString        := aTitulo.Sacado.SacadoAvalista.CEP;
-    JsonSacadorAvalista.Add('endereco').Value.asString   := aTitulo.Sacado.SacadoAvalista.Logradouro;
-    JsonSacadorAvalista.Add('bairro').Value.asString     := aTitulo.Sacado.SacadoAvalista.Bairro;
-    JsonSacadorAvalista.Add('cidade').Value.asString     := aTitulo.Sacado.SacadoAvalista.Cidade;
-    JsonSacadorAvalista.Add('uf').Value.asString         := aTitulo.Sacado.SacadoAvalista.UF;
-
-    JsonPairSacadorAvalista := TJSONPair.Create(AJson, 'beneficiarioFinal');
-    try
-      JsonPairSacadorAvalista.Value.AsObject := JsonSacadorAvalista;
-      AJson.Add('beneficiarioFinal').Assign(JsonPairSacadorAvalista);
-    finally
-      JsonPairSacadorAvalista.Free;
-    end;
-  finally
-    JsonSacadorAvalista.Free;
-  end;
+  LJsonSacadorAvalista := TACBrJSONObject.Create;
+  LJsonSacadorAvalista.AddPair('nome',aTitulo.Sacado.SacadoAvalista.NomeAvalista);
+  LJsonSacadorAvalista.AddPair('cpfCnpj',OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF));
+  LJsonSacadorAvalista.AddPair('tipoPessoa',IfThen(Length(OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11, 'FISICA', 'JURIDICA'));
+  LJsonSacadorAvalista.AddPair('cep',aTitulo.Sacado.SacadoAvalista.CEP);
+  LJsonSacadorAvalista.AddPair('endereco',aTitulo.Sacado.SacadoAvalista.Logradouro);
+  LJsonSacadorAvalista.AddPair('bairro',aTitulo.Sacado.SacadoAvalista.Bairro);
+  LJsonSacadorAvalista.AddPair('cidade',aTitulo.Sacado.SacadoAvalista.Cidade);
+  LJsonSacadorAvalista.AddPair('uf',aTitulo.Sacado.SacadoAvalista.UF);
+  AJson.AddPair('beneficiarioFinal', LJsonPairSacadorAvalista);
 end;
 
-procedure TBoletoW_Bancoob.GerarJuros(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.GerarJuros(AJson: TACBrJSONObject);
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -584,29 +534,29 @@ begin
   case (StrToIntDef(aTitulo.CodigoMora, 0)) of
     0, 3:    // Isento
       begin
-        AJson.Add('tipoJurosMora').Value.AsInteger := 3;
-        AJson.Add('valorJurosMora').Value.asNumber := 0;
+        AJson.AddPair('tipoJurosMora',3);
+        AJson.AddPair('valorJurosMora',0);
       end;
     1:     // Dia
       begin
-       // AJson.Add('taxa').Value.asNumber := aTitulo.ValorMoraJuros;
-        AJson.Add('tipoJurosMora').Value.AsInteger := StrToInt(aTitulo.CodigoMora);
-        AJson.Add('dataJurosMora').Value.AsString  := DateTimeToDateBancoob(aTitulo.DataMoraJuros);
-        AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
+       // AJson.AddPair('taxa').Value.asNumber := aTitulo.ValorMoraJuros;
+        AJson.AddPair('tipoJurosMora',StrToInt(aTitulo.CodigoMora));
+        AJson.AddPair('dataJurosMora',DateTimeToDateBancoob(aTitulo.DataMoraJuros));
+        AJson.AddPair('valorJurosMora',aTitulo.ValorMoraJuros);
       end;
     2: // Mês
       begin
-        AJson.Add('tipoJurosMora').Value.AsInteger := StrToInt(aTitulo.CodigoMora);
-        AJson.Add('dataJurosMora').Value.AsString  := DateTimeToDateBancoob(aTitulo.DataMoraJuros);
-        AJson.Add('valorJurosMora').Value.asNumber := aTitulo.ValorMoraJuros;
+        AJson.AddPair('tipoJurosMora',StrToInt(aTitulo.CodigoMora));
+        AJson.AddPair('dataJurosMora',DateTimeToDateBancoob(aTitulo.DataMoraJuros));
+        AJson.AddPair('valorJurosMora',aTitulo.ValorMoraJuros);
       end;
   end;
 end;
 
-procedure TBoletoW_Bancoob.GerarMulta(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.GerarMulta(AJson: TACBrJSONObject);
 var
-  ACodMulta: Integer;
-  ADataMulta : TDateTime;
+  LCodMulta: Integer;
+  LDataMulta : TDateTime;
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -614,40 +564,40 @@ begin
   if aTitulo.PercentualMulta > 0 then
   begin
     if aTitulo.MultaValorFixo then
-      ACodMulta := 1
+      LCodMulta := 1
     else
-      ACodMulta := 2;
+      LCodMulta := 2;
   end
   else
-    ACodMulta := 3;
+    LCodMulta := 3;
 
   if (aTitulo.DataMulta > 0) then
-    ADataMulta :=  aTitulo.DataMulta
+    LDataMulta :=  aTitulo.DataMulta
   else
-    ADataMulta  := ATitulo.DataMoraJuros;
+    LDataMulta  := ATitulo.DataMoraJuros;
 
-  case ACodMulta of
+  case LCodMulta of
     1:
       begin
-        AJson.Add('tipoMulta').Value.AsInteger  := 1; // Valor Fixo
-        AJson.Add('dataMulta').Value.asString   := DateTimeToDateBancoob(ADataMulta);
-        AJson.Add('valorMulta').Value.asNumber  := aTitulo.PercentualMulta;
+        AJson.AddPair('tipoMulta',1); // Valor Fixo
+        AJson.AddPair('dataMulta',DateTimeToDateBancoob(LDataMulta));
+        AJson.AddPair('valorMulta',aTitulo.PercentualMulta);
       end;
     2:
       begin
-        AJson.Add('tipoMulta').Value.AsInteger := 2; // Percentual
-        AJson.Add('dataMulta').Value.asString  := DateTimeToDateBancoob(ADataMulta);
-        AJson.Add('valorMulta').Value.asNumber := aTitulo.PercentualMulta;
+        AJson.AddPair('tipoMulta',2); // Percentual
+        AJson.AddPair('dataMulta',DateTimeToDateBancoob(LDataMulta));
+        AJson.AddPair('valorMulta',aTitulo.PercentualMulta);
       end;
     3:
       begin
-        AJson.Add('tipoMulta').Value.AsInteger := 0;
-        AJson.Add('valorMulta').Value.asNumber := 0;
+        AJson.AddPair('tipoMulta',0);
+        AJson.AddPair('valorMulta',0);
       end;
   end;
 end;
 
-procedure TBoletoW_Bancoob.GerarDesconto(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.GerarDesconto(AJson: TACBrJSONObject);
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -661,35 +611,35 @@ begin
     case Integer(aTitulo.TipoDesconto) of
       1:
         begin
-          AJson.Add('tipoDesconto').Value.AsInteger := 1;
-          AJson.Add('dataPrimeiroDesconto').Value.asString :=  DateTimeToDateBancoob(aTitulo.DataDesconto);
-          AJson.Add('valorPrimeiroDesconto').Value.asNumber := aTitulo.ValorDesconto;
+          AJson.AddPair('tipoDesconto',1);
+          AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
+          AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
         end;
       2:
         begin
-          AJson.Add('tipoDesconto').Value.AsInteger := 2;
-          AJson.Add('dataPrimeiroDesconto').Value.asString :=  DateTimeToDateBancoob(aTitulo.DataDesconto);
-          AJson.Add('valorPrimeiroDesconto').Value.asNumber := aTitulo.ValorDesconto;
+          AJson.AddPair('tipoDesconto',2);
+          AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
+          AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
         end;
     end;
   end
   else
-    AJson.Add('tipoDesconto').Value.AsInteger := 0;
+    AJson.AddPair('tipoDesconto',0);
 
   if (aTitulo.DataDesconto2 > 0) then
   begin
-    AJson.Add('dataSegundoDesconto').Value.asString :=  DateTimeToDateBancoob(aTitulo.DataDesconto2);
-    AJson.Add('valorSegundoDesconto').Value.asNumber := aTitulo.ValorDesconto2;
+    AJson.AddPair('dataSegundoDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto2));
+    AJson.AddPair('valorSegundoDesconto',aTitulo.ValorDesconto2);
   end;
 
   if (aTitulo.DataDesconto3 > 0) then
   begin
-    AJson.Add('dataTerceiroDesconto').Value.asString :=  DateTimeToDateBancoob(aTitulo.DataDesconto3);
-    AJson.Add('valorTerceiroDesconto').Value.asNumber := aTitulo.ValorDesconto3;
+    AJson.AddPair('dataTerceiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto3));
+    AJson.AddPair('valorTerceiroDesconto',aTitulo.ValorDesconto3);
   end;
 end;
 
-procedure TBoletoW_Bancoob.AlteraDataVencimento(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AlteraDataVencimento(AJson: TACBrJSONObject);
 begin
   if not Assigned(ATitulo) or not Assigned(AJson) then
     Exit;
@@ -697,10 +647,10 @@ begin
   if (ATitulo.Vencimento = 0) then
     Exit;
 
-  AJson.Add('dataVencimento').Value.asString := DateTimeToDateBancoob(aTitulo.Vencimento);
+  AJson.AddPair('dataVencimento',DateTimeToDateBancoob(aTitulo.Vencimento));
 end;
 
-procedure TBoletoW_Bancoob.AtribuirAbatimento(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AtribuirAbatimento(AJson: TACBrJSONObject);
 begin
   if not Assigned(ATitulo) or not Assigned(AJson) then
     Exit;
@@ -708,10 +658,10 @@ begin
   if (ATitulo.ValorAbatimento = 0) then
     Exit;
 
-  AJson.Add('valorAbatimento').Value.AsNumber := aTitulo.ValorAbatimento;
+  AJson.AddPair('valorAbatimento',aTitulo.ValorAbatimento);
 end;
 
-procedure TBoletoW_Bancoob.AlterarEspecie(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AlterarEspecie(AJson: TACBrJSONObject);
 begin
   if not Assigned(ATitulo) or not Assigned(AJson) then
     Exit;
@@ -719,10 +669,10 @@ begin
   if (ATitulo.EspecieDoc = '') then
     Exit;
 
-  AJson.Add('especieDocumento').Value.AsString := aTitulo.EspecieDoc;
+  AJson.Addpair('especieDocumento',aTitulo.EspecieDoc);
 end;
 
-procedure TBoletoW_Bancoob.AtribuirDesconto(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AtribuirDesconto(AJson: TACBrJSONObject);
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -730,7 +680,7 @@ begin
   GerarDesconto(AJson);
 end;
 
-procedure TBoletoW_Bancoob.AlteracaoDesconto(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AlteracaoDesconto(AJson: TACBrJSONObject);
 begin
   if not Assigned(ATitulo) or not Assigned(AJson) then
     Exit;
@@ -738,19 +688,19 @@ begin
   GerarDesconto(AJson);
 end;
 
-procedure TBoletoW_Bancoob.AlterarProtesto(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AlterarProtesto(AJson: TACBrJSONObject);
 begin
   // Só Precisa de Numero de Contrato, Modalidade e Nosso Numero
 
   // Já preenchidos
 end;
 
-procedure TBoletoW_Bancoob.AtribuirJuros(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AtribuirJuros(AJson: TACBrJSONObject);
 begin
   GerarJuros(AJson);
 end;
 
-procedure TBoletoW_Bancoob.AtribuirMulta(AJson: TJsonObject);
+procedure TBoletoW_Bancoob.AtribuirMulta(AJson: TACBrJSONObject);
 begin
   GerarMulta(AJson);
 end;

@@ -49,12 +49,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2024
+-- ACBrBancoBancoob, ACBrBoletoRet_Bancoob, ACBrBoletoW_Bancoob --
+[*]TK-5156 Incluido codigo juros mora aceitos 3 da API 
+[*]TK-5064 Refatorado ACBrJson
+https://www.projetoacbr.com.br/forum/topic/76311-sicoob-juros-c%C3%B3digos-mora-aceitos-codigosmoraaceitos/
+  Por: Daniel Morais InfoCotidiano
+
+
 26/03/2024
 -- ACBrBancoItau --
 [-]TK-5164 Removido uppercase do registro 3 ref. aos dados para gerar qrCode
 https://www.projetoacbr.com.br/forum/topic/76549-itau-bolecode-linha-da-chave-pix-com-uppercase/
   Por: Daniel Morais InfoCotidiano
-
 
 19/03/2024
 -- ACBrBoletoRet_Sicredi_APIV2 --

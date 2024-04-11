@@ -1255,7 +1255,7 @@ type
     fValorDesconto        : Currency;
     fValorDesconto2       : Currency;
     fValorDesconto3       : Currency;
-    fValorMoraJuros       : Currency;
+    fValorMoraJuros       : Real;
     fValorIOF             : Currency;
     fValorOutrasDespesas  : Currency;
     fValorOutrosCreditos  : Currency;
@@ -1388,7 +1388,7 @@ type
      property ValorDesconto        : Currency read fValorDesconto         write fValorDesconto;
      property ValorDesconto2       : Currency read fValorDesconto2        write fValorDesconto2;
      property ValorDesconto3       : Currency read fValorDesconto3        write fValorDesconto3;
-     property ValorMoraJuros       : Currency read fValorMoraJuros        write fValorMoraJuros;
+     property ValorMoraJuros       : Real     read fValorMoraJuros        write fValorMoraJuros;
      property ValorIOF             : Currency read fValorIOF              write fValorIOF;
      property ValorOutrasDespesas  : Currency read fValorOutrasDespesas   write fValorOutrasDespesas;
      property ValorOutrosCreditos  : Currency read fValorOutrosCreditos   write fValorOutrosCreditos;

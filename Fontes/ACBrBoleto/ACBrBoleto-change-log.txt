@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/04/2024
+-- ACBrBoleto --
+[*]TK-5305 Alterado propriedade fValorMoraJuros para real, pois nao estava aceitando juros com 5 casas decimais qdo percentual.
+https://www.projetoacbr.com.br/forum/topic/77159-banco-santander-casas-decimais-juros-e-multa/
+  Por: Daniel Morais InfoCotidiano
+
+11/04/2024
 -- ACBrBancoBancoob, ACBrBoletoRet_Bancoob, ACBrBoletoW_Bancoob --
 [*]TK-5156 Incluido codigo juros mora aceitos 3 da API 
 [*]TK-5064 Refatorado ACBrJson

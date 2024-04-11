@@ -42,7 +42,7 @@ uses
   ACBrTEFDGpu, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
   ACBrTEFDConvCard, ACBrTEFDCappta, ACBrTEFDCliSiTefModular, ACBrTEFDDirecao,
-  ACBrTEFDDialScopeGetcard
+  ACBrTEFDDialScopeGetcard , ACBrTEFDElgin
   {$IfNDef NOGUI}
     {$IfDef FPC}
       ,LResources
@@ -161,6 +161,7 @@ type
      fTefCliSiTefModular: TACBrTEFDCliSiTefModular;
      fTefDirecao   : TACBrTEFDDirecao;
      fTefDialScopeGetcard: TACBrTEFDDialScopeGetcard;
+     fTefElgin      : TACBrTEFDElgin ;
 
      fEsperaSTS    : Integer;
      fEsperaMinimaMensagemFinal: Integer;
@@ -327,6 +328,7 @@ type
      property TEFCappta    : TACBrTEFDCappta    read fTefCappta;
      property TEFCliSiTefModular : TACBrTEFDCliSiTefModular read fTefCliSiTefModular ;
      property TEFDirecao   : TACBrTEFDDirecao  read fTefDirecao;
+     property TEFElgin    : TACBrTEFDElgin     read fTefElgin ;
 
      property OnAguardaResp : TACBrTEFDAguardaRespEvent read fOnAguardaResp
         write fOnAguardaResp ;
@@ -626,6 +628,13 @@ begin
    fTefDialScopeGetcard.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
   {$ENDIF}
 
+  { Criando Classe TEF_DIAL }
+  fTefElgin := TACBrTEFDElgin.Create(self);
+  fTEFList.Add(fTefElgin);     // Adicionando "fTefElgin" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefElgin.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
+
   GPAtual := gpPayGo;
 end;
 
@@ -748,6 +757,7 @@ begin
     gpCliSiTefModular : fTefClass := fTefCliSiTefModular;
     gpTefDirecao : fTefClass := fTefDirecao ;
     gpTefDialScopeGetcard : fTefClass := fTefDialScopeGetcard ;
+    gpTefElgin: fTefClass := fTefElgin ;
   end;
 
   fGPAtual := AValue;

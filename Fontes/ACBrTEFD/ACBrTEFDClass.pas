@@ -93,7 +93,7 @@ type
                     gpTefGpu, gpVeSPague, gpBanese, gpTefAuttar, gpGoodCard,
                     gpFoxWin, gpCliDTEF, gpPetrocard, gpCrediShop, gpTicketCar,
                     gpConvCard, gpCappta, gpPayGo, gpPayGoWeb, gpCliSiTefModular, gpTefDirecao,
-                    gpTefDialScopeGetcard) ;
+                    gpTefDialScopeGetcard, gpTefElgin) ;
 
   TACBrTEFDReqEstado = ( reqNenhum,             // Nennhuma Requisição em andamento
                          reqIniciando,          // Iniciando uma nova Requisicao

@@ -75,6 +75,7 @@ contains
 {$ENDIF}
   ACBrTEFDCliSiTefModular in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTefModular.pas',
   ACBrTEFDDirecao in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDirecao.pas',
-  ACBrTEFDDialScopeGetcard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDialScopeGetcard.pas';
+  ACBrTEFDDialScopeGetcard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDialScopeGetcard.pas',
+	ACBrTEFDElgin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDElgin';
 
 end.

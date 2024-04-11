@@ -104,7 +104,7 @@ implementation
 uses
   IniFiles,
   ACBrDFeConsts,
-  pmdfeRetEnvEventoMDFe, pmdfeConversaoMDFe,
+  pmdfeRetEnvEventoMDFe, pmdfeConversaoMDFe, pmdfeMDFe,
   ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime,
   ACBrDFeUtil;
 
@@ -520,45 +520,42 @@ begin
       begin
         infEvento.detEvento.infPag.New;
 
-        with InfEvento.detEvento.infPag[i] do
+        InfEvento.detEvento.infPag[i].xNome         := RetEventoMDFe.InfEvento.detEvento.infPag[i].xNome;
+        InfEvento.detEvento.infPag[i].idEstrangeiro := RetEventoMDFe.InfEvento.detEvento.infPag[i].idEstrangeiro;
+        InfEvento.detEvento.infPag[i].CNPJCPF       := RetEventoMDFe.InfEvento.detEvento.infPag[i].CNPJCPF;
+
+        for j := 0 to RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp.Count - 1 do
         begin
-          xNome         := RetEventoMDFe.InfEvento.detEvento.infPag[i].xNome;
-          idEstrangeiro := RetEventoMDFe.InfEvento.detEvento.infPag[i].idEstrangeiro;
-          CNPJCPF       := RetEventoMDFe.InfEvento.detEvento.infPag[i].CNPJCPF;
+          InfEvento.detEvento.infPag[i].Comp.New;
 
-          for j := 0 to RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp.Count - 1 do
-          begin
-            Comp.New;
-
-            Comp[j].tpComp := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].tpComp;
-            Comp[j].vComp  := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].vComp;
-            Comp[j].xComp  := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].xComp;
-          end;
-
-          vContrato := RetEventoMDFe.InfEvento.detEvento.infPag[i].vContrato;
-          indPag    := RetEventoMDFe.InfEvento.detEvento.infPag[i].indPag;
-          vAdiant   := RetEventoMDFe.InfEvento.detEvento.infPag[i].vAdiant;
-
-          indAntecipaAdiant := RetEventoMDFe.InfEvento.detEvento.infPag[i].indAntecipaAdiant;
-          tpAntecip := RetEventoMDFe.InfEvento.detEvento.infPag[i].tpAntecip;
-
-          if indPag = ipPrazo then
-          begin
-            for j := 0 to RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo.Count - 1 do
-            begin
-              infPrazo.New;
-
-              infPrazo[j].nParcela := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].nParcela;
-              infPrazo[j].dVenc    := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].dVenc;
-              infPrazo[j].vParcela := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].vParcela;
-            end;
-          end;
-
-          infBanc.PIX        := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.PIX;
-          infBanc.CNPJIPEF   := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF;
-          infBanc.codBanco   := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codBanco;
-          infBanc.codAgencia := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codAgencia;
+          InfEvento.detEvento.infPag[i].Comp[j].tpComp := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].tpComp;
+          InfEvento.detEvento.infPag[i].Comp[j].vComp  := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].vComp;
+          InfEvento.detEvento.infPag[i].Comp[j].xComp  := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].xComp;
         end;
+
+        InfEvento.detEvento.infPag[i].vContrato := RetEventoMDFe.InfEvento.detEvento.infPag[i].vContrato;
+        InfEvento.detEvento.infPag[i].indPag    := RetEventoMDFe.InfEvento.detEvento.infPag[i].indPag;
+        InfEvento.detEvento.infPag[i].vAdiant   := RetEventoMDFe.InfEvento.detEvento.infPag[i].vAdiant;
+
+        InfEvento.detEvento.infPag[i].indAntecipaAdiant := RetEventoMDFe.InfEvento.detEvento.infPag[i].indAntecipaAdiant;
+        InfEvento.detEvento.infPag[i].tpAntecip := RetEventoMDFe.InfEvento.detEvento.infPag[i].tpAntecip;
+
+        if InfEvento.detEvento.infPag[i].indPag = ipPrazo then
+        begin
+          for j := 0 to RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo.Count - 1 do
+          begin
+            InfEvento.detEvento.infPag[i].infPrazo.New;
+
+            InfEvento.detEvento.infPag[i].infPrazo[j].nParcela := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].nParcela;
+            InfEvento.detEvento.infPag[i].infPrazo[j].dVenc    := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].dVenc;
+            InfEvento.detEvento.infPag[i].infPrazo[j].vParcela := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].vParcela;
+          end;
+        end;
+
+        InfEvento.detEvento.infPag[i].infBanc.PIX        := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.PIX;
+        InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF   := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF;
+        InfEvento.detEvento.infPag[i].infBanc.codBanco   := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codBanco;
+        InfEvento.detEvento.infPag[i].infBanc.codAgencia := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codAgencia;
       end;
     end;
   finally
@@ -584,6 +581,10 @@ var
   sSecao, sFim: String;
   INIRec: TMemIniFile;
   Ok: Boolean;
+  ItemInfDoc: TInfDocCollectionItem;
+  ItemInfPag: TinfPagCollectionItem;
+  ItemComp: TCompCollectionItem;
+  ItemInfPrazo: TInfPrazoCollectionItem;
 begin
   Self.Evento.Clear;
 
@@ -636,12 +637,11 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with Self.Evento.Items[I-1].InfEvento.detEvento.infDoc.New do
-          begin
-            cMunDescarga := INIRec.ReadInteger(sSecao, 'cMunDescarga', 0);
-            xMunDescarga := INIRec.ReadString(sSecao, 'xMunDescarga', '');
-            chNFe        := sFim;
-          end;
+          ItemInfDoc := Self.Evento.Items[I-1].InfEvento.detEvento.infDoc.New;
+
+          ItemInfDoc.cMunDescarga := INIRec.ReadInteger(sSecao, 'cMunDescarga', 0);
+          ItemInfDoc.xMunDescarga := INIRec.ReadString(sSecao, 'xMunDescarga', '');
+          ItemInfDoc.chNFe        := sFim;
 
           Inc(J);
         end;
@@ -650,11 +650,8 @@ begin
 
         if INIRec.SectionExists(sSecao) then
         begin
-          with Self.Evento.Items[I-1].InfEvento.detEvento.infViagens do
-          begin
-            qtdViagens := INIRec.ReadInteger(sSecao, 'qtdViagens', 0);
-            nroViagem  := INIRec.ReadInteger(sSecao, 'nroViagem', 0);
-          end;
+          Self.Evento.Items[I-1].InfEvento.detEvento.infViagens.qtdViagens := INIRec.ReadInteger(sSecao, 'qtdViagens', 0);
+          Self.Evento.Items[I-1].InfEvento.detEvento.infViagens.nroViagem  := INIRec.ReadInteger(sSecao, 'nroViagem', 0);
         end;
 
         sSecao := 'infPag001';
@@ -672,77 +669,74 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with Self.Evento.Items[I-1].InfEvento.detEvento.infPag.New do
+            ItemInfPag := Self.Evento.Items[I-1].InfEvento.detEvento.infPag.New;
+
+            ItemInfPag.xNome         := INIRec.ReadString(sSecao, 'xNome', '');
+            ItemInfPag.idEstrangeiro := INIRec.ReadString(sSecao, 'idEstrangeiro', '');
+
+            if ItemInfPag.idEstrangeiro = '' then
+              ItemInfPag.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+
+            ItemInfPag.vContrato := StringToFloatDef(INIRec.ReadString(sSecao, 'vContrato', ''), 0 );
+            ItemInfPag.indPag    := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
+            ItemInfPag.vAdiant   := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
+
+            ItemInfPag.indAntecipaAdiant := StrToTIndicador(ok, INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
+            ItemInfPag.tpAntecip := StrTotpAntecip(ok, INIRec.ReadString(sSecao, 'tpAntecip', ''));
+
+            K := 1;
+            while true do
             begin
-              xNome         := INIRec.ReadString(sSecao, 'xNome', '');
-              idEstrangeiro := INIRec.ReadString(sSecao, 'idEstrangeiro', '');
+              sSecao := 'Comp' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
+              sFim   := INIRec.ReadString(sSecao, 'vComp', 'FIM');
 
-              if idEstrangeiro = '' then
-                CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+              if sFim = 'FIM' then
+                break;
 
-              vContrato := StringToFloatDef(INIRec.ReadString(sSecao, 'vContrato', ''), 0 );
-              indPag    := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
-              vAdiant   := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
+              ItemComp := ItemInfPag.Comp.New;
 
-              indAntecipaAdiant := StrToTIndicador(ok, INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
-              tpAntecip := StrTotpAntecip(ok, INIRec.ReadString(sSecao, 'tpAntecip', ''));
+              ItemComp.tpComp := StrToTComp(ok, INIRec.ReadString(sSecao, 'tpComp', '01'));
+              ItemComp.vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0 );
+              ItemComp.xComp  := INIRec.ReadString(sSecao, 'xComp', '');
 
+              Inc(K);
+            end;
+
+            if ItemInfPag.indPag = ipPrazo then
+            begin
               K := 1;
               while true do
               begin
-                sSecao := 'Comp' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                sFim   := INIRec.ReadString(sSecao, 'vComp', 'FIM');
+                sSecao := 'infPrazo' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
+                sFim   := INIRec.ReadString(sSecao, 'vParcela', 'FIM');
 
                 if sFim = 'FIM' then
                   break;
 
-                with Comp.New do
-                begin
-                  tpComp := StrToTComp(ok, INIRec.ReadString(sSecao, 'tpComp', '01'));
-                  vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0 );
-                  xComp  := INIRec.ReadString(sSecao, 'xComp', '');
-                end;
+                ItemInfPrazo := ItemInfPag.infPrazo.New;
+
+                ItemInfPrazo.nParcela := INIRec.ReadInteger(sSecao, 'nParcela', 1);
+                ItemInfPrazo.dVenc    := StringToDateTime(INIRec.ReadString(sSecao, 'dVenc', '0'));
+                ItemInfPrazo.vParcela := StringToFloatDef(INIRec.ReadString(sSecao, 'vParcela', ''), 0 );
 
                 Inc(K);
               end;
+            end;
 
-              if indPag = ipPrazo then
+            sSecao := 'infBanc' + IntToStrZero(J, 3);
+
+            if INIRec.SectionExists(sSecao) then
+            begin
+              ItemInfPag.infBanc.PIX := INIRec.ReadString(sSecao, 'PIX', '');
+
+              if ItemInfPag.infBanc.PIX = '' then
               begin
-                K := 1;
-                while true do
+                ItemInfPag.infBanc.CNPJIPEF := INIRec.ReadString(sSecao, 'CNPJIPEF', '');
+
+                if ItemInfPag.infBanc.CNPJIPEF = '' then
                 begin
-                  sSecao := 'infPrazo' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                  sFim   := INIRec.ReadString(sSecao, 'vParcela', 'FIM');
-
-                  if sFim = 'FIM' then
-                    break;
-
-                  with infPrazo.New do
-                  begin
-                    nParcela := INIRec.ReadInteger(sSecao, 'nParcela', 1);
-                    dVenc    := StringToDateTime(INIRec.ReadString(sSecao, 'dVenc', '0'));
-                    vParcela := StringToFloatDef(INIRec.ReadString(sSecao, 'vParcela', ''), 0 );
-                  end;
-
-                  Inc(K);
-                end;
-              end;
-
-              sSecao := 'infBanc' + IntToStrZero(J, 3);
-
-              if INIRec.SectionExists(sSecao) then
-              begin
-                infBanc.PIX := INIRec.ReadString(sSecao, 'PIX', '');
-
-                if infBanc.PIX = '' then
-                begin
-                  infBanc.CNPJIPEF := INIRec.ReadString(sSecao, 'CNPJIPEF', '');
-
-                  if infBanc.CNPJIPEF = '' then
-                  begin
-                    infBanc.codBanco   := INIRec.ReadString(sSecao, 'codBanco', '');
-                    infBanc.codAgencia := INIRec.ReadString(sSecao, 'codAgencia', '');
-                  end;
+                  ItemInfPag.infBanc.codBanco   := INIRec.ReadString(sSecao, 'codBanco', '');
+                  ItemInfPag.infBanc.codAgencia := INIRec.ReadString(sSecao, 'codAgencia', '');
                 end;
               end;
             end;

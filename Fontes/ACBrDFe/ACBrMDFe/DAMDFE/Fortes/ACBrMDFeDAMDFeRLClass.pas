@@ -185,7 +185,7 @@ begin
         end;
       end;
 
-      if Impresso = False then
+      if not Impresso then
       begin
         TfrmMDFeDAEventoRLRetrato.Imprimir(Self, TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i]);
       end;

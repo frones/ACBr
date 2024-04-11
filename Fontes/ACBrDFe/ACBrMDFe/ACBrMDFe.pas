@@ -163,7 +163,7 @@ constructor TACBrMDFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FManifestos := TManifestos.Create(Self, Manifesto);
+  FManifestos := TManifestos.Create(Self, TManifesto);
   FEventoMDFe := TEventoMDFe.Create;
   FWebServices := TWebServices.Create(Self);
 end;
@@ -436,7 +436,7 @@ end;
 function TACBrMDFe.GerarNomeArqSchemaModal(const AXML: String;
   VersaoServico: Double): String;
 begin
-  if VersaoServico = 0.0 then
+  if VersaoServico = 0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
@@ -447,7 +447,7 @@ end;
 function TACBrMDFe.GerarNomeArqSchemaEvento(ASchemaEventoMDFe: TSchemaMDFe;
   VersaoServico: Double): String;
 begin
-  if VersaoServico = 0.0 then
+  if VersaoServico = 0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +

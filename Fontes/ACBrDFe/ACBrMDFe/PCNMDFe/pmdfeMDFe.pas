@@ -138,11 +138,11 @@ type
   private
     FId: String;
     FVersao: Double;
-    function GetVersaoStr: String;
+//    function GetVersaoStr: String;
   public
     property Id: String read FId write FId;
     property versao: Double read FVersao write FVersao;
-    property VersaoStr: String read GetVersaoStr;
+//    property VersaoStr: String read GetVersaoStr;
   end;
 
   TinfMunCarregaCollection = class(TACBrObjectList)
@@ -2299,7 +2299,7 @@ begin
 end;
 
 { TinfMDFe }
-
+{
 function TinfMDFe.GetVersaoStr: String;
 begin
   if FVersao <= 0 then
@@ -2307,7 +2307,7 @@ begin
   else
      Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
 end;
-
+}
 { TPeriCTeCollection }
 
 function TPeriCTeCollection.Add: TPeriCollectionItem;

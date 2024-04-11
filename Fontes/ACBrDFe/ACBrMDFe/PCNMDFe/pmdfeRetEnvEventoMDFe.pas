@@ -108,6 +108,7 @@ type
 implementation
 
 uses
+  pmdfeMDFe,
   pmdfeConversaoMDFe;
 
 { TRetInfEventoCollection }
@@ -174,6 +175,8 @@ var
   ok: boolean;
   i, j: Integer;
   sAux: string;
+  ItemComp: TCompCollectionItem;
+  ItemInfPrazo: TInfPrazoCollectionItem;
 begin
   Result := False;
 
@@ -256,12 +259,11 @@ begin
               j := 0;
               while Leitor.rExtrai(5, 'Comp', '', j + 1) <> '' do
               begin
-                with infEvento.detEvento.infPag[i].Comp.New do
-                begin
-                  tpComp := StrToTComp(Ok, Leitor.rCampo(tcStr, 'tpComp'));
-                  vComp  := Leitor.rCampo(tcDe2, 'vComp');
-                  xComp  := Leitor.rCampo(tcStr, 'xComp');
-                end;
+                ItemComp := infEvento.detEvento.infPag[i].Comp.New;
+
+                ItemComp.tpComp := StrToTComp(Ok, Leitor.rCampo(tcStr, 'tpComp'));
+                ItemComp.vComp  := Leitor.rCampo(tcDe2, 'vComp');
+                ItemComp.xComp  := Leitor.rCampo(tcStr, 'xComp');
 
                 inc(j);
               end;
@@ -273,12 +275,11 @@ begin
                 j := 0;
                 while Leitor.rExtrai(5, 'infPrazo', '', j + 1) <> '' do
                 begin
-                  with infEvento.detEvento.infPag[i].infPrazo.New do
-                  begin
-                    nParcela := Leitor.rCampo(tcInt, 'nParcela');
-                    dVenc    := Leitor.rCampo(tcDat, 'dVenc');
-                    vParcela := Leitor.rCampo(tcDe2, 'vParcela');
-                  end;
+                  ItemInfPrazo := infEvento.detEvento.infPag[i].infPrazo.New;
+
+                  ItemInfPrazo.nParcela := Leitor.rCampo(tcInt, 'nParcela');
+                  ItemInfPrazo.dVenc    := Leitor.rCampo(tcDat, 'dVenc');
+                  ItemInfPrazo.vParcela := Leitor.rCampo(tcDe2, 'vParcela');
 
                   inc(j);
                 end;

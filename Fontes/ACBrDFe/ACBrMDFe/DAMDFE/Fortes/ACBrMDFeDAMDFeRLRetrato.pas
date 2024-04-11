@@ -267,15 +267,16 @@ begin
       rlmEmitente.Lines.Text := XNome;
 
       rlmDadosEmitente.Lines.Clear;
-      with EnderEmit do
-      begin
-        rlmDadosEmitente.Lines.Add(XLgr + ifthen(XBairro <> '', ', ' + XBairro, '') +  IfThen(Nro = '0', '', ', ' + Nro));
 
-        if XCpl <> '' then
-          rlmDadosEmitente.Lines.Add(XCpl);
+      rlmDadosEmitente.Lines.Add(EnderEmit.XLgr + ifthen(EnderEmit.XBairro <> '',
+        ', ' + EnderEmit.XBairro, '') +
+        IfThen(EnderEmit.Nro = '0', '', ', ' + EnderEmit.Nro));
 
-        rlmDadosEmitente.Lines.Add(XMun + ' - ' + UF + '   CEP: ' + FormatarCEP(CEP));
-      end;
+      if EnderEmit.XCpl <> '' then
+        rlmDadosEmitente.Lines.Add(EnderEmit.XCpl);
+
+      rlmDadosEmitente.Lines.Add(EnderEmit.XMun + ' - ' + EnderEmit.UF +
+        '   CEP: ' + FormatarCEP(EnderEmit.CEP));
 
       rlmDadosEmitente.Lines.Add(IfThen(Length(OnlyNumber(CNPJCPF)) > 11, 'CNPJ: ', 'CPF: ') + FormatarCNPJouCPF(CNPJCPF) + ACBrStr('   IE: ') + IE);
       rlmDadosEmitente.Lines.Add('TEL.: ' + FormatarFone(EnderEmit.Fone));
@@ -558,7 +559,7 @@ begin
       rllMsg2.Enabled := True;
     end;
 
-    if not fpMDFe.procMDFe.cStat in [100, 101, 110] then
+    if not (fpMDFe.procMDFe.cStat in [100, 101, 110]) then
     begin
       rllMsg2.Caption := fpMDFe.procMDFe.xMotivo;
       rllMsg2.Visible := True;

@@ -373,10 +373,10 @@ function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
 begin
   ok := True;
 
-  if d = 1.0 then
+  if d = 1 then
     Result := ve100
   else
-  if d = 3.0 then
+  if d = 3 then
     Result := ve300
   else
   begin
@@ -388,8 +388,8 @@ end;
 function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;
 begin
   case t of
-    ve100: Result := 1.0;
-    ve300: Result := 3.0;
+    ve100: Result := 1;
+    ve300: Result := 3;
   else
     Result := 0;
   end;

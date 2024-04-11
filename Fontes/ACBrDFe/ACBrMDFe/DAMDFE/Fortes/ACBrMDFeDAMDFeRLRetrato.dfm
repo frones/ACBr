@@ -5,7 +5,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 10
   inherited RLMDFe: TRLReport
     Tag = 1

@@ -77,7 +77,7 @@ type
   public
     { Public declarations }
     class procedure Imprimir(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFes: array of TMDFe);
-    class procedure SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AFile: String); overload;
+    class procedure SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; const AFile: String); overload;
     class procedure SalvarPDF(ADANFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AStream: TStream); overload;
 
   end;
@@ -185,7 +185,8 @@ begin
   end;
 end;
 
-class procedure TfrlDAMDFeRL.SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AFile: String);
+class procedure TfrlDAMDFeRL.SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe;
+  const AFile: String);
 var
   DAMDFeReport: TfrlDAMDFeRL;
 //  ADir: String;

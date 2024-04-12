@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/04/2024
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs e a versão da cidade de Ipora do Oeste/SC, o provedor continua o mesmo.
+  Por: Maiquel
 -- ISSBarueri.Provider --
 [*] Incluido a URL de homologação para baixar o XML.
   Por: Kohzito

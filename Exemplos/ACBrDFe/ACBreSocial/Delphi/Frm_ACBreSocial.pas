@@ -6121,6 +6121,17 @@ begin
               vrInden := 3250.55;
               vrBaseIndenFGTS := 6785.22;
               pagDiretoResc := snfNao;
+
+              with idePeriodo.New do
+              begin
+                perRef := '2012-07';
+
+                with baseCalculo do
+                begin
+                  vrBcCpMensal := 0;
+                  vrBcCp13 := 10000;
+                end;
+              end;
             end;
           end;
         end;

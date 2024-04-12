@@ -56,6 +56,9 @@ Símbolo : Significado
 -- pcesConversaoeSocial --
 [*] Atualização dos enumerados referentes à Tabela 18 - Motivos de Afastamento
 Por: paulosilva0306, Renato Rubinho
+-- pcesS2500, Frm_ACBreSocial --
+[*] AlteradO critério para geração do grupo baseCalculo do S2500 considerando preenchimento do vrBcCpMensal ou vrBcCp13
+Por: Elton Barbosa, Renato Rubinho
 
 21/03/2024
 -- ACBreSocialWebServices --

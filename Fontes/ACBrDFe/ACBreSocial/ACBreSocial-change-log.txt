@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2024
+-- pcesConversaoeSocial --
+[*] Atualização dos enumerados referentes à Tabela 18 - Motivos de Afastamento
+Por: paulosilva0306, Renato Rubinho
+
 21/03/2024
 -- ACBreSocialWebServices --
 [*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação

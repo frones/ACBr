@@ -527,16 +527,44 @@ type
 
   tpTpPgto                = (tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202, tpPgtoBenefPrev1207);
 
-  tpMotivosAfastamento    = (mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho, mtvAfastLicencaRegimeProprioSemRemuneracao,
-                             mtvAposentadoriaInvalidez, mtvAcompanhamentoFamiliaEnfermo, mtvAfastamentoEmpregadoConCuradorFGTS,
-                             mtvAfastLicencaRegimeProprioComRemuneracao, mtvCarcere, mtvCargoEletivoCeletistasGeral,
-                             mtvCargoEletivoServidorPublico, mtvCessaoRequisicao, mtvGozoFeriasRecesso, mtvLicencaRemunerada,
-                             mtvLicencaMaternidade120Dias, mtvLicencaMaternidadeEmpresaCidada, mtvLicencaMaternidadeAbortoNaoCriminoso,
-                             mtvLicencaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
-                             mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
-                             mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
-                             mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias, mtvLicencaMaternidadeAntecipacaoProrrogacao,
-                             mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020, mtvImpedimentoConcorrenciaEscalaTrabalhoAvulso);
+  tpMotivosAfastamento    = ( mtvAcidenteDoencaTrabalho,                                  // 01
+                              mtvAcidenteDoencaNaoTrabalho,                               // 03
+                              mtvAfastLicencaRegimeProprioSemRemuneracao,                 // 05
+                              mtvAposentadoriaInvalidez,                                  // 06
+                              mtvAcompanhamentoFamiliaEnfermo,                            // 07
+                              mtvAfastamentoEmpregadoConCuradorFGTS,                      // 08
+                              mtvAfastLicencaRegimeProprioComRemuneracao,                 // 10
+                              mtvCarcere,                                                 // 11
+                              mtvCargoEletivoCeletistasGeral,                             // 12
+                              mtvCargoEletivoServidorPublico,                             // 13
+                              mtvCessaoRequisicao,                                        // 14
+                              mtvGozoFeriasRecesso,                                       // 15
+                              mtvLicencaRemunerada,                                       // 16
+                              mtvLicencaMaternidade120Dias,                               // 17
+                              mtvLicencaMaternidadeEmpresaCidada,                         // 18
+                              mtvLicencaMaternidadeAbortoNaoCriminoso,                    // 19
+                              mtvLicencaMaternidadeAdocaoGuardaJudicial,                  // 20
+                              mtvLicencaNaoRemunerada,                                    // 21
+                              mtvMandatoEleitoralSemRemuneracao,                          // 22
+                              mtvMandatoEleitoralComRemuneracao,                          // 23
+                              mtvMandatoSindical,                                         // 24
+                              mtvMulherVitimaViolencia,                                   // 25
+                              mtvParticipacaoCNPS,                                        // 26
+                              mtvQualificacao,                                            // 27
+                              mtvRepresentanteSindical,                                   // 28
+                              mtvServicoMilitar,                                          // 29
+                              mtvSuspensaoDisciplinar,                                    // 30
+                              mtvServidorPublicoDisponibilidade,                          // 31
+                              mtvLicencaMaternidade180Dias,                               // 33
+                              mtvInatividadetrabalhadorAvulso90Dias,                      // 34
+                              mtvLicencaMaternidadeAntecipacaoProrrogacao,                // 35
+                              mtvAfastamentoTemporarioMandatoCargoComissao,               // 36
+                              mtvSuspensaoTemporariaContratoTrabalhoNosTermosMP936_2020,  // 37
+                              mtvImpedimentoConcorrenciaEscalaTrabalhoAvulso,             // 38
+                              mtvSuspensaoPagamentoServidorNaoRecadastrado,               // 39
+                              mtvExercicioOutroOrgaoEmpregadoCedido,                      // 40
+                              mtvQualificacaoAfastamentoSuspencaoArt17_MP1116_2022,       // 41
+                              mtvQualificacaoAfastamentoSuspencaoArt19_MP1116_2022);      // 42
 
   tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros, tpatNao);
 
@@ -1349,13 +1377,14 @@ const
 
   TMotivoAlteracaoCargoFuncao: array[0..3] of string = ('1', '2', '3', '9');
 
-  TMotivoAfastamento: array[0..32] of string = ('01', '03', '05', '06', '07',
+  TMotivoAfastamento: array[1..38] of string = ('01', '03', '05', '06', '07',
                                                 '08', '10', '11', '12', '13',
                                                 '14', '15', '16', '17', '18',
                                                 '19', '20', '21', '22', '23',
                                                 '24', '25', '26', '27', '28',
                                                 '29', '30', '31', '33', '34',
-                                                '35', '37', '38');
+                                                '35', '36', '37', '38', '39',
+                                                '40', '41', '42');
 
   TGenericosString0_1 : array[0..1] of string = ('0','1' );
   TGenericosString0_2 : array[0..2] of string = ('0','1','2' );

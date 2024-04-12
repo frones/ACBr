@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/04/2024
+-- SisPMJP.GravarXml --
+[*] Ajuste para gerar a tag ValorISS em função do prestador ser Optante SN e
+    ser Micro Empresa Municipal ou ME EPP.
+  Por: Eraldo CG
+
 10/04/2024
 -- Infisc.GravarXml --
 [*] Ajuste para gerar a tag Aliquota com 2 casas decimais.

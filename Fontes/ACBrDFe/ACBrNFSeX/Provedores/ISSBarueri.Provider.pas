@@ -829,9 +829,12 @@ begin
           Response.Data := EncodeDataHora(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
 
         if (FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1) then
-        begin
-          Response.Link := 'https://www.barueri.sp.gov.br/nfe/xmlNFe.ashx?codigoautenticidade=' + Response.Protocolo + '&numdoc=' + Trim(Copy(Dados[1], 94, 14));
-        end;
+          Response.Link := 'https://www.barueri.sp.gov.br/nfe/xmlNFe.ashx'
+        else
+          Response.Link := 'https://testeeiss.barueri.sp.gov.br/nfe/xmlNFe.ashx';
+
+        Response.Link := Response.Link + '?codigoautenticidade=' +
+                 Response.Protocolo + '&numdoc=' + Trim(Copy(Dados[1], 94, 14));
 
         if NaoEstaVazio(Response.Link) then
         begin

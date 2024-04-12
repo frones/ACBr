@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/04/2024
+-- ISSBarueri.Provider --
+[*] Incluido a URL de homologação para baixar o XML.
+  Por: Kohzito
 -- SisPMJP.GravarXml --
 [*] Ajuste para gerar a tag ValorISS em função do prestador ser Optante SN e
     ser Micro Empresa Municipal ou ME EPP.

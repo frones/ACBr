@@ -327,8 +327,8 @@ begin
   LJson := TACBrJSONObject.Create;
   try
     LJson.AddPair('numeroContrato',StrToIntDef(aTitulo.ACBrBoleto.Cedente.CodigoCedente, 0));
-    LJson.AddPair('modalidade',strtoIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1));
-    LJson.AddPair('numeroContaCorrente',strtoInt(aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito));
+    LJson.AddPair('modalidade',StrToIntdef(aTitulo.ACBrBoleto.Cedente.Modalidade, 1));
+    LJson.AddPair('numeroContaCorrente',StrToInt64(aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito));
     LJson.AddPair('especieDocumento',aTitulo.EspecieDoc);
     LJson.AddPair('dataEmissao',DateTimeToDateBancoob(aTitulo.DataDocumento));
     {

@@ -1660,10 +1660,15 @@ begin
 
     else if (Indice = '05') then    // 05-CARTEIRA DIGITAL
     begin
-      FTestePayGo := 27;
-      InformarParametrosCarteiraDigital;
-      Ok := ACBrTEFD1.CRT(AValor, '01');
-      TemTEF := True;
+      if (ACBrTEFD1.GPAtual = gpTefElgin) then
+        Ok := ACBrTEFD1.TEFElgin.PIX(AValor, '01')
+      else
+      begin
+        FTestePayGo := 27;
+        InformarParametrosCarteiraDigital;
+        Ok := ACBrTEFD1.CRT(AValor, '01');
+        TemTEF := True;
+      end;
     end
 
     else if (Indice = '06') then    // 05-VALE REFEICAO
@@ -1925,7 +1930,7 @@ begin
     seTotalAcrescimo.Value := Venda.TotalAcrescimo;
     edTotalVenda.Text := FormatFloatBr(Venda.TotalVenda);
     edTotalPago.Text := FormatFloatBr(Venda.TotalPago);
-    edTroco.Text := FormatFloatBr(max(Venda.Troco,0));
+    edTroco.Text := FormatFloatBr(max(Double(Venda.Troco),0));
   finally
     seTotalDesconto.OnChange := @seTotalDescontoChange;
     seTotalAcrescimo.OnChange := @seTotalAcrescimoChange;

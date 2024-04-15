@@ -55,6 +55,8 @@ type
    TACBrTEFDElgin = class( TACBrTEFDClassTXT )
    public
      constructor Create(AOwner: TComponent); override;
+     Function PIX( Valor : Double; IndiceFPG_ECF : String;
+        DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean;
    end;
 
 implementation
@@ -72,6 +74,21 @@ begin
   GPExeName := CACBrTEFDElgin_GPExeName ;
   fpTipo    := gpTefElgin;
   Name      := 'TEF_Elgin' ;
+end;
+
+function TACBrTEFDElgin.PIX(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
+begin
+  VerificarTransacaoPagamento( Valor );
+
+  IniciarRequisicao('PIX');
+  Req.DocumentoVinculado  := DocumentoVinculado;
+  Req.ValorTotal          := Valor;
+  Req.Moeda               := Moeda;
+  AdicionarIdentificacao;
+  FinalizarRequisicao;
+
+  Result := ProcessarRespostaPagamento( IndiceFPG_ECF, Valor);
 end;
 
 end.

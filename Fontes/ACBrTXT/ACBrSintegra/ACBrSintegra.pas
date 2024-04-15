@@ -3014,18 +3014,34 @@ var
 begin
   LItem1 := TRegistro54(Item1);
   LItem2 := TRegistro54(Item2);
-  if (StrToInt64Def(LItem1.CPFCNPJ,0) > StrToInt64Def(LItem2.CPFCNPJ,0))
-   and (LItem1.Serie > LItem2.Serie)
-   and (StrToInt64Def(LItem1.Numero,0) > StrToInt64Def(LItem2.Numero,0))
-   and (LItem1.NumeroItem > LItem2.NumeroItem) then
+
+  Result := CompareStr(LItem1.CPFCNPJ, LItem2.CPFCNPJ);
+  if Result <> 0 then
+    Exit;
+
+  // Comparação por Série
+  Result := CompareStr(LItem1.Serie, LItem2.Serie);
+  if Result <> 0 then
+    Exit;
+
+  // Comparação por Número
+  if (StrToInt64Def(LItem1.Numero,0) > StrToInt64Def(LItem2.Numero,0)) then
     Result := 1
-  else if (StrToInt64Def(LItem1.CPFCNPJ,0) = StrToInt64Def(LItem2.CPFCNPJ,0))
-   and (LItem1.Serie = LItem2.Serie)
-   and (StrToInt64Def(LItem1.Numero,0) = StrToInt64Def(LItem2.Numero,0))
-   and (LItem1.NumeroItem = LItem2.NumeroItem) then
-    Result := 0
+  else if (StrToInt64Def(LItem1.Numero,0) < StrToInt64Def(LItem2.Numero,0)) then
+    Result := -1
   else
-    Result := -1;
+    Result := 0;
+
+  if Result <> 0 then
+    Exit;
+
+  // Comparação por Número do Item
+  if LItem1.NumeroItem > LItem2.NumeroItem then
+    Result := 1
+  else if LItem1.NumeroItem < LItem2.NumeroItem then
+    Result := -1
+  else
+    Result := 0;
 end;
 
 { TRegistros56 }
@@ -3056,18 +3072,34 @@ var
 begin
   LItem1 := TRegistro56(Item1);
   LItem2 := TRegistro56(Item2);
-  if (StrToInt64Def(LItem1.Cnpj,0) > StrToInt64Def(LItem2.Cnpj,0))
-   and (LItem1.Serie > LItem2.Serie)
-   and (StrToInt64Def(LItem1.Numero,0) > StrToInt64Def(LItem2.Numero,0))
-   and (LItem1.NumeroItem > LItem2.NumeroItem) then
+
+  Result := CompareStr(LItem1.Cnpj, LItem2.Cnpj);
+  if Result <> 0 then
+    Exit;
+
+  // Comparação por Série
+  Result := CompareStr(LItem1.Serie, LItem2.Serie);
+  if Result <> 0 then
+    Exit;
+
+  // Comparação por Número
+  if (StrToInt64Def(LItem1.Numero,0) > StrToInt64Def(LItem2.Numero,0)) then
     Result := 1
-  else if (StrToInt64Def(LItem1.Cnpj,0) = StrToInt64Def(LItem2.Cnpj,0))
-   and (LItem1.Serie = LItem2.Serie)
-   and (StrToInt64Def(LItem1.Numero,0) = StrToInt64Def(LItem2.Numero,0))
-   and (LItem1.NumeroItem = LItem2.NumeroItem) then
-    Result := 0
+  else if (StrToInt64Def(LItem1.Numero,0) < StrToInt64Def(LItem2.Numero,0)) then
+    Result := -1
   else
-    Result := -1;
+    Result := 0;
+
+  if Result <> 0 then
+    Exit;
+
+  // Comparação por Número do Item
+  if LItem1.NumeroItem > LItem2.NumeroItem then
+    Result := 1
+  else if LItem1.NumeroItem < LItem2.NumeroItem then
+    Result := -1
+  else
+    Result := 0;
 end;
 
 { TRegistros75 }

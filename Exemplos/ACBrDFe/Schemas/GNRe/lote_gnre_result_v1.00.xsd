@@ -15,7 +15,7 @@
     					</xs:restriction>
     				</xs:simpleType>
     			</xs:element>
-    			<xs:element name="numeroRecibo" maxOccurs="1" minOccurs="1">
+    			<xs:element name="numeroRecibo" minOccurs="0">
     				<xs:simpleType>
     					<xs:restriction base="xs:string">
     						<xs:pattern value="[0-9]{10}"></xs:pattern>

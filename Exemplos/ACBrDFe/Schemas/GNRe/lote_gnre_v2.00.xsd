@@ -28,7 +28,7 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="TDadosGNRE" minOccurs="1"
-								maxOccurs="100">
+								maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:choice>
 						            	<xs:group ref="dadosGnre_1.00"/>

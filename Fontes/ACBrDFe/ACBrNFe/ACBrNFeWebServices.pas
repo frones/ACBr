@@ -2954,7 +2954,8 @@ begin
 
   VerificarSemResposta;
 
-  FRetConsCad.XmlRetorno := ParseText(FPRetWS);
+  FRetConsCad.XmlRetorno := FPRetWS; //ParseText(FPRetWS); removido o parser por conta do ACBrDocumentXML que
+                                     //não esta conseguindo ler & precisa ser &amp;
   FRetConsCad.LerXml;
 
   Fversao := FRetConsCad.versao;

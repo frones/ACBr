@@ -271,6 +271,22 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
+        public void GerarRemessaStream(string eDir, int eNumArquivo, string eNomeArq, Stream aStream) 
+        {
+            if (aStream == null) throw new ArgumentNullException(nameof(aStream));
+
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_GerarRemessaStream>();
+            var ret = ExecuteMethod(() => method(eDir, eNumArquivo, eNomeArq, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var rem = ProcessResult(buffer, bufferLen);
+            Base64ToStream(rem, aStream);
+        }
+
         public RetornoBoleto ObterRetorno(string eDir, string eNomeArq)
         {
             var bufferLen = BUFFER_LEN;

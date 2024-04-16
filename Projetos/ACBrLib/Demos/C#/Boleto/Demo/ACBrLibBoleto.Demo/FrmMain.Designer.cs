@@ -121,6 +121,8 @@
             this.txtHost = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label50 = new System.Windows.Forms.Label();
+            this.txtNomeArquivoLog = new System.Windows.Forms.TextBox();
             this.btnArquivoKEY = new System.Windows.Forms.Button();
             this.btnArquivoCRT = new System.Windows.Forms.Button();
             this.label48 = new System.Windows.Forms.Label();
@@ -186,8 +188,7 @@
             this.btnBaixaTitulo = new System.Windows.Forms.Button();
             this.btnConsultaDetalhe = new System.Windows.Forms.Button();
             this.btnArray = new System.Windows.Forms.Button();
-            this.label50 = new System.Windows.Forms.Label();
-            this.txtNomeArquivoLog = new System.Windows.Forms.TextBox();
+            this.btnGerarRemessaStream = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1201,6 +1202,23 @@
             this.tabPage1.Text = "WebService";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.Location = new System.Drawing.Point(324, 151);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(64, 13);
+            this.label50.TabIndex = 60;
+            this.label50.Text = "Nome Log";
+            // 
+            // txtNomeArquivoLog
+            // 
+            this.txtNomeArquivoLog.Location = new System.Drawing.Point(327, 167);
+            this.txtNomeArquivoLog.Name = "txtNomeArquivoLog";
+            this.txtNomeArquivoLog.Size = new System.Drawing.Size(244, 20);
+            this.txtNomeArquivoLog.TabIndex = 59;
+            // 
             // btnArquivoKEY
             // 
             this.btnArquivoKEY.Location = new System.Drawing.Point(289, 106);
@@ -1659,7 +1677,7 @@
             // 
             // btnListaBancos
             // 
-            this.btnListaBancos.Location = new System.Drawing.Point(144, 386);
+            this.btnListaBancos.Location = new System.Drawing.Point(12, 709);
             this.btnListaBancos.Name = "btnListaBancos";
             this.btnListaBancos.Size = new System.Drawing.Size(126, 23);
             this.btnListaBancos.TabIndex = 11;
@@ -1867,28 +1885,22 @@
             this.btnArray.UseVisualStyleBackColor = true;
             this.btnArray.Click += new System.EventHandler(this.btnArray_Click);
             // 
-            // label50
+            // btnGerarRemessaStream
             // 
-            this.label50.AutoSize = true;
-            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label50.Location = new System.Drawing.Point(324, 151);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(64, 13);
-            this.label50.TabIndex = 60;
-            this.label50.Text = "Nome Log";
-            // 
-            // txtNomeArquivoLog
-            // 
-            this.txtNomeArquivoLog.Location = new System.Drawing.Point(327, 167);
-            this.txtNomeArquivoLog.Name = "txtNomeArquivoLog";
-            this.txtNomeArquivoLog.Size = new System.Drawing.Size(244, 20);
-            this.txtNomeArquivoLog.TabIndex = 59;
+            this.btnGerarRemessaStream.Location = new System.Drawing.Point(144, 386);
+            this.btnGerarRemessaStream.Name = "btnGerarRemessaStream";
+            this.btnGerarRemessaStream.Size = new System.Drawing.Size(126, 23);
+            this.btnGerarRemessaStream.TabIndex = 32;
+            this.btnGerarRemessaStream.Text = "Gerar Remessa Stream";
+            this.btnGerarRemessaStream.UseVisualStyleBackColor = true;
+            this.btnGerarRemessaStream.Click += new System.EventHandler(this.btnGerarRemessaStream_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 716);
+            this.ClientSize = new System.Drawing.Size(800, 747);
+            this.Controls.Add(this.btnGerarRemessaStream);
             this.Controls.Add(this.btnArray);
             this.Controls.Add(this.btnConsultaDetalhe);
             this.Controls.Add(this.btnBaixaTitulo);
@@ -2115,6 +2127,7 @@
         private System.Windows.Forms.Button btnArray;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.TextBox txtNomeArquivoLog;
+        private System.Windows.Forms.Button btnGerarRemessaStream;
     }
 }
 

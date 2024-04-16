@@ -478,6 +478,21 @@ namespace ACBrLibBoleto.Demo
             rtbRespostas.AppendLine("Remessa Gerada.");
         }
 
+        private async void btnGerarRemessaStream_Click(object sender, EventArgs e)
+        {
+            var nomeArquivo = "RemessaStream.rem";
+
+            FileStream aStream = File.Create(nomeArquivo);
+
+            var ret = "";
+            if (string.IsNullOrEmpty(txtDirRemessa.Text))
+                ret = Application.StartupPath;
+            else
+                ret = txtDirRemessa.Text;
+            boleto.GerarRemessaStream(ret, 1, txtNomeRemessa.Text, aStream);
+            rtbRespostas.AppendLine("Remessa Gerada.");
+        }
+
         private void BtnTotalTitulo_Click(object sender, EventArgs e)
         {
             var ret = boleto.TotalTitulosLista();
@@ -671,8 +686,6 @@ namespace ACBrLibBoleto.Demo
                 rtbRespostas.AppendLine(ex.Message);
             }
         }
-
-
 
         private void btnClasseTitulo_Click(object sender, EventArgs e)
         {

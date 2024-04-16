@@ -122,6 +122,9 @@ function Boleto_GerarHTML(const libHandle: TLibHandle): longint;
 function Boleto_GerarRemessa(const libHandle: TLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
+function Boleto_GerarRemessaStream(const libHandle: TLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
+
 function Boleto_LerRetorno(const libHandle: TLibHandle; eDir, eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 

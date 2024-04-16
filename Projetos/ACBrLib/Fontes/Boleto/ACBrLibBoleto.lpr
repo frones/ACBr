@@ -75,6 +75,7 @@ exports
   Boleto_SalvarPDFBoleto,
   Boleto_GerarHTML,
   Boleto_GerarRemessa,
+  Boleto_GerarRemessaStream,
   Boleto_LerRetorno,
   Boleto_ObterRetorno,
   Boleto_EnviarEmail,

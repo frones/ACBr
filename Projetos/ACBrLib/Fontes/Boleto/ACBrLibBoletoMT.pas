@@ -91,6 +91,8 @@ function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: longint; c
 function Boleto_GerarHTML(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_GerarRemessa(const libHandle: PLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarRemessaStream(const libHandle: PLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_LerRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ObterRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -382,6 +384,20 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibBoleto(libHandle^.Lib).GerarRemessa(eDir, eNumArquivo, eNomeArq);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function Boleto_GerarRemessaStream(const libHandle: PLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBoleto(libHandle^.Lib).GerarRemessaStream(eDir, eNumArquivo, eNomeArq, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

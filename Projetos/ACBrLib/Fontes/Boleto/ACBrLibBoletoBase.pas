@@ -75,6 +75,7 @@ type
     function SalvarPDFBoleto(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function GerarHTML: longint;
     function GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
+    function GerarRemessaStream(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function LerRetorno(eDir, eNomeArq: PChar): longint;
     function ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
@@ -521,6 +522,50 @@ begin
       BoletoDM.ACBrBoleto1.GerarRemessa( NumArquivo );
       Result := SetRetorno(ErrOK);
     finally
+      BoletoDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibBoleto.GerarRemessaStream(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Dir, NomeArq: AnsiString;
+  NumArquivo: Integer;
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    Dir := ConverterAnsiParaUTF8(eDir);
+    NumArquivo:= StrToIntDef(IntToStr(eNumArquivo ), 0);
+    NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_GerarRemessaStream(' + Dir + ', ' + IntToStr(NumArquivo) + ', ' + NomeArq + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_GerarRemessaStream', logNormal);
+
+    AStream := TMemoryStream.Create;
+    BoletoDM.Travar;
+
+    try
+      if NaoEstaVazio( Dir ) then
+        BoletoDM.ACBrBoleto1.DirArqRemessa := Dir;
+      if NaoEstaVazio( NomeArq ) then
+        BoletoDM.ACBrBoleto1.NomeArqRemessa:= NomeArq;
+
+      BoletoDM.ACBrBoleto1.GerarRemessaStream( NumArquivo, AStream );
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      AStream.Free;
       BoletoDM.Destravar;
     end;
   except

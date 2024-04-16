@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2024
+--- ACBrLibBoletoBase, ACBrLibBoletoST, ACBrLibBoletoMT, ACBrLibBoletoStaticImport, ACBrLibBoletoStaticImportMT ---
+[+] Novo método Boleto_GerarRemessaStream
+    #TK-5181 - https://www.projetoacbr.com.br/forum/topic/76687-gerar-remessa-stream/
+	Por: Antonio Carlos Junior
 
 27/03/2024
 --- ACBrLibBoletoRespostas ---

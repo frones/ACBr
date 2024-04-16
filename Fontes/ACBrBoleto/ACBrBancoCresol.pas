@@ -169,7 +169,7 @@ begin
 
            TempData := copy(Linha, 74, 2) + '/'+copy(Linha, 76, 2)+'/'+copy(Linha, 78, 4);
            if TempData <> '00/00/0000' then
-              Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+              Vencimento := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
 
            ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
            NossoNumero    := DefineNossoNumeroRetorno(Linha);
@@ -202,11 +202,11 @@ begin
 
            TempData            := copy(Linha, 138, 2)+'/'+copy(Linha, 140, 2)+'/'+copy(Linha, 142, 4);
            if TempData <> '00/00/0000' then
-               DataOcorrencia  := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+               DataOcorrencia  := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
 
            TempData := copy(Linha, 146, 2)+'/'+copy(Linha, 148, 2)+'/'+copy(Linha, 150, 4);
            if TempData <> '00/00/0000' then
-               DataCredito     := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+               DataCredito     := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
         end;
      end;
   end;

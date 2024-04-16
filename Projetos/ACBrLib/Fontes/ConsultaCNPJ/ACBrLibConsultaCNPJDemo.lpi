@@ -528,10 +528,13 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="ACBrTCP"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="13">
       <Unit0>

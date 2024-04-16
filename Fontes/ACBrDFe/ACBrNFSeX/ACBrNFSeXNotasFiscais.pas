@@ -331,6 +331,7 @@ begin
       begin
         Numero := INIRec.ReadString(sSecao, 'Numero', '');
         cNFSe := GerarCodigoDFe(StrToIntDef(Numero, 0));
+        NumeroLote := INIRec.ReadString(sSecao, 'NumeroLote', '');
       end;
 
       sSecao := 'IdentificacaoRps';
@@ -885,6 +886,7 @@ begin
       //Provedor Infisc - Layout Proprio
       sSecao:= 'IdentificacaoNFSe';
       INIRec.WriteString(sSecao, 'Numero', Numero);
+      INIRec.WriteString(sSecao, 'NumeroLote', NumeroLote);
 
       //Adicionado para que a informação seja devolvida para quem usa a lib, não considerar na rotina de leitura.
       if CodigoVerificacao <> '' then

@@ -44,6 +44,18 @@ Símbolo : Significado
 
 
 16/04/2024
+-- IPM.LerXml --
+[*] Corrigido a leitura das tags que contem horario e a leitura da aliquota.
+  Por: Italo Giurizzato Junior
+-- Betha.LerXml --
+[*] Alterado o tipo de conversao da leitura da tag DataVencimento para tcDatVcto.
+  Por: Diogo Loff
+-- EloTech.Provider --
+[*] Alterado o TratarXmlRetornado para evitar o erro: xmlParseEntityRef: no name. 
+  Por: Jean Carlo de Lima Kuhn
+-- Giap.Provider --
+[*] Alteração do caracter de quebra de linha.
+  Por: Jeferson S Lima
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs e a versão da cidade de Nova Venecia/ES, o provedor continua o mesmo.
   Por: João Antônio

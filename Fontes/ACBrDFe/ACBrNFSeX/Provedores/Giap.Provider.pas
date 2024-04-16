@@ -109,7 +109,7 @@ begin
   with ConfigGeral do
   begin
     Identificador := '';
-    QuebradeLinha := '\\';
+    QuebradeLinha := sLineBreak;
     UseCertificateHTTP := False;
     UseAuthorizationHeader := True;
     ModoEnvio := meLoteAssincrono;

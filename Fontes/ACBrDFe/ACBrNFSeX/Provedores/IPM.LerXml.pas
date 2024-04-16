@@ -133,6 +133,7 @@ begin
       Valores.BaseCalculo := 0;
       Valores.ValorIss := 0;
       Valores.ValorInss := 0;
+      Valores.Aliquota := 0;
 
       ANodes := AuxNode.Childrens.FindAllAnyNs('lista');
 
@@ -148,8 +149,9 @@ begin
 
         aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_item_lista_servico'), tcStr);
         ItemServico[i].ItemListaServico := PadLeft(aValor, 4, '0');
+        ItemServico[i].ItemListaServico := NormatizarItemListaServico(ItemServico[i].ItemListaServico);
 
-        ItemServico[i].xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
+        ItemServico[i].xItemListaServico := ItemListaServicoDescricao(ItemServico[i].ItemListaServico);
 
         aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unidade_codigo'), tcStr);
         ItemServico[i].TipoUnidade := StrToUnidade(Ok, aValor);
@@ -170,11 +172,13 @@ begin
         ItemServico[i].ValorDeducoes := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_deducao'), tcDe2);
         ItemServico[i].BaseCalculo := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
         ItemServico[i].ValorIssRetido := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
+
         ItemServico[i].ValorISS := ItemServico[i].BaseCalculo *
                                    ItemServico[i].Aliquota / 100;
 
-        Valores.ValorIssRetido := Valores.ValorIssRetido +
-            ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
+        Valores.Aliquota := ItemServico[i].Aliquota;
+
+        Valores.ValorIssRetido := Valores.ValorIssRetido + ItemServico[i].ValorIssRetido;
 
         Valores.BaseCalculo := Valores.BaseCalculo + ItemServico[i].BaseCalculo;
         Valores.ValorIss := Valores.ValorIss + ItemServico[i].ValorISS;
@@ -191,8 +195,9 @@ end;
 procedure TNFSeR_IPM.LerNota(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
+  aValor, aValorD, aValorH: string;
   Ok: Boolean;
+  i: Integer;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('nf');
 
@@ -217,11 +222,17 @@ begin
         Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero_nfse'), tcStr);
         SeriePrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('serie_nfse'), tcStr);
 
-        aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('data_nfse'), tcStr);
-        aValor := aValor + ' ' +
-                  ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcStr);
+        aValorD := ObterConteudo(AuxNode.Childrens.FindAnyNs('data_nfse'), tcStr);
+        aValorH := ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcStr);
 
-        DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY hh:nn:ss');
+        i := Pos('-', aValorH);
+
+        if i > 0 then
+          aValorH := Copy(aValorH, 1, i-1);
+
+        aValorD := aValorD + ' ' + aValorH;
+
+        DataEmissao := EncodeDataHora(aValorD, 'DD/MM/YYYY hh:nn:ss');
       end;
 
       //XML cancelado não tem a tag "situacao_codigo_nfse" se baixado do site da prefeitura
@@ -287,17 +298,24 @@ end;
 procedure TNFSeR_IPM.LerRps(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
+  aValorD, aValorH: string;
+  i: Integer;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('rps');
 
   if AuxNode <> nil then
   begin
-    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('data_emissao_recibo_provisorio'), tcStr);
-    aValor := aValor + ' ' +
-              ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_emissao_recibo_provisorio'), tcStr);
+    aValorD := ObterConteudo(AuxNode.Childrens.FindAnyNs('data_emissao_recibo_provisorio'), tcStr);
+    aValorH := ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_emissao_recibo_provisorio'), tcStr);
 
-    NFSe.DataEmissao := EncodeDataHora(aValor, 'DD/MM/YYYY hh:nn:ss');
+    i := Pos('-', aValorH);
+
+    if i > 0 then
+      aValorH := Copy(aValorH, 1, i-1);
+
+    aValorD := aValorD + ' ' + aValorH;
+
+    NFSe.DataEmissao := EncodeDataHora(aValorD, 'DD/MM/YYYY hh:nn:ss');
     NFSe.DataEmissaoRps := NFSe.DataEmissao;
 
     with NFSe.IdentificacaoRps do

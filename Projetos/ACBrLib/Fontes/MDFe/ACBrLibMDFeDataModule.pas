@@ -116,7 +116,7 @@ procedure TLibMDFeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: 
 {$IFDEF Demo}
 Var
   I: Integer;
-  AItem: Manifesto;
+  AItem: TManifesto;
   AEvento: TInfEventoCollectionItem;
 {$ENDIF}
 begin

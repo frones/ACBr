@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/04/2024
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs e a versão da cidade de Nova Venecia/ES, o provedor continua o mesmo.
+  Por: João Antônio
+[+] Incluída a cidade de Caico/RN, o provedor é Tinus.
+  Por: PrimeSoftware
+[+] Incluída a cidade de Sao Domingos/GO, o provedor é Centi.
+  Por: João Paulo Alcântara
+[+] Incluída a cidade de Guacui/ES, o provedor é EL.
+  Por: Heronim Antonio Marçal
+
 12/04/2024
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs e a versão da cidade de Ipora do Oeste/SC, o provedor continua o mesmo.

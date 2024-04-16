@@ -1001,18 +1001,13 @@ end;
 
 procedure TACBrBancoABCBrasil.GerarRegistroTrailler400(ARemessa: TStringList);
 var
-  vQtdeLinha: Integer;
-  wLinha: string;
+  LLinha: string;
 begin
-  vQtdeLinha := StrToInt(copy(ARemessa.Text, Length(ARemessa.Text) - 7, 6)); //lê a ultima linha gravada para pergar o codigo seq.
-
-  wLinha := '9' + // ID Registro
-  IntToStrZero(vQtdeLinha + 1, 6) + // Contador de Registros
-  IntToStrZero(round(vTotalTitulos * 100), 13) + // Valor Total dos Titulos
-  StringOfChar('0', 374) +
+  LLinha := '9' + // ID Registro
+  StringOfChar(' ', 393) +
     IntToStrZero(ARemessa.Count + 1, 6);
 
-  ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
+  ARemessa.Text := ARemessa.Text + UpperCase(LLinha);
 end;
 
 procedure TACBrBancoABCBrasil.LerRetorno240(ARetorno: TStringList);

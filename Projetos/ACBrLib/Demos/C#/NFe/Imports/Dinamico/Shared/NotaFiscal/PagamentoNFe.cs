@@ -32,7 +32,7 @@ namespace ACBrLib.NFe
         /// </summary>
         public decimal vPag { get; set; }
 
-        public DateTime dPag { get; set; }
+        public DateTime? dPag { get; set; }
 
         /// <summary>
         /// Grupo Opcional

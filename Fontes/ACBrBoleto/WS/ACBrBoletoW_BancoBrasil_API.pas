@@ -348,7 +348,9 @@ begin
       LJsonObject.AddPair('valorAbatimento', ATitulo.ValorAbatimento);
 
       if (ATitulo.DataProtesto > 0) then
-        LJsonObject.AddPair('quantidadeDiasProtesto', Trunc(ATitulo.DataProtesto - ATitulo.Vencimento));
+        LJsonObject.AddPair('quantidadeDiasProtesto', Trunc(ATitulo.DataProtesto - ATitulo.Vencimento))
+      else
+        LJsonObject.AddPair('quantidadeDiasProtesto', 0);
 
       if (ATitulo.DataLimitePagto > 0 ) then
       begin

@@ -3,7 +3,8 @@ program ACBrLibBoletoTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, printer4lazarus, ACBrLibBoletoTestCase;
+  Interfaces, Forms, OpenSSLExt, GuiTestRunner, printer4lazarus,
+  ACBrLibBoletoTestCase;
 
 {$R *.res}
 

@@ -70,6 +70,7 @@ type
     procedure Test_Boleto_GerarPDF;
     procedure Test_Boleto_GerarHTML;
     procedure Test_Boleto_GerarRemessa;
+    procedure Test_Boleto_GerarRemessaStream;
     procedure Test_Boleto_LerRetorno;
     procedure Test_Boleto_SetDiretorioArquivo;
     procedure Test_Boleto_ListaBancos;
@@ -445,6 +446,22 @@ begin
   //AssertEquals('Erro ao tentar Gerar Remessa', ErrOK, Boleto_GerarRemessa(Handle, PChar(ApplicationPath),1,'Remessa.rem'));
   AssertEquals(ErrOK, Boleto_Finalizar(Handle));
 
+end;
+
+procedure TACBrLibBoletoTest.Test_Boleto_GerarRemessaStream;
+var
+  Handle: THandle;
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, Boleto_Inicializar(Handle, '',''));
+
+  //Bufflen := 255;
+  //AStr := Space(Bufflen);
+  //AssertEquals('Erro ao tentar Incluir Titulo', ErrOK, Boleto_IncluirTitulos(Handle, '..\Titulo.ini',''));
+  //AssertEquals('Erro ao tentar Gerar Remessa', ErrOK, Boleto_GerarRemessaStream(Handle, PChar(ApplicationPath), 1,'Remessa.rem', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, Boleto_Finalizar(Handle));
 end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_LerRetorno;

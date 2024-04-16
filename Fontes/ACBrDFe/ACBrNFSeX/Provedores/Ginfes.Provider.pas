@@ -93,11 +93,12 @@ begin
   inherited Configuracao;
 
   ConfigGeral.QuebradeLinha := '\n';
-
   with ConfigMsgDados do
   begin
     Prefixo := 'ns3';
     PrefixoTS := 'ns4';
+
+    ConsultarNFSePorFaixa.DocElemento := 'ConsultarNfseEnvio';
 
     DadosCabecalho := '<ns2:cabecalho versao="3" xmlns:ns2="http://www.ginfes.com.br/cabecalho_v03.xsd">' +
                       '<versaoDados>3</versaoDados>' +
@@ -115,17 +116,20 @@ begin
 
     ConsultarNFSe.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
 
+    ConsultarNFSePorFaixa.xmlns := 'http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd';
+
     CancelarNFSe.xmlns := 'http://www.ginfes.com.br/servico_cancelar_nfse_envio_v03.xsd';
   end;
 
   with ConfigAssinar do
   begin
-    LoteRps           := True;
+    LoteRps := True;
     ConsultarSituacao := True;
-    ConsultarLote     := True;
-    ConsultarNFSeRps  := True;
-    ConsultarNFSe     := True;
-    CancelarNFSe      := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
+    ConsultarNFSe := True;
+    ConsultarNFSePorFaixa := True;
+    CancelarNFSe := True;
   end;
 
   SetNomeXSD('***');
@@ -137,6 +141,7 @@ begin
     ConsultarLote := 'servico_consultar_lote_rps_envio_v03.xsd';
     ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio_v03.xsd';
     ConsultarNFSe := 'servico_consultar_nfse_envio_v03.xsd';
+    ConsultarNFSePorFaixa := 'servico_consultar_nfse_envio_v03.xsd';
     CancelarNFSe := 'servico_cancelar_nfse_envio_v03.xsd';
 
     Validar := False;

@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 16/04/2024
+-- Ginfes.Provider --
+[*] Alterações visando a consulta da NFS-e por período.
+  Por: Italo Giurizzato Junior
+-- ACBrNFSeXDANFSeRLISSNet.dfm/ACBrNFSeXDANFSeRLRetrato.dfm/ACBrNFSeXDANFSeRLSimplISS.dfm --
+[*] Removido a linha que tem o propriedade: StyleElements, para poder compatibilizar
+    com o Delphi 7 e Lazarus.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Carangola/MG, trocou de provedor, agora é o EL.
   Por: João Antônio

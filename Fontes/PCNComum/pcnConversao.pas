@@ -202,6 +202,7 @@ type
   TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
 
   TIndicador = (tiSim, tiNao);
+  TIndicadorEx = (tieNenhum, tieSim, tieNao);
 
   TpcnTipoNFe = (tnEntrada, tnSaida);
 
@@ -425,6 +426,9 @@ function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 
 function TIndicadorToStr(const t: TIndicador): string;
 function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+
+function TIndicadorExToStr(const t: TIndicadorEx): string;
+function StrToTIndicadorEx(out ok: boolean; const s: string): TIndicadorEx;
 
 function tpNFToStr(const t: TpcnTipoNFe): String;
 function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
@@ -1760,6 +1764,16 @@ end;
 function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 begin
   Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function TIndicadorExToStr(const t: TIndicadorEx): string;
+begin
+  Result := EnumeradoToStr(t, ['', '1', '0'], [tieNenhum, tieSim, tieNao]);
+end;
+
+function StrToTIndicadorEx(out ok: boolean; const s: string): TIndicadorEx;
+begin
+  Result := StrToEnumerado(ok, s, ['', '1', '0'], [tieNenhum, tieSim, tieNao]);
 end;
 
 function tpNFToStr(const t: TpcnTipoNFe): String;

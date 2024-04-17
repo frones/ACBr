@@ -531,7 +531,9 @@ begin
   ASenha := fpCmd.Params(1);
 
   with TACBrObjetoACBr(fpObjetoDono) do
-  begin
+  begin   
+    FrmACBrMonitor.ACBrNFe1.Configuracoes.Geral.SSLLib:=libNone;
+    FrmACBrMonitor.ACBrNFe1.SSL.DescarregarCertificado;
     if (APath <> '') then
     begin
       if FileExists(APath) then
@@ -559,6 +561,8 @@ begin
       FrmACBrMonitor.ACBrGNRE1.Configuracoes.Certificados.Senha := ASenha;
       FrmACBrMonitor.edtSenha.Text := FrmACBrMonitor.ACBrNFe1.Configuracoes.Certificados.Senha;
       FrmACBrMonitor.SalvarIni;
+      FrmACBrMonitor.SetComumConfig(FrmACBrMonitor.ACBrNFe1.Configuracoes);
+      FrmACBrMonitor.ACBrNFe1.SSL.CarregarCertificado;
     end
     else
       raise Exception.Create('Certificado '+APath+' Inválido.');

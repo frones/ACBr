@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/24
+-- DoACBrUnit.pas  --
+[*] #TK-5303 Adicionado as chamadas Descarregar e Carregar certificados no metodo SetCertificado
+https://www.projetoacbr.com.br/forum/topic/76796-rejeicao-cnpj-base-consultado-difere-do-cnpj-base-do-certificado-digital/#comment-499716
+Daniel de Morais InfoCotidiano
+
 02/04/24
 -- ACBrMonitor1, DoBoletoUnit   --
 [*] #TK-5115 Adicionado parametro Senha no metodo BOLETO.EnviarEmailBoleto. (funciona apenas em FPDF)

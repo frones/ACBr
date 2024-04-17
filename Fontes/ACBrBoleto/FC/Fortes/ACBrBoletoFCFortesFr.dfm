@@ -3205,6 +3205,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Top = 8
       Width = 756
       Height = 358
+	  AutoExpand = False
       BeforePrint = RLBand3BeforePrint
       object txtNomeSacadoCarne: TRLMemo
         Left = 0

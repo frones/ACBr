@@ -181,6 +181,13 @@ var
   TagEnvio, Prefixo, PrefixoTS: string;
   I: Integer;
 begin
+  if EstaVazio(Response.NumeroLote) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod111;
+    AErro.Descricao := ACBrStr(Desc111);
+  end;
+
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
   begin
     AErro := Response.Erros.New;
@@ -214,6 +221,17 @@ begin
   ListaRps := '';
   Prefixo := '';
   PrefixoTS := '';
+
+  {
+    Alimenta o campo NumeroLote na Lista de notas com o numero do lote informado
+    no primeiro parâmetro do método Emitir. O provedor AssessorPublico necessida
+    dessa informação.
+  }
+  for i := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
+  begin
+    if TACBrNFSeX(FAOwner).NotasFiscais[i].NFSe.NumeroLote = '' then
+      TACBrNFSeX(FAOwner).NotasFiscais[i].NFSe.NumeroLote := Response.NumeroLote;
+  end;
 
   case Response.ModoEnvio of
     meLoteSincrono:

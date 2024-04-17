@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2024
+-- Diversos --
+[*] Criado um novo tipo chamado TIndicadorEx que contem os valores:
+    tieNenhum, tieSim e tieNao para ser utilizado no lugar do TIndicador 
+    para o campo indDeduzDeson, cujo valor padrão vai ser tieNenhum.
+  Por: Italo Giurizzato Junior
+
 16/04/2024
 -- ACBrNFeServicos --
 [*] Adiciona a URL de produção da Inutilização versão 4 para a SVC - AN.

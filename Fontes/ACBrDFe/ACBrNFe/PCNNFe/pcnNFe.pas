@@ -1247,7 +1247,7 @@ type
     FmotRedAdRem: TmotRedAdRem;
     FvICMSMonoOp: Currency;
     FqBCMonoRet: Currency;
-    FindDeduzDeson: TIndicador;
+    FindDeduzDeson: TIndicadorEx;
     FcBenefRBC: string;
   public
     constructor Create;
@@ -1320,7 +1320,7 @@ type
     property vICMSMonoRet: Currency read FvICMSMonoRet write FvICMSMonoRet;
     property qBCMonoRet: Currency read FqBCMonoRet write FqBCMonoRet;
 
-    property indDeduzDeson: TIndicador read FindDeduzDeson write FindDeduzDeson default tiNao;
+    property indDeduzDeson: TIndicadorEx read FindDeduzDeson write FindDeduzDeson default tieNenhum;
     property cBenefRBC: string read FcBenefRBC write FcBenefRBC;
   end;
 
@@ -3780,7 +3780,8 @@ end;
 constructor TICMS.Create;
 begin
   inherited Create;
-  FindDeduzDeson := tiNao;
+
+  FindDeduzDeson := tieNenhum;
 end;
 
 { TIPI }

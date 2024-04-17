@@ -2260,7 +2260,7 @@ begin
                 ICMS.motRedAdRem := StrTomotRedAdRem(OK, INIRec.ReadString(sSecao,'motRedAdRem','0'));
                 ICMS.qBCMonoRet := StringToFloatDef( INIRec.ReadString(sSecao,'qBCMonoRet','') ,0);
                 ICMS.vICMSMonoOp := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSMonoOp','') ,0);
-                ICMS.indDeduzDeson := StrToTIndicador(OK, INIRec.ReadString(sSecao,'indDeduzDeson','0'));
+                ICMS.indDeduzDeson := StrToTIndicadorEx(OK, INIRec.ReadString(sSecao,'indDeduzDeson', ''));
               end;
             end;
 
@@ -3303,7 +3303,7 @@ begin
               INIRec.WriteString(sSecao, 'motRedAdRem', motRedAdRemToStr(ICMS.motRedAdRem));
               INIRec.WriteFloat(sSecao, 'qBCMonoRet', ICMS.qBCMonoRet);
               INIRec.WriteFloat(sSecao, 'vICMSMonoOp', ICMS.vICMSMonoOp);
-              INIRec.WriteString(sSecao, 'indDeduzDeson', TIndicadorToStr(ICMS.indDeduzDeson));
+              INIRec.WriteString(sSecao, 'indDeduzDeson', TIndicadorExToStr(ICMS.indDeduzDeson));
             end;
             sSecao := 'ICMSUFDEST' + IntToStrZero(I + 1, 3);
             with ICMSUFDest do

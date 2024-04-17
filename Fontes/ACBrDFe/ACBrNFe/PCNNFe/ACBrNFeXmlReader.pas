@@ -831,6 +831,7 @@ procedure TNFeXmlReader.LerDetImposto(const Item: TDetCollectionItem; const ANod
 var
   ok: Boolean;
   AuxNode, AxNode: TACBrXmlNode;
+  sAux: string;
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
@@ -907,7 +908,14 @@ begin
 
     Item.Imposto.ICMS.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
     Item.Imposto.ICMS.vICMSMonoOp := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoOp'), tcDe2);
-    Item.Imposto.ICMS.indDeduzDeson := StrToTIndicador(ok, ObterConteudo(AuxNode.Childrens.Find('indDeduzDeson'), tcStr));
+
+    sAux := ObterConteudo(AuxNode.Childrens.Find('indDeduzDeson'), tcStr);
+    Item.Imposto.ICMS.indDeduzDeson := tieNenhum;
+    if sAux = '1' then
+      Item.Imposto.ICMS.indDeduzDeson := tieSim;
+    if sAux = '0' then
+      Item.Imposto.ICMS.indDeduzDeson := tieNao;
+
     Item.Imposto.ICMS.cBenefRBC := ObterConteudo(AuxNode.Childrens.Find('cBenefRBC'), tcStr);
 
     if (AuxNode.Name = 'ICMSPart') then

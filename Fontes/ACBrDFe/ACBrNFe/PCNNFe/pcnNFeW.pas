@@ -1655,7 +1655,7 @@ begin
                         Gerador.wCampo(tcDe2, 'N27a', 'vICMSDeson', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
                         Gerador.wCampo(tcStr, 'N28' , 'motDesICMS', 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
                         if (NFe.infNFe.Versao >= 4) then
-                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
+                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorExToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
                       end;
                     end;
 
@@ -1681,7 +1681,7 @@ begin
                         Gerador.wCampo(tcDe2, 'N27a', 'vICMSDeson', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
                         Gerador.wCampo(tcStr, 'N28' , 'motDesICMS', 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
                         if (NFe.infNFe.Versao >= 4) then
-                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
+                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorExToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
                       end;
                     end;
 
@@ -1697,7 +1697,7 @@ begin
                            Gerador.wCampo(tcDe2, 'N13a', 'vICMSDeson', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
                            Gerador.wCampo(tcStr, 'N13b', 'motDesICMS', 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
                            if (NFe.infNFe.Versao >= 4) then
-                             Gerador.wCampo(tcStr, 'N13c' , 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
+                             Gerador.wCampo(tcStr, 'N13c' , 'indDeduzDeson', 1, 1, 0, TIndicadorExToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
                          end;
                        end
                        else
@@ -1844,7 +1844,7 @@ begin
                         Gerador.wCampo(tcDe2, 'N27a', 'vICMSDeson', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
                         Gerador.wCampo(tcStr, 'N28' , 'motDesICMS', 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
                         if (NFe.infNFe.Versao >= 4) then
-                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
+                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorExToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
                       end;
 
                       if (NFe.infNFe.Versao >= 4) then
@@ -1905,7 +1905,7 @@ begin
                         Gerador.wCampo(tcDe2, 'N27a', 'vICMSDeson', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
                         Gerador.wCampo(tcStr, 'N28' , 'motDesICMS', 01, 02, 1, motDesICMSToStr(NFe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
                         if (NFe.infNFe.Versao >= 4) then
-                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
+                          Gerador.wCampo(tcStr, 'N28b' , 'indDeduzDeson', 1, 1, 0, TIndicadorExToStr(NFe.Det[i].Imposto.ICMS.indDeduzDeson));
                       end;
 
                       if ((NFe.Det[i].Imposto.ICMS.UFST <> '') or

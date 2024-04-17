@@ -736,9 +736,11 @@ begin
       (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
 
              sAux := Leitor.rCampo(tcStr, 'indDeduzDeson');
-             NFe.Det[i].Imposto.ICMS.indDeduzDeson := tiNao;
+             NFe.Det[i].Imposto.ICMS.indDeduzDeson := tieNenhum;
              if sAux = '1' then
-               NFe.Det[i].Imposto.ICMS.indDeduzDeson := tiSim;
+               NFe.Det[i].Imposto.ICMS.indDeduzDeson := tieSim;
+             if sAux = '0' then
+               NFe.Det[i].Imposto.ICMS.indDeduzDeson := tieNao;
 
              NFe.Det[i].Imposto.ICMS.cBenefRBC := Leitor.rCampo(tcStr, 'cBenefRBC');
 

@@ -81,7 +81,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsOutrasInformacoes">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="255" />
+			<xsd:maxLength value="512" />
 			<xsd:minLength value="1" />
 			<xsd:whiteSpace value="collapse" />
 		</xsd:restriction>

@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/04/2024
+-- SmarAPD.Provider --
+[*] Alterações visando assinar ou não o RPS dependendo da cidade que utiliza a
+    versão 2.04 do webservice do provedor.
+  Por: Italo Giurizzato Junior
+
 16/04/2024
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona nas rotinas de leitura e geração do INI a propriedade NumeroLote usada

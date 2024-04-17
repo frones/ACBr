@@ -980,8 +980,11 @@ procedure TACBrNFSeProviderSmarAPD204.Configuracao;
 begin
   inherited Configuracao;
 
+  SubVersao := StrToIntDef(ConfigGeral.Params.ValorParametro('SubVersao'), 0);
+
   with ConfigAssinar do
   begin
+    Rps := (SubVersao = 0);
     LoteRps := True;
     ConsultarLote := True;
     ConsultarNFSeRps := True;
@@ -989,7 +992,7 @@ begin
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
 
-    IncluirURI := False;
+    IncluirURI := Rps and LoteRps;
   end;
 
   with ConfigWebServices do
@@ -1004,8 +1007,6 @@ begin
 
     DadosCabecalho := GetCabecalho('');
   end;
-
-  SubVersao := StrToIntDef(ConfigGeral.Params.ValorParametro('SubVersao'), 0);
 end;
 
 function TACBrNFSeProviderSmarAPD204.CriarGeradorXml(

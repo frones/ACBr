@@ -46,6 +46,8 @@ resourcestring
   sInfoPGWebLibAtualizaTrue = 'Atualização disponível para PGWebLib';
   sInfoPGWebLibAtualizaFalse = 'PGWebLib sem atualização';
   sErrLibJaInicializda = 'Biblioteca PGWebLib já foi inicializada';
+  sErrLibNaoEncontrada = 'Biblioteca não encontrada: %s';
+  sErrVarDef = 'Erro Definindo a valor: %s para variável %s ';
   sErrLibNaoPermiteMudarPath = 'Path da PGWebLib deve ser %s';
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrLibVersaoInvalida = 'Biblioteca %s tem versão %s, inferior a %s';
@@ -70,6 +72,8 @@ resourcestring
 const
   CACBrTEFPGWebAPIName = 'ACBrTEFPGWebAPI';
   CACBrTEFPGWebAPIVersao = '1.0.1';
+  CACBrTEFPGWebDir = 'PGWebLib';
+  CACBrTEFPGWebDirDebug = 'DEBUG';
 
   {$IFDEF MSWINDOWS}
    CACBrTEFPGWebLib = 'PGWebLib.dll';
@@ -660,6 +664,7 @@ type
     procedure SetDiretorioTrabalho(const AValue: String);
     procedure SetEnderecoIP(const AValue: String);
     procedure SetInicializada(AValue: Boolean);
+    procedure SetIsDebug(AValue: Boolean);
     procedure SetNomeAplicacao(const AValue: String);
     procedure SetNomeEstabelecimento(const AValue: String);
     procedure SetPathLib(const AValue: String);
@@ -737,12 +742,14 @@ type
     function ValidarRespostaCampo(var AResposta: String;
       ADefinicaoCampo: TACBrTEFPGWebAPIDefinicaoCampo): String;
 
+    function GetVarPathPGWebLib: String;
     function GetPathPGWebLib: String;
+    function SetPathPGWebLib(const APathLib: String): Boolean;
     function GetPGWebLibAtualiza: Boolean;
     function SetPGWebLibPermiteAtualiza(PermiteAtualizacao: Boolean): Boolean;
 
     property PathLib: String read fPathLib write SetPathLib;
-    property IsDebug: Boolean read fIsDebug write fIsDebug;
+    property IsDebug: Boolean read fIsDebug write SetIsDebug;
     property AtualizaPGWebLibAutomaticamente: Boolean read fAtualizaPGWebLibAutomaticamente write fAtualizaPGWebLibAutomaticamente default True;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
     property Carregada: Boolean read fCarregada;
@@ -1296,6 +1303,7 @@ begin
 
   GravarLog('EACBrTEFPayGoWeb: '+AErrorMsg);
   raise EACBrTEFPayGoWeb.Create(AErrorMsg);
+
 end;
 
 procedure TACBrTEFPGWebAPI.VerificarOK(iRET: SmallInt);
@@ -2661,6 +2669,43 @@ begin
     DesInicializar;
 end;
 
+procedure TACBrTEFPGWebAPI.SetIsDebug(AValue: Boolean);
+var
+  PathAtual, PathNovo: String;
+begin
+  if fIsDebug = AValue then
+    Exit;
+
+  PathNovo := '';
+  PathAtual := GetPathPGWebLib;
+  if (PathAtual = '') then
+    Exit;
+
+  if AValue then
+  begin
+    if (pos(CACBrTEFPGWebDirDebug, PathAtual) = 0) then
+      PathNovo := StringReplace(PathAtual, CACBrTEFPGWebDir + PathDelim,
+                                           CACBrTEFPGWebDir + PathDelim + CACBrTEFPGWebDirDebug + PathDelim, []);
+  end
+  else
+  begin
+    if (pos(CACBrTEFPGWebDirDebug, PathAtual) > 0) then
+      PathNovo := StringReplace(PathAtual, CACBrTEFPGWebDir + PathDelim + CACBrTEFPGWebDirDebug + PathDelim,
+                                           CACBrTEFPGWebDir + PathDelim, []);
+  end;
+
+  if (PathNovo <> '') then
+  begin
+    if not FileExists(PathNovo) then
+      raise EACBrTEFPayGoWeb.CreateFmt(sErrLibNaoEncontrada, [PathNovo]);
+
+    if not SetPathPGWebLib(PathNovo) then
+      raise EACBrTEFPayGoWeb.CreateFmt(sErrVarDef, [PathNovo, GetVarPathPGWebLib]);
+  end;
+
+  fIsDebug := AValue;
+end;
+
 procedure TACBrTEFPGWebAPI.SetPathLib(const AValue: String);
 begin
   if (fPathLib = AValue) then
@@ -2793,27 +2838,38 @@ begin
   fCNPJEstabelecimento := ACNPJ;
 end;
 
+function TACBrTEFPGWebAPI.GetVarPathPGWebLib: String;
+begin
+  {$IfDef MSWINDOWS}
+   {$IfDef CPU64}
+    Result := 'PathPGWebLib_x64';
+   {$Else}
+    Result := 'PathPGWebLib';
+   {$EndIf}
+  {$Else}
+   Result := '';
+  {$EndIf}
+end;
+
 function TACBrTEFPGWebAPI.GetPathPGWebLib: String;
 var
   s: String;
 begin
-  {$IfDef MSWINDOWS}
-   {$IfDef CPU64}
-    s := 'PathPGWebLib_x64';
-   {$Else}
-    s := 'PathPGWebLib';
-   {$EndIf}
-   Result := Trim(SysUtils.GetEnvironmentVariable(s));
+  s := GetVarPathPGWebLib;
+  if (s <> '') then
+    Result := Trim(SysUtils.GetEnvironmentVariable(s))
+  else
+    Result := '';
+end;
 
-   if IsDebug then
-   begin
-    s := StringReplace(Result, 'PGWebLib'+PathDelim, 'PGWebLib'+PathDelim+'DEBUG'+PathDelim, []);
-    if FileExists(s) then
-      Result := s;
-   end;
-  {$Else}
-   Result := '';
-  {$EndIf}
+function TACBrTEFPGWebAPI.SetPathPGWebLib(const APathLib: String): Boolean;
+var
+  s: String;
+begin
+  Result := False;
+  s := GetVarPathPGWebLib;
+  if (s <> '') then
+    Result := ACBrUtil.FilesIO.SetGlobalEnvironment(s, APathLib);
 end;
 
 function TACBrTEFPGWebAPI.GetPGWebLibAtualiza: Boolean;

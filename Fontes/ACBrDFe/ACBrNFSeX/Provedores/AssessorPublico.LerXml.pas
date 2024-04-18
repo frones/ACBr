@@ -45,6 +45,8 @@ type
   { TNFSeR_AssessorPublico }
 
   TNFSeR_AssessorPublico = class(TNFSeRClass)
+  private
+    procedure LerInformacoesCancelamento(const ANode: TACBrXmlNode);
   protected
 
   public
@@ -64,6 +66,29 @@ uses
 //==============================================================================
 
 { TNFSeR_AssessorPublico }
+
+procedure TNFSeR_AssessorPublico.LerInformacoesCancelamento(const ANode: TACBrXmlNode);
+var
+  DataCancel, HoraCancel: string;
+begin
+  if not Assigned(ANode) then exit;
+
+  DataCancel := ObterConteudo(ANode.Childrens.FindAnyNs('DATACANCEL'), tcStr);
+  HoraCancel := ObterConteudo(ANode.Childrens.FindAnyNs('HORACANCEL'), tcStr);
+
+  if (DataCancel <> '') and (HoraCancel <> '') then
+    NFSe.NfseCancelamento.DataHora := StringToDateTime(DataCancel + ' ' + HoraCancel, 'DD/MM/YYYY hh:nn:ss');
+
+  NFSe.MotivoCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('MOTIVOCANCEL'), tcStr);
+  NFSe.JustificativaCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('JUSTCANCEL'), tcStr);
+
+  NFSe.NfseCancelamento.Sucesso := (NFSe.NFSeCancelamento.DataHora > 0) or
+                                   (Trim(NFSe.MotivoCancelamento) <> '')or
+                                   (Trim(NFSe.JustificativaCancelamento) <> '');
+
+  if NFSe.NfseCancelamento.Sucesso then
+    NFSe.SituacaoNfse := snCancelado;
+end;
 
 function TNFSeR_AssessorPublico.LerXml: Boolean;
 var
@@ -118,6 +143,8 @@ begin
   if AuxNode = nil then
     AuxNode := ANode;
 
+  LerInformacoesCancelamento(AuxNode);
+
   NFSe.Link       := ObterConteudo(AuxNode.Childrens.FindAnyNs('LINK'), tcStr);
   NFSe.Link       := StringReplace(NFSe.Link, '&amp;', '&', [rfReplaceAll]);
   NFSe.NumeroLote := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOTE'), tcStr);
@@ -132,12 +159,14 @@ begin
   mes := ObterConteudo(AuxNode.Childrens.FindAnyNs('MESCOMP'), tcInt);
   ano := ObterConteudo(AuxNode.Childrens.FindAnyNs('ANOCOMP'), tcInt);
 
-  NFSe.Competencia := EncodeDataHora(IntToStr(Ano)+ '/' + Poem_Zeros(mes, 2));
+  if (ano > 0) and (mes > 0) then
+    NFSe.Competencia := EncodeDataHora(IntToStr(Ano)+ '/' + Poem_Zeros(mes, 2));
 
   aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('DATA'), tcStr) + ' ' +
             ObterConteudo(AuxNode.Childrens.FindAnyNs('HORA'), tcStr);
 
-  NFSe.DataEmissao := StringToDateTime(aValor, 'DD/MM/YYYY hh:nn:ss');
+  if Trim(aValor) <> '' then
+    NFSe.DataEmissao := StringToDateTime(aValor, 'DD/MM/YYYY hh:nn:ss');
 
   NFSe.OptanteSimplesNacional := snNao;
 

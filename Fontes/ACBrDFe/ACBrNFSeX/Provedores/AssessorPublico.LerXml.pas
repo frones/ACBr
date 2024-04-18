@@ -76,7 +76,7 @@ begin
   DataCancel := ObterConteudo(ANode.Childrens.FindAnyNs('DATACANCEL'), tcStr);
   HoraCancel := ObterConteudo(ANode.Childrens.FindAnyNs('HORACANCEL'), tcStr);
 
-  if (DataCancel <> '') and (HoraCancel <> '') then
+  if (OnlyNumber(DataCancel) <> '') and (OnlyNumber(HoraCancel) <> '') then
     NFSe.NfseCancelamento.DataHora := StringToDateTime(DataCancel + ' ' + HoraCancel, 'DD/MM/YYYY hh:nn:ss');
 
   NFSe.MotivoCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('MOTIVOCANCEL'), tcStr);

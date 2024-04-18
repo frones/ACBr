@@ -44,6 +44,8 @@ Símbolo : Significado
 
 18/04/2024
 -- AssessorPublico.LerXML --
+[*] Adiciona tratativa para evitar erro caso o provedor devolva as tags de data vazias.
+  Por: Diego Folieni
 [*] Adiciona rotina para ler as informações de uma nota cancelada.
   Por: Diego Folieni
 -- IPM.LerXML --

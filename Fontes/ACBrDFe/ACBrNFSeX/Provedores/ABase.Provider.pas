@@ -162,6 +162,8 @@ begin
     ServicosDisponibilizados.ConsultarServicoPrestado := False;
     ServicosDisponibilizados.ConsultarServicoTomado := False;
     ServicosDisponibilizados.SubstituirNfse := False;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
   end;
 
   with ConfigAssinar do

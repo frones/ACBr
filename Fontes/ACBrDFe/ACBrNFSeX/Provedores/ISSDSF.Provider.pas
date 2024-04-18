@@ -191,6 +191,9 @@ begin
     ServicosDisponibilizados.ConsultarSeqRps := True;
     ServicosDisponibilizados.CancelarNfse := True;
     ServicosDisponibilizados.TestarEnvio := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   with ConfigAssinar do

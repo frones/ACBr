@@ -172,6 +172,9 @@ begin
     ServicosDisponibilizados.ConsultarLote := True;
     ServicosDisponibilizados.ConsultarLinkNfse := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   with ConfigAssinar do

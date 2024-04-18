@@ -120,6 +120,8 @@ begin
     ServicosDisponibilizados.ConsultarNfse := True;
     ServicosDisponibilizados.ConsultarRps := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   SetXmlNameSpace('');

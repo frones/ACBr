@@ -122,6 +122,8 @@ begin
     ServicosDisponibilizados.EnviarLoteAssincrono := True;
     ServicosDisponibilizados.ConsultarRps := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
   end;
 
   SetXmlNameSpace('');

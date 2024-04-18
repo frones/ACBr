@@ -131,6 +131,9 @@ begin
     ServicosDisponibilizados.CancelarNfse := True;
     ServicosDisponibilizados.SubstituirNFSe := True;
     ServicosDisponibilizados.GerarToken := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   with ConfigAssinar do

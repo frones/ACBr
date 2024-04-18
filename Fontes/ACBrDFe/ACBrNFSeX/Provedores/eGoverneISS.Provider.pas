@@ -114,6 +114,8 @@ begin
     ServicosDisponibilizados.EnviarUnitario := True;
     ServicosDisponibilizados.ConsultarLote := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
   end;
 
   SetXmlNameSpace('');

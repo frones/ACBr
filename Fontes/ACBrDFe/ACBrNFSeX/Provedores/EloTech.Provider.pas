@@ -116,6 +116,8 @@ begin
     Autenticacao.RequerLogin := True;
 
     ServicosDisponibilizados.EnviarUnitario := False;
+
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   with ConfigWebServices do

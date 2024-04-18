@@ -126,6 +126,8 @@ begin
     ServicosDisponibilizados.ConsultarNfse := True;
     ServicosDisponibilizados.CancelarNfse := True;
     ServicosDisponibilizados.GerarToken := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
   end;
 
   ConfigSchemas.Validar := False;

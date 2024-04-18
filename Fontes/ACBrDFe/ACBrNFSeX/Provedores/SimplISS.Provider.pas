@@ -125,6 +125,9 @@ begin
     DetalharServico := True;
 
     Autenticacao.RequerLogin := True;
+
+    Particularidades.PermiteMaisDeUmServico := True;
+    Particularidades.PermiteTagOutrasInformacoes := True;
   end;
 
   SetXmlNameSpace('http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd');
@@ -392,6 +395,7 @@ begin
   ConfigGeral.ModoEnvio := meLoteAssincrono;
 
   ConfigGeral.ServicosDisponibilizados.EnviarLoteSincrono := False;
+  ConfigGeral.Particularidades.PermiteTagOutrasInformacoes := True;
 
   with ConfigAssinar do
   begin

@@ -119,6 +119,8 @@ begin
     ServicosDisponibilizados.ConsultarLote := True;
     ServicosDisponibilizados.ConsultarNfse := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;

@@ -127,6 +127,15 @@ type
     property TestarEnvio: Boolean read FTestarEnvio write FTestarEnvio;
   end;
 
+  TACBrNFSeXParticularidades = class
+  private
+    FPermiteMaisDeUmServico: Boolean;
+    FPermiteTagOutrasInformacoes: Boolean;
+  public
+    property PermiteMaisDeUmServico: Boolean read FPermiteMaisDeUmServico write FPermiteMaisDeUmServico;
+    property PermiteTagOutrasInformacoes: Boolean read FPermiteTagOutrasInformacoes write FPermiteTagOutrasInformacoes;
+  end;
+
   { TConfigGeral }
 
   TConfigGeral = class
@@ -203,6 +212,7 @@ type
     FImprimirLocalPrestServ: Boolean;
     FAutenticacao: TACBrNFSeXAutenticacao;
     FServicosDisponibilizados: TACBrNFSeXServicosDispobilizados;
+    FParticularidades: TACBrNFSeXParticularidades;
 
   public
     constructor Create;
@@ -249,6 +259,7 @@ type
     property ImprimirLocalPrestServ: Boolean read FImprimirLocalPrestServ write FImprimirLocalPrestServ;
     property Autenticacao: TACBrNFSeXAutenticacao read FAutenticacao;
     property ServicosDisponibilizados: TACBrNFSeXServicosDispobilizados read FServicosDisponibilizados;
+    property Particularidades: TACBrNFSeXParticularidades read FParticularidades write FParticularidades;
   end;
 
   { TWebserviceInfo }
@@ -912,6 +923,7 @@ begin
   FParams := TACBrNFSeXConfigParams.Create;
   FAutenticacao := TACBrNFSeXAutenticacao.Create;
   FServicosDisponibilizados := TACBrNFSeXServicosDispobilizados.Create;
+  FParticularidades := TACBrNFSeXParticularidades.Create;
 end;
 
 destructor TConfigGeral.Destroy;
@@ -919,6 +931,7 @@ begin
   FParams.Free;
   FAutenticacao.Free;
   FServicosDisponibilizados.Free;
+  FParticularidades.Free;
 
   inherited Destroy;
 end;

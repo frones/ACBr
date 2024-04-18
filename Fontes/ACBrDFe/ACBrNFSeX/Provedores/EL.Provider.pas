@@ -1416,6 +1416,9 @@ begin
     ServicosDisponibilizados.ConsultarRps := True;
     ServicosDisponibilizados.ConsultarNfse := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   SetXmlNameSpace('http://www.el.com.br/nfse/xsd/el-nfse.xsd');

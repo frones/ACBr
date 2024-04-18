@@ -144,6 +144,9 @@ begin
     ServicosDisponibilizados.ConsultarFaixaNfse := True;
     ServicosDisponibilizados.CancelarNfse := True;
     ServicosDisponibilizados.SubstituirNfse := True;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   SetXmlNameSpace('http://www.agili.com.br/nfse_v_1.00.xsd');

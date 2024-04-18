@@ -187,6 +187,7 @@ begin
   inherited Configuracao;
 
   ConfigGeral.Identificador := 'id';
+  ConfigGeral.Particularidades.PermiteTagOutrasInformacoes := True;
 
   ConfigAssinar.LoteRps := True;
 end;

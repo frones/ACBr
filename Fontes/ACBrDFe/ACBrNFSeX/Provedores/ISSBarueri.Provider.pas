@@ -366,6 +366,8 @@ begin
     ServicosDisponibilizados.ConsultarLote := True;
     ServicosDisponibilizados.ConsultarServicoTomado := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   with ConfigMsgDados do

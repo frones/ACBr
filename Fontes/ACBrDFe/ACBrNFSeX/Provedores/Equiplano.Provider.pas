@@ -128,6 +128,8 @@ begin
     ServicosDisponibilizados.ConsultarRps := True;
     ServicosDisponibilizados.ConsultarNfse := True;
     ServicosDisponibilizados.CancelarNfse := True;
+
+    Particularidades.PermiteMaisDeUmServico := True;
   end;
 
   with ConfigAssinar do

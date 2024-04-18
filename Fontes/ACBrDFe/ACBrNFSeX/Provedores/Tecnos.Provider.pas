@@ -156,6 +156,8 @@ begin
 
     ServicosDisponibilizados.EnviarUnitario := False;
     ServicosDisponibilizados.SubstituirNfse := False;
+
+    Particularidades.PermiteTagOutrasInformacoes := True;
   end;
 
   with ConfigAssinar do

@@ -347,6 +347,9 @@ begin
 
   ConfigGeral.DetalharServico := True;
 
+  ConfigGeral.Particularidades.PermiteMaisDeUmServico := True;
+  ConfigGeral.Particularidades.PermiteTagOutrasInformacoes := True;
+
   with ConfigAssinar do
   begin
     Rps := False;

@@ -176,6 +176,15 @@ type
     property TestarEnvio: Boolean read FTestarEnvio write FTestarEnvio;
   end;
 
+  TParticularidades = class
+  private
+    FPermiteMaisDeUmServico: Boolean;
+    FPermiteTagOutrasInformacoes: Boolean;
+  public
+    property PermiteMaisDeUmServico: Boolean read FPermiteMaisDeUmServico write FPermiteMaisDeUmServico;
+    property PermiteTagOutrasInformacoes: Boolean read FPermiteTagOutrasInformacoes write FPermiteTagOutrasInformacoes;
+  end;
+
   { TGeralConfNFSe }
 
   TGeralConfNFSe = class(TGeralConf)
@@ -199,6 +208,7 @@ type
     FAutenticacao: TAutenticacao;
     FServicosDisponibilizados: TServicosDispobilizados;
     FFormDiscriminacao: TFormatoDiscriminacao;
+    FParticularidades: TParticularidades;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -232,6 +242,7 @@ type
     property Autenticacao: TAutenticacao read FAutenticacao;
     property ServicosDisponibilizados: TServicosDispobilizados read FServicosDisponibilizados;
     property FormatoDiscriminacao: TFormatoDiscriminacao read FFormDiscriminacao write FFormDiscriminacao default fdNenhum;
+    property Particularidades: TParticularidades read FParticularidades write FParticularidades;
   end;
 
   { TArquivosConfNFSe }
@@ -414,6 +425,7 @@ begin
 
   FAutenticacao := TAutenticacao.Create;
   FServicosDisponibilizados := TServicosDispobilizados.Create;
+  FParticularidades := TParticularidades.Create;
 end;
 
 destructor TGeralConfNFSe.Destroy;
@@ -422,6 +434,7 @@ begin
   FPIniParams.Free;
   FAutenticacao.Free;
   FServicosDisponibilizados.Free;
+  FParticularidades.Free;
 
   inherited;
 end;

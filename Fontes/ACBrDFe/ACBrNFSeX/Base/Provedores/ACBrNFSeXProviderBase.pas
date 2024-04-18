@@ -662,6 +662,9 @@ begin
     ServicosDisponibilizados.ConsultarNfseChave := False;
     ServicosDisponibilizados.TestarEnvio := False;
 
+    Particularidades.PermiteMaisDeUmServico := False;
+    Particularidades.PermiteTagOutrasInformacoes := False;
+
     Provedor := TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor;
     Versao := TACBrNFSeX(FAOwner).Configuracoes.Geral.Versao;
     xMunicipio := TACBrNFSeX(FAOwner).Configuracoes.Geral.xMunicipio;

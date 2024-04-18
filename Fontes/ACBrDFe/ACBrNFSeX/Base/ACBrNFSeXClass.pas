@@ -1352,6 +1352,8 @@ type
     FNfseSubstituidora: string;
     // Provedor ISSDSF
     FMotivoCancelamento: string;
+    // Provedor AssessorPublico
+    FJustificativaCancelamento: string;
     // Provedor ISSBarueri
     FCodigoCancelamento: string;
     FIdentificacaoRemessa: string;
@@ -1463,6 +1465,8 @@ type
     property NfseSubstituidora: string read FNfseSubstituidora write FNfseSubstituidora;
     // Provedor ISSDSF
     property MotivoCancelamento: string read FMotivoCancelamento write FMotivoCancelamento;
+    //Provedor AssessorPublico
+    property JustificativaCancelamento: string read FJustificativaCancelamento write FJustificativaCancelamento;
     // Provedor ISSBarueri
     property CodigoCancelamento: string read FCodigoCancelamento write FCodigoCancelamento;
     property IdentificacaoRemessa: string read FIdentificacaoRemessa write FIdentificacaoRemessa;

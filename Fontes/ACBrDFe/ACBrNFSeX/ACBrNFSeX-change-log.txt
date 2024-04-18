@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/04/2024
+-- IPM.LerXML --
+[*] Adiciona chamada a rotina que lê a informação do link da tag OutrasInformacoes
+  Por: Diego Folieni
 -- Diversos --
 [*] Incrementa os métodos para devolver se permite enviar mais de um serviço
     e se permite enviar OutrasInformacoes ao obter as informações do provedor.

@@ -470,6 +470,8 @@ begin
 
   LerNfseCancelamento(ANode);
   LerNfseSubstituicao(ANode);
+
+  LerCampoLink;
 end;
 
 function TNFSeR_IPM204.NormatizarXml(const aXml: string): string;

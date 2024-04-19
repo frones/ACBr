@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/04/2024
+-- ACBrNFSeXServicos --
+[*] Correção no Param Alias da cidade de Campestre da Serra/RS.
+  Por: dna.automacao
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Possível solução para constar no Resumo o Link caso o provedor retorne no
     XML da NFS-e.

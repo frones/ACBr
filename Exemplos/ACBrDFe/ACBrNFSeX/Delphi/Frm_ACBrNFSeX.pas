@@ -821,8 +821,8 @@ begin
       // Provedores que permitem informar mais de 1 serviço:
       if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEquiplano, proFacundo, proFGMaiss, proEL,
-           proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSimple,
-           proSmarAPD, proWebFisco, proBauhaus, proeISS, proSoftPlan] then
+           proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSam,
+           proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS, proSoftPlan] then
       begin
         Servico.Valores.ValorServicos := 0;
 
@@ -3533,6 +3533,20 @@ begin
       memoLog.Lines.Add(' Não permite Consultar NFS-e por Chave');
 
     memoLog.Lines.Add('');
+    memoLog.Lines.Add('Particularidades');
+    memoLog.Lines.Add('');
+
+    if Particularidades.PermiteMaisDeUmServico then
+      memoLog.Lines.Add(' Permite mais de um serviço')
+    else
+      memoLog.Lines.Add(' Não permite mais de um serviço');
+
+    if Particularidades.PermiteTagOutrasInformacoes then
+      memoLog.Lines.Add(' Permite o envio da tag OutrasInformacoes no Rps')
+    else
+      memoLog.Lines.Add(' Não permite o envio da tag OutrasInformacoes no Rps');
+
+    memoLog.Lines.Add('');
     memoLog.Lines.Add('------------------------------------');
   end;
 end;
@@ -4379,11 +4393,17 @@ var
         else
           begin
             memoLog.Lines.Add('Numero da Nota    : ' + aResumos[i].NumeroNota);
+            memoLog.Lines.Add('Série da Nota     : ' + aResumos[i].SerieNota);
             memoLog.Lines.Add('Código Verificação: ' + aResumos[i].CodigoVerificacao);
             memoLog.Lines.Add('Numero do Rps     : ' + aResumos[i].NumeroRps);
             memoLog.Lines.Add('Série do Rps      : ' + aResumos[i].SerieRps);
             memoLog.Lines.Add('Id da Nota        : ' + aResumos[i].idNota);
             memoLog.Lines.Add('Id da Rps         : ' + aResumos[i].idRps);
+            memoLog.Lines.Add('Data              : ' + DateTimeToStr(aResumos[i].Data));
+            memoLog.Lines.Add('Link              : ' + aResumos[i].Link);
+            memoLog.Lines.Add('Protocolo         : ' + aResumos[i].Protocolo);
+            memoLog.Lines.Add('Situação          : ' + aResumos[i].Situacao);
+            memoLog.Lines.Add('Desc. da Situação : ' + aResumos[i].DescSituacao);
           end;
         end;
 

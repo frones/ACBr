@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2024
+-- ACBrSchemasMatera --
+[*] Correção de problema ao converter String para tipo TMateraWithdrawType
+    por: MatheusHenrique9
+
 26/03/2024
 -- ACBrSchemasMatera --
 [*] Correção no método NewSchema de algumas classes.

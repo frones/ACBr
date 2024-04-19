@@ -8104,17 +8104,17 @@ Var
 begin
   s := UpperCase(Trim(aString));
 
-  if (s = 'BankTransfer') then
+  if (s = 'BANKTRANSFER') then
     Result := mwtBankTransfer
-  else if (s = 'External') then
+  else if (s = 'EXTERNAL') then
     Result := mwtExternal
-  else if (s = 'Boleto') then
+  else if (s = 'BOLETO') then
     Result := mwtBoleto
-  else if (s = 'ReloadPrepaid') then
+  else if (s = 'RELOADPREPAID') then
     Result := mwtReloadPrepaid
-  else if (s = 'Utilities') then
+  else if (s = 'UTILITIES') then
     Result := mwtUtilities
-  else if (s = 'InstantPayment') then
+  else if (s = 'INSTANTPAYMENT') then
     Result := mwtInstantPayment
   else
     Result := mwtNone;

@@ -121,7 +121,7 @@ uses
   WebFisco.Provider, WebISS.GravarXml, WebISS.LerXml, WebISS.Provider, 
   PRODAUB.GravarXml, PRODAUB.LerXml, PRODAUB.Provider, Isaneto.GravarXml, 
   Isaneto.LerXml, Isaneto.Provider, Elmar.GravarXml, Elmar.LerXml, 
-  Elmar.Provider, 
+  Elmar.Provider, Sam.GravarXml, Sam.LerXml, Sam.Provider, 
   LazarusPackageIntf;
 
 implementation

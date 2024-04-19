@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/04/2024
+-- ACBrNFSeXServicos --
+[+] Inclusão das cidades: Areiópolis/SP, Brejo Alegre/SP, Echaporã/SP, 
+    Júlio Mesquita/SP e Porangaba/SP todas são atendidas pelo provedor Sam.
+  Por: Paulo Sergio de Almeida
+[+] Incluída a cidade de Mogi Guaçu/SP, provedor SigISS.
+  Por: Alexandre de Paula
 -- Diversos --
 [+] Implementação do provedor Sam.
   Por: Italo Giurizzato Junior

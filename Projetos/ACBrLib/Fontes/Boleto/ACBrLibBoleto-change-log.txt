@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2024
+-- ACBrLibBoletoST --
+[*] Ajuste visando correção de problema de liberação de memória encontrado no Boleto_Finalizar
+ #TK-5367 - https://www.projetoacbr.com.br/forum/topic/77391-erro-ao-fechar-projeto-demo-acbrlibboletodemo-c/
+        Por: Diego Folieni
+
 16/04/2024
 --- ACBrLibBoletoBase, ACBrLibBoletoST, ACBrLibBoletoMT, ACBrLibBoletoStaticImport, ACBrLibBoletoStaticImportMT ---
 [+] Novo método Boleto_GerarRemessaStream

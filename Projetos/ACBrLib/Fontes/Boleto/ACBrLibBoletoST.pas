@@ -145,6 +145,7 @@ function Boleto_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
+  pLib := nil;
 end;
 
 function Boleto_Nome(const sNome: PChar; var esTamanho: longint): longint;

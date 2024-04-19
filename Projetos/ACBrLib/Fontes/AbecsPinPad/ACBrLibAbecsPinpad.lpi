@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="ACBrLibAbecsPinpad"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <Language Value="0416"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrAbecsPinpad - Biblioteca para comunicação com Pinpad" InternalName="ACBrLibAbecsPinpad" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="AbecsPinpad" ProductVersion="0.0.0.0"/>
+    </VersionInfo>
+    <BuildModes Count="13">
+      <Item1 Name="Win32-i386-CDECL" Default="True"/>
+      <Item2 Name="Win64-x86_64-CDECL">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Cdecl\ACBrAbecsPinpad64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Win32-i386-STDCALL">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\StdCall\ACBrAbecsPinpad32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="Win64-x86_64-STDCALL">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\StdCall\ACBrAbecsPinpad64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item4>
+      <Item5 Name="Linux-x86_64">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\acbrabecspinpad64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item5>
+      <Item6 Name="Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\acbrabecspinpad32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item6>
+      <Item7 Name="i386-CDECL-DEBUG">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\Testes\AbecsPinpad\bin\ACBrAbecsPinpad32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <UseHeaptrc Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dDEBUG -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item7>
+      <Item8 Name="Win32-i386-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Cdecl\ACBrAbecsPinpad32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item8>
+      <Item9 Name="Win64-x86_64-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Cdecl\ACBrAbecsPinpad64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item9>
+      <Item10 Name="Win32-i386-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\StdCall\ACBrAbecsPinpad32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item10>
+      <Item11 Name="Win64-x86_64-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\StdCall\ACBrAbecsPinpad64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item11>
+      <Item12 Name="Linux-x86_64-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Linux\acbrabecspinpad64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item12>
+      <Item13 Name="Linux-i386-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Linux\acbrabecspinpad32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item13>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrSerial"/>
+      </Item2>
+    </RequiredPackages>
+    <Units Count="14">
+      <Unit0>
+        <Filename Value="ACBrLibAbecsPinpad.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Comum\ACBrLibComum.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="ACBrLibAbecsPinpadDataModule.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="LibAbecsPinpadDM"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="ACBrLibAbecsPinpadST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="ACBrLibAbecsPinpadMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="ACBrLibAbecsPinpadConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ACBrLibAbecsPinpadBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="ACBrLibAbecsPinpadStaticImportST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="ACBrLibAbecsPinpadStaticImportMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="acbrlibabecspinpadconsts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrLibAbecsPinpadConsts"/>
+      </Unit13>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="bin\Cdecl\ACBrAbecsPinpad32"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+      <OtherUnitFiles Value="..\Comum"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <TargetCPU Value="i386"/>
+      <TargetOS Value="win32"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+      <SmallerCode Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <CustomOptions Value="-dNOGUI"/>
+    </Other>
+  </CompilerOptions>
+</CONFIG>

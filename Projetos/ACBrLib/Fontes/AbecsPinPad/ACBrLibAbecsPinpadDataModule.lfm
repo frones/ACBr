@@ -1,0 +1,12 @@
+object LibAbecsPinpadDM: TLibAbecsPinpadDM
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 161
+  HorizontalOffset = 1698
+  VerticalOffset = 272
+  Width = 185
+  object ACBrAbecsPinPad1: TACBrAbecsPinPad
+    Left = 72
+    Top = 48
+  end
+end

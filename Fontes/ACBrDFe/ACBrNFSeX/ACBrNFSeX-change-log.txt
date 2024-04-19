@@ -44,6 +44,9 @@ Símbolo : Significado
 
 19/04/2024
 -- ACBrNFSeXServicos --
+[*] Incluída a URL de Consultar NFS-e por Rps para todas as cidades atendidas 
+    pelo provedor Bauhaus.
+  Por: Arimateia Jr
 [*] Correção no Param Alias da cidade de Campestre da Serra/RS.
   Por: dna.automacao
 -- ACBrNFSeXProviderABRASFv2 --

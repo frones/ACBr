@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2024
+[*]TK-5366 ACBrBoletoFCFortesFr (dfm/lfm) - Ajustado Boleto Carne 
+https://www.projetoacbr.com.br/forum/topic/76988-boletofortes-n%C3%A3o-imprime-linha-separadora-no-layout-lcarne/
+Por: Daniel Morais InfoCotidiano
+
 01/02/2024
 [*]TK-5034 ACBrBoletoFCFortesFr (dfm/lfm) - Correção Ancoragem
 https://www.projetoacbr.com.br/forum/topic/74780-boleto-pix-fortes-report-cortando-valores/

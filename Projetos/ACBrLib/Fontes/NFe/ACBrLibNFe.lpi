@@ -505,6 +505,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
               <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
             </Debugging>
@@ -513,9 +514,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dMT 
--dNOGUI
--dMT"/>
+            <CustomOptions Value="-dMT -dDEBUG -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item13>
@@ -525,13 +524,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
+        <HostApplicationFilename Value="C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
+            <HostApplicationFilename Value="C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
           </local>
         </Mode0>
       </Modes>

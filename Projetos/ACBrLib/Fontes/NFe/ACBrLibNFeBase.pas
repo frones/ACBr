@@ -1014,7 +1014,10 @@ begin
                                   WebServices.Retorno.Protocolo,
                                   WebServices.Retorno.ChaveNFe);
 
-            Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
+            if Config.TipoResposta = resJSON then
+              Resposta := '[' + Resposta + ',' + RespRetorno.Gerar + ']'
+            else
+              Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
           finally
             RespRetorno.Free;
           end;

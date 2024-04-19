@@ -120,6 +120,7 @@ RLZ                  2.03
 Saatri               2.01
 Saatri               2.03
 SafeWeb              2.00
+Sam                  1.00
 SH3                  2.00
 Siam                 2.00
 SiapNet              2.00

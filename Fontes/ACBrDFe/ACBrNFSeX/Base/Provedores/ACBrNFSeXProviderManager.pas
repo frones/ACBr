@@ -190,6 +190,7 @@ uses
   ISSSaoPaulo.Provider,
   Prescon.Provider,
   PriMax.Provider,
+  Sam.Provider,
   Siappa.Provider,
   Siat.Provider,
   SigISS.Provider,
@@ -498,6 +499,8 @@ begin
             Result := nil;
           end;
         end;
+
+      proSam:    Result := TACBrNFSeProviderSam.Create(ACBrNFSe);
 
       proSaatri:
         begin

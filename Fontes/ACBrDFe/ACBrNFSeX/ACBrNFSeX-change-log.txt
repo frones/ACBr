@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2024
+-- Diversos --
+[+] Implementação do provedor Sam.
+  Por: Italo Giurizzato Junior
+
 18/04/2024
 -- ACBrNFSeXServicos --
 [*] Correção no nome da cidade de Barao de Cotegipe/RS.

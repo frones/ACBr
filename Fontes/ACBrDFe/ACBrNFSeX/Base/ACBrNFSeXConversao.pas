@@ -136,14 +136,14 @@ type
                    proModernizacaoPublica, proNEAInformatica, proNFSeBrasil,
                    proNotaInteligente, proPrescon, proPriMax, proProdata,
                    proPRODAUB, proPronim, proPublica, proPublicSoft, proRLZ,
-                   proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet, proSiappa,
-                   proSiapSistemas, proSiat, proSigCorp, proSigep, proSigISS,
-                   proSigISSWeb, proSilTecnologia, proSimple, proSimplISS,
-                   proSintese, proSisPMJP, proSistemas4R, proSmarAPD, proSoftPlan,
-                   proSpeedGov, proSSInformatica, proSudoeste, proSysISS,
-                   proSystemPro, proTcheInfo, proTecnos, proThema, proTinus,
-                   proTiplan, proTributus, proVersaTecnologia, proVirtual,
-                   proWebFisco, proWebISS);
+                   proSam, proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet,
+                   proSiappa, proSiapSistemas, proSiat, proSigCorp, proSigep,
+                   proSigISS, proSigISSWeb, proSilTecnologia, proSimple,
+                   proSimplISS, proSintese, proSisPMJP, proSistemas4R, proSmarAPD,
+                   proSoftPlan, proSpeedGov, proSSInformatica, proSudoeste,
+                   proSysISS, proSystemPro, proTcheInfo, proTecnos, proThema,
+                   proTinus, proTiplan, proTributus, proVersaTecnologia,
+                   proVirtual, proWebFisco, proWebISS);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao, stNenhum,
                              stRetidoForaMunicipio, stDevidoForaMunicipioNaoRetido);

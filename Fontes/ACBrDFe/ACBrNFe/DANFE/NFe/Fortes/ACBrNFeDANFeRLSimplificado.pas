@@ -235,7 +235,11 @@ begin
     end;
   end;
 
-  RLNFe.Title := 'NF-e: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF);
+  if fpDANFe.FormatarNumeroDocumento then
+    RLNFe.Title := 'NF-e: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF)
+  else
+    RLNFe.Title := 'NF-e: ' + IntToStr(fpNFe.Ide.nNF);
+
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
   InicializarDados;
 end;
@@ -290,8 +294,12 @@ begin
 
   rllEntradaSaida.Caption := tpNFToStr(fpNFe.Ide.tpNF);
 
-  lblNumero.Caption := ACBrStr('Número: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
-    ' - Série: ' + FormatFloat('000', fpNFe.Ide.serie));
+  if fpDANFe.FormatarNumeroDocumento then
+    ACBrStr('Número: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF))
+  else
+    lblNumero.Caption := ACBrStr('Número: ' + IntToStr(fpNFe.Ide.nNF));
+
+  lblNumero.Caption := lblNumero.Caption + ' - Série: ' + FormatFloat('000', fpNFe.Ide.serie);
 
   rllEmissao.Caption := ACBrStr('Emissão: ' + FormatDateTimeBr(fpNFe.Ide.dEmi));
 end;

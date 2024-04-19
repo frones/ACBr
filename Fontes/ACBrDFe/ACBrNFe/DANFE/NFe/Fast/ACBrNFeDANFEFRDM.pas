@@ -1380,7 +1380,12 @@ begin
     FieldByName('IndPag').AsString  := IndpagToStr(FNFe.Ide.IndPag );
     FieldByName('Mod_').AsString    := IntToStr(FNFe.Ide.Modelo);
     FieldByName('Serie').AsString   := IntToStr(FNFe.Ide.Serie);
-    FieldByName('NNF').AsString     := FormatarNumeroDocumentoFiscal(IntToStr(FNFe.Ide.NNF));
+
+    if TACBrNFeDANFEClass(FDANFEClassOwner).FormatarNumeroDocumento then
+      FieldByName('NNF').AsString     := FormatarNumeroDocumentoFiscal(IntToStr(FNFe.Ide.NNF))
+    else
+      FieldByName('NNF').AsString     := IntToStr(FNFe.Ide.NNF);
+
     FieldByName('DEmi').AsString    := FormatDateBr(FNFe.Ide.DEmi);
     FieldByName('DSaiEnt').AsString := IfThen(FNFe.Ide.DSaiEnt <> 0, FormatDateBr(FNFe.Ide.DSaiEnt));
     FieldByName('TpNF').AsString    := tpNFToStr( FNFe.Ide.TpNF );

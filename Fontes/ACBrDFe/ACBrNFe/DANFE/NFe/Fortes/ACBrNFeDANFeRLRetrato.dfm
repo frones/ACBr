@@ -4,7 +4,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 703
   Font.Height = -18
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitHeight = 742
   TextHeight = 24
   inherited RLNFe: TRLReport
     Left = 10
@@ -23,6 +24,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     Title = 'Danfe Retrato'
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
+    ExplicitLeft = 10
+    ExplicitTop = 10
     object rliMarcaDagua1: TRLImage
       Left = 241
       Top = 670

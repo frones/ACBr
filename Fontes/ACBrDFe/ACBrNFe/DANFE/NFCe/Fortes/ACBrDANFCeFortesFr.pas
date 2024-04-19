@@ -359,7 +359,7 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbChaveDeAcessoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  Via: String;
+  Via,LNNF: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -392,8 +392,13 @@ begin
       lContingencia1.Visible   := NaoEstaVazio(Trim(lContingencia1.Lines.Text));
       lMensagemFiscal1.Visible := NaoEstaVazio(Trim(lMensagemFiscal1.Lines.Text));
 
+      if fACBrNFeDANFCeFortes.FormatarNumeroDocumento then
+        LNNF := IntToStrZero(Ide.nNF, 9)
+      else
+        LNNF := IntToStr(Ide.nNF);
+
       lNumeroSerie1.Lines.Text := ACBrStr(
-        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' + sLineBreak +
+        'NFC-e nº ' + LNNF + ' ' + sLineBreak +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' + sLineBreak +
         FormatDateTimeBr(Ide.dEmi) + sLineBreak +
         Via
@@ -421,8 +426,13 @@ begin
       lContingencia.Visible   := NaoEstaVazio(Trim(lContingencia.Lines.Text));
       lMensagemFiscal.Visible := NaoEstaVazio(Trim(lMensagemFiscal.Lines.Text));
 
+      if fACBrNFeDANFCeFortes.FormatarNumeroDocumento then
+        LNNF := IntToStrZero(Ide.nNF, 9)
+      else
+        LNNF := IntToStr(Ide.nNF);
+
       lNumeroSerie.Caption := ACBrStr(
-        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
+        'NFC-e nº ' + LNNF + ' ' +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
         FormatDateTimeBr(Ide.dEmi)+ Via );
     end;
@@ -545,6 +555,7 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbMensagemFiscalCancBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
+var LNNF : string;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -562,8 +573,14 @@ begin
         lMensagemFiscalCanc.Caption := ACBrStr('');
     end;
 
+
+    if fACBrNFeDANFCeFortes.FormatarNumeroDocumento then
+      LNNF := IntToStrZero(Ide.nNF, 9)
+    else
+      LNNF := IntToStr(Ide.nNF);
+
     lNumeroSerieCanc.Caption := ACBrStr(
-      'Número ' + IntToStrZero(Ide.nNF, 9) + ' - ' +
+      'Número ' + LNNF + ' - ' +
       'Série ' + IntToStrZero(Ide.serie, 3)
     );
 

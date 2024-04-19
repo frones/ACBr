@@ -90,9 +90,16 @@ uses
 {$EndIf}
 
 procedure TfrlDANFeRL.AdicionaInformacaoPDF;
+var LNNF : String;
 begin
-  RLPDFFilter1.DocumentInfo.Title := ACBrStr('DANFE - Nota fiscal nº ') + FormatFloat('000,000,000', fpNFe.Ide.nNF);
-  RLPDFFilter1.DocumentInfo.KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
+
+  if fpDANFe.FormatarNumeroDocumento then
+   LNNF := FormatFloat('000,000,000', fpNFe.Ide.nNF)
+  else
+   LNNF := IntToStr(fpNFe.Ide.nNF);
+
+  RLPDFFilter1.DocumentInfo.Title := ACBrStr('DANFE - Nota fiscal nº ') + LNNF;
+  RLPDFFilter1.DocumentInfo.KeyWords := ACBrStr('Número:' + LNNF +
     '; Data de emissão: ' + FormatDateBr(fpNFe.Ide.dEmi) + '; Destinatário: ' + fpNFe.Dest.xNome +
     '; CNPJ: ' + fpNFe.Dest.CNPJCPF + '; Valor total: ' + FormatFloatBr(fpNFe.Total.ICMSTot.vNF));
 end;

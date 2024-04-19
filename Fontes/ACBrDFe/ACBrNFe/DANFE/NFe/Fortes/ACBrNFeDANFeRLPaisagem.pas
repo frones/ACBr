@@ -1031,7 +1031,11 @@ begin
 
     rlbCodigoBarras.Visible := True;
     rlbCodigoBarras.Caption := OnlyNumber(fpNFe.InfNFe.Id);
-    rllNumNF0.Caption := ACBrStr('Nº ') + FormatarNumeroDocumentoFiscal(IntToStr(nNF));
+    if fpDANFe.FormatarNumeroDocumento then
+      rllNumNF0.Caption := ACBrStr('Nº ') + FormatarNumeroDocumentoFiscal(IntToStr(nNF))
+    else
+      rllNumNF0.Caption := ACBrStr('Nº ') + IntToStr(nNF);
+
     rllNumNF1.Caption := rllNumNF0.Caption;
     rllSERIE0.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
     rllSERIE1.Caption := rllSERIE0.Caption;

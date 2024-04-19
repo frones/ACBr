@@ -403,7 +403,11 @@ begin
   aFont;
   PDF.TextBox(x, y, w, h, texto, 'C', 'L', 1, '', false);
 
-  numNF := FormatarNumeroDocumentoFiscal(IntToStr(NFe.Ide.NNF));
+  if TACBrNFeDANFEClass(FNFeUtils.DANFEClassOwner).FormatarNumeroDocumento then
+    numNF := FormatarNumeroDocumentoFiscal(IntToStr(NFe.Ide.NNF))
+  else
+    numNF := IntToStr(NFe.Ide.NNF);
+
   serie := FormatFloat('000', NFe.Ide.serie, FNFeUtils.FormatSettings);
 
   texto :=

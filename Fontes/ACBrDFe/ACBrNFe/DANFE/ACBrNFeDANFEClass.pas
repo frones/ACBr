@@ -90,6 +90,7 @@ type
     FExpandirDadosAdicionaisAuto: boolean;
     FExibeCampoDePagamento: TpcnInformacoesDePagamento;
     FEtiqueta: Boolean;
+    FFormatarNumeroDocumento : Boolean;
 
     procedure SetTributosPercentual(const AValue: TpcnPercentualTributos);
     procedure SetTributosPercentualPersonalizado(const AValue: Double);
@@ -137,6 +138,7 @@ type
     property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento default eipNunca;
     property FormularioContinuo;
     property Etiqueta: Boolean read FEtiqueta write FEtiqueta default False;
+    property FormatarNumeroDocumento: Boolean read FFormatarNumeroDocumento write FFormatarNumeroDocumento default True;
   end;
 
 
@@ -158,7 +160,7 @@ type
     FDescricaoPagamentos: TDescricaoPagamentos;
     FImprimeEmUmaLinha: Boolean;
     FImprimeEmDuasLinhas: Boolean;
-
+    FFormatarNumeroDocumento : Boolean;
     procedure setImprimeEmUmaLinha(const Value: Boolean);
     procedure setImprimeEmDuasLinhas(const Value: Boolean);
   public
@@ -179,6 +181,7 @@ type
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write setImprimeEmUmaLinha default False;
     property ImprimeEmDuasLinhas: Boolean read FImprimeEmDuasLinhas write setImprimeEmDuasLinhas default False;
     property FormularioContinuo;
+    property FormatarNumeroDocumento: Boolean read FFormatarNumeroDocumento write FFormatarNumeroDocumento default True;
   end;
 
 implementation
@@ -216,6 +219,7 @@ begin
   FExpandirDadosAdicionaisAuto     := False;
   FExibeCampoDePagamento           := eipNunca;   	
   FEtiqueta                        := False;
+  FFormatarNumeroDocumento         := True;
 end;
 
 procedure TACBrNFeDANFEClass.SetTributosPercentual(const AValue: TpcnPercentualTributos);
@@ -662,6 +666,7 @@ begin
   FDescricaoPagamentos   := [icaTipo, icaBandeira];
   FImprimeEmUmaLinha     := False;
   FImprimeEmDuasLinhas   := False;
+  FFormatarNumeroDocumento := True;
 end;
 
 function TACBrNFeDANFCEClass.ManterDescricaoPagamentos(aPagto: TpagCollectionItem

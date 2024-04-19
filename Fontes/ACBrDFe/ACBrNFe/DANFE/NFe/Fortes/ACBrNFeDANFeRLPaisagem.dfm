@@ -4,7 +4,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Caption = 'frlDANFeRLPaisagem'
   ClientHeight = 749
   ClientWidth = 1116
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitWidth = 1132
+  ExplicitHeight = 788
   TextHeight = 13
   inherited RLNFe: TRLReport
     Left = -8
@@ -24,6 +26,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
+    ExplicitLeft = -8
+    ExplicitTop = -20
+    ExplicitWidth = 1123
+    ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage
       Left = 450
       Top = 427

@@ -294,6 +294,9 @@ begin
     SalvarXmlNfse(ANota);
 
     AResumo.NomeArq := ANota.NomeArq;
+    AResumo.Link := ANota.NFSe.Link;
+
+    Response.Link := ANota.NFSe.Link;
 
     Result := True; // Processado com sucesso pois retornou a nota
   end;
@@ -372,6 +375,9 @@ begin
     SalvarXmlNfse(ANota);
 
     AResumo.NomeArq := ANota.NomeArq;
+    AResumo.Link := ANota.NFSe.Link;
+
+    Response.Link := ANota.NFSe.Link;
 
     Result := True; // Processado com sucesso pois retornou a nota
   end;

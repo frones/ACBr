@@ -46,6 +46,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2024
+-- ACBrNFeDANFeRLPaisagem DFM e ACBrNFeDANFeRLRetrato DFM --
+[*] TK-2944 ACBrNFCe/ACBrNFE - Removido StyleElements, ExplicitWidth e ExplicitHeight 
+  Por: Daniel de Morais InfoCotidiano
+
+22/04/2024
+-- ACBrDANFCeFortesFrA4,ACBrNFeDANFeEventoRL,ACBrNFeDANFeRLPaisagem,ACBrNFeDANFeRLRetrato --
+[*] TK-2944 ACBrNFCe/ACBrNFE - Convertido relatórios Delphi para Lazarus.
+  Por: Daniel de Morais InfoCotidiano
+
 04/04/2024
 -- ACBrNFeDANFeRLPaisagem --
 [*] Conversao ACBrNFeDANFeRLSimplificado.dfm para lfm - foi necessario remover a linha 10 (StyleElements) q estava dando conflito no lazarus. 

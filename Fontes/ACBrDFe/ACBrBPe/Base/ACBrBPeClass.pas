@@ -281,16 +281,16 @@ type
 
   TinfBPe = class(TObject)
   private
-    FVersao: Real;
+    FVersao: Double;
     FID: String;
 
-    function GetVersaoStr: String;
-    function GetVersao: Real;
+//    function GetVersaoStr: String;
+//    function GetVersao: Real;
   public
     procedure Assign(Source: TinfBPe);
 
-    property Versao: Real read GetVersao write FVersao;
-    property VersaoStr: String read GetVersaoStr;
+    property Versao: Double read FVersao write FVersao;
+//    property VersaoStr: String read GetVersaoStr;
     property ID: String read FID write FID;
   end;
 
@@ -847,7 +847,7 @@ begin
   FSignature   := TSignature.create;
   FProcBPe    := TProcDFe.Create('1.00', NAME_SPACE_BPe, 'BPe');
 
-  FinfBPe.Versao := 0;
+//  FinfBPe.Versao := 0;
 end;
 
 destructor TBPe.Destroy;
@@ -903,7 +903,7 @@ begin
   ID     := Source.ID;
   Versao := Source.Versao;
 end;
-
+{
 function TinfBPe.GetVersao: Real;
 begin
   if FVersao <= 0 then
@@ -919,7 +919,7 @@ begin
 
   Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
-
+}
 {Ide}
 
 procedure TIde.Assign(Source: TIde);

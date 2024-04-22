@@ -39,7 +39,8 @@ interface
 uses
   Classes, SysUtils,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
-  ACBrBPeClass;
+  ACBrBPeClass,
+  ACBrBPeConversao;
 
 type
   TBPeXmlWriterOptions = class(TACBrXmlWriterOptions)
@@ -69,8 +70,12 @@ type
   private
     FBPe: TBPe;
 
-//    FVersao: string;
     FChaveBPe: string;
+
+    FVersaoDF: TVersaoBPe;
+    FModeloDF: TModeloBPe;
+    FtpAmb: TACBrTipoAmbiente;
+    FtpEmis: TACBrTipoEmissao;
     FIdCSRT: integer;
     FCSRT: string;
 
@@ -134,9 +139,13 @@ type
 
     property Opcoes: TBPeXmlWriterOptions read GetOpcoes write SetOpcoes;
     property BPe: TBPe read FBPe write FBPe;
+
+    property VersaoDF: TVersaoBPe read FVersaoDF write FVersaoDF;
+    property ModeloDF: TModeloBPe read FModeloDF write FModeloDF;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
+    property tpEmis: TACBrTipoEmissao read FtpEmis write FtpEmis;
     property IdCSRT: integer read FIdCSRT write FIdCSRT;
     property CSRT: string read FCSRT write FCSRT;
-
   end;
 
 implementation
@@ -148,7 +157,6 @@ uses
   Math,
   ACBrDFeConsts,
   ACBrBPeConsts,
-  ACBrBPeConversao,
   ACBrValidador,
   ACBrDFeUtil,
   ACBrUtil.Base,
@@ -217,18 +225,21 @@ end;
 function TBPeXmlWriter.GerarXml: boolean;
 var
   Gerar: boolean;
-  xCNPJCPF: string;
   BPeNode, xmlNode: TACBrXmlNode;
 begin
   Result := False;
 
   ListaDeAlertas.Clear;
 
-//  FVersao := Copy(BPe.infBPe.VersaoStr, 9, 4);
+  {
+    Os campos abaixo tem que ser os mesmos da configuração
+  }
+  BPe.Ide.modelo := StrToInt(ModeloBPeToStr(ModeloDF));
+  BPe.infBPe.Versao := VersaoBPeToDbl(VersaoDF);
+  BPe.Ide.tpAmb := tpAmb;
+  BPe.ide.tpEmis := tpEmis;
 
-  xCNPJCPF := BPe.emit.CNPJ;
-
-  FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, xCNPJCPF,
+  FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ,
       BPe.ide.serie, BPe.ide.nBP, StrToInt(TipoEmissaoToStr(BPe.ide.tpEmis)),
       BPe.ide.cBP, BPe.ide.modelo);
 
@@ -257,8 +268,8 @@ begin
   if BPe.infBPeSupl.qrCodBPe <> '' then
   begin
     xmlNode := BPeNode.AddChild('infBPeSupl');
-    xmlNode.AppendChild(AddNode(tcStr, '#318', 'qrCodBPe', 50, 1000,
-                                1, '<![CDATA[' + BPe.infBPeSupl.qrCodBPe + ']]>', DSC_QRCODDFe, False));
+    xmlNode.AppendChild(AddNode(tcStr, '#318', 'qrCodBPe', 50, 1000, 1,
+           '<![CDATA[' + BPe.infBPeSupl.qrCodBPe + ']]>', DSC_QRCODDFe, False));
   end;
 
   if Opcoes.GerarTagAssinatura <> taNunca then
@@ -313,7 +324,7 @@ begin
   else
   begin
     if BPe.Comp.xNome <> '' then
-      Result.AppendChild(Gerar_Comp); // Comprador
+      Result.AppendChild(Gerar_Comp);
 
     if BPe.Agencia.xNome <> '' then
       Result.AppendChild(Gerar_Agencia);
@@ -454,10 +465,10 @@ begin
                                                     BPe.Emit.xFant, DSC_XFANT));
 
   Result.AppendChild(AddNode(tcStr, '#24', 'IM', 1, 15, 1,
-                                                    BPe.Emit.IM, DSC_IM));
+                                                          BPe.Emit.IM, DSC_IM));
 
   Result.AppendChild(AddNode(tcStr, '#25', 'CNAE', 7, 7, 1,
-                                                    BPe.Emit.CNAE, DSC_CNAE));
+                                                      BPe.Emit.CNAE, DSC_CNAE));
 
   Result.AppendChild(AddNode(tcStr, '#26', 'CRT', 1, 1, 1,
                                            CRTToStr(BPe.Emit.CRT), DSC_CRTBPE));
@@ -465,14 +476,13 @@ begin
   Result.AppendChild(Gerar_EnderEmit);
 
   Result.AppendChild(AddNode(tcStr, '#44', 'TAR', 1, 20, 0,
-                                                    BPe.Emit.TAR, DSC_TAR));
+                                                        BPe.Emit.TAR, DSC_TAR));
 end;
 
 function TBPeXmlWriter.Gerar_EnderEmit: TACBrXmlNode;
 var
   cMun: integer;
-  xMun: string;
-  xUF: string;
+  xMun, xUF: string;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL, BPe.Emit.enderEmit.UF,
     BPe.Emit.enderEmit.xMun, BPe.Emit.EnderEmit.cMun);
@@ -545,8 +555,7 @@ end;
 function TBPeXmlWriter.Gerar_EnderComp: TACBrXmlNode;
 var
   cMun: integer;
-  xMun: string;
-  xUF: string;
+  xMun, xUF: string;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL, BPe.Comp.EnderComp.UF,
     BPe.Comp.EnderComp.xMun, BPe.Comp.EnderComp.cMun);
@@ -612,8 +621,7 @@ end;
 function TBPeXmlWriter.Gerar_EnderAgencia: TACBrXmlNode;
 var
   cMun: integer;
-  xMun: string;
-  xUF: string;
+  xMun, xUF: string;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL, BPe.Agencia.EnderAgencia.UF,
     BPe.Agencia.EnderAgencia.xMun, BPe.Agencia.EnderAgencia.cMun);
@@ -884,7 +892,6 @@ function TBPeXmlWriter.Gerar_ICMS: TACBrXmlNode;
 var
   sTagTemp: String;
   xmlNode: TACBrXmlNode;
-
 begin
   Result := FDocument.CreateElement('ICMS');
 
@@ -1416,7 +1423,7 @@ begin
                                                            idCSRT, DSC_IDCSRT));
 
       Result.AppendChild(AddNode(tcStr, '#316', 'hashCSRT', 28, 28, 1,
-                               CalcularHashCSRT(CSRT, FChaveBPe), DSC_HASHCSRT));
+                              CalcularHashCSRT(CSRT, FChaveBPe), DSC_HASHCSRT));
     end;
   end;
 end;

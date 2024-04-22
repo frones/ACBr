@@ -193,15 +193,17 @@ begin
   FBPeR := TBPeXmlReader.Create(FBPe);
   FConfiguracoes := TACBrBPe(TBilhetes(Collection).ACBrBPe).Configuracoes;
 
+  FBPe.Ide.tpBPe := tbNormal;
+  FBPe.Ide.verProc := 'ACBrBPe';
+  {
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
   begin
     FBPe.Ide.modelo := StrToInt(ModeloBPeToStr(Configuracoes.Geral.ModeloDF));
     FBPe.infBPe.Versao := VersaoBPeToDbl(Configuracoes.Geral.VersaoDF);
-    FBPe.Ide.tpBPe := tbNormal;
-    FBPe.Ide.verProc := 'ACBrBPe';
     FBPe.Ide.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
     FBPe.Ide.tpEmis := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
   end;
+  }
 end;
 
 destructor TBilhete.Destroy;
@@ -556,6 +558,13 @@ begin
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
+    {
+      Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
+    }
+    FBPeW.VersaoDF := Configuracoes.Geral.VersaoDF;
+    FBPeW.ModeloDF := Configuracoes.Geral.ModeloDF;
+    FBPeW.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
+    FBPeW.tpEmis := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
     FBPeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FBPeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
@@ -581,6 +590,7 @@ var
   sSecao: string;
   INIRec: TMemIniFile;
   IniBPe: TStringList;
+  Ok: Boolean;
 begin
   Result := '';
 
@@ -591,6 +601,8 @@ begin
   try
     with FBPe do
     begin
+      INIRec.WriteString('infBPe', 'versao', VersaoBPeToStr(DblToVersaoBPe(Ok, infBPe.versao)));
+
       INIRec.WriteInteger('ide', 'cUF', ide.cUF);
       INIRec.WriteInteger('ide', 'mod', Ide.modelo);
       INIRec.WriteInteger('ide', 'serie', Ide.serie);
@@ -978,8 +990,8 @@ begin
     begin
       infBPe.versao := StringToFloatDef(INIRec.ReadString('infBPe', 'versao', VersaoBPeToStr(FConfiguracoes.Geral.VersaoDF)),0);
 
-      versao := FloatToString(infBPe.versao, '.', '#0.00');
-      FConfiguracoes.Geral.VersaoDF := StrToVersaoBPe(OK, versao);
+//      versao := FloatToString(infBPe.versao, '.', '#0.00');
+//      FConfiguracoes.Geral.VersaoDF := StrToVersaoBPe(OK, versao);
 
       Ide.tpAmb   := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
       Ide.modelo  := INIRec.ReadInteger('ide', 'mod', 63);

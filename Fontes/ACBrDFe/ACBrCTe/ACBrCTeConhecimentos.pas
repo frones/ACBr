@@ -654,6 +654,7 @@ var
   sSecao: string;
   INIRec: TMemIniFile;
   IniCTe: TStringList;
+  Ok: Boolean;
 begin
   Result := '';
 
@@ -664,7 +665,9 @@ begin
   try
     with FCTe do
     begin
-      INIRec.WriteString('infCTe', 'versao', FormatFloat('0.00', infCTe.versao));
+//      INIRec.WriteString('infCTe', 'versao', FormatFloat('0.00', infCTe.versao));
+      INIRec.WriteString('infCTe', 'versao', VersaoCTeToStr(DblToVersaoCTe(Ok, infCTe.versao)));
+
       INIRec.WriteInteger('ide', 'cCT', Ide.cCT);
       INIRec.WriteInteger('ide', 'CFOP', Ide.CFOP);
       INIRec.WriteString('ide', 'natOp', Ide.natOp);

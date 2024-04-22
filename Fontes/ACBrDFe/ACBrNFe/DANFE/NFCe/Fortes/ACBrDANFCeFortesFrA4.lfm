@@ -1,7 +1,7 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
-  Left = 534
+  Left = 0
   Height = 745
-  Top = 94
+  Top = 0
   Width = 1012
   Caption = 'frmACBrDANFCeFortesFrA4'
   ClientHeight = 745
@@ -11,7 +11,6 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  LCLVersion = '2.0.10.0'
   object rlReportA4: TRLReport
     Left = 8
     Height = 1123
@@ -367,7 +366,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel19BeforePrint
         end
         object RLLabel20: TRLLabel
-          Left = 645
+          Left = 648
           Height = 16
           Top = 0
           Width = 70
@@ -1399,12 +1398,12 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     DocumentInfo.Creator = 'Projeto ACBr'
     DisplayName = 'Documento PDF'
     Left = 818
-    Top = 72
+    Top = 79
   end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'HTML'
     Left = 821
-    Top = 124
+    Top = 131
   end
 end

@@ -1,9 +1,9 @@
 object frlDANFeEventoRL: TfrlDANFeEventoRL
   Left = 283
   Top = 181
-  Width = 810
-  Height = 634
   Caption = 'frlDANFeEventoLR'
+  ClientHeight = 595
+  ClientWidth = 794
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,10 +11,10 @@ object frlDANFeEventoRL: TfrlDANFeEventoRL
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Position = poMainFormCenter
-  PixelsPerInch = 96
+  Scaled = False
   object RLEvento: TRLReport
     Left = 0
-    Top = 0
+    Top = -2
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET
@@ -23,11 +23,11 @@ object frlDANFeEventoRL: TfrlDANFeEventoRL
     Font.Name = 'Arial'
     Font.Style = []
     PreviewOptions.ShowModal = True
-    PreviewOptions.Caption = 'DANFe '
+    PreviewOptions.Caption = 'DANFe'
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Author = 'FortesReport 3.23 - Copyright © 1999-2009 Fortes Informática'
+    DocumentInfo.Author = 'FortesReport 3.23 - Copyright '#169' 1999-2009 Fortes Inform'#225'tica'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
     Left = 416

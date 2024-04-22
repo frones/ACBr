@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2024
+-- ACBrDANFCeFortesFrA4,ACBrNFeDANFeEventoRL,ACBrNFeDANFeRLPaisagem,ACBrNFeDANFeRLRetrato --
+[*] TK-2944 ACBrNFCe/ACBrNFE - Convertido relatórios Delphi para Lazarus.
+  Por: Daniel de Morais InfoCotidiano
+
 17/04/2024
 -- Diversos --
 [*] Criado um novo tipo chamado TIndicadorEx que contem os valores:

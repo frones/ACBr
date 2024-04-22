@@ -1,10 +1,11 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 560
-  Top = 187
+  Left = 234
+  Top = 0
   Caption = 'frlDANFeRLRetrato'
   Font.Height = -18
   inherited RLNFe: TRLReport
-    Top = 0
+    Left = 10
+    Top = 10
     AdjustableMargins = True
     Background.Arrange = baDistributed
     Background.Height = 96
@@ -289,20 +290,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Alignment = taCenter
         AutoSize = False
         Caption = 'CST'
-        Font.Color = clBlack
-        Font.Height = -7
-        Font.Name = 'Arial'
-        HoldStyle = hsRelatively
-        ParentFont = False
-      end
-      object lblCST2: TRLLabel
-        Tag = 10
-        Left = 284
-        Height = 7
-        Top = 21
-        Width = 22
-        Alignment = taCenter
-        AutoSize = False
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -614,6 +601,21 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object lblCST2: TRLLabel
+        Tag = 10
+        Left = 284
+        Height = 7
+        Top = 21
+        Width = 22
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'CST'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6969,7 +6971,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsVertically
       end
       object rllNFe: TRLLabel
-        Left = 608
+        Left = 607
         Height = 16
         Top = 2
         Width = 128
@@ -7655,7 +7657,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 696
+    Left = 688
     Top = 106
   end
 end

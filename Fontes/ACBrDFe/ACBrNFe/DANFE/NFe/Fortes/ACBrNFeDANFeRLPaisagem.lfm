@@ -1,9 +1,7 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 561
-  Height = 806
-  Top = 164
+  Left = 204
+  Top = 207
   Caption = 'frlDANFeRLPaisagem'
-  ClientHeight = 806
   inherited RLNFe: TRLReport
     Left = -8
     Height = 794
@@ -890,9 +888,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLAngleLabel9: TRLAngleLabel
-        Left = 8
-        Height = 30
-        Top = 43
+        Left = 9
+        Height = 78
+        Top = 20
         Width = 10
         Angle = 90
         AngleBorders = True
@@ -929,9 +927,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RLAngleLabel10: TRLAngleLabel
-        Left = 19
-        Height = 48
-        Top = 34
+        Left = 21
+        Height = 78
+        Top = 20
         Width = 10
         Angle = 90
         AngleBorders = True

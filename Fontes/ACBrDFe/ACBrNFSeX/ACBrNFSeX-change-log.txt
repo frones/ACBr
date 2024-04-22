@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Francisco Morato/SP, provedor Intertec.
+[+] Incluída a cidade de Itapecerica da Serra/SP, provedor Intertec.
+[+] Incluída a cidade de Piraquara/SP, provedor EloTech.
+  Por: Alexandre de Paula
+
 19/04/2024
 -- ACBrNFSeXServicos --
 [*] Incluída a URL de Consultar NFS-e por Rps para todas as cidades atendidas 

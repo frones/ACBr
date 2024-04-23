@@ -112,6 +112,7 @@ begin
     Identificador := '';
     CancPreencherCodVerificacao := True;
     DetalharServico := True;
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
 
     Autenticacao.RequerLogin := True;
 

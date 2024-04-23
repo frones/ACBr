@@ -7,9 +7,6 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  StyleElements = [seFont, seClient, seBorder]
-  ExplicitWidth = 1114
-  ExplicitHeight = 895
   TextHeight = 10
   inherited RLNFe: TRLReport
     Tag = 1
@@ -27,10 +24,6 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     UnlimitedHeight = True
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
-    ExplicitLeft = 656
-    ExplicitTop = -527
-    ExplicitWidth = 340
-    ExplicitHeight = 1890
     object rlb01_Chave: TRLBand
       Left = 38
       Top = 38

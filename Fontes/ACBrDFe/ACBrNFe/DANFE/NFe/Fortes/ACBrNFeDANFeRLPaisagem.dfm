@@ -23,10 +23,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
-    ExplicitLeft = -8
-    ExplicitTop = -20
-    ExplicitWidth = 1123
-    ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage
       Left = 450
       Top = 427

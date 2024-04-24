@@ -41,9 +41,7 @@ uses
   pcnConversao,
   ACBrBoletoConversao,
   ACBrBoleto,
-  synautil,
-  Jsons,
-  ACBrDFeSSL,
+  ACBrJSON,
   ACBrUtil.Base,
   ACBrBoletoWS.Rest;
 
@@ -52,7 +50,6 @@ type
   { TBoletoW_Itau_API }
   TBoletoW_Itau_API = class(TBoletoWSREST)
   private
-    FDFeSSL: TDFeSSL;
     function CodigoTipoTitulo(AEspecieDoc: String): Integer;
   protected
     procedure DefinirURL; override;
@@ -64,29 +61,29 @@ type
     procedure DefinirAutenticacao;
 
     procedure RequisicaoJson;
-    procedure GerarData(AJson: TJsonObject);
-    procedure GeraIdBeneficiario(AJson: TJsonObject);
-    procedure GerarDadosQrCode(AJson: TJsonObject);
-    procedure GeraDadoBoleto(AJson: TJsonObject);
-    procedure GerarPagador(AJson: TJsonObject);
-    procedure GerarPessoaPg(AJson: TJsonObject);
-    procedure GerarTipoPessoaPg(AJson: TJsonObject);
-    procedure GerarEnderecoPg(AJson: TJsonObject);
-    procedure GerarDadosIndividuaisBoleto(AJson: TJsonObject);
-    procedure GerarMulta(AJson: TJsonObject);
-    procedure GerarJuros(AJson: TJsonObject);
-    procedure GerarDesconto(AJson: TJsonObject);
-    procedure GerarRecebimentoDivergente(AJson: TJsonObject);
-    procedure GerarInstruCaoCobranca(AJson: TJsonObject);
-    procedure GerarProtesto(AJson: TJsonObject);
-    procedure GerarNegativacao(AJson: TJsonObject);
+    procedure GerarData(AJson: TACBrJSONObject);
+    procedure GeraIdBeneficiario(AJson: TACBrJSONObject);
+    procedure GerarDadosQrCode(AJson: TACBrJSONObject);
+    procedure GeraDadoBoleto(AJson: TACBrJSONObject);
+    procedure GerarPagador(AJson: TACBrJSONObject);
+    procedure GerarPessoaPg(AJson: TACBrJSONObject);
+    procedure GerarTipoPessoaPg(AJson: TACBrJSONObject);
+    procedure GerarEnderecoPg(AJson: TACBrJSONObject);
+    procedure GerarDadosIndividuaisBoleto(AJson: TACBrJSONObject);
+    procedure GerarMulta(AJson: TACBrJSONObject);
+    procedure GerarJuros(AJson: TACBrJSONObject);
+    procedure GerarDesconto(AJson: TACBrJSONObject);
+    procedure GerarRecebimentoDivergente(AJson: TACBrJSONObject);
+    procedure GerarInstruCaoCobranca(AJson: TACBrJSONObject);
+    procedure GerarProtesto(AJson: TACBrJSONObject);
+    procedure GerarNegativacao(AJson: TACBrJSONObject);
 
     procedure RequisicaoAltera;
-    procedure AtribuirDesconto(AJson: TJsonObject);
-    procedure AtribuirDesconto1(AJson: TJsonObject);
-    procedure AlterarProtesto(AJson: TJsonObject);
-    procedure AtribuirJuros(AJson: TJsonObject);
-    procedure AtribuirMulta(AJson: TJsonObject);
+    procedure AtribuirDesconto(AJson: TACBrJSONObject);
+    procedure AtribuirDesconto1(AJson: TACBrJSONObject);
+    procedure AlterarProtesto(AJson: TACBrJSONObject);
+    procedure AtribuirJuros(AJson: TACBrJSONObject);
+    procedure AtribuirMulta(AJson: TACBrJSONObject);
 
     procedure RequisicaoConsulta;
     procedure RequisicaoConsultaDetalhe;
@@ -107,10 +104,9 @@ type
 
     function GerarRemessa: string; override;
     function Enviar: boolean; override;
-
   end;
 
-const
+  const
 
   C_URL_PIX     = 'https://secure.api.itau/pix_recebimentos_conciliacoes/v2';
   C_URL_PIX_HOM = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-pix-recebimentos-conciliacoes-v2-ext/v2';
@@ -132,7 +128,10 @@ const
 implementation
 
 uses
-  synacode, strutils, DateUtils, ACBrUtil.Strings, ACBrUtil.DateTime;
+  StrUtils,
+  DateUtils,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 { TBoletoW_Itau_API }
 
@@ -351,108 +350,60 @@ begin
   Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, '1', '2'), 2);
 end;
 
-procedure TBoletoW_Itau_API.GeraIdBeneficiario(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GeraIdBeneficiario(AJson: TACBrJSONObject);
 var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
+  LJsonDados: TACBrJSONObject;
   LId_Beneficiario, LDAC: string;
 begin
   if Assigned(ATitulo) then
   begin
     if Assigned(AJson) then
     begin
-      LJsonDados := TJsonObject.Create;
+      LJsonDados := TACBrJSONObject.Create;
       LDAC := IfThen(Boleto.Cedente.DigitoVerificadorAgenciaConta <> '',
                      Boleto.Cedente.DigitoVerificadorAgenciaConta,
                      Boleto.Cedente.ContaDigito);
-      try
-        LId_Beneficiario := PadLeft(Boleto.Cedente.Agencia, 4, '0') +
-          PadLeft(Boleto.Cedente.Conta, 7, '0') +
-          PadLeft(LDAC, 1, '0');
 
-        LJsonDados.Add('id_beneficiario').Value.AsString := LId_Beneficiario;
+      LId_Beneficiario := PadLeft(Boleto.Cedente.Agencia, 4, '0') +
+        PadLeft(Boleto.Cedente.Conta, 7, '0') +
+        PadLeft(LDAC, 1, '0');
 
-        LJsonPair := TJsonPair.Create(AJson, 'beneficiario');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('beneficiario').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonDados.Free;
-      end;
+      LJsonDados.AddPair('id_beneficiario',LId_Beneficiario);
+      AJson.AddPair('beneficiario',LJsonDados);
     end;
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarDadosIndividuaisBoleto(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarDadosIndividuaisBoleto(AJson: TACBrJSONObject);
 var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
-  LJsonArrDados: TJsonArray;
+  LJsonDados: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados    := TJsonObject.Create;
-      LJsonArrDados := TJsonArray.Create;
-      try
-        LJsonDados.Add('numero_nosso_numero').Value.AsString := ATitulo.NossoNumero;
-        LJsonDados.Add('data_vencimento').Value.AsString := FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD');
-        LJsonDados.Add('valor_titulo').Value.AsString := IntToStrZero(round(ATitulo.ValorDocumento * 100), 17);
-        LJsonDados.Add('texto_uso_beneficiario').Value.AsString := '0';
-        LJsonDados.Add('texto_seu_numero').Value.AsString := ATitulo.NossoNumero;
-        LJsonArrDados.Add.AsObject                        := LJsonDados;
+    LJsonDados    := TACBrJSONObject.Create;
+    LJsonDados.AddPair('numero_nosso_numero', ATitulo.NossoNumero);
+    LJsonDados.AddPair('data_vencimento', FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD'));
+    LJsonDados.AddPair('valor_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
+    LJsonDados.AddPair('texto_uso_beneficiario', '0');
+    LJsonDados.AddPair('texto_seu_numero', ATitulo.NossoNumero);
 
-        LJsonPair := TJsonPair.Create(AJson, 'dados_individuais_boleto');
-        try
-          LJsonPair.Value.AsArray := LJsonArrDados;
-          AJson.Add('dados_individuais_boleto').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonArrDados.Free;
-        LJsonDados.Free;
-      end;
-    end;
+    AJson.AddPair('dados_individuais_boleto', LJsonDados);
   end;
 end;
 
-
-procedure TBoletoW_Itau_API.GerarDadosQrCode(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarDadosQrCode(AJson: TACBrJSONObject);
 var
-  JsonDados: TJsonObject;
-  JsonPair: TJsonPair;
+  LJsonDados: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      JsonDados := TJsonObject.Create;
-      try
+    LJsonDados := TACBrJSONObject.Create;
 
-        //ACBrPIXBase
-        //JsonDados.Add('chave').Value.AsString := OnlyNumber(Boleto.Cedente.PIX.TipoChavePIX);
-        JsonDados.Add('chave').Value.AsString := Trim(Boleto.Cedente.PIX.Chave);
-        //JsonDados.Add('tipo_cobranca').Value.AsString := 'cob = cobrança pix imediata';
+    LJsonDados.AddPair('chave',Trim(Boleto.Cedente.PIX.Chave));
+    AJson.AddPair('dados_qrcode', LJsonDados);
 
-        JsonPair := TJsonPair.Create(AJson, 'dados_qrcode');
-        try
-          JsonPair.Value.AsObject := JsonDados;
-          AJson.Add('dados_qrcode').Assign(JsonPair);
-        finally
-          JsonPair.Free;
-        end;
-      finally
-        JsonDados.Free;
-      end;
-    end;
   end;
 end;
-
 
 function TBoletoW_Itau_API.CodigoEspeciaDoc: string;
 begin
@@ -507,176 +458,125 @@ begin
 
 end;
 
-procedure TBoletoW_Itau_API.GerarRecebimentoDivergente(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarRecebimentoDivergente(AJson: TACBrJSONObject);
 var
-  LJsonRecDivergente: TJsonObject;
-  LJsonPairRecDivergente: TJsonPair;
+  LJsonDados: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
-
-  if Assigned(AJson) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    LJsonRecDivergente := TJsonObject.Create;
+    LJsonDados := TACBrJSONObject.Create;
 
-    try
-      LJsonRecDivergente.Add('codigo_tipo_autorizacao').Value.AsString := '0' + inttostr(Integer(ATitulo.TipoPagamento) + 1);
-      if (Integer(ATitulo.TipoPagamento) <> 1) and (Integer(ATitulo.TipoPagamento) <> 3) then
-      begin
-        if (ATitulo.ValorMinPagamento > 0) and (ATitulo.ValorMaxPagamento > 0) then
-          LJsonRecDivergente.Add('codigo_tipo_recebimento').Value.AsString := 'V'
-        else
-          LJsonRecDivergente.Add('codigo_tipo_recebimento').Value.AsString := 'P';
-      end;
-      if ATitulo.ValorMinPagamento > 0 then
-        LJsonRecDivergente.Add('valor_minimo').Value.AsString := IntToStrZero(round(ATitulo.ValorMinPagamento * 100), 17)
+    LJsonDados.AddPair('codigo_tipo_autorizacao', '0' + inttostr(Integer(ATitulo.TipoPagamento) + 1));
+
+    if (Integer(ATitulo.TipoPagamento) <> 1) and (Integer(ATitulo.TipoPagamento) <> 3) then
+    begin
+      if (ATitulo.ValorMinPagamento > 0) and (ATitulo.ValorMaxPagamento > 0) then
+        LJsonDados.AddPair('codigo_tipo_recebimento', 'V')
       else
-        if ATitulo.PercentualMinPagamento > 0 then
-          LJsonRecDivergente.Add('percentual_minimo').Value.AsString := IntToStrZero(round(ATitulo.PercentualMinPagamento * 100000), 12);
-
-      if ATitulo.ValorMinPagamento > 0 then
-        LJsonRecDivergente.Add('valor_maximo').Value.AsString := IntToStrZero(round(ATitulo.ValorMaxPagamento * 100), 17)
-      else
-        if ATitulo.PercentualMaxPagamento > 0 then
-          LJsonRecDivergente.Add('percentual_maximo').Value.AsString := IntToStrZero(round(ATitulo.PercentualMaxPagamento * 100000), 12);
-
-      LJsonPairRecDivergente := TJsonPair.Create(AJson, 'recebimento_divergente');
-      try
-        LJsonPairRecDivergente.Value.AsObject := LJsonRecDivergente;
-        AJson.Add('recebimento_divergente').Assign(LJsonPairRecDivergente);
-      finally
-        LJsonPairRecDivergente.Free;
-      end;
-    finally
-      LJsonRecDivergente.Free;
+        LJsonDados.AddPair('codigo_tipo_recebimento', 'P');
     end;
-  end;
-end;
-
-procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TJsonObject);
-var
-  LJsonDados1, LJsonDados2, LJsonDados3: TJsonObject;
-  LJsonArrDados: TJsonArray;
-  LJsonPair: TJsonPair;
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados1 := TJsonObject.Create;
-      LJsonDados2 := TJsonObject.Create;
-      LJsonDados3 := TJsonObject.Create;
-      LJsonArrDados := TJsonArray.Create;
-      try
-        if (ATitulo.Instrucao1) <> '' then
-        begin
-          LJsonDados1.Add('codigo_instrucao_cobranca').Value.AsString := Copy(trim((ATitulo.Instrucao1)), 1, 2);
-          LJsonDados1.Add('quantidade_dias_apos_vencimento').Value.AsString := Copy(trim((ATitulo.Instrucao1)), 3, 2);
-          LJsonArrDados.Add.AsObject := LJsonDados1;
-        end;
-        if ATitulo.Instrucao2 <> '' then
-        begin
-          LJsonDados2.Add('codigo_instrucao_cobranca').Value.AsString := Copy(trim((ATitulo.Instrucao2)), 1, 2);
-          LJsonDados2.Add('quantidade_dias_apos_vencimento').Value.AsString := Copy(trim((ATitulo.Instrucao2)), 3, 2);
-          LJsonArrDados.Add.AsObject := LJsonDados2;
-        end;
-        if ATitulo.Instrucao3 <> '' then
-        begin
-          LJsonDados3.Add('codigo_instrucao_cobranca').Value.AsString := Copy(trim((ATitulo.Instrucao3)), 1, 2);
-          LJsonDados3.Add('quantidade_dias_apos_vencimento').Value.AsString := Copy(trim((ATitulo.Instrucao3)), 3, 2);
-          LJsonArrDados.Add.AsObject := LJsonDados3;
-        end;
-
-        LJsonPair := TJsonPair.Create(AJson, 'instrucao_cobranca');
-        try
-          LJsonPair.Value.AsArray := LJsonArrDados;
-          AJson.Add('instrucao_cobranca').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonArrDados.Free;
-        LJsonDados1.Free;
-        LJsonDados2.Free;
-        LJsonDados3.Free;
-      end;
-    end;
-  end;
-end;
-
-procedure TBoletoW_Itau_API.GerarProtesto(AJson: TJsonObject);
-var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados := TJsonObject.Create;
-      try
-        LJsonDados.Add('protesto').Value.AsString := 'True';
-        LJsonDados.Add('quantidade_dias_protesto').Value.AsInteger := ATitulo.DiasDeProtesto;
-        LJsonPair := TJsonPair.Create(AJson, 'protesto');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('protesto').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonDados.Free;
-      end;
-    end;
-  end;
-end;
-
-procedure TBoletoW_Itau_API.GerarNegativacao(AJson: TJsonObject);
-var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados := TJsonObject.Create;
-      try
-        LJsonDados.Add('negativacao').Value.AsString := 'True';
-        LJsonDados.Add('quantidade_dias_negativacao').Value.AsInteger := ATitulo.DiasDeNegativacao;
-        LJsonPair := TJsonPair.Create(AJson, 'negativacao');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('negativacao').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonDados.Free;
-      end;
-    end;
-  end;
-end;
-
-procedure TBoletoW_Itau_API.GeraDadoBoleto(AJson: TJsonObject);
-var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
-begin
-  LJsonDados := TJsonObject.Create;
-  try
-    LJsonDados.Add('descricao_instrumento_cobranca').Value.AsString := ifthen(Boleto.Cedente.CedenteWS.IndicadorPix,'boleto_pix','boleto') ;
-    LJsonDados.Add('tipo_boleto').Value.AsString := 'a vista';
-    LJsonDados.Add('codigo_carteira').Value.AsInteger   := StrToIntDef(ATitulo.carteira, 0);
-    LJsonDados.Add('valor_total_titulo').Value.AsString := IntToStrZero(round(ATitulo.ValorDocumento * 100), 17);
-    LJsonDados.Add('codigo_especie').Value.AsString     := CodigoEspeciaDoc;
-    LJsonDados.Add('valor_abatimento').Value.AsString   := IntToStrZero(round(ATitulo.ValorAbatimento * 100), 17);
-    LJsonDados.Add('data_emissao').Value.AsString       := FormatDateBr(ATitulo.DataDocumento, 'yyyy-mm-dd');
-    if ATitulo.TipoPagamento = tpAceita_Qualquer_Valor then
-      LJsonDados.Add('indicador_pagamento_parcial').Value.AsString := 'True'
+    if ATitulo.ValorMinPagamento > 0 then
+      LJsonDados.AddPair('valor_minimo', IntToStrZero(round(ATitulo.ValorMinPagamento * 100), 17))
     else
-      LJsonDados.Add('indicador_pagamento_parcial').Value.AsString := 'False';
-    LJsonDados.Add('quantidade_maximo_parcial').Value.AsInteger := 0;
-    LJsonDados.Add('desconto_expresso').Value.AsString := 'False';
+      if ATitulo.PercentualMinPagamento > 0 then
+        LJsonDados.AddPair('percentual_minimo', IntToStrZero(round(ATitulo.PercentualMinPagamento * 100000), 12));
+
+    if ATitulo.ValorMinPagamento > 0 then
+      LJsonDados.AddPair('valor_maximo', IntToStrZero(round(ATitulo.ValorMaxPagamento * 100), 17))
+    else
+      if ATitulo.PercentualMaxPagamento > 0 then
+        LJsonDados.AddPair('percentual_maximo', IntToStrZero(round(ATitulo.PercentualMaxPagamento * 100000), 12));
+
+    AJson.AddPair('recebimento_divergente', LJsonDados);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
+var
+  LJsonDados, LJsonDados2, LJsonDados3 : TACBrJSONObject;
+  LJsonArray : TACBrJSONArray;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDados := TACBrJSONObject.Create;
+    LJsonArray := TACBrJSONArray.Create;
+    if (ATitulo.Instrucao1) <> '' then
+    begin
+      LJsonDados.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 1, 2));
+      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2));
+      LJsonArray.AddElementJSON(LJsonDados);
+    end;
+    if ATitulo.Instrucao2 <> '' then
+    begin
+      LJsonDados2 := TACBrJSONObject.Create;
+      LJsonDados2.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 1, 2));
+      LJsonDados2.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao2)), 3, 2));
+      LJsonArray.AddElementJSON(LJsonDados2);
+    end;
+    if ATitulo.Instrucao3 <> '' then
+    begin
+      LJsonDados3 := TACBrJSONObject.Create;
+      LJsonDados3.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 1, 2));
+      LJsonDados3.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao3)), 3, 2));
+      LJsonArray.AddElementJSON(LJsonDados3);
+    end;
+
+    AJson.AddPair('instrucao_cobranca',LJsonDados);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarProtesto(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson)then
+  begin
+    LJsonDados := TACBrJSONObject.Create;
+
+    LJsonDados.AddPair('protesto', 'True');
+    LJsonDados.AddPair('quantidade_dias_protesto', ATitulo.DiasDeProtesto);
+    AJson.AddPair('protesto', LJsonDados);
+
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarNegativacao(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDados := TACBrJSONObject.Create;
+
+    LJsonDados.AddPair('negativacao', 'True');
+    LJsonDados.AddPair('quantidade_dias_negativacao', ATitulo.DiasDeNegativacao);
+
+    AJson.AddPair('negativacao', LJsonDados);
+
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GeraDadoBoleto(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  LJsonDados := TACBrJSONObject.Create;
+  try
+    LJsonDados.AddPair('descricao_instrumento_cobranca', IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'boleto_pix','boleto'));
+    LJsonDados.AddPair('tipo_boleto', 'a vista');
+    LJsonDados.AddPair('codigo_carteira', StrToIntDef(ATitulo.carteira, 0));
+    LJsonDados.AddPair('valor_total_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
+    LJsonDados.AddPair('codigo_especie', CodigoEspeciaDoc);
+    LJsonDados.AddPair('valor_abatimento', IntToStrZero(round(ATitulo.ValorAbatimento * 100), 17));
+    LJsonDados.AddPair('data_emissao', FormatDateBr(ATitulo.DataDocumento, 'yyyy-mm-dd'));
+
+    if ATitulo.TipoPagamento = tpAceita_Qualquer_Valor then
+      LJsonDados.AddPair('indicador_pagamento_parcial', 'True')
+    else
+      LJsonDados.AddPair('indicador_pagamento_parcial', 'False');
+
+    LJsonDados.AddPair('quantidade_maximo_parcial', 0);
+    LJsonDados.AddPair('desconto_expresso', 'False');
 
     GerarPagador(LJsonDados);
     GerarDadosIndividuaisBoleto(LJsonDados);
@@ -692,60 +592,44 @@ begin
     if (ATitulo.DiasDeNegativacao > 0) then
       GerarNegativacao(LJsonDados);
 
-    LJsonPair := TJsonPair.Create(AJson, 'dado_boleto');
-    try
-      LJsonPair.Value.AsObject := LJsonDados;
-      AJson.Add('dado_boleto').Assign(LJsonPair);
-    finally
-      LJsonPair.Free;
-    end;
+    AJson.AddPair('dado_boleto',LJsonDados);
+
   finally
     LJsonDados.Free;
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarData(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarData(AJson: TACBrJSONObject);
 var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
+  LJsonDados: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados := TJsonObject.Create;
-      try
-        LJsonDados.Add('etapa_processo_boleto').Value.AsString := ifthen(OAuth.Ambiente=taHomologacao,'validacao','efetivacao')  ;
-        LJsonDados.Add('codigo_canal_operacao').Value.AsString := 'API';
-        GeraIdBeneficiario(LJsonDados);
-        GeraDadoBoleto(LJsonDados);
-        LJsonPair := TJsonPair.Create(AJson, 'data');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('data').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-        finally
-        LJsonDados.Free;
-      end;
+    LJsonDados := TACBrJSONObject.Create;
+    try
+      LJsonDados.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=taHomologacao,'validacao','efetivacao'));
+      LJsonDados.AddPair('codigo_canal_operacao', 'API');
+      GeraIdBeneficiario(LJsonDados);
+      GeraDadoBoleto(LJsonDados);
+      AJson.AddPair('data',LJsonDados);
+    finally
+      LJsonDados.Free;
     end;
   end;
 end;
 
 procedure TBoletoW_Itau_API.RequisicaoJson;
 var
-  LData: string;
-  LJson: TJsonObject;
+  LJson: TACBrJSONObject;
 begin
   if Assigned(ATitulo) then
   begin
-    LJson := TJsonObject.Create;
+    LJson := TACBrJSONObject.Create;
     try
 
       if Boleto.Cedente.CedenteWS.IndicadorPix then
       begin
-        LJson.Add('etapa_processo_boleto').Value.AsString := ifthen(OAuth.Ambiente=taHomologacao,'simulacao','efetivacao');
+        LJson.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=taHomologacao,'simulacao','efetivacao'));
         GeraIdBeneficiario(LJson);
         GeraDadoBoleto(LJson);
         GerarDadosQrCode(LJson);
@@ -755,9 +639,7 @@ begin
         GerarData(LJson);
       end;
 
-      LData := LJson.Stringify;
-
-      FPDadosMsg := LData;
+      FPDadosMsg := LJson.ToJSON;
 
     finally
       LJson.Free;
@@ -768,24 +650,23 @@ end;
 
 procedure TBoletoW_Itau_API.RequisicaoAltera;
 var
-  LData: string;
-  LJson: TJsonObject;
+  LJson: TACBrJSONObject;
 begin
   if Assigned(ATitulo) then
   begin
 
-    LJson := TJsonObject.Create;
+    LJson := TACBrJSONObject.Create;
     try
 
       case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
         3: // RemessaConcederAbatimento
           begin
             if (ATitulo.ValorAbatimento > 0) then
-              LJson.Add('valor_abatimento').Value.AsNumber :=  ATitulo.ValorAbatimento;
+              LJson.AddPair('valor_abatimento', ATitulo.ValorAbatimento);
           end;
         4: // RemessaCancelarAbatimento
           begin
-            LJson.Add('valor_abatimento').Value.AsString := '0';
+            LJson.AddPair('valor_abatimento', '0');
           end;
         5: //RemessaConcederDesconto
           begin
@@ -793,7 +674,7 @@ begin
           end;
         7: //RemessaAlterarVencimento
           begin
-              LJson.Add('data_vencimento').Value.AsString := FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD');
+              LJson.AddPair('data_vencimento', FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD'));
           end;
         9:  //RemessaProtestar
           begin
@@ -810,7 +691,7 @@ begin
         18:  //RemessaAlterarSeuNumero
           begin
             if (ATitulo.SeuNumero <> '') then
-              LJson.Add('texto_seu_numero').Value.AsString := PadLeft(ATitulo.SeuNumero,10,'0')
+              LJson.AddPair('texto_seu_numero', PadLeft(ATitulo.SeuNumero,10,'0'))
             else
               raise Exception.Create(ACBrStr('Seu número é a identificação do boleto que poderá ' + sLineBreak +
                                  ' ter letras e números e OBRIGATÓRIAMENTE 10 posições' + sLineBreak));
@@ -839,21 +720,17 @@ begin
         55:  //toRemessaAlterarPrazoLimiteRecebimento
           begin
             if (ATitulo.DataLimitePagto > 0) then
-              LJson.Add('data_limite_pagamento').Value.AsString := FormatDateBr(ATitulo.DataLimitePagto, 'YYYY-MM-DD');
+              LJson.AddPair('data_limite_pagamento', FormatDateBr(ATitulo.DataLimitePagto, 'YYYY-MM-DD'));
           end;
       end;
 
-      LData := LJson.Stringify;
-
-      FPDadosMsg := LData;
+      FPDadosMsg := LJson.ToJSON;
 
     finally
       LJson.Free;
     end;
-
   end;
-
-end;
+ end;
 
 procedure TBoletoW_Itau_API.RequisicaoBaixa;
 begin
@@ -870,222 +747,148 @@ begin
   // Sem Payload - Define Método GET
 end;
 
-procedure TBoletoW_Itau_API.GerarPessoaPg(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarPessoaPg(AJson: TacbrJsonObject);
 var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
-
+  LJsonDados: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados := TJsonObject.Create;
-      try
-        LJsonDados.Add('nome_pessoa').Value.AsString :=
-          ATitulo.Sacado.NomeSacado;
-        GerarTipoPessoaPg(LJsonDados);
+    LJsonDados := TACBrJSONObject.Create;
+    LJsonDados.AddPair('nome_pessoa', ATitulo.Sacado.NomeSacado);
+    GerarTipoPessoaPg(LJsonDados);
 
-        LJsonPair := TJsonPair.Create(AJson, 'pessoa');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('pessoa').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonDados.Free;
+    AJson.AddPair('pessoa',LJsonDados);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.GerarTipoPessoaPg(AJson: TACBrJSONObject);
+var
+  LJsonDados: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDados := TACBrJSONObject.Create;
+    try
+      if Length(OnlyNumber(ATitulo.Sacado.CNPJCPF)) < 12 then
+      begin
+        LJsonDados.AddPair('codigo_tipo_pessoa', 'F');
+        LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
+      end
+      else
+      begin
+        LJsonDados.AddPair('codigo_tipo_pessoa','J');
+        LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
       end;
+
+      AJson.AddPair('tipo_pessoa', LJsonDados);
+
+    finally
+      LJsonDados.Free;
     end;
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarTipoPessoaPg(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarEnderecoPg(AJson: TACBrJSONObject);
 var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
+  LJsonDados: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados := TJsonObject.Create;
-      try
-        if Length(OnlyNumber(ATitulo.Sacado.CNPJCPF)) < 12 then
-        begin
-          LJsonDados.Add('codigo_tipo_pessoa').Value.AsString := 'F';
-          LJsonDados.Add('numero_cadastro_pessoa_fisica').Value.AsString := OnlyNumber(ATitulo.Sacado.CNPJCPF);
-        end
-        else
-        begin
-          LJsonDados.Add('codigo_tipo_pessoa').Value.AsString := 'J';
-          LJsonDados.Add('numero_cadastro_nacional_pessoa_juridica').Value.AsString := OnlyNumber(ATitulo.Sacado.CNPJCPF);
-        end;
-        LJsonPair := TJsonPair.Create(AJson, 'tipo_pessoa');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('tipo_pessoa').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonDados.Free;
-      end;
-    end;
+    LJsonDados := TacbrJsonObject.Create;
+
+    LJsonDados.AddPair('nome_logradouro', ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero);
+    LJsonDados.AddPair('nome_bairro', ATitulo.Sacado.Bairro);
+    LJsonDados.AddPair('nome_cidade', ATitulo.Sacado.Cidade);
+    LJsonDados.AddPair('sigla_UF', ATitulo.Sacado.UF);
+    LJsonDados.AddPair('numero_CEP', ATitulo.Sacado.CEP);
+    AJson.AddPair('endereco',LJsonDados);
+
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarEnderecoPg(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarPagador(AJson: TACBrJSONObject);
 var
-  LJsonDados: TJsonObject;
-  LJsonPair: TJsonPair;
+  LJsonDadosPagador: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDados := TJsonObject.Create;
-      try
-        LJsonDados.Add('nome_logradouro').Value.AsString := ATitulo.Sacado.Logradouro + ' ' + ATitulo.Sacado.Numero;
-        LJsonDados.Add('nome_bairro').Value.AsString     := ATitulo.Sacado.Bairro;
-        LJsonDados.Add('nome_cidade').Value.AsString     := ATitulo.Sacado.Cidade;
-        LJsonDados.Add('sigla_UF').Value.AsString        := ATitulo.Sacado.UF;
-        LJsonDados.Add('numero_CEP').Value.AsString      := ATitulo.Sacado.CEP;
-        LJsonPair := TJsonPair.Create(AJson, 'endereco');
-        try
-          LJsonPair.Value.AsObject := LJsonDados;
-          AJson.Add('endereco').Assign(LJsonPair);
-        finally
-          LJsonPair.Free;
-        end;
-      finally
-        LJsonDados.Free;
-      end;
-    end;
+    LJsonDadosPagador := TacbrJsonObject.Create;
+
+    GerarPessoaPg(LJsonDadosPagador);
+    GerarEnderecoPg(LJsonDadosPagador);
+    AJson.AddPair('pagador',LJsonDadosPagador);
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarPagador(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarJuros(AJson: TACBrJSONObject);
 var
-  LJsonDadosPagador: TJsonObject;
-  LJsonPairPagador: TJsonPair;
+  LJsonJuros: TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDadosPagador := TJsonObject.Create;
-      try
-        GerarPessoaPg(LJsonDadosPagador);
-        GerarEnderecoPg(LJsonDadosPagador);
-        LJsonPairPagador := TJsonPair.Create(AJson, 'pagador');
-        try
-          LJsonPairPagador.Value.AsObject := LJsonDadosPagador;
-          AJson.Add('pagador').Assign(LJsonPairPagador);
-        finally
-          LJsonPairPagador.Free;
-        end;
-      finally
-        LJsonDadosPagador.Free;
-      end;
-    end;
-  end;
-end;
+    LJsonJuros := TACBrJSONObject.Create;
 
-procedure TBoletoW_Itau_API.GerarJuros(AJson: TJsonObject);
-var
-  LJsonJuros: TJsonObject;
-  LJsonPairJuros: TJsonPair;
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
+    if (ATitulo.ValorMoraJuros > 0) then
     begin
-      LJsonJuros := TJsonObject.Create;
-      try
-        if (ATitulo.ValorMoraJuros > 0) then
-        begin
-          if ATitulo.CodigoMora = '' then
-          begin
+      if ATitulo.CodigoMora = '' then
+      begin
+        ATitulo.CodigoMora := '90';
+        case ATitulo.CodigoMoraJuros of
+          cjValorDia:
+            ATitulo.CodigoMora := '93';
+          cjTaxaDiaria:
+            ATitulo.CodigoMora := '91';
+          cjValorMensal:
             ATitulo.CodigoMora := '90';
-            case ATitulo.CodigoMoraJuros of
-              cjValorDia:
-                ATitulo.CodigoMora := '93';
-              cjTaxaDiaria:
-                ATitulo.CodigoMora := '91';
-              cjValorMensal:
-                ATitulo.CodigoMora := '90';
-              cjIsento:
-                ATitulo.CodigoMora := '05';
-            else
-              ATitulo.CodigoMora := '05';
-            end; //0 cjValorDia,1 cjTaxaMensal,2 cjIsento,3 cjValorMensal,4 cjTaxaDiaria
-          end;
-
-          LJsonJuros.Add('codigo_tipo_juros').Value.AsString := ATitulo.CodigoMora;
-          LJsonJuros.Add('quantidade_dias_juros').Value.AsInteger := trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento);
-          if ATitulo.CodigoMora = '93' then
-          begin
-            LJsonJuros.Add('valor_juros').Value.AsString := IntToStrZero(round(ATitulo.ValorMoraJuros * 100), 17)
-          end
-          else if (ATitulo.CodigoMora = '91') or (ATitulo.CodigoMora = '90') or (ATitulo.CodigoMora = '92') then
-            LJsonJuros.Add('percentual_juros').Value.AsString := IntToStrZero(round(ATitulo.ValorMoraJuros * 100000), 12);
-
-          LJsonPairJuros := TJsonPair.Create(AJson, 'juros');
-          try
-            LJsonPairJuros.Value.AsObject := LJsonJuros;
-            AJson.Add('juros').Assign(LJsonPairJuros);
-          finally
-            LJsonPairJuros.Free;
-          end;
-        end;
-      finally
-        LJsonJuros.Free;
+          cjIsento:
+            ATitulo.CodigoMora := '05';
+        else
+          ATitulo.CodigoMora := '05';
+        end; //0 cjValorDia,1 cjTaxaMensal,2 cjIsento,3 cjValorMensal,4 cjTaxaDiaria
       end;
+
+      LJsonJuros.AddPair('codigo_tipo_juros', ATitulo.CodigoMora);
+      LJsonJuros.AddPair('quantidade_dias_juros', trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento));
+      if ATitulo.CodigoMora = '93' then
+      begin
+        LJsonJuros.AddPair('valor_juros', IntToStrZero(round(ATitulo.ValorMoraJuros * 100), 17))
+      end
+      else if (ATitulo.CodigoMora = '91') or (ATitulo.CodigoMora = '90') or (ATitulo.CodigoMora = '92') then
+        LJsonJuros.AddPair('percentual_juros', IntToStrZero(round(ATitulo.ValorMoraJuros * 100000), 12));
+
+      AJson.AddPair('juros',LJsonJuros);
+
     end;
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarMulta(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarMulta(AJson: TACBrJSONObject);
 var
-  LJsonMulta: TJsonObject;
-  LJsonPairMulta: TJsonPair;
+  LJsonMulta: TACBrJSONObject;
   LCodMulta: String;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
+    LJsonMulta := TacbrJsonObject.Create;
+
+    if (ATitulo.PercentualMulta > 0) and (ATitulo.DataMulta > 0) then
     begin
-      LJsonMulta := TJsonObject.Create;
-      try
-        if (ATitulo.PercentualMulta > 0) and (ATitulo.DataMulta > 0) then
-        begin
-          LCodMulta := IfThen(ATitulo.MultaValorFixo,'01','02');
-        end
-        else
-          LCodMulta := '03';
+      LCodMulta := IfThen(ATitulo.MultaValorFixo,'01','02');
+    end
+    else
+      LCodMulta := '03';
 
-        LJsonMulta.Add('codigo_tipo_multa').Value.AsString := LCodMulta;
-        if (ATitulo.DataMulta > 0) then
-        begin
-          if LCodMulta = '01' then
-            LJsonMulta.Add('valor_multa').Value.AsString := IntToStrZero(round(ATitulo.PercentualMulta * 100), 17)
-          else if LCodMulta = '02' then
-            LJsonMulta.Add('percentual_multa').Value.AsString := IntToStrZero(round(ATitulo.PercentualMulta * 100000), 12);
-          LJsonMulta.Add('quantidade_dias_multa').Value.AsInteger := trunc(ATitulo.DataMulta - ATitulo.Vencimento);
-        end;
-
-        LJsonPairMulta := TJsonPair.Create(AJson, 'multa');
-        try
-          LJsonPairMulta.Value.AsObject := LJsonMulta;
-          AJson.Add('multa').Assign(LJsonPairMulta);
-        finally
-          LJsonPairMulta.Free;
-        end;
-      finally
-        LJsonMulta.Free;
-      end;
+    LJsonMulta.AddPair('codigo_tipo_multa', LCodMulta);
+    if (ATitulo.DataMulta > 0) then
+    begin
+      if LCodMulta = '01' then
+        LJsonMulta.AddPair('valor_multa', IntToStrZero(round(ATitulo.PercentualMulta * 100), 17))
+      else if LCodMulta = '02' then
+        LJsonMulta.AddPair('percentual_multa', IntToStrZero(round(ATitulo.PercentualMulta * 100000), 12));
+      LJsonMulta.AddPair('quantidade_dias_multa', trunc(ATitulo.DataMulta - ATitulo.Vencimento));
     end;
+
+    AJson.AddPair('multa',LJsonMulta);
   end;
 end;
 
@@ -1112,334 +915,249 @@ begin
   end;
 end;
 
-procedure TBoletoW_Itau_API.GerarDesconto(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.GerarDesconto(AJson: TACBrJSONObject);
 var
-  LJsonDesconto: TJsonObject;
-  LJsonPairDesconto: TJsonPair;
-  LJsonArrGrupoDesconto: TJsonArray;
+  LJsonDesconto,LJsonDesconto2: TACBrJSONObject;
+  LJsonArray : TACBrJSONArray;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
+    LJsonDesconto := TACBrJSONObject.Create;
+    LJsonArray := TACBrJSONArray.Create;
+    LJsonDesconto.AddPair('codigo_tipo_desconto', TipoDescontoToString(ATitulo.TipoDesconto));
+    if ATitulo.DataDesconto > 0 then
     begin
-      LJsonDesconto := TJsonObject.Create;
-      LJsonArrGrupoDesconto := TJsonArray.Create;
-      try
-        LJsonDesconto.Add('codigo_tipo_desconto').Value.AsString := TipoDescontoToString(ATitulo.TipoDesconto);
-        if ATitulo.DataDesconto > 0 then
-        begin
-          LJsonDesconto.Add('data_desconto').Value.AsString := FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto);
-          if ((Integer(ATitulo.TipoDesconto)) in [1, 3, 4]) then
-            LJsonDesconto.Add('valor_desconto').Value.AsString := IntToStrZero(round(ATitulo.ValorDesconto * 100), 17)
-          else
-            LJsonDesconto.Add('percentual_desconto').Value.AsString := IntToStrZero(round(ATitulo.ValorDesconto * 100000), 12);
-        end;
-        LJsonArrGrupoDesconto.Add.AsObject := LJsonDesconto;
-
-        // Desconto2
-        if ATitulo.ValorDesconto2 > 0 then
-        begin
-          LJsonDesconto.Clear;
-          LJsonDesconto.Add('codigo_tipo_desconto').Value.AsString := TipoDescontoToString(ATitulo.TipoDesconto2);
-          if ATitulo.DataDesconto2 > 0 then
-          begin
-            LJsonDesconto.Add('data_desconto').Value.AsString := FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2);
-            if ((Integer(ATitulo.TipoDesconto2)) in [1, 3, 4]) then
-              LJsonDesconto.Add('valor_desconto').Value.AsString := IntToStrZero(round(ATitulo.ValorDesconto2 * 100), 17)
-            else
-              LJsonDesconto.Add('percentual_desconto').Value.AsString := IntToStrZero(round(ATitulo.ValorDesconto2 * 100000), 12);
-          end;
-          LJsonArrGrupoDesconto.Add.AsObject := LJsonDesconto;
-        end;
-
-        LJsonPairDesconto := TJsonPair.Create(AJson, 'desconto ');
-        try
-          LJsonPairDesconto.Value.AsArray := LJsonArrGrupoDesconto;
-          AJson.Add('desconto ').Assign(LJsonPairDesconto);
-        finally
-          LJsonPairDesconto.Free;
-        end;
-
-      finally
-        LJsonArrGrupoDesconto.Free;
-        LJsonDesconto.Free;
-      end;
+      LJsonDesconto.AddPair('data_desconto', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto));
+      if ((Integer(ATitulo.TipoDesconto)) in [1, 3, 4]) then
+        LJsonDesconto.AddPair('valor_desconto', IntToStrZero(round(ATitulo.ValorDesconto * 100), 17))
+      else
+        LJsonDesconto.AddPair('percentual_desconto', IntToStrZero(round(ATitulo.ValorDesconto * 100000), 12));
     end;
-  end;
-end;
+    LJsonArray.AddElementJSON(LJsonDesconto);
 
-procedure TBoletoW_Itau_API.AtribuirDesconto(AJson: TJsonObject);
-var
-  LJsonAtribuirDesconto : TJsonObject;
-  LJsonPairAtribuirDesconto: TJsonPair;
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
+    // Desconto2
+    if ATitulo.ValorDesconto2 > 0 then
     begin
-      LJsonAtribuirDesconto := TJsonObject.Create;
-      try
-        case ATitulo.OcorrenciaOriginal.Tipo of
-          toRemessaCancelarDesconto,toRemessaNaoConcederDesconto:
-          begin
-            LJsonAtribuirDesconto.Add('codigo_tipo_desconto').Value.AsString := '00'; // Quando não houver condição de desconto ou efetuar exclusão de desconto.
-          end
+      LJsonDesconto2 := TACBrJSONObject.Create;
+      LJsonDesconto.AddPair('codigo_tipo_desconto', TipoDescontoToString(ATitulo.TipoDesconto2));
+      if ATitulo.DataDesconto2 > 0 then
+      begin
+        LJsonDesconto.AddPair('data_desconto', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2));
+        if ((Integer(ATitulo.TipoDesconto2)) in [1, 3, 4]) then
+          LJsonDesconto.AddPair('valor_desconto', IntToStrZero(round(ATitulo.ValorDesconto2 * 100), 17))
         else
-          begin
-            if (ATitulo.ValorDesconto > 0) then
-            begin
-              case ATitulo.TipoDesconto of
-                tdNaoConcederDesconto                       : LJsonAtribuirDesconto.Add('codigo_tipo_desconto').Value.AsString := '00';  // Quando não houver condição de desconto ou efetuar exclusão de desconto.
-                tdValorFixoAteDataInformada                 : LJsonAtribuirDesconto.Add('codigo_tipo_desconto').Value.AsString := '01';  // Concede desconto de valor fixo, se o título for pago até a data estipulada
-                tdPercentualAteDataInformada                : LJsonAtribuirDesconto.Add('codigo_tipo_desconto').Value.AsString := '02';  // Concede desconto percentual fixo, se o título for pago até a data estipulada
-                tdValorAntecipacaoDiaCorrido                : LJsonAtribuirDesconto.Add('codigo_tipo_desconto').Value.AsString := '91';  // Até a data de vencimento, concede valor de desconto por dia antecipado de pagamento.
-                tdPercentualSobreValorNominalDiaCorrido     : LJsonAtribuirDesconto.Add('codigo_tipo_desconto').Value.AsString := '90';  // Até a data de vencimento, concede desconto percentual por dia antecipado de pagamento.
-              else
-                raise Exception.Create(ACBrStr('TipoDesconto não é válido para este banco' + sLineBreak));
-              end
-            end
-            else
-            raise Exception.Create(ACBrStr('Valor do desconto é obrigatório' + sLineBreak));
-            if Integer(ATitulo.TipoDesconto) > 0 then
-               AtribuirDesconto1(LJsonAtribuirDesconto);
-          end;
-        end;
-
-        LJsonPairAtribuirDesconto := TJsonPair.Create(AJson, 'desconto');
-        try
-          LJsonPairAtribuirDesconto.Value.AsObject := LJsonAtribuirDesconto;
-          AJson.Add('desconto').Assign(LJsonPairAtribuirDesconto);
-        finally
-          LJsonPairAtribuirDesconto.Free;
-        end;
-      finally
-        LJsonAtribuirDesconto.Free;
+          LJsonDesconto.AddPair('percentual_desconto', IntToStrZero(round(ATitulo.ValorDesconto2 * 100000), 12));
       end;
+      LJsonArray.AddElementJSON(LJsonDesconto2);
     end;
+
+    AJson.AddPair('desconto',LJsonArray);
   end;
 end;
 
-procedure TBoletoW_Itau_API.AtribuirDesconto1(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.AtribuirDesconto(AJson: TACBrJSONObject);
 var
-  LJsonDesconto : TJsonObject;
-  LJsonArrGrupoDesconto : TJsonArray;
-  LJsonPairDesconto: TJsonPair;
+  LJsonAtribuirDesconto : TACBrJSONObject;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonDesconto := TJSONObject.Create;
-      LJsonArrGrupoDesconto := TJsonArray.Create;
-      try
-        if ATitulo.DataDesconto > 0 then
+    LJsonAtribuirDesconto := TACBrJSONObject.Create;
+    case ATitulo.OcorrenciaOriginal.Tipo of
+      toRemessaCancelarDesconto,toRemessaNaoConcederDesconto:
+      begin
+        LJsonAtribuirDesconto.AddPair('codigo_tipo_desconto','00'); // Quando não houver condição de desconto ou efetuar exclusão de desconto.
+      end
+    else
+      begin
+        if (ATitulo.ValorDesconto > 0) then
         begin
-          if (ATitulo.TipoDesconto = tdValorFixoAteDataInformada) or (ATitulo.TipoDesconto = tdPercentualAteDataInformada) then
-            LJsonDesconto.Add('quantidade_dias_desconto').Value.AsInteger := DaysBetween(ATitulo.DataDesconto,ATitulo.Vencimento);
+          case ATitulo.TipoDesconto of
+            tdNaoConcederDesconto                       : LJsonAtribuirDesconto.AddPair('codigo_tipo_desconto', '00');  // Quando não houver condição de desconto ou efetuar exclusão de desconto.
+            tdValorFixoAteDataInformada                 : LJsonAtribuirDesconto.AddPair('codigo_tipo_desconto', '01');  // Concede desconto de valor fixo, se o título for pago até a data estipulada
+            tdPercentualAteDataInformada                : LJsonAtribuirDesconto.AddPair('codigo_tipo_desconto', '02');  // Concede desconto percentual fixo, se o título for pago até a data estipulada
+            tdValorAntecipacaoDiaCorrido                : LJsonAtribuirDesconto.AddPair('codigo_tipo_desconto', '91');  // Até a data de vencimento, concede valor de desconto por dia antecipado de pagamento.
+            tdPercentualSobreValorNominalDiaCorrido     : LJsonAtribuirDesconto.AddPair('codigo_tipo_desconto', '90');  // Até a data de vencimento, concede desconto percentual por dia antecipado de pagamento.
+          else
+            raise Exception.Create(ACBrStr('TipoDesconto não é válido para este banco' + sLineBreak));
+          end
+        end
+        else
+        raise Exception.Create(ACBrStr('Valor do desconto é obrigatório' + sLineBreak));
+        if Integer(ATitulo.TipoDesconto) > 0 then
+           AtribuirDesconto1(LJsonAtribuirDesconto);
+      end;
+    end;
 
-          if (ATitulo.ValorDesconto > 0) then
+    AJson.AddPair('desconto',LJsonAtribuirDesconto);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.AtribuirDesconto1(AJson: TACBrJSONObject);
+var
+  LJsonDesconto, LJsonDesconto2, LJsonDesconto3 : TACBrJSONObject;
+  LJsonArray: TACBrJSONArray;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonDesconto := TACBrJSONObject.Create;
+    LJsonArray := TACBrJSONArray.Create;
+
+      if ATitulo.DataDesconto > 0 then
+      begin
+        if (ATitulo.TipoDesconto = tdValorFixoAteDataInformada) or (ATitulo.TipoDesconto = tdPercentualAteDataInformada) then
+          LJsonDesconto.AddPair('quantidade_dias_desconto', DaysBetween(ATitulo.DataDesconto,ATitulo.Vencimento));
+
+        if (ATitulo.ValorDesconto > 0) then
+        begin
+          case ATitulo.TipoDesconto of
+            tdValorFixoAteDataInformada, tdValorAntecipacaoDiaCorrido:
+              LJsonDesconto.AddPair('valor_desconto', CurrToStrItau(ATitulo.ValorDesconto));
+            tdPercentualAteDataInformada,tdPercentualSobreValorNominalDiaCorrido:
+              LJsonDesconto.AddPair('percentual_desconto', PercToStrItau(ATitulo.ValorDesconto));
+          end;
+        end
+        else
+          raise Exception.Create(ACBrStr('Obrigatório informar o valor do desconto!'));
+        LJsonArray.AddElementJSON(LJsonDesconto);
+      end;
+
+      //Desconto2
+      if ATitulo.DataDesconto2 > 0 then
+      begin
+        LJsonDesconto2 := TACBrJSONObject.Create;
+        LJsonDesconto2.AddPair('quantidade_dias_desconto', DaysBetween(ATitulo.DataDesconto2,ATitulo.Vencimento));
+        if (ATitulo.ValorDesconto2 > 0) then
+        begin
+          case ATitulo.TipoDesconto2 of
+            tdValorFixoAteDataInformada, tdValorAntecipacaoDiaCorrido:
+              LJsonDesconto2.AddPair('valor_desconto', CurrToStrItau(ATitulo.ValorDesconto2));
+            tdPercentualAteDataInformada,tdPercentualSobreValorNominalDiaCorrido:
+              LJsonDesconto2.AddPair('percentual_desconto', PercToStrItau(ATitulo.ValorDesconto2));
+          end;
+        end;
+        LJsonArray.AddElementJSON(LJsonDesconto2);
+      end;
+
+      //Desconto3
+      if ATitulo.DataDesconto3 > 0 then
+      begin
+        LJsonDesconto3 := TACBrJSONObject.Create;
+        LJsonDesconto3.AddPair('quantidade_dias_desconto', DaysBetween(ATitulo.DataDesconto3,ATitulo.Vencimento));
+        if (ATitulo.ValorDesconto2 > 0) then
+        begin
+          case ATitulo.TipoDesconto2 of
+            tdValorFixoAteDataInformada, tdValorAntecipacaoDiaCorrido:
+              LJsonDesconto3.AddPair('valor_desconto', CurrToStrItau(ATitulo.ValorDesconto3));
+            tdPercentualAteDataInformada,tdPercentualSobreValorNominalDiaCorrido:
+              LJsonDesconto3.AddPair('percentual_desconto', PercToStrItau(ATitulo.ValorDesconto3));
+          end;
+        end;
+        LJsonArray.AddElementJSON(LJsonDesconto3);
+      end;
+    AJson.AddPair('descontos',LJsonArray);
+  end;
+end;
+
+procedure TBoletoW_Itau_API.AlterarProtesto(AJson: TACBrJSONObject);
+var
+  LJsonAtribuirProtesto: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) and Assigned(AJson) then
+  begin
+    LJsonAtribuirProtesto := TacbrJsonObject.Create;
+    case ATitulo.OcorrenciaOriginal.Tipo of
+      toRemessaProtestar :
+        begin
+          if (ATitulo.DiasDeProtesto > 0) then
           begin
-            case ATitulo.TipoDesconto of
-              tdValorFixoAteDataInformada, tdValorAntecipacaoDiaCorrido:
-                LJsonDesconto.Add('valor_desconto').Value.AsString := CurrToStrItau(ATitulo.ValorDesconto);
-              tdPercentualAteDataInformada,tdPercentualSobreValorNominalDiaCorrido:
-                LJsonDesconto.Add('percentual_desconto').Value.AsString := PercToStrItau(ATitulo.ValorDesconto);
-            end;
+            LJsonAtribuirProtesto.AddPair('codigo_tipo_protesto', 1);    //   protestar
+            LJsonAtribuirProtesto.AddPair('quantidade_dias_protesto', ATitulo.DiasDeProtesto);
           end
           else
-            raise Exception.Create(ACBrStr('Obrigatório informar o valor do desconto!'));
-          LJsonArrGrupoDesconto.Add.AsObject := LJsonDesconto;
+          raise Exception.Create(ACBrStr('DiasDeProtesto obrigatório !'));
         end;
-
-        //Desconto2
-        if ATitulo.DataDesconto2 > 0 then
-        begin
-          LJsonDesconto.Clear;
-          LJsonDesconto.Add('quantidade_dias_desconto').Value.AsInteger := DaysBetween(ATitulo.DataDesconto2,ATitulo.Vencimento);
-          if (ATitulo.ValorDesconto2 > 0) then
-          begin
-            case ATitulo.TipoDesconto2 of
-              tdValorFixoAteDataInformada, tdValorAntecipacaoDiaCorrido:
-                LJsonDesconto.Add('valor_desconto').Value.AsString := CurrToStrItau(ATitulo.ValorDesconto2);
-              tdPercentualAteDataInformada,tdPercentualSobreValorNominalDiaCorrido:
-                LJsonDesconto.Add('percentual_desconto').Value.AsString := PercToStrItau(ATitulo.ValorDesconto2);
-            end;
-          end;
-          LJsonArrGrupoDesconto.Add.AsObject := LJsonDesconto;
-        end;
-
-        //Desconto3
-        if ATitulo.DataDesconto3 > 0 then
-        begin
-          LJsonDesconto.Clear;
-          LJsonDesconto.Add('quantidade_dias_desconto').Value.AsInteger := DaysBetween(ATitulo.DataDesconto3,ATitulo.Vencimento);
-          if (ATitulo.ValorDesconto2 > 0) then
-          begin
-            case ATitulo.TipoDesconto2 of
-              tdValorFixoAteDataInformada, tdValorAntecipacaoDiaCorrido:
-                LJsonDesconto.Add('valor_desconto').Value.AsString := CurrToStrItau(ATitulo.ValorDesconto3);
-              tdPercentualAteDataInformada,tdPercentualSobreValorNominalDiaCorrido:
-                LJsonDesconto.Add('percentual_desconto').Value.AsString := PercToStrItau(ATitulo.ValorDesconto3);
-            end;
-          end;
-          LJsonArrGrupoDesconto.Add.AsObject := LJsonDesconto;
-        end;
-        LJsonPairDesconto := TJsonPair.Create(AJson, 'descontos');
-        try
-          LJsonPairDesconto.Value.AsArray := LJsonArrGrupoDesconto;
-          AJson.Add('descontos').Assign(LJsonPairDesconto);
-        finally
-          LJsonPairDesconto.Free;
-        end;
-      finally
-        LJsonArrGrupoDesconto.Free;
-        LJsonDesconto.Free;
-      end;
+      toRemessaSustarProtesto:
+        LJsonAtribuirProtesto.AddPair('codigo_tipo_protesto', 4); // nao protestar
+      toRemessaCancelarInstrucaoProtesto:
+        LJsonAtribuirProtesto.AddPair('codigo_tipo_protesto', 9); // cancelar protesto
     end;
+    AJson.AddPair('protesto', LJsonAtribuirProtesto);
   end;
 end;
 
-procedure TBoletoW_Itau_API.AlterarProtesto(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.AtribuirJuros(AJson: TACBrJSONObject);
 var
-  LJsonAtribuirProtesto: TJsonObject;
-  LJsonPairAtribuirProtesto: TJsonPair;
-begin
-  if Assigned(ATitulo) then
-  begin
-    if Assigned(AJson) then
-    begin
-      LJsonAtribuirProtesto := TJsonObject.Create;
-      try
-        case ATitulo.OcorrenciaOriginal.Tipo of
-          toRemessaProtestar :
-            begin
-              if (ATitulo.DiasDeProtesto > 0) then
-              begin
-                LJsonAtribuirProtesto.Add('codigo_tipo_protesto').Value.AsInteger     := 1;    //   protestar
-                LJsonAtribuirProtesto.Add('quantidade_dias_protesto').Value.AsInteger := ATitulo.DiasDeProtesto;
-              end
-              else
-              raise Exception.Create(ACBrStr('DiasDeProtesto obrigatório !'));
-            end;
-          toRemessaSustarProtesto:
-            LJsonAtribuirProtesto.Add('codigo_tipo_protesto').Value.AsInteger         := 4; // nao protestar
-          toRemessaCancelarInstrucaoProtesto:
-            LJsonAtribuirProtesto.Add('codigo_tipo_protesto').Value.AsInteger         := 9; // cancelar protesto
-        end;
-        LJsonPairAtribuirProtesto := TJsonPair.Create(AJson, 'protesto');
-        try
-          LJsonPairAtribuirProtesto.Value.AsObject := LJsonAtribuirProtesto;
-          AJson.Add('protesto').Assign(LJsonPairAtribuirProtesto);
-        finally
-          LJsonPairAtribuirProtesto.Free;
-        end;
-      finally
-        LJsonAtribuirProtesto.Free;
-      end;
-    end;
-  end;
-end;
-
-procedure TBoletoW_Itau_API.AtribuirJuros(AJson: TJsonObject);
-var
-  LJsonJuros: TJsonObject;
-  LJsonPairJuros: TJsonPair;
+  LJsonJuros: TACBrJSONObject;
   LCodigoMora: String;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonJuros := TJsonObject.Create;
-      try
-        if (ATitulo.ValorMoraJuros > 0) then
-        begin
-          if ATitulo.CodigoMora = '' then
-          begin
-            LCodigoMora := '90';
-            case ATitulo.CodigoMoraJuros of
-              cjValorDia:
-                LCodigoMora := '93';
-              cjTaxaMensal:
-                LCodigoMora := '90';
-              else
-              raise Exception.Create(ACBrStr('CodigoMoraJuros permitido somente ' + sLineBreak + ' cjValorDia ou cjTaxaMensal !' + sLineBreak));
-            end;
-          end;
-          LJsonJuros.Add('codigo_tipo_juros').Value.AsString := LCodigoMora;
-          LJsonJuros.Add('quantidade_dias_juros').Value.AsInteger := trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento);
-          if LCodigoMora = '93' then
-          begin
-            LJsonJuros.Add('valor_juros').Value.AsString := CurrToStrItau(ATitulo.ValorMoraJuros) ;
-          end
-          else if (LCodigoMora = '90') then
-            LJsonJuros.Add('percentual_juros').Value.AsString := PercToStrItau(ATitulo.ValorMoraJuros);
+    LJsonJuros := TacbrJsonObject.Create;
 
-          LJsonPairJuros := TJsonPair.Create(AJson, 'juros');
-          try
-            LJsonPairJuros.Value.AsObject := LJsonJuros;
-            AJson.Add('juros').Assign(LJsonPairJuros);
-          finally
-            LJsonPairJuros.Free;
-          end;
+    if (ATitulo.ValorMoraJuros > 0) then
+    begin
+      if ATitulo.CodigoMora = '' then
+      begin
+        LCodigoMora := '90';
+        case ATitulo.CodigoMoraJuros of
+          cjValorDia:
+            LCodigoMora := '93';
+          cjTaxaMensal:
+            LCodigoMora := '90';
+          else
+          raise Exception.Create(ACBrStr('CodigoMoraJuros permitido somente ' + sLineBreak + ' cjValorDia ou cjTaxaMensal !' + sLineBreak));
         end;
-      finally
-        LJsonJuros.Free;
       end;
+      LJsonJuros.AddPair('codigo_tipo_juros', LCodigoMora);
+      LJsonJuros.AddPair('quantidade_dias_juros', trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento));
+      if LCodigoMora = '93' then
+      begin
+        LJsonJuros.AddPair('valor_juros', CurrToStrItau(ATitulo.ValorMoraJuros));
+      end
+      else if (LCodigoMora = '90') then
+        LJsonJuros.AddPair('percentual_juros', PercToStrItau(ATitulo.ValorMoraJuros));
+
+      AJson.AddPair('juros', LJsonJuros);
     end;
   end;
 end;
 
-procedure TBoletoW_Itau_API.AtribuirMulta(AJson: TJsonObject);
+procedure TBoletoW_Itau_API.AtribuirMulta(AJson: TACBrJSONObject);
 var
-  LJsonMulta: TJsonObject;
-  LJsonPairMulta: TJsonPair;
+  LJsonMulta: TACBrJSONObject;
   LCodMulta: String;
 begin
-  if Assigned(ATitulo) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    if Assigned(AJson) then
-    begin
-      LJsonMulta := TJsonObject.Create;
-      try
-        case ATitulo.OcorrenciaOriginal.Tipo of
-        toRemessaAlterarMulta :
-          begin
-            if (ATitulo.PercentualMulta > 0) and (ATitulo.DataMulta > 0) then
-              LCodMulta := IfThen(ATitulo.MultaValorFixo,'01','02')
-            else
-              raise Exception.Create(ACBrStr('A propriedade do titulo DataMulta ou PercentualMulta não foi informada ! ' + sLineBreak));
+    LJsonMulta := TacbrJsonObject.Create;
+    case ATitulo.OcorrenciaOriginal.Tipo of
+    toRemessaAlterarMulta :
+      begin
+        if (ATitulo.PercentualMulta > 0) and (ATitulo.DataMulta > 0) then
+          LCodMulta := IfThen(ATitulo.MultaValorFixo,'01','02')
+        else
+          raise Exception.Create(ACBrStr('A propriedade do titulo DataMulta ou PercentualMulta não foi informada ! ' + sLineBreak));
 
-            LJsonMulta.Add('codigo_tipo_multa').Value.AsString := LCodMulta;
+        LJsonMulta.AddPair('codigo_tipo_multa', LCodMulta);
 
-            if (ATitulo.DataMulta > 0) then
-            begin
+        if (ATitulo.DataMulta > 0) then
+        begin
 
-              if LCodMulta = '01' then
-                LJsonMulta.Add('valor_multa').Value.AsString := CurrToStrItau(ATitulo.PercentualMulta)
-              else if LCodMulta = '02' then
-                LJsonMulta.Add('percentual_multa').Value.AsString := PercToStrItau(ATitulo.PercentualMulta);
+          if LCodMulta = '01' then
+            LJsonMulta.AddPair('valor_multa', CurrToStrItau(ATitulo.PercentualMulta))
+          else if LCodMulta = '02' then
+            LJsonMulta.AddPair('percentual_multa', PercToStrItau(ATitulo.PercentualMulta));
 
-              LJsonMulta.Add('quantidade_dias_multa').Value.AsInteger := trunc(ATitulo.DataMulta - ATitulo.Vencimento);
-            end
-            else
-              raise Exception.Create(ACBrStr('A propriedade do titulo DataMulta não foi informada ! '));
-          end;
-        toRemessaDispensarMulta :
-          LJsonMulta.Add('codigo_tipo_multa').Value.AsString := '03'; // dispensar multa
-        end;
-
-        LJsonPairMulta := TJsonPair.Create(AJson, 'multa');
-        try
-          LJsonPairMulta.Value.AsObject := LJsonMulta;
-          AJson.Add('multa').Assign(LJsonPairMulta);
-        finally
-          LJsonPairMulta.Free;
-        end;
-      finally
-        LJsonMulta.Free;
+          LJsonMulta.AddPair('quantidade_dias_multa', trunc(ATitulo.DataMulta - ATitulo.Vencimento));
+        end
+        else
+          raise Exception.Create(ACBrStr('A propriedade do titulo DataMulta não foi informada ! '));
       end;
+    toRemessaDispensarMulta :
+      LJsonMulta.AddPair('codigo_tipo_multa', '03'); // dispensar multa
     end;
+
+    AJson.AddPair('multa',LJsonMulta);
   end;
 end;
 

@@ -37,6 +37,8 @@ namespace ACBrLib.NFe
 
         public decimal vST { get; set; }
 
+        public string IE { get; set; }
+
         #endregion Properties
 
         #region Methods

@@ -52,6 +52,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2024
+-- Frm_ACBreSocial, ACBreSocialWebServices --
+[*] Implementada propriedade PathNome para retorno do arquivo gerado em envio de lote, consultas e download de eventos
+Por: Renato Rubinho
+
+22/04/2024
+-- pcesS2206 --
+[*] Ajustes no S2206 para considerar a classe Vinculo
+Por: Andergoncalves, paulosilva0306, Sófolha
+
 12/04/2024
 -- pcesConversaoeSocial --
 [*] Atualização dos enumerados referentes à Tabela 18 - Motivos de Afastamento

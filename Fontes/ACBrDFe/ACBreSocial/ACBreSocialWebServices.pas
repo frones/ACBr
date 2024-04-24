@@ -62,6 +62,7 @@ type
   private
     FPStatus: TStatusACBreSocial;
     FPLayout: TLayOut;
+    FPathNome: String;
     FPConfiguracoeseSocial: TConfiguracoeseSocial;
 
   protected
@@ -77,6 +78,7 @@ type
 
     property Status: TStatusACBreSocial read FPStatus;
     property Layout: TLayOut read FPLayout;
+    property PathNome: String read FPathNome write FPathNome;
   end;
 
   { TEnvioLote }
@@ -95,7 +97,6 @@ type
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
-    function GerarPrefixoArquivo: String; override;
     function GerarMsgErro(E: Exception): String; override;
     function GerarVersaoDadosSoap: String; override;
   public
@@ -123,7 +124,7 @@ type
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
-
+    function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
 
@@ -195,7 +196,6 @@ type
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
-    function GerarPrefixoArquivo: String; override;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -287,7 +287,12 @@ end;
 
 function TeSocialWebService.GerarPrefixoArquivo: String;
 begin
-  Result := FormatDateTime('yyyymmddhhnnss', Now);
+  if FPathNome = '' then
+    Result := FormatDateTime('yyyymmddhhnnss', Now)
+  else
+    Result := Copy(FPathNome, 1, 14);
+
+  FPathNome := Result + '-' + ArqResp + '.xml';
 end;
 
 function TeSocialWebService.GerarVersaoDadosSoap: String;
@@ -305,6 +310,7 @@ procedure TeSocialWebService.Clear;
 begin
   inherited Clear;
 
+  FPathNome := '';
   FPStatus := stIdle;
   if Assigned(FPDFeOwner) and Assigned(FPDFeOwner.SSL) then
     FPDFeOwner.SSL.UseCertificateHTTP := True;
@@ -483,11 +489,6 @@ begin
   Result := aMsg;
 end;
 
-function TEnvioLote.GerarPrefixoArquivo: String;
-begin
-  Result := FormatDateTime('yymmddhhnnss', Now);
-end;
-
 function TEnvioLote.GerarVersaoDadosSoap: String;
 begin
   Result := ''; // '<versaoDados>' + FVersao + '</versaoDados>';
@@ -603,6 +604,16 @@ begin
                FormatDateTimeBr(FRetConsultaLote.dadosRecLote.dhRecepcao))]);
 
   Result := aMsg;
+end;
+
+function TConsultaLote.GerarPrefixoArquivo: String;
+begin
+  if FProtocolo <> '' then
+    Result := FProtocolo
+  else
+    Result := FormatDateTime('yyyymmddhhnnss', Now);
+
+  FPathNome := Result + '-' + ArqResp + '.xml';
 end;
 
 function TConsultaLote.TratarResposta: Boolean;
@@ -850,10 +861,20 @@ begin
 end;
 
 function TConsultaIdentEventos.GerarPrefixoArquivo: String;
+var
+  i: Integer;
 begin
-  Result := TipoEventoToStr(FEvento) + '-' +
-            fCnpj + '-' + FormatDateTime('mm-yyyy', FPerApur) + '-' +
-            FormatDateTime('yyyymmddhhnnss', Now);
+  if FPathNome = '' then
+    Result := TipoEventoToStr(FEvento) + '-' +
+                 fCnpj + '-' + FormatDateTime('mm-yyyy', FPerApur) + '-' +
+                 FormatDateTime('yyyymmddhhnnss', Now)
+  else
+  begin
+    i := Length(FPathNome) - Length('-' + ArqResp + '.xml');
+    Result := Copy(FPathNome, 1, i);
+  end;
+
+  FPathNome := Result + '-' + ArqResp + '.xml';
 end;
 
 function TConsultaIdentEventos.TratarResposta: Boolean;
@@ -1044,11 +1065,6 @@ begin
                   FRetDownloadEvt.Status.descResposta]);
 
   Result := aMsg;
-end;
-
-function TDownloadEventos.GerarPrefixoArquivo: String;
-begin
-  Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
 function TDownloadEventos.TratarResposta: Boolean;

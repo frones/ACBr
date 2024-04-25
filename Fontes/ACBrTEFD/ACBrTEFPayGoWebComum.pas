@@ -1824,7 +1824,6 @@ begin
 
   pszData := AllocMem(max(50, MaxLen));
   try
-    iRet := xPW_iPPAbort;
     iRet := xPW_iPPGetUserData(iMessageId, MinLen, MaxLen, TimeOutSec, pszData);
     GravarLog('  '+PWRETToString(iRet));
     case iRet of

@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2024
+-- ACBrTEFPayGoWebComum --
+[*] Reversão da Modificação aplicada em 08/03/24
+    TACBrTEFPGWebAPI.ObterDadoPinPad, chamar  xPW_iPPAbort, antes de chamar xPW_iPPGetUserData
+    (por: DSA)
+
+17/04/2024
+-- ACBrTEFPayGoWebComum --
+[*] Ajuste para que propriedade IsDebug, mude o valor da váriável de ambiente,
+    "PathPGWebLib" que aponta para a PGWebLib, para o Path com a DLL a ser
+    carregada.
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=77321
+    (por: DSA)
+
 21/03/2024
 -- ACBrTEFAPICliSiTef --
 [*] Ajuste para permitir Voltar e Interromper o fluxo de perguntas, baseado em

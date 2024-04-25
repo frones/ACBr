@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2024
+-- ACBrUtil.FilesIO --
+[*] Modificação no método "SetGlobalEnvironment", para não mais chamar
+    SendMessageTimeout, que causava lentidão em algumas máquinas
+    (por: DSA)
+
 18/03/2024
 -- ACBr.Inc --
 [+] Adiciona diretiva USE_ACBR_XML_DOCUMENT e validação para que ao definir a mesma use LibXML2

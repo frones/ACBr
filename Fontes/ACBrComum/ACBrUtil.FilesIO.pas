@@ -1585,11 +1585,11 @@ begin
   end;
 
   { Update Current Process Environment Variable }
-  SetEnvironmentVariable(PChar(AName), PChar(AValue));
+   SetEnvironmentVariable(PChar(AName), PChar(AValue));
 
   { Send Message To All Top Windows for Refresh }
   //SendMessage(HWND_BROADCAST, WM_SETTINGCHANGE, 0, LPARAM(PChar('Environment')));
-  SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, LPARAM(PChar('Environment')), SMTO_ABORTIFHUNG, 5000, dwReturnValue);
+  //SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, LPARAM(PChar('Environment')), SMTO_ABORTIFHUNG, 5000, dwReturnValue);  // Removido por causar lentidão
 end;
 {$ELSE}
 begin

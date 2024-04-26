@@ -300,7 +300,7 @@ begin
           SeuNumero                   := copy(Linha,280,26);
           NumeroDocumento             := copy(Linha,117,10);
           LCodigoOrigem               := StrToIntDef(copy(Linha,327,2),0);
-          if LCodigoOrigem in [0,1] then
+          if LCodigoOrigem in [0,1,6,7,9,13,14] then
           begin
             LCodigoOrigem := StrToIntDef(copy(Linha,109,2),0);
             LTipoOcorrencia := CodOcorrenciaToTipo(LCodigoOrigem);

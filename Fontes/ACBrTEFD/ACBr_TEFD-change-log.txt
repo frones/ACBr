@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2024
+-- ACBrTEFPayGoWebComum --
+[*] Ajuste para que a Carga da DLL não use o valor definido na variável de ambiente
+    "PathPGWebLib", caso o valor dessa varável, aponte para uma DLL inexistente
+    (por: DSA)
+
 25/02/2024
 -- ACBrTEFPayGoWebComum --
 [*] Reversão da Modificação aplicada em 08/03/24

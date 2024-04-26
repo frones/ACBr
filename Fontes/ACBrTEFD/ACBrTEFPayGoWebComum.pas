@@ -2677,7 +2677,7 @@ begin
 
   PathNovo := '';
   PathAtual := GetPathPGWebLib;
-  if (PathAtual = '') then
+  if (PathAtual = '') or (not FileExists(PathAtual)) then
     Exit;
 
   if AValue then
@@ -2795,7 +2795,7 @@ begin
   else
   begin
     Result := GetPathPGWebLib;
-    if (Result = '') then
+    if (Result = '') or (not FileExists(Result)) then
       Result := CACBrTEFPGWebLib;
   end;
 end;

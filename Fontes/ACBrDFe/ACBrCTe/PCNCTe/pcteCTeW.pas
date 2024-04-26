@@ -242,7 +242,7 @@ end;
 
 function TCTeW.GerarXml: Boolean;
 var
-  Gerar, Ok: Boolean;
+  Gerar: Boolean;
   xProtCTe, VersaoStr: String;
 begin
   // Carrega Layout que sera utilizado para gera o txt
@@ -1003,7 +1003,8 @@ end;
 begin
   if (trim(CTe.Rem.CNPJCPF) <> '') or (trim(CTe.Rem.xNome) <> '') then
   begin
-    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+//    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+    if VersaoDF <= ve300 then
       xNome := xRazao3
     else
       xNome := xRazao4;
@@ -1087,7 +1088,8 @@ end;
 begin
   if (trim(CTe.Exped.CNPJCPF) <> '') or (trim(CTe.Exped.xNome) <> '') then
   begin
-    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+//    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+    if VersaoDF <= ve300 then
       xNome := xRazao3
     else
       xNome := xRazao4;
@@ -1169,7 +1171,8 @@ end;
 begin
   if (trim(CTe.Receb.CNPJCPF) <> '') or (trim(CTe.Receb.xNome) <> '') then
   begin
-    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+//    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+    if VersaoDF <= ve300 then
       xNome := xRazao3
     else
       xNome := xRazao4;
@@ -1251,7 +1254,8 @@ end;
 begin
   if (trim(CTe.Dest.CNPJCPF) <> '') or (trim(CTe.Dest.xNome) <> '') then
   begin
-    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+//    if (VersaoDF <= ve300) or (CTe.ide.cUF = 51) then
+    if VersaoDF <= ve300 then
       xNome := xRazao3
     else
       xNome := xRazao4;

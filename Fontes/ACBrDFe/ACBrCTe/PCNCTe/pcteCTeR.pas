@@ -81,7 +81,7 @@ end;
 function TCTeR.LerXml: Boolean;
 var
   ok: Boolean;
-  i, j, i01, i02, i03, i04: Integer;
+  i01, i02, i03, i04: Integer;
   sCST, Aspas: String;
   // as variáveis abaixo são utilizadas para identificar as várias ocorrências
   // da tag qtdRat.
@@ -1023,7 +1023,7 @@ begin
           pos1 := PosLast('</infUnidCarga>', sAux);
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
-          len  := pos3 - pos2;
+//          len  := pos3 - pos2;
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;

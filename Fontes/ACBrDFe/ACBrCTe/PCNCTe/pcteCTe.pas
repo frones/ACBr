@@ -406,11 +406,11 @@ type
   private
     FId : String;
     FVersao : Double;
-    function GetVersaoStr: String;
+//    function GetVersaoStr: String;
   public
     property Id: String     read FId     write FId;
     property versao: Double read FVersao write FVersao;
-    property VersaoStr: String read GetVersaoStr;
+//    property VersaoStr: String read GetVersaoStr;
   end;
 
   TIde = class(TObject)
@@ -2730,7 +2730,7 @@ begin
 end;
 
 { TInfCTe }
-
+{
 function TInfCTe.GetVersaoStr: String;
 begin
   if FVersao <= 0 then
@@ -2738,7 +2738,7 @@ begin
   else
      Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
-
+}
 { TIde }
 
 constructor TIde.Create;

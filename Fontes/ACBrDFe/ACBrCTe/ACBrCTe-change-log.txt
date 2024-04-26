@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2024
+-- pcteCTeW --
+[*] A SEFAZ-MT mudou a validação do campo xNome, agora segue o padrão.
+  Por: Fabricio Langer
+-- ACBrCTeConhecimentos/pcteCTe/pcteCTeR/pcteEventoCTe --
+[*] Remoção de variáveis definidas e não usadas e possível solução para
+    usar o valor definido no campo tpImp pelo desenvolvedor.
+  Por: Italo Giurizzato Junior
+
 22/04/2024
 -- ACBrCTeConhecimentos --
 [*] Alterado a forma de gerar o valor do campo versao da seção infCTe.

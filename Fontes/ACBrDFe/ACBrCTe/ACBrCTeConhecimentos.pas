@@ -1595,9 +1595,6 @@ begin
     FCTeW.tpEmis := Configuracoes.Geral.FormaEmissao;
     FCTeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FCTeW.CSRT   := Configuracoes.RespTec.CSRT;
-
-    if Assigned(DACTE) then
-      FCTe.Ide.tpImp := DACTE.TipoDACTE;
   end;
 
   FCTeW.GerarXml;

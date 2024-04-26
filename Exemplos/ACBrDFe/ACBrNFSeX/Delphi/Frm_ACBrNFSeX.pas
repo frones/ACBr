@@ -535,6 +535,9 @@ begin
       DataEmissao := Now;
       Competencia := Now;
 
+      // TtpEmit = (tePrestador, teTomador, teIntermediario)
+      tpEmit := tePrestador;
+
       {
         TnfseRegimeEspecialTributacao = (retNenhum, retMicroempresaMunicipal, retEstimativa,
                                          retSociedadeProfissionais, retCooperativa,

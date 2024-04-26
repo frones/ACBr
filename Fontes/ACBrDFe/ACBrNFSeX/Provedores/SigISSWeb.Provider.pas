@@ -118,6 +118,7 @@ begin
     ModoEnvio := meUnitario;
     ConsultaLote := False;
     ConsultaNFSe := False;
+    CancPreencherMotivo := True;
 
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;
@@ -176,6 +177,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Descricao: String;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -188,10 +190,15 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('descricao'), tcStr);
-    AErro.Correcao := '';
+    Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('descricao'), tcStr);
+
+    if Descricao <> 'Operação concluída com sucesso' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+      AErro.Descricao := Descricao;
+      AErro.Correcao := '';
+    end;  
   end;
 end;
 
@@ -433,7 +440,10 @@ begin
 
       Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigo'), tcStr);
       Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numero_nf'), tcStr);
+      Response.SerieNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('serie'), tcStr);
       Response.NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('rps'), tcStr);
+      Response.SerieRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('serie_rps'), tcStr);
+      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('data_emissao'), tcDatVcto);
 
       ProcessarMensagemErros(ANode, Response);
 

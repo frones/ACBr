@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/04/2024
+-- ACBrMDFeWebServices --
+[*] Ajustes para evitar vazamento de memória.
+  Por: Antonio Carlos L
+
 16/04/2024
 -- ACBrMDFeDAMDFeRLRetrato.dfm --
 [*] Removido a linha que tem o propriedade: StyleElements, para poder compatibilizar

@@ -1607,6 +1607,9 @@ begin
   if Assigned(FprocEventoMDFe) then
     FprocEventoMDFe.Free;
 
+  if Assigned(FprocInfraSA) then
+    FprocInfraSA.Free;
+
   FprotMDFe       := TProcMDFe.Create;
   FprocEventoMDFe := TRetEventoMDFeCollection.Create;
 

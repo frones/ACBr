@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils,
   pcnNFe, pcnGerador, pcnConversao, pcnNFeConsts,
-  ACBrXmlDocument, ACBrXmlWriter, ACBrXmlBase;
+  ACBrXmlDocument, ACBrXmlWriter, ACBrXmlBase, pcnConversaoNFe;
 
 type
   TNFeXmlWriterOptions = class(TACBrXmlWriterOptions)
@@ -79,6 +79,10 @@ type
     ChaveNFe: string;
     FIdCSRT: integer;
     FCSRT: string;
+    FVersaoDF: TpcnVersaoDF;
+    FModeloDF: TpcnModeloDF;
+    FtpAmb: TpcnTipoAmbiente;
+    FtpEmis: TpcnTipoEmissao;
 
     function GerarInfNFe: TACBrXmlNode;
     function GerarIde: TACBrXmlNode;
@@ -174,6 +178,10 @@ type
     property NFe: TNFe read FNFe write FNFe;
     property IdCSRT: integer read FIdCSRT write FIdCSRT;
     property CSRT: string read FCSRT write FCSRT;
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write FVersaoDF;
+    property ModeloDF: TpcnModeloDF read FModeloDF write FModeloDF;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
+    property tpEmis: TpcnTipoEmissao read FtpEmis write FtpEmis;
 
   end;
 
@@ -183,7 +191,7 @@ uses
   variants, dateutils,
   StrUtils,
   Math,
-  pcnConversaoNFe, ACBrValidador,
+  ACBrValidador,
   ACBrDFeUtil,
   ACBrDFeConsts,
   ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,

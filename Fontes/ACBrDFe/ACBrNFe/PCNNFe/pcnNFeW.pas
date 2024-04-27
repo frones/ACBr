@@ -61,7 +61,7 @@ interface
 uses
   SysUtils, Classes,
   pcnGerador, pcnNFe, pcnConversao, pcnNFeConsts,
-  ACBrValidador;
+  ACBrValidador, pcnConversaoNFe;
 
 type
 
@@ -82,6 +82,10 @@ type
     FChaveNFe: string;
     FIdCSRT: Integer;
     FCSRT: String;
+    FVersaoDF: TpcnVersaoDF;
+    FModeloDF: TpcnModeloDF;
+    FtpAmb: TpcnTipoAmbiente;
+    FtpEmis: TpcnTipoEmissao;
 
     procedure GerarInfNFe;
     procedure GerarIde;
@@ -170,6 +174,10 @@ type
     property Opcoes: TGeradorOpcoes read FOpcoes  write FOpcoes;
     property IdCSRT: Integer        read FIdCSRT  write FIdCSRT;
     property CSRT: String           read FCSRT    write FCSRT;
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write FVersaoDF;
+    property ModeloDF: TpcnModeloDF read FModeloDF write FModeloDF;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
+    property tpEmis: TpcnTipoEmissao read FtpEmis write FtpEmis;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -205,7 +213,7 @@ uses
   Math,
   ACBrDFeUtil,
   ACBrDFeConsts,
-  pcnConversaoNFe, pcnLayoutTXT,
+  pcnLayoutTXT,
   ACBrUtil.Base, ACBrUtil.Strings,
   ACBrUtil.DateTime;
 

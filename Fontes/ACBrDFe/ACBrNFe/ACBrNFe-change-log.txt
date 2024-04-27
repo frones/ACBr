@@ -46,6 +46,9 @@ Símbolo : Significado
 
 
 27/04/2024
+-- ACBrNFe.XmlReader/pcnNFeW --
+[*] Adiciona propriedades faltantes visando corrigir problema de compilação.
+  Por: Diego Folieni 
 -- ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
 [+] Novas Units de Leitura e Escrita do XML da nota.
 -- ACBrNFe.AdmCSC/ACBrNFe.ConsSit/ACBrNFe.EnvEvento/ACBrNFe.EventoClass --

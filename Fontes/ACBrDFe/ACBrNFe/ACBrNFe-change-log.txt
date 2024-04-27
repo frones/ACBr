@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+27/04/2024
+-- ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
+[+] Novas Units de Leitura e Escrita do XML da nota.
+-- ACBrNFe.AdmCSC/ACBrNFe.ConsSit/ACBrNFe.EnvEvento/ACBrNFe.EventoClass --
+-- ACBrNFe.Inut/ACBrNFe.RetAdmCSC/ACBrNFe.RetConsSit/ACBrNFe.RetEnvEvento/ACBrNFe.RetInut --
+[+] Novas Units de Leitura e Escrita do XML de diversos serviços.
+    Observação: essas Units estão em fase de testes.
+  Por: Italo Giurizzato Junior
+
 22/04/2024
 -- ACBrDANFCeFortesFrA4,ACBrNFeDANFeEventoRL,ACBrNFeDANFeRLPaisagem,ACBrNFeDANFeRLRetrato --
 [*] TK-2944 ACBrNFCe/ACBrNFE - Convertido relatórios Delphi para Lazarus.

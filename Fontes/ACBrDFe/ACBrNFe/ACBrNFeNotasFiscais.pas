@@ -209,27 +209,28 @@ begin
 
   FConfiguracoes := TACBrNFe(TNotasFiscais(Collection).ACBrNFe).Configuracoes;
 
+  FNFe.Ide.tpNF    := tnSaida;
+  FNFe.Ide.indPag  := ipVista;
+  FNFe.Ide.verProc := 'ACBrNFe';
+
+  FNFe.Emit.EnderEmit.xPais := 'BRASIL';
+  FNFe.Emit.EnderEmit.cPais := 1058;
+  FNFe.Emit.EnderEmit.nro := 'SEM NUMERO';
+
+  FNFe.Dest.EnderDest.xPais := 'BRASIL';
+  FNFe.Dest.EnderDest.cPais := 1058;
+  {
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     FNFe.Ide.modelo := StrToInt(ModeloDFToStr(Configuracoes.Geral.ModeloDF));
     FNFe.infNFe.Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
-
-    FNFe.Ide.tpNF    := tnSaida;
-    FNFe.Ide.indPag  := ipVista;
-    FNFe.Ide.verProc := 'ACBrNFe'; // 'ACBr'+ ModeloDFIntegerToPrefixo(FNFe.Ide.modelo);
     FNFe.Ide.tpAmb   := Configuracoes.WebServices.Ambiente;
     FNFe.Ide.tpEmis  := Configuracoes.Geral.FormaEmissao;
 
     if Assigned(DANFE) then
       FNFe.Ide.tpImp := DANFE.TipoDANFE;
-
-    FNFe.Emit.EnderEmit.xPais := 'BRASIL';
-    FNFe.Emit.EnderEmit.cPais := 1058;
-    FNFe.Emit.EnderEmit.nro := 'SEM NUMERO';
-
-    FNFe.Dest.EnderDest.xPais := 'BRASIL';
-    FNFe.Dest.EnderDest.cPais := 1058;
   end;
+  }
 end;
 
 destructor NotaFiscal.Destroy;
@@ -3827,6 +3828,14 @@ begin
 {$EndIf}
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+
+    {
+      Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
+    }
+    FNFeW.VersaoDF := Configuracoes.Geral.VersaoDF;
+    FNFeW.ModeloDF := Configuracoes.Geral.ModeloDF;
+    FNFeW.tpAmb := Configuracoes.WebServices.Ambiente;
+    FNFeW.tpEmis := Configuracoes.Geral.FormaEmissao;
 
     FNFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFeW.CSRT   := Configuracoes.RespTec.CSRT;

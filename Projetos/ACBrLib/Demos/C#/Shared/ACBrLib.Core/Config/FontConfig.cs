@@ -45,6 +45,12 @@ namespace ACBrLib.Core.Config
             set => SetProperty(value);
         }
 
+        public int TamanhoFonteInformacoesComplementares
+        {
+            get => GetProperty<int>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

@@ -257,8 +257,19 @@ var
   xProtNFe : String;
   xCNPJCPF : string;
   qrCode: string;
+  VersaoStr: string;
 begin
   Gerador.ListaDeAlertas.Clear;
+
+  {
+    Os campos abaixo tem que ser os mesmos da configuração
+  }
+  NFe.infNFe.Versao := VersaoDFToDbl(VersaoDF);
+  NFe.Ide.modelo := StrToInt(ModeloDFToStr(ModeloDF));
+  NFe.Ide.tpAmb := tpAmb;
+  NFe.ide.tpEmis := tpEmis;
+  FVersao := VersaoDFToStr(VersaoDF);
+  VersaoStr := 'versao="'+ FVersao + '"';
 
   FUsar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
 
@@ -271,8 +282,6 @@ begin
     FormatoValor10ou4 := tcDe10
   else
     FormatoValor10ou4 := tcDe4;
-
-  FVersao     := Copy(NFe.infNFe.VersaoStr, 9, 4);
 
   xCNPJCPF := NFe.emit.CNPJCPF;
 
@@ -300,10 +309,10 @@ begin
   {$EndIf}
 
   if NFe.procNFe.nProt <> '' then
-    Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
+    Gerador.wGrupo('nfeProc ' + VersaoStr + ' ' + NAME_SPACE, '');
 
   Gerador.wGrupo('NFe ' + NAME_SPACE);
-  Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + NFe.infNFe.ID + '"');
+  Gerador.wGrupo('infNFe ' + VersaoStr + ' Id="' + NFe.infNFe.ID + '"');
   (**)GerarInfNFe;
   Gerador.wGrupo('/infNFe');
 
@@ -342,7 +351,7 @@ begin
   if NFe.procNFe.nProt <> '' then
    begin
      xProtNFe :=
-       (**)'<protNFe ' + NFe.infNFe.VersaoStr + '>' +
+       (**)'<protNFe ' + VersaoStr + '>' +
      (******)'<infProt>'+
      (*********)'<tpAmb>'+TpAmbToStr(NFe.procNFe.tpAmb)+'</tpAmb>'+
      (*********)'<verAplic>'+NFe.procNFe.verAplic+'</verAplic>'+

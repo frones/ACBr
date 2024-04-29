@@ -75,7 +75,6 @@ type
     Usar_tcDe4: boolean;
     FormatoValor4ou2: TACBrTipoCampo;
     FormatoValor10ou4: TACBrTipoCampo;
-    Versao: string;
     ChaveNFe: string;
     FIdCSRT: integer;
     FCSRT: string;
@@ -262,6 +261,14 @@ var
   xCNPJCPF: string;
   nfeNode, xmlNode: TACBrXmlNode;
 begin
+  {
+    Os campos abaixo tem que ser os mesmos da configuração
+  }
+  NFe.infNFe.Versao := VersaoDFToDbl(VersaoDF);
+  NFe.Ide.modelo := StrToInt(ModeloDFToStr(ModeloDF));
+  NFe.Ide.tpAmb := tpAmb;
+  NFe.ide.tpEmis := tpEmis;
+
   Result := False;
 
   ListaDeAlertas.Clear;
@@ -277,8 +284,6 @@ begin
     FormatoValor10ou4 := tcDe10
   else
     FormatoValor10ou4 := tcDe4;
-
-  Versao := Copy(NFe.infNFe.VersaoStr, 9, 4);
 
   xCNPJCPF := NFe.emit.CNPJCPF;
 

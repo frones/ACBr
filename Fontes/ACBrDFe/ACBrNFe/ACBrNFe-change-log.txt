@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/04/2024
+-- ACBrNFeXmlWriter/pcnNFe/pcnNFeW.pas --
+[*] Ajustes para usar a configuração do tipo de ambiente e de emissão ao
+    gerar o XML.
+  Por: Italo Giurizzato Junior
 -- ACBrNFeNotasFiscais --
 [*] Adiciona leitura do informação IM para o grupo dest
   Por: Diego Folieni

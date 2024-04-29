@@ -232,14 +232,14 @@ type
   TinfNFe = class(TObject)
   private
     FID: String;
-    FVersao: Real;
-    function GetVersaoStr: String;
-    function GetVersao: Real;
+    FVersao: Double;
+//    function GetVersaoStr: String;
+//    function GetVersao: Real;
   public
     procedure Assign(Source: TinfNFe);
     property ID: String read FID write FID;
-    property Versao: Real read GetVersao write FVersao;
-    property VersaoStr: String read GetVersaoStr;
+    property Versao: Double read FVersao write FVersao;
+//    property VersaoStr: String read GetVersaoStr;
   end;
 
   TIde = class(TObject)
@@ -3285,7 +3285,7 @@ begin
   ID     := Source.ID;
   Versao := Source.Versao;
 end;
-
+{
 function TinfNFe.GetVersao: Real;
 begin
   if FVersao <= 0 then
@@ -3301,7 +3301,7 @@ begin
   else
      Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
 end;
-
+}
 { TveicProd }
 
 procedure TveicProd.Assign(Source: TveicProd);

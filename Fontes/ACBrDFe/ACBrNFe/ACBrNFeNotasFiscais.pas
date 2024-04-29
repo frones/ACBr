@@ -1761,6 +1761,7 @@ begin
       Dest.xNome             := INIRec.ReadString(  sSecao,'xNome'  ,INIRec.ReadString(  sSecao,'NomeRazao'  ,''));
       Dest.indIEDest         := StrToindIEDest(OK,INIRec.ReadString( sSecao,'indIEDest','1'));
       Dest.IE                := INIRec.ReadString(  sSecao,'IE'         ,'');
+      Dest.IM                := INIRec.ReadString(  sSecao,'IM'         ,'');
       Dest.ISUF              := INIRec.ReadString(  sSecao,'ISUF'       ,'');
       Dest.Email             := INIRec.ReadString(  sSecao,'Email'      ,'');
 

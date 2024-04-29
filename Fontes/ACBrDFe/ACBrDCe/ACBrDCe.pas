@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, synautil,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrXmlBase, ACBrDCeConfiguracoes, ACBrDCeWebServices, ACBrDCeDeclaracoes,
-  ACBrDCeDACEClass, ACBrDCeClass, pcnConversao, ACBrDCeConversao;
+  ACBrDCeDACEClass, ACBrDCe.Classes, pcnConversao, ACBrDCe.Conversao;
 
 const
   ACBRDCE_NAMESPACE = 'http://www.portalfiscal.inf.br/dce';
@@ -271,7 +271,7 @@ begin
   // devemos descomentar as linhas e trocar o zero da função abaixo pela variável
   // VersaoDFe
 //  VersaoDFe := DblToVersaoDCe(ok, Versao);
-  Result := LerURLDeParams('DCe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaDCe', 0);
+  Result := LerURLDeParams('DCe', CUFtoUF(CUF), TipoAmbiente, 'URL-Consulta', 0);
 end;
 
 function TACBrDCe.GetURLQRCode(const CUF: integer;
@@ -478,15 +478,11 @@ begin
 end;
 
 function TACBrDCe.NomeServicoToNomeSchema(const NomeServico: String): String;
-Var
-  ok: Boolean;
+var
   ALayout: TLayOutDCe;
 begin
-  ALayout := ServicoToLayOutDCe(ok, NomeServico);
-  if ok then
-    Result := SchemaDCeToStr( LayOutDCeToSchema( ALayout ) )
-  else
-    Result := '';
+  ALayout := ServicoToLayOutDCe(NomeServico);
+  Result := SchemaDCeToStr(LayOutDCeToSchema(ALayout));
 end;
 
 procedure TACBrDCe.LerServicoDeParams(LayOutServico: TLayOutDCe;

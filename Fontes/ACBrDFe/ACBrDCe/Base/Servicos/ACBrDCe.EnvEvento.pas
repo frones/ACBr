@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeEnvEvento;
+unit ACBrDCe.EnvEvento;
 
 interface
 
@@ -45,9 +45,10 @@ uses
   {$IFEND}
   ACBrBase,
   pcnConversao,
-  ACBrDFeComum.SignatureClass,
-  ACBrDCeEventoClass,
-  ACBrDCeConsts;
+//  ACBrDFeComum.SignatureClass,
+  pcnSignature,
+  ACBrDCe.EventoClass,
+  ACBrDCe.Consts;
 
 type
   EventoException = class(Exception);
@@ -256,8 +257,7 @@ begin
 
   if Evento.Items[i].signature.URI <> '' then
   begin
-    Evento.Items[i].signature.GerarXML;
-    Xml := Xml + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+    Xml := Xml + Evento.Items[i].signature.GerarXML;
   end;
 
   Result := Xml;

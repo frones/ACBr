@@ -32,14 +32,14 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeXmlReader;
+unit ACBrDCe.XmlReader;
 
 interface
 
 uses
   Classes, SysUtils,
   ACBrXmlDocument, ACBrXmlReader,
-  ACBrDCeClass;
+  ACBrDCe.Classes;
 
 type
 
@@ -81,7 +81,7 @@ implementation
 
 uses
   ACBrUtil.Base,
-  ACBrXmlBase, ACBrDCeConversao;
+  ACBrXmlBase, ACBrDCe.Conversao;
 
 { TDCeXmlReader }
 
@@ -161,7 +161,7 @@ begin
   Item.Prod.xProd := ObterConteudo(ANode.Childrens.Find('xProd'), tcStr);
   Item.Prod.NCM := ObterConteudo(ANode.Childrens.Find('NCM'), tcStr);
   Item.Prod.qCom := ObterConteudo(ANode.Childrens.Find('qCom'), tcDe4);
-  Item.Prod.vUnCom := ObterConteudo(ANode.Childrens.Find('vUnCom'), tcDe10);
+  Item.Prod.vUnCom := ObterConteudo(ANode.Childrens.Find('vUnCom'), tcDe8);
   Item.Prod.vProd := ObterConteudo(ANode.Childrens.Find('vProd'), tcDe2);
 end;
 
@@ -316,7 +316,7 @@ procedure TDCeXmlReader.Ler_InfDCeSupl(const ANode: TACBrXmlNode);
 begin
   if not Assigned(ANode) then Exit;
 
-  DCe.infDCeSupl.qrCode := ObterConteudo(ANode.Childrens.Find('qrCode'), tcStr);
+  DCe.infDCeSupl.qrCode := ObterConteudo(ANode.Childrens.Find('qrCodDCe'), tcStr);
   DCe.infDCeSupl.qrCode := StringReplace(DCe.infDCeSupl.qrCode, '<![CDATA[', '', []);
   DCe.infDCeSupl.qrCode := StringReplace(DCe.infDCeSupl.qrCode, ']]>', '', []);
   DCe.infDCeSupl.urlChave := ObterConteudo(ANode.Childrens.Find('urlChave'), tcStr);
@@ -354,7 +354,7 @@ begin
 
   DCe.procDCe.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   DCe.procDCe.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
-  DCe.procDCe.chDCe    := ObterConteudo(ANode.Childrens.Find('chDCe'), tcStr);
+  DCe.procDCe.chDFe    := ObterConteudo(ANode.Childrens.Find('chDCe'), tcStr);
   DCe.procDCe.dhRecbto := ObterConteudo(ANode.Childrens.Find('dhRecbto'), tcDatHor);
   DCe.procDCe.nProt    := ObterConteudo(ANode.Childrens.Find('nProt'), tcStr);
   DCe.procDCe.digVal   := ObterConteudo(ANode.Childrens.Find('digVal'), tcStr);

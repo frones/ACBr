@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeClass;
+unit ACBrDCe.Classes;
 
 interface
 
@@ -47,9 +47,10 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  ACBrDFeComum.SignatureClass,
-  ACBrDCeConversao,
-  ACBrDCeProc;
+//  ACBrDFeComum.SignatureClass,
+  ACBrDFeComum.Proc,
+  pcnSignature,
+  ACBrDCe.Conversao;
 
 type
 
@@ -58,11 +59,9 @@ type
     FId: String;
     FVersao: Double;
 
-    function GetVersaoStr: String;
   public
     property Id: String read FId write FId;
     property versao: Double read FVersao write FVersao;
-    property VersaoStr: String read GetVersaoStr;
   end;
 
   TIde = class(TObject)
@@ -375,7 +374,7 @@ type
     FinfSolicDCe: TinfSolicDCe;
     FinfDCeSupl: TinfDCeSupl;
 
-    FProcDCe: TProcDCe;
+    FProcDCe: TProcDFe;
     FSignature: TSignature;
 
     procedure SetautXML(const Value: TautXMLCollection);
@@ -400,7 +399,7 @@ type
     property infDec: TinfDec read FinfDec write FinfDec;
     property infSolicDCe: TinfSolicDCe read FinfSolicDCe write FinfSolicDCe;
     property infDCeSupl: TinfDCeSupl read FinfDCeSupl write FinfDCeSupl;
-    property procDCe: TProcDCe read FProcDCe write FProcDCe;
+    property procDCe: TProcDFe read FProcDCe write FProcDCe;
     property signature: Tsignature read Fsignature write Fsignature;
   end;
 
@@ -422,6 +421,7 @@ begin
   FFisco := TFisco.Create;
   FMarketplace := TMarketplace.Create;
   FEmpEmisProp := TEmpEmisProp.Create;
+  FTransportadora := TTransportadora.Create;
   Fdest := Tdest.Create;
   FautXML := TautXMLCollection.Create;
   FDet := TDetCollection.Create;
@@ -431,7 +431,7 @@ begin
   FinfDec := TinfDec.Create;
   FinfSolicDCe := TinfSolicDCe.Create;
   FinfDCeSupl := TinfDCeSupl.Create;
-  FProcDCe := TProcDCe.create;
+  FProcDCe := TProcDFe.Create('', '', '');
   Fsignature := Tsignature.create;
 end;
 
@@ -442,6 +442,7 @@ begin
   Femit.Free;
   FFisco.Free;
   FMarketplace.Free;
+  FTransportadora.Free;
   FEmpEmisProp.Free;
   Fdest.Free;
   FautXML.Free;
@@ -520,16 +521,6 @@ function TautXMLCollection.New: TautXMLCollectionItem;
 begin
   Result := TautXMLCollectionItem.Create;
   Self.Add(Result);
-end;
-
-{ TinfDCe }
-
-function TinfDCe.GetVersaoStr: String;
-begin
-  if FVersao <= 0 then
-    FVersao := 2;
-
-  Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
 
 { Tdest }

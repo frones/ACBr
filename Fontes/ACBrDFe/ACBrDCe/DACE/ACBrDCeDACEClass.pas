@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrBase, ACBrDFeReport, ACBrDCeClass, pcnConversao;
+  ACBrBase, ACBrDFeReport, ACBrDCe.Classes, pcnConversao;
 
 type
   TDadosExtrasDCe = (deValorTotal, deRelacaoDFe);

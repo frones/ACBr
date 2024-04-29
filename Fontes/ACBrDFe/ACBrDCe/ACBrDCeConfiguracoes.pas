@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, ACBrDCeConversao;
+  ACBrDFeConfiguracoes, pcnConversao, ACBrDCe.Conversao;
 
 type
 

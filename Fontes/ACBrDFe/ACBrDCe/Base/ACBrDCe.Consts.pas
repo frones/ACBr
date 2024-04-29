@@ -32,51 +32,25 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeConsSit;
+unit ACBrDCe.Consts;
 
 interface
 
 uses
-  SysUtils, Classes,
-  ACBrXmlBase;
+  SysUtils;
 
-type
+resourcestring
+  NAME_SPACE_DCE = 'xmlns="http://www.portalfiscal.inf.br/dce"';
 
-  TConsSitDCe = class
-  private
-    FtpAmb: TACBrTipoAmbiente;
-    FchDCe: string;
-    FVersao: string;
-  public
-    function GerarXML: string;
-    function ObterNomeArquivo: string;
-
-    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
-    property chDCe: string read FchDCe write FchDCe;
-    property Versao: string read FVersao write FVersao;
-  end;
+  DSC_INFADPROD = 'Informações adicionais do Produto';
+  DSC_NITEM = 'Numero do item';
+  DSC_XPROD = 'Descrição do Produto ou Serviço';
+  DSC_NCM = 'Código NCM';
+  DSC_QCOM = 'Quantidade Comercial';
+  DSC_VUNCOM = 'Valor Unitário de Comercialização';
+  DSC_VPROD = 'Valor Total Bruto dos Produtos ou Serviços';
 
 implementation
-
-uses
-  ACBrUtil.Strings,
-  ACBrDCeConsts;
-
-{ TConsSitDCe }
-
-function TConsSitDCe.ObterNomeArquivo: string;
-begin
-  Result := OnlyNumber(FchDCe) + '-ped-sit.xml';
-end;
-
-function TConsSitDCe.GerarXML: string;
-begin
-  Result := '<consSitDCe ' + NAME_SPACE_DCe + ' versao="' + versao + '">' +
-              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
-              '<xServ>CONSULTAR</xServ>' +
-              '<chDCe>' + chDCe + '</chDCe>' +
-            '</consSitDCe>';
-end;
 
 end.
 

@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeConversao;
+unit ACBrDCe.Conversao;
 
 interface
 
@@ -62,15 +62,14 @@ const
 
 type
   TLayOutDCe = (LayDCeRecepcao, LayDCeRetRecepcao, LayDCeConsulta,
-                LayDCeStatusServico, LayDCeEvento, LayDCeConsNaoEnc,
-                LayDCeDistDFeInt, LayDCeRecepcaoSinc, LayDCeURLQRCode,
-                LayURLConsultaDCe);
+                LayDCeStatusServico, LayDCeEvento, LayDCeDistDFeInt,
+                LayDCeRecepcaoSinc, LayDCeURLQRCode, LayURLConsultaDCe);
 
 const
   TLayOutDCeArrayStrings: array[TLayOutDCe] of string = ('DCeRecepcao',
     'DCeRetRecepcao', 'DCeConsultaProtocolo', 'DCeStatusServico',
-    'RecepcaoEvento', 'DCeConsNaoEnc', 'DCeDistDFeInt', 'DCeRecepcaoSinc',
-    'DCeURLQRCode',  'URLConsultaDCe');
+    'RecepcaoEvento', 'DCeDistDFeInt', 'DCeRecepcaoSinc', 'URL-QRCode',
+    'URL-Consulta');
 
 type
   TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);
@@ -101,7 +100,7 @@ function StrToSchemaDCe(const s: String): TSchemaDCe;
 function LayOutDCeToSchema(const t: TLayOutDCe): TSchemaDCe;
 
 function LayOutDCeToServico(const t: TLayOutDCe): String;
-function ServicoToLayOutDCe(out ok: Boolean; const s: String): TLayOutDCe;
+function ServicoToLayOutDCe(const s: String): TLayOutDCe;
 
 function EmitenteDCeToStr(const t: TEmitenteDCe): String;
 function StrToEmitenteDCe(const s: String): TEmitenteDCe;
@@ -218,7 +217,7 @@ begin
   result := TLayOutDCeArrayStrings[t];
 end;
 
-function ServicoToLayOutDCe(out ok: Boolean; const s: String): TLayOutDCe;
+function ServicoToLayOutDCe(const s: String): TLayOutDCe;
 var
   idx: TLayOutDCe;
 begin

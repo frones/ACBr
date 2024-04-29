@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeEventoClass;
+unit ACBrDCe.EventoClass;
 
 interface
 
@@ -46,7 +46,7 @@ uses
   ACBrBase,
   ACBrXmlBase,
   pcnConversao,
-  ACBrDCeConversao;
+  ACBrDCe.Conversao;
 
 type
   EventoException = class(Exception);

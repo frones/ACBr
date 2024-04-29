@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeRetEnvEvento;
+unit ACBrDCe.RetEnvEvento;
 
 interface
 
@@ -44,8 +44,9 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  ACBrDCeEventoClass,
-  ACBrDFeComum.SignatureClass;
+//  ACBrDFeComum.SignatureClass,
+  pcnSignature,
+  ACBrDCe.EventoClass;
 
 type
 
@@ -71,7 +72,7 @@ type
 implementation
 
 uses
-  ACBrDCeConversao,
+  ACBrDCe.Conversao,
   ACBrUtil.Strings,
   ACBrXmlDocument;
 
@@ -122,7 +123,7 @@ begin
         retInfEvento.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
         retInfEvento.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
         RetInfEvento.chDCe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chDCe'), tcStr);
-        RetInfEvento.tpEvento := StrToEventoDCe(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
+        RetInfEvento.tpEvento := StrTotpEventoDCe(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpEvento'), tcStr));
         RetInfEvento.xEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xEvento'), tcStr);
         retInfEvento.nSeqEvento := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nSeqEvento'), tcInt);
         retInfEvento.dhRegEvento := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);

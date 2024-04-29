@@ -45,8 +45,8 @@ uses
   ACBrDFecomum.Proc,
   ACBrDFecomum.DistDFeInt,
   ACBrDFecomum.RetDistDFeInt,
-  ACBrDCeClass,
-  ACBrDCeConversao,
+  ACBrDCe.Classes,
+  ACBrDCe.Conversao,
 //  pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
 //  pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
   ACBrDCeDeclaracoes, ACBrDCeConfiguracoes;
@@ -285,7 +285,7 @@ type
     FcUF: Integer;
     FRetDCeDFe: String;
 
-    FprotDCe: TProcDCe;
+    FprotDCe: TProcDFe;
 //    FprocEventoDCe: TRetEventoDCeCollection;
 
     procedure SetDCeChave(const AValue: String);
@@ -316,7 +316,7 @@ type
     property cUF: Integer read FcUF;
     property RetDCeDFe: String read FRetDCeDFe;
 
-    property protDCe: TProcDCe read FprotDCe;
+    property protDCe: TProcDFe read FprotDCe;
 //    property procEventoDCe: TRetEventoDCeCollection read FprocEventoDCe;
   end;
 
@@ -354,45 +354,6 @@ type
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
 
 //    property EventoRetorno: TRetEventoDCe read FEventoRetorno;
-  end;
-
-  { TDCeConsultaDCeNaoEnc }
-
-  TDCeConsultaDCeNaoEnc = Class(TDCeWebService)
-  private
-    FOwner: TACBrDFe;
-    FCNPJCPF: String;
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
-    FcStat: Integer;
-    FxMotivo: String;
-    FcUF: Integer;
-//    FInfDCe: TRetInfDCeCollection;
-//    FRetConsDCeNaoEnc: TRetConsDCeNaoEnc;
-    FMsg: String;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-    function GerarMsgErro(E: Exception): String; override;
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-    procedure Clear; override;
-
-    property CNPJCPF: String                read FCNPJCPF write FCNPJCPF;
-    property versao: String                 read Fversao;
-    property tpAmb: TpcnTipoAmbiente        read FtpAmb;
-    property verAplic: String               read FverAplic;
-    property cStat: Integer                 read FcStat;
-    property xMotivo: String                read FxMotivo;
-    property cUF: Integer                   read FcUF;
-//    property InfDCe: TRetInfDCeCollection read FInfDCe;
-    property Msg: String                    read FMsg;
   end;
 
   { TDistribuicaoDFe }
@@ -472,7 +433,6 @@ type
     FRecibo: TDCeRecibo;
     FConsulta: TDCeConsulta;
     FEnvEvento: TDCeEnvEvento;
-    FConsDCeNaoEnc: TDCeConsultaDCeNaoEnc;
     FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TDCeEnvioWebService;
   public
@@ -481,7 +441,6 @@ type
 
     function Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean; overload;
     function Envia(const ALote: String; ASincrono:  Boolean = False): Boolean; overload;
-    function ConsultaDCeNaoEnc(const ACNPJCPF: String): Boolean;
 
     property ACBrDCe: TACBrDFe read FACBrDCe write FACBrDCe;
     property StatusServico: TDCeStatusServico read FStatusServico write FStatusServico;
@@ -490,7 +449,6 @@ type
     property Recibo: TDCeRecibo read FRecibo write FRecibo;
     property Consulta: TDCeConsulta read FConsulta write FConsulta;
     property EnvEvento: TDCeEnvEvento read FEnvEvento write FEnvEvento;
-    property ConsDCeNaoEnc: TDCeConsultaDCeNaoEnc read FConsDCeNaoEnc write FConsDCeNaoEnc;
     property DistribuicaoDFe: TDistribuicaoDFe read FDistribuicaoDFe write FDistribuicaoDFe;
     property EnvioWebService: TDCeEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
@@ -511,7 +469,7 @@ uses
 //  pmdfeConsSitDCe,
   ACBrDFeComum.ConsReciDFe,
   ACBrDCe,
-  ACBrDCeConsts;
+  ACBrDCe.Consts;
 
 { TDCeWebService }
 
@@ -749,7 +707,7 @@ var
   ok: Boolean;
 begin
   if FDeclaracoes.Count > 0 then    // Tem DCe ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoDCe(ok, FDeclaracoes.Items[0].DCe.infDCe.Versao)
+    FVersaoDF := DblToVersaoDCe({ok,} FDeclaracoes.Items[0].DCe.infDCe.Versao)
   else
     FVersaoDF := FPConfiguracoesDCe.Geral.VersaoDF;
 
@@ -856,7 +814,7 @@ function TDCeRecepcao.TratarResposta: Boolean;
 var
   I: integer;
   chDCe, AXML, NomeXMLSalvo: String;
-  AProcDCe: TProcDCe;
+  AProcDCe: TProcDFe;
   SalvarXML: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['DCeRecepcaoLoteResult',
@@ -928,16 +886,12 @@ begin
             DCe.procDCe.digVal := FDCeRetornoSincrono.protDCe.digVal;
             DCe.procDCe.xMotivo := FDCeRetornoSincrono.protDCe.xMotivo;
             }
-            AProcDCe := TProcDCe.Create;
+            AProcDCe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe');
             try
               // Processando em UTF8, para poder gravar arquivo corretamente //
-              AProcDCe.XML_DCe := RemoverDeclaracaoXML(XMLAssinado);
+              AProcDCe.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
 //              AProcDCe.XML_Prot := FDCeRetornoSincrono.XMLprotDCe;
-              AProcDCe.Versao := FPVersaoServico;
-              AjustarOpcoes( AProcDCe.Gerador.Opcoes );
-              AProcDCe.GerarXML;
-
-              XMLOriginal := AProcDCe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcDCe.GerarXML;
 
               if FPConfiguracoesDCe.Arquivos.Salvar then
               begin
@@ -1073,7 +1027,7 @@ var
   ok: Boolean;
 begin
   if FDeclaracoes.Count > 0 then    // Tem DCe ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoDCe(ok, FDeclaracoes.Items[0].DCe.infDCe.Versao)
+    FVersaoDF := DblToVersaoDCe({ok,} FDeclaracoes.Items[0].DCe.infDCe.Versao)
   else
     FVersaoDF := FPConfiguracoesDCe.Geral.VersaoDF;
 
@@ -1246,7 +1200,7 @@ end;
 function TDCeRetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: Integer;
-  AProcDCe: TProcDCe;
+  AProcDCe: TProcDFe;
 //  AInfProt: TProtDFeCollection;
   SalvarXML: Boolean;
   NomeXMLSalvo: String;
@@ -1453,7 +1407,7 @@ var
   ok: Boolean;
 begin
   if FDeclaracoes.Count > 0 then    // Tem DCe ? Se SIM, use as informações do XML
-    FVersaoDF := DblToVersaoDCe(ok, FDeclaracoes.Items[0].DCe.infDCe.Versao)
+    FVersaoDF := DblToVersaoDCe({ok,} FDeclaracoes.Items[0].DCe.infDCe.Versao)
   else
     FVersaoDF := FPConfiguracoesDCe.Geral.VersaoDF;
 
@@ -1732,7 +1686,7 @@ var
 //  DCeRetorno: TRetConsSitDCe;
   SalvarXML, MDFCancelado, DCencerrado, Atualiza: Boolean;
   aEventos, sPathDCe, NomeXMLSalvo: String;
-  AProcDCe: TProcDCe;
+  AProcDCe: TProcDFe;
   I, J, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
 begin
@@ -2352,7 +2306,7 @@ end;
 
 function TDCeEnvEvento.TratarResposta: Boolean;
 var
-  Leitor: TLeitor;
+//italo  Leitor: TLeitor;
   I, J: Integer;
   NomeArq, PathArq, VersaoEvento, Texto: String;
 begin
@@ -2468,140 +2422,6 @@ begin
   Result := IntToStr(FidLote);
 end;
 
-{ TDCeConsultaDCeNaoEnc }
-
-constructor TDCeConsultaDCeNaoEnc.Create(AOwner: TACBrDFe);
-begin
-  inherited Create(AOwner);
-
-  FOwner := AOwner;
-end;
-
-destructor TDCeConsultaDCeNaoEnc.Destroy;
-begin
-//  FinfDCe.Free;
-//  FRetConsDCeNaoEnc.Free;
-
-  inherited;
-end;
-
-procedure TDCeConsultaDCeNaoEnc.Clear;
-begin
-  inherited Clear;
-
-  FPStatus  := stDCeConsulta;
-  FPLayout  := LayDCeConsNaoEnc;
-  FPArqEnv  := 'ped-cons';
-  FPArqResp := 'cons';
-
-  if Assigned(FPConfiguracoesDCe) then
-  begin
-    FtpAmb := FPConfiguracoesDCe.WebServices.Ambiente;
-    FcUF := FPConfiguracoesDCe.WebServices.UFCodigo;
-  end;
-  {
-  if Assigned(FinfDCe) then
-    FinfDCe.Free;
-
-  if Assigned(FRetConsDCeNaoEnc) then
-    FRetConsDCeNaoEnc.Free;
-
-  FInfDCe := TRetInfDCeCollection.Create;
-  FRetConsDCeNaoEnc := TRetConsDCeNaoEnc.Create;
-  }
-end;
-
-procedure TDCeConsultaDCeNaoEnc.DefinirServicoEAction;
-begin
-  FPServico    := GetUrlWsd + 'DCeConsNaoEnc';
-  FPSoapAction := FPServico + '/DCeConsNaoEnc';
-end;
-
-procedure TDCeConsultaDCeNaoEnc.DefinirURL;
-begin
-  FPLayout := LayDCeConsNaoEnc;
-
-  inherited DefinirURL;
-end;
-
-procedure TDCeConsultaDCeNaoEnc.DefinirDadosMsg;
-//var
-//  ConsDCeNaoEnc: TConsDCeNaoEnc;
-begin
-{
-  ConsDCeNaoEnc := TConsDCeNaoEnc.create;
-  try
-    ConsDCeNaoEnc.TpAmb   := FPConfiguracoesDCe.WebServices.Ambiente;
-    ConsDCeNaoEnc.CNPJCPF := OnlyNumber( FCNPJCPF );
-    ConsDCeNaoEnc.Versao  := FPVersaoServico;
-
-    AjustarOpcoes( ConsDCeNaoEnc.Gerador.Opcoes );
-    ConsDCeNaoEnc.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
-
-    ConsDCeNaoEnc.GerarXML;
-
-    FPDadosMsg := ConsDCeNaoEnc.Gerador.ArquivoFormatoXML;
-  finally
-    ConsDCeNaoEnc.Free;
-  end;
-  }
-end;
-
-function TDCeConsultaDCeNaoEnc.TratarResposta: Boolean;
-var
-  i: Integer;
-begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'DCeConsNaoEncResult');
-  {
-  // Limpando variaveis internas
-  FRetConsDCeNaoEnc.Free;
-  FRetConsDCeNaoEnc := TRetConsDCeNaoEnc.Create;
-
-  FRetConsDCeNaoEnc.Leitor.Arquivo := ParseText(FPRetWS);
-  FRetConsDCeNaoEnc.LerXml;
-
-  Fversao    := FRetConsDCeNaoEnc.versao;
-  FtpAmb     := FRetConsDCeNaoEnc.tpAmb;
-  FverAplic  := FRetConsDCeNaoEnc.verAplic;
-  FcStat     := FRetConsDCeNaoEnc.cStat;
-  FxMotivo   := FRetConsDCeNaoEnc.xMotivo;
-  FcUF       := FRetConsDCeNaoEnc.cUF;
-  FMsg       := FxMotivo;
-
-  for i := 0 to FRetConsDCeNaoEnc.InfDCe.Count -1 do
-  begin
-    FinfDCe.New;
-    FinfDCe.Items[i].chDCe := FRetConsDCeNaoEnc.InfDCe.Items[i].chDCe;
-    FinfDCe.Items[i].nProt  := FRetConsDCeNaoEnc.InfDCe.Items[i].nProt;
-  end;
-  }
-    // 111 = MDF-e não encerrados localizados
-    // 112 = MDF-e não encerrados não localizados
-  Result := (FcStat in [111, 112]);
-end;
-
-function TDCeConsultaDCeNaoEnc.GerarMsgLog: String;
-begin
-{
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak),
-                   [FRetConsDCeNaoEnc.versao, TpAmbToStr(FRetConsDCeNaoEnc.tpAmb),
-                    FRetConsDCeNaoEnc.verAplic, IntToStr(FRetConsDCeNaoEnc.cStat),
-                    FRetConsDCeNaoEnc.xMotivo,
-                    CodigoParaUF(FRetConsDCeNaoEnc.cUF)]);
-  }
-end;
-
-function TDCeConsultaDCeNaoEnc.GerarMsgErro(E: Exception): String;
-begin
-  Result := ACBrStr('WebService Consulta MDF-e nao Encerradas:' + LineBreak +
-                    '- Inativo ou Inoperante tente novamente.');
-end;
-
 { TDistribuicaoDFe }
 
 constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
@@ -2631,7 +2451,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create('DCe');
+//italo  FretDistDFeInt := TRetDistDFeInt.Create('DCe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -2658,11 +2478,11 @@ begin
     DistDFeInt.NSU := FNSU;
     DistDFeInt.Chave := trim(FchDCe);
 
-    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
+//italo    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
 
     DistDFeInt.GerarXML;
 
-    FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
+//italo    FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
   finally
     DistDFeInt.Free;
   end;
@@ -2676,7 +2496,7 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'DCeDistDFeInteresseResult');
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
-  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
+  FretDistDFeInt.XmlRetorno := FPRetWS;
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
@@ -2725,9 +2545,9 @@ begin
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
   FretDistDFeInt.Free;   // Limpando a lista
-  FretDistDFeInt := TRetDistDFeInt.Create('DCe');
+//italo  FretDistDFeInt := TRetDistDFeInt.Create('DCe');
 
-  FretDistDFeInt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  FretDistDFeInt.XmlRetorno := UTF8ToNativeString(ParseText(FPRetWS));
   FretDistDFeInt.LerXml;
 
   FPMsg := FretDistDFeInt.xMotivo;
@@ -2851,9 +2671,10 @@ begin
 end;
 
 procedure TDCeEnvioWebService.DefinirDadosMsg;
-var
-  LeitorXML: TLeitor;
+//var
+//  LeitorXML: TLeitor;
 begin
+{
   LeitorXML := TLeitor.Create;
   try
     LeitorXML.Arquivo := FXMLEnvio;
@@ -2862,7 +2683,7 @@ begin
   finally
     LeitorXML.Free;
   end;
-
+}
   FPDadosMsg := FXMLEnvio;
 end;
 
@@ -2895,7 +2716,6 @@ begin
   FRecibo := TDCeRecibo.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
   FConsulta := TDCeConsulta.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
 //  FEnvEvento := TDCeEnvEvento.Create(FACBrDCe, TACBrDCe(FACBrDCe).EventoDCe);
-  FConsDCeNaoEnc := TDCeConsultaDCeNaoEnc.Create(FACBrDCe);
   FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrDCe);
   FEnvioWebService := TDCeEnvioWebService.Create(FACBrDCe);
 end;
@@ -2908,7 +2728,6 @@ begin
   FRecibo.Free;
   FConsulta.Free;
   FEnvEvento.Free;
-  FConsDCeNaoEnc.Free;
   FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
 
@@ -2937,16 +2756,6 @@ begin
     if not FRetorno.Executar then
       FRetorno.GerarException( FRetorno.Msg );
   end;
-
-  Result := True;
-end;
-
-function TWebServices.ConsultaDCeNaoEnc(const ACNPJCPF: String): Boolean;
-begin
-  FConsDCeNaoEnc.FCNPJCPF := ACNPJCPF;
-
-  if not FConsDCeNaoEnc.Executar then
-    FConsDCeNaoEnc.GerarException( FConsDCeNaoEnc.Msg );
 
   Result := True;
 end;

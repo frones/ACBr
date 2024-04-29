@@ -32,98 +32,50 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeRetEnv;
+unit ACBrDCe.ConsSit;
 
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor;
+  SysUtils, Classes,
+  ACBrXmlBase;
 
 type
 
-  TInfREC = class
+  TConsSitDCe = class
   private
-    FnRec: String;
-    FdhRecbto: TDateTime;
-    FtMed: Integer;
+    FtpAmb: TACBrTipoAmbiente;
+    FchDCe: string;
+    FVersao: string;
   public
-    property nRec: String        read FnRec     write FnRec;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: Integer       read FtMed     write FtMed;
-  end;
+    function GerarXML: string;
+    function ObterNomeArquivo: string;
 
-  TretEnvDCe = class(TObject)
-  private
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
-    FcStat: Integer;
-    FLeitor: TLeitor;
-    FcUF: Integer;
-    FverAplic: String;
-    FxMotivo: String;
-    FinfRec: TInfREC;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function LerXml: Boolean;
-
-    property Leitor: TLeitor         read FLeitor   write FLeitor;
-    property versao: String          read Fversao   write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
-    property cUF: Integer            read FcUF      write FcUF;
-    property infRec: TInfREC         read FinfRec   write FinfRec;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
+    property chDCe: string read FchDCe write FchDCe;
+    property Versao: string read FVersao write FVersao;
   end;
 
 implementation
 
-{ TretEnvDCe }
+uses
+  ACBrUtil.Strings,
+  ACBrDCe.Consts;
 
-constructor TretEnvDCe.Create;
+{ TConsSitDCe }
+
+function TConsSitDCe.ObterNomeArquivo: string;
 begin
-  inherited Create;
-
-  FLeitor := TLeitor.Create;
-  FinfRec := TInfREC.Create
+  Result := OnlyNumber(FchDCe) + '-ped-sit.xml';
 end;
 
-destructor TretEnvDCe.Destroy;
+function TConsSitDCe.GerarXML: string;
 begin
-  FLeitor.Free;
-  FinfRec.Free;
-
-  inherited;
-end;
-
-function TretEnvDCe.LerXml: Boolean;
-var
-  ok: Boolean;
-begin
-  result := False;
-  try
-    Leitor.Grupo := Leitor.Arquivo;
-
-    if leitor.rExtrai(1, 'retEnviDCe') <> '' then
-    begin
-      Fversao   := Leitor.rAtributo('versao');
-      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      FcUF      := Leitor.rCampo(tcInt, 'cUF');
-      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-
-      // Grupo infRec - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
-      infRec.nRec      := Leitor.rCampo(tcStr, 'nRec');
-      infRec.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      infRec.FtMed     := Leitor.rCampo(tcInt, 'tMed');
-      
-      Result := True;
-    end;
-  except
-    result := false;
-  end;
+  Result := '<consSitDCe ' + NAME_SPACE_DCe + ' versao="' + versao + '">' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
+              '<xServ>CONSULTAR</xServ>' +
+              '<chDCe>' + chDCe + '</chDCe>' +
+            '</consSitDCe>';
 end;
 
 end.

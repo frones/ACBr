@@ -228,6 +228,8 @@ begin
     else
       Protesto:= '00';
 
+    Instrucao2 := '00';
+
     {Pegando Dias Multa}
     if (DataMulta > 0) and (DataMulta > Vencimento) then
     begin

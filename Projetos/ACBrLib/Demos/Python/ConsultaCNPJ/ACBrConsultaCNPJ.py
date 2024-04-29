@@ -33,8 +33,8 @@ while True:
         acbr_lib.CNPJ_Consultar.restype = ctypes.c_int
 
         # Definir variáveis para armazenar os resultados
-        sResposta = ctypes.create_string_buffer(2048) 
-        esTamanho = ctypes.c_int(2048)
+        sResposta = ctypes.create_string_buffer(9048) 
+        esTamanho = ctypes.c_int(9048)
         
         # Definir o valor do CNPJ como uma string
         cnpj_valor =  input("Digite o CNPJ (somente numeros): ")

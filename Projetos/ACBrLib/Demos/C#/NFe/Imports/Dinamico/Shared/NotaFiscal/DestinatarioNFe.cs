@@ -58,6 +58,11 @@ namespace ACBrLib.NFe
         /// Ingresso, prejudicando a comprovação do ingresso /
         /// internamento da mercadoria nestas áreas. (v2.0)</para>
         /// </summary>
+        /// 
+        public string IM { get; set; }
+        /// <summary>
+        /// Inscrição Municipal do Prestador de Serviço
+        /// </summary>
         public string ISUF { get; set; }
 
         /// <summary>

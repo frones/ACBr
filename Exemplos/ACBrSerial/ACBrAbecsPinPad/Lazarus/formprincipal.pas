@@ -1031,6 +1031,7 @@ end;
 
 procedure TfrMain.btSendQRCodeClick(Sender: TObject);
 var
+  r: TRect;
   ms: TMemoryStream;
   tini, tfim: TDateTime;
   png: TPortableNetworkGraphic;
@@ -1041,9 +1042,13 @@ begin
   try
     qrsize := Trunc(min( ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Cols,
                          ACBrAbecsPinPad1.PinPadCapabilities.DisplayGraphicPixels.Rows)) - 20;
+    r.Top := 0;
+    r.Left := 0;
+    r.Height := qrsize;
+    r.Width := qrsize;
     png.Width := qrsize;
     png.Height := qrsize;
-    png.Canvas.StretchDraw(png.Canvas.ClipRect, imgQRCode.Picture.Bitmap);
+    png.Canvas.StretchDraw(r, imgQRCode.Picture.Bitmap);
     //png.SaveToFile('c:\temp\qrcode.png');
     png.SaveToStream(ms);
     imgQRCode.Picture.Assign(png);

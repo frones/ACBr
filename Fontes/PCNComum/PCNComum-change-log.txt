@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2024
+-- pcnConversao --
+[*] Acrescentado os enumerados para os eventos: Insucesso na Entrega da NF-e e
+    Cancelamento do Insucesso na Entrega da NF-e.
+  Por: Italo Giurizzato Junior
+
 17/04/2024
 -- pcnConversao --
 [*] Criado um novo tipo chamado TIndicadorEx que contem os valores:

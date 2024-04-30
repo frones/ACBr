@@ -20,7 +20,6 @@ CFG_SAT_DLL             = r'C:\ACBr\Projetos\ACBrLib\Demos\Python\SAT\DLLs\dllsa
 
 CFG_SAT_CODIGO_ATIVACAO = '00000000'
 ARQ_VENDA_INI           = r'C:\ACBr\Projetos\ACBrLib\Demos\Python\SAT\CFe.ini'
-REMOVE_INTEGRADOR       = '{ "Integrador" : { "Codigo" : "", "Valor" : "" } }'
 
 # Definindo a variável global
 arquivo_sat = ""
@@ -106,8 +105,7 @@ def opcao2():
     '''
     define_bufferResposta(30600)
     resultado = acbr_lib.SAT_CriarEnviarCFe(ARQ_VENDA_INI.encode('utf-8'), sResposta, ctypes.byref(esTamanho))
-    resposta_completa = sResposta.value.decode("utf-8")
-    json_string = resposta_completa.replace(REMOVE_INTEGRADOR, '')
+    json_string = sResposta.value.decode("utf-8")
     dados_json = json.loads(json_string)
     if dados_json['ENVIO']["CodigoDeRetorno"] == 6000:
         print("SAT Emitido com sucesso:",dados_json['ENVIO']["CodigoDeRetorno"] )

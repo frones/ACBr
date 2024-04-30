@@ -233,9 +233,16 @@ begin
   infEvento.detEvento.longGPS := ObterConteudoTag(ANode.Childrens.FindAnyNs('longGPS'), tcDe6);
 
   infEvento.detEvento.hashComprovante := ObterConteudoTag(ANode.Childrens.FindAnyNs('hashComprovante'), tcStr);
-  infEvento.detEvento.hashComprovante := ObterConteudoTag(ANode.Childrens.FindAnyNs('hashComprovante'), tcDatHor);
+  infEvento.detEvento.dhHashComprovante := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhHashComprovante'), tcDatHor);
   infEvento.detEvento.nProtEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProtEvento'), tcStr);
   infEvento.detEvento.tpAutorizacao := StrToAutorizacao(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAutorizacao'), tcStr));
+
+  infEvento.detEvento.dhTentativaEntrega := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhTentativaEntrega'), tcDatHor);
+  infEvento.detEvento.nTentativa := ObterConteudoTag(ANode.Childrens.FindAnyNs('nTentativa'), tcInt);
+  infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpMotivo'), tcStr));
+  infEvento.detEvento.xJustMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xJustMotivo'), tcStr);
+  infEvento.detEvento.hashTentativaEntrega := ObterConteudoTag(ANode.Childrens.FindAnyNs('hashTentativaEntrega'), tcStr);
+  infEvento.detEvento.dhHashTentativaEntrega := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhHashTentativaEntrega'), tcDatHor);
 
   Ler_Dest(ANode.Childrens.FindAnyNs('dest'));
   Ler_autXML(ANode.Childrens.FindAnyNs('autXML'))
@@ -360,12 +367,10 @@ begin
           versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 
           Ler_InfEvento(ANode.Childrens.FindAnyNs('evento').Childrens.FindAnyNs('infEvento'));
-  //        Ler_DetEvento(ANode.Childrens.FindAnyNs('evento').Childrens.FindAnyNs('infEvento'));
         end;
 
         if ANode.LocalName = 'retEnvEvento' then
           Ler_RetEvento(ANode);
-//        Ler_RetEvento(ANode.Childrens.FindAnyNs('retEvento'));
 
         LerSignature(ANode.Childrens.Find('Signature'), signature);
       end;

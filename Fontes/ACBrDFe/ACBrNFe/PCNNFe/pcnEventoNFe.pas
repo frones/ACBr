@@ -184,6 +184,14 @@ type
     FnProtEvento: String;
     FautXML: TautXMLCollection;
     FtpAutorizacao: TAutorizacao;
+    // Insucesso na Entrega
+    FdhTentativaEntrega: TDateTime;
+    FnTentativa: Integer;
+    FtpMotivo: TtpMotivo;
+    FxJustMotivo: String;
+    FhashTentativaEntrega: String;
+    FdhHashTentativaEntrega: TDateTime;
+    FUF: String;
 
     procedure setxCondUso(const Value: String);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
@@ -223,6 +231,14 @@ type
 
     property autXML: TautXMLCollection    read FautXML            write SetautXML;
     property tpAutorizacao: TAutorizacao  read FtpAutorizacao     write FtpAutorizacao;
+
+    property dhTentativaEntrega: TDateTime read FdhTentativaEntrega write FdhTentativaEntrega;
+    property nTentativa: Integer read FnTentativa write FnTentativa;
+    property tpMotivo: TtpMotivo read FtpMotivo write FtpMotivo;
+    property xJustMotivo: String read FxJustMotivo write FxJustMotivo;
+    property hashTentativaEntrega: String read FhashTentativaEntrega write FhashTentativaEntrega;
+    property dhHashTentativaEntrega: TDateTime read FdhHashTentativaEntrega write FdhHashTentativaEntrega;
+    property UF: String read FUF write FUF;
   end;
 
   TRetchNFePendCollection = class(TACBrObjectList)
@@ -334,14 +350,14 @@ begin
     teInclusaoCondutor         : Result := 'Inclusao Condutor';
     teRegistroCTe              : Result := 'CT-e Autorizado para NF-e';
     teRegistroPassagemNFeCancelado: Result := 'Registro de Passagem para NF-e Cancelado';
-    teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
-    teCTeAutorizado               : Result := 'CT-e Autorizado';
-    teCTeCancelado                : Result := 'CT-e Cancelado';
+    teRegistroPassagemNFeRFID  : Result := 'Registro de Passagem para NF-e RFID';
+    teCTeAutorizado            : Result := 'CT-e Autorizado';
+    teCTeCancelado             : Result := 'CT-e Cancelado';
     teMDFeAutorizado,
-    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado2          : Result := 'MDF-e Autorizado';
     teMDFeCancelado,
-    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
+    teMDFeCancelado2           : Result := 'MDF-e Cancelado';
+    teVistoriaSuframa          : Result := 'Vistoria SUFRAMA';
     tePedProrrog1,
     tePedProrrog2              : Result := 'Pedido de Prorrogacao';
     teCanPedProrrog1,
@@ -355,6 +371,8 @@ begin
     teComprEntregaNFe          : Result := 'Comprovante de Entrega da NF-e';
     teCancComprEntregaNFe      : Result := 'Cancelamento Comprovante de Entrega da NF-e';
     teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
+    teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
+    teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
   else
     Result := '';
   end;
@@ -394,14 +412,14 @@ begin
     teInclusaoCondutor         : Result := 'INCLUSAO CONDUTOR';
     teRegistroCTe              : Result := 'CT-e Autorizado para NF-e';
     teRegistroPassagemNFeCancelado: Result := 'Registro de Passagem para NF-e Cancelado';
-    teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
-    teCTeAutorizado               : Result := 'CT-e Autorizado';
-    teCTeCancelado                : Result := 'CT-e Cancelado';
+    teRegistroPassagemNFeRFID  : Result := 'Registro de Passagem para NF-e RFID';
+    teCTeAutorizado            : Result := 'CT-e Autorizado';
+    teCTeCancelado             : Result := 'CT-e Cancelado';
     teMDFeAutorizado,
-    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado2          : Result := 'MDF-e Autorizado';
     teMDFeCancelado,
-    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
+    teMDFeCancelado2           : Result := 'MDF-e Cancelado';
+    teVistoriaSuframa          : Result := 'Vistoria SUFRAMA';
     tePedProrrog1,
     tePedProrrog2              : Result := 'Pedido de Prorrogacao';
     teCanPedProrrog1,
@@ -415,6 +433,8 @@ begin
     teComprEntregaNFe          : Result := 'Comprovante de Entrega da NF-e';
     teCancComprEntregaNFe      : Result := 'Cancelamento Comprovante de Entrega da NF-e';
     teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
+    teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
+    teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
   else
     Result := 'Não Definido';
   end;

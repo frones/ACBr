@@ -352,6 +352,33 @@ begin
               'declarado no campo CNPJ/CPF deste evento a autorizar os transportadores ' +
               'subcontratados ou redespachados a terem acesso ao download da NF-e');
         end;
+
+      teInsucessoEntregaNFe:
+        begin
+          Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento[i].FInfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcStr, 'P21', 'verAplic',    01, 20, 1, Evento[i].InfEvento.detEvento.verAplic);
+          Gerador.wCampo(tcStr, 'P30', 'dhTentativaEntrega', 25, 25, 1, DateTimeTodh(Evento[i].InfEvento.detEvento.dhTentativaEntrega) +
+                                     GetUTC(Evento[i].InfEvento.detEvento.UF,
+                                     Evento[i].InfEvento.detEvento.dhTentativaEntrega), DSC_DEMI);
+          Gerador.wCampo(tcInt, 'P31', 'nTentativa ', 3, 3, 0, Evento[i].InfEvento.detEvento.nTentativa);
+          Gerador.wCampo(tcStr, 'P32', 'tpMotivo   ', 1, 1, 1, tpMotivoToStr(Evento[i].InfEvento.detEvento.tpMotivo));
+          Gerador.wCampo(tcStr, 'P33', 'xJustMotivo', 25, 250, 0, Evento[i].InfEvento.detEvento.xJustMotivo);
+          Gerador.wCampo(tcDe6, 'P34', 'latGPS    ', 01, 10, 0, Evento[i].InfEvento.detEvento.latGPS);
+          Gerador.wCampo(tcDe6, 'P35', 'longGPS   ', 01, 11, 0, Evento[i].InfEvento.detEvento.longGPS);
+
+          Gerador.wCampo(tcStr, 'P36', 'hashTentativaEntrega  ', 20, 20, 1, Evento[i].InfEvento.detEvento.hashTentativaEntrega);
+          Gerador.wCampo(tcStr, 'P37', 'dhHashTentativaEntrega', 25, 25, 0, DateTimeTodh(Evento[i].InfEvento.detEvento.dhHashTentativaEntrega) +
+                                     GetUTC(Evento[i].InfEvento.detEvento.UF,
+                                     Evento[i].InfEvento.detEvento.dhHashTentativaEntrega), DSC_DEMI);
+        end;
+
+      teCancInsucessoEntregaNFe:
+        begin
+          Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento[i].FInfEvento.detEvento.cOrgaoAutor);
+          Gerador.wCampo(tcStr, 'P21', 'verAplic',    01, 20, 1, Evento[i].InfEvento.detEvento.verAplic);
+
+          Gerador.wCampo(tcStr, 'P22', 'nProtEvento', 15, 15, 1, Evento[i].InfEvento.detEvento.nProtEvento);
+        end;
     end;
     Gerador.wGrupo('/detEvento');
     Gerador.wGrupo('/infEvento');
@@ -522,6 +549,15 @@ begin
           InfEvento.detEvento.autXML[0].CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
         end;
 
+        // Insucesso na Entrega
+        infEvento.detEvento.dhTentativaEntrega := RetEventoNFe.InfEvento.detEvento.dhTentativaEntrega;
+        infEvento.detEvento.nTentativa := RetEventoNFe.InfEvento.detEvento.nTentativa;
+        infEvento.detEvento.tpMotivo := RetEventoNFe.InfEvento.detEvento.tpMotivo;
+        infEvento.detEvento.xJustMotivo := RetEventoNFe.InfEvento.detEvento.xJustMotivo;
+        infEvento.detEvento.hashTentativaEntrega := RetEventoNFe.InfEvento.detEvento.hashTentativaEntrega;
+        infEvento.detEvento.dhHashTentativaEntrega := RetEventoNFe.InfEvento.detEvento.dhHashTentativaEntrega;
+        infEvento.detEvento.UF := RetEventoNFe.InfEvento.detEvento.UF;
+
         signature.URI             := RetEventoNFe.signature.URI;
         signature.DigestValue     := RetEventoNFe.signature.DigestValue;
         signature.SignatureValue  := RetEventoNFe.signature.SignatureValue;
@@ -664,6 +700,26 @@ begin
 
             Inc(J);
           end;
+        end;
+
+        if (infEvento.tpEvento = teInsucessoEntregaNFe) then
+        begin
+          infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 92);
+          infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.dhTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhTentativaEntrega', ''));
+          infEvento.detEvento.nTentativa := INIRec.ReadInteger(sSecao, 'nTentativa', 1);
+          infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, INIRec.ReadString(sSecao, 'tpMotivo', '1'));
+          infEvento.detEvento.xJustMotivo := INIRec.ReadString(sSecao, 'xJustMotivo', '');
+          infEvento.detEvento.hashTentativaEntrega := INIRec.ReadString(sSecao, 'hashTentativaEntrega', '');
+          infEvento.detEvento.dhHashTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashTentativaEntrega', ''));
+          infEvento.detEvento.UF := INIRec.ReadString(sSecao, 'UF', '');
+        end;
+
+        if (infEvento.tpEvento = teCancInsucessoEntregaNFe) then
+        begin
+          infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 92);
+          infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
         end;
       end;
 

@@ -197,8 +197,10 @@ begin
         InfEvento.cOrgao       := Leitor.rCampo(tcInt, 'cOrgao');
         infEvento.tpAmb        := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CNPJ');
+
         if InfEvento.CNPJ = EmptyStr then
-           infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CPF');
+           infEvento.CNPJ := Leitor.rCampo(tcStr, 'CPF');
+
         infEvento.chNFe        := Leitor.rCampo(tcStr, 'chNFe');
         infEvento.dhEvento     := Leitor.rCampo(tcDatHor, 'dhEvento');
         infEvento.tpEvento     := StrToTpEventoNFe(ok,Leitor.rCampo(tcStr, 'tpEvento'));
@@ -233,6 +235,13 @@ begin
           infEvento.detEvento.nProtEvento := Leitor.rCampo(tcStr, 'nProtEvento');
 
           infEvento.detEvento.tpAutorizacao := StrToAutorizacao(ok, Leitor.rCampo(tcStr, 'tpAutorizacao'));
+
+          infEvento.detEvento.dhTentativaEntrega := Leitor.rCampo(tcDatHor, 'dhTentativaEntrega');
+          infEvento.detEvento.nTentativa := Leitor.rCampo(tcInt, 'nTentativa');
+          infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, Leitor.rCampo(tcStr, 'tpMotivo'));
+          infEvento.detEvento.xJustMotivo := Leitor.rCampo(tcStr, 'xJustMotivo');
+          infEvento.detEvento.hashTentativaEntrega := Leitor.rCampo(tcStr, 'hashTentativaEntrega');
+          infEvento.detEvento.dhHashTentativaEntrega := Leitor.rCampo(tcDatHor, 'dhHashTentativaEntrega');
 
 //           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
 //           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');

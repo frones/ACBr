@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+30/04/2024
+-- Diversos --
+[+] Implementação dos eventos: Insucesso na Entrega da NF-e e Cancelamento do
+    Insucesso na Entrega da NF-e.
+  Por: Italo Giurizzato Junior
+
 29/04/2024
 -- ACBrNFeXmlWriter/pcnNFe/pcnNFeW.pas --
 [*] Ajustes para usar a configuração do tipo de ambiente e de emissão ao

@@ -79,7 +79,8 @@ type
                 schCanPedProrrog2, schManifDestConfirmacao,
                 schManifDestCiencia, schManifDestDesconhecimento,
                 schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
-                schAtorInteressadoNFe);
+                schAtorInteressadoNFe, schInsucessoEntregaNFe,
+                schCancInsucessoEntregaNFe);
 
 const
   TSchemaNFeArrayStrings: array[TSchemaNFe] of string = ('Erro', 'Nfe',
@@ -89,12 +90,13 @@ const
     'distDFeInt', 'eventoEPEC', 'CancSubst', 'PedProrrog1', 'PedProrrog2',
     'CanPedProrrog1', 'CanPedProrrog2', 'ManifDestConfirmacao',
     'ManifDestCiencia', 'ManifDestDesconhecimento', 'ManifDestOperNaoRealizada',
-    'CompEntrega', 'CancCompEntrega', 'AtorInteressadoNFe');
+    'CompEntrega', 'CancCompEntrega', 'AtorInteressadoNFe',
+    'InsucessoEntrega', 'CancInsucessoEntrega');
 
   TEventoArrayStrings: array[TSchemaNFe] of string = ('', '', 'e110111', '',
     'e110110', '', '', 'e110140', '', '', '', '', '', '', '', '', '', '', '',
     'e110112', 'e111500', 'e111501', 'e111502', 'e111503', 'e210200', 'e210210',
-    'e210220', 'e210240', 'e110130', 'e110131', 'e110150');
+    'e210220', 'e210240', 'e110130', 'e110131', 'e110150', 'e110192', 'e110193');
 
 type
   TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento,
@@ -215,6 +217,12 @@ type
 const
   TmotRedAdRemArrayStrings: array[TmotRedAdRem] of string = ('1', '9');
 
+type
+  TtpMotivo = (tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro);
+
+const
+  TtpMotivoArrayStrings: array[TtpMotivo] of string = ('1', '2', '3', '4');
+
 {
   Declaração das funções de conversão
 }
@@ -290,6 +298,9 @@ function StrToindImport(out ok: boolean; const s: string): TindImport;
 function motRedAdRemToStr(const t: TmotRedAdRem): string;
 function StrTomotRedAdRem(out ok: boolean; const s: string): TmotRedAdRem;
 
+function tpMotivoToStr(const t: TtpMotivo): string;
+function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
+
 implementation
 
 uses
@@ -302,7 +313,8 @@ begin
              '111501', '111502', '111503', '210200', '210210', '210220',
              '210240', '610600', '610614', '790700', '990900', '990910',
              '110180', '610554', '610510', '610615', '610610', '110130',
-             '110131', '110150', '610130', '610131', '610601'],
+             '110131', '110150', '610130', '610131', '610601',
+             '110192', '110193'],
             [teNaoMapeado, teCCe, teCancelamento, teCancSubst, teEPECNFe,
              tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2,
              teManifDestConfirmacao, teManifDestCiencia,
@@ -312,7 +324,8 @@ begin
              teRegPasAutMDFeComCte, teRegPasNfeProMDFe,
              teCancelamentoMDFeAutComCTe, teMDFeAutorizado,
              teComprEntregaNFe, teCancComprEntregaNFe, teAtorInteressadoNFe,
-             teComprEntregaCTe, teCancComprEntregaCTe, teCTeCancelado]);
+             teComprEntregaCTe, teCancComprEntregaCTe, teCTeCancelado,
+             teInsucessoEntregaNFe, teCancInsucessoEntregaNFe]);
 end;
 
 function LayOutToServico(const t: TLayOut): String;
@@ -751,12 +764,13 @@ begin
   result := EnumeradoToStr(t, ['e110110', 'e110111', 'e110112', 'e110140',
                                'e111500', 'e111501', 'e111502', 'e111503',
                                'e210200', 'e210210', 'e210220', 'e210240',
-                               'e110130', 'e110131', 'e110150'],
+                               'e110130', 'e110131', 'e110150', 'e110192',
+                               'e110193'],
     [schEnvCCe, schcancNFe, schCancSubst, schEnvEPEC,
      schPedProrrog1, schPedProrrog2, schCanPedProrrog1, schCanPedProrrog2,
      schManifDestConfirmacao, schManifDestCiencia, schManifDestDesconhecimento,
      schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
-     schAtorInteressadoNFe]);
+     schAtorInteressadoNFe, schInsucessoEntregaNFe, schCancInsucessoEntregaNFe]);
 end;
 
 function AutorizacaoToStr(const t: TAutorizacao): string;
@@ -817,6 +831,18 @@ function StrTomotRedAdRem(out ok: boolean; const s: string): TmotRedAdRem;
 begin
   Result := StrToEnumerado(ok, s, ['1', '9'],
        [motTranspColetivo, motOutros]);
+end;
+
+function tpMotivoToStr(const t: TtpMotivo): string;
+begin
+  result := EnumeradoToStr(t, ['1', '2', '3', '4'],
+    [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
+end;
+
+function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
+    [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
 end;
 
 initialization

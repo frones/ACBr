@@ -3077,13 +3077,27 @@ begin
   begin
     FPLayout := LayNFCeEPEC;
   end
-  else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe,
-         teCancelamento, teCancSubst, tePedProrrog1, tePedProrrog2,
-         teCanPedProrrog1, teCanPedProrrog2{, teComprEntregaNFe,
-         teCancComprEntregaNFe}]) then
+  else
   begin
-    FPLayout := LayNFeEventoAN;
-    UF       := 'AN';
+    if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe,
+            teCancelamento, teCancSubst, tePedProrrog1, tePedProrrog2,
+            teCanPedProrrog1, teCanPedProrrog2{, teComprEntregaNFe,
+            teCancComprEntregaNFe}]) then
+    begin
+      FPLayout := LayNFeEventoAN;
+      UF       := 'AN';
+    end;
+
+    {
+      Conforme NT 2023/005 versão 1.02 os dois eventos abaixo são
+      recepcionados pela SVRS - SEFAZ Virtual do RS.
+    }
+    if FEvento.Evento.Items[0].InfEvento.tpEvento in [teInsucessoEntregaNFe,
+            teCancInsucessoEntregaNFe] then
+    begin
+      FPLayout := LayNFeEvento;
+      UF       := 'SVRS';
+    end;
   end;
 
   FPURL := '';
@@ -3301,6 +3315,30 @@ begin
 
             infEvento.detEvento.tpAutorizacao := FEvento.Evento[i].InfEvento.detEvento.tpAutorizacao;
             infEvento.detEvento.xCondUso := FEvento.Evento[i].InfEvento.detEvento.xCondUso;
+          end;
+
+          teInsucessoEntregaNFe:
+          begin
+            SchemaEventoNFe := schInsucessoEntregaNFe;
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[i].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[i].InfEvento.detEvento.verAplic;
+            infEvento.detEvento.dhTentativaEntrega := FEvento.Evento[i].InfEvento.detEvento.dhTentativaEntrega;
+            infEvento.detEvento.nTentativa := FEvento.Evento[i].InfEvento.detEvento.nTentativa;
+            infEvento.detEvento.tpMotivo := FEvento.Evento[i].InfEvento.detEvento.tpMotivo;
+            infEvento.detEvento.xJustMotivo := FEvento.Evento[i].InfEvento.detEvento.xJustMotivo;
+            infEvento.detEvento.latGPS := FEvento.Evento[i].InfEvento.detEvento.latGPS;
+            infEvento.detEvento.longGPS := FEvento.Evento[i].InfEvento.detEvento.longGPS;
+            infEvento.detEvento.hashTentativaEntrega := FEvento.Evento[i].InfEvento.detEvento.hashTentativaEntrega;
+            infEvento.detEvento.dhHashTentativaEntrega := FEvento.Evento[i].InfEvento.detEvento.dhHashTentativaEntrega;
+            infEvento.detEvento.UF := FEvento.Evento[i].InfEvento.detEvento.UF;
+          end;
+
+          teCancInsucessoEntregaNFe:
+          begin
+            SchemaEventoNFe := schCancInsucessoEntregaNFe;
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[i].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[i].InfEvento.detEvento.verAplic;
+            infEvento.detEvento.nProtEvento := FEvento.Evento[i].InfEvento.detEvento.nProtEvento;
           end;
         end;
       end;

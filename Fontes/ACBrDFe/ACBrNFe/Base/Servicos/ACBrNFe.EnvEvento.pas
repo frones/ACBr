@@ -132,6 +132,8 @@ type
     function Gerar_Evento_CancComprEntrega(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_AtorInteressado(Idx: Integer): TACBrXmlNode;
     function Gerar_AutXml(Idx: Integer): TACBrXmlNodeArray;
+    function Gerar_Evento_InsucessoEntrega(Idx: Integer): TACBrXmlNode;
+    function Gerar_Evento_CancInsucessoEntrega(Idx: Integer): TACBrXmlNode;
 
   public
     constructor Create;
@@ -689,6 +691,68 @@ begin
   end;
 end;
 
+function TEventoNFe.Gerar_Evento_InsucessoEntrega(Idx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('detEvento');
+  Result.SetAttribute('versao', Versao);
+
+  Result.AppendChild(AddNode(tcStr, 'HP19', 'descEvento', 4, 60, 1,
+                                            Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcInt, 'P20', 'cOrgaoAutor', 1, 2, 1,
+                                 Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
+
+  Result.AppendChild(AddNode(tcStr, 'P21', 'verAplic', 1, 20, 1,
+                                    Evento[Idx].FInfEvento.detEvento.verAplic));
+
+  Result.AppendChild(AddNode(tcStr, 'P30', 'dhTentativaEntrega', 1, 50, 1,
+    DateTimeTodh(Evento[Idx].InfEvento.detEvento.dhTentativaEntrega) +
+    GetUTC(Evento[Idx].InfEvento.detEvento.UF,
+      Evento[Idx].InfEvento.detEvento.dhTentativaEntrega)));
+
+  Result.AppendChild(AddNode(tcInt, 'P31', 'nTentativa', 3, 3, 0,
+                                  Evento[Idx].FInfEvento.detEvento.nTentativa));
+
+  Result.AppendChild(AddNode(tcStr, 'P32', 'tpMotivo', 1, 1, 1,
+                      tpMotivoToStr(Evento[Idx].InfEvento.detEvento.tpMotivo)));
+
+  Result.AppendChild(AddNode(tcStr, 'P33', 'xJustMotivo', 25, 250, 0,
+                                 Evento[Idx].FInfEvento.detEvento.xJustMotivo));
+
+  Result.AppendChild(AddNode(tcDe6, 'P34', 'latGPS', 1, 10, 0,
+                                      Evento[Idx].FInfEvento.detEvento.latGPS));
+
+  Result.AppendChild(AddNode(tcDe6, 'P35', 'longGPS', 1, 11, 0,
+                                     Evento[Idx].FInfEvento.detEvento.longGPS));
+
+  Result.AppendChild(AddNode(tcStr, 'P36', 'hashTentativaEntrega', 20, 20, 1,
+                        Evento[Idx].FInfEvento.detEvento.hashTentativaEntrega));
+
+  Result.AppendChild(AddNode(tcStr, 'P37', 'dhHashTentativaEntrega', 25, 25, 0,
+    DateTimeTodh(Evento[Idx].InfEvento.detEvento.dhHashTentativaEntrega) +
+    GetUTC(Evento[Idx].InfEvento.detEvento.UF,
+      Evento[Idx].InfEvento.detEvento.dhHashTentativaEntrega)));
+end;
+
+function TEventoNFe.Gerar_Evento_CancInsucessoEntrega(
+  Idx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('detEvento');
+  Result.SetAttribute('versao', Versao);
+
+  Result.AppendChild(AddNode(tcStr, 'HP19', 'descEvento', 4, 60, 1,
+                                            Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcInt, 'P20', 'cOrgaoAutor', 1, 2, 1,
+                                 Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
+
+  Result.AppendChild(AddNode(tcStr, 'P21', 'verAplic', 1, 20, 1,
+                                    Evento[Idx].FInfEvento.detEvento.verAplic));
+
+  Result.AppendChild(AddNode(tcStr, 'HP23', 'nProtEvento', 15, 15, 1,
+                                 Evento[Idx].FInfEvento.detEvento.nProtEvento));
+end;
+
 function TEventoNFe.Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
 var
   sDoc: string;
@@ -785,6 +849,10 @@ begin
     teCancComprEntregaNFe: Result.AppendChild(Gerar_Evento_CancComprEntrega(Idx));
 
     teAtorInteressadoNFe: Result.AppendChild(Gerar_Evento_AtorInteressado(Idx));
+
+    teInsucessoEntregaNFe: Result.AppendChild(Gerar_Evento_InsucessoEntrega(Idx));
+
+    teCancInsucessoEntregaNFe: Result.AppendChild(Gerar_Evento_CancInsucessoEntrega(Idx));
   end;
 end;
 
@@ -910,6 +978,15 @@ begin
       begin
         InfEvento.detEvento.autXML[0].CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
       end;
+
+      // Insucesso na Entrega
+      infEvento.detEvento.dhTentativaEntrega := RetEventoNFe.InfEvento.detEvento.dhTentativaEntrega;
+      infEvento.detEvento.nTentativa := RetEventoNFe.InfEvento.detEvento.nTentativa;
+      infEvento.detEvento.tpMotivo := RetEventoNFe.InfEvento.detEvento.tpMotivo;
+      infEvento.detEvento.xJustMotivo := RetEventoNFe.InfEvento.detEvento.xJustMotivo;
+      infEvento.detEvento.hashTentativaEntrega := RetEventoNFe.InfEvento.detEvento.hashTentativaEntrega;
+      infEvento.detEvento.dhHashTentativaEntrega := RetEventoNFe.InfEvento.detEvento.dhHashTentativaEntrega;
+      infEvento.detEvento.UF := RetEventoNFe.InfEvento.detEvento.UF;
 
       signature.URI             := RetEventoNFe.signature.URI;
       signature.DigestValue     := RetEventoNFe.signature.DigestValue;
@@ -1075,6 +1152,26 @@ begin
 
                 Inc(J);
               end;
+            end;
+
+          teInsucessoEntregaNFe:
+            begin
+              infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 92);
+              infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+              infEvento.detEvento.dhTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhTentativaEntrega', ''));
+              infEvento.detEvento.nTentativa := INIRec.ReadInteger(sSecao, 'nTentativa', 1);
+              infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, INIRec.ReadString(sSecao, 'tpMotivo', '1'));
+              infEvento.detEvento.xJustMotivo := INIRec.ReadString(sSecao, 'xJustMotivo', '');
+              infEvento.detEvento.hashTentativaEntrega := INIRec.ReadString(sSecao, 'hashTentativaEntrega', '');
+              infEvento.detEvento.dhHashTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashTentativaEntrega', ''));
+              infEvento.detEvento.UF := INIRec.ReadString(sSecao, 'UF', '');
+            end;
+
+          teCancInsucessoEntregaNFe:
+            begin
+              infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 92);
+              infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+              infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
             end;
         end;
       end;

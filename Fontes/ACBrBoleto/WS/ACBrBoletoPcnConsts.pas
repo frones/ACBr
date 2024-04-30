@@ -54,6 +54,7 @@ const
   DSC_VARIACAO_CARTEIRA = 'Número da variação de Carteira';
   DSC_MODALIDADE = 'Modalidade do Título';
   DSC_CODIGO_MODALIDADE = 'Codigo Modalidade Titulo';
+  DSC_TIPO_HIBRIDO = 'Tipo Híbrido';
   DSC_NOSSO_NUMERO = 'Nosso Número';
   DSC_NUMERO_DOCUMENTO = 'Número do Documento';
   DSC_DATA_VENCIMENTO = 'Vencimento Título';

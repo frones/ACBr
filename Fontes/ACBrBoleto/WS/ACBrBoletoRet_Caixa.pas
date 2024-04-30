@@ -141,6 +141,7 @@ begin
               if leitor.rExtrai(3, 'MENSAGENS') <> '' then
               begin
                 Retorno := Leitor.rCampo(tcStr, 'RETORNO');
+                TituloRet.EstadoTituloCobranca := Retorno;
               end;
             end;
           end;
@@ -159,6 +160,9 @@ begin
             DadosRet.IDBoleto.LinhaDig  := Leitor.rCampo(tcStr, 'LINHA_DIGITAVEL');
             DadosRet.IDBoleto.NossoNum  := Leitor.rCampo(tcStr, 'NOSSO_NUMERO');
             DadosRet.IDBoleto.URL       := Leitor.rCampo(tcStr, 'URL');
+
+            if ACBrBoleto.Cedente.CedenteWS.IndicadorPix then
+              DadosRet.TituloRet.EMV := Leitor.rCampo(tcStr, 'QRCODE');
           end;
 
           if leitor.rExtrai(2, 'CONSULTA_BOLETO') <> '' then
@@ -180,6 +184,9 @@ begin
               TituloRet.CodBarras               := Leitor.rCampo(tcStr, 'CODIGO_BARRAS');
               TituloRet.LinhaDig                := Leitor.rCampo(tcStr, 'LINHA_DIGITAVEL');
               TituloRet.URL                     := Leitor.rCampo(tcStr, 'URL');
+
+              if ACBrBoleto.Cedente.CedenteWS.IndicadorPix then
+                DadosRet.TituloRet.EMV := Leitor.rCampo(tcStr, 'QRCODE');
 
               if leitor.rExtrai(4, 'JUROS_MORA') <> '' then
               begin

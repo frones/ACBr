@@ -1113,22 +1113,37 @@ begin
     }
     if ((Pos('iso-8859-1', LowerCase(FPRetorno)) > 0) or
         (Pos('encoding', LowerCase(FPRetorno)) = 0) or
-        (Pos('encoding', LowerCase(FPRetorno)) > 40)
-       ) and StringIsXML(FPRetorno) then
+        (Pos('encoding', LowerCase(FPRetorno)) > 40)) then
     begin
-      {
-        Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
-        esta no formato UTF-8, converte o XML para UTF-8
-      }
-      if Pos(UTF_8, FPRetorno) = 0 then
+      if StringIsXML(FPRetorno) then
       begin
-        FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-        FPRetorno := AnsiToNativeString(FPRetorno);
-        FPRetorno := NativeStringToUTF8(FPRetorno);
-      end;
+        {
+          Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
+          esta no formato UTF-8, converte o XML para UTF-8
+        }
+        if Pos(UTF_8, FPRetorno) = 0 then
+        begin
+          FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+          FPRetorno := AnsiToNativeString(FPRetorno);
+          FPRetorno := NativeStringToUTF8(FPRetorno);
+        end;
 
-      FPRetorno := StringReplace(FPRetorno, '<?xml version="1.0" ?>', '', [rfReplaceAll]);
-      FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
+        FPRetorno := StringReplace(FPRetorno, '<?xml version="1.0" ?>', '', [rfReplaceAll]);
+        FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
+      end
+      else
+      begin
+        {
+          Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
+          esta no formato UTF-8, converte o XML para UTF-8
+        }
+        if Pos(UTF_8, FPRetorno) = 0 then
+        begin
+          FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+          FPRetorno := AnsiToNativeString(FPRetorno);
+          FPRetorno := NativeStringToUTF8(FPRetorno);
+        end;
+      end;
     end;
 
     if StringIsXML(FPRetorno) then

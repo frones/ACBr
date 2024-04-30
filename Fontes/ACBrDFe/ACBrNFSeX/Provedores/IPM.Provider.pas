@@ -1398,6 +1398,17 @@ begin
 
     Result := AjustarRetorno(Result);
 
+    if Pos('<retorno><msg>', Result) = 0 then
+    begin
+      Result := '<retorno>' +
+                  '<mensagem>' +
+                    '<codigo>' + '</codigo>' +
+                    '<Mensagem>' + Result + '</Mensagem>' +
+                    '<Correcao>' + '</Correcao>' +
+                  '</mensagem>' +
+                '</retorno>';
+    end;
+
     Result := ParseText(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
@@ -1501,6 +1512,17 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := AjustarRetorno(Result);
+
+    if Pos('<retorno><msg>', Result) = 0 then
+    begin
+      Result := '<retorno>' +
+                  '<mensagem>' +
+                    '<codigo>' + '</codigo>' +
+                    '<Mensagem>' + Result + '</Mensagem>' +
+                    '<Correcao>' + '</Correcao>' +
+                  '</mensagem>' +
+                '</retorno>';
+    end;
 
     Result := ParseText(Result);
     Result := RemoverDeclaracaoXML(Result);

@@ -81,7 +81,7 @@ type
     procedure GerarPagamento;
 
 
-  public
+  public                                                                                                   
     constructor Create(ABoletoWS: TBoletoWS); override;
 
     function GerarRemessa: String; override;
@@ -144,7 +144,6 @@ procedure TBoletoW_Caixa.DefinirURL;
 begin
   FPURL := '';
   DefinirServicoEAction;
-  FPVersaoServico := Boleto.Configuracoes.WebService.VersaoDF;
 end;
 
 procedure TBoletoW_Caixa.DefinirServicoEAction;
@@ -173,6 +172,13 @@ procedure TBoletoW_Caixa.DefinirRootElement;
 var
   Prefixo, NameSpaceServico, NameSpaceBase: String;
 begin
+  if Boleto.Cedente.CedenteWS.IndicadorPix then
+    FPVersaoServico := '3.2'
+  else
+    FPVersaoServico := '3.0';
+
+  Boleto.Configuracoes.WebService.VersaoDF := FPVersaoServico;
+
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui,
     tpAltera,
@@ -668,7 +674,7 @@ end;
 function TBoletoW_Caixa.GerarRemessa: String;
 begin
   Result:=inherited GerarRemessa;
-
+  
 end;
 
 function TBoletoW_Caixa.Enviar: Boolean;

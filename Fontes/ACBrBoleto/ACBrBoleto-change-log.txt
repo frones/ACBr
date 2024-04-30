@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2024
+-- ACBrBoletoW_Caixa --
+[*] Controle da VersaoDF automaticamente de acordo com o IndicadorPIX para emissão de Boleto Híbrido da Caixa Econômica Federal
+  Por: Renato Rubinho
+
 29/04/2024
 -- ACBrBoletoPcnConsts, ACBrBoletoRet_Caixa, ACBrBoletoW_Caixa --
 [*]TK-5377 Implementado boleto Híbrido da Caixa Econômica Federal

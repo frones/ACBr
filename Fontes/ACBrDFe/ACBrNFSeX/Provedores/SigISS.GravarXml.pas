@@ -58,6 +58,15 @@ type
 
   end;
 
+  { TNFSeW_SigISS101 }
+
+  TNFSeW_SigISS101 = class(TNFSeW_SigISS)
+  protected
+
+  public
+
+  end;
+
   { TNFSeW_SigISS103 }
 
   TNFSeW_SigISS103 = class(TNFSeW_SigISS)

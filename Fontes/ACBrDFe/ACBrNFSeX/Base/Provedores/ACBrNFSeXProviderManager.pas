@@ -539,6 +539,7 @@ begin
         begin
           case Versao of
             ve100: Result := TACBrNFSeProviderSigISS.Create(ACBrNFSe);
+            ve101: Result := TACBrNFSeProviderSigISS101.Create(ACBrNFSe);
             ve103: Result := TACBrNFSeProviderSigISS103.Create(ACBrNFSe);
           else
             Result := nil;

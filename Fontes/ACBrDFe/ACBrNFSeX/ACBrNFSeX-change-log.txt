@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/04/2024
+-- ACBrNFSeXProviderManager/SigISS.GravarXml/SigISS.LerXml/SigISS.Provider --
+[*] Implementado a versão 1.01 para atender a cidade de Rio Grande/RS
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --
 [*] Alteração visando detectar retorno no formato ANSI e fazer a conversão para
     UTF-8

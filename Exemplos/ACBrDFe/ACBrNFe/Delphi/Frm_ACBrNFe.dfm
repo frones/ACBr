@@ -1851,6 +1851,24 @@ object frmACBrNFe: TfrmACBrNFe
           TabOrder = 6
           OnClick = btnEventoEPECClick
         end
+        object btnInsucessoEntrega: TButton
+          Left = 8
+          Top = 69
+          Width = 177
+          Height = 25
+          Caption = 'Insucesso na Entrega'
+          TabOrder = 7
+          OnClick = btnInsucessoEntregaClick
+        end
+        object btnCancInsucessoEntrega: TButton
+          Left = 191
+          Top = 69
+          Width = 177
+          Height = 25
+          Caption = 'Canc. Insucesso na Entrega'
+          TabOrder = 8
+          OnClick = btnCancInsucessoEntregaClick
+        end
       end
       object tsInutilizacao: TTabSheet
         Caption = 'Inutiliza'#231#227'o'

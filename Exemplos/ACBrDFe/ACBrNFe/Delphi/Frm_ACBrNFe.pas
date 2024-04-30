@@ -281,6 +281,8 @@ type
     btnManifDestOperNaoRealizada: TButton;
     btnEventoEPEC: TButton;
     btnAdministrarCSC: TButton;
+    btnInsucessoEntrega: TButton;
+    btnCancInsucessoEntrega: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -347,6 +349,8 @@ type
     procedure sbPathPDFClick(Sender: TObject);
     procedure btnEventoEPECClick(Sender: TObject);
     procedure btnAdministrarCSCClick(Sender: TObject);
+    procedure btnInsucessoEntregaClick(Sender: TObject);
+    procedure btnCancInsucessoEntregaClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1346,6 +1350,7 @@ begin
 
       if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
       begin
+      {
         CST     := cst00;
         modBC   := dbiPrecoTabelado;
         vBC     := 100;
@@ -1358,6 +1363,16 @@ begin
         pICMSST := 0;
         vICMSST := 0;
         pRedBC  := 0;
+      }
+        CST := cst20;
+        modBC := dbiMargemValorAgregado;
+        pRedBC := 0;
+        vBC := 100;
+        pICMS := 18;
+        vICMS := 18;
+        vICMSDeson := 8;
+        motDesICMS := mdiOutros;
+        indDeduzDeson := tieSim;
       end
       else
       begin
@@ -1977,6 +1992,136 @@ begin
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
     LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
     ShowMessage(IntToStr(ACBrNFe1.WebServices.EnvEvento.cStat));
+    ShowMessage(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
+end;
+
+procedure TfrmACBrNFe.btnInsucessoEntregaClick(Sender: TObject);
+var
+  vData, vHora, vNumTentativa, vJustificativa, vPathImg: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione a NFe';
+  OpenDialog1.DefaultExt := '*-nfe.XML';
+  OpenDialog1.Filter := 'Arquivos NFe (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.NotasFiscais.Clear;
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+
+    vData := DateToStr(Date);
+    if not(InputQuery('Insucesso de Entrega:', 'Data da Tentativa de Entrega (DD/MM/AAAA)', vData)) then
+      exit;
+
+    vHora := TimeToStr(Time);
+    if not(InputQuery('Insucesso de Entrega:', 'Hora da Tentativa de Entrega (HH:MM:SS)', vHora)) then
+      exit;
+
+    vNumTentativa := '1';
+    if not(InputQuery('Insucesso de Entrega:', 'Numero da Tentativa', vNumTentativa)) then
+      exit;
+
+    vJustificativa := '';
+    if not(InputQuery('Insucesso de Entrega:', 'Justificativa/Motivo (15-255)', vJustificativa)) then
+      exit;
+
+    OpenDialog1.Title := 'Selecione a Imagem da Entrega';
+    OpenDialog1.DefaultExt := '*.jpg';
+    OpenDialog1.Filter := 'Arquivos de Imagem (*.jpg)|*.jpg|Todos os Arquivos (*.*)|*.*';
+    OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+
+    if OpenDialog1.Execute then
+      vPathImg := OpenDialog1.FileName
+    else
+      exit;
+
+    ACBrNFe1.EventoNFe.Evento.Clear;
+
+    with ACBrNFe1.EventoNFe.Evento.New do
+    begin
+      // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+      infEvento.nSeqEvento := 1;
+      infEvento.chNFe := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.Id, 4, 44);
+      infEvento.CNPJ := edtEmitCNPJ.Text;
+      infEvento.dhEvento := now;
+      infEvento.cOrgao := 92; // Código do Órgão de recepção deste evento
+      infEvento.tpEvento := teInsucessoEntregaNFe;
+
+      infEvento.detEvento.cOrgaoAutor := ACBrNFe1.Configuracoes.WebServices.UFCodigo;
+      infEvento.detEvento.verAplic := '1.00';
+      infEvento.detEvento.dhTentativaEntrega := StrToDateTime(vData + ' ' + vHora);
+      infEvento.detEvento.nTentativa := StrToIntDef(vNumTentativa, 1);
+
+      // (tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro);
+      InfEvento.detEvento.tpMotivo := tmNaoEncontrado;
+      infEvento.detEvento.xJustMotivo := vJustificativa;
+      infEvento.detEvento.hashTentativaEntrega := CalcularHashArquivo(vPathImg, infEvento.chNFe);
+      infEvento.detEvento.dhHashTentativaEntrega := Now;
+      infEvento.detEvento.UF := CodigoParaUF(ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.cUF);
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrNFe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := ACBrNFe1.WebServices.EnvEvento.RetWS;
+    memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
+
+    LoadXML(ACBrNFe1.WebServices.EnvEvento.RetWS, WBResposta);
+
+    ShowMessage(IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
+end;
+
+procedure TfrmACBrNFe.btnCancInsucessoEntregaClick(Sender: TObject);
+var
+  vProt: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione a NFe para Cancelar o Insucesso de Entrega';
+  OpenDialog1.DefaultExt := '*-nfe.xml';
+  OpenDialog1.Filter := 'Arquivos NFe (*-nfe.xml)|*-nfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.NotasFiscais.Clear;
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+
+    vProt := '';
+    if not(InputQuery('Insucesso de Entrega:', 'Numero do Protocolo', vProt)) then
+      exit;
+
+    ACBrNFe1.EventoNFe.Evento.Clear;
+
+    with ACBrNFe1.EventoNFe.Evento.New do
+    begin
+      // Para o Evento de Cancelamento de Insucesso de Entrega:
+      // nSeqEvento sempre = 1
+      infEvento.nSeqEvento := 1;
+      infEvento.chNFe := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.Id, 4, 44);
+      infEvento.CNPJ := edtEmitCNPJ.Text;
+      infEvento.dhEvento := now;
+      infEvento.cOrgao := 92; // Código do Órgão de recepção deste evento
+      infEvento.tpEvento := teCancInsucessoEntregaNFe;
+
+      infEvento.detEvento.cOrgaoAutor := ACBrNFe1.Configuracoes.WebServices.UFCodigo;
+      infEvento.detEvento.verAplic := '1.00';
+      infEvento.detEvento.nProtEvento := vProt;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrNFe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := ACBrNFe1.WebServices.EnvEvento.RetWS;
+    memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
+
+    LoadXML(ACBrNFe1.WebServices.EnvEvento.RetWS, WBResposta);
+
+    ShowMessage(IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
     ShowMessage(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
   end;
 end;
@@ -3997,8 +4142,8 @@ begin
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 0;
-  PageControl1.ActivePageIndex := 3;
-  PageControl4.ActivePageIndex := 0;
+  PageControl1.ActivePageIndex := 0;
+  PageControl4.ActivePageIndex := 3;
 end;
 
 procedure TfrmACBrNFe.GravarConfiguracao;

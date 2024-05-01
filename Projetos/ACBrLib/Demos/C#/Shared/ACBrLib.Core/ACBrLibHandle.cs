@@ -29,9 +29,13 @@ namespace ACBrLib.Core
         {
             MinusOne = new IntPtr(-1);
 
-            var uri = new Uri(Assembly.GetEntryAssembly().CodeBase);
-            var path = Path.GetDirectoryName(!uri.IsFile ? uri.ToString() : uri.LocalPath + Uri.UnescapeDataString(uri.Fragment));
-            LibraryPath = Path.Combine(path, "ACBrLib", Environment.Is64BitProcess ? "x64" : "x86");
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            if (!string.IsNullOrEmpty(baseDir))
+            {
+                var uri = new Uri(baseDir);
+                var path = Path.GetDirectoryName(!uri.IsFile ? uri.ToString() : uri.LocalPath + Uri.UnescapeDataString(uri.Fragment));
+                LibraryPath = Path.Combine(path, "ACBrLib", Environment.Is64BitProcess ? "x64" : "x86");
+            }
         }
 
         protected ACBrLibHandle(string dllName64, string dllName32) :

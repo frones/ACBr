@@ -259,7 +259,7 @@ type
     FtxId                      : String;
     FCodigoOcorrenciaCartorio  : String;
     FCodigoCanalTituloCobranca : String;
-    FNossoNumeroCorrespondente: string;
+    FNossoNumeroCorrespondente : string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -665,6 +665,8 @@ begin
   CodigoCanalTituloCobranca  := DeACBrBoletoTituloRet.CodigoCanalTituloCobranca;
   Sacado.Assign(DeACBrBoletoTituloRet.Sacado);
   SacadoAvalista.Assign(DeACBrBoletoTituloRet.SacadoAvalista);
+  NossoNumeroCorrespondente  := DeACBrBoletoTituloRet.NossoNumeroCorrespondente;
+
 
 end;
 

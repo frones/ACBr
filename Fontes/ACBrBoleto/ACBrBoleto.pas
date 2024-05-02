@@ -4075,6 +4075,7 @@ begin
             EspecieDoc          := IniBoletos.ReadString(Sessao,'Especie',EspecieDoc);
             Carteira            := trim(IniBoletos.ReadString(Sessao,'Carteira',''));
             NossoNumero         := IniBoletos.ReadString(Sessao,'NossoNumero','');
+            NossoNumeroCorrespondente  := IniBoletos.ReadString(Sessao,'NossoNumeroCorrespondente','');            
             ValorDocumento      := IniBoletos.ReadFloat(Sessao,'ValorDocumento',ValorDocumento);
             Sacado.NomeSacado   := IniBoletos.ReadString(Sessao,'Sacado.NomeSacado','');
             Sacado.CNPJCPF      := OnlyNumber(IniBoletos.ReadString(Sessao,'Sacado.CNPJCPF',''));
@@ -4329,6 +4330,7 @@ begin
            IniRetorno.WriteString(wSessao,'NumeroDocumento',ListadeBoletos[I].NumeroDocumento);
            IniRetorno.WriteString(wSessao,'DataProcessamento',DateToStr(ListadeBoletos[I].DataProcessamento));
            IniRetorno.WriteString(wSessao,'NossoNumero',ListadeBoletos[I].NossoNumero);
+           IniRetorno.WriteString(wSessao,'NossoNumeroCorrespondente',ListadeBoletos[I].NossoNumeroCorrespondente);
            IniRetorno.WriteString(wSessao,'Carteira',ListadeBoletos[I].Carteira);
            IniRetorno.WriteFloat(wSessao,'ValorDocumento',ListadeBoletos[I].ValorDocumento);
            IniRetorno.WriteString(wSessao,'DataOcorrencia',DateToStr(ListadeBoletos[I].DataOcorrencia));

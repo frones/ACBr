@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2024
+-- ACBrBoleto, ACBrBoletoRetorno, ACBrBoletoW_Inter_API, ACBrBoletoRet_Inter_API --
+[*]TK-5016 e 5016-1 Integração API INTER V3 Pix Refatoração ACBrJSON
+  https://www.projetoacbr.com.br/forum/topic/76005-boleto-com-pix-via-api-inter/
+  Por: ActioSistemas / Daniel Morais InfoCotidiano 
 
 02/05/2024
 -- ACBrBoletoRet_Safra, ACBrBoletoW_Safra--

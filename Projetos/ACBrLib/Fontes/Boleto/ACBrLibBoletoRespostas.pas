@@ -140,6 +140,7 @@ type
     FNumeroDocumento: String;
     FDataProcessamento: TDateTime;
     FNossoNumero: String;
+    FNossoNumeroCorrespondente:String;
     FCarteira: String;
     FValorDocumento: Currency;
     FDataOcorrencia: TDateTime;
@@ -178,6 +179,7 @@ type
     property NumeroDocumento: String read FNumeroDocumento write FNumeroDocumento;
     property DataProcessamento: TDateTime read FDataProcessamento write FDataProcessamento;
     property NossoNumero: String read FNossoNumero write FNossoNumero;
+    property NossoNumeroCorrespondente: String read FNossoNumeroCorrespondente write FNossoNumeroCorrespondente;
     property Carteira: String read FCarteira write FCarteira;
     property DataOcorrencia: TDateTime read FDataOcorrencia write FDataOcorrencia;
     property DataCredito: TDateTime read FDataCredito write FDataCredito;
@@ -305,6 +307,7 @@ type
     FAceite: TACBrAceiteTitulo;
     FDataProcessamento: TDateTime;
     FNossoNumero: String;
+    FNossoNumeroCorrespondente: String;
     FUsoBanco: String;
     FCarteira: String;
     FEspecieMod: String;
@@ -381,6 +384,7 @@ type
     property Aceite: TACBrAceiteTitulo read FAceite write FAceite ;
     property DataProcessamento: TDateTime read FDataProcessamento write FDataProcessamento ;
     property NossoNumero: String read FNossoNumero write FNossoNumero ;
+    property NossoNumeroCorrespondente: String read FNossoNumeroCorrespondente write FNossoNumeroCorrespondente;
     property UsoBanco: String read FUsoBanco write FUsoBanco ;
     property Carteira: String read FCarteira write FCarteira ;
     property EspecieMod: String read FEspecieMod write FEspecieMod ;
@@ -725,6 +729,8 @@ begin
       url_Pix:= DadosRet.TituloRet.UrlPix;
       Tx_ID:= DadosRet.TituloRet.TxId;
     end;
+    NossoNumeroCorrespondente:=DadosRet.TituloRet.NossoNumeroCorrespondente;
+
 end;
 
 { TRetornoWebHeader }
@@ -902,6 +908,7 @@ begin
     NumeroDocumento := ACBrBoleto.ListadeBoletos[FID].NumeroDocumento;
     DataProcessamento := ACBrBoleto.ListadeBoletos[FID].DataProcessamento;
     NossoNumero := ACBrBoleto.ListadeBoletos[FID].NossoNumero;
+    NossoNumeroCorrespondente:=ACBrBoleto.ListadeBoletos[FID].NossoNumeroCorrespondente;
     Carteira := ACBrBoleto.ListadeBoletos[FID].Carteira;
     ValorDocumento := ACBrBoleto.ListadeBoletos[FID].ValorDocumento;
     DataOcorrencia := ACBrBoleto.ListadeBoletos[FID].DataOcorrencia;

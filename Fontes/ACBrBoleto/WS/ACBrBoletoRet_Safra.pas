@@ -41,8 +41,9 @@ uses
   SysUtils,
   ACBrBoleto,
   ACBrBoletoRetorno,
-  Jsons,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest,
+  ACBrJSON,
+  ACBrUtil.Base;
 
 type
 
@@ -99,14 +100,13 @@ end;
 
 function TRetornoEnvio_Safra.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
-    //Retorno: TRetEnvio;
-  AJson         : TJson;
-  AJSonObject   : TJsonObject;
+  LJson, LJSonObject, LJsonViolacao   : TACBrJSONObject;
   ARejeicao     : TACBrBoletoRejeicao;
-  aJsonViolacao : TJsonObject;
-  aJsonViolacoes: TJsonArray;
+  LJsonArrayViolacoes: TACBrJSONArray;
   TipoOperacao  : TOperacao;
   x             : Integer;
+  LSituacao     : string;
+
 begin
   Result                    := True;
   TipoOperacao              := ACBrBoleto.Configuracoes.WebService.Operacao;
@@ -116,36 +116,35 @@ begin
   if RetWS <> '' then
   begin
     try
-      AJson := TJson.Create;
+      //LJson := TJson.Create;
       try
-        AJson.Parse(RetWS);
-        ARetornoWS.JSON := AJson.Stringify;
+        LJson.Parse(RetWS);
+        ARetornoWS.JSON := LJson.ToJSON;
 
         case HTTPResultCode of
           400, 415:
             begin
-              aJsonViolacoes := AJson.Values[ 'violacoes' ].AsArray;
-              for x          := 0 to aJsonViolacoes.Count - 1 do
+              LJsonArrayViolacoes := LJson.AsJSONArray['violacoes' ];
+              for x          := 0 to LJsonArrayViolacoes.Count - 1 do
               begin
-                aJsonViolacao      := aJsonViolacoes[ x ].AsObject;
+                LJsonViolacao      := LJsonArrayViolacoes.ItemAsJSONObject[ x ];
                 ARejeicao          := ARetornoWS.CriarRejeicaoLista;
-                ARejeicao.Codigo   := aJsonViolacao.Values[ 'codigo' ].AsString;
-                ARejeicao.Versao   := aJsonViolacao.Values[ 'parametro' ].AsString;
-                ARejeicao.Mensagem := aJsonViolacao.Values[ 'razao' ].AsString + ' de ' + aJsonViolacao.Values[ 'propriedade' ].AsString + ' Valor :' +
-                  aJsonViolacao.Values[ 'valor' ].AsString;
+                ARejeicao.Codigo   := LJsonViolacao.AsString['codigo' ];
+                ARejeicao.Versao   := LJsonViolacao.AsString[ 'parametro' ];
+                ARejeicao.Mensagem := LJsonViolacao.AsString[ 'razao' ] + ' de ' + LJsonViolacao.AsString[ 'propriedade' ] + ' Valor :' +
+                  LJsonViolacao.AsString[ 'valor' ];
               end;
             end;
 
           404:
             begin
-
-              if (AJson.StructType = jsObject) then
-                if (AJson.Values[ 'codigo' ].AsString <> '') then
+              if LJson.IsJSONObject('codigo') then
+                if NaoEstaVazio(LJson.AsString[ 'codigo' ]) then
                 begin
                   ARejeicao          := ARetornoWS.CriarRejeicaoLista;
-                  ARejeicao.Codigo   := AJson.Values[ 'codigo' ].AsString;
-                  ARejeicao.Versao   := AJson.Values[ 'parametro' ].AsString;
-                  ARejeicao.Mensagem := AJson.Values[ 'mensagem' ].AsString;
+                  ARejeicao.Codigo   := LJson.AsString[ 'codigo' ];
+                  ARejeicao.Versao   := LJson.AsString[ 'parametro' ];
+                  ARejeicao.Mensagem := LJson.AsString[ 'mensagem' ];
                 end;
 
             end;
@@ -158,9 +157,9 @@ begin
           if (TipoOperacao = tpInclui) then
           begin
 
-            ARetornoWS.DadosRet.IDBoleto.CodBarras := AJson.Values[ 'codigoBarras' ].AsString;
-            ARetornoWS.DadosRet.IDBoleto.LinhaDig  := AJson.Values[ 'linhaDigitavel' ].AsString;
-            ARetornoWS.DadosRet.IDBoleto.NossoNum  := AJson.Values[ 'nossoNumero' ].AsString;
+            ARetornoWS.DadosRet.IDBoleto.CodBarras := LJson.AsString[ 'codigoBarras' ];
+            ARetornoWS.DadosRet.IDBoleto.LinhaDig  := LJson.AsString[ 'linhaDigitavel' ];
+            ARetornoWS.DadosRet.IDBoleto.NossoNum  := LJson.AsString[ 'nossoNumero' ];
 
             ARetornoWS.DadosRet.TituloRet.CodBarras   := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig    := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
@@ -170,45 +169,44 @@ begin
           else
             if (TipoOperacao = tpConsultaDetalhe) then
             begin
-              AJSonObject := TJsonObject.Create;
-              AJSonObject.Parse(AJson.Stringify);
-              ARetornoWS.DadosRet.IDBoleto.CodBarras := AJSonObject.Values[ 'codigoBarras' ].AsString;;;
-              ARetornoWS.DadosRet.IDBoleto.LinhaDig  := AJSonObject.Values[ 'linhaDigitavel' ].AsString;;
-              ARetornoWS.DadosRet.IDBoleto.NossoNum  := AJSonObject.Values[ 'nossoNumero' ].AsString;
+              LJSonObject.Parse(LJson.ToJSON);
+              ARetornoWS.DadosRet.IDBoleto.CodBarras := LJSonObject.AsString[ 'codigoBarras' ];
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig  := LJSonObject.AsString[ 'linhaDigitavel' ];
+              ARetornoWS.DadosRet.IDBoleto.NossoNum  := LJSonObject.AsString[ 'nossoNumero' ];
               ARetornoWS.indicadorContinuidade       := false;
 
               ARetornoWS.DadosRet.TituloRet.NossoNumero    := ARetornoWS.DadosRet.IDBoleto.NossoNum;
-              ARetornoWS.DadosRet.TituloRet.Vencimento     := DateInterToDateTime(AJSonObject.Values[ 'dataVencimento' ].AsString);
-              ARetornoWS.DadosRet.TituloRet.ValorDocumento := AJSonObject.Values[ 'valorNominal' ].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.ValorAtual     := AJSonObject.Values[ 'valorNominal' ].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.ValorPago      := AJSonObject.Values[ 'valorTotalRecebimento' ].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros := AJSonObject.Values[ 'mora' ].AsObject.Values[ 'valor' ].AsNumber;
-              ARetornoWS.DadosRet.TituloRet.PercentualMulta := AJSonObject.Values[ 'multa' ].AsObject.Values[ 'taxa' ].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.Vencimento     := DateInterToDateTime(LJSonObject.AsString[ 'dataVencimento' ]);
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento := LJSonObject.AsCurrency[ 'valorNominal' ];
+              ARetornoWS.DadosRet.TituloRet.ValorAtual     := LJSonObject.AsCurrency[ 'valorNominal' ];
+              ARetornoWS.DadosRet.TituloRet.ValorPago      := LJSonObject.AsCurrency[ 'valorTotalRecebimento' ];
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros := LJSonObject.AsJSONObject[ 'mora' ].AsCurrency[ 'valor' ];
+              ARetornoWS.DadosRet.TituloRet.PercentualMulta := LJSonObject.AsJSONObject[ 'multa' ].AsCurrency[ 'taxa' ];
               ARetornoWS.DadosRet.TituloRet.CodBarras := ARetornoWS.DadosRet.IDBoleto.CodBarras;
               ARetornoWS.DadosRet.TituloRet.LinhaDig  := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
 
-              ARetornoWS.DadosRet.TituloRet.SeuNumero    := AJSonObject.Values[ 'seuNumero' ].AsString;
-              ARetornoWS.DadosRet.TituloRet.DataRegistro := DateInterToDateTime(AJSonObject.Values[ 'dataEmissao' ].AsString);
-              ARetornoWS.DadosRet.TituloRet.Vencimento   := DateInterToDateTime(AJSonObject.Values[ 'dataVencimento' ].AsString);
+              ARetornoWS.DadosRet.TituloRet.SeuNumero    := LJSonObject.AsString[ 'seuNumero' ];
+              ARetornoWS.DadosRet.TituloRet.DataRegistro := DateInterToDateTime(LJSonObject.AsString[ 'dataEmissao' ]);
+              ARetornoWS.DadosRet.TituloRet.Vencimento   := DateInterToDateTime(LJSonObject.AsString[ 'dataVencimento' ]);
 
-              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := AJSonObject.Values[ 'situacao' ].AsString;
-              ARetornoWS.DadosRet.TituloRet.DataMovimento := DateInterToDateTime(AJSonObject.Values[ 'dataHoraSituacao' ].AsString);
-              ARetornoWS.DadosRet.TituloRet.DataCredito := DateInterToDateTime(AJSonObject.Values[ 'dataHoraSituacao' ].AsString);
+              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSonObject.AsString[ 'situacao' ];
+              ARetornoWS.DadosRet.TituloRet.DataMovimento := DateInterToDateTime(LJSonObject.AsString[ 'dataHoraSituacao' ]);
+              ARetornoWS.DadosRet.TituloRet.DataCredito := DateInterToDateTime(LJSonObject.AsString[ 'dataHoraSituacao' ]);
 
-              ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'nome' ].AsString;
-              ARetornoWS.DadosRet.TituloRet.Sacado.Cidade := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'cidade' ].AsString;
-              ARetornoWS.DadosRet.TituloRet.Sacado.UF     := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'uf' ].AsString;;
-              ARetornoWS.DadosRet.TituloRet.Sacado.Bairro := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'bairro' ].AsString;;
-              ARetornoWS.DadosRet.TituloRet.Sacado.Cep    := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'cep' ].AsString;;
-              ARetornoWS.DadosRet.TituloRet.Sacado.Numero := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'numero' ].AsString;;
-              ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'logradouro' ].AsString;;
-              ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'cpfCnpj' ].AsString;
-
-              if (AJSonObject.Values[ 'situacao' ].AsString = C_CANCELADO) or (AJSonObject.Values[ 'situacao' ].AsString = C_EXPIRADO) or
-                (AJSonObject.Values[ 'situacao' ].AsString = C_PAGO) or (AJSonObject.Values[ 'situacao' ].AsString = C_EXPIRADO) then
+              ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'nome' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Cidade := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'cidade' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.UF     := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'uf' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Bairro := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'bairro' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Cep    := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'cep' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Numero := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'numero' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'logradouro' ];
+              ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'cpfCnpj' ];
+              LSituacao := LJSonObject.AsString[ 'situacao' ];
+              if (LSituacao = C_CANCELADO) or (LSituacao = C_EXPIRADO) or
+                 (LSituacao = C_PAGO) or (LSituacao = C_EXPIRADO) then
               begin
-                ARetornoWS.DadosRet.TituloRet.ValorPago := AJSonObject.Values[ 'valorNominal' ].AsNumber;
-                ARetornoWS.DadosRet.TituloRet.DataBaixa := DateInterToDateTime(AJSonObject.Values[ 'dataHoraSituacao' ].AsString)
+                ARetornoWS.DadosRet.TituloRet.ValorPago := LJSonObject.AsCurrency[ 'valorNominal' ];
+                ARetornoWS.DadosRet.TituloRet.DataBaixa := DateInterToDateTime(LJSonObject.AsString[ 'dataHoraSituacao' ])
               end;
 
             end
@@ -225,7 +223,7 @@ begin
         end;
 
       finally
-        AJson.free;
+        LJson.free;
       end;
 
     except
@@ -239,12 +237,11 @@ end;
 function TRetornoEnvio_Safra.LerListaRetorno: Boolean;
 var
   ListaRetorno: TACBrBoletoRetornoWS;
-  AJson       : TJson;
-  AJSonObject : TJsonObject;
-  ARejeicao   : TACBrBoletoRejeicao;
-  AJsonBoletos: TJsonArray;
+  LJson, LJSonObject : TACBrJSONObject;
+  LRejeicao   : TACBrBoletoRejeicao;
+  LJsonArrayBoletos: TACBrJSONArray;
   I           : Integer;
-  aJsonString : String;
+  LJsonString, LSituacao : String;
 begin
   Result                      := True;
   ListaRetorno                := ACBrBoleto.CriarRetornoWebNaLista;
@@ -255,20 +252,20 @@ begin
   begin
 
     try
-      AJson := TJson.Create;
+      //LJson := TJson.Create;
       try
-        AJson.Parse(RetWS);
+        LJson.Parse(RetWS);
 
         case HTTPResultCode of
           400, 404:
             begin
-              if (AJson.StructType = jsObject) then
-                if (AJson.Values[ 'codigo' ].AsString <> '') then
+              if (LJson.IsJSONObject('codigo')) then
+                if NaoEstaVazio(LJson.AsString[ 'codigo' ]) then
                 begin
-                  ARejeicao          := ListaRetorno.CriarRejeicaoLista;
-                  ARejeicao.Codigo   := AJson.Values[ 'codigo' ].AsString;
-                  ARejeicao.Versao   := AJson.Values[ 'parametro' ].AsString;
-                  ARejeicao.Mensagem := AJson.Values[ 'mensagem' ].AsString;
+                  LRejeicao          := ListaRetorno.CriarRejeicaoLista;
+                  LRejeicao.Codigo   := LJson.AsString[ 'codigo' ];
+                  LRejeicao.Versao   := LJson.AsString[ 'parametro' ];
+                  LRejeicao.Mensagem := LJson.AsString[ 'mensagem' ];
                 end;
             end;
         end;
@@ -276,61 +273,63 @@ begin
           //retorna quando tiver sucesso
         if (ListaRetorno.ListaRejeicao.Count = 0) then
         begin
-          aJsonString  := AJson.Stringify;
-          aJsonString  := AJson.Values[ 'content' ].Stringify;
-          AJsonBoletos := AJson.Values[ 'content' ].AsArray;
-          for I        := 0 to Pred(AJsonBoletos.Count) do
+          LJsonString  := LJson.ToJSON;
+          LJsonArrayBoletos := LJson.AsJSONArray[ 'content' ];
+          for I        := 0 to Pred(LJsonArrayBoletos.Count) do
           begin
             if I > 0 then
               ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
 
-            AJSonObject := AJsonBoletos[ I ].AsObject;
 
-            ListaRetorno.DadosRet.IDBoleto.CodBarras  := AJSonObject.Values[ 'codigoBarras' ].AsString;;;
-            ListaRetorno.DadosRet.IDBoleto.LinhaDig   := AJSonObject.Values[ 'linhaDigitavel' ].AsString;;
-            ListaRetorno.DadosRet.IDBoleto.NossoNum   := AJSonObject.Values[ 'nossoNumero' ].AsString;
+            LJSonObject := LJsonArrayBoletos.ItemAsJSONObject[ I ];
+
+            ListaRetorno.DadosRet.IDBoleto.CodBarras  := LJSonObject.AsString[ 'codigoBarras' ];
+            ListaRetorno.DadosRet.IDBoleto.LinhaDig   := LJSonObject.AsString[ 'linhaDigitavel' ];
+            ListaRetorno.DadosRet.IDBoleto.NossoNum   := LJSonObject.AsString[ 'nossoNumero' ];
             ListaRetorno.indicadorContinuidade        := false;
             ListaRetorno.DadosRet.TituloRet.CodBarras := ListaRetorno.DadosRet.IDBoleto.CodBarras;
             ListaRetorno.DadosRet.TituloRet.LinhaDig  := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
 
             ListaRetorno.DadosRet.TituloRet.NossoNumero := ListaRetorno.DadosRet.IDBoleto.NossoNum;
-            ListaRetorno.DadosRet.TituloRet.Vencimento  := DateInterToDateTime(AJSonObject.Values[ 'dataVencimento' ].AsString);
+            ListaRetorno.DadosRet.TituloRet.Vencimento  := DateInterToDateTime(LJSonObject.AsString[ 'dataVencimento' ]);
 
-            ListaRetorno.DadosRet.TituloRet.ValorDocumento := AJSonObject.Values[ 'valorNominal' ].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorAtual     := AJSonObject.Values[ 'valorNominal' ].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorPago      := AJSonObject.Values[ 'valorTotalRecebimento' ].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.ValorMoraJuros := AJSonObject.Values[ 'mora' ].AsObject.Values[ 'valor' ].AsNumber;
-            ListaRetorno.DadosRet.TituloRet.PercentualMulta := AJSonObject.Values[ 'multa' ].AsObject.Values[ 'taxa' ].AsNumber;
+            ListaRetorno.DadosRet.TituloRet.ValorDocumento := LJSonObject.AsCurrency[ 'valorNominal' ];
+            ListaRetorno.DadosRet.TituloRet.ValorAtual     := LJSonObject.AsCurrency[ 'valorNominal' ];
+            ListaRetorno.DadosRet.TituloRet.ValorPago      := LJSonObject.AsCurrency[ 'valorTotalRecebimento' ];
+            ListaRetorno.DadosRet.TituloRet.ValorMoraJuros := LJSonObject.AsJSONObject[ 'mora' ].AsCurrency[ 'valor' ];
+            ListaRetorno.DadosRet.TituloRet.PercentualMulta:= LJSonObject.AsJSONObject[ 'multa' ].AsCurrency[ 'taxa' ];
 
-            ListaRetorno.DadosRet.TituloRet.SeuNumero    := AJSonObject.Values[ 'seuNumero' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.DataRegistro := DateInterToDateTime(AJSonObject.Values[ 'dataEmissao' ].AsString);
-            ListaRetorno.DadosRet.TituloRet.Vencimento   := DateInterToDateTime(AJSonObject.Values[ 'dataVencimento' ].AsString);
+            ListaRetorno.DadosRet.TituloRet.SeuNumero    := LJSonObject.AsString[ 'seuNumero' ];
+            ListaRetorno.DadosRet.TituloRet.DataRegistro := DateInterToDateTime(LJSonObject.AsString[ 'dataEmissao' ]);
+            ListaRetorno.DadosRet.TituloRet.Vencimento   := DateInterToDateTime(LJSonObject.AsString[ 'dataVencimento' ]);
 
-            ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := AJSonObject.Values[ 'situacao' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.DataMovimento := DateInterToDateTime(AJSonObject.Values[ 'dataHoraSituacao' ].AsString);
-            ListaRetorno.DadosRet.TituloRet.DataCredito := DateInterToDateTime(AJSonObject.Values[ 'dataHoraSituacao' ].AsString);
+            ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := LJSonObject.AsString[ 'situacao' ];
+            ListaRetorno.DadosRet.TituloRet.DataMovimento        := DateInterToDateTime(LJSonObject.AsString[ 'dataHoraSituacao' ]);
+            ListaRetorno.DadosRet.TituloRet.DataCredito          := DateInterToDateTime(LJSonObject.AsString[ 'dataHoraSituacao' ]);
 
-            ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'nome' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.Cidade := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'cidade' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.UF     := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'uf' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.Bairro := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'bairro' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.Cep    := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'cep' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.Numero := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'numero' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.Logradouro := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'logradouro' ].AsString;
-            ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF := AJSonObject.Values[ 'pagador' ].AsObject.Values[ 'cpfCnpj' ].AsString;
+            ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'nome' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.Cidade     := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'cidade' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.UF         := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'uf' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.Bairro     := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'bairro' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.Cep        := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'cep' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.Numero     := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'numero' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.Logradouro := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'logradouro' ];
+            ListaRetorno.DadosRet.TituloRet.Sacado.CNPJCPF    := LJSonObject.AsJSONObject[ 'pagador' ].AsString[ 'cpfCnpj' ];
 
-            if (AJSonObject.Values[ 'situacao' ].AsString = C_CANCELADO) or (AJSonObject.Values[ 'situacao' ].AsString = C_EXPIRADO) or
-              (AJSonObject.Values[ 'situacao' ].AsString = C_PAGO) or (AJSonObject.Values[ 'situacao' ].AsString = C_EXPIRADO) then
+            LSituacao := LJSonObject.AsString[ 'situacao' ];
+
+            if (LSituacao = C_CANCELADO) or (LSituacao = C_EXPIRADO) or
+              (LSituacao = C_PAGO) or (LSituacao = C_EXPIRADO) then
             begin
-              ListaRetorno.DadosRet.TituloRet.ValorPago := AJSonObject.Values[ 'valorNominal' ].AsNumber;
-              ListaRetorno.DadosRet.TituloRet.DataBaixa := DateInterToDateTime(AJSonObject.Values[ 'dataHoraSituacao' ].AsString)
+              ListaRetorno.DadosRet.TituloRet.ValorPago := LJSonObject.AsCurrency[ 'valorNominal' ];
+              ListaRetorno.DadosRet.TituloRet.DataBaixa := DateInterToDateTime(LJSonObject.AsString[ 'dataHoraSituacao' ])
             end;
 
           end;
         end;
 
       finally
-        AJson.free;
+        LJson.free;
       end;
 
     except

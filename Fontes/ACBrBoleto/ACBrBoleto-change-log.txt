@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+02/05/2024
+-- ACBrBoletoRet_Safra, ACBrBoletoW_Safra--
+[*]TK-5064 Refatorado Banco Safra API p ACBrJSON
+  Por: Daniel Morais InfoCotidiano
+
 30/04/2024
 -- ACBrBoletoW_Caixa --
 [*] Controle da VersaoDF automaticamente de acordo com o IndicadorPIX para emissão de Boleto Híbrido da Caixa Econômica Federal

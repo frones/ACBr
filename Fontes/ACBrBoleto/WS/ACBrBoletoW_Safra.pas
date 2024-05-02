@@ -43,8 +43,8 @@ uses
   ACBrBoletoConversao,
   StrUtils,
   ACBrBoleto,
-  Jsons,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest,
+  ACBrJSON;
 
 type
 
@@ -67,19 +67,19 @@ type
     function ValidaAmbiente: Integer;
 
     procedure RequisicaoJson;
-    procedure GerarDocumento(AJson: TJsonObject);
-    procedure GerarDesconto(AJson: TJsonObject);
-    procedure GerarMultaJuros(AJson: TJsonObject);
-    procedure GerarPagador(AJson: TJsonObject);
-    procedure GerarEnderecoPagador(AJson: TJsonObject);
-    procedure GeraMensagem(AJson: TJsonObject);
+    procedure GerarDocumento(AJson: TACBrJSONObject);
+    procedure GerarDesconto(AJson: TACBrJSONObject);
+    procedure GerarMultaJuros(AJson: TACBrJsonObject);
+    procedure GerarPagador(AJson: TACBrJSONObject);
+    procedure GerarEnderecoPagador(AJson: TACBrJSONObject);
+    procedure GeraMensagem(AJson: TACBrJsonObject);
 
-    procedure GerarBenificiarioFinal(AJson: TJsonObject);
+    procedure GerarBenificiarioFinal(AJson: TACBrJSONObject);
 
     procedure RequisicaoConsulta;
     procedure RequisicaoConsultaDetalhe;
 
-    procedure GeraDadosInstrucao(AJson: TJsonObject);
+    procedure GeraDadosInstrucao(AJson: TACBrJSONObject);
   public
     constructor Create(ABoletoWS: TBoletoWS); override;
 
@@ -234,27 +234,24 @@ end;
 
 procedure TBoletoW_Safra.RequisicaoJson;
 var
-  Data: string;
-  Json: TJsonObject;
+  LData: string;
+  LJson: TACBrJSONObject;
 begin
   if Assigned(aTitulo) then
   begin
-    Json := TJsonObject.Create;
+    LJson := TACBrJSONObject.Create;
     try
-      Json.Add('agencia').Value.asString := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Agencia, '');
-      Json.Add('conta').Value.asString := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito,'');
-
-      GerarDocumento(Json);
-
-      Data       := Json.Stringify;
-      FPDadosMsg := Data;
+      LJson.AddPair('agencia',IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Agencia, ''));
+      LJson.AddPair('conta', IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito,''));
+      GerarDocumento(LJson);
+      FPDadosMsg := LJson.ToJSON;
     finally
-      Json.Free;
+      LJson.Free;
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GerarDocumento(AJson: TJsonObject);
+procedure TBoletoW_Safra.GerarDocumento(AJson: TACBrJSONObject);
 const
   EPC_DUPLICATA_MERCANTIL  = '01';
   EPC_NOTA_PROMISSORIA     = '02';
@@ -262,58 +259,45 @@ const
   EPC_RECIBO               = '05';
   EPC_DUPLICATA_DE_SERVICO = '09';
 var
-  JsonDocumento    : TJsonObject;
-  JsonPairDocumento: TJSONPair;
+  LJsonDocumento, LJsonPairDocumento  : TACBrJSONObject;
 begin
   if Assigned(aTitulo) then
   begin
     if Assigned(AJson) then
     begin
-      JsonDocumento := TJsonObject.Create;
-      try
-        JsonDocumento.Add('numero').Value.asString         := Copy(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 1, 15);
-        JsonDocumento.Add('numeroCliente').Value.asString  := Copy(aTitulo.SeuNumero, 1, 10);
-        JsonDocumento.Add('diasDevolucao').Value.AsInteger := 90;
-        JsonDocumento.Add('especie').Value.asString        := EPC_DUPLICATA_MERCANTIL;
-        JsonDocumento.Add('dataVencimento').Value.asString := DateTimeToDateInter(aTitulo.Vencimento);
-        JsonDocumento.Add('valor').Value.asNumber          := aTitulo.ValorDocumento;
-        JsonDocumento.Add('codigoMoeda').Value.AsInteger   := 0;
-        JsonDocumento.Add('quantidadeDiasProtesto').Value.AsInteger := aTitulo.DiasDeProtesto;
-        JsonDocumento.Add('campoLivre').Value.asString := Copy('', 1, 25);
-        JsonDocumento.Add('fidc').Value.AsInteger      := 0;
-        JsonDocumento.Add('danfe').Value.asString      := Copy('', 1, 44);
-        JsonDocumento.Add('valorAbatimento').Value.asNumber := aTitulo.ValorAbatimento;
-          //            JsonDocumento.Add('identificacaoAceite').Value.AsString     := aTitulo.Aceite.atSim;
+      LJsonDocumento := TACBrJSONObject.Create;
+      LJsonDocumento.AddPair('numero', Copy(OnlyNumber(aTitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(aTitulo)), 1, 15));
+      LJsonDocumento.AddPair('numeroCliente', Copy(aTitulo.SeuNumero, 1, 10));
+      LJsonDocumento.AddPair('diasDevolucao', 90);
+      LJsonDocumento.AddPair('especie', EPC_DUPLICATA_MERCANTIL);
+      LJsonDocumento.AddPair('dataVencimento', DateTimeToDateInter(aTitulo.Vencimento));
+      LJsonDocumento.AddPair('valor', aTitulo.ValorDocumento);
+      LJsonDocumento.AddPair('codigoMoeda', 0);
+      LJsonDocumento.AddPair('quantidadeDiasProtesto', aTitulo.DiasDeProtesto);
+      LJsonDocumento.AddPair('campoLivre', Copy('', 1, 25));
+      LJsonDocumento.AddPair('fidc', 0);
+      LJsonDocumento.AddPair('danfe', Copy('', 1, 44));
+      LJsonDocumento.AddPair('valorAbatimento', aTitulo.ValorAbatimento);
+        //            LJsonDocumento.Add('identificacaoAceite').Value.AsString     := aTitulo.Aceite.atSim;
 
-        GerarDesconto(JsonDocumento);
-        GerarMultaJuros(JsonDocumento);
-        GerarPagador(JsonDocumento);
-        GeraMensagem(JsonDocumento);
+      GerarDesconto(LJsonDocumento);
+      GerarMultaJuros(LJsonDocumento);
+      GerarPagador(LJsonDocumento);
+      GeraMensagem(LJsonDocumento);
 
-        JsonPairDocumento := TJSONPair.Create(AJson, 'Documento');
-        try
-          JsonPairDocumento.Value.AsObject := JsonDocumento;
-          AJson.Add('Documento').Assign(JsonPairDocumento);
-        finally
-          JsonPairDocumento.Free;
-        end;
-
-      finally
-        JsonDocumento.Free;
-      end;
+      AJson.AddPair('Documento',LJsonDocumento);
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GerarDesconto(AJson: TJsonObject);
+procedure TBoletoW_Safra.GerarDesconto(AJson: TACBrJSONObject);
 Const
   C_DESCONTO_EM_VALOR                                    = 1;
   C_DESCONTO_EM_PERCENTUAL                               = 2;
   C_DESCONTO_EM_VALOR_POR_ANTECIPACAO_DIAS_CORRIDOS      = 3;
   C_DESCONTO_EM_PERCENTUAL_POR_ANTECIPACAO_DIAS_CORRIDOS = 5;
 var
-  JsonDesconto    : TJsonObject;
-  JsonPairDesconto: TJSONPair;
+  LJsonDesconto : TACBrJSONObject;
 begin
   if Assigned(aTitulo) then
   begin
@@ -321,49 +305,36 @@ begin
     begin
       if (aTitulo.ValorDesconto + aTitulo.ValorDesconto2 + aTitulo.ValorDesconto3) > 0 then
       begin
-        JsonDesconto := TJsonObject.Create;
-        try
-          JsonDesconto := TJsonObject.Create;
-
-          if (aTitulo.DataDesconto > 0) then
-          begin
-            JsonDesconto.Add('data').Value.asString  := DateTimeToDateInter(aTitulo.DataDesconto);
-            JsonDesconto.Add('valor').Value.asNumber := RoundABNT(aTitulo.ValorDesconto, 2);
-          end;
-
-          if (aTitulo.DataDesconto2 > 0) then
-          begin
-            JsonDesconto.Add('data2').Value.asString  := DateTimeToDateInter(aTitulo.DataDesconto2);
-            JsonDesconto.Add('valor2').Value.asNumber := RoundABNT(aTitulo.ValorDesconto2, 2);
-          end;
-
-          if (aTitulo.DataDesconto3 > 0) then
-          begin
-            JsonDesconto.Add('data3').Value.asString  := DateTimeToDateInter(aTitulo.DataDesconto3);
-            JsonDesconto.Add('valor3').Value.asNumber := RoundABNT(aTitulo.ValorDesconto3, 2);
-          end;
-
-          JsonDesconto.Add('tipoDesconto ').Value.AsInteger := C_DESCONTO_EM_VALOR;
-
-          JsonPairDesconto := TJSONPair.Create(AJson, 'desconto');
-          try
-            JsonPairDesconto.Value.AsObject := JsonDesconto;
-            AJson.Add('desconto').Assign(JsonPairDesconto);
-          finally
-            JsonPairDesconto.Free;
-          end;
-        finally
-          JsonDesconto.Free;
+        LJsonDesconto := TACBrJSONObject.Create;
+        if (aTitulo.DataDesconto > 0) then
+        begin
+          LJsonDesconto.AddPair('data', DateTimeToDateInter(aTitulo.DataDesconto));
+          LJsonDesconto.AddPair('valor', RoundABNT(aTitulo.ValorDesconto, 2));
         end;
+
+        if (aTitulo.DataDesconto2 > 0) then
+        begin
+          LJsonDesconto.AddPair('data2', DateTimeToDateInter(aTitulo.DataDesconto2));
+          LJsonDesconto.AddPair('valor2', RoundABNT(aTitulo.ValorDesconto2, 2));
+        end;
+
+        if (aTitulo.DataDesconto3 > 0) then
+        begin
+          LJsonDesconto.AddPair('data3', DateTimeToDateInter(aTitulo.DataDesconto3));
+          LJsonDesconto.AddPair('valor3', RoundABNT(aTitulo.ValorDesconto3, 2));
+        end;
+
+        LJsonDesconto.AddPair('tipoDesconto ', C_DESCONTO_EM_VALOR);
+
+        AJson.AddPair('desconto',LJsonDesconto);
       end;
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GerarMultaJuros(AJson: TJsonObject);
+procedure TBoletoW_Safra.GerarMultaJuros(AJson: TACBrJsonObject);
 var
-  JsonMultaJuros    : TJsonObject;
-  JsonPairMultaJuros: TJSONPair;
+  LJsonMultaJuros : TACBrJsonObject;
   LMulta            : Double;
 begin
   if Assigned(aTitulo) then
@@ -372,132 +343,85 @@ begin
     begin
       if (aTitulo.PercentualMulta + aTitulo.ValorMoraJuros) > 0 then
       begin
-        JsonMultaJuros := TJsonObject.Create;
-        try
-          JsonMultaJuros.Add('dataMulta').Value.asString := DateTimeToDateInter(aTitulo.DataMulta);
-          if aTitulo.MultaValorFixo then
-            LMulta := RoundABNT((aTitulo.PercentualMulta * 100) / aTitulo.ValorDocumento, 2)
-          else
-            LMulta                                       := aTitulo.PercentualMulta;
-          JsonMultaJuros.Add('taxaMulta').Value.asNumber := aTitulo.PercentualMulta;
+        LJsonMultaJuros := TACBrJSONObject.Create;
+        LJsonMultaJuros.AddPair('dataMulta', DateTimeToDateInter(aTitulo.DataMulta));
+        if aTitulo.MultaValorFixo then
+          LMulta := RoundABNT((aTitulo.PercentualMulta * 100) / aTitulo.ValorDocumento, 2)
+        else
+          LMulta := aTitulo.PercentualMulta;
 
-          JsonMultaJuros.Add('dataJuros').Value.asString := DateTimeToDateInter(aTitulo.DataMulta);
+        LJsonMultaJuros.AddPair('taxaMulta', aTitulo.PercentualMulta);
 
-          JsonMultaJuros.Add('taxaJuros').Value.asNumber := aTitulo.ValorMoraJuros;
+        LJsonMultaJuros.AddPair('dataJuros', DateTimeToDateInter(aTitulo.DataMulta));
 
-          JsonPairMultaJuros := TJSONPair.Create(AJson, 'multa');
-          try
-            JsonPairMultaJuros.Value.AsObject := JsonMultaJuros;
-            AJson.Add('multa').Assign(JsonPairMultaJuros);
-          finally
-            JsonPairMultaJuros.Free;
-          end;
-        finally
-          JsonMultaJuros.Free;
-        end;
+        LJsonMultaJuros.AddPair('taxaJuros', aTitulo.ValorMoraJuros);
+
+        AJson.AddPair('multa',LJsonMultaJuros);
       end;
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GerarPagador(AJson: TJsonObject);
+procedure TBoletoW_Safra.GerarPagador(AJson: TACBrJSONObject);
 var
-  JsonDadosPagador: TJsonObject;
-  JsonPairPagador : TJSONPair;
+  LJsonDadosPagador: TACBrJSONObject;
 begin
   if Assigned(aTitulo) then
   begin
     if Assigned(AJson) then
     begin
-      JsonDadosPagador := TJsonObject.Create;
-      try
-        JsonDadosPagador.Add('nome').Value.asString       := Copy(aTitulo.Sacado.NomeSacado, 1, 40);
-        JsonDadosPagador.Add('tipoPessoa').Value.asString := IfThen(Length(OnlyNumber(aTitulo.Sacado.CNPJCPF)) = 11, 'F', 'J');
-        JsonDadosPagador.Add('numeroDocumento').Value.asString := OnlyNumber(aTitulo.Sacado.CNPJCPF);
-        JsonDadosPagador.Add('email').Value.asString := Copy(aTitulo.Sacado.Email, 1, 14);
-
-        GerarEnderecoPagador(JsonDadosPagador);
-
-        JsonPairPagador := TJSONPair.Create(AJson, 'pagador');
-        try
-          JsonPairPagador.Value.AsObject := JsonDadosPagador;
-          AJson.Add('pagador').Assign(JsonPairPagador);
-        finally
-          JsonPairPagador.Free;
-        end;
-      finally
-        JsonDadosPagador.Free;
-      end;
+      LJsonDadosPagador := TACBrJSONObject.Create;
+      LJsonDadosPagador.AddPair('nome', Copy(aTitulo.Sacado.NomeSacado, 1, 40));
+      LJsonDadosPagador.AddPair('tipoPessoa', IfThen(Length(OnlyNumber(aTitulo.Sacado.CNPJCPF)) = 11, 'F', 'J'));
+      LJsonDadosPagador.AddPair('numeroDocumento', OnlyNumber(aTitulo.Sacado.CNPJCPF));
+      LJsonDadosPagador.AddPair('email',Copy(aTitulo.Sacado.Email, 1, 14));
+      GerarEnderecoPagador(LJsonDadosPagador);
+      AJson.AddPair('pagador',LJsonDadosPagador);
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GerarEnderecoPagador(AJson: TJsonObject);
+procedure TBoletoW_Safra.GerarEnderecoPagador(AJson: TACBrJsonObject);
 var
-  JsonDadosPagador: TJsonObject;
-  JsonPairPagador : TJSONPair;
+  LJsonDadosPagador: TACBrJSONObject;
 begin
   if Assigned(aTitulo) then
   begin
     if Assigned(AJson) then
     begin
-      JsonDadosPagador := TJsonObject.Create;
-      try
-        JsonDadosPagador.Add('logradouro').Value.asString := Copy(aTitulo.Sacado.Logradouro + ', ' + aTitulo.Sacado.Numero + ', ' + aTitulo.Sacado.Complemento, 1, 40);
-        JsonDadosPagador.Add('bairro').Value.asString     := Copy(aTitulo.Sacado.Bairro, 1, 10);
-        JsonDadosPagador.Add('cidade').Value.asString     := Copy(aTitulo.Sacado.Cidade, 1, 15);
-        JsonDadosPagador.Add('uf').Value.asString         := aTitulo.Sacado.UF;
-        JsonDadosPagador.Add('cep').Value.asString        := OnlyNumber(aTitulo.Sacado.CEP);
-
-        JsonPairPagador := TJSONPair.Create(AJson, 'endereco');
-        try
-          JsonPairPagador.Value.AsObject := JsonDadosPagador;
-          AJson.Add('endereco').Assign(JsonPairPagador);
-        finally
-          JsonPairPagador.Free;
-        end;
-      finally
-        JsonDadosPagador.Free;
-      end;
+      LJsonDadosPagador := TACBrJSONObject.Create;
+      LJsonDadosPagador.AddPair('logradouro', Copy(aTitulo.Sacado.Logradouro + ', ' + aTitulo.Sacado.Numero + ', ' + aTitulo.Sacado.Complemento, 1, 40));
+      LJsonDadosPagador.AddPair('bairro', Copy(aTitulo.Sacado.Bairro, 1, 10));
+      LJsonDadosPagador.AddPair('cidade', Copy(aTitulo.Sacado.Cidade, 1, 15));
+      LJsonDadosPagador.AddPair('uf', aTitulo.Sacado.UF);
+      LJsonDadosPagador.AddPair('cep', OnlyNumber(aTitulo.Sacado.CEP));
+      AJson.AddPair('endereco',LJsonDadosPagador);
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GeraMensagem(AJson: TJsonObject);
+procedure TBoletoW_Safra.GeraMensagem(AJson: TACBrJsonObject);
 Const
   TP_MENSAGEM_RECIBO = 1;
   TP_MENSAGEM_FICHA  = 2;
 var
-  JsonMensagem     : TJsonObject;
-  JsonPairMensagem : TJSONPair;
-  JsonArrayMensagem: TJsonArray;
+  LJsonMensagem : TACBrJSONObject;
+  LJsonArrayMensagem: TACBrJSONArray;
 begin
   if Assigned(aTitulo) then
   begin
     if Assigned(AJson) then
     begin
-      JsonArrayMensagem := TJsonArray.Create;
-      JsonMensagem      := TJsonObject.Create;
-      try
-        JsonMensagem.Add('posicao').Value.AsInteger := TP_MENSAGEM_RECIBO;
-        JsonMensagem.Add('mensagem').Value.asString := Copy('', 1, 72);
-
-        JsonPairMensagem := TJSONPair.Create(AJson, 'mensagem');
-        try
-          JsonPairMensagem.Value.AsArray := JsonArrayMensagem;
-          AJson.Add('mensagem').Assign(JsonPairMensagem);
-        finally
-          JsonPairMensagem.Free;
-        end;
-      finally
-        JsonArrayMensagem.Free;
-        JsonMensagem.Free;
-      end;
+      LJsonArrayMensagem := TACBrJSONArray.Create;
+      LJsonMensagem      := TACBrJSONObject.Create;
+      LJsonMensagem.AddPair('posicao', TP_MENSAGEM_RECIBO);
+      LJsonMensagem.AddPair('mensagem', Copy('', 1, 72));
+      AJson.AddPair('mensagem',LJsonMensagem);
     end;
   end;
 end;
 
-procedure TBoletoW_Safra.GeraDadosInstrucao(AJson: TJsonObject);
+procedure TBoletoW_Safra.GeraDadosInstrucao(AJson: TACBrJSONObject);
 begin
     // Sem Payload
 end;
@@ -512,10 +436,9 @@ begin
     // Sem Payload - Define Método GET
 end;
 
-procedure TBoletoW_Safra.GerarBenificiarioFinal(AJson: TJsonObject);
+procedure TBoletoW_Safra.GerarBenificiarioFinal(AJson: TACBrJSONObject);
 var
-  JsonSacadorAvalista    : TJsonObject;
-  JsonPairSacadorAvalista: TJSONPair;
+  LJsonSacadorAvalista, LJsonPairSacadorAvalista    : TACBrJsonObject;
 begin
   if Assigned(aTitulo) then
   begin
@@ -524,28 +447,16 @@ begin
 
     if Assigned(AJson) then
     begin
-      JsonSacadorAvalista := TJsonObject.Create;
-
-      try
-        JsonSacadorAvalista.Add('nome').Value.asString    := aTitulo.Sacado.SacadoAvalista.NomeAvalista;
-        JsonSacadorAvalista.Add('cpfCnpj').Value.asString := OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF);
-        JsonSacadorAvalista.Add('tipoPessoa').Value.asString := IfThen(Length(OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11, 'FISICA', 'JURIDICA');
-        JsonSacadorAvalista.Add('cep').Value.asString      := aTitulo.Sacado.SacadoAvalista.CEP;
-        JsonSacadorAvalista.Add('endereco').Value.asString := aTitulo.Sacado.SacadoAvalista.Logradouro;
-        JsonSacadorAvalista.Add('bairro').Value.asString   := aTitulo.Sacado.SacadoAvalista.Bairro;
-        JsonSacadorAvalista.Add('cidade').Value.asString   := aTitulo.Sacado.SacadoAvalista.Cidade;
-        JsonSacadorAvalista.Add('uf').Value.asString       := aTitulo.Sacado.SacadoAvalista.UF;
-
-        JsonPairSacadorAvalista := TJSONPair.Create(AJson, 'beneficiarioFinal');
-        try
-          JsonPairSacadorAvalista.Value.AsObject := JsonSacadorAvalista;
-          AJson.Add('beneficiarioFinal').Assign(JsonPairSacadorAvalista);
-        finally
-          JsonPairSacadorAvalista.Free;
-        end;
-      finally
-        JsonSacadorAvalista.Free;
-      end;
+      LJsonSacadorAvalista := TACBrJSONObject.Create;
+      LJsonSacadorAvalista.AddPair('nome', aTitulo.Sacado.SacadoAvalista.NomeAvalista);
+      LJsonSacadorAvalista.AddPair('cpfCnpj', OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF));
+      LJsonSacadorAvalista.AddPair('tipoPessoa',IfThen(Length(OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11, 'FISICA', 'JURIDICA'));
+      LJsonSacadorAvalista.AddPair('cep', aTitulo.Sacado.SacadoAvalista.CEP);
+      LJsonSacadorAvalista.AddPair('endereco', aTitulo.Sacado.SacadoAvalista.Logradouro);
+      LJsonSacadorAvalista.AddPair('bairro', aTitulo.Sacado.SacadoAvalista.Bairro);
+      LJsonSacadorAvalista.AddPair('cidade', aTitulo.Sacado.SacadoAvalista.Cidade);
+      LJsonSacadorAvalista.AddPair('uf', aTitulo.Sacado.SacadoAvalista.UF);
+      AJson.AddPair('beneficiarioFinal',LJsonSacadorAvalista);
     end;
 
   end;

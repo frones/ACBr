@@ -164,6 +164,7 @@ begin
       ClientSecret := pLibPIXCDConfig.PIXCDBradesco.ClientSecret;
       ArquivoPFX   := pLibPIXCDConfig.PIXCDBradesco.ArqPFX;
       SenhaPFX     := pLibPIXCDConfig.PIXCDBradesco.SenhaPFX;
+      Scopes       := pLibPIXCDConfig.PIXCDBradesco.Scopes;
     end;
 
     with ACBrPSPSicredi1 do
@@ -174,6 +175,7 @@ begin
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDSicredi.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDSicredi.ArqCertificado;
       APIVersion          := pLibPIXCDConfig.PIXCDSicredi.APIVersion;
+      Scopes              := pLibPIXCDConfig.PIXCDSicredi.Scopes;
     end;
 
     with ACBrPSPSicoob1 do
@@ -184,6 +186,7 @@ begin
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDSiccob.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDSiccob.ArqCertificado;
       APIVersion          := pLibPIXCDConfig.PIXCDSiccob.APIVersion;
+      Scopes              := pLibPIXCDConfig.PIXCDSiccob.Scopes;
     end;
 
     with ACBrPSPShipay1 do
@@ -191,6 +194,7 @@ begin
       ClientID  := pLibPIXCDConfig.PIXCDShipay.ClientID;
       SecretKey := pLibPIXCDConfig.PIXCDShipay.SecretKey;
       AccessKey := pLibPIXCDConfig.PIXCDShipay.AccessKey;
+      Scopes    := pLibPIXCDConfig.PIXCDShipay.Scopes;
     end;
 
     with ACBrPSPSantander1 do
@@ -201,12 +205,14 @@ begin
       ArquivoCertificado := pLibPIXCDConfig.PIXCDSantander.ArqCertificadoPFX;
       SenhaPFX           := pLibPIXCDConfig.PIXCDSantander.SenhaCertificadoPFX;
       APIVersion         := pLibPIXCDConfig.PIXCDSantander.APIVersion;
+      Scopes             := pLibPIXCDConfig.PIXCDSantander.Scopes;
     end;
 
     with ACBrPSPPixPDV1 do
     begin
       CNPJ  := pLibPIXCDConfig.PIXCDPixPDV.CNPJ;
       Token := pLibPIXCDConfig.PIXCDPixPDV.Token;
+      Scopes:= pLibPIXCDConfig.PIXCDPixPDV.Scopes;
     end;
 
     with ACBrPSPPagSeguro1 do
@@ -216,6 +222,7 @@ begin
       ClientSecret        := pLibPIXCDConfig.PIXCDPagSeguro.ClientSecret;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDPagSeguro.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDPagSeguro.ArqCertificado;
+      Scopes              := pLibPIXCDConfig.PIXCDPagSeguro.Scopes;
     end;
 
     with ACBrPSPItau1 do
@@ -226,6 +233,7 @@ begin
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDItau.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDItau.ArqCertificado;
       APIVersion          := pLibPIXCDConfig.PIXCDItau.APIVersion;
+      Scopes              := pLibPIXCDConfig.PIXCDItau.Scopes;
     end;
 
     with ACBrPSPInter1 do
@@ -235,6 +243,7 @@ begin
       ClientSecret        := pLibPIXCDConfig.PIXCDInter.ClientSecret;
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDInter.ArqChavePrivada;
       ArquivoCertificado  := pLibPIXCDConfig.PIXCDInter.ArqCertificado;
+      Scopes              := pLibPIXCDConfig.PIXCDInter.Scopes;
     end;
 
     with ACBrPSPGerenciaNet1 do
@@ -243,6 +252,7 @@ begin
       ClientID            := pLibPIXCDConfig.PIXCDGerenciaNet.ClientID;
       ClientSecret        := pLibPIXCDConfig.PIXCDGerenciaNet.ClientSecret;
       ArquivoPFX          := pLibPIXCDConfig.PIXCDGerenciaNet.ArqPFX;
+      Scopes              := pLibPIXCDConfig.PIXCDGerenciaNet.Scopes;
     end;
 
     with ACBrPSPBancoDoBrasil1 do
@@ -257,6 +267,7 @@ begin
       SenhaPFX                := pLibPIXCDConfig.PIXCDBancoDoBrasil.SenhaPFX;
       BBAPIVersao             := pLibPIXCDConfig.PIXCDBancoDoBrasil.BBAPIVersao;
       APIVersion              := pLibPIXCDConfig.PIXCDBancoDoBrasil.APIVersion;
+      Scopes                  := pLibPIXCDConfig.PIXCDBancoDoBrasil.Scopes;
     end;
 
     with ACBrPSPAilos1 do
@@ -267,6 +278,7 @@ begin
       ArquivoChavePrivada     := pLibPIXCDConfig.PIXCDAilos.ArqChavePrivada;
       ArquivoCertificado      := pLibPIXCDConfig.PIXCDAilos.ArqCertificado;
       RootCrt                 := pLibPIXCDConfig.PIXCDAilos.ArqCertificadoRoot;
+      Scopes                  := pLibPIXCDConfig.PIXCDAilos.Scopes;
     end;
 
     with ACBrPSPMatera1 do
@@ -279,6 +291,7 @@ begin
       ArquivoChavePrivada := pLibPIXCDConfig.PIXCDMatera.ArqChavePrivada;
       AccountId           := pLibPIXCDConfig.PIXCDMatera.AccountID;
       MediatorFee         := pLibPIXCDConfig.PIXCDMatera.MediatorFee;
+      Scopes              := pLibPIXCDConfig.PIXCDMatera.Scopes;
     end;
 
     with ACBrPSPCielo1 do
@@ -286,12 +299,14 @@ begin
       ChavePIX     := pLibPIXCDConfig.PIXCDCielo.ChavePIX;
       ClientID     := pLibPIXCDConfig.PIXCDCielo.ClientID;
       ClientSecret := pLibPIXCDConfig.PIXCDCielo.ClientSecret;
+      Scopes       := pLibPIXCDConfig.PIXCDCielo.Scopes;
     end;
 
     with ACBrPSPMercadoPago1 do
     begin
       ChavePIX    := pLibPIXCDConfig.PIXCDMercadoPago.ChavePIX;
       AccessToken := pLibPIXCDConfig.PIXCDMercadoPago.AccessToken;
+      Scopes      := pLibPIXCDConfig.PIXCDMercadoPago.Scopes;
     end;
 
     {$IFDEF Demo}

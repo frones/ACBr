@@ -42,8 +42,18 @@ uses
 
 type
 
+  { TPIXCDPSPConfig }
+
+  TPIXCDPSPConfig = class
+    private
+      FScopes: TACBrPSPScopes;
+    public
+      constructor Create;
+      property Scopes: TACBrPSPScopes read FScopes write FScopes;
+  end;
+
   { TPIXCDMercadoPagoConfig }
-  TPIXCDMercadoPagoConfig = class
+  TPIXCDMercadoPagoConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FAccessToken: String;
 
@@ -58,7 +68,7 @@ type
   end;
 
   { TPIXCDCieloConfig }
-  TPIXCDCieloConfig = class
+  TPIXCDCieloConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -75,7 +85,7 @@ type
   end;
 
   { TPIXCDMateraConfig }
-  TPIXCDMateraConfig = class
+  TPIXCDMateraConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FSecretKey: String;
@@ -103,7 +113,7 @@ type
 
 
   { TPIXCDAilosConfig }
-  TPIXCDAilosConfig = class
+  TPIXCDAilosConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -126,7 +136,7 @@ type
   end;
 
   { TPIXCDBancoDoBrasilConfig }
-  TPIXCDBancoDoBrasilConfig = class
+  TPIXCDBancoDoBrasilConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -157,7 +167,7 @@ type
   end;
 
   { TPIXCDGerenciaNetConfig }
-  TPIXCDGerenciaNetConfig = class
+  TPIXCDGerenciaNetConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -176,7 +186,7 @@ type
   end;
 
   { TPIXCDInterConfig }
-  TPIXCDInterConfig = class
+  TPIXCDInterConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -197,7 +207,7 @@ type
   end;
 
   { TPIXCDItauConfig }
-  TPIXCDItauConfig = class
+  TPIXCDItauConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -220,7 +230,7 @@ type
   end;
 
   { TPIXCDPagSeguroConfig }
-  TPIXCDPagSeguroConfig = class
+  TPIXCDPagSeguroConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -241,7 +251,7 @@ type
   end;
 
   { TPIXCDPixPDVConfig }
-  TPIXCDPixPDVConfig = class
+  TPIXCDPixPDVConfig = class(TPIXCDPSPConfig)
     FCNPJ: String;
     FToken: String;
     FSecretKey: String;
@@ -258,7 +268,7 @@ type
   end;
 
   { TPIXCDSantanderConfig }
-  TPIXCDSantanderConfig = class
+  TPIXCDSantanderConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FConsumerKey: String;
     FConsumerSecret: String;
@@ -281,7 +291,7 @@ type
   end;
 
   { TPIXCDShipayConfig }
-  TPIXCDShipayConfig = class
+  TPIXCDShipayConfig = class(TPIXCDPSPConfig)
     FClientID: String;
     FSecretKey: String;
     FAccessKey: String;
@@ -298,7 +308,7 @@ type
   end;
 
   { TPIXCDSiccobConfig }
-  TPIXCDSiccobConfig = class
+  TPIXCDSiccobConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FTokenSandbox: String;
@@ -321,7 +331,7 @@ type
   end;
 
   { TPIXCDSicrediConfig }
-  TPIXCDSicrediConfig = class
+  TPIXCDSicrediConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -344,7 +354,7 @@ type
   end;
 
   {TPIXCDBradescoConfig}
-  TPIXCDBradescoConfig = class
+  TPIXCDBradescoConfig = class(TPIXCDPSPConfig)
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
@@ -449,10 +459,13 @@ type
       property PIXCDMercadoPago:   TPIXCDMercadoPagoConfig read FPIXCDMercadoPagoConfig;
   end;
 
+  function StringToSetOfPSPScopes(const AOriginalString: String): TACBrPSPScopes;
+  function SetOfPSPScopesToString(const ASetOfScopes: TACBrPSPScopes): String;
+
 implementation
 
 Uses
-  ACBrLibPIXCDBase, ACBrLibPIXCDConsts, ACBrLibConsts, ACBrUtil.FilesIO, ACBrUtil.Strings;
+  ACBrLibPIXCDBase, ACBrLibPIXCDConsts, ACBrLibConsts, ACBrUtil.FilesIO, ACBrUtil.Strings, TypInfo;
 
 { TLibPIXCDConfig }
 constructor TLibPIXCDConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
@@ -675,6 +688,7 @@ end;
 { TPIXCDBradescoConfig }
 constructor TPIXCDBradescoConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -683,26 +697,35 @@ begin
 end;
 
 procedure TPIXCDBradescoConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := Aini.ReadString(CSessaoPIXCDBradescoConfig, CChavePIXBradesco, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveClientIDBradesco, ClientID);
   ClientSecret:= AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveClientSecretBradesco, ClientSecret);
   ArqPFX := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveArqPFXBradesco, ArqPFX);
   SenhaPFX := AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveSenhaPFXBradesco, SenhaPFX);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDBradescoConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDBradescoConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChavePIXBradesco, ChavePIX);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveClientIDBradesco, ClientID);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveClientSecretBradesco, ClientSecret);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveArqPFXBradesco, ArqPFX);
   AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveSenhaPFXBradesco, SenhaPFX);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDBradescoConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDSicrediConfig }
 constructor TPIXCDSicrediConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -712,6 +735,8 @@ begin
 end;
 
 procedure TPIXCDSicrediConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDSicrediConfig, CChavePIXSicredi, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDSicrediConfig, CChaveClientIDSicredi, ClientID);
@@ -719,9 +744,13 @@ begin
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDSicrediConfig, CChaveArqChavePrivadaSicredi, ArqChavePrivada);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDSicrediConfig, CChaveArqCertificadoSicredi, ArqCertificado);
   APIVersion := TACBrPIXAPIVersion(AIni.ReadInteger(CSessaoPIXCDSicrediConfig, CChaveAPIVersionSicredi, Integer(APIVersion)));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDSicrediConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDSicrediConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDSicrediConfig, CChavePIXSicredi, ChavePIX);
   AIni.WriteString(CSessaoPIXCDSicrediConfig, CChaveClientIDSicredi, ClientID);
@@ -729,11 +758,14 @@ begin
   AIni.WriteString(CSessaoPIXCDSicrediConfig, CChaveArqChavePrivadaSicredi, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDSicrediConfig, CChaveArqCertificadoSicredi, ArqCertificado);
   AIni.WriteInteger(CSessaoPIXCDSicrediConfig, CChaveAPIVersionSicredi, Integer(APIVersion));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDSicrediConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDSiccobConfig }
 constructor TPIXCDSiccobConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FTokenSandbox := '';
@@ -743,6 +775,8 @@ begin
 end;
 
 procedure TPIXCDSiccobConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDSicoobConfig, CChavePIXSicoob, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDSicoobConfig, CChaveClientIDSicoob, ClientID);
@@ -750,9 +784,13 @@ begin
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDSicoobConfig, CChaveArqChavePrivadaSicoob, ArqChavePrivada);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDSicoobConfig, CChaveArqCertificadoSicoob, ArqCertificado);
   APIVersion := TACBrPIXAPIVersion(AIni.ReadInteger(CSessaoPIXCDSicoobConfig, CChaveAPIVersionSicoob, Integer(APIVersion)));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDSicoobConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDSiccobConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDSicoobConfig, CChavePIXSicoob, ChavePIX);
   AIni.WriteString(CSessaoPIXCDSicoobConfig, CChaveClientIDSicoob, ClientID);
@@ -760,33 +798,45 @@ begin
   Aini.WriteString(CSessaoPIXCDSicoobConfig, CChaveArqChavePrivadaSicoob, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDSicoobConfig, CChaveArqCertificadoSicoob, ArqCertificado);
   AIni.WriteInteger(CSessaoPIXCDSicoobConfig, CChaveAPIVersionSicoob, Integer(APIVersion));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDSicoobConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDShipayConfig }
 constructor TPIXCDShipayConfig.Create;
 begin
+  inherited Create;
   FClientID := '';
   FSecretKey := '';
   FAccessKey := '';
 end;
 
 procedure TPIXCDShipayConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LSCopesStr: String;
 begin
   ClientID := AIni.ReadString(CSessaoPIXCDShipayConfig, CChaveClientIDShipay, ClientID);
   SecretKey := AIni.ReadString(CSessaoPIXCDShipayConfig, CChaveSecretKeyShipay, SecretKey);
   AccessKey := AIni.ReadString(CSessaoPIXCDShipayConfig, CChaveAccessKeyShipay, AccessKey);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDShipayConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDShipayConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDShipayConfig, CChaveClientIDShipay, ClientID);
   AIni.WriteString(CSessaoPIXCDShipayConfig, CChaveSecretKeyShipay, SecretKey);
   AIni.WriteString(CSessaoPIXCDShipayConfig, CChaveAccessKeyShipay, AccessKey);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDShipayConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDSantanderConfig }
 constructor TPIXCDSantanderConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FConsumerKey := '';
   FConsumerSecret := '';
@@ -796,6 +846,8 @@ begin
 end;
 
 procedure TPIXCDSantanderConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDSantanderConfig, CChavePIXSantander, ChavePIX);
   ConsumerKey := AIni.ReadString(CSessaoPIXCDSantanderConfig, CChaveConsumerKeySantander, ConsumerKey);
@@ -803,9 +855,13 @@ begin
   ArqCertificadoPFX := AIni.ReadString(CSessaoPIXCDSantanderConfig, CChaveArqCertificadoPFXSantander, ArqCertificadoPFX);
   SenhaCertificadoPFX := AIni.ReadString(CSessaoPIXCDSantanderConfig, CChaveSenhaCertificadoPFXSantander, SenhaCertificadoPFX);
   APIVersion := TACBrPIXAPIVersion(AIni.ReadInteger(CSessaoPIXCDSantanderConfig, CChaveAPIVersionSantander, Integer(APIVersion)));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDSantanderConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDSantanderConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDSantanderConfig, CChavePIXSantander, ChavePIX);
   AIni.WriteString(CSessaoPIXCDSantanderConfig, CChaveConsumerKeySantander, ConsumerKey);
@@ -813,33 +869,45 @@ begin
   AIni.WriteString(CSessaoPIXCDSantanderConfig, CChaveArqCertificadoPFXSantander, ArqCertificadoPFX);
   AIni.WriteString(CSessaoPIXCDSantanderConfig, CChaveSenhaCertificadoPFXSantander, SenhaCertificadoPFX);
   AIni.WriteInteger(CSessaoPIXCDSantanderConfig, CChaveAPIVersionSantander, Integer(APIVersion));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDSantanderConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDPixPDVConfig }
 constructor TPIXCDPixPDVConfig.Create;
 begin
+  inherited Create;
   FCNPJ := '';
   FToken := '';
   FSecretKey := '';
 end;
 
 procedure TPIXCDPixPDVConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   CNPJ := AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveCNPJPixPDV, CNPJ);
   Token := AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveToken, Token);
   SecretKey := AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveSecretKeyPixPDV, SecretKey);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDPixPDVConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDPixPDVConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveCNPJPixPDV, CNPJ);
   AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveToken, Token);
   AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveSecretKeyPixPDV, SecretKey);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDPixPDVConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDPagSeguroConfig }
 constructor TPIXCDPagSeguroConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -848,26 +916,35 @@ begin
 end;
 
 procedure TPIXCDPagSeguroConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LSCopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDPagSeguroConfig, CChavePIXPagSeguro, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDPagSeguroConfig, CChaveClientIDPagSeguro, ClientID);
   ClientSecret := AIni.ReadString(CSessaoPIXCDPagSeguroConfig, CChaveClientSecretPagSeguro, ClientSecret);
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDPagSeguroConfig, CChaveArqChavePrivadaPagSeguro, ArqChavePrivada);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDPagSeguroConfig, CChaveArqCertificadoPagSeguro, ArqCertificado);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDPagSeguroConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDPagSeguroConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDPagSeguroConfig, CChavePIXPagSeguro, ChavePIX);
   AIni.WriteString(CSessaoPIXCDPagSeguroConfig, CChaveClientIDPagSeguro, ClientID);
   AIni.WriteString(CSessaoPIXCDPagSeguroConfig, CChaveClientSecretPagSeguro, ClientSecret);
   AIni.WriteString(CSessaoPIXCDPagSeguroConfig, CChaveArqChavePrivadaPagSeguro, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDPagSeguroConfig, CChaveArqCertificadoPagSeguro, ArqCertificado);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDPagSeguroConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDItauConfig }
 constructor TPIXCDItauConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -877,6 +954,8 @@ begin
 end;
 
 procedure TPIXCDItauConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LSCopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDItauConfig, CChavePIXItau, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDItauConfig, CChaveClientIDItau, ClientID);
@@ -884,9 +963,13 @@ begin
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDItauConfig, CChaveArqChavePrivadaItau, ArqChavePrivada);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDItauConfig, CChaveArqCertificadoItau, ArqCertificado);
   APIVersion := TACBrPIXAPIVersion(AIni.ReadInteger(CSessaoPIXCDItauConfig, CChaveAPIVersionItau, Integer(APIVersion)));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDItauConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDItauConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDItauConfig, CChavePIXItau, ChavePIX);
   AIni.WriteString(CSessaoPIXCDItauConfig, CChaveClientIDItau, ClientID);
@@ -894,11 +977,14 @@ begin
   AIni.WriteString(CSessaoPIXCDItauConfig, CChaveArqChavePrivadaItau, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDItauConfig, CChaveArqCertificadoItau, ArqCertificado);
   AIni.WriteInteger(CSessaoPIXCDItauConfig, CChaveAPIVersionItau, Integer(APIVersion));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDItauConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDInterConfig }
 constructor TPIXCDInterConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -907,26 +993,35 @@ begin
 end;
 
 procedure TPIXCDInterConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDInterConfig, CChavePIXInter, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDInterConfig, CChaveClientIDInter, ClientID);
   ClientSecret := AIni.ReadString(CSessaoPIXCDInterConfig, CChaveClientSecretInter, ClientSecret);
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDInterConfig, CChaveArqChavePrivadaInter, ArqChavePrivada);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDInterConfig, CChaveArqCertificadoInter, ArqCertificado);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDInterConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDInterConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDInterConfig, CChavePIXInter, ChavePIX);
   AIni.WriteString(CSessaoPIXCDInterConfig, CChaveClientIDInter, ClientID);
   AIni.WriteString(CSessaoPIXCDInterConfig, CChaveClientSecretInter, ClientSecret);
   AIni.WriteString(CSessaoPIXCDInterConfig, CChaveArqChavePrivadaInter, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDInterConfig, CChaveArqCertificadoInter, ArqCertificado);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDInterConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDGerenciaNetConfig }
 constructor TPIXCDGerenciaNetConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -934,24 +1029,33 @@ begin
 end;
 
 procedure TPIXCDGerenciaNetConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LSCopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDGerenciaNetConfig, CChavePIXGerenciaNet, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDGerenciaNetConfig, CChaveClientIDGerenciaNet, ClientID);
   ClientSecret := AIni.ReadString(CSessaoPIXCDGerenciaNetConfig, CChaveClientSecretGerenciaNet, ClientSecret);
   ArqPFX := AIni.ReadString(CSessaoPIXCDGerenciaNetConfig, CChaveArqPFXGerenciaNet, ArqPFX);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDGerenciaNetConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDGerenciaNetConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDGerenciaNetConfig, CChavePIXGerenciaNet, ChavePIX);
   AIni.WriteString(CSessaoPIXCDGerenciaNetConfig, CChaveClientIDGerenciaNet, ClientID);
   AIni.WriteString(CSessaoPIXCDGerenciaNetConfig, CChaveClientSecretGerenciaNet, ClientSecret);
   AIni.WriteString(CSessaoPIXCDGerenciaNetConfig, CChaveArqPFXGerenciaNet, ArqPFX);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDGerenciaNetConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDBancoDoBrasilConfig }
 constructor TPIXCDBancoDoBrasilConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -965,6 +1069,8 @@ begin
 end;
 
 procedure TPIXCDBancoDoBrasilConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDBancoBrasilConfig, CChavePIXBancoBrasil, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDBancoBrasilConfig, CChaveClientIDBancoBrasil, ClientID);
@@ -976,9 +1082,13 @@ begin
   SenhaPFX := AIni.ReadString(CSessaoPIXCDBancoBrasilConfig, CChaveSenhaPFXBancoBrasil, SenhaPFX);
   BBAPIVersao := TACBrBBAPIVersao(AIni.ReadInteger(CSessaoPIXCDBancoBrasilConfig, CChaveBBAPIVersaoBancoBrasil, Integer(BBAPIVersao)));
   APIVersion := TACBrPIXAPIVersion(AIni.ReadInteger(CSessaoPIXCDBancoBrasilConfig, CChaveAPIVersionBancoBrasil, Integer(APIVersion)));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDBancoBrasilConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDBancoDoBrasilConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDBancoBrasilConfig, CChavePIXBancoBrasil, ChavePIX);
   AIni.WriteString(CSessaoPIXCDBancoBrasilConfig, CChaveClientIDBancoBrasil, ClientID);
@@ -990,11 +1100,14 @@ begin
   AIni.WriteString(CSessaoPIXCDBancoBrasilConfig, CChaveSenhaPFXBancoBrasil, SenhaPFX);
   AIni.WriteInteger(CSessaoPIXCDBancoBrasilConfig, CChaveBBAPIVersaoBancoBrasil, Integer(BBAPIVersao));
   AIni.WriteInteger(CSessaoPIXCDBancoBrasilConfig, CChaveAPIVersionBancoBrasil, Integer(APIVersion));
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDBancoBrasilConfig, CChaveScopes, LSCopesStr);
 end;
 
 { TPIXCDAilosConfig }
 constructor TPIXCDAilosConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
@@ -1004,6 +1117,8 @@ begin
 end;
 
 procedure TPIXCDAilosConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDAilosConfig, CChavePIXAilos, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDAilosConfig, CChaveClientIDAilos, ClientID);
@@ -1011,9 +1126,13 @@ begin
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDAilosConfig, CChaveArqChavePrivadaAilos, ArqChavePrivada);
   ArqCertificado := AIni.ReadString(CSessaoPIXCDAilosConfig, CChaveArqCertificadoAilos, ArqCertificado);
   ArqCertificadoRoot := AIni.ReadString(CSessaoPIXCDAilosConfig, CChaveArqCertificadoRootAilos, ArqCertificadoRoot);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDAilosConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDAilosConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDAilosConfig, CChavePIXAilos, ChavePIX);
   AIni.WriteString(CSessaoPIXCDAilosConfig, CChaveClientIDAilos, ClientID);
@@ -1021,11 +1140,14 @@ begin
   AIni.WriteString(CSessaoPIXCDAilosConfig, CChaveArqChavePrivadaAilos, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDAilosConfig, CChaveArqCertificadoAilos, ArqCertificado);
   AIni.WriteString(CSessaoPIXCDAilosConfig, CChaveArqCertificadoRootAilos, ArqCertificadoRoot);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDAilosConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDMateraConfig }
 constructor TPIXCDMateraConfig.Create;
 begin
+  inherited Create;
   FClientID := '';
   FSecretKey := '';
   FClientSecret := '';
@@ -1037,6 +1159,8 @@ begin
 end;
 
 procedure TPIXCDMateraConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDMateraConfig, CChavePIXMatera, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveClientIDMatera, ClientID);
@@ -1046,9 +1170,13 @@ begin
   ArqChavePrivada := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveArqChavePrivadaMatera, ArqChavePrivada);
   AccountID := AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveAccountIDMatera, AccountID);
   MediatorFee := AIni.ReadFloat(CSessaoPIXCDMateraConfig, CChaveMediatorFeeMatera, MediatorFee);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDMateraConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDMateraConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChavePIXMatera, ChavePIX);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveClientIDMatera, ClientID);
@@ -1058,47 +1186,121 @@ begin
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveArqChavePrivadaMatera, ArqChavePrivada);
   AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveAccountIDMatera, AccountID);
   AIni.WriteFloat(CSessaoPIXCDMateraConfig, CChaveMediatorFeeMatera, MediatorFee);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDMateraConfig, CChaveScopes, LScopesStr);
 end;
 
 { TPIXCDCieloConfig }
 constructor TPIXCDCieloConfig.Create;
 begin
+  inherited Create;
   FChavePIX := '';
   FClientID := '';
   FClientSecret := '';
 end;
 
 procedure TPIXCDCieloConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDCieloConfig, CChavePIXCielo, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveClientIDCielo, ClientID);
   ClientSecret := AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveClientSecretCielo, ClientSecret);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDCieloConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDCieloConfig, CChavePIXCielo, ChavePIX);
   AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveClientIDCielo, ClientID);
   AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveClientSecretCielo, ClientSecret);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveScopes, LScopesStr);
+end;
+
+{ TPIXCDPSPConfig }
+
+constructor TPIXCDPSPConfig.Create;
+begin
+  FScopes := [scCobWrite,scCobRead,scPixWrite,scPixRead];
 end;
 
 { TPIXCDMercadoPagoConfig }
 constructor TPIXCDMercadoPagoConfig.Create;
 begin
+  inherited Create;
   FChavePIX:= '';
   FAccessToken:= '';
 end;
 
 procedure TPIXCDMercadoPagoConfig.LerIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDMercadoPagoConfig, CChavePIXMercadoPago, ChavePIX);
   AccessToken := AIni.ReadString(CSessaoPIXCDMercadoPagoConfig, CChaveAccesTokenMercadoPago, AccessToken);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  Scopes := StringToSetOfPSPScopes(AIni.ReadString(CSessaoPIXCDMercadoPagoConfig, CChaveScopes, LScopesStr));
 end;
 
 procedure TPIXCDMercadoPagoConfig.GravarIni(const AIni: TCustomIniFile);
+var
+  LScopesStr: String;
 begin
   AIni.WriteString(CSessaoPIXCDMercadoPagoConfig, CChavePIXMercadoPago, ChavePIX);
   AIni.WriteString(CSessaoPIXCDMercadoPagoConfig, CChaveAccesTokenMercadoPago, AccessToken);
+  LScopesStr := SetOfPSPScopesToString(Scopes);
+  AIni.WriteString(CSessaoPIXCDMercadoPagoConfig, CChaveScopes, LScopesStr);
+end;
+
+
+function StringToSetOfPSPScopes(const AOriginalString: String): TACBrPSPScopes;
+var
+  LScopesString, LScopeName: String;
+  LScopesList: TStringList;
+  LTotalOfScopes: Integer;
+  I: Integer;
+  LScope: TACBrPSPScope;
+begin
+  Result := [];
+
+  LScopesString := RetornarConteudoEntre(AOriginalString, '[', ']');
+
+
+  if LScopesString.IsEmpty then
+    LScopesString := AOriginalString;
+
+  LScopesString := Trim(LScopesString);
+
+  LScopesList := TStringList.Create;
+  try
+    LTotalOfScopes := AddDelimitedTextToList(LScopesString, ',', LScopesList, #0);
+    for I:=0 to Pred(LTotalOfScopes) do
+    begin
+      LScopeName := Trim(LScopesList.Strings[I]);
+      LScope := TACBrPSPScope(GetEnumValue(TypeInfo(TACBrPSPScope), LScopeName));
+      Result := Result + [LScope];
+    end;
+
+  finally
+    LScopesList.Free;
+  end;
+end;
+
+function SetOfPSPScopesToString(const ASetOfScopes: TACBrPSPScopes): String;
+var
+  LScope: TACBrPSPScope;
+begin
+  Result := '';
+  for LScope in ASetOfScopes do
+  begin
+    Result := Result + GetEnumName(TypeInfo(TACBrPSPScope), Ord(LScope)) + ',';
+  end;
+
+  Result := '[' + Copy(Result, 0, Length(Result)-1) + ']';
 end;
 
 end.

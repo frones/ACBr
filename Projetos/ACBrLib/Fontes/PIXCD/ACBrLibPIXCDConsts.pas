@@ -76,6 +76,7 @@ const
   CChaveCidadeRecebedor = 'CidadeRecebedor';
   CChaveNomeRecebedor = 'NomeRecebedor';
   CChaveUFRecebedor = 'UFRecebedor';
+  CChaveScopes = 'Scopes';
 
   CSessaoPIXCDBradescoConfig = 'Bradesco';
   CChavePIXBradesco = 'ChavePIX';

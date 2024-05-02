@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2024
+-- ACBrLibPIXCDConfig, ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts --
+[*] Adiciona a propriedade Scopes para os PSPs.
+Por: Diego Folieni
+
 13/03/2024
 --- ACBrLibPIXCDBase --
 [*] Adicionado uses ACBrUtil.filesIO

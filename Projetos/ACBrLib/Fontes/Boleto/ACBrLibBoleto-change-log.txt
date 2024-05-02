@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2024
+-- ACBrLibBoletoRespostas --
+[*] #TK-5016-1 - Add NossoNumeroCorrespondente para tratar a propriedade utilizada no Inter API V3
+        Por: Daniel de Morais InfoCotidiano
+
 19/04/2024
 -- ACBrLibBoletoST --
 [*] Ajuste visando correção de problema de liberação de memória encontrado no Boleto_Finalizar

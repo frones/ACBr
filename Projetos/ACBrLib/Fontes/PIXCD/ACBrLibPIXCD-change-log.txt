@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/05/2024
+-- ACBrLibPIXCDConfig --
+[*] Refactoring da maneira como era lido e salvo a informação dos scopes
+Por: Diego Folieni
 -- ACBrLibPIXCDConfig, ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts --
 [*] Adiciona a propriedade Scopes para os PSPs.
 Por: Diego Folieni

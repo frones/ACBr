@@ -1633,16 +1633,16 @@ end;
 procedure TACBrNFSeProviderABRASFv1.LerCancelamento(ANode: TACBrXmlNode;
       Response: TNFSeWebserviceResponse);
 var
-  AuxNodeCanc: TACBrXmlNode;
+  AuxNodeCanc, ANodeNfseCancelamento: TACBrXmlNode;
 begin
-  AuxNodeCanc := ANode.Childrens.FindAnyNs('NfseCancelamento');
+  ANodeNfseCancelamento := ANode.Childrens.FindAnyNs('NfseCancelamento');
 
-  if AuxNodeCanc <> nil then
+  if ANodeNfseCancelamento <> nil then
   begin
-    AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('Confirmacao');
+    AuxNodeCanc := ANodeNfseCancelamento.Childrens.FindAnyNs('Confirmacao');
 
     if AuxNodeCanc = nil then
-      AuxNodeCanc := ANode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+      AuxNodeCanc := ANodeNfseCancelamento.Childrens.FindAnyNs('ConfirmacaoCancelamento');
 
     if AuxNodeCanc <> nil then
     begin

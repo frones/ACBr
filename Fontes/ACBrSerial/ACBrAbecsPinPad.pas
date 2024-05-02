@@ -348,6 +348,72 @@ const
   PP_TABVER00  = $9300; // A10 EMV Tables version correspondent to the Acquirer #nn (00 to 99). Index #00 corresponds to the “general” version for all Acquirers.
   PP_TABVER63  = $9363;
 
+  //Strings das constantes acima
+  SPP_SERNUM     = 'PP_SERNUM';
+  SPP_PARTNBR    = 'PP_PARTNBR';
+  SPP_MODEL      = 'PP_MODEL';
+  SPP_MNNAME     = 'PP_MNNAME';
+  SPP_CAPAB      = 'PP_CAPAB';
+  SPP_SOVER      = 'PP_SOVER';
+  SPP_SPECVER    = 'PP_SPECVER';
+  SPP_MANVERS    = 'PP_MANVERS';
+  SPP_APPVERS    = 'PP_APPVERS';
+  SPP_GENVERS    = 'PP_GENVERS';
+  SPP_KRNLVER    = 'PP_KRNLVER';
+  SPP_CTLSVER    = 'PP_CTLSVER';
+  SPP_MCTLSVER   = 'PP_MCTLSVER';
+  SPP_VCTLSVER   = 'PP_VCTLSVER';
+  SPP_AECTLSVER  = 'PP_AECTLSVER';
+  SPP_DPCTLSVER  = 'PP_DPCTLSVER';
+  SPP_PUREVER    = 'PP_PUREVER';
+  SPP_DSPTXTSZ   = 'PP_DSPTXTSZ';
+  SPP_DSPGRSZ    = 'PP_DSPGRSZ';
+  SPP_MFSUP      = 'PP_MFSUP';
+  SPP_MKTDESP    = 'PP_MKTDESP';
+  SPP_MKTDESD    = 'PP_MKTDESD';
+  SPP_DKPTTDESP  = 'PP_DKPTTDESP';
+  SPP_DKPTTDESD  = 'PP_DKPTTDESD';
+  SPP_EVENT      = 'PP_EVENT';
+  SPP_TRK1INC    = 'PP_TRK1INC';
+  SPP_TRK2INC    = 'PP_TRK2INC';
+  SPP_TRK3INC    = 'PP_TRK3INC';
+  SPP_TRACK1     = 'PP_TRACK1';
+  SPP_TRACK2     = 'PP_TRACK2';
+  SPP_TRACK3     = 'PP_TRACK3';
+  SPP_TRK1KSN    = 'PP_TRK1KSN';
+  SPP_TRK2KSN    = 'PP_TRK2KSN';
+  SPP_TRK3KSN    = 'PP_TRK3KSN';
+  SPP_ENCPAN     = 'PP_ENCPAN';
+  SPP_ENCPANKSN  = 'PP_ENCPANKSN';
+  SPP_KSN        = 'PP_KSN';
+  SPP_VALUE      = 'PP_VALUE';
+  SPP_DATAOUT    = 'PP_DATAOUT';
+  SPP_CARDTYPE   = 'PP_CARDTYPE';
+  SPP_ICCSTAT    = 'PP_ICCSTAT';
+  SPP_AIDTABINFO = 'PP_AIDTABINFO';
+  SPP_PAN        = 'PP_PAN';
+  SPP_PANSEQNO   = 'PP_PANSEQNO';
+  SPP_EMVDATA    = 'PP_EMVDATA';
+  SPP_CHNAME     = 'PP_CHNAME';
+  SPP_GOXRES     = 'PP_GOXRES';
+  SPP_PINBLK     = 'PP_PINBLK';
+  SPP_FCXRES     = 'PP_FCXRES';
+  SPP_ISRESULTS  = 'PP_ISRESULTS';
+  SPP_BIGRAND    = 'PP_BIGRAND';
+  SPP_LABEL      = 'PP_LABEL';
+  SPP_ISSCNTRY   = 'PP_ISSCNTRY';
+  SPP_CARDEXP    = 'PP_CARDEXP';
+  SPP_MFNAME     = 'PP_MFNAME';
+  SPP_DEVTYPE    = 'PP_DEVTYPE';
+  SPP_TLRMEM     = 'PP_TLRMEM';
+  SPP_ENCKRAND   = 'PP_ENCKRAND';
+  SPP_KSNTDESP00 = 'PP_KSNTDESP00';
+  SPP_KSNTDESP63 = 'PP_KSNTDESP63';
+  SPP_KSNTDESD00 = 'PP_KSNTDESD00';
+  SPP_KSNTDESD63 = 'PP_KSNTDESD63';
+  SPP_TABVER00   = 'PP_TABVER00';
+  SPP_TABVER63   = 'PP_TABVER63';
+
 type
 
   EACBrAbecsPinPadError = class(Exception);
@@ -693,6 +759,7 @@ type
   function ReturnStatusCodeDescription(AStatus: Integer): String;
   function SPE_ToStr(ASPE: Word): String;
   function PP_ToStr(APP: Word): String;
+  function PP_StrToInt(const PP: String): Word;
 
 implementation
 
@@ -803,75 +870,214 @@ end;
 function PP_ToStr(APP: Word): String;
 begin
   case APP of
-    PP_SERNUM     : Result := 'PP_SERNUM';
-    PP_PARTNBR    : Result := 'PP_PARTNBR';
-    PP_MODEL      : Result := 'PP_MODEL';
-    PP_MNNAME     : Result := 'PP_MNNAME';
-    PP_CAPAB      : Result := 'PP_CAPAB';
-    PP_SOVER      : Result := 'PP_SOVER';
-    PP_SPECVER    : Result := 'PP_SPECVER';
-    PP_MANVERS    : Result := 'PP_MANVERS';
-    PP_APPVERS    : Result := 'PP_APPVERS';
-    PP_GENVERS    : Result := 'PP_GENVERS';
-    PP_KRNLVER    : Result := 'PP_KRNLVER';
-    PP_CTLSVER    : Result := 'PP_CTLSVER';
-    PP_MCTLSVER   : Result := 'PP_MCTLSVER';
-    PP_VCTLSVER   : Result := 'PP_VCTLSVER';
-    PP_AECTLSVER  : Result := 'PP_AECTLSVER';
-    PP_DPCTLSVER  : Result := 'PP_DPCTLSVER';
-    PP_PUREVER    : Result := 'PP_PUREVER';
-    PP_DSPTXTSZ   : Result := 'PP_DSPTXTSZ';
-    PP_DSPGRSZ    : Result := 'PP_DSPGRSZ';
-    PP_MFSUP      : Result := 'PP_MFSUP';
-    PP_MKTDESP    : Result := 'PP_MKTDESP';
-    PP_MKTDESD    : Result := 'PP_MKTDESD';
-    PP_DKPTTDESP  : Result := 'PP_DKPTTDESP';
-    PP_DKPTTDESD  : Result := 'PP_DKPTTDESD';
-    PP_EVENT      : Result := 'PP_EVENT';
-    PP_TRK1INC    : Result := 'PP_TRK1INC';
-    PP_TRK2INC    : Result := 'PP_TRK2INC';
-    PP_TRK3INC    : Result := 'PP_TRK3INC';
-    PP_TRACK1     : Result := 'PP_TRACK1';
-    PP_TRACK2     : Result := 'PP_TRACK2';
-    PP_TRACK3     : Result := 'PP_TRACK3';
-    PP_TRK1KSN    : Result := 'PP_TRK1KSN';
-    PP_TRK2KSN    : Result := 'PP_TRK2KSN';
-    PP_TRK3KSN    : Result := 'PP_TRK3KSN';
-    PP_ENCPAN     : Result := 'PP_ENCPAN';
-    PP_ENCPANKSN  : Result := 'PP_ENCPANKSN';
-    PP_KSN        : Result := 'PP_KSN';
-    PP_VALUE      : Result := 'PP_VALUE';
-    PP_DATAOUT    : Result := 'PP_DATAOUT';
-    PP_CARDTYPE   : Result := 'PP_CARDTYPE';
-    PP_ICCSTAT    : Result := 'PP_ICCSTAT';
-    PP_AIDTABINFO : Result := 'PP_AIDTABINFO';
-    PP_PAN        : Result := 'PP_PAN';
-    PP_PANSEQNO   : Result := 'PP_PANSEQNO';
-    PP_EMVDATA    : Result := 'PP_EMVDATA';
-    PP_CHNAME     : Result := 'PP_CHNAME';
-    PP_GOXRES     : Result := 'PP_GOXRES';
-    PP_PINBLK     : Result := 'PP_PINBLK';
-    PP_FCXRES     : Result := 'PP_FCXRES';
-    PP_ISRESULTS  : Result := 'PP_ISRESULTS';
-    PP_BIGRAND    : Result := 'PP_BIGRAND';
-    PP_LABEL      : Result := 'PP_LABEL';
-    PP_ISSCNTRY   : Result := 'PP_ISSCNTRY';
-    PP_CARDEXP    : Result := 'PP_CARDEXP';
-    PP_MFNAME     : Result := 'PP_MFNAME';
-    PP_DEVTYPE    : Result := 'PP_DEVTYPE';
-    PP_TLRMEM     : Result := 'PP_TLRMEM';
-    PP_ENCKRAND   : Result := 'PP_ENCKRAND';
-    PP_KSNTDESP00 : Result := 'PP_KSNTDESP00';
-    PP_KSNTDESP63 : Result := 'PP_KSNTDESP63';
-    PP_KSNTDESD00 : Result := 'PP_KSNTDESD00';
-    PP_KSNTDESD63 : Result := 'PP_KSNTDESD63';
-    PP_TABVER00   : Result := 'PP_TABVER00';
-    PP_TABVER63   : Result := 'PP_TABVER63';
+    PP_SERNUM     : Result := sPP_SERNUM;
+    PP_PARTNBR    : Result := sPP_PARTNBR;
+    PP_MODEL      : Result := sPP_MODEL;
+    PP_MNNAME     : Result := sPP_MNNAME;
+    PP_CAPAB      : Result := sPP_CAPAB;
+    PP_SOVER      : Result := sPP_SOVER;
+    PP_SPECVER    : Result := sPP_SPECVER;
+    PP_MANVERS    : Result := sPP_MANVERS;
+    PP_APPVERS    : Result := sPP_APPVERS;
+    PP_GENVERS    : Result := sPP_GENVERS;
+    PP_KRNLVER    : Result := sPP_KRNLVER;
+    PP_CTLSVER    : Result := sPP_CTLSVER;
+    PP_MCTLSVER   : Result := sPP_MCTLSVER;
+    PP_VCTLSVER   : Result := sPP_VCTLSVER;
+    PP_AECTLSVER  : Result := sPP_AECTLSVER;
+    PP_DPCTLSVER  : Result := sPP_DPCTLSVER;
+    PP_PUREVER    : Result := sPP_PUREVER;
+    PP_DSPTXTSZ   : Result := sPP_DSPTXTSZ;
+    PP_DSPGRSZ    : Result := sPP_DSPGRSZ;
+    PP_MFSUP      : Result := sPP_MFSUP;
+    PP_MKTDESP    : Result := sPP_MKTDESP;
+    PP_MKTDESD    : Result := sPP_MKTDESD;
+    PP_DKPTTDESP  : Result := sPP_DKPTTDESP;
+    PP_DKPTTDESD  : Result := sPP_DKPTTDESD;
+    PP_EVENT      : Result := sPP_EVENT;
+    PP_TRK1INC    : Result := sPP_TRK1INC;
+    PP_TRK2INC    : Result := sPP_TRK2INC;
+    PP_TRK3INC    : Result := sPP_TRK3INC;
+    PP_TRACK1     : Result := sPP_TRACK1;
+    PP_TRACK2     : Result := sPP_TRACK2;
+    PP_TRACK3     : Result := sPP_TRACK3;
+    PP_TRK1KSN    : Result := sPP_TRK1KSN;
+    PP_TRK2KSN    : Result := sPP_TRK2KSN;
+    PP_TRK3KSN    : Result := sPP_TRK3KSN;
+    PP_ENCPAN     : Result := sPP_ENCPAN;
+    PP_ENCPANKSN  : Result := sPP_ENCPANKSN;
+    PP_KSN        : Result := sPP_KSN;
+    PP_VALUE      : Result := sPP_VALUE;
+    PP_DATAOUT    : Result := sPP_DATAOUT;
+    PP_CARDTYPE   : Result := sPP_CARDTYPE;
+    PP_ICCSTAT    : Result := sPP_ICCSTAT;
+    PP_AIDTABINFO : Result := sPP_AIDTABINFO;
+    PP_PAN        : Result := sPP_PAN;
+    PP_PANSEQNO   : Result := sPP_PANSEQNO;
+    PP_EMVDATA    : Result := sPP_EMVDATA;
+    PP_CHNAME     : Result := sPP_CHNAME;
+    PP_GOXRES     : Result := sPP_GOXRES;
+    PP_PINBLK     : Result := sPP_PINBLK;
+    PP_FCXRES     : Result := sPP_FCXRES;
+    PP_ISRESULTS  : Result := sPP_ISRESULTS;
+    PP_BIGRAND    : Result := sPP_BIGRAND;
+    PP_LABEL      : Result := sPP_LABEL;
+    PP_ISSCNTRY   : Result := sPP_ISSCNTRY;
+    PP_CARDEXP    : Result := sPP_CARDEXP;
+    PP_MFNAME     : Result := sPP_MFNAME;
+    PP_DEVTYPE    : Result := sPP_DEVTYPE;
+    PP_TLRMEM     : Result := sPP_TLRMEM;
+    PP_ENCKRAND   : Result := sPP_ENCKRAND;
+    PP_KSNTDESP00 : Result := sPP_KSNTDESP00;
+    PP_KSNTDESP63 : Result := sPP_KSNTDESP63;
+    PP_KSNTDESD00 : Result := sPP_KSNTDESD00;
+    PP_KSNTDESD63 : Result := sPP_KSNTDESD63;
+    PP_TABVER00   : Result := sPP_TABVER00;
+    PP_TABVER63   : Result := sPP_TABVER63;
   else
     Result := IntToHex(APP, 2)+'h';
   end;
 end;
 
+function PP_StrToInt(const PP: String): Word;
+var
+  s: String;
+begin
+  s := UpperCase(Trim(PP));
+
+  if (s = sPP_SERNUM) then
+    Result := PP_SERNUM
+  else if (s = sPP_PARTNBR) then
+    Result := PP_PARTNBR
+  else if (s = sPP_MODEL) then
+    Result := PP_MODEL
+  else if (s = sPP_MNNAME) then
+    Result := PP_MNNAME
+  else if (s = sPP_CAPAB) then
+    Result := PP_CAPAB
+  else if (s = sPP_SOVER) then
+    Result := PP_SOVER
+  else if (s = sPP_SPECVER) then
+    Result := PP_SPECVER
+  else if (s = sPP_MANVERS) then
+    Result := PP_MANVERS
+  else if (s = sPP_APPVERS) then
+    Result := PP_APPVERS
+  else if (s = sPP_GENVERS) then
+    Result := PP_GENVERS
+  else if (s = sPP_KRNLVER) then
+    Result := PP_KRNLVER
+  else if (s = sPP_CTLSVER) then
+    Result := PP_CTLSVER
+  else if (s = sPP_MCTLSVER) then
+    Result := PP_MCTLSVER
+  else if (s = sPP_VCTLSVER) then
+    Result := PP_VCTLSVER
+  else if (s = sPP_AECTLSVER) then
+    Result := PP_AECTLSVER
+  else if (s = sPP_DPCTLSVER) then
+    Result := PP_DPCTLSVER
+  else if (s = sPP_PUREVER) then
+    Result := PP_PUREVER
+  else if (s = sPP_DSPTXTSZ) then
+    Result := PP_DSPTXTSZ
+  else if (s = sPP_DSPGRSZ) then
+    Result := PP_DSPGRSZ
+  else if (s = sPP_MFSUP) then
+    Result := PP_MFSUP
+  else if (s = sPP_MKTDESP) then
+    Result := PP_MKTDESP
+  else if (s = sPP_MKTDESD) then
+    Result := PP_MKTDESD
+  else if (s = sPP_DKPTTDESP) then
+    Result := PP_DKPTTDESP
+  else if (s = sPP_DKPTTDESD) then
+    Result := PP_DKPTTDESD
+  else if (s = sPP_EVENT) then
+    Result := PP_EVENT
+  else if (s = sPP_TRK1INC) then
+    Result := PP_TRK1INC
+  else if (s = sPP_TRK2INC) then
+    Result := PP_TRK2INC
+  else if (s = sPP_TRK3INC) then
+    Result := PP_TRK3INC
+  else if (s = sPP_TRACK1) then
+    Result := PP_TRACK1
+  else if (s = sPP_TRACK2) then
+    Result := PP_TRACK2
+  else if (s = sPP_TRACK3) then
+    Result := PP_TRACK3
+  else if (s = sPP_TRK1KSN) then
+    Result := PP_TRK1KSN
+  else if (s = sPP_TRK2KSN) then
+    Result := PP_TRK2KSN
+  else if (s = sPP_TRK3KSN) then
+    Result := PP_TRK3KSN
+  else if (s = sPP_ENCPAN) then
+    Result := PP_ENCPAN
+  else if (s = sPP_ENCPANKSN) then
+    Result := PP_ENCPANKSN
+  else if (s = sPP_KSN) then
+    Result := PP_KSN
+  else if (s = sPP_VALUE) then
+    Result := PP_VALUE
+  else if (s = sPP_DATAOUT) then
+    Result := PP_DATAOUT
+  else if (s = sPP_CARDTYPE) then
+    Result := PP_CARDTYPE
+  else if (s = sPP_ICCSTAT) then
+    Result := PP_ICCSTAT
+  else if (s = sPP_AIDTABINFO) then
+    Result := PP_AIDTABINFO
+  else if (s = sPP_PAN) then
+    Result := PP_PAN
+  else if (s = sPP_PANSEQNO) then
+    Result := PP_PANSEQNO
+  else if (s = sPP_EMVDATA) then
+    Result := PP_EMVDATA
+  else if (s = sPP_CHNAME) then
+    Result := PP_CHNAME
+  else if (s = sPP_GOXRES) then
+    Result := PP_GOXRES
+  else if (s = sPP_PINBLK) then
+    Result := PP_PINBLK
+  else if (s = sPP_FCXRES) then
+    Result := PP_FCXRES
+  else if (s = sPP_ISRESULTS) then
+    Result := PP_ISRESULTS
+  else if (s = sPP_BIGRAND) then
+    Result := PP_BIGRAND
+  else if (s = sPP_LABEL) then
+    Result := PP_LABEL
+  else if (s = sPP_ISSCNTRY) then
+    Result := PP_ISSCNTRY
+  else if (s = sPP_CARDEXP) then
+    Result := PP_CARDEXP
+  else if (s = sPP_MFNAME) then
+    Result := PP_MFNAME
+  else if (s = sPP_DEVTYPE) then
+    Result := PP_DEVTYPE
+  else if (s = sPP_TLRMEM) then
+    Result := PP_TLRMEM
+  else if (s = sPP_ENCKRAND) then
+    Result := PP_ENCKRAND
+  else if (s = sPP_KSNTDESP00) then
+    Result := PP_KSNTDESP00
+  else if (s = sPP_KSNTDESP63) then
+    Result := PP_KSNTDESP63
+  else if (s = sPP_KSNTDESD00) then
+    Result := PP_KSNTDESD00
+  else if (s = sPP_KSNTDESD63) then
+    Result := PP_KSNTDESD63
+  else if (s = sPP_TABVER00) then
+    Result := PP_TABVER00
+  else if (s = sPP_TABVER63) then
+    Result := PP_TABVER63
+  else
+  begin
+    raise EACBrAbecsPinPadError.Create(Format(CERR_INVTLVSIZE, [MAX_TLV_SIZE]));
+  end;
+end;
 { TACBrAbecsTLV }
 
 constructor TACBrAbecsTLV.Create;
@@ -2045,7 +2251,7 @@ procedure TACBrAbecsPinPad.WaitForResponse;
   end;
 
 var
-  b, NumFails: Byte;
+  NumFails: Byte;
   PktData, CRCData: AnsiString;
   Done: Boolean;
   pkt: TACBrAbecsPacket;

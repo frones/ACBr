@@ -13,7 +13,7 @@ uses
 
 begin
   Application.Initialize;
-  TStyleManager.TrySetStyle('Aqua Light Slate');
+//  TStyleManager.TrySetStyle('Aqua Light Slate');
   Application.CreateForm(TfrMain, frMain);
   Application.Run;
 end.

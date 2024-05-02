@@ -26,6 +26,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item>
+      <Item>
         <PackageName Value="ACBrComum"/>
       </Item>
       <Item>
@@ -57,10 +60,6 @@
       </Unit>
       <Unit>
         <Filename Value="..\..\Fontes\Comum\ACBrLibErros.inc"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ACBrLibPIXCD_PSP_Sicoob_TestCase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

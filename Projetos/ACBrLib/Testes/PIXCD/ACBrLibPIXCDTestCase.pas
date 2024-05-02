@@ -61,6 +61,9 @@ type
     procedure Test_PIXCD_Versao;
     procedure Test_PIXCD_ConfigLerValor;
     procedure Test_PIXCD_ConfigGravarValor;
+    procedure Test_PIXCD_ConfigGravarValor_ScopesBancoBrasil;
+    procedure Test_PIXCD_ConfigGravarValor_ScopesInvalidos;
+    procedure Test_PIXCD_ConfigGravarValor_ScopeEmBranco;
     procedure Test_PIXCD_TestePSP;
     procedure Test_PIXCD_GerarQRCodeEstatico;
     procedure Test_PIXCD_ConsultarPIX;
@@ -252,6 +255,66 @@ begin
   AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConfigGravarValor_ScopesBancoBrasil;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  // Gravando o valor
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk,
+                     PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDBancoBrasilConfig, CChaveScopes, '[scCobWrite,scCobRead,scCobVWrite,scCobVRead,scPixWrite,scPixRead]'));
+
+  // Checando se o valor foi atualizado //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDBancoBrasilConfig, CChaveScopes, PChar(AStr), Bufflen));
+  AStr := copy(AStr,1,Bufflen);
+  AssertEquals('Erro ao Mudar configuração', '[scCobWrite,scCobRead,scCobVWrite,scCobVRead,scPixWrite,scPixRead]', AStr);
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConfigGravarValor_ScopesInvalidos;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  // Gravando o valor
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk,
+                     PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDBradescoConfig, CChaveScopes, 'ScopeInvalido'));
+
+  // Checando se o valor foi atualizado //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDBradescoConfig, CChaveScopes, PChar(AStr), Bufflen));
+  AStr := copy(AStr,1,Bufflen);
+  AssertEquals('Erro ao Mudar configuração', '[]', AStr);
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConfigGravarValor_ScopeEmBranco;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+begin
+  // Gravando o valor
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk,
+                     PIXCD_ConfigGravarValor(Handle, CSessaoPIXCDInterConfig, CChaveScopes, ''));
+
+  // Checando se o valor foi atualizado //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDInterConfig, CChaveScopes, PChar(AStr), Bufflen));
+  AStr := copy(AStr,1,Bufflen);
+  AssertEquals('Erro ao Mudar configuração', '[]', AStr);
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;
 

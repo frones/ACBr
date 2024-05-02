@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="173"/>
+      <BuildNr Value="174"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNCMs - Biblioteca para consulta de NCMs" InternalName="ACBrLibNCMs" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>

@@ -40,9 +40,7 @@ namespace ACBrLibNFSe.Demo
         private void FrmMain_Shown(object sender, EventArgs e)
         {
             SplashScreenManager.Show<FrmWait>();
-            SplashScreenManager.ShowInfo(SplashInfo.Message, "Carregando...");
-
-            
+            SplashScreenManager.ShowInfo(SplashInfo.Message, "Carregando...");           
 
             try
             {
@@ -411,7 +409,7 @@ namespace ACBrLibNFSe.Demo
                 var aLote = "1";
                 if (InputBox.Show("Enviar Assíncrono", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
-                var ret = ACBrNFSe.Emitir(aLote, 2, false);
+                var ret = ACBrNFSe.Emitir(aLote, 1, false);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)

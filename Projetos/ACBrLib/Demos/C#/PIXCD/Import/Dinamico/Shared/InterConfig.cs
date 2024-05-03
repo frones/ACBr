@@ -48,6 +48,12 @@ namespace ACBrLib.PIXCD
             set => SetProperty(value);
         }
 
+        public string Scopes
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value); 
+        }
+
         #endregion Properties
     }
 }

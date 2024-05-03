@@ -119,6 +119,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Bradesco.ClientSecret = txtClientSecretBradesco.Text;
                 ACBrPIXCD.Config.Bradesco.ArqPFX = txtArquivoPFXBradesco.Text;
                 ACBrPIXCD.Config.Bradesco.SenhaPFX = txtSenhaCertificadoBradesco.Text;
+                ACBrPIXCD.Config.Bradesco.Scopes = txtScopesBradesco.Text;
 
                 //Sicredi
                 ACBrPIXCD.Config.Sicredi.ChavePIX = txtChavePIXSicredi.Text;
@@ -126,6 +127,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Sicredi.ClientSecret = txtClientSecretSicredi.Text;
                 ACBrPIXCD.Config.Sicredi.ArqChavePrivada = txtArquivoChavePrivadaSicredi.Text;
                 ACBrPIXCD.Config.Sicredi.ArqCertificado = txtArquivoCertificadoSicredi.Text;
+                ACBrPIXCD.Config.Sicredi.Scopes = txtScopesSicredi.Text;
 
                 //Sicoob
                 ACBrPIXCD.Config.Sicoob.ChavePIX = txtChavePIXSicoob.Text;
@@ -133,11 +135,13 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Sicoob.TokenSandbox = txtTokenSandboxSicoob.Text;
                 ACBrPIXCD.Config.Sicoob.ArqChavePrivada = txtArquivoChavePrivadaSicoob.Text;
                 ACBrPIXCD.Config.Sicoob.ArqCertificado = txtArquivoCertificadoSicoob.Text;
+                ACBrPIXCD.Config.Sicoob.Scopes = txtScopesSicoob.Text;
 
                 //Shipay
                 ACBrPIXCD.Config.Shipay.ClientID = txtClientIDShipay.Text;
                 ACBrPIXCD.Config.Shipay.SecretKey = txtSecretKeyShipay.Text;
                 ACBrPIXCD.Config.Shipay.AccessKey = txtAccessKeyShipay.Text;
+                ACBrPIXCD.Config.Shipay.Scopes = txtScopesShipay.Text;
 
                 //Santander
                 ACBrPIXCD.Config.Santander.ChavePIX = txtChavePIXSantander.Text;
@@ -145,11 +149,13 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Santander.ConsumerSecret = txtConsumerSecretSantander.Text;
                 ACBrPIXCD.Config.Santander.ArqCertificadoPFX = txtArquivoCertificadoPFXSantander.Text;
                 ACBrPIXCD.Config.Santander.SenhaCertificadoPFX = txtSenhaCertificadoPFXSantander.Text;
+                ACBrPIXCD.Config.Santander.Scopes = txtScopesSantander.Text;
 
                 //PixPDV
                 ACBrPIXCD.Config.PixPDV.CNPJ = txtCNPJPixPDV.Text;
                 ACBrPIXCD.Config.PixPDV.Token = txtPixPDVToken.Text;
                 ACBrPIXCD.Config.PixPDV.SecretKey = txtSecretKeyPixPDV.Text;
+                ACBrPIXCD.Config.PixPDV.Scopes = txtScopesPixPDV.Text;
 
                 //PagSeguro
                 ACBrPIXCD.Config.PagSeguro.ChavePIX = txtChavePIXPagSeguro.Text;
@@ -157,6 +163,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.PagSeguro.ClientSecret = txtClientSecretPagSeguro.Text;
                 ACBrPIXCD.Config.PagSeguro.ArqChavePrivada = txtArquivoChavePrivadaPagSeguro.Text;
                 ACBrPIXCD.Config.PagSeguro.ArqCertificado = txtArquivoCertificadoPagSeguro.Text;
+                ACBrPIXCD.Config.PagSeguro.Scopes = txtScopesPagSeguro.Text;
 
                 //Itau
                 ACBrPIXCD.Config.Itau.ChavePIX = txtChavePIXItau.Text;
@@ -164,6 +171,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Itau.ClientSecret = txtClientSecretItau.Text;
                 ACBrPIXCD.Config.Itau.ArqChavePrivada = txtArquivoChavePrivadaItau.Text;
                 ACBrPIXCD.Config.Itau.ArqCertificado = txtArquivoCertificadoItau.Text;
+                ACBrPIXCD.Config.Itau.Scopes = txtScopesItau.Text;
 
                 //Inter
                 ACBrPIXCD.Config.Inter.ChavePIX = txtChavePIXInter.Text;
@@ -171,12 +179,14 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Inter.ClientSecret = txtClientSecretInter.Text;
                 ACBrPIXCD.Config.Inter.ArqChavePrivada = txtArquivoChavePrivadaInter.Text;
                 ACBrPIXCD.Config.Inter.ArqCertificado = txtArquivoCertificadoInter.Text;
+                ACBrPIXCD.Config.Inter.Scopes = txtScopesInter.Text;
 
                 //GerenciaNet
                 ACBrPIXCD.Config.GerenciaNet.ChavePIX = txtChavePIXGerenciaNet.Text;
                 ACBrPIXCD.Config.GerenciaNet.ClientID = txtClientIDGerenciaNet.Text;
                 ACBrPIXCD.Config.GerenciaNet.ClientSecret = txtClientSecretGerenciaNet.Text;
                 ACBrPIXCD.Config.GerenciaNet.ArqPFX = txtArquivoCertificadoGerenciaNet.Text;
+                ACBrPIXCD.Config.GerenciaNet.Scopes = txtScopesGerenciaNet.Text;
 
                 //BancoBrasil
                 ACBrPIXCD.Config.BancoBrasil.ChavePIX = txtChavePIXBancoBrasil.Text;
@@ -188,6 +198,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.BancoBrasil.ArqPFX = txtArquivoPXFBancoBrasil.Text;
                 ACBrPIXCD.Config.BancoBrasil.SenhaPFX = txtSenhaPFXBancoBrasil.Text;
                 ACBrPIXCD.Config.BancoBrasil.BBAPIVersao = cmbBBAPIVersao.GetSelectedValue<BBAPIVersao>();
+                ACBrPIXCD.Config.BancoBrasil.Scopes = txtScopesBancoBrasil.Text;
 
                 //Ailos
                 ACBrPIXCD.Config.Ailos.ChavePIX = txtChavePIXAilos.Text;
@@ -196,6 +207,7 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Ailos.ArqChavePrivada = txtArquivoChavePrivadaAilos.Text;
                 ACBrPIXCD.Config.Ailos.ArqCertificado = txtArquivoCertificadoAilos.Text;
                 ACBrPIXCD.Config.Ailos.ArqCertificadoRoot = txtArquivoCeriticadoRootAilos.Text;
+                ACBrPIXCD.Config.Ailos.Scopes = txtScopesAilos.Text;
 
                 //Matera
                 ACBrPIXCD.Config.Matera.ChavePIX = txtChavePIXMatera.Text;
@@ -206,15 +218,18 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Matera.ArqChavePrivada = txtArquivoChavePrivadaMatera.Text;
                 ACBrPIXCD.Config.Matera.AccountID = txtAccountIDMatera.Text;
                 ACBrPIXCD.Config.Matera.MediatorFee = txtMediatorFeeMatera.Text;
+                ACBrPIXCD.Config.Matera.Scopes = txtScopesMatera.Text;
 
                 //Cielo
                 ACBrPIXCD.Config.Cielo.ChavePIX = txtChavePIXCielo.Text;
                 ACBrPIXCD.Config.Cielo.ClientID = txtClientIDCielo.Text;
                 ACBrPIXCD.Config.Cielo.ClientSecret = txtClientSecretCielo.Text;
+                ACBrPIXCD.Config.Cielo.Scopes = txtScopesCielo.Text;
 
                 //MercadoPago
                 ACBrPIXCD.Config.MercadoPago.ChavePIX = txtChavePIXMercadoPago.Text;
                 ACBrPIXCD.Config.MercadoPago.AccessToken = txtAccessTokenMercadoPago.Text;
+                ACBrPIXCD.Config.MercadoPago.Scopes = txtScopesMercadoPago.Text;
 
                 ACBrPIXCD.ConfigGravar();
 
@@ -260,6 +275,7 @@ namespace ACBrLibPIXCD.Demo
             txtClientSecretBradesco.Text = ACBrPIXCD.Config.Bradesco.ClientSecret;
             txtArquivoPFXBradesco.Text = ACBrPIXCD.Config.Bradesco.ArqPFX;
             txtSenhaCertificadoBradesco.Text = ACBrPIXCD.Config.Bradesco.SenhaPFX;
+            txtScopesBradesco.Text = ACBrPIXCD.Config.Bradesco.Scopes;
 
             //Sicredi
             txtChavePIXSicredi.Text = ACBrPIXCD.Config.Sicredi.ChavePIX;
@@ -267,6 +283,7 @@ namespace ACBrLibPIXCD.Demo
             txtClientSecretSicredi.Text = ACBrPIXCD.Config.Sicredi.ClientSecret;
             txtArquivoChavePrivadaSicredi.Text = ACBrPIXCD.Config.Sicredi.ArqChavePrivada;
             txtArquivoCertificadoSicredi.Text = ACBrPIXCD.Config.Sicredi.ArqCertificado;
+            txtScopesSicredi.Text = ACBrPIXCD.Config.Sicredi.Scopes;
 
             //Sicoob
             txtChavePIXSicoob.Text = ACBrPIXCD.Config.Sicoob.ChavePIX;
@@ -274,11 +291,13 @@ namespace ACBrLibPIXCD.Demo
             txtTokenSandboxSicoob.Text = ACBrPIXCD.Config.Sicoob.TokenSandbox;
             txtArquivoChavePrivadaSicoob.Text = ACBrPIXCD.Config.Sicoob.ArqChavePrivada;
             txtArquivoCertificadoSicoob.Text = ACBrPIXCD.Config.Sicoob.ArqCertificado;
+            txtScopesSicoob.Text = ACBrPIXCD.Config.Sicoob.Scopes;
 
             //Shipay
             txtClientIDShipay.Text = ACBrPIXCD.Config.Shipay.ClientID;
             txtSecretKeyShipay.Text = ACBrPIXCD.Config.Shipay.SecretKey;
             txtAccessKeyShipay.Text = ACBrPIXCD.Config.Shipay.AccessKey;
+            txtScopesShipay.Text = ACBrPIXCD.Config.Shipay.Scopes;
 
             //Santander
             txtChavePIXSantander.Text = ACBrPIXCD.Config.Santander.ChavePIX;
@@ -286,11 +305,13 @@ namespace ACBrLibPIXCD.Demo
             txtConsumerSecretSantander.Text = ACBrPIXCD.Config.Santander.ConsumerSecret;
             txtArquivoCertificadoPFXSantander.Text = ACBrPIXCD.Config.Santander.ArqCertificadoPFX;
             txtSenhaCertificadoPFXSantander.Text = ACBrPIXCD.Config.Santander.SenhaCertificadoPFX;
+            txtScopesSantander.Text = ACBrPIXCD.Config.Santander.Scopes;
 
             //PixPDV
             txtCNPJPixPDV.Text = ACBrPIXCD.Config.PixPDV.CNPJ;
             txtPixPDVToken.Text = ACBrPIXCD.Config.PixPDV.Token;
             txtSecretKeyPixPDV.Text = ACBrPIXCD.Config.PixPDV.SecretKey;
+            txtScopesPixPDV.Text = ACBrPIXCD.Config.PixPDV.Scopes;
 
             //PagSeguro
             txtChavePIXPagSeguro.Text = ACBrPIXCD.Config.PagSeguro.ChavePIX;
@@ -298,6 +319,7 @@ namespace ACBrLibPIXCD.Demo
             txtClientSecretPagSeguro.Text = ACBrPIXCD.Config.PagSeguro.ClientSecret;
             txtArquivoChavePrivadaPagSeguro.Text = ACBrPIXCD.Config.PagSeguro.ArqChavePrivada;
             txtArquivoCertificadoPagSeguro.Text = ACBrPIXCD.Config.PagSeguro.ArqCertificado;
+            txtScopesPagSeguro.Text = ACBrPIXCD.Config.PagSeguro.Scopes;
 
             //Itau
             txtChavePIXItau.Text = ACBrPIXCD.Config.Itau.ChavePIX;
@@ -305,6 +327,7 @@ namespace ACBrLibPIXCD.Demo
             txtClientSecretItau.Text = ACBrPIXCD.Config.Itau.ClientSecret;
             txtArquivoChavePrivadaItau.Text = ACBrPIXCD.Config.Itau.ArqChavePrivada;
             txtArquivoCertificadoItau.Text = ACBrPIXCD.Config.Itau.ArqCertificado;
+            txtScopesItau.Text = ACBrPIXCD.Config.Itau.Scopes;
 
             //Inter
             txtChavePIXInter.Text = ACBrPIXCD.Config.Inter.ChavePIX;
@@ -312,12 +335,14 @@ namespace ACBrLibPIXCD.Demo
             txtClientSecretInter.Text = ACBrPIXCD.Config.Inter.ClientSecret;
             txtArquivoChavePrivadaInter.Text = ACBrPIXCD.Config.Inter.ArqChavePrivada;
             txtArquivoCertificadoInter.Text = ACBrPIXCD.Config.Inter.ArqCertificado;
+            txtScopesInter.Text = ACBrPIXCD.Config.Inter.Scopes;
 
             //GerenciaNet
             txtChavePIXGerenciaNet.Text = ACBrPIXCD.Config.GerenciaNet.ChavePIX;
             txtClientIDGerenciaNet.Text = ACBrPIXCD.Config.GerenciaNet.ClientID;
             txtClientSecretGerenciaNet.Text = ACBrPIXCD.Config.GerenciaNet.ClientSecret;
             txtArquivoCertificadoGerenciaNet.Text = ACBrPIXCD.Config.GerenciaNet.ArqPFX;
+            txtScopesGerenciaNet.Text = ACBrPIXCD.Config.GerenciaNet.Scopes;
 
             //BancoBrasil
             txtChavePIXBancoBrasil.Text = ACBrPIXCD.Config.BancoBrasil.ChavePIX;
@@ -329,6 +354,7 @@ namespace ACBrLibPIXCD.Demo
             txtArquivoPXFBancoBrasil.Text = ACBrPIXCD.Config.BancoBrasil.ArqPFX;
             txtSenhaPFXBancoBrasil.Text = ACBrPIXCD.Config.BancoBrasil.SenhaPFX;
             cmbBBAPIVersao.SetSelectedValue(ACBrPIXCD.Config.BancoBrasil.BBAPIVersao);
+            txtScopesBancoBrasil.Text = ACBrPIXCD.Config.BancoBrasil.Scopes;           
 
             //Ailos
             txtChavePIXAilos.Text = ACBrPIXCD.Config.Ailos.ChavePIX;
@@ -337,6 +363,7 @@ namespace ACBrLibPIXCD.Demo
             txtArquivoChavePrivadaAilos.Text = ACBrPIXCD.Config.Ailos.ArqChavePrivada;
             txtArquivoCertificadoAilos.Text = ACBrPIXCD.Config.Ailos.ArqCertificado;
             txtArquivoCeriticadoRootAilos.Text = ACBrPIXCD.Config.Ailos.ArqCertificadoRoot;
+            txtScopesAilos.Text = ACBrPIXCD.Config.Ailos.Scopes;
 
             //Matera
             txtChavePIXMatera.Text = ACBrPIXCD.Config.Matera.ChavePIX;
@@ -347,15 +374,18 @@ namespace ACBrLibPIXCD.Demo
             txtArquivoChavePrivadaMatera.Text = ACBrPIXCD.Config.Matera.ArqChavePrivada;
             txtAccountIDMatera.Text = ACBrPIXCD.Config.Matera.AccountID;
             txtMediatorFeeMatera.Text = ACBrPIXCD.Config.Matera.MediatorFee;
+            txtScopesMatera.Text = ACBrPIXCD.Config.Matera.Scopes;
 
             //Cielo
             txtChavePIXCielo.Text = ACBrPIXCD.Config.Cielo.ChavePIX;
             txtClientIDCielo.Text = ACBrPIXCD.Config.Cielo.ClientID;
             txtClientSecretCielo.Text = ACBrPIXCD.Config.Cielo.ClientSecret;
+            txtScopesCielo.Text = ACBrPIXCD.Config.Cielo.Scopes;
 
             //MercadoPago
             txtChavePIXMercadoPago.Text = ACBrPIXCD.Config.MercadoPago.ChavePIX;
             txtAccessTokenMercadoPago.Text = ACBrPIXCD.Config.MercadoPago.AccessToken;
+            txtScopesMercadoPago.Text = ACBrPIXCD.Config.MercadoPago.Scopes;
         }
 
         private void btnCertificadoBradesco_Click(object sender, EventArgs e)

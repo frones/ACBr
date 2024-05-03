@@ -47,6 +47,7 @@ type
   TPIXCDPSPConfig = class
     private
       FScopes: TACBrPSPScopes;
+    protected
       FSessaoPSP: String;
     public
       constructor Create;

@@ -44,6 +44,8 @@ Símbolo : Significado
 
 02/05/2024
 -- ACBrLibPIXCDConfig --
+[*] Altera o escopo de variável visando correto uso de herança.
+Por: Diego Folieni
 [*] Refactoring da maneira como era lido e salvo a informação dos scopes
 Por: Diego Folieni
 -- ACBrLibPIXCDConfig, ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts --

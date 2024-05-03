@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Alagoinhas/BA, o provedor é WebISS versão 2.02.
+  Por: DeveloperATS
+
 02/05/2024
 -- ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2 --
 [*] Ajuste visando corrigir erro ao realizar a leitura de informações de cancelamento

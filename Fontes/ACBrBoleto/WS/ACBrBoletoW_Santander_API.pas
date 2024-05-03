@@ -153,23 +153,27 @@ begin
   if Assigned(ATitulo) then
   begin
     case Boleto.Configuracoes.WebService.Operacao of
-      tpInclui: RequisicaoJson;
+      tpInclui:
+        begin
+          FMetodoHTTP := htPOST;
+          RequisicaoJson;
+        end;
       tpAltera:
-      begin
-        FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
-        RequisicaoAltera;
-      end;
+        begin
+          FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
+          RequisicaoAltera;
+        end;
       tpBaixa :
-      begin
-        FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
-        RequisicaoBaixa;
-      end;
+        begin
+          FMetodoHTTP := htPATCH; // Define Método PATCH conforme manual do banco
+          RequisicaoBaixa;
+        end;
 
       tpConsultaDetalhe:
-      begin
-        FMetodoHTTP := htGET; // Define Método GET Consulta
-        RequisicaoConsultaDetalhe;
-      end;
+        begin
+          FMetodoHTTP := htGET; // Define Método GET Consulta
+          RequisicaoConsultaDetalhe;
+        end;
     else
       raise EACBrBoletoWSException.Create(ClassName + Format( S_OPERACAO_NAO_IMPLEMENTADO, [TipoOperacaoToStr(Boleto.Configuracoes.WebService.Operacao)]));
     end;

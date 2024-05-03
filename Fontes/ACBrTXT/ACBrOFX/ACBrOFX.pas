@@ -51,6 +51,7 @@ type
     Document: string;
     Description: string;
     Name: string;
+    RefNum : string;
   end;
 
 type
@@ -284,6 +285,10 @@ begin
               oItem.ID := InfLine(sLine);
             if FindString('<CHKNUM>', sLine) or FindString('<CHECKNUM>', sLine) then
               oItem.Document := InfLine(sLine);
+
+            if FindString('<REFNUM>', sLine) then
+              oItem.RefNum := InfLine(sLine);
+
             if FindString('<MEMO>', sLine) then
             begin
               LDescricaoMemo := LDescricaoMemo + ifthen(LDescricaoMemo='','',', ')+trim(InfLine(sLine));

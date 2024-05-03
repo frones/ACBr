@@ -1398,7 +1398,7 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    if Pos('<retorno><msg>', Result) = 0 then
+    if Pos('<retorno>', Result) = 0 then
     begin
       Result := '<retorno>' +
                   '<mensagem>' +
@@ -1513,7 +1513,7 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    if Pos('<retorno><msg>', Result) = 0 then
+    if Pos('<retorno>', Result) = 0 then
     begin
       Result := '<retorno>' +
                   '<mensagem>' +

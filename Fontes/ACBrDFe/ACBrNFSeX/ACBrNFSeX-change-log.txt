@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 03/05/2024
+-- ISSRio.Provider --
+[*] Alterado o caracter de Quebra de Linha.
+  Por: Italo Giurizzato Junior
+-- IPM.Provider --
+[-] Possível correção na montagem do XML contendo a mensagem de erro.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Alagoinhas/BA, o provedor é WebISS versão 2.02.
   Por: DeveloperATS

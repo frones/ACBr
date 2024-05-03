@@ -201,7 +201,7 @@ procedure TACBrNFSeProviderISSRio.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := '&#xA;';
+  ConfigGeral.QuebradeLinha := sLineBreak;
 
   ConfigGeral.ServicosDisponibilizados.EnviarUnitario := True;
 

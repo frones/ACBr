@@ -57,7 +57,6 @@ public class FrmMain extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup8 = new javax.swing.ButtonGroup();
         buttonGroup9 = new javax.swing.ButtonGroup();
-        btnCarregarConfiguracoes = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
@@ -109,6 +108,8 @@ public class FrmMain extends javax.swing.JFrame {
         btnCertificadoBradesco = new javax.swing.JButton();
         txtSenhaCertificadoBradesco = new javax.swing.JTextField();
         jLabel68 = new javax.swing.JLabel();
+        jLabel137 = new javax.swing.JLabel();
+        txtScopesBradesco = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel69 = new javax.swing.JLabel();
         txtChavePIXSicredi = new javax.swing.JTextField();
@@ -122,6 +123,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel73 = new javax.swing.JLabel();
         txtArquivoCertificadoSicredi = new javax.swing.JTextField();
         btnArquivoCertificadoSicredi = new javax.swing.JButton();
+        txtScopesSicredi = new javax.swing.JTextField();
+        jLabel138 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnArquivoCertificadoSicredi1 = new javax.swing.JButton();
         txtArquivoCertificadoSicoob = new javax.swing.JTextField();
@@ -135,6 +138,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel77 = new javax.swing.JLabel();
         txtChavePIXSicoob = new javax.swing.JTextField();
         jLabel78 = new javax.swing.JLabel();
+        txtScopesSicoob = new javax.swing.JTextField();
+        jLabel139 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         txtAccessKeyShipay = new javax.swing.JTextField();
         jLabel79 = new javax.swing.JLabel();
@@ -142,6 +147,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel80 = new javax.swing.JLabel();
         jLabel81 = new javax.swing.JLabel();
         txtClientIDShipay = new javax.swing.JTextField();
+        txtScopesShipay = new javax.swing.JTextField();
+        jLabel140 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel82 = new javax.swing.JLabel();
         txtChavePIXSantander = new javax.swing.JTextField();
@@ -154,6 +161,8 @@ public class FrmMain extends javax.swing.JFrame {
         btnArquivoCertificadoPFXSantander = new javax.swing.JButton();
         jLabel86 = new javax.swing.JLabel();
         txtSenhaCertificadoPFXSantander = new javax.swing.JTextField();
+        txtScopesSantander = new javax.swing.JTextField();
+        jLabel141 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel87 = new javax.swing.JLabel();
         txtCNPJPixPDV = new javax.swing.JTextField();
@@ -161,6 +170,8 @@ public class FrmMain extends javax.swing.JFrame {
         txtPixPDVToken = new javax.swing.JTextField();
         jLabel89 = new javax.swing.JLabel();
         txtSecretKeyPixPDV = new javax.swing.JTextField();
+        txtScopesPixPDV = new javax.swing.JTextField();
+        jLabel142 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel90 = new javax.swing.JLabel();
         txtChavePIXPagSeguro = new javax.swing.JTextField();
@@ -174,6 +185,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel94 = new javax.swing.JLabel();
         txtArquivoCertificadoPagSeguro = new javax.swing.JTextField();
         btnArquivoCertificadoPagSeguro = new javax.swing.JButton();
+        txtScopesPagSeguro = new javax.swing.JTextField();
+        jLabel143 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel95 = new javax.swing.JLabel();
         txtChavePIXItau = new javax.swing.JTextField();
@@ -187,6 +200,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel99 = new javax.swing.JLabel();
         txtArquivoCertificadoItau = new javax.swing.JTextField();
         btnArquivoCertificadoItau = new javax.swing.JButton();
+        txtScopesItau = new javax.swing.JTextField();
+        jLabel144 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel100 = new javax.swing.JLabel();
         txtChavePIXInter = new javax.swing.JTextField();
@@ -200,6 +215,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel104 = new javax.swing.JLabel();
         txtArquivoCertificadoInter = new javax.swing.JTextField();
         btnArquivoCertificadoInter = new javax.swing.JButton();
+        txtScopesInter = new javax.swing.JTextField();
+        jLabel145 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         btnArquivoCertificadoGerenciaNet = new javax.swing.JButton();
         txtArquivoCertificadoGerenciaNet = new javax.swing.JTextField();
@@ -210,6 +227,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel107 = new javax.swing.JLabel();
         txtChavePIXGerenciaNet = new javax.swing.JTextField();
         jLabel108 = new javax.swing.JLabel();
+        txtScopesGerenciaNet = new javax.swing.JTextField();
+        jLabel147 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel109 = new javax.swing.JLabel();
         jLabel110 = new javax.swing.JLabel();
@@ -232,6 +251,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel117 = new javax.swing.JLabel();
         txtSenhaPFXBancoBrasil = new javax.swing.JTextField();
         jLabel113 = new javax.swing.JLabel();
+        txtScopesBancoBrasil = new javax.swing.JTextField();
+        jLabel151 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jLabel118 = new javax.swing.JLabel();
         txtChavePIXAilos = new javax.swing.JTextField();
@@ -248,6 +269,8 @@ public class FrmMain extends javax.swing.JFrame {
         txtArquivoCeriticadoRootAilos = new javax.swing.JTextField();
         jLabel123 = new javax.swing.JLabel();
         btnArquivoCeriticadoRootAilos = new javax.swing.JButton();
+        txtScopesAilos = new javax.swing.JTextField();
+        jLabel146 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
         txtClientSecretMatera = new javax.swing.JTextField();
         jLabel129 = new javax.swing.JLabel();
@@ -267,6 +290,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel136 = new javax.swing.JLabel();
         txtArquivoCertificadoMatera = new javax.swing.JTextField();
         btnArquivoCertificadoMatera = new javax.swing.JButton();
+        txtScopesMatera = new javax.swing.JTextField();
+        jLabel148 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
         txtClientSecretCielo = new javax.swing.JTextField();
         jLabel124 = new javax.swing.JLabel();
@@ -274,12 +299,15 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel125 = new javax.swing.JLabel();
         jLabel126 = new javax.swing.JLabel();
         txtChavePIXCielo = new javax.swing.JTextField();
+        txtScopesCielo = new javax.swing.JTextField();
+        jLabel149 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         txtAccessTokenMercadoPago = new javax.swing.JTextField();
         jLabel127 = new javax.swing.JLabel();
         txtChavePIXMercadoPago = new javax.swing.JTextField();
         jLabel128 = new javax.swing.JLabel();
-        btnSalvar = new javax.swing.JButton();
+        txtScopesMercadoPago = new javax.swing.JTextField();
+        jLabel150 = new javax.swing.JLabel();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel14 = new javax.swing.JPanel();
@@ -302,6 +330,8 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         rtbRespostas = new javax.swing.JTextArea();
+        btnSalvar = new javax.swing.JButton();
+        btnCarregarConfiguracoes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibNFSe Demo");
@@ -314,13 +344,6 @@ public class FrmMain extends javax.swing.JFrame {
             }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
-            }
-        });
-
-        btnCarregarConfiguracoes.setLabel("Carregar Configurações");
-        btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarregarConfiguracoesActionPerformed(evt);
             }
         });
 
@@ -576,7 +599,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         ConfigPIXLayout.setVerticalGroup(
             ConfigPIXLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,7 +612,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(ConfigPIXLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Configurações PIX", ConfigPIX);
@@ -616,6 +639,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel68.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel68.setText("Senha Certificado");
 
+        jLabel137.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel137.setText("Scopes");
+
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
@@ -631,14 +657,16 @@ public class FrmMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCertificadoBradesco))
                     .addComponent(txtSenhaCertificadoBradesco)
+                    .addComponent(txtScopesBradesco)
                     .addGroup(jPanel23Layout.createSequentialGroup()
                         .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel59)
                             .addComponent(jLabel58)
                             .addComponent(jLabel68)
                             .addComponent(jLabel61)
-                            .addComponent(jLabel60))
-                        .addGap(0, 346, Short.MAX_VALUE)))
+                            .addComponent(jLabel60)
+                            .addComponent(jLabel137))
+                        .addGap(0, 348, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel23Layout.setVerticalGroup(
@@ -666,7 +694,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel68)
                 .addGap(3, 3, 3)
                 .addComponent(txtSenhaCertificadoBradesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel137)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesBradesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(183, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Bradesco", jPanel23);
@@ -700,6 +732,9 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel138.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel138.setText("Scopes");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -725,7 +760,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel72)
                             .addComponent(jLabel71)
                             .addComponent(jLabel73))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesSicredi, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel138)
+                        .addGap(291, 291, 291)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -755,7 +794,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoSicredi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoSicredi))
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel138)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesSicredi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Sicredi", jPanel2);
@@ -789,6 +832,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel78.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel78.setText("Chave PIX");
 
+        jLabel139.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel139.setText("Scopes");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -814,7 +860,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel75)
                             .addComponent(jLabel76)
                             .addComponent(jLabel74))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesSicoob, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel139)
+                        .addGap(291, 291, 291)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -844,7 +894,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoSicoob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoSicredi1))
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel139)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesSicoob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(188, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Sicoob", jPanel3);
@@ -858,6 +912,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel81.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel81.setText("Chave PIX");
 
+        jLabel140.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel140.setText("Scopes");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -867,13 +924,15 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtClientIDShipay)
                     .addComponent(txtSecretKeyShipay)
+                    .addComponent(txtAccessKeyShipay)
+                    .addComponent(txtScopesShipay)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel81)
                             .addComponent(jLabel80)
-                            .addComponent(jLabel79))
-                        .addGap(0, 358, Short.MAX_VALUE))
-                    .addComponent(txtAccessKeyShipay))
+                            .addComponent(jLabel79)
+                            .addComponent(jLabel140))
+                        .addGap(0, 359, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -891,7 +950,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel79)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAccessKeyShipay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel140)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtScopesShipay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Shipay", jPanel4);
@@ -918,6 +981,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel86.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel86.setText("Senha Certificado");
 
+        jLabel141.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel141.setText("Scopes");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -933,14 +999,16 @@ public class FrmMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnArquivoCertificadoPFXSantander))
                     .addComponent(txtSenhaCertificadoPFXSantander)
+                    .addComponent(txtScopesSantander, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel83)
                             .addComponent(jLabel82)
                             .addComponent(jLabel86)
                             .addComponent(jLabel85)
-                            .addComponent(jLabel84))
-                        .addGap(0, 314, Short.MAX_VALUE)))
+                            .addComponent(jLabel84)
+                            .addComponent(jLabel141))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -968,7 +1036,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel86)
                 .addGap(3, 3, 3)
                 .addComponent(txtSenhaCertificadoPFXSantander, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel141)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtScopesSantander, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Santander", jPanel5);
@@ -982,6 +1054,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel89.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel89.setText("Secret Key");
 
+        jLabel142.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel142.setText("Scopes");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -992,11 +1067,13 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(txtPixPDVToken, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addComponent(txtCNPJPixPDV)
                     .addComponent(txtSecretKeyPixPDV)
+                    .addComponent(txtScopesPixPDV)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel88)
                             .addComponent(jLabel87)
-                            .addComponent(jLabel89))
+                            .addComponent(jLabel89)
+                            .addComponent(jLabel142))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1015,7 +1092,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel89)
                 .addGap(3, 3, 3)
                 .addComponent(txtSecretKeyPixPDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel142)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesPixPDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(280, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("PixPDV", jPanel7);
@@ -1049,6 +1130,9 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel143.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel143.setText("Scopes");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -1074,7 +1158,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel92)
                             .addComponent(jLabel94)
                             .addComponent(jLabel93))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesPagSeguro, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel143)
+                        .addGap(291, 291, 291)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -1104,7 +1192,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoPagSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoPagSeguro))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel143)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesPagSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("PagSeguro", jPanel9);
@@ -1138,6 +1230,9 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel144.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel144.setText("Scopes");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -1163,7 +1258,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel97)
                             .addComponent(jLabel99)
                             .addComponent(jLabel98))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesItau, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel144)
+                        .addGap(291, 291, 291)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1193,7 +1292,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoItau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoItau))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel144)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesItau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Itau", jPanel10);
@@ -1227,6 +1330,9 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel145.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel145.setText("Scopes");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -1252,7 +1358,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel102)
                             .addComponent(jLabel104)
                             .addComponent(jLabel103))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesInter, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel145)
+                        .addGap(291, 291, 291)))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -1282,7 +1392,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoInter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoInter))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel145)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesInter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Inter", jPanel11);
@@ -1306,6 +1420,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel108.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel108.setText("Chave PIX");
 
+        jLabel147.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel147.setText("Scopes");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -1326,7 +1443,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel108)
                             .addComponent(jLabel106)
                             .addComponent(jLabel105))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesGerenciaNet)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel147)
+                        .addGap(310, 310, 310)))
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -1350,7 +1471,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoGerenciaNet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoGerenciaNet))
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel147)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesGerenciaNet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("GerenciaNet", jPanel12);
@@ -1405,6 +1530,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel113.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel113.setText("Senha PFX");
 
+        jLabel151.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel151.setText("Scopes");
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
@@ -1438,6 +1566,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnArquivoPXFBancoBrasil))
                     .addComponent(txtDeveloperApplicationKeyBancoBrasil)
                     .addComponent(txtSenhaPFXBancoBrasil)
+                    .addComponent(txtScopesBancoBrasil)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel109)
@@ -1446,7 +1575,8 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel115)
                             .addComponent(jLabel116)
                             .addComponent(jLabel117)
-                            .addComponent(jLabel113))
+                            .addComponent(jLabel113)
+                            .addComponent(jLabel151))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1497,7 +1627,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel113)
                 .addGap(3, 3, 3)
                 .addComponent(txtSenhaPFXBancoBrasil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel151)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesBancoBrasil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("BancoBrasil", jPanel13);
@@ -1541,6 +1675,9 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel146.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel146.setText("Scopes");
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -1571,7 +1708,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel121)
                             .addComponent(jLabel122)
                             .addComponent(jLabel123))
-                        .addGap(0, 307, Short.MAX_VALUE)))
+                        .addGap(0, 309, Short.MAX_VALUE))
+                    .addComponent(txtScopesAilos)
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addComponent(jLabel146)
+                        .addGap(280, 280, 280)))
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
@@ -1607,7 +1748,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCeriticadoRootAilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCeriticadoRootAilos))
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel146)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesAilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Ailos", jPanel15);
@@ -1650,6 +1795,10 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel148.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel148.setText("Scopes");
+        jLabel148.setToolTipText("");
+
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
@@ -1689,7 +1838,11 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel132)
                             .addComponent(jLabel135)
                             .addComponent(jLabel136))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtScopesMatera, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel148)
+                        .addGap(291, 291, 291)))
                 .addContainerGap())
         );
         jPanel19Layout.setVerticalGroup(
@@ -1733,7 +1886,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArquivoCertificadoMatera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArquivoCertificadoMatera))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel148)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesMatera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Matera", jPanel19);
@@ -1747,22 +1904,27 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel126.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel126.setText("Chave PIX");
 
+        jLabel149.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel149.setText("Scopes");
+
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+            .addGroup(jPanel20Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtClientIDCielo)
                     .addComponent(txtChavePIXCielo)
                     .addComponent(txtClientSecretCielo)
+                    .addComponent(txtScopesCielo)
                     .addGroup(jPanel20Layout.createSequentialGroup()
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel125)
                             .addComponent(jLabel126)
-                            .addComponent(jLabel124))
-                        .addGap(0, 373, Short.MAX_VALUE)))
+                            .addComponent(jLabel124)
+                            .addComponent(jLabel149))
+                        .addGap(0, 375, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
@@ -1780,7 +1942,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel124)
                 .addGap(3, 3, 3)
                 .addComponent(txtClientSecretCielo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel149)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesCielo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Cielo", jPanel20);
@@ -1791,6 +1957,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel128.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel128.setText("Chave PIX");
 
+        jLabel150.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel150.setText("Scopes");
+
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
@@ -1800,10 +1969,12 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtAccessTokenMercadoPago, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addComponent(txtChavePIXMercadoPago)
+                    .addComponent(txtScopesMercadoPago, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel127)
-                            .addComponent(jLabel128))
+                            .addComponent(jLabel128)
+                            .addComponent(jLabel150))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1818,7 +1989,11 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel127)
                 .addGap(3, 3, 3)
                 .addComponent(txtAccessTokenMercadoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(375, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel150)
+                .addGap(3, 3, 3)
+                .addComponent(txtScopesMercadoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(324, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("MercadoPago", jPanel22);
@@ -1838,7 +2013,7 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+            .addGap(0, 526, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1847,7 +2022,7 @@ public class FrmMain extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 566, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1861,27 +2036,16 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane3)
-                .addContainerGap())
+            .addComponent(jTabbedPane3)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 555, Short.MAX_VALUE)
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Configurações PIX");
 
         jTabbedPane1.addTab("Configurações", jPanel1);
-
-        btnSalvar.setText("Salvar Configurações");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
-            }
-        });
 
         jTabbedPane2.setToolTipText("");
         jTabbedPane2.setName("Envio"); // NOI18N
@@ -2111,23 +2275,39 @@ public class FrmMain extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
+        btnSalvar.setText("Salvar Configurações");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCarregarConfiguracoes.setLabel("Carregar Configurações");
+        btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarConfiguracoesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addComponent(btnSalvar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCarregarConfiguracoes))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)
+                        .addComponent(btnCarregarConfiguracoes)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2143,13 +2323,13 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnCarregarConfiguracoes))
-                .addGap(213, 213, 213))
+                .addGap(207, 207, 207))
         );
 
-        btnCarregarConfiguracoes.getAccessibleContext().setAccessibleName("Salvar Carregar Configurações");
         jTabbedPane4.getAccessibleContext().setAccessibleName("EndPoints");
+        btnCarregarConfiguracoes.getAccessibleContext().setAccessibleName("Salvar Carregar Configurações");
 
-        setSize(new java.awt.Dimension(1068, 639));
+        setSize(new java.awt.Dimension(1094, 664));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2789,6 +2969,7 @@ public class FrmMain extends javax.swing.JFrame {
             txtClientSecretBradesco.setText(acbrPIXCD.configLerValor(ACBrSessao.Bradesco, "ClientSecret"));
             txtArquivoPFXBradesco.setText(acbrPIXCD.configLerValor(ACBrSessao.Bradesco, "ArqPFX"));
             txtSenhaCertificadoBradesco.setText(acbrPIXCD.configLerValor(ACBrSessao.Bradesco, "SenhaPFX"));
+            txtScopesBradesco.setText(acbrPIXCD.configLerValor(ACBrSessao.Bradesco, "Scopes"));
             
             //Sicredi
             txtChavePIXSicredi.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicredi, "ChavePIX"));
@@ -2796,6 +2977,7 @@ public class FrmMain extends javax.swing.JFrame {
             txtClientSecretSicredi.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicredi, "ClientSecret"));
             txtArquivoChavePrivadaSicredi.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicredi, "ArqChavePrivada"));
             txtArquivoCertificadoSicredi.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicredi, "ArqCertificado"));
+            txtScopesSicredi.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicredi, "Scopes"));
             
             //Sicoob
             txtChavePIXSicoob.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicoob, "ChavePIX"));
@@ -2803,23 +2985,27 @@ public class FrmMain extends javax.swing.JFrame {
             txtTokenSandboxSicoob.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicoob, "TokenSandbox"));
             txtArquivoChavePrivadaSicoob.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicoob, "ArqChavePrivada"));
             txtArquivoCertificadoSicoob.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicoob, "ArqCertificado"));
+            txtScopesSicoob.setText(acbrPIXCD.configLerValor(ACBrSessao.Sicoob, "Scopes")); 
             
             //Shipay
             txtClientIDShipay.setText(acbrPIXCD.configLerValor(ACBrSessao.Shipay, "ClientID"));
             txtSecretKeyShipay.setText(acbrPIXCD.configLerValor(ACBrSessao.Shipay, "SecretKey"));
             txtAccessKeyShipay.setText(acbrPIXCD.configLerValor(ACBrSessao.Shipay, "AccessKey"));
+            txtScopesShipay.setText(acbrPIXCD.configLerValor(ACBrSessao.Shipay, "Scopes"));
             
             //Santander
             txtChavePIXSantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "ChavePIX"));
             txtConsumerKeySantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "ConsumerKey"));
             txtConsumerSecretSantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "ConsumerSecret"));
             txtArquivoCertificadoPFXSantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "ArqCertificadoPFX"));
-            txtSenhaCertificadoPFXSantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "SenhaCertificadoPFX"));
+            txtSenhaCertificadoPFXSantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "SenhaCertificadoPFX"));            
+            txtScopesSantander.setText(acbrPIXCD.configLerValor(ACBrSessao.Santander, "Scopes"));
             
             //PixPDV
             txtCNPJPixPDV.setText(acbrPIXCD.configLerValor(ACBrSessao.PixPDV, "CNPJ"));
             txtPixPDVToken.setText(acbrPIXCD.configLerValor(ACBrSessao.PixPDV, "Token"));
             txtSecretKeyPixPDV.setText(acbrPIXCD.configLerValor(ACBrSessao.PixPDV, "SecretKey"));
+            txtScopesPixPDV.setText(acbrPIXCD.configLerValor(ACBrSessao.PixPDV, "Scopes"));
             
             //PagSeguro
             txtChavePIXPagSeguro.setText(acbrPIXCD.configLerValor(ACBrSessao.PagSeguro, "ChavePIX"));
@@ -2827,6 +3013,7 @@ public class FrmMain extends javax.swing.JFrame {
             txtClientSecretPagSeguro.setText(acbrPIXCD.configLerValor(ACBrSessao.PagSeguro, "ClientSecret"));
             txtArquivoChavePrivadaPagSeguro.setText(acbrPIXCD.configLerValor(ACBrSessao.PagSeguro, "ArqChavePrivada"));
             txtArquivoCertificadoPagSeguro.setText(acbrPIXCD.configLerValor(ACBrSessao.PagSeguro, "ArqCertificado"));
+            txtScopesPagSeguro.setText(acbrPIXCD.configLerValor(ACBrSessao.PagSeguro, "Scopes"));
             
             //Itau
             txtChavePIXItau.setText(acbrPIXCD.configLerValor(ACBrSessao.Itau, "ChavePIX"));
@@ -2834,6 +3021,7 @@ public class FrmMain extends javax.swing.JFrame {
             txtClientSecretItau.setText(acbrPIXCD.configLerValor(ACBrSessao.Itau, "ClientSecret"));
             txtArquivoChavePrivadaItau.setText(acbrPIXCD.configLerValor(ACBrSessao.Itau, "ArqChavePrivada"));
             txtArquivoCertificadoItau.setText(acbrPIXCD.configLerValor(ACBrSessao.Itau, "ArqCertificado"));
+            txtScopesItau.setText(acbrPIXCD.configLerValor(ACBrSessao.Itau, "Scopes"));
             
             //Inter
             txtChavePIXInter.setText(acbrPIXCD.configLerValor(ACBrSessao.Inter, "ChavePIX"));
@@ -2841,12 +3029,14 @@ public class FrmMain extends javax.swing.JFrame {
             txtClientSecretInter.setText(acbrPIXCD.configLerValor(ACBrSessao.Inter, "ClientSecret"));
             txtArquivoChavePrivadaInter.setText(acbrPIXCD.configLerValor(ACBrSessao.Inter, "ArqChavePrivada"));
             txtArquivoCertificadoInter.setText(acbrPIXCD.configLerValor(ACBrSessao.Inter, "ArqCertificado"));
+            txtScopesInter.setText(acbrPIXCD.configLerValor(ACBrSessao.Inter, "Scopes"));
             
             //GerenciaNet
             txtChavePIXGerenciaNet.setText(acbrPIXCD.configLerValor(ACBrSessao.GerenciaNet, "ChavePIX"));
             txtClientIDGerenciaNet.setText(acbrPIXCD.configLerValor(ACBrSessao.GerenciaNet, "ClientID"));
             txtClientSecretGerenciaNet.setText(acbrPIXCD.configLerValor(ACBrSessao.GerenciaNet, "ClientSecret"));
             txtArquivoCertificadoGerenciaNet.setText(acbrPIXCD.configLerValor(ACBrSessao.GerenciaNet, "ArqPFX"));
+            txtScopesGerenciaNet.setText(acbrPIXCD.configLerValor(ACBrSessao.GerenciaNet, "Scopes"));
             
             //BancoBrasil
             txtChavePIXBancoBrasil.setText(acbrPIXCD.configLerValor(ACBrSessao.BancoBrasil, "ChavePIX"));
@@ -2858,6 +3048,7 @@ public class FrmMain extends javax.swing.JFrame {
             txtArquivoPXFBancoBrasil.setText(acbrPIXCD.configLerValor(ACBrSessao.BancoBrasil, "ArqPFX"));
             txtSenhaPFXBancoBrasil.setText(acbrPIXCD.configLerValor(ACBrSessao.BancoBrasil, "SenhaPFX"));
             cmbBBAPIVersao.setSelectedIndex(Integer.parseInt(acbrPIXCD.configLerValor(ACBrSessao.BancoBrasil, "BBAPIVersao")));
+            txtScopesBancoBrasil.setText(acbrPIXCD.configLerValor(ACBrSessao.BancoBrasil, "Scopes"));
             
             //Ailos
             txtChavePIXAilos.setText(acbrPIXCD.configLerValor(ACBrSessao.Ailos, "ChavePIX"));
@@ -2866,6 +3057,7 @@ public class FrmMain extends javax.swing.JFrame {
             txtArquivoChavePrivadaAilos.setText(acbrPIXCD.configLerValor(ACBrSessao.Ailos, "ArqChavePrivada"));
             txtArquivoCertificadoAilos.setText(acbrPIXCD.configLerValor(ACBrSessao.Ailos, "ArqCertificado"));
             txtArquivoCeriticadoRootAilos.setText(acbrPIXCD.configLerValor(ACBrSessao.Ailos, "ArqCertificadoRoot"));
+            txtScopesAilos.setText(acbrPIXCD.configLerValor(ACBrSessao.Ailos, "Scopes"));
 
             //Matera
             txtChavePIXMatera.setText(acbrPIXCD.configLerValor(ACBrSessao.Matera, "ChavePIX"));
@@ -2876,15 +3068,18 @@ public class FrmMain extends javax.swing.JFrame {
             txtArquivoChavePrivadaMatera.setText(acbrPIXCD.configLerValor(ACBrSessao.Matera, "ArqChavePrivada"));
             txtAccountIDMatera.setText(acbrPIXCD.configLerValor(ACBrSessao.Matera, "AccountID"));
             txtMediatorFeeMatera.setText(acbrPIXCD.configLerValor(ACBrSessao.Matera, "MediatorFee"));
+            txtScopesMatera.setText(acbrPIXCD.configLerValor(ACBrSessao.Matera, "Scopes"));
 
             //Cielo
             txtChavePIXCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ChavePIX"));
             txtClientIDCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ClientID"));
             txtClientSecretCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ClientSecret"));
+            txtScopesCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "Scopes")); 
 
             //MercadoPago
             txtChavePIXMercadoPago.setText(acbrPIXCD.configLerValor(ACBrSessao.MercadoPago, "ChavePIX"));
             txtAccessTokenMercadoPago.setText(acbrPIXCD.configLerValor(ACBrSessao.MercadoPago, "AccessToken"));
+            txtScopesMercadoPago.setText(acbrPIXCD.configLerValor(ACBrSessao.MercadoPago, "Scopes"));
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2916,6 +3111,8 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Bradesco, "ClientSecret", txtClientSecretBradesco.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Bradesco, "ArqPFX", txtArquivoPFXBradesco.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Bradesco, "SenhaPFX", txtSenhaCertificadoBradesco.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Bradesco, "Scopes", txtScopesBradesco.getText());
+            
             
             //Sicred
             acbrPIXCD.configGravarValor(ACBrSessao.Sicredi, "ChavePIX", txtChavePIXSicredi.getText());
@@ -2923,6 +3120,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Sicredi, "ClientSecret", txtClientSecretSicredi.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Sicredi, "ArqChavePrivada", txtArquivoChavePrivadaSicredi.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Sicredi, "ArqCertificado", txtArquivoCertificadoSicredi.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Sicredi, "Scopes", txtScopesSicredi.getText());
             
             //Sicoob
             acbrPIXCD.configGravarValor(ACBrSessao.Sicoob, "ChavePIX", txtChavePIXSicoob.getText());
@@ -2930,11 +3128,13 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Sicoob, "TokenSandbox", txtTokenSandboxSicoob.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Sicoob, "ArqChavePrivada", txtArquivoChavePrivadaSicoob.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Sicoob, "ArqCertificado", txtArquivoCertificadoSicoob.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Sicoob, "Scopes", txtScopesSicoob.getText());
             
             //Shipay
             acbrPIXCD.configGravarValor(ACBrSessao.Shipay, "ClientID", txtClientIDShipay.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Shipay, "SecretKey", txtSecretKeyShipay.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Shipay, "AccessKey", txtAccessKeyShipay.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Shipay, "Scopes", txtScopesShipay.getText());
             
             //Santander
             acbrPIXCD.configGravarValor(ACBrSessao.Santander, "ChavePIX", txtChavePIXSantander.getText());
@@ -2942,11 +3142,13 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Santander, "ConsumerSecret", txtConsumerSecretSantander.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Santander, "ArqCertificadoPFX", txtArquivoCertificadoPFXSantander.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Santander, "SenhaCertificadoPFX", txtSenhaCertificadoPFXSantander.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Santander, "Scopes", txtScopesSantander.getText());
             
             //PixPDV
             acbrPIXCD.configGravarValor(ACBrSessao.PixPDV, "CNPJ", txtCNPJPixPDV.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.PixPDV, "Token", txtPixPDVToken.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.PixPDV, "SecretKey", txtSecretKeyPixPDV.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.PixPDV, "Scopes", txtScopesPixPDV.getText());
             
             //PagSeguro
             acbrPIXCD.configGravarValor(ACBrSessao.PagSeguro, "ChavePIX", txtChavePIXPagSeguro.getText());
@@ -2954,6 +3156,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.PagSeguro, "ClientSecret", txtClientSecretPagSeguro.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.PagSeguro, "ArqChavePrivada", txtArquivoChavePrivadaPagSeguro.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.PagSeguro, "ArqCertificado", txtArquivoCertificadoPagSeguro.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.PagSeguro, "Scopes", txtScopesPagSeguro.getText());
             
             //Itau
             acbrPIXCD.configGravarValor(ACBrSessao.Itau, "ChavePIX", txtChavePIXItau.getText());
@@ -2961,6 +3164,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Itau, "ClientSecret", txtClientSecretItau.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Itau, "ArqChavePrivada", txtArquivoChavePrivadaItau.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Itau, "ArqCertificado", txtArquivoCertificadoItau.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Itau, "Scopes", txtScopesItau.getText());
             
             //Inter
             acbrPIXCD.configGravarValor(ACBrSessao.Inter, "ChavePIX", txtChavePIXInter.getText());
@@ -2968,12 +3172,14 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Inter, "ClientSecret", txtClientSecretInter.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Inter, "ArqChavePrivada", txtArquivoChavePrivadaInter.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Inter, "ArqCertificado", txtArquivoCertificadoInter.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Inter, "Scopes", txtScopesInter.getText());
             
             //GerenciaNet
             acbrPIXCD.configGravarValor(ACBrSessao.GerenciaNet, "ChavePIX", txtChavePIXGerenciaNet.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.GerenciaNet, "ClientID", txtClientIDGerenciaNet.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.GerenciaNet, "ClientSecret", txtClientSecretGerenciaNet.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.GerenciaNet, "ArqPFX", txtArquivoCertificadoGerenciaNet.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.GerenciaNet, "Scopes", txtScopesGerenciaNet.getText());
             
             //BancoBrasil
             acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ChavePIX", txtChavePIXBancoBrasil.getText());
@@ -2985,6 +3191,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "ArqPFX", txtArquivoPXFBancoBrasil.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "SenhaPFX", txtSenhaPFXBancoBrasil.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "BBAPIVersao", cmbBBAPIVersao.getSelectedIndex());
+            acbrPIXCD.configGravarValor(ACBrSessao.BancoBrasil, "Scopes", txtScopesBancoBrasil.getText());
             
             //Ailos
             acbrPIXCD.configGravarValor(ACBrSessao.Ailos, "ChavePIX", txtChavePIXAilos.getText());
@@ -2993,6 +3200,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Ailos, "ArqChavePrivada", txtArquivoChavePrivadaAilos.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Ailos, "ArqCertificado", txtArquivoCertificadoAilos.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Ailos, "ArqCertificadoRoot", txtArquivoCeriticadoRootAilos.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Ailos, "Scopes", txtScopesAilos.getText());
             
             //Matera
             acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ChavePIX", txtChavePIXMatera.getText());
@@ -3003,15 +3211,18 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Matera, "ArqChavePrivada", txtArquivoChavePrivadaMatera.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Matera, "AccountID", txtAccountIDMatera.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Matera, "MediatorFee", txtMediatorFeeMatera.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Matera, "Scopes", txtScopesMatera.getText());
             
             //Cielo
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ChavePIX", txtChavePIXCielo.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ClientID", txtClientIDCielo.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ClientSecret", txtClientSecretCielo.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "Scopes", txtScopesCielo.getText());
             
             //MercadoPago
             acbrPIXCD.configGravarValor(ACBrSessao.MercadoPago, "ChavePIX", txtChavePIXMercadoPago.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.MercadoPago, "AccessToken", txtAccessTokenMercadoPago.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.MercadoPago, "Scopes", txtScopesMercadoPago.getText());
             
             acbrPIXCD.configGravar();            
             
@@ -3104,6 +3315,21 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel134;
     private javax.swing.JLabel jLabel135;
     private javax.swing.JLabel jLabel136;
+    private javax.swing.JLabel jLabel137;
+    private javax.swing.JLabel jLabel138;
+    private javax.swing.JLabel jLabel139;
+    private javax.swing.JLabel jLabel140;
+    private javax.swing.JLabel jLabel141;
+    private javax.swing.JLabel jLabel142;
+    private javax.swing.JLabel jLabel143;
+    private javax.swing.JLabel jLabel144;
+    private javax.swing.JLabel jLabel145;
+    private javax.swing.JLabel jLabel146;
+    private javax.swing.JLabel jLabel147;
+    private javax.swing.JLabel jLabel148;
+    private javax.swing.JLabel jLabel149;
+    private javax.swing.JLabel jLabel150;
+    private javax.swing.JLabel jLabel151;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
@@ -3261,6 +3487,21 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtProxySenha;
     private javax.swing.JTextField txtProxyServidor;
     private javax.swing.JTextField txtProxyUsuario;
+    private javax.swing.JTextField txtScopesAilos;
+    private javax.swing.JTextField txtScopesBancoBrasil;
+    private javax.swing.JTextField txtScopesBradesco;
+    private javax.swing.JTextField txtScopesCielo;
+    private javax.swing.JTextField txtScopesGerenciaNet;
+    private javax.swing.JTextField txtScopesInter;
+    private javax.swing.JTextField txtScopesItau;
+    private javax.swing.JTextField txtScopesMatera;
+    private javax.swing.JTextField txtScopesMercadoPago;
+    private javax.swing.JTextField txtScopesPagSeguro;
+    private javax.swing.JTextField txtScopesPixPDV;
+    private javax.swing.JTextField txtScopesSantander;
+    private javax.swing.JTextField txtScopesShipay;
+    private javax.swing.JTextField txtScopesSicoob;
+    private javax.swing.JTextField txtScopesSicredi;
     private javax.swing.JTextField txtSecretKeyMatera;
     private javax.swing.JTextField txtSecretKeyPixPDV;
     private javax.swing.JTextField txtSecretKeyShipay;

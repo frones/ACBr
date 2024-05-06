@@ -48,6 +48,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+06/05/2024
+[*]TK-5402 ACBrBoleto - Mensagens Automáticas de Juros
+  por Victor H Gonzales - Pandaaa
 
 02/05/2024
 -- ACBrBoleto, ACBrBoletoRetorno, ACBrBoletoW_Inter_API, ACBrBoletoRet_Inter_API --

@@ -3310,23 +3310,28 @@ begin
 end;
 
 function TACBrBoleto.GerarMensagemPadraoJuros(ATitulo: TACBrTitulo): String;
-var ATipoJuros,AJurosQuando : String;
+var LTipoJuros, LJurosQuando : String;
 begin
-  if (ATitulo.CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
-    ATipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao mês'
-  else
-    ATipoJuros := FormatFloatBr(ATitulo.ValorMoraJuros, 'R$ #,##0.00 por dia');
+  case ATitulo.CodigoMoraJuros of
+    cjTaxaMensal : LTipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao mês';
+    cjTaxaDiaria : LTipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao dia';
+    cjValorMensal: LTipoJuros := FormatFloatBr(ATitulo.ValorMoraJuros, 'R$ #,##0.00 por mês');
+    cjValorDia   : LTipoJuros := FormatFloatBr(ATitulo.ValorMoraJuros, 'R$ #,##0.00 por dia');
+  end;
+
+  if (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
+    LTipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao mês';
 
   if ATitulo.DataMoraJuros <> 0 then
   begin
     if ATitulo.Vencimento = ATitulo.DataMoraJuros then
-      AJurosQuando := 'após o vencimento'
+      LJurosQuando := 'após o vencimento'
     else
-      AJurosQuando := 'a partir de '+FormatDateTime('dd/mm/yyyy',ATitulo.DataMoraJuros);
+      LJurosQuando := 'a partir de '+FormatDateTime('dd/mm/yyyy',ATitulo.DataMoraJuros);
   end;(* else
-    AJurosQuando := ' por dia de atraso';*) //TK-4612
+    LJurosQuando := ' por dia de atraso';*) //TK-4612
 
-  Result := ACBrStr(Format('Cobrar juros de %s de atraso para pagamento %s.',[ATipoJuros,AJurosQuando]));
+  Result := ACBrStr(Format('Cobrar juros de %s de atraso para pagamento %s.',[LTipoJuros,LJurosQuando]));
 end;
 
 function TACBrBoleto.GerarMensagemPadraoMulta(ATitulo: TACBrTitulo): String;

@@ -211,6 +211,8 @@ type
     Label32: TLabel;
     ACBr_NFCom_dpk: TCheckBox;
     lblNFCom: TLabel;
+    ACBr_SATExtratoFPDF_dpk: TCheckBox;
+    Label33: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -464,6 +466,8 @@ begin
       begin
         ACBr_SATExtratoRL_dpk.Checked := False;
         ACBr_SATExtratoFR_dpk.Checked := False;
+        ACBr_SATExtratoESCPOS_dpk.Checked := False;
+        ACBr_SATExtratoFPDF_dpk.Checked := False;
       end;
 
       // quando não for selecionado o GNRE devemos desmarcar

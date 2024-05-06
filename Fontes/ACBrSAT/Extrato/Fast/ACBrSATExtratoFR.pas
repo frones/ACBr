@@ -83,7 +83,9 @@ type
     {$IFDEF DELPHIX_ALEXANDRIA_UP}
     frxSVGExport: TfrxSVGExport;
     {$ENDIF}
+    {$IFDEF DELPHIXE_UP}
     frxPNGExport: TfrxPNGExport;
+    {$ENDIF}
 
     frxBarCodeObject: TfrxBarCodeObject;
     FFastExtrato: string;
@@ -527,7 +529,9 @@ begin
   {$IFDEF DELPHIX_ALEXANDRIA_UP}
   frxSVGExport  := TfrxSVGExport.Create(Self);
   {$ENDIF}
+  {$IFDEF DELPHIXE_UP}
   frxPNGExport  := TfrxPNGExport.Create(Self);
+  {$ENDIF}
 
   frxBarCodeObject := TfrxBarCodeObject.Create(Self);
 

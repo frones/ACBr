@@ -304,16 +304,18 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpRegPrev', 1, 1, 1, eSTpRegPrevToStr(objAltContratual.vinculo.tpRegPrev));
   end;  
-   
-  Gerador.wGrupo('infoRegimeTrab');
-  
-  if objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
-	GerarInfoCeletista(objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista) 
-  else
-    if(objAltContratual.Vinculo.tpRegPrev = rpRPPS)then
+
+  if objAltContratual.Vinculo.tpRegPrev = rpRPPS then
+  begin
+    Gerador.wGrupo('infoRegimeTrab');
+    
+    if objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
+      GerarInfoCeletista(objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista)
+    else
       GerarInfoEstatutario(objAltContratual.Vinculo.infoRegimeTrab.InfoEstatutario);
-  
-  Gerador.wGrupo('/infoRegimeTrab');
+
+    Gerador.wGrupo('/infoRegimeTrab');
+  end;
  
   GerarInfoContrato(objAltContratual.Vinculo.InfoContrato, 3, objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista);
 

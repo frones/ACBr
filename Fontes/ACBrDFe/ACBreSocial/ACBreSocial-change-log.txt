@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2024
+-- pcesConversaoeSocial, pcesS2206 --
+[*] Corrigido critério para geração do grupo infoRegimeTrab no evento S2206
+Por: paulosilva0306
+
 23/04/2024
 -- Frm_ACBreSocial, ACBreSocialWebServices --
 [*] Implementada propriedade PathNome para retorno do arquivo gerado em envio de lote, consultas e download de eventos

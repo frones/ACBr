@@ -11,10 +11,8 @@ object frMain: TfrMain
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = True
   Visible = True
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 15
   object Splitter2: TSplitter
     Left = 0
@@ -23,7 +21,6 @@ object frMain: TfrMain
     Height = 8
     Cursor = crVSplit
     Align = alTop
-    ExplicitWidth = 938
   end
   object pLogs: TPanel
     Left = 0
@@ -66,8 +63,6 @@ object frMain: TfrMain
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = sbCleanMemoLogClick
-      ExplicitLeft = 913
-      ExplicitHeight = 158
     end
     object mLog: TMemo
       Left = 1
@@ -132,7 +127,7 @@ object frMain: TfrMain
       Top = 0
       Width = 936
       Height = 332
-      ActivePage = tsClose
+      ActivePage = tsGIX
       Align = alClient
       Images = ImageList1
       TabOrder = 0
@@ -186,7 +181,6 @@ object frMain: TfrMain
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             OnClick = btSerialClick
-            ExplicitLeft = 549
           end
           object btSearchSerialPorts: TSpeedButton
             Left = 578
@@ -222,7 +216,6 @@ object frMain: TfrMain
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             OnClick = btSearchSerialPortsClick
-            ExplicitLeft = 580
           end
           object cbxPort: TComboBox
             Left = 19
@@ -276,7 +269,6 @@ object frMain: TfrMain
               Font.Style = []
               ParentFont = False
               OnClick = sbShowLogFileClick
-              ExplicitLeft = 551
             end
             object Label14: TLabel
               Left = 597
@@ -288,7 +280,6 @@ object frMain: TfrMain
               Caption = 'Log.Level'
               Color = clBtnFace
               ParentColor = False
-              ExplicitLeft = 599
             end
             object edLogFile: TEdit
               Left = 19
@@ -623,7 +614,6 @@ object frMain: TfrMain
           Width = 5
           Height = 302
           Align = alRight
-          ExplicitLeft = 462
         end
         object Splitter3: TSplitter
           Left = 729
@@ -631,7 +621,6 @@ object frMain: TfrMain
           Width = 5
           Height = 302
           Align = alRight
-          ExplicitLeft = 731
         end
         object gbGIN: TGroupBox
           Left = 734
@@ -1567,8 +1556,6 @@ object frMain: TfrMain
                     018FE96D69582AFBB1A0E67260970C67B0E52D9AB36DB5D32BCEAC7BDE827046
                     F82BA30D1B26C226808D931A36016C9CD4B00960E3A4C6FF0384944656961706
                     650000000049454E44AE426082}
-                  ExplicitWidth = 192
-                  ExplicitHeight = 192
                 end
               end
               object pMediaLoad: TPanel
@@ -1615,7 +1602,6 @@ object frMain: TfrMain
                     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
                     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
                   OnClick = btSearchSerialPorts1Click
-                  ExplicitLeft = 369
                 end
                 object btMediaLoad: TButton
                   Left = 526
@@ -1752,7 +1738,6 @@ object frMain: TfrMain
               'ssage'#13'shall be selected among those available in a fixed table d' +
               'efined by ABECS specification'
             WordWrap = True
-            ExplicitWidth = 211
           end
           object Label9: TLabel
             Left = 10
@@ -2049,7 +2034,6 @@ object frMain: TfrMain
               Alignment = taCenter
               Caption = 'Obsolete. This command does not return numeric keys'
               WordWrap = True
-              ExplicitWidth = 135
             end
             object btGKY: TButton
               Left = 32

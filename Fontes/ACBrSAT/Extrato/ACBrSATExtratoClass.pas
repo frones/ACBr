@@ -57,7 +57,7 @@ const
   cMsgAppQRCodeCE = 'Consulte o QR Code pelo aplicativo  "Sua Nota Tem Valor", '+
                     'disponível na AppStore (Apple) e PlayStore (Android)';
 type
-   TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
+   TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML, fiSVG, fiPNG ) ;
 
    TACBrSATExtratoLayOut = (lCompleto, lResumido, lCancelamento) ;
 
@@ -85,7 +85,6 @@ type
     FImprimeDescAcrescItem: Boolean;
     FImprimeEmUmaLinha: Boolean;
     FImprimeCodigoEan: Boolean;
-
 
     procedure ErroAbstract(const NomeProcedure : String) ;
     {$IFNDEF NOGUI}

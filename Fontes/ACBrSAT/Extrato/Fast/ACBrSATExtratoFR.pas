@@ -38,8 +38,15 @@ interface
 
 uses
   Classes, SysUtils, ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass, pcnCFe,
-  pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode,
-  frxExportHTML;
+  pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode
+  {$IFDEF DELPHIX_ALEXANDRIA_UP} // ImprimirExtratoSVG
+    , frxExportSVG
+  {$ENDIF}
+  {$IFDEF DELPHIXE_UP} // ImprimirExtratoPNG
+    , frxExportImage
+  {$ENDIF}
+
+  ,frxExportHTML;
 
 type
  TTipoImpressao = (tiNormal,tiResumido,tiCancelado);
@@ -73,6 +80,8 @@ type
     frxReport: TfrxReport;
     frxPDFExport: TfrxPDFExport;
     frxHTMLExport: TfrxHTMLExport;
+    frxSVGExport: TfrxSVGExport;
+    frxPNGExport: TfrxPNGExport;
 
     frxBarCodeObject: TfrxBarCodeObject;
     FFastExtrato: string;
@@ -99,6 +108,8 @@ type
     procedure Imprimir;
     procedure ImprimirExtratoPDF;
     procedure ImprimirExtratoHTML;
+    procedure ImprimirExtratoSVG;
+    procedure ImprimirExtratoPNG;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -355,6 +366,8 @@ begin
       end;
     fiPDF : ImprimirExtratoPDF;
     fiHTML: ImprimirExtratoHTML;
+    fiSVG:  ImprimirExtratoSVG;
+    fiPNG:  ImprimirExtratoPNG;
   end;
   TipoImpressao(tiNormal);
 end;
@@ -388,6 +401,50 @@ begin
   FPArquivoPDF := frxHTMLExport.FileName;
 end;
 
+procedure TACBrSATExtratoFR.ImprimirExtratoSVG;
+begin
+  {$IFDEF DELPHIX_ALEXANDRIA_UP}
+    if (FStream <> nil) then
+      frxSVGExport.Stream := FStream;
+
+    if EstaVazio(Trim(NomeDocumento)) then
+      frxSVGExport.FileName := 'Extrato SAT'
+    else
+      frxSVGExport.FileName := NomeDocumento;
+
+    frxSVGExport.FileName     := PathPDF + ChangeFileExt(frxSVGExport.FileName, '.svg');
+    frxSVGExport.ShowDialog   := false;
+    frxSVGExport.ShowProgress := MostraStatus;
+
+    frxReport.Export(frxSVGExport);
+    FPArquivoPDF := frxSVGExport.FileName;
+  {$ELSE}
+    ImprimirExtratoPDF;
+  {$ENDIF}
+end;
+
+procedure TACBrSATExtratoFR.ImprimirExtratoPNG;
+begin
+  {$IFDEF DELPHIXE_UP}
+    if (FStream <> nil) then
+      frxPNGExport.Stream := FStream;
+
+    if EstaVazio(Trim(NomeDocumento)) then
+      frxPNGExport.FileName := 'Extrato SAT'
+    else
+      frxPNGExport.FileName := NomeDocumento;
+
+    frxPNGExport.FileName     := PathPDF + ChangeFileExt(frxPNGExport.FileName, '.png');
+    frxPNGExport.ShowDialog   := false;
+    frxPNGExport.ShowProgress := MostraStatus;
+
+    frxReport.Export(frxPNGExport);
+    FPArquivoPDF := frxPNGExport.FileName;
+  {$ELSE}
+    ImprimirExtratoPDF;
+  {$ENDIF}
+end;
+
 procedure TACBrSATExtratoFR.ImprimirExtratoPDF;
 begin
   if (FStream <> nil) then
@@ -409,7 +466,7 @@ begin
   else
     frxPDFExport.FileName := NomeDocumento;
 
-  frxPDFExport.FileName := PathPDF + frxPDFExport.FileName + '.pdf';
+  frxPDFExport.FileName := PathPDF + ChangeFileExt(frxPDFExport.FileName, '.pdf');
 
   if frxPDFExport.FileName <> NomeDocumento then
     NomeDocumento := frxPDFExport.FileName;
@@ -419,7 +476,6 @@ begin
 
   frxReport.Export(frxPDFExport);
   FPArquivoPDF := frxPDFExport.FileName;
-
 end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoResumido(AStream: TStream;
@@ -466,8 +522,8 @@ begin
   RttiSetProp(frxPDFExport, 'Transparency', 'False');
 
   frxHTMLExport := TfrxHTMLExport.Create(Self);
-
-
+  frxSVGExport  := TfrxSVGExport.Create(Self);
+  frxPNGExport  := TfrxPNGExport.Create(Self);
 
   frxBarCodeObject := TfrxBarCodeObject.Create(Self);
 
@@ -920,13 +976,13 @@ end;
 procedure TACBrSATExtratoFR.ImprimirExtrato(AStream: TStream; ACFe: TCFe);
 begin
   inherited;
-  TipoImpressao(tiNormal);
-  try
-    if PrepareReport(ACFe) then
-      ImprimirExtratoPDF;
-  finally
-    TipoImpressao(tiNormal);
-  end;
+   TipoImpressao(tiNormal);
+
+   case Filtro of
+      fiPDF : ImprimirExtratoPDF;
+      fiSVG:  ImprimirExtratoSVG;
+      fiPNG:  ImprimirExtratoPNG;
+   end;
 end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoCancelamento(AStream: TStream;

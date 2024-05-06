@@ -80,7 +80,9 @@ type
     frxReport: TfrxReport;
     frxPDFExport: TfrxPDFExport;
     frxHTMLExport: TfrxHTMLExport;
+    {$IFDEF DELPHIX_ALEXANDRIA_UP}
     frxSVGExport: TfrxSVGExport;
+    {$ENDIF}
     frxPNGExport: TfrxPNGExport;
 
     frxBarCodeObject: TfrxBarCodeObject;
@@ -522,7 +524,9 @@ begin
   RttiSetProp(frxPDFExport, 'Transparency', 'False');
 
   frxHTMLExport := TfrxHTMLExport.Create(Self);
+  {$IFDEF DELPHIX_ALEXANDRIA_UP}
   frxSVGExport  := TfrxSVGExport.Create(Self);
+  {$ENDIF}
   frxPNGExport  := TfrxPNGExport.Create(Self);
 
   frxBarCodeObject := TfrxBarCodeObject.Create(Self);

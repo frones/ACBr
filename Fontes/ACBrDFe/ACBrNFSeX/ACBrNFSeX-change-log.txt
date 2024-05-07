@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Abaetetuba/PA, o provedor é MegaSoft.
+  Por: Luan Carvalho
+[+] Incluída a cidade de Morrinhos/GO, o provedor é Prodata versão 2.01.
+  Por: Michel Laudrup
+[*] A cidade de Canarana/MT trocou de provedor, agora é Coplan.
+  Por: Maiquel
+
 03/05/2024
 -- ISSRio.Provider --
 [*] Alterado o caracter de Quebra de Linha.

@@ -286,7 +286,7 @@ begin
     // Gerar arquivo
     if (XML_DFe <> '') and (XML_prot <> '') then
       Result := '<' + LowerCase(FptagGrupo) + 'Proc ' + FpNameSpace + ' versao="' + FpVersao + '">' +
-                  '<' + FptagGrupo + ' xmlns>' +
+                  '<' + FptagGrupo + ' xmlns' +
                     RetornarConteudoEntre(FXML_DFe, '<' + FptagGrupo + ' xmlns',
                                                     '</' + FptagGrupo + '>') +
                   '</' + FptagGrupo + '>' +

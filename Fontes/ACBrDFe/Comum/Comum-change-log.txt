@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/05/2024
+-- Diversos --
+[*] Incluido nas units de leitura de retorno a verificação se o XML a ser lido
+    esta vazio ou não.
+  Por: Italo Giurizzato Junior
+
 02/04/2024
 -- Diversos --
 [*] Melhorias no código usando o FixInsight (ainda não ficou 100%).

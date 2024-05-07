@@ -176,6 +176,8 @@ begin
 
   try
     try
+      if XmlRetorno = '' then Exit;
+
       Document.LoadFromXml(XmlRetorno);
 
       ANode := Document.Root;

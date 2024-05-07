@@ -855,6 +855,8 @@ begin
 
   try
     try
+      if XmlRetorno = '' then Exit;
+
       XML := XmlRetorno;
       Document.LoadFromXml(XmlRetorno);
 

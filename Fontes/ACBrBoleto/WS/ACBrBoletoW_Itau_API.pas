@@ -734,7 +734,7 @@ begin
 
 procedure TBoletoW_Itau_API.RequisicaoBaixa;
 begin
-  // Sem Payload - Define Método GET
+  FPDadosMsg := '{}';
 end;
 
 procedure TBoletoW_Itau_API.RequisicaoConsulta;

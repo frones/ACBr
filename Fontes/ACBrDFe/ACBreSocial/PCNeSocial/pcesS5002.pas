@@ -2192,230 +2192,232 @@ begin
               end; { endExt }
             end; { infoPgtoExt }
 
-            if leitor.rExtrai(3, 'infoIRComplem') <> '' then
-            begin
-              IdeTrabalhador.infoIRComplem.FdtLaudo := leitor.rCampo(tcDat, 'dtLaudo');
 
-              j := 0;
-              while Leitor.rExtrai(4, 'ideDep', '', j + 1) <> '' do
-              begin
-                with IdeTrabalhador.infoIRComplem.ideDep do
-                begin
-                  New;
-                  Items[j].FcpfDep   := leitor.rCampo(tcStr, 'cpfDep');
-                  Items[j].FdepIRRF  := eSStrToSimNaoFacultativo(ok, leitor.rCampo(tcStr, 'depIRRF'));
-
-                  // terminar
-                  //Items[j].FdtNascto := leitor.rCampo(tcDat, 'dtNascto');
-                  Items[j].Fnome     := leitor.rCampo(tcStr, 'nome');
-                  Items[j].FtpDep    := eSStrToTpDep(ok, leitor.rCampo(tcStr, 'tpDep'));
-                  Items[j].FdescrDep := leitor.rCampo(tcStr, 'descrDep');
-                end;
-
-                inc(j);
-              end; { ideDep }
-
-              j := 0;
-              while Leitor.rExtrai(4, 'infoIRCR', '', j + 1) <> '' do
-              begin
-                with IdeTrabalhador.infoIRComplem.infoIRCR do
-                begin
-                  New;
-                  Items[j].FtpCR := leitor.rCampo(tcStr, 'tpCR');
-                end;
-
-                k := 0;
-                while Leitor.rExtrai(5, 'dedDepen', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].dedDepen do
-                  begin
-                    New;
-                    Items[k].FtpRend    := leitor.rCampo(tcInt, 'tpRend');
-                    Items[k].FcpfDep    := leitor.rCampo(tcStr, 'cpfDep');
-                    Items[k].FvlrDedDep := leitor.rCampo(tcDe2, 'vlrDedDep');
-                  end;
-
-                  inc(k);
-                end; { dedDepen }
-
-                k := 0;
-                while Leitor.rExtrai(5, 'penAlim', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].penAlim do
-                  begin
-                    New;
-                    Items[k].FtpRend        := leitor.rCampo(tcInt, 'tpRend');
-                    Items[k].FcpfDep        := leitor.rCampo(tcStr, 'cpfDep');
-                    Items[k].FvlrDedPenAlim := leitor.rCampo(tcDe2, 'vlrDedPenAlim');
-                  end;
-
-                  inc(k);
-                end; { penAlim }
-
-                k := 0;
-                while Leitor.rExtrai(5, 'previdCompl', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].previdCompl do
-                  begin
-                    New;
-                    Items[k].FtpPrev        := eSStrTotpTpPrev(ok, leitor.rCampo(tcStr, 'tpPrev'));
-                    Items[k].FcnpjEntidPC   := leitor.rCampo(tcStr, 'cnpjEntidPC');
-                    Items[k].FvlrDedPC      := leitor.rCampo(tcDe2, 'vlrDedPC');
-                    Items[k].FvlrPatrocFunp := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
-                  end;
-
-                  inc(k);
-                end; { previdCompl }
-
-                k := 0;
-                while Leitor.rExtrai(5, 'infoProcRet', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet do
-                  begin
-                    New;
-                    Items[k].FtpProcRet := eSStrTotpTpProcRet(ok, leitor.rCampo(tcStr, 'tpProcRet'));
-                    Items[k].FnrProcRet := leitor.rCampo(tcStr, 'nrProcRet');
-                    Items[k].FcodSusp   := leitor.rCampo(tcInt, 'codSusp');
-                  end;
-
-                  l := 0;
-                  while Leitor.rExtrai(6, 'infoValores', '', l + 1) <> '' do
-                  begin
-                    with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet.Items[k].infoValores do
-                    begin
-                      New;
-                      Items[l].FindApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'indApuracao'));
-                      Items[l].FvlrNRetido   := leitor.rCampo(tcDe2, 'vlrNRetido');
-                      Items[l].FvlrDepJud    := leitor.rCampo(tcDe2, 'vlrDepJud');
-                      Items[l].FvlrCmpAnoCal := leitor.rCampo(tcDe2, 'vlrCmpAnoCal');
-                      Items[l].FvlrCmpAnoAnt := leitor.rCampo(tcDe2, 'vlrCmpAnoAnt');
-                      Items[l].FvlrRendSusp  := leitor.rCampo(tcDe2, 'vlrRendSusp');
-                    end;
-
-                    m := 0;
-                    while Leitor.rExtrai(6, 'dedSusp', '', m + 1) <> '' do
-                    begin
-                      with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp do
-                      begin
-                        New;
-                        Items[m].FindTpDeducao  := eSStrTotpIndTpDeducao(ok, leitor.rCampo(tcStr, 'indTpDeducao'));
-                        Items[m].FvlrDedSusp    := leitor.rCampo(tcDe2, 'vlrDedSusp');
-                        Items[m].FcnpjEntidPC   := leitor.rCampo(tcStr, 'cnpjEntidPC');
-                        Items[m].FvlrPatrocFunp := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
-                      end;
-
-                      n := 0;
-                      while Leitor.rExtrai(7, 'benefPen', '', n + 1) <> '' do
-                      begin
-                        with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp.Items[m].benefPen do
-                        begin
-                          New;
-                          Items[n].FcpfDep       := leitor.rCampo(tcStr, 'cpfDep');
-                          Items[n].FvlrDepenSusp := leitor.rCampo(tcDe2, 'vlrDepenSusp');
-                        end;
-
-                        inc(n);
-                      end; { benefPen }
-
-                      inc(m);
-                    end; { dedSusp }
-
-                    inc(l);
-                  end; { infoValores }
-
-                  inc(k);
-                end; { infoProcRet }
-
-                inc(j);
-              end; { infoIRCR }
-
-              j := 0;
-              while Leitor.rExtrai(4, 'planSaude', '', j + 1) <> '' do
-              begin
-                with IdeTrabalhador.infoIRComplem.planSaude do
-                begin
-                  New;
-                  Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
-                  Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
-                  Items[j].FvlrSaudeTit := leitor.rCampo(tcDe2, 'vlrSaudeTit');
-                end;
-
-                k := 0;
-                while Leitor.rExtrai(5, 'infoDepSau', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.planSaude.Items[j].infoDepSau do
-                  begin
-                    New;
-                    Items[k].FcpfDep      := leitor.rCampo(tcStr, 'cpfDep');
-                    Items[k].FvlrSaudeDep := leitor.rCampo(tcDe2, 'vlrSaudeDep');
-                  end;
-
-                  inc(k);
-                end; { infoDepSau }
-
-                inc(j);
-              end; { planSaude }
-
-              j := 0;
-              while Leitor.rExtrai(4, 'infoReembMed', '', j + 1) <> '' do
-              begin
-                with IdeTrabalhador.infoIRComplem.infoReembMed do
-                begin
-                  New;
-                  Items[j].FindOrgReemb := leitor.rCampo(tcStr, 'indOrgReemb');
-                  Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
-                  Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
-                end;
-
-                k := 0;
-                while Leitor.rExtrai(5, 'detReembTit', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.infoReembMed.Items[j].detReembTit do
-                  begin
-                    New;
-                    Items[k].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-                    Items[k].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
-                    Items[k].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
-                    Items[k].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
-                  end;
-
-                  inc(k);
-                end; { detReembTit }
-
-                k := 0;
-                while Leitor.rExtrai(5, 'infoReembDep', '', k + 1) <> '' do
-                begin
-                  with IdeTrabalhador.infoIRComplem.infoReembMed.Items[j].infoReembDep do
-                  begin
-                    New;
-                    Items[k].FcpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
-                  end;
-
-                  l := 0;
-                  while Leitor.rExtrai(6, 'detReembDep', '', l + 1) <> '' do
-                  begin
-                    with IdeTrabalhador.infoIRComplem.infoReembMed.Items[j].infoReembDep.Items[k].detReembDep do
-                    begin
-                      New;
-                      Items[l].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-                      Items[l].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
-                      Items[l].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
-                      Items[l].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
-                    end;
-
-                    inc(l);
-                  end; { detReembDep }
-
-                  inc(k);
-                end; { infoReembDep }
-
-                inc(j);
-              end; { infoReembMed }
-            end; { infoIRComplem }
           end;
 
           inc(i);
         end; { dmDev }
+
+        if leitor.rExtrai(2, 'infoIRComplem') <> '' then
+        begin
+          IdeTrabalhador.infoIRComplem.FdtLaudo := leitor.rCampo(tcDat, 'dtLaudo');
+
+          j := 0;
+          while Leitor.rExtrai(3, 'ideDep', '', j + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.ideDep do
+            begin
+              New;
+              Items[j].FcpfDep   := leitor.rCampo(tcStr, 'cpfDep');
+              Items[j].FdepIRRF  := eSStrToSimNaoFacultativo(ok, leitor.rCampo(tcStr, 'depIRRF'));
+
+              // terminar
+              //Items[j].FdtNascto := leitor.rCampo(tcDat, 'dtNascto');
+              Items[j].Fnome     := leitor.rCampo(tcStr, 'nome');
+              Items[j].FtpDep    := eSStrToTpDep(ok, leitor.rCampo(tcStr, 'tpDep'));
+              Items[j].FdescrDep := leitor.rCampo(tcStr, 'descrDep');
+            end;
+
+            inc(j);
+          end; { ideDep }
+
+          j := 0;
+          while Leitor.rExtrai(3, 'infoIRCR', '', j + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.infoIRCR do
+            begin
+              New;
+              Items[j].FtpCR := leitor.rCampo(tcStr, 'tpCR');
+            end;
+
+            k := 0;
+            while Leitor.rExtrai(4, 'dedDepen', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].dedDepen do
+              begin
+                New;
+                Items[k].FtpRend    := leitor.rCampo(tcInt, 'tpRend');
+                Items[k].FcpfDep    := leitor.rCampo(tcStr, 'cpfDep');
+                Items[k].FvlrDedDep := leitor.rCampo(tcDe2, 'vlrDedDep');
+              end;
+
+              inc(k);
+            end; { dedDepen }
+
+            k := 0;
+            while Leitor.rExtrai(4, 'penAlim', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].penAlim do
+              begin
+                New;
+                Items[k].FtpRend        := leitor.rCampo(tcInt, 'tpRend');
+                Items[k].FcpfDep        := leitor.rCampo(tcStr, 'cpfDep');
+                Items[k].FvlrDedPenAlim := leitor.rCampo(tcDe2, 'vlrDedPenAlim');
+              end;
+
+              inc(k);
+            end; { penAlim }
+
+            k := 0;
+            while Leitor.rExtrai(4, 'previdCompl', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].previdCompl do
+              begin
+                New;
+                Items[k].FtpPrev        := eSStrTotpTpPrev(ok, leitor.rCampo(tcStr, 'tpPrev'));
+                Items[k].FcnpjEntidPC   := leitor.rCampo(tcStr, 'cnpjEntidPC');
+                Items[k].FvlrDedPC      := leitor.rCampo(tcDe2, 'vlrDedPC');
+                Items[k].FvlrPatrocFunp := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
+              end;
+
+              inc(k);
+            end; { previdCompl }
+
+            k := 0;
+            while Leitor.rExtrai(4, 'infoProcRet', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet do
+              begin
+                New;
+                Items[k].FtpProcRet := eSStrTotpTpProcRet(ok, leitor.rCampo(tcStr, 'tpProcRet'));
+                Items[k].FnrProcRet := leitor.rCampo(tcStr, 'nrProcRet');
+                Items[k].FcodSusp   := leitor.rCampo(tcInt, 'codSusp');
+              end;
+
+              l := 0;
+              while Leitor.rExtrai(5, 'infoValores', '', l + 1) <> '' do
+              begin
+                with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet.Items[k].infoValores do
+                begin
+                  New;
+                  Items[l].FindApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'indApuracao'));
+                  Items[l].FvlrNRetido   := leitor.rCampo(tcDe2, 'vlrNRetido');
+                  Items[l].FvlrDepJud    := leitor.rCampo(tcDe2, 'vlrDepJud');
+                  Items[l].FvlrCmpAnoCal := leitor.rCampo(tcDe2, 'vlrCmpAnoCal');
+                  Items[l].FvlrCmpAnoAnt := leitor.rCampo(tcDe2, 'vlrCmpAnoAnt');
+                  Items[l].FvlrRendSusp  := leitor.rCampo(tcDe2, 'vlrRendSusp');
+                end;
+
+                m := 0;
+                while Leitor.rExtrai(5, 'dedSusp', '', m + 1) <> '' do
+                begin
+                  with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp do
+                  begin
+                    New;
+                    Items[m].FindTpDeducao  := eSStrTotpIndTpDeducao(ok, leitor.rCampo(tcStr, 'indTpDeducao'));
+                    Items[m].FvlrDedSusp    := leitor.rCampo(tcDe2, 'vlrDedSusp');
+                    Items[m].FcnpjEntidPC   := leitor.rCampo(tcStr, 'cnpjEntidPC');
+                    Items[m].FvlrPatrocFunp := leitor.rCampo(tcDe2, 'vlrPatrocFunp');
+                  end;
+
+                  n := 0;
+                  while Leitor.rExtrai(6, 'benefPen', '', n + 1) <> '' do
+                  begin
+                    with IdeTrabalhador.infoIRComplem.infoIRCR.Items[j].infoProcRet.Items[k].infoValores.Items[l].dedSusp.Items[m].benefPen do
+                    begin
+                      New;
+                      Items[n].FcpfDep       := leitor.rCampo(tcStr, 'cpfDep');
+                      Items[n].FvlrDepenSusp := leitor.rCampo(tcDe2, 'vlrDepenSusp');
+                    end;
+
+                    inc(n);
+                  end; { benefPen }
+
+                  inc(m);
+                end; { dedSusp }
+
+                inc(l);
+              end; { infoValores }
+
+              inc(k);
+            end; { infoProcRet }
+
+            inc(j);
+          end; { infoIRCR }
+
+          j := 0;
+          while Leitor.rExtrai(3, 'planSaude', '', j + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.planSaude do
+            begin
+              New;
+              Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
+              Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
+              Items[j].FvlrSaudeTit := leitor.rCampo(tcDe2, 'vlrSaudeTit');
+            end;
+
+            k := 0;
+            while Leitor.rExtrai(4, 'infoDepSau', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.planSaude.Items[j].infoDepSau do
+              begin
+                New;
+                Items[k].FcpfDep      := leitor.rCampo(tcStr, 'cpfDep');
+                Items[k].FvlrSaudeDep := leitor.rCampo(tcDe2, 'vlrSaudeDep');
+              end;
+
+              inc(k);
+            end; { infoDepSau }
+
+            inc(j);
+          end; { planSaude }
+
+          j := 0;
+          while Leitor.rExtrai(3, 'infoReembMed', '', j + 1) <> '' do
+          begin
+            with IdeTrabalhador.infoIRComplem.infoReembMed do
+            begin
+              New;
+              Items[j].FindOrgReemb := leitor.rCampo(tcStr, 'indOrgReemb');
+              Items[j].FcnpjOper    := leitor.rCampo(tcStr, 'cnpjOper');
+              Items[j].FregANS      := leitor.rCampo(tcStr, 'regANS');
+            end;
+
+            k := 0;
+            while Leitor.rExtrai(4, 'detReembTit', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.infoReembMed.Items[j].detReembTit do
+              begin
+                New;
+                Items[k].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                Items[k].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
+                Items[k].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
+                Items[k].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
+              end;
+
+              inc(k);
+            end; { detReembTit }
+
+            k := 0;
+            while Leitor.rExtrai(4, 'infoReembDep', '', k + 1) <> '' do
+            begin
+              with IdeTrabalhador.infoIRComplem.infoReembMed.Items[j].infoReembDep do
+              begin
+                New;
+                Items[k].FcpfBenef := leitor.rCampo(tcStr, 'cpfBenef');
+              end;
+
+              l := 0;
+              while Leitor.rExtrai(5, 'detReembDep', '', l + 1) <> '' do
+              begin
+                with IdeTrabalhador.infoIRComplem.infoReembMed.Items[j].infoReembDep.Items[k].detReembDep do
+                begin
+                  New;
+                  Items[l].FtpInsc      := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                  Items[l].FnrInsc      := leitor.rCampo(tcStr, 'nrInsc');
+                  Items[l].FvlrReemb    := leitor.rCampo(tcDe2, 'vlrReemb');
+                  Items[l].FvlrReembAnt := leitor.rCampo(tcDe2, 'vlrReembAnt');
+                end;
+
+                inc(l);
+              end; { detReembDep }
+
+              inc(k);
+            end; { infoReembDep }
+
+            inc(j);
+          end; { infoReembMed }
+        end; { infoIRComplem }
       end;
 
       Result := True;

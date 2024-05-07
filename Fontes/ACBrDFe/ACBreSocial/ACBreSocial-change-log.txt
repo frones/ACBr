@@ -56,6 +56,9 @@ Símbolo : Significado
 -- pcesConversaoeSocial, pcesS2206 --
 [*] Corrigido critério para geração do grupo infoRegimeTrab no evento S2206
 Por: paulosilva0306
+-- pcesS5002 --
+[*] Corrigida leitura do grupo InfoIRComplem do evento S5002
+Por: claudemes
 
 23/04/2024
 -- Frm_ACBreSocial, ACBreSocialWebServices --

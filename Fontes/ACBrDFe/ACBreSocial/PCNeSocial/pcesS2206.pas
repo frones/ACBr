@@ -303,12 +303,13 @@ begin
     Gerador.wGrupo('vinculo');
 
     Gerador.wCampo(tcStr, '', 'tpRegPrev', 1, 1, 1, eSTpRegPrevToStr(objAltContratual.vinculo.tpRegPrev));
-  end;  
+  end;
 
-  if objAltContratual.Vinculo.tpRegPrev = rpRPPS then
+  if ((objAltContratual.Vinculo.tpRegPrev = rpRPPS) or
+      (objAltContratual.Vinculo.tpRegTrab <> trEstatutario)) then
   begin
     Gerador.wGrupo('infoRegimeTrab');
-    
+
     if objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
       GerarInfoCeletista(objAltContratual.Vinculo.infoRegimeTrab.InfoCeletista)
     else

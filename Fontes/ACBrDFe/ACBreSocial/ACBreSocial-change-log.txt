@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/05/2024
+-- pcesS2206 --
+[*] Corrigido critério para geração do grupo infoRegimeTrab no evento S2206
+Por: EdmarFrazao, Renato Rubinho
+
 06/05/2024
 -- pcesConversaoeSocial, pcesS2206 --
 [*] Corrigido critério para geração do grupo infoRegimeTrab no evento S2206

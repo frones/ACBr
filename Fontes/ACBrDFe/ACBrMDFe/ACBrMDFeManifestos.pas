@@ -199,16 +199,14 @@ begin
   FConfiguracoes := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes;
 
   FMDFe.Ide.verProc := 'ACBrMDFe';
-  {
+
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     FMDFe.Ide.modelo := '58';
     FMDFe.infMDFe.Versao := VersaoMDFeToDbl(Configuracoes.Geral.VersaoDF);
-
     FMDFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FMDFe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
   end;
-  }
 end;
 
 destructor TManifesto.Destroy;
@@ -1159,12 +1157,12 @@ begin
     FMDFeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
-
+    {
     FMDFeW.VersaoDF := Configuracoes.Geral.VersaoDF;
     FMDFeW.ModeloDF := '58';
     FMDFeW.tpAmb := Configuracoes.WebServices.Ambiente;
     FMDFeW.tpEmis := Configuracoes.Geral.FormaEmissao;
-
+    }
     FMDFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FMDFeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;

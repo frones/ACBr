@@ -308,8 +308,8 @@ begin
                         PadLeft(LDAC, 1, '0');
 
     LConsulta := TStringList.Create;
-    LConsulta.Delimiter := '&';
     try
+      LConsulta.Delimiter := '&';
       case Boleto.Configuracoes.WebService.Operacao of
         tpConsulta,tpConsultaDetalhe :
           begin
@@ -333,8 +333,8 @@ begin
                           LNossoNumero+'/baixa');
           end;
       end;
-    finally
       Result := LConsulta.DelimitedText;
+    finally
       LConsulta.Free;
     end;
   end;
@@ -606,15 +606,11 @@ begin
   if Assigned(ATitulo) and Assigned(AJson) then
   begin
     LJsonDados := TACBrJSONObject.Create;
-    try
-      LJsonDados.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=taHomologacao,'validacao','efetivacao'));
-      LJsonDados.AddPair('codigo_canal_operacao', 'API');
-      GeraIdBeneficiario(LJsonDados);
-      GeraDadoBoleto(LJsonDados);
-      AJson.AddPair('data',LJsonDados);
-    finally
-      LJsonDados.Free;
-    end;
+    LJsonDados.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=taHomologacao,'validacao','efetivacao'));
+    LJsonDados.AddPair('codigo_canal_operacao', 'API');
+    GeraIdBeneficiario(LJsonDados);
+    GeraDadoBoleto(LJsonDados);
+    AJson.AddPair('data',LJsonDados);
   end;
 end;
 
@@ -625,25 +621,19 @@ begin
   if Assigned(ATitulo) then
   begin
     LJson := TACBrJSONObject.Create;
-    try
-
-      if Boleto.Cedente.CedenteWS.IndicadorPix then
-      begin
-        LJson.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=taHomologacao,'simulacao','efetivacao'));
-        GeraIdBeneficiario(LJson);
-        GeraDadoBoleto(LJson);
-        GerarDadosQrCode(LJson);
-      end
-      else
-      begin
-        GerarData(LJson);
-      end;
-
-      FPDadosMsg := LJson.ToJSON;
-
-    finally
-      LJson.Free;
+    if Boleto.Cedente.CedenteWS.IndicadorPix then
+    begin
+      LJson.AddPair('etapa_processo_boleto', IfThen(OAuth.Ambiente=taHomologacao,'simulacao','efetivacao'));
+      GeraIdBeneficiario(LJson);
+      GeraDadoBoleto(LJson);
+      GerarDadosQrCode(LJson);
+    end
+    else
+    begin
+      GerarData(LJson);
     end;
+
+    FPDadosMsg := LJson.ToJSON;
   end;
 end;
 

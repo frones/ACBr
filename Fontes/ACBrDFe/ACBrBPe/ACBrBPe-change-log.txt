@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2024
+-- ACBrBPeXmlWriter --
+[*] Comentado as linhas que usa os dados de configuração na geração do XML.
+   Por: Italo Giurizzato Junior
+
 22/04/2024
 -- ACBrBPeBilhetes/ACBrBPeClass/ACBrBPeXmlWriter --
 [*] Alterações visando usar os valores definidos na configuração ao gerar o 

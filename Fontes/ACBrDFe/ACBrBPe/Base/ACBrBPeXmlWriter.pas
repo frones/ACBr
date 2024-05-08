@@ -234,11 +234,12 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   BPe.Ide.modelo := StrToInt(ModeloBPeToStr(ModeloDF));
   BPe.infBPe.Versao := VersaoBPeToDbl(VersaoDF);
   BPe.Ide.tpAmb := tpAmb;
   BPe.ide.tpEmis := tpEmis;
-
+}
   FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ,
       BPe.ide.serie, BPe.ide.nBP, StrToInt(TipoEmissaoToStr(BPe.ide.tpEmis)),
       BPe.ide.cBP, BPe.ide.modelo);

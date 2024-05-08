@@ -254,11 +254,12 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   CTe.infCTe.Versao := VersaoCTeToDbl(VersaoDF);
   CTe.Ide.modelo := StrToInt(ModeloCTeToStr(ModeloDF));
   CTe.Ide.tpAmb := tpAmb;
   CTe.ide.tpEmis := tpEmis;
-
+}
   VersaoStr := 'versao="' + FloatToString(CTe.infCTe.Versao, '.', '#0.00') + '"';
 
   FChaveCTe := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,

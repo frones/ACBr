@@ -176,11 +176,13 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   MDFe.infMDFe.Versao := VersaoMDFeToDbl(VersaoDF);
-  VersaoStr := 'versao="' + FloatToString(MDFe.infMDFe.Versao, '.', '#0.00') + '"';
   MDFe.ide.modelo := ModeloDF;
   MDFe.Ide.tpAmb := tpAmb;
   MDFe.ide.tpEmis := tpEmis;
+}
+  VersaoStr := 'versao="' + FloatToString(MDFe.infMDFe.Versao, '.', '#0.00') + '"';
 
   FChaveMDFe := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJCPF, MDFe.ide.serie,
                             MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),

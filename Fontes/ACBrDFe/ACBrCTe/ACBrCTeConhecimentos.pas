@@ -209,19 +209,17 @@ begin
   FCTe.Ide.verProc := 'ACBrCTe';
   FCTe.ide.indGlobalizado := tiNao;
   FCTe.infCTeNorm.infCteSub.indAlteraToma := tiNao;
-  {
+
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     FCTe.Ide.modelo := StrToInt(ModeloCTeToStr(Configuracoes.Geral.ModeloDF));
     FCTe.infCTe.Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
-
     FCTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FCTe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
 
     if Assigned(DACTE) then
       FCTe.Ide.tpImp := DACTE.TipoDACTE;
   end;
-  }
 end;
 
 destructor Conhecimento.Destroy;
@@ -1589,10 +1587,12 @@ begin
     {
       Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
     }
+    {
     FCTeW.VersaoDF := Configuracoes.Geral.VersaoDF;
     FCTeW.ModeloDF := Configuracoes.Geral.ModeloDF;
     FCTeW.tpAmb := Configuracoes.WebServices.Ambiente;
     FCTeW.tpEmis := Configuracoes.Geral.FormaEmissao;
+    }
     FCTeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FCTeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;

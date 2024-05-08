@@ -254,11 +254,12 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   NF3e.infNF3e.Versao := VersaoNF3eToDbl(VersaoDF);
   NF3e.Ide.modelo := ModeloDF;
   NF3e.Ide.tpAmb := tpAmb;
   NF3e.ide.tpEmis := tpEmis;
-
+}
   FChaveNF3e := GerarChaveAcesso(NF3e.ide.cUF, NF3e.ide.dhEmi, NF3e.emit.CNPJ,
       NF3e.ide.serie, NF3e.ide.nNF, StrToInt(TipoEmissaoToStr(NF3e.ide.tpEmis)),
       NF3e.ide.cNF, NF3e.ide.modelo,

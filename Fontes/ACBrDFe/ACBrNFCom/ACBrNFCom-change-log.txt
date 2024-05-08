@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/05/2024
+-- ACBrNFComNotasFiscais --
+[*] Reversão da alteração que visava o uso das configurações na geração do XML.
+   Por: Italo Giurizzato Junior
 -- ACBrNFComXmlWriter --
 [*] Comentado as linhas que usa os dados de configuração na geração do XML.
    Por: Italo Giurizzato Junior

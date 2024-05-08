@@ -192,14 +192,14 @@ begin
   FConfiguracoes := TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom).Configuracoes;
 
   FNFCom.Ide.verProc := 'ACBrNFCom';
-  {
+
   with TACBrNFCom(TNotasFiscais(Collection).ACBrNFCom) do
   begin
+    FNFCom.Ide.modelo := 62;
     FNFCom.infNFCom.Versao := VersaoNFComToDbl(Configuracoes.Geral.VersaoDF);
     FNFCom.Ide.tpAmb   := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
     FNFCom.Ide.tpEmis  := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
   end;
-  }
 end;
 
 destructor TNotaFiscal.Destroy;
@@ -1219,11 +1219,12 @@ begin
     {
       Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
     }
+    {
     FNFComW.modeloDF := 62;
     FNFComW.VersaoDF := Configuracoes.Geral.VersaoDF;
     FNFComW.tpAmb   := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
     FNFComW.tpEmis  := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
-
+    }
     FNFComW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFComW.CSRT   := Configuracoes.RespTec.CSRT;
   end;

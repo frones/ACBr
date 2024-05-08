@@ -264,11 +264,12 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   NFe.infNFe.Versao := VersaoDFToDbl(VersaoDF);
   NFe.Ide.modelo := StrToInt(ModeloDFToStr(ModeloDF));
   NFe.Ide.tpAmb := tpAmb;
   NFe.ide.tpEmis := tpEmis;
-
+}
   Result := False;
 
   ListaDeAlertas.Clear;

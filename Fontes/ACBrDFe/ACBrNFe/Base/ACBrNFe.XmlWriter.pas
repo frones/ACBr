@@ -37,6 +37,7 @@ interface
 uses
   Classes, SysUtils,
   pcnNFe, pcnGerador, pcnConversao, pcnNFeConsts,
+  pcnConversaoNFe,
   ACBrXmlDocument, ACBrXmlWriter, ACBrXmlBase;
 
 type
@@ -79,6 +80,10 @@ type
     ChaveNFe: string;
     FIdCSRT: integer;
     FCSRT: string;
+    FVersaoDF: TpcnVersaoDF;
+    FModeloDF: TpcnModeloDF;
+    FtpAmb: TpcnTipoAmbiente;
+    FtpEmis: TpcnTipoEmissao;
 
     function GerarInfNFe: TACBrXmlNode;
     function GerarIde: TACBrXmlNode;
@@ -174,7 +179,10 @@ type
     property NFe: TNFe read FNFe write FNFe;
     property IdCSRT: integer read FIdCSRT write FIdCSRT;
     property CSRT: string read FCSRT write FCSRT;
-
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write FVersaoDF;
+    property ModeloDF: TpcnModeloDF read FModeloDF write FModeloDF;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
+    property tpEmis: TpcnTipoEmissao read FtpEmis write FtpEmis;
   end;
 
 implementation
@@ -183,7 +191,7 @@ uses
   variants, dateutils,
   StrUtils,
   Math,
-  pcnConversaoNFe, ACBrValidador,
+  ACBrValidador,
   ACBrDFeUtil,
   ACBrDFeConsts,
   ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.DateTime,
@@ -254,6 +262,15 @@ var
   xCNPJCPF: string;
   nfeNode, xmlNode: TACBrXmlNode;
 begin
+  {
+    Os campos abaixo tem que ser os mesmos da configuração
+  }
+{
+  NFe.infNFe.Versao := VersaoDFToDbl(VersaoDF);
+  NFe.Ide.modelo := StrToInt(ModeloDFToStr(ModeloDF));
+  NFe.Ide.tpAmb := tpAmb;
+  NFe.ide.tpEmis := tpEmis;
+}
   Result := False;
 
   ListaDeAlertas.Clear;
@@ -269,8 +286,6 @@ begin
     FormatoValor10ou4 := tcDe10
   else
     FormatoValor10ou4 := tcDe4;
-
-  Versao := Copy(NFe.infNFe.VersaoStr, 9, 4);
 
   xCNPJCPF := NFe.emit.CNPJCPF;
 

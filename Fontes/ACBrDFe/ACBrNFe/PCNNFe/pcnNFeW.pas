@@ -264,12 +264,14 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   NFe.infNFe.Versao := VersaoDFToDbl(VersaoDF);
   NFe.Ide.modelo := StrToInt(ModeloDFToStr(ModeloDF));
   NFe.Ide.tpAmb := tpAmb;
   NFe.ide.tpEmis := tpEmis;
-  FVersao := VersaoDFToStr(VersaoDF);
-  VersaoStr := 'versao="'+ FVersao + '"';
+}
+  VersaoStr := 'versao="' + FloatToString(NFe.infNFe.Versao, '.', '#0.00') + '"';
+  FVersao := FloatToString(NFe.infNFe.Versao, '.', '#0.00');
 
   FUsar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
 

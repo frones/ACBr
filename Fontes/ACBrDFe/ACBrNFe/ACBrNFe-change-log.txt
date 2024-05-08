@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/05/2024
+-- ACBrNFeXmlWriter/pcnNFe/pcnNFeW.pas --
+[*] Comentado as linhas que usa os dados de configuração na geração do XML.
+   Por: Italo Giurizzato Junior
+
 30/04/2024
 -- Diversos --
 [+] Implementação dos eventos: Insucesso na Entrega da NF-e e Cancelamento do

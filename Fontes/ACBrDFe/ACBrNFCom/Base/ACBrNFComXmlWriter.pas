@@ -237,11 +237,12 @@ begin
   {
     Os campos abaixo tem que ser os mesmos da configuração
   }
+{
   NFCom.infNFCom.Versao := VersaoNFComToDbl(VersaoDF);
   NFCom.Ide.modelo := ModeloDF;
   NFCom.Ide.tpAmb := tpAmb;
   NFCom.ide.tpEmis := tpEmis;
-
+}
   FChaveNFCom := GerarChaveAcesso(NFCom.ide.cUF, NFCom.ide.dhEmi, NFCom.emit.CNPJ,
     NFCom.ide.serie, NFCom.ide.nNF, StrToInt(TipoEmissaoToStr(NFCom.ide.tpEmis)),
     NFCom.ide.cNF, NFCom.ide.modelo,

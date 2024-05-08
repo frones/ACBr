@@ -219,7 +219,7 @@ begin
 
   FNFe.Dest.EnderDest.xPais := 'BRASIL';
   FNFe.Dest.EnderDest.cPais := 1058;
-  {
+
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     FNFe.Ide.modelo := StrToInt(ModeloDFToStr(Configuracoes.Geral.ModeloDF));
@@ -230,7 +230,6 @@ begin
     if Assigned(DANFE) then
       FNFe.Ide.tpImp := DANFE.TipoDANFE;
   end;
-  }
 end;
 
 destructor NotaFiscal.Destroy;
@@ -3833,11 +3832,12 @@ begin
     {
       Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
     }
+    {
     FNFeW.VersaoDF := Configuracoes.Geral.VersaoDF;
     FNFeW.ModeloDF := Configuracoes.Geral.ModeloDF;
     FNFeW.tpAmb := Configuracoes.WebServices.Ambiente;
     FNFeW.tpEmis := Configuracoes.Geral.FormaEmissao;
-
+    }
     FNFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;

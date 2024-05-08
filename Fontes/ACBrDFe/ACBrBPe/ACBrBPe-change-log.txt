@@ -46,6 +46,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/05/2024
+-- ACBrBPeBilhetes --
+[*] Reversão da alteração que visava o uso das configurações na geração do XML.
+   Por: Italo Giurizzato Junior
 -- ACBrBPeXmlWriter --
 [*] Comentado as linhas que usa os dados de configuração na geração do XML.
    Por: Italo Giurizzato Junior

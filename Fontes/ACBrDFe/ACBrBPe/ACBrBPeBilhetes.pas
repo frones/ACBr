@@ -195,7 +195,7 @@ begin
 
   FBPe.Ide.tpBPe := tbNormal;
   FBPe.Ide.verProc := 'ACBrBPe';
-  {
+
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
   begin
     FBPe.Ide.modelo := StrToInt(ModeloBPeToStr(Configuracoes.Geral.ModeloDF));
@@ -203,7 +203,6 @@ begin
     FBPe.Ide.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
     FBPe.Ide.tpEmis := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
   end;
-  }
 end;
 
 destructor TBilhete.Destroy;
@@ -561,10 +560,12 @@ begin
     {
       Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
     }
+    {
     FBPeW.VersaoDF := Configuracoes.Geral.VersaoDF;
     FBPeW.ModeloDF := Configuracoes.Geral.ModeloDF;
     FBPeW.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
     FBPeW.tpEmis := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
+    }
     FBPeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FBPeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;

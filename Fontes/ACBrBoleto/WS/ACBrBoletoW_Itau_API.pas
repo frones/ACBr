@@ -758,23 +758,19 @@ begin
   if Assigned(ATitulo) and Assigned(AJson) then
   begin
     LJsonDados := TACBrJSONObject.Create;
-    try
-      if Length(OnlyNumber(ATitulo.Sacado.CNPJCPF)) < 12 then
-      begin
-        LJsonDados.AddPair('codigo_tipo_pessoa', 'F');
-        LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
-      end
-      else
-      begin
-        LJsonDados.AddPair('codigo_tipo_pessoa','J');
-        LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
-      end;
 
-      AJson.AddPair('tipo_pessoa', LJsonDados);
-
-    finally
-      LJsonDados.Free;
+    if Length(OnlyNumber(ATitulo.Sacado.CNPJCPF)) < 12 then
+    begin
+      LJsonDados.AddPair('codigo_tipo_pessoa', 'F');
+      LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
+    end
+    else
+    begin
+      LJsonDados.AddPair('codigo_tipo_pessoa','J');
+      LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
     end;
+
+    AJson.AddPair('tipo_pessoa', LJsonDados);
   end;
 end;
 

@@ -1,0 +1,26 @@
+[EVENTO]
+idLote=1
+[EVENTO001]
+cOrgao=35
+CNPJ=12345678000123
+chNFe=12345678901234567890123456789012345678901234
+dhEvento=09/04/2024 18:14:00
+tpEvento=110130
+nSeqEvento=1
+versaoEvento=1.00
+cOrgaoAutor=35
+
+; Tipo de Autor pode ser:
+;   1 = Empresa Emitente,
+;   2 = Empresa Destinatária,
+;   3 = Empresa Transportadora.
+tpAutor=1
+
+; Versão do Aplicativo do emitente do evento
+verAplic=1.0
+
+dhEntrega=09/04/2024 18:14:00
+nDoc=12345678
+xNome=Pedro
+hashComprovante=0uJObQk29JacPTFTlMtooavXdpM=
+dhHashComprovante=09/04/2024 18:14:00

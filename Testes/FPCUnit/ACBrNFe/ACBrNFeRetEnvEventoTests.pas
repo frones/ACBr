@@ -57,23 +57,48 @@ begin
 
   FRetEnvEvento.XmlRetorno := ParseText(sxml);
   FRetEnvEvento.LerXML;
-{
-  CheckEquals('3.00', FRetEnvEvento.versao, 'Versao valor incorreto');
-  CheckEquals('ID113130001934975', FRetEnvEvento.Id, 'Id valor incorreto');
-  CheckEquals('2', tpAmbToStr(FRetEnvEvento.tpAmb), 'tpAmb valor incorreto');
-  CheckEquals('AM3.00', FRetEnvEvento.verAplic, 'verAplic valor incorreto');
-  CheckEquals(102, FRetEnvEvento.cStat, 'cStat valor incorreto');
-  CheckEquals('Inutilizacao de numero homologado', FRetEnvEvento.xMotivo, 'xMotivo valor incorreto');
-  CheckEquals(13, FRetEnvEvento.cUF, 'cUF valor incorreto');
-  CheckEquals(EncodeDataHora('2013-01-24T19:46:32-04:00'), FRetEnvEvento.dhRecbto, 'dhRecbto valor incorreto');
-  CheckEquals(13, FRetEnvEvento.ano, 'ano valor incorreto');
-  CheckEquals('12345678000123', FRetEnvEvento.CNPJ, 'CNPJ valor incorreto');
-  CheckEquals(65, FRetEnvEvento.Modelo, 'mod valor incorreto');
-  CheckEquals(1, FRetEnvEvento.serie, 'serie valor incorreto');
-  CheckEquals(16, FRetEnvEvento.nNFIni, 'nNFIni valor incorreto');
-  CheckEquals(18, FRetEnvEvento.nNFFin, 'nNFFin valor incorreto');
-  CheckEquals('113130001934975', FRetEnvEvento.nProt, 'nProt valor incorreto');
-  }
+
+  CheckEquals('1.00', FRetEnvEvento.versao, 'Versao valor incorreto');
+  CheckEquals(8, FRetEnvEvento.idLote, 'idLote valor incorreto');
+  CheckEquals('1', tpAmbToStr(FRetEnvEvento.tpAmb), 'tpAmb valor incorreto');
+  CheckEquals('AN_1.0.0', FRetEnvEvento.verAplic, 'verAplic valor incorreto');
+  CheckEquals(91, FRetEnvEvento.cOrgao, 'cOrgao valor incorreto');
+  CheckEquals(128, FRetEnvEvento.cStat, 'cStat valor incorreto');
+  CheckEquals('Lote de evento processado', FRetEnvEvento.xMotivo, 'xMotivo valor incorreto');
+
+  // Leitura do grupo infEvento que esta dentro de retEvento (que é uma lista)
+  // primeira ocorrência
+  if FRetEnvEvento.retEvento.Count > 0 then
+  begin
+    CheckEquals('ID891120000074187', FRetEnvEvento.retEvento[0].RetInfEvento.Id, 'Id valor incorreto');
+    CheckEquals('1', tpAmbToStr(FRetEnvEvento.retEvento[0].RetInfEvento.tpAmb), 'tpAmb valor incorreto');
+    CheckEquals('AN_1.0.0', FRetEnvEvento.retEvento[0].RetInfEvento.verAplic, 'verAplic valor incorreto');
+    CheckEquals(91, FRetEnvEvento.retEvento[0].RetInfEvento.cOrgao, 'cOrgao valor incorreto');
+    CheckEquals(135, FRetEnvEvento.retEvento[0].RetInfEvento.cStat, 'cStat valor incorreto');
+    CheckEquals('Evento registrado e vinculado a NF-e', FRetEnvEvento.retEvento[0].RetInfEvento.xMotivo, 'xMotivo valor incorreto');
+    CheckEquals('35121012345678000123550010000003911000003915', FRetEnvEvento.retEvento[0].RetInfEvento.chNFe, 'chNFe valor incorreto');
+    CheckEquals('210210', TpEventoToStr(FRetEnvEvento.retEvento[0].RetInfEvento.tpEvento), 'tpEvento valor incorreto');
+    CheckEquals(1, FRetEnvEvento.retEvento[0].RetInfEvento.nSeqEvento, 'nSeqEvento valor incorreto');
+    CheckEquals(EncodeDataHora('2012-11-21T23:51:55-02:00'), FRetEnvEvento.retEvento[0].RetInfEvento.dhRegEvento, 'dhRegEvento valor incorreto');
+    CheckEquals('891120000074187', FRetEnvEvento.retEvento[0].RetInfEvento.nProt, 'nProt valor incorreto');
+  end;
+
+  // Leitura do grupo infEvento que esta dentro de retEvento (que é uma lista)
+  // segunda ocorrência
+  if FRetEnvEvento.retEvento.Count > 1 then
+  begin
+    CheckEquals('ID891120000074188', FRetEnvEvento.retEvento[1].RetInfEvento.Id, 'Id valor incorreto');
+    CheckEquals('1', tpAmbToStr(FRetEnvEvento.retEvento[1].RetInfEvento.tpAmb), 'tpAmb valor incorreto');
+    CheckEquals('AN_1.0.0', FRetEnvEvento.retEvento[1].RetInfEvento.verAplic, 'verAplic valor incorreto');
+    CheckEquals(91, FRetEnvEvento.retEvento[1].RetInfEvento.cOrgao, 'cOrgao valor incorreto');
+    CheckEquals(135, FRetEnvEvento.retEvento[1].RetInfEvento.cStat, 'cStat valor incorreto');
+    CheckEquals('Evento registrado e vinculado a NF-e', FRetEnvEvento.retEvento[1].RetInfEvento.xMotivo, 'xMotivo valor incorreto');
+    CheckEquals('35121012345678000123550010000068961010068962', FRetEnvEvento.retEvento[1].RetInfEvento.chNFe, 'chNFe valor incorreto');
+    CheckEquals('210210', TpEventoToStr(FRetEnvEvento.retEvento[1].RetInfEvento.tpEvento), 'tpEvento valor incorreto');
+    CheckEquals(1, FRetEnvEvento.retEvento[1].RetInfEvento.nSeqEvento, 'nSeqEvento valor incorreto');
+    CheckEquals(EncodeDataHora('2012-11-21T23:51:55-02:00'), FRetEnvEvento.retEvento[1].RetInfEvento.dhRegEvento, 'dhRegEvento valor incorreto');
+    CheckEquals('891120000074188', FRetEnvEvento.retEvento[1].RetInfEvento.nProt, 'nProt valor incorreto');
+  end;
 end;
 
 procedure ACBrNFeRetEnvEventoTest.LoadFromFile_Ret_Vazio;
@@ -84,23 +109,15 @@ begin
 
   FRetEnvEvento.XmlRetorno := ParseText(sxml);
   FRetEnvEvento.LerXML;
-  {
+
   CheckEquals('', FRetEnvEvento.versao, 'Versao valor incorreto');
-  CheckEquals('', FRetEnvEvento.Id, 'Id valor incorreto');
+  CheckEquals(0, FRetEnvEvento.idLote, 'idLote valor incorreto');
   CheckEquals('1', tpAmbToStr(FRetEnvEvento.tpAmb), 'tpAmb valor incorreto');
   CheckEquals('', FRetEnvEvento.verAplic, 'verAplic valor incorreto');
+  CheckEquals(0, FRetEnvEvento.cOrgao, 'cOrgao valor incorreto');
   CheckEquals(0, FRetEnvEvento.cStat, 'cStat valor incorreto');
   CheckEquals('', FRetEnvEvento.xMotivo, 'xMotivo valor incorreto');
-  CheckEquals(0, FRetEnvEvento.cUF, 'cUF valor incorreto');
-  CheckEquals(EncodeDataHora('1899-12-30T00:00:00'), FRetEnvEvento.dhRecbto, 'dhRecbto valor incorreto');
-  CheckEquals(0, FRetEnvEvento.ano, 'ano valor incorreto');
-  CheckEquals('', FRetEnvEvento.CNPJ, 'CNPJ valor incorreto');
-  CheckEquals(0, FRetEnvEvento.Modelo, 'mod valor incorreto');
-  CheckEquals(0, FRetEnvEvento.serie, 'serie valor incorreto');
-  CheckEquals(0, FRetEnvEvento.nNFIni, 'nNFIni valor incorreto');
-  CheckEquals(0, FRetEnvEvento.nNFFin, 'nNFFin valor incorreto');
-  CheckEquals('', FRetEnvEvento.nProt, 'nProt valor incorreto');
-  }
+
 end;
 
 initialization

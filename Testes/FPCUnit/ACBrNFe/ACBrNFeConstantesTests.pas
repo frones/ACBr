@@ -1,4 +1,4 @@
-﻿unit ACBrNFeConstantesTests;
+unit ACBrNFeConstantesTests;
 
 {$I ACBr.inc}
 
@@ -348,7 +348,7 @@ const
                                          '<CNPJ>12345678000123</CNPJ>' +
                                        '</autXML>' +
                                        '<tpAutorizacao>1</tpAutorizacao>' +
-                                       '<xCondUso>O emitente ou destinatário da NF-e, declara que permite ' +
+                                       '<xCondUso>O emitente ou destinat�rio da NF-e, declara que permite ' +
                                        'o transportador declarado no campo CNPJ/CPF deste evento a ' +
                                        'autorizar os transportadores subcontratados ou redespachados a ' +
                                        'terem acesso ao download da NF-e</xCondUso>' +
@@ -356,6 +356,55 @@ const
                                    '</infEvento>' +
                                  '</evento>' +
                                '</envEvento>';
+
+  sxml_EventoInsucessoEntrega = '<envEvento xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">' +
+                                  '<idLote>1</idLote>' +
+                                  '<evento xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">' +
+                                    '<infEvento Id="ID1101921234567890123456789012345678901234567890123401">' +
+                                      '<cOrgao>92</cOrgao>' +
+                                      '<tpAmb>2</tpAmb>' +
+                                      '<CNPJ>12345678000123</CNPJ>' +
+                                      '<chNFe>12345678901234567890123456789012345678901234</chNFe>' +
+                                      '<dhEvento>2024-04-09T18:14:00-03:00</dhEvento>' +
+                                      '<tpEvento>110192</tpEvento>' +
+                                      '<nSeqEvento>1</nSeqEvento>' +
+                                      '<verEvento>4.00</verEvento>' +
+                                      '<detEvento versao="4.00">' +
+                                      '<descEvento>Insucesso na Entrega da NF-e</descEvento>' +
+                                        '<cOrgaoAutor>35</cOrgaoAutor>' +
+                                        '<verAplic>1.00</verAplic>' +
+                                        '<dhTentativaEntrega>2024-05-09T09:11:57-03:00</dhTentativaEntrega>' +
+                                        '<nTentativa>001</nTentativa>' +
+                                        '<tpMotivo>4</tpMotivo>' +
+                                        '<xJustMotivo>Nao tinha ninguem para receber a mercadoria</xJustMotivo>' +
+                                        '<hashTentativaEntrega>0uJObQk29JacPTFTlMtooavXdpM=</hashTentativaEntrega>' +
+                                        '<dhHashTentativaEntrega>2024-05-09T09:12:46-03:00</dhHashTentativaEntrega>' +
+                                      '</detEvento>' +
+                                    '</infEvento>' +
+                                  '</evento>' +
+                                '</envEvento>';
+
+  sxml_EventoCancInsucessoEntrega = '<envEvento xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">' +
+                                      '<idLote>1</idLote>' +
+                                      '<evento xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">' +
+                                        '<infEvento Id="ID1101931234567890123456789012345678901234567890123401">' +
+                                          '<cOrgao>92</cOrgao>' +
+                                          '<tpAmb>2</tpAmb>' +
+                                          '<CNPJ>12345678000123</CNPJ>' +
+                                          '<chNFe>12345678901234567890123456789012345678901234</chNFe>' +
+                                          '<dhEvento>2024-04-09T18:14:00-03:00</dhEvento>' +
+                                          '<tpEvento>110193</tpEvento>' +
+                                          '<nSeqEvento>1</nSeqEvento>' +
+                                          '<verEvento>4.00</verEvento>' +
+                                          '<detEvento versao="4.00">' +
+                                            '<descEvento>Cancelamento Insucesso na Entrega da NF-e</descEvento>' +
+                                            '<cOrgaoAutor>35</cOrgaoAutor>' +
+                                            '<verAplic>1.00</verAplic>' +
+                                            '<nProtEvento>123456789012345</nProtEvento>' +
+                                          '</detEvento>' +
+                                        '</infEvento>' +
+                                      '</evento>' +
+                                    '</envEvento>';
 
   { Xmls de Retorno }
   sxml_Ret_Vazio =  '';

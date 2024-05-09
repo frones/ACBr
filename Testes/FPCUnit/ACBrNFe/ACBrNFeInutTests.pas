@@ -21,6 +21,7 @@ type
     procedure TearDown; override;
   published
     procedure GerarXml_Inut;
+    procedure LerXml_Inut;
 
   end;
 
@@ -67,6 +68,23 @@ begin
   sxml_new := FInut_New.GerarXML;
 
   CheckEquals(sxml_new, sxml_old, 'Xml novo de Inut diferente do antigo');
+end;
+
+procedure ACBrNFeInutTest.LerXml_Inut;
+begin
+  FInut_New.LerXMLFromString(sXml_Inut);
+
+  CheckEquals('4.00', FInut_New.versao, 'Versao valor incorreto');
+  CheckEquals('ID35241234567800012355001000000010000000020', FInut_New.Id, 'Id valor incorreto');
+  CheckEquals('2', tpAmbToStr(FInut_New.tpAmb), 'tpAmb valor incorreto');
+  CheckEquals(35, FInut_New.cUF, 'cUF valor incorreto');
+  CheckEquals(24, FInut_New.ano, 'ano valor incorreto');
+  CheckEquals('12345678000123', FInut_New.CNPJ, 'CNPJ valor incorreto');
+  CheckEquals(55, FInut_New.Modelo, 'mod valor incorreto');
+  CheckEquals(1, FInut_New.serie, 'serie valor incorreto');
+  CheckEquals(10, FInut_New.nNFIni, 'nNFIni valor incorreto');
+  CheckEquals(20, FInut_New.nNFFin, 'nNFFin valor incorreto');
+  CheckEquals('Erro no Sistema de Emissao de Notas', FInut_New.xJust, 'xJust valor incorreto');
 end;
 
 initialization

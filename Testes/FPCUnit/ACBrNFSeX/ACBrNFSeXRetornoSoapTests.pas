@@ -36,7 +36,7 @@ uses
 const
   SArquivoRetornoSoap  = '..\..\..\..\Recursos\NFSe\RetornoSoap.xml';
   SArquivoRetorno  = '..\..\..\..\Recursos\NFSe\Retorno.xml';
-  UmMunicipioWebFisco = 3545803;
+  UmMunicipioWebFisco = 3169356;
 
 { ACBrNFSeXRetornoSoapTest }
 
@@ -81,6 +81,16 @@ begin
   if Pos('Body', sxml) > 0 then
     sxml := SeparaDados(sxml, 'Body');
 
+(*
+  // ISSIntel - 1508407
+  sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
+  sxml := RemoverIdentacao(sxml);
+  sxml := RemoverCaracteresDesnecessarios(sxml);
+  sxml := RemoverPrefixosDesnecessarios(sxml);
+  sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
+*)
+
+(*
   // SigISSWeb - 3545803
   sxml := NativeStringToUTF8(sxml);
   sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
@@ -89,44 +99,50 @@ begin
   sxml := RemoverCaracteresDesnecessarios(sxml);
   sxml := RemoverPrefixosDesnecessarios(sxml);
   sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
+*)
 
-  (*
+(*
   // Fiorilli - 3544004
-  sxml := SeparaDados(sxml, 'ns2:ListaNfse');
+//  sxml := SeparaDados(sxml, 'ns2:ListaNfse');
 
-  sxml := NativeStringToUTF8(sxml);
+  if UTF8Decode(sxml) = '' then
+    sxml := NativeStringToUTF8(sxml);
+
+  sxml := string(NativeStringToUTF8(sxml));
   sxml := StringReplace(sxml, '&#xd;', '\s\n', [rfReplaceAll]);
+  sxml := StringReplace(sxml, ''#$A'', '\s\n', [rfReplaceAll]);
   sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
   sxml := RemoverPrefixosDesnecessarios(sxml);
   sxml := RemoverCaracteresDesnecessarios(sxml);
   sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
-  *)
-  (*
+*)
+(*
   sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
 
   sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
   sxml := RemoverIdentacao(sxml);
   sxml := RemoverCaracteresDesnecessarios(sxml);
   sxml := InserirDeclaracaoXMLSeNecessario(sxml);
-  *)
+*)
 
-  (*
-  NFSeBrasil - 3169356
+
+//  NFSeBrasil - 3169356
   sxml := SeparaDados(sxml, 'return');
 
   if Pos('ISO-8859-1', sxml) > 0 then
     sxml := AnsiToNativeString(sXML);
 
-  sxml := string(NativeStringToUTF8(sxml));
   sxml := StringReplace(sxml, '&amp;amp;', 'e',[rfReplaceAll]);
   sxml := ParseText(AnsiString(sxml), True, {$IfDef FPC}True{$Else}False{$EndIf});
   sxml := RemoverDeclaracaoXML(sxml, True);
   sxml := RemoverCDATA(sxml);
   sxml := RemoverIdentacao(sxml);
   sxml := RemoverPrefixosDesnecessarios(sxml);
+  sxml := RemoverCaracteresDesnecessarios(sxml);
   sxml := StringReplace(sxml, 'R$', '', [rfReplaceAll]);
   sxml := StringReplace(sxml, '&', '&amp;', [rfReplaceAll]);
-  *)
+  sxml := NativeStringToUTF8(sxml);
+
   sxml := InserirDeclaracaoXMLSeNecessario(sxml);
 
   WriteToTXT(SArquivoRetorno, sxml, False, False);

@@ -88,6 +88,7 @@ begin
   inherited Configuracao;
 
   ConfigGeral.CancPreencherMotivo := True;
+  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
   with ConfigWebServices do
   begin
@@ -139,6 +140,36 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+
+procedure MontarListaErros(AuxNode: TACBrXmlNode);
+var
+  Codigo, Descricao, Correcao: string;
+begin
+  Codigo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr);
+
+  if Codigo = '' then
+    Codigo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ErroID'), tcStr);
+
+  Descricao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Mensagem'), tcStr);
+
+  if Descricao = '' then
+    Descricao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ErroMensagem'), tcStr);
+
+  Correcao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Correcao'), tcStr);
+
+  if Correcao = '' then
+    Correcao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ErroSolucao'), tcStr);
+
+  if (Codigo <> '') or (Descricao <> '') or (Correcao <> '') then
+  begin
+    AErro := Response.Erros.New;
+
+    AErro.Codigo := Codigo;
+    AErro.Descricao := Descricao;
+    AErro.Correcao := Correcao;
+  end;
+end;
+
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -147,34 +178,13 @@ begin
 
   ANodeArray := ANode.Childrens.FindAllAnyNs('Erro');
 
-  if not Assigned(ANodeArray) and (ANodeArray <> nil) then
+  if Assigned(ANodeArray) then
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
-    AErro.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
-
-   Exit;
-  end;
-
-  for I := Low(ANodeArray) to High(ANodeArray) do
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-
-    if AErro.Codigo = '' then
-      AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroID'), tcStr);
-
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
-
-    if AErro.Descricao = '' then
-      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroMensagem'), tcStr);
-
-    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
-
-    if AErro.Correcao = '' then
-      AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroSolucao'), tcStr);
-  end;
+    for I := Low(ANodeArray) to High(ANodeArray) do
+      MontarListaErros(ANodeArray[I]);
+  end
+  else
+    MontarListaErros(ANode);
 end;
 
 { TACBrNFSeXWebserviceSudoeste202 }

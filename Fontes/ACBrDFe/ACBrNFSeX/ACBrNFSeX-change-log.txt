@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/05/2024
+-- Sudoeste.Provider --
+[*] Melhora a função que lê as informações da lista de erros e adiciona parâmetro para incluir numNFSeFinal
+    na consulta de NFSe por faixa.
+  Por: Italo Giurizzato Junior / Diego Folieni
+
 07/05/2024
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Abaetetuba/PA, o provedor é MegaSoft.

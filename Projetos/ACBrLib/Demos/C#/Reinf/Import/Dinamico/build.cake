@@ -190,3 +190,5 @@ else
     tipoProjeto = "MT/";
     RunTarget(targetPush);
 }
+
+Information("Script cake processado com sucesso");

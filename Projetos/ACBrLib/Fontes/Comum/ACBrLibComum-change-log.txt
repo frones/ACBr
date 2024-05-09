@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2024
+-- build.cake --
+[*] Adicionada informação no final dos scripts para identificar quando foram executados com sucesso
+  Por: Renato Rubinho
+
 30/04/2024
 -- ACBrLibHandle.cs --
 [*] TK-5375 - Compatibilização da LibraryPath da ACBrLib.Core com pacote self-contained

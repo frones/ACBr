@@ -164,7 +164,7 @@ end;
 
 function TMDFeW.GerarXml: boolean;
 var
-  Gerar: boolean;
+  Gerar, Ok: boolean;
   xProtMDFe, VersaoStr: string;
 begin
   // Carrega Layout que sera utilizado para gera o txt
@@ -182,6 +182,7 @@ begin
   MDFe.Ide.tpAmb := tpAmb;
   MDFe.ide.tpEmis := tpEmis;
 }
+  VersaoDF :=  DblToVersaoMDFe(Ok, MDFe.infMDFe.Versao);
   VersaoStr := 'versao="' + FloatToString(MDFe.infMDFe.Versao, '.', '#0.00') + '"';
 
   FChaveMDFe := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJCPF, MDFe.ide.serie,

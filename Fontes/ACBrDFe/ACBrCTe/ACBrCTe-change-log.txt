@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2024
+-- pcteCTeW --
+[*] Correção para gerar a versão correta do Modal.
+   Por: Italo Giurizzato Junior
+
 08/05/2024
 -- ACBrCTeConhecimentos --
 [*] Reversão da alteração que visava o uso das configurações na geração do XML.

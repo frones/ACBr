@@ -140,22 +140,7 @@ begin
           xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
           cUF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
           ano := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ano'), tcInt);
-
-          CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
-
-          if CNPJ <> '' then
-          begin
-            if length(CNPJ) < 14 then
-              CNPJ := PadLeft(CNPJ, 14, '0');
-          end
-          else
-          begin
-            CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPF'), tcStr);
-
-            if (CNPJ <> '') and (length(CNPJ) < 11) then
-              CNPJ := PadLeft(CNPJ, 11, '0');
-          end;
-
+          CNPJ := ObterConteudoTagCNPJCPF(AuxNode);
           modelo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('mod'), tcInt);
           serie := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('serie'), tcInt);
           nNFIni := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFIni'), tcInt);

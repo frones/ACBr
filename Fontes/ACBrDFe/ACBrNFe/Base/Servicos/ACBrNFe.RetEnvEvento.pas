@@ -338,10 +338,10 @@ begin
   cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
   xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
 
-  ANodes := ANode.Childrens.FindAll('infEvento');
+  ANodes := ANode.Childrens.FindAll('retEvento');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    Ler_InfEventos(ANodes[i]);
+    Ler_InfEventos(ANodes[i].Childrens.FindAnyNs('infEvento'));
   end;
 end;
 
@@ -362,7 +362,7 @@ begin
 
       if ANode <> nil then
       begin
-        if ANode.LocalName = 'procEventoNFe' then
+        if (ANode.LocalName = 'procEventoNFe') or (ANode.LocalName = 'envEvento') then
         begin
           versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 

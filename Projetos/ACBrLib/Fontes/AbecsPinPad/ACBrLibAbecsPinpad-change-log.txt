@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/05/2024
+--- ACBrLibAbecsPinpadConsts ---
+[+] Inclusão unit ACBrLibAbecsPinpadConsts
+    Por: Antonio Carlos Junior
+
+10/05/2024
 --- ACBrLibAbecsPinpad ---
 [+] Inclusão novos métodos
 [+] Criação unit ACBrLibAbecsPinpadRespostas

@@ -1127,9 +1127,9 @@ begin
   fUltimoQRCode := '';
 
   {$IfDef DEBUG}
-   fIsDebug := True;
+   IsDebug := True;
   {$Else}
-   fIsDebug := False;
+   IsDebug := False;
   {$EndIf}
 
   fPathLib := '';

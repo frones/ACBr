@@ -66,7 +66,7 @@ type
     function CarregarImagem(const eArquivoImagem, eNomeImagem: PChar; Flipped: Boolean): longint;
     function Imprimir(const ACopias, AAvancoEtq: Integer): longint;
 
-    function GerarStream(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+    function GerarStreamBase64(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
 
     function ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
                                        MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
@@ -271,20 +271,20 @@ begin
   end;
 end;
 
-function TACBrLibETQ.GerarStream(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibETQ.GerarStreamBase64(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
 var
   LResposta : AnsiString;
 begin
   try
     if Config.Log.Nivel > logNormal then
-      GravarLog('ETQ_GerarStream( ' + IntToStr(ACopias) + ',' +
+      GravarLog('ETQ_GerarStreamBase64( ' + IntToStr(ACopias) + ',' +
                                  IntToStr(AAvancoEtq) + ' )', logCompleto, True)
     else
-      GravarLog('ETQ_GerarStream', logNormal);
+      GravarLog('ETQ_GerarStreamBase64', logNormal);
 
     ETQDM.Travar;
     try
-      LResposta := ETQDM.ACBrETQ1.GerarStream(ACopias, AAvancoEtq);
+      LResposta := ETQDM.ACBrETQ1.GerarStreamBase64(ACopias, AAvancoEtq);
       MoverStringParaPChar(LResposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, LResposta);
     finally

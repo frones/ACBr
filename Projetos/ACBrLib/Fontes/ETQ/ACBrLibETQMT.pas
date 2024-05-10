@@ -78,7 +78,7 @@ function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, e
 
 {%region Impressão}
 function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_GerarStream(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_GerarStreamBase64(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function ETQ_ImprimirTexto(const libHandle: PLibHandle; const Orientacao, Fonte, MultiplicadorH,
   MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar; const SubFonte: Integer;
@@ -273,11 +273,11 @@ begin
   end;
 end;
 
-function ETQ_GerarStream(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_GerarStreamBase64(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibETQ(libHandle^.Lib).GerarStream(ACopias, AAvancoEtq, sResposta, esTamanho);
+    Result := TACBrLibETQ(libHandle^.Lib).GerarStreamBase64(ACopias, AAvancoEtq, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

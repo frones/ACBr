@@ -70,7 +70,7 @@ exports
 
   // Impressão
   ETQ_Imprimir,
-  ETQ_GerarStream,
+  ETQ_GerarStreamBase64,
   ETQ_ImprimirTexto,
   ETQ_ImprimirTextoStr,
   ETQ_ImprimirBarras,

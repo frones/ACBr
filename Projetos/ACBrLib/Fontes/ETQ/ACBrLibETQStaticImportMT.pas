@@ -108,7 +108,7 @@ function ETQ_CarregarImagem(const libHandle: TLibHandle; const eArquivoImagem, e
 {%region Impressão}
 function ETQ_Imprimir(const libHandle: TLibHandle; const ACopias, AAvancoEtq: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
-function ETQ_GerarStream(const libHandle: TLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
+function ETQ_GerarStreamBase64(const libHandle: TLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
 function ETQ_ImprimirTexto(const libHandle: TLibHandle; const Orientacao, Fonte, MultiplicadorH,
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;

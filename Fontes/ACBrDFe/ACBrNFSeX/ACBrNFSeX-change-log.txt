@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/05/2024
+-- ACBrNFSeXServicos --
+[*] Alteração de versão da cidade de Cunha Pora/SC, o provedor continua o mesmo.
+  Por: Léo
+[*] Alteração no URL para acessar a nota da cidade de Sao Domingos/GO.
+  Por: João Paulo Alcântara
+[*] Alteração na cidade de Abaetetuba/PA, o provedor correto é Desenvolve.
+  Por: Luan Carvalho
+
 09/05/2024
 -- Sudoeste.Provider --
 [*] Melhora a função que lê as informações da lista de erros e adiciona parâmetro para incluir numNFSeFinal

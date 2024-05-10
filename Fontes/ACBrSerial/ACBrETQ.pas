@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBase, ACBrDevice, ACBrETQClass;
+  ACBrBase, ACBrDevice, ACBrETQClass, synacode, synautil;
 
 type
 
@@ -113,6 +113,7 @@ type
     procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
 
     procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
+    function  GerarStreamBase64(Copias: Integer = 1; AvancoEtq: Integer = 0 ) : AnsiString;
 
     procedure ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte, MultiplicadorH,
       MultiplicadorV, Vertical, Horizontal: Integer; const Texto: String;
@@ -666,6 +667,7 @@ end;
 procedure TACBrETQ.Imprimir(Copias: Integer; AvancoEtq: Integer);
 var
   wCmd: AnsiString;
+
 begin
   GravarLog('- Imprimir. Copias:'+IntToStr(Copias)+', AvancoEtq:'+IntToStr(AvancoEtq));
 
@@ -701,6 +703,7 @@ begin
     wCmd := fsETQ.TratarComandoAntesDeEnviar(ListaCmd.Text);
     GravarLog(wCmd, True);
 
+
     fsDevice.EnviaString(wCmd);
   finally
     fsListaCmd.Clear;
@@ -709,6 +712,64 @@ begin
     fsCopias          := 1;
     fsAvancoEtq       := 0;
   end;
+end;
+
+function TACBrETQ.GerarStreamBase64(Copias: Integer; AvancoEtq: Integer): AnsiString;
+var
+  wCmd: AnsiString;
+  SLConteudoImpressao : TStringList;
+  LStream : TMemoryStream;
+begin
+  GravarLog('- Gerar Stream. Copias:'+IntToStr(Copias)+', AvancoEtq:'+IntToStr(AvancoEtq));
+
+  AtivarSeNecessario;
+
+  try
+    // Verifica se é necessário IniciarEtiqueta. Só será utilizado quando
+    //  o comando não foi enviado manualmente
+    if (not (fsEtqInicializada or fsEtqFinalizada)) then
+      IniciarEtiqueta;
+
+    // Verifica se ficou um bloco de etiquetas sem ser Finalizado
+    if (not fsEtqFinalizada) then
+      FinalizarEtiqueta(Copias, AvancoEtq)
+    else
+    begin
+      if Copias > 1 then
+        fsCopias := Copias;
+
+      if AvancoEtq > 0 then
+        fsAvancoEtq := AvancoEtq;
+    end;
+
+    wCmd := fsETQ.ComandosFinalizarEtiqueta(fsCopias, fsAvancoEtq);
+    fsListaCmd.Add(wCmd);
+
+    if LimparMemoria then
+    begin
+      wCmd := fsETQ.ComandoLimparMemoria;
+      fsListaCmd.Add(wCmd);
+    end;
+
+    wCmd := fsETQ.TratarComandoAntesDeEnviar(ListaCmd.Text);
+    GravarLog(wCmd, True);
+
+    SLConteudoImpressao := TStringList.Create;
+    LStream := TMemoryStream.Create;
+    SLConteudoImpressao.Text:= wCmd;
+    SLConteudoImpressao.SaveToStream( LStream );
+    LStream.Position := 0;
+    result := EncodeBase64(ReadStrFromStream(LStream, LStream.Size));
+  finally
+    fsListaCmd.Clear;
+    fsEtqInicializada := False;
+    fsEtqFinalizada   := False;
+    fsCopias          := 1;
+    fsAvancoEtq       := 0;
+    LStream.free;
+    SLConteudoImpressao.Free;
+  end;
+
 end;
 
 procedure TACBrETQ.ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte,

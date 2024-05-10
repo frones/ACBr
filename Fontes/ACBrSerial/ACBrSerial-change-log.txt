@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2024
+-- ACBrETQ -- 
+[+] Criado a função para retornar a etiqueta GerarStreamBase64
+    por: Daniel Morais Infocotidiano
+
 16/02/2024
 -- ACBrVirtualPrinter -- 
 [+] Adicionado evento para capturar a linha que será impressa antes da decodificação

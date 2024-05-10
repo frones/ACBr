@@ -40,6 +40,11 @@ Símbolo : Significado
 
 10/05/2024
 -- ACBrETQ -- 
+[+] Corrigido a função GerarStreamBase64 para evitar falhas.
+    por: Daniel Morais Infocotidiano
+
+10/05/2024
+-- ACBrETQ -- 
 [+] Criado a função para retornar a etiqueta GerarStreamBase64
     por: Daniel Morais Infocotidiano
 

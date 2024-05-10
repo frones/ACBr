@@ -723,6 +723,8 @@ begin
   GravarLog('- Gerar Stream. Copias:'+IntToStr(Copias)+', AvancoEtq:'+IntToStr(AvancoEtq));
 
   AtivarSeNecessario;
+  LStream := TMemoryStream.Create;
+  SLConteudoImpressao := TStringList.Create;
 
   try
     // Verifica se é necessário IniciarEtiqueta. Só será utilizado quando
@@ -754,8 +756,6 @@ begin
     wCmd := fsETQ.TratarComandoAntesDeEnviar(ListaCmd.Text);
     GravarLog(wCmd, True);
 
-    SLConteudoImpressao := TStringList.Create;
-    LStream := TMemoryStream.Create;
     SLConteudoImpressao.Text:= wCmd;
     SLConteudoImpressao.SaveToStream( LStream );
     LStream.Position := 0;

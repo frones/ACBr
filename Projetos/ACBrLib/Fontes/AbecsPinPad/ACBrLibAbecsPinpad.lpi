@@ -528,7 +528,7 @@
         <PackageName Value="ACBrSerial"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="ACBrLibAbecsPinpad.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -585,10 +585,14 @@
         <IsPartOfProject Value="True"/>
       </Unit12>
       <Unit13>
-        <Filename Value="acbrlibabecspinpadconsts.pas"/>
+        <Filename Value="ACBrLibAbecsPinpadConsts.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrLibAbecsPinpadConsts"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="ACBrLibAbecsPinpadRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

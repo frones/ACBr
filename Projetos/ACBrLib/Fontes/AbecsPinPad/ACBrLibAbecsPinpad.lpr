@@ -38,7 +38,8 @@ uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
   {$IFDEF MT}ACBrLibAbecsPinpadMT{$ELSE}ACBrLibAbecsPinpadST{$ENDIF},
-  ACBrLibAbecsPinpadConfig, ACBrLibAbecsPinpadDataModule, ACBrLibAbecsPinpadConsts;
+  ACBrLibAbecsPinpadConfig, ACBrLibAbecsPinpadDataModule,
+  ACBrLibAbecsPinpadRespostas, ACBrLibAbecsPinpadConsts;
 
 {$R *.res}
 
@@ -60,7 +61,31 @@ exports
   AbecsPinpad_ConfigLer,
   AbecsPinpad_ConfigGravar,
   AbecsPinpad_ConfigLerValor,
-  AbecsPinpad_ConfigGravarValor;
+  AbecsPinpad_ConfigGravarValor,
+
+  //Control Commands
+  AbecsPinpad_Ativar,
+  AbecsPinpad_Desativar,
+  AbecsPinpad_OPN,
+  AbecsPinpad_CLO,
+  AbecsPinpad_CLX,
+  AbecsPinpad_GIX,
+  AbecsPinpad_GIN,
+  AbecsPinpad_PinPadCapabilities,
+
+  //Basic Commands
+  AbecsPinpad_DSP,
+  AbecsPinpad_DEX,
+  AbecsPinpad_GKY,
+  AbecsPinpad_RMC,
+  AbecsPinpad_GCD,
+  AbecsPinpad_CEX,
+  AbecsPinpad_MNU,
+
+  //Multimida Commands
+  AbecsPinpad_LoadMedia,
+  AbecsPinpad_DSI,
+  AbecsPinpad_DMF;
 
 begin
   {$IFDEF DEBUG}

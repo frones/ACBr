@@ -44,12 +44,22 @@ type
   {TAbecsPinpadConfig}
   TAbecsPinpadConfig = class
     private
-
+      FPort: String;
+      FTimeOut: Integer;
+      FLogFile: String;
+      FMsgAlign: TACBrAbecsMsgAlign;
+      FMsgWordWrap: Boolean;
     public
       constructor Create;
       destructor Destroy; override;
       procedure LerIni(const AIni: TCustomIniFile);
       procedure GravarIni(const AIni: TCustomIniFile);
+
+      property Port: String read FPort write FPort;
+      property TimeOut: Integer read FTimeOut write FTimeOut;
+      property LogFile: String read FLogFile write FLogFile;
+      property MsgAlign: TACBrAbecsMsgAlign read FMsgAlign write FMsgAlign;
+      property MsgWordWrap: Boolean read FMsgWordWrap write FMsgWordWrap;
   end;
 
   { TLibAbecsPinpadConfig }
@@ -71,7 +81,7 @@ type
       destructor Destroy; override;
 
       property AbecsPinpadConfig: TAbecsPinpadConfig read FAbecsPinpadConfig;
-
+      property AbecsPinpadDeviceConfig: TDeviceConfig read FDeviceConfig;
   end;
 
 implementation
@@ -84,7 +94,11 @@ uses
 
 constructor TAbecsPinpadConfig.Create;
 begin
-
+  FPort := '';
+  FTimeOut := 10000;
+  FLogFile := '';
+  FMsgAlign := alCenter;
+  FMsgWordWrap := True;
 end;
 
 destructor TAbecsPinpadConfig.Destroy;
@@ -94,12 +108,20 @@ end;
 
 procedure TAbecsPinpadConfig.LerIni(const AIni: TCustomIniFile);
 begin
-
+  FPort := AIni.ReadString(CSessaoAbecsPinpad, CChavePortaPinpad, FPort);
+  FTimeOut :=  AIni.ReadInteger(CSessaoAbecsPinpad, CChaveTimeOutPinpad, FTimeOut);
+  FLogFile := AIni.ReadString(CSessaoAbecsPinpad, CChaveLogFile, FLogFile);
+  FMsgAlign := TACBrAbecsMsgAlign(AIni.ReadInteger(CSessaoAbecsPinpad, CChaveMsgAlign, Integer(FMsgAlign)));
+  FMsgWordWrap := AIni.ReadBool(CSessaoAbecsPinpad, CChaveMsgWordWrap, FMsgWordWrap);
 end;
 
 procedure TAbecsPinpadConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-
+  AIni.WriteString(CSessaoAbecsPinpad, CChavePortaPinpad, FPort);
+  AIni.WriteInteger(CSessaoAbecsPinpad, CChaveTimeOutPinpad, FTimeOut);
+  AIni.WriteString(CSessaoAbecsPinpad, CChaveLogFile, FLogFile);
+  AIni.WriteInteger(CSessaoAbecsPinpad, CChaveMsgAlign, Integer(FMsgAlign));
+  AIni.WriteBool(CSessaoAbecsPinpad, CChaveMsgWordWrap, FMsgWordWrap);
 end;
 
 { TLibAbecsPinpadConfig }

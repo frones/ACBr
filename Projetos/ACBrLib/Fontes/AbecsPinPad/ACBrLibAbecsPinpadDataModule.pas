@@ -65,7 +65,7 @@ type
 implementation
 
 uses
-  ACBrLibAbecsPinpadConfig;
+  ACBrLibAbecsPinpadConfig, ACBrDeviceSerial;
 
 {$R *.lfm}
 
@@ -82,8 +82,31 @@ begin
 end;
 
 procedure TLibAbecsPinpadDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibAbecsPinpadConfig;
 begin
+  pLibConfig := TLibAbecsPinpadConfig(Lib.Config);
 
+  with ACBrAbecsPinPad1 do
+  begin
+    Port := pLibConfig.AbecsPinpadConfig.Port;
+    TimeOut := pLibConfig.AbecsPinpadConfig.TimeOut;
+    LogFile := pLibConfig.AbecsPinpadConfig.LogFile;
+    MsgAlign := pLibConfig.AbecsPinpadConfig.MsgAlign;
+    MsgWordWrap := pLibConfig.AbecsPinpadConfig.MsgWordWrap;
+
+    Device.Baud := pLibConfig.AbecsPinpadDeviceConfig.Baud;
+    Device.Data := pLibConfig.AbecsPinpadDeviceConfig.Data;
+    Device.TimeOut := pLibConfig.AbecsPinpadDeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.AbecsPinpadDeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.AbecsPinpadDeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.AbecsPinpadDeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.AbecsPinpadDeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.AbecsPinpadDeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.AbecsPinpadDeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.AbecsPinpadDeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.AbecsPinpadDeviceConfig.SoftFlow;
+  end;
 end;
 
 procedure TLibAbecsPinpadDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

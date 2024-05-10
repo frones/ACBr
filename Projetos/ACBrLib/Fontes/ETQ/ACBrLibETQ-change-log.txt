@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2024
+--- ACBrLibETQStaticImport, ACBrLibETQStaticImportMT, ACBrLibETQMT, ACBrLibETQBase, ACBrLibETQ   --
+[+] TK-5390 - Criado o metodo ETQ_GerarStream
+https://www.projetoacbr.com.br/forum/topic/77507-implementa%C3%A7%C3%A3o-do-retorno-da-etiqueta-em-base64-na-acbrlibetq/
+Por: Daniel Morais Infocotidiano
+
 13/03/2024
 --- ACBrLibETQBase, ACBrLibETQDataModule --
 [*] Adicionado uses ACBrUtil.filesIO

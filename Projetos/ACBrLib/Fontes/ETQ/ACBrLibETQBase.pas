@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibComum, ACBrLibETQDataModule, ACBrDevice, ACBrETQ, ACBrUtil.FilesIO;
+  ACBrLibComum, ACBrLibETQDataModule, ACBrDevice, ACBrETQ, ACBrUtil.FilesIO, synacode, synautil;
 
 type
 
@@ -65,6 +65,9 @@ type
     function FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;
     function CarregarImagem(const eArquivoImagem, eNomeImagem: PChar; Flipped: Boolean): longint;
     function Imprimir(const ACopias, AAvancoEtq: Integer): longint;
+
+    function GerarStream(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+
     function ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
                                        MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
                                        const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
@@ -256,6 +259,34 @@ begin
     try
       ETQDM.ACBrETQ1.Imprimir(ACopias, AAvancoEtq);
       Result := SetRetorno(ErrOK);
+    finally
+      ETQDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibETQ.GerarStream(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  LResposta : AnsiString;
+begin
+  try
+    if Config.Log.Nivel > logNormal then
+      GravarLog('ETQ_GerarStream( ' + IntToStr(ACopias) + ',' +
+                                 IntToStr(AAvancoEtq) + ' )', logCompleto, True)
+    else
+      GravarLog('ETQ_GerarStream', logNormal);
+
+    ETQDM.Travar;
+    try
+      LResposta := ETQDM.ACBrETQ1.GerarStream(ACopias, AAvancoEtq);
+      MoverStringParaPChar(LResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, LResposta);
     finally
       ETQDM.Destravar;
     end;

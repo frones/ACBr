@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Rafael Teno Dias, Daniel Morais Infocotidiano   }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -30,7 +30,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit ACBrLibETQStaticImport;
+unit ACBrLibETQStaticImportMT;
 
 {$IfDef FPC}
 {$mode objfpc}{$H+}
@@ -62,7 +62,7 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function ETQ_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function ETQ_Inicializar(const libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
 function ETQ_Finalizar: longint;
@@ -70,61 +70,60 @@ function ETQ_Finalizar: longint;
 {%endregion}
 
 {%region Versao/Retorno}
-function ETQ_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function ETQ_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
-function ETQ_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function ETQ_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
-function ETQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function ETQ_ConfigLer(const eArqConfig: PChar): longint;
+function ETQ_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
-function ETQ_ConfigGravar(const eArqConfig: PChar): longint;
+function ETQ_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
-function ETQ_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function ETQ_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 
-function ETQ_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function ETQ_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 {%endregion}
 
 {%region Diversos}
-function ETQ_Ativar: longint;
+function ETQ_Ativar(const libHandle: TLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
+function ETQ_Desativar(const libHandle: TLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
+function ETQ_IniciarEtiqueta(const libHandle: TLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
+function ETQ_FinalizarEtiqueta(const libHandle: TLibHandle; const ACopias, AAvancoEtq: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_Desativar: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_IniciarEtiqueta: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_CarregarImagem(const eArquivoImagem, eNomeImagem: PChar;
+function ETQ_CarregarImagem(const libHandle: TLibHandle; const eArquivoImagem, eNomeImagem: PChar;
       Flipped: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 {%endregion}
 
 {%region Impressão}
-function ETQ_Imprimir(const ACopias, AAvancoEtq: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_GerarStream(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
+function ETQ_Imprimir(const libHandle: TLibHandle; const ACopias, AAvancoEtq: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
+
+function ETQ_GerarStream(const libHandle: TLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
+
+function ETQ_ImprimirTexto(const libHandle: TLibHandle; const Orientacao, Fonte, MultiplicadorH,
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
+function ETQ_ImprimirBarras(const libHandle: TLibHandle; const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
      const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): longint;
+function ETQ_ImprimirLinha(const libHandle: TLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_ImprimirCaixa(const Vertical, Horizontal, Largura, Altura,
+function ETQ_ImprimirCaixa(const libHandle: TLibHandle; const Vertical, Horizontal, Largura, Altura,
       EspessuraVertical, EspessuraHorizontal: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
-function ETQ_ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
+function ETQ_ImprimirImagem(const libHandle: TLibHandle; const MultiplicadorImagem, Vertical, Horizontal: Integer;
       const eNomeImagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrETQLIBName;
 {%endregion}

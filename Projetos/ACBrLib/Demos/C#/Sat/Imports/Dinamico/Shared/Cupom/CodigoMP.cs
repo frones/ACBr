@@ -31,6 +31,24 @@ namespace ACBrLib.Sat
         [EnumValue("13")]
         mpValeCombustivel,
 
+        [EnumValue("15")]
+        mpBoletoBancario,
+
+        [EnumValue("16")]
+        mpDepositoBancario,
+
+        [EnumValue("17")]
+        mpPix,
+
+        [EnumValue("18")]
+        mpTransfBancariaCarteiraDigital,
+
+        [EnumValue("19")]
+        mpFidelidadeCashbackCredito,
+
+        [EnumValue("90")]
+        mpSemPagamento,
+
         [EnumValue("99")]
         mpOutros
     }

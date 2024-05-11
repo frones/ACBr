@@ -643,10 +643,18 @@ begin
   try
     for I := 0 to Pred(Retorno.Count) do
     begin
-      RetText.Add( 'Nosso Número :: '    + Retorno[i].NossoNumero);
-      RetText.Add( 'Valor Documento :: ' + CurrToStr(Retorno[i].ValorDocumento));
-      RetText.Add( 'Valor Pago :: '      + CurrToStr(Retorno[i].ValorPago));
-      RetText.Add( 'Data Ocorrencia :: ' + DateToStr(Retorno[i].DataOcorrencia));
+      RetText.Add('Nosso Número :: '    + Retorno[i].NossoNumero);
+      RetText.Add('Valor Documento :: ' + CurrToStr(Retorno[i].ValorDocumento));
+      RetText.Add('Valor Pago :: '      + CurrToStr(Retorno[i].ValorPago));
+      RetText.Add('Valor Recebido :: '  + CurrToStr(Retorno[i].ValorRecebido));
+      RetText.Add('Data Ocorrencia :: ' + DateToStr(Retorno[i].DataOcorrencia));
+      RetText.Add('Data Vencimento :: ' + DateToStr(Retorno[i].Vencimento));
+      RetText.Add('CodTipoOcorrencia :: ' + GetEnumName( TypeInfo(TACBrTipoOcorrencia), Integer(Retorno[i].OcorrenciaOriginal.Tipo)));
+      RetText.Add('Descrição Tipo Ocorrencia :: '  + Retorno[i].OcorrenciaOriginal.Descricao);
+      RetText.Add('Descriçãoo Comando :: '  + Retorno[i].DescricaoMotivoRejeicaoComando.Text);
+      RetText.Add('EMV (QrCode Pix) :: '  + Retorno[i].QrCode.emv);
+      RetText.Add('---------------------------');
+
       //[...] demais propriedades do titulo a gosto
     end;
     RetText.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoProcessado.txt' );
@@ -698,6 +706,7 @@ begin
   Titulo.DataProcessamento := Now;
   Titulo.Carteira          := edtCarteira.Text;
   Titulo.NossoNumero       := edtNossoNro.Text;
+  Titulo.NossoNumeroCorrespondente := ''; //utilizado na Consulta, Alteração e Baixa da API Inter com QrCode
   Titulo.ValorDocumento    := StrToCurr(edtValorDoc.Text);
   Titulo.Sacado.NomeSacado := edtNome.Text;
   Titulo.Sacado.CNPJCPF    := OnlyNumber(edtCPFCNPJ.Text);
@@ -1048,6 +1057,8 @@ begin
               SLRetorno.Add('dataCredito = '                + DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
               SLRetorno.Add('valorAtual = '                 + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
               SLRetorno.Add('valorPago = '                  + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
+              SLRetorno.Add('NossoNumeroCorrespondente = '  + Retorno[I].DadosRet.TituloRet.NossoNumeroCorrespondente);
+              SLRetorno.Add('EMV (QrCodePix) = '            + Retorno[I].DadosRet.TituloRet.EMV);
               SLRetorno.Add('  ---  ');
             end;
             SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
@@ -1090,6 +1101,9 @@ begin
               SLRetorno.Add('dataCredito = '                + DateToStr(RetornoDetalhe.DadosRet.TituloRet.dataCredito));
               SLRetorno.Add('valorAtual = '                 + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.valorAtual));
               SLRetorno.Add('valorPago = '                  + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.ValorPago));
+              SLRetorno.Add('NossoNumeroCorrespondente = '  + RetornoDetalhe.DadosRet.TituloRet.NossoNumeroCorrespondente);
+              SLRetorno.Add('EMV (QrCode Pix) = '           + RetornoDetalhe.DadosRet.TituloRet.EMV);
+
               SLRetorno.Add('  ---  ');
             end;
             SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsultaDetalhe.txt' );
@@ -1181,15 +1195,16 @@ begin
         begin
          SLRemessa.Add('TITULO_RETORNO'            + sLineBreak  +
           'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+          'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+          'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
           'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
           'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+          'NossoNumeroCorrespondente='             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumeroCorrespondente+ sLineBreak +
           'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
           'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
           'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
           'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
           'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
-          'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
-          'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
           'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
           'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
           'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
@@ -1197,8 +1212,8 @@ begin
           'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
           'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
           'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+          'EMV (QrCode) ='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV + sLineBreak +
           'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
-
         end;
       end;
       SLRemessa.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );

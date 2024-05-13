@@ -362,10 +362,7 @@ begin
                                      Evento[i].InfEvento.detEvento.dhTentativaEntrega), DSC_DEMI);
           Gerador.wCampo(tcInt, 'P31', 'nTentativa ', 3, 3, 0, Evento[i].InfEvento.detEvento.nTentativa);
           Gerador.wCampo(tcStr, 'P32', 'tpMotivo   ', 1, 1, 1, tpMotivoToStr(Evento[i].InfEvento.detEvento.tpMotivo));
-
-          if Evento[i].InfEvento.detEvento.tpMotivo = tmOutro then
-            Gerador.wCampo(tcStr, 'P33', 'xJustMotivo', 25, 250, 0, Evento[i].InfEvento.detEvento.xJustMotivo);
-
+          Gerador.wCampo(tcStr, 'P33', 'xJustMotivo', 25, 250, 0, Evento[i].InfEvento.detEvento.xJustMotivo);
           Gerador.wCampo(tcDe6, 'P34', 'latGPS    ', 01, 10, 0, Evento[i].InfEvento.detEvento.latGPS);
           Gerador.wCampo(tcDe6, 'P35', 'longGPS   ', 01, 11, 0, Evento[i].InfEvento.detEvento.longGPS);
 
@@ -549,7 +546,7 @@ begin
 
         if RetEventoNFe.InfEvento.detEvento.autXML.Count > 0 then
         begin
-          InfEvento.detEvento.autXML[0].CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
+          InfEvento.detEvento.autXML.New.CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
         end;
 
         // Insucesso na Entrega

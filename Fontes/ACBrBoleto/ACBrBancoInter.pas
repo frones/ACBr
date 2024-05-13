@@ -50,7 +50,7 @@ type
     function GetLocalPagamento: String; override;
   public
     constructor create(AOwner: TACBrBanco);
-
+    function CalcularTamMaximoNossoNumero(const Carteira: String; const NossoNumero : String = '';const Convenio: String = ''): Integer; override;
     function CalcularNomeArquivoRemessa: string; override;
     function MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string; override;
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): string; override;
@@ -66,6 +66,7 @@ type
     function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string; override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
+    function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): string; override;
   end;
 
 implementation
@@ -87,6 +88,19 @@ begin
   fValorTotalDocs         := 0;
   fQtRegLote              := 0;
   fpCodigosMoraAceitos    := '012';
+end;
+
+function TACBrBancoInter.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): string;
+begin
+  Modulo.FormulaDigito        := frModulo10;
+  Modulo.MultiplicadorFinal   := 1;
+  Modulo.MultiplicadorInicial := 2;
+  Modulo.Documento :=
+    ACBrTitulo.ACBrBoleto.Cedente.Agencia
+    + ACBrTitulo.Carteira
+    + PadLeft(ACBrTitulo.NossoNumero, fpTamanhoMaximoNossoNum, '0');
+  Modulo.Calcular;
+  Result := IntToStr(Modulo.DigitoFinal);
 end;
 
 function TACBrBancoInter.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string;
@@ -116,24 +130,36 @@ begin
   Result := copy(CodigoBarras, 1, 4)
             + DigitoCodBarras
             + copy(CodigoBarras, 5, 39);
-
 end;
 
 function TACBrBancoInter.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): string;
 var
   NossoNr, NossoNrDv: string;
 begin
+
   NossoNrDv := PadLeft(ACBrTitulo.NossoNumero, TamanhoMaximoNossoNum, '0') ;
+  if ACBrTitulo.Carteira = '112' then
+  begin
+    NossoNr := ACBrTitulo.ACBrBoleto.Cedente.Agencia
+               + ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito
+               + '/'
+               + ACBrTitulo.Carteira
+               + '/'
+               + Copy(NossoNrDv, 1, 10)
+               + '-'
+               + Copy(NossoNrDv, 11, 1);
 
-  NossoNr := ACBrTitulo.ACBrBoleto.Cedente.Agencia
-             + ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito
-             + '/'
-             + ACBrTitulo.Carteira
-             + '/'
-             + Copy(NossoNrDv, 1, 10)
-             + '-'
-             + Copy(NossoNrDv, 11, 1);
-
+  end else
+  begin
+    NossoNr := ACBrTitulo.ACBrBoleto.Cedente.Agencia
+               + ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito
+               + '/'
+               + ACBrTitulo.Carteira
+               + '/'
+               + Copy(NossoNrDv, 1, 10)
+               + '-'
+               + CalcularDigitoVerificador(ACBrTitulo);
+  end;
   Result := NossoNr ;
 
 end;
@@ -184,7 +210,7 @@ end;
 procedure TACBrBancoInter.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList);
 var
   ACodigoMoraJuros, ATipoCedente, ATipoSacado, ADataMoraJuros, ADataDesconto, wLinha,
-  wCarteira, ValorMora, EspecieDoc, ADesconto, AMensagem : string;
+  wCarteira, ValorMora, EspecieDoc, ADesconto, AMensagem, LDigitoVerificador : string;
   Boleto : TACBrBoleto;
   ADataLimitePagamento : Byte;
 begin
@@ -252,16 +278,25 @@ begin
   AMensagem := Copy(stringreplace(ACBrTitulo.Mensagem.Text,sLineBreak,' ',[rfReplaceAll]), 1, 70) ;
   wCarteira := Trim(ACBrTitulo.Carteira);
 
+  if wCarteira = '112' then
+  begin
+    ACBrTitulo.NossoNumero := '0';
+    LDigitoVerificador := '0';
+  end else
+    LDigitoVerificador := CalcularDigitoVerificador(ACBrTitulo);
+
+
   wLinha := '1'                                                                                                                                          + // 1 a 1 Identificação do registro de transação
             Space(19)                                                                                                                                    + // 002 a 020 Branco
-            '1120001' + PadLeft(Boleto.Cedente.Conta + Boleto.Cedente.ContaDigito, 10, '0')                                                              + // 021 a 037 Identificação da empresa beneficiária no Inter
+            wCarteira                                                                                                                                    + // 021 a 023 carteira 110 ou 112
+            '0001' + PadLeft(Boleto.Cedente.Conta + Boleto.Cedente.ContaDigito, 10, '0')                                                                 + // 021 a 037 Identificação da empresa beneficiária no Inter
             PadRight(ACBrTitulo.SeuNumero, 25, ' ')                                                                                                      + // 038 a 062 Número de controle para uso da empresa.
             Space(3)                                                                                                                                     + // 063 a 065 Branco
             IfThen((ACBrTitulo.PercentualMulta > 0), IfThen(ACBrTitulo.MultaValorFixo, '1', '2'), '0')                                                   + // 066 a 066 Campo de multa
             IfThen(ACBrTitulo.MultaValorFixo, IntToStrZero(Round(ACBrTitulo.PercentualMulta * 100), 13), PadLeft('', 13, '0'))                           + // 067 a 079 Valor da multa
             IfThen(ACBrTitulo.MultaValorFixo, PadLeft('', 4, '0'), IntToStrZero(Round(ACBrTitulo.PercentualMulta * 100), 4))                             +  // 080 a 083 Percentual de multa
             IfThen((ACBrTitulo.DataMulta > 0) and (ACBrTitulo.PercentualMulta > 0), FormatDateTime('ddmmyy', ACBrTitulo.DataMulta), PadLeft('', 6, '0')) + // 084 a 089 Data da multa
-            PadLeft('', 11, '0')                                                                                                                         + // 090 a 100 Identificação do título no banco ("Nosso número") (será preenchido pelo Inter no arquivoretorno)
+            PadLeft(ACBrTitulo.NossoNumero+LDigitoVerificador, 11, '0')                                                                                                     + // 090 a 100 Identificação do título no banco ("Nosso número") (será preenchido pelo Inter no arquivoretorno)
             Space(8)                                                                                                                                     + // 101 a 108 Branco
             '01'                                                                                                                                         + // 109 a 110 Identificação da ocorrência
             PadRight(ACBrTitulo.NumeroDocumento, 10, ' ')                                                                                                + // 111 a 120 Nº do documento (Seu número)
@@ -308,6 +343,15 @@ end;
 function TACBrBancoInter.GetLocalPagamento: String;
 begin
   Result := ACBrStr(CInstrucaoPagamentoRegistro);
+end;
+
+function TACBrBancoInter.CalcularTamMaximoNossoNumero(const Carteira: String; const NossoNumero : String = '';const Convenio: String = ''): Integer;
+begin
+  if Carteira = '112' then
+    fpTamanhoMaximoNossoNum := 11
+  else
+    fpTamanhoMaximoNossoNum := 10;
+  Result := fpTamanhoMaximoNossoNum;
 end;
 
 procedure TACBrBancoInter.GerarRegistroTrailler400(ARemessa: TStringList);
@@ -391,7 +435,11 @@ begin
 
     Titulo.ValorDocumento          := StrToFloatDef(Copy(Linha, 125, 13), 0) / 100;
     Titulo.ValorRecebido           := StrToFloatDef(Copy(Linha, 160, 13), 0) / 100;
-    Titulo.NossoNumero             := Copy(Linha, 71, 11);
+
+    if Boleto.LerNossoNumeroCompleto or (Titulo.Carteira = '112') then
+      Titulo.NossoNumero             := Copy(Linha, 71, 11)
+    else
+      Titulo.NossoNumero             := Copy(Linha, 71, 10);
 
     Titulo.Sacado.NomeSacado       := Copy(Linha, 182, 40);
     Titulo.Sacado.CNPJCPF          := Trim(Copy(Linha, 227, 14));

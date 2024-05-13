@@ -57,6 +57,7 @@ type
     procedure Test_AbecsPinpad_MNU;
     procedure Test_AbecsPinpad_MNU_Hotkey;
     procedure Test_AbecsPinpad_LoadMedia;
+    procedure Test_AbecsPinpad_LMF;
     procedure Test_AbecsPinpad_DSI;
     procedure Test_AbecsPinpad_DMF;
 
@@ -672,6 +673,25 @@ begin
   AssertEquals('Erro ao Ativar Pinpad', ErrOk, AbecsPinpad_Ativar(Handle));
   AssertEquals('Erro ao Abrir Comunicação com Pinpad', ErrOk, AbecsPinpad_OPN(Handle));
   AssertEquals('Erro ao Carregar Midia para o Pinpad', ErrOk, AbecsPinpad_LoadMedia(Handle, 'C:\TesteIMG.jpg', 2, PChar(AStr), Bufflen));
+  AssertEquals('Erro ao Finalizar Comunicação com Pinpad', ErrOk, AbecsPinpad_CLO(Handle, 'Comunicação Finalizada'));
+  AssertEquals('Erro ao Desativar Pinpad', ErrOk, AbecsPinpad_Desativar(Handle));
+  AssertEquals(ErrOk, AbecsPinpad_Finalizar(Handle));
+end;
+
+procedure TTestACBrAbecsPinpadLib.Test_AbecsPinpad_LMF;
+var
+  Handle: THandle;
+  AStr: String;
+  Bufflen: Integer;
+begin
+  AssertEquals(ErrOk, AbecsPinpad_Inicializar(Handle,'',''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao Ativar Pinpad', ErrOk, AbecsPinpad_Ativar(Handle));
+  AssertEquals('Erro ao Abrir Comunicação com Pinpad', ErrOk, AbecsPinpad_OPN(Handle));
+  AssertEquals('Erro ao Listar Media Files', ErrOk, AbecsPinpad_LMF(Handle, PChar(AStr), Bufflen));
   AssertEquals('Erro ao Finalizar Comunicação com Pinpad', ErrOk, AbecsPinpad_CLO(Handle, 'Comunicação Finalizada'));
   AssertEquals('Erro ao Desativar Pinpad', ErrOk, AbecsPinpad_Desativar(Handle));
   AssertEquals(ErrOk, AbecsPinpad_Finalizar(Handle));

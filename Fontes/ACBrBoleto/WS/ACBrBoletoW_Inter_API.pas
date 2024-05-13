@@ -124,14 +124,19 @@ uses
 
 procedure TBoletoW_Inter_API.DefinirURL;
 var
-  LNossoNumero: string;
+  LNossoNumero, LNossoNumeroCorrespondente: string;
 begin
+  if Assigned(Atitulo) then
+    begin
+      LNossoNumero := PadLeft(ATitulo.NossoNumero, 11, '0');
 
-  if( ATitulo <> nil ) then
-  LNossoNumero := PadLeft(ATitulo.NossoNumero, 11, '0');
+      if Boleto.Cedente.CedenteWS.IndicadorPix then
+        begin
+          LNossoNumero               := ATitulo.NossoNumero;
+          LNossoNumeroCorrespondente := ATitulo.NossoNumeroCorrespondente;
+        end;
+    end;
 
-  if ((Boleto.Cedente.CedenteWS.IndicadorPix) and (ATitulo <> nil)) then
-  LNossoNumero := ATitulo.NossoNumero;
 
   if Boleto.Configuracoes.WebService.Ambiente = taProducao then
    FPURL := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix, C_URLPIX, C_URL)
@@ -140,7 +145,7 @@ begin
 
   if Boleto.Cedente.CedenteWS.IndicadorPix then
     begin
-      if EstaVazio(ATitulo.NossoNumeroCorrespondente) and
+      if EstaVazio(LNossoNumeroCorrespondente) and
       ((Boleto.Configuracoes.WebService.Operacao = tpConsultaDetalhe)  or  (Boleto.Configuracoes.WebService.Operacao = tpBaixa)) then
          raise Exception.Create('Boleto PIX necessario informar codigoSolicitacao, Exemplo:'+sLineBreak+
                                 'NossoNumeroCorrespondente := "183e982a-34e5-4bc0-9643-def5432a"');
@@ -148,8 +153,8 @@ begin
         tpInclui:         FPURL := FPURL + '/cobrancas';
         tpConsulta:       FPURL := FPURL + '/cobrancas?' + DefinirParametros;
         tpAltera:         FPURL := FPURL + '/comandoInstrucao';
-        tpConsultaDetalhe:FPURL := FPURL + '/cobrancas/' + ATitulo.NossoNumeroCorrespondente;
-        tpBaixa:          FPURL := FPURL + '/cobrancas/' + ATitulo.NossoNumeroCorrespondente + '/cancelar';
+        tpConsultaDetalhe:FPURL := FPURL + '/cobrancas/' + LNossoNumeroCorrespondente;
+        tpBaixa:          FPURL := FPURL + '/cobrancas/' + LNossoNumeroCorrespondente + '/cancelar';
       end;
     end
   else

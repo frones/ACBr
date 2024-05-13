@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+13/05/2024
+-- ACBrBoletoW_Inter_API --
+[-]TK-5429 - Corrigido para evitar o AV que foi reportado realizando consulta detalhe.
+  https://www.projetoacbr.com.br/forum/topic/77706-retorno-cobranca-boleto-pix-inter/#comment-502065
+  por Daniel de Morais InfoCotidiano
+
 06/05/2024
 [*]TK-5402 ACBrBoleto - Mensagens Automáticas de Juros
   por Victor H Gonzales - Pandaaa

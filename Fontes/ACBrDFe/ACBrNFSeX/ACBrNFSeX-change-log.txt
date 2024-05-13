@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Sao Roque do Canaa/ES, provedor é o EL na versão 2.04
+  Por: Eduardo Casotti
 
 10/05/2024
 -- ACBrNFSeXServicos --

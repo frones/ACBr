@@ -54,6 +54,10 @@ Símbolo : Significado
 [-]TK-5429 - Corrigido para evitar o AV que foi reportado realizando consulta detalhe.
   https://www.projetoacbr.com.br/forum/topic/77706-retorno-cobranca-boleto-pix-inter/#comment-502065
   por Daniel de Morais InfoCotidiano
+-- ACBrBancoInter.pas -- 
+[+]Geração do nosso número banco Inter - Carteira 110 - ACBR Boleto
+  por Victor H Gonzales - Pandaaa
+
 
 06/05/2024
 [*]TK-5402 ACBrBoleto - Mensagens Automáticas de Juros

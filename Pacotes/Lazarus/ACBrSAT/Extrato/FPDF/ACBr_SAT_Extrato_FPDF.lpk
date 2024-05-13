@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_SAT_Extrato_FPDF"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Alexandre de Paula"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\FPDF"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrSAT\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Extrato Cupom Fiscal Eletrônico SAT para Serial - (http://www.projectoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Version Minor="1"/>
+    <Files Count="3">
+      <Item2>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\FPDF\ACBrSATExtratoFPDF.pas"/>
+        <UnitName Value="ACBrSATExtratoFPDF"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\FPDF\ACBrSATExtratoFPDFReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSATExtratoFPDFReg"/>
+      </Item3>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBr_SAT"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrSerial"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

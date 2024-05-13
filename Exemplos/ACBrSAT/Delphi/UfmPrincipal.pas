@@ -28,17 +28,26 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit Unit1;
+unit UfmPrincipal;
+
+{$I ACBr.inc}
 
 interface
+
+//descomentar o motor de relatório que desejar utilizar! removendo o ponto
+{$DEFINE GERADOR_FORTES_REPORT}
+{.$DEFINE GERADOR_FAST_REPORT}
 
 uses
   Classes, SysUtils, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
+  dateutils, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
   RLFilters, ACBrSATExtratoReportClass, ACBrSATExtratoClass, OleCtrls,
-  SHDocVw, ACBrIntegrador, ACBrDFeReport;
+  SHDocVw, ACBrIntegrador, ACBrDFeReport
+  {$IFDEF GERADOR_FORTES_REPORT},ACBrSATExtratoFortesFr {$ENDIF}
+  {$IFDEF GERADOR_FAST_REPORT},ACBrSATExtratoFR {$ENDIF}
+  , ACBrSATExtratoFPDF;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -51,11 +60,10 @@ type
 
   { TForm1 }
 
-  TForm1 = class(TForm)
+  TfmPrincipal = class(TForm)
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrSAT1 : TACBrSAT;
     ACBrSATExtratoESCPOS1 : TACBrSATExtratoESCPOS;
-    ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     bImpressora: TButton;
     bInicializar : TButton;
     btLerParams: TButton;
@@ -65,8 +73,6 @@ type
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
-    cbUsarEscPos: TRadioButton;
-    cbUsarFortes: TRadioButton;
     cbxRemoverAcentos: TCheckBox;
     cbxModeloPosPrinter: TComboBox;
     cbxPagCodigo: TComboBox;
@@ -110,8 +116,8 @@ type
     edRedeCodigo: TEdit;
     edSchemaVendaSAT: TEdit;
     GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
+    grpFortesFast: TGroupBox;
+    gbESCPOS: TGroupBox;
     gbWiFi: TGroupBox;
     gbIPFix: TGroupBox;
     gbPPPoE: TGroupBox;
@@ -275,6 +281,13 @@ type
     N1: TMenuItem;
     CarregarLote1: TMenuItem;
     ConsultarltimaSessoFiscal1: TMenuItem;
+    Label80: TLabel;
+    cbxMotorRelatorio: TComboBox;
+    Label83: TLabel;
+    sbFR3: TSpeedButton;
+    edtPathFR3: TEdit;
+    Label36: TLabel;
+
     procedure ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
       AData: TDateTime);
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
@@ -338,38 +351,48 @@ type
     procedure SbArqLogClick(Sender : TObject);
     procedure sePagCodChange(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
-    procedure cbUsarEscPosClick(Sender: TObject);
-    procedure cbUsarFortesClick(Sender: TObject);
     procedure CarregarLote1Click(Sender: TObject);
     procedure ConsultarltimaSessoFiscal1Click(Sender: TObject);
+    procedure cbxMotorRelatorioChange(Sender: TObject);
+    procedure sbFR3Click(Sender: TObject);
   private
+    FACBrSATExtratoFPDF1: TACBrSATExtratoFPDF;
+
+    {$IFDEF GERADOR_FORTES_REPORT}
+      FACBrSATExtratoFortes1: TACBrSATExtratoFortes;
+    {$ENDIF}
+    {$IFDEF GERADOR_FAST_REPORT}
+      FACBrSATExtratoFR1: TACBrSATExtratoFR;
+    {$ENDIF}
+
+    procedure AdicionaModelosExtratoNoComboBox;
     procedure ConfiguraRedeSAT;
     procedure LeDadosRedeSAT;
     procedure PrepararImpressao;
     procedure TrataErros(Sender : TObject; E : Exception);
     procedure AjustaACBrSAT;
-    procedure LoadXML(AXML: String; MyWebBrowser: TWebBrowser);
+    procedure LoadXML(const AXML: String; MyWebBrowser: TWebBrowser);
 
     procedure GetsignAC(var Chave: AnsiString);
     procedure GetcodigoDeAtivacao(var Chave: AnsiString);
   public
-    { public declarations }
   end;
 
 var
-  Form1 : TForm1;
+  fmPrincipal : TfmPrincipal;
 
 implementation
 
 Uses
-  math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, configuraserial,
-  RLPrinters, Printers, ACBrSATMFe_integrador, pcnVFPe;
+  math, typinfo, pcnConversao, pcnRede, synacode, IniFiles, configuraserial,
+  RLPrinters, Printers, ACBrSATMFe_integrador, pcnVFPe,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 {$R *.dfm}
 
 { TForm1 }
 
-procedure TForm1.FormCreate(Sender : TObject);
+procedure TfmPrincipal.FormCreate(Sender : TObject);
 var
   I: TACBrSATModelo;
   J: TpcnTipoAmbiente;
@@ -380,7 +403,6 @@ var
   O: TACBrPosPaginaCodigo;
   R: pcnRede.TSegSemFio;
   P: TSSLXmlSignLib;
-  x: Integer;
 begin
   ACBrSAT1.OnGetsignAC := GetsignAC;
   ACBrSAT1.OnGetcodigoDeAtivacao := GetcodigoDeAtivacao;
@@ -445,20 +467,23 @@ begin
   PageControl1.ActivePageIndex := 0;
   PageControl2.ActivePageIndex := 0;
 
+  AdicionaModelosExtratoNoComboBox;
+
   btLerParams.Click;
+
 end;
 
-procedure TForm1.mAssociarAssinaturaClick(Sender : TObject);
+procedure TfmPrincipal.mAssociarAssinaturaClick(Sender : TObject);
 begin
   ACBrSAT1.AssociarAssinatura( edtSwHCNPJ.Text + edtEmitCNPJ.Text, edtSwHAssinatura.Text );
 end;
 
-procedure TForm1.mAtaulizarSoftwareSATClick(Sender : TObject);
+procedure TfmPrincipal.mAtaulizarSoftwareSATClick(Sender : TObject);
 begin
   ACBrSAT1.AtualizarSoftwareSAT;
 end;
 
-procedure TForm1.TrataErros(Sender: TObject; E: Exception);
+procedure TfmPrincipal.TrataErros(Sender: TObject; E: Exception);
 var
   Erro: String;
 begin
@@ -466,7 +491,7 @@ begin
   ACBrSAT1.DoLog( E.ClassName+' - '+Erro);
 end;
 
-procedure TForm1.AjustaACBrSAT;
+procedure TfmPrincipal.AjustaACBrSAT;
 begin
   with ACBrSAT1 do
   begin
@@ -506,7 +531,7 @@ begin
   end
 end;
 
-procedure TForm1.ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
+procedure TfmPrincipal.ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
 begin
   mLog.Lines.Add(ALogLine);
   StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
@@ -514,24 +539,42 @@ begin
   Tratado := False;
 end;
 
-procedure TForm1.ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
+procedure TfmPrincipal.ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
 begin
   MessageDlg( IntToStr(ACod)+'-'+AMensagem, mtWarning, [mbOK], 0);
 end;
 
-procedure TForm1.ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
+procedure TfmPrincipal.ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
   AData: TDateTime);
 begin
   mLog.Lines.Add('O Path para o CNPJ: '+ACNPJ+' Data: '+DateToStr(AData)+' é: '+APath);
 end;
 
-procedure TForm1.bImpressoraClick(Sender: TObject);
+procedure TfmPrincipal.AdicionaModelosExtratoNoComboBox;
+begin
+  {$IFDEF GERADOR_FORTES_REPORT}
+    FACBrSATExtratoFortes1   := TACBrSATExtratoFortes.Create(ACBrSAT1);
+    cbxMotorRelatorio.AddItem('Fortes Reports', FACBrSATExtratoFortes1);
+  {$ENDIF}
+
+  {$IFDEF GERADOR_FAST_REPORT}
+    FACBrSATExtratoFR1 := TACBrSATExtratoFR.Create(ACBrSAT1);
+    cbxMotorRelatorio.AddItem('Fast Reports', FACBrSATExtratoFR1);
+  {$ENDIF}
+
+  cbxMotorRelatorio.AddItem('ESCPOS', ACBrSATExtratoESCPOS1);
+
+  FACBrSATExtratoFPDF1 := TACBrSATExtratoFPDF.Create(ACBrSAT1);
+  cbxMotorRelatorio.AddItem('FPDF', FACBrSATExtratoFPDF1);
+end;
+
+procedure TfmPrincipal.bImpressoraClick(Sender: TObject);
 begin
   if PrintDialog1.Execute then
     lImpressora.Caption := Printer.Printers[Printer.PrinterIndex];
 end;
 
-procedure TForm1.bInicializarClick(Sender : TObject);
+procedure TfmPrincipal.bInicializarClick(Sender : TObject);
 begin
   AjustaACBrSAT;
 
@@ -543,7 +586,7 @@ begin
     bInicializar.Caption := 'Inicializar';
 end;
 
-procedure TForm1.btLerParamsClick(Sender : TObject);
+procedure TfmPrincipal.btLerParamsClick(Sender : TObject);
 var
   ArqINI: String;
   INI : TIniFile;
@@ -595,14 +638,18 @@ begin
     edtSwHCNPJ.Text       := INI.ReadString('SwH','CNPJ','11111111111111');
     edtSwHAssinatura.Text := INI.ReadString('SwH','Assinatura',cAssinatura);
 
-    cbUsarFortes.Checked   := INI.ReadBool('Fortes','UsarFortes', True);
-    cbUsarEscPos.Checked   := not cbUsarFortes.Checked;
-    seLargura.Value        := INI.ReadInteger('Fortes','Largura', ACBrSATExtratoFortes1.LarguraBobina);
-    seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo', Trunc(ACBrSATExtratoFortes1.MargemSuperior));
-    seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo', Trunc(ACBrSATExtratoFortes1.MargemInferior));
-    seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda', Trunc(ACBrSATExtratoFortes1.MargemEsquerda));
-    seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita', Trunc(ACBrSATExtratoFortes1.MargemDireita));
+    cbxMotorRelatorio.ItemIndex := cbxMotorRelatorio.Items.IndexOf(INI.ReadString('SAT','MotorRelatorio', ''));
+
+    {$IFDEF GERADOR_FORTES_REPORT}
+    seLargura.Value        := INI.ReadInteger('Fortes','Largura', FACBrSATExtratoFortes1.LarguraBobina);
+    seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo', Trunc(FACBrSATExtratoFortes1.MargemSuperior));
+    seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo', Trunc(FACBrSATExtratoFortes1.MargemInferior));
+    seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda', Trunc(FACBrSATExtratoFortes1.MargemEsquerda));
+    seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita', Trunc(FACBrSATExtratoFortes1.MargemDireita));
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
+    {$ENDIF}
+
+    edtPathFR3.Text := INI.ReadString('Fast','CaminhoFR3',EmptyStr);
 
     lImpressora.Caption    := INI.ReadString('Printer','Name', '');
     if EstaVazio(lImpressora.Caption) then
@@ -612,7 +659,7 @@ begin
     end;
 
     cbImprimirChaveUmaLinha.Checked := INI.ReadBool('EscPos','ImprimirChaveUmaLinha',cbImprimirChaveUmaLinha.Checked);
- 
+
     cbImprimir1Linha.Checked := INI.ReadBool('Printer','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
     cbImprimirDescAcres.Checked := INI.ReadBool('Printer','ImprimeDescAcres',cbImprimirDescAcres.Checked);
     cbLogoLateral.Checked := INI.ReadBool('Printer','LogoLateral',cbLogoLateral.Checked);
@@ -657,7 +704,7 @@ begin
 end;
 
 //Este método é utilizado para Envio de Pagamento utilizando TEF
-procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
+procedure TfmPrincipal.btMFEEnviarStatusPagamentoClick(Sender: TObject);
 var
   StatusPagamentoMFe : TStatusPagamento;
   RespostaStatusPagamento : TRespostaStatusPagamento;
@@ -700,7 +747,7 @@ begin
 end;
 
 //Este método é utilizado para Envio de Pagamento utilizando POS
-procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
+procedure TfmPrincipal.btMFEEnviarPagamentoClick(Sender: TObject);
 var
   PagamentoMFe : TEnviarPagamento;
   RespostaPagamentoMFe : TRespostaPagamento;
@@ -745,7 +792,7 @@ end;
 
 //Este método é utilizado para Finalizar o processo de Pagamento, vinculando um Pagamento a um Documento Fiscal
 //Utilizado também para envio do Extrato CFe para impressão no equipamento POS
-procedure TForm1.btMFERespostaFiscalClick(Sender: TObject);
+procedure TfmPrincipal.btMFERespostaFiscalClick(Sender: TObject);
 var
   RespostaFiscal : TRespostaFiscal;
   RetornoRespostaFiscal : TRetornoRespostaFiscal;
@@ -762,7 +809,7 @@ Begin
       NumerodeAprovacao := '123456';                                                            //Código de Autorização de Pagamento Realizado, retornado pela Adquirinte (Autorizadora Pagamento)
       Bandeira := 'VISA';                                                                       //Tipo de Bandeira do Cartão fornecido pela Adquirinte
       Adquirente := 'STONE';                                                                    //Adquirinte que realizou a Operação de Aprovação de Pagamento
-      if Assigned(ACBrSAT1.CFe) and (ACBrSAT1.Extrato= ACBrSATExtratoESCPOS1) then
+      if Assigned(ACBrSAT1.CFe) and (ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1) then
         ImpressaoFiscal := '<![CDATA['+ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe+']]>';     //Extrato do CFe para impressão no aparelho POS
       NumeroDocumento := '1674068';                                                             //Número do Cupom Fiscal Autorizado
       CNPJ:= edtEmitCNPJ.Text;                                                                  //CNPJ do contribuinte
@@ -785,7 +832,7 @@ end;
 
 //OBS: Esta funcionalidade está disponível apenas para testes em Homologação utilizando o "Simulador POS Ceara"
 //Como não existe este equipamento POS Integrado conforme previsão inicial da SEFAZ CE, não deve ser utilizado em Produção
-procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);
+procedure TfmPrincipal.btMFEVerificarStatusClick(Sender: TObject);
 var
   VerificarStatusValidador : TVerificarStatusValidador;
   RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
@@ -818,7 +865,7 @@ begin
   ShowMessage(RespostaVerificarStatusValidador.CodigoAutorizacao);
 end;
 
-procedure TForm1.btSalvarParamsClick(Sender : TObject);
+procedure TfmPrincipal.btSalvarParamsClick(Sender : TObject);
 Var
   ArqINI : String;
   INI : TIniFile;
@@ -850,6 +897,7 @@ begin
     INI.WriteString('SAT','SchemaVendaAPL',edSchemaVendaAPL.Text);
     INI.WriteString('SAT','SchemaVendaSAT',edSchemaVendaSAT.Text);
     INI.WriteInteger('SAT','XMLLib',cbxXmlSignLib.ItemIndex);
+    INI.WriteString('SAT','MotorRelatorio',cbxMotorRelatorio.Text);
 
     INI.WriteInteger('PosPrinter','Modelo',cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
@@ -869,13 +917,14 @@ begin
     INI.WriteString('SwH','CNPJ',edtSwHCNPJ.Text);
     INI.WriteString('SwH','Assinatura',edtSwHAssinatura.Text);
 
-    INI.WriteBool('Fortes','UsarFortes',cbUsarFortes.Checked);
     INI.WriteInteger('Fortes','Largura',seLargura.Value);
     INI.WriteInteger('Fortes','MargemTopo',seMargemTopo.Value);
     INI.WriteInteger('Fortes','MargemFundo',seMargemFundo.Value);
     INI.WriteInteger('Fortes','MargemEsquerda',seMargemEsquerda.Value);
     INI.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
     INI.WriteBool('Fortes','Preview',cbPreview.Checked);
+
+    INI.WriteString('Fast','CaminhoFR3', edtPathFR3.Text);
 
     INI.WriteString('Printer','Name',lImpressora.Caption);
     INI.WriteBool('EscPos','ImprimirChaveUmaLinha',cbImprimirChaveUmaLinha.Checked);
@@ -911,7 +960,7 @@ begin
   end;
 end;
 
-procedure TForm1.btSerialClick(Sender: TObject);
+procedure TfmPrincipal.btSerialClick(Sender: TObject);
 begin
   frConfiguraSerial := TfrConfiguraSerial.Create(self);
 
@@ -930,7 +979,7 @@ begin
   end;
 end;
 
-procedure TForm1.CarregarLote1Click(Sender: TObject);
+procedure TfmPrincipal.CarregarLote1Click(Sender: TObject);
 var
   i: Integer;
 begin
@@ -964,13 +1013,13 @@ begin
   end;
 end;
 
-procedure TForm1.cbxFormatXMLChange(Sender: TObject);
+procedure TfmPrincipal.cbxFormatXMLChange(Sender: TObject);
 begin
   ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
   ACBrSAT1.CFeCanc.IdentarXML := cbxFormatXML.Checked;
 end;
 
-procedure TForm1.cbxModeloChange(Sender : TObject);
+procedure TfmPrincipal.cbxModeloChange(Sender : TObject);
 begin
   try
     ACBrSAT1.Modelo := TACBrSATModelo( cbxModelo.ItemIndex );
@@ -980,7 +1029,32 @@ begin
   end;
 end;
 
-procedure TForm1.cbxRedeProxyChange(Sender: TObject);
+procedure TfmPrincipal.cbxMotorRelatorioChange(Sender: TObject);
+var
+  LSelectedItemIndex: Integer;
+  LSelectedObject: TObject;
+begin
+  LSelectedObject := nil;
+  LSelectedItemIndex := cbxMotorRelatorio.ItemIndex;
+
+  if LSelectedItemIndex <> -1 then
+    LSelectedObject := TObject(cbxMotorRelatorio.Items.Objects[LSelectedItemIndex]);
+
+  if Assigned(LSelectedObject) then
+  begin
+    ACBrSAT1.Extrato := TACBrSATExtratoReportClass(LSelectedObject);
+
+    {$IFDEF GERADOR_FAST_REPORT}
+      if ACBrSAT1.Extrato is TACBrSATExtratoFR then
+        TACBrSATExtratoFR(ACBrSAT1.Extrato).FastExtrato := edtPathFR3.Text;
+    {$ENDIF}
+  end;
+
+  gbESCPOS.Enabled := cbxMotorRelatorio.Text = 'ESCPOS';
+
+end;
+
+procedure TfmPrincipal.cbxRedeProxyChange(Sender: TObject);
 begin
   edRedeProxyIP.Enabled := (cbxRedeProxy.ItemIndex > 0);
   edRedeProxyPorta.Enabled := edRedeProxyIP.Enabled;
@@ -988,59 +1062,59 @@ begin
   edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
 end;
 
-procedure TForm1.cbxRemoverAcentosChange(Sender: TObject);
+procedure TfmPrincipal.cbxRemoverAcentosChange(Sender: TObject);
 begin
   ACBrSAT1.CFe.RetirarAcentos := cbxRemoverAcentos.Checked;
   ACBrSAT1.CFeCanc.RetirarAcentos := cbxRemoverAcentos.Checked;
 end;
 
-procedure TForm1.cbxSalvarCFeCancChange(Sender: TObject);
+procedure TfmPrincipal.cbxSalvarCFeCancChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
 end;
 
-procedure TForm1.cbxSalvarCFeChange(Sender: TObject);
+procedure TfmPrincipal.cbxSalvarCFeChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
 end;
 
-procedure TForm1.cbxSalvarEnvioChange(Sender: TObject);
+procedure TfmPrincipal.cbxSalvarEnvioChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
 end;
 
-procedure TForm1.cbxSepararPorAnoChange(Sender: TObject);
+procedure TfmPrincipal.cbxSepararPorAnoChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorAno := cbxSepararPorAno.Checked;
 end;
 
-procedure TForm1.cbxSepararPorCNPJChange(Sender: TObject);
+procedure TfmPrincipal.cbxSepararPorCNPJChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
 end;
 
-procedure TForm1.cbxSepararPorDiaChange(Sender: TObject);
+procedure TfmPrincipal.cbxSepararPorDiaChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorDia := cbxSepararPorDia.Checked;
 end;
 
-procedure TForm1.cbxSepararPorMesChange(Sender: TObject);
+procedure TfmPrincipal.cbxSepararPorMesChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMes.Checked;
 end;
 
-procedure TForm1.cbxSepararPorModeloChange(Sender: TObject);
+procedure TfmPrincipal.cbxSepararPorModeloChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorModelo := cbxSepararPorModelo.Checked;
 end;
 
-procedure TForm1.cbxUTF8Change(Sender: TObject);
+procedure TfmPrincipal.cbxUTF8Change(Sender: TObject);
 begin
   ACBrSAT1.Config.EhUTF8 := cbxUTF8.Checked;
   sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
 end;
 
-procedure TForm1.MenuItem10Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem10Click(Sender: TObject);
 begin
   ConfiguraRedeSAT;
   LoadXML( ACBrSAT1.Rede.AsXMLString,  mRede );
@@ -1048,7 +1122,7 @@ begin
   ACBrSAT1.ConfigurarInterfaceDeRede( );
 end;
 
-procedure TForm1.MenuItem13Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem13Click(Sender: TObject);
 begin
   ConfiguraRedeSAT;
   LoadXML( ACBrSAT1.Rede.AsXMLString,  mRede );
@@ -1063,7 +1137,7 @@ begin
   end;
 end;
 
-procedure TForm1.MenuItem15Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem15Click(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
@@ -1082,7 +1156,7 @@ begin
   end;
 end;
 
-procedure TForm1.MenuItem17Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem17Click(Sender: TObject);
 begin
   ACBrSAT1.CFe.Clear;
   ACBrSAT1.CFeCanc.Clear;
@@ -1099,7 +1173,7 @@ begin
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
-procedure TForm1.MenuItem18Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem18Click(Sender: TObject);
 var
   tini, tfim: TDateTime;
 begin
@@ -1112,7 +1186,7 @@ begin
   mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' );
 end;
 
-procedure TForm1.MenuItem19Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem19Click(Sender: TObject);
 var
   Erro: String;
 begin
@@ -1129,7 +1203,7 @@ begin
   end;
 end;
 
-procedure TForm1.MenuItem22Click(Sender: TObject);
+procedure TfmPrincipal.MenuItem22Click(Sender: TObject);
 var
   Erro: String;
 begin
@@ -1146,7 +1220,7 @@ begin
   end;
 end;
 
-procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
+procedure TfmPrincipal.miGerarXMLCancelamentoClick(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
@@ -1160,7 +1234,7 @@ begin
   end;
 end;
 
-procedure TForm1.miEnviarCancelamentoClick(Sender: TObject);
+procedure TfmPrincipal.miEnviarCancelamentoClick(Sender: TObject);
 begin
   PageControl1.ActivePage := tsLog;
   if mCancelamentoEnviar.Lines.Count < 1 then
@@ -1186,7 +1260,7 @@ begin
   end;
 end;
 
-procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
+procedure TfmPrincipal.miImprimirExtratoCancelamentoClick(Sender: TObject);
 begin
   //ACBrSAT1.CFeCanc.LoadFromFile('C:\temp\ADC35160666591991000132590000371860052583129800.xml');
   //ACBrSAT1.CFe.LoadFromFile('C:\temp\AD35160666591991000132590000371860052570122411.xml');
@@ -1194,14 +1268,14 @@ begin
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
-procedure TForm1.mTesteFimAFimClick(Sender: TObject);
-var
-  Numero: Integer;
+procedure TfmPrincipal.mTesteFimAFimClick(Sender: TObject);
+//var
+//  Numero: Integer;
 begin
   if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
-  Numero := ACBrSAT1.CFe.ide.nCFe;
+//  Numero := ACBrSAT1.CFe.ide.nCFe;
   PageControl1.ActivePage := tsLog;
 
   ACBrSAT1.TesteFimAFim( mVendaEnviar.Text );
@@ -1213,18 +1287,33 @@ begin
   end;
 end;
 
-procedure TForm1.rgRedeTipoInterClick(Sender: TObject);
+procedure TfmPrincipal.rgRedeTipoInterClick(Sender: TObject);
 begin
   gbWiFi.Visible := (rgRedeTipoInter.ItemIndex = 1);
 end;
 
-procedure TForm1.rgRedeTipoLanClick(Sender: TObject);
+procedure TfmPrincipal.rgRedeTipoLanClick(Sender: TObject);
 begin
   gbPPPoE.Visible := (rgRedeTipoLan.ItemIndex = 1);
   gbIPFix.Visible := (rgRedeTipoLan.ItemIndex = 2);
 end;
 
-procedure TForm1.sbNomeDLLClick(Sender: TObject);
+procedure TfmPrincipal.sbFR3Click(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo FR3|*.fr3';
+  OpenDialog1.InitialDir := ExtractFilePath(edtPathFR3.Text);
+  OpenDialog1.FileName := edtPathFR3.Text;
+  if OpenDialog1.Execute then
+  begin
+    edtPathFR3.Text := OpenDialog1.FileName;
+    {$IFDEF GERADOR_FAST_REPORT}
+      FACBrSATExtratoFR1.FastExtrato := edtPathFR3.Text;
+    {$ENDIF}
+
+  end;
+end;
+
+procedure TfmPrincipal.sbNomeDLLClick(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo DLL|*.dll';
   OpenDialog1.InitialDir := ExtractFilePath(edNomeDLL.Text);
@@ -1233,7 +1322,7 @@ begin
     edNomeDLL.Text := OpenDialog1.FileName;
 end;
 
-procedure TForm1.sbSchemaVendaAPLClick(Sender: TObject);
+procedure TfmPrincipal.sbSchemaVendaAPLClick(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XSD|*.xsd';
   OpenDialog1.InitialDir := ExtractFilePath(edSchemaVendaAPL.Text);
@@ -1242,7 +1331,7 @@ begin
     edSchemaVendaAPL.Text := OpenDialog1.FileName;
 end;
 
-procedure TForm1.sbSchemaVendaSATClick(Sender: TObject);
+procedure TfmPrincipal.sbSchemaVendaSATClick(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XSD|*.xsd';
   OpenDialog1.InitialDir := ExtractFilePath(edSchemaVendaSAT.Text);
@@ -1251,17 +1340,17 @@ begin
     edSchemaVendaSAT.Text := OpenDialog1.FileName;
 end;
 
-procedure TForm1.mAtivarSATClick(Sender : TObject);
+procedure TfmPrincipal.mAtivarSATClick(Sender : TObject);
 begin
   ACBrSAT1.AtivarSAT( 1, edtEmitCNPJ.Text, StrToInt(edtCodUF.Text) );
 end;
 
-procedure TForm1.mBloquearSATClick(Sender : TObject);
+procedure TfmPrincipal.mBloquearSATClick(Sender : TObject);
 begin
   ACBrSAT1.BloquearSAT;
 end;
 
-procedure TForm1.mComunicarCertificadoClick(Sender : TObject);
+procedure TfmPrincipal.mComunicarCertificadoClick(Sender : TObject);
 var
   SL : TStringList;
 begin
@@ -1279,7 +1368,7 @@ begin
   end;
 end;
 
-procedure TForm1.mConfigurarInterfaceRedeClick(Sender : TObject);
+procedure TfmPrincipal.mConfigurarInterfaceRedeClick(Sender : TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
@@ -1291,7 +1380,7 @@ begin
   end;
 end;
 
-procedure TForm1.mConsultarNumeroSessaoClick(Sender : TObject);
+procedure TfmPrincipal.mConsultarNumeroSessaoClick(Sender : TObject);
 Var
   strSessao: String;
   nSessao : Integer;
@@ -1308,17 +1397,17 @@ begin
   ACBrSAT1.ConsultarNumeroSessao( nSessao );
 end;
 
-procedure TForm1.ConsultarltimaSessoFiscal1Click(Sender: TObject);
+procedure TfmPrincipal.ConsultarltimaSessoFiscal1Click(Sender: TObject);
 begin
   ACBrSAT1.ConsultarUltimaSessaoFiscal;
 end;
 
-procedure TForm1.mConsultarSATClick(Sender : TObject);
+procedure TfmPrincipal.mConsultarSATClick(Sender : TObject);
 begin
   ACBrSAT1.ConsultarSAT;
 end;
 
-procedure TForm1.mConsultarStatusOperacionalClick(Sender : TObject);
+procedure TfmPrincipal.mConsultarStatusOperacionalClick(Sender : TObject);
 begin
   ACBrSAT1.ConsultarStatusOperacional;
 
@@ -1351,12 +1440,12 @@ begin
     mLog.Lines.Add(ACBrSAT1.Resposta.RetornoStr);
 end;
 
-procedure TForm1.mDesbloquearSATClick(Sender : TObject);
+procedure TfmPrincipal.mDesbloquearSATClick(Sender : TObject);
 begin
   ACBrSAT1.DesbloquearSAT;
 end;
 
-procedure TForm1.MenuItem5Click(Sender : TObject);
+procedure TfmPrincipal.MenuItem5Click(Sender : TObject);
 Var
   CodNovo, CodAtual, tipoCodigo: String;
 begin
@@ -1389,7 +1478,7 @@ begin
   end;
 end;
 
-procedure TForm1.mEnviarVendaClick(Sender : TObject);
+procedure TfmPrincipal.mEnviarVendaClick(Sender : TObject);
 var
   tini, tfim: TDateTime;
 begin
@@ -1422,7 +1511,7 @@ begin
   end;
 end;
 
-procedure TForm1.mExtrairLogsClick(Sender : TObject);
+procedure TfmPrincipal.mExtrairLogsClick(Sender : TObject);
 Var
   NomeArquivo: String;
 begin
@@ -1434,7 +1523,7 @@ begin
   ACBrSAT1.ExtrairLogs( NomeArquivo );
 end;
 
-procedure TForm1.mGerarVendaClick(Sender : TObject);
+procedure TfmPrincipal.mGerarVendaClick(Sender : TObject);
 var
   TotalItem, TotalGeral, Pagto1: Double;
   A: Integer;
@@ -1661,7 +1750,7 @@ begin
   mLog.Lines.Add('Venda Gerada');
 end;
 
-procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject);
+procedure TfmPrincipal.mImprimirExtratoVendaClick(Sender : TObject);
 var
   tini, tfim: TDateTime;
 begin
@@ -1678,31 +1767,31 @@ begin
   mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' );
 end;
 
-procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject);
+procedure TfmPrincipal.mImprimirExtratoVendaResumidoClick(Sender : TObject);
 begin
   PrepararImpressao;
   ACBrSAT1.ImprimirExtratoResumido;
 end;
 
-procedure TForm1.mLimparClick(Sender : TObject);
+procedure TfmPrincipal.mLimparClick(Sender : TObject);
 begin
   mVendaEnviar.Clear;
   LoadXML( '', mRecebido );
   mCancelamentoEnviar.Clear;
 end;
 
-procedure TForm1.SbArqLogClick(Sender : TObject);
+procedure TfmPrincipal.SbArqLogClick(Sender : TObject);
 begin
   OpenURL( ExtractFilePath( Application.ExeName ) + edLog.Text);
 end;
 
-procedure TForm1.sePagCodChange(Sender: TObject);
+procedure TfmPrincipal.sePagCodChange(Sender: TObject);
 begin
   ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
 //  cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
 end;
 
-procedure TForm1.ConfiguraRedeSAT;
+procedure TfmPrincipal.ConfiguraRedeSAT;
 begin
   with ACBrSAT1.Rede do
   begin
@@ -1726,7 +1815,7 @@ begin
   end;
 end;
 
-procedure TForm1.LeDadosRedeSAT;
+procedure TfmPrincipal.LeDadosRedeSAT;
 begin
   with ACBrSAT1.Rede do
   begin
@@ -1750,7 +1839,7 @@ begin
   end;
 end;
 
-procedure TForm1.PrepararImpressao;
+procedure TfmPrincipal.PrepararImpressao;
 begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
@@ -1769,18 +1858,39 @@ begin
   end
   else
   begin
-    ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
-    ACBrSATExtratoFortes1.MargemSuperior   := seMargemTopo.Value;
-    ACBrSATExtratoFortes1.MargemInferior   := seMargemFundo.Value;
-    ACBrSATExtratoFortes1.MargemEsquerda   := seMargemEsquerda.Value;
-    ACBrSATExtratoFortes1.MargemDireita    := seMargemDireita.Value;
-    ACBrSATExtratoFortes1.MostraPreview   := cbPreview.Checked;
+    {$IFDEF GERADOR_FORTES_REPORT}
+    if ACBrSAT1.Extrato = FACBrSATExtratoFortes1 then
+    begin
+      FACBrSATExtratoFortes1.LarguraBobina := seLargura.Value;
+      FACBrSATExtratoFortes1.MargemSuperior := seMargemTopo.Value;
+      FACBrSATExtratoFortes1.MargemInferior := seMargemFundo.Value;
+      FACBrSATExtratoFortes1.MargemEsquerda := seMargemEsquerda.Value;
+      FACBrSATExtratoFortes1.MargemDireita := seMargemDireita.Value;
+      FACBrSATExtratoFortes1.MostraPreview := cbPreview.Checked;
 
-    try
       if lImpressora.Caption <> '' then
-        ACBrSATExtratoFortes1.Impressora := lImpressora.Caption;
-    except
+        FACBrSATExtratoFortes1.Impressora := lImpressora.Caption;
     end;
+    {$ENDIF}
+
+    {$IFDEF GERADOR_FAST_REPORT}
+    if ACBrSAT1.Extrato = FACBrSATExtratoFR1 then
+    begin
+      FACBrSATExtratoFR1.LarguraBobina := seLargura.Value;
+      FACBrSATExtratoFR1.MargemSuperior := seMargemTopo.Value;
+      FACBrSATExtratoFR1.MargemInferior := seMargemFundo.Value;
+      FACBrSATExtratoFR1.MargemEsquerda := seMargemEsquerda.Value;
+      FACBrSATExtratoFR1.MargemDireita := seMargemDireita.Value;
+      FACBrSATExtratoFR1.MostraPreview := cbPreview.Checked;
+
+      try
+        if lImpressora.Caption <> '' then
+          FACBrSATExtratoFR1.Impressora := lImpressora.Caption;
+      except
+      end;
+    end;
+    {$ENDIF}
+
   end;
 
   ACBrSAT1.Extrato.ImprimeLogoLateral := cbLogoLateral.Checked;
@@ -1789,40 +1899,29 @@ begin
   ACBrSAT1.Extrato.ImprimeDescAcrescItem := cbImprimirDescAcres.Checked;
 end;
 
-
-procedure TForm1.GetsignAC(var Chave: AnsiString);
+procedure TfmPrincipal.GetsignAC(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtSwHAssinatura.Text );
 end;
 
-procedure TForm1.GetcodigoDeAtivacao(var Chave: AnsiString);
+procedure TfmPrincipal.GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtCodigoAtivacao.Text );
 end;
 
-procedure TForm1.sfeVersaoEntChange(Sender: TObject);
+procedure TfmPrincipal.sfeVersaoEntChange(Sender: TObject);
 begin
   ACBrSAT1.Config.infCFe_versaoDadosEnt := StringToFloatDef(sfeVersaoEnt.Text, cversaoDadosEnt);
 end;
 
-procedure TForm1.LoadXML(AXML: String; MyWebBrowser: TWebBrowser);
+procedure TfmPrincipal.LoadXML(const AXML: String; MyWebBrowser: TWebBrowser);
 begin
   WriteToTXT( PathWithDelim(ExtractFileDir(application.ExeName))+MyWebBrowser.Name+'-temp.xml',
               AXML, False, False);
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+MyWebBrowser.Name+'-temp.xml');
 end;
 
-procedure TForm1.cbUsarEscPosClick(Sender: TObject);
-begin
-  cbUsarFortes.Checked := False;
-  ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
-end;
 
-procedure TForm1.cbUsarFortesClick(Sender: TObject);
-begin
-  cbUsarEscPos.Checked := False;
-  ACBrSAT1.Extrato := ACBrSATExtratoFortes1
-end;
 
 end.
 

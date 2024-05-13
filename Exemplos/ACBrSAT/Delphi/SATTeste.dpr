@@ -1,8 +1,8 @@
 program SATTeste;
 
 uses
-  Forms, 
-  unit1 in 'unit1.pas' {Form1},
+  Forms,
+  UfmPrincipal in 'UfmPrincipal.pas' {fmPrincipal},
   configuraserial in 'configuraserial.pas';
 
 {$R *.res}
@@ -10,7 +10,7 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'SAT Teste - Projeto ACBr';
-  Application.CreateForm(TForm1, Form1) ;
+  Application.CreateForm(TfmPrincipal, fmPrincipal);
   Application.Run;
 end.
 

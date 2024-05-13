@@ -84,6 +84,7 @@ exports
 
   //Multimida Commands
   AbecsPinpad_LoadMedia,
+  AbecsPinpad_LMF,
   AbecsPinpad_DSI,
   AbecsPinpad_DMF;
 

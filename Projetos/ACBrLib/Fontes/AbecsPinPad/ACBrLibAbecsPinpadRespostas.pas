@@ -87,6 +87,24 @@ type
       property MediaGIFisSupported: Boolean read fMediaGIFisSupported write fMediaGIFisSupported;
   end;
 
+  { TLibAbecsPinpadRespostaLMF }
+  TLibAbecsPinpadRespostaLMF = class(TACBrLibRespostaBase)
+    private
+      fSTAT: Integer;
+      fRespostaLMF: AnsiString;
+
+    public
+      constructor Create(const aTipo: TACBrLibRespostaTipo; const aFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure ProcessarLMF(RespostaLMF: TACBrAbecsResponse);
+
+    published
+      property STAT: Integer read fSTAT write fSTAT;
+      property RespostaLMF: AnsiString read fRespostaLMF write fRespostaLMF;
+  end;
+
   { TLibAbecsPinpadRespostaLoadMedia }
   TLibAbecsPinpadRespostaLoadMedia = class(TACBrLibRespostaBase)
     private
@@ -340,18 +358,31 @@ begin
 end;
 
 procedure TLibAbecsPinpadRespostaLoadMedia.ProcessarLoadMedia(const RespostaLoadMedia: TACBrAbecsResponse);
-var
-  sl: TStringList;
 begin
   fSTAT := RespostaLoadMedia.STAT;
-  sl := TStringList.Create;
-  try
-    RespostaLoadMedia.GetResponseFromTagValue(PP_MFNAME, sl);
-    sl.Assign(sl);
-    fRespostaLoadMedia := Format('%d media file(s)', [sl.Count]);
-  finally
-    sl.Free;
-  end;
+  fRespostaLoadMedia := RespostaLoadMedia.GetResponseFromTagValue(PP_MFNAME);
+end;
+
+{ TLibAbecsPinpadRespostaLMF }
+constructor TLibAbecsPinpadRespostaLMF.Create(const aTipo: TACBrLibRespostaTipo; const aFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespAbecsPinpadLMF, ATipo, AFormato);
+end;
+
+destructor TLibAbecsPinpadRespostaLMF.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TLibAbecsPinpadRespostaLMF.Clear;
+begin
+  fSTAT := 0;
+end;
+
+procedure TLibAbecsPinpadRespostaLMF.ProcessarLMF(RespostaLMF: TACBrAbecsResponse);
+begin
+  fSTAT := RespostaLMF.STAT;
+  fRespostaLMF := RespostaLMF.GetResponseFromTagValue(PP_MFNAME);
 end;
 
 { TLibAbecsPinpadCapabilitiesResposta }

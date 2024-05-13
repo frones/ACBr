@@ -50,6 +50,7 @@ const
   CSessaoRespAbecsPinpadCEX = 'RespostaCEX';
   CSessaoRespAbecsPinpadMNU = 'RespostaMNU';
   CSessaoRespAbecsPinpadLoadMedia = 'RespostaLoadMedia';
+  CSessaoRespAbecsPinpadLMF = 'RespostaLMF';
 
   CSessaoAbecsPinpad = 'AbecsPinpad';
   CSessaoAbecsPinpadDevice = 'AbecsPinpad_Device';

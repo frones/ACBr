@@ -152,6 +152,9 @@ function AbecsPinpad_MNU(const libHandle: TLibHandle; const sMNUOPT: PChar; sDSP
 function AbecsPinpad_LoadMedia(const libHandle: TLibHandle; const sCaminhoImagem: PChar; aTipoImagem: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
+function AbecsPinpad_LMF(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
+
 function AbecsPinpad_DSI(const libHandle: TLibHandle; const sNomeArquivo: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 

@@ -75,6 +75,7 @@ type
       function CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
       function MNU(const sMNUOPT: PChar; sDSPMSG: PChar; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
       function LoadMedia(const sCaminhoImagem: PChar; aTipoImagem: longint; const sResposta: PChar; var esTamanho: longint): longint;
+      function LMF(const sResposta: PChar; var esTamanho: longint): longint;
       function DSI(const sNomeArquivo: PChar): longint;
       function DMF(const sNomeArquivo: PChar): longint;
   end;
@@ -539,20 +540,6 @@ begin
 
      AbecsPinpadDM.Travar;
      try
-        s := '';
-        if VerifyKey = True then
-        s := s + 'Press Key'+CR;
-        if VerifyMagnetic = True then
-        s := s + 'Swipe the card'+CR;
-        if VerifyICCInsertion = True then
-        s := s + 'Insert card'+CR;
-        if VerifyICCRemoval = True then
-        s := s + 'Remove card'+CR;
-        if VerifyCTLSPresence = True then
-        s := s + 'Bring card closer'+CR;
-
-        AbecsPinpadDM.ACBrAbecsPinPad1.DEX(s);
-
         AbecsPinpadDM.ACBrAbecsPinPad1.CEX(VerifyKey, VerifyMagnetic, VerifyICCInsertion, VerifyICCRemoval, VerifyCTLSPresence, aTimeOut, '');
         Resp := TLibAbecsPinpadRespostaCEX.Create(Config.TipoResposta, Config.CodResposta);
         try
@@ -665,7 +652,6 @@ begin
         AStream.LoadFromFile(CaminhoImagem);
         AbecsPinpadDM.ACBrAbecsPinPad1.LoadMedia(filename, AStream, TipoImagem);
         AbecsPinpadDM.ACBrAbecsPinPad1.LMF;
-        AbecsPinpadDM.ACBrAbecsPinPad1.DSI(filename);
         Resp := TLibAbecsPinpadRespostaLoadMedia.Create(Config.TipoResposta, Config.CodResposta);
         try
            Resp.ProcessarLoadMedia(AbecsPinpadDM.ACBrAbecsPinPad1.Response);
@@ -676,6 +662,7 @@ begin
         finally
           Resp.Free;
         end;
+        AbecsPinpadDM.ACBrAbecsPinPad1.DSI(filename);
      finally
        AStream.Free;
        AbecsPinpadDM.Destravar;
@@ -686,6 +673,39 @@ begin
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibAbecsPinpad.LMF(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Resp: TLibAbecsPinpadRespostaLMF;
+  Resposta: AnsiString;
+begin
+  try
+     GravarLog('AbecsPinpad_LMF', logNormal);
+
+     AbecsPinpadDM.Travar;
+     try
+        AbecsPinpadDM.ACBrAbecsPinPad1.LMF;
+        Resp := TLibAbecsPinpadRespostaLMF.Create(Config.TipoResposta, Config.CodResposta);
+        try
+           Resp.ProcessarLMF(AbecsPinpadDM.ACBrAbecsPinPad1.Response);
+
+           Resposta := Resp.Gerar;
+           MoverStringParaPChar(Resposta, sResposta, esTamanho);
+           Result := SetRetorno(ErrOK, Resposta);
+        finally
+          Resp.Free;
+        end;
+     finally
+       AbecsPinpadDM.Destravar;
+     end;
+  except
+    on E: EACBrLibException do
+       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
   end;
 end;
 

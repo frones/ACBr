@@ -587,7 +587,6 @@
       <Unit13>
         <Filename Value="ACBrLibAbecsPinpadConsts.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibAbecsPinpadConsts"/>
       </Unit13>
       <Unit14>
         <Filename Value="ACBrLibAbecsPinpadRespostas.pas"/>

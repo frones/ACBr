@@ -119,6 +119,9 @@ function AbecsPinpad_MNU(const libHandle: PLibHandle; const sMNUOPT: PChar; sDSP
 function AbecsPinpad_LoadMedia(const libHandle: PLibHandle; const sCaminhoImagem: PChar; aTipoImagem: longint; const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function AbecsPinpad_LMF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function AbecsPinpad_DSI(const libHandle: PLibHandle; const sNomeArquivo: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -446,6 +449,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibAbecsPinpad(libHandle^.Lib).LoadMedia(sCaminhoImagem, aTipoImagem, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function AbecsPinpad_LMF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibAbecsPinpad(libHandle^.Lib).LMF(sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2024
+--- ACBrLibAbecsPinpadBase, ACBrLibAbecsPinpadConsts, ACBrLibAbecsPinpadRespostas, 
+    ACBrLibAbecsPinpadST, ACBrLibAbecsPinpadMT, ACBrLibAbecsPinpadStaticImportST, ACBrLibAbecsPinpadStaticImportMT ---
+[+] Inclusão do método LMF
+[*] Ajuste do método CEX e LoadMedia
+    Por: Antonio Carlos Junior
+    
+
 10/05/2024
 --- ACBrLibAbecsPinpadConsts ---
 [+] Inclusão unit ACBrLibAbecsPinpadConsts

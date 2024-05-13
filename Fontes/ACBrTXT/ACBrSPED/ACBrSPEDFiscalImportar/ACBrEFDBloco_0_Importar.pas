@@ -46,6 +46,7 @@ type
   private
     procedure Reg0000;
     procedure Reg0001;
+    procedure Reg0002;
     procedure Reg0005;
     procedure Reg0015;
     procedure Reg0100;
@@ -77,6 +78,7 @@ begin
   vHead := Head;
   if (vHead = '0000') then Reg0000
   else if (vHead = '0001') then Reg0001
+  else if (vHead = '0002') then Reg0002
   else if (vHead = '0005') then Reg0005
   else if (vHead = '0015') then Reg0015
   else if (vHead = '0100') then Reg0100
@@ -124,6 +126,14 @@ begin
   with ACBrSpedFiscal.Bloco_0.Registro0001New do
   begin
     IND_MOV := StrToIndMov(Valor);
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco0.Reg0002;
+begin
+  with ACBrSpedFiscal.Bloco_0.Registro0002New do
+  begin
+    CLAS_ESTAB_IND := Valor;
   end;
 end;
 

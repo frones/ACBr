@@ -319,9 +319,9 @@ begin
     VL_OUT_CRED_DIFAL := ValorF;
     VL_SLD_DEV_ANT_DIFAL := ValorF;
     VL_DEDUCOES_DIFAL := ValorF;
-    DEB_ESP_DIFAL := ValorF;
     VL_RECOL_DIFAL := ValorF;
     VL_SLD_CRED_TRANSPORTAR_DIFAL := ValorF;
+    DEB_ESP_DIFAL := ValorF;
     VL_SLD_CRED_ANT_FCP := ValorF;
     VL_TOT_DEB_FCP := ValorF;
     VL_OUT_DEB_FCP := ValorF;

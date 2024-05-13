@@ -49,6 +49,7 @@ type
   public
     procedure RegC001;
     procedure RegC100;
+    procedure RegC101;
     procedure RegC105;
     procedure RegC110;
     procedure RegC111;
@@ -131,6 +132,7 @@ begin
   vHead := Head;
   if (vHead = 'C001') then RegC001
   else if (vHead = 'C100') then RegC100
+  else if (vHead = 'C101') then RegC101
   else if (vHead = 'C105') then RegC105
   else if (vHead = 'C110') then RegC110
   else if (vHead = 'C111') then RegC111
@@ -230,6 +232,16 @@ begin
     VL_COFINS := ValorF;
     VL_PIS_ST := ValorF;
     VL_COFINS_ST := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_BlocoC.RegC101;
+begin
+  with ACBrSpedFiscal.Bloco_C.RegistroC101New do
+  begin
+    VL_FCP_UF_DEST := ValorF;
+    VL_ICMS_UF_DEST := ValorF;
+    VL_ICMS_UF_REM := ValorF;
   end;
 end;
 

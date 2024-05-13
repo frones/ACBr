@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2024
+-- ACBrLibHandle.cs --
+[*] Buscar dependências distribuídas na estrutura dos pacotes nuget e exibir na exceção o caminho previsto quando não for encontrado
+  Por: Renato Rubinho
+
 09/05/2024
 -- build.cake --
 [*] Adicionada informação no final dos scripts para identificar quando foram executados com sucesso

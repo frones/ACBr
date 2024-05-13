@@ -238,6 +238,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoGerarStreamBase64}
+TMetodoGerarStreamBase64 = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoCarregarImagem}
 TMetodoCarregarImagem = class(TACBrMetodo)
 public
@@ -308,6 +314,8 @@ begin
   ListaDeMetodos.Add(CMetodoLimparMemoria);
   ListaDeMetodos.Add(CMetodoSetLimparMemoria);
   ListaDeMetodos.Add(cMetodoImprimirQRCode);
+  ListaDeMetodos.Add(CMetodoGerarStreamBase64);
+
 end;
 
 procedure TACBrObjetoETQ.Executar(ACmd: TACBrCmd);
@@ -357,6 +365,7 @@ begin
    32  : AMetodoClass := TMetodoLimparMemoria;
    33  : AMetodoClass := TMetodoSetLimparMemoria;
    34  : AMetodoClass := TMetodoImprimirQRCode;
+   35  : AMetodoClass := TMetodoGerarStreamBase64;
   end;
 
   if Assigned(AMetodoClass) then
@@ -795,6 +804,32 @@ begin
       AAvanco := MonitorConfig.ETQ.Avanco;
 
     ACBrETQ.Imprimir( ACopias, AAvanco );
+  end;
+end;
+
+{ TMetodoGerarStreamBase64}
+
+{ Params: 0 - Inteiro - Copias
+          1 - Inteiro - Avanco de Etiqueta
+}
+procedure TMetodoGerarStreamBase64.Executar;
+var
+  ACopias: Integer;
+  AAvanco: Integer;
+begin
+  with TACBrObjetoETQ(fpObjetoDono) do
+  begin
+    if NaoEstaVazio( fpCmd.Params(0) ) then
+      ACopias := StrToInt(fpCmd.Params(0))
+    else
+      ACopias := MonitorConfig.ETQ.Copias;
+
+    if NaoEstaVazio( fpCmd.Params(1) ) then
+      AAvanco := StrToInt(fpCmd.Params(1))
+    else
+      AAvanco := MonitorConfig.ETQ.Avanco;
+
+    fpCmd.Resposta := sLineBreak + ACBrETQ.GerarStreamBase64( ACopias, AAvanco );
   end;
 end;
 

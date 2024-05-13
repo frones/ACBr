@@ -748,6 +748,7 @@ const
   CMetodoLimparMemoria     = 'limparmemoria';
   CMetodoSetLimparMemoria  = 'setlimparmemoria';
   CMetodoImprimirQRCode    = 'imprimirqrcode';
+  CMetodoGerarStreamBase64 = 'GerarStreamBase64';
 
   CMetodoConsultaConfig  = 'consultaconfig';
   CMetodoImprimirGNRe    = 'imprimirgnre';

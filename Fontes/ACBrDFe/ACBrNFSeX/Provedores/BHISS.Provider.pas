@@ -211,6 +211,7 @@ begin
 
   with ConfigGeral do
   begin
+    QuebradeLinha := '|';
     NumMaxRpsGerar := 3;
 
     ServicosDisponibilizados.EnviarUnitario := True;

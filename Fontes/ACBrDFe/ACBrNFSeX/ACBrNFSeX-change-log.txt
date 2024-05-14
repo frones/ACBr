@@ -71,6 +71,8 @@ Símbolo : Significado
 [*] Alteração visando gerar a tag DATAVENCIMENTO no XML do RPS.
   Por: Concept Automação
 -- ACBrNFSeXServicos --
+[*] A URL de produção e homologação para Cascavel/PR é a mesma, provedor é o IPM.
+  Por: IvoSilva
 [*] Alteração de versão da cidade de Macae/RJ, o provedor continua o mesmo.
   Por: BFBraz
 [+] Incluida a cidade de Ibicoara/BA, provedor é o EL na versão 2.04

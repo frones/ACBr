@@ -264,7 +264,7 @@ begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
     Result := 'https://nfemws.joinville.sc.gov.br/'
   else
-    Result := 'http://nfemwshomologacao.pmjlle.joinville.sc.gov.br/';
+    Result := 'https://nfemwshomologacao.joinville.sc.gov.br/';
 end;
 
 function TACBrNFSeXWebserviceISSJoinville204.Recepcionar(const ACabecalho,

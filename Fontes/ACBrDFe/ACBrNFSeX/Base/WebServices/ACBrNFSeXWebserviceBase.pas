@@ -1106,6 +1106,18 @@ begin
     if FPRetorno = '' then
       raise EACBrDFeException.Create('WebService retornou um XML vazio.');
 
+
+    FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+
+    if Pos(UTF_8, FPRetorno) = 0 then
+    begin
+      FPRetorno := AnsiToNativeString(FPRetorno);
+      FPRetorno := NativeStringToUTF8(FPRetorno);
+    end;
+
+    if StringIsXML(FPRetorno) then
+      FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
+(*
     {
       Se o retorno for um XML mas o seu encoding for iso-8859-1 ou se não constar
       a declaração do encoding logo no inicio do XML assume que o mesmo não
@@ -1121,14 +1133,14 @@ begin
           Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
           esta no formato UTF-8, converte o XML para UTF-8
         }
+        FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+
         if Pos(UTF_8, FPRetorno) = 0 then
         begin
-          FPRetorno := RemoverDeclaracaoXML(FPRetorno);
           FPRetorno := AnsiToNativeString(FPRetorno);
           FPRetorno := NativeStringToUTF8(FPRetorno);
         end;
 
-        FPRetorno := StringReplace(FPRetorno, '<?xml version="1.0" ?>', '', [rfReplaceAll]);
         FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
       end
       else
@@ -1139,13 +1151,12 @@ begin
         }
         if Pos(UTF_8, FPRetorno) = 0 then
         begin
-          FPRetorno := RemoverDeclaracaoXML(FPRetorno);
           FPRetorno := AnsiToNativeString(FPRetorno);
           FPRetorno := NativeStringToUTF8(FPRetorno);
         end;
       end;
     end;
-
+*)
     if StringIsXML(FPRetorno) then
       LevantarExcecaoHttp;
   except

@@ -1398,7 +1398,7 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    if Pos('<retorno>', Result) = 0 then
+    if not StringIsXML(Result) then
     begin
       Result := '<retorno>' +
                   '<mensagem>' +
@@ -1513,7 +1513,7 @@ begin
 
     Result := AjustarRetorno(Result);
 
-    if Pos('<retorno>', Result) = 0 then
+    if not StringIsXML(Result) then
     begin
       Result := '<retorno>' +
                   '<mensagem>' +

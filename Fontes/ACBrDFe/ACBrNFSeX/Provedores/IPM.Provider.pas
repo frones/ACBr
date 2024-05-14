@@ -184,6 +184,7 @@ begin
     ConsultaNFSe := False;
     DetalharServico := True;
     FormatoArqEnvioSoap := tfaTxt;
+    ImprimirOptanteSN := False;
 
     Autenticacao.RequerLogin := True;
 

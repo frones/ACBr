@@ -161,7 +161,7 @@ type
     RLLabel52: TRLLabel;
     RLLabel53: TRLLabel;
     RLLabel54: TRLLabel;
-    RLLabel55: TRLLabel;
+    rllOpcaoSN: TRLLabel;
     RLLabel56: TRLLabel;
     RLDraw15: TRLDraw;
     RLDraw16: TRLDraw;
@@ -465,6 +465,9 @@ begin
       rllIncentivador.Visible := False;
       RLLabel56.Visible := False;
     end;
+
+    rllOpcaoSN.Visible := ACBrNFSe.Provider.ConfigGeral.ImprimirOptanteSN;
+    rllOpcaoSimples.Visible := ACBrNFSe.Provider.ConfigGeral.ImprimirOptanteSN;
 
     rllCodObra.Caption := ConstrucaoCivil.CodigoObra;
     rllCodART.Caption := ConstrucaoCivil.Art;

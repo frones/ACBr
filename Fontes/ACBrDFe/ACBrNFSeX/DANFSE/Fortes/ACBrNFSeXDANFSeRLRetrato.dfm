@@ -3,6 +3,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Top = 76
   Caption = 'frlXDANFSeRLRetrato'
   ClientHeight = 750
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32
@@ -1596,7 +1597,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLLabel55: TRLLabel
+      object rllOpcaoSN: TRLLabel
         Left = 297
         Top = 261
         Width = 120

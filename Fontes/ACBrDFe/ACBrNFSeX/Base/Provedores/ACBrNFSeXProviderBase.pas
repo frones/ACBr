@@ -633,6 +633,7 @@ begin
     FormatoArqRecibo := tfaXml;
     FormatoArqNota := tfaXml;
     FormatoArqEvento := tfaXml;
+    ImprimirOptanteSN := True;
 
     Autenticacao.RequerCertificado := True;
     Autenticacao.RequerLogin := False;

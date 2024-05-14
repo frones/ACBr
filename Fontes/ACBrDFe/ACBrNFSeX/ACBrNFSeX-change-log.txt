@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/05/2024
+-- Diversos --
+[*] Implementado o Parâmetro: ImprimirOpcaoSN (ConfigGeral),
+    se True imprimi no DANFSE a informação sobre a Opção Simples Nacional
+    caso contrario não imprimi.
+  Por: Italo Giurizzato Junior
 -- ISSRecife.Provider/BHISS.Provider --
 [*] Alteração na quebra de linha.
   Por: Bruno

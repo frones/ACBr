@@ -1,11 +1,11 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 709
+  Left = 220
   Height = 874
-  Top = 76
+  Top = 15
   Caption = 'frlXDANFSeRLRetrato'
   ClientHeight = 874
   inherited RLNFSe: TRLReport
-    Left = 32
+    Left = 48
     Top = 0
     Margins.LeftMargin = 6
     Margins.TopMargin = 8
@@ -1453,7 +1453,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLLabel55: TRLLabel
+      object rllOpcaoSN: TRLLabel
         Left = 297
         Height = 15
         Top = 261

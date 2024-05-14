@@ -213,6 +213,7 @@ type
     FAutenticacao: TACBrNFSeXAutenticacao;
     FServicosDisponibilizados: TACBrNFSeXServicosDispobilizados;
     FParticularidades: TACBrNFSeXParticularidades;
+    FImprimirOptanteSN: Boolean;
 
   public
     constructor Create;
@@ -260,6 +261,7 @@ type
     property Autenticacao: TACBrNFSeXAutenticacao read FAutenticacao;
     property ServicosDisponibilizados: TACBrNFSeXServicosDispobilizados read FServicosDisponibilizados;
     property Particularidades: TACBrNFSeXParticularidades read FParticularidades write FParticularidades;
+    property ImprimirOptanteSN: Boolean read FImprimirOptanteSN write FImprimirOptanteSN;
   end;
 
   { TWebserviceInfo }

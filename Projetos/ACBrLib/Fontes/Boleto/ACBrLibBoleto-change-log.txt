@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2024
+-- ACBrLibBoletoConfig --
+[*] #TK-5441 - Ajustado para ler a propriedade e realizar a quebra de linha | (pipe) e ele estava sobrescrevendo o INI, desabilitado a escrita.
+	https://www.projetoacbr.com.br/forum/topic/77745-acbrlib-boleto-cef-sac-caixa-n%C3%A3o-informado/
+        Por: Daniel de Morais InfoCotidiano
+
 02/05/2024
 -- ACBrLibBoletoRespostas --
 [*] #TK-5016-1 - Add NossoNumeroCorrespondente para tratar a propriedade utilizada no Inter API V3

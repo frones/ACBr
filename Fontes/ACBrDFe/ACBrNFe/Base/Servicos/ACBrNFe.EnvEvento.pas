@@ -977,7 +977,7 @@ begin
 
       if RetEventoNFe.InfEvento.detEvento.autXML.Count > 0 then
       begin
-        InfEvento.detEvento.autXML[0].CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
+        InfEvento.detEvento.autXML.New.CNPJCPF := RetEventoNFe.InfEvento.detEvento.autXML[0].CNPJCPF;
       end;
 
       // Insucesso na Entrega

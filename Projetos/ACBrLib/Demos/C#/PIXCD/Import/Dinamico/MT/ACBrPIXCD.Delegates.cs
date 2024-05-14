@@ -79,7 +79,10 @@ namespace ACBrLib.PIXCD
         public delegate int PIXCD_RevisarCobranca(IntPtr handle, string AInfCobVRevisada, string ATxId, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int PIXCD_CancelarCobranca(IntPtr handle, string ATxId, StringBuilder buffer, ref int bufferSize); 
+        public delegate int PIXCD_CancelarCobranca(IntPtr handle, string ATxId, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int PIXCD_OpenSSLInfo(IntPtr handle, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {
@@ -107,6 +110,7 @@ namespace ACBrLib.PIXCD
             AddMethod<PIXCD_ConsultarCobranca > ("PIXCD_ConsultarCobranca");
             AddMethod<PIXCD_RevisarCobranca>("PIXCD_RevisarCobranca");
             AddMethod<PIXCD_CancelarCobranca>("PIXCD_CancelarCobranca");
+            AddMethod<PIXCD_OpenSSLInfo>("PIXCD_OpenSSLInfo");
         }
     }
 }

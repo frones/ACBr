@@ -303,6 +303,19 @@ namespace ACBrLib.PIXCD
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string OpenSSLInfo()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<PIXCD_OpenSSLInfo>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         #endregion Diversos
 
         #region Private Methods

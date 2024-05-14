@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2024
+-- ACBrNFSeXServicos --
+[*] Alteração de versão da cidade de Macae/RJ, o provedor continua o mesmo.
+  Por: BFBraz
+[+] Incluida a cidade de Ibicoara/BA, provedor é o EL na versão 2.04
+  Por: C4Dev
+
 13/05/2024
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Sao Roque do Canaa/ES, provedor é o EL na versão 2.04

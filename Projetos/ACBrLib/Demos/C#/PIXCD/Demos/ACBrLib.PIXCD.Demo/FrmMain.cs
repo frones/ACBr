@@ -738,5 +738,11 @@ namespace ACBrLibPIXCD.Demo
                 MessageBox.Show(ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnOpenSSLInfo_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrPIXCD.OpenSSLInfo();
+            rtbRespostas.AppendText(ret);
+        }
     }
 }

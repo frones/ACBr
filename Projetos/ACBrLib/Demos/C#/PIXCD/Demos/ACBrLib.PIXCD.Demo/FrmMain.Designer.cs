@@ -70,6 +70,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl5 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txtScopesBradesco = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.btnCertificadoBradesco = new System.Windows.Forms.Button();
             this.txtSenhaCertificadoBradesco = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -82,6 +84,8 @@
             this.txtChavePIXBradesco = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txtScopesSicredi = new System.Windows.Forms.TextBox();
+            this.label40 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoSicredi = new System.Windows.Forms.Button();
             this.txtArquivoCertificadoSicredi = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -95,6 +99,8 @@
             this.txtChavePIXSicredi = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.txtScopesSicoob = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
             this.txtTokenSandboxSicoob = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoSicoob = new System.Windows.Forms.Button();
@@ -108,6 +114,8 @@
             this.txtChavePIXSicoob = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.txtScopesShipay = new System.Windows.Forms.TextBox();
+            this.label55 = new System.Windows.Forms.Label();
             this.txtAccessKeyShipay = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.txtSecretKeyShipay = new System.Windows.Forms.TextBox();
@@ -115,6 +123,8 @@
             this.txtClientIDShipay = new System.Windows.Forms.TextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.txtScopesSantander = new System.Windows.Forms.TextBox();
+            this.label61 = new System.Windows.Forms.Label();
             this.txtSenhaCertificadoPFXSantander = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoPFXSantander = new System.Windows.Forms.Button();
@@ -127,6 +137,8 @@
             this.txtChavePIXSantander = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.txtScopesPixPDV = new System.Windows.Forms.TextBox();
+            this.label66 = new System.Windows.Forms.Label();
             this.txtSecretKeyPixPDV = new System.Windows.Forms.TextBox();
             this.label41 = new System.Windows.Forms.Label();
             this.txtPixPDVToken = new System.Windows.Forms.TextBox();
@@ -134,6 +146,8 @@
             this.txtCNPJPixPDV = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.txtScopesPagSeguro = new System.Windows.Forms.TextBox();
+            this.label70 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoPagSeguro = new System.Windows.Forms.Button();
             this.txtArquivoCertificadoPagSeguro = new System.Windows.Forms.TextBox();
             this.label44 = new System.Windows.Forms.Label();
@@ -147,6 +161,8 @@
             this.txtChavePIXPagSeguro = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
             this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.txtScopesItau = new System.Windows.Forms.TextBox();
+            this.label82 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoItau = new System.Windows.Forms.Button();
             this.txtArquivoCertificadoItau = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
@@ -160,6 +176,8 @@
             this.txtChavePIXItau = new System.Windows.Forms.TextBox();
             this.label54 = new System.Windows.Forms.Label();
             this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.txtScopesInter = new System.Windows.Forms.TextBox();
+            this.label95 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoInter = new System.Windows.Forms.Button();
             this.txtArquivoCertificadoInter = new System.Windows.Forms.TextBox();
             this.label56 = new System.Windows.Forms.Label();
@@ -173,6 +191,8 @@
             this.txtChavePIXInter = new System.Windows.Forms.TextBox();
             this.label60 = new System.Windows.Forms.Label();
             this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.txtScopesGerenciaNet = new System.Windows.Forms.TextBox();
+            this.label98 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoGerenciaNet = new System.Windows.Forms.Button();
             this.txtArquivoCertificadoGerenciaNet = new System.Windows.Forms.TextBox();
             this.label62 = new System.Windows.Forms.Label();
@@ -183,6 +203,8 @@
             this.txtChavePIXGerenciaNet = new System.Windows.Forms.TextBox();
             this.label65 = new System.Windows.Forms.Label();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.txtScopesBancoBrasil = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.txtSenhaPFXBancoBrasil = new System.Windows.Forms.TextBox();
             this.label76 = new System.Windows.Forms.Label();
             this.btnArquivoPXFBancoBrasil = new System.Windows.Forms.Button();
@@ -205,6 +227,8 @@
             this.txtChavePIXBancoBrasil = new System.Windows.Forms.TextBox();
             this.label69 = new System.Windows.Forms.Label();
             this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.txtScopesAilos = new System.Windows.Forms.TextBox();
+            this.label99 = new System.Windows.Forms.Label();
             this.btnArquivoCeriticadoRootAilos = new System.Windows.Forms.Button();
             this.txtArquivoCeriticadoRootAilos = new System.Windows.Forms.TextBox();
             this.label83 = new System.Windows.Forms.Label();
@@ -221,6 +245,8 @@
             this.txtChavePIXAilos = new System.Windows.Forms.TextBox();
             this.label81 = new System.Windows.Forms.Label();
             this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.txtScopesMatera = new System.Windows.Forms.TextBox();
+            this.label100 = new System.Windows.Forms.Label();
             this.btnArquivoCertificadoMatera = new System.Windows.Forms.Button();
             this.txtArquivoCertificadoMatera = new System.Windows.Forms.TextBox();
             this.label90 = new System.Windows.Forms.Label();
@@ -240,6 +266,8 @@
             this.txtChavePIXMatera = new System.Windows.Forms.TextBox();
             this.label86 = new System.Windows.Forms.Label();
             this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.txtScopesCielo = new System.Windows.Forms.TextBox();
+            this.label101 = new System.Windows.Forms.Label();
             this.txtClientSecretCielo = new System.Windows.Forms.TextBox();
             this.label92 = new System.Windows.Forms.Label();
             this.txtClientIDCielo = new System.Windows.Forms.TextBox();
@@ -247,6 +275,8 @@
             this.txtChavePIXCielo = new System.Windows.Forms.TextBox();
             this.label94 = new System.Windows.Forms.Label();
             this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.txtScopesMercadoPago = new System.Windows.Forms.TextBox();
+            this.label102 = new System.Windows.Forms.Label();
             this.txtChavePIXMercadoPago = new System.Windows.Forms.TextBox();
             this.label97 = new System.Windows.Forms.Label();
             this.txtAccessTokenMercadoPago = new System.Windows.Forms.TextBox();
@@ -273,36 +303,7 @@
             this.btnRevisarCobranca = new System.Windows.Forms.Button();
             this.btnConsultarCobranca = new System.Windows.Forms.Button();
             this.btnCriarCobranca = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtScopesBancoBrasil = new System.Windows.Forms.TextBox();
-            this.txtScopesBradesco = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.txtScopesSicredi = new System.Windows.Forms.TextBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.txtScopesSicoob = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.txtScopesShipay = new System.Windows.Forms.TextBox();
-            this.label55 = new System.Windows.Forms.Label();
-            this.txtScopesSantander = new System.Windows.Forms.TextBox();
-            this.label61 = new System.Windows.Forms.Label();
-            this.txtScopesPixPDV = new System.Windows.Forms.TextBox();
-            this.label66 = new System.Windows.Forms.Label();
-            this.txtScopesPagSeguro = new System.Windows.Forms.TextBox();
-            this.label70 = new System.Windows.Forms.Label();
-            this.txtScopesItau = new System.Windows.Forms.TextBox();
-            this.label82 = new System.Windows.Forms.Label();
-            this.txtScopesInter = new System.Windows.Forms.TextBox();
-            this.label95 = new System.Windows.Forms.Label();
-            this.txtScopesGerenciaNet = new System.Windows.Forms.TextBox();
-            this.label98 = new System.Windows.Forms.Label();
-            this.txtScopesAilos = new System.Windows.Forms.TextBox();
-            this.label99 = new System.Windows.Forms.Label();
-            this.txtScopesMatera = new System.Windows.Forms.TextBox();
-            this.label100 = new System.Windows.Forms.Label();
-            this.txtScopesCielo = new System.Windows.Forms.TextBox();
-            this.label101 = new System.Windows.Forms.Label();
-            this.txtScopesMercadoPago = new System.Windows.Forms.TextBox();
-            this.label102 = new System.Windows.Forms.Label();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -344,9 +345,9 @@
             // 
             this.groupBox2.Controls.Add(this.rtbRespostas);
             this.groupBox2.Location = new System.Drawing.Point(607, 171);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(575, 491);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
@@ -356,7 +357,7 @@
             // 
             this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbRespostas.Location = new System.Drawing.Point(4, 19);
-            this.rtbRespostas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rtbRespostas.Margin = new System.Windows.Forms.Padding(4);
             this.rtbRespostas.Name = "rtbRespostas";
             this.rtbRespostas.Size = new System.Drawing.Size(567, 468);
             this.rtbRespostas.TabIndex = 3;
@@ -366,7 +367,7 @@
             // 
             this.tabControl1.Controls.Add(this.tbpConfiguracoes);
             this.tabControl1.Location = new System.Drawing.Point(16, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(583, 652);
@@ -376,9 +377,9 @@
             // 
             this.tbpConfiguracoes.Controls.Add(this.tabControl2);
             this.tbpConfiguracoes.Location = new System.Drawing.Point(4, 25);
-            this.tbpConfiguracoes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpConfiguracoes.Margin = new System.Windows.Forms.Padding(4);
             this.tbpConfiguracoes.Name = "tbpConfiguracoes";
-            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(4);
             this.tbpConfiguracoes.Size = new System.Drawing.Size(575, 623);
             this.tbpConfiguracoes.TabIndex = 2;
             this.tbpConfiguracoes.Text = "Configurações";
@@ -390,7 +391,7 @@
             this.tabControl2.Controls.Add(this.tabPage2);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(4, 4);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(567, 615);
@@ -403,9 +404,9 @@
             this.tbpPIX.Controls.Add(this.groupBox1);
             this.tbpPIX.Controls.Add(this.groupBox3);
             this.tbpPIX.Location = new System.Drawing.Point(4, 25);
-            this.tbpPIX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpPIX.Margin = new System.Windows.Forms.Padding(4);
             this.tbpPIX.Name = "tbpPIX";
-            this.tbpPIX.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpPIX.Padding = new System.Windows.Forms.Padding(4);
             this.tbpPIX.Size = new System.Drawing.Size(559, 586);
             this.tbpPIX.TabIndex = 0;
             this.tbpPIX.Text = "Configurações PIX";
@@ -413,15 +414,16 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnOpenSSLInfo);
             this.groupBox4.Controls.Add(this.cmbNivelLogPSP);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.txtArqLogPSP);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(304, 327);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox4.Size = new System.Drawing.Size(241, 174);
             this.groupBox4.TabIndex = 35;
             this.groupBox4.TabStop = false;
@@ -432,7 +434,7 @@
             this.cmbNivelLogPSP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbNivelLogPSP.FormattingEnabled = true;
             this.cmbNivelLogPSP.Location = new System.Drawing.Point(12, 92);
-            this.cmbNivelLogPSP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbNivelLogPSP.Margin = new System.Windows.Forms.Padding(4);
             this.cmbNivelLogPSP.Name = "cmbNivelLogPSP";
             this.cmbNivelLogPSP.Size = new System.Drawing.Size(220, 25);
             this.cmbNivelLogPSP.TabIndex = 35;
@@ -452,7 +454,7 @@
             // 
             this.txtArqLogPSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArqLogPSP.Location = new System.Drawing.Point(12, 39);
-            this.txtArqLogPSP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArqLogPSP.Margin = new System.Windows.Forms.Padding(4);
             this.txtArqLogPSP.Name = "txtArqLogPSP";
             this.txtArqLogPSP.Size = new System.Drawing.Size(220, 23);
             this.txtArqLogPSP.TabIndex = 17;
@@ -480,9 +482,9 @@
             this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.Location = new System.Drawing.Point(8, 327);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox5.Size = new System.Drawing.Size(280, 174);
             this.groupBox5.TabIndex = 34;
             this.groupBox5.TabStop = false;
@@ -492,7 +494,7 @@
             // 
             this.txtProxySenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtProxySenha.Location = new System.Drawing.Point(12, 135);
-            this.txtProxySenha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtProxySenha.Margin = new System.Windows.Forms.Padding(4);
             this.txtProxySenha.Name = "txtProxySenha";
             this.txtProxySenha.PasswordChar = '*';
             this.txtProxySenha.Size = new System.Drawing.Size(255, 23);
@@ -513,7 +515,7 @@
             // 
             this.txtProxyUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtProxyUsuario.Location = new System.Drawing.Point(12, 87);
-            this.txtProxyUsuario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtProxyUsuario.Margin = new System.Windows.Forms.Padding(4);
             this.txtProxyUsuario.Name = "txtProxyUsuario";
             this.txtProxyUsuario.Size = new System.Drawing.Size(255, 23);
             this.txtProxyUsuario.TabIndex = 21;
@@ -543,7 +545,7 @@
             // nudProxyPorta
             // 
             this.nudProxyPorta.Location = new System.Drawing.Point(189, 39);
-            this.nudProxyPorta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudProxyPorta.Margin = new System.Windows.Forms.Padding(4);
             this.nudProxyPorta.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -558,7 +560,7 @@
             // 
             this.txtProxyServidor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtProxyServidor.Location = new System.Drawing.Point(12, 39);
-            this.txtProxyServidor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtProxyServidor.Margin = new System.Windows.Forms.Padding(4);
             this.txtProxyServidor.Name = "txtProxyServidor";
             this.txtProxyServidor.Size = new System.Drawing.Size(172, 23);
             this.txtProxyServidor.TabIndex = 17;
@@ -586,9 +588,9 @@
             this.groupBox1.Controls.Add(this.label34);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(8, 7);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(537, 140);
             this.groupBox1.TabIndex = 33;
             this.groupBox1.TabStop = false;
@@ -598,7 +600,7 @@
             // 
             this.txtUFRecebedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUFRecebedor.Location = new System.Drawing.Point(349, 102);
-            this.txtUFRecebedor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUFRecebedor.Margin = new System.Windows.Forms.Padding(4);
             this.txtUFRecebedor.Name = "txtUFRecebedor";
             this.txtUFRecebedor.Size = new System.Drawing.Size(165, 23);
             this.txtUFRecebedor.TabIndex = 38;
@@ -618,7 +620,7 @@
             // 
             this.txtCEPRecebedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCEPRecebedor.Location = new System.Drawing.Point(349, 48);
-            this.txtCEPRecebedor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCEPRecebedor.Margin = new System.Windows.Forms.Padding(4);
             this.txtCEPRecebedor.Name = "txtCEPRecebedor";
             this.txtCEPRecebedor.Size = new System.Drawing.Size(165, 23);
             this.txtCEPRecebedor.TabIndex = 36;
@@ -638,7 +640,7 @@
             // 
             this.txtCidadeRecebedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCidadeRecebedor.Location = new System.Drawing.Point(8, 102);
-            this.txtCidadeRecebedor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCidadeRecebedor.Margin = new System.Windows.Forms.Padding(4);
             this.txtCidadeRecebedor.Name = "txtCidadeRecebedor";
             this.txtCidadeRecebedor.Size = new System.Drawing.Size(332, 23);
             this.txtCidadeRecebedor.TabIndex = 34;
@@ -658,7 +660,7 @@
             // 
             this.txtNomeRecebedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNomeRecebedor.Location = new System.Drawing.Point(8, 48);
-            this.txtNomeRecebedor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNomeRecebedor.Margin = new System.Windows.Forms.Padding(4);
             this.txtNomeRecebedor.Name = "txtNomeRecebedor";
             this.txtNomeRecebedor.Size = new System.Drawing.Size(332, 23);
             this.txtNomeRecebedor.TabIndex = 32;
@@ -686,9 +688,9 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(8, 155);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox3.Size = new System.Drawing.Size(537, 165);
             this.groupBox3.TabIndex = 21;
             this.groupBox3.TabStop = false;
@@ -699,7 +701,7 @@
             this.cmbTipoChave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoChave.FormattingEnabled = true;
             this.cmbTipoChave.Location = new System.Drawing.Point(276, 48);
-            this.cmbTipoChave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbTipoChave.Margin = new System.Windows.Forms.Padding(4);
             this.cmbTipoChave.Name = "cmbTipoChave";
             this.cmbTipoChave.Size = new System.Drawing.Size(239, 25);
             this.cmbTipoChave.TabIndex = 39;
@@ -729,7 +731,7 @@
             // nudPSPTimeout
             // 
             this.nudPSPTimeout.Location = new System.Drawing.Point(276, 112);
-            this.nudPSPTimeout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudPSPTimeout.Margin = new System.Windows.Forms.Padding(4);
             this.nudPSPTimeout.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -755,7 +757,7 @@
             this.cmbAmbiente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAmbiente.FormattingEnabled = true;
             this.cmbAmbiente.Location = new System.Drawing.Point(12, 112);
-            this.cmbAmbiente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbAmbiente.Margin = new System.Windows.Forms.Padding(4);
             this.cmbAmbiente.Name = "cmbAmbiente";
             this.cmbAmbiente.Size = new System.Drawing.Size(255, 25);
             this.cmbAmbiente.TabIndex = 35;
@@ -776,7 +778,7 @@
             this.cmbPSP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPSP.FormattingEnabled = true;
             this.cmbPSP.Location = new System.Drawing.Point(12, 48);
-            this.cmbPSP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbPSP.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPSP.Name = "cmbPSP";
             this.cmbPSP.Size = new System.Drawing.Size(255, 25);
             this.cmbPSP.TabIndex = 33;
@@ -796,9 +798,9 @@
             // 
             this.tabPage2.Controls.Add(this.tabControl5);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(559, 586);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Configurações PSP";
@@ -823,7 +825,7 @@
             this.tabControl5.Controls.Add(this.tabPage17);
             this.tabControl5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl5.Location = new System.Drawing.Point(4, 4);
-            this.tabControl5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl5.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl5.Name = "tabControl5";
             this.tabControl5.SelectedIndex = 0;
             this.tabControl5.Size = new System.Drawing.Size(551, 578);
@@ -845,18 +847,38 @@
             this.tabPage3.Controls.Add(this.txtChavePIXBradesco);
             this.tabPage3.Controls.Add(this.label9);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage3.Size = new System.Drawing.Size(543, 549);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Bradesco";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // txtScopesBradesco
+            // 
+            this.txtScopesBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesBradesco.Location = new System.Drawing.Point(10, 322);
+            this.txtScopesBradesco.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesBradesco.Name = "txtScopesBradesco";
+            this.txtScopesBradesco.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesBradesco.TabIndex = 131;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(8, 301);
+            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(61, 17);
+            this.label29.TabIndex = 130;
+            this.label29.Text = "Scopes";
+            // 
             // btnCertificadoBradesco
             // 
             this.btnCertificadoBradesco.Location = new System.Drawing.Point(492, 197);
-            this.btnCertificadoBradesco.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCertificadoBradesco.Margin = new System.Windows.Forms.Padding(4);
             this.btnCertificadoBradesco.Name = "btnCertificadoBradesco";
             this.btnCertificadoBradesco.Size = new System.Drawing.Size(35, 28);
             this.btnCertificadoBradesco.TabIndex = 48;
@@ -868,7 +890,7 @@
             // 
             this.txtSenhaCertificadoBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSenhaCertificadoBradesco.Location = new System.Drawing.Point(8, 261);
-            this.txtSenhaCertificadoBradesco.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSenhaCertificadoBradesco.Margin = new System.Windows.Forms.Padding(4);
             this.txtSenhaCertificadoBradesco.Name = "txtSenhaCertificadoBradesco";
             this.txtSenhaCertificadoBradesco.Size = new System.Drawing.Size(517, 23);
             this.txtSenhaCertificadoBradesco.TabIndex = 47;
@@ -888,7 +910,7 @@
             // 
             this.txtArquivoPFXBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoPFXBradesco.Location = new System.Drawing.Point(8, 201);
-            this.txtArquivoPFXBradesco.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoPFXBradesco.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoPFXBradesco.Name = "txtArquivoPFXBradesco";
             this.txtArquivoPFXBradesco.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoPFXBradesco.TabIndex = 45;
@@ -908,7 +930,7 @@
             // 
             this.txtClientSecretBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretBradesco.Location = new System.Drawing.Point(8, 140);
-            this.txtClientSecretBradesco.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretBradesco.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretBradesco.Name = "txtClientSecretBradesco";
             this.txtClientSecretBradesco.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretBradesco.TabIndex = 43;
@@ -928,7 +950,7 @@
             // 
             this.txtClientIDBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDBradesco.Location = new System.Drawing.Point(8, 81);
-            this.txtClientIDBradesco.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDBradesco.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDBradesco.Name = "txtClientIDBradesco";
             this.txtClientIDBradesco.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDBradesco.TabIndex = 41;
@@ -948,7 +970,7 @@
             // 
             this.txtChavePIXBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXBradesco.Location = new System.Drawing.Point(8, 26);
-            this.txtChavePIXBradesco.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXBradesco.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXBradesco.Name = "txtChavePIXBradesco";
             this.txtChavePIXBradesco.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXBradesco.TabIndex = 39;
@@ -981,18 +1003,38 @@
             this.tabPage4.Controls.Add(this.txtChavePIXSicredi);
             this.tabPage4.Controls.Add(this.label21);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage4.Size = new System.Drawing.Size(543, 549);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Sicredi";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // txtScopesSicredi
+            // 
+            this.txtScopesSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesSicredi.Location = new System.Drawing.Point(8, 317);
+            this.txtScopesSicredi.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesSicredi.Name = "txtScopesSicredi";
+            this.txtScopesSicredi.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesSicredi.TabIndex = 131;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(6, 296);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(61, 17);
+            this.label40.TabIndex = 130;
+            this.label40.Text = "Scopes";
+            // 
             // btnArquivoCertificadoSicredi
             // 
             this.btnArquivoCertificadoSicredi.Location = new System.Drawing.Point(492, 257);
-            this.btnArquivoCertificadoSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoSicredi.Name = "btnArquivoCertificadoSicredi";
             this.btnArquivoCertificadoSicredi.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoSicredi.TabIndex = 57;
@@ -1004,7 +1046,7 @@
             // 
             this.txtArquivoCertificadoSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoSicredi.Location = new System.Drawing.Point(8, 261);
-            this.txtArquivoCertificadoSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoSicredi.Name = "txtArquivoCertificadoSicredi";
             this.txtArquivoCertificadoSicredi.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoSicredi.TabIndex = 56;
@@ -1023,7 +1065,7 @@
             // btnArquivoChavePrivadaSicredi
             // 
             this.btnArquivoChavePrivadaSicredi.Location = new System.Drawing.Point(492, 196);
-            this.btnArquivoChavePrivadaSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaSicredi.Name = "btnArquivoChavePrivadaSicredi";
             this.btnArquivoChavePrivadaSicredi.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaSicredi.TabIndex = 54;
@@ -1035,7 +1077,7 @@
             // 
             this.txtArquivoChavePrivadaSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaSicredi.Location = new System.Drawing.Point(8, 199);
-            this.txtArquivoChavePrivadaSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaSicredi.Name = "txtArquivoChavePrivadaSicredi";
             this.txtArquivoChavePrivadaSicredi.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaSicredi.TabIndex = 53;
@@ -1055,7 +1097,7 @@
             // 
             this.txtClientSecretSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretSicredi.Location = new System.Drawing.Point(8, 142);
-            this.txtClientSecretSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretSicredi.Name = "txtClientSecretSicredi";
             this.txtClientSecretSicredi.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretSicredi.TabIndex = 51;
@@ -1075,7 +1117,7 @@
             // 
             this.txtClientIDSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDSicredi.Location = new System.Drawing.Point(8, 82);
-            this.txtClientIDSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDSicredi.Name = "txtClientIDSicredi";
             this.txtClientIDSicredi.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDSicredi.TabIndex = 49;
@@ -1095,7 +1137,7 @@
             // 
             this.txtChavePIXSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXSicredi.Location = new System.Drawing.Point(8, 27);
-            this.txtChavePIXSicredi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXSicredi.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXSicredi.Name = "txtChavePIXSicredi";
             this.txtChavePIXSicredi.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXSicredi.TabIndex = 47;
@@ -1128,19 +1170,39 @@
             this.tabPage5.Controls.Add(this.txtChavePIXSicoob);
             this.tabPage5.Controls.Add(this.label28);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage5.Size = new System.Drawing.Size(543, 549);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Sicoob";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // txtScopesSicoob
+            // 
+            this.txtScopesSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesSicoob.Location = new System.Drawing.Point(8, 323);
+            this.txtScopesSicoob.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesSicoob.Name = "txtScopesSicoob";
+            this.txtScopesSicoob.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesSicoob.TabIndex = 131;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.Location = new System.Drawing.Point(6, 302);
+            this.label49.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(61, 17);
+            this.label49.TabIndex = 130;
+            this.label49.Text = "Scopes";
+            // 
             // txtTokenSandboxSicoob
             // 
             this.txtTokenSandboxSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTokenSandboxSicoob.Location = new System.Drawing.Point(8, 139);
-            this.txtTokenSandboxSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTokenSandboxSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.txtTokenSandboxSicoob.Name = "txtTokenSandboxSicoob";
             this.txtTokenSandboxSicoob.Size = new System.Drawing.Size(517, 23);
             this.txtTokenSandboxSicoob.TabIndex = 71;
@@ -1159,7 +1221,7 @@
             // btnArquivoCertificadoSicoob
             // 
             this.btnArquivoCertificadoSicoob.Location = new System.Drawing.Point(492, 257);
-            this.btnArquivoCertificadoSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoSicoob.Name = "btnArquivoCertificadoSicoob";
             this.btnArquivoCertificadoSicoob.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoSicoob.TabIndex = 69;
@@ -1171,7 +1233,7 @@
             // 
             this.txtArquivoCertificadoSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoSicoob.Location = new System.Drawing.Point(8, 261);
-            this.txtArquivoCertificadoSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoSicoob.Name = "txtArquivoCertificadoSicoob";
             this.txtArquivoCertificadoSicoob.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoSicoob.TabIndex = 68;
@@ -1190,7 +1252,7 @@
             // btnArquivoChavePrivadaSicoob
             // 
             this.btnArquivoChavePrivadaSicoob.Location = new System.Drawing.Point(492, 196);
-            this.btnArquivoChavePrivadaSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaSicoob.Name = "btnArquivoChavePrivadaSicoob";
             this.btnArquivoChavePrivadaSicoob.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaSicoob.TabIndex = 66;
@@ -1202,7 +1264,7 @@
             // 
             this.txtArquivoChavePrivadaSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaSicoob.Location = new System.Drawing.Point(8, 199);
-            this.txtArquivoChavePrivadaSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaSicoob.Name = "txtArquivoChavePrivadaSicoob";
             this.txtArquivoChavePrivadaSicoob.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaSicoob.TabIndex = 65;
@@ -1222,7 +1284,7 @@
             // 
             this.txtClientIDSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDSicoob.Location = new System.Drawing.Point(8, 84);
-            this.txtClientIDSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDSicoob.Name = "txtClientIDSicoob";
             this.txtClientIDSicoob.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDSicoob.TabIndex = 63;
@@ -1242,7 +1304,7 @@
             // 
             this.txtChavePIXSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXSicoob.Location = new System.Drawing.Point(8, 28);
-            this.txtChavePIXSicoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXSicoob.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXSicoob.Name = "txtChavePIXSicoob";
             this.txtChavePIXSicoob.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXSicoob.TabIndex = 61;
@@ -1269,19 +1331,39 @@
             this.tabPage6.Controls.Add(this.txtClientIDShipay);
             this.tabPage6.Controls.Add(this.label33);
             this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage6.Size = new System.Drawing.Size(543, 549);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Shipay";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // txtScopesShipay
+            // 
+            this.txtScopesShipay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesShipay.Location = new System.Drawing.Point(8, 209);
+            this.txtScopesShipay.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesShipay.Name = "txtScopesShipay";
+            this.txtScopesShipay.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesShipay.TabIndex = 131;
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.Location = new System.Drawing.Point(6, 188);
+            this.label55.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(61, 17);
+            this.label55.TabIndex = 130;
+            this.label55.Text = "Scopes";
+            // 
             // txtAccessKeyShipay
             // 
             this.txtAccessKeyShipay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAccessKeyShipay.Location = new System.Drawing.Point(8, 144);
-            this.txtAccessKeyShipay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAccessKeyShipay.Margin = new System.Windows.Forms.Padding(4);
             this.txtAccessKeyShipay.Name = "txtAccessKeyShipay";
             this.txtAccessKeyShipay.Size = new System.Drawing.Size(517, 23);
             this.txtAccessKeyShipay.TabIndex = 57;
@@ -1301,7 +1383,7 @@
             // 
             this.txtSecretKeyShipay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSecretKeyShipay.Location = new System.Drawing.Point(8, 85);
-            this.txtSecretKeyShipay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSecretKeyShipay.Margin = new System.Windows.Forms.Padding(4);
             this.txtSecretKeyShipay.Name = "txtSecretKeyShipay";
             this.txtSecretKeyShipay.Size = new System.Drawing.Size(517, 23);
             this.txtSecretKeyShipay.TabIndex = 55;
@@ -1321,7 +1403,7 @@
             // 
             this.txtClientIDShipay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDShipay.Location = new System.Drawing.Point(8, 30);
-            this.txtClientIDShipay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDShipay.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDShipay.Name = "txtClientIDShipay";
             this.txtClientIDShipay.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDShipay.TabIndex = 53;
@@ -1353,19 +1435,39 @@
             this.tabPage7.Controls.Add(this.txtChavePIXSantander);
             this.tabPage7.Controls.Add(this.label39);
             this.tabPage7.Location = new System.Drawing.Point(4, 25);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage7.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage7.Size = new System.Drawing.Size(543, 549);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Santander";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // txtScopesSantander
+            // 
+            this.txtScopesSantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesSantander.Location = new System.Drawing.Point(8, 326);
+            this.txtScopesSantander.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesSantander.Name = "txtScopesSantander";
+            this.txtScopesSantander.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesSantander.TabIndex = 131;
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label61.Location = new System.Drawing.Point(6, 305);
+            this.label61.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(61, 17);
+            this.label61.TabIndex = 130;
+            this.label61.Text = "Scopes";
+            // 
             // txtSenhaCertificadoPFXSantander
             // 
             this.txtSenhaCertificadoPFXSantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSenhaCertificadoPFXSantander.Location = new System.Drawing.Point(8, 261);
-            this.txtSenhaCertificadoPFXSantander.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSenhaCertificadoPFXSantander.Margin = new System.Windows.Forms.Padding(4);
             this.txtSenhaCertificadoPFXSantander.Name = "txtSenhaCertificadoPFXSantander";
             this.txtSenhaCertificadoPFXSantander.Size = new System.Drawing.Size(517, 23);
             this.txtSenhaCertificadoPFXSantander.TabIndex = 70;
@@ -1384,7 +1486,7 @@
             // btnArquivoCertificadoPFXSantander
             // 
             this.btnArquivoCertificadoPFXSantander.Location = new System.Drawing.Point(492, 196);
-            this.btnArquivoCertificadoPFXSantander.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoPFXSantander.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoPFXSantander.Name = "btnArquivoCertificadoPFXSantander";
             this.btnArquivoCertificadoPFXSantander.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoPFXSantander.TabIndex = 68;
@@ -1396,7 +1498,7 @@
             // 
             this.txtArquivoCertificadoPFXSantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoPFXSantander.Location = new System.Drawing.Point(8, 199);
-            this.txtArquivoCertificadoPFXSantander.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoPFXSantander.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoPFXSantander.Name = "txtArquivoCertificadoPFXSantander";
             this.txtArquivoCertificadoPFXSantander.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoPFXSantander.TabIndex = 67;
@@ -1416,7 +1518,7 @@
             // 
             this.txtConsumerSecretSantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConsumerSecretSantander.Location = new System.Drawing.Point(8, 142);
-            this.txtConsumerSecretSantander.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtConsumerSecretSantander.Margin = new System.Windows.Forms.Padding(4);
             this.txtConsumerSecretSantander.Name = "txtConsumerSecretSantander";
             this.txtConsumerSecretSantander.Size = new System.Drawing.Size(517, 23);
             this.txtConsumerSecretSantander.TabIndex = 65;
@@ -1436,7 +1538,7 @@
             // 
             this.txtConsumerKeySantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConsumerKeySantander.Location = new System.Drawing.Point(8, 82);
-            this.txtConsumerKeySantander.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtConsumerKeySantander.Margin = new System.Windows.Forms.Padding(4);
             this.txtConsumerKeySantander.Name = "txtConsumerKeySantander";
             this.txtConsumerKeySantander.Size = new System.Drawing.Size(517, 23);
             this.txtConsumerKeySantander.TabIndex = 63;
@@ -1456,7 +1558,7 @@
             // 
             this.txtChavePIXSantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXSantander.Location = new System.Drawing.Point(8, 27);
-            this.txtChavePIXSantander.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXSantander.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXSantander.Name = "txtChavePIXSantander";
             this.txtChavePIXSantander.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXSantander.TabIndex = 61;
@@ -1483,19 +1585,39 @@
             this.tabPage8.Controls.Add(this.txtCNPJPixPDV);
             this.tabPage8.Controls.Add(this.label43);
             this.tabPage8.Location = new System.Drawing.Point(4, 25);
-            this.tabPage8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage8.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage8.Size = new System.Drawing.Size(543, 549);
             this.tabPage8.TabIndex = 5;
             this.tabPage8.Text = "PixPDV";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
+            // txtScopesPixPDV
+            // 
+            this.txtScopesPixPDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesPixPDV.Location = new System.Drawing.Point(8, 213);
+            this.txtScopesPixPDV.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesPixPDV.Name = "txtScopesPixPDV";
+            this.txtScopesPixPDV.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesPixPDV.TabIndex = 131;
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label66.Location = new System.Drawing.Point(6, 192);
+            this.label66.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(61, 17);
+            this.label66.TabIndex = 130;
+            this.label66.Text = "Scopes";
+            // 
             // txtSecretKeyPixPDV
             // 
             this.txtSecretKeyPixPDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSecretKeyPixPDV.Location = new System.Drawing.Point(8, 144);
-            this.txtSecretKeyPixPDV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSecretKeyPixPDV.Margin = new System.Windows.Forms.Padding(4);
             this.txtSecretKeyPixPDV.Name = "txtSecretKeyPixPDV";
             this.txtSecretKeyPixPDV.Size = new System.Drawing.Size(517, 23);
             this.txtSecretKeyPixPDV.TabIndex = 63;
@@ -1515,7 +1637,7 @@
             // 
             this.txtPixPDVToken.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPixPDVToken.Location = new System.Drawing.Point(8, 85);
-            this.txtPixPDVToken.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPixPDVToken.Margin = new System.Windows.Forms.Padding(4);
             this.txtPixPDVToken.Name = "txtPixPDVToken";
             this.txtPixPDVToken.Size = new System.Drawing.Size(517, 23);
             this.txtPixPDVToken.TabIndex = 61;
@@ -1535,7 +1657,7 @@
             // 
             this.txtCNPJPixPDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCNPJPixPDV.Location = new System.Drawing.Point(8, 30);
-            this.txtCNPJPixPDV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCNPJPixPDV.Margin = new System.Windows.Forms.Padding(4);
             this.txtCNPJPixPDV.Name = "txtCNPJPixPDV";
             this.txtCNPJPixPDV.Size = new System.Drawing.Size(517, 23);
             this.txtCNPJPixPDV.TabIndex = 59;
@@ -1568,18 +1690,38 @@
             this.tabPage9.Controls.Add(this.txtChavePIXPagSeguro);
             this.tabPage9.Controls.Add(this.label48);
             this.tabPage9.Location = new System.Drawing.Point(4, 25);
-            this.tabPage9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage9.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage9.Size = new System.Drawing.Size(543, 549);
             this.tabPage9.TabIndex = 6;
             this.tabPage9.Text = "PagSeguro";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
+            // txtScopesPagSeguro
+            // 
+            this.txtScopesPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesPagSeguro.Location = new System.Drawing.Point(8, 329);
+            this.txtScopesPagSeguro.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesPagSeguro.Name = "txtScopesPagSeguro";
+            this.txtScopesPagSeguro.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesPagSeguro.TabIndex = 131;
+            // 
+            // label70
+            // 
+            this.label70.AutoSize = true;
+            this.label70.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label70.Location = new System.Drawing.Point(6, 308);
+            this.label70.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(61, 17);
+            this.label70.TabIndex = 130;
+            this.label70.Text = "Scopes";
+            // 
             // btnArquivoCertificadoPagSeguro
             // 
             this.btnArquivoCertificadoPagSeguro.Location = new System.Drawing.Point(492, 261);
-            this.btnArquivoCertificadoPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoPagSeguro.Name = "btnArquivoCertificadoPagSeguro";
             this.btnArquivoCertificadoPagSeguro.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoPagSeguro.TabIndex = 71;
@@ -1591,7 +1733,7 @@
             // 
             this.txtArquivoCertificadoPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoPagSeguro.Location = new System.Drawing.Point(8, 265);
-            this.txtArquivoCertificadoPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoPagSeguro.Name = "txtArquivoCertificadoPagSeguro";
             this.txtArquivoCertificadoPagSeguro.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoPagSeguro.TabIndex = 70;
@@ -1610,7 +1752,7 @@
             // btnArquivoChavePrivadaPagSeguro
             // 
             this.btnArquivoChavePrivadaPagSeguro.Location = new System.Drawing.Point(492, 199);
-            this.btnArquivoChavePrivadaPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaPagSeguro.Name = "btnArquivoChavePrivadaPagSeguro";
             this.btnArquivoChavePrivadaPagSeguro.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaPagSeguro.TabIndex = 68;
@@ -1622,7 +1764,7 @@
             // 
             this.txtArquivoChavePrivadaPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaPagSeguro.Location = new System.Drawing.Point(8, 203);
-            this.txtArquivoChavePrivadaPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaPagSeguro.Name = "txtArquivoChavePrivadaPagSeguro";
             this.txtArquivoChavePrivadaPagSeguro.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaPagSeguro.TabIndex = 67;
@@ -1642,7 +1784,7 @@
             // 
             this.txtClientSecretPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretPagSeguro.Location = new System.Drawing.Point(8, 145);
-            this.txtClientSecretPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretPagSeguro.Name = "txtClientSecretPagSeguro";
             this.txtClientSecretPagSeguro.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretPagSeguro.TabIndex = 65;
@@ -1662,7 +1804,7 @@
             // 
             this.txtClientIDPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDPagSeguro.Location = new System.Drawing.Point(8, 86);
-            this.txtClientIDPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDPagSeguro.Name = "txtClientIDPagSeguro";
             this.txtClientIDPagSeguro.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDPagSeguro.TabIndex = 63;
@@ -1682,7 +1824,7 @@
             // 
             this.txtChavePIXPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXPagSeguro.Location = new System.Drawing.Point(8, 31);
-            this.txtChavePIXPagSeguro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXPagSeguro.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXPagSeguro.Name = "txtChavePIXPagSeguro";
             this.txtChavePIXPagSeguro.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXPagSeguro.TabIndex = 61;
@@ -1715,18 +1857,38 @@
             this.tabPage10.Controls.Add(this.txtChavePIXItau);
             this.tabPage10.Controls.Add(this.label54);
             this.tabPage10.Location = new System.Drawing.Point(4, 25);
-            this.tabPage10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage10.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage10.Size = new System.Drawing.Size(543, 549);
             this.tabPage10.TabIndex = 7;
             this.tabPage10.Text = "Itau";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
+            // txtScopesItau
+            // 
+            this.txtScopesItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesItau.Location = new System.Drawing.Point(7, 340);
+            this.txtScopesItau.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesItau.Name = "txtScopesItau";
+            this.txtScopesItau.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesItau.TabIndex = 131;
+            // 
+            // label82
+            // 
+            this.label82.AutoSize = true;
+            this.label82.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label82.Location = new System.Drawing.Point(5, 319);
+            this.label82.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label82.Name = "label82";
+            this.label82.Size = new System.Drawing.Size(61, 17);
+            this.label82.TabIndex = 130;
+            this.label82.Text = "Scopes";
+            // 
             // btnArquivoCertificadoItau
             // 
             this.btnArquivoCertificadoItau.Location = new System.Drawing.Point(492, 262);
-            this.btnArquivoCertificadoItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoItau.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoItau.Name = "btnArquivoCertificadoItau";
             this.btnArquivoCertificadoItau.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoItau.TabIndex = 85;
@@ -1738,7 +1900,7 @@
             // 
             this.txtArquivoCertificadoItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoItau.Location = new System.Drawing.Point(8, 266);
-            this.txtArquivoCertificadoItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoItau.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoItau.Name = "txtArquivoCertificadoItau";
             this.txtArquivoCertificadoItau.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoItau.TabIndex = 84;
@@ -1757,7 +1919,7 @@
             // btnArquivoChavePrivadaItau
             // 
             this.btnArquivoChavePrivadaItau.Location = new System.Drawing.Point(492, 201);
-            this.btnArquivoChavePrivadaItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaItau.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaItau.Name = "btnArquivoChavePrivadaItau";
             this.btnArquivoChavePrivadaItau.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaItau.TabIndex = 82;
@@ -1769,7 +1931,7 @@
             // 
             this.txtArquivoChavePrivadaItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaItau.Location = new System.Drawing.Point(8, 204);
-            this.txtArquivoChavePrivadaItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaItau.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaItau.Name = "txtArquivoChavePrivadaItau";
             this.txtArquivoChavePrivadaItau.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaItau.TabIndex = 81;
@@ -1789,7 +1951,7 @@
             // 
             this.txtClientSecretItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretItau.Location = new System.Drawing.Point(8, 146);
-            this.txtClientSecretItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretItau.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretItau.Name = "txtClientSecretItau";
             this.txtClientSecretItau.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretItau.TabIndex = 79;
@@ -1809,7 +1971,7 @@
             // 
             this.txtClientIDItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDItau.Location = new System.Drawing.Point(8, 87);
-            this.txtClientIDItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDItau.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDItau.Name = "txtClientIDItau";
             this.txtClientIDItau.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDItau.TabIndex = 77;
@@ -1829,7 +1991,7 @@
             // 
             this.txtChavePIXItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXItau.Location = new System.Drawing.Point(8, 32);
-            this.txtChavePIXItau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXItau.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXItau.Name = "txtChavePIXItau";
             this.txtChavePIXItau.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXItau.TabIndex = 75;
@@ -1862,18 +2024,38 @@
             this.tabPage11.Controls.Add(this.txtChavePIXInter);
             this.tabPage11.Controls.Add(this.label60);
             this.tabPage11.Location = new System.Drawing.Point(4, 25);
-            this.tabPage11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage11.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage11.Size = new System.Drawing.Size(543, 549);
             this.tabPage11.TabIndex = 8;
             this.tabPage11.Text = "Inter";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
+            // txtScopesInter
+            // 
+            this.txtScopesInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesInter.Location = new System.Drawing.Point(8, 331);
+            this.txtScopesInter.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesInter.Name = "txtScopesInter";
+            this.txtScopesInter.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesInter.TabIndex = 131;
+            // 
+            // label95
+            // 
+            this.label95.AutoSize = true;
+            this.label95.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label95.Location = new System.Drawing.Point(6, 310);
+            this.label95.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label95.Name = "label95";
+            this.label95.Size = new System.Drawing.Size(61, 17);
+            this.label95.TabIndex = 130;
+            this.label95.Text = "Scopes";
+            // 
             // btnArquivoCertificadoInter
             // 
             this.btnArquivoCertificadoInter.Location = new System.Drawing.Point(492, 262);
-            this.btnArquivoCertificadoInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoInter.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoInter.Name = "btnArquivoCertificadoInter";
             this.btnArquivoCertificadoInter.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoInter.TabIndex = 99;
@@ -1885,7 +2067,7 @@
             // 
             this.txtArquivoCertificadoInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoInter.Location = new System.Drawing.Point(8, 266);
-            this.txtArquivoCertificadoInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoInter.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoInter.Name = "txtArquivoCertificadoInter";
             this.txtArquivoCertificadoInter.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoInter.TabIndex = 98;
@@ -1904,7 +2086,7 @@
             // btnArquivoChavePrivadaInter
             // 
             this.btnArquivoChavePrivadaInter.Location = new System.Drawing.Point(492, 201);
-            this.btnArquivoChavePrivadaInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaInter.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaInter.Name = "btnArquivoChavePrivadaInter";
             this.btnArquivoChavePrivadaInter.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaInter.TabIndex = 96;
@@ -1916,7 +2098,7 @@
             // 
             this.txtArquivoChavePrivadaInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaInter.Location = new System.Drawing.Point(8, 204);
-            this.txtArquivoChavePrivadaInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaInter.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaInter.Name = "txtArquivoChavePrivadaInter";
             this.txtArquivoChavePrivadaInter.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaInter.TabIndex = 95;
@@ -1936,7 +2118,7 @@
             // 
             this.txtClientSecretInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretInter.Location = new System.Drawing.Point(8, 146);
-            this.txtClientSecretInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretInter.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretInter.Name = "txtClientSecretInter";
             this.txtClientSecretInter.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretInter.TabIndex = 93;
@@ -1956,7 +2138,7 @@
             // 
             this.txtClientIDInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDInter.Location = new System.Drawing.Point(8, 87);
-            this.txtClientIDInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDInter.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDInter.Name = "txtClientIDInter";
             this.txtClientIDInter.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDInter.TabIndex = 91;
@@ -1976,7 +2158,7 @@
             // 
             this.txtChavePIXInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXInter.Location = new System.Drawing.Point(8, 32);
-            this.txtChavePIXInter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXInter.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXInter.Name = "txtChavePIXInter";
             this.txtChavePIXInter.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXInter.TabIndex = 89;
@@ -2006,18 +2188,38 @@
             this.tabPage12.Controls.Add(this.txtChavePIXGerenciaNet);
             this.tabPage12.Controls.Add(this.label65);
             this.tabPage12.Location = new System.Drawing.Point(4, 25);
-            this.tabPage12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage12.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage12.Size = new System.Drawing.Size(543, 549);
             this.tabPage12.TabIndex = 9;
             this.tabPage12.Text = "GerenciaNet";
             this.tabPage12.UseVisualStyleBackColor = true;
             // 
+            // txtScopesGerenciaNet
+            // 
+            this.txtScopesGerenciaNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesGerenciaNet.Location = new System.Drawing.Point(8, 267);
+            this.txtScopesGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesGerenciaNet.Name = "txtScopesGerenciaNet";
+            this.txtScopesGerenciaNet.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesGerenciaNet.TabIndex = 131;
+            // 
+            // label98
+            // 
+            this.label98.AutoSize = true;
+            this.label98.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label98.Location = new System.Drawing.Point(6, 246);
+            this.label98.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label98.Name = "label98";
+            this.label98.Size = new System.Drawing.Size(61, 17);
+            this.label98.TabIndex = 130;
+            this.label98.Text = "Scopes";
+            // 
             // btnArquivoCertificadoGerenciaNet
             // 
             this.btnArquivoCertificadoGerenciaNet.Location = new System.Drawing.Point(492, 198);
-            this.btnArquivoCertificadoGerenciaNet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoGerenciaNet.Name = "btnArquivoCertificadoGerenciaNet";
             this.btnArquivoCertificadoGerenciaNet.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoGerenciaNet.TabIndex = 107;
@@ -2029,7 +2231,7 @@
             // 
             this.txtArquivoCertificadoGerenciaNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoGerenciaNet.Location = new System.Drawing.Point(8, 202);
-            this.txtArquivoCertificadoGerenciaNet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoGerenciaNet.Name = "txtArquivoCertificadoGerenciaNet";
             this.txtArquivoCertificadoGerenciaNet.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoGerenciaNet.TabIndex = 106;
@@ -2049,7 +2251,7 @@
             // 
             this.txtClientSecretGerenciaNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretGerenciaNet.Location = new System.Drawing.Point(8, 144);
-            this.txtClientSecretGerenciaNet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretGerenciaNet.Name = "txtClientSecretGerenciaNet";
             this.txtClientSecretGerenciaNet.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretGerenciaNet.TabIndex = 104;
@@ -2069,7 +2271,7 @@
             // 
             this.txtClientIDGerenciaNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDGerenciaNet.Location = new System.Drawing.Point(8, 85);
-            this.txtClientIDGerenciaNet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDGerenciaNet.Name = "txtClientIDGerenciaNet";
             this.txtClientIDGerenciaNet.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDGerenciaNet.TabIndex = 102;
@@ -2089,7 +2291,7 @@
             // 
             this.txtChavePIXGerenciaNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXGerenciaNet.Location = new System.Drawing.Point(8, 30);
-            this.txtChavePIXGerenciaNet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXGerenciaNet.Name = "txtChavePIXGerenciaNet";
             this.txtChavePIXGerenciaNet.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXGerenciaNet.TabIndex = 100;
@@ -2131,19 +2333,39 @@
             this.tabPage13.Controls.Add(this.txtChavePIXBancoBrasil);
             this.tabPage13.Controls.Add(this.label69);
             this.tabPage13.Location = new System.Drawing.Point(4, 25);
-            this.tabPage13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage13.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage13.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage13.Size = new System.Drawing.Size(543, 549);
             this.tabPage13.TabIndex = 10;
             this.tabPage13.Text = "BancoBrasil";
             this.tabPage13.UseVisualStyleBackColor = true;
             // 
+            // txtScopesBancoBrasil
+            // 
+            this.txtScopesBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesBancoBrasil.Location = new System.Drawing.Point(7, 494);
+            this.txtScopesBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesBancoBrasil.Name = "txtScopesBancoBrasil";
+            this.txtScopesBancoBrasil.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesBancoBrasil.TabIndex = 129;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(5, 473);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 17);
+            this.label8.TabIndex = 128;
+            this.label8.Text = "Scopes";
+            // 
             // txtSenhaPFXBancoBrasil
             // 
             this.txtSenhaPFXBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSenhaPFXBancoBrasil.Location = new System.Drawing.Point(8, 433);
-            this.txtSenhaPFXBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSenhaPFXBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtSenhaPFXBancoBrasil.Name = "txtSenhaPFXBancoBrasil";
             this.txtSenhaPFXBancoBrasil.Size = new System.Drawing.Size(517, 23);
             this.txtSenhaPFXBancoBrasil.TabIndex = 127;
@@ -2162,7 +2384,7 @@
             // btnArquivoPXFBancoBrasil
             // 
             this.btnArquivoPXFBancoBrasil.Location = new System.Drawing.Point(492, 373);
-            this.btnArquivoPXFBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoPXFBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoPXFBancoBrasil.Name = "btnArquivoPXFBancoBrasil";
             this.btnArquivoPXFBancoBrasil.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoPXFBancoBrasil.TabIndex = 125;
@@ -2174,7 +2396,7 @@
             // 
             this.txtArquivoPXFBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoPXFBancoBrasil.Location = new System.Drawing.Point(8, 377);
-            this.txtArquivoPXFBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoPXFBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoPXFBancoBrasil.Name = "txtArquivoPXFBancoBrasil";
             this.txtArquivoPXFBancoBrasil.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoPXFBancoBrasil.TabIndex = 124;
@@ -2193,7 +2415,7 @@
             // btnArquivoCertificadoBancoBrasil
             // 
             this.btnArquivoCertificadoBancoBrasil.Location = new System.Drawing.Point(492, 315);
-            this.btnArquivoCertificadoBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoBancoBrasil.Name = "btnArquivoCertificadoBancoBrasil";
             this.btnArquivoCertificadoBancoBrasil.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoBancoBrasil.TabIndex = 122;
@@ -2205,7 +2427,7 @@
             // 
             this.txtArquivoCertificadoBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoBancoBrasil.Location = new System.Drawing.Point(8, 319);
-            this.txtArquivoCertificadoBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoBancoBrasil.Name = "txtArquivoCertificadoBancoBrasil";
             this.txtArquivoCertificadoBancoBrasil.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoBancoBrasil.TabIndex = 121;
@@ -2224,7 +2446,7 @@
             // btnArquivoChavePrivadaBancoBrasil
             // 
             this.btnArquivoChavePrivadaBancoBrasil.Location = new System.Drawing.Point(492, 254);
-            this.btnArquivoChavePrivadaBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaBancoBrasil.Name = "btnArquivoChavePrivadaBancoBrasil";
             this.btnArquivoChavePrivadaBancoBrasil.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaBancoBrasil.TabIndex = 119;
@@ -2236,7 +2458,7 @@
             // 
             this.txtArquivoChavePrivadaBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaBancoBrasil.Location = new System.Drawing.Point(8, 257);
-            this.txtArquivoChavePrivadaBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaBancoBrasil.Name = "txtArquivoChavePrivadaBancoBrasil";
             this.txtArquivoChavePrivadaBancoBrasil.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaBancoBrasil.TabIndex = 118;
@@ -2256,7 +2478,7 @@
             // 
             this.txtDeveloperApplicationKeyBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDeveloperApplicationKeyBancoBrasil.Location = new System.Drawing.Point(8, 201);
-            this.txtDeveloperApplicationKeyBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDeveloperApplicationKeyBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtDeveloperApplicationKeyBancoBrasil.Name = "txtDeveloperApplicationKeyBancoBrasil";
             this.txtDeveloperApplicationKeyBancoBrasil.Size = new System.Drawing.Size(517, 23);
             this.txtDeveloperApplicationKeyBancoBrasil.TabIndex = 116;
@@ -2277,7 +2499,7 @@
             this.cmbBBAPIVersao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBBAPIVersao.FormattingEnabled = true;
             this.cmbBBAPIVersao.Location = new System.Drawing.Point(357, 85);
-            this.cmbBBAPIVersao.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBBAPIVersao.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBBAPIVersao.Name = "cmbBBAPIVersao";
             this.cmbBBAPIVersao.Size = new System.Drawing.Size(168, 24);
             this.cmbBBAPIVersao.TabIndex = 114;
@@ -2297,7 +2519,7 @@
             // 
             this.txtClientSecretBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretBancoBrasil.Location = new System.Drawing.Point(8, 144);
-            this.txtClientSecretBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretBancoBrasil.Name = "txtClientSecretBancoBrasil";
             this.txtClientSecretBancoBrasil.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretBancoBrasil.TabIndex = 112;
@@ -2317,7 +2539,7 @@
             // 
             this.txtClientIDBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDBancoBrasil.Location = new System.Drawing.Point(8, 85);
-            this.txtClientIDBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDBancoBrasil.Name = "txtClientIDBancoBrasil";
             this.txtClientIDBancoBrasil.Size = new System.Drawing.Size(340, 23);
             this.txtClientIDBancoBrasil.TabIndex = 110;
@@ -2337,7 +2559,7 @@
             // 
             this.txtChavePIXBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXBancoBrasil.Location = new System.Drawing.Point(8, 30);
-            this.txtChavePIXBancoBrasil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXBancoBrasil.Name = "txtChavePIXBancoBrasil";
             this.txtChavePIXBancoBrasil.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXBancoBrasil.TabIndex = 108;
@@ -2373,18 +2595,38 @@
             this.tabPage14.Controls.Add(this.txtChavePIXAilos);
             this.tabPage14.Controls.Add(this.label81);
             this.tabPage14.Location = new System.Drawing.Point(4, 25);
-            this.tabPage14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage14.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage14.Name = "tabPage14";
-            this.tabPage14.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage14.Size = new System.Drawing.Size(543, 549);
             this.tabPage14.TabIndex = 11;
             this.tabPage14.Text = "Ailos";
             this.tabPage14.UseVisualStyleBackColor = true;
             // 
+            // txtScopesAilos
+            // 
+            this.txtScopesAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesAilos.Location = new System.Drawing.Point(8, 386);
+            this.txtScopesAilos.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesAilos.Name = "txtScopesAilos";
+            this.txtScopesAilos.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesAilos.TabIndex = 131;
+            // 
+            // label99
+            // 
+            this.label99.AutoSize = true;
+            this.label99.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label99.Location = new System.Drawing.Point(6, 365);
+            this.label99.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label99.Name = "label99";
+            this.label99.Size = new System.Drawing.Size(61, 17);
+            this.label99.TabIndex = 130;
+            this.label99.Text = "Scopes";
+            // 
             // btnArquivoCeriticadoRootAilos
             // 
             this.btnArquivoCeriticadoRootAilos.Location = new System.Drawing.Point(492, 315);
-            this.btnArquivoCeriticadoRootAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCeriticadoRootAilos.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCeriticadoRootAilos.Name = "btnArquivoCeriticadoRootAilos";
             this.btnArquivoCeriticadoRootAilos.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCeriticadoRootAilos.TabIndex = 116;
@@ -2396,7 +2638,7 @@
             // 
             this.txtArquivoCeriticadoRootAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCeriticadoRootAilos.Location = new System.Drawing.Point(8, 319);
-            this.txtArquivoCeriticadoRootAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCeriticadoRootAilos.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCeriticadoRootAilos.Name = "txtArquivoCeriticadoRootAilos";
             this.txtArquivoCeriticadoRootAilos.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCeriticadoRootAilos.TabIndex = 115;
@@ -2415,7 +2657,7 @@
             // btnArquivoCertificadoAilos
             // 
             this.btnArquivoCertificadoAilos.Location = new System.Drawing.Point(492, 258);
-            this.btnArquivoCertificadoAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoAilos.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoAilos.Name = "btnArquivoCertificadoAilos";
             this.btnArquivoCertificadoAilos.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoAilos.TabIndex = 113;
@@ -2427,7 +2669,7 @@
             // 
             this.txtArquivoCertificadoAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoAilos.Location = new System.Drawing.Point(8, 262);
-            this.txtArquivoCertificadoAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoAilos.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoAilos.Name = "txtArquivoCertificadoAilos";
             this.txtArquivoCertificadoAilos.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoAilos.TabIndex = 112;
@@ -2446,7 +2688,7 @@
             // btnArquivoChavePrivadaAilos
             // 
             this.btnArquivoChavePrivadaAilos.Location = new System.Drawing.Point(492, 197);
-            this.btnArquivoChavePrivadaAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaAilos.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaAilos.Name = "btnArquivoChavePrivadaAilos";
             this.btnArquivoChavePrivadaAilos.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaAilos.TabIndex = 110;
@@ -2458,7 +2700,7 @@
             // 
             this.txtArquivoChavePrivadaAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaAilos.Location = new System.Drawing.Point(8, 201);
-            this.txtArquivoChavePrivadaAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaAilos.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaAilos.Name = "txtArquivoChavePrivadaAilos";
             this.txtArquivoChavePrivadaAilos.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaAilos.TabIndex = 109;
@@ -2478,7 +2720,7 @@
             // 
             this.txtClientSecretAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretAilos.Location = new System.Drawing.Point(8, 143);
-            this.txtClientSecretAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretAilos.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretAilos.Name = "txtClientSecretAilos";
             this.txtClientSecretAilos.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretAilos.TabIndex = 107;
@@ -2498,7 +2740,7 @@
             // 
             this.txtClientIDAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDAilos.Location = new System.Drawing.Point(8, 84);
-            this.txtClientIDAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDAilos.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDAilos.Name = "txtClientIDAilos";
             this.txtClientIDAilos.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDAilos.TabIndex = 105;
@@ -2518,7 +2760,7 @@
             // 
             this.txtChavePIXAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXAilos.Location = new System.Drawing.Point(8, 28);
-            this.txtChavePIXAilos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXAilos.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXAilos.Name = "txtChavePIXAilos";
             this.txtChavePIXAilos.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXAilos.TabIndex = 103;
@@ -2557,18 +2799,38 @@
             this.tabPage15.Controls.Add(this.txtChavePIXMatera);
             this.tabPage15.Controls.Add(this.label86);
             this.tabPage15.Location = new System.Drawing.Point(4, 25);
-            this.tabPage15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage15.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage15.Name = "tabPage15";
-            this.tabPage15.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage15.Size = new System.Drawing.Size(543, 549);
             this.tabPage15.TabIndex = 12;
             this.tabPage15.Text = "Matera";
             this.tabPage15.UseVisualStyleBackColor = true;
             // 
+            // txtScopesMatera
+            // 
+            this.txtScopesMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesMatera.Location = new System.Drawing.Point(8, 430);
+            this.txtScopesMatera.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesMatera.Name = "txtScopesMatera";
+            this.txtScopesMatera.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesMatera.TabIndex = 131;
+            // 
+            // label100
+            // 
+            this.label100.AutoSize = true;
+            this.label100.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label100.Location = new System.Drawing.Point(6, 409);
+            this.label100.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label100.Name = "label100";
+            this.label100.Size = new System.Drawing.Size(61, 17);
+            this.label100.TabIndex = 130;
+            this.label100.Text = "Scopes";
+            // 
             // btnArquivoCertificadoMatera
             // 
             this.btnArquivoCertificadoMatera.Location = new System.Drawing.Point(492, 366);
-            this.btnArquivoCertificadoMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoCertificadoMatera.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoCertificadoMatera.Name = "btnArquivoCertificadoMatera";
             this.btnArquivoCertificadoMatera.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoCertificadoMatera.TabIndex = 125;
@@ -2580,7 +2842,7 @@
             // 
             this.txtArquivoCertificadoMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoCertificadoMatera.Location = new System.Drawing.Point(8, 369);
-            this.txtArquivoCertificadoMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoCertificadoMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoCertificadoMatera.Name = "txtArquivoCertificadoMatera";
             this.txtArquivoCertificadoMatera.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoCertificadoMatera.TabIndex = 124;
@@ -2599,7 +2861,7 @@
             // btnArquivoChavePrivadaMatera
             // 
             this.btnArquivoChavePrivadaMatera.Location = new System.Drawing.Point(492, 304);
-            this.btnArquivoChavePrivadaMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArquivoChavePrivadaMatera.Margin = new System.Windows.Forms.Padding(4);
             this.btnArquivoChavePrivadaMatera.Name = "btnArquivoChavePrivadaMatera";
             this.btnArquivoChavePrivadaMatera.Size = new System.Drawing.Size(35, 28);
             this.btnArquivoChavePrivadaMatera.TabIndex = 122;
@@ -2611,7 +2873,7 @@
             // 
             this.txtArquivoChavePrivadaMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtArquivoChavePrivadaMatera.Location = new System.Drawing.Point(8, 308);
-            this.txtArquivoChavePrivadaMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtArquivoChavePrivadaMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtArquivoChavePrivadaMatera.Name = "txtArquivoChavePrivadaMatera";
             this.txtArquivoChavePrivadaMatera.Size = new System.Drawing.Size(475, 23);
             this.txtArquivoChavePrivadaMatera.TabIndex = 121;
@@ -2631,7 +2893,7 @@
             // 
             this.txtMediatorFeeMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMediatorFeeMatera.Location = new System.Drawing.Point(279, 250);
-            this.txtMediatorFeeMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMediatorFeeMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtMediatorFeeMatera.Name = "txtMediatorFeeMatera";
             this.txtMediatorFeeMatera.Size = new System.Drawing.Size(247, 23);
             this.txtMediatorFeeMatera.TabIndex = 119;
@@ -2651,7 +2913,7 @@
             // 
             this.txtAccountIDMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAccountIDMatera.Location = new System.Drawing.Point(8, 250);
-            this.txtAccountIDMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAccountIDMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtAccountIDMatera.Name = "txtAccountIDMatera";
             this.txtAccountIDMatera.Size = new System.Drawing.Size(261, 23);
             this.txtAccountIDMatera.TabIndex = 117;
@@ -2671,7 +2933,7 @@
             // 
             this.txtSecretKeyMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSecretKeyMatera.Location = new System.Drawing.Point(8, 199);
-            this.txtSecretKeyMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSecretKeyMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtSecretKeyMatera.Name = "txtSecretKeyMatera";
             this.txtSecretKeyMatera.Size = new System.Drawing.Size(517, 23);
             this.txtSecretKeyMatera.TabIndex = 115;
@@ -2691,7 +2953,7 @@
             // 
             this.txtClientSecretMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretMatera.Location = new System.Drawing.Point(8, 143);
-            this.txtClientSecretMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretMatera.Name = "txtClientSecretMatera";
             this.txtClientSecretMatera.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretMatera.TabIndex = 113;
@@ -2711,7 +2973,7 @@
             // 
             this.txtClientIDMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDMatera.Location = new System.Drawing.Point(8, 84);
-            this.txtClientIDMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDMatera.Name = "txtClientIDMatera";
             this.txtClientIDMatera.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDMatera.TabIndex = 111;
@@ -2731,7 +2993,7 @@
             // 
             this.txtChavePIXMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXMatera.Location = new System.Drawing.Point(8, 28);
-            this.txtChavePIXMatera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXMatera.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXMatera.Name = "txtChavePIXMatera";
             this.txtChavePIXMatera.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXMatera.TabIndex = 109;
@@ -2758,19 +3020,39 @@
             this.tabPage16.Controls.Add(this.txtChavePIXCielo);
             this.tabPage16.Controls.Add(this.label94);
             this.tabPage16.Location = new System.Drawing.Point(4, 25);
-            this.tabPage16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage16.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage16.Name = "tabPage16";
-            this.tabPage16.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage16.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage16.Size = new System.Drawing.Size(543, 549);
             this.tabPage16.TabIndex = 13;
             this.tabPage16.Text = "Cielo";
             this.tabPage16.UseVisualStyleBackColor = true;
             // 
+            // txtScopesCielo
+            // 
+            this.txtScopesCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtScopesCielo.Location = new System.Drawing.Point(8, 213);
+            this.txtScopesCielo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtScopesCielo.Name = "txtScopesCielo";
+            this.txtScopesCielo.Size = new System.Drawing.Size(517, 23);
+            this.txtScopesCielo.TabIndex = 131;
+            // 
+            // label101
+            // 
+            this.label101.AutoSize = true;
+            this.label101.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label101.Location = new System.Drawing.Point(6, 192);
+            this.label101.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label101.Name = "label101";
+            this.label101.Size = new System.Drawing.Size(61, 17);
+            this.label101.TabIndex = 130;
+            this.label101.Text = "Scopes";
+            // 
             // txtClientSecretCielo
             // 
             this.txtClientSecretCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientSecretCielo.Location = new System.Drawing.Point(8, 144);
-            this.txtClientSecretCielo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientSecretCielo.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientSecretCielo.Name = "txtClientSecretCielo";
             this.txtClientSecretCielo.Size = new System.Drawing.Size(517, 23);
             this.txtClientSecretCielo.TabIndex = 115;
@@ -2790,7 +3072,7 @@
             // 
             this.txtClientIDCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClientIDCielo.Location = new System.Drawing.Point(8, 85);
-            this.txtClientIDCielo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientIDCielo.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientIDCielo.Name = "txtClientIDCielo";
             this.txtClientIDCielo.Size = new System.Drawing.Size(517, 23);
             this.txtClientIDCielo.TabIndex = 113;
@@ -2810,7 +3092,7 @@
             // 
             this.txtChavePIXCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtChavePIXCielo.Location = new System.Drawing.Point(8, 30);
-            this.txtChavePIXCielo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtChavePIXCielo.Margin = new System.Windows.Forms.Padding(4);
             this.txtChavePIXCielo.Name = "txtChavePIXCielo";
             this.txtChavePIXCielo.Size = new System.Drawing.Size(517, 23);
             this.txtChavePIXCielo.TabIndex = 111;
@@ -2835,589 +3117,13 @@
             this.tabPage17.Controls.Add(this.txtAccessTokenMercadoPago);
             this.tabPage17.Controls.Add(this.label96);
             this.tabPage17.Location = new System.Drawing.Point(4, 25);
-            this.tabPage17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage17.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage17.Name = "tabPage17";
-            this.tabPage17.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage17.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage17.Size = new System.Drawing.Size(543, 549);
             this.tabPage17.TabIndex = 14;
             this.tabPage17.Text = "MercadoPago";
             this.tabPage17.UseVisualStyleBackColor = true;
-            // 
-            // txtChavePIXMercadoPago
-            // 
-            this.txtChavePIXMercadoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtChavePIXMercadoPago.Location = new System.Drawing.Point(8, 30);
-            this.txtChavePIXMercadoPago.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtChavePIXMercadoPago.Name = "txtChavePIXMercadoPago";
-            this.txtChavePIXMercadoPago.Size = new System.Drawing.Size(517, 23);
-            this.txtChavePIXMercadoPago.TabIndex = 119;
-            // 
-            // label97
-            // 
-            this.label97.AutoSize = true;
-            this.label97.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label97.Location = new System.Drawing.Point(4, 10);
-            this.label97.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label97.Name = "label97";
-            this.label97.Size = new System.Drawing.Size(82, 17);
-            this.label97.TabIndex = 118;
-            this.label97.Text = "Chave PIX";
-            // 
-            // txtAccessTokenMercadoPago
-            // 
-            this.txtAccessTokenMercadoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccessTokenMercadoPago.Location = new System.Drawing.Point(8, 78);
-            this.txtAccessTokenMercadoPago.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtAccessTokenMercadoPago.Name = "txtAccessTokenMercadoPago";
-            this.txtAccessTokenMercadoPago.Size = new System.Drawing.Size(517, 23);
-            this.txtAccessTokenMercadoPago.TabIndex = 115;
-            // 
-            // label96
-            // 
-            this.label96.AutoSize = true;
-            this.label96.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label96.Location = new System.Drawing.Point(4, 58);
-            this.label96.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label96.Name = "label96";
-            this.label96.Size = new System.Drawing.Size(109, 17);
-            this.label96.TabIndex = 114;
-            this.label96.Text = "Access Token";
-            // 
-            // btnCarregarConfiguracoes
-            // 
-            this.btnCarregarConfiguracoes.Location = new System.Drawing.Point(21, 674);
-            this.btnCarregarConfiguracoes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnCarregarConfiguracoes.Name = "btnCarregarConfiguracoes";
-            this.btnCarregarConfiguracoes.Size = new System.Drawing.Size(185, 28);
-            this.btnCarregarConfiguracoes.TabIndex = 28;
-            this.btnCarregarConfiguracoes.Text = "Carregar Configurações";
-            this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
-            this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
-            // 
-            // btnSalvarConfiguracoes
-            // 
-            this.btnSalvarConfiguracoes.Location = new System.Drawing.Point(408, 674);
-            this.btnSalvarConfiguracoes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnSalvarConfiguracoes.Name = "btnSalvarConfiguracoes";
-            this.btnSalvarConfiguracoes.Size = new System.Drawing.Size(185, 28);
-            this.btnSalvarConfiguracoes.TabIndex = 27;
-            this.btnSalvarConfiguracoes.Text = "Salvar Configurações";
-            this.btnSalvarConfiguracoes.UseVisualStyleBackColor = true;
-            this.btnSalvarConfiguracoes.Click += new System.EventHandler(this.btnSalvarConfiguracoes_Click);
-            // 
-            // tabControl4
-            // 
-            this.tabControl4.Controls.Add(this.tabPage1);
-            this.tabControl4.Location = new System.Drawing.Point(601, 6);
-            this.tabControl4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabControl4.Name = "tabControl4";
-            this.tabControl4.SelectedIndex = 0;
-            this.tabControl4.Size = new System.Drawing.Size(585, 158);
-            this.tabControl4.TabIndex = 29;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.tabControl3);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(577, 129);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "EndPoints";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabControl3
-            // 
-            this.tabControl3.Controls.Add(this.tbpCancelamento);
-            this.tabControl3.Controls.Add(this.tabPage18);
-            this.tabControl3.Controls.Add(this.tabPage19);
-            this.tabControl3.Controls.Add(this.tabPage20);
-            this.tabControl3.Location = new System.Drawing.Point(8, 7);
-            this.tabControl3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabControl3.Name = "tabControl3";
-            this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(560, 114);
-            this.tabControl3.TabIndex = 26;
-            // 
-            // tbpCancelamento
-            // 
-            this.tbpCancelamento.Controls.Add(this.btnGerarQRCodeEstatico);
-            this.tbpCancelamento.Location = new System.Drawing.Point(4, 25);
-            this.tbpCancelamento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tbpCancelamento.Name = "tbpCancelamento";
-            this.tbpCancelamento.Size = new System.Drawing.Size(552, 85);
-            this.tbpCancelamento.TabIndex = 4;
-            this.tbpCancelamento.Text = "PIXCD";
-            this.tbpCancelamento.UseVisualStyleBackColor = true;
-            // 
-            // btnGerarQRCodeEstatico
-            // 
-            this.btnGerarQRCodeEstatico.Location = new System.Drawing.Point(4, 12);
-            this.btnGerarQRCodeEstatico.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnGerarQRCodeEstatico.Name = "btnGerarQRCodeEstatico";
-            this.btnGerarQRCodeEstatico.Size = new System.Drawing.Size(236, 28);
-            this.btnGerarQRCodeEstatico.TabIndex = 9;
-            this.btnGerarQRCodeEstatico.Text = "Gerar QRCode Estático";
-            this.btnGerarQRCodeEstatico.UseVisualStyleBackColor = true;
-            this.btnGerarQRCodeEstatico.Click += new System.EventHandler(this.btnGerarQRCodeEstatico_Click);
-            // 
-            // tabPage18
-            // 
-            this.tabPage18.Controls.Add(this.btnConsultarDevolucaoPix);
-            this.tabPage18.Controls.Add(this.btnSolicitarDevolucaoPix);
-            this.tabPage18.Controls.Add(this.btnConsultarPixRecebidos);
-            this.tabPage18.Controls.Add(this.btnConsultarPix);
-            this.tabPage18.Location = new System.Drawing.Point(4, 25);
-            this.tabPage18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage18.Name = "tabPage18";
-            this.tabPage18.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage18.Size = new System.Drawing.Size(552, 85);
-            this.tabPage18.TabIndex = 5;
-            this.tabPage18.Text = "/Pix";
-            this.tabPage18.UseVisualStyleBackColor = true;
-            // 
-            // btnConsultarDevolucaoPix
-            // 
-            this.btnConsultarDevolucaoPix.Location = new System.Drawing.Point(252, 41);
-            this.btnConsultarDevolucaoPix.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnConsultarDevolucaoPix.Name = "btnConsultarDevolucaoPix";
-            this.btnConsultarDevolucaoPix.Size = new System.Drawing.Size(236, 28);
-            this.btnConsultarDevolucaoPix.TabIndex = 13;
-            this.btnConsultarDevolucaoPix.Text = "Consultar Devolução Pix";
-            this.btnConsultarDevolucaoPix.UseVisualStyleBackColor = true;
-            this.btnConsultarDevolucaoPix.Click += new System.EventHandler(this.btnConsultarDevolucaoPix_Click);
-            // 
-            // btnSolicitarDevolucaoPix
-            // 
-            this.btnSolicitarDevolucaoPix.Location = new System.Drawing.Point(8, 43);
-            this.btnSolicitarDevolucaoPix.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnSolicitarDevolucaoPix.Name = "btnSolicitarDevolucaoPix";
-            this.btnSolicitarDevolucaoPix.Size = new System.Drawing.Size(236, 28);
-            this.btnSolicitarDevolucaoPix.TabIndex = 12;
-            this.btnSolicitarDevolucaoPix.Text = "Solicitar Devolução Pix";
-            this.btnSolicitarDevolucaoPix.UseVisualStyleBackColor = true;
-            this.btnSolicitarDevolucaoPix.Click += new System.EventHandler(this.btnSolicitarDevolucaoPix_Click);
-            // 
-            // btnConsultarPixRecebidos
-            // 
-            this.btnConsultarPixRecebidos.Location = new System.Drawing.Point(252, 7);
-            this.btnConsultarPixRecebidos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnConsultarPixRecebidos.Name = "btnConsultarPixRecebidos";
-            this.btnConsultarPixRecebidos.Size = new System.Drawing.Size(236, 28);
-            this.btnConsultarPixRecebidos.TabIndex = 11;
-            this.btnConsultarPixRecebidos.Text = "Consultar Pix Recebidos";
-            this.btnConsultarPixRecebidos.UseVisualStyleBackColor = true;
-            this.btnConsultarPixRecebidos.Click += new System.EventHandler(this.btnConsultarPixRecebidos_Click);
-            // 
-            // btnConsultarPix
-            // 
-            this.btnConsultarPix.Location = new System.Drawing.Point(8, 7);
-            this.btnConsultarPix.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnConsultarPix.Name = "btnConsultarPix";
-            this.btnConsultarPix.Size = new System.Drawing.Size(236, 28);
-            this.btnConsultarPix.TabIndex = 10;
-            this.btnConsultarPix.Text = "Consultar Pix";
-            this.btnConsultarPix.UseVisualStyleBackColor = true;
-            this.btnConsultarPix.Click += new System.EventHandler(this.btnConsultarPix_Click);
-            // 
-            // tabPage19
-            // 
-            this.tabPage19.Controls.Add(this.btnCancelarCobrancaImediata);
-            this.tabPage19.Controls.Add(this.btnRevisarCobrancaImediata);
-            this.tabPage19.Controls.Add(this.btnConsultarCobrancaImediata);
-            this.tabPage19.Controls.Add(this.btnCriarCobrancaImediata);
-            this.tabPage19.Location = new System.Drawing.Point(4, 25);
-            this.tabPage19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage19.Name = "tabPage19";
-            this.tabPage19.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage19.Size = new System.Drawing.Size(552, 85);
-            this.tabPage19.TabIndex = 6;
-            this.tabPage19.Text = "/Cob";
-            this.tabPage19.UseVisualStyleBackColor = true;
-            // 
-            // btnCancelarCobrancaImediata
-            // 
-            this.btnCancelarCobrancaImediata.Location = new System.Drawing.Point(252, 43);
-            this.btnCancelarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnCancelarCobrancaImediata.Name = "btnCancelarCobrancaImediata";
-            this.btnCancelarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
-            this.btnCancelarCobrancaImediata.TabIndex = 14;
-            this.btnCancelarCobrancaImediata.Text = "Cancelar Cobrança Imediata";
-            this.btnCancelarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnCancelarCobrancaImediata.Click += new System.EventHandler(this.btnCancelarCobrancaImediata_Click);
-            // 
-            // btnRevisarCobrancaImediata
-            // 
-            this.btnRevisarCobrancaImediata.Location = new System.Drawing.Point(8, 43);
-            this.btnRevisarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnRevisarCobrancaImediata.Name = "btnRevisarCobrancaImediata";
-            this.btnRevisarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
-            this.btnRevisarCobrancaImediata.TabIndex = 13;
-            this.btnRevisarCobrancaImediata.Text = "Revisar Cobrança Imediata";
-            this.btnRevisarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnRevisarCobrancaImediata.Click += new System.EventHandler(this.btnRevisarCobrancaImediata_Click);
-            // 
-            // btnConsultarCobrancaImediata
-            // 
-            this.btnConsultarCobrancaImediata.Location = new System.Drawing.Point(252, 7);
-            this.btnConsultarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnConsultarCobrancaImediata.Name = "btnConsultarCobrancaImediata";
-            this.btnConsultarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
-            this.btnConsultarCobrancaImediata.TabIndex = 12;
-            this.btnConsultarCobrancaImediata.Text = "Consultar Cobrança Imediata";
-            this.btnConsultarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnConsultarCobrancaImediata.Click += new System.EventHandler(this.btnConsultarCobrancaImediata_Click);
-            // 
-            // btnCriarCobrancaImediata
-            // 
-            this.btnCriarCobrancaImediata.Location = new System.Drawing.Point(8, 7);
-            this.btnCriarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnCriarCobrancaImediata.Name = "btnCriarCobrancaImediata";
-            this.btnCriarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
-            this.btnCriarCobrancaImediata.TabIndex = 11;
-            this.btnCriarCobrancaImediata.Text = "Criar Cobrança Imediata";
-            this.btnCriarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnCriarCobrancaImediata.Click += new System.EventHandler(this.btnCriarCobrancaImediata_Click);
-            // 
-            // tabPage20
-            // 
-            this.tabPage20.Controls.Add(this.btnCancelarCobranca);
-            this.tabPage20.Controls.Add(this.btnRevisarCobranca);
-            this.tabPage20.Controls.Add(this.btnConsultarCobranca);
-            this.tabPage20.Controls.Add(this.btnCriarCobranca);
-            this.tabPage20.Location = new System.Drawing.Point(4, 25);
-            this.tabPage20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage20.Name = "tabPage20";
-            this.tabPage20.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage20.Size = new System.Drawing.Size(552, 85);
-            this.tabPage20.TabIndex = 7;
-            this.tabPage20.Text = "/CobV";
-            this.tabPage20.UseVisualStyleBackColor = true;
-            // 
-            // btnCancelarCobranca
-            // 
-            this.btnCancelarCobranca.Location = new System.Drawing.Point(252, 43);
-            this.btnCancelarCobranca.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnCancelarCobranca.Name = "btnCancelarCobranca";
-            this.btnCancelarCobranca.Size = new System.Drawing.Size(236, 28);
-            this.btnCancelarCobranca.TabIndex = 15;
-            this.btnCancelarCobranca.Text = "Cancelar Cobranca";
-            this.btnCancelarCobranca.UseVisualStyleBackColor = true;
-            this.btnCancelarCobranca.Click += new System.EventHandler(this.btnCancelarCobranca_Click);
-            // 
-            // btnRevisarCobranca
-            // 
-            this.btnRevisarCobranca.Location = new System.Drawing.Point(8, 43);
-            this.btnRevisarCobranca.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnRevisarCobranca.Name = "btnRevisarCobranca";
-            this.btnRevisarCobranca.Size = new System.Drawing.Size(236, 28);
-            this.btnRevisarCobranca.TabIndex = 14;
-            this.btnRevisarCobranca.Text = "Revisar Cobranca";
-            this.btnRevisarCobranca.UseVisualStyleBackColor = true;
-            this.btnRevisarCobranca.Click += new System.EventHandler(this.btnRevisarCobranca_Click);
-            // 
-            // btnConsultarCobranca
-            // 
-            this.btnConsultarCobranca.Location = new System.Drawing.Point(252, 7);
-            this.btnConsultarCobranca.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnConsultarCobranca.Name = "btnConsultarCobranca";
-            this.btnConsultarCobranca.Size = new System.Drawing.Size(236, 28);
-            this.btnConsultarCobranca.TabIndex = 13;
-            this.btnConsultarCobranca.Text = "Consultar Cobranca";
-            this.btnConsultarCobranca.UseVisualStyleBackColor = true;
-            this.btnConsultarCobranca.Click += new System.EventHandler(this.btnConsultarCobranca_Click);
-            // 
-            // btnCriarCobranca
-            // 
-            this.btnCriarCobranca.Location = new System.Drawing.Point(8, 7);
-            this.btnCriarCobranca.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnCriarCobranca.Name = "btnCriarCobranca";
-            this.btnCriarCobranca.Size = new System.Drawing.Size(236, 28);
-            this.btnCriarCobranca.TabIndex = 12;
-            this.btnCriarCobranca.Text = "Criar Cobranca";
-            this.btnCriarCobranca.UseVisualStyleBackColor = true;
-            this.btnCriarCobranca.Click += new System.EventHandler(this.btnCriarCobranca_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(5, 473);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(61, 17);
-            this.label8.TabIndex = 128;
-            this.label8.Text = "Scopes";
-            // 
-            // txtScopesBancoBrasil
-            // 
-            this.txtScopesBancoBrasil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesBancoBrasil.Location = new System.Drawing.Point(7, 494);
-            this.txtScopesBancoBrasil.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesBancoBrasil.Name = "txtScopesBancoBrasil";
-            this.txtScopesBancoBrasil.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesBancoBrasil.TabIndex = 129;
-            // 
-            // txtScopesBradesco
-            // 
-            this.txtScopesBradesco.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesBradesco.Location = new System.Drawing.Point(10, 322);
-            this.txtScopesBradesco.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesBradesco.Name = "txtScopesBradesco";
-            this.txtScopesBradesco.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesBradesco.TabIndex = 131;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(8, 301);
-            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(61, 17);
-            this.label29.TabIndex = 130;
-            this.label29.Text = "Scopes";
-            // 
-            // txtScopesSicredi
-            // 
-            this.txtScopesSicredi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesSicredi.Location = new System.Drawing.Point(8, 317);
-            this.txtScopesSicredi.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesSicredi.Name = "txtScopesSicredi";
-            this.txtScopesSicredi.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesSicredi.TabIndex = 131;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.Location = new System.Drawing.Point(6, 296);
-            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(61, 17);
-            this.label40.TabIndex = 130;
-            this.label40.Text = "Scopes";
-            // 
-            // txtScopesSicoob
-            // 
-            this.txtScopesSicoob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesSicoob.Location = new System.Drawing.Point(8, 323);
-            this.txtScopesSicoob.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesSicoob.Name = "txtScopesSicoob";
-            this.txtScopesSicoob.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesSicoob.TabIndex = 131;
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label49.Location = new System.Drawing.Point(6, 302);
-            this.label49.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(61, 17);
-            this.label49.TabIndex = 130;
-            this.label49.Text = "Scopes";
-            // 
-            // txtScopesShipay
-            // 
-            this.txtScopesShipay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesShipay.Location = new System.Drawing.Point(8, 209);
-            this.txtScopesShipay.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesShipay.Name = "txtScopesShipay";
-            this.txtScopesShipay.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesShipay.TabIndex = 131;
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label55.Location = new System.Drawing.Point(6, 188);
-            this.label55.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(61, 17);
-            this.label55.TabIndex = 130;
-            this.label55.Text = "Scopes";
-            // 
-            // txtScopesSantander
-            // 
-            this.txtScopesSantander.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesSantander.Location = new System.Drawing.Point(8, 326);
-            this.txtScopesSantander.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesSantander.Name = "txtScopesSantander";
-            this.txtScopesSantander.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesSantander.TabIndex = 131;
-            // 
-            // label61
-            // 
-            this.label61.AutoSize = true;
-            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label61.Location = new System.Drawing.Point(6, 305);
-            this.label61.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(61, 17);
-            this.label61.TabIndex = 130;
-            this.label61.Text = "Scopes";
-            // 
-            // txtScopesPixPDV
-            // 
-            this.txtScopesPixPDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesPixPDV.Location = new System.Drawing.Point(8, 213);
-            this.txtScopesPixPDV.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesPixPDV.Name = "txtScopesPixPDV";
-            this.txtScopesPixPDV.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesPixPDV.TabIndex = 131;
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label66.Location = new System.Drawing.Point(6, 192);
-            this.label66.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(61, 17);
-            this.label66.TabIndex = 130;
-            this.label66.Text = "Scopes";
-            // 
-            // txtScopesPagSeguro
-            // 
-            this.txtScopesPagSeguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesPagSeguro.Location = new System.Drawing.Point(8, 329);
-            this.txtScopesPagSeguro.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesPagSeguro.Name = "txtScopesPagSeguro";
-            this.txtScopesPagSeguro.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesPagSeguro.TabIndex = 131;
-            // 
-            // label70
-            // 
-            this.label70.AutoSize = true;
-            this.label70.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label70.Location = new System.Drawing.Point(6, 308);
-            this.label70.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(61, 17);
-            this.label70.TabIndex = 130;
-            this.label70.Text = "Scopes";
-            // 
-            // txtScopesItau
-            // 
-            this.txtScopesItau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesItau.Location = new System.Drawing.Point(7, 340);
-            this.txtScopesItau.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesItau.Name = "txtScopesItau";
-            this.txtScopesItau.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesItau.TabIndex = 131;
-            // 
-            // label82
-            // 
-            this.label82.AutoSize = true;
-            this.label82.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label82.Location = new System.Drawing.Point(5, 319);
-            this.label82.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(61, 17);
-            this.label82.TabIndex = 130;
-            this.label82.Text = "Scopes";
-            // 
-            // txtScopesInter
-            // 
-            this.txtScopesInter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesInter.Location = new System.Drawing.Point(8, 331);
-            this.txtScopesInter.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesInter.Name = "txtScopesInter";
-            this.txtScopesInter.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesInter.TabIndex = 131;
-            // 
-            // label95
-            // 
-            this.label95.AutoSize = true;
-            this.label95.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label95.Location = new System.Drawing.Point(6, 310);
-            this.label95.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label95.Name = "label95";
-            this.label95.Size = new System.Drawing.Size(61, 17);
-            this.label95.TabIndex = 130;
-            this.label95.Text = "Scopes";
-            // 
-            // txtScopesGerenciaNet
-            // 
-            this.txtScopesGerenciaNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesGerenciaNet.Location = new System.Drawing.Point(8, 267);
-            this.txtScopesGerenciaNet.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesGerenciaNet.Name = "txtScopesGerenciaNet";
-            this.txtScopesGerenciaNet.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesGerenciaNet.TabIndex = 131;
-            // 
-            // label98
-            // 
-            this.label98.AutoSize = true;
-            this.label98.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label98.Location = new System.Drawing.Point(6, 246);
-            this.label98.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label98.Name = "label98";
-            this.label98.Size = new System.Drawing.Size(61, 17);
-            this.label98.TabIndex = 130;
-            this.label98.Text = "Scopes";
-            // 
-            // txtScopesAilos
-            // 
-            this.txtScopesAilos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesAilos.Location = new System.Drawing.Point(8, 386);
-            this.txtScopesAilos.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesAilos.Name = "txtScopesAilos";
-            this.txtScopesAilos.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesAilos.TabIndex = 131;
-            // 
-            // label99
-            // 
-            this.label99.AutoSize = true;
-            this.label99.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label99.Location = new System.Drawing.Point(6, 365);
-            this.label99.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label99.Name = "label99";
-            this.label99.Size = new System.Drawing.Size(61, 17);
-            this.label99.TabIndex = 130;
-            this.label99.Text = "Scopes";
-            // 
-            // txtScopesMatera
-            // 
-            this.txtScopesMatera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesMatera.Location = new System.Drawing.Point(8, 430);
-            this.txtScopesMatera.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesMatera.Name = "txtScopesMatera";
-            this.txtScopesMatera.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesMatera.TabIndex = 131;
-            // 
-            // label100
-            // 
-            this.label100.AutoSize = true;
-            this.label100.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label100.Location = new System.Drawing.Point(6, 409);
-            this.label100.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label100.Name = "label100";
-            this.label100.Size = new System.Drawing.Size(61, 17);
-            this.label100.TabIndex = 130;
-            this.label100.Text = "Scopes";
-            // 
-            // txtScopesCielo
-            // 
-            this.txtScopesCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesCielo.Location = new System.Drawing.Point(8, 213);
-            this.txtScopesCielo.Margin = new System.Windows.Forms.Padding(4);
-            this.txtScopesCielo.Name = "txtScopesCielo";
-            this.txtScopesCielo.Size = new System.Drawing.Size(517, 23);
-            this.txtScopesCielo.TabIndex = 131;
-            // 
-            // label101
-            // 
-            this.label101.AutoSize = true;
-            this.label101.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label101.Location = new System.Drawing.Point(6, 192);
-            this.label101.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(61, 17);
-            this.label101.TabIndex = 130;
-            this.label101.Text = "Scopes";
             // 
             // txtScopesMercadoPago
             // 
@@ -3439,6 +3145,312 @@
             this.label102.TabIndex = 130;
             this.label102.Text = "Scopes";
             // 
+            // txtChavePIXMercadoPago
+            // 
+            this.txtChavePIXMercadoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtChavePIXMercadoPago.Location = new System.Drawing.Point(8, 30);
+            this.txtChavePIXMercadoPago.Margin = new System.Windows.Forms.Padding(4);
+            this.txtChavePIXMercadoPago.Name = "txtChavePIXMercadoPago";
+            this.txtChavePIXMercadoPago.Size = new System.Drawing.Size(517, 23);
+            this.txtChavePIXMercadoPago.TabIndex = 119;
+            // 
+            // label97
+            // 
+            this.label97.AutoSize = true;
+            this.label97.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label97.Location = new System.Drawing.Point(4, 10);
+            this.label97.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label97.Name = "label97";
+            this.label97.Size = new System.Drawing.Size(82, 17);
+            this.label97.TabIndex = 118;
+            this.label97.Text = "Chave PIX";
+            // 
+            // txtAccessTokenMercadoPago
+            // 
+            this.txtAccessTokenMercadoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAccessTokenMercadoPago.Location = new System.Drawing.Point(8, 78);
+            this.txtAccessTokenMercadoPago.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAccessTokenMercadoPago.Name = "txtAccessTokenMercadoPago";
+            this.txtAccessTokenMercadoPago.Size = new System.Drawing.Size(517, 23);
+            this.txtAccessTokenMercadoPago.TabIndex = 115;
+            // 
+            // label96
+            // 
+            this.label96.AutoSize = true;
+            this.label96.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label96.Location = new System.Drawing.Point(4, 58);
+            this.label96.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label96.Name = "label96";
+            this.label96.Size = new System.Drawing.Size(109, 17);
+            this.label96.TabIndex = 114;
+            this.label96.Text = "Access Token";
+            // 
+            // btnCarregarConfiguracoes
+            // 
+            this.btnCarregarConfiguracoes.Location = new System.Drawing.Point(21, 674);
+            this.btnCarregarConfiguracoes.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCarregarConfiguracoes.Name = "btnCarregarConfiguracoes";
+            this.btnCarregarConfiguracoes.Size = new System.Drawing.Size(185, 28);
+            this.btnCarregarConfiguracoes.TabIndex = 28;
+            this.btnCarregarConfiguracoes.Text = "Carregar Configurações";
+            this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
+            this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
+            // 
+            // btnSalvarConfiguracoes
+            // 
+            this.btnSalvarConfiguracoes.Location = new System.Drawing.Point(408, 674);
+            this.btnSalvarConfiguracoes.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSalvarConfiguracoes.Name = "btnSalvarConfiguracoes";
+            this.btnSalvarConfiguracoes.Size = new System.Drawing.Size(185, 28);
+            this.btnSalvarConfiguracoes.TabIndex = 27;
+            this.btnSalvarConfiguracoes.Text = "Salvar Configurações";
+            this.btnSalvarConfiguracoes.UseVisualStyleBackColor = true;
+            this.btnSalvarConfiguracoes.Click += new System.EventHandler(this.btnSalvarConfiguracoes_Click);
+            // 
+            // tabControl4
+            // 
+            this.tabControl4.Controls.Add(this.tabPage1);
+            this.tabControl4.Location = new System.Drawing.Point(601, 6);
+            this.tabControl4.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl4.Name = "tabControl4";
+            this.tabControl4.SelectedIndex = 0;
+            this.tabControl4.Size = new System.Drawing.Size(585, 158);
+            this.tabControl4.TabIndex = 29;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.tabControl3);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Size = new System.Drawing.Size(577, 129);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "EndPoints";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabControl3
+            // 
+            this.tabControl3.Controls.Add(this.tbpCancelamento);
+            this.tabControl3.Controls.Add(this.tabPage18);
+            this.tabControl3.Controls.Add(this.tabPage19);
+            this.tabControl3.Controls.Add(this.tabPage20);
+            this.tabControl3.Location = new System.Drawing.Point(8, 7);
+            this.tabControl3.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl3.Name = "tabControl3";
+            this.tabControl3.SelectedIndex = 0;
+            this.tabControl3.Size = new System.Drawing.Size(560, 114);
+            this.tabControl3.TabIndex = 26;
+            // 
+            // tbpCancelamento
+            // 
+            this.tbpCancelamento.Controls.Add(this.btnGerarQRCodeEstatico);
+            this.tbpCancelamento.Location = new System.Drawing.Point(4, 25);
+            this.tbpCancelamento.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpCancelamento.Name = "tbpCancelamento";
+            this.tbpCancelamento.Size = new System.Drawing.Size(552, 85);
+            this.tbpCancelamento.TabIndex = 4;
+            this.tbpCancelamento.Text = "PIXCD";
+            this.tbpCancelamento.UseVisualStyleBackColor = true;
+            // 
+            // btnGerarQRCodeEstatico
+            // 
+            this.btnGerarQRCodeEstatico.Location = new System.Drawing.Point(4, 12);
+            this.btnGerarQRCodeEstatico.Margin = new System.Windows.Forms.Padding(4);
+            this.btnGerarQRCodeEstatico.Name = "btnGerarQRCodeEstatico";
+            this.btnGerarQRCodeEstatico.Size = new System.Drawing.Size(236, 28);
+            this.btnGerarQRCodeEstatico.TabIndex = 9;
+            this.btnGerarQRCodeEstatico.Text = "Gerar QRCode Estático";
+            this.btnGerarQRCodeEstatico.UseVisualStyleBackColor = true;
+            this.btnGerarQRCodeEstatico.Click += new System.EventHandler(this.btnGerarQRCodeEstatico_Click);
+            // 
+            // tabPage18
+            // 
+            this.tabPage18.Controls.Add(this.btnConsultarDevolucaoPix);
+            this.tabPage18.Controls.Add(this.btnSolicitarDevolucaoPix);
+            this.tabPage18.Controls.Add(this.btnConsultarPixRecebidos);
+            this.tabPage18.Controls.Add(this.btnConsultarPix);
+            this.tabPage18.Location = new System.Drawing.Point(4, 25);
+            this.tabPage18.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage18.Name = "tabPage18";
+            this.tabPage18.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage18.Size = new System.Drawing.Size(552, 85);
+            this.tabPage18.TabIndex = 5;
+            this.tabPage18.Text = "/Pix";
+            this.tabPage18.UseVisualStyleBackColor = true;
+            // 
+            // btnConsultarDevolucaoPix
+            // 
+            this.btnConsultarDevolucaoPix.Location = new System.Drawing.Point(252, 41);
+            this.btnConsultarDevolucaoPix.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConsultarDevolucaoPix.Name = "btnConsultarDevolucaoPix";
+            this.btnConsultarDevolucaoPix.Size = new System.Drawing.Size(236, 28);
+            this.btnConsultarDevolucaoPix.TabIndex = 13;
+            this.btnConsultarDevolucaoPix.Text = "Consultar Devolução Pix";
+            this.btnConsultarDevolucaoPix.UseVisualStyleBackColor = true;
+            this.btnConsultarDevolucaoPix.Click += new System.EventHandler(this.btnConsultarDevolucaoPix_Click);
+            // 
+            // btnSolicitarDevolucaoPix
+            // 
+            this.btnSolicitarDevolucaoPix.Location = new System.Drawing.Point(8, 43);
+            this.btnSolicitarDevolucaoPix.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSolicitarDevolucaoPix.Name = "btnSolicitarDevolucaoPix";
+            this.btnSolicitarDevolucaoPix.Size = new System.Drawing.Size(236, 28);
+            this.btnSolicitarDevolucaoPix.TabIndex = 12;
+            this.btnSolicitarDevolucaoPix.Text = "Solicitar Devolução Pix";
+            this.btnSolicitarDevolucaoPix.UseVisualStyleBackColor = true;
+            this.btnSolicitarDevolucaoPix.Click += new System.EventHandler(this.btnSolicitarDevolucaoPix_Click);
+            // 
+            // btnConsultarPixRecebidos
+            // 
+            this.btnConsultarPixRecebidos.Location = new System.Drawing.Point(252, 7);
+            this.btnConsultarPixRecebidos.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConsultarPixRecebidos.Name = "btnConsultarPixRecebidos";
+            this.btnConsultarPixRecebidos.Size = new System.Drawing.Size(236, 28);
+            this.btnConsultarPixRecebidos.TabIndex = 11;
+            this.btnConsultarPixRecebidos.Text = "Consultar Pix Recebidos";
+            this.btnConsultarPixRecebidos.UseVisualStyleBackColor = true;
+            this.btnConsultarPixRecebidos.Click += new System.EventHandler(this.btnConsultarPixRecebidos_Click);
+            // 
+            // btnConsultarPix
+            // 
+            this.btnConsultarPix.Location = new System.Drawing.Point(8, 7);
+            this.btnConsultarPix.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConsultarPix.Name = "btnConsultarPix";
+            this.btnConsultarPix.Size = new System.Drawing.Size(236, 28);
+            this.btnConsultarPix.TabIndex = 10;
+            this.btnConsultarPix.Text = "Consultar Pix";
+            this.btnConsultarPix.UseVisualStyleBackColor = true;
+            this.btnConsultarPix.Click += new System.EventHandler(this.btnConsultarPix_Click);
+            // 
+            // tabPage19
+            // 
+            this.tabPage19.Controls.Add(this.btnCancelarCobrancaImediata);
+            this.tabPage19.Controls.Add(this.btnRevisarCobrancaImediata);
+            this.tabPage19.Controls.Add(this.btnConsultarCobrancaImediata);
+            this.tabPage19.Controls.Add(this.btnCriarCobrancaImediata);
+            this.tabPage19.Location = new System.Drawing.Point(4, 25);
+            this.tabPage19.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage19.Name = "tabPage19";
+            this.tabPage19.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage19.Size = new System.Drawing.Size(552, 85);
+            this.tabPage19.TabIndex = 6;
+            this.tabPage19.Text = "/Cob";
+            this.tabPage19.UseVisualStyleBackColor = true;
+            // 
+            // btnCancelarCobrancaImediata
+            // 
+            this.btnCancelarCobrancaImediata.Location = new System.Drawing.Point(252, 43);
+            this.btnCancelarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelarCobrancaImediata.Name = "btnCancelarCobrancaImediata";
+            this.btnCancelarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
+            this.btnCancelarCobrancaImediata.TabIndex = 14;
+            this.btnCancelarCobrancaImediata.Text = "Cancelar Cobrança Imediata";
+            this.btnCancelarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnCancelarCobrancaImediata.Click += new System.EventHandler(this.btnCancelarCobrancaImediata_Click);
+            // 
+            // btnRevisarCobrancaImediata
+            // 
+            this.btnRevisarCobrancaImediata.Location = new System.Drawing.Point(8, 43);
+            this.btnRevisarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRevisarCobrancaImediata.Name = "btnRevisarCobrancaImediata";
+            this.btnRevisarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
+            this.btnRevisarCobrancaImediata.TabIndex = 13;
+            this.btnRevisarCobrancaImediata.Text = "Revisar Cobrança Imediata";
+            this.btnRevisarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnRevisarCobrancaImediata.Click += new System.EventHandler(this.btnRevisarCobrancaImediata_Click);
+            // 
+            // btnConsultarCobrancaImediata
+            // 
+            this.btnConsultarCobrancaImediata.Location = new System.Drawing.Point(252, 7);
+            this.btnConsultarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConsultarCobrancaImediata.Name = "btnConsultarCobrancaImediata";
+            this.btnConsultarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
+            this.btnConsultarCobrancaImediata.TabIndex = 12;
+            this.btnConsultarCobrancaImediata.Text = "Consultar Cobrança Imediata";
+            this.btnConsultarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnConsultarCobrancaImediata.Click += new System.EventHandler(this.btnConsultarCobrancaImediata_Click);
+            // 
+            // btnCriarCobrancaImediata
+            // 
+            this.btnCriarCobrancaImediata.Location = new System.Drawing.Point(8, 7);
+            this.btnCriarCobrancaImediata.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCriarCobrancaImediata.Name = "btnCriarCobrancaImediata";
+            this.btnCriarCobrancaImediata.Size = new System.Drawing.Size(236, 28);
+            this.btnCriarCobrancaImediata.TabIndex = 11;
+            this.btnCriarCobrancaImediata.Text = "Criar Cobrança Imediata";
+            this.btnCriarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnCriarCobrancaImediata.Click += new System.EventHandler(this.btnCriarCobrancaImediata_Click);
+            // 
+            // tabPage20
+            // 
+            this.tabPage20.Controls.Add(this.btnCancelarCobranca);
+            this.tabPage20.Controls.Add(this.btnRevisarCobranca);
+            this.tabPage20.Controls.Add(this.btnConsultarCobranca);
+            this.tabPage20.Controls.Add(this.btnCriarCobranca);
+            this.tabPage20.Location = new System.Drawing.Point(4, 25);
+            this.tabPage20.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage20.Name = "tabPage20";
+            this.tabPage20.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage20.Size = new System.Drawing.Size(552, 85);
+            this.tabPage20.TabIndex = 7;
+            this.tabPage20.Text = "/CobV";
+            this.tabPage20.UseVisualStyleBackColor = true;
+            // 
+            // btnCancelarCobranca
+            // 
+            this.btnCancelarCobranca.Location = new System.Drawing.Point(252, 43);
+            this.btnCancelarCobranca.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelarCobranca.Name = "btnCancelarCobranca";
+            this.btnCancelarCobranca.Size = new System.Drawing.Size(236, 28);
+            this.btnCancelarCobranca.TabIndex = 15;
+            this.btnCancelarCobranca.Text = "Cancelar Cobranca";
+            this.btnCancelarCobranca.UseVisualStyleBackColor = true;
+            this.btnCancelarCobranca.Click += new System.EventHandler(this.btnCancelarCobranca_Click);
+            // 
+            // btnRevisarCobranca
+            // 
+            this.btnRevisarCobranca.Location = new System.Drawing.Point(8, 43);
+            this.btnRevisarCobranca.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRevisarCobranca.Name = "btnRevisarCobranca";
+            this.btnRevisarCobranca.Size = new System.Drawing.Size(236, 28);
+            this.btnRevisarCobranca.TabIndex = 14;
+            this.btnRevisarCobranca.Text = "Revisar Cobranca";
+            this.btnRevisarCobranca.UseVisualStyleBackColor = true;
+            this.btnRevisarCobranca.Click += new System.EventHandler(this.btnRevisarCobranca_Click);
+            // 
+            // btnConsultarCobranca
+            // 
+            this.btnConsultarCobranca.Location = new System.Drawing.Point(252, 7);
+            this.btnConsultarCobranca.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConsultarCobranca.Name = "btnConsultarCobranca";
+            this.btnConsultarCobranca.Size = new System.Drawing.Size(236, 28);
+            this.btnConsultarCobranca.TabIndex = 13;
+            this.btnConsultarCobranca.Text = "Consultar Cobranca";
+            this.btnConsultarCobranca.UseVisualStyleBackColor = true;
+            this.btnConsultarCobranca.Click += new System.EventHandler(this.btnConsultarCobranca_Click);
+            // 
+            // btnCriarCobranca
+            // 
+            this.btnCriarCobranca.Location = new System.Drawing.Point(8, 7);
+            this.btnCriarCobranca.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCriarCobranca.Name = "btnCriarCobranca";
+            this.btnCriarCobranca.Size = new System.Drawing.Size(236, 28);
+            this.btnCriarCobranca.TabIndex = 12;
+            this.btnCriarCobranca.Text = "Criar Cobranca";
+            this.btnCriarCobranca.UseVisualStyleBackColor = true;
+            this.btnCriarCobranca.Click += new System.EventHandler(this.btnCriarCobranca_Click);
+            // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(16, 130);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(215, 27);
+            this.btnOpenSSLInfo.TabIndex = 36;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -3451,7 +3463,7 @@
             this.Controls.Add(this.groupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -3792,6 +3804,7 @@
         private System.Windows.Forms.TextBox txtScopesMercadoPago;
         private System.Windows.Forms.Label label102;
         private System.Windows.Forms.TextBox txtScopesSantander;
+        private System.Windows.Forms.Button btnOpenSSLInfo;
     }
 }
 

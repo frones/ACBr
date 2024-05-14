@@ -385,7 +385,7 @@ begin
     LJsonDados.AddPair('data_vencimento', FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD'));
     LJsonDados.AddPair('valor_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
     LJsonDados.AddPair('texto_uso_beneficiario', '0');
-    LJsonDados.AddPair('texto_seu_numero', ATitulo.NossoNumero);
+    LJsonDados.AddPair('texto_seu_numero', ATitulo.SeuNumero);
 
     AJson.AddPair('dados_individuais_boleto', LJsonDados);
   end;

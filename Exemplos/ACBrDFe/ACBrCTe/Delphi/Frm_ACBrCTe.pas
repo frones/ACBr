@@ -515,6 +515,7 @@ begin
     Ide.cCT    := GerarCodigoDFe(Ide.nCT);
     Ide.dhEmi  := Now;
     Ide.tpImp  := tiRetrato;
+
     Ide.tpEmis := teNormal;
 
     if rgTipoAmb.ItemIndex = 0 then
@@ -762,6 +763,7 @@ begin
     Ide.cCT    := GerarCodigoDFe(Ide.nCT);
     Ide.dhEmi  := Now;
     Ide.tpImp  := tiRetrato;
+
     Ide.tpEmis := teNormal;
 
     if rgTipoAmb.ItemIndex = 0 then
@@ -798,25 +800,26 @@ begin
     Ide.Toma03.Toma := tmRemetente; // tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmRemetente
 
     {Dados do Tomador: Outros}
+    {
     Ide.Toma4.Toma    := tmOutros;
-    Ide.Toma4.CNPJCPF := '10242141000174';
-    Ide.Toma4.IE      := '0010834420031';
-    Ide.Toma4.xNome   := 'ACOUGUE E SUPERMERCADO SOUZA LTDA';
+    Ide.Toma4.CNPJCPF := '12345678000112';
+    Ide.Toma4.IE      := '1234567890123';
+    Ide.Toma4.xNome   := 'RAZAO SOCIAL';
     Ide.Toma4.xFant   := '';
     Ide.Toma4.fone    := '';
 
-    Ide.Toma4.enderToma.xLgr    := 'RUA BELO HORIZONTE';
+    Ide.Toma4.enderToma.xLgr    := 'RUA CENTRAL';
     Ide.Toma4.enderToma.nro     := '614';
-    Ide.Toma4.enderToma.xCpl    := 'N D';
-    Ide.Toma4.enderToma.xBairro := 'CALADINA';
-    Ide.Toma4.enderToma.cMun    := 3119401;
-    Ide.Toma4.enderToma.xMun    := 'CORONEL FABRICIANO';
-    Ide.Toma4.enderToma.CEP     := 35171167;
-    Ide.Toma4.enderToma.UF      := 'MG';
+    Ide.Toma4.enderToma.xCpl    := '';
+    Ide.Toma4.enderToma.xBairro := 'CENTRO';
+    Ide.Toma4.enderToma.cMun    := 0;
+    Ide.Toma4.enderToma.xMun    := 'NOME DO MUNICIPIO';
+    Ide.Toma4.enderToma.CEP     := 0;
+    Ide.Toma4.enderToma.UF      := 'SP';
     Ide.Toma4.enderToma.cPais   := 1058;
     Ide.Toma4.enderToma.xPais   := 'BRASIL';
     Ide.Toma4.email             := '';
-
+    }
     {Informações Complementares do CTe}
     compl.xCaracAd  := 'Carac Adic';
     compl.xCaracSer := 'Carac Adicionais do Serviço';
@@ -1236,6 +1239,7 @@ begin
     //autXML.New.CNPJCPF := '';
 
     {Informações do Responsável Técnico pela emissão do DF-e}
+    infRespTec.CNPJ := '';
     infRespTec.xContato := '';
     infRespTec.email    := '';
     infRespTec.fone     := '';
@@ -1247,17 +1251,18 @@ begin
   //GTVe
   with ACBrCTe1.Conhecimentos.Add.CTe do
   begin
+    {
     case cbVersaoDF.ItemIndex of
       0: infCTe.versao := 2.0;
       1: infCTe.versao := 3.0;
       2: infCTe.versao := 4.0;
     end;
-
+    }
     Ide.cUF    := UFtoCUF(edtEmitUF.Text);
     Ide.CFOP   := 5353;
     Ide.natOp  := 'PRESTACAO SERVICO';
     ide.forPag := fpAPagar; // fpAPagar ou fpPago
-    Ide.modelo := 64;
+//    Ide.modelo := 64;
     Ide.serie  := 1;
     Ide.nCT    := StrToInt(NumDFe);
     // Atenção o valor de cCT tem que ser um numero aleatório conforme recomendação
@@ -1265,13 +1270,14 @@ begin
     Ide.cCT    := GerarCodigoDFe(Ide.nCT);
     Ide.dhEmi  := Now;
     Ide.tpImp  := tiRetrato;
+    {
     Ide.tpEmis := teNormal;
 
     if rgTipoAmb.ItemIndex = 0 then
       Ide.tpAmb := taProducao
     else
       Ide.tpAmb := taHomologacao;
-
+    }
     Ide.tpCTe      := tcGTVe;
     Ide.verProc    := '3.0';
     Ide.cMunEnv    := StrToInt(edtEmitCodCidade.Text);
@@ -2236,7 +2242,7 @@ begin
       infEvento.dhEvento        := now;
       infEvento.tpEvento        := teEPEC;
 
-      infEvento.detEvento.xJust   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.xJust;
+      infEvento.detEvento.xJust   := vAux; //ACBrCTe1.Conhecimentos.Items[0].CTe.ide.xJust;
 
       // Exemplo com CST = 00 (vICMS, vICMSRet ou vICMSOutraUF)
       infEvento.detEvento.vICMS   := ACBrCTe1.Conhecimentos.Items[0].CTe.imp.ICMS.ICMS00.vICMS;

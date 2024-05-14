@@ -3653,9 +3653,11 @@ begin
     'Situacao   : '+ ACBrConsultaCNPJ1.Situacao+sLineBreak+
     'Email      : '+ ACBrConsultaCNPJ1.EndEletronico+sLineBreak+
     'Telefone   : '+ ACBrConsultaCNPJ1.Telefone+sLineBreak+
-    'CNAE1      : '+ ACBrConsultaCNPJ1.CNAE1+sLineBreak;
+    'CNAE1      : '+ ACBrConsultaCNPJ1.CNAE1+sLineBreak+
+    'IE         : '+ ACBrConsultaCNPJ1.InscricaoEstadual;
+
     for I := 0 to ACBrConsultaCNPJ1.CNAE2.Count - 1 do
-      aMSG := 'CNAE2      : '+ ACBrConsultaCNPJ1.CNAE2[I];
+      aMSG := aMSG+sLineBreak+'CNAE2      : '+ ACBrConsultaCNPJ1.CNAE2[I];
      MessageDlg(AMsg, mtInformation, [mbOK], 0);
   end;
 

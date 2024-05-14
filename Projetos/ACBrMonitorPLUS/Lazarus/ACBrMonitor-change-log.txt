@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/24
+-- ACBrMonitor1.pas, DoCNPJUnit, ACBrMonitorConsts   --
+[*] TK-5422 - Retornar IE apos consulta CNPJ qdo retornado pelo provedor.
+https://www.projetoacbr.com.br/forum/topic/77714-usando-por-exemplo-o-cnpjconsultar52651232000103-a-resposta-n%C3%A3o-retorna-a-ie-em-nenhum-dos-provedores-inclusive-o-cwscnpjws
+Por: Victor Gonzales Pandaaa
+
 13/05/24
 -- DoETQUnitm, ACBrMonitorConsts   --
 [*] TK-5390 - Criado novo metodo ETQ_GerarStreamBase64

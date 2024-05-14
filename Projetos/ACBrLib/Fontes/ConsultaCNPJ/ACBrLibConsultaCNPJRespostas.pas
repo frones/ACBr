@@ -58,6 +58,7 @@ type
     FCNAE1: String;
     FCNAE2: String;
     FNaturezaJuridica: String;
+    FInscricaoEstadual: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
@@ -81,6 +82,7 @@ type
     property CNAE1: String read FCNAE1 write FCNAE1;
     property CNAE2: String read FCNAE2 write FCNAE2;
     property NaturezaJuridica: String read FNaturezaJuridica write FNaturezaJuridica;
+    property InscricaoEstadual: string read FInscricaoEstadual write FInscricaoEstadual ;
 	
   end;
 

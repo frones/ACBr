@@ -89,7 +89,7 @@ begin
                                              NFSe.IdentificacaoRps.Numero, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DATAEMISSAO', 1, 10, 1,
-                            FormatDateTime('dd/MM/yyyy',NFSe.DataEmissao), ''));
+                           FormatDateTime('dd/MM/yyyy', NFSe.DataEmissao), ''));
 
   NFSeNode.AppendChild(AddNode(tcHor, '#1', 'HORAEMISSAO', 1, 10, 1,
                                                          NFSe.DataEmissao, ''));
@@ -171,6 +171,9 @@ begin
                                              NFSe.Tomador.Contato.Email, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DENTROPAIS', 1, 1, 1, 'S', ''));
+
+  NFSeNode.AppendChild(AddNode(tcDatVcto, '#1', 'DATAVENCIMENTO', 1, 10, 0,
+                                                          NFSe.Vencimento, ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'PIS', 1, 15, 1,
                                             NFSe.Servico.Valores.ValorPis, ''));

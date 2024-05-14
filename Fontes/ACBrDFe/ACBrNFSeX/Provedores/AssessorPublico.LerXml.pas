@@ -390,6 +390,8 @@ begin
 
     Tomador.Contato.Email := ObterConteudo(ANode.Childrens.FindAnyNs('EMAIL'), tcStr);
 
+    NFSe.Vencimento := ObterConteudo(ANode.Childrens.FindAnyNs('DATAVENCIMENTO'), tcDatVcto);
+
     AuxNode := ANode.Childrens.FindAnyNs('SERVICOS');
 
     if AuxNode <> nil then

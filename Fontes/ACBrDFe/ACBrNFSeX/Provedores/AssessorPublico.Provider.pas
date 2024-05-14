@@ -199,28 +199,35 @@ procedure TACBrNFSeProviderAssessorPublico.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
+  xData: string;
+  Mes, Ano: Integer;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  xData := SeparaDados(Params.Xml, 'DATAEMISSAO', False);
+
+  Mes := StrToInt(Copy(xData, 4, 2));
+  Ano := StrToInt(Copy(xData, 7, 4));
 
   with Params do
   begin
     Response.ArquivoEnvio := '<NFSE>' +
-                           '<IDENTIFICACAO>' +
-                             '<MESCOMP>' +
-                                FormatDateTime('MM', Now) +
-                             '</MESCOMP>' +
-                             '<ANOCOMP>' +
-                                FormatDateTime('yyyy', Now) +
-                             '</ANOCOMP>' +
-                             '<INSCRICAO>' +
-                                Emitente.InscMun +
-                             '</INSCRICAO>' +
-                             '<VERSAO>1.00</VERSAO>' +
-                           '</IDENTIFICACAO>' +
-                           '<NOTAS>' +
-                             Xml +
-                           '</NOTAS>' +
-                         '</NFSE>';
+                               '<IDENTIFICACAO>' +
+                                 '<MESCOMP>' +
+                                    FormatFloat('00', Mes) +
+                                 '</MESCOMP>' +
+                                 '<ANOCOMP>' +
+                                    FormatFloat('0000', Ano) +
+                                 '</ANOCOMP>' +
+                                 '<INSCRICAO>' +
+                                    Emitente.InscMun +
+                                 '</INSCRICAO>' +
+                                 '<VERSAO>1.00</VERSAO>' +
+                               '</IDENTIFICACAO>' +
+                               '<NOTAS>' +
+                                 Xml +
+                               '</NOTAS>' +
+                             '</NFSE>';
   end;
 end;
 
@@ -289,15 +296,15 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<NFSE>' +
-                         '<IDENTIFICACAO>' +
-                           '<INSCRICAO>' +
-                              Emitente.InscMun +
-                           '</INSCRICAO>' +
-                           '<LOTE>' +
-                              Response.NumeroLote +
-                           '</LOTE>' +
-                         '</IDENTIFICACAO>' +
-                       '</NFSE>';
+                             '<IDENTIFICACAO>' +
+                               '<INSCRICAO>' +
+                                  Emitente.InscMun +
+                               '</INSCRICAO>' +
+                               '<LOTE>' +
+                                  Response.NumeroLote +
+                               '</LOTE>' +
+                             '</IDENTIFICACAO>' +
+                           '</NFSE>';
 end;
 
 procedure TACBrNFSeProviderAssessorPublico.TratarRetornoConsultaLoteRps(
@@ -404,18 +411,18 @@ begin
   Response.Metodo := tmConsultarNFSe;
 
   Response.ArquivoEnvio := '<NFSE>' +
-                         '<IDENTIFICACAO>' +
-                           '<INSCRICAO>' +
-                              Emitente.InscMun +
-                           '</INSCRICAO>' +
-                           '<LOTE>' +
-                              Response.InfConsultaNFSe.NumeroLote +
-                           '</LOTE>' +
-                           '<SEQUENCIA>' +
-                              Response.InfConsultaNFSe.NumeroIniNFSe +
-                           '</SEQUENCIA>' +
-                         '</IDENTIFICACAO>' +
-                       '</NFSE>';
+                             '<IDENTIFICACAO>' +
+                               '<INSCRICAO>' +
+                                  Emitente.InscMun +
+                               '</INSCRICAO>' +
+                               '<LOTE>' +
+                                  Response.InfConsultaNFSe.NumeroLote +
+                               '</LOTE>' +
+                               '<SEQUENCIA>' +
+                                  Response.InfConsultaNFSe.NumeroIniNFSe +
+                               '</SEQUENCIA>' +
+                             '</IDENTIFICACAO>' +
+                           '</NFSE>';
 end;
 
 procedure TACBrNFSeProviderAssessorPublico.TratarRetornoConsultaNFSeporNumero(

@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/05/2024
+-- AssessorPublico.Provider --
+[*] Alteração visando usar o Mês/Ano da data de Emissão do RPS ao montar o XML de
+    envio.
+  Por: Italo Giurizzato Junior/Heber Germano
+-- AssessorPublico.LerXml --
+[*] Alteração visando ler o conteudo da tag DATAVENCIMENTO.
+  Por: Italo Giurizzato Junior
+-- AssessorPublico.GravarXml --
+[*] Alteração visando gerar a tag DATAVENCIMENTO no XML do RPS.
+  Por: Concept Automação
 -- ACBrNFSeXServicos --
 [*] Alteração de versão da cidade de Macae/RJ, o provedor continua o mesmo.
   Por: BFBraz

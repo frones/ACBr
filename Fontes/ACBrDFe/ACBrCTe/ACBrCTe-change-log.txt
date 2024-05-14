@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2024
+-- pcteCTeW --
+[*] Correção para identificar corretamente o modelo selecionado.
+   Por: Italo Giurizzato Junior
+
 09/05/2024
 -- pcteCTeW --
 [*] Correção para gerar a versão correta do Modal.

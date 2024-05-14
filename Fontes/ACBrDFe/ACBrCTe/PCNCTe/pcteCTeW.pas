@@ -260,6 +260,8 @@ begin
   CTe.Ide.tpAmb := tpAmb;
   CTe.ide.tpEmis := tpEmis;
 }
+  ModeloDF :=  StrToModeloCTe(Ok, IntToStr(CTe.ide.modelo));
+
   VersaoDF :=  DblToVersaoCTe(Ok, CTe.infCTe.Versao);
   VersaoStr := 'versao="' + FloatToString(CTe.infCTe.Versao, '.', '#0.00') + '"';
 

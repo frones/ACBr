@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2024
+-- ACBrSchemasMatera --
+[*] Inclusão de novo status no enumerado TMateraAccountStatus
+    por: MatheusHenrique9
+
 19/04/2024
 -- ACBrSchemasMatera --
 [*] Correção de problema ao converter String para tipo TMateraWithdrawType

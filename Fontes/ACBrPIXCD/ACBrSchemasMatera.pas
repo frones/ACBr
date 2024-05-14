@@ -87,7 +87,8 @@ type
     mcsClosed,
     mcsReserved,
     mcsCreating,
-    mcsError
+    mcsError,
+    mcsApproved
   );
 
   TMateraActiveStatus = (
@@ -3538,6 +3539,7 @@ begin
     mcsReserved: Result := 'RESERVED';
     mcsCreating: Result := 'CREATING';
     mcsError: Result := 'ERROR';
+    mcsApproved: Result := 'APPROVED';
   else
     Result := EmptyStr;
   end;
@@ -3561,6 +3563,8 @@ begin
     Result := mcsCreating
   else if (s = 'ERROR') then
     Result := mcsError
+  else if (s = 'APPROVED') then
+    Result := mcsApproved
   else
     Result := mcsNone;
 end;

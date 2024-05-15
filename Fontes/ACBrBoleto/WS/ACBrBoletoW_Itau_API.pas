@@ -377,17 +377,19 @@ end;
 procedure TBoletoW_Itau_API.GerarDadosIndividuaisBoleto(AJson: TACBrJSONObject);
 var
   LJsonDados: TACBrJSONObject;
+  LJsonArray : TACBrJSONArray;
 begin
   if Assigned(ATitulo) and Assigned(AJson) then
   begin
     LJsonDados    := TACBrJSONObject.Create;
+    LJsonArray    := TACBrJSONArray.Create;
     LJsonDados.AddPair('numero_nosso_numero', ATitulo.NossoNumero);
     LJsonDados.AddPair('data_vencimento', FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD'));
     LJsonDados.AddPair('valor_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
     LJsonDados.AddPair('texto_uso_beneficiario', '0');
-    LJsonDados.AddPair('texto_seu_numero', ATitulo.SeuNumero);
-
-    AJson.AddPair('dados_individuais_boleto', LJsonDados);
+    LJsonDados.AddPair('texto_seu_numero', IfThen(ATitulo.SeuNumero <> '',  ATitulo.SeuNumero, ATitulo.NossoNumero));
+    LJsonArray.AddElementJSON(LJsonDados);
+    AJson.AddPair('dados_individuais_boleto', LJsonArray);
   end;
 end;
 
@@ -937,7 +939,7 @@ begin
       LJsonArray.AddElementJSON(LJsonDesconto2);
     end;
 
-    AJson.AddPair('desconto',LJsonArray);
+    AJson.AddPair('desconto ',LJsonArray);
   end;
 end;
 

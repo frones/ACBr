@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2024
+-- ACBrBoletoW_Itau_API --
+[-]TK-5452 - Corrigido array nos dados_individuais_boleto 
+  https://discord.com/channels/798697718800318484/809129039159230514/1240272260162654289
+  por Allan Hilário /Verificado Daniel Morais InfoCotidiano
+
+15/05/2024
 -- ACBrBancoBrasil --
 [-]TK-5451 - Corrigido posição 225/227 que estava gerando espacos ao inves de zeros.
   https://discord.com/channels/798697718800318484/809129039159230514/1240272260162654289

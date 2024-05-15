@@ -1405,7 +1405,7 @@ begin
         RLLayout.ShowProgress := MostrarProgresso;
         RLLayout.Title        := TituloRelatorio;
 
-        RLLayout.JobTitle := 'boleto ' + ACBrBoleto.Banco.nome;
+        RLLayout.JobTitle     := 'boleto ' + ACBrBoleto.Banco.nome;
 
         if TituloPreview <> '' then
         begin
@@ -1423,6 +1423,8 @@ begin
            if MostrarPreview then
            begin
               RLLayout.Title := '';
+              RLPDFFilter1.FileName := NomeArquivo;
+              RLLayout.DefaultFilter := RLPDFFilter1;
               RLLayout.PreviewModal;
            end
            else

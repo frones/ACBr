@@ -44,9 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2024
+-- pcteCTeR --
+[-] Correção para leitura correta do grupo obsFisco
+   Por: DigitalWay Informatica
+
 14/05/2024
 -- pcteCTeW --
-[*] Correção para identificar corretamente o modelo selecionado.
+[-] Correção para identificar corretamente o modelo selecionado.
    Por: Italo Giurizzato Junior
 
 09/05/2024

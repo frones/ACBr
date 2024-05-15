@@ -310,9 +310,9 @@ begin
     CTe.Compl.ObsFisco.Clear;
     while Leitor.rExtrai(2, 'ObsFisco', '', i01 + 1) <> '' do
     begin
-      CTe.Compl.obsCont.New;
-      CTe.Compl.obsCont[i01].xCampo := Leitor.rAtributo('xCampo');
-      CTe.Compl.obsCont[i01].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+      CTe.Compl.ObsFisco.New;
+      CTe.Compl.ObsFisco[i01].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.ObsFisco[i01].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i01);
     end;
   end;

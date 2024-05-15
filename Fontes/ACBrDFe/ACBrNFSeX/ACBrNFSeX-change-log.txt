@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Serrinha/BA, provedor é o Ginfes.
+  Por: JhonatasZtha
+[+] Incluida a cidade de Cristalina/GO, provedor é o Sigep versão 2.00
+  Por: ddSilva
+[+] Incluida a cidade de Rio Paranaiba/MG, provedor é o Governa versão 1.01
+  Por: ddSilva
+
 14/05/2024
 -- Diversos --
 [*] Implementado o Parâmetro: ImprimirOpcaoSN (ConfigGeral),

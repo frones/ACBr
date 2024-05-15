@@ -157,7 +157,7 @@ begin
     LerSegmentoC(PagFor.Lote.Last.SegmentoA.Last.SegmentoC, nLinha);
 //    LerSegmentoE(PagFor.Lote.Last.SegmentoA.Last.SegmentoE, I);
 //    LerSegmentoF(PagFor.Lote.Last.SegmentoA.Last.SegmentoF, I);
-//    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, I);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoA.Last.SegmentoZ, nLinha);
 
     for x := 0 to PagFor.Lote.Last.SegmentoA.Last.SegmentoB.Count - 1 do
     begin

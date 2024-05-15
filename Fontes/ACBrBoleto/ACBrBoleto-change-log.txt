@@ -50,10 +50,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2024
+-- ACBrBoletoRet_Sicredi_APIV2 --
+[*]TK-5455 - Adicionado a propriedade no retorno ValorMulta
+  https://www.projetoacbr.com.br/forum/topic/77787-retorno-da-consulta-de-boleto-sicredi-via-webservice/
+  por christian@adminfo.com.br /verificado Daniel Morais InfoCotidiano
+
+15/05/2024
 -- ACBrBoletoRet_Itau_API --
 [-]TK-5452 - Corrigido ler OBJ qdo existir no retorno da inclusao  
   https://www.projetoacbr.com.br/forum/topic/77609-erro-ao-registrar-boleto-ita%C3%BAapi/page/2/
-  por Verificado Daniel Morais InfoCotidiano
+  por Daniel Morais InfoCotidiano
 
 15/05/2024
 -- ACBrBoletoW_Itau_API --

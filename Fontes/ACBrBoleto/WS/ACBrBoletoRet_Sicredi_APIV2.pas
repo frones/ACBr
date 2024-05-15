@@ -187,6 +187,7 @@ begin
                  ARetornoWS.DadosRet.TituloRet.DataBaixa              := DateSicreditoDateTime(LJsonObject.AsJSONObject['dadosLiquidacao'].AsString['data']);
                  ARetornoWS.DadosRet.TituloRet.HoraBaixa              := TimeSicreditoDateTime(LJsonObject.AsJSONObject['dadosLiquidacao'].AsString['data']);
                  ARetornoWS.DadosRet.TituloRet.ValorDesconto          := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['desconto'];
+                 ARetornoWS.DadosRet.TituloRet.ValorMulta             := LJsonObject.AsJSONObject['dadosLiquidacao'].AsFloat['multa'];
               end;
 
               if LJsonObject.IsJSONArray('descontos') then

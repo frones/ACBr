@@ -107,7 +107,8 @@ type
 
     function ExtrairRetorno(const ARetorno: string; responseTag: array of string): string; virtual;
     function TratarXmlRetornado(const aXML: string): string; virtual;
-    function RetornaHTMLNota(const Retorno: string): String;
+    function RetornaHTMLNota(const Retorno: string): string;
+    function ConverteANSIparaUTF8(const Retorno: string): string;
 
     procedure VerificarErroNoRetorno(const ADocument: TACBrXmlDocument); virtual;
     procedure UsarCertificado; virtual;
@@ -1086,8 +1087,6 @@ begin
 end;
 
 procedure TACBrNFSeXWebservice.EnvioInterno(var CodigoErro, CodigoInterno: Integer);
-const
-  UTF_8 = #$C3;
 begin
   ConfigurarHttpClient;
 
@@ -1106,57 +1105,6 @@ begin
     if FPRetorno = '' then
       raise EACBrDFeException.Create('WebService retornou um XML vazio.');
 
-
-    FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-
-    if Pos(UTF_8, FPRetorno) = 0 then
-    begin
-      FPRetorno := AnsiToNativeString(FPRetorno);
-      FPRetorno := NativeStringToUTF8(FPRetorno);
-    end;
-
-    if StringIsXML(FPRetorno) then
-      FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
-(*
-    {
-      Se o retorno for um XML mas o seu encoding for iso-8859-1 ou se não constar
-      a declaração do encoding logo no inicio do XML assume que o mesmo não
-      esta no formato URF-8
-    }
-    if ((Pos('iso-8859-1', LowerCase(FPRetorno)) > 0) or
-        (Pos('encoding', LowerCase(FPRetorno)) = 0) or
-        (Pos('encoding', LowerCase(FPRetorno)) > 40)) then
-    begin
-      if StringIsXML(FPRetorno) then
-      begin
-        {
-          Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
-          esta no formato UTF-8, converte o XML para UTF-8
-        }
-        FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-
-        if Pos(UTF_8, FPRetorno) = 0 then
-        begin
-          FPRetorno := AnsiToNativeString(FPRetorno);
-          FPRetorno := NativeStringToUTF8(FPRetorno);
-        end;
-
-        FPRetorno := '<?xml version="1.0" encoding="UTF-8"?>' + FPRetorno;
-      end
-      else
-      begin
-        {
-          Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
-          esta no formato UTF-8, converte o XML para UTF-8
-        }
-        if Pos(UTF_8, FPRetorno) = 0 then
-        begin
-          FPRetorno := AnsiToNativeString(FPRetorno);
-          FPRetorno := NativeStringToUTF8(FPRetorno);
-        end;
-      end;
-    end;
-*)
     if StringIsXML(FPRetorno) then
       LevantarExcecaoHttp;
   except
@@ -1290,8 +1238,9 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
-function TACBrNFSeXWebservice.RetornaHTMLNota(const Retorno: string): String;
-var pInicio, pFim: Integer;
+function TACBrNFSeXWebservice.RetornaHTMLNota(const Retorno: string): string;
+var
+  pInicio, pFim: Integer;
 begin
   Result := EmptyStr;
 
@@ -1305,6 +1254,63 @@ begin
     Result := StringReplace(Result, '&gt;', '>', [rfReplaceAll]);
     Result := StringReplace(Result, '&quot;', '"', [rfReplaceAll]);
   end;
+end;
+
+function TACBrNFSeXWebservice.ConverteANSIparaUTF8(
+  const Retorno: string): string;
+const
+  UTF_8 = #$C3;
+begin
+  Result := RemoverDeclaracaoXML(Retorno);
+
+  if Pos(UTF_8, Result) = 0 then
+  begin
+    Result := AnsiToNativeString(Result);
+    Result := NativeStringToUTF8(Result);
+  end;
+
+  if StringIsXML(Result) then
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + Result;
+(*
+    {
+      Se o retorno for um XML mas o seu encoding for iso-8859-1 ou se não constar
+      a declaração do encoding logo no inicio do XML assume que o mesmo não
+      esta no formato URF-8
+    }
+    if ((Pos('iso-8859-1', LowerCase(Retorno)) > 0) or
+        (Pos('encoding', LowerCase(Retorno)) = 0) or
+        (Pos('encoding', LowerCase(Retorno)) > 40)) then
+    begin
+      if StringIsXML(Retorno) then
+      begin
+        {
+          Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
+          esta no formato UTF-8, converte o XML para UTF-8
+        }
+        Retorno := RemoverDeclaracaoXML(Retorno);
+
+        if Pos(UTF_8, Retorno) = 0 then
+        begin
+          Retorno := AnsiToNativeString(Retorno);
+          Retorno := NativeStringToUTF8(Retorno);
+        end;
+
+        Retorno := '<?xml version="1.0" encoding="UTF-8"?>' + Retorno;
+      end
+      else
+      begin
+        {
+          Se não encontrar o caracter que diz que uma vogal acentuada ou cedilha
+          esta no formato UTF-8, converte o XML para UTF-8
+        }
+        if Pos(UTF_8, Retorno) = 0 then
+        begin
+          Retorno := AnsiToNativeString(Retorno);
+          Retorno := NativeStringToUTF8(Retorno);
+        end;
+      end;
+    end;
+*)
 end;
 
 function TACBrNFSeXWebservice.SubstituirNFSe(const ACabecalho, AMSG: string): string;

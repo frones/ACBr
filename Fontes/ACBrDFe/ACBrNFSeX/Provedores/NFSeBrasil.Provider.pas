@@ -232,6 +232,7 @@ begin
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
   Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result, True);
+  Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverCDATA(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);

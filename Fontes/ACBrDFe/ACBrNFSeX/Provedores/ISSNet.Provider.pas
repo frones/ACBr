@@ -636,6 +636,7 @@ begin
 
   with ConfigGeral do
   begin
+    QuebradeLinha := '\s\n';
     ConsultaPorFaixaPreencherNumNfseFinal := True;
 
     ServicosDisponibilizados.ConsultarLinkNfse := True;

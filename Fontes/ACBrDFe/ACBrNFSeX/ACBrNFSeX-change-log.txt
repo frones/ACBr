@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2024
+-- ISSNet.Provider/MetropolisWeb.Provider --
+[*] Alterado a sequencia de caracteres para quebra de linha nas tags que permitem 
+    um texto longo como é o caso da tag Discriminacao.
+  Por: Bruno
 -- BHISS.Provider --
 [*] Ajustes no PrepararConsultaNFSe pois estava permitindo o uso de tipos de
     consultas que não existe no provedor alem de gerar uma mensagem de erro

@@ -80,6 +80,7 @@ begin
 
   with ConfigGeral do
   begin
+    QuebradeLinha := '&#xd;';
     UseCertificateHTTP := False;
     Identificador := 'id';
   end;

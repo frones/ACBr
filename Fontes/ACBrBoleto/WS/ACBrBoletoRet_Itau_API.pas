@@ -42,6 +42,7 @@ uses
   ACBrBoleto,
   ACBrBoletoRetorno,
   ACBrBoletoWS.Rest;
+
 type
 
 { TRetornoEnvio_Itau_API_API }
@@ -144,62 +145,66 @@ begin
             ARetornoWS.DadosRet.TituloRet.EspecieDoc     := LJsonBoletoObject.AsString['codigo_especie'];
             ARetornoWS.DadosRet.TituloRet.DataDocumento  := StringToDateTimeDef(LJsonBoletoObject.AsString['data_emissao'], 0, 'yyyy-mm-dd');
 
-            ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado     := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsString['nome_pessoa'];
-            if (ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado = '') then
-              ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado   := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsString['nome_razao_social_pagador'];
+            if LJsonBoletoObject.IsJSONObject('pagador') then
+            begin
+              ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado     := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsString['nome_pessoa'];
+              if (ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado = '') then
+                ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado   := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsString['nome_razao_social_pagador'];
 
-            if LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['codigo_tipo_pessoa'] = 'F' then
-              ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['numero_cadastro_pessoa_fisica']
-            else
-              ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['numero_cadastro_nacional_pessoa_juridica'];
+              if LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['codigo_tipo_pessoa'] = 'F' then
+                ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['numero_cadastro_pessoa_fisica']
+              else
+                ARetornoWS.DadosRet.TituloRet.Sacado.CNPJCPF        := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['pessoa'].AsJSONObject['tipo_pessoa'].AsString['numero_cadastro_nacional_pessoa_juridica'];
 
-            ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['nome_logradouro'];
-            ARetornoWS.DadosRet.TituloRet.Sacado.Bairro     := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['nome_bairro'];
-            ARetornoWS.DadosRet.TituloRet.Sacado.Cidade     := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['nome_cidade'];
-            ARetornoWS.DadosRet.TituloRet.Sacado.UF         := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['sigla_UF'];
-            ARetornoWS.DadosRet.TituloRet.Sacado.Cep        := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['numero_CEP'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['nome_logradouro'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Bairro     := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['nome_bairro'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Cidade     := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['nome_cidade'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.UF         := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['sigla_UF'];
+              ARetornoWS.DadosRet.TituloRet.Sacado.Cep        := LJsonBoletoObject.AsJSONObject['pagador'].AsJSONObject['endereco'].AsString['numero_CEP'];
+            end;
 
-             ARetornoWS.DadosRet.TituloRet.SacadoAvalista.CNPJCPF         := LJsonBoletoObject.AsJSONObject['sacador_avalista'].AsString['numero_cadastro_pessoa_fisica'];
-             ARetornoWS.DadosRet.TituloRet.SacadoAvalista.NomeAvalista    := LJsonBoletoObject.AsJSONObject['sacador_avalista'].AsString['nome_pessoa'];
-             if ARetornoWS.DadosRet.TituloRet.SacadoAvalista.NomeAvalista = '' then
-               ARetornoWS.DadosRet.TituloRet.SacadoAvalista.NomeAvalista  := LJsonBoletoObject.AsJSONObject['sacador_avalista'].AsString['nome_fantasia'];
+            if LJsonBoletoObject.IsJSONObject('sacador_avalista') then
+            begin
+              ARetornoWS.DadosRet.TituloRet.SacadoAvalista.CNPJCPF         := LJsonBoletoObject.AsJSONObject['sacador_avalista'].AsString['numero_cadastro_pessoa_fisica'];
+              ARetornoWS.DadosRet.TituloRet.SacadoAvalista.NomeAvalista    := LJsonBoletoObject.AsJSONObject['sacador_avalista'].AsString['nome_pessoa'];
+              if ARetornoWS.DadosRet.TituloRet.SacadoAvalista.NomeAvalista = '' then
+                ARetornoWS.DadosRet.TituloRet.SacadoAvalista.NomeAvalista  := LJsonBoletoObject.AsJSONObject['sacador_avalista'].AsString['nome_fantasia'];
 
+            end;
 
-              LJsonBoletoIndividualArray := LJsonBoletoObject.AsJSONArray['dados_individuais_boleto'];
+            LJsonBoletoIndividualArray := LJsonBoletoObject.AsJSONArray['dados_individuais_boleto'];
 
-              for I := 0 to Pred(LJsonBoletoIndividualArray.Count) do
-              begin
-                ARetornoWS.DadosRet.IDBoleto.IDBoleto  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['id_boleto_individual'];
-                ARetornoWS.DadosRet.IDBoleto.CodBarras := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['codigo_barras'];
-                ARetornoWS.DadosRet.IDBoleto.LinhaDig  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_linha_digitavel'];
-                ARetornoWS.DadosRet.IDBoleto.NossoNum  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_nosso_numero'];
+            for I := 0 to Pred(LJsonBoletoIndividualArray.Count) do
+            begin
+              ARetornoWS.DadosRet.IDBoleto.IDBoleto  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['id_boleto_individual'];
+              ARetornoWS.DadosRet.IDBoleto.CodBarras := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['codigo_barras'];
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_linha_digitavel'];
+              ARetornoWS.DadosRet.IDBoleto.NossoNum  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_nosso_numero'];
 
-                ARetornoWS.DadosRet.TituloRet.Vencimento           := StringToDateTimeDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['data_vencimento'], 0, 'yyyy-mm-dd');
-                ARetornoWS.DadosRet.TituloRet.NossoNumero          := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_nosso_numero'];
-                ARetornoWS.DadosRet.TituloRet.SeuNumero            := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['texto_seu_numero'];
-                ARetornoWS.DadosRet.TituloRet.CodBarras            := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['codigo_barras'];
-                ARetornoWS.DadosRet.TituloRet.LinhaDig             := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_linha_digitavel'];
-                ARetornoWS.DadosRet.TituloRet.DataProcessamento    := StringToDateTimeDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['data_processamento'], 0, 'yyyy-mm-dd');
-                ARetornoWS.DadosRet.TituloRet.UsoBanco             := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['uso_banco'];
-                ARetornoWS.DadosRet.TituloRet.ValorDesconto        := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_desconto'], 0);
-                ARetornoWS.DadosRet.TituloRet.ValorDespesaCobranca := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_outra_deducao'], 0);
-                ARetornoWS.DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_juro_multa'], 0);
-                ARetornoWS.DadosRet.TituloRet.ValorOutrosCreditos  := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_outro_acrescimo'], 0);
-                ARetornoWS.DadosRet.TituloRet.ValorPago            := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_total_cobrado'], 0);
+              ARetornoWS.DadosRet.TituloRet.Vencimento           := StringToDateTimeDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['data_vencimento'], 0, 'yyyy-mm-dd');
+              ARetornoWS.DadosRet.TituloRet.NossoNumero          := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_nosso_numero'];
+              ARetornoWS.DadosRet.TituloRet.SeuNumero            := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['texto_seu_numero'];
+              ARetornoWS.DadosRet.TituloRet.CodBarras            := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['codigo_barras'];
+              ARetornoWS.DadosRet.TituloRet.LinhaDig             := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_linha_digitavel'];
+              ARetornoWS.DadosRet.TituloRet.DataProcessamento    := StringToDateTimeDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['data_processamento'], 0, 'yyyy-mm-dd');
+              ARetornoWS.DadosRet.TituloRet.UsoBanco             := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['uso_banco'];
+              ARetornoWS.DadosRet.TituloRet.ValorDesconto        := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_desconto'], 0);
+              ARetornoWS.DadosRet.TituloRet.ValorDespesaCobranca := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_outra_deducao'], 0);
+              ARetornoWS.DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_juro_multa'], 0);
+              ARetornoWS.DadosRet.TituloRet.ValorOutrosCreditos  := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_outro_acrescimo'], 0);
+              ARetornoWS.DadosRet.TituloRet.ValorPago            := StrToFloatDef( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['valor_total_cobrado'], 0);
 
-                ARetornoWS.DadosRet.TituloRet.Informativo.Add( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['texto_informacao_cliente_beneficiario'] );
-                ARetornoWS.DadosRet.TituloRet.Mensagem.Add(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['local_pagamento']);
-              end;
+              ARetornoWS.DadosRet.TituloRet.Informativo.Add( LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['texto_informacao_cliente_beneficiario'] );
+              ARetornoWS.DadosRet.TituloRet.Mensagem.Add(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['local_pagamento']);
+            end;
 
-              if LJsonObject.IsJSONObject('data') and LJsonObject.AsJSONObject['data'].IsJSONObject('dados_qrcode') then
-              begin
-
-                ARetornoWS.DadosRet.TituloRet.EMV    := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['emv'];
-                ARetornoWS.DadosRet.TituloRet.TxId   := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['txid'];
-                ARetornoWS.DadosRet.TituloRet.UrlPix := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['location'];
-                ARetornoWS.DadosRet.TituloRet.Url    := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['location'];
-
-              end;
+            if LJsonObject.IsJSONObject('data') and LJsonObject.AsJSONObject['data'].IsJSONObject('dados_qrcode') then
+            begin
+              ARetornoWS.DadosRet.TituloRet.EMV    := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['emv'];
+              ARetornoWS.DadosRet.TituloRet.TxId   := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['txid'];
+              ARetornoWS.DadosRet.TituloRet.UrlPix := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['location'];
+              ARetornoWS.DadosRet.TituloRet.Url    := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['location'];
+            end;
 
           end;
         end else

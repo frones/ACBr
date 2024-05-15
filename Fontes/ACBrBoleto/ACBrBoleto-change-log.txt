@@ -50,9 +50,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2024
+-- ACBrBoletoRet_Itau_API --
+[-]TK-5452 - Corrigido ler OBJ qdo existir no retorno da inclusao  
+  https://www.projetoacbr.com.br/forum/topic/77609-erro-ao-registrar-boleto-ita%C3%BAapi/page/2/
+  por Verificado Daniel Morais InfoCotidiano
+
+15/05/2024
 -- ACBrBoletoW_Itau_API --
 [-]TK-5452 - Corrigido array nos dados_individuais_boleto 
-  https://discord.com/channels/798697718800318484/809129039159230514/1240272260162654289
+  https://www.projetoacbr.com.br/forum/topic/77609-erro-ao-registrar-boleto-ita%C3%BAapi/page/2/
   por Allan Hilário /Verificado Daniel Morais InfoCotidiano
 
 15/05/2024

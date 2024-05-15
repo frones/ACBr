@@ -275,14 +275,32 @@ procedure TACBrNFSeProviderBHISS.PrepararConsultaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  XmlConsulta, NameSpace, Prefixo: string;
+  XmlConsulta, NameSpace, Prefixo, NumeroFinal: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado] then
+  if Response.InfConsultaNFSe.tpConsulta in [tcPorPeriodo,
+     tcServicoTomado, tcServicoPrestado, tcPorChave, tcPorCodigoVerificacao] then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod001;
-    AErro.Descricao := ACBrStr(Desc101);
+    AErro.Descricao := ACBrStr(Desc001);
     Exit;
+  end;
+
+  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod105;
+    AErro.Descricao := ACBrStr(Desc105);
+    Exit;
+  end;
+
+  NumeroFinal := '';
+
+  if not EstaVazio(Response.InfConsultaNFSe.NumeroFinNFSe) then
+  begin
+    NumeroFinal := '<NumeroNfseFinal>' +
+                      OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
+                   '</NumeroNfseFinal>';
   end;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
@@ -293,9 +311,7 @@ begin
                    '<NumeroNfseInicial>' +
                       OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
                    '</NumeroNfseInicial>' +
-                   '<NumeroNfseFinal>' +
-                      OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
-                   '</NumeroNfseFinal>' +
+                   NumeroFinal +
                  '</Faixa>';
 
   if EstaVazio(ConfigMsgDados.ConsultarNFSe.xmlns) then

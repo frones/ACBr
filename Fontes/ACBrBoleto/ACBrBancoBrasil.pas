@@ -734,8 +734,13 @@ begin
 
      // Nº Dias para Baixa/Devolucao
      sDiasBaixa  := '   ';
-     if ((ATipoOcorrencia = '01') or (ATipoOcorrencia = '39')) and (Max(DataBaixa, DataLimitePagto) > Vencimento) then
-       sDiasBaixa  := IntToStrZero(DaysBetween(Vencimento, Max(DataBaixa, DataLimitePagto)), 3);
+     if ((ATipoOcorrencia = '01') or (ATipoOcorrencia = '39')) then
+     begin
+       if (Max(DataBaixa, DataLimitePagto) > Vencimento) then
+         sDiasBaixa  := IntToStrZero(DaysBetween(Vencimento, Max(DataBaixa, DataLimitePagto)), 3)
+       else
+         sDiasBaixa  := '000';
+     end;
 
      {SEGMENTO P}
      Result:= IntToStrZero(ACBrBanco.Numero, 3)                                         + // 1 a 3 - Código do banco

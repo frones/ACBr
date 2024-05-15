@@ -49,11 +49,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2024
+-- ACBrBancoBrasil --
+[-]TK-5451 - Corrigido posição 225/227 que estava gerando espacos ao inves de zeros.
+  https://discord.com/channels/798697718800318484/809129039159230514/1240272260162654289
+  por Daniel de Morais InfoCotidiano
+
 13/05/2024
 -- ACBrBoletoW_Inter_API --
 [-]TK-5429 - Corrigido para evitar o AV que foi reportado realizando consulta detalhe.
   https://www.projetoacbr.com.br/forum/topic/77706-retorno-cobranca-boleto-pix-inter/#comment-502065
   por Daniel de Morais InfoCotidiano
+  
 -- ACBrBancoInter.pas -- 
 [+]Geração do nosso número banco Inter - Carteira 110 - ACBR Boleto
   por Victor H Gonzales - Pandaaa

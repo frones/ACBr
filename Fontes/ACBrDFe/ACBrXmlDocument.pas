@@ -64,12 +64,18 @@ type
   TACBrXmlDocument = class;
   TACBrXmlNodeArray = array of TACBrXmlNode;
 
+  TACBrXmlNodeType = (ntUnknown,
+    ntElement, ntAttribute, ntText, ntCData,
+    ntEntityRef, ntEntity, ntProcessingInstr, ntComment, ntDocument,
+    ntDocType, ntDocFragment, ntNotation, ntHtmlDocument, ntDtd,
+    ntElementDeclaration, ntAttributeDeclaration, ntEntityDeclaration,
+    ntNamespaceDeclaration, ntXIncludeStart, ntXIncludeEnd, ntDocbDocument);
+
   { TACBrXmlNode }
 
   TACBrXmlNode = class
   private
     FXmlNode: xmlNodePtr;
-    FXmlCdataNode: xmlNodePtr;
     FXmlDoc: TACBrXmlDocument;
     FNamespaceList: TACBrXMLNamespaceList;
     FNodeList: TACBrXMLNodeList;
@@ -83,6 +89,8 @@ type
     function GetLocalName: string;
     function GetContent: string;
     function GetOuterXml: string;
+    function GetInnerXml: string;
+    function GetNodeType: TACBrXmlNodeType;
     procedure SetName(AName: string);
     procedure SetContent(AContent: string);
 
@@ -98,7 +106,9 @@ type
     property Attributes: TACBrXMLAttributeList read FAttributeList;
     property Content: string read GetContent write SetContent;
     property OuterXml: string read GetOuterXml;
+    property InnerXml: string read GetInnerXml;
     property FloatIsIntString: Boolean read FFloatIsIntString write FFloatIsIntString;
+    property NodeType: TACBrXmlNodeType read GetNodeType;
 
     procedure AppendChild(ANode: TACBrXmlNode);
     procedure ImportXml(AXmlString: string);
@@ -303,6 +313,7 @@ type
     destructor Destroy; override;
 
     function CreateElement(AName: string; ANamespace: string = ''; APrefix: string = ''): TACBrXmlNode;
+    function CreateCDATA(AContent: string): TACBrXmlNode;
 
     procedure Clear();
     procedure SaveToFile(AFilename: string);
@@ -336,7 +347,6 @@ begin
 
   FXmlDoc := xmlDoc;
   FXmlNode := xmlNode;
-  FXmlCdataNode := nil;
   FNamespaceList := TACBrXMLNamespaceList.Create(Self);
   FNodeList := TACBrXMLNodeList.Create(Self);
   FAttributeList := TACBrXMLAttributeList.Create(Self);
@@ -368,6 +378,8 @@ end;
 function TACBrXmlNode.GetName: string;
 begin
   Result := string(FXmlNode^.Name);
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  Result := UTF8ToNativeString(Result);
 end;
 
 function TACBrXmlNode.GetLocalName: string;
@@ -376,6 +388,8 @@ Var
 begin
   AName := string(FXmlNode^.Name);
   Result := copy(AName, Pos(':', AName) + 1, Length(AName));
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  Result := UTF8ToNativeString(Result);
 end;
 
 function TACBrXmlNode.GetContent: string;
@@ -383,8 +397,28 @@ begin
   Result := UTF8ToNativeString(AnsiString(xmlNodeGetContent(FXmlNode)));
 end;
 
+function TACBrXmlNode.GetInnerXml: string;
+var
+  buffer: xmlBufferPtr;
+  I: Integer;
+begin
+  Result := '';
+  for I := 0 to Self.Childrens.Count - 1 do
+  begin
+    buffer := xmlBufferCreate();
+    try
+      xmlNodeDump(buffer, FXmlNode.doc, Self.Childrens[I].FXmlNode, 0, 0);
+      Result := Result + string(buffer.content);
+    finally
+      xmlBufferFree(buffer);
+    end;
+  end;
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  Result := UTF8ToNativeString(Result);
+end;
+
 function TACBrXmlNode.GetOuterXml: string;
-Var
+var
   buffer: xmlBufferPtr;
 begin
   Result := '';
@@ -393,6 +427,8 @@ begin
   try
     xmlNodeDump(buffer, FXmlNode.doc, FXmlNode, 0, 0);
     Result := string(buffer.content);
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//    Result := UTF8ToNativeString(Result);
   finally
     xmlBufferFree(buffer);
   end;
@@ -407,31 +443,22 @@ begin
 end;
 
 procedure TACBrXmlNode.SetContent(AContent: string);
-Var
-  IsCData: Boolean;
-  cdataValue: String;
-  cdataNode: xmlNodePtr;
+var
+  CDataValue: string;
+  CDataNode: TACBrXmlNode;
 begin
-  cdataNode := nil;
-
-  IsCData := pos('CDATA', AContent) > 0;
-  if IsCData then
+  if pos('CDATA', AContent) > 0 then
   begin
-    cdataValue := RetornarConteudoEntre(AContent, '<![CDATA[', ']]>');
-    cdataNode := xmlNewCDataBlock(FXmlDoc.xmlDocInternal,
-               PAnsichar(ansistring(cdataValue)), Length(cdataValue));
-    xmlAddChild(FXmlNode, cdataNode);
+    CDataValue := RetornarConteudoEntre(AContent, '<![CDATA[', ']]>');
+    CDataNode := FXmlDoc.CreateCDATA(CDataValue);
+    Self.AppendChild(CDataNode);
   end
   else
-    xmlNodeSetContent(FXmlNode, PAnsichar(ansistring(AContent)));
-
-  if FXmlCdataNode <> nil then
   begin
-    xmlUnlinkNode(FXmlCdataNode);
-    xmlFreeNode(FXmlCdataNode);
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//    AContent := NativeStringToUTF8(AContent);
+    xmlNodeAddContent(FXmlNode, PAnsichar(ansistring(AContent)));
   end;
-
-  FXmlCdataNode := cdataNode;
 end;
 
 function TACBrXmlNode.AddChild(AName: string; ANamespace: string = ''; APrefix: string = ''): TACBrXmlNode;
@@ -516,6 +543,56 @@ function TACBrXmlNode.GetNextNamespace(var ANamespace: TACBrXmlNamespace): boole
 begin
   Result := FNamespaceEnumerator.MoveNext;
   ANamespace := FNamespaceEnumerator.Current;
+end;
+
+function TACBrXmlNode.GetNodeType: TACBrXmlNodeType;
+begin
+  case FXmlNode^.type_ of
+    XML_ELEMENT_NODE:
+      Result := ntElement;
+    XML_ATTRIBUTE_NODE:
+      Result := ntAttribute;
+    XML_TEXT_NODE:
+      Result := ntText;
+    XML_CDATA_SECTION_NODE:
+      Result := ntCData;
+    XML_ENTITY_REF_NODE:
+      Result := ntEntityRef;
+    XML_ENTITY_NODE:
+      Result := ntEntity;
+    XML_PI_NODE:
+      Result := ntProcessingInstr;
+    XML_COMMENT_NODE:
+      Result := ntComment;
+    XML_DOCUMENT_NODE:
+      Result := ntDocument;
+    XML_DOCUMENT_TYPE_NODE:
+      Result := ntDocType;
+    XML_DOCUMENT_FRAG_NODE:
+      Result := ntDocFragment;
+    XML_NOTATION_NODE:
+      Result := ntNotation;
+    XML_HTML_DOCUMENT_NODE:
+      Result := ntHtmlDocument;
+    XML_DTD_NODE:
+      Result := ntDtd;
+    XML_ELEMENT_DECL:
+      Result := ntElementDeclaration;
+    XML_ATTRIBUTE_DECL:
+      Result := ntAttributeDeclaration;
+    XML_ENTITY_DECL:
+      Result := ntEntityDeclaration;
+    XML_NAMESPACE_DECL:
+      Result := ntNamespaceDeclaration;
+    XML_XINCLUDE_START:
+      Result := ntXIncludeStart;
+    XML_XINCLUDE_END:
+      Result := ntXIncludeEnd;
+    XML_DOCB_DOCUMENT_NODE:
+      Result := ntDocbDocument;
+  else
+    Result := ntUnknown;
+  end;
 end;
 
 function TACBrXmlNode.GetNextChild(var ANode: TACBrXmlNode): boolean;
@@ -819,9 +896,7 @@ begin
     curNode := FParent.FXmlNode.children;
     while curNode <> nil do
     begin
-      if curNode^.type_ = XML_ELEMENT_NODE then
-        Insert(TACBrXmlNode.Create(FParent.Document, curNode));
-
+      Insert(TACBrXmlNode.Create(FParent.Document, curNode));
       curNode := curNode^.Next;
     end;
   end;
@@ -1126,6 +1201,16 @@ begin
     xmlRootElement := nil;
 end;
 
+function TACBrXmlDocument.CreateCDATA(AContent: string): TACBrXmlNode;
+var
+  Node: xmlNodePtr;
+begin
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  AContent := NativeStringToUTF8(AContent);
+  Node := xmlNewCDataBlock(xmlDocInternal, PAnsichar(ansistring(AContent)), Length(AContent));
+  Result := TACBrXmlNode.Create(Self, Node);
+end;
+
 destructor TACBrXmlDocument.Destroy;
 begin
   if xmlRootElement <> nil then
@@ -1139,6 +1224,8 @@ end;
 function TACBrXmlDocument.GetName: string;
 begin
   Result := string(xmlDocInternal^.Name);
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  Result := UTF8ToNativeString(Result);
 end;
 
 function TACBrXmlDocument.GetSaveOptions: integer;
@@ -1159,8 +1246,8 @@ var
   xmlSaveCtx: xmlSaveCtxtPtr;
   ret: integer;
 begin
-    buffer := xmlBufferCreate();
-    xmlSaveCtx := xmlSaveToBuffer(buffer, PAnsiChar(ansistring('UTF-8')), GetSaveOptions);
+  buffer := xmlBufferCreate();
+  xmlSaveCtx := xmlSaveToBuffer(buffer, PAnsiChar(ansistring('UTF-8')), GetSaveOptions);
 
   try
     try
@@ -1171,6 +1258,8 @@ begin
       if Assigned(xmlSaveCtx) then xmlSaveClose(xmlSaveCtx);
     end;
     Result := string(buffer.content);
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//    Result := UTF8ToNativeString(Result);
   finally
     if Assigned(buffer) then xmlBufferFree(buffer);
   end;
@@ -1194,6 +1283,8 @@ function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string; APref
 var
   NodeName: PAnsichar;
 begin
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  AName := NativeStringToUTF8(AName);
   NodeName := PAnsichar(ansistring(AName));
 
   Result := TACBrXmlNode.Create(Self, xmlNewDocNode(xmlDocInternal, nil, NodeName, nil));
@@ -1254,6 +1345,8 @@ var
   loadedDoc: xmlDocPtr;
   loadedRoot: xmlNodePtr;
 begin
+  // a linha abaixo foi comentada pois segundo o DSA consome muito a CPU e causa lentidão
+//  AXmlDocument := NativeStringToUTF8(AXmlDocument);
   loadedDoc := xmlParseDoc(PAnsiChar(ansistring(AXmlDocument)));
 
   if loadedDoc <> nil then

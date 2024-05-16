@@ -344,6 +344,7 @@ type
   TxmlCopyNode = function(const node: xmlNodePtr; extended: longint): xmlNodePtr; cdecl;
   TxmlNodeGetContent = function(cur: xmlNodePtr): xmlCharPtr; cdecl;
   TxmlNodeSetContent = procedure(cur: xmlNodePtr; const content: xmlCharPtr); cdecl;
+  TxmlNodeAddContent = procedure(cur: xmlNodePtr; const content: xmlCharPtr); cdecl;
   TxmlNodeSetName = procedure(cur: xmlNodePtr; const name: xmlCharPtr); cdecl;
   TxmlNewNs = function(node: xmlNodePtr; const href: xmlCharPtr; const prefix: xmlCharPtr): xmlNsPtr; cdecl;
   TxmlSetNs = procedure(node: xmlNodePtr; ns: xmlNsPtr); cdecl;
@@ -411,6 +412,7 @@ function xmlC14NDocDumpMemory(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: l
 function xmlCopyNode(const node: xmlNodePtr; extended: longint): xmlNodePtr;
 function xmlNodeGetContent(cur: xmlNodePtr): xmlCharPtr;
 procedure xmlNodeSetContent(cur: xmlNodePtr; const content: xmlCharPtr);
+procedure xmlNodeAddContent(cur: xmlNodePtr; const content: xmlCharPtr);
 procedure xmlNodeSetName(cur: xmlNodePtr; const name: xmlCharPtr);
 function xmlNewNs(node: xmlNodePtr; const href: xmlCharPtr; const prefix: xmlCharPtr): xmlNsPtr;
 procedure xmlSetNs(node: xmlNodePtr; ns: xmlNsPtr);
@@ -487,6 +489,7 @@ var
   _xmlCopyNode: TxmlCopyNode = nil;
   _xmlNodeGetContent: TxmlNodeGetContent = nil;
   _xmlNodeSetContent: TxmlNodeSetContent = nil;
+  _xmlNodeAddContent: TxmlNodeAddContent = nil;
   _xmlNodeSetName: TxmlNodeSetName = nil;
   _xmlNewNs: TxmlNewNs = nil;
   _xmlSetNs: TxmlSetNs = nil;
@@ -609,6 +612,7 @@ begin
   _xmlCopyNode := GetProcAddr(LibXml2Handle, 'xmlCopyNode');
   _xmlNodeGetContent := GetProcAddr(LibXml2Handle, 'xmlNodeGetContent');
   _xmlNodeSetContent := GetProcAddr(LibXml2Handle, 'xmlNodeSetContent');
+  _xmlNodeAddContent := GetProcAddr(LibXml2Handle, 'xmlNodeAddContent');
   _xmlNodeSetName := GetProcAddr(LibXml2Handle, 'xmlNodeSetName');
   _xmlNewNs := GetProcAddr(LibXml2Handle, 'xmlNewNs');
   _xmlSetNs := GetProcAddr(LibXml2Handle, 'xmlSetNs');
@@ -718,6 +722,7 @@ begin
   _xmlCopyNode := nil;
   _xmlNodeGetContent := nil;
   _xmlNodeSetContent := nil;
+  _xmlNodeAddContent := nil;
   _xmlNodeSetName := nil;
   _xmlNewNs := nil;
   _xmlSetNs := nil;
@@ -954,6 +959,12 @@ procedure xmlNodeSetContent(cur: xmlNodePtr; const content: xmlCharPtr);
 begin
   if InitLibXml2Interface and Assigned(_xmlNodeSetContent) then
     _xmlNodeSetContent(cur, content);
+end;
+
+procedure xmlNodeAddContent(cur: xmlNodePtr; const content: xmlCharPtr);
+begin
+  if InitLibXml2Interface and Assigned(_xmlNodeAddContent) then
+    _xmlNodeAddContent(cur, content);
 end;
 
 procedure xmlNodeSetName(cur: xmlNodePtr; const name: xmlCharPtr);

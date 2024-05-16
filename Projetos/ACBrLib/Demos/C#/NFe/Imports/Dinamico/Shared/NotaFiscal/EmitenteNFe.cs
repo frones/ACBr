@@ -132,11 +132,6 @@ namespace ACBrLib.NFe
         /// </summary>
         public string Fone { get; set; }
 
-        /// <summary>
-        /// Código do Município de Ocorrência do Fato Gerador
-        /// </summary>
-        public int cMunFG { get; set; }
-
         #endregion Properties
     }
 }

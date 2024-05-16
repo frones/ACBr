@@ -39,7 +39,7 @@ namespace ACBrLib.NFe
         /// <summary>
         /// Código do Modelo do Documento Fiscal
         /// </summary>
-        public ModeloNFe mod { get; set; }
+        public ModeloNFe modelo { get; set; }
 
         /// <summary>
         /// Série do Documento Fiscal
@@ -175,6 +175,11 @@ namespace ACBrLib.NFe
         /// O Grupo "NFref" deve ser preenchido apenas se existir documentos Referenciados na NFe (Tipos aceitos: NFE, CTE, ECF, NFP, NF)
         /// </summary>
         public List<NFRef> NFref { get; } = new List<NFRef>();
+
+        /// <summary>
+        /// Código do Município de Ocorrência do Fato Gerador
+        /// </summary>
+        public int cMunFG { get; set; }
 
         #endregion Properties
     }

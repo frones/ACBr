@@ -44,6 +44,8 @@ Símbolo : Significado
 
 16/05/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Taubate/SP, incluída as URL de produção e homologação do SoapAction.
+  Por: Italo Giurizzato Junior
 [*] A cidade de Guanhaes/MG mudou para a versão 2.04, provedor ainda é o EL
   Por: Facil Sistemas Ltda
 [-] Corrigida a URL de homologação da cidade de São José/SC.

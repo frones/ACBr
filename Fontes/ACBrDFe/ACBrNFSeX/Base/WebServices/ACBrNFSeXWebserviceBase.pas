@@ -979,6 +979,19 @@ begin
       else
         Result := ANode.Content;
     end;
+    {
+      Em estudo
+    if ANode <> nil then
+    begin
+      if ANode.NodeType = ntElement then
+        ANode := ANode.Childrens[0];
+
+      if ANode.NodeType in [ntText, ntCData] then
+        Result := ANode.Content
+      else
+        Result := ANode.OuterXml;
+    end;
+    }
   finally
     Document.Free;
   end;

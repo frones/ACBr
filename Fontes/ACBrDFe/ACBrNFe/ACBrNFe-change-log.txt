@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/05/2024
+-- ACBrNFeNotasFiscais --
+[*] Altera a conversao de dhCont para devolver data e hora na geração do INI
+  Por: Diego Folieni
+
 14/05/2024
 -- ACBrNFe.EnvEvento/pcnEnvEventoNFe --
 [*] Alinhando as mesmas correções feitas na unit atual na nova unit.

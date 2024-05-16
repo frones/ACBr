@@ -2825,7 +2825,7 @@ begin
         indIntermedToStr(TindIntermed(Ide.indIntermed)));
       INIRec.WriteString('Identificacao', 'procEmi', procEmiToStr(Ide.procEmi));
       INIRec.WriteString('Identificacao', 'verProc', Ide.verProc);
-      INIRec.WriteString('Identificacao', 'dhCont', DateToStr(Ide.dhCont));
+      INIRec.WriteString('Identificacao', 'dhCont', FormatDateTimeBr(Ide.dhCont));
       INIRec.WriteString('Identificacao', 'xJust', Ide.xJust);
 
       for I := 0 to Ide.NFref.Count - 1 do

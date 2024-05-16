@@ -44,6 +44,8 @@ Símbolo : Significado
 
 16/05/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Guanhaes/MG mudou para a versão 2.04, provedor ainda é o EL
+  Por: Facil Sistemas Ltda
 [-] Corrigida a URL de homologação da cidade de São José/SC.
   Por: Willian Carminatt
 [*] A cidade de Caratinga/MG, mudou a URL de produção, o provedor continua o mesmo.

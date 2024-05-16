@@ -42,6 +42,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2024
+-- ACBrNFSeXServicos --
+[-] Corrigida a URL de homologação da cidade de São José/SC.
+  Por: Willian Carminatt
+[*] A cidade de Caratinga/MG, mudou a URL de produção, o provedor continua o mesmo.
+  Por: João Antônio
+[+] Incluida a cidade de Iomere/SC, provedor é o Betha.
+  Por: Metasis Sistemas
+[*] A cidade de Taubate/SP, mudou para a versão 2.04 o provedor 
+    continua o mesmo.
+  Por: administrativo@ncpc.com.br
+[*] A cidade de Santa Maria de Jetiba/ES, mudou para a versão 2.04 o provedor 
+    continua o mesmo.
+  Por: Italo Giurizzato Junior
+
 15/05/2024
 -- ISSNet.Provider/MetropolisWeb.Provider --
 [*] Alterado a sequencia de caracteres para quebra de linha nas tags que permitem 

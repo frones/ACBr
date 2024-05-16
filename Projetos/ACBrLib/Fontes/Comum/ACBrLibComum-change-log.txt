@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2024
+-- ACBrLibHandle.cs --
+[*] Correção na localização das dependências distribuídas na estrutura dos pacotes nuget quando houver mais de um nuget na mesma aplicação
+  Por: Renato Rubinho
+
 13/05/2024
 -- ACBrLibHandle.cs --
 [*] Buscar dependências distribuídas na estrutura dos pacotes nuget e exibir na exceção o caminho previsto quando não for encontrado

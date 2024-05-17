@@ -274,13 +274,19 @@ begin
 
   if (ANFe = nil) then
   begin
-    for i := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
-    begin
-      ArqPDF := ImprimirDANFEPDFTipo(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe);
+    try
+      for i := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
+      begin
+        FIndexImpressaoIndividual := I;
 
-      FPArquivoPDF := FPArquivoPDF + ArqPDF;
-      if (i < (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1)) then
-        FPArquivoPDF := FPArquivoPDF + sLinebreak;
+        ArqPDF := ImprimirDANFEPDFTipo(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe);
+
+        FPArquivoPDF := FPArquivoPDF + ArqPDF;
+        if (i < (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1)) then
+          FPArquivoPDF := FPArquivoPDF + sLinebreak;
+      end;
+    finally
+      FIndexImpressaoIndividual := 0;
     end;
   end
   else

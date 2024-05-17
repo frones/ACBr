@@ -53,6 +53,7 @@ uses
   ACBrValidador,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBrDFeUtil,
   ACBrUtil.Compatibilidade,
   ACBrNFeUtilsFPDF, ACBrNFeDANFEClass, ACBrNFe, ACBrBase, ACBrDFeDANFeReport;
@@ -2701,6 +2702,7 @@ begin
     LNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
     Report := TNFeDANFeFPDF.Create(LNFe,TACBrNFeDANFEClass(TACBrNFe(ACBrNFe).DANFE));
 
+    FIndexImpressaoIndividual := I;
 
     //TNFeDANFeFPDF(Report).PosCanhoto := TNFeDANFeFPDF(TACBrNFe(ACBrNFe).DANFE).PosCanhoto;
 
@@ -2711,10 +2713,16 @@ begin
       try
         Engine.Compressed := True;
 
-        LPAth := IncludeTrailingPathDelimiter(TACBrNFe(ACBrNFe).DANFE.PathPDF) +
-          ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
+       // LPAth := IncludeTrailingPathDelimiter(TACBrNFe(ACBrNFe).DANFE.PathPDF) +
+       //   ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
 
-        Engine.SaveToFile(LPath + LNFe.infNFe.ID+'.pdf');
+       // Engine.SaveToFile(LPath + LNFe.infNFe.ID+'.pdf');
+
+       LPath := DefinirNomeArquivo(TACBrNFe(ACBrNFe).DANFE.PathPDF,
+               OnlyNumber(LNFe.infNFe.ID) + '-nfe.pdf',
+               TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
+
+       Engine.SaveToFile(LPath);
       finally
         Engine.Free;
       end;

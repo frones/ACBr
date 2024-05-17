@@ -78,12 +78,15 @@ type
     procedure ErroAbstract(const NomeProcedure: String);
 
   protected
+
+
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     procedure SetTipoDANFE(AValue: TpcnTipoImpressao); virtual;
 
   public
+    FIndexImpressaoIndividual : Integer;
     constructor Create(AOwner: TComponent); override;
 
     procedure ImprimirDANFE(ANFe: TNFe = nil); virtual;
@@ -269,7 +272,8 @@ begin
   begin
     if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada
     begin
-      ANFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;   // Pegue informações da Primeira Nota
+
+      ANFe := TACBrNFe(ACBrNFe).NotasFiscais[FIndexImpressaoIndividual].NFe;   // Pegue informações da Primeira Nota
 
       if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
         dhEmissao := ANFe.Ide.dEmi

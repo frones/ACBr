@@ -55,6 +55,7 @@ type
    function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean; override;
    function LerListaRetorno: Boolean; override;
    function RetornoEnvio(const AIndex: Integer): Boolean; override;
+   function TrataNossoNumero(const ANossoNumero: string):string;
 
  end;
 
@@ -148,7 +149,6 @@ begin
         begin
           if (LTipoOperacao = tpInclui) then
           begin
-
             ARetornoWS.DadosRet.IDBoleto.CodBarras      := LJsonObject.AsString['codigoBarraNumerico'];
             ARetornoWS.DadosRet.IDBoleto.LinhaDig       := LJsonObject.AsString['linhaDigitavel'];
             ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['numero'];
@@ -160,6 +160,7 @@ begin
             ARetornoWS.DadosRet.TituloRet.Modalidade    := LJsonObject.AsInteger['numeroVariacaoCarteira'];
             ARetornoWS.DadosRet.TituloRet.CodigoCliente := LJsonObject.AsFloat['codigoCliente'];
             ARetornoWS.DadosRet.TituloRet.Contrato      := LJsonObject.AsString['numeroContratoCobranca'];
+            ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(LJsonObject.AsString['numero']);
 
             LItemObject                                 := LJsonObject.AsJSONObject['qrCode'];
 
@@ -177,7 +178,7 @@ begin
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
-            ARetornoWS.DadosRet.TituloRet.SeuNumero     := LJsonObject.AsString['numeroTituloCedenteCobranca'];
+            ARetornoWS.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(LJsonObject.AsString['id']);
             ARetornoWS.DadosRet.TituloRet.Carteira      := LJsonObject.AsString['numeroCarteiraCobranca'];
             ARetornoWS.DadosRet.TituloRet.Modalidade    := LJsonObject.AsInteger['numeroVariacaoCarteiraCobranca'];
             ARetornoWS.DadosRet.TituloRet.Contrato      := LJsonObject.AsString['numeroContratoCobranca'];
@@ -213,9 +214,7 @@ begin
               19 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'PAGO PARCIALMENTE CREDITADO';
               21 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'TITULO AGENDADO COMPE';
               80 : ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := 'EM PROCESSAMENTO (ESTADO TRANSITÓRIO';
-      		end;
-
-            
+            end;
 
             ARetornoWS.DadosRet.TituloRet.CodigoCanalTituloCobranca  := LJsonObject.AsString['codigoCanalPagamento'];
             ARetornoWS.DadosRet.TituloRet.contrato                   := LJsonObject.AsString['numeroContratoCobranca'];
@@ -387,6 +386,7 @@ begin
 
 
             LListaRetorno.DadosRet.TituloRet.NossoNumero                := LListaRetorno.DadosRet.IDBoleto.NossoNum;
+            LListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(LListaRetorno.DadosRet.IDBoleto.NossoNum);
             LListaRetorno.DadosRet.TituloRet.DataRegistro               := DateBBtoDateTime(LItemObject.AsString['dataRegistro']);
             LListaRetorno.DadosRet.TituloRet.Vencimento                 := DateBBtoDateTime(LItemObject.AsString['dataVencimento']);
             LListaRetorno.DadosRet.TituloRet.ValorDocumento             := LItemObject.AsFloat['valorOriginal'];
@@ -433,6 +433,13 @@ begin
 
   Result:=inherited RetornoEnvio(AIndex);
 
+end;
+
+function TRetornoEnvio_BancoBrasil_API.TrataNossoNumero(
+  const ANossoNumero: string): string;
+begin
+  if NaoEstaVazio(ANossoNumero) and TamanhoIgual(ANossoNumero,20) then
+    Result := RemoveZerosEsquerda(Copy(ANossoNumero,11,10));
 end;
 
 end.

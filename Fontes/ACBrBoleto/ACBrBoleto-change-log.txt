@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/05/2024
+-- ACBrBoletoRet_BancoBrasil_API --
+[*]TK-5426 - Retorno do nossoNumero tratado NossoNumeroCorrespondente
+   https://www.projetoacbr.com.br/forum/topic/77732-tratar-nosso-n%C3%BAmero-no-retorno-do-banco-do-brasil-api/
+   Por Daniel Morais InfoCotidiano
+
+17/05/2024
 -- ACBrBoletoConversao, ACBrBoletoRet_Inter_API, ACBrBoletoW_Inter_API --
 [-]TK-5463 - Correção consultas API V3 - Por Daniel de Morais InfoCotidiano
 [*]TK-5468 - ACbrBoleto API Inter Memory Leaks - Por Victor Gonzales Pandaaa  

@@ -84,6 +84,8 @@ uses
 { TACBrNFSeProviderFiorilli200 }
 
 procedure TACBrNFSeProviderFiorilli200.Configuracao;
+var
+  NaoAssinar: Boolean;
 begin
   inherited Configuracao;
 
@@ -92,7 +94,9 @@ begin
 
   ConfigGeral.Autenticacao.RequerLogin := True;
 
-  if ConfigAssinar.Assinaturas = taConfigProvedor then
+  NaoAssinar := ConfigGeral.Params.ParamTemValor('Assinar', 'NaoAssinar');
+
+  if (ConfigAssinar.Assinaturas = taConfigProvedor) and not NaoAssinar then
   begin
     with ConfigAssinar do
     begin

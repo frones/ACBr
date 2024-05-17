@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+17/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Tailandia/PA, provedor é o Fiorilli.
+[+] Incluida a cidade de Santana/AP, provedor é o Fiorilli.
+[+] Incluida a cidade de Codó/MA, provedor é o Fiorilli.
+  Por: Italo Giurizzato Junior
+
 16/05/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Taubate/SP, incluída as URL de produção e homologação do SoapAction.

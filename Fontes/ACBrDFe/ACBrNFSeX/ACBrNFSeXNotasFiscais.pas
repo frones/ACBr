@@ -1692,6 +1692,7 @@ begin
 
   l := Self.Count; // Indice da última nota já existente
 
+  XmlUTF8 := SeparaDados(XmlUTF8, 'CompNfse', true);
   Result := LoadFromString(XmlUTF8, AGerarNFSe);
 
   if Result then

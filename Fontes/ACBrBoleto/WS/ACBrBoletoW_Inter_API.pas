@@ -37,7 +37,7 @@ interface
 
 uses
   Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao,
-  synacode, strutils, DateUtils, ACBrDFeSSL, synautil, ACBrBoleto, Jsons, httpsend,
+  synacode, strutils, DateUtils, ACBrDFeSSL, synautil, ACBrBoleto, httpsend,
   ACBrBoletoWS.Rest, ACBrJSON;
 
 type
@@ -45,7 +45,7 @@ type
   { TBoletoW_Inter_API }
   TBoletoW_Inter_API = class(TBoletoWSREST)
   private
-    function CodigoTipoTitulo(AEspecieDoc: String): String;
+//    function CodigoTipoTitulo(AEspecieDoc: String): String;
     function DateIntertoDateTime(const AValue: String): TDateTime;
     function DateTimeToDateInter( const AValue:TDateTime ):String;
   protected
@@ -73,7 +73,7 @@ type
     procedure GerarDesconto(AJson: TACBrJSONObject);
     procedure GeraDadosInstrucao(AJson: TACBrJSONObject);
 
-    procedure AlteraDataVencimento(AJson: TJsonObject);
+    procedure AlteraDataVencimento(AJson: TACBrJSONObject);
     procedure AtribuirDesconto(AJson: TACBrJSONObject);
     procedure AlteracaoDesconto(AJson: TACBrJSONObject);
     procedure AlteracaoDataDesconto(AJson: TACBrJSONObject);
@@ -238,16 +238,16 @@ procedure TBoletoW_Inter_API.RequisicaoBaixa;
 var
   Stream: TMemoryStream;
   Str: String;
-  LJson: TJsonObject;
+  LJson: TACBrJSONObject;
 begin
   FPContentType := 'x-www-form-urlencoded';
-  LJson := TJsonObject.Create;
+  LJson := TACBrJSONObject.Create;
   try
    if (ATitulo <> nil) and (Boleto.Cedente.CedenteWS.IndicadorPix) then
-     LJson.Add('motivoCancelamento').Value.AsString := 'Solicitado Pela Empresa'
+     LJson.AddPair('motivoCancelamento','Solicitado Pela Empresa')
    else
-     LJson.Add('motivoCancelamento').Value.AsString := 'PAGODIRETOAOCLIENTE';
-   FPDadosMsg := LJson.Stringify;
+     LJson.AddPair('motivoCancelamento','PAGODIRETOAOCLIENTE');
+   FPDadosMsg := LJson.ToJSON;
   finally
     LJson.Free;
   end;
@@ -262,19 +262,23 @@ end;
 function TBoletoW_Inter_API.DefinirParametros: String;
 var
   LConsulta: TStringList;
-  LDocumento, LSituacaoAbertos, LSituacaoBaixados: String;
+  LDocumento, LSituacaoAbertos, LSituacaoBaixados, LSituacaoVencidos, LSituacaoCancelados: String;
 begin
   if Assigned(Boleto.Configuracoes.WebService.Filtro) then
   begin
     if Boleto.Cedente.CedenteWS.IndicadorPix then
     begin
       LSituacaoBaixados:= 'RECEBIDO';
+      LSituacaoVencidos:= 'ATRASADO';
       LSituacaoAbertos := 'A_RECEBER';
+      LSituacaoCancelados := 'CANCELADO';
     end
     else
     begin
       LSituacaoBaixados:= 'PAGO,CANCELADO';
       LSituacaoAbertos:=  'EMABERTO,VENCIDO';
+      LSituacaoVencidos:= 'VENCIDO';
+      LSituacaoCancelados := 'CANCELADO';
     end;
 
     LDocumento := OnlyNumber
@@ -298,13 +302,24 @@ begin
             LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
             LConsulta.Add( 'ordenarPor=DATASITUACAO' );
           end;
+        isbCancelado:
+          begin
+            LConsulta.Add('filtrarDataPor=SITUACAO' );
+            LConsulta.Add('situacao='+LSituacaoCancelados);
+            LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio));
+            LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
+            LConsulta.Add( 'ordenarPor=DATASITUACAO' );
+          end;
         isbAberto:
           begin
-
             if Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio > 0 then
             begin
               LConsulta.Add('filtrarDataPor=VENCIMENTO' );
-              LConsulta.Add('situacao='+LSituacaoAbertos);
+              case Boleto.Configuracoes.WebService.Filtro.boletoVencido of
+                ibvSim: LConsulta.Add('situacao='+LSituacaoVencidos);
+              else
+                 LConsulta.Add('situacao='+LSituacaoAbertos);
+              end;
               LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio));
               LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal));
               LConsulta.Add( 'ordenarPor=DATAVENCIMENTO' );
@@ -702,7 +717,7 @@ begin
   end;
 end;
 
-procedure TBoletoW_Inter_API.AlteraDataVencimento(AJson: TJsonObject);
+procedure TBoletoW_Inter_API.AlteraDataVencimento(AJson: TACBrJSONObject);
 begin
   // Sem Payload
 end;
@@ -776,9 +791,9 @@ begin
   // sem Payload
 end;
 
-function TBoletoW_Inter_API.CodigoTipoTitulo(AEspecieDoc: String): String;
-begin
-end;
+//function TBoletoW_Inter_API.CodigoTipoTitulo(AEspecieDoc: String): String;
+//begin
+//end;
 
 constructor TBoletoW_Inter_API.Create(ABoletoWS: TBoletoWS);
 begin

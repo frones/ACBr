@@ -85,7 +85,7 @@ type
                      tpNao_Aceita_Valor_Divergente, tpSomente_Valor_Minimo);
 
     { Situação do boleto. Campo obrigatoriamente MAIÚSCULO. Domínios: A - Em ser B - Baixados/Protestados/Liquidados }
-  TACBrIndicadorSituacaoBoleto    = (isbNenhum,isbAberto,isbBaixado);
+  TACBrIndicadorSituacaoBoleto    = (isbNenhum,isbAberto,isbBaixado,isbCancelado);
 
   { Indica se o Boleto está vencido ou não. Campo obrigatoriamente MAIÚSCULO. Domínio: S para boletos vencidos N para boletos não vencidos }
   TACBrIndicadorBoletoVencido     = (ibvNenhum,ibvNao,ibvSim);

@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2024
+-- ACBrBoletoConversao, ACBrBoletoRet_Inter_API, ACBrBoletoW_Inter_API --
+[-]TK-5463 - Correção consultas API V3 - Por Daniel de Morais InfoCotidiano
+[*]TK-5468 - ACbrBoleto API Inter Memory Leaks - Por Victor Gonzales Pandaaa  
+  https://www.projetoacbr.com.br/forum/topic/77759-banco-inter-com-pagamento-com-qrcode
+  https://www.projetoacbr.com.br/forum/topic/77836-memory-leaks-no-boleto-inter/
+
 15/05/2024
 -- ACBrBoletoRet_Sicredi_APIV2 --
 [*]TK-5455 - Adicionado a propriedade no retorno ValorMulta

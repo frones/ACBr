@@ -28,6 +28,14 @@ type
   public
     function ToJSON: string; virtual; abstract;
   end;
+  {$IFDEF FPC}
+  { TJSONFloat4Number }
+  TJSONFloat4Number = class(TJSONFloatNumber)
+  protected
+     function GetAsString: TJSONStringType; override;
+  end;
+  {$ENDIF}
+
 
   { TACBrJSONObject }
 
@@ -107,6 +115,7 @@ type
     constructor Create; overload;
     constructor Create(AJSONObject: TJsonObject); overload;
     destructor Destroy; override;
+
   end;
 
   { TACBrJSONArray }
@@ -149,6 +158,9 @@ begin
   FJSON := TJsonObject.Create;
   FOwnerJSON := True;
   FContexts := TList.Create;
+  {$IFDEF FPC}
+    SetJSONInstanceType(jitNumberFloat, TJSONFloat4Number);
+  {$ENDIF}
 end;
 
 function TACBrJSONObject.AddPair(const AName: string; const AValue: Boolean): TACBrJSONObject;
@@ -651,6 +663,9 @@ begin
   FOwnerJSON := False;
   FJSON := AJSONObject;
   FContexts := TList.Create;
+  {$IFDEF FPC}
+    SetJSONInstanceType(jitNumberFloat, TJSONFloat4Number);
+  {$ENDIF}
 end;
 
 class function TACBrJSONObject.CreateJsonObject(const AJsonString: string): TJsonObject;
@@ -969,4 +984,23 @@ begin
   {$EndIf}{$EndIf}
 end;
 
+{$IFDEF FPC}
+{ TJSONFloat4Number }
+function TJSONFloat4Number.GetAsString: TJSONStringType;
+var
+  F: TJSONFloat;
+  LDecimalSeparator : char;
+begin
+  F := GetAsFloat;
+  try
+    LDecimalSeparator := FormatSettings.DecimalSeparator;
+    FormatSettings.DecimalSeparator := '.';
+    Result := FloatToStr(F);
+  finally
+    FormatSettings.DecimalSeparator := LDecimalSeparator;
+  end;
+end;
+{$ENDIF}
+
 end.
+

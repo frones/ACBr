@@ -518,10 +518,9 @@ begin
     try
       ACBrNFSeX.NotasFiscais.ImprimirPDF;
 
-      if ACBrNFSeX.NotasFiscais.Items[0].NomeArqRps <> '' then
-        fpCmd.Resposta := fpCmd.Resposta + ACBrNFSeX.NotasFiscais.Items[0].NomeArqRps
-      else
-        fpCmd.Resposta :=  fpCmd.Resposta + ACBrNFSeX.NotasFiscais.Items[0].NomeArq;
+      if Assigned(ACBrNFSeX.DANFSe)then
+        fpCmd.Resposta := fpCmd.Resposta + ACBrNFSeX.DANFSE.ArquivoPDF;
+
     finally
       CargaDFe.Free;
     end;

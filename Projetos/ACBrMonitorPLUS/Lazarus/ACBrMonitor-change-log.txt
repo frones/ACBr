@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2024
+-- DoACBrNFSeUnit --
+[*] Altera a resposta do comando ImprimirPDFNFSe para devolver o caminho correto do PDF.
+Por: Diego Folieni
+
 14/05/24
 -- ACBrMonitor1.pas, DoCNPJUnit, ACBrMonitorConsts   --
 [*] TK-5422 - Retornar IE apos consulta CNPJ qdo retornado pelo provedor.

@@ -41,11 +41,11 @@
 				/* O MÉTODO PARSE_INI_STRING CONSEGUE CONVERTER A RESPOSTA DO ACBr PARA UM ARRAY.
 				 * DESSA FORMA FICA MUITO FÁCIL LER A RESPOSTA. */
 				$respostaFuncaoArray = parse_ini_string($respostaFuncao,true);
-				if (!isset($respostaFuncaoArray["STATUS"]["CStat"])) { throw new Exception(nl2br($respostaFuncao)); }
+				if (!isset($respostaFuncaoArray["Status"]["CStat"])) {throw new Exception(nl2br($respostaFuncao)); }
 				else {
 					/* LIMPANDO OS DADOS DE CONEXÃO COM O SOCKET */
-					$retorno["statusRetorno"] = "SUCESSO";
-					$retorno["msgRetorno"] = $respostaFuncaoArray["STATUS"]["CStat"]." - ".$respostaFuncaoArray["STATUS"]["XMotivo"];
+					$retorno["statusRetorno"] = "SUCESSO"; 
+					$retorno["msgRetorno"] = $respostaFuncaoArray["Status"]["CStat"]." - ".$respostaFuncaoArray["Status"]["XMotivo"];
 					return $retorno;
 				}
 			}

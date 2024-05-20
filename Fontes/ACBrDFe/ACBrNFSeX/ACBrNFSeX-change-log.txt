@@ -42,7 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+20/05/2024
+-- ACBrNFSeXDANFSeRLRetrato.dfm --
+[*] Removida linha que tem o propriedade: StyleElements, para poder compatibilizar com o Delphi 7 e Lazarus.
+  Por: Renato Rubinho
+  
 17/05/2024
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Tailandia/PA, provedor é o Fiorilli.

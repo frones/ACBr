@@ -1365,7 +1365,16 @@ begin
   if i > 0 then
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
-    Result := Retorno;
+  begin
+    Result := ConverteXMLtoNativeString(Retorno);
+    if Pos('<',Result) = 0 then
+      Result := '<retorno>'+
+                  '<msg>' + Result + '</msg>' +
+                  '<code>999</code>' +
+                '</retorno>'
+    else
+      Result := Retorno;
+  end;
 end;
 
 function TACBrNFSeXWebserviceIPM.TratarXmlRetornado(const aXML: string): string;
@@ -1481,7 +1490,16 @@ begin
   if i > 0 then
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
-    Result := Retorno;
+  begin
+    Result := ConverteXMLtoNativeString(Retorno);
+    if Pos('<',Result) = 0 then
+      Result := '<retorno>'+
+                  '<msg>' + Result + '</msg>' +
+                  '<code>999</code>' +
+                '</retorno>'
+    else
+      Result := Retorno;
+  end;
 end;
 
 function TACBrNFSeXWebserviceIPM101.TratarXmlRetornado(
@@ -1643,7 +1661,16 @@ begin
   if i > 0 then
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
-    Result := Retorno;
+  begin
+    Result := ConverteXMLtoNativeString(Retorno);
+    if Pos('<',Result) = 0 then
+      Result := '<retorno>'+
+                  '<msg>' + Result + '</msg>' +
+                  '<code>999</code>' +
+                '</retorno>'
+    else
+      Result := Retorno;
+  end;
 end;
 
 function TACBrNFSeXWebserviceIPM204.Recepcionar(const ACabecalho,

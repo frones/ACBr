@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2024
+-- ACBrBoletoRet_Inter_API --
+[-]TK-5463-1 - Ajustes no tratamento de RetornoPIX para alimentar nossoNumero e EMV dos OBJ boleto e pix, e dataSituacao
+   https://www.projetoacbr.com.br/forum/topic/77759-banco-inter-com-pagamento-com-qrcode/?do=findComment&comment=503090&_rid=1706
+   Por Daniel Morais InfoCotidiano
+
 17/05/2024
 -- ACBrBoletoRet_BancoBrasil_API --
 [*]TK-5426 - Retorno do nossoNumero tratado NossoNumeroCorrespondente

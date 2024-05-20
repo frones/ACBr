@@ -481,7 +481,7 @@ begin
 
               if (LSituacao = C_CANCELADO) or (LSituacao = C_EXPIRADO) or
                 (LSituacao = C_PAGO) or (LSituacao = C_EXPIRADO) or
-                (LSituacao = C_MARCADO_RECEBIDO) then
+                (LSituacao = C_MARCADO_RECEBIDO) or (LSituacao = C_RECEBIDO) then
               begin
                 ARetornoWS.DadosRet.TituloRet.DataBaixa := DateIntertoDateTime(LJsonObjectItem.AsJSONObject['cobranca'].AsString['dataSituacao']);
               end;
@@ -770,9 +770,9 @@ begin
           end;
 
           {Boleto}
-          if LJsonObject.IsJSONObject('boleto') then
+          if LJsonArray.ItemAsJSONObject[I].IsJSONObject('boleto') then
           begin
-            LJsonItemObject := LJsonObject.AsJSONObject['boleto'];
+            LJsonItemObject := LJsonArray.ItemAsJSONObject[I].AsJSONObject['boleto'];
             LListaRetorno.DadosRet.IDBoleto.CodBarras      := LJsonItemObject.AsString['codigoBarras'];
             LListaRetorno.DadosRet.IDBoleto.LinhaDig       := LJsonItemObject.AsString['linhaDigitavel'];
             LListaRetorno.DadosRet.IDBoleto.NossoNum       := LJsonItemObject.AsString['nossoNumero'];
@@ -782,9 +782,9 @@ begin
           end;
 
           {PIX}
-          if LJsonObject.IsJSONObject('pix') then
+          if LJsonArray.ItemAsJSONObject[I].IsJSONObject('pix') then
           begin
-            LJsonItemObject := LJsonObject.AsJSONObject['pix'];
+            LJsonItemObject := LJsonArray.ItemAsJSONObject[I].AsJSONObject['pix'];
             LListaRetorno.DadosRet.TituloRet.EMV      := LJsonItemObject.AsString['pixCopiaECola'];
             LListaRetorno.DadosRet.TituloRet.TxId     := LJsonItemObject.AsString['txid'];
           end;

@@ -1094,7 +1094,6 @@ begin
   LoadXML(ACBrMDFe1.WebServices.Retorno.RetWS, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
-
   with MemoDados do
   begin
     Lines.Add('');
@@ -1158,6 +1157,8 @@ begin
   begin
     Lines.Add('');
     Lines.Add('Envio MDFe');
+    Lines.Add('Chave: '    + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chMDFe);
+    Lines.Add('');
     Lines.Add('tpAmb: '     + TpAmbToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
     Lines.Add('verAplic: '  + ACBrMDFe1.WebServices.Enviar.verAplic);
     Lines.Add('cStat: '     + IntToStr(ACBrMDFe1.WebServices.Enviar.cStat));

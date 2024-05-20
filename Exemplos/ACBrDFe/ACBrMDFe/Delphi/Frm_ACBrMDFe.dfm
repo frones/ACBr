@@ -1678,7 +1678,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 330
-    Top = 287
+    Top = 295
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1686,8 +1686,8 @@ object frmACBrMDFe: TfrmACBrMDFe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 432
-    Top = 288
+    Left = 456
+    Top = 296
   end
   object ACBrMDFe1: TACBrMDFe
     MAIL = ACBrMail1
@@ -1725,6 +1725,8 @@ object frmACBrMDFe: TfrmACBrMDFe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrMDFe = ACBrMDFe1
     ImprimeHoraSaida = False
     TipoDAMDFe = tiSemGeracao
@@ -1734,7 +1736,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     ExibirMunicipioDescarregamento = False
     PrintDialog = True
-    Left = 430
+    Left = 454
     Top = 238
   end
 end

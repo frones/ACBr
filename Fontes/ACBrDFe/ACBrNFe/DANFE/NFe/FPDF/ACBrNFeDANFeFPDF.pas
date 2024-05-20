@@ -2723,6 +2723,7 @@ begin
                TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
 
        Engine.SaveToFile(LPath);
+       FPArquivoPDF := LPath;
       finally
         Engine.Free;
       end;

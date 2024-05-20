@@ -162,7 +162,11 @@ namespace ACBrLib.Core
             set
             {
                 if (value != libraryPath)
-                    Environment.SetEnvironmentVariable("PATH", value);
+                {
+                    var currentPath = Environment.GetEnvironmentVariable("PATH");
+                    var updatedPath = string.Concat(currentPath, ";", value);
+                    Environment.SetEnvironmentVariable("PATH", updatedPath);
+                }
 
                 libraryPath = value;
             }

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2024
+-- ACBrLib.NFSe.csproj, ACBrLib.Core.csproj, ACBrLibHandle.cs --
+[*] Correção no Core do C# para não sobrescrever a variável PATH do usuário/sistema
+  Por: gostartlab
+
 16/05/2024
 -- ACBrLibHandle.cs --
 [*] Correção na localização das dependências distribuídas na estrutura dos pacotes nuget quando houver mais de um nuget na mesma aplicação

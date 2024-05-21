@@ -130,16 +130,6 @@
     <Content Include="ACBrMonitor.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
-      <Project>{D7A15051-F5B5-4F6D-A452-08138852375A}</Project>
-      <Name>ACBrLib.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Import\Dinamico\MT\ACBrLib.GTINMT.csproj">
-      <Project>{3181BF4F-2F5F-4F19-A543-AD43699B9019}</Project>
-      <Name>ACBrLib.GTINMT</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 e x64%29</ProductName>
@@ -150,6 +140,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
+      <Project>{d7a15051-f5b5-4f6d-a452-08138852375a}</Project>
+      <Name>ACBrLib.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Import\Dinamico\ST\ACBrLib.GTIN.csproj">
+      <Project>{3181bf4f-2f5f-4f19-a543-ad43699b9019}</Project>
+      <Name>ACBrLib.GTIN</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -43,6 +43,23 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Itacoatiara/AM, provedor é o Fiorilli.
+[+] Incluída a cidade de Gragança/PA, provedor é o Bauhaus.
+[+] Incluída a cidade de Abreu e Lima/PE, provedor é o Tributus.
+[+] Incluída a cidade de Sao Lourenco da Mata/PE, provedor é o Tributus.
+[+] Incluída a cidade de Igarassu/PE, provedor é o Tinus.
+[+] Incluída a cidade de Santa Cruz do Capibaribe/PE, provedor é o Tinus.
+  Por: Italo Giurizzato Junior
+[*] A cidade de Planalto Alegre/SC, mudou a versão e as URLs o provedor é o mesmo.
+  Por: Delcio
+[*] A cidade de Itabirito/MG, mudou de http para https, o provedor é o mesmo.
+  Por: Developer ATS
+[*] A cidade de Tres Cachoeiras/RS, mudou a URLs o provedor é o mesmo.
+  Por: Mario Inacio
+[*] A cidade de Botucatu/SP mudou de provedor, agora é Fiorilli.
+  Por: Milton Campanhã
+
 -- EL.Provider --
 [*] Alterado os arquivos de envio para que eles já contenham a URL de namespace.
   Por: Italo Giurizzato Junior

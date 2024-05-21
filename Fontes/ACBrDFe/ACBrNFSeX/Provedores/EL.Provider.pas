@@ -693,7 +693,7 @@ begin
     Exit;
   end;
 
-  Response.ArquivoEnvio := '<el:autenticarContribuinte>' +
+  Response.ArquivoEnvio := '<el:autenticarContribuinte xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +
                              '</identificacaoPrestador>' +
@@ -744,7 +744,7 @@ end;
 procedure TACBrNFSeProviderEL.PrepararFecharSessao(
   Response: TNFSeFechaSessaoResponse);
 begin
-  Response.ArquivoEnvio := '<el:finalizarSessao>' +
+  Response.ArquivoEnvio := '<el:finalizarSessao xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<hashIdentificador>' +
                                 FPHash +
                              '</hashIdentificador>' +
@@ -835,7 +835,7 @@ begin
                  '</ListaRps>' +
                '</LoteRps>';
 
-    Response.ArquivoEnvio := '<el:EnviarLoteRpsEnvio>' +
+    Response.ArquivoEnvio := '<el:EnviarLoteRpsEnvio xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                                '<identificacaoPrestador>' +
                                   OnlyNumber(Emitente.CNPJ) +
                                '</identificacaoPrestador>' +
@@ -916,7 +916,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.ArquivoEnvio := '<el:ConsultarSituacaoLoteRpsEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarSituacaoLoteRpsEnvio xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +
                              '</identificacaoPrestador>' +
@@ -998,7 +998,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.ArquivoEnvio := '<el:ConsultarLoteRpsEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarLoteRpsEnvio xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +
                              '</identificacaoPrestador>' +
@@ -1164,7 +1164,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.ArquivoEnvio := '<el:ConsultarNfseRpsEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarNfseRpsEnvio xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<identificacaoRps>' +
                                 Response.NumeroRps +
                              '</identificacaoRps>' +
@@ -1249,7 +1249,7 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  Response.ArquivoEnvio := '<el:ConsultarNfseEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarNfseEnvio xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +
                              '</identificacaoPrestador>' +
@@ -1329,7 +1329,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.ArquivoEnvio := '<el:CancelarNfseEnvio>' +
+  Response.ArquivoEnvio := '<el:CancelarNfseEnvio xmlns:el="http://des36.el.com.br:8080/el-issonline/">' +
                              '<identificacaoPrestador>' +
                                 OnlyNumber(Emitente.CNPJ) +
                              '</identificacaoPrestador>' +
@@ -1513,24 +1513,21 @@ function TACBrNFSeXWebserviceEL.Recepcionar(const ACabecalho, AMSG: String): str
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.AbrirSessao(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.FecharSessao(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.ConsultarSituacao(const ACabecalho,
@@ -1538,16 +1535,14 @@ function TACBrNFSeXWebserviceEL.ConsultarSituacao(const ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.ConsultarLote(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.ConsultarNFSePorRps(const ACabecalho,
@@ -1555,24 +1550,21 @@ function TACBrNFSeXWebserviceEL.ConsultarNFSePorRps(const ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.ConsultarNFSe(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceEL.Cancelar(const ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [],
-                     ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
+  Result := Executar('', AMSG, [], []);
 end;
 
 end.

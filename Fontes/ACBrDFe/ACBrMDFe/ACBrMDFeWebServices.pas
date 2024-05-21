@@ -1094,7 +1094,6 @@ begin
   Fversao := '';
   FxMsg := '';
   FcMsg := 0;
-  FRecibo := '';
   FProtocolo := '';
   FChaveMDFe := '';
 

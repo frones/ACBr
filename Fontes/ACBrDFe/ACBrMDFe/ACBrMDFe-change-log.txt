@@ -1,7 +1,3 @@
-08/05/2024
--- pcteCTeW --
-[*] Comentado as linhas que usa os dados de configuração na geração do XML.
-   Por: Italo Giurizzato Junior
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
@@ -46,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+21/05/2024
+-- ACBrMDFeWebServices --
+[-] Removido da procedure TMDFeRetRecepcao.Clear a linha que inicializa a
+    propriedade FRecibo.
+  Por: Italo Giurizzato Junior
 
 09/05/2024
 -- pmdfeMDFeW --

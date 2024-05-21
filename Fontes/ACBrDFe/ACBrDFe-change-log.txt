@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/05/2024
+-- ACBrDFeOpenSSL --
+[-] Possível correção de vazamento de memória, quando usando OpenSSL 3.X
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=75762
+
 16/05/2024
 -- ACBrLibXml2 --
 [*] Implementado a procedure xmlNodeAddContent.

@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
+  blcksock,  ssl_openssl_lib,
   ACBrDFeSSL,
   {$IfDef MSWINDOWS}ACBrDFeWinCrypt, ACBr_WinCrypt,{$EndIf}
   OpenSSLExt;
@@ -61,13 +62,15 @@ type
     FCertContextWinApi: Pointer;
     FPrivKey: pEVP_PKEY;
     FCert: pX509;
+    Fctx: PSSL_CTX;
     FVersion: String;
     FOldVersion: Boolean;
-
     procedure GetCertInfo(cert: pX509);
 
     procedure DestroyKey;
     procedure DestroyCert;
+    procedure CreateContext;	
+    procedure DestroyContext;	
   protected
 
     function GetCertContextWinApi: Pointer; override;
@@ -113,7 +116,8 @@ function BioToStr(ABio: pBIO): AnsiString;
 implementation
 
 uses
-  strutils, dateutils, typinfo, synautil, synacode,
+  strutils, dateutils, typinfo,
+  synautil, synacode,
   ACBrOpenSSLUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
@@ -349,6 +353,7 @@ end ;
 constructor TDFeOpenSSL.Create(ADFeSSL: TDFeSSL);
 begin
   inherited Create(ADFeSSL);
+  Fctx := nil;
   FPrivKey := nil;
   FCert := nil;
   FStoreWinApi := Nil;
@@ -358,6 +363,7 @@ end;
 
 destructor TDFeOpenSSL.Destroy;
 begin
+  DestroyContext;
   DescarregarCertificado;
   inherited Destroy;
 end;
@@ -383,6 +389,47 @@ begin
   begin
     EvpPkeyFree(FPrivKey);
     FPrivKey := nil;
+  end;
+end;
+
+procedure TDFeOpenSSL.CreateContext;
+begin
+  DestroyContext;
+
+  if LibVersionIsGreaterThan1_0_0 then
+    Fctx := SslCtxNew(SslTLSMethod) // best common protocol
+  else
+  begin
+    Fctx := nil;
+    case FpDFeSSL.SSLType of
+      LT_SSLv2:
+        Fctx := SslCtxNew(SslMethodV2);
+      LT_SSLv3:
+        Fctx := SslCtxNew(SslMethodV3);
+      LT_TLSv1:
+        Fctx := SslCtxNew(SslMethodTLSV1);
+      LT_TLSv1_1:
+        Fctx := SslCtxNew(SslMethodTLSV1_1);
+      LT_TLSv1_2, LT_TLSv1_3:
+        Fctx := SslCtxNew(SslMethodTLSV1_2);
+      LT_all:
+        begin
+          //try new call for OpenSSL 1.1.0 first
+          Fctx := SslCtxNew(SslTLSMethod);
+          if Fctx=nil then
+            //callback to previous versions
+            Fctx := SslCtxNew(SslMethodV23);
+        end;
+    end;
+  end;
+end;
+  
+procedure TDFeOpenSSL.DestroyContext;
+begin
+  if Assigned(Fctx) then
+  begin
+    SslCtxFree(Fctx);
+    Fctx := nil;
   end;
 end;
 
@@ -432,6 +479,7 @@ procedure TDFeOpenSSL.DescarregarCertificado;
 begin
   DestroyKey;
   DestroyCert;
+  DestroyContext;
 
   {$IfDef MSWINDOWS}
   if Assigned(FCertContextWinApi) then
@@ -451,6 +499,9 @@ function TDFeOpenSSL.LerPFXInfo(const PFXData: Ansistring): Boolean;
 var
   ca, p12: Pointer;
   b: PBIO;
+  Store: PX509_STORE;
+  certx: PAnsiChar;
+  iTotal, I: Integer;
 begin
   Result := False;
   DestroyKey;
@@ -465,14 +516,43 @@ begin
     try
       DestroyCert;
       DestroyKey;
+      CreateContext;
       ca := nil;
       if (PKCS12parse(p12, FpDFeSSL.Senha, FPrivKey, FCert, ca) > 0) then
       begin
-        if (FCert <> nil) then
+        if SSLCTXusecertificate(Fctx, FCert) > 0 then
+          if SSLCTXusePrivateKey(Fctx, FPrivKey) > 0 then
+            Result := True;
+
+        //  Set Certificate Verification chain
+        if Result and (ca <> nil) then
         begin
-          GetCertInfo( FCert );
-          Result := True;
+          if LibVersionIsGreaterThan1_0_0 then
+          begin
+            iTotal := OPENSSL_sk_num(ca);
+            if iTotal > 0 then
+            begin
+              Store := SSL_CTX_get_cert_store(Fctx);
+              for I := 0 to iTotal - 1 do
+              begin
+                certx := OPENSSL_sk_value(ca, I);
+                if certx <> nil then
+                begin
+                  if X509_STORE_add_cert(Store, pX509(certx)) = 0  then
+                  begin
+                    // already exists
+                  end;
+                 //X509_free(Cert);
+                end;
+              end;
+            end;
+          end
+          else
+            SslCtxCtrl(Fctx, SSL_CTRL_CHAIN, 0, ca);
         end;
+
+        if Result and (FCert <> nil) then
+          GetCertInfo( FCert );
       end;
     finally
       PKCS12free(p12);

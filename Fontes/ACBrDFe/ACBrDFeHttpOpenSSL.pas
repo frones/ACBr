@@ -211,7 +211,7 @@ end;
 procedure TDFeHttpOpenSSL.CheckSSLType(AValue: TSSLType);
 var
   SSLMethod: ssl_openssl_lib.PSSL_METHOD;
-  OpenSSLVersion: String;
+  s: String;
 begin
   SSLMethod := Nil;
 
@@ -237,9 +237,9 @@ begin
 
   if not Assigned(SSLMethod) then
   begin
-    OpenSSLVersion := String(ssl_openssl_lib.OpenSSLVersion( 0 ));
+    s := String(ssl_openssl_lib.OpenSSLVersion( 0 ));
     DoException( Format( ACBrStr('%s, não suporta %s'),
-                         [OpenSSLVersion, GetEnumName(TypeInfo(TSSLType), integer(AValue) )]));
+                         [s, GetEnumName(TypeInfo(TSSLType), integer(AValue) )]));
   end;
 end;
 

@@ -46,6 +46,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2024
+-- ACBrTEFAPI, ACBrTEFAPIElgin, ACBrTEFAPIElginComum --
+[+] Adicionado suporte novo TEF por API (DLL) TED Elgin
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=74662
+    (por: MuriloS.A e Fernando Pasqueto e DSA)
+
+-- ACBrTEFAPIComum, ACBrTEFAPICliSiTef --
+[*] Removendo propriedade "PathDLL" que passou para a classe mãe "TACBrTEFAPIComumClass"
+    (por: DSA)
+
+--ACBrTEFPayGoWebComum --
+[*] Adicionado Log em "LibFullName", para informar qual Path será considerado na carga da DLL
+    (por: DSA)
+
 26/02/2024
 -- ACBrTEFPayGoWebComum --
 [*] Ajuste para que a Carga da DLL não use o valor definido na variável de ambiente

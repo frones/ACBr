@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  pcnConversao, ACBrLibConfig, ACBrNFSeLibConfig, ACBrUtil.Base, ACBrUtil.FilesIO;
+  pcnConversao, ACBrLibConfig, ACBrLibNFSeConfig, ACBrUtil.Base, ACBrUtil.FilesIO;
 
 {$R *.lfm}
 

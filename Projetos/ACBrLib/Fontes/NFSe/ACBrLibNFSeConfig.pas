@@ -31,7 +31,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFSeLibConfig;
+unit ACBrLibNFSeConfig;
 
 interface
 
@@ -343,4 +343,5 @@ begin
 end;
 
 end.
+
 

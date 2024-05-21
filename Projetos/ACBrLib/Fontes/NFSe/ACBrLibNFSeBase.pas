@@ -112,7 +112,7 @@ implementation
 uses
   StrUtils, ACBrLibResposta, ACBrLibHelpers,
   ACBrLibConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrLibCertUtils,
-  ACBrLibNFSeConsts, ACBrLibConfig, ACBrNFSeLibConfig, ACBrNFSeXConversao,
+  ACBrLibNFSeConsts, ACBrLibConfig, ACBrLibNFSeConfig, ACBrNFSeXConversao,
   ACBrLibNFSeRespostas, ACBrNFSeXWebserviceBase;
 
 { TACBrLibNFSe }

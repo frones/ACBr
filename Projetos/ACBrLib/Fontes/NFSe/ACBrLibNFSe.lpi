@@ -618,19 +618,19 @@
         <ResourceBaseClass Value="DataModule"/>
       </Unit10>
       <Unit11>
-        <Filename Value="ACBrNFSeLibConfig.pas"/>
+        <Filename Value="ACBrLibNFSeMT.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="ACBrLibNFSeMT.pas"/>
+        <Filename Value="ACBrLibNFSeST.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
       <Unit13>
-        <Filename Value="ACBrLibNFSeST.pas"/>
+        <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
       <Unit14>
-        <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
+        <Filename Value="ACBrLibNFSeConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
     </Units>

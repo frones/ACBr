@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2024
+--- ACBrLibNFSeConfig ---
+[+] Implementado conversor para visar a correção da propriedade Produção na seção DANFSE - #TK-5453 
+    Por: Antonio Carlos Junior, Diego Folieni
+
 13/03/2024
 --- Diversos ---
 [+] Implementa o método NFSE_CarregarLoteXML

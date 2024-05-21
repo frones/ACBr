@@ -38,7 +38,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrLibComum, ACBrLibConfig, DFeReportConfig,
-  ACBrNFSeXDANFSeRLClass, ACBrNFSeXConversao, ACBrNFSeXConfiguracoes;
+  ACBrNFSeXDANFSeRLClass, ACBrNFSeXConversao, ACBrNFSeXConfiguracoes, ACBrXmlBase;
 
 type
    { TDANFSeReportConfig }
@@ -71,6 +71,9 @@ type
     FTamanhoFonte: Integer;
     FProducao: TnfseSimNao;
     FDetalharServico : Boolean;
+
+    function SimNaoToStr(const t: TnfseSimNao): string;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
@@ -139,12 +142,29 @@ uses
   ACBrLibNFSeBase, ACBrLibNFSeConsts;
 
 { TDANFSeReportConfig }
+
+function TDANFSeReportConfig.SimNaoToStr(const t: TnfseSimNao): string;
+begin
+    Result := EnumeradoToStr(t,
+                           ['0', '1'],
+                           [snNao, snSim]);
+end;
+
+function TDANFSeReportConfig.StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
+begin
+      Result := StrToEnumerado(ok, s,
+                           ['1', '0'],
+                           [snSim, snNao]);
+end;
+
 constructor TDANFSeReportConfig.Create;
 begin
   inherited Create(CSessaoDANFSE);
 end;
 
 procedure TDANFSeReportConfig.LerIniChild(const AIni: TCustomIniFile);
+var
+  ok: Boolean;
 begin
   FPrestadorLogo := AIni.ReadString(CSessaoDANFSE, CChavePLogo, FPrestadorLogo);
   FPrestadorRazaoSocial := AIni.ReadString(CSessaoDANFSE, CChavePRazaoSocial, FPrestadorRazaoSocial);
@@ -171,7 +191,7 @@ begin
   FFormatarNumeroDocumentoNFSe := AIni.ReadBool(CSessaoDANFSE, CChaveFmtNroNFSe, FFormatarNumeroDocumentoNFSe);
   FNFSeCancelada := AIni.ReadBool(CSessaoDANFSE, CChaveNFSeCancelada, FNFSeCancelada);
   FDetalharServico := AIni.ReadBool(CSessaoDANFSE, CChaveDetalharServico, FDetalharServico);
-  FProducao := TnfseSimNao(AIni.ReadInteger(CSessaoDANFSE, CChaveProducao, Integer(FProducao)));
+  FProducao := StrToSimNao(ok, AIni.ReadString(CSessaoDANFSE, CChaveProducao, SimNaoToStr(FProducao)));
 end;
 
 procedure TDANFSeReportConfig.GravarIniChild(const AIni: TCustomIniFile);
@@ -201,7 +221,7 @@ begin
   AIni.WriteBool(CSessaoDANFSE, CChaveFmtNroNFSe, FFormatarNumeroDocumentoNFSe);
   AIni.WriteBool(CSessaoDANFSE, CChaveNFSeCancelada, FNFSeCancelada);
   AIni.WriteBool(CSessaoDANFSE, CChaveDetalharServico, FDetalharServico);
-  AIni.WriteInteger(CSessaoDANFSE, CChaveProducao, Integer(FProducao));
+  AIni.WriteString(CSessaoDANFSE, CChaveProducao, SimNaoToStr(FProducao));
 end;
 
 procedure TDANFSeReportConfig.ApplyChild(const DFeReport: TACBrNFSeXDANFSeRL; const Lib: TACBrLib);

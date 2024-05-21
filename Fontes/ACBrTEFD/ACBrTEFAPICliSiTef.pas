@@ -78,9 +78,6 @@ type
     fOperacaoAdministrativa: Integer;
     fOperacaoCancelamento: Integer;
     fAutorizador: String;
-
-    function GetPathDLL: string;
-    procedure SetPathDLL(AValue: string);
   private
     function ExecutarTransacaoSiTef(Funcao: Integer; Valor: Double): Boolean;
     procedure FazerRequisicaoSiTef(Funcao: Integer; Valor: Double);
@@ -137,7 +134,6 @@ type
     property OperacaoCancelamento: Integer read fOperacaoCancelamento
       write fOperacaoCancelamento default CSITEF_OP_Cancelamento;
 
-    property PathDLL: string read GetPathDLL write SetPathDLL;
     property PinPadChaveAcesso: AnsiString read fPinPadChaveAcesso
       write fPinPadChaveAcesso;
     property PinPadIdentificador: AnsiString read fPinPadIdentificador
@@ -214,6 +210,7 @@ begin
   if Inicializado then
     Exit;
 
+  fTEFCliSiTefAPI.PathDLL := PathDLL;
   fTEFCliSiTefAPI.Inicializada := True;
 
   PortaPinPad := StrToIntDef( OnlyNumber(fpACBrTEFAPI.DadosTerminal.PortaPinPad), 0);
@@ -764,16 +761,6 @@ begin
   Erro := fTEFCliSiTefAPI.TraduzirErroTransacao(Ret);
   if (Erro <> '') then
     fpACBrTEFAPI.DoException( ACBrStr(Erro) ) ;
-end;
-
-function TACBrTEFAPIClassCliSiTef.GetPathDLL: string;
-begin
-  Result := fTEFCliSiTefAPI.PathDLL;
-end;
-
-procedure TACBrTEFAPIClassCliSiTef.SetPathDLL(AValue: string);
-begin
-  fTEFCliSiTefAPI.PathDLL := AValue;
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.InterpretarRespostaAPI;

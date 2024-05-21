@@ -177,6 +177,7 @@ type
     fpInicializado: Boolean;
     fpMetodoOperacao: TACBrTEFAPIMetodo;
     fpTEFRespClass: TACBrTEFRespClass;
+    fpPathDll : String;
 
     procedure ErroAbstract(const NomeProcedure: String);
     procedure VerificarIdentificadorVendaInformado;
@@ -229,6 +230,7 @@ type
 
     property Inicializado: Boolean read fpInicializado;
     property OperacaoEmAndamento: TACBrTEFAPIMetodo read fpMetodoOperacao;
+    property PathDLL: string read fpPathDll write fpPathDll;
 
     property TEFRespClass: TACBrTEFRespClass read fpTEFRespClass;
   end;

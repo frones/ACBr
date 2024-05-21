@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -43,7 +43,8 @@ uses
 type
   TACBrTEFAPITipo = ( tefApiNenhum,
                       tefApiPayGoWeb,
-                      tefApiCliSiTEF );
+                      tefApiCliSiTEF,
+                      tefApiElgin );
 
   TACBrTEFAPIExibicaoQRCode = ( qrapiNaoSuportado,
                                 qrapiAuto,
@@ -172,6 +173,8 @@ type
 
     function GetTEFAPIClass: TACBrTEFAPIClass;
     procedure SetModelo(const AValue: TACBrTEFAPITipo);
+    function GetPathDLL: String;
+    procedure SetPathDLL(const Value: String);
   protected
 
   public
@@ -188,6 +191,7 @@ type
   published
     property Modelo: TACBrTEFAPITipo
       read fTEFModelo write SetModelo default tefApiNenhum;
+    property PathDLL: String read GetPathDLL write SetPathDLL;
 
     property ExibicaoQRCode: TACBrTEFAPIExibicaoQRCode read fExibicaoQRCode
       write fExibicaoQRCode default qrapiAuto;
@@ -209,7 +213,7 @@ implementation
 
 uses
   TypInfo,
-  ACBrTEFAPIPayGoWeb, ACBrTEFAPICliSiTef;
+  ACBrTEFAPIPayGoWeb, ACBrTEFAPICliSiTef, ACBrTEFAPIElgin;
 
 { TACBrTEFAPIClass }
 
@@ -313,6 +317,7 @@ begin
   case AValue of
     tefApiPayGoWeb : fpTEFAPIClass := TACBrTEFAPIClassPayGoWeb.Create( Self );
     tefApiCliSiTEF : fpTEFAPIClass := TACBrTEFAPIClassCliSiTef.Create( Self );
+    tefApiElgin    : fpTEFAPIClass := TACBrTEFAPIClassElgin.Create( Self )
   else
     fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
   end;
@@ -320,6 +325,20 @@ begin
   fTEFModelo := AValue;
   RespostasTEF.LimparRespostasTEF;
   CriarTEFResp;
+end;
+
+function TACBrTEFAPI.GetPathDLL: string;
+begin
+  if Assigned(fpTEFAPIClass) then
+    Result := fpTEFAPIClass.PathDLL
+  else
+    Result := '';
+end;
+
+procedure TACBrTEFAPI.SetPathDLL(const Value: string);
+begin
+  if Assigned(fpTEFAPIClass) then
+    fpTEFAPIClass.PathDLL := value;
 end;
 
 function TACBrTEFAPI.GetTEFAPIClass: TACBrTEFAPIClass;

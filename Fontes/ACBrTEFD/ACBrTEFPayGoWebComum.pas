@@ -2791,12 +2791,17 @@ end;
 function TACBrTEFPGWebAPI.LibFullName: String;
 begin
   if (PathLib <> '') then
+  begin
+    GravarLog(ACBrStr('LibFullName: Usando "PathLib" informado pela aplicação: ')+PathLib);
     Result := PathLib + CACBrTEFPGWebLib
+  end
   else
   begin
     Result := GetPathPGWebLib;
     if (Result = '') or (not FileExists(Result)) then
-      Result := CACBrTEFPGWebLib;
+      Result := CACBrTEFPGWebLib
+    else
+      GravarLog(ACBrStr('LibFullName: Usando Path da Váriável de Ambiente "'+GetVarPathPGWebLib+'": ')+Result);
   end;
 end;
 

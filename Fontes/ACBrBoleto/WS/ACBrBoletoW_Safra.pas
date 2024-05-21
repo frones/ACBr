@@ -241,8 +241,8 @@ begin
   begin
     LJson := TACBrJSONObject.Create;
     try
-      LJson.AddPair('agencia',IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Agencia, ''));
-      LJson.AddPair('conta', IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Conta + aTitulo.ACBrBoleto.Cedente.ContaDigito,''));
+      LJson.AddPair('agencia',aTitulo.ACBrBoleto.Cedente.Agencia);
+      LJson.AddPair('conta', inttostr(strToInt(aTitulo.ACBrBoleto.Cedente.Conta)) + aTitulo.ACBrBoleto.Cedente.ContaDigito);
       GerarDocumento(LJson);
       FPDadosMsg := LJson.ToJSON;
     finally
@@ -272,7 +272,7 @@ begin
       LJsonDocumento.AddPair('especie', EPC_DUPLICATA_MERCANTIL);
       LJsonDocumento.AddPair('dataVencimento', DateTimeToDateInter(aTitulo.Vencimento));
       LJsonDocumento.AddPair('valor', aTitulo.ValorDocumento);
-      LJsonDocumento.AddPair('codigoMoeda', 0);
+      LJsonDocumento.AddPair('codigoMoeda', 9);
       LJsonDocumento.AddPair('quantidadeDiasProtesto', aTitulo.DiasDeProtesto);
       LJsonDocumento.AddPair('campoLivre', Copy('', 1, 25));
       LJsonDocumento.AddPair('fidc', 0);
@@ -344,15 +344,18 @@ begin
       if (aTitulo.PercentualMulta + aTitulo.ValorMoraJuros) > 0 then
       begin
         LJsonMultaJuros := TACBrJSONObject.Create;
-        LJsonMultaJuros.AddPair('dataMulta', DateTimeToDateInter(aTitulo.DataMulta));
-        if aTitulo.MultaValorFixo then
-          LMulta := RoundABNT((aTitulo.PercentualMulta * 100) / aTitulo.ValorDocumento, 2)
-        else
-          LMulta := aTitulo.PercentualMulta;
+        if aTitulo.percentualMulta > 0 then
+           begin
+              LJsonMultaJuros.AddPair('dataMulta', DateTimeToDateInter(aTitulo.DataMulta));
+              if aTitulo.MultaValorFixo then
+                LMulta := RoundABNT((aTitulo.PercentualMulta * 100) / aTitulo.ValorDocumento, 2)
+              else
+                LMulta := aTitulo.PercentualMulta;
 
-        LJsonMultaJuros.AddPair('taxaMulta', aTitulo.PercentualMulta);
+              LJsonMultaJuros.AddPair('taxaMulta', aTitulo.PercentualMulta);
+           end;
 
-        LJsonMultaJuros.AddPair('dataJuros', DateTimeToDateInter(aTitulo.DataMulta));
+        LJsonMultaJuros.AddPair('dataJuros', DateTimeToDateInter(aTitulo.DataMoraJuros));
 
         LJsonMultaJuros.AddPair('taxaJuros', aTitulo.ValorMoraJuros);
 

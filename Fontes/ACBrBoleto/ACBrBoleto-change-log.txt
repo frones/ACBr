@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2024
+-- ACBrBoletoRet_Safra, ACBrBoletoW_Safra --
+[-]TK-5438 - Ajustes no envio do boleto e no tratamento retorno. 
+   https://www.projetoacbr.com.br/forum/topic/77704-boleto-pix-banco-safra/
+   Por Vicente Ensis / Verificado Daniel Morais InfoCotidiano
+
 20/05/2024
 -- ACBrBoletoRet_Inter_API --
 [-]TK-5463-1 - Ajustes no tratamento de RetornoPIX para alimentar nossoNumero e EMV dos OBJ boleto e pix, e dataSituacao

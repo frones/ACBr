@@ -118,7 +118,7 @@ begin
     try
       //LJson := TJson.Create;
       try
-        LJson.Parse(RetWS);
+        LJson := TACBrJSONObject.Parse(RetWS);
         ARetornoWS.JSON := LJson.ToJSON;
 
         case HTTPResultCode of

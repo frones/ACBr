@@ -68,6 +68,8 @@
         Matera,
         Cielo,
         MercadoPago,
-        IBGE
+        IBGE,
+        AbecsPinpad,
+        AbecsPinpad_Device
     }
 }

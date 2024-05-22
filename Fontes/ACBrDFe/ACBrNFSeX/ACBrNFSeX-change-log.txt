@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Japeri/RJ, provedor é o SiapNet.
+  Por: Italo Giurizzato Junior
+[+] Incluída a cidade de Fartura/SP, provedor é o Fiorilli.
+  Por: Willians wsac
+[*] Alterada a URL da cidade de Uruguaiana/RS, provedor e versão ainda são os mesmos.
+  Por: Bill Barsch
+[*] Alterada a URL da cidade de Vacaria/RS, provedor e versão ainda são os mesmos.
+  Por: André Lucca
 [*] Alterada a URL da cidade de Soledade/RS, provedor e versão ainda são os mesmos.
   Por: Doglas Sumpf
 

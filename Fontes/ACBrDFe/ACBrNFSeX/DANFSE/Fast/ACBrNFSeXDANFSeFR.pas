@@ -794,7 +794,6 @@ begin
   frxIntermediario := TfrxDBDataset.Create(Self);
 
   frxIntermediario.UserName := 'Intermediario';
-  frxIntermediario.Enabled         := false;
   frxIntermediario.CloseDataSource := false;
   frxIntermediario.OpenDataSource  := false;
 

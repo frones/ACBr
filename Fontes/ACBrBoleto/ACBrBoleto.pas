@@ -2758,10 +2758,12 @@ begin
   if fCodigoGeracao = AValue then
     Exit;
 
-  if Pos(AValue,ACBrBoleto.Banco.CodigosGeracaoAceitos) = 0 then
-     raise Exception.Create( ACBrStr('Código de Geração Inválido!') );
-
-  fCodigoGeracao := AValue;
+  if ((Length(AValue) = 3) and (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite)) or
+     (Pos(AValue,ACBrBoleto.Banco.CodigosGeracaoAceitos) > 0)
+  then
+    fCodigoGeracao := AValue
+  else
+    raise Exception.Create( ACBrStr('Código de Geração Inválido!') );
 end;
 
 procedure TACBrTitulo.SetDataProtesto(AValue: TDateTime);

@@ -104,7 +104,7 @@ begin
    fpTamanhoConta          := 5;
    fpTamanhoCarteira       := 1;
    fpCodigosMoraAceitos    := 'AB0123';
-   fpCodigosGeracaoAceitos := '23456789';
+   fpCodigosGeracaoAceitos := '023456789';
    fpLayoutVersaoArquivo   := 81;
    fpLayoutVersaoLote      := 40;
 end;
@@ -114,9 +114,19 @@ begin
    Modulo.CalculoPadrao;
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito, 2, '0') +
-                       PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 5, '0') +
+                       PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 5, '0');
+
+  if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (Length(ACBrTitulo.CodigoGeracao) = 3)) then
+    Modulo.Documento := Modulo.Documento +
+                        copy(ACBrTitulo.CodigoGeracao,1,2) + //60    AA
+                        copy(ACBrTitulo.CodigoGeracao,3,1) + //0     B
+                        RightStr(ACBrTitulo.NossoNumero,5)   //00000 NNNNN
+  else
+    Modulo.Documento := Modulo.Documento +
                        FormatDateTime('yy',ACBrTitulo.DataDocumento) +
                        ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5);
+
+
    Modulo.Calcular;
 
    if (Modulo.DigitoFinal > 9) then
@@ -176,6 +186,14 @@ function TACBrBancoSicredi.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo
 begin
   if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and ( (Trim(ACBrTitulo.NossoNumero) = '') or (Trim(ACBrTitulo.NossoNumero) = '00000') ) ) then
     Result := ''
+  else
+  if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (Length(ACBrTitulo.CodigoGeracao) = 3)) then
+    Result:= copy(ACBrTitulo.CodigoGeracao,1,2) + //60    AA
+             '/'+
+             copy(ACBrTitulo.CodigoGeracao,3,1) + //0     B
+             RightStr(ACBrTitulo.NossoNumero,5) +  //00000 NNNNN
+             '-' +
+             CalcularDigitoVerificador(ACBrTitulo)
   else
     Result:= FormatDateTime('yy',ACBrTitulo.DataDocumento) + '/' +
              ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5) + '-' +

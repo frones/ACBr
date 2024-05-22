@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+22/05/2024
+--ACBrBoleto. ACBrBancoSicredi--
+[*]TK-5318 ACBrBoleto NossoNúmero Sicredi Gerado Pela API
+https://www.projetoacbr.com.br/forum/topic/77235-problema-com-nosson%C3%BAmero-sicredi-gerado-pela-api/
+  por Victor H Gonzales - Pandaaa
 
 21/05/2024
 -- ACBrBoletoRet_Safra, ACBrBoletoW_Safra --

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 22/05/2024
 -- ACBrNFSeXServicos --
+[+] Incluída a cidade de Nova Santa Helena/MT, provedor é o Agili.
+  Por: Diego Reckziegel
+[+] Incluída a cidade de Piratininga/SP, provedor é o Fiorilli.
+  Por: Italo Giurizzato Junior/Alecio Ferreira
 [+] Incluída a cidade de Japeri/RJ, provedor é o SiapNet.
   Por: Italo Giurizzato Junior
 [+] Incluída a cidade de Fartura/SP, provedor é o Fiorilli.

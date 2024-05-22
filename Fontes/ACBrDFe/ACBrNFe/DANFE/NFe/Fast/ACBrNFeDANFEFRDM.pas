@@ -2117,7 +2117,7 @@ begin
           CarregaDadosNFe;
 
           //Result := frxReport.PrepareReport( not (i > 0) );
-          Result := frxReport.PrepareReport( false );
+          Result := frxReport.PrepareReport( not (i > 0) );
         end;
       end;
     end
@@ -2390,6 +2390,7 @@ end;
 
 procedure TACBrNFeFRClass.ImprimirDANFE(ANFE: TNFe);
 begin
+  DANFEClassOwner.FIndexImpressaoIndividual := 0;
   if PrepareReport(ANFE) then
   begin
     if DANFEClassOwner.MostraPreview then

@@ -76,7 +76,7 @@ type
     function DefinerCnpjCPFRetorno240(const ALinha: String): String; override;         //Define retorno rCnpjCPF
     procedure DefineCanalLiquidacaoRetorno240(const ALinha: String; out ATitulo : TACBrTitulo); override;
     function CodigoLiquidacaoDescricao( CodLiquidacao : Integer) : String;
-
+    function DefineCaucionada(const ACBrTitulo: TACBrTitulo): String;
   end;
 
 implementation
@@ -626,6 +626,24 @@ begin
   ATitulo.ValorOutrasDespesas := 0;
 end;
 
+function TACBrBancoUnicredES.DefineCaucionada(
+  const ACBrTitulo: TACBrTitulo): String;
+begin
+   if (fpNumero = 136) and (fpLayoutVersaoArquivo = 085) then
+   begin
+     if (ACBrTitulo.EspecieDoc = Trim('31')) or (ACBrTitulo.EspecieDoc = trim('CC')) then
+       Result := 'N'
+     else
+       case ACBrTitulo.CaracTitulo of
+         tcCaucionada: result := 'S';
+       else
+         result := 'N';
+       end;
+   end
+   else
+     result := Space(1);
+end;
+
 function TACBrBancoUnicredES.DefineCodigoProtesto(
   const ACBrTitulo: TACBrTitulo): String;
 begin
@@ -738,8 +756,9 @@ var
   sNossoNumero, sDigitoNossoNumero, ATipoAceite : String;
   ACodJuros, ACodDesc, ACodProtesto : String;
   ACodMulta, AValorMulta : String;
-  ADias : String;
+  ADias, LCaucionada : String;
   ListTransacao: TStringList;
+
 begin
   with ACBrTitulo do
   begin
@@ -765,6 +784,9 @@ begin
 
     {Define Codigo Multa}
     ACodMulta := DefineCodigoMulta(ACBrTitulo);
+
+    {Define caucionada}
+    LCaucionada := DefineCaucionada(ACBrTitulo);
 
     {Calculo de Multa}
     if PercentualMulta > 0 then
@@ -827,7 +849,7 @@ begin
                IntToStrZero( round( ValorDocumento * 100), 15)                         + // 86 a 100 - Valor nominal do título
                Space(6)                                                                + // 101 a 106 - Agência cobradora + dv
                'N'                                                                     + // 107 - Título Participa de operação de desconto
-               Space(1)                                                                + // 108 - Brancos
+               LCaucionada                                                             + // 108 - Brancos
                ATipoAceite                                                             + // 109 - Identificação de título Aceito / Não aceito
                FormatDateTime('ddmmyyyy', DataDocumento)                               + // 110 a 117 - Data da emissão do documento
                aCodJuros                                                               + // 118 - Código de juros de mora: Valor por dia   ('1' = Valor por Dia  '2' = Taxa Mensal  '4' = Taxa Diaria '5' = Isento)

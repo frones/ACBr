@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+22/05/2024
+-- ACBrBancoUnicredES --
+[*]TK-5490 - Alteracao manual seg P 108 - caucionado (S/N) qdo fpLayoutVersaoArquivo = 085/banco 136
+   https://www.projetoacbr.com.br/forum/topic/77893-unicred-erro-encontrado-campo-deve-conter-s-ou-n-no-segmento-p-posi%C3%A7%C3%A3o-inicial-108-a-posi%C3%A7%C3%A3o-final-108-valor-esperado-sn/
+   Por Daniel Morais InfoCotidiano
+   
 22/05/2024
 --ACBrBoleto. ACBrBancoSicredi--
 [*]TK-5318 ACBrBoleto NossoNúmero Sicredi Gerado Pela API

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Cacapava/SP, provedor é o Conam.
+  Por: Alexandre de Paula
+[+] Incluída a cidade de Barra do Pirai/RJ, provedor é o WebISS.
+  Por: Alexandre de Paula
+[+] Incluída a cidade de Cidade Ocidental/GO, provedor é o Prodata.
+  Por: Diego Folieni
+
 22/05/2024
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Nova Santa Helena/MT, provedor é o Agili.

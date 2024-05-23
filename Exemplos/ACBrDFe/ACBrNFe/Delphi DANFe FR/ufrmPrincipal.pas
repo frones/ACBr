@@ -195,29 +195,47 @@ begin
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
-var
-  {$IFDEF DELPHIXE6_UP}
-  fsFiles: string;
-  {$ELSE}
-  SR: TSearchRec;
-  {$ENDIF}
-begin
-  {$IFDEF DELPHIXE6_UP}
-  for fsFiles in TDirectory.GetFiles('..\Delphi\Report\') do
-    if Pos('.fr3', LowerCase(fsFiles)) > 0 then
-      lstbxFR3.AddItem(fsFiles, nil);
-  {$ELSE}
-  if FindFirst('..\Delphi\Report\*.fr3', faArchive, SR) = 0 then
+
+  procedure AdicionarArquivos(const Diretorio: String; const Extensao: String);
+  var
+    {$IFDEF DELPHIXE6_UP}
+    fsFiles: string;
+    fsDirectories: string;
+    {$ELSE}
+    SR: TSearchRec;
+    PathArq: string;
+    {$ENDIF}
+  begin
+    {$IFDEF DELPHIXE6_UP}
+    for fsFiles in TDirectory.GetFiles(Diretorio) do
+      if Pos(Extensao, LowerCase(fsFiles)) > 0 then
+        lstbxFR3.AddItem(fsFiles, nil);
+
+    for fsDirectories in TDirectory.GetDirectories(Diretorio) do
+      if (fsDirectories <> '.') and (fsDirectories <> '..') then
+        AdicionarArquivos(fsDirectories, Extensao);
+
+    {$ELSE}
+    if FindFirst(Diretorio + '*.*', faDirectory or faArchive, SR) = 0 then
     try
       repeat
-        if (SR.Attr and faDirectory) = 0 then
-          lstbxFR3.AddItem('..\Delphi\Report\' + SR.Name, nil)
+        PathArq := Diretorio + SR.Name;
+        if ((SR.Attr and faDirectory) = 0) then
+        begin
+          if (ExtractFileExt(PathArq) = Extensao) then
+            lstbxFR3.AddItem(PathArq, nil);
+        end
+        else if (SR.Name <> '.') and (SR.Name <> '..') then
+          AdicionarArquivos(PathArq + '\', Extensao);
       until FindNext(SR) <> 0;
     finally
       FindClose(SR);
     end;
-  {$ENDIF}
+    {$ENDIF}
+  end;
 
+begin
+  AdicionarArquivos('..\Delphi\Report\', '.fr3');
   Initializao;
 end;
 

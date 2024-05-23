@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Paragominas/PA, provedor é o Desenvolve.
+[+] Incluída a cidade de Itapipoca/CE, provedor é o SpeedGov.
+[+] Incluída a cidade de Maranguape/CE, provedor é o SpeedGov.
+[+] Incluída a cidade de Patos/PB, provedor é o WebISS.
+[+] Incluída a cidade de São Cristovão/SE, provedor é o WebISS.
+[*] A cidade de Bocaiuva do Sul/PR trocou de provedor, agora é EloTech
+  Por: Italo Giurizzato Junior
+[*] A cidade de Viamao/RS trocou a URL, o provedor continua o mesmo.
+  Por: Italo Giurizzato Junior/SHARMAQ
 -- SiapNet.LerXml --
 [+] Sobre escrito as procedures: LerEnderecoPrestadorServico, LerEnderecoTomador e LerServico,
     visando o uso da função GerarDigitoMunicipio.

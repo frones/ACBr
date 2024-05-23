@@ -144,7 +144,7 @@ end;
 
 procedure TNFSeR_SiapNet200.LerServico(const ANode: TACBrXmlNode);
 var
-  AuxNode, AuxNode2: TACBrXmlNode;
+  AuxNode: TACBrXmlNode;
   Ok: Boolean;
   CodigoItemServico, Responsavel, xUF: string;
   ValorLiq: Double;

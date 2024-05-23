@@ -81,6 +81,7 @@ function ObterDFeXML(const AXML, Grupo, NameSpace: String): String;
 function DataHoraTimeZoneModoDeteccao(const AComponente : TACBrDFe): TDateTime;
 
 function GerarDigito(out Digito: integer; chave: string): boolean;
+function GerarDigitoMunicipio(Municipio: string): string;
 
 function ValidarAAMM(const AAMM: string): boolean;
 function ValidarCListServ(const cListServ: integer): boolean;
@@ -667,6 +668,55 @@ begin
   end;
   if length(chave) <> 43 then
     result := False;
+end;
+
+function GerarDigitoMunicipio(Municipio: string): string;
+var
+  i, Valor, Soma: integer;
+  Digito: string;
+const
+  PESO = '1212120';
+  NAO_VALIDAR = '|2201919|2202251|2201988|2611533|3117836|3152131|4305871|5203939|5203962|';
+begin
+  result := Municipio;
+
+  if Municipio = '9999999' then
+    exit;
+
+  if pos('|' + copy(Municipio, 1, 6), NAO_VALIDAR) > 0 then
+  begin
+    Result := copy(NAO_VALIDAR, pos('|' + Municipio, NAO_VALIDAR)+1, 7);
+    exit;
+  end;
+
+  result := 'Codigo Invalido';
+
+  if length(Municipio) < 6 then
+    exit;
+
+  if not ValidarCodigoUF(StrToInt(copy(Municipio, 1, 2))) then
+    exit;
+
+  if copy(Municipio, 3, 4) = '0000' then
+    exit;
+
+  soma := 0;
+
+  for i := 1 to 6 do
+  begin
+    valor := StrToInt(copy(Municipio, i, 1)) * StrToInt(copy(PESO, i, 1));
+    if valor > 9 then
+      soma := soma + StrToInt(copy(IntToStr(valor), 1, 1)) + StrToInt(copy(IntToStr(valor), 2, 1))
+    else
+      soma := soma + valor;
+  end;
+
+  Digito := IntToStr(10 - (soma mod 10));
+
+  if ((soma mod 10) = 0) then
+    Digito := '0';
+
+  result := Copy(Municipio, 1, 6) + Digito;
 end;
 
 function ValidarAAMM(const AAMM: string): boolean;

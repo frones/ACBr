@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2024
+-- ACBrDFeUtil --
+[+] Implementado a função GerarDigitoMunicipio.
+   Por: Italo Giurizzato Junior
 
 21/05/2024
 -- ACBrDFeOpenSSL --

@@ -495,7 +495,7 @@ end;
 
 procedure TBoletoW_Bancoob.GerarBenificiarioFinal(AJson: TACBrJSONObject);
 var
- LJsonPairSacadorAvalista, LJsonSacadorAvalista: TACBrJSONObject;
+ LJsonSacadorAvalista: TACBrJSONObject;
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
     Exit;
@@ -512,7 +512,7 @@ begin
   LJsonSacadorAvalista.AddPair('bairro',aTitulo.Sacado.SacadoAvalista.Bairro);
   LJsonSacadorAvalista.AddPair('cidade',aTitulo.Sacado.SacadoAvalista.Cidade);
   LJsonSacadorAvalista.AddPair('uf',aTitulo.Sacado.SacadoAvalista.UF);
-  AJson.AddPair('beneficiarioFinal', LJsonPairSacadorAvalista);
+  AJson.AddPair('beneficiarioFinal', LJsonSacadorAvalista);
 end;
 
 procedure TBoletoW_Bancoob.GerarJuros(AJson: TACBrJSONObject);

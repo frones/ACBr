@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2024
+-- ACBrBoletoW_Bancoob --
+[-]TK-5505 - Corrigido gerarBeneficiarioFinal estava apontando para outro obj
+   Por Command4293 - Verificado Daniel Morais
+
 22/05/2024
 -- ACBrBancoUnicredES --
 [*]TK-5490 - Alteracao manual seg P 108 - caucionado (S/N) qdo fpLayoutVersaoArquivo = 085/banco 136

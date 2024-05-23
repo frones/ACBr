@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 367
+  Left = 282
   Height = 652
-  Top = 153
+  Top = 142
   Width = 1008
   Caption = 'ACBrPIXCD Teste'
   ClientHeight = 652
@@ -87,7 +87,7 @@ object Form1: TForm1
     0000
   }
   OnCreate = FormCreate
-  LCLVersion = '2.2.4.0'
+  LCLVersion = '2.2.6.0'
   object pgPrincipal: TPageControl
     Left = 0
     Height = 621
@@ -7192,6 +7192,176 @@ object Form1: TForm1
                 end
               end
             end
+            object tsBanrisul: TTabSheet
+              Caption = 'tsBanrisul'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnBanrisul: TPanel
+                Left = 48
+                Height = 322
+                Top = 113
+                Width = 910
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 322
+                ClientWidth = 910
+                TabOrder = 0
+                object lbBanrisulTipoChave: TLabel
+                  Left = 711
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbBanrisulClientSecret: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 132
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object lbBanrisulClientID: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbBanrisulChave: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object imBanrisulErroChavePix: TImage
+                  Left = 871
+                  Height = 17
+                  Top = 43
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edBanrisulClientSecret: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 148
+                  Width = 846
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 3
+                end
+                object edBanrisulClientID: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 846
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edBanrisulChavePIX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 668
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 0
+                end
+                object cbBanrisulTipoChave: TComboBox
+                  Left = 711
+                  Height = 23
+                  Top = 40
+                  Width = 157
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+                object edBanrisulSenhaCertificadoPFX: TEdit
+                  Left = 688
+                  Height = 23
+                  Top = 197
+                  Width = 180
+                  Anchors = [akTop, akLeft, akRight]
+                  EchoMode = emPassword
+                  PasswordChar = '*'
+                  TabOrder = 4
+                end
+                object lbBanrisulSenhaCertificado: TLabel
+                  Left = 688
+                  Height = 15
+                  Top = 181
+                  Width = 93
+                  Caption = 'Senha Certificado'
+                  ParentColor = False
+                end
+                object sbBanrisulVerSenhaPFX: TSpeedButton
+                  Left = 871
+                  Height = 23
+                  Top = 197
+                  Width = 23
+                  AllowAllUp = True
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  GroupIndex = 1
+                  Images = ImageList1
+                  ImageIndex = 7
+                end
+                object sbBanrisulAcharCertificadoPFX: TSpeedButton
+                  Left = 650
+                  Height = 23
+                  Top = 197
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edBanrisulArqCertificadoPFX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 197
+                  Width = 625
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  TabOrder = 5
+                end
+                object lbBanrisulArqCertificadoPFX: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 181
+                  Width = 126
+                  Caption = 'Arquivo Certificado PFX'
+                  ParentColor = False
+                end
+                object lbBanrisulErroCertificadoPFX: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 222
+                  Width = 151
+                  Caption = 'lbBanrisulErroCertificadoPFX'
+                  ParentColor = False
+                end
+                object imBanrisulErroCertificadoPFX: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 200
+                  Width = 16
+                  Visible = False
+                end
+              end
+            end
           end
         end
       end
@@ -7534,6 +7704,11 @@ object Form1: TForm1
   object ACBrPSPGate2All1: TACBrPSPGate2All
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 600
+    Top = 416
+  end
+  object ACBrPSPBanrisul1: TACBrPSPBanrisul
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 632
     Top = 416
   end
 end

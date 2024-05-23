@@ -6758,6 +6758,177 @@ object Form1: TForm1
                 end
               end
             end
+            object tsBanrisul: TTabSheet
+              Caption = 'Banrisul'
+              ImageIndex = 16
+              DesignSize = (
+                984
+                492)
+              object pnBanrisul: TPanel
+                Left = 48
+                Top = 72
+                Width = 880
+                Height = 322
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  880
+                  322)
+                object lbBanrisulTipoChave: TLabel
+                  Left = 681
+                  Top = 24
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                end
+                object lbBanrisulClientSecret: TLabel
+                  Left = 24
+                  Top = 132
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                end
+                object lbBanrisulClientID: TLabel
+                  Left = 24
+                  Top = 75
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                end
+                object lbBanrisulChave: TLabel
+                  Left = 24
+                  Top = 24
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                end
+                object imBanrisulErroChavePix: TImage
+                  Left = 844
+                  Top = 43
+                  Width = 16
+                  Height = 17
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object imBanrisulErroCertificadoPFX: TImage
+                  Left = 3
+                  Top = 200
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object lbBanrisulArqCertificadoPFX: TLabel
+                  Left = 24
+                  Top = 181
+                  Width = 112
+                  Height = 13
+                  Caption = 'Arquivo Certificado PFX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object lbBanrisulErroCertificadoPFX: TLabel
+                  Left = 24
+                  Top = 222
+                  Width = 134
+                  Height = 13
+                  Caption = 'lbBanrisulErroCertificadoPFX'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object sbBanrisulAcharCertificadoPFX: TSpeedButton
+                  Left = 640
+                  Top = 197
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = sbSantanderAcharCertificadoPFXClick
+                end
+                object lbBanrisulSenhaCertificado: TLabel
+                  Left = 688
+                  Top = 181
+                  Width = 84
+                  Height = 13
+                  Caption = 'Senha Certificado'
+                end
+                object sbBanrisulVerSenhaPFX: TSpeedButton
+                  Left = 840
+                  Top = 196
+                  Width = 23
+                  Height = 23
+                  AllowAllUp = True
+                  Anchors = [akTop, akRight]
+                  GroupIndex = 1
+                  Flat = True
+                  OnClick = sbSantanderVerSenhaPFXClick
+                end
+                object edBanrisulClientSecret: TEdit
+                  Left = 24
+                  Top = 148
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 3
+                end
+                object edBanrisulClientID: TEdit
+                  Left = 24
+                  Top = 90
+                  Width = 816
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                end
+                object edBanrisulChavePIX: TEdit
+                  Left = 24
+                  Top = 40
+                  Width = 638
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 0
+                  OnChange = edInterChavePIXChange
+                end
+                object cbBanrisulTipoChave: TComboBox
+                  Left = 681
+                  Top = 40
+                  Width = 157
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 13
+                  TabOrder = 1
+                  TabStop = False
+                end
+                object edBanrisulArqCertificadoPFX: TEdit
+                  Left = 24
+                  Top = 197
+                  Width = 616
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 4
+                  OnChange = edSantanderArqCertificadoPFXChange
+                end
+                object edBanrisulSenhaCertificadoPFX: TEdit
+                  Left = 688
+                  Top = 197
+                  Width = 151
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  PasswordChar = '*'
+                  TabOrder = 5
+                end
+              end
+            end
           end
         end
       end
@@ -8244,6 +8415,11 @@ object Form1: TForm1
   object ACBrPSPGate2All1: TACBrPSPGate2All
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 594
+    Top = 416
+  end
+  object ACBrPSPBanrisul1: TACBrPSPBanrisul
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 625
     Top = 416
   end
 end

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2024
+-- ACBrPIXCD --
+[+] Inclusão do novo PSP Banrisul
+    por: Elias César Vieira
+
 14/05/2024
 -- ACBrSchemasMatera --
 [*] Inclusão de novo status no enumerado TMateraAccountStatus

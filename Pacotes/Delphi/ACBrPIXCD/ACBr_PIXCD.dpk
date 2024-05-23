@@ -76,6 +76,7 @@ contains
   ACBrPIXPSPMercadoPago in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPMercadoPago.pas',
   ACBrPIXSchemasMercadoPago in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasMercadoPago.pas',
   ACBrPIXPSPGate2All in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPGate2All.pas',
-  ACBrSchemasGate2All in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasGate2All.pas';
+  ACBrSchemasGate2All in '..\..\..\Fontes\ACBrPIXCD\ACBrSchemasGate2All.pas',
+  ACBrPIXPSPBanrisul in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBanrisul.pas';
 
 end.

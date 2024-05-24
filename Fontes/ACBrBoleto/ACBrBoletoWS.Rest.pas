@@ -143,8 +143,10 @@ end;
 
 procedure TBoletoWSREST.DefinirCertificado;
 begin
-  BoletoWS.ArquivoCRT := Boleto.Configuracoes.WebService.ArquivoCRT;
-  BoletoWS.ArquivoKEY := Boleto.Configuracoes.WebService.ArquivoKEY;
+  BoletoWS.ArquivoCRT   := Boleto.Configuracoes.WebService.ArquivoCRT;
+  BoletoWS.ArquivoKEY   := Boleto.Configuracoes.WebService.ArquivoKEY;
+  BoletoWS.ChavePrivada := Boleto.Configuracoes.WebService.ChavePrivada;
+  BoletoWS.Certificado  := Boleto.Configuracoes.WebService.Certificado;
 
     // Adicionando o chave privada
   if NaoEstaVazio(BoletoWS.ChavePrivada) then

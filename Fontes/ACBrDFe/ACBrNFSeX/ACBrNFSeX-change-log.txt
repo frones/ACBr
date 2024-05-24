@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Breves/PA, provedor é o Isaneto.
+  Por: Italo Giurizzato Junior
+
 23/05/2024
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Paragominas/PA, provedor é o Desenvolve.

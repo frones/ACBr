@@ -222,6 +222,7 @@ type
     FDataLimitePagto           : TDateTime;
     FValorDespesaCobranca      : Currency;
     FValorAbatimento           : Currency;
+    FvalorAbatimentoTituloCobranca : Currency;
     FValorDesconto             : Currency;
     FValorDesconto2            : Currency;
     FValorDesconto3            : Currency;
@@ -308,6 +309,7 @@ type
     property DataLimitePagto: TDateTime read FDataLimitePagto write FDataLimitePagto;
     property ValorDespesaCobranca: Currency read FValorDespesaCobranca write FValorDespesaCobranca;
     property ValorAbatimento: Currency read FValorAbatimento write FValorAbatimento;
+    property valorAbatimentoTituloCobranca: Currency read FvalorAbatimentoTituloCobranca write FvalorAbatimentoTituloCobranca ;
     property ValorDesconto: Currency read FValorDesconto write FValorDesconto;
     property ValorDesconto2: Currency read FValorDesconto2 write FValorDesconto2;
     property ValorDesconto3: Currency read FValorDesconto3 write FValorDesconto3;

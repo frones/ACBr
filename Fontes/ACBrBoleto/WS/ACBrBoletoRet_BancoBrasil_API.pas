@@ -232,6 +232,7 @@ begin
             ARetornoWS.DadosRet.TituloRet.ValorOutrosCreditos        := LJsonObject.AsFloat['valorOutroRecebido'];
             ARetornoWS.DadosRet.TituloRet.ValorIOF                   := LJsonObject.AsFloat['valorImpostoSobreOprFinanceirasRecebidoTitulo'];
             ARetornoWS.DadosRet.TituloRet.ValorAbatimento            := LJsonObject.AsFloat['valorAbatimentoTotal'];
+            ARetornoWS.DadosRet.TituloRet.ValorAbatimentoTituloCobranca  := LJsonObject.AsFloat['valorAbatimentoTituloCobranca'];
             ARetornoWS.DadosRet.TituloRet.MultaValorFixo             := true;
             ARetornoWS.DadosRet.TituloRet.PercentualMulta            := LJsonObject.AsFloat['valorMultaRecebido'];
 

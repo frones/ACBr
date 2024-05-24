@@ -56,7 +56,11 @@ uses
   ACBrUtil.FilesIO,
   ACBrDFeUtil,
   ACBrUtil.Compatibilidade,
-  ACBrNFeUtilsFPDF, ACBrNFeDANFEClass, ACBrNFe, ACBrBase, ACBrDFeDANFeReport;
+  ACBrNFeUtilsFPDF,
+  ACBrNFeDANFEClass,
+  ACBrNFe,
+  ACBrBase,
+  ACBrDFeDANFeReport;
 
 type
   TNFeDANFeFPDF = class(TFPDFReport)
@@ -2635,6 +2639,12 @@ begin
         LStream.Free;
       end;
     end;
+
+
+    if FDANFEClassOwner.ExpandeLogoMarca then
+      FLogoAlign := laFull
+    else
+      FLogoAlign := laRight;
 
     AddPage(LOrientation);
     AddBand(TBlocoCanhoto.Create(PosCanhoto, FNFeUtils));

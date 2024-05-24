@@ -1504,6 +1504,10 @@ begin
       FieldByName('OBS').AsString        := BufferInfCpl;
       FieldByName('LinhasOBS').AsInteger := wLinhasObs;
       FieldByName('MensagemSEFAZ').AsString := FNFe.procNFe.xMsg;
+
+      if (FDANFEClassOwner is TACBrNFeDANFCEFR) and (FNFe.Ide.tpEmis = teOffLine) and (FNFe.procNFe.nProt = '') then
+        FieldByName('MensagemSEFAZ').AsString := FieldByName('MensagemSEFAZ').AsString + #13#10+'<b>EMITIDA EM CONTINGÊNCIA</b>'+#13#10+'Pendente de Autorização';
+
       Post;
     end;
 

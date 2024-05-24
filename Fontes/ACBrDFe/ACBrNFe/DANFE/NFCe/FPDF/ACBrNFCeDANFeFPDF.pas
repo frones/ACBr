@@ -54,6 +54,7 @@ uses
   ACBrUtil.Compatibilidade,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBrDFeUtil,
   ACBrNFeUtilsFPDF, ACBrNFeDANFEClass, ACBrNFe, ACBrBase, ACBrDFeDANFeReport;
 
@@ -2054,7 +2055,7 @@ begin
   if FQRCodeLateral then
     QrSize := Args.Band.Width * 0.3
   else
-    QrSize := Args.Band.Width * 0.4;
+    QrSize := Args.Band.Width * 0.7;
 
   QrY := y1;
   if QRCodeLateral then
@@ -2273,7 +2274,11 @@ begin
   SetFont('Times');
 
   EngineOptions.DoublePass := True;
-  FPaperWidth := 80;
+
+  if AACBrNFeDANFCEClass.LarguraBobina = 302 then
+    AACBrNFeDANFCEClass.LarguraBobina := 80;
+
+  FPaperWidth := AACBrNFeDANFCEClass.LarguraBobina;
   FPaperHeight := 20;
   SetFont(FFontFamily);
   SetMargins(2, 2);
@@ -2466,10 +2471,17 @@ begin
       try
         Engine.Compressed := True;
 
-        LPAth := IncludeTrailingPathDelimiter(TACBrNFe(ACBrNFe).DANFE.PathPDF) +
-                                              ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
+        //LPAth := IncludeTrailingPathDelimiter(TACBrNFe(ACBrNFe).DANFE.PathPDF) +
+        //                                      ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
 
-        Engine.SaveToFile(LPath + LNFe.infNFe.ID+'.pdf');
+        //Engine.SaveToFile(LPath + LNFe.infNFe.ID+'.pdf');
+
+        LPath := DefinirNomeArquivo(TACBrNFe(ACBrNFe).DANFE.PathPDF,
+               OnlyNumber(LNFe.infNFe.ID) + '-nfe.pdf',
+               TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
+
+        Engine.SaveToFile(LPath);
+        FPArquivoPDF := LPath;
       finally
         Engine.Free;
       end;

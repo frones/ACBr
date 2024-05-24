@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/05/2024
+-- PagFor.BancodoBrasil.GravarTxtRemessa --
+[*] Alteração visando a geração do Segmento J52 com as informações da chave PIX e
+    do TXID.
+   Por: Marcelo Gonçalves
+
 15/05/2024
 -- PagFor.BancodoBrasil.LerTxtRetorno --
 [*] Alteração visando a leitura do Segmento Z ao ler o Segmento A.

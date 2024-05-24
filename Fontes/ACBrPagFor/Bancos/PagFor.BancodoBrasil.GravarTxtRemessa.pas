@@ -442,10 +442,19 @@ begin
       GravarCampo(TpInscricaoToStr(Beneficiario.Inscricao.Tipo), 1, tcStr);
       GravarCampo(Beneficiario.Inscricao.Numero, 15, tcStrZero);
       GravarCampo(Beneficiario.Nome, 40, tcStr, True);
-      GravarCampo(TpInscricaoToStr(SacadorAvalista.Inscricao.Tipo), 1, tcStr);
-      GravarCampo(SacadorAvalista.Inscricao.Numero, 15, tcStrZero);
-      GravarCampo(SacadorAvalista.Nome, 40, tcStr, True);
-      GravarCampo(' ', 53, tcStr);
+
+      if Chave = '' then
+      begin
+        GravarCampo(TpInscricaoToStr(SacadorAvalista.Inscricao.Tipo), 1, tcStr);
+        GravarCampo(SacadorAvalista.Inscricao.Numero, 15, tcStrZero);
+        GravarCampo(SacadorAvalista.Nome, 40, tcStr, True);
+        GravarCampo(' ', 53, tcStr);
+      end
+      else
+      begin
+        GravarCampo(Chave, 79, tcStr);
+        GravarCampo(TXID, 30, tcStr);
+      end;
 
       ValidarLinha('J52');
       IncluirLinha;

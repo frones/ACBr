@@ -544,6 +544,9 @@ begin
       end;
       AJson.AddPair('protestQuantityDays', IntToStr(ATitulo.DiasDeProtesto));
     end;
+    //prazo de baixa/devolução em dias, opcional
+    if (ATitulo.DataBaixa <> 0) and ((ATitulo.DataBaixa - ATitulo.Vencimento) > 0) then
+      AJson.AddPair('writeOffQuantityDays', IntToStr(trunc(ATitulo.DataBaixa - ATitulo.Vencimento)));
   end;
 end;
 

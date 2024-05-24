@@ -55,6 +55,9 @@ type
     FGNRE                   : TGNRERetorno;
     FIncorporarFontesPdf    : Boolean;
     FIncorporarBackgroundPdf: Boolean;
+
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+    procedure PrintQrCodePIX(const ANomeObjImagem, ANomeObjShape, ANomeObjTexto: String);
   public
     { Public declarations }
     constructor Create(AOwner: TComponent);
@@ -73,7 +76,9 @@ var
 
 implementation
 
-uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE;
+uses
+  ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE, ACBrImage,
+  ACBrDelphiZXingQRCode;
 
   { TdmACBrNFeFR }
 
@@ -148,6 +153,7 @@ begin
     FieldDefs.Add('IdentificadorGuia', ftString, 10);
     FieldDefs.Add('Reservado', ftString, 126);
     FieldDefs.Add('ValorFECP', ftFloat);
+    FieldDefs.Add('QrCodePayload', ftString, 200);
     CreateDataSet;
     Append;
 
@@ -217,6 +223,7 @@ begin
       FieldByName('IdentificadorGuia').AsString      := IdentificadorGuia;
       FieldByName('Reservado').AsString              := Reservado;
       FieldByName('ValorFECP').AsCurrency            := ValorFECP;
+      FieldByName('QrCodePayload').AsString          := qrcodePayload;
 
       if Trim(FieldByName('PeriodoReferencia').AsString) <> '' then
       begin
@@ -249,6 +256,7 @@ begin
 
   with frxReport do
   begin
+    OnBeforePrint := frxReportBeforePrint;
     // Version = '5.5.8'
     DotMatrixReport           := False;
     IniFile                   := '\Software\Fast Reports';
@@ -318,6 +326,48 @@ begin
   frxBarCodeObject.Free;
   frxReport.Free;
   inherited;
+end;
+
+procedure TdmACBrGNREFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+begin
+  PrintQrCodePIX('imgQrCodePIX', 'shpSemQRCodePIX', 'memSemQrCodePIX');
+  PrintQrCodePIX('imgQrCodePIX2', 'shpSemQRCodePIX2', 'memSemQrCodePIX2');
+  PrintQrCodePIX('imgQrCodePIX3', 'shpSemQRCodePIX3', 'memSemQrCodePIX3');
+end;
+
+procedure TdmACBrGNREFR.PrintQrCodePIX(const ANomeObjImagem, ANomeObjShape, ANomeObjTexto: String);
+var
+  ImgQrCodePIX: TfrxPictureView;
+  shpSemQrCodePIX: TfrxShapeView;
+  memSemQrCodePIX: TfrxMemoView;
+  Continuar: Boolean;
+  LQrCodePayload: String;
+begin
+  ImgQrCodePIX := TfrxPictureView(frxReport.FindObject(ANomeObjImagem));
+  shpSemQrCodePIX := TfrxShapeView(frxReport.FindObject(ANomeObjShape));
+  memSemQrCodePIX := TfrxMemoView(frxReport.FindObject(ANomeObjTexto));
+
+  LqrCodePayload := cdsGuia.FieldByName('QrCodePayload').AsString;
+
+  Continuar := Assigned(ImgQrCodePIX) and Assigned(shpSemQrCodePIX) and Assigned(memSemQrCodePIX);
+
+  if Continuar then
+  begin
+    if NaoEstaVazio(LQrCodePayload) then
+    begin
+      ImgQrCodePIX.Visible := True;
+      shpSemQrCodePIX.Visible := False;
+      memSemQrCodePIX.Visible := False;
+
+      PintarQRCode(LQrCodePayload, ImgQrCodePIX.Picture.Bitmap, qrAuto);
+    end else
+    begin
+      ImgQrCodePIX.Visible := False;
+      shpSemQrCodePIX.Visible := True;
+      memSemQrCodePIX.Visible := True;
+    end;
+  end;
+
 end;
 
 end.

@@ -99,6 +99,8 @@ type
     FValorFECP: Currency;
     FValorPrincICMS: Currency;
     FvalorGNRE: Currency;
+    FqrcodePayload: String;
+    FDadosPagamento: TDadosPagamento;
   public
     constructor Create;
     destructor Destroy; override;
@@ -159,6 +161,9 @@ type
     property AtualMonetFECP: Currency read FAtualMonetFECP write FAtualMonetFECP;
     property ValorPrincICMS: Currency read FValorPrincICMS write FValorPrincICMS;
     property valorGNRE: Currency read FvalorGNRE write FvalorGNRE;
+    // Versao 2.10
+    property qrcodePayload: String read FqrcodePayload write FqrcodePayload;
+    property dadosPagamento: TDadosPagamento read FDadosPagamento;
   end;
 
 implementation
@@ -211,11 +216,14 @@ begin
   FReservado := '';
   FvalorGNRE := 0;
   FInfoCabec := TInfoCabec.Create;
+  FqrcodePayload := '';
+  FDadosPagamento := TDadosPagamento.Create;
 end;
 
 destructor TGNRERetorno.Destroy;
 begin
   FInfoCabec.Free;
+  FDadosPagamento.Free;
 
   inherited Destroy;
 end;

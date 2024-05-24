@@ -47,7 +47,7 @@ uses
 
 type
 
-  GuiaRetorno = class(TCollectionItem)
+  TGuiaRetorno = class(TCollectionItem)
   private
     FGNRE: TGNRERetorno;
     FConfirmada : Boolean;
@@ -72,24 +72,24 @@ type
   private
     FACBrGNRE : TComponent;
 
-    function GetItem(Index: Integer): GuiaRetorno;
-    procedure SetItem(Index: Integer; const Value: GuiaRetorno);
+    function GetItem(Index: Integer): TGuiaRetorno;
+    procedure SetItem(Index: Integer; const Value: TGuiaRetorno);
 
     function LerTXT(ArqRetorno: TStringList): Boolean;
-    function LerXML(AXML: String): Boolean;
+    function LerXML(const AXML: String): Boolean;
   public
     constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
 
     procedure Imprimir;
     procedure ImprimirPDF;
 
-    function Add: GuiaRetorno;
-    function Insert(Index: Integer): GuiaRetorno;
-    property Items[Index: Integer]: GuiaRetorno read GetItem  write SetItem;
+    function Add: TGuiaRetorno;
+    function Insert(Index: Integer): TGuiaRetorno;
+    property Items[Index: Integer]: TGuiaRetorno read GetItem  write SetItem;
 
     function GetNamePath: string; override;
-    function LoadFromFile(CaminhoArquivo: String): boolean;
-    function LoadFromString(Arquivo: String): boolean;
+    function LoadFromFile(const CaminhoArquivo: String): boolean;
+    function LoadFromString(const Arquivo: String): boolean;
 
     property ACBrGNRE : TComponent read FACBrGNRE ;
   end;
@@ -101,9 +101,9 @@ uses
   ACBrGNRE2, ACBrUtil.XMLHTML, ACBrUtil.Base,
   ACBrDFeUtil;
 
-{ GuiaRetorno }
+{ TGuiaRetorno }
 
-constructor GuiaRetorno.Create(Collection2: TCollection);
+constructor TGuiaRetorno.Create(Collection2: TCollection);
 begin
  inherited Create(Collection2);
 
@@ -111,14 +111,14 @@ begin
  FNomeArq  := '';
 end;
 
-destructor GuiaRetorno.Destroy;
+destructor TGuiaRetorno.Destroy;
 begin
   FGNRE.Free;
 
   inherited Destroy;
 end;
 
-procedure GuiaRetorno.Imprimir;
+procedure TGuiaRetorno.Imprimir;
 begin
  if not Assigned( TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia ) then
    raise Exception.Create('Componente GNREGuia não associado.')
@@ -126,7 +126,7 @@ begin
    TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia.ImprimirGuia(GNRE);
 end;
 
-procedure GuiaRetorno.ImprimirPDF;
+procedure TGuiaRetorno.ImprimirPDF;
 begin
  if not Assigned( TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia ) then
    raise Exception.Create('Componente DANFSE não associado.')
@@ -136,9 +136,9 @@ end;
 
 { TGuiaRetorno }
 
-function TGuiasRetorno.Add: GuiaRetorno;
+function TGuiasRetorno.Add: TGuiaRetorno;
 begin
-  Result := GuiaRetorno(inherited Add);
+  Result := TGuiaRetorno(inherited Add);
 end;
 
 constructor TGuiasRetorno.Create(AOwner: TPersistent;
@@ -151,9 +151,9 @@ begin
  FACBrGNRE := TACBrGNRE( AOwner ) ;
 end;
 
-function TGuiasRetorno.GetItem(Index: Integer): GuiaRetorno;
+function TGuiasRetorno.GetItem(Index: Integer): TGuiaRetorno;
 begin
-  Result := GuiaRetorno(inherited Items[Index]);
+  Result := TGuiaRetorno(inherited Items[Index]);
 end;
 
 function TGuiasRetorno.GetNamePath: string;
@@ -177,9 +177,9 @@ begin
    TACBrGNRE( FACBrGNRE ).GNREGuia.ImprimirGuiaPDF(nil);
 end;
 
-function TGuiasRetorno.Insert(Index: Integer): GuiaRetorno;
+function TGuiasRetorno.Insert(Index: Integer): TGuiaRetorno;
 begin
-  Result := GuiaRetorno(inherited Insert(Index));
+  Result := TGuiaRetorno(inherited Insert(Index));
 end;
 
 function TGuiasRetorno.LerTXT(ArqRetorno: TStringList): Boolean;
@@ -259,7 +259,7 @@ begin
 
 end;
 
-function TGuiasRetorno.LerXML(AXML: String): Boolean;
+function TGuiasRetorno.LerXML(const AXML: String): Boolean;
 var
   GNRERetorno: TGNRERetorno;
   i, j, k, Nivel, cProd, codIBGE: Integer;
@@ -287,6 +287,7 @@ begin
       GNRERetorno.NumeroControle        := Leitor.rCampo(tcStr, 'nossoNumero');
       GNRERetorno.RepresentacaoNumerica := Leitor.rCampo(tcStr, 'linhaDigitavel');
       GNRERetorno.CodigoBarras          := Leitor.rCampo(tcStr, 'codigoBarras');
+      GNRERetorno.qrcodePayload         := Leitor.rCampo(tcStr, 'qrcodePayload');
 
       Inc(Nivel);
       if Leitor.rExtrai(Nivel, 'contribuinteEmitente') <> '' then
@@ -330,6 +331,17 @@ begin
           GNRERetorno.InfoComplementares := GNRERetorno.InfoComplementares + Leitor.rCampo(tcStr, 'informacao')+ sLineBreak;
           Inc(j);
         end;
+      end;
+
+      if Leitor.rExtrai(Nivel, 'dadosPagamento') <> '' then
+      begin
+        GNReRetorno.dadosPagamento.data := Leitor.rCampo(tcDatHor, 'data');
+        GNReRetorno.dadosPagamento.autenticacao := Leitor.rCampo(tcStr, 'autenticacao');
+        GNReRetorno.dadosPagamento.banco := Leitor.rCampo(tcStr, 'banco');
+        GNReRetorno.dadosPagamento.agencia := Leitor.rCampo(tcStr, 'agencia');
+        GNReRetorno.dadosPagamento.txId := Leitor.rCampo(tcStr, 'txId');
+        GNReRetorno.dadosPagamento.e2eId := Leitor.rCampo(tcStr, 'e2eId');
+        GNReRetorno.dadosPagamento.pspPagador := Leitor.rCampo(tcStr, 'pspPagador');
       end;
 
       if Leitor.rExtrai(Nivel, 'itensGNRE') <> '' then
@@ -482,7 +494,7 @@ begin
   end;
 end;
 
-function TGuiasRetorno.LoadFromFile(CaminhoArquivo: string): boolean;
+function TGuiasRetorno.LoadFromFile(const CaminhoArquivo: string): boolean;
 var
   XMLUTF8: AnsiString;
   MS: TMemoryStream;
@@ -519,7 +531,7 @@ begin
   end;
 end;
 
-function TGuiasRetorno.LoadFromString(Arquivo: String): boolean;
+function TGuiasRetorno.LoadFromString(const Arquivo: String): boolean;
 var
 	ArquivoRetorno: TStringList;
   XMLString: string;
@@ -545,7 +557,7 @@ begin
   end;
 end;
 
-procedure TGuiasRetorno.SetItem(Index: Integer; const Value: GuiaRetorno);
+procedure TGuiasRetorno.SetItem(Index: Integer; const Value: TGuiaRetorno);
 begin
   Items[Index].Assign(Value);
 end;

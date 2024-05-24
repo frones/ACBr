@@ -2,7 +2,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
   Left = 0
   Top = 0
   Caption = 'ACBrGNREGuiaFR_Fortes'
-  ClientHeight = 749
+  ClientHeight = 1044
   ClientWidth = 812
   Font.Name = 'Tahoma'
   TextHeight = 13
@@ -51,6 +51,30 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         Width = 729
         Height = 1030
         BeforePrint = RLBand1BeforePrint
+        object imgQrCodePIX: TRLImage
+          Left = 524
+          Top = 269
+          Width = 52
+          Height = 52
+          Center = True
+          Scaled = True
+        end
+        object imgQrCodePIX2: TRLImage
+          Left = 524
+          Top = 599
+          Width = 52
+          Height = 52
+          Center = True
+          Scaled = True
+        end
+        object imgQrCodePIX3: TRLImage
+          Left = 524
+          Top = 935
+          Width = 52
+          Height = 52
+          Center = True
+          Scaled = True
+        end
         object RLMemo2: TRLMemo
           Left = 0
           Top = 0
@@ -2743,6 +2767,78 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Alignment = taCenter
           AutoSize = False
           Ratio = 3.000000000000000000
+        end
+        object pnlMsgPIX: TRLPanel
+          Left = 524
+          Top = 269
+          Width = 67
+          Height = 55
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = True
+          Borders.DrawTop = True
+          Borders.DrawRight = True
+          Borders.DrawBottom = True
+          Visible = False
+          object msgQrCodePIX: TRLMemo
+            Left = 1
+            Top = 1
+            Width = 65
+            Height = 53
+            Align = faClient
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Layout = tlCenter
+            Lines.Strings = (
+              'UF n'#227'o emite QR Code PIX')
+          end
+        end
+        object pnlMsgPIX2: TRLPanel
+          Left = 525
+          Top = 599
+          Width = 67
+          Height = 55
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = True
+          Borders.DrawTop = True
+          Borders.DrawRight = True
+          Borders.DrawBottom = True
+          Visible = False
+          object msgQrCodePIX2: TRLMemo
+            Left = 1
+            Top = 1
+            Width = 65
+            Height = 53
+            Align = faClient
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Layout = tlCenter
+            Lines.Strings = (
+              'UF n'#227'o emite QR Code PIX')
+          end
+        end
+        object pnlMsgPIX3: TRLPanel
+          Left = 524
+          Top = 935
+          Width = 67
+          Height = 55
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = True
+          Borders.DrawTop = True
+          Borders.DrawRight = True
+          Borders.DrawBottom = True
+          Visible = False
+          object msgQrCodePIX3: TRLMemo
+            Left = 1
+            Top = 1
+            Width = 65
+            Height = 53
+            Align = faClient
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Layout = tlCenter
+            Lines.Strings = (
+              'UF n'#227'o emite QR Code PIX')
+          end
         end
       end
     end

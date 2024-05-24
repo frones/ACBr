@@ -50,7 +50,7 @@ uses
   ACBrGNReGuiaRL, 
   RLFilters, 
   pgnreGNRERetorno, 
-  maskutils;
+  maskutils, StdCtrls;
 
 type
 
@@ -290,6 +290,15 @@ type
     RLDraw52: TRLDraw;
     RLDraw53: TRLDraw;
     RLDraw55: TRLDraw;
+    imgQrCodePIX: TRLImage;
+    imgQrCodePIX2: TRLImage;
+    imgQrCodePIX3: TRLImage;
+    pnlMsgPIX: TRLPanel;
+    RLMemo7: TRLMemo;
+    pnlMsgPIX2: TRLPanel;
+    RLMemo8: TRLMemo;
+    pnlMsgPIX3: TRLPanel;
+    RLMemo9: TRLMemo;
       procedure RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLGNReDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
       var Eof: Boolean; var RecordAction: TRLRecordAction);
@@ -298,6 +307,7 @@ type
   private
     { Private declarations }
     FNumItem : integer;
+    procedure printQrCodePayload(const AQrCodePayLoad: String; AInfoQrCode: TRLPanel; out AImagemQrCode: TRLImage);
   public
     { Public declarations }
   end;
@@ -305,7 +315,7 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils,
+  StrUtils, DateUtils, ACBrImage, ACBrDelphiZXingQRCode,
   ACBrUtil.Base, ACBrUtil.Strings,
   ACBrDFeUtil;
 
@@ -314,6 +324,26 @@ uses
 {$else}
  {$R *.dfm}
 {$endif}
+
+procedure TfrlGuiaRLRetrato.printQrCodePayload(const AQrCodePayLoad: String; AInfoQrCode: TRLPanel; out AImagemQrCode: TRLImage);
+begin
+  if NaoEstaVazio(AQrCodePayLoad) then
+  begin
+    AImagemQrCode.Visible := True;
+    PintarQrCode(AQrCodePayload, AImagemQrCode.Picture.Bitmap, qrAuto);
+    AImagemQrCode.BringToFront;
+
+    AInfoQrCode.Visible := False;
+    AInfoQrCode.SendToBack;
+  end else
+  begin
+    AImagemQrCode.Visible := False;
+    AImagemQrCode.SendToBack;
+
+    AInfoQrCode.Visible := True;
+    AInfoQrCode.BringToFront;
+  end;
+end;
 
 procedure TfrlGuiaRLRetrato.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
 
@@ -495,6 +525,10 @@ begin
   CodigoBarras.Caption := OnlyNumber(FGNRe.CodigoBarras);
   CodigoBarras2.Caption := CodigoBarras.Caption;
   CodigoBarras3.Caption := CodigoBarras.Caption;
+
+  printQrCodePayload(FGNRe.qrcodePayload, pnlMsgPIX, imgQrCodePIX);
+  printQrCodePayload(FGNRe.qrcodePayload, pnlMsgPIX2, imgQrCodePIX2);
+  printQrCodePayload(FGNRe.qrcodePayload, pnlMsgPIX3, imgQrCodePIX3);
 
   InfoComplementares.Lines.Text := FGNRe.InfoComplementares;
   InfoComplementares2.Lines := InfoComplementares.Lines;

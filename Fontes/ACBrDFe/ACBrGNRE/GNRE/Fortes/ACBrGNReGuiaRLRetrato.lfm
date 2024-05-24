@@ -27,21 +27,37 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
       Borders.DrawRight = False
       Borders.DrawBottom = False
       InsideMargins.LeftMargin = 5
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       OnDataRecord = subItensDataRecord
       object RLBand1: TRLBand
         Left = 19
         Height = 1030
         Top = 0
         Width = 729
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         BeforePrint = RLBand1BeforePrint
+        object imgQrCodePIX: TRLImage
+          Left = 524
+          Top = 269
+          Width = 52
+          Height = 52
+          Center = True
+          Scaled = True
+        end
+        object imgQrCodePIX2: TRLImage
+          Left = 524
+          Top = 599
+          Width = 52
+          Height = 52
+          Center = True
+          Scaled = True
+        end
+        object imgQrCodePIX3: TRLImage
+          Left = 524
+          Top = 935
+          Width = 52
+          Height = 52
+          Center = True
+          Scaled = True
+        end
         object RLMemo2: TRLMemo
           Left = 0
           Height = 261
@@ -58,10 +74,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
             'para Pagamento'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLMemo5: TRLMemo
           Left = 8
@@ -79,43 +91,24 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
             'para Pagamento'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw55: TRLDraw
           Left = 481
           Height = 27
           Top = 744
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw53: TRLDraw
           Left = 481
           Height = 27
           Top = 718
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw52: TRLDraw
           Left = 480
           Height = 27
           Top = 692
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLMemo3: TRLMemo
           Left = 8
@@ -133,318 +126,174 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
             'para Pagamento'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw49: TRLDraw
           Left = 481
           Height = 27
           Top = 900
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw48: TRLDraw
           Left = 481
           Height = 27
           Top = 874
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw47: TRLDraw
           Left = 481
           Height = 27
           Top = 848
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw46: TRLDraw
           Left = 481
           Height = 27
           Top = 822
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw45: TRLDraw
           Left = 481
           Height = 27
           Top = 796
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw44: TRLDraw
           Left = 481
           Height = 27
           Top = 770
           Width = 110
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw38: TRLDraw
           Left = 590
           Height = 27
           Top = 770
           Width = 110
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw51: TRLDraw
           Left = 1
           Height = 64
           Top = 863
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw50: TRLDraw
           Left = 1
           Height = 53
           Top = 811
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw36: TRLDraw
           Left = 1
           Height = 42
           Top = 770
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw37: TRLDraw
           Left = 1
           Height = 79
           Top = 692
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw1: TRLDraw
           Left = 0
           Height = 27
           Top = 0
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw14: TRLDraw
           Left = 0
           Height = 42
           Top = 104
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw2: TRLDraw
           Left = 0
           Height = 79
           Top = 26
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw17: TRLDraw
           Left = 589
           Height = 27
           Top = 104
           Width = 110
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw3: TRLDraw
           Left = 480
           Height = 27
           Top = 0
           Width = 89
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw4: TRLDraw
           Left = 568
           Height = 27
           Top = 0
           Width = 131
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw5: TRLDraw
           Left = 480
           Height = 27
           Top = 26
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw6: TRLDraw
           Left = 480
           Height = 27
           Top = 52
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw7: TRLDraw
           Left = 480
           Height = 27
           Top = 78
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw8: TRLDraw
           Left = 480
           Height = 27
           Top = 104
           Width = 110
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw9: TRLDraw
           Left = 480
           Height = 27
           Top = 130
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw10: TRLDraw
           Left = 480
           Height = 27
           Top = 156
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw11: TRLDraw
           Left = 480
           Height = 27
           Top = 182
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw12: TRLDraw
           Left = 480
           Height = 27
           Top = 208
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw13: TRLDraw
           Left = 480
           Height = 27
           Top = 234
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw15: TRLDraw
           Left = 0
           Height = 53
           Top = 145
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw16: TRLDraw
           Left = 0
           Height = 64
           Top = 197
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel1: TRLLabel
           Left = 43
@@ -458,10 +307,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel2: TRLLabel
           Left = 3
@@ -476,10 +321,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel3: TRLLabel
           Left = 3
@@ -492,10 +333,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel4: TRLLabel
           Left = 376
@@ -508,10 +345,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel5: TRLLabel
           Left = 3
@@ -524,10 +357,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel6: TRLLabel
           Left = 487
@@ -540,10 +369,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel7: TRLLabel
           Left = 585
@@ -556,10 +381,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel8: TRLLabel
           Left = 3
@@ -572,10 +393,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel9: TRLLabel
           Left = 376
@@ -588,10 +405,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel10: TRLLabel
           Left = 3
@@ -604,10 +417,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel11: TRLLabel
           Left = 355
@@ -620,10 +429,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel12: TRLLabel
           Left = 487
@@ -636,10 +441,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel13: TRLLabel
           Left = 487
@@ -652,10 +453,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel14: TRLLabel
           Left = 487
@@ -668,10 +465,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel15: TRLLabel
           Left = 3
@@ -686,10 +479,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel16: TRLLabel
           Left = 3
@@ -702,10 +491,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel17: TRLLabel
           Left = 3
@@ -718,10 +503,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel18: TRLLabel
           Left = 86
@@ -733,10 +514,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel19: TRLLabel
           Left = 3
@@ -751,10 +528,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel20: TRLLabel
           Left = 3
@@ -767,10 +540,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel21: TRLLabel
           Left = 3
@@ -783,10 +552,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel22: TRLLabel
           Left = 3
@@ -799,10 +564,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel23: TRLLabel
           Left = 3
@@ -815,10 +576,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel24: TRLLabel
           Left = 487
@@ -831,10 +588,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel25: TRLLabel
           Left = 594
@@ -847,10 +600,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel26: TRLLabel
           Left = 594
@@ -863,10 +612,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel27: TRLLabel
           Left = 487
@@ -879,10 +624,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel28: TRLLabel
           Left = 487
@@ -895,10 +636,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel30: TRLLabel
           Left = 487
@@ -911,10 +648,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel32: TRLLabel
           Left = 487
@@ -927,10 +660,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel33: TRLLabel
           Left = 487
@@ -943,10 +672,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel34: TRLLabel
           Left = 487
@@ -959,10 +684,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel35: TRLLabel
           Left = 487
@@ -975,10 +696,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel36: TRLLabel
           Left = 487
@@ -991,10 +708,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel37: TRLLabel
           Left = 652
@@ -1006,10 +719,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -7
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLMemo1: TRLMemo
           Left = 703
@@ -1036,10 +745,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
             'o'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel29: TRLLabel
           Left = 487
@@ -1052,10 +757,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel31: TRLLabel
           Left = 487
@@ -1068,197 +769,108 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw18: TRLDraw
           Left = 0
           Height = 27
           Top = 330
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw19: TRLDraw
           Left = 0
           Height = 42
           Top = 434
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw20: TRLDraw
           Left = 0
           Height = 79
           Top = 356
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw21: TRLDraw
           Left = 589
           Height = 27
           Top = 434
           Width = 110
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw22: TRLDraw
           Left = 480
           Height = 27
           Top = 330
           Width = 89
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw23: TRLDraw
           Left = 568
           Height = 27
           Top = 330
           Width = 131
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw24: TRLDraw
           Left = 480
           Height = 27
           Top = 356
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw25: TRLDraw
           Left = 480
           Height = 27
           Top = 382
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw26: TRLDraw
           Left = 480
           Height = 27
           Top = 408
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw27: TRLDraw
           Left = 480
           Height = 27
           Top = 434
           Width = 110
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw28: TRLDraw
           Left = 480
           Height = 27
           Top = 460
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw29: TRLDraw
           Left = 480
           Height = 27
           Top = 486
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw30: TRLDraw
           Left = 480
           Height = 27
           Top = 512
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw31: TRLDraw
           Left = 480
           Height = 27
           Top = 538
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw32: TRLDraw
           Left = 480
           Height = 27
           Top = 564
           Width = 219
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw33: TRLDraw
           Left = 0
           Height = 53
           Top = 475
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw34: TRLDraw
           Left = 0
           Height = 64
           Top = 527
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel38: TRLLabel
           Left = 43
@@ -1272,10 +884,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel39: TRLLabel
           Left = 3
@@ -1290,10 +898,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel40: TRLLabel
           Left = 3
@@ -1306,10 +910,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel41: TRLLabel
           Left = 376
@@ -1322,10 +922,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel42: TRLLabel
           Left = 3
@@ -1338,10 +934,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel43: TRLLabel
           Left = 487
@@ -1354,10 +946,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel44: TRLLabel
           Left = 585
@@ -1370,10 +958,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel45: TRLLabel
           Left = 3
@@ -1386,10 +970,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel46: TRLLabel
           Left = 376
@@ -1402,10 +982,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel47: TRLLabel
           Left = 3
@@ -1418,10 +994,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel48: TRLLabel
           Left = 355
@@ -1434,10 +1006,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel49: TRLLabel
           Left = 487
@@ -1450,10 +1018,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel50: TRLLabel
           Left = 487
@@ -1466,10 +1030,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel51: TRLLabel
           Left = 487
@@ -1482,10 +1042,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel52: TRLLabel
           Left = 3
@@ -1500,10 +1056,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel53: TRLLabel
           Left = 3
@@ -1516,10 +1068,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel54: TRLLabel
           Left = 3
@@ -1532,10 +1080,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel55: TRLLabel
           Left = 86
@@ -1547,10 +1091,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel56: TRLLabel
           Left = 3
@@ -1565,10 +1105,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel57: TRLLabel
           Left = 3
@@ -1581,10 +1117,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel58: TRLLabel
           Left = 3
@@ -1597,10 +1129,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel59: TRLLabel
           Left = 3
@@ -1613,10 +1141,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel60: TRLLabel
           Left = 3
@@ -1629,10 +1153,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel61: TRLLabel
           Left = 487
@@ -1645,10 +1165,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel62: TRLLabel
           Left = 594
@@ -1661,10 +1177,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel63: TRLLabel
           Left = 594
@@ -1677,10 +1189,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel64: TRLLabel
           Left = 487
@@ -1693,10 +1201,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel65: TRLLabel
           Left = 487
@@ -1709,10 +1213,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel66: TRLLabel
           Left = 487
@@ -1725,10 +1225,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel67: TRLLabel
           Left = 487
@@ -1741,10 +1237,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel68: TRLLabel
           Left = 487
@@ -1757,10 +1249,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel69: TRLLabel
           Left = 487
@@ -1773,10 +1261,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel70: TRLLabel
           Left = 487
@@ -1789,10 +1273,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel71: TRLLabel
           Left = 487
@@ -1805,10 +1285,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel72: TRLLabel
           Left = 632
@@ -1820,10 +1296,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -7
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLMemo4: TRLMemo
           Left = 702
@@ -1850,10 +1322,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
             'o'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel73: TRLLabel
           Left = 487
@@ -1866,10 +1334,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel74: TRLLabel
           Left = 487
@@ -1882,10 +1346,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RazaoSocialEmitente: TRLLabel
           Left = 3
@@ -1897,10 +1357,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DocEmitente: TRLLabel
           Left = 376
@@ -1911,10 +1367,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object EnderecoEmitente: TRLLabel
           Left = 52
@@ -1926,10 +1378,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object UFFavorecida: TRLLabel
           Left = 487
@@ -1940,10 +1388,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CodReceita: TRLLabel
           Left = 585
@@ -1954,10 +1398,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object MunicipioEmitente: TRLLabel
           Left = 52
@@ -1969,10 +1409,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object UFEmitente: TRLLabel
           Left = 398
@@ -1983,10 +1419,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CEPEmitente: TRLLabel
           Left = 52
@@ -1997,10 +1429,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object TelefoneEmitente: TRLLabel
           Left = 398
@@ -2011,10 +1439,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object NumeroControle: TRLLabel
           Left = 585
@@ -2027,10 +1451,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DataVencimento: TRLLabel
           Left = 585
@@ -2043,10 +1463,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object NumDocOrigem: TRLLabel
           Left = 585
@@ -2059,10 +1475,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object MunicipioDestinatario: TRLLabel
           Left = 52
@@ -2074,10 +1486,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object Convenio: TRLLabel
           Left = 90
@@ -2089,10 +1497,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object Produto: TRLLabel
           Left = 45
@@ -2104,10 +1508,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DataLimitePagamento: TRLLabel
           Left = 167
@@ -2119,10 +1519,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RepresentacaoNumerica: TRLLabel
           Left = 3
@@ -2135,10 +1531,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RazaoSocialEmitente2: TRLLabel
           Left = 3
@@ -2150,10 +1542,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DocEmitente2: TRLLabel
           Left = 376
@@ -2164,10 +1552,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object EnderecoEmitente2: TRLLabel
           Left = 52
@@ -2179,10 +1563,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object UFFavorecida2: TRLLabel
           Left = 487
@@ -2193,10 +1573,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CodReceita2: TRLLabel
           Left = 585
@@ -2207,10 +1583,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object MunicipioEmitente2: TRLLabel
           Left = 52
@@ -2222,10 +1594,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object UFEmitente2: TRLLabel
           Left = 398
@@ -2236,10 +1604,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CEPEmitente2: TRLLabel
           Left = 52
@@ -2250,10 +1614,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object TelefoneEmitente2: TRLLabel
           Left = 398
@@ -2264,10 +1624,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object NumeroControle2: TRLLabel
           Left = 585
@@ -2280,10 +1636,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DataVencimento2: TRLLabel
           Left = 585
@@ -2296,10 +1648,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object NumDocOrigem2: TRLLabel
           Left = 585
@@ -2312,10 +1660,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object MunicipioDestinatario2: TRLLabel
           Left = 52
@@ -2327,10 +1671,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object Convenio2: TRLLabel
           Left = 90
@@ -2342,10 +1682,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object Produto2: TRLLabel
           Left = 45
@@ -2357,10 +1693,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DataLimitePagamento2: TRLLabel
           Left = 167
@@ -2372,10 +1704,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RepresentacaoNumerica2: TRLLabel
           Left = 3
@@ -2388,10 +1716,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object PerMesAnoRef2: TRLLabel
           Left = 487
@@ -2403,10 +1727,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object PerMesAnoRef: TRLLabel
           Left = 487
@@ -2417,10 +1737,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CodigoBarras: TRLBarcode
           Left = 3
@@ -2432,10 +1748,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Margins.LeftMargin = 1
           Margins.RightMargin = 1
           Ratio = 3
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CodigoBarras2: TRLBarcode
           Left = 3
@@ -2447,10 +1759,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Margins.LeftMargin = 1
           Margins.RightMargin = 1
           Ratio = 3
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object InfoComplementares: TRLMemo
           Left = 125
@@ -2463,10 +1771,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object InfoComplementares2: TRLMemo
           Left = 125
@@ -2479,21 +1783,12 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw35: TRLDraw
           Left = 1
           Height = 27
           Top = 666
           Width = 481
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel75: TRLLabel
           Left = 44
@@ -2507,32 +1802,18 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw39: TRLDraw
           Left = 481
           Height = 27
           Top = 666
           Width = 89
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLDraw40: TRLDraw
           Left = 569
           Height = 27
           Top = 666
           Width = 131
-          Angle = 0
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel80: TRLLabel
           Left = 488
@@ -2545,10 +1826,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object UFFavorecida3: TRLLabel
           Left = 488
@@ -2559,10 +1836,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CodReceita3: TRLLabel
           Left = 586
@@ -2573,10 +1846,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel81: TRLLabel
           Left = 586
@@ -2589,10 +1858,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel86: TRLLabel
           Left = 488
@@ -2605,10 +1870,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object NumeroControle3: TRLLabel
           Left = 586
@@ -2621,10 +1882,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel87: TRLLabel
           Left = 488
@@ -2637,10 +1894,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DataVencimento3: TRLLabel
           Left = 586
@@ -2653,10 +1906,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel88: TRLLabel
           Left = 488
@@ -2669,10 +1918,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object NumDocOrigem3: TRLLabel
           Left = 586
@@ -2685,10 +1930,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel98: TRLLabel
           Left = 488
@@ -2701,10 +1942,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object PerMesAnoRef3: TRLLabel
           Left = 488
@@ -2716,10 +1953,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel99: TRLLabel
           Left = 595
@@ -2732,10 +1965,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel100: TRLLabel
           Left = 595
@@ -2748,10 +1977,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel101: TRLLabel
           Left = 488
@@ -2764,10 +1989,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel102: TRLLabel
           Left = 488
@@ -2780,10 +2001,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel110: TRLLabel
           Left = 488
@@ -2796,10 +2013,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel103: TRLLabel
           Left = 488
@@ -2812,10 +2025,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel111: TRLLabel
           Left = 488
@@ -2828,10 +2037,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel104: TRLLabel
           Left = 488
@@ -2844,10 +2049,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel105: TRLLabel
           Left = 488
@@ -2860,10 +2061,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel106: TRLLabel
           Left = 488
@@ -2876,10 +2073,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel107: TRLLabel
           Left = 488
@@ -2892,10 +2085,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel108: TRLLabel
           Left = 488
@@ -2908,10 +2097,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel109: TRLLabel
           Left = 613
@@ -2923,10 +2108,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -7
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLMemo6: TRLMemo
           Left = 703
@@ -2953,10 +2134,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
             'o'
           )
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel76: TRLLabel
           Left = 4
@@ -2971,10 +2148,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel77: TRLLabel
           Left = 4
@@ -2987,10 +2160,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel79: TRLLabel
           Left = 4
@@ -3003,10 +2172,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object EnderecoEmitente3: TRLLabel
           Left = 52
@@ -3018,10 +2183,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel78: TRLLabel
           Left = 377
@@ -3034,10 +2195,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DocEmitente3: TRLLabel
           Left = 377
@@ -3048,10 +2205,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RazaoSocialEmitente3: TRLLabel
           Left = 4
@@ -3063,10 +2216,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel83: TRLLabel
           Left = 377
@@ -3079,10 +2228,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object UFEmitente3: TRLLabel
           Left = 399
@@ -3093,10 +2238,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object TelefoneEmitente3: TRLLabel
           Left = 399
@@ -3107,10 +2248,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel85: TRLLabel
           Left = 356
@@ -3123,10 +2260,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object MunicipioEmitente3: TRLLabel
           Left = 53
@@ -3138,10 +2271,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel82: TRLLabel
           Left = 4
@@ -3154,10 +2283,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel84: TRLLabel
           Left = 4
@@ -3170,10 +2295,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CEPEmitente3: TRLLabel
           Left = 53
@@ -3184,10 +2305,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel89: TRLLabel
           Left = 4
@@ -3202,10 +2319,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel90: TRLLabel
           Left = 4
@@ -3218,10 +2331,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel92: TRLLabel
           Left = 87
@@ -3233,10 +2342,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object MunicipioDestinatario3: TRLLabel
           Left = 53
@@ -3248,10 +2353,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel93: TRLLabel
           Left = 4
@@ -3266,10 +2367,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel94: TRLLabel
           Left = 4
@@ -3282,10 +2379,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object Convenio3: TRLLabel
           Left = 91
@@ -3297,10 +2390,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel95: TRLLabel
           Left = 4
@@ -3313,10 +2402,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object Produto3: TRLLabel
           Left = 46
@@ -3328,10 +2413,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel91: TRLLabel
           Left = 4
@@ -3344,10 +2425,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel96: TRLLabel
           Left = 4
@@ -3360,10 +2437,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object InfoComplementares3: TRLMemo
           Left = 126
@@ -3376,10 +2449,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RLLabel97: TRLLabel
           Left = 4
@@ -3392,10 +2461,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object DataLimitePagamento3: TRLLabel
           Left = 167
@@ -3407,10 +2472,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object RepresentacaoNumerica3: TRLLabel
           Left = 4
@@ -3423,10 +2484,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Font.Height = -9
           Font.Name = 'Arial'
           ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
         end
         object CodigoBarras3: TRLBarcode
           Left = 4
@@ -3438,10 +2495,78 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           Margins.LeftMargin = 1
           Margins.RightMargin = 1
           Ratio = 3
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
+        end
+        object pnlMsgPIX: TRLPanel
+          Left = 524
+          Top = 269
+          Width = 67
+          Height = 55
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = True
+          Borders.DrawTop = True
+          Borders.DrawRight = True
+          Borders.DrawBottom = True
+          Visible = False
+          object msgQrCodePIX: TRLMemo
+            Left = 1
+            Top = 1
+            Width = 65
+            Height = 53
+            Align = faClient
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Layout = tlCenter
+            Lines.Strings = (
+              'UF n'#227'o emite QR Code PIX')
+          end
+        end
+        object pnlMsgPIX2: TRLPanel
+          Left = 525
+          Top = 599
+          Width = 67
+          Height = 55
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = True
+          Borders.DrawTop = True
+          Borders.DrawRight = True
+          Borders.DrawBottom = True
+          Visible = False
+          object msgQrCodePIX2: TRLMemo
+            Left = 1
+            Top = 1
+            Width = 65
+            Height = 53
+            Align = faClient
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Layout = tlCenter
+            Lines.Strings = (
+              'UF n'#227'o emite QR Code PIX')
+          end
+        end
+        object pnlMsgPIX3: TRLPanel
+          Left = 524
+          Top = 935
+          Width = 67
+          Height = 55
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = True
+          Borders.DrawTop = True
+          Borders.DrawRight = True
+          Borders.DrawBottom = True
+          Visible = False
+          object msgQrCodePIX3: TRLMemo
+            Left = 1
+            Top = 1
+            Width = 65
+            Height = 53
+            Align = faClient
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Layout = tlCenter
+            Lines.Strings = (
+              'UF n'#227'o emite QR Code PIX')
+          end
         end
       end
     end
@@ -3451,11 +2576,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
     Height = 27
     Top = 411
     Width = 219
-    Angle = 0
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     Transparent = False
   end
   object RLDraw43: TRLDraw[2]
@@ -3463,11 +2583,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
     Height = 27
     Top = 463
     Width = 219
-    Angle = 0
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     Transparent = False
   end
   object RLDraw42: TRLDraw[3]
@@ -3475,17 +2590,12 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
     Height = 27
     Top = 437
     Width = 219
-    Angle = 0
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     Transparent = False
   end
   inherited RLPDFFilter1: TRLPDFFilter[4]
     DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
     DisplayName = 'ACBrGNRE PDF - http://acbr.sf.net'
-    left = 128
-    top = 8
+    Left = 128
+    Top = 8
   end
 end

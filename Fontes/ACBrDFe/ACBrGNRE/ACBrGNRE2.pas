@@ -138,7 +138,7 @@ begin
 
   FGuias := TGuias.Create(Self, Guia);
   FWebServices := TWebServices.Create(Self);
-  FGuiasRetorno := TGuiasRetorno.Create(Self, GuiaRetorno);
+  FGuiasRetorno := TGuiasRetorno.Create(Self, TGuiaRetorno);
 end;
 
 destructor TACBrGNRE.Destroy;

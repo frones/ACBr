@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/05/2024
+-- ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração visando a leitura a tag referente a Taxa de Turismo bem como a 
+    sua impressão no DANFSE.
+  Por: Eloildo Vieira
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Breves/PA, provedor é o Isaneto.
   Por: Italo Giurizzato Junior

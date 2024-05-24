@@ -1022,7 +1022,8 @@ begin
 
       Valores.ValorTotalNotaFiscal := Valores.ValorServicos -
                                       Valores.DescontoCondicionado -
-                                      Valores.DescontoIncondicionado;
+                                      Valores.DescontoIncondicionado +
+                                      Valores.ValorTaxaTurismo;
     end;
   end;
 end;
@@ -1164,6 +1165,9 @@ begin
 
       if IssRetido = stNenhum then
         IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
+
+      if ValorTaxaTurismo = 0 then
+        ValorTaxaTurismo := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorTTS'), tcDe2);
     end;
   end;
 end;

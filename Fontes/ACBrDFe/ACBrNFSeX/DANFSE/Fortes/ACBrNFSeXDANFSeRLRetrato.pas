@@ -479,8 +479,14 @@ begin
     rllCodigoArt.Visible := MostrarObra;
     rllCodART.Visible := MostrarObra;
 
-    rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ ' +
+    if Servico.Valores.ValorTaxaTurismo > 0 then
+      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA + (Taxa Turismo ' +
+                               FormatFloat(',0.00', Servico.Valores.ValorTaxaTurismo) + ')' +
+                               ' = R$ ' + FormatFloat(',0.00', Servico.Valores.ValorTotalNotaFiscal)
+    else
+      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ ' +
                              FormatFloat(',0.00', Servico.Valores.ValorTotalNotaFiscal);
+
     rlmCodServico.Lines.Clear;
 
     if (Servico.xItemListaServico = '') and (Servico.ItemServico.Count > 0) then

@@ -53,8 +53,10 @@ const
   CSITEF_RestricoesDebito = '16;17;18;19;42;43';
   CSITEF_RestricoesAVista = '16;24;26;34';
   CSITEF_RestricoesParcelado = '18;35;44';
-  CSITEF_RestricoesParcelaEstabelecimento = '27';
-  CSITEF_RestricoesParcelaAministradora = '28';
+  CSITEF_RestricoesParcelaEstabelecimento = '27,3988';
+  CSITEF_RestricoesParcelaAministradora = '28,3988';
+
+// https://dev.softwareexpress.com.br/en/docs/clisitef/clisitef_documento_principal/
 
 type
 

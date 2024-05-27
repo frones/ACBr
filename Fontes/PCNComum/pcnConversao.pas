@@ -157,12 +157,17 @@ type
   TpcnDestinoOperacao = (doInterna, doInterestadual, doExterior);
   TpcnConsumidorFinal = (cfNao, cfConsumidorFinal);
   TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcPresencialForaEstabelecimento, pcOutros);
+  (*TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
+                        fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
+                        fpDuplicataMercantil, fpBoletoBancario, fpDepositoBancario,
+                        fpPagamentoInstantaneo, fpTransfBancario, fpProgramaFidelidade,
+                        fpSemPagamento, fpRegimeEspecial, fpOutro);*) //antes da IT 2024.002 v1.00
   TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                         fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
                         fpDuplicataMercantil, fpBoletoBancario, fpDepositoBancario,
                         fpPagamentoInstantaneo, fpTransfBancario, fpProgramaFidelidade,
-                        fpSemPagamento, fpRegimeEspecial, fpOutro);
-
+                        fpSemPagamento, fpRegimeEspecial, fpOutro, fpPagamentoInstantaneoEstatico,
+                        fpCreditoEmLojaPorDevolucao, fpFalhaHardware);
   TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
                         bcElo, bcHipercard, bcAura, bcCabal, bcAlelo, bcBanesCard,
                         bcCalCard, bcCredz, bcDiscover, bcGoodCard, bcGreenCard,
@@ -1304,14 +1309,15 @@ function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 begin
   result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12',
                                '13', '14', '15', '16', '17', '18', '19', '90',
-                               '98', '99'],
+                               '98', '99', '20', '21', '22'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
                                fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
                                fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
                                fpBoletoBancario, fpDepositoBancario,
                                fpPagamentoInstantaneo, fpTransfBancario,
                                fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
-                               fpOutro]);
+                               fpOutro, fpPagamentoInstantaneoEstatico,
+                               fpCreditoEmLojaPorDevolucao, fpFalhaHardware]);
 end;
 
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string; overload;
@@ -1325,20 +1331,22 @@ begin
     result := xPag
   else
     result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
-                                'Cartão de Débito', 'Crédito Loja',
+                                'Cartão de Débito', 'Private Label',
                                 'Vale Alimentação', 'Vale Refeição', 'Vale Presente',
                                 'Vale Combustível', 'Duplicata Mercantil',
                                 'Boleto Bancário', 'Deposito Bancário',
-                                'Pagamento Instantâneo (PIX)', 'Transferência Bancária',
+                                'Pagamento Instantâneo (PIX) - Dinâmico', 'Transferência Bancária',
                                 'Programa Fidelidade', 'Sem Pagamento',
-                                'Regime Especial NFF', 'Outro'],
+                                'Regime Especial NFF', 'Outro', 'Pagamento Instantâneo (PIX) - Estático',
+                                'Crédito em Loja', 'Falha de hardware do sistema emissor'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
                                fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
                                fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
                                fpBoletoBancario, fpDepositoBancario,
                                fpPagamentoInstantaneo, fpTransfBancario,
                                fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
-                               fpOutro]);
+                               fpOutro, fpPagamentoInstantaneoEstatico,
+                               fpCreditoEmLojaPorDevolucao, fpFalhaHardware]);
 end;
 
 
@@ -1346,14 +1354,15 @@ function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamen
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12',
                                    '13', '14', '15', '16', '17', '18', '19', '90',
-                                   '98', '99'],
+                                   '98', '99', '20', '21', '22'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
                                fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
                                fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
                                fpBoletoBancario, fpDepositoBancario,
                                fpPagamentoInstantaneo, fpTransfBancario,
                                fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
-                               fpOutro]);
+                               fpOutro,fpPagamentoInstantaneoEstatico,
+                               fpCreditoEmLojaPorDevolucao, fpFalhaHardware]);
 end;
 
 function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
@@ -1489,6 +1498,7 @@ end;
 
 function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
 begin
+
   result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito',
                                'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação',
                                'Vale Refeição', 'Vale Presente', 'Vale Combustível',
@@ -1501,6 +1511,7 @@ begin
                                MPBoletoBancario, MPDepositoBancario,
                                MPPagamentoInstantaneo, MPTransfBancario,
                                MPProgramaFidelidade, MPSemPagamento, MPOutros]);
+
 end;
 
 // Tipo da Unidade de Transporte ***********************************************

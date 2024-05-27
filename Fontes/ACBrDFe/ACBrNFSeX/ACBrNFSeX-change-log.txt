@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/05/2024
+-- ACBrNFSeXServicos --
+[*] Incluida a versão 2.00 para a cidade de Pedro Afonso/TO, provedor é o Megasoft.
+  Por: maxdatasistema
 -- Saatri.Provider --
 [*] Provedor requer Login/Senha para autenticação
   Por: Diego Folieni

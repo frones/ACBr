@@ -96,8 +96,8 @@ type
     procedure FinalizarTransacao(const Rede, NSU, CodigoFinalizacao: String;
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
     procedure AbortarTransacaoEmAndamento; override;
-    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-      TimeOut: SmallInt = 30000): String; override;
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000;
+      MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
 
 //  procedure ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
 //  procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
@@ -606,7 +606,7 @@ begin
 end;
 
 function TACBrTEFAPIClassElgin.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-  TimeOut: SmallInt): String;
+  TimeOut: SmallInt; MinLen: SmallInt; MaxLen: SmallInt): String;
 var
   TipoDocumento, RetornoInt: integer;
   RetornoDLL, resultadoCapturaPinPad: String;

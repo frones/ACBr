@@ -94,7 +94,22 @@ type
                               dpRG, dpRedRG,
                               dp4UltDigitos,
                               dpCodSeguranca,
-                              dpCNPJ, dpRedCNPJ );
+                              dpCNPJ, dpRedCNPJ,
+                              dpDataDDMMAAAA, dpDataDDMMAA, dpDataDDMM,
+                              dpDiaDD, dpMesMM, dpAnoAA, dpAnoAAAA,
+                              dpDataNascimentoDDMMAAAA, dpDataNascimentoDDMMAA, dpDataNascimentoDDMM,
+                              dpDiaNascimentoDD, dpMesNascimentoMM, dpAnoNascimentoAA, dpAnoNascimentoAAAA,
+                              dpIdentificacao,
+                              dpCodFidelidade, dpNumeroMesa, dpQtdPessoas, dpQuantidade,
+                              dpNumeroBomba, dpNumeroVaga, dpNumeroGuiche,
+                              dpCodVendedor, dpCodGarcom, dpNotaAtendimento,
+                              dpNumeroNotaFiscal, dpNumeroComanda,
+                              dpPlacaVeiculo, dpQuilometragem, dpQuilometragemInicial, dpQuilometragemFinal,
+                              dpPorcentagem,
+                              dpPesquisaSatisfacao0_10, dpAvalieAtendimento0_10,
+                              dpToken, dpNumeroCartao,
+                              dpNumeroParcelas,
+                              dpCodigoPlano, dpCodigoProduto );
 
   TACBrTEFAPIDefinicaoCampo = record
     TituloPergunta: String;
@@ -147,11 +162,12 @@ type
   TACBrTEFAPIClass = class(TACBrTEFAPIComumClass)
   protected
     procedure FinalizarChamadaAPI; override;
-
+    procedure CalcularTamanhosCampoDadoPinPad( TipoDado: TACBrTEFAPIDadoPinPad;
+      out MinLen: SmallInt; out MaxLen: SmallInt);
   public
     procedure ExibirMensagemPinPad(const MsgPinPad: String); virtual;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-      TimeOut: SmallInt = 30000): String; virtual;
+      TimeOut: SmallInt = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; virtual;
     function VerificarPresencaPinPad: Byte; virtual;
   end;
 
@@ -184,7 +200,8 @@ type
     procedure Inicializar; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
-    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000): String;
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
+      TimeOut: SmallInt = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String;
     function VerificarPresencaPinPad: Byte;
 
     property TEF: TACBrTEFAPIClass read GetTEFAPIClass;
@@ -223,13 +240,76 @@ begin
   inherited;
 end;
 
+procedure TACBrTEFAPIClass.CalcularTamanhosCampoDadoPinPad(
+  TipoDado: TACBrTEFAPIDadoPinPad; out MinLen: SmallInt; out MaxLen: SmallInt);
+begin
+  case TipoDado of
+    dpDDD, dpRedDDD:
+      begin
+        MinLen := 3; MaxLen := 3;
+      end;
+    dpFone, dpRedFone:
+      begin
+        MinLen := 8; MaxLen := 9;
+      end;
+    dpDDDeFone, dpRedDDDeFone:
+      begin
+        MinLen := 10; MaxLen := 11;
+      end;
+    dpCPF, dpRedCPF:
+      begin
+        MinLen := 11; MaxLen := 11;
+      end;
+    dpRG, dpRedRG:
+      begin
+        MinLen := 5; MaxLen := 11;
+      end;
+    dp4UltDigitos:
+      begin
+        MinLen := 4; MaxLen := 4;
+      end;
+    dpCodSeguranca:
+      begin
+        MinLen := 3; MaxLen := 3;
+      end;
+    dpCNPJ, dpRedCNPJ:
+      begin
+        MinLen := 14; MaxLen := 14;
+      end;
+    dpDataDDMMAAAA, dpDataNascimentoDDMMAAAA:
+      begin
+        MinLen := 8; MaxLen := 8;
+      end;
+    dpDataDDMMAA,  dpDataNascimentoDDMMAA:
+      begin
+        MinLen := 6; MaxLen := 6;
+      end;
+    dpDataDDMM, dpDataNascimentoDDMM, dpAnoAAAA, dpAnoNascimentoAAAA:
+      begin
+        MinLen := 4; MaxLen := 4;
+      end;
+    dpDiaDD, dpMesMM, dpAnoAA, dpDiaNascimentoDD, dpMesNascimentoMM, dpAnoNascimentoAA:
+      begin
+        MinLen := 2; MaxLen := 2;
+      end;
+    dpPesquisaSatisfacao0_10, dpAvalieAtendimento0_10, dpNotaAtendimento:
+      begin
+        MinLen := 1; MaxLen := 2;
+      end;
+    dpNumeroParcelas:
+      begin
+        MinLen := 1; MaxLen := 3;
+      end;
+  end;
+end;
+
 procedure TACBrTEFAPIClass.ExibirMensagemPinPad(const MsgPinPad: String);
 begin
   ErroAbstract('ExibirMensagemPinPad');
 end;
 
 function TACBrTEFAPIClass.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-  TimeOut: SmallInt): String;
+  TimeOut: SmallInt; MinLen: SmallInt; MaxLen: SmallInt): String;
 begin
   Result := '';
   ErroAbstract('ObterDadoPinPad');
@@ -285,12 +365,12 @@ begin
 end;
 
 function TACBrTEFAPI.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-  TimeOut: SmallInt): String;
+  TimeOut: SmallInt; MinLen: SmallInt; MaxLen: SmallInt): String;
 begin
   GravarLog('ObterDadoPinPad( '+
             GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) )+', '+
-            IntToStr(TimeOut)+' )');
-  Result := TEF.ObterDadoPinPad(TipoDado, TimeOut);
+            IntToStr(TimeOut)+', '+IntToStr(MinLen)+', '+IntToStr(MaxLen)+' )');
+  Result := TEF.ObterDadoPinPad(TipoDado, TimeOut, MinLen, MaxLen);
   GravarLog('   '+Result);
 end;
 
@@ -327,7 +407,7 @@ begin
   CriarTEFResp;
 end;
 
-function TACBrTEFAPI.GetPathDLL: string;
+function TACBrTEFAPI.GetPathDLL: String;
 begin
   if Assigned(fpTEFAPIClass) then
     Result := fpTEFAPIClass.PathDLL
@@ -335,7 +415,7 @@ begin
     Result := '';
 end;
 
-procedure TACBrTEFAPI.SetPathDLL(const Value: string);
+procedure TACBrTEFAPI.SetPathDLL(const Value: String);
 begin
   if Assigned(fpTEFAPIClass) then
     fpTEFAPIClass.PathDLL := value;

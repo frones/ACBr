@@ -47,14 +47,15 @@ const
   CSITEF_OP_Administrativo = 110;
   CSITEF_OP_Cancelamento = 200;
   CSITEF_ESPERA_MINIMA_MSG_FINALIZACAO = 5000;
+  CSITEF_OP_DadosPinPadAberto = 789;
 
   CSITEF_RestricoesCueque = '10';
   CSITEF_RestricoesCredito = '24;26;27;28;29;30;34;35;44;73';
   CSITEF_RestricoesDebito = '16;17;18;19;42;43';
   CSITEF_RestricoesAVista = '16;24;26;34';
   CSITEF_RestricoesParcelado = '18;35;44';
-  CSITEF_RestricoesParcelaEstabelecimento = '27,3988';
-  CSITEF_RestricoesParcelaAministradora = '28,3988';
+  CSITEF_RestricoesParcelaEstabelecimento = '27;3988';
+  CSITEF_RestricoesParcelaAministradora = '28;3988';
 
 // https://dev.softwareexpress.com.br/en/docs/clisitef/clisitef_documento_principal/
 
@@ -86,6 +87,7 @@ type
     procedure ContinuarRequisicaoSiTef;
     procedure FinalizarTransacaoSiTef(Confirma: Boolean; const DocumentoVinculado: String = '');
     procedure InterpretarRetornoCliSiTef(const Ret: Integer);
+    function DadoPinPadToOperacao(ADadoPinPad: TACBrTEFAPIDadoPinPad): String;
 
   protected
     procedure InterpretarRespostaAPI; override;
@@ -124,8 +126,8 @@ type
     procedure AbortarTransacaoEmAndamento; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
-    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000
-      ): String; override;
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000;
+      MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
 
     property TEFCliSiTefAPI: TACBrTEFCliSiTefAPI read fTEFCliSiTefAPI;
 
@@ -765,6 +767,67 @@ begin
     fpACBrTEFAPI.DoException( ACBrStr(Erro) ) ;
 end;
 
+function TACBrTEFAPIClassCliSiTef.DadoPinPadToOperacao(
+  ADadoPinPad: TACBrTEFAPIDadoPinPad): String;
+begin
+  case ADadoPinPad of
+    dpDDD: Result := '1';
+    dpRedDDD: Result := '2';
+    dpFone: Result := '3';
+    dpRedFone: Result := '4';
+    dpDDDeFone: Result := '5';
+    dpRedDDDeFone: Result := '6';
+    dpCPF: Result := '7';
+    dpRedCPF: Result := '8';
+    dpRG: Result := '9';
+    dpRedRG: Result := 'A';
+    dp4UltDigitos: Result := 'B';
+    dpCodSeguranca: Result := 'C';
+    dpCNPJ: Result := 'D';
+    dpRedCNPJ: Result := 'E';
+    dpDataDDMMAAAA: Result := 'F';
+    dpDataDDMMAA: Result := '10';
+    dpDataDDMM: Result := '11';
+    dpDiaDD: Result := '12';
+    dpMesMM: Result := '13';
+    dpAnoAA: Result := '14';
+    dpAnoAAAA: Result := '15';
+    dpDataNascimentoDDMMAAAA: Result := '16';
+    dpDataNascimentoDDMMAA: Result := '17';
+    dpDataNascimentoDDMM: Result := '18';
+    dpDiaNascimentoDD: Result := '19';
+    dpMesNascimentoMM: Result := '1A';
+    dpAnoNascimentoAA: Result := '1B';
+    dpAnoNascimentoAAAA: Result := '1C';
+    dpIdentificacao: Result := '1D';
+    dpCodFidelidade: Result := '1E';
+    dpNumeroMesa: Result := '1F';
+    dpQtdPessoas: Result := '20';
+    dpQuantidade: Result := '21';
+    dpNumeroBomba: Result := '22';
+    dpNumeroVaga: Result := '23';
+    dpNumeroGuiche: Result := '24';
+    dpCodVendedor: Result := '25';
+    dpCodGarcom: Result := '26';
+    dpNotaAtendimento: Result := '27';
+    dpNumeroNotaFiscal: Result := '28';
+    dpNumeroComanda: Result := '29';
+    dpPlacaVeiculo: Result := '2A';
+    dpQuilometragem: Result := '2B';
+    dpQuilometragemInicial: Result := '2C';
+    dpQuilometragemFinal: Result := '2D';
+    dpPorcentagem: Result := '2E';
+    dpPesquisaSatisfacao0_10: Result := '2F';
+    dpAvalieAtendimento0_10: Result := '30';
+    dpToken: Result := '31';
+    dpNumeroParcelas: Result := '33';
+    dpCodigoPlano: Result := '34';
+    dpCodigoProduto: Result := '35';
+  else
+    Result := '';
+  end;
+end;
+
 procedure TACBrTEFAPIClassCliSiTef.InterpretarRespostaAPI;
 begin
   fpACBrTEFAPI.GravarLog( fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.Conteudo.Text );
@@ -991,25 +1054,31 @@ begin
 end;
 
 function TACBrTEFAPIClassCliSiTef.ObterDadoPinPad(
-  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt): String;
+  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt; MinLen: SmallInt;
+  MaxLen: SmallInt): String;
 Var
-  TipoDocumento: Integer;
+  DadoPortador: String;
+  Ok: Boolean;
 begin
-  case TipoDado of
-    dpFone, dpRedFone, dpDDDeFone, dpRedDDDeFone:
-      TipoDocumento := 3;
-
-    dpCPF, dpRedCPF:
-      TipoDocumento := 1;
-
-    dpCNPJ, dpRedCNPJ:
-      TipoDocumento := 2;
-  else
+  // https://dev.softwareexpress.com.br/en/docs/clisitef-leitura-de-campo-aberto-no-pinpad/
+  DadoPortador := DadoPinPadToOperacao(TipoDado);
+  if (DadoPortador = '') then
+  begin
     fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
       [GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) ), ClassName] ));
   end;
 
-  Result := fTEFCliSiTefAPI.ObtemDadoPinPadDiretoEx( TipoDocumento, PinPadChaveAcesso, PinPadIdentificador);
+  if (MinLen = 0) and (MaxLen = 0) then
+    CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
+
+  fRespostasPorTipo.ValueInfo[2967] := DadoPortador;
+  fRespostasPorTipo.ValueInfo[2968] := IntToStr(MinLen);
+  fRespostasPorTipo.ValueInfo[2969] := IntToStr(MaxLen);
+  fRespostasPorTipo.ValueInfo[2970] := IntToStr(TimeOut);
+
+  Ok := ExecutarTransacaoSiTef(CSITEF_OP_DadosPinPadAberto, 0);
+  if Ok then
+    Result := fpACBrTEFAPI.UltimaRespostaTEF.LeInformacao(2971,0).AsString;
 end;
 
 end.

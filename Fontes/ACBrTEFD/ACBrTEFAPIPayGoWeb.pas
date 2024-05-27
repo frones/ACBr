@@ -82,6 +82,8 @@ type
     procedure LimparUltimaTransacaoPendente;
     procedure SetDiretorioTrabalho(const AValue: String);
 
+    function DadoPinPadToMsg(ADadoPinPad: TACBrTEFAPIDadoPinPad): Word;
+
   protected
     procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
@@ -122,8 +124,8 @@ type
     procedure AbortarTransacaoEmAndamento; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
-    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000
-      ): String; override;
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000;
+      MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
     function VerificarPresencaPinPad: Byte; override;
 
     property TEFPayGoAPI: TACBrTEFPGWebAPI read fTEFPayGoAPI;
@@ -613,88 +615,20 @@ begin
 end;
 
 function TACBrTEFAPIClassPayGoWeb.ObterDadoPinPad(
-  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt): String;
+  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt; MinLen: SmallInt;
+  MaxLen: SmallInt): String;
 var
   TipoMsg: Word;
-  MinLen, MaxLen: Byte;
 begin
-  MinLen := 0; MaxLen := 0;
-
-  case TipoDado of
-    dpDDD:
-    begin
-      TipoMsg := PWDPIN_DIGITE_O_DDD;
-      MinLen := 2; MaxLen := 2;
-    end;
-    dpRedDDD:
-    begin
-      TipoMsg := PWDPIN_REDIGITE_O_DDD;
-      MinLen := 2; MaxLen := 2;
-    end;
-    dpFone:
-    begin
-      TipoMsg := PWDPIN_DIGITE_O_TELEFONE;
-      MinLen := 8; MaxLen := 9;
-    end;
-    dpRedFone:
-    begin
-      TipoMsg := PWDPIN_REDIGITE_O_TELEFONE;
-      MinLen := 8; MaxLen := 9;
-    end;
-    dpDDDeFone:
-    begin
-      TipoMsg := PWDPIN_DIGITE_DDD_TELEFONE;
-      MinLen := 10; MaxLen := 11;
-    end;
-    dpRedDDDeFone:
-    begin
-      TipoMsg := PWDPIN_REDIGITE_DDD_TELEFONE;
-      MinLen := 10; MaxLen := 11;
-    end;
-    dpCPF:
-    begin
-      TipoMsg := PWDPIN_DIGITE_O_CPF;
-      MinLen := 11; MaxLen := 11;
-    end;
-    dpRedCPF:
-    begin
-      TipoMsg := PWDPIN_REDIGITE_O_CPF;
-      MinLen := 11; MaxLen := 11;
-    end;
-    dpRG:
-    begin
-      TipoMsg := PWDPIN_DIGITE_O_RG;
-      MinLen := 5; MaxLen := 11;
-    end;
-    dpRedRG:
-    begin
-      TipoMsg := PWDPIN_REDIGITE_O_RG;
-      MinLen := 5; MaxLen := 11;
-    end;
-    dp4UltDigitos:
-    begin
-      TipoMsg := PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS;
-      MinLen := 4; MaxLen := 4;
-    end;
-    dpCodSeguranca:
-    begin
-      TipoMsg := PWDPIN_DIGITE_CODIGO_DE_SEGURANCA;
-      MinLen := 3; MaxLen := 3;
-    end;
-    dpCNPJ:
-    begin
-      TipoMsg := PWDPIN_DIGITE_O_CNPJ;
-      MinLen := 14; MaxLen := 14;
-    end;
-    dpRedCNPJ:
-    begin
-      TipoMsg := PWDPIN_REDIGITE_O_CNPJ;
-      MinLen := 14; MaxLen := 14;
-    end;
-  else
+  TipoMsg := DadoPinPadToMsg(TipoDado);
+  if (TipoMsg < 1) then
+  begin
     fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
       [GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) ), ClassName] ));
   end;
+
+  if (MinLen = 0) and (MaxLen = 0) then
+    CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
 
   Result := fTEFPayGoAPI.ObterDadoPinPad( TipoMsg,
                                           MinLen, MaxLen,
@@ -724,6 +658,29 @@ begin
                                      ['TACBrTEFAPIClassPayGoWeb.DiretorioTrabalho']));
 
   fDiretorioTrabalho := AValue;
+end;
+
+function TACBrTEFAPIClassPayGoWeb.DadoPinPadToMsg(
+  ADadoPinPad: TACBrTEFAPIDadoPinPad): Word;
+begin
+  case ADadoPinPad of
+    dpDDD: Result := PWDPIN_DIGITE_O_DDD;
+    dpRedDDD: Result := PWDPIN_REDIGITE_O_DDD;
+    dpFone: Result := PWDPIN_DIGITE_O_TELEFONE;
+    dpRedFone: Result := PWDPIN_REDIGITE_O_TELEFONE;
+    dpDDDeFone: Result := PWDPIN_DIGITE_DDD_TELEFONE;
+    dpRedDDDeFone: Result := PWDPIN_REDIGITE_DDD_TELEFONE;
+    dpCPF: Result := PWDPIN_DIGITE_O_CPF;
+    dpRedCPF: Result := PWDPIN_REDIGITE_O_CPF;
+    dpRG: Result := PWDPIN_DIGITE_O_RG;
+    dpRedRG: Result := PWDPIN_REDIGITE_O_RG;
+    dp4UltDigitos: Result := PWDPIN_DIGITE_OS_4_ULTIMOS_DIGITOS;
+    dpCodSeguranca: Result := PWDPIN_DIGITE_CODIGO_DE_SEGURANCA;
+    dpCNPJ: Result := PWDPIN_DIGITE_O_CNPJ;
+    dpRedCNPJ: Result := PWDPIN_REDIGITE_O_CNPJ;
+  else
+    Result := 0;
+  end;
 end;
 
 end.

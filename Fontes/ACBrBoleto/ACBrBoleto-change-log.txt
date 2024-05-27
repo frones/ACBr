@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2024
+-- ACBrBoletoW_Bancoob --
+[*]TK-5499 - remapeado retorno ("seuNumero": Campo numero documento boleto,  "identificacaoBoletoEmpresa": SeuNumero identificacao do titulo na empresa)
+   https://www.projetoacbr.com.br/forum/topic/77917-acbrboleto-api-sicoob-problemas-identifica%C3%A7%C3%A3o-do-boleto/
+   https://www.projetoacbr.com.br/forum/topic/77960-altera%C3%A7%C3%A3o-no-retorno-da-propriedade-seunumero-e-numerodocumento-sicoob-api/
+   Por Verificado Daniel Morais
+
 23/05/2024
 -- ACBrBoletoW_Bancoob --
 [-]TK-5505 - Corrigido gerarBeneficiarioFinal estava apontando para outro obj

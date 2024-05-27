@@ -170,11 +170,12 @@ begin
             ARetornoWS.DadosRet.TituloRet.UrlPix         := LJSonObject.AsString['qrCode'];
             ARetornoWS.DadosRet.TituloRet.Vencimento     := DateBancoobToDateTime(LJSonObject.AsString['dataVencimento']);
             ARetornoWS.DadosRet.TituloRet.NossoNumero    := LJSonObject.AsString['nossoNumero'];
-            ARetornoWS.DadosRet.TituloRet.SeuNumero      := LJSonObject.AsString['seuNumero'];
             ARetornoWS.DadosRet.TituloRet.EspecieDoc     := LJSonObject.AsString['especieDocumento'];
             ARetornoWS.DadosRet.TituloRet.DataDocumento  := DateBancoobToDateTime(LJSonObject.AsString['dataEmissao']);
             ARetornoWS.DadosRet.TituloRet.ValorDocumento := LJSonObject.AsCurrency['valor'];
             ARetornoWS.DadosRet.TituloRet.ValorDesconto  := LJSonObject.AsCurrency['valorPrimeiroDesconto'];
+            ARetornoWS.DadosRet.TituloRet.NumeroDocumento:= LJSonObject.AsString['seuNumero'];
+            ARetornoWS.DadosRet.TituloRet.SeuNumero      := trim(LJSonObject.AsString['identificacaoBoletoEmpresa']);
           end
           else if (TipoOperacao = tpConsultaDetalhe) then
           begin
@@ -233,7 +234,9 @@ begin
             ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
 
-            ARetornoWS.DadosRet.TituloRet.SeuNumero       := LJSonObject.asString['seuNumero'];
+            ARetornoWS.DadosRet.TituloRet.NumeroDocumento := LJSonObject.asString['seuNumero'];
+            ARetornoWS.DadosRet.TituloRet.SeuNumero       := Trim(LJSonObject.asString['identificacaoBoletoEmpresa']);
+
             ARetornoWS.DadosRet.TituloRet.DataRegistro    := DateBancoobToDateTime( LJSonObject.asString['dataEmissao'] );
             ARetornoWS.DadosRet.TituloRet.Vencimento      := DateBancoobToDateTime( LJSonObject.asString['dataVencimento'] );
 
@@ -396,7 +399,8 @@ begin
             ListaRetorno.DadosRet.TituloRet.ValorMoraJuros       := AJSonObject.AsJSONObject['mora'].AsCurrency['valor'];
             ListaRetorno.DadosRet.TituloRet.PercentualMulta      := AJSonObject.AsJSONObject['multa'].AsFloat['taxa'];
 
-            ListaRetorno.DadosRet.TituloRet.SeuNumero            := AJSonObject.asString['seuNumero'];
+            ListaRetorno.DadosRet.TituloRet.NumeroDocumento      := AJSonObject.asString['seuNumero'];
+            ListaRetorno.DadosRet.TituloRet.SeuNumero            := trim(AJSonObject.asString['identificacaoBoletoEmpresa']);
             ListaRetorno.DadosRet.TituloRet.DataRegistro         := DateBancoobToDateTime( AJSonObject.asString['dataEmissao'] );
             ListaRetorno.DadosRet.TituloRet.Vencimento           := DateBancoobToDateTime( AJSonObject.asString['dataVencimento'] );
 

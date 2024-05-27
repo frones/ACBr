@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2024
+-- Saatri.Provider --
+[*] Provedor requer Login/Senha para autenticação
+  Por: Diego Folieni
+
 24/05/2024
 -- ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
 [*] Alteração visando a leitura a tag referente a Taxa de Turismo bem como a 

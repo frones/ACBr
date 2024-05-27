@@ -375,6 +375,7 @@ begin
   with ConfigGeral do
   begin
     UseCertificateHTTP := False;
+    Autenticacao.RequerLogin := True;
   end;
 
   with ConfigAssinar do

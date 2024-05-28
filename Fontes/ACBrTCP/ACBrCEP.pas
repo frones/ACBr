@@ -1271,9 +1271,9 @@ var
   i: Integer;
 begin
   LSL := TStringList.Create;
-
+  fOwner.RespHTTP.Text := UTF8ToNativeString(fOwner.RespHTTP.Text);
   try
-    LBuffer := UTF8ToNativeString(fOwner.RespHTTP.Text);
+    LBuffer := fOwner.RespHTTP.Text;
     LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '<enderecos>', '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '</enderecos>', '', [rfReplaceAll]);
@@ -1335,6 +1335,8 @@ begin
        + ' <soapenv:Body>'
        + ' <cli:consultaCEP>'
        + ' <cep>' + ACEP + '</cep>'
+       + ' <usuario>' + Trim(fOwner.Usuario) + '</usuario>'
+       + ' <senha>'  + Trim(fOwner.Senha) +  '</senha>'
        + ' </cli:consultaCEP>'
        + ' </soapenv:Body>'
        + ' </soapenv:Envelope>';
@@ -1611,7 +1613,8 @@ var
   LJson : TACBrJSONObject;
   LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
-  LJson := TACBrJSONObject.Parse( UTF8ToNativeString( fOwner.RespHTTP.Text ));
+  fOwner.RespHTTP.Text := UTF8ToNativeString(fOwner.RespHTTP.Text);
+  LJson := TACBrJSONObject.Parse( fOwner.RespHTTP.Text );
 
   try
     LACBrCEPEnderecos := fOwner.Enderecos.New;
@@ -1664,7 +1667,8 @@ var
   LJson : TACBrJSONObject;
   LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
-  LJson := TACBrJSONObject.Parse(fOwner.RespHTTP.Text);
+  fOwner.RespHTTP.Text := UTF8ToNativeString(fOwner.RespHTTP.Text);
+  LJson := TACBrJSONObject.Parse( fOwner.RespHTTP.Text );
 
   try
     LACBrCEPEnderecos := fOwner.Enderecos.New;

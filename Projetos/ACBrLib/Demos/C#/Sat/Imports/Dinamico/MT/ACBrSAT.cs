@@ -222,6 +222,14 @@ namespace ACBrLib.Sat
             return ConsultarSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
+        public void SetNumeroSessao(string cNumeroDeSessao)
+        {
+            var method = GetMethod<SAT_SetNumeroSessao>();
+            var ret = ExecuteMethod(() => method(libHandle, cNumeroDeSessao));
+
+            CheckResult(ret);
+        }
+
         public ConsultarStatusOperacionalResposta ConsultarStatusOperacional()
         {
             var bufferLen = BUFFER_LEN;

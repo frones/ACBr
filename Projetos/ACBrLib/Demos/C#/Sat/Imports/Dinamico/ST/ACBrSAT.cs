@@ -248,6 +248,14 @@ namespace ACBrLib.Sat
             return ConsultarSessaoSatResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
+        public void SetNumeroSessao(string cNumeroDeSessao)
+        {
+            var method = GetMethod<SAT_SetNumeroSessao>();
+            var ret = ExecuteMethod(() => method(cNumeroDeSessao));
+
+            CheckResult(ret);           
+        }
+
         public ConsultarUltimaSessaoFiscalResposta ConsultarUltimaSessaoFiscal()
         {
             var bufferLen = BUFFER_LEN;

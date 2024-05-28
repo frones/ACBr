@@ -672,7 +672,7 @@
         <IsPartOfProject Value="True"/>
       </Unit73>
       <Unit74>
-        <Filename Value="..\..\ACBrLib\Fontes\NFSe\ACBrNFSeLibConfig.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\NFSe\ACBrLibNFSeConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit74>
     </Units>

@@ -38,9 +38,24 @@ uses
   Classes, SysUtils, ACBrBase, ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase,
   ACBrPIXSchemasCob, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
   ACBrPIXSchemasPix, ACBrPixSchemasDevolucao, ACBrPIXSchemasPixConsultados,
-  ACBrPixSchemasPaginacao, ACBrPixSchemasCobV, ACBrPIXSchemasProblema;
+  ACBrPixSchemasPaginacao, ACBrPixSchemasCobV, ACBrPIXSchemasProblema, ACBrUtil.Base;
 
 type
+
+  { TLibPIXCDProblemaRespostaViolacao }
+
+  TLibPIXCDProblemaRespostaViolacao = class(TACBrLibRespostaBase)
+  private
+    fPropriedade: String;
+    fRazao: String;
+    fValor: String;
+  public
+    procedure Processar(const Violacao: TACBrPIXViolacao);
+  published
+    property Propriedade: String read fPropriedade;
+    property Razao: String read fRazao;
+    property Valor: String read fValor;
+  end;
 
   { TLibPIXCDProblemaResposta }
   TLibPIXCDProblemaResposta = class (TACBrLibRespostaBase)
@@ -48,6 +63,7 @@ type
     fDetail: String;
     fStatus: integer;
     fTitle: String;
+    fViolacoes: TACBrObjectList;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
@@ -58,6 +74,7 @@ type
     property Status: integer read fStatus write fStatus;
     property Title: String read fTitle write fTitle;
     property Detail: String read fDetail write fDetail;
+    property Violacoes: TACBrObjectList read fViolacoes;
   end;
 
   { TLibPixCDValorVInfo }
@@ -398,16 +415,27 @@ type
 
 implementation
 
+{ TLibPIXCDProblemaRespostaViolacao }
+
+procedure TLibPIXCDProblemaRespostaViolacao.Processar(const Violacao: TACBrPIXViolacao);
+begin
+  fPropriedade := Violacao.propriedade;
+  fRazao := Violacao.razao;
+  fValor := Violacao.valor;
+end;
+
 { TLibPIXCDProblemaResposta }
 constructor TLibPIXCDProblemaResposta.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespProblema, ATipo, AFormato);
+  fViolacoes := TACBrObjectList.Create;
   Clear;
 end;
 
 destructor TLibPIXCDProblemaResposta.Destroy;
 begin
+  fViolacoes.Free;
   inherited Destroy;
 end;
 
@@ -416,13 +444,24 @@ begin
   fStatus := 0;
   fTitle := EmptyStr;
   fDetail := EmptyStr;
+  fViolacoes.Clear;
 end;
 
 procedure TLibPIXCDProblemaResposta.Processar(const Problema: TACBrPIXProblema);
+var
+  LViolacao: TLibPIXCDProblemaRespostaViolacao;
+  i: Integer;
 begin
   fStatus := Problema.status;
   fTitle := Problema.title;
   fDetail := Problema.detail;
+
+  for i:=0 to Pred(Problema.violacoes.Count) do
+  begin
+    LViolacao := TLibPIXCDProblemaRespostaViolacao.Create('Violacoes'+IntToStrZero(i+1, 3), Tipo, Formato);
+    LViolacao.Processar(Problema.violacoes.Items[i]);
+    fViolacoes.Add(LViolacao);
+  end;
 end;
 
 { TLibPixCDValorVInfo }

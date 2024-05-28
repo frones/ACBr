@@ -49,6 +49,15 @@ namespace ACBrLib.NFe
         [EnumValue("19")]
         fpProgramaFidelidade,
 
+        [EnumValue("20")]
+        fpPagamentoInstantaneoEstatico,
+
+        [EnumValue("21")]
+        fpCreditoEmLojaPorDevolucao,
+
+        [EnumValue("22")]
+        fpFalhaHardware,
+
         [EnumValue("90")]
         fpSemPagamento,
 

@@ -583,16 +583,13 @@ var
   I: Integer;
 begin
   if Assigned(ATitulo) and Assigned(AJson) then
-  begin
-    LJsonArray := TACBrJSONArray.Create;
-
-    for I := 0 to PRed(ATitulo.Mensagem.Count) do
+    if ATitulo.Mensagem.Count > 0 then
     begin
-      LJsonArray.AddElementJSONString(ATitulo.Mensagem[I]);
+      LJsonArray := TACBrJSONArray.Create;
+      for I := 0 to Pred(ATitulo.Mensagem.Count) do
+        LJsonArray.AddElement(ATitulo.Mensagem[I]);
+      AJson.AddPair('messages',LJsonArray);
     end;
-
-    AJson.AddPair('messages',LJsonArray);
-  end;
 end;
 
 procedure TBoletoW_Santander_API.GerarMulta(AJson: TACBrJSONObject);

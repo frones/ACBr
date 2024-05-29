@@ -54,40 +54,46 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="11">
+    <RequiredPackages Count="13">
       <Item1>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="ACBr_BoletoFC_FPDF"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBr_SAT_Extrato_FPDF"/>
       </Item2>
       <Item3>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="frce"/>
       </Item5>
       <Item6>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="ACBrTCP"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBrSerial"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item8>
       <Item9>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item10>
       <Item11>
-        <PackageName Value="LCL"/>
+        <PackageName Value="SynEdit"/>
       </Item11>
+      <Item12>
+        <PackageName Value="ACBr_SAT"/>
+      </Item12>
+      <Item13>
+        <PackageName Value="LCL"/>
+      </Item13>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -100,7 +106,6 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit1"/>
       </Unit1>
       <Unit2>
         <Filename Value="configuraserial.pas"/>
@@ -127,6 +132,7 @@
     <Linking>
       <Debugging>
         <GenerateDebugInfo Value="False"/>
+        <DebugInfoType Value="dsDwarf3"/>
         <StripSymbols Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>

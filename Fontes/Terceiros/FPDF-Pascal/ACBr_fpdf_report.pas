@@ -115,11 +115,13 @@ type
     FEngineOptions: TFPDFEngineOptions;
     FDefaultPageMargins: TFPDFMargins;
     FDefaultFontFamily: string;
+    FUTF8 : Boolean;
     procedure CheckHasPage;
 
     function HasEndlessPage: boolean;
     property Pages: TFPDFPageList read FPages;
     property DefaultFontFamily: string read FDefaultFontFamily;
+    property UTF8: Boolean read FUTF8;
 
     procedure DoStartReport(Args: TFPDFReportEventArgs);
     procedure DoEndReport(Args: TFPDFReportEventArgs);
@@ -132,6 +134,7 @@ type
 
     procedure SetMargins(ALeft, ATop: double; ARight: double = -1; ABottom: double = -1);
     procedure SetFont(const AFontFamily: string);
+    procedure SetUTF8(const AUTF8: boolean = true);
     function AddPage(AOrientation: TFPDFOrientation = poPortrait;
       APageUnit: TFPDFUnit = puMM; APageFormat: TFPDFPageFormat = pfA4): TFPDFPage; overload;
     function AddPage(AOrientation: TFPDFOrientation;
@@ -712,6 +715,7 @@ begin
   FPages := TFPDFPageList.Create;
   FOptions := TFPDFReportOptions.Create;
   FEngineOptions := TFPDFEngineOptions.Create;
+  FUTF8 := True;
 end;
 
 destructor TFPDFReport.Destroy;
@@ -758,6 +762,13 @@ begin
 //  CheckHasPage;
 
   FDefaultFontFamily := AFontFamily;
+end;
+
+procedure TFPDFReport.SetUTF8(const AUTF8: boolean);
+begin
+//  CheckHasPage;
+
+  FUTF8 := AUTF8;
 end;
 
 procedure TFPDFReport.SetMargins(ALeft, ATop, ARight, ABottom: double);
@@ -889,7 +900,7 @@ begin
   end
   else
     FPDF := TFPDFExt2.Create;
-
+  FPDF.SetUTF8(AReport.UTF8);
   FPDF.SetFont(AReport.DefaultFontFamily, '', 12);
 end;
 

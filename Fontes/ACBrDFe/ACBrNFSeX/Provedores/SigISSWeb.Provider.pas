@@ -114,6 +114,7 @@ begin
 
   with ConfigGeral do
   begin
+    QuebradeLinha := '|';
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaLote := False;

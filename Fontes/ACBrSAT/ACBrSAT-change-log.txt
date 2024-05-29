@@ -46,6 +46,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+29/05/2024
+[*]TK-5509-1 Ajustes no extrato SAT que estava sobrescrevendo itens, removido ACBrStr conf. instrucao DSA
+  Por Daniel Morais InfoCotidiano
+
 06/05/2024
 [+]TK-5354 ACBrSATExtratoFR (SAT.Extrato.Filtro: fiSVG, fiPNG) (funcionamento restrito a versões atuais do RAD)
   Por Rafael S Amaral / Victor H Gonzales - Pandaaa

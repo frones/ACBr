@@ -251,7 +251,7 @@ begin
       Trim(CFe.Entrega.xBairro)+
       Trim(CFe.Entrega.xMun) <> '') then
   begin
-     Texto := ACBrStr('DADOS PARA ENTREGA:');
+     Texto := 'DADOS PARA ENTREGA:';
      Texto := Texto+' '+Trim(CFe.Entrega.xLgr)+' '+
                      ifthen(Trim(CFe.Entrega.nro)<>'',', '+Trim(CFe.Entrega.nro),'') + ' ' +
                      ifthen(Trim(CFe.Entrega.xCpl)<>'',Trim(CFe.Entrega.xCpl) + ' ','') +
@@ -376,7 +376,7 @@ begin
       // acrescimo
       if (CFe.Det.Items[i].Prod.vOutro > 0) then
       begin
-        TextoItemAdicional := ACBrStr('acréscimo sobre item ') + FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+,0.00');
+        TextoItemAdicional := 'acréscimo sobre item ' + FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+,0.00');
         y := y + PDF.TextBox(0, y, Args.Band.Width , 0, TextoItem, 'T', 'L', 0, '', False);
       end;
 
@@ -390,16 +390,16 @@ begin
       // Rateio de Acréscimo
       if (CFe.Det.Items[i].Prod.vRatAcr > 0) then
       begin
-        TextoItemAdicional := ACBrStr('rateio de acréscimo sobre subtotal ') + FormatFloatBr(CFe.Det.Items[i].Prod.vRatAcr, '+,0.00');
+        TextoItemAdicional := 'rateio de acréscimo sobre subtotal ' + FormatFloatBr(CFe.Det.Items[i].Prod.vRatAcr, '+,0.00');
         y := y + PDF.TextBox(0, y, Args.Band.Width , 0, TextoItem, 'T', 'L', 0, '', False);
       end;
     end;
 
     if (CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN > 0) then
     begin
-      TextoItemAdicional := ACBrStr('dedução para ISSQN ') + FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN, '-,0.00');
+      TextoItemAdicional := 'dedução para ISSQN ' + FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN, '-,0.00');
       y := y + PDF.TextBox(0, y, Args.Band.Width , 0, TextoItem, 'T', 'L', 0, '', False);
-      TextoItemAdicional := ACBrStr('base de cálculo ISSQN ') + FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vBC);
+      TextoItemAdicional := 'base de cálculo ISSQN ' + FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vBC);
       y := y + PDF.TextBox(0, y, Args.Band.Width , 0, TextoItem, 'T', 'L', 0, '', False);
     end;
 
@@ -427,7 +427,7 @@ begin
   PDF := Args.PDF;
   PDF.SetFont(7, '');
 
-  Texto := ACBrStr('OBSERVAÇÕES DO CONTRIBUINTE');
+  Texto := 'OBSERVAÇÕES DO CONTRIBUINTE';
   y := y + PDF.TextBox(0, y, Args.Band.Width, 0, Texto, 'T', 'L', 0, '', true);
 
   vTotTrib := FCFeUtils.CFe.Total.vCFeLei12741;
@@ -444,7 +444,7 @@ begin
   y:= y + PDF.TextBox(0, y+3, Args.Band.Width, h, Texto, 'T', 'L', 0, '', false);
 
   y := y + 2;
-  PDF.DashedLine(0, y, 0 + Args.Band.Width, y, FDashWidth);
+  //PDF.DashedLine(0, y, 0 + Args.Band.Width, y, FDashWidth);
 end;
 
 procedure TSATExtratoFPDF.GerarBlocoObsFisco(Args: TFPDFBandDrawArgs);
@@ -454,6 +454,7 @@ var
   Texto: string;
   i : integer;
 begin
+  Args.Band.AutoHeight := True;
   PDF := Args.PDF;
   y := 0;
   Texto := '';
@@ -501,7 +502,7 @@ begin
       'T', 'L', 0, '', false);
 
     y := y + PDF.TextBox(0, y, Args.Band.Width, 3,
-      FormatFloat('#,0.00', FCFeUtils.CFe.Pagto[I].vMP, FFormatSettings),
+      FormatFloat('#,0.00', FCFeUtils.CFe.Pagto[I].vMP, FCFeUtils.FormatSettings),
       'T', 'R', 0, '', false);
   end;
 
@@ -509,7 +510,7 @@ begin
   begin
     Texto := 'Troco R$';
     PDF.TextBox(0, y, Args.Band.Width, 3, Texto, 'T', 'L', 0, '', false);
-    Texto := FormatFloat('#,0.00', FCFeUtils.CFe.Pagto.vTroco, FFormatSettings);
+    Texto := FormatFloat('#,0.00', FCFeUtils.CFe.Pagto.vTroco, FCFeUtils.FormatSettings);
     y := y + PDF.TextBox(0, y, Args.Band.Width, 3, Texto, 'T', 'R', 0, '', false);
   end;
 end;
@@ -615,14 +616,14 @@ begin
     PDF.SetFont(8, '');
     Texto := 'Total bruto de itens';
     PDF.TextBox(0, y , meiaLargura, 3, Texto, 'T', 'L', 0, '', false);
-    Texto := FormatFloat('#,0.00', TotBruto, FFormatSettings);
+    Texto := FormatFloat('#,0.00', TotBruto, FCFeUtils.FormatSettings);
     y := y + PDF.TextBox(0 + meiaLargura, y, meiaLargura, 3, Texto, 'T', 'R', 0, '', false);
 
     if TotDesconto > 0 then
     begin
       Texto := 'Total de descontos/acréscimos sobre item';
       PDF.TextBox(0, y, meiaLargura, 3, Texto, 'T', 'L', 0, '', false);
-      Texto := FormatFloat('#,0.00', TotDesconto, FFormatSettings);
+      Texto := FormatFloat('#,0.00', TotDesconto, FCFeUtils.FormatSettings);
       y := y + PDF.TextBox(meiaLargura, y, meiaLargura, 3, Texto, 'T', 'R', 0, '', false);
     end;
 
@@ -714,6 +715,10 @@ begin
   FPaperHeight := 20;
   SetFont(FFontFamily);
   SetMargins(2, 2);
+  SetUTF8(false);
+
+
+
 end;
 
 destructor TSATExtratoFPDF.Destroy;
@@ -857,7 +862,7 @@ begin
   Args.Band.AutoHeight := True;
   PDF := Args.PDF;
   PDF.SetFont(7, 'B');
-
+  y := 5;
   ChaveSat := FormatarChaveAcesso(CFe.infCFe.ID);
   y := y + PDF.TextBox(0, y, Args.Band.Width, 3, ChaveSat, 'T', 'C', 0, '', true);
   y := y + 2;
@@ -913,7 +918,7 @@ begin
     AddBand(btData, 10, GerarBlocoObsFisco);
     AddBand(btData, 10, GerarBlocoDadosEntrega);
     AddBand(btData, 10, GerarBlocoObsContribuinte);
-//Termina Corpo Extrato
+    //Termina Corpo Extrato
     AddBand(btData, 10, GerarBlocoRodape);
     AddBand(btData, 10, GerarBlocoFechamento);
 

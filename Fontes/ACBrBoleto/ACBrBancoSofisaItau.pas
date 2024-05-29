@@ -70,9 +70,6 @@ type
 
 implementation
 
-uses
-  ACBrUtil;
-
 { TACBrBancoSofisaItau }
 
 constructor TACBrBancoSofisaItau.create(AOwner: TACBrBanco);

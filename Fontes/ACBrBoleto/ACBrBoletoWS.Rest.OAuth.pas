@@ -121,7 +121,6 @@ uses
   Classes,
   synacode,
   synautil,
-  ACBrUtil,
   ACBrUtil.FilesIO;
 
   { TOAuth }
@@ -345,6 +344,7 @@ end;
 function TOAuth.ClearHeaderParams: TOAuth;
 begin
   SetLength(FHeaderParamsList, 0);
+  Result := Self;
 end;
 
 constructor TOAuth.Create(ASSL: THTTPSend; AACBrBoleto: TACBrBoleto = nil);

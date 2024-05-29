@@ -80,7 +80,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil ;
+  StrUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
 
 { TACBrBancoC6 }
 function TACBrBancoC6.ConverterDigitoModuloFinal(): String;

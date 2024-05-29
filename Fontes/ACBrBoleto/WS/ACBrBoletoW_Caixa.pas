@@ -41,7 +41,6 @@ uses
   SysUtils,
   ACBrBoletoWS,
   pcnConversao,
-  pcnGerador,
   ACBrBoletoConversao,
   ACBrBoleto,
   ACBrBoletoWS.SOAP;

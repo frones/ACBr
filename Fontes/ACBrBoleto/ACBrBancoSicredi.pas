@@ -1902,7 +1902,6 @@ var
     TipoAvalista: Char;
     lDataDesconto: String;
     LCodigoMoraJuros : String;
-    LTitulo: TACBrTitulo;
 begin
   with ACBrBanco.ACBrBoleto.Cedente, ACBrTitulo do
   begin

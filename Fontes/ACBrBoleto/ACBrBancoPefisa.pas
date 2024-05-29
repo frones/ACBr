@@ -82,7 +82,9 @@ uses
   StrUtils,
   ACBrBase,
   ACBrUtil.Strings,
-  ACBrUtil.Base, ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.Math;
 
   { TACBrBancoPefisa }
 function TACBrBancoPefisa.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
@@ -392,6 +394,7 @@ begin
   LTitulo      := ACBrTitulo;
   Beneficiario := LTitulo.ACBrBoleto.Cedente;
   Pagador      := LTitulo.Sacado;
+  LValorMoraJuros := 0.0;
 
   if (LTitulo.ValorMoraJuros > 0) then
     case LTitulo.CodigoMoraJuros of

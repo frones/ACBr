@@ -740,6 +740,7 @@ begin
   if Trim(Result) <> '' then
   begin
     Result := ChangeLineBreak(AXMLRps, '&#10;');
+    Result := StringReplace(Result, '&amp;amp;', '&amp;', [rfReplaceAll]);
     Result := StringReplace(Result, '&amp;#10;', '&#10;', [rfReplaceAll]);
   end;
 end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2024
+-- Siappa.Provider --
+[*] Correção no tratamento da quebra de linha do provedor Siappa.
+  Por: Renato Rubinho
+
 29/05/2024
 -- ACBrNFSeXServicos --
 [*] Incluida as URLs de produção e homologação do Link para a cidade de Sertaozinho/SP.

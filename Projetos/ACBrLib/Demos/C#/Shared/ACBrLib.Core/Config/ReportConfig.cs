@@ -69,27 +69,27 @@
             set => SetProperty(value);
         }
 
-        public int MargemInferior
+        public decimal MargemInferior
         {
-            get => GetProperty<int>();
+            get => GetProperty<decimal>();
             set => SetProperty(value);
         }
 
-        public int MargemSuperior
+        public decimal MargemSuperior
         {
-            get => GetProperty<int>();
+            get => GetProperty<decimal>();
             set => SetProperty(value);
         }
 
-        public int MargemEsquerda
+        public decimal MargemEsquerda
         {
-            get => GetProperty<int>();
+            get => GetProperty<decimal>();
             set => SetProperty(value);
         }
 
-        public int MargemDireita
+        public decimal MargemDireita
         {
-            get => GetProperty<int>();
+            get => GetProperty<decimal>();
             set => SetProperty(value);
         }
 

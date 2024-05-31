@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrDCeDACEClass;
+unit ACBrDCe.DACEClass;
 
 interface
 

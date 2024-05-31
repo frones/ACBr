@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, synautil,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrXmlBase, ACBrDCeConfiguracoes, ACBrDCeWebServices, ACBrDCeDeclaracoes,
-  ACBrDCeDACEClass, ACBrDCe.Classes, pcnConversao, ACBrDCe.Conversao,
+  ACBrDCe.DACEClass, ACBrDCe.Classes, pcnConversao, ACBrDCe.Conversao,
   ACBrDCe.EventoClass,
   ACBrDCe.EnvEvento;
 

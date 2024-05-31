@@ -53,6 +53,8 @@ const
   CSessaoRespConsultaNFSe = 'ConsultaNFSe';
   CSessaoRespConsultaLinkNFSe = 'ConsultaLinkNFSe';
   CSessaoRespCancelarNFSe = 'CancelarNFSe';
+  CSessaoRespInformacaoCancelamento = 'InfCancelamento';
+  CSessaoRespRetornoCancelamento = 'RetCancelamento';
   CSessaoRespLinkNFSe = 'LinkNFSe';
   CSessaoRespGerarLote = 'GerarLote';
   CSessaoRespEnviarEvento = 'EnviarEvento';

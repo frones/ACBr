@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/05/2024
+-- Diversos --
+[*] Ajustes nas novas units a serem utilizadas pelo componente.
+   Por: Italo Giurizzato Junior
+
 16/05/2024
 -- ACBrNFeNotasFiscais --
 [*] Altera a conversao de dhCont para devolver data e hora na geração do INI

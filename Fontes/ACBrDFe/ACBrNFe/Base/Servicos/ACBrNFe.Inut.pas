@@ -53,41 +53,41 @@ type
     FtpAmb: TpcnTipoAmbiente;
     FcUF: Integer;
     Fano: Integer;
-    FCNPJ: String;
+    FCNPJ: string;
     Fmodelo: Integer;
     Fserie: Integer;
     FnNFIni: Integer;
     FnNFFin: Integer;
-    FxJust: String;
-    FIDInutilizacao: String;
-    FVersao: String;
+    FxJust: string;
+    FIDInutilizacao: string;
+    FVersao: string;
     FRetInutNFe: TRetInutNFe;
     Fsignature: Tsignature;
-    FXML: String;
+    FXML: string;
   public
     constructor Create;
     destructor Destroy; override;
 
     function GerarXML: string;
 
-    function LerXML(const CaminhoArquivo: String): Boolean;
-    function LerXMLFromString(const AXML: String): Boolean;
-    function ObterNomeArquivo: String;
+    function LerXML(const CaminhoArquivo: string): Boolean;
+    function LerXMLFromString(const AXML: string): Boolean;
+    function ObterNomeArquivo: string;
 
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
     property cUF: Integer            read FcUF        write FcUF;
     property ano: Integer            read Fano        write Fano;
-    property CNPJ: String            read FCNPJ       write FCNPJ;
+    property CNPJ: string            read FCNPJ       write FCNPJ;
     property modelo: Integer         read Fmodelo     write Fmodelo;
     property serie: Integer          read Fserie      write Fserie;
     property nNFIni: Integer         read FnNFIni     write FnNFIni;
     property nNFFin: Integer         read FnNFFin     write FnNFFin;
-    property xJust: String           read FxJust      write FxJust;
-    property ID: String              read FIDInutilizacao write FIDInutilizacao;
-    property Versao: String          read FVersao     write FVersao;
+    property xJust: string           read FxJust      write FxJust;
+    property ID: string              read FIDInutilizacao write FIDInutilizacao;
+    property Versao: string          read FVersao     write FVersao;
     property RetInutNFe: TRetInutNFe read FRetInutNFe write FRetInutNFe;
     property signature: Tsignature   read Fsignature  write Fsignature;
-    property XML: String             read FXML        write FXML;
+    property XML: string             read FXML        write FXML;
   end;
 
 implementation
@@ -115,14 +115,14 @@ begin
   inherited;
 end;
 
-function TinutNFe.ObterNomeArquivo: String;
+function TinutNFe.ObterNomeArquivo: string;
 begin
   Result := OnlyNumber(FIDInutilizacao) + '-ped-inu.xml';
 end;
 
 function TinutNFe.GerarXML: string;
 var
-  xCNPJ, ACNPJ, AJust: String;
+  xCNPJ, ACNPJ: string;
 begin
   ACNPJ := OnlyNumber(FCNPJ);
 
@@ -184,26 +184,25 @@ begin
   end;
 end;
 
-function TinutNFe.LerXML(const CaminhoArquivo: String): Boolean;
+function TinutNFe.LerXML(const CaminhoArquivo: string): Boolean;
 var
   ArqInut: TStringList;
 begin
   ArqInut := TStringList.Create;
   try
-     ArqInut.LoadFromFile(CaminhoArquivo);
-     Result := LerXMLFromString(ArqInut.Text);
+    ArqInut.LoadFromFile(CaminhoArquivo);
+    Result := LerXMLFromString(ArqInut.Text);
   finally
-     ArqInut.Free;
+    ArqInut.Free;
   end;
 end;
 
-function TinutNFe.LerXMLFromString(const AXML: String): Boolean;
+function TinutNFe.LerXMLFromString(const AXML: string): Boolean;
 var
   Document: TACBrXmlDocument;
   ANode, AuxNode: TACBrXmlNode;
   ok: Boolean;
   RetornoInutNFe: TRetInutNFe;
-  CPF: string;
 begin
   RetornoInutNFe := TRetInutNFe.Create;
   try
@@ -244,32 +243,33 @@ begin
         // Lendo dados do retorno, se houver
         RetornoInutNFe.XmlRetorno := AXML;
 
-        Result := RetornoInutNFe.LerXml;
-
-        if ( FIDInutilizacao = '' ) then
+        if RetornoInutNFe.LerXml then
         begin
-          FIDInutilizacao := RetornoInutNFe.Id;
-          tpAmb           := RetornoInutNFe.tpAmb;
-        end;
+          if ( FIDInutilizacao = '' ) then
+          begin
+            FIDInutilizacao := RetornoInutNFe.Id;
+            tpAmb           := RetornoInutNFe.tpAmb;
+          end;
 
-        with FRetInutNFe do
-        begin
-          Id       := RetornoInutNFe.Id;
-          tpAmb    := RetornoInutNFe.tpAmb;
-          verAplic := RetornoInutNFe.verAplic;
-          cStat    := RetornoInutNFe.cStat;
-          xMotivo  := RetornoInutNFe.xMotivo;
-          cUF      := RetornoInutNFe.cUF;
-          xJust    := RetornoInutNFe.xJust;
+          with FRetInutNFe do
+          begin
+            Id       := RetornoInutNFe.Id;
+            tpAmb    := RetornoInutNFe.tpAmb;
+            verAplic := RetornoInutNFe.verAplic;
+            cStat    := RetornoInutNFe.cStat;
+            xMotivo  := RetornoInutNFe.xMotivo;
+            cUF      := RetornoInutNFe.cUF;
+            xJust    := RetornoInutNFe.xJust;
 
-          ano      := RetornoInutNFe.ano;
-          CNPJ     := RetornoInutNFe.CNPJ;
-          Modelo   := RetornoInutNFe.Modelo;
-          Serie    := RetornoInutNFe.Serie;
-          nNFIni   := RetornoInutNFe.nNFIni;
-          nNFFin   := RetornoInutNFe.nNFFin;
-          dhRecbto := RetornoInutNFe.dhRecbto;
-          nProt    := RetornoInutNFe.nProt;
+            ano      := RetornoInutNFe.ano;
+            CNPJ     := RetornoInutNFe.CNPJ;
+            Modelo   := RetornoInutNFe.Modelo;
+            Serie    := RetornoInutNFe.Serie;
+            nNFIni   := RetornoInutNFe.nNFIni;
+            nNFFin   := RetornoInutNFe.nNFFin;
+            dhRecbto := RetornoInutNFe.dhRecbto;
+            nProt    := RetornoInutNFe.nProt;
+          end;
         end;
 
         Result := True;

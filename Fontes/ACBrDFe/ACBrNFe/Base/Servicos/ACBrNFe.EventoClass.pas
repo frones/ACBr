@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -51,15 +51,15 @@ type
 
   TDestinatario = class(TObject)
   private
-    FUF: String;
-    FCNPJCPF: String;
-    FidEstrangeiro: String;
-    FIE: String;
+    FUF: string;
+    FCNPJCPF: string;
+    FidEstrangeiro: string;
+    FIE: string;
   public
-    property UF: String            read FUF            write FUF;
-    property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
-    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
-    property IE: String            read FIE            write FIE;
+    property UF: string            read FUF            write FUF;
+    property CNPJCPF: string       read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: string read FidEstrangeiro write FidEstrangeiro;
+    property IE: string            read FIE            write FIE;
   end;
 
   TitemPedidoCollectionItem = class
@@ -83,10 +83,11 @@ type
 
   TautXMLCollectionItem = class(TObject)
   private
-    FCNPJCPF: String;
+    FCNPJCPF: string;
   public
     procedure Assign(Source: TautXMLCollectionItem);
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
   end;
 
   TautXMLCollection = class(TACBrObjectList)
@@ -101,80 +102,80 @@ type
 
   TDetEvento = class
   private
-    FVersao: String;
-    FDescEvento: String;
-    FCorrecao: String;     // Carta de Correção
-    FCondUso: String;      // Carta de Correção
-    FnProt: String;        // Cancelamento
-    FxJust: String;        // Cancelamento e Manif. Destinatario
+    FVersao: string;
+    FDescEvento: string;
+    FCorrecao: string;     // Carta de Correção
+    FCondUso: string;      // Carta de Correção
+    FnProt: string;        // Cancelamento
+    FxJust: string;        // Cancelamento e Manif. Destinatario
     FcOrgaoAutor: Integer; // EPEC
     FtpAutor: TpcnTipoAutor;
-    FverAplic: String;
+    FverAplic: string;
     FdhEmi: TDateTime;
     FtpNF: TpcnTipoNFe;
-    FIE: String;
+    FIE: string;
     Fdest: TDestinatario;
     FvNF: Currency;
     FvICMS: Currency;
     FvST: Currency;
     FitemPedido: TitemPedidoCollection;
-    FidPedidoCancelado: String;
-    FchNFeRef: String;
-
+    FidPedidoCancelado: string;
+    FchNFeRef: string;
     FdhEntrega: TDateTime;
-    FnDoc: String;
-    FxNome: String;
+    FnDoc: string;
+    FxNome: string;
     FlatGPS: Double;
     FlongGPS: Double;
-    FhashComprovante: String;
+    FhashComprovante: string;
     FdhHashComprovante: TDateTime;
-    FnProtEvento: String;
+    FnProtEvento: string;
     FautXML: TautXMLCollection;
     FtpAutorizacao: TAutorizacao;
     // Insucesso na Entrega
     FdhTentativaEntrega: TDateTime;
     FnTentativa: Integer;
     FtpMotivo: TtpMotivo;
-    FxJustMotivo: String;
-    FhashTentativaEntrega: String;
+    FxJustMotivo: string;
+    FhashTentativaEntrega: string;
     FdhHashTentativaEntrega: TDateTime;
-    FUF: String;
+    FUF: string;
 
-    procedure setxCondUso(const Value: String);
+    procedure setxCondUso(const Value: string);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
     procedure SetautXML(const Value: TautXMLCollection);
   public
     constructor Create;
     destructor Destroy; override;
 
-    property versao: String         read FVersao      write FVersao;
-    property descEvento: String     read FDescEvento  write FDescEvento;
-    property xCorrecao: String      read FCorrecao    write FCorrecao;
-    property xCondUso: String       read FCondUso     write setxCondUso;
-    property nProt: String          read FnProt       write FnProt;
-    property xJust: String          read FxJust       write FxJust;
+    property versao: string         read FVersao      write FVersao;
+    property descEvento: string     read FDescEvento  write FDescEvento;
+    property xCorrecao: string      read FCorrecao    write FCorrecao;
+    property xCondUso: string       read FCondUso     write setxCondUso;
+    property nProt: string          read FnProt       write FnProt;
+    property xJust: string          read FxJust       write FxJust;
     property cOrgaoAutor: Integer   read FcOrgaoAutor write FcOrgaoAutor;
     property tpAutor: TpcnTipoAutor read FtpAutor     write FtpAutor;
-    property verAplic: String       read FverAplic    write FverAplic;
-    property chNFeRef: String       read FchNFeRef    write FchNFeRef;
+    property verAplic: string       read FverAplic    write FverAplic;
+    property chNFeRef: string       read FchNFeRef    write FchNFeRef;
     property dhEmi: TDateTime       read FdhEmi       write FdhEmi;
     property tpNF: TpcnTipoNFe      read FtpNF        write FtpNF;
-    property IE: String             read FIE          write FIE;
+    property IE: string             read FIE          write FIE;
     property dest: TDestinatario    read Fdest        write Fdest;
     property vNF: Currency          read FvNF         write FvNF;
     property vICMS: Currency        read FvICMS       write FvICMS;
     property vST: Currency          read FvST         write FvST;
-    property itemPedido: TitemPedidoCollection read FitemPedido write SetitemPedido;
-    property idPedidoCancelado: String read FidPedidoCancelado write FidPedidoCancelado;
+
+    property itemPedido: TitemPedidoCollection read FitemPedido        write SetitemPedido;
+    property idPedidoCancelado: string         read FidPedidoCancelado write FidPedidoCancelado;
 
     property dhEntrega: TDateTime         read FdhEntrega         write FdhEntrega;
-    property nDoc: String                 read FnDoc              write FnDoc;
-    property xNome: String                read FxNome             write FxNome;
+    property nDoc: string                 read FnDoc              write FnDoc;
+    property xNome: string                read FxNome             write FxNome;
     property latGPS: Double               read FlatGPS            write FlatGPS;
     property longGPS: Double              read FlongGPS           write FlongGPS;
-    property hashComprovante: String      read FhashComprovante   write FhashComprovante;
+    property hashComprovante: string      read FhashComprovante   write FhashComprovante;
     property dhHashComprovante: TDateTime read FdhHashComprovante write FdhHashComprovante;
-    property nProtEvento: String          read FnProtEvento       write FnProtEvento;
+    property nProtEvento: string          read FnProtEvento       write FnProtEvento;
 
     property autXML: TautXMLCollection    read FautXML            write SetautXML;
     property tpAutorizacao: TAutorizacao  read FtpAutorizacao     write FtpAutorizacao;
@@ -182,53 +183,53 @@ type
     property dhTentativaEntrega: TDateTime read FdhTentativaEntrega write FdhTentativaEntrega;
     property nTentativa: Integer read FnTentativa write FnTentativa;
     property tpMotivo: TtpMotivo read FtpMotivo write FtpMotivo;
-    property xJustMotivo: String read FxJustMotivo write FxJustMotivo;
-    property hashTentativaEntrega: String read FhashTentativaEntrega write FhashTentativaEntrega;
+    property xJustMotivo: string read FxJustMotivo write FxJustMotivo;
+    property hashTentativaEntrega: string read FhashTentativaEntrega write FhashTentativaEntrega;
     property dhHashTentativaEntrega: TDateTime read FdhHashTentativaEntrega write FdhHashTentativaEntrega;
-    property UF: String read FUF write FUF;
+    property UF: string read FUF write FUF;
   end;
 
   TInfEvento = class
   private
-    FID: String;
+    FID: string;
     FtpAmbiente: TpcnTipoAmbiente;
-    FCNPJ: String;
+    FCNPJ: string;
     FcOrgao: Integer;
-    FChave: String;
+    FChave: string;
     FDataEvento: TDateTime;
     FTpEvento: TpcnTpEvento;
     FnSeqEvento: Integer;
-    FVersaoEvento: String;
+    FVersaoEvento: string;
     FDetEvento: TDetEvento;
 
     function getcOrgao: Integer;
-    function getDescEvento: String;
-    function getTipoEvento: String;
+    function getDescEvento: string;
+    function getTipoEvento: string;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): String;
+    function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): string;
 
-    property id: String              read FID             write FID;
-    property cOrgao: Integer         read getcOrgao       write FcOrgao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
-    property CNPJ: String            read FCNPJ           write FCNPJ;
-    property chNFe: String           read FChave          write FChave;
-    property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
-    property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
-    property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
-    property versaoEvento: String    read FVersaoEvento   write FversaoEvento;
-    property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
-    property DescEvento: String      read getDescEvento;
-    property TipoEvento: String      read getTipoEvento;
+    property id: string              read FID            write FID;
+    property cOrgao: Integer         read getcOrgao      write FcOrgao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmbiente    write FtpAmbiente;
+    property CNPJ: string            read FCNPJ          write FCNPJ;
+    property chNFe: string           read FChave         write FChave;
+    property dhEvento: TDateTime     read FDataEvento    write FDataEvento;
+    property tpEvento: TpcnTpEvento  read FTpEvento      write FTpEvento;
+    property nSeqEvento: Integer     read FnSeqEvento    write FnSeqEvento;
+    property versaoEvento: string    read FVersaoEvento  write FversaoEvento;
+    property detEvento: TDetEvento   read FDetEvento     write FDetEvento;
+    property DescEvento: string      read getDescEvento;
+    property TipoEvento: string      read getTipoEvento;
   end;
 
   TRetchNFePendCollectionItem = class
   private
-    FChavePend: String;
+    FChavePend: string;
   public
-    property ChavePend: String read FChavePend write FChavePend;
+    property ChavePend: string read FChavePend write FChavePend;
   end;
 
   TRetchNFePendCollection = class(TACBrObjectList)
@@ -245,46 +246,46 @@ type
 
   TRetInfEvento = class(TObject)
   private
-    FId: String;
-    FNomeArquivo: String;
+    FId: string;
+    FNomeArquivo: string;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FcOrgao: Integer;
     FcStat: Integer;
-    FxMotivo: String;
-    FchNFe: String;
+    FxMotivo: string;
+    FchNFe: string;
     FtpEvento: TpcnTpEvento;
-    FxEvento: String;
+    FxEvento: string;
     FnSeqEvento: Integer;
-    FCNPJDest: String;
-    FemailDest: String;
+    FCNPJDest: string;
+    FemailDest: string;
     FcOrgaoAutor: Integer;
     FdhRegEvento: TDateTime;
-    FnProt: String;
+    FnProt: string;
     FchNFePend: TRetchNFePendCollection;
     FXML: AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
 
-    property Id: String                         read FId          write FId;
+    property Id: string                         read FId          write FId;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb       write FtpAmb;
-    property verAplic: String                   read FverAplic    write FverAplic;
+    property verAplic: string                   read FverAplic    write FverAplic;
     property cOrgao: Integer                    read FcOrgao      write FcOrgao;
     property cStat: Integer                     read FcStat       write FcStat;
-    property xMotivo: String                    read FxMotivo     write FxMotivo;
-    property chNFe: String                      read FchNFe       write FchNFe;
+    property xMotivo: string                    read FxMotivo     write FxMotivo;
+    property chNFe: string                      read FchNFe       write FchNFe;
     property tpEvento: TpcnTpEvento             read FtpEvento    write FtpEvento;
-    property xEvento: String                    read FxEvento     write FxEvento;
+    property xEvento: string                    read FxEvento     write FxEvento;
     property nSeqEvento: Integer                read FnSeqEvento  write FnSeqEvento;
-    property CNPJDest: String                   read FCNPJDest    write FCNPJDest;
-    property emailDest: String                  read FemailDest   write FemailDest;
+    property CNPJDest: string                   read FCNPJDest    write FCNPJDest;
+    property emailDest: string                  read FemailDest   write FemailDest;
     property cOrgaoAutor: Integer               read FcOrgaoAutor write FcOrgaoAutor;
     property dhRegEvento: TDateTime             read FdhRegEvento write FdhRegEvento;
-    property nProt: String                      read FnProt       write FnProt;
+    property nProt: string                      read FnProt       write FnProt;
     property chNFePend: TRetchNFePendCollection read FchNFePend   write FchNFePend;
     property XML: AnsiString                    read FXML         write FXML;
-    property NomeArquivo: String                read FNomeArquivo write FNomeArquivo;
+    property NomeArquivo: string                read FNomeArquivo write FNomeArquivo;
   end;
 
 implementation
@@ -294,12 +295,14 @@ implementation
 constructor TInfEvento.Create;
 begin
   inherited Create;
+
   FDetEvento := TDetEvento.Create();
 end;
 
 destructor TInfEvento.Destroy;
 begin
   FDetEvento.Free;
+
   inherited;
 end;
 
@@ -313,7 +316,7 @@ begin
     Result := StrToIntDef(copy(FChave, 1, 2), 0);
 end;
 
-function TInfEvento.getDescEvento: String;
+function TInfEvento.getDescEvento: string;
 begin
   case fTpEvento of
     teCCe                      : Result := 'Carta de Correcao';
@@ -361,7 +364,7 @@ begin
   end;
 end;
 
-function TInfEvento.getTipoEvento: String;
+function TInfEvento.getTipoEvento: string;
 begin
   try
     Result := TpEventoToStr( FTpEvento );
@@ -370,7 +373,7 @@ begin
   end;
 end;
 
-function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
+function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): string;
 begin
   case TipoEvento of
     teCCe                      : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
@@ -438,7 +441,7 @@ begin
   inherited;
 end;
 
-procedure TDetEvento.setxCondUso(const Value: String);
+procedure TDetEvento.setxCondUso(const Value: string);
 begin
   FCondUso := Value;
 
@@ -495,12 +498,14 @@ end;
 constructor TRetInfEvento.Create;
 begin
   inherited Create;
+
   FchNFePend := TRetchNFePendCollection.Create();
 end;
 
 destructor TRetInfEvento.Destroy;
 begin
   FchNFePend.Free;
+
   inherited;
 end;
 

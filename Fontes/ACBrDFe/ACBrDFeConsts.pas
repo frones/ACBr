@@ -59,6 +59,9 @@ resourcestring
   ERR_MSG_MAIOR_MAXIMO = 'Número de ocorrências maior que o máximo permitido - Máximo ';
   ERR_MSG_MENOR_MINIMO = 'Número de ocorrências menor que o mínimo permitido - Mínimo ';
 
+  // Descrição de Lotes
+  DSC_IDLOTE = 'Numero do Lote';
+
   // Descrição de Documentos
   DSC_CNPJ = 'CNPJ(MF)';
   DSC_CPF = 'CPF';

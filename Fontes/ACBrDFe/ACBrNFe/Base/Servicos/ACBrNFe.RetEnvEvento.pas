@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -151,12 +151,14 @@ end;
 constructor TRetInfEventoCollectionItem.Create;
 begin
   inherited Create;
+
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
 destructor TRetInfEventoCollectionItem.Destroy;
 begin
   FRetInfEvento.Free;
+
   inherited;
 end;
 
@@ -257,11 +259,7 @@ begin
   infEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
   infEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
   infEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
-  infEvento.CNPJ := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-
-  if infEvento.CNPJ = '' then
-    infEvento.CNPJ := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
-
+  infEvento.CNPJ := ObterConteudoTagCNPJCPF(ANode);
   infEvento.chNFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFe'), tcStr);
   infEvento.dhEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
   infEvento.tpEvento := StrToTpEventoNFe(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr));

@@ -45,18 +45,18 @@ type
   TConsSitNFe = class
   private
     FtpAmb: TpcnTipoAmbiente;
-    FchNFe: String;
-    FVersao: String;
+    FchNFe: string;
+    FVersao: string;
   public
     constructor Create;
     destructor Destroy; override;
 
     function GerarXML: string;
-    function ObterNomeArquivo: String;
+    function ObterNomeArquivo: string;
 
-    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property chNFe: String           read FchNFe   write FchNFe;
-    property Versao: String          read FVersao  write FVersao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb  write FtpAmb;
+    property chNFe: string           read FchNFe  write FchNFe;
+    property Versao: string          read FVersao write FVersao;
   end;
 
 implementation
@@ -79,7 +79,7 @@ begin
   inherited;
 end;
 
-function TConsSitNFe.ObterNomeArquivo: String;
+function TConsSitNFe.ObterNomeArquivo: string;
 begin
   Result := OnlyNumber(FchNFe) + '-ped-sit.xml';
 end;

@@ -45,22 +45,22 @@ type
 
   TRetInutNFe = class(TObject)
   private
-    Fversao: String;
-    FId: String;
+    Fversao: string;
+    FId: string;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FcStat: Integer;
-    FxMotivo: String;
-    FxJust: String;
+    FxMotivo: string;
+    FxJust: string;
     FcUF: Integer;
     Fano: Integer;
-    FCNPJ: String;
+    FCNPJ: string;
     FModelo: Integer;
     FSerie: Integer;
     FnNFIni: Integer;
     FnNFFin: Integer;
     FdhRecbto: TDateTime;
-    FnProt: String;
+    FnProt: string;
     FXmlRetorno: string;
   public
     constructor Create;
@@ -68,22 +68,22 @@ type
 
     function LerXml: Boolean;
 
-    property versao: String          read Fversao   write Fversao;
-    property Id: String              read FId       write FId;
+    property versao: string          read Fversao   write Fversao;
+    property Id: string              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
+    property verAplic: string        read FverAplic write FverAplic;
     property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
-    property xJust: String           read FxJust    write FxJust;
+    property xMotivo: string         read FxMotivo  write FxMotivo;
+    property xJust: string           read FxJust    write FxJust;
     property cUF: Integer            read FcUF      write FcUF;
     property ano: Integer            read Fano      write Fano;
-    property CNPJ: String            read FCNPJ     write FCNPJ;
+    property CNPJ: string            read FCNPJ     write FCNPJ;
     property Modelo: Integer         read FModelo   write FModelo;
     property Serie: Integer          read FSerie    write FSerie;
     property nNFIni: Integer         read FnNFIni   write FnNFIni;
     property nNFFin: Integer         read FnNFFin   write FnNFFin;
     property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: String           read FnProt    write FnProt;
+    property nProt: string           read FnProt    write FnProt;
 
     property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;

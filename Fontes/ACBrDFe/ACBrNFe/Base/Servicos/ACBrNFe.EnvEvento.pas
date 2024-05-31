@@ -54,7 +54,7 @@ uses
   ACBrXmlDocument;
 
 type
-
+{
   TNFeXmlWriterOptions = class(TACBrXmlWriterOptions)
   private
     FAjustarTagNro: boolean;
@@ -70,7 +70,7 @@ type
     property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
   end;
-
+}
   TInfEventoCollectionItem = class(TObject)
   private
     FInfEvento: TInfEvento;
@@ -108,8 +108,8 @@ type
 
     procedure SetEvento(const Value: TInfEventoCollection);
 
-    function GetOpcoes: TNFeXmlWriterOptions;
-    procedure SetOpcoes(const Value: TNFeXmlWriterOptions);
+    function GetOpcoes: TACBrXmlWriterOptions;
+    procedure SetOpcoes(const Value: TACBrXmlWriterOptions);
   protected
     function CreateOptions: TACBrXmlWriterOptions; override;
 
@@ -146,11 +146,11 @@ type
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: string; CCe: Boolean = True): Boolean;
 
-    property idLote: Int64                read FidLote  write FidLote;
-    property Evento: TInfEventoCollection read FEvento  write SetEvento;
-    property Versao: string               read FVersao  write FVersao;
+    property idLote: Int64                read FidLote write FidLote;
+    property Evento: TInfEventoCollection read FEvento write SetEvento;
+    property Versao: string               read FVersao write FVersao;
 
-    property Opcoes: TNFeXmlWriterOptions read GetOpcoes write SetOpcoes;
+//    property Opcoes: TNFeXmlWriterOptions read GetOpcoes write SetOpcoes;
 
     property XmlEnvio: string read FXmlEnvio write FXmlEnvio;
   end;
@@ -171,17 +171,18 @@ begin
   inherited Create;
 
   FEvento  := TInfEventoCollection.Create();
-
+  {
   Opcoes.AjustarTagNro := True;
   Opcoes.NormatizarMunicipios := False;
   Opcoes.PathArquivoMunicipios := '';
   Opcoes.GerarTagAssinatura := pcnConversao.taSomenteSeAssinada;
   Opcoes.ValidarInscricoes := False;
+  }
 end;
 
 function TEventoNFe.CreateOptions: TACBrXmlWriterOptions;
 begin
-  Result := TNFeXmlWriterOptions.Create();
+  Result := TACBrXmlWriterOptions.Create();
 end;
 
 destructor TEventoNFe.Destroy;
@@ -878,9 +879,9 @@ begin
     wAlerta('#1', 'itemPedido', '', ERR_MSG_MAIOR_MAXIMO + '990');
 end;
 
-function TEventoNFe.GetOpcoes: TNFeXmlWriterOptions;
+function TEventoNFe.GetOpcoes: TACBrXmlWriterOptions;
 begin
-  Result := TNFeXmlWriterOptions(FOpcoes);
+  Result := TACBrXmlWriterOptions(FOpcoes);
 end;
 
 procedure TEventoNFe.SetEvento(const Value: TInfEventoCollection);
@@ -888,7 +889,7 @@ begin
   FEvento.Assign(Value);
 end;
 
-procedure TEventoNFe.SetOpcoes(const Value: TNFeXmlWriterOptions);
+procedure TEventoNFe.SetOpcoes(const Value: TACBrXmlWriterOptions);
 begin
   FOpcoes := Value;
 end;

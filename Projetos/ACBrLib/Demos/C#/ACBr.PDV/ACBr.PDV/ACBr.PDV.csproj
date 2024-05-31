@@ -164,21 +164,21 @@
     <None Include="Resources\config.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BAL\Imports\Dinamico\MT\ACBrLib.BAL.csproj">
-      <Project>{3989a535-1e78-4e45-b3ae-47335ea6a359}</Project>
-      <Name>ACBrLib.BAL</Name>
+    <ProjectReference Include="..\..\BAL\Imports\Dinamico\MT\ACBrLib.BALMT.csproj">
+      <Project>{688ecc57-2f28-472b-9bbb-913b997e497f}</Project>
+      <Name>ACBrLib.BALMT</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NFe\Imports\Dinamico\MT\ACBrLib.NFe.csproj">
-      <Project>{fd128f90-7a85-4431-8853-0f7df7301e7e}</Project>
-      <Name>ACBrLib.NFe</Name>
+    <ProjectReference Include="..\..\NFe\Imports\Dinamico\MT\ACBrLib.NFeMT.csproj">
+      <Project>{b837c49d-6794-4256-8811-84117af493fa}</Project>
+      <Name>ACBrLib.NFeMT</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\PosPrinter\Import\Dinamico\MT\ACBrLib.PosPrinter.csproj">
-      <Project>{f44a03bc-e5aa-45da-a2b1-5d000d513152}</Project>
-      <Name>ACBrLib.PosPrinter</Name>
+    <ProjectReference Include="..\..\PosPrinter\Import\Dinamico\MT\ACBrLib.PosPrinterMT.csproj">
+      <Project>{d7e27234-12b4-43c3-892f-01a720b86606}</Project>
+      <Name>ACBrLib.PosPrinterMT</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Sat\Imports\Dinamico\MT\ACBrLib.Sat.csproj">
-      <Project>{84bc69d8-a7ae-4b5e-a8d9-73540f869e78}</Project>
-      <Name>ACBrLib.Sat</Name>
+    <ProjectReference Include="..\..\Sat\Imports\Dinamico\MT\ACBrLib.SatMT.csproj">
+      <Project>{74acca2c-ef02-40b9-a5e7-6dd7dd2b9e3b}</Project>
+      <Name>ACBrLib.SatMT</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>

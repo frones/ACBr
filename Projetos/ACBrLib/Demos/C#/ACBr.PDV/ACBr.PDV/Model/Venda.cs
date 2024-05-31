@@ -90,7 +90,7 @@ namespace ACBr.PDV.Model
             //Identificação
             ret.Identificacao.natOp = "Venda de Mercadoria";
             ret.Identificacao.indPag = IndicadorPagamento.ipVista;
-            ret.Identificacao.mod = ModeloNFe.moNFCe;
+            ret.Identificacao.modelo = ModeloNFe.moNFCe;
             ret.Identificacao.Serie = Serie.ToString();
             ret.Identificacao.nNF = Numero;
             ret.Identificacao.dhEmi = Data;

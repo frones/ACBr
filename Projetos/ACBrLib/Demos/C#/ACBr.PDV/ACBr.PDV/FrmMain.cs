@@ -123,6 +123,8 @@ namespace ACBr.PDV
             dgvItensVenda.AutoGenerateColumns = false;
             dgvPagamentos.AutoGenerateColumns = false;
 
+            cmbParity.EnumDataSource(SerialParity.None);            
+
             LoadConfig();
         }
 

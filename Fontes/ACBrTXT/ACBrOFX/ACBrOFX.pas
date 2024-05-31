@@ -94,6 +94,9 @@ CONST
 
 implementation
 
+uses
+  ACBrUtil.Base;
+
 { TACBrOFX }
 
 function TACBrOFX.FirstWord(const S: String): String;
@@ -299,7 +302,7 @@ begin
             begin
               Amount := InfLine(sLine);
               Amount := StringReplace(Amount,'.',',',[rfReplaceAll]);
-              oItem.Value := StrToFloat(Amount);
+              oItem.Value := StringToFloat(Amount);
             end;
             if FindString('<NAME>', sLine) then
               oItem.Name := InfLine(sLine);

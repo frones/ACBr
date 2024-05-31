@@ -41,14 +41,13 @@ uses
   ACBrXmlBase,
   pcnConversao,
   ACBrDFe, ACBrDFeWebService,
-  ACBrDFeComum.RetConsReciDFe,
   ACBrDFecomum.Proc,
-  ACBrDFecomum.DistDFeInt,
-  ACBrDFecomum.RetDistDFeInt,
   ACBrDCe.Classes,
   ACBrDCe.Conversao,
-//  pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
-//  pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
+  ACBrDCe.RetConsSit,
+  ACBrDCe.EnvEvento,
+  ACBrDCe.RetEnvEvento,
+//  pmdfeRetEnvMDFe,
   ACBrDCeDeclaracoes, ACBrDCeConfiguracoes;
 
 type
@@ -222,7 +221,7 @@ type
 
 //    property DCeRetorno: TRetConsReciDFe read FDCeRetorno;
   end;
-
+(*
   { TDCeRecibo }
 
   TDCeRecibo = class(TDCeWebService)
@@ -266,7 +265,7 @@ type
 
 //    property DCeRetorno: TRetConsReciDFe read FDCeRetorno;
   end;
-
+*)
   { TDCeConsulta }
 
   TDCeConsulta = class(TDCeWebService)
@@ -356,43 +355,6 @@ type
 //    property EventoRetorno: TRetEventoDCe read FEventoRetorno;
   end;
 
-  { TDistribuicaoDFe }
-
-  TDistribuicaoDFe = class(TDCeWebService)
-  private
-    FCNPJCPF: String;
-    FultNSU: String;
-    FNSU: String;
-    FchDCe: String;
-    FNomeArq: String;
-    FlistaArqs: TStringList;
-
-    FretDistDFeInt: TretDistDFeInt;
-
-    function GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
-  protected
-//    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-    function GerarMsgErro(E: Exception): String; override;
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-    procedure Clear; override;
-
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property ultNSU: String read FultNSU write FultNSU;
-    property NSU: String read FNSU write FNSU;
-    property chDCe: String read FchDCe write FchDCe;
-    property NomeArq: String read FNomeArq;
-    property ListaArqs: TStringList read FlistaArqs;
-
-    property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
-  end;
-
  { TDCeEnvioWebService }
 
   TDCeEnvioWebService = class(TDCeWebService)
@@ -430,26 +392,23 @@ type
     FStatusServico: TDCeStatusServico;
     FEnviar: TDCeRecepcao;
     FRetorno: TDCeRetRecepcao;
-    FRecibo: TDCeRecibo;
+//    FRecibo: TDCeRecibo;
     FConsulta: TDCeConsulta;
     FEnvEvento: TDCeEnvEvento;
-    FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TDCeEnvioWebService;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean; overload;
-    function Envia(const ALote: String; ASincrono:  Boolean = False): Boolean; overload;
+    function Envia(const ALote: String): Boolean;
 
     property ACBrDCe: TACBrDFe read FACBrDCe write FACBrDCe;
     property StatusServico: TDCeStatusServico read FStatusServico write FStatusServico;
     property Enviar: TDCeRecepcao read FEnviar write FEnviar;
     property Retorno: TDCeRetRecepcao read FRetorno write FRetorno;
-    property Recibo: TDCeRecibo read FRecibo write FRecibo;
+//    property Recibo: TDCeRecibo read FRecibo write FRecibo;
     property Consulta: TDCeConsulta read FConsulta write FConsulta;
     property EnvEvento: TDCeEnvEvento read FEnvEvento write FEnvEvento;
-    property DistribuicaoDFe: TDistribuicaoDFe read FDistribuicaoDFe write FDistribuicaoDFe;
     property EnvioWebService: TDCeEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -466,10 +425,9 @@ uses
   ACBrDFeUtil,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
-//  pmdfeConsSitDCe,
-  ACBrDFeComum.ConsReciDFe,
   ACBrDCe,
-  ACBrDCe.Consts;
+  ACBrDCe.Consts,
+  ACBrDCe.ConsSit;
 
 { TDCeWebService }
 
@@ -563,14 +521,14 @@ end;
 procedure TDCeStatusServico.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'DCeStatusServico';
-  FPSoapAction := FPServico + '/DCeStatusServicoMDF';
+  FPSoapAction := FPServico + '/DCeStatusServicoDC';
 end;
 
 procedure TDCeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-  ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe', False);
+  ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe', True);
   try
     ConsStatServ.TpAmb := FPConfiguracoesDCe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesDCe.WebServices.UFCodigo;
@@ -585,7 +543,7 @@ function TDCeStatusServico.TratarResposta: Boolean;
 var
   DCeRetorno: TRetConsStatServ;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'DCeStatusServicoMDFResult');
+  FPRetWS := SeparaDados(FPRetornoWS, 'DCeStatusServicoDCResult');
 
   DCeRetorno := TRetConsStatServ.Create('DCe');
   try
@@ -608,7 +566,6 @@ begin
       FPConfiguracoesDCe.WebServices.AguardarConsultaRet := FTMed * 1000;
 
     Result := (FcStat = 107);
-
   finally
     DCeRetorno.Free;
   end;
@@ -1162,9 +1119,10 @@ begin
 end;
 
 procedure TDCeRetRecepcao.DefinirDadosMsg;
-var
-  ConsReciDCe: TConsReciDFe;
+//var
+//  ConsReciDCe: TConsReciDFe;
 begin
+{
   ConsReciDCe := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe');
   try
     ConsReciDCe.tpAmb := FPConfiguracoesDCe.WebServices.Ambiente;
@@ -1174,6 +1132,7 @@ begin
   finally
     ConsReciDCe.Free;
   end;
+  }
 end;
 
 function TDCeRetRecepcao.TratarResposta: Boolean;
@@ -1356,7 +1315,7 @@ function TDCeRetRecepcao.GerarPrefixoArquivo: String;
 begin
   Result := Recibo;
 end;
-
+(*
 { TDCeRecibo }
 
 constructor TDCeRecibo.Create(AOwner: TACBrDFe; ADeclaracoes: TDeclaracoes);
@@ -1510,7 +1469,7 @@ begin
                    CodigoParaUF(FDCeRetorno.cUF)]);
   }
 end;
-
+*)
 { TDCeConsulta }
 
 constructor TDCeConsulta.Create(AOwner: TACBrDFe; ADeclaracoes: TDeclaracoes);
@@ -2422,218 +2381,6 @@ begin
   Result := IntToStr(FidLote);
 end;
 
-{ TDistribuicaoDFe }
-
-constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
-begin
-  inherited Create(AOwner);
-end;
-
-destructor TDistribuicaoDFe.Destroy;
-begin
-  FretDistDFeInt.Free;
-  FlistaArqs.Free;
-
-  inherited;
-end;
-
-procedure TDistribuicaoDFe.Clear;
-begin
-  inherited Clear;
-
-  FPStatus := stDCeDistDFeInt;
-  FPLayout := LayDCeDistDFeInt;
-  FPArqEnv := 'con-dist-dfe';
-  FPArqResp := 'dist-dfe';
-//  FPBodyElement := 'DCeDistDFeInteresse';
-//  FPHeaderElement := '';
-
-  if Assigned(FretDistDFeInt) then
-    FretDistDFeInt.Free;
-
-//italo  FretDistDFeInt := TRetDistDFeInt.Create('DCe');
-
-  if Assigned(FlistaArqs) then
-    FlistaArqs.Free;
-
-  FlistaArqs := TStringList.Create;
-end;
-
-procedure TDistribuicaoDFe.DefinirServicoEAction;
-begin
-  FPServico := GetUrlWsd + 'DCeDistribuicaoDFe';
-  FPSoapAction := FPServico + '/DCeDistDFeInteresse';
-end;
-
-procedure TDistribuicaoDFe.DefinirDadosMsg;
-var
-  DistDFeInt: TDistDFeInt;
-begin
-  DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE_DCE,
-                                   '', 'consChDCe', 'chDCe', False);
-  try
-    DistDFeInt.TpAmb := FPConfiguracoesDCe.WebServices.Ambiente;
-    DistDFeInt.CNPJCPF := FCNPJCPF;
-    DistDFeInt.ultNSU := FultNSU;
-    DistDFeInt.NSU := FNSU;
-    DistDFeInt.Chave := trim(FchDCe);
-
-//italo    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
-
-    DistDFeInt.GerarXML;
-
-//italo    FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
-  finally
-    DistDFeInt.Free;
-  end;
-end;
-
-function TDistribuicaoDFe.TratarResposta: Boolean;
-var
-  I: Integer;
-  AXML, aPath: String;
-begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'DCeDistDFeInteresseResult');
-
-  // Processando em UTF8, para poder gravar arquivo corretamente //
-  FretDistDFeInt.XmlRetorno := FPRetWS;
-  FretDistDFeInt.LerXml;
-
-  for I := 0 to FretDistDFeInt.docZip.Count - 1 do
-  begin
-    AXML := FretDistDFeInt.docZip.Items[I].XML;
-    FNomeArq := '';
-    if (AXML <> '') then
-    begin
-        (*
-      case FretDistDFeInt.docZip.Items[I].schema of
-        schresDCe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resDCe.chDCe + '-resDCe.xml';
-
-        schresEvento:
-          FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-                     FretDistDFeInt.docZip.Items[I].resEvento.chDCe +
-                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-                     '-resEventoDCe.xml';
-        schprocDCe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-DCe.xml';
-
-        schprocEventoDCe:
-          FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
-                     '-procEventoDCe.xml';
-      end;
-        *)
-
-      if NaoEstaVazio(NomeArq) then
-        FlistaArqs.Add( FNomeArq );
-
-      aPath := GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]);
-      FretDistDFeInt.docZip.Items[I].NomeArq := aPath + FNomeArq;
-      {
-      if (FPConfiguracoesDCe.Arquivos.Salvar) and NaoEstaVazio(FNomeArq) then
-      begin
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoDCe]) then
-          FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
-
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocDCe]) then
-          FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
-      end;
-      }
-    end;
-  end;
-
-  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
-    nativa e Decodificar caracteres HTML Entity }
-  FretDistDFeInt.Free;   // Limpando a lista
-//italo  FretDistDFeInt := TRetDistDFeInt.Create('DCe');
-
-  FretDistDFeInt.XmlRetorno := UTF8ToNativeString(ParseText(FPRetWS));
-  FretDistDFeInt.LerXml;
-
-  FPMsg := FretDistDFeInt.xMotivo;
-  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
-end;
-
-function TDistribuicaoDFe.GerarMsgLog: String;
-begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'Resposta: %s ' + LineBreak +
-                           'Último NSU: %s ' + LineBreak +
-                           'Máximo NSU: %s ' + LineBreak),
-                   [FretDistDFeInt.versao, TpAmbToStr(FretDistDFeInt.tpAmb),
-                    FretDistDFeInt.verAplic, IntToStr(FretDistDFeInt.cStat),
-                    FretDistDFeInt.xMotivo,
-                    IfThen(FretDistDFeInt.dhResp = 0, '',
-                           FormatDateTimeBr(RetDistDFeInt.dhResp)),
-                    FretDistDFeInt.ultNSU, FretDistDFeInt.maxNSU]);
-end;
-
-function TDistribuicaoDFe.GerarMsgErro(E: Exception): String;
-begin
-  Result := ACBrStr('WebService Distribuição de DFe:' + LineBreak +
-                    '- Inativo ou Inoperante tente novamente.');
-end;
-
-function TDistribuicaoDFe.GerarPathDistribuicao(
-  AItem: TdocZipCollectionItem): String;
-var
-  Data: TDateTime;
-begin
-  if FPConfiguracoesDCe.Arquivos.EmissaoPathDCe then
-  begin
-    Data := AItem.resDFe.dhEmi;
-    if Data = 0 then
-      Data := AItem.procEvento.dhEvento;
-  end
-  else
-    Data := Now;
-  {
-  case AItem.schema of
-    schprocEventoDCe:
-      Result := FPConfiguracoesDCe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
-                                                           AItem.resDFe.xNome,
-                                                           AItem.procEvento.CNPJ,
-                                                           AItem.resDFe.IE,
-                                                           Data);
-
-    schprocDCe:
-      Result := FPConfiguracoesDCe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
-                                                             AItem.resDFe.CNPJCPF,
-                                                             AItem.resDFe.IE,
-                                                             Data);
-  end;
-  }
-end;
-(*
-procedure TDistribuicaoDFe.DefinirURL;
-var
-  UF, Modelo: String;
-  Versao: Double;
-begin
-  { Esse método é tratado diretamente pela RFB }
-
-  UF := 'AN';
-  Modelo := 'DCe';
-  Versao := 0;
-  FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoDCeToDbl(FPConfiguracoesDCe.Geral.VersaoDF);
-
-  TACBrDCe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
-    UF ,
-    FPConfiguracoesDCe.WebServices.Ambiente,
-    LayOutToServico(FPLayout),
-    Versao,
-    FPURL);
-
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
-end;
-*)
 { TDCeEnvioWebService }
 
 constructor TDCeEnvioWebService.Create(AOwner: TACBrDFe);
@@ -2713,10 +2460,9 @@ begin
   FStatusServico := TDCeStatusServico.Create(FACBrDCe);
   FEnviar := TDCeRecepcao.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
   FRetorno := TDCeRetRecepcao.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
-  FRecibo := TDCeRecibo.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
+//  FRecibo := TDCeRecibo.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
   FConsulta := TDCeConsulta.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
 //  FEnvEvento := TDCeEnvEvento.Create(FACBrDCe, TACBrDCe(FACBrDCe).EventoDCe);
-  FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrDCe);
   FEnvioWebService := TDCeEnvioWebService.Create(FACBrDCe);
 end;
 
@@ -2725,37 +2471,23 @@ begin
   FStatusServico.Free;
   FEnviar.Free;
   FRetorno.Free;
-  FRecibo.Free;
+//  FRecibo.Free;
   FConsulta.Free;
-  FEnvEvento.Free;
-  FDistribuicaoDFe.Free;
+//  FEnvEvento.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean;
-begin
-  Result := Envia(IntToStr(ALote), ASincrono);
-end;
-
-function TWebServices.Envia(const ALote: String; ASincrono:  Boolean = False): Boolean;
+function TWebServices.Envia(const ALote: String): Boolean;
 begin
   FEnviar.Clear;
   FRetorno.Clear;
 
   FEnviar.Lote := ALote;
-  FEnviar.Sincrono := ASincrono;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );
-
-  if not ASincrono or ((FEnviar.Recibo <> '') and (FEnviar.cStat = 103)) then
-  begin
-    FRetorno.Recibo := FEnviar.Recibo;
-    if not FRetorno.Executar then
-      FRetorno.GerarException( FRetorno.Msg );
-  end;
 
   Result := True;
 end;

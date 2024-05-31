@@ -72,7 +72,7 @@ type
   private
     FID: String;
     FtpAmbiente: TACBrTipoAmbiente;
-    FCNPJ: String;
+    FCNPJCPF: String;
     FcOrgao: Integer;
     FChave: String;
     FDataEvento: TDateTime;
@@ -92,7 +92,7 @@ type
     property id: String               read FID             write FID;
     property cOrgao: Integer          read getcOrgao       write FcOrgao;
     property tpAmb: TACBrTipoAmbiente read FtpAmbiente     write FtpAmbiente;
-    property CNPJ: String             read FCNPJ           write FCNPJ;
+    property CNPJCPF: String          read FCNPJCPF        write FCNPJCPF;
     property chDCe: String            read FChave          write FChave;
     property dhEvento: TDateTime      read FDataEvento     write FDataEvento;
     property tpEvento: TpcnTpEvento   read FTpEvento       write FTpEvento;
@@ -117,9 +117,6 @@ type
     FtpEvento: TpcnTpEvento;
     FxEvento: String;
     FnSeqEvento: Integer;
-    FCNPJDest: String;
-    FemailDest: String;
-    FcOrgaoAutor: Integer;
     FdhRegEvento: TDateTime;
     FnProt: String;
     FXML: AnsiString;
@@ -134,9 +131,6 @@ type
     property tpEvento: TpcnTpEvento   read FtpEvento    write FtpEvento;
     property xEvento: String          read FxEvento     write FxEvento;
     property nSeqEvento: Integer      read FnSeqEvento  write FnSeqEvento;
-    property CNPJDest: String         read FCNPJDest    write FCNPJDest;
-    property emailDest: String        read FemailDest   write FemailDest;
-    property cOrgaoAutor: Integer     read FcOrgaoAutor write FcOrgaoAutor;
     property dhRegEvento: TDateTime   read FdhRegEvento write FdhRegEvento;
     property nProt: String            read FnProt       write FnProt;
     property XML: AnsiString          read FXML         write FXML;

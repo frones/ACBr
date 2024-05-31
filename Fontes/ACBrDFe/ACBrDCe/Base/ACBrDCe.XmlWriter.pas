@@ -245,10 +245,12 @@ begin
 
   Result.AppendChild(Gerar_Ide);
   Result.AppendChild(Gerar_Emit);
+
   Result.AppendChild(Gerar_Fisco);
   Result.AppendChild(Gerar_Marketplace);
   Result.AppendChild(Gerar_Transportadora);
   Result.AppendChild(Gerar_EmpEmisProp);
+
   Result.AppendChild(Gerar_Dest);
 
   nodeArray := Gerar_autXML;
@@ -743,7 +745,7 @@ begin
   DCe.Ide.modelo := ModeloDF;
   DCe.infDCe.Versao := VersaoDCeToDbl(VersaoDF);
   DCe.Ide.tpAmb := tpAmb;
-  DCe.ide.tpEmis := tpEmis;
+//  DCe.ide.tpEmis := tpEmis;
 
   case DCe.Ide.tpEmit of
     teFisco:

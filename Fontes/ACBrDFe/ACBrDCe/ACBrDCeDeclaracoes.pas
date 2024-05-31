@@ -198,16 +198,14 @@ begin
   FConfiguracoes := TACBrDCe(TDeclaracoes(Collection).ACBrDCe).Configuracoes;
 
   FDCe.Ide.verProc := 'ACBrDCe';
-  {
+
   with TACBrDCe(TDeclaracoes(Collection).ACBrDCe) do
   begin
     FDCe.Ide.modelo := 99;
     FDCe.infDCe.Versao := VersaoDCeToDbl(Configuracoes.Geral.VersaoDF);
-
     FDCe.Ide.tpAmb := TACBrTipoAmbiente(Integer(Configuracoes.WebServices.Ambiente));
     FDCe.Ide.tpEmis := TACBrTipoEmissao(Integer(Configuracoes.Geral.FormaEmissao));
   end;
-  }
 end;
 
 destructor Declaracao.Destroy;
@@ -1199,12 +1197,12 @@ begin
     FDCeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
-
+    {
     FDCeW.ModeloDF := 99;
     FDCeW.VersaoDF := Configuracoes.Geral.VersaoDF;
-
     FDCeW.tpAmb := TACBrTipoAmbiente(Integer(Configuracoes.WebServices.Ambiente));
     FDCeW.tpEmis := TACBrTipoEmissao(Integer(Configuracoes.Geral.FormaEmissao));
+    }
   end;
 
   FDCeW.GerarXml;

@@ -176,92 +176,95 @@ begin
   Document := TACBrXmlDocument.Create;
 
   try
-    Document.LoadFromXml(XmlRetorno);
+    try
+      if XmlRetorno = '' then Exit;
 
-    ANode := Document.Root;
+      Document.LoadFromXml(XmlRetorno);
 
-    if ANode <> nil then
-    begin
-      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
-      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-      xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
-      cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
-      nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
-      dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-      chDCe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chDCe'), tcStr);
+      ANode := Document.Root;
 
-      case cStat of
-        100, // Autorizado o Uso da DCe
-        101, // Cancelamento de DCe homologado
-        102, // Substituição da DCe homologado
-        150: // Autorizado o Uso da DCe, autorização fora de prazo
-          begin
-            ANodeAux := ANode.Childrens.FindAnyNs('protDCe');
+      if ANode <> nil then
+      begin
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+        tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+        cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+        xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
+        cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
+        nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
+        dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        chDCe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chDCe'), tcStr);
 
-            if ANodeAux <> nil then
+        case cStat of
+          100, // Autorizado o Uso da DCe
+          101, // Cancelamento de DCe homologado
+          102, // Substituição da DCe homologado
+          150: // Autorizado o Uso da DCe, autorização fora de prazo
             begin
-              // A propriedade XMLprotDCe contem o XML que traz o resultado do
-              // processamento da DCe.
-              XMLprotDCe := ANodeAux.OuterXml;
-
-              ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
+              ANodeAux := ANode.Childrens.FindAnyNs('protDCe');
 
               if ANodeAux <> nil then
               begin
-       //         protDCe.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
-                protDCe.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
-                protDCe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-                protDCe.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chDCe'), tcStr);
-                protDCe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-                protDCe.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
-                protDCe.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
-                protDCe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
-                protDCe.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+                // A propriedade XMLprotDCe contem o XML que traz o resultado do
+                // processamento da DCe.
+                XMLprotDCe := ANodeAux.OuterXml;
 
-                ANodeAux := ANodeAux.Childrens.FindAnyNs('infFisco');
+                ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
 
                 if ANodeAux <> nil then
                 begin
-                  protDCe.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
-                  protDCe.xMsg := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr));
+         //         protDCe.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
+                  protDCe.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+                  protDCe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+                  protDCe.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chDCe'), tcStr);
+                  protDCe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+                  protDCe.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+                  protDCe.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
+                  protDCe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+                  protDCe.xMotivo := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr));
+
+                  ANodeAux := ANodeAux.Childrens.FindAnyNs('infFisco');
+
+                  if ANodeAux <> nil then
+                  begin
+                    protDCe.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
+                    protDCe.xMsg := ACBrStr(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr));
+                  end;
                 end;
               end;
             end;
-          end;
-      end;
-
-      if Assigned(procEventoDCe) then
-        procEventoDCe.Free;
-
-      procEventoDCe := TRetEventoDCeCollection.Create;
-
-      try
-        ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoDCe');
-
-        if Assigned(ANodeArray) then
-        begin
-          for i := Low(ANodeArray) to High(ANodeArray) do
-          begin
-            AnodeAux := ANodeArray[i];
-
-            procEventoDCe.New;
-            procEventoDCe.Items[i].RetEventoDCe.XmlRetorno := AnodeAux.OuterXml;
-            procEventoDCe.Items[i].RetEventoDCe.LerXml;
-          end;
         end;
 
-        Result := True;
-      except
-        Result := False;
-      end;
-    end;
+        if Assigned(procEventoDCe) then
+          procEventoDCe.Free;
 
+        procEventoDCe := TRetEventoDCeCollection.Create;
+
+        try
+          ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoDCe');
+
+          if Assigned(ANodeArray) then
+          begin
+            for i := Low(ANodeArray) to High(ANodeArray) do
+            begin
+              AnodeAux := ANodeArray[i];
+
+              procEventoDCe.New;
+              procEventoDCe.Items[i].RetEventoDCe.XmlRetorno := AnodeAux.OuterXml;
+              procEventoDCe.Items[i].RetEventoDCe.LerXml;
+            end;
+          end;
+        finally
+          Result := True;
+        end;
+      end;
+
+      Result := True;
+    except
+      Result := False;
+    end;
+  finally
     FreeAndNil(Document);
-    Result := True;
-  except
-    Result := False;
   end;
 end;
 

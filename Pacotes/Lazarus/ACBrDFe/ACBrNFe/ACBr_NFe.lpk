@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFe"/>
     <Type Value="RunAndDesignTime"/>
@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe;..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE;..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe;..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE;..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe;..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="25">
+    <Files Count="34">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe.pas"/>
         <UnitName Value="ACBrNFe"/>
@@ -122,7 +122,44 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrDFeDANFeReport.pas"/>
         <UnitName Value="ACBrDFeDANFeReport"/>
       </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.AdmCSC.pas"/>
+        <UnitName Value="ACBrNFe.AdmCSC"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.ConsSit.pas"/>
+        <UnitName Value="ACBrNFe.ConsSit"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.EnvEvento.pas"/>
+        <UnitName Value="ACBrNFe.EnvEvento"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.EventoClass.pas"/>
+        <UnitName Value="ACBrNFe.EventoClass"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.Inut.pas"/>
+        <UnitName Value="ACBrNFe.Inut"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.RetAdmCSC.pas"/>
+        <UnitName Value="ACBrNFe.RetAdmCSC"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.RetConsSit.pas"/>
+        <UnitName Value="ACBrNFe.RetConsSit"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.RetEnvEvento.pas"/>
+        <UnitName Value="ACBrNFe.RetEnvEvento"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\Servicos\ACBrNFe.RetInut.pas"/>
+        <UnitName Value="ACBrNFe.RetInut"/>
+      </Item34>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

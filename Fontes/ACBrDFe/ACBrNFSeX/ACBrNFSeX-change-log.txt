@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/06/2024
+-- SigISS.Provider --
+[*] Possível solução para o erro de UTF-8
+  Por: Italo Giurizzato Junior
+
 31/05/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Ibatiba/ES trocou a URL e a versão, o provedor continua o EL.

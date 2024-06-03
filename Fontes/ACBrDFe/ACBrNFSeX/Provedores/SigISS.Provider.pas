@@ -575,6 +575,7 @@ function TACBrNFSeXWebserviceSigISS.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := ConverteXMLtoUTF8(Result);
   Result := ParseText(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverDeclaracaoXML(Result);
@@ -706,16 +707,16 @@ begin
   Response.Metodo := tmConsultarNFSe;
 
   Response.ArquivoEnvio := '<ConsultarNfseServicoPrestado xmlns="http://iss.londrina.pr.gov.br/ws/v1_03">' +
-                         '<ConsultarNfseServicoPrestadoEnvio>' +
-                           '<ccm>' + Trim(Emitente.InscMun) + '</ccm>' +
-                           '<cnpj>' + Trim(Emitente.Cnpj) + '</cnpj>' +
-                           '<cpf>' + Trim(Emitente.WSUser) + '</cpf>' +
-                           '<senha>' + Trim(Emitente.WSSenha) + '</senha>' +
-                           '<numero_nfse>' +
-                             Response.InfConsultaNFSe.NumeroIniNFSe +
-                           '</numero_nfse>' +
-                         '</ConsultarNfseServicoPrestadoEnvio>' +
-                       '</ConsultarNfseServicoPrestado>';
+                             '<ConsultarNfseServicoPrestadoEnvio>' +
+                               '<ccm>' + Trim(Emitente.InscMun) + '</ccm>' +
+                               '<cnpj>' + Trim(Emitente.Cnpj) + '</cnpj>' +
+                               '<cpf>' + Trim(Emitente.WSUser) + '</cpf>' +
+                               '<senha>' + Trim(Emitente.WSSenha) + '</senha>' +
+                               '<numero_nfse>' +
+                                 Response.InfConsultaNFSe.NumeroIniNFSe +
+                               '</numero_nfse>' +
+                             '</ConsultarNfseServicoPrestadoEnvio>' +
+                           '</ConsultarNfseServicoPrestado>';
 end;
 
 procedure TACBrNFSeProviderSigISS103.TratarRetornoConsultaNFSeporNumero(

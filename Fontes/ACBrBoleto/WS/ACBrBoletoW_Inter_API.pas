@@ -820,10 +820,8 @@ end;
 function TBoletoW_Inter_API.Enviar: boolean;
 var
   LJsonObject : TACBrJSONObject;
-  LOperacao : TOperacao;
 begin
   Result := inherited Enviar;
-  LOperacao := Boleto.Configuracoes.WebService.Operacao;
   (*
   Tratamento automatico qdo tpINCLUI com pix.
   Entao ele vai enviar capturar a reposta para pegar o codigoSolicitacao e realizar uma consulta

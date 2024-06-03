@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			                                         }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -546,7 +546,7 @@ begin
     Ide.dSaiEnt   := now;
     Ide.hSaiEnt   := now;
     Ide.tpNF      := tnSaida;
-    Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);;
+    Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
     Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variavel quando for para ambiente de producao
     Ide.cUF       := UFtoCUF(edtEmitUF.Text);
     Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
@@ -993,7 +993,7 @@ begin
   NotaF.NFe.Ide.dSaiEnt   := Date;
   NotaF.NFe.Ide.hSaiEnt   := Now;
   NotaF.NFe.Ide.tpNF      := tnSaida;
-  NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);;
+  NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
   NotaF.NFe.Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
   NotaF.NFe.Ide.verProc   := '1.0.0.0'; //Versão do seu sistema
   NotaF.NFe.Ide.cUF       := UFtoCUF(edtEmitUF.Text);
@@ -1379,7 +1379,7 @@ begin
         CSOSN   := csosn101;
         modBC   := dbiValorOperacao;
         pCredSN := 5;
-        vCredICMSSN := 100 * pCredSN / 100;;
+        vCredICMSSN := 100 * pCredSN / 100;
         vBC     := 0;
         pICMS   := 0;
         vICMS   := 0;
@@ -1683,7 +1683,7 @@ begin
   ProcReferenciado.indProc := ipSEFAZ;
   *)
 
-  NotaF.NFe.exporta.UFembarq   := '';;
+  NotaF.NFe.exporta.UFembarq   := '';
   NotaF.NFe.exporta.xLocEmbarq := '';
 
   NotaF.NFe.compra.xNEmp := '';
@@ -3129,7 +3129,7 @@ begin
                         trvwNFe.Items.AddChild(NodePai,'xLocDesemb='  +xLocDesemb);
                         trvwNFe.Items.AddChild(NodePai,'UFDesemb='    +UFDesemb);
                         trvwNFe.Items.AddChild(NodePai,'dDesemb='     +DateToStr(dDesemb));
-                        trvwNFe.Items.AddChild(NodePai,'cExportador=' +cExportador);;
+                        trvwNFe.Items.AddChild(NodePai,'cExportador=' +cExportador);
 
                         for K:=0 to adi.Count-1 do
                          begin
@@ -3588,7 +3588,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
@@ -3607,7 +3607,7 @@ begin
       PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
@@ -3626,7 +3626,7 @@ begin
       PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
@@ -3976,7 +3976,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, True);
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     try
       ACBrNFe1.NotasFiscais.Validar;

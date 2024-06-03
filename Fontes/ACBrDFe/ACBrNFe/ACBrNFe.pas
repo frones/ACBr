@@ -43,7 +43,8 @@ uses
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
   pcnNFe, pcnConversao, pcnConversaoNFe,
-  pcnEnvEventoNFe, pcnInutNFe, 
+  pcnEnvEventoNFe,
+  ACBrNFe.Inut,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 const
@@ -382,7 +383,7 @@ function TACBrNFe.GerarNomeArqSchemaEvento(ASchemaEventoNFe: TSchemaNFe;
 var
   xComplemento: string;
 begin
-  if VersaoServico = 0.0 then
+  if VersaoServico = 0 then
     Result := ''
   else
   begin

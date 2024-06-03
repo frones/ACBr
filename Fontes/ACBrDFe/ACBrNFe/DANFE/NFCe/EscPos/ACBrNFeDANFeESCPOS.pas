@@ -39,7 +39,9 @@ interface
 uses
   Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
   ACBrBase, ACBrNFeDANFEClass, ACBrPosPrinter,
-  pcnNFe, pcnEnvEventoNFe, pcnInutNFe, ACBrDFeDANFeReport;
+  pcnNFe, pcnEnvEventoNFe,
+  ACBrNFe.Inut,
+  ACBrDFeDANFeReport;
 
 const
   CLarguraRegiaoEsquerda = 270;

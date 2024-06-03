@@ -57,7 +57,7 @@ uses
   pcnConversao, 
   pcnConversaoNFe, 
   pcnEnvEventoNFe, 
-  pcnRetInutNFe,
+  ACBrNFe.RetInut,
   ACBrNFe, 
   ACBrNFeDANFEClass, 
   ACBrUtil.Base, 

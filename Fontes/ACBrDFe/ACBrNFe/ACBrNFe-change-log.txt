@@ -45,6 +45,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/06/2024
+-- Diversos --
+[*] Alteração nos fontes para passar a utilizar as novas units: ACBrNFe.Inut e 
+    ACBrNFe.RetInut responsávels por gerar o pedido de inutilização e a leitura
+    do retorno da SEFAZ no que se refere ao pedido de inutilização.
+   Por: Italo Giurizzato Junior
+
 31/05/2024
 -- Diversos --
 [*] Ajustes nas novas units a serem utilizadas pelo componente.

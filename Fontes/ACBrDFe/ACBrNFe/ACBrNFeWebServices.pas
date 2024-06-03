@@ -633,7 +633,10 @@ uses
   ACBrDFeComum.ConsCad,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
-  pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciDFe,
+  pcnConsSitNFe,
+  ACBrNFe.Inut,
+  ACBrNFe.RetInut,
+  pcnConsReciDFe,
   pcnLeitor, ACBrIntegrador;
 
 { TNFeWebService }
@@ -2700,7 +2703,7 @@ var
 begin
   InutNFe := TinutNFe.Create;
   try
-    AjustarOpcoes( InutNFe.Gerador.Opcoes );
+//    AjustarOpcoes( InutNFe.Gerador.Opcoes );
 
     InutNFe.tpAmb  := FPConfiguracoesNFe.WebServices.Ambiente;
     InutNFe.cUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
@@ -2712,10 +2715,10 @@ begin
     InutNFe.nNFFin := FNumeroFinal;
     InutNFe.xJust  := FJustificativa;
     InutNFe.Versao := FPVersaoServico;
-    InutNFe.GerarXML;
 
-    AssinarXML( NativeStringToUTF8( InutNFe.Gerador.ArquivoFormatoXML ),
-                'inutNFe', 'infInut', 'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
+    AssinarXML( NativeStringToUTF8( InutNFe.GerarXML ),
+                'inutNFe', 'infInut',
+                'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
 
     FID := InutNFe.ID;
   finally
@@ -2735,8 +2738,7 @@ begin
 
     VerificarSemResposta;
 
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
-    NFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+    NFeRetorno.XmlRetorno := ParseText(FPRetWS);
     NFeRetorno.LerXml;
 
     Fversao := NFeRetorno.versao;

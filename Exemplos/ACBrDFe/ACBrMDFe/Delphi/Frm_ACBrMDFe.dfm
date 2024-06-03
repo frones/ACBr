@@ -1660,8 +1660,14 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 559
           Height = 385
           Align = alClient
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Lucida Console'
+          Font.Style = []
           Lines.Strings = (
             '')
+          ParentFont = False
           ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False

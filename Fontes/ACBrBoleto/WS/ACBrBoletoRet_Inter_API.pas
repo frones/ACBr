@@ -654,8 +654,11 @@ begin
                ( LSituacao = C_PAGO ) or
                ( LSituacao = C_EXPIRADO ) then
              begin
-                if LJsonObjectItem.asString['situacao'] <> C_PAGO then
-                  LListaRetorno.DadosRet.TituloRet.ValorPago  := LJsonObjectItem.AsCurrency['valorNominal'];
+                if LJsonObjectItem.asString['situacao'] = C_PAGO then
+                  begin
+                  LListaRetorno.DadosRet.TituloRet.ValorRecebido        := LJsonObjectItem.AsCurrency['valorTotalRecebimento'];
+                  LListaRetorno.DadosRet.TituloRet.ValorPago            := LJsonObjectItem.AsCurrency['valorTotalRecebimento'];
+                  end;
                 LListaRetorno.DadosRet.TituloRet.DataBaixa    := DateIntertoDateTime( LJsonObjectItem.asString['dataHoraSituacao'] )
              end;
           end;
@@ -755,8 +758,8 @@ begin
               if (LSituacaoBoleto = C_PAGO) or (LSituacaoBoleto = C_RECEBIDO) then
               begin
                 LListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := LJsonItemObject.AsString['origemRecebimento'];
-                LListaRetorno.DadosRet.TituloRet.ValorPago := LJsonItemObject.AsCurrency['valorNominal'];
-                LListaRetorno.DadosRet.TituloRet.ValorRecebido := LJsonItemObject.AsCurrency['valorTotalRecebimento'];
+                LListaRetorno.DadosRet.TituloRet.ValorPago := LJsonItemObject.AsCurrency['valorTotalRecebido'];
+                LListaRetorno.DadosRet.TituloRet.ValorRecebido := LJsonItemObject.AsCurrency['valorTotalRecebido'];
               end;
               LListaRetorno.DadosRet.TituloRet.DataBaixa := DateIntertoDateTime(LJsonItemObject.AsString['dataSituacao']);
             end;

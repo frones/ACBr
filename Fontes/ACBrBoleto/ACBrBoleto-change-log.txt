@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2024
+-- ACBrBoletoRet_Inter_API --
+[-]TK-5546 - Ajustes no tratamento de RetornoPIX para mapear ValorRecebido
+   https://www.projetoacbr.com.br/forum/topic/78083-api-banco-inter-com-retorno-valorrecebido-zerado
+   Por Daniel Morais InfoCotidiano
+
 27/05/2024
 -- ACBrBoletoW_Bancoob --
 [*]TK-5499 - remapeado retorno ("seuNumero": Campo numero documento boleto,  "identificacaoBoletoEmpresa": SeuNumero identificacao do titulo na empresa)

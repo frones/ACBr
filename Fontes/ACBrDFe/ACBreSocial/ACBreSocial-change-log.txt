@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2024
+-- pcesConversaoeSocial --
+[*] Correção na identificação do tipo de evento ao carregar o xml
+Por: Ray Hildebrant
+
 07/05/2024
 -- pcesS2206 --
 [*] Corrigido critério para geração do grupo infoRegimeTrab no evento S2206

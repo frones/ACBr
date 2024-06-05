@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/06/2024
+-- ACBrNFSeXServicos --
+[*] Alterado de http para https as URLs da cidade de Lucelia/SP.
+  Por: Italo Giurizzato Junior
 -- ISSLegal.Provider --
 [*] Incluido no TratarXmlRetornado a chamada para remover a declaração do XML.
   Por: Pedro A. Araújo

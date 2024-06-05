@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/06/2024
+-- ISSLegal.Provider --
+[*] Incluido no TratarXmlRetornado a chamada para remover a declaração do XML.
+  Por: Pedro A. Araújo
+-- Governa.GravarXml/Governa.LerXml --
+[*] Ao gerar e ler a tag tsVlrDsc passou a utilizar o campo DescontoIncondicional
+    que é o correto.
+  Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] A cidade de Martinho Campos/MG trocou de provedor, agora é ISSLegal.
   Por: Pedro A. Araújo

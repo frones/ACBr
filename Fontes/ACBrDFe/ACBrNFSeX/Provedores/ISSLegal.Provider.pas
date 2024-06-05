@@ -370,6 +370,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := ParseText(Result);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

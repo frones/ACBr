@@ -193,7 +193,7 @@ begin
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'tsVlrDsc', 1, 16, 1,
-                                NFSe.Servico.Valores.DescontoCondicionado, ''));
+                                NFSe.Servico.Valores.DescontoIncondicionado, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'tsVlrPIS', 1, 16, 1,
                                             NFSe.Servico.Valores.ValorPis, ''));

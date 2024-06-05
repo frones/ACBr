@@ -101,7 +101,7 @@ begin
     begin
       ValorServicos := xValorServico;
       ValorLiquidoNfse := xValorServico;
-      BaseCalculo := xValorServico;
+      BaseCalculo := xValorServico - DescontoIncondicionado;
       ValorIss := (BaseCalculo * (Aliquota/100));
     end;
   end;
@@ -286,7 +286,7 @@ begin
     Servico.Valores.Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsPerAlq'), tcDe2);
     Servico.Valores.ValorRepasse := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrRep'), tcDe2);
     Servico.Valores.ValorDeducoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrDed'), tcDe2);
-    Servico.Valores.DescontoCondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrDsc'), tcDe2);
+    Servico.Valores.DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrDsc'), tcDe2);
     Servico.Valores.ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrPIS'), tcDe2);
     Servico.Valores.ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrCOFINS'), tcDe2);
     Servico.Valores.ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsVlrINSS'), tcDe2);
@@ -319,11 +319,11 @@ begin
     end;
 
     Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
-      Servico.Valores.DescontoCondicionado - Servico.Valores.RetencoesFederais -
+      Servico.Valores.DescontoIncondicionado - Servico.Valores.RetencoesFederais -
       Servico.Valores.ValorOutrasRetencoes - Servico.Valores.ValorIssRetido;
 
     Servico.Valores.ValorTotalNotaFiscal := Servico.Valores.ValorServicos -
-      Servico.Valores.DescontoCondicionado;
+      Servico.Valores.DescontoIncondicionado;
   end;
 end;
 

@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Martinho Campos/MG trocou de provedor, agora é ISSLegal.
+  Por: Pedro A. Araújo
+[+] Incluida a cidade de Nossa Senhora do Livramento/MT, provedor é o Fiorilli.
+  Por: Robson pds
+[*] A cidade de Curitiba/PR trocou a URL, o provedor continua o EL.
+  Por: Marcio Patyk
+[*] A cidade de Candelaria/RS correção na versão, o correto é 1.01
+  Por: Italo Giurizzato Junior
+
 03/06/2024
 -- SigISS.Provider --
 [*] Possível solução para o erro de UTF-8

@@ -370,6 +370,7 @@ begin
     end;
 
     GerarDesconto(LJson);
+    AtribuirAbatimento(LJson);
     GerarJuros(LJson);
     GerarMulta(LJson);
     GerarPagador(LJson);

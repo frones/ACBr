@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2024
+-- ACBrPIXCD --
+[*] Adicionada rotinas de redirecionamento de URL no método:
+
 23/05/2024
 -- ACBrPIXCD --
 [+] Inclusão do novo PSP Banrisul
@@ -79,7 +83,7 @@ Símbolo : Significado
 
 23/02/2024
 -- ACBrPIXPSPGate2All --
-[-] Correção na conversão do Valor do Pix para Gate2All, que conssidera o valor
+[-] Correção na conversão do Valor do Pix para Gate2All, que considera o valor
     inteiro, sem decimais
     (por: DSA)
 

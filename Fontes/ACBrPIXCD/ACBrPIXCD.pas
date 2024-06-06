@@ -1903,43 +1903,141 @@ end;
 function TACBrPSP.TransmitirHttp(const AMethod, AURL: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
-  vMethod, vURL: String;
-  HttpBody: AnsiString;
+  vMethod, vURL, vLocation, vReqHeader: String;
+  vHttpBody, vMimeType: AnsiString;
+  ContRedir: Integer;
+
+  function DoTransmitirHTTP: Boolean;
+  begin
+    ConfigurarHTTP;
+    ConfigurarHeaders(vMethod, vURL);
+    ChamarEventoQuandoTransmitirHttp(vURL, vMethod);
+    if (NivelLog > 2) then
+    begin
+      RegistrarLog('  Req.Headers:'+ sLineBreak + vReqHeader);
+      RegistrarLog('  Req.Body:'+ sLineBreak + vHttpBody);
+    end;
+
+    fHttpRespStream.Clear;
+    Result := fHttpSend.HTTPMethod(vMethod, vURL);  // HTTP call
+    ResultCode := fHttpSend.ResultCode;
+
+    if (NivelLog > 1) then
+      RegistrarLog('  ResultCode: '+IntToStr(ResultCode)+' - '+fHttpSend.ResultString);
+
+    if (NivelLog > 3) then
+    begin
+      RegistrarLog('  Sock.LastError: '+IntToStr(fHttpSend.Sock.LastError));
+      RegistrarLog('  Resp.Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+    end;
+  end;
+
+  function ResultCodeIsRedir(ResultCode: Integer): Boolean;
+  begin
+    case ResultCode of
+      301, 302, 303, 307:
+        Result := True;
+      else
+        Result := False;
+    end;
+  end;
+
+  function IsAbsoluteURL(const URL: String): Boolean;
+  const
+    protocolos: array[0..2] of string = ('http','https', 'ftp');
+  var
+   i: Integer;
+  begin
+    Result := False;
+
+    //Testa se é um tipo absoluto relativo ao protocolo
+    if Pos('//', URL) = 1 then
+    begin
+      Result := True;
+      Exit;
+    end;
+
+    //Testa se é um tipo relativo
+    if Pos('/', URL) = 1 then
+    begin
+      Result := False;
+      Exit;
+    end;
+
+    //Testa se inicia por protocolos...
+    for I := 0 to High(protocolos) do
+    begin
+      if Pos(UpperCase(protocolos[i])+'://', UpperCase(URL)) = 1 then
+      begin
+        Result := True;
+        Break;
+      end;
+    end;
+
+    if Result then Exit;
+
+    //Começa com "www."
+    if Pos('www.', URL) = 1 then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+
+  function GetURLBasePath(const URL: String): String;
+  begin
+    Result := Copy(URL, 1, PosLast('/',URL) );
+  end;
+
 begin
   VerificarPIXCDAtribuido;
   if NivelLog > 1 then
     RegistrarLog('TransmitirHttp( '+AMethod+', '+AURL+' )');
 
-  HttpBody := '';
   vMethod := AMethod;
   vURL := AURL;
-  ConfigurarHTTP;
-  ConfigurarHeaders(AMethod, vURL);
-  ChamarEventoQuandoTransmitirHttp(vURL, vMethod);
-  if (NivelLog > 2) then
-    RegistrarLog('  Req.Headers:'+ sLineBreak + fHttpSend.Headers.Text);
-  if (NivelLog > 2) then
-  begin
-    HttpBody := StreamToAnsiString(fHttpSend.Document);
-    RegistrarLog('  Req.Body:'+ sLineBreak + HttpBody);
-  end;
+  vReqHeader := fHttpSend.Headers.Text;
+  vHttpBody := StreamToAnsiString(fHttpSend.Document);
+  vMimeType := fHttpSend.MimeType;
+  Result := DoTransmitirHTTP;
 
-  fHttpRespStream.Clear;
-  Result := fHttpSend.HTTPMethod(vMethod, vURL);  // HTTP call
-  ResultCode := fHttpSend.ResultCode;
-
-  if (NivelLog > 1) then
-    RegistrarLog('  ResultCode: '+IntToStr(ResultCode)+' - '+fHttpSend.ResultString);
-  if (NivelLog > 3) then
+  ContRedir := 0;
+  while Result and (ContRedir <= 10) and (ResultCodeIsRedir(ResultCode)) do
   begin
-    RegistrarLog('  Sock.LastError: '+IntToStr(fHttpSend.Sock.LastError));  
-    RegistrarLog('  Resp.Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+    Inc(ContRedir);
+    if (NivelLog > 2) then
+      RegistrarLog('  Redirect: '+IntToStr(ContRedir));
+
+    vLocation := GetHeaderValue('Location:', fHttpSend.Headers);
+    vLocation := Trim(SeparateLeft( vLocation, ';' ));
+
+    //Location pode ser relativa ou absoluta http://stackoverflow.com/a/25643550/460775
+    if IsAbsoluteURL(vLocation) then
+      vURL := vLocation
+    else
+      vURL := GetURLBasePath( vURL ) + vLocation;
+
+    fHTTPSend.Clear;
+    fHTTPSend.Headers.Text := vReqHeader;
+    WriteStrToStream(fHttpSend.Document, vHttpBody);
+    fHttpSend.MimeType := vMimeType;
+
+    // Tipo de método usado não deveria ser trocado...
+    // https://tools.ietf.org/html/rfc2616#page-62
+    // ... mas talvez seja necessário, pois a maioria dos browsers o fazem
+    // http://blogs.msdn.com/b/ieinternals/archive/2011/08/19/understanding-the-impact-of-redirect-response-status-codes-on-http-methods-like-head-get-post-and-delete.aspx
+    if (ResultCode = HTTP_SEE_OTHER) or
+       ( ((ResultCode = HTTP_MOVED_PERMANENTLY) or (ResultCode = HTTP_MOVED_TEMPORARILY)) and (vMethod = ChttpMethodPOST) ) then
+      vMethod := ChttpMethodGET;
+
+    Result := DoTransmitirHTTP;
   end;
 
   if ContentIsCompressed(fHttpSend.Headers) then
   begin
     if (NivelLog > 2) then
       RegistrarLog('    Decompress Content');
+
     RespostaHttp := DecompressStream(fHttpSend.OutputStream)
   end
   else

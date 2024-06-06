@@ -113,7 +113,7 @@ procedure TACBrBancoUnicredES.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo;
 var
   sDigitoNossoNumero, sAgencia : String;
   sTipoSacado, sConta, sProtesto    : String;
-  sCarteira, sLinha, sNossoNumero, sTipoMulta,sValorMulta : String;
+  sCarteira, sLinha, sNossoNumero, sTipoMulta,sValorMulta, LCaucionada : String;
 begin
 
   with ACBrTitulo do
@@ -127,7 +127,8 @@ begin
     sTipoSacado := DefineTipoSacado(ACBrTitulo);
 
     {Pegando campo Intruções}
-    sProtesto:= DefineTipoDiasProtesto(ACBrTitulo); //InstrucoesProtesto(ACBrTitulo);
+    sProtesto:= DefineCodigoProtesto(ACBrTitulo);
+
     {Verifica o Tipo da Multa}
     if MultaValorFixo then
       CodigoMulta := cmValorFixo;
@@ -144,6 +145,10 @@ begin
           sValorMulta  := PadRight('', 10, '0');
       end;
     end;
+
+    {Define caucionada}
+    LCaucionada := DefineCaucionada(ACBrTitulo);
+
     with ACBrBoleto do
     begin
        sLinha:= '1'                                                           +{ 001 a 001  	Identificação do Registro }
@@ -163,7 +168,8 @@ begin
                 PadLeft(sValorMulta, 10, '0')                                 +{ 095 a 104	  Valor/Percentual da Multa	010 }
                 CodJurosToStr(CodigoMoraJuros,ValorMoraJuros)                 +{ 105 a 105	  Tipo de Valor Mora	001}
                 'N'                                                           +{ 106 a 106	  Filler	001 }
-                Space(2)                                                      +{ 107 a 108	  Branco	002	Branco }
+                LCaucionada                                                   +{ 107 a 107	  Caucionada }
+                Space(1)                                                      +{ 108 a 108	  108 - Brancos}
                 TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo)           +{ 109 a 110	  Identificação da Ocorrência	002 }
                 PadRight(ACBrTitulo.SeuNumero, 10)                            +{ 111 a 120	  Nº do Documento (Seu número)	010 }
                 FormatDateTime( 'ddmmyy', Vencimento)                         +{ 121 a 126	  Data de vencimento do Título	006 }

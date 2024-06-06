@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/06/2024
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade de Nova Odessa/SP, o provedor continua o mesmo.
+  Por: fppp09
+[+] Incluida as cidades de Miracema do Tocantins/TO e Colmeia/TO, provedor é o MegaSoft.
+  Por: Nícolas Dörr
+[+] Incluida a cidade de Santa Maria do Herval/RS, provedor é o Tecnos.
+  Por: Nícolas Dörr
+[*] Alterado as URLs da cidade de Arapongas/PR, o provedor continua o mesmo.
+  Por: Marcelo T/Italo Giurizzato Junior
 -- Diversos --
 [*] Realizado algumas alterações para atender o provedor SystemPro, 
     requer mais testes com credenciais de um prestador de serviço da

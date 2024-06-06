@@ -1366,7 +1366,8 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
   begin
-    Result := ConverteXMLtoNativeString(Retorno);
+    Result := ConverteXMLtoUTF8(Retorno);
+//    Result := ConverteXMLtoNativeString(Retorno);
     if Pos('<',Result) = 0 then
       Result := '<retorno>'+
                   '<msg>' + Result + '</msg>' +
@@ -1491,11 +1492,13 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
   begin
-    Result := ConverteXMLtoNativeString(Retorno);
-    if Pos('<',Result) = 0 then
+    Result := RemoverDeclaracaoXML(Retorno);
+    if Pos('<', Result) = 0 then
       Result := '<retorno>'+
-                  '<msg>' + Result + '</msg>' +
-                  '<code>999</code>' +
+                  '<mensagem>' +
+                    '<codigo>999</codigo>' +
+                    '<Mensagem>' + Result + '</Mensagem>' +
+                  '</mensagem>' +
                 '</retorno>'
     else
       Result := Retorno;

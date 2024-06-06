@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2024
+-- ACBrBoletoW_Sicredi_APIV2 --
+[-]TK-5558 - Corrigido AV por um objeto que nao estava sendo usado corretamente
+   https://www.projetoacbr.com.br/forum/topic/77982-boleto-sicredi-via-api-v2
+   Por Daniel Morais InfoCotidiano
+
+
 04/06/2024
 -- ACBrBoletoRet_Inter_API --
 [-]TK-5546 - Ajustes no tratamento de RetornoPIX para mapear ValorRecebido

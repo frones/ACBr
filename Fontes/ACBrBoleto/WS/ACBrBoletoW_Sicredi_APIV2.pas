@@ -41,7 +41,7 @@ uses
   ACBrJSON,
   ACBrBoleto,
   ACBrBoletoWS,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest, ACBrUtil.FilesIO;
 
 type
   { TBoletoW_Sicredi_APIV2 }
@@ -190,7 +190,6 @@ end;
 procedure TBoletoW_Sicredi_APIV2.GerarInfomativo(AJson: TACBrJSONObject);
 var
   LJsonArray: TACBrJSONArray;
-  LJsonInformativoObject: TACBrJSONObject;
   I: Integer;
 begin
   if ATitulo.Informativo.Text <> '' then
@@ -198,11 +197,11 @@ begin
     LJsonArray := TACBrJSONArray.Create;
     for I := 0 to ATitulo.Informativo.Count - 1 do
     begin
-      LJsonArray.AddElement(Copy(Atitulo.Informativo.Strings[I],1,80));
+      LJsonArray.AddElement(Copy(Atitulo.Informativo[I],1,80));
       if I = 4 then
         break;
     end;
-    LJsonInformativoObject.AddPair('informativos', LJsonArray);
+    AJson.AddPair('informativos', LJsonArray);
   end;
 end;
 

@@ -100,10 +100,12 @@ begin
   with ConfigWebServices do
   begin
     VersaoDados := '2.01';
-    VersaoAtrib := '2.01';
+    VersaoAtrib := '0.01';
   end;
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+
+  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProviderSystemPro201.CriarGeradorXml(
@@ -147,14 +149,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:EnviarLoteRpsSincrono>';
-  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
+  Request := '<ns2:EnviarLoteRpsSincrono xmlns:ns2="http://NFSe.wsservices.systempro.com.br/">';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ns2:EnviarLoteRpsSincrono>';
 
   Result := Executar('', Request,
                      ['return', 'EnviarLoteRpsSincronoResposta'],
-                     ['xmlns:ns2="http://NFSe.wsservices.systempro.com.br/"']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceSystemPro201.GerarNFSe(const ACabecalho,

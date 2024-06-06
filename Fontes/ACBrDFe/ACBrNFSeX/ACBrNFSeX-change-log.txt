@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2024
+-- Diversos --
+[*] Realizado algumas alterações para atender o provedor SystemPro, 
+    requer mais testes com credenciais de um prestador de serviço da
+    cidade que usa o provedor.
+  Por: Italo Giurizzato Junior
+
 05/06/2024
 -- ACBrNFSeXServicos --
 [*] Alterado de http para https as URLs da cidade de Lucelia/SP.

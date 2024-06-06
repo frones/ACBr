@@ -477,6 +477,8 @@ end;
 function TNFSeW_ABRASFv2.GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;
 var
   aNameSpace: string;
+  nodeArray: TACBrXmlNodeArray;
+  i: Integer;
 begin
   aNameSpace := DefinirNameSpaceDeclaracao;
 
@@ -502,6 +504,16 @@ begin
                                                   NFSe.Competencia, DSC_DHEMI));
 
   Result.AppendChild(GerarServico);
+
+  nodeArray := GerarServicos;
+  if nodeArray <> nil then
+  begin
+    for i := 0 to Length(nodeArray) - 1 do
+    begin
+      Result.AppendChild(nodeArray[i]);
+    end;
+  end;
+
   Result.AppendChild(GerarPrestador);
   Result.AppendChild(GerarTomador);
   Result.AppendChild(GerarIntermediarioServico);

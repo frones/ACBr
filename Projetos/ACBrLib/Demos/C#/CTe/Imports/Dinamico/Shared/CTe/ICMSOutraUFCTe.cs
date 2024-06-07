@@ -16,5 +16,9 @@ namespace ACBrLib.CTe
         public decimal pICMSOutraUF { get; set; }
 
         public decimal vICMSOutraUF { get; set; }
+
+        public decimal vICMSDeson { get; set; }
+
+        public string cBenef { get; set; }
     }
 }

@@ -18,5 +18,9 @@ namespace ACBrLib.CTe
         public decimal vICMS { get; set; }
 
         public decimal vCred { get; set; }
+
+        public decimal vICMSDeson { get; set; }
+
+        public string cBenef { get; set; }
     }
 }

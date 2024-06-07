@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/06/2024
+-- ACBrMDFeWebServices --
+[*] Incluido a leitura da tag dhRecbto do retorno do envio síncrono.
+  Por: Lucas ATZ
+
 21/05/2024
 -- ACBrMDFeWebServices --
 [-] Removido da procedure TMDFeRetRecepcao.Clear a linha que inicializa a

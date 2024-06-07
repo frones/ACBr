@@ -903,6 +903,7 @@ begin
     begin
       // Pega o numero do protocolo
       FProtocolo := FMDFeRetornoSincrono.protMDFe.nProt;
+      FdhRecbto := FMDFeRetornoSincrono.protMDFe.dhRecbto;
 
       for I := 0 to TACBrMDFe(FPDFeOwner).Manifestos.Count - 1 do
       begin

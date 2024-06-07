@@ -42,6 +42,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2024
+-- IPM.GravarXml --
+[*] Ao gerar o XML se o tomador for estrangeiro devemos gerar a tag <cidade> com
+    o nome da cidade e não com o código.
+  Por: Cristiano DB
+-- IPM.LerXml --
+[*] Alteração na leitura do XML visando identificar se o tomador é estrangeiro ou não
+    e fazer a leitura das tags de forma correta.
+  Por: Italo Giurizzato Junior
+-- EL.Provider --
+[*] Possível solução para gerar e salvar o XML da nota ao realizar as consultas.
+    O XML do RPS deve ser previamente carregado antes das consultas.
+  Por: Italo Giurizzato Junior
+
 06/06/2024
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Pombal/PB, provedor é o Elmar.

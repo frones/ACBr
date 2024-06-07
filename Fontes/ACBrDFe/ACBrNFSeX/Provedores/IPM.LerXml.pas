@@ -340,43 +340,54 @@ begin
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nome_razao_social'), tcStr);
       NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('sobrenome_nome_fantasia'), tcStr);
 
-      Endereco.Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
-      Endereco.Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero_residencia'), tcStr);
-      Endereco.Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
-      Endereco.Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
-      Endereco.CodigoMunicipio := CodTOMToCodIBGE(ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr));
-      Endereco.CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
-      Endereco.xMunicipio      := ObterNomeMunicipioUF(StrToIntDef(Endereco.CodigoMunicipio, 0), xUF);
-
-      if Endereco.UF = '' then
-        Endereco.UF := xUF;
+      Endereco.Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
+      Endereco.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero_residencia'), tcStr);
+      Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
+      Endereco.Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
 
       IdentificacaoTomador.CpfCnpj := OnlyNumber(ObterConteudo(AuxNode.Childrens.FindAnyNs('cpfcnpj'), tcStr));
-      aValor  := ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo'), tcStr);
+      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo'), tcStr);
 
-      if ((aValor = 'J') or (aValor = '2')) then
+      if aValor = 'E' then
       begin
-        IdentificacaoTomador.CpfCnpj := PadLeft(IdentificacaoTomador.CpfCnpj, 14, '0');
-
-        if Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
-          IdentificacaoTomador.Tipo := tpPJdoMunicipio
-        else
-          IdentificacaoTomador.Tipo := tpPJforaMunicipio;
+        IdentificacaoTomador.DocEstrangeiro := ObterConteudo(AuxNode.Childrens.FindAnyNs('identificador'), tcStr);
+        Endereco.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('estado'), tcStr);
+        Endereco.xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('pais'), tcStr);
+        Endereco.xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
       end
       else
       begin
-        IdentificacaoTomador.CpfCnpj := PadLeft(IdentificacaoTomador.CpfCnpj, 11, '0');
-        IdentificacaoTomador.Tipo    := tpPF;
-      end;
+        Endereco.CodigoMunicipio := CodTOMToCodIBGE(ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr));
+        Endereco.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
+        Endereco.xMunicipio := ObterNomeMunicipioUF(StrToIntDef(Endereco.CodigoMunicipio, 0), xUF);
 
-      IdentificacaoTomador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
+        if Endereco.UF = '' then
+          Endereco.UF := xUF;
+
+        if ((aValor = 'J') or (aValor = '2')) then
+        begin
+          IdentificacaoTomador.CpfCnpj := PadLeft(IdentificacaoTomador.CpfCnpj, 14, '0');
+
+          if Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
+            IdentificacaoTomador.Tipo := tpPJdoMunicipio
+          else
+            IdentificacaoTomador.Tipo := tpPJforaMunicipio;
+        end
+        else
+        begin
+          IdentificacaoTomador.CpfCnpj := PadLeft(IdentificacaoTomador.CpfCnpj, 11, '0');
+          IdentificacaoTomador.Tipo := tpPF;
+        end;
+
+        IdentificacaoTomador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
+      end;
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('ddd_fone_comercial'), tcStr);
       aValor := aValor +
                 ObterConteudo(AuxNode.Childrens.FindAnyNs('fone_comercial'), tcStr);
 
       Contato.Telefone := aValor;
-      Contato.Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+      Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
     end;
   end;
 end;

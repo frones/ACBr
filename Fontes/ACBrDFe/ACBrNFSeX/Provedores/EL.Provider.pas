@@ -1181,6 +1181,9 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
+  j, k: Integer;
+  aXmlRetorno, aXmlNota: string;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -1216,6 +1219,32 @@ begin
           idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+          NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('rpsNumero'), tcStr);
+
+          j := TACBrNFSeX(FAOwner).NotasFiscais.Count;
+
+          if j > 0 then
+          begin
+            aXmlRetorno := AuxNode.OuterXml;
+
+            for k := 0 to j-1 do
+            begin
+              ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[k];
+
+              if ANota.NFSe.IdentificacaoRps.Numero = NumeroRps  then
+              begin
+                if ANota.XmlRps = '' then
+                  aXmlNota := GerarXmlNota(ANota.XmlNfse, aXmlRetorno)
+                else
+                  aXmlNota := GerarXmlNota(ANota.XmlRps, aXmlRetorno);
+
+                ANota.XmlNfse := aXmlNota;
+
+                SalvarXmlNfse(ANota);
+                Exit;
+              end;
+            end;
+          end;
         end;
       end;
     except
@@ -1266,6 +1295,9 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
+  j, k: Integer;
+  aXmlRetorno, aXmlNota: string;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -1298,6 +1330,32 @@ begin
           idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+          NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('rpsNumero'), tcStr);
+
+          j := TACBrNFSeX(FAOwner).NotasFiscais.Count;
+
+          if j > 0 then
+          begin
+            aXmlRetorno := AuxNode.OuterXml;
+
+            for k := 0 to j-1 do
+            begin
+              ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[k];
+
+              if ANota.NFSe.IdentificacaoRps.Numero = NumeroRps  then
+              begin
+                if ANota.XmlRps = '' then
+                  aXmlNota := GerarXmlNota(ANota.XmlNfse, aXmlRetorno)
+                else
+                  aXmlNota := GerarXmlNota(ANota.XmlRps, aXmlRetorno);
+
+                ANota.XmlNfse := aXmlNota;
+
+                SalvarXmlNfse(ANota);
+                Exit;
+              end;
+            end;
+          end;
         end;
       end;
     except

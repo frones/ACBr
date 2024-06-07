@@ -465,8 +465,12 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'bairro', 1, 30, FpNrOcorrTagsTomador,
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, FpNrOcorrTagsTomador,
-    CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
+  if Trim(NFSe.Tomador.IdentificacaoTomador.DocEstrangeiro) <> '' then
+    Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 100, FpNrOcorrTagsTomador,
+                                          NFSe.Tomador.Endereco.xMunicipio, ''))
+  else
+    Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, FpNrOcorrTagsTomador,
+   CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 8, FpNrOcorrTagsTomador,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));

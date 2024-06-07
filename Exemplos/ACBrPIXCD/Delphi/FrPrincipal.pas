@@ -351,6 +351,7 @@ type
     imBBErroCertificado: TImage;
     imBBErroChavePrivada: TImage;
     imBBErroPFX: TImage;
+    imBanrisulErroChavePix: TImage;
     imBanrisulErroCertificadoPFX: TImage;
     imMercadoPagoErroChavePix: TImage;
     imCobVQRCode: TImage;
@@ -855,7 +856,6 @@ type
     Valor: TLabel;
     ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet;
     tsGerenciaNet: TTabSheet;
-    imBanrisulErroChavePix: TImage;
     procedure ACBrPixCD1QuandoGravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL: String;
       const AMethod: String; RespHeaders: TStrings; var AResultCode: Integer;
@@ -936,7 +936,9 @@ type
     procedure edAilosChavePIXChange(Sender: TObject);
     procedure edAilosChavePrivadaExit(Sender: TObject);
     procedure edBanrisulArqCertificadoPFXChange(Sender: TObject);
+    procedure edBanrisulArqCertificadoPFXExit(Sender: TObject);
     procedure edBanrisulChavePIXChange(Sender: TObject);
+    procedure edBanrisulSenhaCertificadoPFXExit(Sender: TObject);
     procedure edBBArqPFXChange(Sender: TObject);
     procedure edBBArqPFXExit(Sender: TObject);
     procedure edBBArqsChange(Sender: TObject);
@@ -2736,10 +2738,22 @@ begin
   lbBanrisulErroCertificadoPFX.Caption := EmptyStr;
 end;
 
+procedure TForm1.edBanrisulArqCertificadoPFXExit(Sender: TObject);
+begin
+  if NaoEstaVazio(edBanrisulSenhaCertificadoPFX.Text) then
+    ValidarPFXBanrisul;
+end;
+
 procedure TForm1.edBanrisulChavePIXChange(Sender: TObject);
 begin
   cbBanrisulTipoChave.ItemIndex := Integer(DetectarTipoChave(edBanrisulChavePIX.Text));
   imBanrisulErroChavePix.Visible := NaoEstaVazio(edBanrisulChavePIX.Text) and (cbBanrisulTipoChave.ItemIndex = 0);
+end;
+
+procedure TForm1.edBanrisulSenhaCertificadoPFXExit(Sender: TObject);
+begin
+  if NaoEstaVazio(edBanrisulArqCertificadoPFX.Text) then
+    ValidarPFXBanrisul;
 end;
 
 procedure TForm1.edBBArqPFXChange(Sender: TObject);

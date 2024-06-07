@@ -6870,7 +6870,7 @@ object Form1: TForm1
                   Anchors = [akTop, akRight]
                   GroupIndex = 1
                   Flat = True
-                  OnClick = sbSantanderVerSenhaPFXClick
+                  OnClick = sbBanrisulVerSenhaPFXClick
                 end
                 object edBanrisulClientSecret: TEdit
                   Left = 24
@@ -6895,7 +6895,7 @@ object Form1: TForm1
                   Height = 21
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 0
-                  OnChange = edInterChavePIXChange
+                  OnChange = edBanrisulChavePIXChange
                 end
                 object cbBanrisulTipoChave: TComboBox
                   Left = 681
@@ -6916,7 +6916,8 @@ object Form1: TForm1
                   Anchors = [akLeft, akTop, akRight]
                   AutoSize = False
                   TabOrder = 4
-                  OnChange = edSantanderArqCertificadoPFXChange
+                  OnChange = edBanrisulArqCertificadoPFXChange
+                  OnExit = edBanrisulArqCertificadoPFXExit
                 end
                 object edBanrisulSenhaCertificadoPFX: TEdit
                   Left = 688
@@ -6926,6 +6927,7 @@ object Form1: TForm1
                   Anchors = [akLeft, akTop, akRight]
                   PasswordChar = '*'
                   TabOrder = 5
+                  OnExit = edBanrisulSenhaCertificadoPFXExit
                 end
               end
             end

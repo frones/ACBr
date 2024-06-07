@@ -7193,7 +7193,7 @@ object Form1: TForm1
               end
             end
             object tsBanrisul: TTabSheet
-              Caption = 'tsBanrisul'
+              Caption = 'Banrisul'
               ClientHeight = 485
               ClientWidth = 984
               object pnBanrisul: TPanel
@@ -7269,6 +7269,7 @@ object Form1: TForm1
                   Top = 40
                   Width = 668
                   Anchors = [akTop, akLeft, akRight]
+                  OnChange = edBanrisulChavePIXChange
                   TabOrder = 0
                 end
                 object cbBanrisulTipoChave: TComboBox
@@ -7289,6 +7290,7 @@ object Form1: TForm1
                   Width = 180
                   Anchors = [akTop, akLeft, akRight]
                   EchoMode = emPassword
+                  OnExit = edBanrisulSenhaCertificadoPFXExit
                   PasswordChar = '*'
                   TabOrder = 4
                 end
@@ -7311,6 +7313,7 @@ object Form1: TForm1
                   GroupIndex = 1
                   Images = ImageList1
                   ImageIndex = 7
+                  OnClick = sbBanrisulVerSenhaPFXClick
                 end
                 object sbBanrisulAcharCertificadoPFX: TSpeedButton
                   Left = 650
@@ -7324,6 +7327,7 @@ object Form1: TForm1
                   Font.Name = 'MS Sans Serif'
                   Images = ImageList1
                   ImageIndex = 9
+                  OnClick = sbBanrisulAcharCertificadoPFXClick
                   ShowHint = True
                   ParentFont = False
                   ParentShowHint = False
@@ -7335,6 +7339,8 @@ object Form1: TForm1
                   Width = 625
                   Anchors = [akTop, akLeft, akRight]
                   AutoSize = False
+                  OnChange = edBanrisulArqCertificadoPFXChange
+                  OnExit = edBanrisulArqCertificadoPFXExit
                   TabOrder = 5
                 end
                 object lbBanrisulArqCertificadoPFX: TLabel

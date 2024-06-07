@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/06/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Governador Valadares/MG trocou de provedor, agora é ISSIntel
+  Por: Valter Patrick
 -- ACBrNFSeXDANFSeRLRetrato.dfm --
 [*] Alteração na fonte do campo discriminação para apresentar o texto por inteiro
     tanto na tela, papel e PDF.

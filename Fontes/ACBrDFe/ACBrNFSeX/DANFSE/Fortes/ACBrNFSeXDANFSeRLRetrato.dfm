@@ -874,7 +874,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 498
       Width = 752
-      Height = 21
+      Height = 18
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -882,15 +882,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawBottom = True
       BeforePrint = rlbItensBeforePrint
       object rlmDescricao: TRLMemo
-        Left = 10
+        Left = 4
         Top = 6
-        Width = 737
-        Height = 14
+        Width = 740
+        Height = 11
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'Arial'
+        Font.Name = 'Lucida Console'
         Font.Style = []
         ParentFont = False
         Transparent = False
@@ -898,7 +898,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 538
+      Top = 535
       Width = 752
       Height = 366
       BandType = btSummary
@@ -1924,7 +1924,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 904
+      Top = 901
       Width = 752
       Height = 40
       BandType = btSummary
@@ -1967,7 +1967,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 962
+      Top = 959
       Width = 752
       Height = 73
       BandType = btSummary
@@ -2226,7 +2226,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object subItens: TRLSubDetail
       Left = 23
-      Top = 519
+      Top = 516
       Width = 752
       Height = 19
       Borders.Sides = sdCustom
@@ -2334,7 +2334,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object RLBand1: TRLBand
       Left = 23
-      Top = 944
+      Top = 941
       Width = 752
       Height = 18
       BandType = btSummary

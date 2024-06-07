@@ -3722,12 +3722,18 @@ begin
     Except
       on E:Exception do
       begin
-        if ( ( RemessaWS.RetornoBanco.CodRetorno = 0 ) and
-             ( Trim( RemessaWS.RetornoBanco.Msg ) = '' ) ) then
-          raise Exception.Create(ACBrStr('Erro: ' + E.Message))
-        else
-          raise Exception.Create(ACBrStr('Erro: ' + IntToStr(RemessaWS.RetornoBanco.CodRetorno) + sLineBreak +
+        if RemessaWS.RetornoBanco <> nil then
+        begin
+          if ( ( RemessaWS.RetornoBanco.CodRetorno = 0 ) and
+               ( Trim( RemessaWS.RetornoBanco.Msg ) = '' ) ) then
+            raise Exception.Create(ACBrStr('Erro: ' + E.Message))
+          else
+            raise Exception.Create(ACBrStr('Erro: ' + IntToStr(RemessaWS.RetornoBanco.CodRetorno) + sLineBreak +
                                  RemessaWS.RetornoBanco.Msg + sLineBreak));
+        end
+        else
+          raise Exception.Create(ACBrStr('Erro: ' + E.Message))
+
       end;
     end;
 

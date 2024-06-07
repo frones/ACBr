@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2024
+-- ACBrBoleto --
+[-]TK-5565 - Correção AV Qdo nao existia metodo. qdo configurado errado.
+   https://www.projetoacbr.com.br/forum/topic/78002-erro-acbrboleto-java-invalid-memory-access
+   Por Victor Gonzales Pandaaaa / Daniel Morais InfoCotidiano 
+
+
 06/06/2024
 -- ACBrBoletoW_Sicredi_APIV2 --
 [-]TK-5558 - Corrigido AV por um objeto que nao estava sendo usado corretamente

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2024
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Sao Gonçalo dos Campos/BA, provedor é o Sudoeste.
+  Por: DeveloperATS
+
 07/06/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Governador Valadares/MG trocou de provedor, agora é ISSIntel

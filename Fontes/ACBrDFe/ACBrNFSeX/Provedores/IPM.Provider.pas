@@ -1367,7 +1367,9 @@ begin
   else
   begin
     Result := ConverteXMLtoUTF8(Retorno);
+    Result := RemoverDeclaracaoXML(Result);
 //    Result := ConverteXMLtoNativeString(Retorno);
+
     if Pos('<',Result) = 0 then
       Result := '<retorno>'+
                   '<msg>' + Result + '</msg>' +
@@ -1384,6 +1386,7 @@ var
   Codigo, Mensagem, Xml: string;
 begin
   Xml := ConverteXMLtoUTF8(aXml);
+  Xml := RemoverDeclaracaoXML(Xml);
 
   if (Pos('{"', Xml) > 0) and (Pos('":"', Xml) > 0) then
   begin
@@ -1512,6 +1515,7 @@ var
   Codigo, Mensagem, Xml: string;
 begin
   Xml := ConverteXMLtoUTF8(aXml);
+  Xml := RemoverDeclaracaoXML(Xml);
 
   if (Pos('{"', Xml) > 0) and (Pos('":"', Xml) > 0) then
   begin
@@ -1841,6 +1845,7 @@ var
   Codigo, Mensagem, Xml: string;
 begin
   Xml := ConverteXMLtoUTF8(aXml);
+  Xml := RemoverDeclaracaoXML(Xml);
 
   if (Pos('{"', Xml) > 0) and (Pos('":"', Xml) > 0) then
   begin

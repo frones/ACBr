@@ -44,11 +44,14 @@ uses
   blcksock, synacode,
   pcnNFe, pcnRetConsReciDFe,
   ACBrDFeComum.RetConsCad,
-  pcnConversao,
   ACBrDFeConsts,
+  pcnConversao,
+  ACBrNFe.AdmCSC,
+  ACBrNFe.RetAdmCSC,
+  ACBrNFe.RetConsSit,
   pcnNFeConsts,
-  pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe, 
-  pcnAdmCSCNFCe, pcnRetAdmCSCNFCe, pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNFe,
+  pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe,
+  pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNFe,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes;
 
 type
@@ -633,7 +636,7 @@ uses
   ACBrDFeComum.ConsCad,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
-  pcnConsSitNFe,
+  ACBrNFe.ConsSit,
   ACBrNFe.Inut,
   ACBrNFe.RetInut,
   pcnConsReciDFe,
@@ -971,7 +974,7 @@ begin
   if Assigned(FNFeRetorno) then
     FNFeRetorno.Free;
 
-  FNFeRetornoSincrono := TRetConsSitNFe.Create;
+  FNFeRetornoSincrono := TRetConsSitNFe.Create(FPVersaoServico);
   FNFeRetorno := TretEnvNFe.Create;
 end;
 
@@ -1181,8 +1184,7 @@ begin
     else
       AXML := FPRetWS;
 
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
-    FNFeRetornoSincrono.Leitor.Arquivo := UTF8ToNativeString(ParseText(AXML));
+    FNFeRetornoSincrono.XmlRetorno := ParseText(AXML);
     FNFeRetornoSincrono.LerXml;
 
     Fversao := FNFeRetornoSincrono.versao;
@@ -1192,7 +1194,7 @@ begin
     // Consta no Retorno da NFC-e
     FRecibo := FNFeRetornoSincrono.nRec;
     FcUF := FNFeRetornoSincrono.cUF;
-    chNFe := FNFeRetornoSincrono.ProtNFe.chNFe;
+    chNFe := FNFeRetornoSincrono.ProtNFe.chDFe;
 
     if (FNFeRetornoSincrono.protNFe.cStat > 0) then
       FcStat := FNFeRetornoSincrono.protNFe.cStat
@@ -1235,7 +1237,7 @@ begin
             NFe.procNFe.cStat := FNFeRetornoSincrono.protNFe.cStat;
             NFe.procNFe.tpAmb := FNFeRetornoSincrono.tpAmb;
             NFe.procNFe.verAplic := FNFeRetornoSincrono.verAplic;
-            NFe.procNFe.chNFe := FNFeRetornoSincrono.ProtNFe.chNFe;
+            NFe.procNFe.chNFe := FNFeRetornoSincrono.ProtNFe.chDFe;
             NFe.procNFe.dhRecbto := FNFeRetornoSincrono.protNFe.dhRecbto;
             NFe.procNFe.nProt := FNFeRetornoSincrono.ProtNFe.nProt;
             NFe.procNFe.digVal := FNFeRetornoSincrono.protNFe.digVal;
@@ -2142,10 +2144,8 @@ begin
     ConsSitNFe.TpAmb := FTpAmb;
     ConsSitNFe.chNFe := FNFeChave;
     ConsSitNFe.Versao := FPVersaoServico;
-    AjustarOpcoes( ConsSitNFe.Gerador.Opcoes );
-    ConsSitNFe.GerarXML;
 
-    FPDadosMsg := ConsSitNFe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsSitNFe.GerarXML;
   finally
     ConsSitNFe.Free;
   end;
@@ -2203,7 +2203,7 @@ var
   I, J, Inicio, Fim: integer;
   dhEmissao: TDateTime;
 begin
-  NFeRetorno := TRetConsSitNFe.Create;
+  NFeRetorno := TRetConsSitNFe.Create(FPVersaoServico);
 
   try
     FPRetWS := SeparaDadosArray(['NfeConsultaNF2Result',
@@ -2212,8 +2212,7 @@ begin
 
     VerificarSemResposta;
 
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
-    NFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+    NFeRetorno.XmlRetorno := ParseText(FPRetWS);
     NFeRetorno.LerXML;
 
     NFCancelada := False;
@@ -2252,18 +2251,18 @@ begin
 
     // <protNFe> - Retorno dos dados do ENVIO da NF-e
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotNFe.PathNFe := NFeRetorno.protNFe.PathNFe;
-    FprotNFe.PathRetConsReciNFe := NFeRetorno.protNFe.PathRetConsReciNFe;
-    FprotNFe.PathRetConsSitNFe := NFeRetorno.protNFe.PathRetConsSitNFe;
-    FprotNFe.tpAmb := NFeRetorno.protNFe.tpAmb;
+    FprotNFe.PathNFe := NFeRetorno.protNFe.PathDFe;
+    FprotNFe.PathRetConsReciNFe := NFeRetorno.protNFe.PathRetConsReciDFe;
+    FprotNFe.PathRetConsSitNFe := NFeRetorno.protNFe.PathRetConsSitDFe;
+    FprotNFe.tpAmb := TpcnTipoAmbiente(NFeRetorno.protNFe.tpAmb);
     FprotNFe.verAplic := NFeRetorno.protNFe.verAplic;
-    FprotNFe.chNFe := NFeRetorno.protNFe.chNFe;
+    FprotNFe.chNFe := NFeRetorno.protNFe.chDFe;
     FprotNFe.dhRecbto := NFeRetorno.protNFe.dhRecbto;
     FprotNFe.nProt := NFeRetorno.protNFe.nProt;
     FprotNFe.digVal := NFeRetorno.protNFe.digVal;
     FprotNFe.cStat := NFeRetorno.protNFe.cStat;
     FprotNFe.xMotivo := NFeRetorno.protNFe.xMotivo;
-    FprotNFe.Versao := NFeRetorno.protNFe.Versao;
+    FprotNFe.Versao := Fversao;
     FprotNFe.cMsg := NFeRetorno.protNFe.cMsg;
     FprotNFe.xMsg := NFeRetorno.protNFe.xMsg;
 
@@ -2423,21 +2422,21 @@ begin
                   NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
                   NFe.procNFe.cStat := NFeRetorno.cStat;
                   NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
-                  NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
+                  NFe.procNFe.Versao := Fversao;
 
                   GerarXML;
                 end
                 else
                 begin
-                  NFe.procNFe.tpAmb := NFeRetorno.protNFe.tpAmb;
+                  NFe.procNFe.tpAmb := TpcnTipoAmbiente(NFeRetorno.protNFe.tpAmb);
                   NFe.procNFe.verAplic := NFeRetorno.protNFe.verAplic;
-                  NFe.procNFe.chNFe := NFeRetorno.protNFe.chNfe;
+                  NFe.procNFe.chNFe := NFeRetorno.protNFe.chDFe;
                   NFe.procNFe.dhRecbto := NFeRetorno.protNFe.dhRecbto;
                   NFe.procNFe.nProt := NFeRetorno.protNFe.nProt;
                   NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
                   NFe.procNFe.cStat := NFeRetorno.protNFe.cStat;
                   NFe.procNFe.xMotivo := NFeRetorno.protNFe.xMotivo;
-                  NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
+                  NFe.procNFe.Versao := Fversao;
                   NFe.procNFe.cMsg := NFeRetorno.protNFe.cMsg;
                   NFe.procNFe.xMsg := NFeRetorno.protNFe.xMsg;
 
@@ -2452,7 +2451,7 @@ begin
                     // gerados com apostrofe em vez de aspas.
                     AProcNFe.XML_Prot := StringReplace(NFeRetorno.XMLprotNFe, '''', '"', [rfReplaceAll]);
 
-                    AProcNFe.Versao := NFeRetorno.protNFe.Versao;
+                    AProcNFe.Versao := Fversao;
                     if AProcNFe.Versao = '' then
                       AProcNFe.Versao := FPVersaoServico;
                     AjustarOpcoes( AProcNFe.Gerador.Opcoes );
@@ -3630,12 +3629,9 @@ begin
     AdmCSCNFCe.indOP := FindOp;
     AdmCSCNFCe.idCsc := FIdCSC;
     AdmCSCNFCe.codigoCsc := FCodigoCSC;
-
     AdmCSCNFCe.Versao := FPVersaoServico;
-    AjustarOpcoes( AdmCSCNFCe.Gerador.Opcoes );
-    AdmCSCNFCe.GerarXML;
 
-    FPDadosMsg := AdmCSCNFCe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := AdmCSCNFCe.GerarXML;
   finally
     AdmCSCNFCe.Free;
   end;
@@ -3648,8 +3644,7 @@ begin
 
   VerificarSemResposta;
 
-  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
-  FretAdmCSCNFCe.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  FretAdmCSCNFCe.XmlRetorno := ParseText(FPRetWS);
   FretAdmCSCNFCe.LerXml;
 
   FPMsg := FretAdmCSCNFCe.xMotivo;

@@ -45,6 +45,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/06/2024
+-- ACBrNFeWebServices --
+[*] Alteração nos fontes para passar a utilizar as novas units: ACBrNFe.AdmCSC,
+    ACBrNFe.ConsSit, ACBrNFe.RetAdmCSC e ACBrNFe.RetConsSit responsávels por 
+    gerar o pedido de Administração do CSC e Consulta a situação e a leitura
+    do retorno da SEFAZ no que se refere aos serviços solicitados.
+   Por: Italo Giurizzato Junior
+
 03/06/2024
 -- Diversos --
 [*] Alteração nos fontes para passar a utilizar as novas units: ACBrNFe.Inut e 

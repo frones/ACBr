@@ -66,6 +66,8 @@ procedure TNFSeW_PRODAUB204.Configuracao;
 begin
   inherited Configuracao;
 
+  NrOcorrInformacoesComplemetares := 0;
+
   TagTomador := 'TomadorServico';
 end;
 

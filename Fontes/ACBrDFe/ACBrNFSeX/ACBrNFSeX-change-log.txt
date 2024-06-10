@@ -44,6 +44,8 @@ Símbolo : Significado
 
 10/06/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Uberlandia/MG, trocou de provedor, agora é: PRODAUB.
+  Por: Italo Giurizzato Junior
 [+] Incluida a cidade de Sao Gonçalo dos Campos/BA, provedor é o Sudoeste.
   Por: DeveloperATS
 

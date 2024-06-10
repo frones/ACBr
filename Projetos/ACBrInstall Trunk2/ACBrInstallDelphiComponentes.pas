@@ -58,6 +58,8 @@ type
     UsarCargaTardiaDLL: Boolean;
     RemoverStringCastWarnings: Boolean;
     DeveSobrescreverDllsExistentes: Boolean;
+    UsarExportadorFRSVG: Boolean;
+    UsarExportadorFRPNG: Boolean;
   public
     procedure DesligarDefines(const ArquivoACBrInc: TFileName);
     procedure RedefinirValoresOpcoesParaPadrao;
@@ -449,8 +451,14 @@ begin
     end;
     InformaProgresso;
 
+    if OpcoesCompilacao.UsarExportadorFRSVG then
+      InformaSituacao('Habilitado Diretiva de Exportação SVG para Fast Reports...');
+
+    if OpcoesCompilacao.UsarExportadorFRPNG then
+      InformaSituacao('Habilitado Diretiva de Exportação PNG para Fast Reports...');
 
     CompilarEInstalarPacotes(ListaPacotes);
+
   end; //<---- endwith
 end;
 
@@ -1254,6 +1262,10 @@ begin
     UsarCargaTardiaDLL        := ArqIni.ReadBool('CONFIG','CargaDllTardia', True);
     RemoverStringCastWarnings := ArqIni.ReadBool('CONFIG','RemoverCastWarnings', RemoverStringCastWarnings);
     DeveSobrescreverDllsExistentes := ArqIni.ReadBool('CONFIG','SobrescreverDLL', DeveSobrescreverDllsExistentes);;
+    DeveInstalarOpenSSL       := ArqIni.ReadBool('CONFIG','InstalaOpenSSL', DeveInstalarOpenSSL);
+    DeveInstalarOpenSSL       := ArqIni.ReadBool('CONFIG','InstalaOpenSSL', DeveInstalarOpenSSL);
+    UsarExportadorFRPNG       := ArqIni.ReadBool('CONFIG','UsarExportadorFRPNG', UsarExportadorFRPNG);
+    UsarExportadorFRSVG       := ArqIni.ReadBool('CONFIG','UsarExportadorFRSVG', UsarExportadorFRSVG);
   finally
     ArqIni.Free;
   end;
@@ -1267,6 +1279,8 @@ begin
   DesligarDefineACBrInc(ArquivoACBrInc, 'USE_DELAYED', UsarCargaTardiaDLL);
   DesligarDefineACBrInc(ArquivoACBrInc, 'REMOVE_CAST_WARN', RemoverStringCastWarnings);
   DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_XMLSEC', not DeveInstalarXMLSec);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'USE_EXPORT_FR_SVG', UsarExportadorFRSVG);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'USE_EXPORT_FR_PNG', UsarExportadorFRPNG);
 end;
 
 procedure TACBrCompilerOpcoes.RedefinirValoresOpcoesParaPadrao;
@@ -1277,6 +1291,8 @@ begin
   UsarCargaTardiaDLL             := True;
   RemoverStringCastWarnings      := True;
   DeveSobrescreverDllsExistentes := False;
+  UsarExportadorFRSVG            := False;
+  UsarExportadorFRPNG            := False;
 end;
 
 procedure TACBrCompilerOpcoes.SalvarEmArquivoIni(const ArquivoIni: string);
@@ -1291,6 +1307,8 @@ begin
     ArqIni.WriteBool('CONFIG','CargaDllTardia', UsarCargaTardiaDLL);
     ArqIni.WriteBool('CONFIG','RemoverCastWarnings', RemoverStringCastWarnings);
     ArqIni.WriteBool('CONFIG','SobrescreverDLL', DeveSobrescreverDllsExistentes);
+    ArqIni.WriteBool('CONFIG','UsarExportadorFRPNG', UsarExportadorFRPNG);
+    ArqIni.WriteBool('CONFIG','UsarExportadorFRSVG', UsarExportadorFRSVG);
   finally
     ArqIni.Free;
   end;

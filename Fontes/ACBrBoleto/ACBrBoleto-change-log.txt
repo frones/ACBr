@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2024
+-- ACBrBoletoWS, ACBrBoletoRet_Bancoob_APIV3, ACBrBoletoW_Bancoob_APIV3 --
+[+]TK-5506 - Nova API V3 Sicoob.
+   https://www.projetoacbr.com.br/forum/topic/77945-migra%C3%A7%C3%A3o-api-cobran%C3%A7a-banc%C3%A1ria-v3-do-banco-sicoob/
+   Por Daniel Morais InfoCotidiano 
+
 07/06/2024
 -- ACBrBoleto --
 [-]TK-5565 - Correção AV Qdo nao existia metodo. qdo configurado errado.

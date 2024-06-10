@@ -235,7 +235,9 @@ uses
   ACBrBoletoW_Itau_API,
   ACBrBoletoRet_Itau_API,
   ACBrBoletoW_Safra,
-  ACBrBoletoRet_Safra;
+  ACBrBoletoRet_Safra,
+  ACBrBoletoW_Bancoob_APIV3,
+  ACBrBoletoRet_Bancoob_APIV3;
 
   { TRetornoEnvioClass }
 
@@ -400,8 +402,16 @@ begin
       end;
     cobBancoob:
       begin
+        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V3' then
+        begin
+        FBoletoWSClass := TBoletoW_Bancoob_APIV3.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Bancoob_APIV3.Create(FBoleto);
+        end
+        else
+        begin
         FBoletoWSClass := TBoletoW_Bancoob.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Bancoob.Create(FBoleto);
+        end
       end;
     cobBancoSafra:
       begin

@@ -1366,14 +1366,16 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
   begin
-    Result := ConverteXMLtoUTF8(Retorno);
-    Result := RemoverDeclaracaoXML(Result);
+//    Result := ConverteXMLtoUTF8(Retorno);
+//    Result := RemoverDeclaracaoXML(Result);
 //    Result := ConverteXMLtoNativeString(Retorno);
 
-    if Pos('<',Result) = 0 then
-      Result := '<retorno>'+
-                  '<msg>' + Result + '</msg>' +
-                  '<code>999</code>' +
+    if Pos('<', Retorno) = 0 then
+      Result := '<retorno>' +
+                  '<mensagem>' +
+                    '<codigo>999</codigo>' +
+                    '<Mensagem>' + Retorno + '</Mensagem>' +
+                  '</mensagem>' +
                 '</retorno>'
     else
       Result := Retorno;
@@ -1495,12 +1497,12 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
   begin
-    Result := RemoverDeclaracaoXML(Retorno);
-    if Pos('<', Result) = 0 then
-      Result := '<retorno>'+
+//    Result := RemoverDeclaracaoXML(Retorno);
+    if Pos('<', Retorno) = 0 then
+      Result := '<retorno>' +
                   '<mensagem>' +
                     '<codigo>999</codigo>' +
-                    '<Mensagem>' + Result + '</Mensagem>' +
+                    '<Mensagem>' + Retorno + '</Mensagem>' +
                   '</mensagem>' +
                 '</retorno>'
     else
@@ -1669,11 +1671,13 @@ begin
     Result := Copy(Retorno, 1, i -1) + '</retorno>'
   else
   begin
-    Result := ConverteXMLtoNativeString(Retorno);
-    if Pos('<',Result) = 0 then
-      Result := '<retorno>'+
-                  '<msg>' + Result + '</msg>' +
-                  '<code>999</code>' +
+//    Result := ConverteXMLtoNativeString(Retorno);
+    if Pos('<', Retorno) = 0 then
+      Result := '<retorno>' +
+                  '<mensagem>' +
+                    '<codigo>999</codigo>' +
+                    '<Mensagem>' + Retorno + '</Mensagem>' +
+                  '</mensagem>' +
                 '</retorno>'
     else
       Result := Retorno;

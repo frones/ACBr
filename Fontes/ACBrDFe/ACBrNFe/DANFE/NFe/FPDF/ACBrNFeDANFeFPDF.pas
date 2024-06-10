@@ -50,6 +50,9 @@ uses
   pcnNFe,
   pcnConversao,
   pcnConversaoNFe,
+  pcnEventoNFe,
+  pcnEnvEventoNFe,
+  pcnRetDistDFeInt,
   ACBrValidador,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
@@ -290,6 +293,38 @@ type
   public
     constructor Create(ANFeUtils: TNFeUtilsFPDF; ACancelada: boolean); reintroduce;
   end;
+
+
+  type
+  TNFeDANFeEventoFPDF = class(TFPDFReport)
+  private
+    FNFe: TNFe;
+    FProcEvento: TInfEventoCollectionItem;
+    FFormatSettings: TFormatSettings;
+    FInitialized: boolean;
+    FMensagemRodape: string;
+    procedure SetFontBoxHeader(PDF: IFPDF);
+    procedure SetFontBoxContent(PDF: IFPDF);
+    procedure SetFontBoxContentBold(PDF: IFPDF);
+    property NFe: TNFe read FNFe;
+    procedure BlocoCabecalho(Args: TFPDFBandDrawArgs);
+    procedure BlocoDadosNota(Args: TFPDFBandDrawArgs);
+    procedure BlocoDadosEvento(Args: TFPDFBandDrawArgs);
+    procedure BlocoEmitente(Args: TFPDFBandDrawArgs);
+    procedure BlocoDestinatarioRemetente(Args: TFPDFBandDrawArgs);
+    procedure BlocoTexto(Args: TFPDFBandDrawArgs; const ATitulo, AConteudo: string);
+    procedure BlocoCartaCorrecao(Args: TFPDFBandDrawArgs);
+    procedure BlocoCorrecaoOuJustificativa(Args: TFPDFBandDrawArgs);
+    procedure BlocoMensagem(Args: TFPDFBandDrawArgs);
+    procedure BlocoRodape(Args: TFPDFBandDrawArgs);
+  protected
+    procedure OnStartReport(Args: TFPDFReportEventArgs); override;
+  public
+    constructor Create(ANFe: TNFe; AProcEvento: TInfEventoCollectionItem); reintroduce;
+    property MensagemRodape: string read FMensagemRodape write FMensagemRodape;
+  end;
+
+
 
 const
   cDefaultFontFamily = 'Times';
@@ -2562,7 +2597,7 @@ begin
   FNFeUtils.FormatSettings := LFormatSettings;
 
   SetFont('Times');
-
+  SetUTF8(false);
   EngineOptions.DoublePass := True;
 end;
 
@@ -2685,7 +2720,6 @@ end;
 procedure TACBrNFeDANFeFPDF.ImprimirDANFE(NFE: TNFe);
 begin
   inherited;
-
 end;
 
 procedure TACBrNFeDANFeFPDF.ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe);
@@ -2696,7 +2730,6 @@ end;
 procedure TACBrNFeDANFeFPDF.ImprimirDANFEResumido(NFE: TNFe);
 begin
   inherited;
-
 end;
 
 procedure TACBrNFeDANFeFPDF.ImprimirDANFEPDF(NFE: TNFe);
@@ -2732,6 +2765,8 @@ begin
                OnlyNumber(LNFe.infNFe.ID) + '-nfe.pdf',
                TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
 
+       ForceDirectories(ExtractFilePath(LPath));
+
        Engine.SaveToFile(LPath);
        FPArquivoPDF := LPath;
       finally
@@ -2746,7 +2781,6 @@ end;
 procedure TACBrNFeDANFeFPDF.ImprimirEVENTO(NFE: TNFe);
 begin
   inherited;
-
 end;
 
 procedure TACBrNFeDANFeFPDF.ImprimirEVENTOPDF(AStream: TStream; ANFe: TNFe);
@@ -2755,8 +2789,48 @@ begin
 end;
 
 procedure TACBrNFeDANFeFPDF.ImprimirEVENTOPDF(NFE: TNFe);
+var
+  Report: TNFeDANFeEventoFPDF;
+  Engine: TFPDFEngine;
+  I : Integer;
+  LNFe : TNFe;
+  LNFeEvento : TInfEventoCollectionItem;
+  LPath : String;
 begin
-  inherited;
+  for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count -1 do
+  begin
+    LNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
+
+    LNFeEvento := TACBrNFe(ACBrNFe).EventoNFe.Evento[I];
+    Report := TNFeDANFeEventoFPDF.Create(LNFe, LNFeEvento);
+
+    FIndexImpressaoIndividual := I;
+
+    TNFeDANFeEventoFPDF(Report).MensagemRodape := Self.Sistema;
+
+    try
+      Engine := TFPDFEngine.Create(Report, False);
+      try
+        Engine.Compressed := True;
+
+        LPAth := IncludeTrailingPathDelimiter(TACBrNFe(ACBrNFe).DANFE.PathPDF) +
+          ExtractFilePath(TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
+
+        LPath := DefinirNomeArquivo(TACBrNFe(ACBrNFe).DANFE.PathPDF,
+                    TpEventoToStr(TACBrNFe(ACBrNFe).EventoNFe.Evento[I].InfEvento.tpEvento)
+                      + OnlyNumber(LNFe.infNFe.ID)
+                      + '-nfe.pdf',
+                  TACBrNFe(ACBrNFe).DANFE.NomeDocumento);
+
+        ForceDirectories(ExtractFilePath(LPath));
+        Engine.SaveToFile(LPath);
+      finally
+        Engine.Free;
+      end;
+    finally
+      Report.Free;
+    end;
+  end;
 end;
 
 procedure TACBrNFeDANFeFPDF.ImprimirINUTILIZACAO(NFE: TNFe);
@@ -2774,6 +2848,730 @@ end;
 procedure TACBrNFeDANFeFPDF.ImprimirINUTILIZACAOPDF(NFE: TNFe);
 begin
   inherited;
+end;
+
+
+
+{ TNFeDANFeEventoFPDF }
+
+procedure TNFeDANFeEventoFPDF.BlocoTexto(Args: TFPDFBandDrawArgs; const ATitulo, AConteudo: string);
+var
+  maxW, w: double;
+  x, y: double;
+  PDF: IFPDF;
+  texto: string;
+begin
+  PDF := Args.PDF;
+  x := 0;
+  y := 0;
+  y := y + 1;
+
+  MaxW := Args.Band.Width;
+  w := maxW;
+
+  PDF.SetFont(7, 'B');
+  PDF.TextBox(x, y, w, 5, ATitulo, 'T', 'L', 0, '');
+  y := y + 3;
+
+  PDF.Rect(x, y, MaxW, Args.Band.Height - y);
+
+  texto := StringReplace(AConteudo, ';', sLineBreak, [rfReplaceAll]);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x + 2, y + 2, MaxW - 4, Args.Band.Height - y, texto, 'T', 'L', 0, '', false);
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoCabecalho(Args: TFPDFBandDrawArgs);
+var
+  MaxW, w, h: double;
+  Texto: string;
+  x, y: double;
+  PDF: IFPDF;
+begin
+  PDF := Args.PDF;
+  x := 0;
+  y := 0;
+  maxW := Args.Band.Width;
+  // ######################################################################
+  // coluna esquerda identificação do emitente
+  w := MaxW;
+  h := 18;
+  PDF.TextBox(x, y, w, h);
+
+  PDF.SetFont(12, 'B');
+  texto := FProcEvento.InfEvento.detEvento.DescEvento;
+  y := y + 2;
+  y := y + PDF.TextBox(x, y, w, 5, texto, 'T', 'C', 0, '');
+  y := y + 1;
+
+  PDF.SetFont(10, '');
+  texto := 'Não possui valor fiscal, simples representação do fato indicado abaixo.';
+  y := y + PDF.TextBox(x, y, w, 5, texto, 'T', 'C', 0, '');
+  y := y + 1;
+
+  PDF.SetFont(10, '');
+  texto := 'CONSULTE A AUTENTICIDADE NO SITE DA SEFAZ AUTORIZADORA.';
+  PDF.TextBox(x, y, w, 5, texto, 'T', 'C', 0, '');
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoCartaCorrecao(Args: TFPDFBandDrawArgs);
+var
+  CondicoesUso: string;
+  PDF: IFPDF;
+  InfEvento : TInfEventoCollectionItem;
+  EvCCe : TDetEvento;
+begin
+  PDF := Args.PDF;
+
+  InfEvento := FProcEvento;
+  EvCCe := pcnEventoNFe.TDetEvento(FProcEvento.InfEvento.detEvento);
+
+  CondicoesUso := EvCCe.xCondUso;
+  CondicoesUso := StringReplace(CondicoesUso, 'com: I', 'com:' + sLineBreak + 'I', [rfReplaceAll]);
+  CondicoesUso := StringReplace(CondicoesUso, ';', ';' + sLineBreak, [rfReplaceAll]);
+
+  BlocoTexto(Args, 'CONDIÇÕES DE USO', CondicoesUso);
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoCorrecaoOuJustificativa(Args: TFPDFBandDrawArgs);
+var
+  Titulo, Conteudo: string;
+begin
+  if TpEventoToStr(FProcEvento.InfEvento.tpEvento) = '110110' then
+  begin
+    Titulo := 'CORREÇÕES A SEREM CONSIDERADAS';
+    Conteudo := FProcEvento.InfEvento.detEvento.xCorrecao;
+  end
+  else if TpEventoToStr(FProcEvento.InfEvento.tpEvento) = '110111' then
+  begin
+    Titulo := 'JUSTIFICATIVA DO CANCELAMENTO';
+    Conteudo := FProcEvento.InfEvento.detEvento.xJust;
+  end
+  else
+  begin
+    Titulo := FProcEvento.InfEvento.detEvento.descEvento;
+    Conteudo := '';
+  end;
+
+  Args.Band.Height := Args.FreeSpace - Args.ReservedSpace;
+
+  BlocoTexto(Args, Titulo, Conteudo);
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoDadosEvento(Args: TFPDFBandDrawArgs);
+var
+  oldX, maxW, w, h, w1, w2, w3: double;
+  texto: string;
+  x, y: double;
+  PDF: IFPDF;
+begin
+  PDF := Args.PDF;
+
+  x := 0;
+  y := 0;
+  y := y + 1;
+
+  oldX := x;
+  maxW := Args.Band.Width;
+  w := maxW;
+  h := 7;
+  texto := 'DADOS DO EVENTO';
+  PDF.SetFont(7, 'B');
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 0, '');
+  y := y + 3;
+
+  w1 := RoundTo(maxW * 0.05, 0);
+  w := w1;
+  texto := 'ÓRGÃO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'C', 1, '');
+  texto := CUFtoUF(FProcEvento.InfEvento.cOrgao);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  w2 := maxW - RoundTo(maxW * 0.25, 0);
+  w := w2;
+  texto := 'AMBIENTE';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  if FProcEvento.InfEvento.tpAmb = taProducao then
+    texto := '1 - PRODUÇÃO'
+  else
+    texto := '2 - HOMOLOGAÇÃO (SEM VALOR FISCAL)';
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+
+  x := x + w;
+  w3 := maxW - w1 - w2;
+  w := w3;
+  texto := 'DATA/HORA DO EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FormatDateTimeBr(FProcEvento.InfEvento.dhEvento);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := oldX;
+  y := y + h;
+  w1 := RoundTo(maxW * 0.10, 0);
+  w := w1;
+  texto := 'EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := TpEventoToStr(FProcEvento.InfEvento.tpEvento);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  w2 := RoundTo(maxW * 0.60, 0);
+  w := w2;
+  texto := 'DESCRIÇÃO DO EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FProcEvento.InfEvento.detEvento.descEvento;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+
+  x := x + w;
+  w3 := (MaxW - w1 - w2) / 2;
+  w := w3;
+  texto := 'SEQUENCIAL DO EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := IntToStr(FProcEvento.InfEvento.nSeqEvento);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  texto := 'VERSÃO DO EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FProcEvento.InfEvento.versaoEvento;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := oldX;
+  y := y + h;
+  w1 := RoundTo(maxW * 0.50, 0);
+  w := w1;
+  texto := 'STATUS';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := Format('%d - %s', [FProcEvento.RetInfEvento.cStat, FProcEvento.RetInfEvento.xMotivo]);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+
+  x := x + w;
+  w2 := (MaxW - w1) / 2;
+  w := w2;
+  texto := 'PROTOCOLO DE REGISTRO DO EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FProcEvento.RetInfEvento.nProt;
+  SetFontBoxContentBold(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  texto := 'DATA/HORA DO REGISTRO DO EVENTO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FormatDateTimeBr(FProcEvento.RetInfEvento.dhRegEvento);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoDadosNota(Args: TFPDFBandDrawArgs);
+var
+  oldX, maxW, w, h, w1, w2, w3, w4, bW, bH: double;
+  texto: string;
+  x, y: double;
+  PDF: IFPDF;
+begin
+  PDF := Args.PDF;
+  x := 0;
+  y := 0;
+  y := y + 1;
+
+  oldX := x;
+  maxW := Args.Band.Width;
+  w := maxW;
+  h := 8;
+  texto := 'NOTA FISCAL ELETRÔNICA';
+  PDF.SetFont(7, 'B');
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 0, '');
+  y := y + 3;
+
+  w1 := RoundTo(maxW * 0.10, 0);
+  w := w1;
+  texto := 'MODELO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'C', 1, '');
+  texto := IntToStr(NFe.Ide.modelo);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  w2 := RoundTo(maxW * 0.10, 0);
+  w := w2;
+  texto := 'SÉRIE';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'C', 1, '');
+  texto := FormatFloat('000', NFe.Ide.serie);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  w3 := RoundTo(maxW * 0.15, 0);
+  w := w3;
+  texto := 'NÚMERO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'C', 1, '');
+  texto := FormatFloat('000000000', NFe.ide.nNF);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+  x := x + w;
+  w4 := RoundTo(maxW * 0.15, 0);
+  w := w4;
+  texto := 'DATA/HORA DE EMISSÃO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FormatDateTime('dd/mm/yyyy HH:nn:ss', NFe.ide.dEmi, FFormatSettings);
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+
+
+  //coluna codigo de barras
+  x := x + w;
+  w := (maxW-w1-w2-w3-w4);
+  PDF.TextBox(x, y, w, 2 * h);
+  PDF.SetFillColor(0, 0, 0);
+  bW := 75;
+  bH := 12;
+  //codigo de barras
+  PDF.Code128(OnlyNumber(NFe.infNFe.Id), x +((w-bW)/2), y + 2, bH, bW);
+
+
+  x := oldX;
+  y := y + h;
+  w := w1 + w2 + w3 + w4;
+  texto := 'CHAVE DE ACESSO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FormatarChaveAcesso(OnlyNumber(NFe.infNFe.ID));
+  SetFontBoxContentBold(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoDestinatarioRemetente(Args: TFPDFBandDrawArgs);
+var
+  oldX, maxW, w, h, w1, w2: double;
+  texto: string;
+  x, y: double;
+  PDF: IFPDF;
+begin
+  PDF := Args.PDF;
+  x := 0;
+  y := 0;
+  y := y + 1;
+
+  //DESTINATÁRIO / REMETENTE
+  oldX := x;
+  maxW := Args.Band.Width;
+  w := maxW;
+  h := 7;
+  texto := 'DESTINATÁRIO / REMETENTE';
+  PDF.SetFont(7, 'B');
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 0, '');
+  //NOME / RAZÃO SOCIAL
+  w := maxW - RoundTo(maxW * 0.23, 0);
+  w1 := w;
+  y := y + 3;
+  texto := 'NOME / RAZÃO SOCIAL';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest <> nil then
+    texto := NFe.Dest.xNome;
+  SetFontBoxContent(PDF);
+  if PDF.Orientation = poPortrait then
+    PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '')
+  else
+    PDF.TextBox(x, y, w, h, texto, 'B', 'L', 1, '');
+  //CNPJ / CPF
+  x := x + w;
+  w := maxW - w1;
+  texto := 'CNPJ / CPF';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  //Pegando valor do CPF/CNPJ
+  texto := '';
+  if NFe.Dest <> nil then
+    texto := FormatarCNPJouCPF(NFe.Dest.CNPJCPF);
+  SetFontBoxContentBold(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+
+
+  //ENDEREÇO
+  w := RoundTo(maxW * 0.50, 0);
+  w1 := w;
+  y := y + h;
+  x := oldX;
+  texto := 'ENDEREÇO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest.enderDest <> nil then
+  begin
+    texto := NFe.Dest.enderDest.xLgr;
+    texto := texto + ', ' + NFe.Dest.enderDest.nro;
+  end;
+  if NFe.Dest.enderDest <> nil then
+    if NFe.Dest.enderDest.xCpl <> '' then
+      texto := texto + ' - ' + NFe.Dest.enderDest.xCpl;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '', true);
+  //BAIRRO / DISTRITO
+  x := x + w;
+  w := RoundTo(maxW*0.25, 0);
+  w2 := w;
+  texto := 'BAIRRO / DISTRITO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest.enderDest <> nil then
+    texto := NFe.Dest.enderDest.xBairro;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+  //CEP
+  x := x + w;
+  w := maxW - w1 - w2;
+  w2 := w;
+  texto := 'CEP';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest.enderDest <> nil then
+    texto := IfThen(NFe.Dest.enderDest.CEP <> 0, FormatarCEP(NFe.Dest.enderDest.CEP));
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+
+  //MUNICÍPIO
+  w := w1;
+  y := y + h;
+  x := oldX;
+  texto := 'MUNICÍPIO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest.enderDest <> nil then
+  begin
+    texto := NFe.Dest.enderDest.xMun;
+    if (UpperCase(Trim(texto)) = 'EXTERIOR') and (Length(NFe.Dest.enderDest.xPais) > 0) then
+      texto := texto + ' - ' + NFe.Dest.enderDest.xPais;
+  end;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+  //UF
+  x := x + w;
+  w := 8;
+  texto := 'UF';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest.enderDest <> nil then
+    texto := NFe.Dest.enderDest.UF;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+  //FONE / FAX
+  x := x + w;
+  w := MaxW - w1 - w2 - 8;
+  texto := 'FONE / FAX';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest.enderDest <> nil then
+    texto := NFe.Dest.enderDest.fone;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+  //INSCRIÇÃO ESTADUAL
+  x := x + w;
+  w := w2;
+  texto := 'INSCRIÇÃO ESTADUAL';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Dest <> nil then
+    texto := NFe.Dest.IE;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoEmitente(Args: TFPDFBandDrawArgs);
+var
+  oldX, maxW, w, h, w1, w2, w3, wx: double;
+  texto: string;
+  x, y: double;
+  PDF: IFPDF;
+begin
+  PDF := Args.PDF;
+  x := 0;
+  y := 0;
+  if PDF.CurrentPage > 1 then
+    Exit;
+
+  y := y + 1;
+
+  // EMITENTE
+  oldX := x;
+  maxW := Args.Band.Width;
+  w := maxW;
+  h := 7;
+  texto := 'EMITENTE';
+  PDF.SetFont(7, 'B');
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 0, '');
+  //NOME / RAZÃO SOCIAL
+  w := RoundTo(maxW * 0.61, 0);
+  w1 := w;
+  y := y + 3;
+  texto := 'NOME / RAZÃO SOCIAL';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.xNome;
+  SetFontBoxContent(PDF);
+  if PDF.Orientation = poPortrait then
+    PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '')
+  else
+    PDF.TextBox(x, y, w, h, texto, 'B', 'L', 1, '');
+  //CNPJ / CPF
+  x := x + w;
+  w := roundto(maxW*0.23, 0);
+  w2 := w;
+  texto := 'CNPJ / CPF';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  //Pegando valor do CPF/CNPJ
+  texto := FormatarCNPJouCPF(NFe.Emit.CNPJCPF);
+  SetFontBoxContentBold(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+  //DATA DA EMISSÃO
+  x := x + w;
+  w := maxW-(w1+w2);
+  wx := w;
+  texto := 'DATA DA EMISSÃO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := FormatDateBr(NFe.ide.dEmi);
+  SetFontBoxContent(PDF);
+  if PDF.Orientation = poPortrait then
+    PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '')
+  else
+    PDF.TextBox(x, y, w, h, texto, 'B', 'C', 1, '');
+
+  //ENDEREÇO
+  w := RoundTo(maxW * 0.47, 0);
+  w1 := w;
+  y := y + h;
+  x := oldX;
+  texto := 'ENDEREÇO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.EnderEmit.xLgr;
+  texto := texto + ', ' + NFe.Emit.EnderEmit.nro;
+  if NFe.Emit.EnderEmit.xCpl <> '' then
+    texto := texto + ' - ' + NFe.Emit.EnderEmit.xCpl;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '', true);
+  //BAIRRO / DISTRITO
+  x := x + w;
+  w := RoundTo(maxW*0.21, 0);
+  w2 := w;
+  texto := 'BAIRRO / DISTRITO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.EnderEmit.xBairro;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+  //CEP
+  x := x + w;
+  w := maxW - w1 - w2 - wx;
+  texto := 'CEP';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := IfThen(NFe.Emit.EnderEmit.CEP <> 0, FormatarCEP(NFe.Emit.EnderEmit.CEP));
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+  //DATA DA SAÍDA
+  x := x + w;
+  w := wx;
+  texto := 'DATA DA SAÍDA/ENTRADA';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.ide.dSaiEnt > 0 then
+    texto := FormatDateBr(NFe.Ide.dSaiEnt);
+  SetFontBoxContentBold(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+  //MUNICÍPIO
+  w := w1;
+  y := y + h;
+  x := oldX;
+  texto := 'MUNICÍPIO';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.EnderEmit.xMun;
+  if (UpperCase(Trim(texto)) = 'EXTERIOR') and (Length(NFe.Emit.EnderEmit.xPais) > 0) then
+    texto := texto + ' - ' + NFe.Emit.EnderEmit.xPais;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'L', 0, '');
+  //UF
+  x := x + w;
+  w := 8;
+  texto := 'UF';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.EnderEmit.UF;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+  //FONE / FAX
+  x := x + w;
+  w := RoundTo((maxW - w1 - wx - 8) / 2, 0);
+  w3 := w;
+  texto := 'FONE / FAX';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.EnderEmit.fone;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+  //INSCRIÇÃO ESTADUAL
+  x := x + w;
+  w := maxW - w1 - wx - 8 - w3;
+  texto := 'INSCRIÇÃO ESTADUAL';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := NFe.Emit.IE;
+  SetFontBoxContent(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+  //HORA DA SAÍDA
+  x := x + w;
+  w := wx;
+  texto := 'HORA DA SAÍDA/ENTRADA';
+  SetFontBoxHeader(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
+  texto := '';
+  if NFe.Ide.dSaiEnt > 0 then
+    texto := IfThen(TimeOf(NFe.Ide.dSaiEnt) = 0, '', TimeToStr(NFe.Ide.dSaiEnt));
+  SetFontBoxContentBold(PDF);
+  PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoMensagem(Args: TFPDFBandDrawArgs);
+var
+  texto: string;
+  PDF: IFPDF;
+begin
+  PDF := Args.PDF;
+  if TpEventoToStr(FProcEvento.InfEvento.tpEvento) = '110110' then
+    texto :=
+      'Este documento é uma representação gráfica da CC-e ' +
+      'e foi impresso apenas para sua informação e não possui validade ' +
+      'fiscal.' + sLineBreak + ' A CC-e deve ser recebida e mantida em arquivo eletrônico XML ' +
+      'e pode ser consultada através dos Portais das SEFAZ.'
+  else if TpEventoToStr(FProcEvento.InfEvento.tpEvento) = '110111' then
+    texto :=
+      'Este documento é uma representação gráfica do evento de NFe e ' +
+      'foi impresso apenas para sua informação e não possui validade ' +
+      'fiscal.' + sLineBreak + ' O Evento deve ser recebido e mantido em arquivo ' +
+      'eletrônico XML e pode ser consultada através dos Portais ' +
+      'das SEFAZ.';
+  PDF.SetFont(10,'I');
+  PDF.TextBox(0, 0, Args.Band.Width, Args.Band.Height, texto, 'C', 'C', True, False, False);
+end;
+
+procedure TNFeDANFeEventoFPDF.BlocoRodape(Args: TFPDFBandDrawArgs);
+var
+  PDF: IFPDF;
+  x, y, w, h: double;
+  Mensagens: TStringArray;
+begin
+  PDF := Args.PDF;
+  if FMensagemRodape = '' then
+    Exit;
+  Mensagens := ACBr_fpdf.Split(FMensagemRodape, '|');
+
+  x := 0;
+  y := 0;
+  w := Args.Band.Width;
+  h := Args.Band.Height;
+
+  PDF.SetFont(6, 'I');
+  if Length(Mensagens) >= 1 then
+    PDF.TextBox(x, y, w, h, Mensagens[0], 'T', 'L', 0);
+  if Length(Mensagens) >= 2 then
+    PDF.TextBox(x, y, w, h, Mensagens[1], 'T', 'C', 0);
+  if Length(Mensagens) >= 3 then
+    PDF.TextBox(x, y, w, h, Mensagens[2], 'T', 'R', 0);
+end;
+
+constructor TNFeDANFeEventoFPDF.Create(ANFe: TNFe; AProcEvento: TInfEventoCollectionItem);
+begin
+  inherited Create;
+  FNFe := ANFe;
+  FProcEvento := AProcEvento;
+
+  {$IFNDEF FPC}
+    {$IFDEF HAS_FORMATSETTINGS}
+      FFormatSettings := TFormatSettings.Create;
+    {$ENDIF}
+  {$ENDIF}
+  FFormatSettings.DecimalSeparator := ',';
+  FFormatSettings.ThousandSeparator := '.';
+
+  SetFont('Times');
+  SetUTF8(false);
+  SetMargins(4, 4);
+end;
+
+procedure TNFeDANFeEventoFPDF.OnStartReport(Args: TFPDFReportEventArgs);
+begin
+  if not FInitialized then
+  begin
+    if FNFe = nil then
+      raise Exception.Create('FNFe not initialized');
+    if FProcEvento = nil then
+      raise Exception.Create('FInfEvento not initialized');
+
+    AddPage;
+
+    AddBand(btData, 18, BlocoCabecalho);
+    AddBand(btData, 20, BlocoDadosNota);
+    AddBand(btData, 25, BlocoDadosEvento);
+    AddBand(btData, 25, BlocoEmitente);
+    AddBand(btData, 25, BlocoDestinatarioRemetente);
+    if TpEventoToStr(FProcEvento.InfEvento.tpEvento) = '110110' then
+      AddBand(btData, 30, BlocoCartaCorrecao);
+    if MatchText(TpEventoToStr(FProcEvento.InfEvento.tpEvento), ['110110', '110111']) then
+      AddBand(btData, 30, BlocoCorrecaoOuJustificativa);
+    AddBand(btPageFooter, 25, BlocoMensagem);
+    AddBand(btPageFooter, 5, BlocoRodape);
+
+    FInitialized := True;
+  end;
+end;
+
+procedure TNFeDANFeEventoFPDF.SetFontBoxContent(PDF: IFPDF);
+begin
+  PDF.SetFont(10, '');
+end;
+
+procedure TNFeDANFeEventoFPDF.SetFontBoxContentBold(PDF: IFPDF);
+begin
+  PDF.SetFont(10, 'B');
+end;
+
+procedure TNFeDANFeEventoFPDF.SetFontBoxHeader(PDF: IFPDF);
+begin
+  PDF.SetFont(6, '');
 end;
 
 end.

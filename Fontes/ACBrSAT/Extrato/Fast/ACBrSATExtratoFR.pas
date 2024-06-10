@@ -39,10 +39,10 @@ interface
 uses
   Classes, SysUtils, ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass, pcnCFe,
   pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode
-  {$IFDEF DELPHIX_ALEXANDRIA_UP} // ImprimirExtratoSVG
+  {$IFDEF USE_EXPORT_FR_SVG} // ImprimirExtratoSVG
     , frxExportSVG
   {$ENDIF}
-  {$IFDEF DELPHIXE_UP} // ImprimirExtratoPNG
+  {$IFDEF USE_EXPORT_FR_PNG} // ImprimirExtratoPNG
     , frxExportImage
   {$ENDIF}
 
@@ -80,10 +80,10 @@ type
     frxReport: TfrxReport;
     frxPDFExport: TfrxPDFExport;
     frxHTMLExport: TfrxHTMLExport;
-    {$IFDEF DELPHIX_ALEXANDRIA_UP}
+    {$IFDEF USE_EXPORT_FR_SVG}
     frxSVGExport: TfrxSVGExport;
     {$ENDIF}
-    {$IFDEF DELPHIXE_UP}
+    {$IFDEF USE_EXPORT_FR_PNG}
     frxPNGExport: TfrxPNGExport;
     {$ENDIF}
 
@@ -407,7 +407,7 @@ end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoSVG;
 begin
-  {$IFDEF DELPHIX_ALEXANDRIA_UP}
+  {$IFDEF USE_EXPORT_FR_SVG}
     if (FStream <> nil) then
       frxSVGExport.Stream := FStream;
 
@@ -429,7 +429,7 @@ end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoPNG;
 begin
-  {$IFDEF DELPHIXE_UP}
+  {$IFDEF USE_EXPORT_FR_PNG}
     if (FStream <> nil) then
       frxPNGExport.Stream := FStream;
 
@@ -526,10 +526,10 @@ begin
   RttiSetProp(frxPDFExport, 'Transparency', 'False');
 
   frxHTMLExport := TfrxHTMLExport.Create(Self);
-  {$IFDEF DELPHIX_ALEXANDRIA_UP}
+  {$IFDEF USE_EXPORT_FR_SVG}
   frxSVGExport  := TfrxSVGExport.Create(Self);
   {$ENDIF}
-  {$IFDEF DELPHIXE_UP}
+  {$IFDEF USE_EXPORT_FR_PNG}
   frxPNGExport  := TfrxPNGExport.Create(Self);
   {$ENDIF}
 

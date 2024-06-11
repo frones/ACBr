@@ -50,7 +50,8 @@ uses
   ACBrNFe.RetAdmCSC,
   ACBrNFe.RetConsSit,
   pcnNFeConsts,
-  pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe,
+  pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe,
+  ACBrNFe.RetEnvEvento,
   pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNFe,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes;
 
@@ -3466,8 +3467,7 @@ begin
 
   VerificarSemResposta;
 
-  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
-  EventoRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;

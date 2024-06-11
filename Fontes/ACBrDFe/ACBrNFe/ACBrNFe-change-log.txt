@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/06/2024
+-- ACBrNFeWebServices --
+[*] Substituida a unit pcnRetEnvEventoNFe pela nova ACBrNFe.RetEnvEvento.
+    Pois a nova unit ACBrNFe.RetConsSit a utiliza.
+   Por: Italo Giurizzato Junior
+
 10/06/2024
 -- ACBrNFeWebServices --
 [*] Alteração nos fontes para passar a utilizar as novas units: ACBrNFe.AdmCSC,

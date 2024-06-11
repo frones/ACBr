@@ -64,6 +64,12 @@
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
 {$DEFINE USE_DELAYED}
 
+// Descomente essa linha, para usar a exportação de Fast Reports com suporte a SVG
+{.$DEFINE USE_REPORT_FR_SVG}
+
+// Descomente essa linha, para usar a exportação de Fast Reports com suporte a PNG
+{.$DEFINE USE_REPORT_FR_PNG}
+
 // Descomente essa linha, para usar ZLibExGZ de \ACBr\Fontes\Terceiros\ZLibExGZ
 // ZLib de D7 contém bugs e está incompleta. Caso contrário usará compactação nativa, unit "ZLib"
 {.$DEFINE USE_ZLibExGZ}

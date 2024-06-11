@@ -1,4 +1,4 @@
-{*******************************************************************************}
+﻿{*******************************************************************************}
 { Projeto: Componentes ACBr                                                     }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
 { mentos de Automação Comercial utilizados no Brasil                            }
@@ -39,7 +39,9 @@ interface
 
 uses
   SysUtils, Classes, contnrs,
-  pcnEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe,
+  ACBrNFe.EventoClass,
+  ACBrNFe.RetEnvEvento,
+  ACBrNFe.RetConsSit,
   ACBrLibResposta, ACBrLibConsReciDFe, ACBrNFe;
 
 type

@@ -148,8 +148,8 @@ begin
          FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL, C_URL_HOM) + '/boletos';
       end;
 
-    tpConsulta:
-      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
+    //tpConsulta:
+    //  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
 
     tpConsultaDetalhe:
       FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,
@@ -217,11 +217,11 @@ begin
           FMetodoHTTP := htPATCH; // Define Método POST para Baixa
           RequisicaoBaixa;
         end;
-      tpConsulta:
-        begin
-          FMetodoHTTP := htGET; // Define Método GET Consulta
-          RequisicaoConsulta;
-        end;
+      //tpConsulta:
+      //  begin
+      //    FMetodoHTTP := htGET; // Define Método GET Consulta
+      //    RequisicaoConsulta;
+      //  end;
       tpConsultaDetalhe:
         begin
           FMetodoHTTP := htGET; // Define Método GET Consulta Detalhe
@@ -283,6 +283,9 @@ begin
   if Assigned(ATitulo) then
     LNossoNumero := ATitulo.NossoNumero;
 
+  if Assigned(ATitulo) then
+    LCarteira := ATitulo.Carteira;
+
   if Assigned(Boleto.Configuracoes.WebService.Filtro) then
   begin
 
@@ -311,11 +314,12 @@ begin
     try
       LConsulta.Delimiter := '&';
       case Boleto.Configuracoes.WebService.Operacao of
-        tpConsulta,tpConsultaDetalhe :
+        tpConsultaDetalhe :
           begin
             LConsulta.Add('id_beneficiario=' + LId_Beneficiario);
 
-            LConsulta.Add('codigo_carteira=' + ATitulo.Carteira);
+            if LCarteira <> EmptyStr then
+              LConsulta.Add('codigo_carteira=' + LCarteira);
 
             if LNossoNumero <> EmptyStr then
                LConsulta.Add('nosso_numero=' + LNossoNumero);
@@ -323,13 +327,13 @@ begin
         tpAltera :
           begin
              LConsulta.Add(LId_Beneficiario+
-                          ATitulo.Carteira+
+                          LCarteira+
                           LNossoNumero+'/'+DefinirInstrucaoAlteracao );
           end;
         tpBaixa :
           begin
              LConsulta.Add(LId_Beneficiario+
-                          inttostr(Boleto.Configuracoes.WebService.Filtro.carteira)+
+                          LCarteira+
                           LNossoNumero+'/baixa');
           end;
       end;

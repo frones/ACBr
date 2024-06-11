@@ -1533,7 +1533,7 @@ begin
   else if AValue = '99' then
     Result := indOutrasDeducoes
     else
-     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04 e 99)',[AValue]));
 end;
 
 function StrToIndNatRec(const AValue: string):TACBrIndNatRec;
@@ -2523,7 +2523,7 @@ begin
   else if AValue = '42' then
     Result := tcaOutrVlrsSemDecJudicial
   else
-    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
+    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,21,41 e 42)', [AValue]));
 end;
 
 
@@ -2536,7 +2536,7 @@ begin
   else if AValue = '03' then
     Result := iaaRefUnicaCofins
   else
-    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
+    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02 e 03)', [AValue]));
 end;
 
 

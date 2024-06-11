@@ -862,6 +862,18 @@ begin
                      aRemessa.Add(UpperCase(wLinhaMulta));
                    end;
 
+                  {Registro Híbrido - Bolecode}
+                  if (NaoEstaVazio(ACBrBoleto.Cedente.PIX.Chave)) then
+                  begin
+                    wLinha := '3'                                              + // 001 a 001 - Identificação do registro bolecode (3)
+                              PadRight(IfThen(QrCode.txId = '', ACBrBoleto.Cedente.PIX.Chave, ''), 77, ' ') + // 002 a 078 - Chave Pix (opicional)
+                              PadRight(QrCode.txId,  64, ' ')                  + // 079 a 142 - ID DA URL DO QR CODE PIX (opcional)
+                              PadRight('', 252, ' ')                                                          + // 143 a 394 - Brancos
+                              IntToStrZero(ARemessa.Count + 1, 6);
+                    iSequencia := aRemessa.Count + 1;                                                                        // 395 a 400 - Número sequencial do registro
+                    ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+                  end;
+
                    //OPCIONAL – COBRANÇA E-MAIL E/OU DADOS DO SACADOR AVALISTA
                    if (Sacado.Email <> '') or (Sacado.SacadoAvalista.CNPJCPF <> '') then
                    begin
@@ -898,21 +910,7 @@ begin
 
                      aRemessa.Add(UpperCase(wLinhaMulta));
                    end;
-
         end;
-
-        {Registro Híbrido - Bolecode}
-        if (NaoEstaVazio(ACBrBoleto.Cedente.PIX.Chave)) then
-        begin
-          wLinha := '3'                                              + // 001 a 001 - Identificação do registro bolecode (3)
-                    PadRight(ACBrBoleto.Cedente.PIX.Chave, 77, ' ')  + // 002 a 078 - Chave Pix (opicional)
-                    PadRight(QrCode.txId,  64, ' ')                  + // 079 a 142 - ID DA URL DO QR CODE PIX (opcional)
-                    PadRight('', 252, ' ')                           + // 143 a 394 - Brancos
-                    IntToStrZero( ARemessa.Count + 1, 6);              // 395 a 400 - Número sequencial do registro
-          ARemessa.Text:= ARemessa.Text + wLinha;
-        end;
-
-
     end;
   end;
 end;

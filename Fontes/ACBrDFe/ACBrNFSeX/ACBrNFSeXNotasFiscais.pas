@@ -332,6 +332,11 @@ begin
         Numero := INIRec.ReadString(sSecao, 'Numero', '');
         cNFSe := GerarCodigoDFe(StrToIntDef(Numero, 0));
         NumeroLote := INIRec.ReadString(sSecao, 'NumeroLote', '');
+        ModeloNFSe := INIRec.ReadString(sSecao, 'ModeloNFSe', '');
+        refNF := INIRec.ReadString(sSecao, 'refNF', '');
+        TipoEmissao := StrToTipoEmissao(Ok, INIRec.ReadString(sSecao, 'TipoEmissao', 'N'));
+        Canhoto := StrToCanhoto(Ok, INIRec.ReadString(sSecao, 'Canhoto', '0'));
+        EmpreitadaGlobal := StrToEmpreitadaGlobal(Ok, INIRec.ReadString(sSecao, 'EmpreitadaGlobal', '2'));
       end;
 
       sSecao := 'IdentificacaoRps';
@@ -350,7 +355,7 @@ begin
         StatusRps := FProvider.StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
         OutrasInformacoes := INIRec.ReadString(sSecao, 'OutrasInformacoes', '');
 
-        // Provedor ISSDSF e Siat
+        // Provedores: Infisc, ISSDSF e Siat
         SeriePrestacao := INIRec.ReadString(sSecao, 'SeriePrestacao', '');
 
         IdentificacaoRps.Numero := INIRec.ReadString(sSecao, 'Numero', '0');
@@ -451,6 +456,7 @@ begin
 
         Tomador.RazaoSocial := INIRec.ReadString(sSecao, 'RazaoSocial', '');
 
+        Tomador.Endereco.EnderecoInformado := FProvider.StrToSimNaoOpc(Ok, INIRec.ReadString(sSecao, 'EnderecoInformado', ''));
         Tomador.Endereco.TipoLogradouro := INIRec.ReadString(sSecao, 'TipoLogradouro', '');
         Tomador.Endereco.Endereco := INIRec.ReadString(sSecao, 'Logradouro', '');
         Tomador.Endereco.Numero := INIRec.ReadString(sSecao, 'Numero', '');
@@ -979,6 +985,8 @@ begin
       //Exigido pelo provedor Equiplano
       INIRec.WriteString(sSecao, 'InscricaoEstadual', Tomador.IdentificacaoTomador.InscricaoEstadual);
       INIRec.WriteString(sSecao, 'RazaoSocial', Tomador.RazaoSocial);
+
+      INIRec.WriteString(sSecao, 'EnderecoInformado', FProvider.SimNaoOpcToStr(Tomador.Endereco.EnderecoInformado));
       INIRec.WriteString(sSecao, 'TipoLogradouro', Tomador.Endereco.TipoLogradouro);
       INIRec.WriteString(sSecao, 'Logradouro', Tomador.Endereco.Endereco);
       INIRec.WriteString(sSecao, 'Numero', Tomador.Endereco.Numero);

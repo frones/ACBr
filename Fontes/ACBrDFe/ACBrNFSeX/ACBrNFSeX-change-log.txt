@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2024
+-- ACBrNFSeXNotasFiscais --
+[+] Incluído na leitura da seção [IdendificacaoNFSe] os campos utilizados pelo
+    provedor Infisc.
+    Campos incluídos: ModeloNFSe, refNF, TipoEmissao (N = Normal ou C = Contingencia), 
+    Canhoto (0 = Nenhum, 1 = Cabeçalho ou 2 = Rodapé) e 
+    EmpreitadaGlobal (1 = Construcao Civil ou 2 = Outros).
+[+] Incluído na leitura da seção [Tomador] o campo utilizado pelo provedor IPM.
+    Campo Incluído: EnderecoInformado (0 = Não, 1 = Sim ou vazio para não gerar a tag).
+  Por: Italo Giurizzato Junior
+
 10/06/2024
 -- ACBrNFSeXServicos --
 [*] A cidade de Campestre/MG, trocou de provedor, agora é: GestaoISS.

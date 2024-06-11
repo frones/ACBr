@@ -411,7 +411,7 @@ begin
   Result := CreateElement('tomador');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 0,
-                            Trim(NFSe.Tomador.Endereco.EnderecoInformado), ''));
+            FpAOwner.SimNaoOpcToStr(NFSe.Tomador.Endereco.EnderecoInformado), ''));
 
   if Trim(NFSe.Tomador.IdentificacaoTomador.DocEstrangeiro) <> '' then
   begin

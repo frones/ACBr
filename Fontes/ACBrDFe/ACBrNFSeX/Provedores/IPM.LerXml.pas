@@ -330,6 +330,7 @@ procedure TNFSeR_IPM.LerTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   xUF, aValor: string;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('tomador');
 
@@ -340,6 +341,7 @@ begin
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nome_razao_social'), tcStr);
       NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('sobrenome_nome_fantasia'), tcStr);
 
+      Endereco.EnderecoInformado := FpAOwner.StrToSimNaoOpc(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('endereco_informado'), tcStr));
       Endereco.Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
       Endereco.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero_residencia'), tcStr);
       Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);

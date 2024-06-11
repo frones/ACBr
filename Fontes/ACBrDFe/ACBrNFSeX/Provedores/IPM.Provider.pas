@@ -100,6 +100,9 @@ type
     function SimNaoToStr(const t: TnfseSimNao): string; override;
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
 
+    function SimNaoOpcToStr(const t: TnfseSimNaoOpc): string; override;
+    function StrToSimNaoOpc(out ok: boolean; const s: string): TnfseSimNaoOpc; override;
+
     function CondicaoPagToStr(const t: TnfseCondicaoPagamento): string; override;
     function StrToCondicaoPag(out ok: boolean; const s: string): TnfseCondicaoPagamento; override;
   end;
@@ -409,6 +412,19 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['0', '1', 'N', 'S'],
                            [snNao, snSim, snNao, snSim]);
+end;
+
+function TACBrNFSeProviderIPM.SimNaoOpcToStr(const t: TnfseSimNaoOpc): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', ''], [snoNao, snoSim, snoNenhum]);
+end;
+
+function TACBrNFSeProviderIPM.StrToSimNaoOpc(out ok: boolean;
+  const s: string): TnfseSimNaoOpc;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['0', '1', 'N', 'S', ''],
+                           [snoNao, snoSim, snoNao, snoSim, snoNenhum]);
 end;
 
 function TACBrNFSeProviderIPM.CondicaoPagToStr(

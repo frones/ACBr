@@ -260,6 +260,9 @@ type
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; virtual;
     function SimNaoDescricao(const t: TnfseSimNao): string; virtual;
 
+    function SimNaoOpcToStr(const t: TnfseSimNaoOpc): string; virtual;
+    function StrToSimNaoOpc(out ok: boolean; const s: string): TnfseSimNaoOpc; virtual;
+
     function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; virtual;
     function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; virtual;
     function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string; virtual;
@@ -1236,6 +1239,21 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2', ''],
                            [snSim, snNao, snNao]);
+end;
+
+function TACBrNFSeXProvider.SimNaoOpcToStr(const t: TnfseSimNaoOpc): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', ''],
+                           [snoSim, snoNao, snoNenhum]);
+end;
+
+function TACBrNFSeXProvider.StrToSimNaoOpc(out ok: boolean;
+  const s: string): TnfseSimNaoOpc;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', ''],
+                           [snoSim, snoNao, snoNenhum]);
 end;
 
 function TACBrNFSeXProvider.SituacaoTributariaToStr(

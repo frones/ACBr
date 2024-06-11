@@ -99,6 +99,7 @@ type
                                    retExigibSuspensaAdm);
 
   TnfseSimNao = (snSim, snNao);
+  TnfseSimNaoOpc = (snoSim, snoNao, snoNenhum);
 
   TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito,
                             cpCartaoDebito, cpDeposito, cpCheque, cpPIX);

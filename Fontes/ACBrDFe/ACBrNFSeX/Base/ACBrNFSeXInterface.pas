@@ -82,6 +82,9 @@ type
     function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
     function SimNaoDescricao(const t: TnfseSimNao): string;
 
+    function SimNaoOpcToStr(const t: TnfseSimNaoOpc): string;
+    function StrToSimNaoOpc(out ok: boolean; const s: string): TnfseSimNaoOpc;
+
     function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string;
     function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
     function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string;

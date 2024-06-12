@@ -278,48 +278,48 @@ begin
       LJsonObject.AddPair('covenantCode', Boleto.Cedente.Convenio);
       LJsonObject.AddPair('bankNumber', ATitulo.NossoNumero);
 
-      case Integer(ATitulo.OcorrenciaOriginal.Tipo) of
-        3:  // RemessaConcederAbatimento
+      case ATitulo.OcorrenciaOriginal.Tipo of
+        toRemessaConcederAbatimento:
           begin
             LJsonObject.AddPair('deductionValue', StringReplace(FormatFloat('0.00', ATitulo.ValorAbatimento), ',', '.', [rfReplaceAll]));
           end;
-        4:  // RemessaCancelarAbatimento
+        toRemessaCancelarAbatimento:
           begin
             LJsonObject.AddPair('deductionValue', StringReplace(FormatFloat('0.00', 0), ',', '.', [rfReplaceAll]));
           end;
-        5: //RemessaConcederDesconto
+        toRemessaConcederDesconto:
           begin
             RequisicaoAlterarDesconto(LJsonObject)
           end;
-        7: //RemessaAlterarVencimento
+        toRemessaAlterarVencimento:
           begin
              LJsonObject.AddPair('dueDate', FormatDateTime('yyyy-mm-dd', ATitulo.Vencimento));
           end;
-        9:  //RemessaProtestar
+        toRemessaProtestar:
           begin
              LJsonObject.AddPair('operation', 'PROTESTAR');
           end;
-        10:  //RemessaSustarProtesto
+        toRemessaSustarProtesto:
           begin
              LJsonObject.AddPair('operation', 'BAIXAR');
           end;
-        12:  //RemessaCancelarInstrucaoProtesto
+        toRemessaCancelarInstrucaoProtesto:
           begin
              LJsonObject.AddPair('operation', 'CANCELAR_PROTESTO');
           end;
-        13:  //RemessaDispensarJuros
+        toRemessaDispensarJuros:
           begin
             LJsonObject.AddPair('interestPercentage', StringReplace(FormatFloat('0.00', 0), ',', '.', [rfReplaceAll]));
           end;
-        18:  //RemessaAlterarSeuNumero
+        toRemessaAlterarSeuNumero :
           begin
             LJsonObject.AddPair('clientNumber', ATitulo.NumeroDocumento); // seu número ou numero documento
           end;
-        40:  //RemessaAlterarNumeroDiasProtesto,
+        toRemessaAlterarNumeroDiasProtesto:
           begin
              LJsonObject.AddPair('protestQuatilyDays', IntToStr(ATitulo.DiasDeProtesto));
           end;
-        50:  //RemessaAlterarMulta
+        toRemessaAlterarMulta:
           begin
              if ATitulo.PercentualMulta > 0 then
               begin
@@ -330,15 +330,15 @@ begin
                 LJsonObject.AddPair('FineDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataMulta));
               end
           end;
-        51:  //RemessaDispensarMulta
+        toRemessaDispensarMulta:
           begin
              LJsonObject.AddPair('finePercentage', StringReplace(FormatFloat('0.00', 0), ',', '.', [rfReplaceAll]));
           end;
-        52: //RemessaAlterarDesconto
+        toRemessaAlterarDesconto:
           begin
             RequisicaoAlterarDesconto(LJsonObject);
           end;
-        53: //toRemessaNaoConcederDesconto,
+        toRemessaNaoConcederDesconto:
           begin
             RequisicaoAlterarDesconto(LJsonObject);
           end;
@@ -625,14 +625,15 @@ end;
 
 procedure TBoletoW_Santander_API.RequisicaoAlterarDesconto(AJson: TACBrJSONObject);
 var
-  LJsonObjectDesconto1,LJsonObjectDesconto2,LJsonObjectDesconto3 : TACBrJSONObject;
-  LValorDesconto1, LValorDesconto2, LValorDesconto3, LTipo1, LTipo2, LTipo3 : string;
+  LJsonObjectDesconto : TACBrJSONObject;
+  LValorDesconto1, LValorDesconto2, LValorDesconto3, LTipo1 : string;
 begin
   if Assigned(ATitulo) and Assigned(AJson) then
   begin
+    LJsonObjectDesconto := TACBrJSONObject.Create;
+
     if ATitulo.DataDesconto > 0 then
     begin
-      LJsonObjectDesconto1 := TACBrJSONObject.Create;
       case ATitulo.OcorrenciaOriginal.Tipo of
         toRemessaCancelarDesconto,
         toRemessaNaoConcederDesconto :
@@ -641,8 +642,8 @@ begin
             LValorDesconto2:='0.00';
             LValorDesconto3:='0.00';
             LTipo1 :=  'ISENTO';
-            LTipo2 :=  'ISENTO';
-            LTipo3 :=  'ISENTO';
+            //LTipo2 :=  'ISENTO';
+            //LTipo3 :=  'ISENTO';
           end;
         toRemessaConcederDesconto,
         toRemessaAlterarDesconto :
@@ -654,89 +655,103 @@ begin
            LValorDesconto3 := IfThen(ATitulo.TipoDesconto3=tdNaoConcederDesconto,'0.00',
                                      StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto3), ',', '.', [rfReplaceAll]));
            LTipo1 := retornaTipoDesconto(ATitulo.TipoDesconto);
-           LTipo2 := retornaTipoDesconto(ATitulo.TipoDesconto2);
-           LTipo3 := retornaTipoDesconto(ATitulo.TipoDesconto3);
+           //LTipo2 := retornaTipoDesconto(ATitulo.TipoDesconto2);
+           //LTipo3 := retornaTipoDesconto(ATitulo.TipoDesconto3);
           end;
       end;
-        LJsonObjectDesconto1.AddPair('type', LTipo1);
-        LJsonObjectDesconto1.AddPair('value', LValorDesconto1);
-        LJsonObjectDesconto1.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto));
-        AJson.AddPair('discountOne', LJsonObjectDesconto1);
+      LJsonObjectDesconto.AddPair('type',LTipo1);
+      LJsonObjectDesconto.AddPair('disconuntOne',
+                                                 TACBrJSONObject.Create
+                                                                .AddPair('value', LValorDesconto1)
+                                                                .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto))
+                                  );
     end;
     if ATitulo.DataDesconto2 > 0 then
     begin
-      LJsonObjectDesconto2 := TACBrJSONObject.Create;
-      LJsonObjectDesconto2.AddPair('type', LTipo1);
-      LJsonObjectDesconto2.AddPair('value', LValorDesconto2);
-      LJsonObjectDesconto2.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2));
-      AJson.AddPair('discountTwo', LJsonObjectDesconto2);
+      LJsonObjectDesconto.AddPair('discountTwo',
+                                           TACBrJSONObject.Create
+                                                          .AddPair('value', LValorDesconto2)
+                                                          .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2))
+                            );
     end;
 
     if ATitulo.DataDesconto3 > 0 then
     begin
-      LJsonObjectDesconto3 := TACBrJSONObject.Create;
-      LJsonObjectDesconto3.AddPair('type', LTipo3);
-      LJsonObjectDesconto3.AddPair('value', LValorDesconto3);
-      LJsonObjectDesconto3.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto3));
-      AJson.AddPair('discountThree', LJsonObjectDesconto3);
+      LJsonObjectDesconto.AddPair('discountThree',
+                                     TACBrJSONObject.Create
+                                                    .AddPair('value', LValorDesconto3)
+                                                    .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto3))
+                      );
+
     end;
+
+    AJson.AddPair('discount',LJsonObjectDesconto);
   end;
 end;
 
 procedure TBoletoW_Santander_API.GerarDesconto(AJson: TACBrJSONObject);
 var
-  LJsonObjectDesconto, LJsonObjectDesconto1, LJsonObjectDesconto2, LJsonObjectDesconto3: TACBrJSONObject;
-  LTipoDesconto: string;
+  LJsonObjectDesconto : TACBrJSONObject;
+  LValorDesconto1, LValorDesconto2, LValorDesconto3, LTipo1 : string;
 begin
-  if Assigned(AJson) then
+  if Assigned(ATitulo) and Assigned(AJson) then
   begin
-    case ATitulo.TipoDesconto of
-      tdNaoConcederDesconto:
-        LTipoDesconto := 'ISENTO';
-      tdValorFixoAteDataInformada:
-        LTipoDesconto := 'VALOR_DATA_FIXA';
-      tdValorAntecipacaoDiaCorrido:
-        LTipoDesconto := 'VALOR_DIA_CORRIDO';
-      tdValorAntecipacaoDiaUtil:
-        LTipoDesconto := 'VALOR_DIA_UTIL ';
-      else
-        raise Exception.Create('Modalidade de desconto não permitida');
-    end;
     LJsonObjectDesconto := TACBrJSONObject.Create;
-    LJsonObjectDesconto.AddPair('type', LTipoDesconto);
-    AJson.AddPair('discount', LJsonObjectDesconto);
-    {Desconto1}
-    if ATitulo.ValorDesconto > 0 then
-    begin
-      LJsonObjectDesconto1 := TACBrJSONObject.Create;
-      LJsonObjectDesconto1.AddPair('value', StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto), ',', '.', [rfReplaceAll]));
-      if ATitulo.DataDesconto > 0 then
-        LJsonObjectDesconto1.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto))
-      else
-        LJsonObjectDesconto1.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2));
 
-      AJson.AddPair('discountOne',LJsonObjectDesconto1);
+    if ATitulo.DataDesconto > 0 then
+    begin
+      case ATitulo.OcorrenciaOriginal.Tipo of
+        toRemessaCancelarDesconto,
+        toRemessaNaoConcederDesconto :
+          begin
+            LValorDesconto1:='0.00';
+            LValorDesconto2:='0.00';
+            LValorDesconto3:='0.00';
+            LTipo1 :=  'ISENTO';
+            //LTipo2 :=  'ISENTO';
+            //LTipo3 :=  'ISENTO';
+          end;
+        toRemessaConcederDesconto,
+        toRemessaAlterarDesconto :
+          begin
+           LValorDesconto1 := IfThen(ATitulo.TipoDesconto=tdNaoConcederDesconto,'0.00',
+                                     StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto), ',', '.', [rfReplaceAll]));
+           LValorDesconto2 := IfThen(ATitulo.TipoDesconto2=tdNaoConcederDesconto,'0.00',
+                                     StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto2), ',', '.', [rfReplaceAll]));
+           LValorDesconto3 := IfThen(ATitulo.TipoDesconto3=tdNaoConcederDesconto,'0.00',
+                                     StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto3), ',', '.', [rfReplaceAll]));
+           LTipo1 := retornaTipoDesconto(ATitulo.TipoDesconto);
+           //LTipo2 := retornaTipoDesconto(ATitulo.TipoDesconto2);
+           //LTipo3 := retornaTipoDesconto(ATitulo.TipoDesconto3);
+          end;
+      end;
+      LJsonObjectDesconto.AddPair('type',LTipo1);
+      LJsonObjectDesconto.AddPair('disconuntOne',
+                                                 TACBrJSONObject.Create
+                                                                .AddPair('value', LValorDesconto1)
+                                                                .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto))
+                                  );
+    end;
+    if ATitulo.DataDesconto2 > 0 then
+    begin
+      LJsonObjectDesconto.AddPair('discountTwo',
+                                           TACBrJSONObject.Create
+                                                          .AddPair('value', LValorDesconto2)
+                                                          .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2))
+                            );
     end;
 
-    {Desconto2}
-    if ATitulo.ValorDesconto2 > 0 then
+    if ATitulo.DataDesconto3 > 0 then
     begin
-      LJsonObjectDesconto2 := TACBrJSONObject.Create;
-      LJsonObjectDesconto2.AddPair('value', StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto2), ',', '.', [rfReplaceAll]));
-      LJsonObjectDesconto2.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2));
+      LJsonObjectDesconto.AddPair('discountThree',
+                                     TACBrJSONObject.Create
+                                                    .AddPair('value', LValorDesconto3)
+                                                    .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto3))
+                      );
 
-      AJson.AddPair('discountTwo', LJsonObjectDesconto2);
     end;
 
-    {Desconto3}
-    if ATitulo.ValorDesconto3 > 0 then
-    begin
-      LJsonObjectDesconto3 := TACBrJSONObject.Create;
-      LJsonObjectDesconto3.AddPair('value', StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto3), ',', '.', [rfReplaceAll]));
-      LJsonObjectDesconto3.AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto3));
-
-      AJson.AddPair('discountThree', LJsonObjectDesconto3);
-    end;
+    AJson.AddPair('discount',LJsonObjectDesconto);
   end;
 end;
 

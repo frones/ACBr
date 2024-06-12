@@ -116,14 +116,14 @@ begin
                   begin
                     LJSONObject := LJsonArray.ItemAsJSONObject[0];
 
-                    ARetornoWS.DadosRet.IDBoleto.CodBarras                     := LJSONObject.AsString['barcode'];
+                    ARetornoWS.DadosRet.IDBoleto.CodBarras                     := LJSONObject.AsString['barCode'];
                     ARetornoWS.DadosRet.IDBoleto.LinhaDig                      := LJSONObject.AsString['digitableLine'];
                     ARetornoWS.DadosRet.IDBoleto.NossoNum                      := LJSONObject.AsString['bankNumber'];
 
                     ARetornoWS.DadosRet.TituloRet.Vencimento                   := StringToDateTimeDef(LJSONObject.AsString['dueDate'], 0, 'yyyy-mm-dd');
                     ARetornoWS.DadosRet.TituloRet.NossoNumero                  := LJSONObject.AsString['bankNumber'];
                     ARetornoWS.DadosRet.TituloRet.SeuNumero                    := LJSONObject.AsString['clientNumber'];
-                    ARetornoWS.DadosRet.TituloRet.CodBarras                    := LJSONObject.AsString['barcode'];
+                    ARetornoWS.DadosRet.TituloRet.CodBarras                    := LJSONObject.AsString['barCode'];
                     ARetornoWS.DadosRet.TituloRet.LinhaDig                     := LJSONObject.AsString['digitableLine'];
                     ARetornoWS.DadosRet.TituloRet.DataProcessamento            := StringToDateTimeDef(LJSONObject.AsString['entryDate'], 0, 'yyyy-mm-dd');
                     ARetornoWS.DadosRet.TituloRet.DataDocumento                :=  StringToDateTimeDef(LJSONObject.AsString['issueDate'], 0, 'yyyy-mm-dd');
@@ -178,7 +178,7 @@ begin
                           ARetornoWS.DadosRet.TituloRet.ValorRecebido         := LJSONObject.AsFloat['amountReceived'];
                           ARetornoWS.DadosRet.TituloRet.ValorMoraJuros        := LJSONObject.AsFloat['interestPercentage'];
                           ARetornoWS.DadosRet.TituloRet.LinhaDig              := LJSONObject.AsString['digitableLine'];
-                          ARetornoWS.DadosRet.TituloRet.CodBarras             := LJSONObject.AsString['barcode'];
+                          ARetornoWS.DadosRet.TituloRet.CodBarras             := LJSONObject.AsString['barCode'];
 
                           // payerData
                           LJSONObject := LJsonArray.ItemAsJSONObject[0].AsJSONObject['payerData'];

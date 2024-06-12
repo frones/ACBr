@@ -173,6 +173,9 @@ begin
         ItemServico[i].BaseCalculo := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
         ItemServico[i].ValorIssRetido := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
 
+        if ItemServico[i].ValorTotal = 0 then
+          ItemServico[i].ValorTotal := ItemServico[i].Quantidade * ItemServico[i].ValorUnitario;
+
         ItemServico[i].ValorISS := ItemServico[i].BaseCalculo *
                                    ItemServico[i].Aliquota / 100;
 

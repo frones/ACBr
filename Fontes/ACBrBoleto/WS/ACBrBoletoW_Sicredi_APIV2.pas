@@ -285,6 +285,10 @@ begin
         LConsulta.Delimiter := '&';
         LConsulta.Add(Format('codigoBeneficiario=%s',[Boleto.Cedente.CodigoCedente]));
         LConsulta.Add(Format('dia=%s', [FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio, 'DD/MM/YYYY')]));
+
+        if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
+           LConsulta.Add('pagina='+FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade));
+
       finally
         Result := LConsulta.DelimitedText;
         LConsulta.Free;

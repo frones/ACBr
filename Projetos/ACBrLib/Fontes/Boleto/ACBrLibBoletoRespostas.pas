@@ -75,6 +75,10 @@ type
     FNumeroCorrespondente : Integer;
     FVersaoArquivo : Integer;
     FVersaoLote : Integer;
+    FNumeroArquivo: Integer;
+    FNomeArqRetorno: String;
+    FDensidadeGravacao: String;
+    FCIP: String;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -87,6 +91,10 @@ type
     property NumeroCorrespondente : Integer read FNumeroCorrespondente write FNumeroCorrespondente;
     property VersaoArquivo : Integer read FVersaoArquivo write FVersaoArquivo;
     property VersaoLote : Integer read FVersaoLote write FVersaoLote;
+    property NumeroArquivo: Integer read FNumeroArquivo write FNumeroArquivo;
+    property NomeArqRetorno: String read FNomeArqRetorno write FNomeArqRetorno;
+    property DensidadeGravacao: String read FDensidadeGravacao write FDensidadeGravacao;
+    property CIP: String read FCIP write FCIP;
 
   end;
 
@@ -985,9 +993,11 @@ begin
     NumeroCorrespondente := ACBrBoleto.Banco.NumeroCorrespondente;
     VersaoArquivo := ACBrBoleto.Banco.LayoutVersaoArquivo;
     VersaoLote := ACBrBoleto.Banco.LayoutVersaoLote;
-
+    NumeroArquivo := ACBrBoleto.NumeroArquivo;
+    NomeArqRetorno := ACBrBoleto.NomeArqRetorno;
+    DensidadeGravacao := ACBrBoleto.Banco.DensidadeGravacao;
+    CIP := ACBrBoleto.Banco.CIP;
   end;
-
 end;
 
 { TRetornoDadosCedente }

@@ -4297,6 +4297,8 @@ begin
        IniRetorno.WriteInteger(CBanco,'VersaoArquivo',Banco.LayoutVersaoArquivo);
        IniRetorno.WriteInteger(CBanco,'VersaoLote',Banco.LayoutVersaoLote);
        IniRetorno.WriteString(CBanco,'OrientacoesBanco',StringReplace( Banco.OrientacoesBanco.Text, sLineBreak, '|', [rfReplaceAll] ));
+       IniRetorno.WriteInteger(CBanco,'NumeroArquivo',NumeroArquivo);
+       IniRetorno.WriteString(CBanco,'NomeArqRetorno',NomeArqRetorno);
 
        IniRetorno.WriteString(CBanco,'LocalPagamento',Banco.LocalPagamento);
        IniRetorno.WriteInteger(CBanco,'CasasDecimaisMoraJuros',Banco.CasasDecimaisMoraJuros);

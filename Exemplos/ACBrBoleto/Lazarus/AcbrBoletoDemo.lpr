@@ -1,7 +1,5 @@
 program AcbrBoletoDemo;
 
-{$MODE Delphi}
-
 uses
   Forms, Interfaces,
   uDemoBoleto in 'uDemoBoleto.pas' {frmDemoBoleto};

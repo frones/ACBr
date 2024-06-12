@@ -30,8 +30,6 @@
 
 unit uDemoBoleto;
 
-{$MODE Delphi}
-
 interface
 
 //descomentar o motor de relatório que desejar utilizar! removendo o ponto

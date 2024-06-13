@@ -134,7 +134,12 @@ begin
         end;
 
         case LTipoOperacao of
-          tpBaixa,
+          tpBaixa :
+            begin
+              ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := LJsonObject.AsString['statusComando'];
+              ARetornoWS.DadosRet.IDBoleto.IDBoleto                    := LJsonObject.AsString['transactionId'];
+              ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca       := LJsonObject.AsString['tipoMensagem'];
+            end;
           tpAltera,
           tpConsultaDetalhe :
             begin
@@ -143,6 +148,10 @@ begin
               ARetornoWS.DadosRet.TituloRet.Carteira       := LJsonObject.AsString['carteira'];
               ARetornoWS.DadosRet.TituloRet.SeuNumero      := LJsonObject.AsString['seuNumero'];
               ARetornoWS.DadosRet.TituloRet.NossoNumero    := LJsonObject.AsString['nossoNumero'];
+              ARetornoWS.DadosRet.IDBoleto.CodBarras       := ARetornoWS.DadosRet.TituloRet.CodBarras;
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig        := ARetornoWS.DadosRet.TituloRet.LinhaDig;
+              ARetornoWS.DadosRet.IDBoleto.NossoNum        := ARetornoWS.DadosRet.TituloRet.NossoNumero;
+
               //Pagador
               //ARetornoWS.DadosRet.TituloRet.Sacado.codigo         := LJsonObject.AsJSONObject['pagador'].AsString['codigo'];
               ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado      := LJsonObject.AsJSONObject['pagador'].AsString['nome'];

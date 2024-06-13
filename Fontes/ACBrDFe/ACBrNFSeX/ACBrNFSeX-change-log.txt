@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ACBrNFSeXServicos --
 [*] A cidade de Carmo do Rio Claro/MG, trocou de provedor, agora é: Fiorilli.
   Por: João Antônio
+-- SigISSWeb.LerXml --
+[*] Provedor SigISSWeb - Preencher a NaturezaOperacao com base no IssRetido ao ler o xml da NFSe.
+  Por: Renato Rubinho
 
 11/06/2024
 -- ACBrNFSeXNotasFiscais --

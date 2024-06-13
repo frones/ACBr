@@ -195,6 +195,11 @@ begin
     else
       NFSe.Servico.Valores.IssRetido := stNormal;
 
+    if NFSe.Servico.Valores.IssRetido in [stRetidoForaMunicipio, stDevidoForaMunicipioNaoRetido] then
+      NFSe.NaturezaOperacao := no2
+    else
+      NFSe.NaturezaOperacao := no1;
+
     Servico.Valores.Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('aliq_iss'), tcDe2);
     Servico.Valores.ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('valor_iss'), tcDe2);
 

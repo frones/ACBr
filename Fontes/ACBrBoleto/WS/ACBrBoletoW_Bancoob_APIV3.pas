@@ -430,11 +430,7 @@ begin
   LJsonDadosPagador.AddPair('cep',OnlyNumber(aTitulo.Sacado.CEP));
   LJsonDadosPagador.AddPair('uf',aTitulo.Sacado.UF);
   if NaoEstaVazio(ATitulo.Sacado.Email) then
-  begin
-    LJsonArrayEmail := TACBrJSONArray.Create;
-    LJsonArrayEmail.AddElement(ATitulo.Sacado.Email);
-    LJsonDadosPagador.AddPair('email', LJsonArrayEmail);
-  end;
+    LJsonDadosPagador.AddPair('email',ATitulo.Sacado.Email);
   AJson.AddPair('pagador', LJsonDadosPagador);
 end;
 

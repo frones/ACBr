@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2024
+-- ACBrBoletoW_Bancoob_APIV3 --
+[-]TK-5506 - Ajuste no envio do email do pagador na inclusao do titulo.
+   Por Daniel Morais InfoCotidiano 
+
 10/06/2024
 -- ACBrBoletoWS, ACBrBoletoRet_Bancoob_APIV3, ACBrBoletoW_Bancoob_APIV3 --
 [+]TK-5506 - Nova API V3 Sicoob.

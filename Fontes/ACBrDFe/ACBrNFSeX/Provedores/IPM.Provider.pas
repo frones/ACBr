@@ -71,7 +71,8 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     function GerarXMLNota(const AXmlRps: String; const Response: TNFSeWebserviceResponse): String;
-    procedure MontarXMLNFSe(const ANode: TACBrXmlNode; const Response: TNFSeWebserviceResponse);
+    procedure MontarXMLNFSe(const ANode: TACBrXmlNode;
+      const Response: TNFSeWebserviceResponse; AResumo: TNFSeResumoCollectionItem);
 
     function PrepararRpsParaLote(const aXml: string): string; override;
 
@@ -295,7 +296,8 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderIPM.MontarXMLNFSe(const ANode: TACBrXmlNode; const Response: TNFSeWebserviceResponse);
+procedure TACBrNFSeProviderIPM.MontarXMLNFSe(const ANode: TACBrXmlNode;
+  const Response: TNFSeWebserviceResponse; AResumo: TNFSeResumoCollectionItem);
 var
   AuxNode: TACBrXmlNode;
   NumRps, LXmlNota: String;
@@ -321,6 +323,8 @@ begin
       begin
         ANota.XmlNfse := LXmlNota;
         SalvarXmlNfse(ANota);
+
+        AResumo.NomeArq := ANota.NomeArq;
       end;
     end;
   end;
@@ -575,8 +579,7 @@ begin
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
 
-        MontarXMLNFSe(ANode, Response);
-
+        MontarXMLNFSe(ANode, Response, AResumo);
       end;
     except
       on E:Exception do
@@ -723,7 +726,7 @@ begin
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
 
-        MontarXMLNFSe(ANode, Response);
+        MontarXMLNFSe(ANode, Response, AResumo);
       end;
     except
       on E:Exception do
@@ -898,8 +901,7 @@ begin
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
 
-        MontarXMLNFSe(ANode, Response);
-
+        MontarXMLNFSe(ANode, Response, AResumo);
       end;
     except
       on E:Exception do
@@ -1093,8 +1095,7 @@ begin
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
 
-        MontarXMLNFSe(ANode, Response);
-
+        MontarXMLNFSe(ANode, Response, AResumo);
       end;
     except
       on E:Exception do
@@ -1354,8 +1355,7 @@ begin
         AResumo.Situacao := Response.Situacao;
         AResumo.DescSituacao := Response.DescSituacao;
 
-        MontarXMLNFSe(ANode, Response);
-
+        MontarXMLNFSe(ANode, Response, AResumo);
       end;
     except
       on E:Exception do

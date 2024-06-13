@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Carmo do Rio Claro/MG, trocou de provedor, agora é: Fiorilli.
+  Por: João Antônio
+
 11/06/2024
 -- ACBrNFSeXNotasFiscais --
 [+] Incluído na leitura da seção [IdendificacaoNFSe] os campos utilizados pelo

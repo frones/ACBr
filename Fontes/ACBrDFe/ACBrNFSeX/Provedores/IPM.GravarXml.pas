@@ -460,7 +460,7 @@ begin
                                   NFSe.Tomador.Endereco.Complemento, DSC_XCPL));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'ponto_referencia', 1, 100, FpNrOcorrTagsTomador,
-                                                                       '', ''));
+                                    NFSe.Tomador.Endereco.PontoReferencia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'bairro', 1, 30, FpNrOcorrTagsTomador,
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));

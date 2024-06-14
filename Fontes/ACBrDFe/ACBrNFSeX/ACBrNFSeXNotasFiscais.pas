@@ -455,12 +455,14 @@ begin
         Tomador.IdentificacaoTomador.CAEPF := INIRec.ReadString(sSecao, 'CAEPF', '');
 
         Tomador.RazaoSocial := INIRec.ReadString(sSecao, 'RazaoSocial', '');
+        Tomador.NomeFantasia := INIRec.ReadString(sSecao, 'NomeFantasia', '');
 
         Tomador.Endereco.EnderecoInformado := FProvider.StrToSimNaoOpc(Ok, INIRec.ReadString(sSecao, 'EnderecoInformado', ''));
         Tomador.Endereco.TipoLogradouro := INIRec.ReadString(sSecao, 'TipoLogradouro', '');
         Tomador.Endereco.Endereco := INIRec.ReadString(sSecao, 'Logradouro', '');
         Tomador.Endereco.Numero := INIRec.ReadString(sSecao, 'Numero', '');
         Tomador.Endereco.Complemento := INIRec.ReadString(sSecao, 'Complemento', '');
+        Tomador.Endereco.PontoReferencia := INIRec.ReadString(sSecao, 'PontoReferencia', '');
         Tomador.Endereco.Bairro := INIRec.ReadString(sSecao, 'Bairro', '');
         Tomador.Endereco.CodigoMunicipio := INIRec.ReadString(sSecao, 'CodigoMunicipio', '');
         Tomador.Endereco.xMunicipio := INIRec.ReadString(sSecao, 'xMunicipio', '');
@@ -470,6 +472,7 @@ begin
         // Provedor Equiplano é obrigatório o pais e IE
         Tomador.Endereco.xPais := INIRec.ReadString(sSecao, 'xPais', '');
 
+        Tomador.Contato.DDD := INIRec.ReadString(sSecao, 'DDD', '');
         Tomador.Contato.Telefone := INIRec.ReadString(sSecao, 'Telefone', '');
         Tomador.Contato.Email := INIRec.ReadString(sSecao, 'Email', '');
 

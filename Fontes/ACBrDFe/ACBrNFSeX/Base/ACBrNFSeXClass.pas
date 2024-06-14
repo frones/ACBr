@@ -183,6 +183,7 @@ type
     FxMunicipio: string;
     FCodigoPais: Integer;
     FxPais: string;
+    FPontoReferencia: string;
   public
     property EnderecoInformado: TnfseSimNaoOpc read FEnderecoInformado write FEnderecoInformado;
     property TipoLogradouro: string read FTipoLogradouro write FTipoLogradouro;
@@ -197,6 +198,7 @@ type
     property xMunicipio: string read FxMunicipio write FxMunicipio;
     property CodigoPais: Integer read FCodigoPais write FCodigoPais;
     property xPais: string read FxPais write FxPais;
+    property PontoReferencia: string read FPontoReferencia write FPontoReferencia;
   end;
 
   TInfoPessoa = class(TObject)

@@ -348,6 +348,7 @@ begin
       Endereco.Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
       Endereco.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero_residencia'), tcStr);
       Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
+      Endereco.PontoReferencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('ponto_referencia'), tcStr);
       Endereco.Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
 
       IdentificacaoTomador.CpfCnpj := OnlyNumber(ObterConteudo(AuxNode.Childrens.FindAnyNs('cpfcnpj'), tcStr));
@@ -387,11 +388,8 @@ begin
         IdentificacaoTomador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
       end;
 
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('ddd_fone_comercial'), tcStr);
-      aValor := aValor +
-                ObterConteudo(AuxNode.Childrens.FindAnyNs('fone_comercial'), tcStr);
-
-      Contato.Telefone := aValor;
+      Contato.DDD := ObterConteudo(AuxNode.Childrens.FindAnyNs('ddd_fone_comercial'), tcStr);
+      Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone_comercial'), tcStr);
       Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
     end;
   end;

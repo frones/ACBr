@@ -3541,7 +3541,7 @@ begin
     mcsCreating: Result := 'CREATING';
     mcsError: Result := 'ERROR';
     mcsApproved: Result := 'APPROVED';
-    mcsRegular: Result := 'REJECTED';
+    mcsRejected: Result := 'REJECTED';
   else
     Result := EmptyStr;
   end;

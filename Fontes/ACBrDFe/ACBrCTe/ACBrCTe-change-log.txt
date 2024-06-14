@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2024
+-- ACBrCTe.XmlHandler --
+[+] Nova Unit de Leitura do XML do conhecimento.
+-- ACBrCTe.ConsSit/ACBrCTe.EnvEvento/ACBrCTe.EventoClass --
+-- ACBrCTe.RetConsSit/ACBrCTe.RetEnvEvento --
+[+] Novas Units de Leitura e Escrita do XML de diversos serviços.
+    Observação: essas Units estão em fase de testes.
+  Por: Italo Giurizzato Junior
+
 15/05/2024
 -- pcteCTeR --
 [-] Correção para leitura correta do grupo obsFisco

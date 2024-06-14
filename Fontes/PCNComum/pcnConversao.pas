@@ -105,7 +105,7 @@ type
                    cof73, cof74, cof75, cof98, cof99);
   TpcnIndicadorProcesso = (ipSEFAZ, ipJusticaFederal, ipJusticaEstadual,
                            ipSecexRFB, ipCONFAZ, ipOutros);
-  TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
+  TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal, crtMEI);
   TpcnIndicadorTotal = (itSomaTotalNFe, itNaoSomaTotalNFe );
 
   TpcnECFModRef = (ECFModRefVazio, ECFModRef2B,ECFModRef2C,ECFModRef2D);
@@ -1060,12 +1060,16 @@ end;
 // 49a - Código do Regime Tributário **************************************
 function CRTToStr(const t: TpcnCRT): string;
 begin
-  result := EnumeradoToStr(t, ['','1', '2', '3'], [crtRegimeNormal,crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal]);
+  result := EnumeradoToStr(t, ['','1', '2', '3', '4'],
+    [crtRegimeNormal, crtSimplesNacional, crtSimplesExcessoReceita,
+     crtRegimeNormal, crtMEI]);
 end;
 
 function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
 begin
-  result := StrToEnumerado(ok, s, ['','1', '2', '3'],[crtRegimeNormal,crtSimplesNacional,crtSimplesExcessoReceita, crtRegimeNormal]);
+  result := StrToEnumerado(ok, s, ['','1', '2', '3', '4'],
+    [crtRegimeNormal, crtSimplesNacional, crtSimplesExcessoReceita,
+     crtRegimeNormal, crtMEI]);
 end;
 
 function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;

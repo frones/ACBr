@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2024
+--- ACBrSchemasMatera --
+[*] Incluído novo status da conta: REJECTED
+    por: Elias César
+
 06/06/2024
 -- ACBrPIXCD --
 [*] Adicionada rotinas de redirecionamento de URL no método:

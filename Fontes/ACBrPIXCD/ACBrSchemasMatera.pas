@@ -88,7 +88,8 @@ type
     mcsReserved,
     mcsCreating,
     mcsError,
-    mcsApproved
+    mcsApproved,
+    mcsRejected
   );
 
   TMateraActiveStatus = (
@@ -439,8 +440,8 @@ type
   protected
     function NewSchema: TACBrPIXSchema; override;
   public
-    Function Add(aItem: TMateraDocument): Integer;
-    Procedure Insert(aIndex: Integer; AItem: TMateraDocument);
+    function Add(aItem: TMateraDocument): Integer;
+    procedure Insert(aIndex: Integer; AItem: TMateraDocument);
     function New: TMateraDocument;
     property Items[aIndex: Integer]: TMateraDocument read GetItem write SetItem; default;
   end;
@@ -523,8 +524,8 @@ type
   protected
     function NewSchema: TACBrPIXSchema; override;
   public
-    Function Add(aItem: TMateraClientRepresentative): Integer;
-    Procedure Insert(aIndex: Integer; aItem: TMateraClientRepresentative);
+    function Add(aItem: TMateraClientRepresentative): Integer;
+    procedure Insert(aIndex: Integer; aItem: TMateraClientRepresentative);
     function New: TMateraClientRepresentative;
     property Items[aIndex: Integer]: TMateraClientRepresentative read GetItem write SetItem; default;
   end;
@@ -3540,6 +3541,7 @@ begin
     mcsCreating: Result := 'CREATING';
     mcsError: Result := 'ERROR';
     mcsApproved: Result := 'APPROVED';
+    mcsRegular: Result := 'REJECTED';
   else
     Result := EmptyStr;
   end;
@@ -3565,6 +3567,8 @@ begin
     Result := mcsError
   else if (s = 'APPROVED') then
     Result := mcsApproved
+  else if (s = 'REJECTED') then
+    Result := mcsRejected
   else
     Result := mcsNone;
 end;
@@ -4128,7 +4132,7 @@ end;
 procedure TMaterastatementEntry.AssignSchema(aSource: TACBrPIXSchema);
 begin
   if (ASource is TMaterastatementEntry) then
-      Assign(TMaterastatementEntry(ASource));
+    Assign(TMaterastatementEntry(ASource));
 end;
 
 procedure TMaterastatementEntry.DoWriteToJSon(aJSon: TACBrJSONObject);

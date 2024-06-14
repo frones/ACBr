@@ -45,6 +45,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/06/2024
+-- ACBrNFeWebServices --
+[*] Ajustes na classe TAdministrarCSCNFCe, inclusão da procedure InicializarServico.
+-- ACBrNFe.XmlWriter/ACBrNFeXmlWriter/pcnNFeW --
+[*] Substituida a unit pcnRetEnvEventoNFe pela nova ACBrNFe.RetEnvEvento.
+    Para o CSOSN 102, 103, 300, 400 e 900 a tag orig passa a ser opcional.
+   Por: Italo Giurizzato Junior
+
 11/06/2024
 -- ACBrNFeWebServices --
 [*] Substituida a unit pcnRetEnvEventoNFe pela nova ACBrNFe.RetEnvEvento.

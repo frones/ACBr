@@ -1991,8 +1991,15 @@ begin
               //Grupo do Simples Nacional
               sTagTemp  := CSOSNTOStrTagPos(NFe.Det[i].Imposto.ICMS.CSOSN);
               Gerador.wGrupo('ICMSSN' + sTagTemp, 'N' + CSOSNToStrID(NFe.Det[i].Imposto.ICMS.CSOSN));
-              Gerador.wCampo(tcStr, 'N11' , 'orig ', 01, 01, 1, OrigTOStr(NFe.Det[i].Imposto.ICMS.orig), DSC_ORIG);
+
+              if NFe.Det[i].Imposto.ICMS.CSOSN in [csosn102, csosn103, csosn300,
+                                                   csosn400, csosn900] then
+                Gerador.wCampo(tcStr, 'N11' , 'orig ', 01, 01, 0, OrigTOStr(NFe.Det[i].Imposto.ICMS.orig), DSC_ORIG)
+              else
+                Gerador.wCampo(tcStr, 'N11' , 'orig ', 01, 01, 1, OrigTOStr(NFe.Det[i].Imposto.ICMS.orig), DSC_ORIG);
+
               Gerador.wCampo(tcStr, 'N12a', 'CSOSN', 03, 03, 1, CSOSNIcmsToStr(NFe.Det[i].Imposto.ICMS.CSOSN), DSC_CSOSN);
+
               case  NFe.Det[i].Imposto.ICMS.CSOSN of
                  csosn101 :
                     begin

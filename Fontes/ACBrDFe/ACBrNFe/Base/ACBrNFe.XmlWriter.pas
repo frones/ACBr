@@ -2459,10 +2459,18 @@ begin
         //Grupo do Simples Nacional
         sTagTemp := CSOSNTOStrTagPos(NFe.Det[i].Imposto.ICMS.CSOSN);
         xmlNode := Result.AddChild('ICMSSN' + sTagTemp);
-        xmlNode.AppendChild(AddNode(tcStr, 'N11', 'orig', 01, 01,
-          1, OrigTOStr(NFe.Det[i].Imposto.ICMS.orig), DSC_ORIG));
+
+        if NFe.Det[i].Imposto.ICMS.CSOSN in [csosn102, csosn103, csosn300,
+                                                       csosn400, csosn900] then
+          xmlNode.AppendChild(AddNode(tcStr, 'N11', 'orig', 01, 01, 0,
+                             OrigTOStr(NFe.Det[i].Imposto.ICMS.orig), DSC_ORIG))
+        else
+          xmlNode.AppendChild(AddNode(tcStr, 'N11', 'orig', 01, 01, 1,
+                            OrigTOStr(NFe.Det[i].Imposto.ICMS.orig), DSC_ORIG));
+
         xmlNode.AppendChild(AddNode(tcStr, 'N12a', 'CSOSN', 03, 03, 1,
-          CSOSNIcmsToStr(NFe.Det[i].Imposto.ICMS.CSOSN), DSC_CSOSN));
+                     CSOSNIcmsToStr(NFe.Det[i].Imposto.ICMS.CSOSN), DSC_CSOSN));
+
         case NFe.Det[i].Imposto.ICMS.CSOSN of
           csosn101:
           begin

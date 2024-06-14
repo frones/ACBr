@@ -494,6 +494,7 @@ type
 
     FretAdmCSCNFCe: TRetAdmCSCNFCe;
   protected
+    procedure InicializarServico; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -2703,8 +2704,6 @@ var
 begin
   InutNFe := TinutNFe.Create;
   try
-//    AjustarOpcoes( InutNFe.Gerador.Opcoes );
-
     InutNFe.tpAmb  := FPConfiguracoesNFe.WebServices.Ambiente;
     InutNFe.cUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
     InutNFe.ano    := FAno;
@@ -2716,7 +2715,7 @@ begin
     InutNFe.xJust  := FJustificativa;
     InutNFe.Versao := FPVersaoServico;
 
-    AssinarXML( NativeStringToUTF8( InutNFe.GerarXML ),
+    AssinarXML(NativeStringToUTF8( InutNFe.GerarXML ),
                 'inutNFe', 'infInut',
                 'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
 
@@ -3639,8 +3638,7 @@ end;
 
 function TAdministrarCSCNFCe.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['cscNFCeResult',
-                               'nfeResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['admCscNFCeResult'], FPRetornoWS);
 
   VerificarSemResposta;
 
@@ -3649,6 +3647,16 @@ begin
 
   FPMsg := FretAdmCSCNFCe.xMotivo;
 
+  {
+    150 = devolução dos CSC ativos caso o indicador da operação
+          seja de consulta (indOp=1)
+    151 = não há CSC ativo caso o indicador da operação
+          seja consulta (indOp=1)
+    152 = a requisição retornará um novo CSC caso o indicador da operação
+          seja requisição (indOp=2)
+    153 = a requisição retornará que o CSC foi revogado caso o indicador da
+          operação seja revogação (indOp=3)
+  }
   Result := (FretAdmCSCNFCe.CStat in [150..153]);
 end;
 
@@ -3662,6 +3670,13 @@ begin
                    [FretAdmCSCNFCe.versao, TpAmbToStr(FretAdmCSCNFCe.tpAmb),
                     IntToStr(FretAdmCSCNFCe.cStat), FretAdmCSCNFCe.xMotivo]);
   {*)}
+end;
+
+procedure TAdministrarCSCNFCe.InicializarServico;
+begin
+  inherited InicializarServico;
+
+  FPHeaderElement := 'nfeCabecMsg';
 end;
 
 function TAdministrarCSCNFCe.GerarMsgErro(E: Exception): String;

@@ -192,8 +192,8 @@ begin
             ARetornoWS.DadosRet.TituloRet.Vencimento      := DateInterToDateTime(LJsonObject.AsString['dataVencimento']);
             ARetornoWS.DadosRet.TituloRet.ValorDocumento  := LJsonObject.AsCurrency['valorNominal'];
             ARetornoWS.DadosRet.TituloRet.ValorAtual      := LJsonObject.AsCurrency['valorNominal'];
-            ARetornoWS.DadosRet.TituloRet.ValorPago       := LJsonObject.AsCurrency['valorTotalRecebimento'];
-            ARetornoWS.DadosRet.TituloRet.ValorRecebido   := LJsonObject.AsCurrency['valorTotalRecebimento'];
+            ARetornoWS.DadosRet.TituloRet.ValorPago       := LJsonObject.AsCurrency['valorTotalRecebido'];
+            ARetornoWS.DadosRet.TituloRet.ValorRecebido   := LJsonObject.AsCurrency['valorTotalRecebido'];
 
             ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;

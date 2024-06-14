@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+14/06/2024
+-- ACBrBoletoRet_Inter_API --
+[-]TK-5586 - Ajuste nas propriedades de retorno do campo valor recebido que é diferente V2 vs V3 (com pix)
+   https://www.projetoacbr.com.br/forum/topic/78219-valor-total-recebido-n%C3%A3o-esta-carregando-nas-propriedades-do-componente
+   Por Daniel Morais InfoCotidiano 
+
 13/06/2024
 -- ACBrBoletoW_Bancoob_APIV3 --
 [-]TK-5506 - Ajuste no envio do email do pagador na inclusao do titulo.

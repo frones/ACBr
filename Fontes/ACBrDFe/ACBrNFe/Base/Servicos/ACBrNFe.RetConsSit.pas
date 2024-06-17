@@ -174,6 +174,7 @@ begin
 
   try
     try
+      Result := False;
       if XmlRetorno = '' then Exit;
 
       Document.LoadFromXml(XmlRetorno);
@@ -267,7 +268,7 @@ begin
         end;
       end;
 
-      Result := True;
+//      Result := True;
     except
       Result := False;
     end;

@@ -116,6 +116,8 @@ begin
 
   try
     try
+      Result := False;
+
       if XmlRetorno = '' then Exit;
 
       Document.LoadFromXml(XmlRetorno);

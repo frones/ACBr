@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/06/2024
+-- ACBrNFe.EnvEvento.pas/ACBrNFe.RetAdmCSC.pas/ACBrNFe.RetConsSit.pas/
+   ACBrNFe.RetEnvEvento.pas/ACBrNFe.RetInut.pas --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+
 14/06/2024
 -- ACBrNFeWebServices --
 [*] Ajustes na classe TAdministrarCSCNFCe, inclusão da procedure InicializarServico.

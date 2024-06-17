@@ -143,7 +143,8 @@ implementation
 uses
   synautil, ACBrNFe,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
-  ACBrNFeNotasFiscais, pcnEnvEventoNFe,
+  ACBrNFeNotasFiscais,
+  ACBrNFe.EnvEvento,
   ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
   ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado,

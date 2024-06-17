@@ -43,7 +43,7 @@ uses
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
   pcnNFe, pcnConversao, pcnConversaoNFe,
-  pcnEnvEventoNFe,
+  ACBrNFe.EnvEvento,
   ACBrNFe.Inut,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
@@ -624,11 +624,11 @@ end;
 
 function TACBrNFe.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoNFe.Gerador.ArquivoFormatoXML) then
+//  if EstaVazio(FEventoNFe.Gerador.ArquivoFormatoXML) then
     FEventoNFe.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoNFe.Gerador.ArquivoFormatoXML));
+  WriteStrToStream(AStream, AnsiString(FEventoNFe.XmlEnvio));
   Result := True;
 end;
 

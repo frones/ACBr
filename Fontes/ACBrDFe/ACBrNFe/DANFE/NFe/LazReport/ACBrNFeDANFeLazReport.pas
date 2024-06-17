@@ -56,7 +56,7 @@ uses
   pcnNFe, 
   pcnConversao, 
   pcnConversaoNFe, 
-  pcnEnvEventoNFe, 
+  ACBrNFe.EnvEvento,
   ACBrNFe.RetInut,
   ACBrNFe, 
   ACBrNFeDANFEClass, 

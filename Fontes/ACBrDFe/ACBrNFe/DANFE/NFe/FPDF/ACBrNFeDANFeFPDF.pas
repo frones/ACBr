@@ -51,7 +51,7 @@ uses
   pcnConversao,
   pcnConversaoNFe,
   pcnEventoNFe,
-  pcnEnvEventoNFe,
+  ACBrNFe.EnvEvento,
   pcnRetDistDFeInt,
   ACBrValidador,
   ACBrUtil.DateTime,

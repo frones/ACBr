@@ -46,7 +46,8 @@ uses
   {$ELSE}
   Controls, Forms, ExtCtrls,
   {$ENDIF}
-  pcnEnvEventoNFe, pcnNFe,
+  ACBrNFe.EnvEvento,
+  pcnNFe,
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
   RLReport, RLPDFFilter, RLFilters;
 

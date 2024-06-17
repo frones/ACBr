@@ -50,7 +50,8 @@ uses
   ACBrNFe.RetAdmCSC,
   ACBrNFe.RetConsSit,
   pcnNFeConsts,
-  pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe,
+  pcnConversaoNFe, pcnProcNFe,
+  ACBrNFe.EnvEvento,
   ACBrNFe.RetEnvEvento,
   pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNFe,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes;
@@ -3347,17 +3348,18 @@ begin
     {*)}
 
     EventoNFe.Versao := FPVersaoServico;
+{
     AjustarOpcoes( EventoNFe.Gerador.Opcoes );
 
     if SchemaEventoNFe = schAtorInteressadoNFe then
       EventoNFe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
-
+}
     EventoNFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
-    I := Pos('<evento ', EventoNFe.Gerador.ArquivoFormatoXML);
-    Lote := Copy(EventoNFe.Gerador.ArquivoFormatoXML, 1, I - 1);
-    Eventos := SeparaDados(EventoNFe.Gerador.ArquivoFormatoXML, 'envEvento');
+    I := Pos('<evento ', EventoNFe.XmlEnvio);
+    Lote := Copy(EventoNFe.XmlEnvio, 1, I - 1);
+    Eventos := SeparaDados(EventoNFe.XmlEnvio, 'envEvento');
     I := Pos('<evento ', Eventos);
     Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 
@@ -3406,7 +3408,7 @@ begin
     end;
 
     // Realiza a validação de cada evento
-    Eventos := SeparaDados(EventoNFe.Gerador.ArquivoFormatoXML, 'envEvento');
+    Eventos := SeparaDados(EventoNFe.XmlEnvio, 'envEvento');
     I := Pos('<evento ', Eventos);
     Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 

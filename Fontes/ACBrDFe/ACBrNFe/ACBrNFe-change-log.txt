@@ -46,6 +46,12 @@ Símbolo : Significado
 
 
 17/06/2024
+-- Diversos --
+[*] Alteração nos fontes para passar a utilizar as novas units: ACBrNFe.EnvEvento
+    e ACBrNFe.RetEnvEvento responsávels por gerar o pedido de Evento e a leitura
+    do retorno da SEFAZ no que se refere ao evento enviado.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFe.EnvEvento.pas/ACBrNFe.RetAdmCSC.pas/ACBrNFe.RetConsSit.pas/
    ACBrNFe.RetEnvEvento.pas/ACBrNFe.RetInut.pas --
 [*] Remoção de Warnings e Hints.

@@ -40,7 +40,8 @@ interface
 
 uses
   SysUtils, Classes, Forms, DB, DBClient, Graphics,
-  pcnEnvEventoNFe, ACBrNFe.RetInut, pcnNFe, pcnConversao,
+  ACBrNFe.EnvEvento,
+  ACBrNFe.RetInut, pcnNFe, pcnConversao,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
   frxClass, frxExportPDF, frxDBSet, frxBarcode;
 

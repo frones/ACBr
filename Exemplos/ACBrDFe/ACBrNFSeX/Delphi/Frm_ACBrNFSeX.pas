@@ -1100,15 +1100,14 @@ begin
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE E TESTE';
 
       // O campo EnderecoInformado é utilizado pelo provedor IPM
-      // A tag <endereco_informado> é opcional, caso não deseje que ela seja
-      // gerada devemos informar uma string vazia, ou S = Sim ou N = Não
-      Tomador.Endereco.EnderecoInformado := 'S';
+      // Devemos informar: snoSim Sim ou snoNao = Não ou snoNenhum para não gerar a tag
+      Tomador.Endereco.EnderecoInformado := snoSim;
       Tomador.Endereco.TipoLogradouro := 'RUA';
       Tomador.Endereco.Endereco := 'RUA PRINCIPAL';
       Tomador.Endereco.Numero := '100';
       Tomador.Endereco.Complemento := 'APTO 11';
       Tomador.Endereco.TipoBairro := 'BAIRRO';
-      Tomador.Endereco.Bairro := 'CENTRO - tamanho maior que o permitido para o nome do bairro da cidade';
+      Tomador.Endereco.Bairro := 'CENTRO';
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
       Tomador.Endereco.xMunicipio := 'Cidade do Tomador';
       Tomador.Endereco.UF := edtEmitUF.Text;
@@ -1292,7 +1291,7 @@ begin
 
       // Provedores que permitem informar mais de 1 serviço:
       if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEloTech, profintelISS,
-          proSimplISS] then
+          proSimplISS, proSystemPro] then
       begin
         // Provedor Elotech
         Servico.Valores.RetidoPis := snNao;
@@ -4545,6 +4544,7 @@ begin
 
             ListaDeErros(Erros);
             ListaDeAlertas(Alertas);
+            ListaDeResumos(Resumos, tmRecepcionarSincrono);
           end;
         end;
 

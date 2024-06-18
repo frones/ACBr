@@ -2004,15 +2004,26 @@ begin
         slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
+{
         if ( ArqEvento = '' ) then
         begin
           tipoEvento := ACBrBPe.EventoBPe.Evento[0].Infevento.tpEvento;
           ArqEvento  := ACBrBPe.EventoBPe.ObterNomeArquivo(tipoEvento);
           ArqEvento  := PathWithDelim(ACBrBPe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
-          //ACBrBPe.EventoBPe.Gerador.SalvarArquivo(ArqEvento);
           WriteToTxt(ArqEvento, ACBrBPe.EventoBPe.Evento[0].RetInfEvento.XML, False, False);
         end;
         slAnexos.Add(ArqEvento);
+}
+        if  StringIsXML( APathXMLEvento ) then
+        begin
+          tipoEvento := ACBrBPe.EventoBPe.Evento[0].InfEvento.tpEvento;
+          ArqEvento  := ACBrBPe.EventoBPe.ObterNomeArquivo(tipoEvento);
+          ArqEvento  := PathWithDelim(ACBrBPe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
+          WriteToTxt(ArqEvento, ACBrBPe.EventoBPe.Evento[0].RetInfEvento.XML, False, False);
+          slAnexos.Add(ArqEvento)
+        end
+        else
+          slAnexos.Add(APathXMLEvento);
 
         if AEnviaPDF then
           slAnexos.Add(ArqPDF);

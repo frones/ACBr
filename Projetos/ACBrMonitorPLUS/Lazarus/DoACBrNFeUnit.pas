@@ -444,20 +444,6 @@ uses
   pcnConversao, pcnConversaoNFe,
   pcnAuxiliar, pcnNFeRTXT, pcnNFe, DoACBrUnit, ACBrDFeSSL;
 
-
-procedure SalvaStringEmArquivo(const StringdoArquivo, CaminhoArquivo: string);
-var
-  ArquivoGerado : TStringList;
-begin
-  ArquivoGerado := TStringList.Create;
-  try
-    ArquivoGerado.Add(StringdoArquivo);
-    ArquivoGerado.SaveToFile(CaminhoArquivo);
-  finally
-    ArquivoGerado.Free;
-  end;
-end;
-
 { TACBrObjetoNFe }
 
 constructor TACBrObjetoNFe.Create(AConfig: TMonitorConfig; ACBrNFe: TACBrNFe);
@@ -2924,7 +2910,7 @@ begin
           tipoEvento := ACBrNFe.EventoNFe.Evento[0].InfEvento.tpEvento;
           ArqEvento  := ACBrNFe.EventoNFe.ObterNomeArquivo(tipoEvento);
           ArqEvento  := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
-          SalvaStringEmArquivo(APathXMLEvento, ArqEvento);
+          WriteToTxt(ArqEvento, ACBrNFe.EventoNFe.Evento[0].RetInfEvento.XML, False, False);
           slAnexos.Add(ArqEvento)
         end
         else
@@ -3031,7 +3017,7 @@ begin
         begin
           ArqInut  := ACBrNFe.InutNFe.ObterNomeArquivo;
           ArqInut  := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.GetPathInu()) + ArqInut;
-          SalvaStringEmArquivo(APathXML, ArqInut);
+          WriteToTxt(ArqInut, APathXML, False, False);
           slAnexos.Add(ArqInut)
         end
         else

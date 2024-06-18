@@ -2631,15 +2631,27 @@ begin
         slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
+{
         if ( ArqEvento = '' ) then
         begin
           tipoEvento := ACBrCTe.EventoCTe.Evento[0].Infevento.tpEvento;
           ArqEvento  := ACBrCTe.EventoCTe.ObterNomeArquivo(tipoEvento);
           ArqEvento  := PathWithDelim(ACBrCTe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
-          ACBrCTe.EventoCTe.Gerador.SalvarArquivo(ArqEvento);
+          WriteToTxt(ArqEvento, ACBrCTe.EventoCTe.Evento[0].RetInfEvento.XML, False, False);
         end;
         slAnexos.Add(ArqEvento);
-
+}
+        if  StringIsXML( APathXMLEvento ) then
+        begin
+          tipoEvento := ACBrCTe.EventoCTe.Evento[0].InfEvento.tpEvento;
+          ArqEvento  := ACBrCTe.EventoCTe.ObterNomeArquivo(tipoEvento);
+          ArqEvento  := PathWithDelim(ACBrCTe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
+          WriteToTxt(ArqEvento, ACBrCTe.EventoCTe.Evento[0].RetInfEvento.XML, False, False);
+          slAnexos.Add(ArqEvento)
+        end
+        else
+          slAnexos.Add(APathXMLEvento);
+		  
         if AEnviaPDF then
           slAnexos.Add(ArqPDF);
 
@@ -2741,13 +2753,24 @@ begin
         slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou Inutilizacao usando XML como parâmetro, salva XML para poder anexar
+{
         if ( ArqInut = '' ) then
         begin
           ArqInut  := ACBrCTe.InutCTe.ID + '-procInutCTe.xml';
           ArqInut  := PathWithDelim(ACBrCTe.Configuracoes.Arquivos.GetPathInu()) + ArqInut;
-          ACBrCTe.EventoCTe.Gerador.SalvarArquivo(ArqInut);
+          WriteToTxt(ArqInut, APathXML, False, False);
         end;
         slAnexos.Add(ArqInut);
+}
+        if  StringIsXML( APathXML ) then
+        begin
+          ArqInut  := ACBrCTe.InutCTe.ObterNomeArquivo;
+          ArqInut  := PathWithDelim(ACBrCTe.Configuracoes.Arquivos.GetPathInu()) + ArqInut;
+          WriteToTxt(ArqInut, APathXML, False, False);
+          slAnexos.Add(ArqInut)
+        end
+        else
+          slAnexos.Add(APathXML);
 
         if AEnviaPDF then
           slAnexos.Add(ArqPDF);

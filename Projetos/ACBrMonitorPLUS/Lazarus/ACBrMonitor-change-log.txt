@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2024
+-- DoACBrBPeUnit/DoACBrCTeUnit/DoACBrNFeUnit --
+[*] Alteração os métodos de envio de e-mail de evento e inutilização.
+Por: Diego Folieni/Italo Giurizzato Junior/Elton Barbosa
+
 17/05/2024
 -- DoACBrNFSeUnit --
 [*] Altera a resposta do comando ImprimirPDFNFSe para devolver o caminho correto do PDF.

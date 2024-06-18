@@ -2764,7 +2764,7 @@ begin
 }
         if  StringIsXML( APathXML ) then
         begin
-          ArqInut  := ACBrCTe.InutCTe.ObterNomeArquivo;
+          ArqInut  := ACBrCTe.InutCTe.ID + '-procInutCTe.xml';
           ArqInut  := PathWithDelim(ACBrCTe.Configuracoes.Arquivos.GetPathInu()) + ArqInut;
           WriteToTxt(ArqInut, APathXML, False, False);
           slAnexos.Add(ArqInut)

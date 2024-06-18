@@ -1986,7 +1986,7 @@ begin
               end;
               Gerador.wGrupo('/ICMS' + sTagTemp );
            end;
-        crtSimplesNacional :
+        crtSimplesNacional, crtMEI :
            begin
               //Grupo do Simples Nacional
               sTagTemp  := CSOSNTOStrTagPos(NFe.Det[i].Imposto.ICMS.CSOSN);

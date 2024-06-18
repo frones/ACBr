@@ -611,7 +611,7 @@ begin
           rlmProdutoCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
           rlCST.Caption:= 'Cst';
         end;
-      crtSimplesNacional:
+      crtSimplesNacional, crtMEI:
         begin
           rlmProdutoCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
           rlCST.Caption:= 'Csosn/Cst';

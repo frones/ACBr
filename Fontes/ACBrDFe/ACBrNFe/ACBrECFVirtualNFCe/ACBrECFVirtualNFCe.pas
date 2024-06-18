@@ -570,7 +570,7 @@ begin
     AliqECF := fpAliquotas[ItemCupom.AliqPos];
 
     Det.Prod.CFOP := '5102';
-    if NotasFiscais.Items[0].NFe.Emit.CRT = crtSimplesNacional then
+    if (NotasFiscais.Items[0].NFe.Emit.CRT in [crtSimplesNacional, crtMEI]) then
     begin
       Det.Imposto.ICMS.CSOSN := csosn101;
       Det.Imposto.ICMS.vBC := 0;
@@ -626,7 +626,7 @@ begin
   else
     Det.Prod.vDesc := -ItemCupom.DescAcres;
 
-  if (fsACBrNFCe.NotasFiscais.Items[0].NFe.Emit.CRT <> crtSimplesNacional) and (det.Imposto.ICMS.pICMS>0)  then
+  if (not (fsACBrNFCe.NotasFiscais.Items[0].NFe.Emit.CRT in [crtSimplesNacional,crtMEI])) and (det.Imposto.ICMS.pICMS>0)  then
   begin
     Det.Imposto.ICMS.vBC := RoundABNT((ItemCupom.Qtd * ItemCupom.ValorUnit) + ItemCupom.DescAcres, 2);
     Det.Imposto.ICMS.vICMS := RoundABNT(Det.Imposto.ICMS.vBC * (Det.Imposto.ICMS.pICMS / 100), 2);

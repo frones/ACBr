@@ -1244,7 +1244,7 @@ begin
       FieldByName('CRT').AsString       := CRTToStr(CRT);
 
       case CRT of
-        crtSimplesNacional: FieldByName('DESCR_CST').AsString := 'CSOSN / CST';
+        crtSimplesNacional, crtMEI: FieldByName('DESCR_CST').AsString := 'CSOSN / CST';
         crtRegimeNormal, crtSimplesExcessoReceita: FieldByName('DESCR_CST').AsString := 'CST';
       end;
 

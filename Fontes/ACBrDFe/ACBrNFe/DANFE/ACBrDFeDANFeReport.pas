@@ -591,7 +591,7 @@ end;
 
 function TACBrDFeDANFeReport.ManterCst(dCRT: TpcnCRT; dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms): String;
 begin
-  if (dCRT = crtSimplesNacional) and not (dCST in [cst02, cst15, cst53, cst61]) then
+  if (dCRT in [crtSimplesNacional, crtMEI]) and not (dCST in [cst02, cst15, cst53, cst61]) then
     Result := CSOSNIcmsToStr(dCSOSN)
   else
     Result := CSTICMSToStr(dCST);

@@ -1946,7 +1946,7 @@ begin
       lblCST2.Font.Size := 5;
     end;
 
-    crtSimplesNacional:
+    crtSimplesNacional, crtMEI:
     begin
       lblCST1.Caption := 'CSOSN';
       lblCST1.Font.Size := 4;

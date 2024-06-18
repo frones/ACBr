@@ -1978,7 +1978,7 @@ begin
       lblCST1.Caption := 'CST';
       lblCST2.Caption := '';
     end;
-    crtSimplesNacional: begin
+    crtSimplesNacional, crtMEI: begin
       lblCST1.Caption := 'CSOSN';
       lblCST2.Caption := '/ CST';
     end;

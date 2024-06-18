@@ -2454,7 +2454,7 @@ begin
           end;
         end;
       end;
-      crtSimplesNacional:
+      crtSimplesNacional, crtMEI:
       begin
         //Grupo do Simples Nacional
         sTagTemp := CSOSNTOStrTagPos(NFe.Det[i].Imposto.ICMS.CSOSN);

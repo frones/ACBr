@@ -71,7 +71,7 @@ implementation
 uses
   pcnConversao, pcnConversaoNFe,
   FileUtil, ACBrDeviceSerial, ACBrNFeDANFEClass,
-  {$IFDEF Demo}ACBrNFeNotasFiscais, pcnEnvEventoNFe,{$ENDIF}
+  {$IFDEF Demo}ACBrNFeNotasFiscais, ACBrNFe.EnvEvento,{$ENDIF}
   ACBrDeviceConfig, ACBrLibNFeConfig, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 {$R *.lfm}

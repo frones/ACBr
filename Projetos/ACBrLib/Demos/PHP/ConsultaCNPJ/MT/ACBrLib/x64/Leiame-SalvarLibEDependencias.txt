@@ -1,0 +1,1 @@
+Salve nesta pasta a ACBrConsultaCNPJ64.dll MT e as dependências para x64.

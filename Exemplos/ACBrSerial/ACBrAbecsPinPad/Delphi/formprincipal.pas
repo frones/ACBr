@@ -4,10 +4,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad, Types,
-  ACBrBase, ImgList, AppEvnts, System.ImageList,
-  Vcl.Imaging.pngimage,
-  Vcl.Imaging.jpeg;
+  Buttons, Spin, ComCtrls, Grids, ExtDlgs, ACBrAbecsPinPad, 
+  ACBrBase, ImgList, AppEvnts, ImageList;
 
 const
   CSerialSection = 'Serial';

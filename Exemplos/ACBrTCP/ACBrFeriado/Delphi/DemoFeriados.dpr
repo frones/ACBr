@@ -1,7 +1,7 @@
 program DemoFeriados;
 
 uses
-  Vcl.Forms,
+  Forms,
   Frm_Feriados in 'Frm_Feriados.pas' {Form1};
 
 {$R *.res}

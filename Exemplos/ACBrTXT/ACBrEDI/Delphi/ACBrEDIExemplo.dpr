@@ -1,7 +1,7 @@
 program ACBrEDIExemplo;
 
 uses
-  Vcl.Forms,
+  Forms,
   Frm_ACBrEDI in 'Frm_ACBrEDI.pas' {frmACBrEDI};
 
 {$R *.res}

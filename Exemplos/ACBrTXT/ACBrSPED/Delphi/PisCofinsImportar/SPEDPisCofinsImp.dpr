@@ -1,7 +1,7 @@
 program SPEDPisCofinsImp;
 
 uses
-  Vcl.Forms,
+  Forms,
   UFormImport in 'UFormImport.pas' {FormImport};
 
 {$R *.res}

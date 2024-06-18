@@ -3,8 +3,8 @@ unit Form.NFSe;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, ACBrBase,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ACBrBase,
   ACBrDFe, ACBrNFSeX, ACBrSocket, ACBrIBGE;
 
 type
@@ -41,8 +41,8 @@ var
 implementation
 
 uses
-  System.IOUtils,
-  System.Math,
+  IOUtils,
+  Math,
 
   ACBr_fpdf,
   ACBr_fpdf_ext,

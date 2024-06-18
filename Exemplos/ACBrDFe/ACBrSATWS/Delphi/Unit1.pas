@@ -35,7 +35,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ACBrBase, ACBrDFe, ACBrSATWS, ComCtrls, ACBrDFeSSL,
-  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Samples.Spin, DateUtils;
+  Buttons, ExtCtrls, Spin, DateUtils;
 
 type
   TForm1 = class(TForm)

@@ -35,7 +35,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Buttons,
-  ACBrBase, ACBrSocket, ACBrConsultaCNPJ, Mask, Vcl.ComCtrls;
+  ACBrBase, ACBrSocket, ACBrConsultaCNPJ, Mask, ComCtrls;
 
 {$IFDEF CONDITIONALEXPRESSIONS}
    {$IF CompilerVersion >= 20.0}
@@ -126,7 +126,7 @@ implementation
 uses
   JPEG
 {$IFDEF SUPPORT_PNG}
-  , pngimage, System.TypInfo
+  , pngimage, TypInfo
 {$ENDIF}
   ;
 

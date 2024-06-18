@@ -127,7 +127,7 @@ implementation
 
 uses
 {$IFDEF DELPHIXE6_UP}
-  System.IOUtils,
+  IOUtils,
 {$ENDIF}
   pcnConversao;
 

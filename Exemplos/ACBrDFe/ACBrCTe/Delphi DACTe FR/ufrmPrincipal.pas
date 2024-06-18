@@ -35,8 +35,8 @@ unit ufrmPrincipal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, IOUtils,
   ACBrBase, ACBrDFe, ACBrNFe, frxClass, ACBrCTeDACTEClass, ACBrCTeDACTEFR, ACBrCTe;
 
 type

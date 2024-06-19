@@ -153,7 +153,7 @@ begin
   Request := Request + '</lot:enviar>';
 
   Result := Executar('', Request,
-                     ['enviarReturn', 'ReqEnvioLoteRPS'],
+                     ['enviarReturn', 'RetornoEnvioLoteRPS'],
                      [NameSpace]);
 end;
 

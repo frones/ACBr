@@ -194,6 +194,7 @@ begin
     ConsultarLote := True;
     ConsultarNFSeRps := True;
     ConsultarNFSe := True;
+    ConsultarNFSePorFaixa := True;
   end;
 
   with ConfigMsgDados do
@@ -211,6 +212,9 @@ begin
     ConsultarNFSeRps.xmlns := 'http://nfe.sjp.pr.gov.br/servico_consultar_nfse_rps_envio_v03.xsd';
 
     ConsultarNFSe.xmlns := 'http://nfe.sjp.pr.gov.br/servico_consultar_nfse_envio_v03.xsd';
+
+    // Usado para geração da Consulta da NFSe Por Faixa
+    ConsultarNFSePorFaixa.xmlns := 'http://nfe.sjp.pr.gov.br/servico_consultar_nfse_envio_v03.xsd';
 
     CancelarNFSe.xmlns := 'http://nfe.sjp.pr.gov.br/servico_cancelar_nfse_envio_v03.xsd';
 

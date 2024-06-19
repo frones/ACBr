@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/06/2024
+-- Siat.Provider --
+[*] Alterado a tag na lista de tags para obter o retorno do serviço: Recepcionar.
+  Por: Italo Giurizzato Junior
+-- ISSSJP.Provider --
+[*] Alterações visando realizar a consulta a NFS-e por periodo.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Matinhos/PR, provedor é o IPM.
   Por: Leonard Miranda

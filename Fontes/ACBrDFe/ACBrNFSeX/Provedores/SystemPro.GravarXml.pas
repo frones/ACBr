@@ -137,24 +137,8 @@ begin
 end;
 
 function TNFSeW_SystemPro201.GerarServico: TACBrXmlNode;
-var
-  nodeArray: TACBrXmlNodeArray;
-  i: Integer;
 begin
-  Result := nil; //CreateElement('Servico');
-{
-  if (NFSe.Servico.ItemServico.Count > 0) then
-  begin
-    nodeArray := GerarServicos;
-    if nodeArray <> nil then
-    begin
-      for i := 0 to Length(nodeArray) - 1 do
-      begin
-        Result.AppendChild(nodeArray[i]);
-      end;
-    end;
-  end;
-  }
+  Result := nil;
 end;
 
 function TNFSeW_SystemPro201.GerarServicos: TACBrXmlNodeArray;

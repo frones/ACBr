@@ -182,6 +182,12 @@ procedure TACBrNFSeProviderIPM.Configuracao;
 begin
   inherited Configuracao;
 
+  with ConfigAssinar do
+  begin
+    RpsGerarNFSe := ConfigGeral.Params.ParamTemValor('Assinar', 'AssRpsGerarNfse');
+    CancelarNFSe := ConfigGeral.Params.ParamTemValor('Assinar', 'AssCancelarNfse');
+  end;
+
   with ConfigGeral do
   begin
     ModoEnvio := meUnitario;
@@ -190,6 +196,7 @@ begin
     FormatoArqEnvioSoap := tfaTxt;
     ImprimirOptanteSN := False;
 
+    Autenticacao.RequerCertificado := (ConfigAssinar.RpsGerarNFSe) or (ConfigAssinar.CancelarNFSe);
     Autenticacao.RequerLogin := True;
 
     ServicosDisponibilizados.EnviarUnitario := True;
@@ -200,12 +207,6 @@ begin
 
     Particularidades.PermiteTagOutrasInformacoes := True;
     Particularidades.PermiteMaisDeUmServico := True;
-  end;
-
-  with ConfigAssinar do
-  begin
-    RpsGerarNFSe := ConfigGeral.Params.ParamTemValor('Assinar', 'AssRpsGerarNfse');
-    CancelarNFSe := ConfigGeral.Params.ParamTemValor('Assinar', 'AssCancelarNfse');
   end;
 
   SetXmlNameSpace('');

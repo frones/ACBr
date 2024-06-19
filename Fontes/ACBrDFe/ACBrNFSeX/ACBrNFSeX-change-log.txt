@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Matinhos/PR, provedor é o IPM.
+  Por: Leonard Miranda
+[*] Alteração nas URLs e versão da Cidade de Candelaria/RS, o provedor continua o mesmo.
+  Por: DNA Automação
+
 14/06/2024
 -- ACBrNFSeXServicos --
 [*] Incluído o Params Assinar para a cidade de Botucatu/SP.

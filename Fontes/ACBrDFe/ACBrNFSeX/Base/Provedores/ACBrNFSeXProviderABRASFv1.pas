@@ -180,6 +180,9 @@ begin
     VersaoAtrib := '1.00';
   end;
 
+  ConfigMsgDados.ConsultarNFSePorFaixa.InfElemento := '';
+  ConfigMsgDados.ConsultarNFSePorFaixa.DocElemento := 'ConsultarNfseEnvio';
+
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 

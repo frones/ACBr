@@ -896,6 +896,7 @@ begin
       sSecao:= 'IdentificacaoNFSe';
       INIRec.WriteString(sSecao, 'Numero', Numero);
       INIRec.WriteString(sSecao, 'NumeroLote', NumeroLote);
+      INIRec.WriteString(sSecao, 'StatusNFSe', StatusNFSeToStr(SituacaoNfse));
 
       //Adicionado para que a informação seja devolvida para quem usa a lib, não considerar na rotina de leitura.
       if CodigoVerificacao <> '' then

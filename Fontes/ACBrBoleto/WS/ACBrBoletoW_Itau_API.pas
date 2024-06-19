@@ -148,8 +148,8 @@ begin
          FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL, C_URL_HOM) + '/boletos';
       end;
 
-    //tpConsulta:
-    //  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
+    tpConsulta:
+      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
 
     tpConsultaDetalhe:
       FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,
@@ -217,11 +217,11 @@ begin
           FMetodoHTTP := htPATCH; // Define Método POST para Baixa
           RequisicaoBaixa;
         end;
-      //tpConsulta:
-      //  begin
-      //    FMetodoHTTP := htGET; // Define Método GET Consulta
-      //    RequisicaoConsulta;
-      //  end;
+      tpConsulta:
+        begin
+          FMetodoHTTP := htGET; // Define Método GET Consulta
+          RequisicaoConsulta;
+        end;
       tpConsultaDetalhe:
         begin
           FMetodoHTTP := htGET; // Define Método GET Consulta Detalhe

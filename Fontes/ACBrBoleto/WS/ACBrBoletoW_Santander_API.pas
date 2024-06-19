@@ -660,7 +660,7 @@ begin
           end;
       end;
       LJsonObjectDesconto.AddPair('type',LTipo1);
-      LJsonObjectDesconto.AddPair('disconuntOne',
+      LJsonObjectDesconto.AddPair('discountOne',
                                                  TACBrJSONObject.Create
                                                                 .AddPair('value', LValorDesconto1)
                                                                 .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto))

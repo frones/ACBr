@@ -839,7 +839,7 @@ begin
 
     AssinaturaAdicional := False;
     Assinaturas := TACBrNFSeX(FAOwner).Configuracoes.Geral.Assinaturas;
-	IdSignatureValue := '';
+    IdSignatureValue := '';
   end;
 
   SetNomeXSD('nfse.xsd');

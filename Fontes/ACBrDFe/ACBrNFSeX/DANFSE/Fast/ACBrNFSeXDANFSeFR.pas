@@ -457,7 +457,7 @@ begin
   cdsPrestador.FieldDefs.Clear;
   cdsPrestador.FieldDefs.Add('Cnpj', ftString, 18);
   cdsPrestador.FieldDefs.Add('InscricaoMunicipal', ftString, 15);
-  cdsPrestador.FieldDefs.Add('InscricaoEstadual', ftString, 15);
+  cdsPrestador.FieldDefs.Add('InscricaoEstadual', ftString, 20);
   cdsPrestador.FieldDefs.Add('RazaoSocial', ftString, 60);
   cdsPrestador.FieldDefs.Add('NomeFantasia', ftString, 60);
   cdsPrestador.FieldDefs.Add('Endereco', ftString, 60);
@@ -519,6 +519,7 @@ begin
   cdsServicos.FieldDefs.Add('OutrosDescontos', ftCurrency);
   cdsServicos.FieldDefs.Add('DescricaoTotalRetDemo', ftString, 19);
   cdsServicos.FieldDefs.Add('DescriçãoTributosFederais', ftString, 35);
+  cdsServicos.FieldDefs.Add('ValorTotalNotaFiscal', ftCurrency);
 
     // Provedor SP
   cdsServicos.FieldDefs.Add('ValorCargaTributaria', ftCurrency);
@@ -577,7 +578,7 @@ begin
   cdsTomador.FieldDefs.Clear;
   cdsTomador.FieldDefs.Add('CpfCnpj', ftString, 18);
   cdsTomador.FieldDefs.Add('InscricaoMunicipal', ftString, 15);
-  cdsTomador.FieldDefs.Add('InscricaoEstadual', ftString, 15);
+  cdsTomador.FieldDefs.Add('InscricaoEstadual', ftString, 20);
   cdsTomador.FieldDefs.Add('RazaoSocial', ftString, 60);
   cdsTomador.FieldDefs.Add('NomeFantasia', ftString, 60);
   cdsTomador.FieldDefs.Add('Endereco', ftString, 60);
@@ -867,6 +868,7 @@ begin
   frxServicos.FieldAliases.Add('OutrosDescontos=OutrosDescontos');
   frxServicos.FieldAliases.Add('DescricaoTotalRetDemo=DescricaoTotalRetDemo');
   frxServicos.FieldAliases.Add('DescriçãoTributosFederais=DescriçãoTributosFederais');
+  frxServicos.FieldAliases.Add('ValorTotalNotaFiscal=ValorTotalNotaFiscal');
     // Provedor SP
   frxServicos.FieldAliases.Add('ValorCargaTributaria=ValorCargaTributaria');
   frxServicos.FieldAliases.Add('PercentualCargaTributaria=PercentualCargaTributaria');
@@ -1329,6 +1331,7 @@ begin
   LCDS.FieldByName('DescontoCondicionado').AsFloat   := LValores.DescontoCondicionado;
   LCDS.FieldByName('DescontoIncondicionado').AsFloat := LValores.DescontoIncondicionado;
   LCDS.FieldByName('OutrosDescontos').AsCurrency     := LValores.OutrosDescontos;
+  LCDS.FieldByName('ValorTotalNotaFiscal').AsCurrency := LValores.ValorTotalNotaFiscal;
 
   if LValores.IssRetido = stRetencao then
   begin

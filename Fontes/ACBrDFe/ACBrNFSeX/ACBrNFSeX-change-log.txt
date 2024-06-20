@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/06/2024
+-- GovDigital.Provider --
+[*] Alteração visando a leitura correta do retorno da consulta por faixa de período.
+  Por: Italo Giurizzato Junior
+-- ACBrNFSeXDANFSeFR --
+[*] Alteração visando IE com mais de 15 digitos e a inclusão do campo ValorTotalNotaFiscal.
+  Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Santana do Deserto/MG, provedor é o Futurize.
   Por: ASL Software LTDA

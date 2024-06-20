@@ -63,12 +63,15 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure GerarMsgDadosConsultaNFSe(Response: TNFSeConsultaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
 
 uses
   ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, ISSSJP.GravarXml, ISSSJP.LerXml;
 
@@ -87,7 +90,7 @@ begin
 
   Result := Executar('RecepcionarLoteRpsV3', Request,
                      ['return', 'EnviarLoteRpsResposta'],
-                     ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
+                     ['xmlns:nfse="http://nfe.sjp.pr.gov.br"']);
 end;
 
 function TACBrNFSeXWebserviceISSSJP.ConsultarLote(const ACabecalho, AMSG: String): string;
@@ -103,7 +106,7 @@ begin
 
   Result := Executar('ConsultarLoteRpsV3', Request,
                      ['return', 'ConsultarLoteRpsResposta'],
-                     ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
+                     ['xmlns:nfse="http://nfe.sjp.pr.gov.br"']);
 end;
 
 function TACBrNFSeXWebserviceISSSJP.ConsultarSituacao(const ACabecalho, AMSG: String): string;
@@ -119,7 +122,7 @@ begin
 
   Result := Executar('ConsultarSituacaoLoteRpsV3', Request,
                      ['return', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
+                     ['xmlns:nfse="http://nfe.sjp.pr.gov.br"']);
 end;
 
 function TACBrNFSeXWebserviceISSSJP.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
@@ -135,7 +138,7 @@ begin
 
   Result := Executar('ConsultarNfsePorRpsV3', Request,
                      ['return', 'ConsultarNfseRpsResposta'],
-                     ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
+                     ['xmlns:nfse="http://nfe.sjp.pr.gov.br"']);
 end;
 
 function TACBrNFSeXWebserviceISSSJP.ConsultarNFSe(const ACabecalho, AMSG: String): string;
@@ -145,13 +148,13 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:nfse_ConsultarNfseV3>';
-  Request := Request + '<arg0>' + XmlToStr(ACabecalho) + '</arg0>';
-  Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AMSG) + '</arg1>';
   Request := Request + '</nfse:nfse_ConsultarNfseV3>';
 
   Result := Executar('ConsultarNfseV3', Request,
                      ['return', 'ConsultarNfseResposta'],
-                     ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
+                     ['xmlns:nfse="http://nfe.sjp.pr.gov.br"']);
 end;
 
 function TACBrNFSeXWebserviceISSSJP.Cancelar(const ACabecalho, AMSG: String): string;
@@ -167,7 +170,7 @@ begin
 
   Result := Executar('CancelarNfseV3', Request,
                      ['return', 'CancelarNfseResposta'],
-                     ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
+                     ['xmlns:nfse="http://nfe.sjp.pr.gov.br"']);
 end;
 
 function TACBrNFSeXWebserviceISSSJP.TratarXmlRetornado(
@@ -262,6 +265,29 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderISSSJP.GerarMsgDadosConsultaNFSe(
+  Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    IdAttr := ' Id="' + OnlyNumber(Emitente.CNPJ) + '" ';
+
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + IdAttr + NameSpace + '>' +
+                               '<' + Prefixo + 'Prestador>' +
+                                 '<' + Prefixo2 + 'Cnpj>' +
+                                   OnlyNumber(Emitente.CNPJ) +
+                                 '</' + Prefixo2 + 'Cnpj>' +
+                                 GetInscMunic(Emitente.InscMun, Prefixo2) +
+                               '</' + Prefixo + 'Prestador>' +
+                               Xml +
+                             '</' + Prefixo + TagEnvio + '>';
   end;
 end;
 

@@ -221,9 +221,12 @@ begin
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
-
+  {
+    Alterado de ConsultarNfsePorFaixaResposta para ConsultarNfseFaixaResposta
+    Por: Italo em 19/06/2024 (cidade: Coronel Fabriciano/MG)
+  }
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
-                     ['outputXML', 'ConsultarNfsePorFaixaResposta'],
+                     ['outputXML', 'ConsultarNfseFaixaResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

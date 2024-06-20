@@ -420,14 +420,14 @@ begin
     txtServicoUnitario.Caption := FormatFloatBr(ValorUnitario);
     txtServicoQtde.Caption := FormatFloatBr(Quantidade);
 
-    if ValorTotal = 0.0 then
-      ValorTotal := Quantidade * ValorUnitario;
+//    if ValorTotal = 0.0 then
+//      ValorTotal := Quantidade * ValorUnitario;
 
     txtServicoTotal.Caption := FormatFloatBr(ValorTotal);
     txtBaseCalculo.Caption := FormatFloatBr(BaseCalculo);
 
-    if ValorISS = 0.0 then
-      ValorISS := BaseCalculo * Aliquota/100;
+//    if ValorISS = 0.0 then
+//      ValorISS := BaseCalculo * Aliquota/100;
 
     txtISS.Caption := FormatFloatBr(ValorISS);
   end;

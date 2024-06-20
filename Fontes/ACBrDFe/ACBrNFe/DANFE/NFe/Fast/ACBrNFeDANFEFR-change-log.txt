@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2024
+--ACBrNFeDANFEFRDM--
+[*] No caso do evento de Insucesso na Entrega devemos usar o conteudo do campo 
+    xJustMotivo em vez de xJust.
+  por : Microsys Sistemas
+
 14/12/2022
 --ACBrNFeDANFEFRDM--
 [+] TK-3373 ACBrNFe - Impressão do xPed e nItemPed no DANFeFR - CDS apenas

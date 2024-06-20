@@ -1965,6 +1965,8 @@ begin
         if InfEvento.tpEvento <> teCCe then
         begin
           FieldByName('xJust').AsString := InfEvento.detEvento.xJust;
+          if InfEvento.tpEvento = teInsucessoEntregaNFe then
+            FieldByName('xJust').AsString := InfEvento.detEvento.xJustMotivo;
         end
         else
         begin

@@ -1923,7 +1923,7 @@ end;
 procedure TFormPrincipal.seValorInicialVendaKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if not CharInSet(Key, ['0'..'9',#8,#13,#27])  then
+  if not( Key in ['0'..'9',#8,#13,#27])  then
     Key := #0;
 end;
 

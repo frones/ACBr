@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/06/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Santana do Deserto/MG, provedor é o Futurize.
+  Por: ASL Software LTDA
+[*] Alteração nas URLs e versão da Cidade de Itanhanga/MT, o provedor continua o mesmo.
+  Por: Diego Reckziegel
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona CNO na rotina de leitura do INI
   Por: Diego Folieni

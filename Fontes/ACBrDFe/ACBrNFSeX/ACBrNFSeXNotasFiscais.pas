@@ -632,6 +632,7 @@ begin
         Item.SituacaoTributaria := INIRec.ReadInteger(sSecao, 'SituacaoTributaria', 0);
         Item.ValorISSRetido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorISSRetido', ''), 0);
         Item.ValorTributavel := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTributavel', ''), 0);
+        Item.CodCNO := INIRec.ReadString(sSecao, 'CodCNO', '');
 
         Inc(i);
       end;

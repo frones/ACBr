@@ -92,6 +92,9 @@ type
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
     procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString;
       Problema: TACBrPIXProblema); override;
+
+    procedure ConfigurarHeaders(const Method, AURL: String); override;
+
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
@@ -298,6 +301,13 @@ begin
     if (aEndPoint = cEndPointCob) then
       Result := URLComDelimitador(Result);
   end;
+end;
+
+procedure TACBrPSPBancoDoBrasil.ConfigurarHeaders(const Method, AURL: String);
+begin
+   inherited ConfigurarHeaders(Method, AURL);
+   if ACBrPixCD.DadosAutomacao.CNPJSoftwareHouse <> '' then
+     Http.Headers.Add( 'x-bb-portal-devx-cnpj-parceiro:' + ACBrPixCD.DadosAutomacao.CNPJSoftwareHouse );
 end;
 
 procedure TACBrPSPBancoDoBrasil.ConfigurarQueryParameters(const Method, EndPoint: String);

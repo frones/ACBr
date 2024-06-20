@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2024
+-- pcnConversao --
+[+] acrescentado os enumeradores: teConcFinanceira, teCancConcFinanceira.
+   Por: Italo Giurizzato Junior
+
 14/06/2024
 -- pcnConversao --
 [*] Acrescentado o enumerado crtMEI ao tipo TpcnCRT

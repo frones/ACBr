@@ -147,7 +147,7 @@ type
                   teConfirmaServMDFe, teAlteracaoPagtoServMDFe,
                   teCancPrestDesacordo, teInsucessoEntregaCTe,
                   teCancInsucessoEntregaCTe, teInsucessoEntregaNFe,
-                  teCancInsucessoEntregaNFe);
+                  teCancInsucessoEntregaNFe, teConcFinanceira, teCancConcFinanceira);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -231,7 +231,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..75] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..77] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -256,7 +256,7 @@ const
                                                 '110150', '610130', '610131',
                                                 '110117', '110118', '610111',
                                                 '110190', '110191', '110192',
-                                                '110193');
+                                                '110193', '110750', '110751');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1182,7 +1182,8 @@ begin
               'AlteracaoPoltrona', 'ExcessoBagagem', 'EncerramentoFisco',
               'ComprEntregaNFe', 'CancComprEntregaNFe',
               'AtorInteressadoNFe', 'ComprEntregaCTe', 'CancComprEntregaCTe',
-              'CancPrestDesacordo', 'InsucessoEntregaCTe', 'CancInsucessoEntregaCTe'],
+              'CancPrestDesacordo', 'InsucessoEntregaCTe', 'CancInsucessoEntregaCTe',
+              'ConcFinanceira', 'CancConcFinanceira'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1204,7 +1205,7 @@ begin
               teExcessoBagagem, teEncerramentoFisco, teComprEntregaNFe,
               teCancComprEntregaNFe, teAtorInteressadoNFe, teComprEntregaCTe,
               teCancComprEntregaCTe, teCancPrestDesacordo, teInsucessoEntregaCTe,
-              teCancInsucessoEntregaCTe]);
+              teCancInsucessoEntregaCTe, teConcFinanceira, teCancConcFinanceira]);
 end;
 
 

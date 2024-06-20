@@ -117,6 +117,9 @@ type
     function Gerar_AutXml(Idx: Integer): TACBrXmlNodeArray;
     function Gerar_Evento_InsucessoEntrega(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_CancInsucessoEntrega(Idx: Integer): TACBrXmlNode;
+    function Gerar_Evento_ConciliacaoFinanceira(Idx: Integer): TACBrXmlNode;
+    function Gerar_DetalhePagamento(Idx: Integer): TACBrXmlNodeArray;
+    function Gerar_Evento_CancConciliacaoFinanceira(Idx: Integer): TACBrXmlNode;
 
   public
     constructor Create;
@@ -731,6 +734,106 @@ begin
                                  Evento[Idx].FInfEvento.detEvento.nProtEvento));
 end;
 
+function TEventoNFe.Gerar_Evento_ConciliacaoFinanceira(
+  Idx: Integer): TACBrXmlNode;
+var
+  nodeArray: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  Result := CreateElement('detEvento');
+  Result.SetAttribute('versao', Versao);
+
+  Result.AppendChild(AddNode(tcStr, 'P19', 'descEvento', 4, 60, 1,
+                                            Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcStr, 'P20', 'verAplic', 1, 20, 1,
+                                    Evento[Idx].FInfEvento.detEvento.verAplic));
+
+  nodeArray := Gerar_DetalhePagamento(Idx);
+  if nodeArray <> nil then
+  begin
+    for i := 0 to Length(nodeArray) - 1 do
+    begin
+      Result.AppendChild(nodeArray[i]);
+    end;
+  end;
+end;
+
+function TEventoNFe.Gerar_DetalhePagamento(Idx: Integer): TACBrXmlNodeArray;
+var
+  i: integer;
+begin
+  Result := nil;
+  SetLength(Result, Evento[Idx].FInfEvento.detEvento.detPag.Count);
+
+  for i := 0 to Evento[Idx].FInfEvento.detEvento.detPag.Count - 1 do
+  begin
+    Result[i] := CreateElement('dePag');
+
+    Result[i].AppendChild(AddNode(tcStr, 'P22', 'indPag', 01, 01, 0,
+      IndpagToStr(Evento[Idx].InfEvento.detEvento.detPag[i].indPag), DSC_INDPAG));
+
+    Result[i].AppendChild(AddNode(tcStr, 'P23', 'tPag', 02, 02, 1,
+      FormaPagamentoToStr(Evento[Idx].InfEvento.detEvento.detPag[i].tPag), DSC_TPAG));
+
+    Result[i].AppendChild(AddNode(tcStr, 'P24', 'xPag', 02, 60, 0,
+                     Evento[Idx].InfEvento.detEvento.detPag[i].xPag, DSC_XPAG));
+
+    Result[i].AppendChild(AddNode(tcDe2, 'P25', 'vPag', 01, 15, 1,
+                     Evento[Idx].InfEvento.detEvento.detPag[i].vPag, DSC_VPAG));
+
+    Result[i].AppendChild(AddNode(tcDat, 'P26', 'dPag', 10, 10, 1,
+                     Evento[Idx].InfEvento.detEvento.detPag[i].dPag, DSC_DPAG));
+
+    if (Evento[Idx].InfEvento.detEvento.detPag[i].CNPJPag <> '') or
+       (Evento[Idx].InfEvento.detEvento.detPag[i].UFPag <> '') then
+    begin
+      Result[i].AppendChild(AddNode(tcStr, 'P28', 'CNPJPag', 14, 14, 1,
+               Evento[Idx].InfEvento.detEvento.detPag[i].CNPJPag, DSC_CNPJPAG));
+
+      Result[i].AppendChild(AddNode(tcStr, 'P29', 'UFPag', 2, 2, 1,
+                   Evento[Idx].InfEvento.detEvento.detPag[i].UFPag, DSC_UFPAG));
+    end;
+
+    Result[i].AppendChild(AddNode(tcStr, 'P30', 'CNPJIF', 14, 14, 0,
+                 Evento[Idx].InfEvento.detEvento.detPag[i].CNPJIF, DSC_CNPJIF));
+
+    Result[i].AppendChild(AddNode(tcStr, 'P31', 'tBand', 02, 02, 0,
+      BandeiraCartaoToStr(Evento[Idx].InfEvento.detEvento.detPag[i].tBand), DSC_TBAND));
+    Result[i].AppendChild(AddNode(tcStr, 'P32', 'cAut', 01, 128, 0,
+                     Evento[Idx].InfEvento.detEvento.detPag[i].cAut, DSC_CAUT));
+
+    if (Evento[Idx].InfEvento.detEvento.detPag[i].CNPJReceb <> '') or
+       (Evento[Idx].InfEvento.detEvento.detPag[i].UFReceb <> '') then
+    begin
+      Result[i].AppendChild(AddNode(tcStr, 'P28', 'CNPJReceb', 14, 14, 1,
+           Evento[Idx].InfEvento.detEvento.detPag[i].CNPJReceb, DSC_CNPJRECEB));
+
+      Result[i].AppendChild(AddNode(tcStr, 'P29', 'UFReceb', 2, 2, 1,
+               Evento[Idx].InfEvento.detEvento.detPag[i].UFReceb, DSC_UFRECEB));
+    end;
+  end;
+
+  if Evento[Idx].FInfEvento.detEvento.detPag.Count > 100 then
+    wAlerta('#1', 'dePag', '', ERR_MSG_MAIOR_MAXIMO + '100');
+end;
+
+function TEventoNFe.Gerar_Evento_CancConciliacaoFinanceira(
+  Idx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('detEvento');
+  Result.SetAttribute('versao', Versao);
+
+  Result.AppendChild(AddNode(tcStr, 'P19', 'descEvento', 4, 60, 1,
+                                            Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcStr, 'P22', 'verAplic', 1, 20, 1,
+                                    Evento[Idx].FInfEvento.detEvento.verAplic));
+
+  Result.AppendChild(AddNode(tcStr, 'P23', 'nProtEvento', 15, 15, 1,
+                                 Evento[Idx].FInfEvento.detEvento.nProtEvento));
+end;
+
 function TEventoNFe.Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
 var
   sDoc: string;
@@ -831,6 +934,10 @@ begin
     teInsucessoEntregaNFe: Result.AppendChild(Gerar_Evento_InsucessoEntrega(Idx));
 
     teCancInsucessoEntregaNFe: Result.AppendChild(Gerar_Evento_CancInsucessoEntrega(Idx));
+
+    teConcFinanceira: Result.AppendChild(Gerar_Evento_ConciliacaoFinanceira(Idx));
+
+    teCancConcFinanceira: Result.AppendChild(Gerar_Evento_CancConciliacaoFinanceira(Idx));
   end;
 end;
 

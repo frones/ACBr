@@ -100,6 +100,45 @@ type
     property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
   end;
 
+  TdetPagCollectionItem = class
+  private
+    FindPag: TpcnIndicadorPagamento;
+    FtPag: TpcnFormaPagamento;
+    FxPag: string;
+    FvPag: Currency;
+    FdPag: TDateTime;
+    FCNPJPag: string;
+    FUFPag: string;
+    FCNPJIF: string;
+    FtBand: TpcnBandeiraCartao;
+    FcAut: string;
+    FCNPJReceb: string;
+    FUFReceb: string;
+  public
+    property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipNenhum;
+    property tPag: TpcnFormaPagamento read FtPag write FtPag;
+    property xPag: string read FxPag write FxPag;
+    property vPag: Currency read FvPag write FvPag;
+    property dPag: TDateTime read FdPag write FdPag;
+    property CNPJPag: string read FCNPJPag write FCNPJPag;
+    property UFPag: string read FUFPag write FUFPag;
+    property CNPJIF: string read FCNPJIF write FCNPJIF;
+    property tBand: TpcnBandeiraCartao read FtBand write FtBand;
+    property cAut: string read FcAut write FcAut;
+    property CNPJReceb: string read FCNPJReceb write FCNPJReceb;
+    property UFReceb: string read FUFReceb write FUFReceb;
+  end;
+
+  TdetPagCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TdetPagCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetPagCollectionItem);
+  public
+    function Add: TdetPagCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetPagCollectionItem;
+    property Items[Index: Integer]: TdetPagCollectionItem read GetItem write SetItem; default;
+  end;
+
   TDetEvento = class
   private
     FVersao: string;
@@ -139,10 +178,12 @@ type
     FhashTentativaEntrega: string;
     FdhHashTentativaEntrega: TDateTime;
     FUF: string;
+    FdetPag: TdetPagCollection;
 
     procedure setxCondUso(const Value: string);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
     procedure SetautXML(const Value: TautXMLCollection);
+    procedure SetdetPag(const Value: TdetPagCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -187,6 +228,7 @@ type
     property hashTentativaEntrega: string read FhashTentativaEntrega write FhashTentativaEntrega;
     property dhHashTentativaEntrega: TDateTime read FdhHashTentativaEntrega write FdhHashTentativaEntrega;
     property UF: string read FUF write FUF;
+    property detPag: TdetPagCollection read FdetPag write SetdetPag;
   end;
 
   TInfEvento = class
@@ -359,6 +401,8 @@ begin
     teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
     teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
     teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
+    teConcFinanceira           : Result := 'ECONF';
+    teCancConcFinanceira       : Result := 'Cancelamento Conciliacao Financeira';
   else
     Result := '';
   end;
@@ -416,6 +460,8 @@ begin
     teAtorInteressadoNFe       : Result := 'Ator interessado na NF-e';
     teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
     teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
+    teConcFinanceira           : Result := 'ECONF';
+    teCancConcFinanceira       : Result := 'Cancelamento Conciliacao Financeira';
   else
     Result := 'Não Definido';
   end;
@@ -429,7 +475,8 @@ begin
 
   Fdest := TDestinatario.Create;
   FitemPedido := TitemPedidoCollection.Create;
-  FautXML  := TautXMLCollection.Create;
+  FautXML := TautXMLCollection.Create;
+  FdetPag := TdetPagCollection.Create;
 end;
 
 destructor TDetEvento.Destroy;
@@ -437,6 +484,7 @@ begin
   Fdest.Free;
   FitemPedido.Free;
   FautXML.Free;
+  FdetPag.Free;
 
   inherited;
 end;
@@ -461,6 +509,11 @@ end;
 procedure TDetEvento.SetautXML(const Value: TautXMLCollection);
 begin
   FautXML := Value;
+end;
+
+procedure TDetEvento.SetdetPag(const Value: TdetPagCollection);
+begin
+  FdetPag := Value;
 end;
 
 procedure TDetEvento.SetitemPedido(const Value: TitemPedidoCollection);
@@ -561,6 +614,30 @@ end;
 
 procedure TautXMLCollection.SetItem(Index: Integer;
   Value: TautXMLCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TdetPagCollection }
+
+function TdetPagCollection.Add: TdetPagCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TdetPagCollection.GetItem(Index: Integer): TdetPagCollectionItem;
+begin
+  Result := TdetPagCollectionItem(inherited Items[Index]);
+end;
+
+function TdetPagCollection.New: TdetPagCollectionItem;
+begin
+  Result := TdetPagCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TdetPagCollection.SetItem(Index: Integer;
+  Value: TdetPagCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;

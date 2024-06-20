@@ -80,7 +80,8 @@ type
                 schManifDestCiencia, schManifDestDesconhecimento,
                 schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
                 schAtorInteressadoNFe, schInsucessoEntregaNFe,
-                schCancInsucessoEntregaNFe);
+                schCancInsucessoEntregaNFe, schConcFinanceira,
+                schCancConcFinanceira);
 
 const
   TSchemaNFeArrayStrings: array[TSchemaNFe] of string = ('Erro', 'Nfe',
@@ -91,12 +92,14 @@ const
     'CanPedProrrog1', 'CanPedProrrog2', 'ManifDestConfirmacao',
     'ManifDestCiencia', 'ManifDestDesconhecimento', 'ManifDestOperNaoRealizada',
     'CompEntrega', 'CancCompEntrega', 'AtorInteressadoNFe',
-    'InsucessoEntrega', 'CancInsucessoEntrega');
+    'InsucessoEntrega', 'CancInsucessoEntrega', 'ConcFinanceira',
+    'CancConcFinanceira');
 
   TEventoArrayStrings: array[TSchemaNFe] of string = ('', '', 'e110111', '',
     'e110110', '', '', 'e110140', '', '', '', '', '', '', '', '', '', '', '',
     'e110112', 'e111500', 'e111501', 'e111502', 'e111503', 'e210200', 'e210210',
-    'e210220', 'e210240', 'e110130', 'e110131', 'e110150', 'e110192', 'e110193');
+    'e210220', 'e210240', 'e110130', 'e110131', 'e110150', 'e110192', 'e110193',
+    'e110750', 'e110751');
 
 type
   TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento,
@@ -765,12 +768,13 @@ begin
                                'e111500', 'e111501', 'e111502', 'e111503',
                                'e210200', 'e210210', 'e210220', 'e210240',
                                'e110130', 'e110131', 'e110150', 'e110192',
-                               'e110193'],
+                               'e110193', 'e110750', 'e110751'],
     [schEnvCCe, schcancNFe, schCancSubst, schEnvEPEC,
      schPedProrrog1, schPedProrrog2, schCanPedProrrog1, schCanPedProrrog2,
      schManifDestConfirmacao, schManifDestCiencia, schManifDestDesconhecimento,
      schManifDestOperNaoRealizada, schCompEntrega, schCancCompEntrega,
-     schAtorInteressadoNFe, schInsucessoEntregaNFe, schCancInsucessoEntregaNFe]);
+     schAtorInteressadoNFe, schInsucessoEntregaNFe, schCancInsucessoEntregaNFe,
+     schConcFinanceira, schCancConcFinanceira]);
 end;
 
 function AutorizacaoToStr(const t: TAutorizacao): string;

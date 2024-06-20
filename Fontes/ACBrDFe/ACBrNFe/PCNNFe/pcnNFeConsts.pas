@@ -374,6 +374,8 @@ const
   DSC_PCREDPRESUMIDO = 'Percentual do Crédito Presumido';
   DSC_VCREDPRESUMIDO = 'Valor do Crédito Presumido';
   DSC_CBENEFRBC = 'Código de Benefício Fiscal na UF aplicado ao item quando houver RBC.';
+  DSC_CNPJIF = 'CNPJ da instituição financeira, de pagamento, adquirente ou subadquirente.';
+  DSC_UFRECEB = 'UF do CNPJ do estabelecimento beneficiário do pagamento.';
 
 implementation
 

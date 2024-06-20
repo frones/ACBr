@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2024
+-- Frm_ACBreSocial --
+[*] Correção na geração do grupo Vinculo do evento S2206
+Por: Renato Rubinho
+
 04/06/2024
 -- pcesConversaoeSocial --
 [*] Correção na identificação do tipo de evento ao carregar o xml

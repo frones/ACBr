@@ -3046,98 +3046,101 @@ begin
         dtEf := Now;
         dscAlt := 'descrição da alteração';
 
-        Vinculo.TpRegTrab := trCLT;
-        Vinculo.TpRegPrev := rpRGPS;
-
-        with infoRegimeTrab do
+        with Vinculo do
         begin
-          with InfoCeletista do
+          TpRegTrab := trCLT;
+          TpRegPrev := rpRGPS;
+
+          with infoRegimeTrab do
           begin
-            TpRegJor := rjSubmetidosHorarioTrabalho;
-            NatAtividade := navUrbano;
-            dtBase := 08;
-            cnpjSindCategProf := '15975395135700';
-
-            trabTemporario.justProrr := 'Prorrogado porque eu quis';
-
-            aprend.indAprend := tiapContrDireta;
-            aprend.cnpjEntQual := '12345678901234';
-            aprend.TpInsc := tpTpInsc(1);
-            aprend.NrInsc := '98765432109';
-            aprend.cnpjPrat := '12345678901234';
-          end;
-
-          // InfoEstatutario.tpPlanRP := tpPlanRP(0);
-        end;
-
-        with infoContrato do
-        begin
-          CodCargo := '123';
-          CodFuncao := '321';
-          CodCateg := 111;
-          codCarreira := '1';
-          dtIngrCarr := Now;
-          nmFuncao := 'Função';
-
-          Remuneracao.VrSalFx := 780.00;
-          Remuneracao.UndSalFixo := sfPorMes;
-          Remuneracao.DscSalVar := 'Descrição de salário variável, obrigatório caso UndSalFixo for sfNaoAplicavel';
-
-          Duracao.TpContr := PrazoIndeterminado;
-          // Duracao.dtTerm  := Date; // Obrigatório se TpContr = PrazoDeterminado!
-
-          // LocalTrabGeral não deve ser preenchido no caso de trabalhador doméstico.
-          with LocalTrabalho do
-          begin
-            LocalTrabGeral.TpInsc := tiCNPJ;
-            LocalTrabGeral.NrInsc := '12345678901234';
-            LocalTrabGeral.DescComp := 'Descrição complementar do local de trabalho.';
-
-            // LocalTrabDom - exclusivo para trabalhador doméstico,
-            // indicando endereço onde exerce suas atividades
-            (*
-            with LocalTrabDom do
+            with InfoCeletista do
             begin
-              TpLograd    := '001';
-              DscLograd   := 'Rua das Hortencias';
-              NrLograd    := '12';
-              Complemento := 'Fundos';
-              Bairro      := 'Jardim das Flores';
-              Cep         := '11001001';
-              CodMunic    := 1234567;
-              Uf          := ufPr;
+              TpRegJor := rjSubmetidosHorarioTrabalho;
+              NatAtividade := navUrbano;
+              dtBase := 08;
+              cnpjSindCategProf := '15975395135700';
+
+              trabTemporario.justProrr := 'Prorrogado porque eu quis';
+
+              aprend.indAprend := tiapContrDireta;
+              aprend.cnpjEntQual := '12345678901234';
+              aprend.TpInsc := tpTpInsc(1);
+              aprend.NrInsc := '98765432109';
+              aprend.cnpjPrat := '12345678901234';
             end;
-            *)
+
+            // InfoEstatutario.tpPlanRP := tpPlanRP(0);
           end;
 
-          with HorContratual do
+          with infoContrato do
           begin
-            QtdHrsSem := 44;
-            TpJornada := tjDemaisTiposJornada;
-            DscTpJorn := 'Descrição do tipo de jornada, obrigatório se tpJornada = tjDemaisTiposJornada';
-            tmpParc := tpNaoeTempoParcial;
-            dscJorn := 'Descrição Jornada';
+            CodCargo := '123';
+            CodFuncao := '321';
+            CodCateg := 111;
+            codCarreira := '1';
+            dtIngrCarr := Now;
+            nmFuncao := 'Função';
 
-            horario.Clear;
+            Remuneracao.VrSalFx := 780.00;
+            Remuneracao.UndSalFixo := sfPorMes;
+            Remuneracao.DscSalVar := 'Descrição de salário variável, obrigatório caso UndSalFixo for sfNaoAplicavel';
 
-            with horario.New do
+            Duracao.TpContr := PrazoIndeterminado;
+            // Duracao.dtTerm  := Date; // Obrigatório se TpContr = PrazoDeterminado!
+
+            // LocalTrabGeral não deve ser preenchido no caso de trabalhador doméstico.
+            with LocalTrabalho do
             begin
-              Dia := diSegundaFeira;
-              codHorContrat := '001';
+              LocalTrabGeral.TpInsc := tiCNPJ;
+              LocalTrabGeral.NrInsc := '12345678901234';
+              LocalTrabGeral.DescComp := 'Descrição complementar do local de trabalho.';
+
+              // LocalTrabDom - exclusivo para trabalhador doméstico,
+              // indicando endereço onde exerce suas atividades
+              (*
+              with LocalTrabDom do
+              begin
+                TpLograd    := '001';
+                DscLograd   := 'Rua das Hortencias';
+                NrLograd    := '12';
+                Complemento := 'Fundos';
+                Bairro      := 'Jardim das Flores';
+                Cep         := '11001001';
+                CodMunic    := 1234567;
+                Uf          := ufPr;
+              end;
+              *)
             end;
+
+            with HorContratual do
+            begin
+              QtdHrsSem := 44;
+              TpJornada := tjDemaisTiposJornada;
+              DscTpJorn := 'Descrição do tipo de jornada, obrigatório se tpJornada = tjDemaisTiposJornada';
+              tmpParc := tpNaoeTempoParcial;
+              dscJorn := 'Descrição Jornada';
+
+              horario.Clear;
+
+              with horario.New do
+              begin
+                Dia := diSegundaFeira;
+                codHorContrat := '001';
+              end;
+            end;
+
+            FiliacaoSindical.Clear;
+
+            with FiliacaoSindical.Add do
+              CnpjSindTrab := '12345678901234';
+
+            AlvaraJudicial.nrProcJud := '12345678901234567890';
+
+            // servPubl.mtvAlter := maPromocao;
+
+
+
           end;
-
-          FiliacaoSindical.Clear;
-
-          with FiliacaoSindical.Add do
-            CnpjSindTrab := '12345678901234';
-
-          AlvaraJudicial.nrProcJud := '12345678901234567890';
-
-          // servPubl.mtvAlter := maPromocao;
-
-
-
         end;
       end;
     end;

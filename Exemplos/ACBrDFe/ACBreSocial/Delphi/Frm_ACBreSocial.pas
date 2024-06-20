@@ -3687,8 +3687,8 @@ begin
 
         with vinculo do
         begin
+          tpRegTrab := trCLT;
           tpRegPrev := rpRGPS;
-        end;
 
         with infoRegimeTrab do
         begin
@@ -3749,7 +3749,7 @@ begin
             dtIngrCarr := Now;
           end;
 
-                                                                                     
+
           with remuneracao do
           begin
             vrSalFx := 780.00;
@@ -3790,7 +3790,7 @@ begin
               CodMunic    := 1234567;
               Uf          := 'PR';
             end;
-              
+
           end;
 }
           with horContratual do
@@ -3829,10 +3829,6 @@ begin
           with alvaraJudicial do
             nrProcJud := '12345678901234567890';
 
-          if VersaoDFx <= ve02_05_00 then
-            with servPubl do
-              mtvAlter := maPromocao;
-
           with observacoes.New do
             observacao := 'Descrever aqui qualquer observacao';
 
@@ -3841,6 +3837,7 @@ begin
 
           with treiCap.New do
             codTreiCap := 3703;
+        end;
         end;
       end;
     end;

@@ -92,6 +92,7 @@ type
       Pagamento de Títulos de Cobrança e QRCode Pix
     }
     procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); virtual;
+    procedure GeraSegmentoJ53(mSegmentoJ53List: TSegmentoJ53List); virtual;
 
     {
       Pagamento de Tributos
@@ -522,6 +523,7 @@ begin
 
       {opcionais segmento J}
       GeraSegmentoJ52(SegmentoJ52);
+      GeraSegmentoJ53(SegmentoJ53);
 //      GeraSegmentoB(SegmentoB);
 //      GeraSegmentoC(SegmentoC);
     end;
@@ -572,6 +574,44 @@ begin
       end;
 
       ValidarLinha('J52');
+      IncluirLinha;
+    end;
+  end;
+end;
+
+procedure TArquivoW_CNAB240.GeraSegmentoJ53(mSegmentoJ53List: TSegmentoJ53List);
+var
+  J: Integer;
+begin
+  // Em conformidade com o layout da Febraban versão 10.11
+  for J := 0 to mSegmentoJ53List.Count - 1 do
+  begin
+    FpLinha := '';
+
+    with mSegmentoJ53List.Items[J] do
+    begin
+      Inc(FQtdeRegistros);
+      Inc(FQtdeRegistrosLote);
+      Inc(FSequencialDoRegistroNoLote);
+
+      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
+      GravarCampo(FQtdeLotes, 4, tcInt);
+      GravarCampo('3', 1, tcStr);
+      GravarCampo(FSequencialDoRegistroNoLote, 5, tcInt);
+      GravarCampo('J', 1, tcStr);
+      GravarCampo(' ', 1, tcStr);
+      GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
+      GravarCampo('53', 2, tcStr);
+      GravarCampo(TpInscricaoToStr(Pagador.Inscricao.Tipo), 1, tcStr);
+      GravarCampo(Pagador.Inscricao.Numero, 15, tcStrZero);
+      GravarCampo(Pagador.Nome, 40, tcStr, True);
+      GravarCampo(TpInscricaoToStr(Agregador.Inscricao.Tipo), 1, tcStr);
+      GravarCampo(Agregador.Inscricao.Numero, 15, tcStrZero);
+      GravarCampo(Agregador.Nome, 40, tcStr, True);
+      GravarCampo(' ', 55, tcStr);
+      GravarCampo(' ', 53, tcStr);
+
+      ValidarLinha('J53');
       IncluirLinha;
     end;
   end;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/06/2024
+--- Diversos ---
+[+] Implementação o Segmento J53 conforme a versão 10.11 do Manual CNAB240 - Febraban.
+   Por: Italo Giurizzato Junior
+
 24/05/2024
 -- PagFor.BancodoBrasil.GravarTxtRemessa --
 [*] Alteração visando a geração do Segmento J52 com as informações da chave PIX e

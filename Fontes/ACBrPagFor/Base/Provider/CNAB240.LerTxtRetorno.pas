@@ -76,6 +76,8 @@ type
 
     procedure LerSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List; nLinha: Integer); virtual;
 
+    procedure LerSegmentoJ53(mSegmentoJ53List: TSegmentoJ53List; nLinha: Integer); virtual;
+
     procedure LerSegmentoJ99(mSegmentoJ99List: TSegmentoJ99List; nLinha: Integer); virtual;
 
     procedure LerSegmentoN(mSegmentoN: TSegmentoN); virtual;
@@ -876,6 +878,7 @@ begin
 
     {opcionais segmento J}
     LerSegmentoJ52(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ52, nLinha);
+    LerSegmentoJ53(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ53, nLinha);
     LerSegmentoJ99(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ99, nLinha);
 //    LerSegmentoB(PagFor.Lote.Last.SegmentoJ.Last.SegmentoB, I);
 //    LerSegmentoC(PagFor.Lote.Last.SegmentoJ.Last.SegmentoC, I);
@@ -917,6 +920,35 @@ begin
     SacadorAvalista.Inscricao.Tipo := StrToTpInscricao(mOk, LerCampo(Linha, 132, 1, tcStr));
     SacadorAvalista.Inscricao.Numero := LerCampo(Linha, 133, 15, tcStr);
     SacadorAvalista.Nome := LerCampo(Linha, 148, 40, tcStr);
+  end;
+end;
+
+procedure TArquivoR_CNAB240.LerSegmentoJ53(mSegmentoJ53List: TSegmentoJ53List;
+  nLinha: Integer);
+var
+  mOk: Boolean;
+  RegSegOpc: string;
+begin
+  Linha := ArquivoTXT.Strings[nLinha];
+  RegSegOpc := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr) +
+               LerCampo(Linha, 18, 2, tcStr);
+
+  if RegSegOpc <> '3J53' then
+    Exit;
+
+  mSegmentoJ53List.New;
+
+  with mSegmentoJ53List.Last do
+  begin
+    CodMovimento := StrToInMovimento(mOk, LerCampo(Linha, 16, 2, tcStr));
+
+    Pagador.Inscricao.Tipo := StrToTpInscricao(mOk, LerCampo(Linha, 20, 1, tcStr));
+    Pagador.Inscricao.Numero := LerCampo(Linha, 21, 15, tcStr);
+    Pagador.Nome := LerCampo(Linha, 36, 40, tcStr);
+
+    Agregador.Inscricao.Tipo := StrToTpInscricao(mOk, LerCampo(Linha, 76, 1, tcStr));
+    Agregador.Inscricao.Numero := LerCampo(Linha, 77, 15, tcStr);
+    Agregador.Nome := LerCampo(Linha, 92, 40, tcStr);
   end;
 end;
 

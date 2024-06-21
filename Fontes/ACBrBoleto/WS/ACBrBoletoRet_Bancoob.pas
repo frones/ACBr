@@ -122,19 +122,29 @@ begin
       LJson := TACBrJSONObject.Parse(RetWS);
       try
         ARetornoWS.JSON :=  LJson.ToJSON;
-        if LJson.IsJSONArray('resultado') then
+        if HTTPResultCode >= 300 then
         begin
-          LJsonViolacoesArray := LJson.AsJSONArray['resultado'];
-          for x := 0 to LJsonViolacoesArray.Count-1 do
+          if LJson.IsJSONArray('resultado') then
           begin
-            LJsonViolacao := LJsonViolacoesArray.ItemAsJSONObject[x];
-            if (LJsonViolacao.AsJSONObject['status'].AsString['codigo'] <> '200') then
+            LJsonViolacoesArray := LJson.AsJSONArray['resultado'];
+            for x := 0 to LJsonViolacoesArray.Count-1 do
             begin
-              LRejeicao            := ARetornoWS.CriarRejeicaoLista;
-              LRejeicao.Codigo     := LJsonViolacao.AsJSONObject['status'].AsString['codigo'];
-              LRejeicao.mensagem   := LJsonViolacao.AsJSONObject['status'].AsString['mensagem'];
+              LJsonViolacao := LJsonViolacoesArray.ItemAsJSONObject[x];
+              if (LJsonViolacao.AsJSONObject['status'].AsString['codigo'] <> '200') then
+              begin
+                LRejeicao            := ARetornoWS.CriarRejeicaoLista;
+                LRejeicao.Codigo     := LJsonViolacao.AsJSONObject['status'].AsString['codigo'];
+                LRejeicao.mensagem   := LJsonViolacao.AsJSONObject['status'].AsString['mensagem'];
+              end;
             end;
           end;
+        end;
+        if LJson.ValueExists('httpCode') then
+        begin
+          LRejeicao            := ARetornoWS.CriarRejeicaoLista;
+          LRejeicao.Codigo     := LJson.AsString['httpCode'];
+          LRejeicao.mensagem   := LJson.AsString['httpMessage'] + '. ' + LJson.AsString['moreInformation'];
+          ARetornoWS.MsgRetorno:= LJson.AsString['httpMessage'] + '. ' + LJson.AsString['moreInformation'];
         end;
 
         if LJson.IsJSONObject('resultado') and LJson.AsJSONObject['resultado'].IsJSONArray('mensagens') then

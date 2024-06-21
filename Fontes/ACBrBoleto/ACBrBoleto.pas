@@ -3321,9 +3321,6 @@ begin
     cjValorDia   : LTipoJuros := FormatFloatBr(ATitulo.ValorMoraJuros, 'R$ #,##0.00 por dia');
   end;
 
-  if (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
-    LTipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao mês';
-
   if ATitulo.DataMoraJuros <> 0 then
   begin
     if ATitulo.Vencimento = ATitulo.DataMoraJuros then

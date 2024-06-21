@@ -612,7 +612,10 @@ begin
       Exit;
     end;
     if SNIHost<>'' then
+    begin
       SSLCtrl(Fssl, SSL_CTRL_SET_TLSEXT_HOSTNAME, TLSEXT_NAMETYPE_host_name, PAnsiChar(AnsiString(SNIHost)));
+      SslSet1Host(Fssl, PAnsiChar(AnsiString(SNIHost)));
+    end;
     if FSocket.ConnectionTimeout <= 0 then //do blocking call of SSL_Connect
     begin
       x := sslconnect(FSsl);

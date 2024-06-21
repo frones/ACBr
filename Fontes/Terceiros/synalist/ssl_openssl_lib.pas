@@ -818,6 +818,7 @@ var
   function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer):Integer;
   function SSLGetVerifyResult(ssl: PSSL):Integer;
   function SSLCtrl(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer;
+  function SslSet1Host(ssl: PSSL; hostname: PAnsiChar):Integer;
 
 // libeay.dll
   function X509New: PX509;
@@ -875,6 +876,7 @@ var
   procedure SkX509PopFree(st: PSTACK; func: TSkPopFreeFunc); {pf}
   function OPENSSL_sk_num(Stack: PSTACK): Integer;
   function OPENSSL_sk_value(Stack: PSTACK; Item: Integer): PAnsiChar;
+  procedure OPENSSL_sk_pop_free(Stack: PSTACK; func: TSkPopFreeFunc);
   function X509_STORE_add_cert(Store: PX509_STORE; Cert: PX509): Integer;
   function SSL_CTX_get_cert_store(const Ctx: PSSL_CTX): PX509_STORE;
 
@@ -955,6 +957,7 @@ type
   TSSLCipherGetBits = function(c: SslPtr; alg_bits: PInteger):Integer; cdecl;
   TSSLGetVerifyResult = function(ssl: PSSL):Integer; cdecl;
   TSSLCtrl = function(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer; cdecl;
+  TSslSet1Host = function(ssl: PSSL; hostname: PAnsiChar):Integer; cdecl;
 
   TSSLSetTlsextHostName = function(ssl: PSSL; buf: PAnsiChar):Integer; cdecl;
 
@@ -963,6 +966,7 @@ type
   TOPENSSL_sk_num = function(Stack: PSTACK): Integer; cdecl;
   TOPENSSL_sk_value = function(Stack: PSTACK; Item: Integer): PAnsiChar; cdecl;
   TOPENSSL_sk_free = procedure(Stack: PSTACK); cdecl;
+  TOPENSSL_sk_pop_free = procedure(Stack: PSTACK; func: TSkPopFreeFunc); cdecl;
   TOPENSSL_sk_insert = function(Stack: PSTACK; Data: PAnsiChar; Index: Integer): Integer; cdecl;
   TX509_dup = function(X: PX509): PX509; cdecl;
   TSSL_CTX_get_cert_store =  function(const Ctx: PSSL_CTX): PX509_STORE;cdecl;
@@ -1018,7 +1022,6 @@ type
   Ti2dX509bio = function(b: PBIO; x: PX509): integer; cdecl;
   Td2iX509bio = function(b:PBIO;  x:PX509):   PX509;   cdecl; {pf}
   TPEMReadBioX509 = function(b:PBIO;  {var x:PX509;}x:PSslPtr; callback:PFunction; cb_arg:SslPtr): PX509;   cdecl; {pf}
-  TSkX509PopFree = procedure(st: PSTACK; func: TSkPopFreeFunc); cdecl; {pf}
   Ti2dPrivateKeyBio= function(b: PBIO; pkey: EVP_PKEY): integer; cdecl;
 
   // 3DES functions
@@ -1077,12 +1080,14 @@ var
   _SSLCipherGetBits: TSSLCipherGetBits = nil;
   _SSLGetVerifyResult: TSSLGetVerifyResult = nil;
   _SSLCtrl: TSSLCtrl = nil;
+  _SslSet1Host: TSslSet1Host = nil;
 
 // libeay.dll
   _OPENSSL_sk_new_null: TOPENSSL_sk_new_null  = nil;
   _OPENSSL_sk_num: TOPENSSL_sk_num  = nil;
   _OPENSSL_sk_value: TOPENSSL_sk_value  = nil;
   _OPENSSL_sk_free: TOPENSSL_sk_free   = nil;
+  _OPENSSL_sk_pop_free: TOPENSSL_sk_pop_free = nil;
   _OPENSSL_sk_insert: TOPENSSL_sk_insert = nil;
   _SSL_CTX_get_cert_store : TSSL_CTX_get_cert_store = nil;
   _X509_STORE_add_cert : TX509_STORE_add_cert = nil;
@@ -1136,7 +1141,6 @@ var
   _i2dX509bio: Ti2dX509bio = nil;
   _d2iX509bio: Td2iX509bio = nil; {pf}
   _PEMReadBioX509: TPEMReadBioX509 = nil; {pf}
-  _SkX509PopFree: TSkX509PopFree = nil; {pf}
   _i2dPrivateKeyBio: Ti2dPrivateKeyBio = nil;
 
   // 3DES functions
@@ -1526,6 +1530,14 @@ begin
     Result := X509_V_ERR_APPLICATION_VERIFICATION;
 end;
 
+function SslSet1Host(ssl: PSSL; hostname: PAnsiChar):Integer;
+begin
+  if InitSSLInterface and Assigned(_SslSet1Host) then
+    Result := _SslSet1Host(ssl, hostname)
+  else
+    Result := 0;
+end;
+
 // libeay.dll
 function X509New: PX509;
 begin
@@ -1898,6 +1910,12 @@ begin
     Result := Nil;
 end;
 
+procedure OPENSSL_sk_pop_free(Stack: PSTACK; func: TSkPopFreeFunc);
+begin
+  if InitSSLInterface and Assigned(_OPENSSL_sk_pop_free) then
+    _OPENSSL_sk_pop_free(Stack, func);
+end;
+
 function X509_STORE_add_cert(Store: PX509_STORE; Cert: PX509): Integer;
 begin
   if InitSSLInterface and Assigned(_X509_STORE_add_cert) then
@@ -1908,8 +1926,7 @@ end;
 
 procedure SkX509PopFree(st: PSTACK; func:TSkPopFreeFunc); {pf}
 begin
-  if InitSSLInterface and Assigned(_SkX509PopFree) then
-    _SkX509PopFree(st,func);
+  OPENSSL_sk_pop_free(st, func);
 end;
 
 function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): integer;
@@ -2156,11 +2173,13 @@ begin
         _SslCipherGetBits := GetProcAddr(SSLLibHandle, 'SSL_CIPHER_get_bits');
         _SslGetVerifyResult := GetProcAddr(SSLLibHandle, 'SSL_get_verify_result');
         _SslCtrl := GetProcAddr(SSLLibHandle, 'SSL_ctrl');
+        _SslSet1Host := GetProcAddr(SSLLibHandle, 'SSL_set1_host');
 
         _OPENSSL_sk_new_null:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
         _OPENSSL_sk_num:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
         _OPENSSL_sk_value:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');
         _OPENSSL_sk_free:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_free');
+        _OPENSSL_sk_pop_free:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_pop_free');
         _OPENSSL_sk_insert:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_insert');
         _SSL_CTX_get_cert_store:= GetProcAddr(SSLLibHandle, 'SSL_CTX_get_cert_store');
         _X509_STORE_add_cert := GetProcAddr(SSLUtilHandle, 'X509_STORE_add_cert');
@@ -2223,7 +2242,6 @@ begin
         _i2dX509bio := GetProcAddr(SSLUtilHandle, 'i2d_X509_bio');
         _d2iX509bio := GetProcAddr(SSLUtilHandle, 'd2i_X509_bio'); {pf}
         _PEMReadBioX509 := GetProcAddr(SSLUtilHandle, 'PEM_read_bio_X509'); {pf}
-        _SkX509PopFree := GetProcAddr(SSLUtilHandle, 'SK_X509_POP_FREE'); {pf}
         _i2dPrivateKeyBio := GetProcAddr(SSLUtilHandle, 'i2d_PrivateKey_bio');
 
         // 3DES functions
@@ -2365,10 +2383,13 @@ begin
     _SslCipherGetBits := nil;
     _SslGetVerifyResult := nil;
     _SslCtrl := nil;
+    _SslSet1Host := nil;
+
     _OPENSSL_sk_new_null := nil;
     _OPENSSL_sk_num := nil;
     _OPENSSL_sk_value := nil;
     _OPENSSL_sk_free := nil;
+    _OPENSSL_sk_pop_free := nil;
     _OPENSSL_sk_insert := nil;
     _SSL_CTX_get_cert_store := nil;
     _X509_STORE_add_cert := nil;
@@ -2420,7 +2441,6 @@ begin
     _Asn1UtctimeFree := nil;
     _Asn1IntegerSet := nil;
     _Asn1IntegerGet := nil; {pf}
-    _SkX509PopFree := nil; {pf}
     _i2dX509bio := nil;
     _i2dPrivateKeyBio := nil;
 

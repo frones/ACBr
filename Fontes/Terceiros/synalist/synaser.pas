@@ -1,5 +1,5 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 007.007.001 |
+| Project : Ararat Synapse                                       | 007.007.003 |
 |==============================================================================|
 | Content: Serial port support                                                 |
 |==============================================================================|
@@ -2450,7 +2450,7 @@ end;
 {$IFNDEF MSWINDOWS}
 function GetSerialPortNames: string;
 const
-  ATTR = {$IFDEF POSIX}$7FFFFFFF{$ELSE}$FFFFFFFF{$ENDIF};
+  ATTR = {$IFDEF POSIX}$7FFFFFFF{$ELSE}longint($FFFFFFFF){$ENDIF};
 var
   sr : TSearchRec;
 begin
@@ -2475,6 +2475,15 @@ begin
   end;
   FindClose(sr);
   if FindFirst('/dev/ttyAM*', ATTR, sr) = 0 then begin
+    repeat
+      if (sr.Attr and ATTR) = Sr.Attr then begin
+        if Result <> '' then Result := Result + ',';
+        Result := Result + '/dev/' + sr.Name;
+      end;
+    until FindNext(sr) <> 0;
+  end;
+  FindClose(sr);
+  if FindFirst('/dev/ttyACM*', ATTR, sr) = 0 then begin
     repeat
       if (sr.Attr and ATTR) = Sr.Attr then begin
         if Result <> '' then Result := Result + ',';

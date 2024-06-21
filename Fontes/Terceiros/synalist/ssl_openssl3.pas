@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 001.000.000 |
+| Project : Ararat Synapse                                       | 001.000.001 |
 |==============================================================================|
 | Content: SSL support by OpenSSL                                              |
 |==============================================================================|
-| Copyright (c)1999-2022, Lukas Gebauer                                        |
+| Copyright (c)1999-2023, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c)2005-2022.                |
+| Portions created by Lukas Gebauer are Copyright (c)2005-2023.                |
 | Portions created by Petr Fejfar are Copyright (c)2011-2012.                  |
 | All Rights Reserved.                                                         |
 |==============================================================================|
@@ -435,7 +435,6 @@ begin
           SslCtxCtrl(Fctx, SSL_CTRL_SET_MAX_PROTO_VERSION, TLS1_3_VERSION, nil);
         end;
     end;
-    
     s := FCiphers;
     SslCtxSetCipherList(Fctx, s);
     if FVerifyCert then
@@ -508,7 +507,10 @@ begin
       Exit;
     end;
     if SNIHost<>'' then
+    begin
       SSLCtrl(Fssl, SSL_CTRL_SET_TLSEXT_HOSTNAME, TLSEXT_NAMETYPE_host_name, PAnsiChar(AnsiString(SNIHost)));
+      SslSet1Host(Fssl, PAnsiChar(AnsiString(SNIHost)));
+    end;
     if FSocket.ConnectionTimeout <= 0 then //do blocking call of SSL_Connect
     begin
       x := sslconnect(FSsl);

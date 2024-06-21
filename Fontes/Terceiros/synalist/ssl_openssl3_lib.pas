@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 001.000.000 |
+| Project : Ararat Synapse                                       | 001.000.001 |
 |==============================================================================|
 | Content: SSL support by OpenSSL 3.0                                          |
 |==============================================================================|
-| Copyright (c)1999-2022, Lukas Gebauer                                        |
+| Copyright (c)1999-2023, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c)2002-2022.                |
+| Portions created by Lukas Gebauer are Copyright (c)2002-2023.                |
 | Portions created by Petr Fejfar are Copyright (c)2011-2012.                  |
 | All Rights Reserved.                                                         |
 |==============================================================================|
@@ -282,6 +282,7 @@ var
   function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer):Integer;
   function SSLGetVerifyResult(ssl: PSSL):Integer;
   function SSLCtrl(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer;
+  function SslSet1Host(ssl: PSSL; hostname: PAnsiChar):Integer;
 
 // libeay.dll
 
@@ -397,6 +398,7 @@ type
   TSSLCipherGetBits = function(c: SslPtr; alg_bits: PInteger):Integer; cdecl;
   TSSLGetVerifyResult = function(ssl: PSSL):Integer; cdecl;
   TSSLCtrl = function(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer; cdecl;
+  TSslSet1Host = function(ssl: PSSL; hostname: PAnsiChar):Integer; cdecl;
 
   TSSLSetTlsextHostName = function(ssl: PSSL; buf: PAnsiChar):Integer; cdecl;
 
@@ -498,7 +500,8 @@ var
   _SSLCipherGetBits: TSSLCipherGetBits = nil;
   _SSLGetVerifyResult: TSSLGetVerifyResult = nil;
   _SSLCtrl: TSSLCtrl = nil;
-
+  _SslSet1Host: TSslSet1Host = nil;
+  
 // libeay.dll
 
   _OPENSSL_sk_new_null: TOPENSSL_sk_new_null  = nil;
@@ -843,6 +846,14 @@ begin
     Result := _SSLCtrl(ssl, cmd, larg, parg)
   else
     Result := X509_V_ERR_APPLICATION_VERIFICATION;
+end;
+
+function SslSet1Host(ssl: PSSL; hostname: PAnsiChar):Integer;
+begin
+  if InitSSLInterface and Assigned(_SslSet1Host) then
+    Result := _SslSet1Host(ssl, hostname)
+  else
+    Result := 0;
 end;
 
 // libeay.dll
@@ -1300,7 +1311,8 @@ begin
         _SslCipherGetBits := GetProcAddr(SSLLibHandle, 'SSL_CIPHER_get_bits');
         _SslGetVerifyResult := GetProcAddr(SSLLibHandle, 'SSL_get_verify_result');
         _SslCtrl := GetProcAddr(SSLLibHandle, 'SSL_ctrl');
-
+        _SslSet1Host := GetProcAddr(SSLLibHandle, 'SSL_set1_host');
+        
         _OPENSSL_sk_new_null:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
         _OPENSSL_sk_num:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
         _OPENSSL_sk_value:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');
@@ -1449,6 +1461,7 @@ begin
     _SslCipherGetBits := nil;
     _SslGetVerifyResult := nil;
     _SslCtrl := nil;
+    _SslSet1Host := nil;
 
     _X509New := nil;
     _X509Free := nil;

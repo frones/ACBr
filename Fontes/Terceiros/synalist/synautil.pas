@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 004.015.007 |
+| Project : Ararat Synapse                                       | 004.016.001 |
 |==============================================================================|
 | Content: support procedures and functions                                    |
 |==============================================================================|
-| Copyright (c)1999-2017, Lukas Gebauer                                        |
+| Copyright (c)1999-2024, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c) 1999-2017.               |
+| Portions created by Lukas Gebauer are Copyright (c) 1999-2024.               |
 | Portions created by Hernan Sanchez are Copyright (c) 2000.                   |
 | Portions created by Petr Fejfar are Copyright (c)2011-2012.                  |
 | All Rights Reserved.                                                         |
@@ -125,6 +125,9 @@ function TimeZone: string;
  specification. Four digit year is used to break any Y2K concerns. (Example
  'Fri, 15 Oct 1999 21:14:56 +0200')}
 function Rfc822DateTime(t: TDateTime): string;
+
+{:Returns date and time in format defined in RFC-3339 in format "yyyy-mm-ddThh:nn:ss.zzz"}
+function Rfc3339DateTime(t: TDateTime): string;
 
 {:Returns date and time in format defined in C compilers in format "mmm dd hh:nn:ss"}
 function CDateTime(t: TDateTime): string;
@@ -489,6 +492,13 @@ begin
   DecodeDate(t, wYear, wMonth, wDay);
   Result := Format('%s, %d %s %s %s', [MyDayNames[DayOfWeek(t)], wDay,
     MyMonthNames[1, wMonth], FormatDateTime('yyyy hh":"nn":"ss', t), TimeZone]);
+end;
+
+{==============================================================================}
+
+function Rfc3339DateTime(t: TDateTime): string;
+begin
+  Result := FormatDateTime('yyyy"-"mm"-"dd"T"hh":"nn":"ss"."zzz', t) + Timezone;
 end;
 
 {==============================================================================}

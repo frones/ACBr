@@ -466,6 +466,8 @@ type
                  const sigbuf: PByte; siglen: cuint; arsa: PRSA): cint;
   Trsa_keygen = function(arsa: PRSA; bits: cint; e: PBIGNUM; cb: PBN_GENCB): cint;
 
+  Tsk_pop_free_func = procedure (p : Pointer);
+
   RSA_METHOD = record
     name: PAnsiChar;
     rsa_pub_enc: Trsa_pub_enc;
@@ -1332,6 +1334,7 @@ var
   function i2dPrivateKeyBio(b: PBIO; pkey: PEVP_PKEY): cInt;
   function OPENSSL_sk_num(Stack: PSTACK): Integer;
   function OPENSSL_sk_value(Stack: PSTACK; Item: Integer): PAnsiChar;
+  procedure OPENSSL_sk_pop_free(Stack: PSTACK; func: Tsk_pop_free_func);
   function X509_STORE_add_cert(Store: PX509_STORE; Cert: PX509): Integer;
   function SSL_CTX_get_cert_store(const Ctx: PSSL_CTX): PX509_STORE;
 
@@ -1675,6 +1678,8 @@ function InitLibeaInterface(AVerboseLoading: Boolean = false): Boolean; deprecat
 function DestroySSLEAInterface: Boolean; deprecated;
 function DestroyLibeaInterface: Boolean; deprecated;
 
+function LibNumVersion: String;
+function LibVersionIsGreaterThan1_0_0: Boolean;
 
 var
   OpenSSL_unavailable_functions: string;
@@ -1762,6 +1767,22 @@ function DestroyLibeaInterface: Boolean; deprecated;
 
 begin
   Result:=DestroySSLInterface;
+end;
+
+function LibNumVersion: String;
+begin
+  Result := IntToHex(OpenSSLVersionNum, 9);
+end;
+
+function LibVersionIsGreaterThan1_0_0: Boolean;
+var
+  Major, Minor: Integer;
+  s: String;
+begin
+  s := LibNumVersion;
+  Major := StrToIntDef(copy(s, 1, 2), 0);
+  Minor := StrToIntDef(copy(s, 3, 2), 0);
+  Result :=  (Major > 1) or ((Major = 1) and (Minor > 0));
 end;
 
 type
@@ -1887,6 +1908,7 @@ type
   TOPENSSL_sk_num = function(Stack: PSTACK): Integer; cdecl;
   TOPENSSL_sk_value = function(Stack: PSTACK; Item: Integer): PAnsiChar; cdecl;
   TOPENSSL_sk_free = procedure(Stack: PSTACK); cdecl;
+  TOPENSSL_sk_pop_free = procedure(Stack: PSTACK; func: Tsk_pop_free_func); cdecl;
   TOPENSSL_sk_insert = function(Stack: PSTACK; Data: PAnsiChar; Index: Integer): Integer; cdecl;
   TX509_dup = function(X: PX509): PX509; cdecl;
   TSSL_CTX_get_cert_store =  function(const Ctx: PSSL_CTX): PX509_STORE;cdecl;
@@ -2168,6 +2190,7 @@ var
   _OPENSSL_sk_new_null: TOPENSSL_sk_new_null  = nil;
   _OPENSSL_sk_num: TOPENSSL_sk_num  = nil;
   _OPENSSL_sk_value: TOPENSSL_sk_value  = nil;
+  _OPENSSL_sk_pop_free: TOPENSSL_sk_pop_free = nil;
   _OPENSSL_sk_free: TOPENSSL_sk_free   = nil;
   _OPENSSL_sk_insert: TOPENSSL_sk_insert = nil;
   _SSL_CTX_get_cert_store : TSSL_CTX_get_cert_store = nil;
@@ -3403,6 +3426,12 @@ begin
     Result := _OPENSSL_sk_value(Stack, Item)
   else
     Result := Nil;
+end;
+
+procedure OPENSSL_sk_pop_free(Stack: PSTACK; func: Tsk_pop_free_func);
+begin
+  if InitSSLInterface and Assigned(_OPENSSL_sk_pop_free) then
+    _OPENSSL_sk_pop_free(Stack, func);
 end;
 
 function X509_STORE_add_cert(Store: PX509_STORE; Cert: PX509): Integer;
@@ -5669,6 +5698,7 @@ begin
   _OPENSSL_sk_new_null:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
   _OPENSSL_sk_num:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
   _OPENSSL_sk_value:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');
+  _OPENSSL_sk_pop_free:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_pop_free');
   _OPENSSL_sk_free:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_free');
   _OPENSSL_sk_insert:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_insert');
   _SSL_CTX_get_cert_store:= GetProcAddr(SSLLibHandle, 'SSL_CTX_get_cert_store');
@@ -6213,6 +6243,7 @@ begin
   _OPENSSL_sk_new_null := nil;
   _OPENSSL_sk_num := nil;
   _OPENSSL_sk_value := nil;
+  _OPENSSL_sk_pop_free := nil;
   _OPENSSL_sk_free := nil;
   _OPENSSL_sk_insert := nil;
   _SSL_CTX_get_cert_store := nil;

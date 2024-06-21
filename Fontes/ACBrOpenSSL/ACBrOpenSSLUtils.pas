@@ -196,6 +196,7 @@ type
     procedure LoadPublicKeyFromString(const APublicKey: AnsiString);
     procedure LoadPublicKeyFromModulusAndExponent(const Modulus, Exponent: String);
     function ExtractModulusAndExponentFromPublicKey(out Modulus: String; out Exponent: String): Boolean;
+    function ExtractModulusAndExponentFromPrivateKey(out Modulus: String; out Exponent: String): Boolean;
     function GeneratePublicKeyFromPrivateKey: String;
 
     function CreateCertificateSignRequest(const CN_CommonName: String;
@@ -1380,6 +1381,13 @@ function TACBrOpenSSLUtils.ExtractModulusAndExponentFromPublicKey(out
 begin
   CheckPublicKeyIsLoaded;
   Result := ExtractModulusAndExponentFromKey(fEVP_PublicKey, Modulus, Exponent);
+end;
+
+function TACBrOpenSSLUtils.ExtractModulusAndExponentFromPrivateKey(out
+  Modulus: String; out Exponent: String): Boolean;
+begin
+  CheckPrivateKeyIsLoaded;
+  Result := ExtractModulusAndExponentFromKey(fEVP_PrivateKey, Modulus, Exponent);
 end;
 
 function TACBrOpenSSLUtils.GeneratePublicKeyFromPrivateKey: String;

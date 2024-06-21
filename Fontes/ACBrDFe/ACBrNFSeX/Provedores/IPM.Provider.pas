@@ -305,28 +305,31 @@ var
   ANota: TNotaFiscal;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('rps');
+
   if Assigned(AuxNode) then
-  begin
     NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nro_recibo_provisorio'), tcStr);
-    if NumRps <> '' then
-      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+
+  if NumRps <> '' then
+    ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps)
+  else
+    ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+
+  if (not Assigned(ANota)) and (TACBrNFSeX(FAOwner).NotasFiscais.Count > 0) then
+    ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[0];
+
+  if Assigned(ANota) then
+  begin
+    if ANota.XmlRps = '' then
+      LXmlNota := GerarXMLNota(ANota.XmlNfse, Response)
     else
-      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(Response.NumeroNota);
+      LXmlNota := GerarXMLNota(ANota.XmlRps, Response);
 
-    if Assigned(ANota) then
+    if LXmlNota <> '' then
     begin
-      if ANota.XmlRps = '' then
-        LXmlNota := GerarXMLNota(ANota.XmlNfse, Response)
-      else
-        LXmlNota := GerarXMLNota(ANota.XmlRps, Response);
+      ANota.XmlNfse := LXmlNota;
+      SalvarXmlNfse(ANota);
 
-      if LXmlNota <> '' then
-      begin
-        ANota.XmlNfse := LXmlNota;
-        SalvarXmlNfse(ANota);
-
-        AResumo.NomeArq := ANota.NomeArq;
-      end;
+      AResumo.NomeArq := ANota.NomeArq;
     end;
   end;
 end;

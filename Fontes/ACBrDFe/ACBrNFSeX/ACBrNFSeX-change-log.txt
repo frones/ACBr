@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/06/2024
+-- IPM.Provider --
+[*] Alteração na procedure MontarXmlNFSe visando montar o XML da nota mesmo
+    quando o provedor no retorno não consta o numero do RPS.
+  Por: Limber Software
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Castelo/ES, provedor é o EL.
   Por: Christian

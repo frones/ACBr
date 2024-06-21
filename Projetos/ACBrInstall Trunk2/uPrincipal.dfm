@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgFinalizar
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -22,7 +22,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgFinalizar
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -540,7 +540,10 @@ object frmPrincipal: TfrmPrincipal
           Top = 37
           Width = 305
           Height = 17
-          Hint = 'Desabilita o uso das Dlls da OpenSLL'
+          Hint = 
+            'Habilitar exporta'#231#227'o PNG para os Relat'#243'rios com suporte, caso co' +
+            'ntr'#225'rio somente exporta'#231#227'o em PDF '#13#10'- Requer vers'#227'o do FastRepor' +
+            't com suporte ao recurso'
           Caption = 'Utilizar exporta'#231#227'o PNG (Fast Report) *requer exportador'
           ParentShowHint = False
           ShowHint = True
@@ -552,8 +555,9 @@ object frmPrincipal: TfrmPrincipal
           Width = 305
           Height = 17
           Hint = 
-            '*Recomendado A Carga de DLL ser'#225' executada quando necess'#225'rio, e ' +
-            'n'#227'o no carregamento inicial da aplica'#231#227'o'
+            'Habilitar exporta'#231#227'o SVG para os Relat'#243'rios com suporte, caso co' +
+            'ntr'#225'rio somente exporta'#231#227'o em PDF '#13#10'- Requer vers'#227'o do FastRepor' +
+            't com suporte ao recurso'
           Caption = 'Utilizar exporta'#231#227'o SVG (Fast Report) *requer exportador'
           ParentShowHint = False
           ShowHint = True
@@ -1079,7 +1083,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 6
         Top = 188
         Width = 547
-        Height = 23
+        Height = 25
         Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 183620
@@ -1179,7 +1183,7 @@ object frmPrincipal: TfrmPrincipal
       object Label14: TLabel
         Left = 15
         Top = 424
-        Width = 530
+        Width = 486
         Height = 46
         Alignment = taCenter
         Caption = 
@@ -1488,7 +1492,6 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

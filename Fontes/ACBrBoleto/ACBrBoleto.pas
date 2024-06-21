@@ -3314,6 +3314,17 @@ end;
 function TACBrBoleto.GerarMensagemPadraoJuros(ATitulo: TACBrTitulo): String;
 var LTipoJuros, LJurosQuando : String;
 begin
+  if (ATitulo.CodigoMora <> '') and
+     (ATitulo.CodigoMoraJuros = cjIsento) and
+     (ATitulo.ValorMoraJuros > 0) and
+     (not (ATitulo.CodigoMoraJuros in [cjValorMensal,cjValorDia])) then
+  begin
+    if (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B')  then
+      ATitulo.CodigoMoraJuros := cjTaxaMensal;
+    if ATitulo.CodigoMora = '1' then
+      ATitulo.CodigoMoraJuros := cjValorDia;
+  end;
+
   case ATitulo.CodigoMoraJuros of
     cjTaxaMensal : LTipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao mês';
     cjTaxaDiaria : LTipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao dia';
@@ -4116,6 +4127,10 @@ begin
             SeuNumero           := IniBoletos.ReadString(Sessao,'SeuNumero',SeuNumero);
             PercentualMulta     := IniBoletos.ReadFloat(Sessao,'PercentualMulta',PercentualMulta);
             CodigoMora          := IniBoletos.ReadString(Sessao,'CodigoMora','1');
+
+            if (ValorMoraJuros > 0) and (CodigoMora = '0') then
+              CodigoMora := '1';
+
             CodigoMoraJuros     := TACBrCodigoJuros(IniBoletos.ReadInteger(Sessao,'CodigoMoraJuros', 2 ));
             CodigoGeracao       := IniBoletos.ReadString(Sessao,'CodigoGeracao','2');
             Competencia         := IniBoletos.ReadString(Sessao,'Competencia', Competencia);

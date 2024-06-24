@@ -314,6 +314,16 @@ begin
     try
       LConsulta.Delimiter := '&';
       case Boleto.Configuracoes.WebService.Operacao of
+        tpConsulta :
+          begin
+            LConsulta.Add('id_beneficiario=' + LId_Beneficiario);
+
+            if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0 then
+              LConsulta.Add('data_inclusao=' + FormatDateBr(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio, 'YYYY-MM-DD'));
+
+            if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
+              LConsulta.Add('page=' + IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
+          end;
         tpConsultaDetalhe :
           begin
             LConsulta.Add('id_beneficiario=' + LId_Beneficiario);

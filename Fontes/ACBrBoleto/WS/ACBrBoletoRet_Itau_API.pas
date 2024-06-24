@@ -369,6 +369,11 @@ begin
         //retorna quando tiver sucesso
         if (ListaRetorno.ListaRejeicao.Count = 0) then
         begin
+          if LJsonObject.IsJSONObject('pagination') then
+          begin
+            ListaRetorno.indicadorContinuidade := LJsonObject.AsJSONObject['pagination'].AsInteger['total_pages'] - (LJsonObject.AsJSONObject['pagination'].AsInteger['page'] + 1) > 0;
+            ListaRetorno.proximoIndice         := LJsonObject.AsJSONObject['pagination'].AsInteger['page'] + 1;
+          end;
           LJsonArray := LJsonObject.AsJSONArray['data'];
           if LJsonArray.Count = 0 then
           begin

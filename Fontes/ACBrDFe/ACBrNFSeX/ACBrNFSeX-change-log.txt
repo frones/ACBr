@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/06/2024
+-- IPM.Provider --
+[*] Alteração visando converter retornos no formato ANSI em UTF-8.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLISSNet --
 [*] Na impressão os campos Nome Fantasia e Razão Social estavam se sobrepondo.
   Por: Wilson Andrade

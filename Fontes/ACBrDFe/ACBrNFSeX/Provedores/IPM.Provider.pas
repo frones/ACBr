@@ -1407,7 +1407,7 @@ var
   jDocument, JSonErro: TACBrJSONObject;
   Codigo, Mensagem, Xml: string;
 begin
-  Xml := ConverteXMLtoUTF8(aXml);
+  Xml := ConverteANSIparaUTF8(aXml);
   Xml := RemoverDeclaracaoXML(Xml);
 
   if (Pos('{"', Xml) > 0) and (Pos('":"', Xml) > 0) then
@@ -1536,7 +1536,7 @@ var
   jDocument, JSonErro: TACBrJSONObject;
   Codigo, Mensagem, Xml: string;
 begin
-  Xml := ConverteXMLtoUTF8(aXml);
+  Xml := ConverteANSIparaUTF8(aXml);
   Xml := RemoverDeclaracaoXML(Xml);
 
   if (Pos('{"', Xml) > 0) and (Pos('":"', Xml) > 0) then
@@ -1868,7 +1868,7 @@ var
   jDocument, JSonErro: TACBrJSONObject;
   Codigo, Mensagem, Xml: string;
 begin
-  Xml := ConverteXMLtoUTF8(aXml);
+  Xml := ConverteANSIparaUTF8(aXml);
   Xml := RemoverDeclaracaoXML(Xml);
 
   if (Pos('{"', Xml) > 0) and (Pos('":"', Xml) > 0) then

@@ -165,7 +165,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       Left = 23
       Top = 108
       Width = 748
-      Height = 160
+      Height = 161
       Margins.BottomMargin = 1.000000000000000000
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -175,7 +175,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       Borders.DrawBottom = True
       BeforePrint = rlbPrestadorBeforePrint
       object RLLabel30: TRLLabel
-        Left = 118
+        Left = 125
         Top = 134
         Width = 25
         Height = 14
@@ -189,7 +189,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object RLLabel32: TRLLabel
-        Left = 119
+        Left = 122
         Top = 120
         Width = 58
         Height = 14
@@ -203,7 +203,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestInscMunicipal: TRLLabel
-        Left = 145
+        Left = 152
         Top = 134
         Width = 100
         Height = 14
@@ -216,7 +216,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestCNPJ: TRLLabel
-        Left = 179
+        Left = 186
         Top = 120
         Width = 61
         Height = 14
@@ -229,7 +229,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rliPrestLogo: TRLImage
-        Left = 8
+        Left = 4
         Top = 35
         Width = 101
         Height = 110
@@ -237,20 +237,20 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Scaled = True
       end
       object rllPrestNome: TRLLabel
-        Left = 119
+        Left = 118
         Top = 33
-        Width = 86
+        Width = 104
         Height = 16
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object RLLabel69: TRLLabel
-        Left = 255
+        Left = 262
         Top = 134
         Width = 21
         Height = 14
@@ -264,7 +264,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestInscEstadual: TRLLabel
-        Left = 278
+        Left = 285
         Top = 134
         Width = 97
         Height = 14
@@ -477,23 +477,23 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
       end
       object rllPrestFantasia: TRLLabel
-        Left = 119
+        Left = 121
         Top = 49
-        Width = 93
-        Height = 15
+        Width = 119
+        Height = 16
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object rllPrestEndereco: TRLMemo
-        Left = 119
+        Left = 126
         Top = 67
-        Width = 358
-        Height = 47
+        Width = 353
+        Height = 48
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
@@ -521,7 +521,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbTomador: TRLBand
       Left = 23
-      Top = 368
+      Top = 369
       Width = 748
       Height = 145
       Margins.BottomMargin = 1.000000000000000000
@@ -859,7 +859,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbHeaderItens: TRLBand
       Left = 23
-      Top = 513
+      Top = 514
       Width = 748
       Height = 27
       BandType = btColumnHeader
@@ -885,7 +885,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbItens: TRLBand
       Left = 23
-      Top = 556
+      Top = 557
       Width = 748
       Height = 26
       Margins.BottomMargin = 1.000000000000000000
@@ -912,7 +912,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 650
+      Top = 651
       Width = 748
       Height = 130
       Margins.BottomMargin = 1.000000000000000000
@@ -1785,7 +1785,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 780
+      Top = 781
       Width = 748
       Height = 50
       BandType = btSummary
@@ -1840,7 +1840,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 853
+      Top = 854
       Width = 748
       Height = 73
       BandType = btSummary
@@ -2003,7 +2003,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbHeaderItensDetalhado: TRLBand
       Left = 23
-      Top = 540
+      Top = 541
       Width = 748
       Height = 16
       BandType = btColumnHeader
@@ -2071,7 +2071,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object subItens: TRLSubDetail
       Left = 23
-      Top = 582
+      Top = 583
       Width = 748
       Height = 18
       Borders.Sides = sdCustom
@@ -2149,7 +2149,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object RLBand1: TRLBand
       Left = 23
-      Top = 830
+      Top = 831
       Width = 748
       Height = 23
       BandType = btSummary
@@ -2199,7 +2199,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbDadosNota: TRLBand
       Left = 23
-      Top = 268
+      Top = 269
       Width = 748
       Height = 100
       Margins.BottomMargin = 1.000000000000000000
@@ -2472,7 +2472,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rbConstrucao: TRLBand
       Left = 23
-      Top = 600
+      Top = 601
       Width = 748
       Height = 50
       Margins.BottomMargin = 1.000000000000000000

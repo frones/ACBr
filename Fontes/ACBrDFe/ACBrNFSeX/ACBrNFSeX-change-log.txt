@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/06/2024
+-- ACBrNFSeXDANFSeRLISSNet --
+[*] Na impressão os campos Nome Fantasia e Razão Social estavam se sobrepondo.
+  Por: Wilson Andrade
+-- Equiplano.LerXml --
+[-] Correção, ao ler a tag vlDesconto estava buscando de um nó errado.
+  Por: Limber Software
+
 21/06/2024
 -- IPM.Provider --
 [*] Alteração na procedure MontarXmlNFSe visando montar o XML da nota mesmo

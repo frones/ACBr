@@ -483,7 +483,10 @@ var
 begin
   inherited;
 
-  TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.Prestador.Logo);
+  if FileExists(fpDANFSe.Prestador.Logo) then
+     TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.Prestador.Logo)
+  else
+     rliPrestLogo.Visible:=False;
 
   with fpNFSe do
   begin
@@ -492,8 +495,28 @@ begin
     rllCodVerificacao.Caption := CodigoVerificacao;
   end;
 
-  rllPrestNome.Caption := fpDANFSe.Prestador.RazaoSocial;
-  rllPrestFantasia.Caption := fpDANFSe.Prestador.NomeFantasia;
+  if not rliPrestLogo.Visible then
+  begin
+    rllPrestNome.Left := rliPrestLogo.left;
+    rllPrestFantasia.Left := rliPrestLogo.left + 1;
+
+    rllPrestNome.Caption := copy(trim(fpDANFSe.Prestador.RazaoSocial), 1, 58);
+    rllPrestFantasia.Caption := copy(trim(fpDANFSe.Prestador.NomeFantasia), 1, 65);
+
+    rllPrestEndereco.Left := rliPrestLogo.left + 10;
+
+    RLLabel32.Left := rllPrestEndereco.LEFT;
+
+    rllPrestCNPJ.Left := RLLabel32.left+RLLabel32.width;
+
+    RLLabel30.Left := rllPrestEndereco.LEFT;
+    rllPrestInscMunicipal.Left := RLLabel30.left + RLLabel30.width;
+  end
+  else
+  begin
+    rllPrestNome.Caption := copy(fpDANFSe.Prestador.RazaoSocial, 1, 44);
+    rllPrestFantasia.Caption := copy(fpDANFSe.Prestador.NomeFantasia, 1, 50);
+  end;
 
   rllPrestNomeEnt.Caption := rllPrestNome.Caption;
 

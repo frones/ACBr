@@ -460,7 +460,7 @@ begin
     LerListaServico(ANode);
     LerRetencoes(ANode);
 
-    Servico.Valores.DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlDesconto'), tcDe2);
+    Servico.Valores.DescontoIncondicionado := ObterConteudo(ANode.Childrens.FindAnyNs('vlDesconto'), tcDe2);
 
     if Servico.Valores.ValorLiquidoNfse = 0 then
       Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -

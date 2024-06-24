@@ -1,6 +1,6 @@
 inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
-  Left = 231
-  Top = 121
+  Left = 234
+  Top = 128
   Caption = 'frlXDANFSeRLISSNet'
   inherited RLNFSe: TRLReport
     Left = 32
@@ -149,7 +149,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
     object rlbPrestador: TRLBand[1]
       Left = 23
-      Height = 160
+      Height = 161
       Top = 108
       Width = 748
       BandType = btTitle
@@ -161,7 +161,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       Margins.BottomMargin = 1
       BeforePrint = rlbPrestadorBeforePrint
       object RLLabel30: TRLLabel
-        Left = 118
+        Left = 125
         Height = 14
         Top = 134
         Width = 25
@@ -174,7 +174,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object RLLabel32: TRLLabel
-        Left = 119
+        Left = 122
         Height = 14
         Top = 120
         Width = 58
@@ -187,7 +187,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestInscMunicipal: TRLLabel
-        Left = 145
+        Left = 152
         Height = 14
         Top = 134
         Width = 100
@@ -198,7 +198,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestCNPJ: TRLLabel
-        Left = 179
+        Left = 186
         Height = 14
         Top = 120
         Width = 61
@@ -209,7 +209,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rliPrestLogo: TRLImage
-        Left = 8
+        Left = 4
         Height = 110
         Top = 35
         Width = 101
@@ -217,19 +217,19 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Scaled = True
       end
       object rllPrestNome: TRLLabel
-        Left = 119
+        Left = 118
         Height = 16
         Top = 33
-        Width = 86
+        Width = 104
         Font.Color = clBlack
         Font.Height = -13
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object RLLabel69: TRLLabel
-        Left = 255
+        Left = 262
         Height = 14
         Top = 134
         Width = 21
@@ -242,7 +242,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         Transparent = False
       end
       object rllPrestInscEstadual: TRLLabel
-        Left = 278
+        Left = 285
         Height = 14
         Top = 134
         Width = 97
@@ -441,22 +441,22 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
         ParentFont = False
       end
       object rllPrestFantasia: TRLLabel
-        Left = 119
-        Height = 15
+        Left = 121
+        Height = 16
         Top = 49
-        Width = 93
+        Width = 119
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = False
       end
       object rllPrestEndereco: TRLMemo
-        Left = 119
-        Height = 47
+        Left = 126
+        Height = 48
         Top = 67
-        Width = 358
+        Width = 353
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Color = clBlack
@@ -483,7 +483,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbTomador: TRLBand[2]
       Left = 23
       Height = 145
-      Top = 368
+      Top = 369
       Width = 748
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -787,7 +787,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbHeaderItens: TRLBand[3]
       Left = 23
       Height = 27
-      Top = 513
+      Top = 514
       Width = 748
       BandType = btColumnHeader
       Borders.Sides = sdCustom
@@ -812,7 +812,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbItens: TRLBand[4]
       Left = 23
       Height = 26
-      Top = 556
+      Top = 557
       Width = 748
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -837,7 +837,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbISSQN: TRLBand[5]
       Left = 23
       Height = 130
-      Top = 650
+      Top = 651
       Width = 748
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1647,7 +1647,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rbOutrasInformacoes: TRLBand[6]
       Left = 23
       Height = 50
-      Top = 780
+      Top = 781
       Width = 748
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1700,7 +1700,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbCanhoto: TRLBand[7]
       Left = 23
       Height = 73
-      Top = 853
+      Top = 854
       Width = 748
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1847,7 +1847,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbHeaderItensDetalhado: TRLBand[8]
       Left = 23
       Height = 16
-      Top = 540
+      Top = 541
       Width = 748
       BandType = btColumnHeader
       Borders.Sides = sdCustom
@@ -1907,7 +1907,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object subItens: TRLSubDetail[9]
       Left = 23
       Height = 18
-      Top = 582
+      Top = 583
       Width = 748
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1977,7 +1977,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object RLBand1: TRLBand[10]
       Left = 23
       Height = 23
-      Top = 830
+      Top = 831
       Width = 748
       BandType = btSummary
       BeforePrint = RLBand1BeforePrint
@@ -2022,7 +2022,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rlbDadosNota: TRLBand[11]
       Left = 23
       Height = 100
-      Top = 268
+      Top = 269
       Width = 748
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -2270,7 +2270,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     object rbConstrucao: TRLBand[12]
       Left = 23
       Height = 50
-      Top = 600
+      Top = 601
       Width = 748
       BandType = btSummary
       Borders.Sides = sdCustom

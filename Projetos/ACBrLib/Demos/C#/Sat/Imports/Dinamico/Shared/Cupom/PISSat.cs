@@ -6,7 +6,7 @@ namespace ACBrLib.Sat
     {
         #region Properties
 
-        public CSTPIS? CST { get; set; }
+        public CSTPIS CST { get; set; }
 
         public decimal vBC { get; set; }
 

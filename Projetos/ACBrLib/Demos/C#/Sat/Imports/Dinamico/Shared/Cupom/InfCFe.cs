@@ -15,6 +15,8 @@
 
         public string versao { get; set; }
 
+        public string Id { get; set; }
+
         #endregion Properties
     }
 }

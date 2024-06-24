@@ -97,6 +97,12 @@ namespace ACBrLib.Sat
         public delegate int SAT_ValidarCFe(string eArquivoXml);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int SAT_CarregarXML(string eArquivo);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int SAT_ObterIni(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int SAT_CriarEnviarCFe(string eArquivoIni, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -164,6 +170,8 @@ namespace ACBrLib.Sat
             AddMethod<SAT_GerarAssinaturaSAT>("SAT_GerarAssinaturaSAT");
             AddMethod<SAT_CriarCFe>("SAT_CriarCFe");
             AddMethod<SAT_ValidarCFe>("SAT_ValidarCFe");
+            AddMethod<SAT_CarregarXML>("SAT_CarregarXML");
+            AddMethod<SAT_ObterIni>("SAT_ObterIni");
             AddMethod<SAT_CriarEnviarCFe>("SAT_CriarEnviarCFe");
             AddMethod<SAT_EnviarCFe>("SAT_EnviarCFe");
             AddMethod<SAT_CancelarCFe>("SAT_CancelarCFe");
@@ -175,7 +183,7 @@ namespace ACBrLib.Sat
             AddMethod<SAT_ImprimirExtratoCancelamento>("SAT_ImprimirExtratoCancelamento");
             AddMethod<SAT_EnviarEmail>("SAT_EnviarEmail");
             AddMethod<SAT_SalvarPDF>("SAT_SalvarPDF");
-            AddMethod< SAT_SetNumeroSessao>("SAT_SetNumeroSessao");
+            AddMethod<SAT_SetNumeroSessao>("SAT_SetNumeroSessao");           
         }
     }
 }

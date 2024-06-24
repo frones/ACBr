@@ -16,11 +16,11 @@ namespace ACBrLib.Sat
 
         public string IM { get; set; }
 
-        public RegTrib? cRegTrib { get; set; }
+        public RegTrib cRegTrib { get; set; }
 
-        public RegTribISSQN? cRegTribISSQN { get; set; }
+        public RegTribISSQN cRegTribISSQN { get; set; }
 
-        public indRatISSQN? indRatISSQN { get; set; }
+        public indRatISSQN indRatISSQN { get; set; }
 
         public string xLgr { get; set; }
 

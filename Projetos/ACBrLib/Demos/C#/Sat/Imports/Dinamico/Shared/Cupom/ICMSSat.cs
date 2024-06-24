@@ -10,7 +10,7 @@ namespace ACBrLib.Sat
 
         public CSTIcms? CST { get; set; }
 
-        public CSOSNIcms? CSOSN { get; set; }
+        public CSOSNIcms CSOSN { get; set; }
 
         public decimal pICMS { get; set; }
 

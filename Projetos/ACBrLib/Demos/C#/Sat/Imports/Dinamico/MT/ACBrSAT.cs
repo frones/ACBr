@@ -352,6 +352,27 @@ namespace ACBrLib.Sat
             CheckResult(ret);
         }
 
+        public string ObterIni()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<SAT_ObterIni>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public void CarregarXML(string eArquivoOuXml)
+        {
+            var method = GetMethod<SAT_CarregarXML>();
+            var ret = ExecuteMethod(() => method(libHandle, ToUTF8(eArquivoOuXml)));
+
+            CheckResult(ret);
+        }
+
         public EnvioResposta CriarEnviarCFe(CupomFiscal cfe) => CriarEnviarCFe(cfe.ToString());
 
         public EnvioResposta CriarEnviarCFe(string eArquivoIni)
@@ -465,6 +486,8 @@ namespace ACBrLib.Sat
 
             CheckResult(ret);
         }
+
+        public CupomFiscal ObterCFe() => CupomFiscal.Load(ObterIni());
 
         public async void SalvarPDF(Stream aStream)
         {

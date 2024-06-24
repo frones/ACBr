@@ -35,6 +35,8 @@ namespace ACBrLib.Sat
 
         public TotalSat Total { get; } = new TotalSat();
 
+        public TotalISSQN ISSQNtot {  get; } = new TotalISSQN();
+
         public List<PagamentoSat> Pagamentos { get; } = new List<PagamentoSat>();
 
         public DadosAdicionaisSat DadosAdicionais { get; } = new DadosAdicionaisSat();
@@ -69,16 +71,16 @@ namespace ACBrLib.Sat
                 for (var j = 0; j < Produtos[i].ObsFisco.Count; j++)
                     iniData.WriteToIni(Produtos[i].ObsFisco[j], $"OBSFISCODET{i + 1:000}{j + 1:000}");
 
-                if (Produtos[i].ICMS.CST.HasValue || Produtos[i].ICMS.CSOSN.HasValue)
+                if (Produtos[i].ICMS.CST.HasValue || Produtos[i].ICMS.CSOSN != Core.DFe.CSOSNIcms.csosnVazio)
                     iniData.WriteToIni(Produtos[i].ICMS, $"ICMS{i + 1:000}");
 
-                if (Produtos[i].PIS.CST.HasValue)
+                if (Produtos[i].PIS.pPIS > 0)
                     iniData.WriteToIni(Produtos[i].PIS, $"PIS{i + 1:000}");
 
                 if (Produtos[i].PISST.vBC > 0)
                     iniData.WriteToIni(Produtos[i].PISST, $"PISST{i + 1:000}");
 
-                if (Produtos[i].COFINS.CST.HasValue)
+                if (Produtos[i].COFINS.pCOFINS > 0)
                     iniData.WriteToIni(Produtos[i].COFINS, $"COFINS{i + 1:000}");
 
                 if (Produtos[i].COFINSST.vBC > 0)
@@ -139,6 +141,7 @@ namespace ACBrLib.Sat
             } while (produto != null);
 
             iniData.ReadFromIni(Total, "Total");
+            iniData.ReadFromIni(ISSQNtot, "ISSQNtot");
 
             i = 0;
             PagamentoSat pagamento;

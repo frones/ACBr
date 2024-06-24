@@ -69,7 +69,8 @@
     <Compile Include="..\Shared\Cupom\PISSTSat.cs" Link="Cupom\PISSTSat.cs" />
     <Compile Include="..\Shared\Cupom\ProdutoSat.cs" Link="Cupom\ProdutoSat.cs" />
     <Compile Include="..\Shared\Cupom\TotalSat.cs" Link="Cupom\TotalSat.cs" />
-    <Compile Include="..\Shared\ExtratoConfig.cs" Link="ExtratoConfig.cs" />
+	<Compile Include="..\Shared\Cupom\TotalISSQN.cs" Link="Cupom\TotalISSQN.cs" />
+	<Compile Include="..\Shared\ExtratoConfig.cs" Link="ExtratoConfig.cs" />
     <Compile Include="..\Shared\Respostas\AssociarAssinaturaResposta.cs" Link="Respostas\AssociarAssinaturaResposta.cs" />
     <Compile Include="..\Shared\Respostas\AtivarSatResposta.cs" Link="Respostas\AtivarSatResposta.cs" />
     <Compile Include="..\Shared\Respostas\AtualizarSoftwareSatResposta.cs" Link="Respostas\AtualizarSoftwareSatResposta.cs" />

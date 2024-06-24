@@ -163,6 +163,12 @@ function SAT_CriarEnviarCFe(const libHandle: TLibHandle; eArquivoIni: PChar; con
 function SAT_ValidarCFe(const libHandle: TLibHandle; eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 
+function SAT_CarregarXml(const libHandle: TLibHandle; eArquivoXml: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ObterIni(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
 function SAT_EnviarCFe(const libHandle: TLibHandle; eArquivoXml: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 

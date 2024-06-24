@@ -111,6 +111,8 @@ function SAT_CriarCFe(const libHandle: PLibHandle; eArquivoIni: PChar; const sRe
 function SAT_CriarEnviarCFe(const libHandle: PLibHandle; eArquivoIni: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ValidarCFe(const libHandle: PLibHandle; eArquivoXml: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CarregarXML(const libHandle: PLibHandle; eArquivoXml: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ObterIni(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_EnviarCFe(const libHandle: PLibHandle; eArquivoXml: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_CancelarCFe(const libHandle: PLibHandle; eArquivoXml: PChar; const sResposta: PChar;
@@ -519,6 +521,36 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibSAT(libHandle^.Lib).ValidarCFe(eArquivoXml);
+  except
+    on E: EACBrLibException do
+       Result := E.Erro;
+
+    on E: Exception do
+       Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function SAT_CarregarXML(const libHandle: PLibHandle; eArquivoXml: PChar):longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibSAT(libHandle^.Lib).CarregarXML(eArquivoXml);
+  except
+    on E: EACBrLibException do
+       Result := E.Erro;
+
+    on E: Exception do
+       Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function SAT_ObterIni(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibSAT(libHandle^.Lib).ObterIni(sResposta, esTamanho);
   except
     on E: EACBrLibException do
        Result := E.Erro;

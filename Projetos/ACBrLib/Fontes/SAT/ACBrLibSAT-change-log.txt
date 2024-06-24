@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2024
+--- ACBrLibSATBase, ACBrLibSATST, ACBrLibSATMT, ACBrLibSATStaticImport, ACBrLibSATStaticImportMT ---
+[+] Adiciona um método para carregar um XML de CFe na Lib e outro para Obter um INI com as 
+    informações do referido CFe. - TK-4935
+    Por: Antônio Carlos / Diego Folieni 
+
 10/05/2024
 --- CodigoMP.cs ---
 [*] Adicionados itens que faltavam no enumerado CodigoMP das classes em c#

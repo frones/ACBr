@@ -48,6 +48,8 @@ type
   private
     FSatDM: TLibSatDM;
 
+    function SetRetornoCFeCarregados(const NumCFe: integer): integer;
+
   protected
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
       override;
@@ -82,6 +84,8 @@ type
     function CriarCFe(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function CriarEnviarCFe(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function ValidarCFe(eArquivoXml: PChar): longint;
+    function CarregarXML(eArquivoXml: PChar): longint;
+    function ObterIni(const sResposta: PChar; var esTamanho: longint): longint;
     function EnviarCFe(eArquivoXml: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function CancelarCFe(eArquivoXml: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PChar): longint;
@@ -118,6 +122,11 @@ destructor TACBrLibSAT.Destroy;
 begin
   FSatDM.Free;
   inherited Destroy;
+end;
+
+function TACBrLibSAT.SetRetornoCFeCarregados(const NumCFe: integer): integer;
+begin
+  Result := SetRetorno(0, Format(SInfCFesCarregados, [NumCFe]));
 end;
 
 procedure TACBrLibSAT.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
@@ -838,6 +847,65 @@ begin
      finally
        Arquivo.Free;
      end;
+    finally
+      SatDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibSAT.CarregarXML(eArquivoXml: PChar): longint;
+var
+  EhArquivo: boolean;
+  Arquivo: string;
+begin
+  try
+    Arquivo := ConverterAnsiParaUTF8(eArquivoXml);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('SAT_CarregarXML(' + Arquivo + ' )', logCompleto, True)
+    else
+      GravarLog('SAT_CarregarXML', logNormal);
+
+    EhArquivo := StringEhArquivo(Arquivo);
+    if EhArquivo then
+      VerificarArquivoExiste(Arquivo);
+
+    SATDM.Travar;
+    try
+      SATDM.ACBrSAT1.CFe.LoadFromFile(Arquivo);
+
+      Result := SetRetornoCFeCarregados(1);
+    finally
+      SATDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibSAT.ObterIni(const sResposta: PChar; var esTamanho: longint): longint;
+var
+   Resposta: Ansistring;
+begin
+  try
+    GravarLog('SAT_ObterIni', logNormal);
+
+    SatDM.Travar;
+    try
+      Resposta := SatDM.ACBrSAT1.GerarCFeIni;
+      Resposta := ConverterUTF8ParaAnsi(Resposta);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
     finally
       SatDM.Destravar;
     end;

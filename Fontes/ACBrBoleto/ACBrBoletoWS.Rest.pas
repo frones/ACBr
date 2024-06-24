@@ -237,15 +237,13 @@ begin
   Result := '';
   if Assigned(OAuth) then
   begin
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-      BoletoWS.DoLog('Autenticando Token... ');
+    BoletoWS.DoLog('Autenticando Token... ', logSimples);
     DefinirParamOAuth;
     OAuth.ParamsOAuth := FParamsOAuth;
     if OAuth.GerarToken then
       Result := OAuth.Token
     else
-      if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-        BoletoWS.DoLog(Format(S_ERRO_GERAR_TOKEN_AUTENTICACAO, [ OAuth.ErroComunicacao ]));
+      BoletoWS.DoLog(Format(S_ERRO_GERAR_TOKEN_AUTENTICACAO, [ OAuth.ErroComunicacao ]) ,logSimples);
   end;
 end;
 
@@ -291,14 +289,9 @@ begin
     if FPDadosMsg <> '' then
       WriteStrToStream(httpsend.Document, NativeStringToUTF8(FPDadosMsg));
 
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-      BoletoWS.DoLog('URL: [' + MetodoHTTPToStr(FMetodoHTTP) + '] ' + FPURL);
-
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logParanoico then
-    begin
-      BoletoWS.DoLog('Header:');
-      BoletoWS.DoLog(httpsend.Headers.Text);
-    end;
+    BoletoWS.DoLog('URL: [' + MetodoHTTPToStr(FMetodoHTTP) + '] ' + FPURL, logSimples);
+    BoletoWS.DoLog('Header:', logParanoico);
+    BoletoWS.DoLog(httpsend.Headers.Text, logParanoico);
 
     httpsend.HTTPMethod(MetodoHTTPToStr(FMetodoHTTP), FPURL);
   finally
@@ -321,9 +314,9 @@ begin
       FRetornoWS       := ReadStrFromStream(LStream, LStream.Size);
     end;
 
-    FRetornoWS                       := String(UTF8Decode(FRetornoWS));
+    FRetornoWS                       := String(UTF8ToNativeString(FRetornoWS));
     BoletoWS.RetornoBanco.CodRetorno := httpsend.Sock.LastError;
-
+    httpsend.Document.SaveToFile('c:\tmp\envio.log');
     try
         //      LStream.CopyFrom(HTTPSend.Document,0);
       BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code=' + IntToStr(httpsend.ResultCode) + ' ' + httpsend.ResultString + ' ' + FRetornoWS);
@@ -373,36 +366,29 @@ begin
   DefinirProxy;
 
   //Grava json gerado
-  if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-    BoletoWS.DoLog('Comando Enviar: ' + ClassName);
-
-  if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-    BoletoWS.DoLog('Comando Enviar: ' + FPDadosMsg);
+  BoletoWS.DoLog('Comando Enviar: ' + ClassName, logSimples);
+  BoletoWS.DoLog('Comando Enviar: ' + FPDadosMsg, logSimples);
 
   try
     Executar;
   finally
     Result := (BoletoWS.RetornoBanco.HTTPResultCode in [ 200 .. 207 ]);
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-    begin
-      BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName);
-      BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode) + ' ' + httpsend.Protocol + ' ' +  httpsend.ResultString);
-    end;
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logParanoico then
-    begin
-      if Result then //Grava retorno
-        BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS)
-      else
-        BoletoWS.DoLog('Retorno Envio: ' + IfThen(BoletoWS.RetornoBanco.CodRetorno > 0,
-            sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno), '') + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS));
 
-      BoletoWS.DoLog('Cookies:');
-      BoletoWS.DoLog(httpsend.Cookies.Text);
-      BoletoWS.DoLog(httpsend.Sock.SSL.CertificateFile);
-      BoletoWS.DoLog(httpsend.Sock.SSL.PrivateKeyFile);
-      BoletoWS.DoLog('Header:');
-      BoletoWS.DoLog(httpsend.Headers.Text);
-    end;
+    BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName, logSimples);
+    BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode) + ' ' + httpsend.Protocol + ' ' +  httpsend.ResultString, logSimples);
+
+    if Result then //Grava retorno
+      BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS, logParanoico)
+    else
+      BoletoWS.DoLog('Retorno Envio: ' + IfThen(BoletoWS.RetornoBanco.CodRetorno > 0,
+          sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno), '') + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS), logParanoico);
+
+    BoletoWS.DoLog('Cookies:', logParanoico);
+    BoletoWS.DoLog(httpsend.Cookies.Text, logParanoico);
+    BoletoWS.DoLog(httpsend.Sock.SSL.CertificateFile, logParanoico);
+    BoletoWS.DoLog(httpsend.Sock.SSL.PrivateKeyFile, logParanoico);
+    BoletoWS.DoLog('Header:', logParanoico);
+    BoletoWS.DoLog(httpsend.Headers.Text, logParanoico);
   end;
 end;
 

@@ -299,31 +299,21 @@ begin
   DefinirEnvelopeSoap;
   FPEnvelopeSoap := UTF8ToNativeString(FPEnvelopeSoap);
     //Grava xml gerado
-  if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-    BoletoWS.DoLog('Comando Enviar: ' + Self.ClassName);
-
-  if Boleto.Configuracoes.Arquivos.LogNivel >= logParanoico then
-    BoletoWS.DoLog('Envelope Enviar: ' + FPEnvelopeSoap);
+  BoletoWS.DoLog('Comando Enviar: ' + Self.ClassName, logSimples);
+  BoletoWS.DoLog('Envelope Enviar: ' + FPEnvelopeSoap, logParanoico);
 
   try
     Executar;
   finally
     Result := (DFeSSL.HTTPResultCode in [ 200, 201, 202 ]);
+    BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName, logSimples);
+    BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode), logSimples);
 
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logSimples then
-    begin
-      BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName);
-      BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode));
-    end;
-
-    if Boleto.Configuracoes.Arquivos.LogNivel >= logParanoico then
-    begin
-      if Result then //Grava retorno
-        BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS)
-      else
-        BoletoWS.DoLog('Retorno Envio: ' + IfThen(BoletoWS.RetornoBanco.CodRetorno > 0,
-            sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno), '') + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS));
-    end;
+    if Result then //Grava retorno
+      BoletoWS.DoLog('Retorno Envio: ' + FRetornoWS, logParanoico)
+    else
+      BoletoWS.DoLog('Retorno Envio: ' + IfThen(BoletoWS.RetornoBanco.CodRetorno > 0,
+          sLineBreak + 'ErrorCode=' + IntToStr(BoletoWS.RetornoBanco.CodRetorno), '') + sLineBreak + 'Result=' + NativeStringToAnsi(FRetornoWS), logParanoico);
   end;
 end;
 end.

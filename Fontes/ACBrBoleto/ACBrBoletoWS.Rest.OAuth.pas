@@ -40,7 +40,8 @@ uses
   ACBrOpenSSLUtils,
   httpsend,
   ACBrBoletoConversao,
-  ACBrBoleto;
+  ACBrBoleto,
+  ACBrUtil.FilesIO;
 
 type
   TpAuthorizationType = (atNoAuth, atBearer);
@@ -106,7 +107,7 @@ type
     property Token: String read FToken;
     property Payload: Boolean read FPayload write setPayload;
     property AuthorizationType: TpAuthorizationType read FAuthorizationType write SetAuthorizationType;
-    procedure DoLog(const AString: String);
+    procedure DoLog(const AString: String; const ANivelSeveridadeLog : TNivelLog);
   end;
 
 implementation
@@ -120,8 +121,7 @@ uses
   DateUtils,
   Classes,
   synacode,
-  synautil,
-  ACBrUtil.FilesIO;
+  synautil;
 
   { TOAuth }
 
@@ -222,8 +222,7 @@ begin
         FToken := LJson.AsString[ 'access_token' ];
         try
           FExpire := now + (LJson.AsInteger[ 'expires_in' ] * OneSecond);
-          if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logSimples) then
-            DoLog('Validade: ' + DateTimeToStr(FExpire));
+          DoLog('Validade: ' + DateTimeToStr(FExpire), logSimples);
         except
           FExpire := 0;
         end;
@@ -238,16 +237,14 @@ begin
             LErrorMessage  := LJson.AsString[ 'error_title' ];
           FErroComunicacao := FErroComunicacao + ' Erro=' + LErrorMessage;
         end;
-        if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logSimples) then
-          DoLog('Erro: ' + FErroComunicacao);
+        DoLog('Erro: ' + FErroComunicacao, logSimples);
       end;
     finally
       LJson.Free;
     end;
   except
     FErroComunicacao := 'HTTP_Code=' + IntToStr(FHTTPSend.ResultCode) + ' Erro=' + ARetorno;
-    if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logSimples) then
-      DoLog('Erro: ' + FErroComunicacao);
+    DoLog('Erro: ' + FErroComunicacao, logSimples);
   end;
 end;
 
@@ -285,27 +282,22 @@ begin
   try
     try
         //Utiliza HTTPMethod para envio
-      if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logSimples) then
-        DoLog('Comando Enviar: ' + Self.ClassName);
-
-      if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logParanoico) then
-        DoLog('Header Envio:' + FHTTPSend.Headers.Text);
+      DoLog('Comando Enviar: ' + Self.ClassName, logSimples);
+      DoLog('Header Envio:' + FHTTPSend.Headers.Text, logParanoico);
 
 
       if FPayload then
       begin
-        if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logSimples) then
-          DoLog('URL: [' + MetodoHTTPToStr(htPOST) +'] '+ URL);
-        if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logParanoico) then
-          DoLog('Body Envio (Payload):' + FParamsOAuth);
+        DoLog('URL: [' + MetodoHTTPToStr(htPOST) +'] '+ URL, logSimples);
+        DoLog('Body Envio (Payload):' + FParamsOAuth, logParanoico);
+
         FHTTPSend.Document.Position := 0;
         WriteStrToStream(FHTTPSend.Document, AnsiString(FParamsOAuth));
         FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL);
       end
       else
       begin
-        if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logSimples) then
-          DoLog('URL: [' + MetodoHTTPToStr(htPOST) + '] ' + URL + '?' + FParamsOAuth);
+        DoLog('URL: [' + MetodoHTTPToStr(htPOST) + '] ' + URL + '?' + FParamsOAuth, logSimples);
         FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL + '?' + FParamsOAuth);
       end;
 
@@ -321,13 +313,11 @@ begin
       end;
     end;
   finally
-    if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logParanoico) then
-      DoLog('Header Resposta:' + FHTTPSend.Headers.Text);
+    DoLog('Header Resposta:' + FHTTPSend.Headers.Text, logParanoico);
 
     FHTTPSend.Document.Position := 0;
 
-    if (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= logParanoico) then
-      DoLog('Body Resposta (payload):' + ReadStrFromStream(FHTTPSend.Document, FHTTPSend.Document.Size));
+    DoLog('Body Resposta (payload):' + ReadStrFromStream(FHTTPSend.Document, FHTTPSend.Document.Size), logParanoico);
     if FErroComunicacao <> '' then
       raise EACBrBoletoWSException.Create(ACBrStr('Falha na Autenticação: ' + FErroComunicacao));
   end;
@@ -406,17 +396,22 @@ begin
   inherited Destroy;
 end;
 
-procedure TOAuth.DoLog(const AString: String);
+procedure TOAuth.DoLog(const AString: String; const ANivelSeveridadeLog : TNivelLog);
 var
   Tratado: Boolean;
+  LLog : string;
 begin
   Tratado := False;
 
-  if Assigned(FACBrBoleto.Configuracoes.Arquivos.OnGravarLog) then
-    FACBrBoleto.Configuracoes.Arquivos.OnGravarLog(AString, Tratado);
+  if ANivelSeveridadeLog = logNenhum then
+    Exit;
 
-  if Tratado or (FACBrBoleto.Configuracoes.Arquivos.LogNivel > logNenhum) then
-    GravaLog(AString);
+  LLog := NativeStringToAnsi(AString);
+  if Assigned(FACBrBoleto.Configuracoes.Arquivos.OnGravarLog) then
+    FACBrBoleto.Configuracoes.Arquivos.OnGravarLog(LLog, Tratado);
+
+  if Tratado or (FACBrBoleto.Configuracoes.Arquivos.LogNivel >= ANivelSeveridadeLog) then
+    GravaLog(LLog);
 end;
 
 function TOAuth.GerarToken: Boolean;

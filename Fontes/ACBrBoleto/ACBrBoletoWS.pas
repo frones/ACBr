@@ -126,7 +126,7 @@ type
   public
     constructor Create(AOwner: TComponent); Override;
     destructor Destroy; override;
-    procedure DoLog(const AString: String);
+    procedure DoLog(const AString: String; const ANivelSeveridadeLog : TNivelLog);
     function Enviar: Boolean; override;
     property RetornoBanco: TRetornoEnvioClass read FRetornoBanco;
 
@@ -237,7 +237,9 @@ uses
   ACBrBoletoW_Safra,
   ACBrBoletoRet_Safra,
   ACBrBoletoW_Bancoob_APIV3,
-  ACBrBoletoRet_Bancoob_APIV3;
+  ACBrBoletoRet_Bancoob_APIV3,
+  ACBrBoletoW_C6,
+  ACBrBoletoRet_C6;
 
   { TRetornoEnvioClass }
 
@@ -319,6 +321,8 @@ end;
   { TBoletoWS }
 
 procedure TBoletoWS.SetBanco(ABanco: TACBrTipoCobranca);
+var LVersaoDF : String;
+    LVersaoDFInt : Integer;
 begin
   if ABanco = FBanco then
     exit;
@@ -329,10 +333,13 @@ begin
   if Assigned(FRetornoBanco) then
     FreeAndNil(FRetornoBanco);
 
+  LVersaoDF := UpperCase(FBoleto.Configuracoes.WebService.VersaoDF);
+  LVersaoDFInt := StrToIntDef(FBoleto.Configuracoes.WebService.VersaoDF,0);
+
   case ABanco of
     cobSicred:
       begin
-        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V2' then
+        if (LVersaoDF = 'V2') or (LVersaoDFInt = 2) then
         begin //API V2 (NOVA 2022)
           FBoletoWSClass := TBoletoW_Sicredi_APIV2.Create(Self);
           FRetornoBanco  := TRetornoEnvio_Sicredi_APIV2.Create(FBoleto);
@@ -360,7 +367,7 @@ begin
       end;
     cobItau:
       begin
-        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V2' then
+        if (LVersaoDF = 'V2') or (LVersaoDFInt = 2) then
         begin //API V2 (NOVA 2023)
           FBoletoWSClass := TBoletoW_Itau_API.Create(Self);
           FRetornoBanco  := TRetornoEnvio_Itau_API.Create(FBoleto);
@@ -384,7 +391,7 @@ begin
       end;
     cobSantander:
       begin
-        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V1' then
+        if (LVersaoDF = 'V1') or (LVersaoDFInt = 1) then
         begin //API V1
           FBoletoWSClass := TBoletoW_Santander_API.Create(Self);
           FRetornoBanco  := TRetornoEnvio_Santander_API.Create(FBoleto);
@@ -402,21 +409,26 @@ begin
       end;
     cobBancoob:
       begin
-        if UpperCase(FBoleto.Configuracoes.WebService.VersaoDF) = 'V3' then
+        if (LVersaoDF = 'V3') or (LVersaoDFInt = 3) then
         begin
-        FBoletoWSClass := TBoletoW_Bancoob_APIV3.Create(Self);
-        FRetornoBanco  := TRetornoEnvio_Bancoob_APIV3.Create(FBoleto);
+          FBoletoWSClass := TBoletoW_Bancoob_APIV3.Create(Self);
+          FRetornoBanco  := TRetornoEnvio_Bancoob_APIV3.Create(FBoleto);
         end
         else
         begin
-        FBoletoWSClass := TBoletoW_Bancoob.Create(Self);
-        FRetornoBanco  := TRetornoEnvio_Bancoob.Create(FBoleto);
+          FBoletoWSClass := TBoletoW_Bancoob.Create(Self);
+          FRetornoBanco  := TRetornoEnvio_Bancoob.Create(FBoleto);
         end
       end;
     cobBancoSafra:
       begin
         FBoletoWSClass := TBoletoW_Safra.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Safra.Create(FBoleto);
+      end;
+     cobBancoC6:
+      begin
+        FBoletoWSClass := TBoletoW_C6.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_C6.Create(FBoleto);
       end;
     else
       FBoletoWSClass := TBoletoWSClass.Create(Self);
@@ -457,19 +469,21 @@ begin
   FBoletoWSClass := TBoletoWSClass.Create(Self);
 end;
 
-procedure TBoletoWS.DoLog(const AString: String);
+procedure TBoletoWS.DoLog(const AString: String; const ANivelSeveridadeLog : TNivelLog);
 var
   Tratado: Boolean;
   LLog : String;
 begin
   Tratado := False;
+  if ANivelSeveridadeLog = logNenhum then
+    Exit;
+
   LLog := NativeStringToAnsi(AString);
   if Assigned(FBoleto.Configuracoes.Arquivos.OnGravarLog) then
     FBoleto.Configuracoes.Arquivos.OnGravarLog(LLog, Tratado);
 
-  if Tratado or (FBoleto.Configuracoes.Arquivos.LogNivel > logNenhum) then
+  if Tratado or (FBoleto.Configuracoes.Arquivos.LogNivel >= ANivelSeveridadeLog) then
     GravaLog(LLog);
-
 end;
 
 procedure TBoletoWS.GravaLog(const AString: AnsiString);
@@ -528,9 +542,9 @@ begin
     on E: Exception do
     begin
       if not (Assigned(FBoletoWSClass.RetornoBanco)) or ((FBoletoWSClass.RetornoBanco.CodRetorno = 0) and (Trim(FBoletoWSClass.RetornoBanco.Msg) = '')) then
-        DoLog('Falha Envio: ' + ACBrStr(E.Message))
+        DoLog('Falha Envio: ' + ACBrStr(E.Message), logSimples)
       else
-        DoLog('Erro Envio: ' + ACBrStr(IntToStr(FBoletoWSClass.RetornoBanco.CodRetorno) + sLineBreak + FBoletoWSClass.RetornoBanco.Msg + sLineBreak + E.Message));
+        DoLog('Erro Envio: ' + ACBrStr(IntToStr(FBoletoWSClass.RetornoBanco.CodRetorno) + sLineBreak + FBoletoWSClass.RetornoBanco.Msg + sLineBreak + E.Message), logSimples);
       raise;
     end;
   end;

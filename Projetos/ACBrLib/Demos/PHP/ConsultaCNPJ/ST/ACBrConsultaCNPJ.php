@@ -1,41 +1,41 @@
 <?php
 /* {******************************************************************************}
 // { Projeto: Componentes ACBr                                                    }
-// {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-// { mentos de Automação Comercial utilizados no Brasil                           }
+// {  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
+// { mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
 // {                                                                              }
 // { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 // {                                                                              }
 // { Colaboradores nesse arquivo: Renato Rubinho                                  }
 // {                                                                              }
-// {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+// {  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
 // { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 // {                                                                              }
-// {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-// { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-// { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-// { qualquer versão posterior.                                                   }
+// {  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
+// { sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
+// { Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
+// { qualquer versÃ£o posterior.                                                   }
 // {                                                                              }
-// {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-// { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-// { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-// { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+// {  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
+// { NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
+// { ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
+// { do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
 // {                                                                              }
-// {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-// { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-// { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-// { Você também pode obter uma copia da licença em:                              }
+// {  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
+// { com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
+// { no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+// { VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
 // { http://www.opensource.org/licenses/lgpl-license.php                          }
 // {                                                                              }
-// { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-// {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+// { Daniel SimÃµes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+// {       Rua Coronel Aureliano de Camargo, 963 - TatuÃ­ - SP - 18270-170         }
 // {******************************************************************************}
 */
 header('Content-Type: application/json; charset=UTF-8');
 
 function ValidaFFI(){
     if (!extension_loaded('ffi')) {
-        echo json_encode(["mensagem" => mb_convert_encoding("A extensão FFI não está habilitada.", "UTF-8", "ISO-8859-1")]);
+        echo json_encode(["mensagem" => "A extensÃ£o FFI nÃ£o estÃ¡ habilitada."]);
         return -10;
     }
 
@@ -65,7 +65,7 @@ function CarregaDll(){
     if (file_exists($dllPath))
         return $dllPath;
     else {
-        echo json_encode(["mensagem" => mb_convert_encoding("DLL não encontrada no caminho especificado: $dllPath", "UTF-8", "ISO-8859-1")]);
+        echo json_encode(["mensagem" => "DLL nÃ£o encontrada no caminho especificado: $dllPath"]);
         return -10;
     }
 
@@ -76,7 +76,7 @@ function CarregaImports(){
     $importsPath = __DIR__ . DIRECTORY_SEPARATOR . 'ACBrConsultaCNPJ.h';
 
     if (!file_exists($importsPath)) {
-        echo json_encode(["mensagem" => mb_convert_encoding("Imports não encontrados no caminho especificado: $importsPath", "UTF-8", "ISO-8859-1")]);
+        echo json_encode(["mensagem" => "Imports nÃ£o encontrados no caminho especificado: $importsPath"]);
         return -10;
     }
 
@@ -100,7 +100,7 @@ function Inicializar($ffi, $iniPath) {
     $sMensagem = FFI::new("char[535]");
 
     if ($retorno !== 0) {
-        echo json_encode(["mensagem" => mb_convert_encoding("Falha ao inicializar a biblioteca ACBr. Código de erro: $retorno", "UTF-8", "ISO-8859-1")]);
+        echo json_encode(["mensagem" => "Falha ao inicializar a biblioteca ACBr. CÃ³digo de erro: $retorno"]);
         return -10;
     }
 
@@ -111,7 +111,7 @@ function Finalizar($ffi) {
     $retorno = $ffi->CNPJ_Finalizar();
 
     if ($retorno !== 0) {
-        echo json_encode(["mensagem" => mb_convert_encoding("Falha ao finalizar a biblioteca ACBr. Código de erro: $retorno", "UTF-8", "ISO-8859-1")]);
+        echo json_encode(["mensagem" => "Falha ao finalizar a biblioteca ACBr. CÃ³digo de erro: $retorno"]);
         return -10;
     }
 
@@ -153,12 +153,12 @@ function UltimoRetorno($ffi, $retornolib, &$sMensagem, $msgErro, $retMensagem = 
 
         if ($retornolib !== 0){
             $ultimoRetorno = FFI::string($sMensagem);
-            $retorno = "$msgErro Código de erro: $retornolib. ";
+            $retorno = "$msgErro CÃ³digo de erro: $retornolib. ";
             
-            $retorno = mb_convert_encoding($retorno, "UTF-8", "ISO-8859-1");
+            $retorno = $retorno;
     
             if ($ultimoRetorno != "") {
-                $retorno = $retorno . mb_convert_encoding("Último retorno: ", "UTF-8", "ISO-8859-1") . $ultimoRetorno;
+                $retorno = $retorno . "Ãšltimo retorno: " . $ultimoRetorno;
             }
         
             echo json_encode(["mensagem" => $retorno]);

@@ -1,39 +1,38 @@
 <!--
 // {******************************************************************************}
 // { Projeto: Componentes ACBr                                                    }
-// {  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-// { mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+// {  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+// { mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 // {                                                                              }
 // { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 // {                                                                              }
 // { Colaboradores nesse arquivo: Renato Rubinho                                  }
 // {                                                                              }
-// {  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+// {  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 // { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 // {                                                                              }
-// {  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-// { sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-// { Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-// { qualquer vers„o posterior.                                                   }
+// {  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+// { sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+// { Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+// { qualquer vers√£o posterior.                                                   }
 // {                                                                              }
-// {  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-// { NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-// { ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-// { do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+// {  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+// { NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+// { ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+// { do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 // {                                                                              }
-// {  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-// { com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-// { no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-// { VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+// {  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+// { com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+// { no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+// { Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 // { http://www.opensource.org/licenses/lgpl-license.php                          }
 // {                                                                              }
-// { Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-// {       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+// { Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+// {       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 // {******************************************************************************}
 -->
 
 <!DOCTYPE html>
-<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>ACBrConsultaCNPJ</title>
@@ -66,24 +65,24 @@
         <h1>ACBrConsultaCNPJ - MultiThread</h1>
     </div>
     <form id="formConsulta">
-        <label for="cnpj"><?php echo mb_convert_encoding("Digite o CNPJ:", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="cnpj">Digite o CNPJ:</label>
         <input type="text" id="cnpj" name="cnpj">
         <br><br>
-        <label for="prov"><?php echo mb_convert_encoding("Selecione o Provedor:", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="prov">Selecione o Provedor:</label>
         <select id="prov" name="prov">
             <option value="0">cwsNenhum</option>
             <option value="1">cwsBrasilAPI</option>
             <option value="2">cwsReceitaWS</option>
             <option value="3">cwsCNPJWS</option>
         </select>
-        <label for="usuario"><?php echo mb_convert_encoding("Usu·rio:", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="usuario">Usu√°rio:</label>
         <input type="text" id="usuario" name="usuario">
-        <label for="senha"><?php echo mb_convert_encoding("Senha:", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="senha">Senha:</label>
         <input type="password" id="senha" name="senha">
         <br><br>
         <input type="button" id="consultaCNPJ" value="Consultar">
-        <input type="button" id="salvarConfiguracoes" value="<?php echo mb_convert_encoding('Salvar ConfiguraÁıes', 'UTF-8', 'ISO-8859-1'); ?>">
-        <input type="button" id="carregarConfiguracoes" value="<?php echo mb_convert_encoding('Carregar ConfiguraÁıes', 'UTF-8', 'ISO-8859-1'); ?>">
+        <input type="button" id="salvarConfiguracoes" value="Salvar Configura√ß√µes">
+        <input type="button" id="carregarConfiguracoes" value="Carregar Configura√ß√µes">
     </form>
 
     <h2>Detalhes da Empresa</h2>
@@ -121,7 +120,7 @@
         <input type="text" id="empresaTipo" name="empresaTipo"><br>
       </div>
       <div class="retornoCamposColuna">
-        <label for="endereco"><?php echo mb_convert_encoding("EndereÁo", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="endereco">Endere√ßo</label>
         <input type="text" id="endereco" name="endereco"><br>
       </div>
       <div class="retornoCamposColuna">
@@ -129,23 +128,23 @@
         <input type="text" id="fantasia" name="fantasia"><br>
       </div>
       <div class="retornoCamposColuna">
-        <label for="inscricaoEstadual"><?php echo mb_convert_encoding("InscriÁ„o Estadual", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="inscricaoEstadual">Inscri√ß√£o Estadual</label>
         <input type="text" id="inscricaoEstadual" name="inscricaoEstadual"><br>
       </div>
       <div class="retornoCamposColuna">
-        <label for="naturezaJuridica"><?php echo mb_convert_encoding("Natureza JurÌdica", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="naturezaJuridica">Natureza Jur√≠dica</label>
         <input type="text" id="naturezaJuridica" name="naturezaJuridica"><br>
       </div>
       <div class="retornoCamposColuna">
-        <label for="numero"><?php echo mb_convert_encoding("N˙mero", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="numero">N√∫mero</label>
         <input type="text" id="numero" name="numero"><br>
       </div>
       <div class="retornoCamposColuna">
-        <label for="razaoSocial"><?php echo mb_convert_encoding("Raz„o Social", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="razaoSocial">Raz√£o Social</label>
         <input type="text" id="razaoSocial" name="razaoSocial"><br>
       </div>
       <div class="retornoCamposColuna">
-        <label for="situacao"><?php echo mb_convert_encoding("SituaÁ„o", "UTF-8", "ISO-8859-1"); ?></label>
+        <label for="situacao">Situa√ß√£o</label>
         <input type="text" id="situacao" name="situacao"><br>
       </div>
       <div class="retornoCamposColuna">
@@ -154,7 +153,7 @@
       </div>
     </div>
 
-    <label for="result"><?php echo mb_convert_encoding("Retorno:", "UTF-8", "ISO-8859-1"); ?></label>
+    <label for="result">Retorno:</label>
     <br>
     <textarea id="result" rows="10" cols="100" readonly></textarea>
     <br><br>

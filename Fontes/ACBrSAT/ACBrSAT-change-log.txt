@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/06/2024
+[+]TK-4935 Adiciona método gera um arquivo INI com as informações da classe do CFe
+  Por: Antônio Carlos / Diego Folieni
+
 29/05/2024
 [*]TK-5509-1 Ajustes no extrato SAT que estava sobrescrevendo itens, removido ACBrStr conf. instrucao DSA
   Por Daniel Morais InfoCotidiano

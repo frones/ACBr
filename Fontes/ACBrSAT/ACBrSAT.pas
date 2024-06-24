@@ -37,7 +37,7 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
+  Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, pcnConversao, ACBrBase, ACBrSATClass,
   ACBrSATExtratoClass, synacode, ACBrMail, ACBrIntegrador, ACBrDFeSSL;
 
 const
@@ -197,6 +197,7 @@ type
      function TrocarCodigoDeAtivacao(const codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao: Integer; const novoCodigo: AnsiString): String;
      function ValidarDadosVenda( dadosVenda : AnsiString; out msgErro: String) : Boolean;
+     function GerarCFeIni: String;
 
     procedure ImprimirExtrato;
     procedure ImprimirExtratoResumido;
@@ -277,7 +278,7 @@ Uses
   dateutils,
   ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime, ACBrUtil.Base,
   ACBrConsts, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador,
-  synautil;
+  synautil, IniFiles;
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
 var
@@ -1623,6 +1624,269 @@ begin
 
   msgErro := '';
   Result := SSL.Validar(dadosVenda, fsConfig.ArqSchema, msgErro);
+end;
+
+function TACBrSAT.GerarCFeIni: String;
+var
+  I, J, K, L: Integer;
+  sSecao: string;
+  INIRec: TMemIniFile;
+  IniCFe: TStringList;
+begin
+  Result := '';
+
+  INIRec := TMemIniFile.Create('');
+  try
+    with fsCFe do
+    begin
+      INIRec.WriteString('infCFe', 'ID', infCFe.ID);
+      INIRec.WriteString('infCFe', 'VersaoDadosEnt', CurrToStr(infCFe.versaoDadosEnt));
+      INIRec.WriteString('infCFe', 'versao', CurrToStr(infCFe.versao));
+      INIRec.WriteString('infCFe', 'versaoSB', CurrToStr(infCFe.versaoSB));
+
+      INIRec.WriteInteger('Identificacao', 'cUF', ide.cUF);
+      INIRec.WriteInteger('Identificacao', 'cNF', ide.cNF);
+      INIRec.WriteInteger('Identificacao', 'mod', ide.modelo);
+      INIRec.WriteInteger('Identificacao', 'nserieSAT', ide.nserieSAT);
+      INIRec.WriteInteger('Identificacao', 'nCFe', ide.nCFe);
+      INIRec.WriteDate('Identificacao', 'dhEmi', ide.dEmi);
+      INIRec.WriteInteger('Identificacao', 'cDV', ide.cDV);
+      INIRec.WriteString('Identificacao', 'tpAmb', TpAmbToStr(ide.tpAmb));
+
+      INIRec.WriteString('Identificacao', 'CNPJ', ide.CNPJ);
+      INIRec.WriteString('Identificacao', 'signAC', ide.signAC);
+      INIRec.WriteString('Identificacao', 'assinaturaQRCODE', ide.assinaturaQRCODE);
+      INIRec.WriteInteger('Identificacao', 'numeroCaixa', ide.numeroCaixa);
+
+      INIRec.WriteString('Emitente', 'CNPJ', Emit.CNPJ);
+      INIRec.WriteString('Emitente', 'xNome', Emit.xNome);
+      INIRec.WriteString('Emitente', 'xFant', Emit.xFant);
+      INIRec.WriteString('Emitente', 'xLgr', Emit.EnderEmit.xLgr);
+      INIRec.WriteString('Emitente', 'nro', Emit.EnderEmit.nro);
+      INIRec.WriteString('Emitente', 'xCpl', Emit.EnderEmit.xCpl);
+      INIRec.WriteString('Emitente', 'xBairro', Emit.EnderEmit.xBairro);
+      INIRec.WriteString('Emitente', 'xMun', Emit.EnderEmit.xMun);
+      INIRec.WriteInteger('Emitente', 'CEP', Emit.EnderEmit.CEP);
+      INIRec.WriteString('Emitente', 'IE', Emit.IE);
+      INIRec.WriteString('Emitente', 'IM', Emit.IM);
+      INIRec.WriteString('Emitente', 'cRegTrib', RegTribToStr(Emit.cRegTrib));
+      INIRec.WriteString('Emitente', 'cRegTribISSQN', RegTribISSQNToStr(Emit.cRegTribISSQN));
+      INIRec.WriteString('Emitente', 'indRatISSQN', indRatISSQNToStr(Emit.indRatISSQN));
+
+      INIRec.WriteString('Destinatario', 'CNPJCPF', Dest.CNPJCPF);
+      INIRec.WriteString('Destinatario', 'xNome', Dest.xNome);
+
+      INIRec.WriteString('Entrega', 'xLgr', Entrega.xLgr);
+      INIRec.WriteString('Entrega', 'nro', Entrega.nro);
+      INIRec.WriteString('Entrega', 'xCpl', Entrega.xCpl);
+      INIRec.WriteString('Entrega', 'xBairro', Entrega.xBairro);
+      INIRec.WriteString('Entrega', 'xMun', Entrega.xMun);
+      INIRec.WriteString('Entrega', 'UF', Entrega.UF);
+
+      for I := 0 to Det.Count - 1 do
+        begin
+          with Det.Items[I] do
+          begin
+            sSecao := 'Produto' + IntToStrZero(I + 1, 3);
+            INIRec.WriteString(sSecao, 'cProd', Prod.cProd);
+            INIRec.WriteString(sSecao, 'cEAN', Prod.cEAN);
+            INIRec.WriteString(sSecao, 'xProd', Prod.xProd);
+            INIRec.WriteString(sSecao, 'NCM', Prod.NCM);
+            INIRec.WriteString(sSecao, 'CEST', Prod.CEST);
+            INIRec.WriteString(sSecao, 'CFOP', Prod.CFOP);
+            INIRec.WriteString(sSecao, 'uCom', Prod.uCom);
+            INIRec.WriteString(sSecao, 'qCom', CurrToStr(Prod.qCom));
+            INIRec.WriteFloat(sSecao, 'vUnCom', Prod.vUnCom);
+            INIRec.WriteString(sSecao, 'vProd', CurrToStr(Prod.vProd));
+            INIRec.WriteString(sSecao, 'indRegra', indRegraToStr(Prod.indRegra));
+            INIRec.WriteString(sSecao, 'vDesc', CurrToStr(Prod.vDesc));
+            INIRec.WriteString(sSecao, 'vOutro', CurrToStr(Prod.vOutro));
+            INIRec.WriteString(sSecao, 'vItem', CurrToStr(Prod.vItem));
+            INIRec.WriteString(sSecao, 'vRatDesc', CurrToStr(Prod.vRatDesc));
+            INIRec.WriteString(sSecao, 'vRatAcr', CurrToStr(Prod.vRatAcr));
+            INIRec.WriteInteger(sSecao, 'cANP', Prod.cANP);
+
+            INIRec.WriteString(sSecao, 'vItem12741', CurrToStr(Imposto.vItem12741));
+            INIRec.WriteString(sSecao, 'infAdProd', infAdProd);
+          end;
+        end;
+
+      for J := 0 to Det.Count - 1 do
+        begin
+          with Det.Items[J] do
+          begin
+            sSecao := 'ObsFisco' + IntToStrZero(J + 1, 3);
+            INIRec.WriteString(sSecao, 'xCampoDet', obsFisco.Add.xCampo);
+            INIRec.WriteString(sSecao, 'xTextoDet', obsFisco.Add.xTexto);
+          end;
+        end;
+
+      for K := 0 to Det.Count - 1 do
+        begin
+          for L := 0 to Det.Count - 1 do
+            begin
+              with Det.Items[L] do
+              begin
+                sSecao := 'ICMS' + IntToStrZero(L + 1, 3);
+                INIRec.WriteString(sSecao, 'orig', OrigToStr(Imposto.ICMS.orig));
+                INIRec.WriteString(sSecao, 'CST', CSTICMSToStr(Imposto.ICMS.CST));
+                INIRec.WriteString(sSecao, 'CSOSN', CSOSNIcmsToStr(Imposto.ICMS.CSOSN));
+                INIRec.WriteString(sSecao, 'pICMS', CurrToStr(Imposto.ICMS.pICMS));
+                INIRec.WriteString(sSecao, 'vICMS', CurrToStr(Imposto.ICMS.vICMS));
+              end;
+            end;
+
+          for L := 0 to Det.Count - 1 do
+            begin
+              with Det.Items[L] do
+              begin
+                sSecao := 'PIS' + IntToStrZero(L + 1, 3);
+                INIRec.WriteString(sSecao, 'CST', CSTPISToStr(Imposto.PIS.CST));
+                INIRec.WriteString(sSecao, 'vBC', CurrToStr(Imposto.PIS.vBC));
+                INIRec.WriteString(sSecao, 'pPIS', CurrToStr(Imposto.PIS.pPIS));
+                INIRec.WriteString(sSecao, 'vPIS', CurrToStr(Imposto.PIS.vPIS));
+                INIRec.WriteString(sSecao, 'qBCProd', CurrToStr(Imposto.PIS.qBCProd));
+                INIRec.WriteString(sSecao, 'vAliqProd', CurrToStr(Imposto.PIS.vAliqProd));
+              end;
+            end;
+
+          for L := 0 to Det.Count - 1 do
+            begin
+              with Det.Items[L] do
+              begin
+                sSecao := 'PISST' + IntToStrZero(L + 1, 3);
+                INIRec.WriteString(sSecao, 'vBc', CurrToStr(Imposto.PISST.vBc));
+                INIRec.WriteString(sSecao, 'pPis', CurrToStr(Imposto.PISST.pPis));
+                INIRec.WriteString(sSecao, 'qBCProd', CurrToStr(Imposto.PISST.qBCProd));
+                INIRec.WriteString(sSecao, 'vAliqProd', CurrToStr(Imposto.PISST.vAliqProd));
+                INIRec.WriteString(sSecao, 'vPIS', CurrToStr(Imposto.PISST.vPIS));
+              end;
+            end;
+
+          for L := 0 to Det.Count - 1 do
+            begin
+              with Det.Items[L] do
+              begin
+                sSecao := 'COFINS' + IntToStrZero(L + 1, 3);
+                INIRec.WriteString(sSecao, 'CST', CSTCOFINSToStr(Imposto.COFINS.CST));
+                INIRec.WriteString(sSecao, 'vBC', CurrToStr(Imposto.COFINS.vBC));
+                INIRec.WriteString(sSecao, 'pCOFINS', CurrToStr(Imposto.COFINS.pCOFINS));
+                INIRec.WriteString(sSecao, 'vCOFINS', CurrToStr(Imposto.COFINS.vCOFINS));
+                INIRec.WriteString(sSecao, 'vAliqProd', CurrToStr(Imposto.COFINS.vAliqProd));
+                INIRec.WriteString(sSecao, 'qBCProd', CurrToStr(Imposto.COFINS.qBCProd));
+              end;
+            end;
+
+          for L := 0 to Det.Count - 1 do
+            begin
+              with Det.Items[L] do
+              begin
+                sSecao := 'COFINSST' + IntToStrZero(L + 1, 3);
+                INIRec.WriteString(sSecao, 'vBC', CurrToStr(Imposto.COFINSST.vBC));
+                INIRec.WriteString(sSecao, 'pCOFINS', CurrToStr(Imposto.COFINSST.pCOFINS));
+                INIRec.WriteString(sSecao, 'qBCProd', CurrToStr(Imposto.COFINSST.qBCProd));
+                INIRec.WriteString(sSecao, 'vAliqProd', CurrToStr(Imposto.COFINSST.vAliqProd));
+                INIRec.WriteString(sSecao, 'vCOFINS', CurrToStr(Imposto.COFINSST.vCOFINS));
+              end;
+            end;
+
+          for L := 0 to Det.Count - 1 do
+            begin
+              with Det.Items[L] do
+              begin
+                sSecao := 'ISSQN' + IntToStrZero(L + 1, 3);
+                INIRec.WriteString(sSecao, 'vDeducISSQN', CurrToStr(Imposto.ISSQN.vDeducISSQN));
+                INIRec.WriteString(sSecao, 'vBC', CurrToStr(Imposto.ISSQN.vBC));
+                INIRec.WriteString(sSecao, 'vAliq', CurrToStr(Imposto.ISSQN.vAliq));
+                INIRec.WriteString(sSecao, 'vISSQN', CurrToStr(Imposto.ISSQN.vISSQN));
+                INIRec.WriteInteger(sSecao, 'cMunFG', Imposto.ISSQN.cMunFG);
+                INIRec.WriteString(sSecao, 'cListServ', Imposto.ISSQN.cListServ);
+                INIRec.WriteString(sSecao, 'cServTribMun', Imposto.ISSQN.cServTribMun);
+                INIRec.WriteInteger(sSecao, 'cNatOp', Imposto.ISSQN.cNatOp);
+                INIRec.WriteString(sSecao, 'indIncFisc', indIncentivoToStr(Imposto.ISSQN.indIncFisc));
+              end;
+            end;
+        end;
+
+      sSecao := 'Total';
+      with Total do
+      begin
+        with ICMSTot do
+        begin
+          INIRec.WriteFloat(sSecao, 'vICMS', vICMS);
+          INIRec.WriteFloat(sSecao, 'vProd', vProd);
+          INIRec.WriteFloat(sSecao, 'vDesc', vDesc);
+          INIRec.WriteFloat(sSecao, 'vPIS', vPIS);
+          INIRec.WriteFloat(sSecao, 'vCOFINS', vCOFINS);
+          INIRec.WriteFloat(sSecao, 'vPISST', vPISST);
+          INIRec.WriteFloat(sSecao, 'vCOFINSST', vCOFINSST);
+          INIRec.WriteFloat(sSecao, 'vOutro', vOutro);
+        end;
+
+        INIRec.WriteString(sSecao, 'vCFe', CurrToStr(vCFe));
+
+        with DescAcrEntr do
+        begin
+          sSecao := 'DescAcrEntr';
+          INIRec.WriteString(sSecao, 'vDescSubtot', CurrToStr(vDescSubtot));
+          INIRec.WriteString(sSecao, 'vAcresSubtot', CurrToStr(vAcresSubtot));
+        end;
+
+        INIRec.WriteString(sSecao, 'vCFeLei12741', CurrToStr(vCFeLei12741));
+
+        with ISSQNtot do
+        begin
+          sSecao := 'ISSQNtot';
+          INIRec.WriteString(sSecao, 'vBC', CurrToStr(vBC));
+          INIRec.WriteString(sSecao, 'vISS', CurrToStr(vISS));
+          INIRec.WriteString(sSecao, 'vPIS', CurrToStr(vPIS));
+          INIRec.WriteString(sSecao, 'vCOFINS', CurrToStr(vCOFINS));
+          INIRec.WriteString(sSecao, 'vPISST', CurrToStr(vPISST));
+          INIRec.WriteString(sSecao, 'vCOFINSST', CurrToStr(vCOFINSST));
+        end;
+      end;
+
+      for L := 0 to Pagto.Count - 1 do
+        begin
+          with Pagto.Items[L] do
+          begin
+            sSecao := 'pag' + IntToStrZero(L + 1, 3);
+            INIRec.WriteString(sSecao, 'cMP', CodigoMPToStr(cMP));
+            INIRec.WriteString(sSecao, 'vMP', CurrToStr(vMP));
+            INIRec.WriteInteger(sSecao, 'cAdmC', cAdmC);
+            INIRec.WriteString(sSecao, 'cAut', cAut);
+          end;
+          INIRec.WriteString(sSecao, 'vTroco', CurrToStr(Pagto.vTroco));
+        end;
+
+      with InfAdic do
+      begin
+        sSecao := 'DadosAdicionais';
+        INIRec.WriteString(sSecao, 'infCpl', infCpl);
+
+        for L := 0 to obsFisco.Count - 1 do
+          begin
+            with obsFisco.Items[L] do
+            begin
+              sSecao := 'ObsFisco' + IntToStrZero(L + 1, 3);
+              INIRec.WriteString(sSecao, 'xCampo', xCampo);
+              INIRec.WriteString(sSecao, 'xTexto', xTexto);
+            end;
+          end;
+
+      end;
+
+    end;
+  finally
+    IniCFe := TStringList.Create;
+    try
+      INIRec.GetStrings(IniCFe);
+      INIRec.Free;
+      Result := StringReplace(IniCFe.Text, sLineBreak + sLineBreak, sLineBreak, [rfReplaceAll]);
+    finally
+      IniCFe.Free;
+    end;
+  end;
 end;
 
 function TACBrSAT.GetcodigoDeAtivacao : AnsiString ;

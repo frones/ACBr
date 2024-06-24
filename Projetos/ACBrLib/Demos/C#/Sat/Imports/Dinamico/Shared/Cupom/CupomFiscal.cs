@@ -71,7 +71,7 @@ namespace ACBrLib.Sat
                 for (var j = 0; j < Produtos[i].ObsFisco.Count; j++)
                     iniData.WriteToIni(Produtos[i].ObsFisco[j], $"OBSFISCODET{i + 1:000}{j + 1:000}");
 
-                if (Produtos[i].ICMS.CST.HasValue || Produtos[i].ICMS.CSOSN != Core.DFe.CSOSNIcms.csosnVazio)
+                if (Produtos[i].ICMS.CST != Core.DFe.CSTIcms.cstVazio || Produtos[i].ICMS.CSOSN != Core.DFe.CSOSNIcms.csosnVazio)
                     iniData.WriteToIni(Produtos[i].ICMS, $"ICMS{i + 1:000}");
 
                 if (Produtos[i].PIS.pPIS > 0)

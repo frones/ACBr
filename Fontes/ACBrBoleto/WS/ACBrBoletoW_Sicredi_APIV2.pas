@@ -163,7 +163,7 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirContentType;
 begin
-  FPContentType := 'application/json';
+  FPContentType := 'application/json; charset=utf-8';
   if (Boleto.Configuracoes.WebService.Operacao = tpConsulta) then
     FPContentType := 'application/x-www-form-urlencoded';
 end;
@@ -638,12 +638,12 @@ var
   I: Integer;
 begin
 
-  if ATitulo.Mensagem.Text <> '' then
+  if Trim(ATitulo.Mensagem.Text) <> '' then
   begin
     LJsonMensagemArray := TACBrJSONArray.Create;
     for I := 0 to ATitulo.Mensagem.Count - 1 do
     begin
-      LJsonMensagemArray.AddElement( Copy(Atitulo.Mensagem.Strings[I],1,80) );
+      LJsonMensagemArray.AddElement( Copy(Trim(Atitulo.Mensagem.Strings[I]),1,80) );
       if I = 3 then break;//Somente 4 infos
     end;
     AJson.AddPair('mensagens', LJsonMensagemArray);

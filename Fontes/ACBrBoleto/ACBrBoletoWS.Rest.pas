@@ -316,9 +316,7 @@ begin
 
     FRetornoWS                       := String(UTF8ToNativeString(FRetornoWS));
     BoletoWS.RetornoBanco.CodRetorno := httpsend.Sock.LastError;
-    httpsend.Document.SaveToFile('c:\tmp\envio.log');
     try
-        //      LStream.CopyFrom(HTTPSend.Document,0);
       BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code=' + IntToStr(httpsend.ResultCode) + ' ' + httpsend.ResultString + ' ' + FRetornoWS);
       BoletoWS.RetornoBanco.HTTPResultCode := httpsend.ResultCode;
     finally

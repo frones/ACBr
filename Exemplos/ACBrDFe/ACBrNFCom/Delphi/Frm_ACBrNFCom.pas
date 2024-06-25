@@ -424,6 +424,13 @@ begin
 
     // Grupo de Informações do Cofaturamento
     gCofat.chNFComLocal := '';
+    // ou
+    gCofat.gNF.CNPJ := '';
+    gCofat.gNF.Modelo := 21; // 21 ou 22
+    gCofat.gNF.serie := '';
+    gCofat.gNF.nNF := 0;
+    gCofat.gNF.CompetEmis := StrToDate('01/01/2024');
+    gCofat.gNF.hash115 := '';
 
     // Detalhamento de Produtos e Servicos
     with Det.New do
@@ -431,6 +438,7 @@ begin
       nItem := 1;
       chNFComAnt := '';
       nItemAnt := 0;
+      indNFComAntPapelFatCentral := tiNao;
 
       with Prod do
       begin
@@ -453,12 +461,19 @@ begin
 
       with Imposto do
       begin
+        // Indicador de Sem CST para ICMS
+        // se Sim, não vai ser gerado as informações do ICMS
+        indSemCST := tiNao;
+
         with ICMS do
         begin
           CST   := cst00;
           vBC   := 100;
           pICMS := 18;
           vICMS := vBC * pICMS / 100;
+
+          // Indicador de Simples Nacional
+          indSN := tiNao;
         end;
 
         with PIS do
@@ -1668,7 +1683,7 @@ end;
 procedure TfrmACBrNFCom.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
   WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ConverteXMLtoUTF8(RetWS), False, False);
+                      RetWS, False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

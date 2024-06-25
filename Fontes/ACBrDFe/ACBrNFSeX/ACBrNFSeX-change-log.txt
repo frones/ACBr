@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 25/06/2024
+-- ACBrNFSeXServicos --
+[*] Alteração na URL da cidade de Barra Velha/SC, provedor é o mesmo.
+  Por: Catrini
+[*] Alteração na URL da cidade de Morro Reuter/RS, provedor é o mesmo.
+  Por: DNA Automação
 -- ACBrNFSeXProviderBase/ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Alteração visando obter o valor correto para o campo Sucesso em diversas
     situações dos diversos métodos do componente.

@@ -578,7 +578,7 @@ type
     fpQtdRegsLote: Integer;
     fpQtdRegsCobranca: Integer;
     fpVlrRegsCobranca: Double;
-
+    FDigitosSequencialArquivoRemessa : Integer;
     function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
@@ -4848,6 +4848,7 @@ begin
    fpQtdRegsLote            := 0;
    fpQtdRegsCobranca        := 0;
    fpVlrRegsCobranca        := 0;
+   FDigitosSequencialArquivoRemessa := 2;
    fpModulo                := TACBrCalcDigito.Create;
    fpOrientacoesBanco      := TStringList.Create;
 end;
@@ -5545,7 +5546,7 @@ begin
 
          repeat
             Inc( Sequencia );
-            NomeArq := NomeFixo + IntToStrZero( Sequencia, 2 ) + '.rem'
+            NomeArq := NomeFixo + IntToStrZero( Sequencia, FDigitosSequencialArquivoRemessa ) + '.rem'
          until not FileExists( NomeArq ) ;
 
          Result := NomeArq;

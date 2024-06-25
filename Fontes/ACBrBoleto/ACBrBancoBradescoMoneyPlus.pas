@@ -65,8 +65,7 @@ type
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
-
-  end;
+end;
 
 implementation
 
@@ -127,6 +126,7 @@ begin
    fpModuloMultiplicadorInicial:= 2;
    fpModuloMultiplicadorFinal  := 7;
    fpCodParametroMovimento     := 'MX';
+   FDigitosSequencialArquivoRemessa := 7;
 end;
 
 function TACBrBancoBradescoMoneyPlus.MontarCampoCodigoCedente( const ACBrTitulo: TACBrTitulo): String;

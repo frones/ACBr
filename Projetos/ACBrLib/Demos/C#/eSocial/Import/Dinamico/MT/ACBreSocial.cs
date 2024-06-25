@@ -169,12 +169,13 @@ namespace ACBrLib.eSocial
             return ProcessResult(buffer, bufferLen);
         }
 
-        public void CriarEnviareSocial(string eArqIni, int aGrupo)
+        public string CriarEnviareSocial(string eArqIni, int aGrupo)
         {
             var method = GetMethod<eSocial_CriarEnviareSocial>();
             var ret = ExecuteMethod(() => method(libHandle, ToUTF8(eArqIni), aGrupo));
 
             CheckResult(ret);
+            return GetUltimoRetorno(ret);
         }
 
         public void LimpareSocial()

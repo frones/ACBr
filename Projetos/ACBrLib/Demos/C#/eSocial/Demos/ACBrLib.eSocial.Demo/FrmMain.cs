@@ -48,7 +48,7 @@ namespace ACBrLibeSocial.Demo
                 cmbXmlSign.EnumDataSource(SSLXmlSignLib.xsLibXml2);
                 cmbTipoEmpregador.EnumDataSource(TipoEmpregador.tePessoaJuridica);
                 cmbFormaEmissao.EnumDataSource(TipoEmissao.teNormal);
-                cmbVersaoDF.SelectedItem = "02_04_01";
+                cmbVersaoDF.SelectedItem = "S01_02_00";
 
                 // Altera as config de log
                 ACBreSocial.Config.Principal.LogNivel = NivelLog.logParanoico;
@@ -284,8 +284,8 @@ namespace ACBrLibeSocial.Demo
                 var grupo = 1;
                 if (InputBox.Show("Enviar eSocial", "Grupo", ref grupo) != DialogResult.OK) return;
 
-                ACBreSocial.CriarEnviareSocial(arquivoIni, grupo);
-
+                string ret = ACBreSocial.CriarEnviareSocial(arquivoIni, grupo);
+                rtbRespostas.AppendText(ret);
             }
             catch (Exception ex)
             {

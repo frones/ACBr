@@ -299,6 +299,8 @@ begin
              Resp.Free;
            end;
 
+           Result := SetRetorno(ErrOK, AResposta);
+
            eSocialDM.ACBreSocial1.Eventos.Clear;
 
         finally

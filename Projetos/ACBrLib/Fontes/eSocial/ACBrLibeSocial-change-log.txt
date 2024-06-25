@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2024
+--- ACBrLibeSocialBase ---
+[*] Configurada lib para retornar os dados de envio no método CriarEnviareSocial
+--- Diversos C# ---
+[*] Adicionados novos leiautes na combo de versões, tratado retorno do método CriarEnviareSocial
+    Por: Renato Rubinho
+
 11/01/2023
 --- ACBrLibeSocialBase ---
 [-] Correção para conversão das respostas com Erros, em ANSI, se assim estiver configurado

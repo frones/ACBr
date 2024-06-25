@@ -531,8 +531,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root;
 
       Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
@@ -1271,8 +1269,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
 
       if not Assigned(ANode) then
@@ -1522,8 +1518,6 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('Cancelamento');
 

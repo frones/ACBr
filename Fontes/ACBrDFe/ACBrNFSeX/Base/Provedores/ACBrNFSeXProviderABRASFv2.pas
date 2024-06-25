@@ -748,8 +748,6 @@ begin
           AResumo.NomeArq := ANota.NomeArq;
         end;
       end;
-
-      Response.Sucesso := (Response.Erros.Count = 0);
     except
       on E:Exception do
       begin
@@ -927,8 +925,6 @@ begin
       end;
 
       ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
 
@@ -1111,8 +1107,6 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
 
@@ -1462,8 +1456,6 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
 
       if not Assigned(ANodeArray) then
@@ -1739,8 +1731,6 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
 
       if not Assigned(ANodeArray) then
@@ -2010,8 +2000,6 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
 
       if not Assigned(ANodeArray) then
@@ -2274,8 +2262,6 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetCancelamento');
 
@@ -2653,8 +2639,6 @@ begin
       end;
 
       ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituida');
 

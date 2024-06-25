@@ -1799,6 +1799,7 @@ end;
 
 procedure TACBrNFSeXProvider.GeraLote;
 begin
+  GerarResponse.Sucesso := False;
   GerarResponse.Erros.Clear;
   GerarResponse.Alertas.Clear;
   GerarResponse.Resumos.Clear;
@@ -1850,6 +1851,7 @@ begin
                            GerarResponse.NomeArq;
 
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  GerarResponse.Sucesso := (GerarResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.Emite;
@@ -1857,6 +1859,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  EmiteResponse.Sucesso := False;
   EmiteResponse.Erros.Clear;
   EmiteResponse.Alertas.Clear;
   EmiteResponse.Resumos.Clear;
@@ -1969,6 +1972,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoEmitir(EmiteResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  EmiteResponse.Sucesso := (EmiteResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultaSituacao;
@@ -1976,6 +1980,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultaSituacaoResponse.Sucesso := False;
   ConsultaSituacaoResponse.Erros.Clear;
   ConsultaSituacaoResponse.Alertas.Clear;
   ConsultaSituacaoResponse.Resumos.Clear;
@@ -2044,6 +2049,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultaSituacao(ConsultaSituacaoResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultaSituacaoResponse.Sucesso := (ConsultaSituacaoResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultaLoteRps;
@@ -2051,6 +2057,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultaLoteRpsResponse.Sucesso := False;
   ConsultaLoteRpsResponse.Erros.Clear;
   ConsultaLoteRpsResponse.Alertas.Clear;
   ConsultaLoteRpsResponse.Resumos.Clear;
@@ -2118,6 +2125,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultaLoteRps(ConsultaLoteRpsResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultaLoteRpsResponse.Sucesso := (ConsultaLoteRpsResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultaNFSeporRps;
@@ -2125,6 +2133,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultaNFSeporRpsResponse.Sucesso := False;
   ConsultaNFSeporRpsResponse.Erros.Clear;
   ConsultaNFSeporRpsResponse.Alertas.Clear;
   ConsultaNFSeporRpsResponse.Resumos.Clear;
@@ -2193,6 +2202,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultaNFSeporRps(ConsultaNFSeporRpsResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultaNFSeporRpsResponse.Sucesso := (ConsultaNFSeporRpsResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultarEvento;
@@ -2200,6 +2210,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultarEventoResponse.Sucesso := False;
   ConsultarEventoResponse.Erros.Clear;
   ConsultarEventoResponse.Alertas.Clear;
   ConsultarEventoResponse.Resumos.Clear;
@@ -2268,6 +2279,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultarEvento(ConsultarEventoResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultarEventoResponse.Sucesso := (ConsultarEventoResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultarParam;
@@ -2275,6 +2287,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultarParamResponse.Sucesso := False;
   ConsultarParamResponse.Erros.Clear;
   ConsultarParamResponse.Alertas.Clear;
   ConsultarParamResponse.Resumos.Clear;
@@ -2344,6 +2357,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultarParam(ConsultarParamResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultarParamResponse.Sucesso := (ConsultarParamResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultarDFe;
@@ -2351,6 +2365,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultarDFeResponse.Sucesso := False;
   ConsultarDFeResponse.Erros.Clear;
   ConsultarDFeResponse.Alertas.Clear;
   ConsultarDFeResponse.Resumos.Clear;
@@ -2419,6 +2434,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultarDFe(ConsultarDFeResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultarDFeResponse.Sucesso := (ConsultarDFeResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultaNFSe;
@@ -2427,6 +2443,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Prefixo: string;
 begin
+  ConsultaNFSeResponse.Sucesso := False;
   ConsultaNFSeResponse.Erros.Clear;
   ConsultaNFSeResponse.Alertas.Clear;
   ConsultaNFSeResponse.Resumos.Clear;
@@ -2535,6 +2552,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultaNFSe(ConsultaNFSeResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultaNFSeResponse.Sucesso := (ConsultaNFSeResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultaLinkNFSe;
@@ -2542,6 +2560,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultaLinkNFSeResponse.Sucesso := False;
   ConsultaLinkNFSeResponse.Erros.Clear;
   ConsultaLinkNFSeResponse.Alertas.Clear;
   ConsultaLinkNFSeResponse.Resumos.Clear;
@@ -2609,6 +2628,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultaLinkNFSe(ConsultaLinkNFSeResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultaLinkNFSeResponse.Sucesso := (ConsultaLinkNFSeResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.CancelaNFSe;
@@ -2617,6 +2637,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   aConfig: TConfiguracoesNFSe;
 begin
+  CancelaNFSeResponse.Sucesso := False;
   CancelaNFSeResponse.Erros.Clear;
   CancelaNFSeResponse.Alertas.Clear;
   CancelaNFSeResponse.Resumos.Clear;
@@ -2694,6 +2715,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoCancelaNFSe(CancelaNFSeResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  CancelaNFSeResponse.Sucesso := (CancelaNFSeResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.SubstituiNFSe;
@@ -2702,6 +2724,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Cancelamento: TNFSeCancelaNFSeResponse;
 begin
+  SubstituiNFSeResponse.Sucesso := False;
   SubstituiNFSeResponse.Erros.Clear;
   SubstituiNFSeResponse.Alertas.Clear;
   SubstituiNFSeResponse.Resumos.Clear;
@@ -2711,6 +2734,7 @@ begin
   Cancelamento := TNFSeCancelaNFSeResponse.Create;
 
   try
+    Cancelamento.Sucesso := False;
     Cancelamento.Erros.Clear;
     Cancelamento.Alertas.Clear;
     Cancelamento.Resumos.Clear;
@@ -2741,6 +2765,7 @@ begin
 
     SubstituiNFSeResponse.PedCanc := Cancelamento.ArquivoEnvio;
     SubstituiNFSeResponse.PedCanc := SepararDados(SubstituiNFSeResponse.PedCanc, 'CancelarNfseEnvio', False);
+    Cancelamento.Sucesso := True;
   finally
     FreeAndNil(Cancelamento);
   end;
@@ -2807,6 +2832,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoSubstituiNFSe(SubstituiNFSeResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  SubstituiNFSeResponse.Sucesso := (SubstituiNFSeResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.GerarToken;
@@ -2814,6 +2840,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  GerarTokenResponse.Sucesso := False;
   GerarTokenResponse.Erros.Clear;
   GerarTokenResponse.Alertas.Clear;
   GerarTokenResponse.Resumos.Clear;
@@ -2881,6 +2908,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoGerarToken(GerarTokenResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  GerarTokenResponse.Sucesso := (GerarTokenResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.EnviarEvento;
@@ -2889,6 +2917,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   aConfig: TConfiguracoesNFSe;
 begin
+  EnviarEventoResponse.Sucesso := False;
   EnviarEventoResponse.Erros.Clear;
   EnviarEventoResponse.Alertas.Clear;
   EnviarEventoResponse.Resumos.Clear;
@@ -2962,6 +2991,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoEnviarEvento(EnviarEventoResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  EnviarEventoResponse.Sucesso := (EnviarEventoResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.ConsultarSeqRps;
@@ -2969,6 +2999,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
 begin
+  ConsultarSeqRpsResponse.Sucesso := False;
   ConsultarSeqRpsResponse.Erros.Clear;
   ConsultarSeqRpsResponse.Alertas.Clear;
   ConsultarSeqRpsResponse.Resumos.Clear;
@@ -3036,6 +3067,7 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoConsultarSeqRps(ConsultarSeqRpsResponse);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  ConsultarSeqRpsResponse.Sucesso := (ConsultarSeqRpsResponse.Erros.Count = 0);
 end;
 
 procedure TACBrNFSeXProvider.AssinarConsultaLinkNFSe(

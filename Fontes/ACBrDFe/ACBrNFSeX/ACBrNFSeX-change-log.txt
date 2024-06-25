@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/06/2024
+-- ACBrNFSeXProviderBase/ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Alteração visando obter o valor correto para o campo Sucesso em diversas
+    situações dos diversos métodos do componente.
+  Por: SupraMAIS/Italo Giurizzato Junior
+
 24/06/2024
 -- IPM.Provider --
 [*] Alteração visando converter retornos no formato ANSI em UTF-8.

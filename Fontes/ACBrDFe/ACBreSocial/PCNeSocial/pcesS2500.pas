@@ -1518,9 +1518,8 @@ begin
      (obj.natAtividade <> navNaoInformar) or
      (obj.instRemuneracao()) or
      (obj.InfoVinc.tpRegTrab <> trNenhum) or
-     (obj.InfoVinc.FtpRegPrev <> rpNenhum) or
-     (obj.InfoVinc.FdtAdm > 0) or
-     (obj.InfoVinc.FtmpParc <> tpNenhum) or
+     (obj.InfoVinc.tpRegPrev <> rpNenhum) or
+     (obj.InfoVinc.tmpParc <> tpNenhum) or
      (obj.infoVinc.instDuracao()) or
      (obj.infoVinc.instObservacoes()) or
      (obj.infoVinc.instSucessaoVinc()) or

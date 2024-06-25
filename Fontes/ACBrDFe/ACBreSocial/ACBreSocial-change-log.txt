@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2024
+--- pcesS2500 ---
+[*] Corrigido critério para geração do grupo infoCompl do evento S2500
+Por: Andergoncalves
+
 24/06/2024
 --- Diversos ---
 [*] Implementado evento S2221 na versão 01_02_00

@@ -18,7 +18,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="3"/>
+      <BuildNr Value="4"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrAbecsPinpad - Biblioteca para comunicação com Pinpad" InternalName="ACBrLibAbecsPinpad" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="AbecsPinpad" ProductVersion="0.0.0.0"/>
     </VersionInfo>

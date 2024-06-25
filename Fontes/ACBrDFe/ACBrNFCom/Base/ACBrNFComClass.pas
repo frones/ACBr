@@ -298,10 +298,15 @@ type
   TgCofat = class(TObject)
   private
     FchNFComLocal: string;
+    FgNF: TgNF;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure Assign(Source: TgCofat);
 
     property chNFComLocal: string read FchNFComLocal write FchNFComLocal;
+    property gNF: TgNF read FgNF write FgNF;
   end;
 
   { TProd }
@@ -613,6 +618,7 @@ type
     FgProcRef: TgProcRef;
     FgRessarc: TgRessarc;
     FinfAdProd: string;
+    FindNFComAntPapelFatCentral: TIndicador;
   public
     constructor Create;
     destructor Destroy; override;
@@ -627,6 +633,7 @@ type
     property gProcRef: TgProcRef read FgProcRef write FgProcRef;
     property gRessarc: TgRessarc read FgRessarc write FgRessarc;
     property infAdProd: string read FinfAdProd write FinfAdProd;
+    property indNFComAntPapelFatCentral: TIndicador read FindNFComAntPapelFatCentral write FindNFComAntPapelFatCentral default tiNao;
   end;
 
   { TDetCollection }
@@ -1006,6 +1013,7 @@ begin
   chNFComAnt := Source.chNFComAnt;
   nItemAnt := Source.nItemAnt;
   infAdProd := Source.infAdProd;
+  indNFComAntPapelFatCentral := Source.indNFComAntPapelFatCentral;
 
   Prod.Assign(Source.Prod);
   Imposto.Assign(Source.Imposto);
@@ -1056,6 +1064,22 @@ end;
 procedure TgCofat.Assign(Source: TgCofat);
 begin
   chNFComLocal := Source.chNFComLocal;
+
+  gNF.Assign(Source.gNF);
+end;
+
+constructor TgCofat.Create;
+begin
+  inherited Create;
+
+  FgNF := TgNF.Create;
+end;
+
+destructor TgCofat.Destroy;
+begin
+  FgNF.Free;
+
+  inherited;
 end;
 
 { TgSub }

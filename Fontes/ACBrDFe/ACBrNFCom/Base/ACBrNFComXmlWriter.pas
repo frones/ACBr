@@ -88,8 +88,9 @@ type
     function Gerar_DestEnderDest(var UF: string): TACBrXmlNode;
 
     function Gerar_Assinante: TACBrXmlNode;
-    function Gerar_gNF: TACBrXmlNode;
+    function Gerar_gSub_gNF: TACBrXmlNode;
     function Gerar_gSub: TACBrXmlNode;
+    function Gerar_gCofat_gNF: TACBrXmlNode;
     function Gerar_gCofat: TACBrXmlNode;
 
     function Gerar_det: TACBrXmlNodeArray;
@@ -660,14 +661,14 @@ begin
         wAlerta('#75', 'chNFCom', DSC_CHNFCom, ERR_MSG_INVALIDO);
     end
     else
-      Result.AppendChild(Gerar_gNF);
+      Result.AppendChild(Gerar_gSub_gNF);
 
     Result.AppendChild(AddNode(tcStr, '#83', 'motSub', 2, 2, 1,
                                    motSubToStr(NFCom.gSub.motSub), DSC_MOTSUB));
   end;
 end;
 
-function TNFComXmlWriter.Gerar_gNF: TACBrXmlNode;
+function TNFComXmlWriter.Gerar_gSub_gNF: TACBrXmlNode;
 begin
   Result := FDocument.CreateElement('gNF');
 
@@ -675,7 +676,7 @@ begin
                                                 NFCom.gSub.gNF.CNPJ, DSC_CNPJ));
 
   Result.AppendChild(AddNode(tcInt, '#78', 'mod', 2, 2, 1,
-                                            NFCom.gSub.gNF.Modelo, DSC_MOD));
+                                               NFCom.gSub.gNF.Modelo, DSC_MOD));
 
   Result.AppendChild(AddNode(tcStr, '#79', 'serie', 1, 3, 1,
                                               NFCom.gSub.gNF.serie, DSC_SERIE));
@@ -694,16 +695,44 @@ function TNFComXmlWriter.Gerar_gCofat: TACBrXmlNode;
 begin
   Result := nil;
 
-  if (NFCom.gCofat.chNFComLocal <> '') then
+  if (NFCom.gCofat.chNFComLocal <> '') or (NFCom.gCofat.gNF.CNPJ <> '') then
   begin
     Result := FDocument.CreateElement('gCofat');
 
-    Result.AppendChild(AddNode(tcStr, '#85', 'chNFComLocal', 44, 44, 1,
-                                       NFCom.gCofat.chNFComLocal, DSC_CHNFCOM));
+    if NFCom.gCofat.chNFComLocal <> '' then
+    begin
+      Result.AppendChild(AddNode(tcStr, '#85', 'chNFComLocal', 44, 44, 1,
+                                         NFCom.gCofat.chNFComLocal, DSC_CHNFCOM));
 
-    if not ValidarChave(NFCom.gCofat.chNFComLocal) then
-      wAlerta('#085', 'chNFComLocal', DSC_CHNFCOM, ERR_MSG_INVALIDO);
+      if not ValidarChave(NFCom.gCofat.chNFComLocal) then
+        wAlerta('#085', 'chNFComLocal', DSC_CHNFCOM, ERR_MSG_INVALIDO);
+    end
+    else
+      Result.AppendChild(Gerar_gCofat_gNF);
   end;
+end;
+
+function TNFComXmlWriter.Gerar_gCofat_gNF: TACBrXmlNode;
+begin
+  Result := FDocument.CreateElement('gNF');
+
+  Result.AppendChild(AddNode(tcStr, '#77', 'CNPJ', 14, 14, 1,
+                                              NFCom.gCofat.gNF.CNPJ, DSC_CNPJ));
+
+  Result.AppendChild(AddNode(tcInt, '#78', 'mod', 2, 2, 1,
+                                             NFCom.gCofat.gNF.Modelo, DSC_MOD));
+
+  Result.AppendChild(AddNode(tcStr, '#79', 'serie', 1, 3, 1,
+                                            NFCom.gCofat.gNF.serie, DSC_SERIE));
+
+  Result.AppendChild(AddNode(tcStr, '#80', 'nNF', 1, 9, 1,
+                                                NFCom.gCofat.gNF.nNF, DSC_NDF));
+
+  Result.AppendChild(AddNode(tcStr, '#81', 'CompetEmis', 6, 6, 1,
+        FormatDateTime('yyyymm', NFCom.gCofat.gNF.CompetEmis), DSC_COMPETEMIS));
+
+  Result.AppendChild(AddNode(tcStr, '#82', 'hash115', 32, 32, 0,
+                                        NFCom.gCofat.gNF.hash115, DSC_HASH115));
 end;
 
 function TNFComXmlWriter.Gerar_det: TACBrXmlNodeArray;
@@ -725,6 +754,9 @@ begin
 
     if NFCom.Det[i].nItemAnt > 0 then
       Result[i].SetAttribute('nItemAnt', FormatFloat('000', NFCom.Det[i].nItemAnt));
+
+    if NFCom.Det[i].indNFComAntPapelFatCentral = tiSim then
+      Result[i].SetAttribute('indNFComAntPapelFatCentral', '1');
 
     Result[i].AppendChild(Gerar_det_prod(i));
     Result[i].AppendChild(Gerar_det_imposto(i));

@@ -56,8 +56,9 @@ type
     procedure Ler_DestEnderDest(const ANode: TACBrXmlNode);
     procedure Ler_Assinante(const ANode: TACBrXmlNode);
     procedure Ler_gSub(const ANode: TACBrXmlNode);
-    procedure Ler_gNF(const ANode: TACBrXmlNode);
+    procedure Ler_gSub_gNF(const ANode: TACBrXmlNode);
     procedure Ler_gCofat(const ANode: TACBrXmlNode);
+    procedure Ler_gCofat_gNF(const ANode: TACBrXmlNode);
     procedure Ler_Det(const ANode: TACBrXmlNode);
     procedure Ler_DetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
     procedure Ler_DetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
@@ -343,10 +344,10 @@ begin
   NFCom.gSub.chNFCom := ObterConteudo(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
   NFCom.gSub.motSub := StrToMotSub(ObterConteudo(ANode.Childrens.FindAnyNs('motSub'), tcStr));
 
-  Ler_gNF(ANode.Childrens.FindAnyNs('gNF'));
+  Ler_gSub_gNF(ANode.Childrens.FindAnyNs('gNF'));
 end;
 
-procedure TNFComXmlReader.Ler_gNF(const ANode: TACBrXmlNode);
+procedure TNFComXmlReader.Ler_gSub_gNF(const ANode: TACBrXmlNode);
 var
   xData: string;
 begin
@@ -375,6 +376,32 @@ begin
   if not Assigned(ANode) then Exit;
 
   NFCom.gCofat.chNFComLocal := ObterConteudo(ANode.Childrens.FindAnyNs('chNFComLocal'), tcStr);
+
+  Ler_gCofat_gNF(ANode.Childrens.FindAnyNs('gNF'));
+end;
+
+procedure TNFComXmlReader.Ler_gCofat_gNF(const ANode: TACBrXmlNode);
+var
+  xData: string;
+begin
+  if not Assigned(ANode) then Exit;
+
+  NFCom.gCofat.gNF.CNPJ := ObterConteudo(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  NFCom.gCofat.gNF.Modelo := ObterConteudo(ANode.Childrens.FindAnyNs('mod'), tcInt);
+  NFCom.gCofat.gNF.serie := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
+  NFCom.gCofat.gNF.nNF := ObterConteudo(ANode.Childrens.FindAnyNs('nNF'), tcInt);
+
+  xData := ObterConteudo(ANode.Childrens.FindAnyNs('CompetEmis'), tcStr);
+
+  if xData <> '' then
+  begin
+    xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4);
+    NFCom.gCofat.gNF.CompetEmis := StrToDate(xData);
+  end
+  else
+    NFCom.gCofat.gNF.CompetEmis := 0;
+
+  NFCom.gCofat.gNF.hash115 := ObterConteudo(ANode.Childrens.FindAnyNs('hash115'), tcStr);
 end;
 
 procedure TNFComXmlReader.Ler_Det(const ANode: TACBrXmlNode);
@@ -388,6 +415,7 @@ begin
   Item.nItem := StrToInt(ObterConteudoTag(ANode.Attributes.Items['nItem']));
   Item.chNFComAnt := ObterConteudoTag(ANode.Attributes.Items['chNFComAnt']);
   Item.nItemAnt := StrToIntDef(ObterConteudoTag(ANode.Attributes.Items['nItemAnt']), 0);
+  Item.indNFComAntPapelFatCentral := StrToTIndicador(ObterConteudoTag(ANode.Attributes.Items['indNFComAntPapelFatCentral']));
 
   Item.infAdProd := ObterConteudo(ANode.Childrens.FindAnyNs('infAdProd'), tcStr);
 

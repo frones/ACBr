@@ -560,6 +560,12 @@ begin
 
       sSecao := 'gCofat';
       gCofat.chNFComLocal := INIRec.ReadString(sSecao, 'chNFComLocal', '');
+      gCofat.gNF.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
+      gCofat.gNF.Modelo := INIRec.ReadInteger(sSecao, 'Modelo', 0);
+      gCofat.gNF.Serie := INIRec.ReadString(sSecao, 'Serie', '');
+      gCofat.gNF.nNF := INIRec.ReadInteger(sSecao, 'nNF', 0);
+      gCofat.gNF.CompetEmis := StringToDateTime(INIRec.ReadString(sSecao, 'CompetEmis', '0'));
+      gCofat.gNF.hash115 := INIRec.ReadString(sSecao, 'hash115', '');
 
       i := 1;
       while true do
@@ -575,6 +581,7 @@ begin
         ItemDet.chNFComAnt := INIRec.ReadString(sSecao, 'chNFComAnt', '');
         ItemDet.nItemAnt := INIRec.ReadInteger(sSecao, 'nItemAnt', 0);
         ItemDet.infAdProd := INIRec.ReadString(sSecao, 'infAdProd', '');
+        ItemDet.indNFComAntPapelFatCentral := StrToTIndicador(INIRec.ReadString(sSecao, 'indNFComAntPapelFatCentral', '0'));
 
         ItemDet.Prod.cProd := INIRec.ReadString(sSecao, 'cProd', '');
         ItemDet.Prod.xProd := INIRec.ReadString(sSecao, 'xProd', '');
@@ -928,6 +935,12 @@ begin
 
       sSecao := 'gCofat';
       INIRec.WriteString(sSecao, 'chNFComLocal', gCofat.chNFComLocal);
+      INIRec.WriteString(sSecao, 'CNPJ', gCofat.gNF.CNPJ);
+      INIRec.WriteInteger(sSecao, 'Modelo', gCofat.gNF.Modelo);
+      INIRec.WriteString(sSecao, 'Serie', gCofat.gNF.Serie);
+      INIRec.WriteInteger(sSecao, 'nNF', gCofat.gNF.nNF);
+      INIRec.WriteString(sSecao, 'CompetEmis', DateTimeToStr(gCofat.gNF.CompetEmis));
+      INIRec.WriteString(sSecao, 'hash115', gCofat.gNF.hash115);
 
       for i := 0 to Det.Count - 1 do
       begin
@@ -937,6 +950,8 @@ begin
         INIRec.WriteString(sSecao, 'chNFComAnt', Det.Items[i].chNFComAnt);
         INIRec.WriteInteger(sSecao, 'nItemAnt', Det.Items[i].nItemAnt);
         INIRec.WriteString(sSecao, 'infAdProd', Det.Items[i].infAdProd);
+        INIRec.WriteString(sSecao, 'indNFComAntPapelFatCentral',TIndicadorToStr(Det.Items[i].indNFComAntPapelFatCentral));
+
         // Informações do produto
         INIRec.WriteString(sSecao, 'cProd', Det.Items[i].Prod.cProd);
         INIRec.WriteString(sSecao, 'xProd', Det.Items[i].Prod.xProd);

@@ -648,8 +648,10 @@ begin
         PWINFO_POSID:
           SerialPOS := LinStr;
 
+        PWINFO_PRODUCTNAME:  // 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
+          Instituicao := LinStr;
+
         //PWINFO_PRODUCTID   3Eh até 8 Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
-        //PWINFO_PRODUCTNAME 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
         //PWINFO_AUTMERCHID  38h até 50 Identificador do estabelecimento para o Provedor (código de afiliação)
         //PWINFO_TRANSACDESCRIPT 1F40h Até 80 Descritivo da transação realizada, por exemplo, CREDITO A VISTA ou VENDA PARCELADA EM DUAS VEZES.
       else
@@ -671,6 +673,13 @@ begin
     else
       TextoEspecialOperador := IfEmptyThen( LeInformacao(PWINFO_CNCDSPMSG, 0).AsBinary,
                                             LeInformacao(PWINFO_RESULTMSG, 0).AsBinary );
+
+    // Workaround, para situações onde a VERO / BANRICOMPRAS não retorna o CodigoAutorizacaoTransacao ou PWINFO_AUTHCODE (0x46)
+    if (CodigoAutorizacaoTransacao = '') then
+    begin
+      if (UpperCase(Instituicao) = 'BANRICOMPRAS') and (UpperCase(Rede) = 'VERO') then
+        CodigoAutorizacaoTransacao := NSU;
+    end;
 
     if (Trim(TextoEspecialOperador) = '') then
       TextoEspecialOperador := 'TRANSACAO FINALIZADA'

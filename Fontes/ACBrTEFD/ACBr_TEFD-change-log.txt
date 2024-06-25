@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2024
+-- ACBrTEFPayGoComum --
+[*] Workaround, para situações onde a VERO / BANRICOMPRAS não retorna o 
+    CodigoAutorizacaoTransacao ou PWINFO_AUTHCODE (0x46), para considerar
+    CodigoAutorizacaoTransacao = NSU
+    (por: DSA)
+  
 27/05/2024
 -- ACBrTEFAPI --
 [*] Modificada a assintura do método "ObterDadoPinPad" para permitir informar
@@ -64,7 +71,6 @@ Símbolo : Significado
 -- ACBrTEFAPICliSiTef --
 [*] Nova Implememtação do método "ObterDadoPinPad", baseado nas sugestões da
     nova versão da CliSiTef
-
     https://www.projetoacbr.com.br/forum/topic/73829-problema-em-obter-dados-pinpad/
     (por: DataCamp)
 

@@ -1361,12 +1361,11 @@ object frmACBreSocial: TfrmACBreSocial
           Width = 404
           Height = 17
           Caption = 'S-2221 Exame Toxicol'#243'gico do Motorista Profissional '
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Tahoma'
-          Font.Style = [fsStrikeOut]
+          Font.Style = []
           ParentFont = False
           TabOrder = 6
         end

@@ -202,7 +202,8 @@ begin
   Gerador.wCampo(tcStr, '', 'nmMed',       1, 70, 0, objToxicologico.nmMed);
   Gerador.wCampo(tcStr, '', 'nrCRM',       1,  8, 0, objToxicologico.nrCRM);
   Gerador.wCampo(tcStr, '', 'ufCRM',       1,  2, 0, objToxicologico.ufCRM);
-  Gerador.wCampo(tcStr, '', 'indRecusa',   1,  1, 1, eSSimNaoToStr(objToxicologico.indRecusa));
+  if VersaoDF <= ve02_05_00 then
+    Gerador.wCampo(tcStr, '', 'indRecusa',   1,  1, 1, eSSimNaoToStr(objToxicologico.indRecusa));
 
   Gerador.wGrupo('/toxicologico');
 end;

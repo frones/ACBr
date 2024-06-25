@@ -4045,9 +4045,6 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2221;
 begin
-  if VersaoDFx > ve02_05_00 then
-    exit;
-
   with ACBreSocial1.Eventos.NaoPeriodicos.S2221.New do
   begin
     with evtToxic do
@@ -4071,7 +4068,8 @@ begin
       with ideVinculo do
       begin
         cpfTrab   := '12345678901';
-        nisTrab   := '12345678901';
+        if VersaoDFx <= ve02_05_00 then
+          nisTrab   := '12345678901';
         matricula := '5000';
       end;
 
@@ -4079,11 +4077,10 @@ begin
       begin
         dtExame     := Date;
         cnpjLab     := '12548526587101';
-        codSeqExame := '999999999';
+        codSeqExame := 'SP999999999';
         nmMed       := 'MEDICO TESTE';
         nrCRM       := '54646548';
         ufCRM       := 'SP';
-//        indRecusa   := tpNao;
       end;
     end;
   end;

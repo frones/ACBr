@@ -736,7 +736,7 @@ type
   end;
 
 const
-  TEventoString: array[0..52] of String =('evtInfoEmpregador', 'evtTabEstab',
+  TEventoString: array[0..53] of String =('evtInfoEmpregador', 'evtTabEstab',
                                           'evtTabRubrica', 'evtTabLotacao',
                                           'evtTabCargo', 'evtTabCarreira',
                                           'evtTabFuncao', 'evtTabHorTur',
@@ -762,7 +762,7 @@ const
                                           'evtCessao', 'evtCdBenAlt',
                                           'evtReativBen','evtCdBenTerm',
                                           'evtProcTrab', 'evtContProc',
-                                          'evtExcProcTrab');
+                                          'evtExcProcTrab', 'evtToxic');
 
   EventoStringNova: array[0..58] of String =
       ('evtInfoEmpregador', 'evtTabEstab', 'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
@@ -784,7 +784,7 @@ const
                                           751, 761, 771, 781, 901, 902, 903, 904);
 
 const
-  __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 161] of TRecMatrixEventoInfo =
+  __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 162] of TRecMatrixEventoInfo =
     (
     // Leiaute S-1.2.0
     (TipoEvento: teS1000                   ; TipoEventoString: 'S-1000'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtInfoEmpregador'          ; Schema: schevtInfoEmpregador       ; StrEventoToTipoEvento: 'evtInfoEmpregador'          ; Observacao: ''),
@@ -807,6 +807,7 @@ const
     (TipoEvento: teS2206                   ; TipoEventoString: 'S-2206'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtAltContratual'           ; Schema: schevtAltContratual        ; StrEventoToTipoEvento: 'evtAltContratual'           ; Observacao: ''),
     (TipoEvento: teS2210                   ; TipoEventoString: 'S-2210'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtCAT'                     ; Schema: schevtCAT                  ; StrEventoToTipoEvento: 'evtCAT'                     ; Observacao: ''),
     (TipoEvento: teS2220                   ; TipoEventoString: 'S-2220'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtMonit'                   ; Schema: schevtMonit                ; StrEventoToTipoEvento: 'evtMonit'                   ; Observacao: ''),
+    (TipoEvento: teS2221                   ; TipoEventoString: 'S-2221'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtToxic'                   ; Schema: schevtToxic                ; StrEventoToTipoEvento: 'evtToxic'                   ; Observacao: ''),
     (TipoEvento: teS2230                   ; TipoEventoString: 'S-2230'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtAfastTemp'               ; Schema: schevtAfastTemp            ; StrEventoToTipoEvento: 'evtAfastTemp'               ; Observacao: ''),
     (TipoEvento: teS2231                   ; TipoEventoString: 'S-2231'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtCessao'                  ; Schema: schevtCessao               ; StrEventoToTipoEvento: 'evtCessao'                  ; Observacao: ''),
     (TipoEvento: teS2240                   ; TipoEventoString: 'S-2240'                    ; VersaoeSocial: veS01_02_00; Versao: 'vS1_02'; EventoString: 'evtExpRisco'                ; Schema: schevtExpRisco             ; StrEventoToTipoEvento: 'evtExpRisco'                ; Observacao: ''),

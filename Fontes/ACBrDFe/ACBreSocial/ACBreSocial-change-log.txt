@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2024
+--- Diversos ---
+[*] Implementado evento S2221 na versão 01_02_00
+Por: Renato Rubinho
+
 19/06/2024
 -- Frm_ACBreSocial --
 [*] Correção na geração do grupo Vinculo do evento S2206

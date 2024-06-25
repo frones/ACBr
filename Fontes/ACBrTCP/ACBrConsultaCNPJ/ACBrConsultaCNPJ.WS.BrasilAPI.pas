@@ -112,6 +112,7 @@ begin
         FResposta.EndEletronico        := '';
         FResposta.Telefone             := LJsonObject.AsString['ddd_telefone_1'];
         FResposta.EFR                  := '';
+        FResposta.CapitalSocial        := LJsonObject.AsFloat['capital_social'];
 
         FResposta.MotivoSituacaoCad    := LJsonObject.AsString['motivo_situacao_cadastral'];
 

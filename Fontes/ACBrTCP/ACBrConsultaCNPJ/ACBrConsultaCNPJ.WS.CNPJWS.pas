@@ -111,6 +111,7 @@ begin
       FResposta.UF                   := LJsonObject.AsJSONObject['estado'].AsString['sigla'];
 
       FResposta.EFR                  := '';
+      FResposta.CapitalSocial        := StrToFloatDef(StringReplace(LJson.AsString['capital_social'],'.',',',[rfReplaceAll]),0);
 
       FResposta.CNAE1 := LJsonObject.AsJSONObject['atividade_principal'].AsString['id'] + ' ' +
                          LJsonObject.AsJSONObject['atividade_principal'].AsString['descricao'];

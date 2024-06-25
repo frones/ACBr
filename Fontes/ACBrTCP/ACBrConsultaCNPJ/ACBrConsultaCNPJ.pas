@@ -98,7 +98,7 @@ type
     FProxyPort : string;
     FProxyUser : string;
     FProxyPass : string;
-
+    FCapitalSocial : Double;
     function GetIBGE_UF : String ;
     function GetIniServicos: String;
     procedure ParserWS(const AACBrConsultaCNPJWSResposta : TACBrConsultaCNPJWSResposta);
@@ -148,6 +148,7 @@ type
     property ProxyPort: string read FProxyPort write FProxyPort;
     property ProxyUser: string read FProxyUser write FProxyUser;
     property ProxyPass: string read FProxyPass write FProxyPass;
+    property CapitalSocial: Double read FCapitalSocial write FCapitalSocial;
   end;
 
 implementation
@@ -198,6 +199,7 @@ begin
   FMotivoSituacaoCad    := AACBrConsultaCNPJWSResposta.MotivoSituacaoCad;
   FCodigoIBGE           := AACBrConsultaCNPJWSResposta.CodigoIBGE;
   FInscricaoEstadual    := AACBrConsultaCNPJWSResposta.InscricaoEstadual;
+  FCapitalSocial        := AACBrConsultaCNPJWSResposta.CapitalSocial;
 end;
 
 function TACBrConsultaCNPJ.Consulta(const ACNPJ: String; const ACaptcha: String; const ARemoverEspacosDuplos: Boolean): Boolean;

@@ -119,6 +119,7 @@ begin
         FResposta.Telefone             := LJsonObject.AsString['telefone'];
         FResposta.EFR                  := LJsonObject.AsString['efr'];
         FResposta.MotivoSituacaoCad    := LJsonObject.AsString['motivo_situacao'];
+        FResposta.CapitalSocial        := LJsonObject.AsFloat['capital_social'];
         Result := true;
       end else
       begin

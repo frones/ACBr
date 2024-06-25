@@ -1867,7 +1867,7 @@ type
   TMateraDrawee = class(TACBrPIXSchema)
   private
     fname: String;
-    ftaxIdentifier: TMateraTaxIdentifierBasic;
+    ftaxIdentifier: TMateraTaxIdentifier;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1880,7 +1880,7 @@ type
     procedure Assign(aSource: TMateraDrawee);
 
     property name: String read fname write fname;
-    property taxIdentifier: TMateraTaxIdentifierBasic read ftaxIdentifier write ftaxIdentifier;
+    property taxIdentifier: TMateraTaxIdentifier read ftaxIdentifier write ftaxIdentifier;
   end;
 
   { TMateraWithdrawProviders }
@@ -7053,7 +7053,7 @@ end;
 constructor TMateraDrawee.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  ftaxIdentifier := TMateraTaxIdentifierBasic.Create('taxIdentifier');
+  ftaxIdentifier := TMateraTaxIdentifier.Create('taxIdentifier');
   Clear;
 end;
 

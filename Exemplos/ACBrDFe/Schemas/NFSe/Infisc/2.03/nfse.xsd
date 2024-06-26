@@ -802,6 +802,7 @@
 	<xsd:complexType name="tcIdentificacaoNfse">
 		<xsd:sequence>
 			<xsd:element name="Numero" type="tsNumeroNfse" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="Serie" type="tsSerieRps" minOccurs="0" maxOccurs="1" />
 			<xsd:element name="CpfCnpj" type="tcCpfCnpj" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal" minOccurs="0" maxOccurs="1" />
 			<xsd:element name="CodigoMunicipio" type="tsCodigoMunicipioIbge" minOccurs="1" maxOccurs="1" />

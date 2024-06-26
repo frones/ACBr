@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2024
+-- Infisc.Provider --
+[*] Adiciona configuração para que a ConsultaNFSePorFaixa na versão 2.03 sempre gere NumInicial e NumFinal
+  Por: Diego Folieni
 
 25/06/2024
 -- ACBrNFSeXServicos --

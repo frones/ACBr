@@ -42,7 +42,7 @@ uses
   ACBrBoletoWS,
   ACBrBoletoRetorno,
   ACBrBoletoWS.Rest,
-  System.StrUtils;
+  StrUtils;
 type
 
 { TRetornoEnvio_BancoBrasil_API }

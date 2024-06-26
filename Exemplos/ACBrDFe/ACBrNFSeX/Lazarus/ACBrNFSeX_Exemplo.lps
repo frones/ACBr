@@ -54,13 +54,10 @@
         <ComponentName Value="frlXDANFSeRLRetrato"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="455"/>
         <CursorPos X="15" Y="469"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRL.pas"/>
@@ -71,15 +68,19 @@
         <CursorPos X="23" Y="7"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes\ACBrNFSeXDANFSeRLISSNet.pas"/>
         <ComponentName Value="frlXDANFSeRLISSnet"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="37"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXConfiguracoes.pas"/>

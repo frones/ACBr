@@ -1667,7 +1667,7 @@ begin
       exit;
 
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil, proWebFisco,
-      proSimple, proFGMaiss, proIPM, proPriMax, proSigISSWeb] then
+      proSimple, proFGMaiss, proInfisc, proIPM, proPriMax, proSigISSWeb] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -4464,6 +4464,7 @@ begin
           end;
 
           if ACBrNFSeX1.Configuracoes.Geral.ConsultaLoteAposEnvio and
+             (Emite.Erros.Count = 0) and
              ((Emite.Protocolo <> '') or (Emite.NumeroLote <> '')) then
           begin
             if ACBrNFSeX1.Provider.ConfigGeral.ConsultaSitLote then
@@ -4491,7 +4492,8 @@ begin
               end;
             end;
 
-            if ACBrNFSeX1.Provider.ConfigGeral.ConsultaLote then
+            if ACBrNFSeX1.Provider.ConfigGeral.ConsultaLote and
+               (ConsultaSituacao.Erros.Count = 0) then
             begin
               with ConsultaLoteRps do
               begin

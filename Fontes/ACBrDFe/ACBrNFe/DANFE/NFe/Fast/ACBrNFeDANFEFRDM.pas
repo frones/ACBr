@@ -2111,7 +2111,7 @@ begin
   begin
     if Assigned(DANFEClassOwner.ACBrNFe) then
     begin
-      if DANFEClassOwner.FIndexImpressaoIndividual > 0  then
+      if DANFEClassOwner.FIndexImpressaoIndividual >= 0  then
       begin
         NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais[DANFEClassOwner.FIndexImpressaoIndividual].NFe;
         CarregaDadosNFe;
@@ -2397,7 +2397,7 @@ end;
 
 procedure TACBrNFeFRClass.ImprimirDANFE(ANFE: TNFe);
 begin
-  DANFEClassOwner.FIndexImpressaoIndividual := 0;
+  DANFEClassOwner.FIndexImpressaoIndividual := -1;
   if PrepareReport(ANFE) then
   begin
     if DANFEClassOwner.MostraPreview then

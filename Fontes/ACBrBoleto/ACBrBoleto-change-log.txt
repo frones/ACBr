@@ -49,12 +49,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2024
+-- ACBrBoletoRet_BancoBrasil_API --
+[*]TK-5627 - Ajuste nas propriedades de retorno qdo httpcode >= 400, novo obj retorno errors  
+   https://www.projetoacbr.com.br/forum/topic/78355-tratamento-de-mensagens-de-erro-acbrboletows-banco-do-brasil-api/
+   Por Daniel Morais InfoCotidiano
+
+
 21/06/2024
 -- ACBrBoletoRet_Bancoob --
 [-]TK-5561 - Ajuste nas propriedades de retorno qdo httpcode >= 300
    https://www.projetoacbr.com.br/forum/topic/76103-api-boleto-pix-sicoob-n%C3%A3o-esta-tratando-as-mensagens-de-erro-corretamente/page/2/
    Por Daniel Morais InfoCotidiano 
-
 
 14/06/2024
 -- ACBrBoletoRet_Inter_API --

@@ -41,7 +41,8 @@ uses
   ACBrBoleto,
   ACBrBoletoWS,
   ACBrBoletoRetorno,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest,
+  System.StrUtils;
 type
 
 { TRetornoEnvio_BancoBrasil_API }
@@ -91,6 +92,7 @@ var
   LMensagemRejeicao: TACBrBoletoRejeicao;
   LTipoOperacao : TOperacao;
   I: Integer;
+  LMensagemRetorno : string;
 begin
   Result := True;
 
@@ -110,7 +112,6 @@ begin
         if HTTPResultCode >= 400 then
         begin
           LJsonArray := LJsonObject.AsJSONArray['erros'];
-
           if LJsonArray.Count > 0 then
           begin
             for I := 0 to Pred(LJsonArray.Count) do
@@ -141,6 +142,21 @@ begin
             LMensagemRejeicao.Codigo     := LJsonObject.AsString['statusCode'];
             LMensagemRejeicao.Versao     := LJsonObject.AsString['error'];
             LMensagemRejeicao.Mensagem   := LJsonObject.AsString['message'];
+          end;
+          if LJsonObject.IsJSONArray('errors') then
+          begin
+            LJsonArray := LJsonObject.AsJSONArray['errors'];
+            for I := 0 to Pred(LJsonArray.Count) do
+            begin
+              LItemObject                  := LJsonArray.ItemAsJSONObject[I];
+              LMensagemRejeicao            := ARetornoWS.CriarRejeicaoLista;
+              LMensagemRejeicao.Codigo     := LItemObject.AsString['code'];
+              LMensagemRejeicao.Mensagem   := LItemObject.AsString['message'];
+              LMensagemRetorno :=  LMensagemRetorno +
+                                   IfThen(I > 0,', ','')+
+                                   LItemObject.AsString['message'];
+            end;
+            ARetornoWS.MsgRetorno := LMensagemRetorno;
           end;
         end;
 

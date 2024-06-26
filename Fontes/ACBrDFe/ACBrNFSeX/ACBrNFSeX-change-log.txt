@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/06/2024
+-- ACBrNFSeXServicos --
+[*] Alteração na URL da cidade de Cachoeira do Sul/RS, provedor é o mesmo.
+  Por: Maiquel
+[+] Incluída a cidade de Pains/MG, provedor é GestaoISS.
+  Por: João Antônio
+[+] Incluída a cidade de São José das Palmeiras/RP, provedor é Equiplano.
+  Por: Jeann Lima
+[+] Incluída a cidade de Arinos/MG, provedor é Fiorilli.
+  Por: João Antônio
 -- Infisc.Provider --
 [*] Adiciona configuração para que a ConsultaNFSePorFaixa na versão 2.03 sempre gere NumInicial e NumFinal
   Por: Diego Folieni

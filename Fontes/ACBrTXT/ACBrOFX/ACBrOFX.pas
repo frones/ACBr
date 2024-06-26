@@ -95,7 +95,8 @@ CONST
 implementation
 
 uses
-  ACBrUtil.Base;
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TACBrOFX }
 
@@ -218,6 +219,9 @@ begin
     oFile.LoadFromFile(FOFXFile);
     i := 0;
 
+    if (Pos('ENCODING:UTF-8',oFile.Text) > 0) then
+      oFile.Text := UTF8ToNativeString(oFile.Text);
+
     while i < oFile.Count do
     begin
       sLine := oFile.Strings[i];
@@ -295,7 +299,7 @@ begin
             if FindString('<MEMO>', sLine) then
             begin
               LDescricaoMemo := LDescricaoMemo + ifthen(LDescricaoMemo='','',', ')+trim(InfLine(sLine));
-              if bOFX then                
+              if bOFX then
                 oItem.Description := Trim(LDescricaoMemo);
             end;
             if FindString('<TRNAMT>', sLine) then

@@ -113,7 +113,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; override;
-    function ObterNomeArquivo: string; override;
+    function ObterNomeArquivo: string; overload;
 
     property Opcoes: TDCeXmlWriterOptions read GetOpcoes write SetOpcoes;
     property DCe: TDCe read FDCe write FDCe;

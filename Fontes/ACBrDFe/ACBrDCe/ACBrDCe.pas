@@ -86,7 +86,8 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
-    function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean;
+    function Enviar(const ALote: String; Imprimir: Boolean = True;
+      Zipado: Boolean = True): Boolean;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -562,12 +563,12 @@ begin
   Result := True;
 end;
 
-function TACBrDCe.Enviar(const ALote: String; Imprimir:Boolean = True): Boolean;
+function TACBrDCe.Enviar(const ALote: String; Imprimir:Boolean = True;
+  Zipado: Boolean = True): Boolean;
 var
  i: Integer;
 begin
   WebServices.Enviar.Clear;
-  WebServices.Retorno.Clear;
 
   if Declaracoes.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum DC-e adicionado ao Lote'));
@@ -579,7 +580,7 @@ begin
   Declaracoes.Assinar;
   Declaracoes.Validar;
 
-  Result := WebServices.Envia(ALote);
+  Result := WebServices.Envia(ALote, Zipado);
 
   if DACE <> nil then
   begin

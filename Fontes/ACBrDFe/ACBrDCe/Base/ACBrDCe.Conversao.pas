@@ -41,9 +41,8 @@ uses
   pcnConversao;
 
 type
-  TStatusDCe = (stDCeIdle, stDCeStatusServico, stDCeRecepcao, stDCeRetRecepcao,
-                stDCeConsulta, stDCeRecibo, stDCeEmail, stDCeEvento,
-                stDCeDistDFeInt, stDCeEnvioWebService);
+  TStatusDCe = (stDCeIdle, stDCeStatusServico, stDCeAutorizacao, stDCeConsulta,
+                stDCeEmail, stDCeEvento, stDCeEnvioWebService);
 
   TVersaoDCe = (ve100);
 
@@ -52,24 +51,20 @@ const
   TVersaoDCeArrayDouble: array[TVersaoDCe] of Double = (1.00);
 
 type
-  TSchemaDCe = (schErroDCe, schDCe, schEventoDCe, schconsReciDCe,
-                schconsSitDCe, schconsStatServDCe, schevCancDCe,
-                schdistDFeInt);
+  TSchemaDCe = (schErroDCe, schDCe, schEventoDCe, schconsSitDCe,
+                schconsStatServDCe, schevCancDCe);
 
 const
-  TSchemaDCeArrayStrings: array[TSchemaDCe] of string = ('', '', '', '', '', '',
-    'evCancDCe', 'distDFeInt');
+  TSchemaDCeArrayStrings: array[TSchemaDCe] of string = ('', '', '', '', '',
+    'evCancDCe');
 
 type
-  TLayOutDCe = (LayDCeRecepcao, LayDCeRetRecepcao, LayDCeConsulta,
-                LayDCeStatusServico, LayDCeEvento, LayDCeDistDFeInt,
-                LayDCeRecepcaoSinc, LayDCeURLQRCode, LayURLConsultaDCe);
+  TLayOutDCe = (LayDCeAutorizacao, LayDCeConsulta, LayDCeStatusServico,
+                LayDCeEvento, LayDCeURLQRCode, LayURLConsultaDCe);
 
 const
-  TLayOutDCeArrayStrings: array[TLayOutDCe] of string = ('DCeRecepcao',
-    'DCeRetRecepcao', 'DCeConsultaProtocolo', 'DCeStatusServico',
-    'RecepcaoEvento', 'DCeDistDFeInt', 'DCeRecepcaoSinc', 'URL-QRCode',
-    'URL-Consulta');
+  TLayOutDCeArrayStrings: array[TLayOutDCe] of string = ('Autorizacao',
+    'Consulta', 'StatusServico', 'RecepcaoEvento', 'URL-QRCode', 'URL-Consulta');
 
 type
   TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);
@@ -200,13 +195,10 @@ end;
 function LayOutDCeToSchema(const t: TLayOutDCe): TSchemaDCe;
 begin
   case t of
-    LayDCeRecepcao,
-    LayDCeRecepcaoSinc:  Result := schDCe;
-    LayDCeRetRecepcao:   Result := schconsReciDCe;
+    LayDCeAutorizacao:   Result := schDCe;
     LayDCeConsulta:      Result := schconsSitDCe;
     LayDCeStatusServico: Result := schconsStatServDCe;
     LayDCeEvento:        Result := schEventoDCe;
-    LayDCeDistDFeInt:    Result := schdistDFeInt;
   else
     Result := schErroDCe;
   end;

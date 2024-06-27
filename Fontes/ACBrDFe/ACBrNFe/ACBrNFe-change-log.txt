@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/06/2024
+-- ACBrNFe.RetEnvEvento --
+[*] Alteração visando a leitura correta do XML de retorno de eventos.
+   Por: Italo Giurizzato Junior
+
 20/06/2024
 -- Diversos --
 [+] Implementação dos eventos: Conciliação Financeira (ECONF) e do Cancelamento de

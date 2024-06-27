@@ -366,6 +366,7 @@ begin
           versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 
           Ler_InfEvento(ANode.Childrens.FindAnyNs('evento').Childrens.FindAnyNs('infEvento'));
+          Ler_RetEvento(ANode);
         end;
 
         if ANode.LocalName = 'retEnvEvento' then

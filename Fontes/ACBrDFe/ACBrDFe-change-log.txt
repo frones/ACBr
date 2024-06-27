@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+-- ACBrXmlWriter --
+[*] Alteração na assinatura da função: ObterNomeArquivo. 
+   Por: Italo Giurizzato Junior
+
 23/05/2024
 -- ACBrDFeUtil --
 [+] Implementado a função GerarDigitoMunicipio.

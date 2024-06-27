@@ -99,7 +99,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; virtual; abstract;
-    function ObterNomeArquivo: string; virtual; abstract;
+    function ObterNomeArquivo: string; overload;
 
     property Document: TACBrXmlDocument read FDocument;
     property ListaDeAlertas: TStringList read FListaDeAlertas write FListaDeAlertas;
@@ -505,6 +505,11 @@ begin
   Result.AddChild('SignatureValue').Content := Signature.SignatureValue;
   xmlNode := Result.AddChild('KeyInfo').AddChild('X509Data');
   xmlNode.AddChild('X509Certificate').Content := Signature.X509Certificate;
+end;
+
+function TACBrXmlWriter.ObterNomeArquivo: string;
+begin
+  Result := '';
 end;
 
 end.

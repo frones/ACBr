@@ -154,7 +154,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; override;
-    function ObterNomeArquivo: string; override;
+    function ObterNomeArquivo: string; overload;
 
     property Opcoes: TNF3eXmlWriterOptions read GetOpcoes write SetOpcoes;
     property NF3e: TNF3e read FNF3e write FNF3e;

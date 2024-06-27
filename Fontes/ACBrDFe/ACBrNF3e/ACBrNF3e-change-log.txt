@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+-- ACBrNF3eXmlWriter --
+[*] Alteração na assinatura da função: ObterNomeArquivo.
+   Por: Italo Giurizzato Junior
+
 08/05/2024
 -- ACBrNF3eNotasFiscais --
 [*] Reversão da alteração que visava o uso das configurações na geração do XML.

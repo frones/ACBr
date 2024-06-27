@@ -111,10 +111,8 @@ end;
 constructor TACBrSuframa.Create(AOwner: TComponent);
 begin
   inherited;
-
   FSituacao := TACBrSuframaSituacao.Create;
-  fOnBuscaEfetuada := nil;
-  Self.ParseText := True;
+  fOnBuscaEfetuada := Nil;
 end;
 
 destructor TACBrSuframa.Destroy;
@@ -128,7 +126,7 @@ var
   Acao: String;
   ParametrosConsulta: String;
   ErroCodigo, ErroMsg: String;
-  Retorno: String;
+  Retorno, aux: String;
 begin
   FSituacao.Clear;
 
@@ -176,27 +174,25 @@ begin
     Self.HTTPSend.Headers.Add( 'SOAPAction: "' + URL_WEBSERVICE + '"' );
     Self.HTTPPost(URL_WEBSERVICE);
 
+    aux := ParseText(HTTPResponse, True, RespIsUTF8);
     if ACNPJ <> '' then
-      Retorno := String(SeparaDados(AnsiString(RespHTTP.Text), 'ns1:consultarSituacaoInscCnpjReturn'))
+      Retorno := String(SeparaDados(aux, 'ns1:consultarSituacaoInscCnpjReturn'))
     else
-      Retorno := String(SeparaDados(AnsiString(RespHTTP.Text), 'ns1:consultarSituacaoInscsufReturn'));
+      Retorno := String(SeparaDados(aux, 'ns1:consultarSituacaoInscsufReturn'));
 
     if Retorno <> '' then
       FSituacao.Codigo := StrToInt(Retorno)
     else
     begin
-      ErroCodigo := String( SeparaDados(AnsiString(RespHTTP.Text), 'faultcode') );
+      ErroCodigo := String(SeparaDados(aux, 'faultcode'));
       if ErroCodigo <> EmptyStr then
       begin
-        ErroMsg := String( SeparaDados(AnsiString(RespHTTP.Text), 'faultstring') );
+        ErroMsg := String(SeparaDados(aux, 'faultstring'));
         raise EACBrSuframa.Create(ErroCodigo + sLineBreak + '  - ' + ErroMsg);
       end;
 
-      if SameText(String(RespHTTP), Acao) then
-      begin
-        RespHTTP.Clear;
+      if SameText(aux, Acao) then
         raise EACBrSuframa.Create('Resposta do webservice não foi recebida.');
-      end;
     end;
 
     if Assigned(fOnBuscaEfetuada) then
@@ -206,8 +202,7 @@ begin
     begin
       raise EACBrSuframa.Create(
         'Ocorreu o seguinte erro ao consumir o webService Suframa:' + sLineBreak +
-        '  - ' + E.Message
-      );
+        '  - ' + E.Message);
     end;
   end;
 end;

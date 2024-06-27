@@ -101,11 +101,9 @@ uses ACBrUtil.Strings,
 
 constructor TACBrNFPws.Create(AOwner : TComponent) ;
 begin
-  inherited Create(AOwner) ;
+  inherited Create(AOwner);
 
-  ParseText := False;
-
-  fOnBuscaEfetuada := nil ;
+  fOnBuscaEfetuada := Nil;
   fURL             := CNFPws_URLCF;
   fTipoDocto       := docCupomFiscal;
   fUsuario         := '';
@@ -166,18 +164,21 @@ end;
 
 
 function TACBrNFPws.Consultar(const Protocolo: String): String;
+var
+  aux: String;
 begin
   DoPOST( '<Consultar xmlns="https://www.nfp.sp.gov.br/ws">'+
           '<Protocolo>'+Protocolo+'</Protocolo>'+
-          '</Consultar>' ) ;
-
-  Result := LerTagXML( RespHTTP.Text, 'ConsultarResult' ) ;
+          '</Consultar>');
+                       
+  aux := DecodeToString(HTTPResponse, RespIsUTF8);
+  Result := LerTagXML(aux, 'ConsultarResult');
 end;
 
-function TACBrNFPws.Enviar(const NomeArquivo: String; const Observacoes: String
-  ): String;
-Var
-  SL : TStringList ;
+function TACBrNFPws.Enviar(const NomeArquivo: String; const Observacoes: String): String;
+var
+  SL: TStringList;
+  aux: String;
 begin
   if not FileExists( NomeArquivo ) then
     raise EACBrNFPwsException.Create( ACBrStr('Arquivo ' + NomeArquivo + 'não encontrado') );
@@ -193,13 +194,13 @@ begin
                 ACBrUtil.XMLHTML.ParseText( SL.Text, False, False )+
               '</ConteudoArquivo>'+
               '<Observacoes>'+Trim(Observacoes)+'</Observacoes>'+
-            '</Enviar>' );
-
+            '</Enviar>');
   finally
     SL.Free;
-  end ;
+  end;
 
-  Result := LerTagXML( RespHTTP.Text, 'EnviarResult' ) ;
+  aux := DecodeToString(HTTPResponse, RespIsUTF8);
+  Result := LerTagXML(aux, 'EnviarResult');
 end;
 
 end.

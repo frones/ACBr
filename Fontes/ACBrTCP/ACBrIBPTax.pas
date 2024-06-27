@@ -424,7 +424,7 @@ begin
 
   // baixar a tabela
   HTTPGet( FURLDownload );
-  FArquivo.Text := RespHTTP.Text;
+  FArquivo.Text := DecodeToString(HTTPResponse, RespIsUTF8);
   Result := True;
 
   PopularItens;
@@ -483,7 +483,7 @@ function TACBrIBPTax.API_ConsultarProduto(const ANCM, AUF: String;
   AUnidadeMedida: String; const AValorUnitario: Double;
   const AGtin: String): TACBrIBPTaxProdutoDTO;
 var
-  UrlConsulta: String;
+  UrlConsulta, aux: String;
   json: TStringList;
 begin
   if Trim(FToken) = '' then
@@ -532,7 +532,8 @@ begin
   Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));
 
   // retorno em JSON
-  Result.JSON := TraduzStrToAnsi(Self.RespHTTP.Text);
+  aux := DecodeToString(HTTPResponse, RespIsUTF8);
+  Result.JSON := TraduzStrToAnsi(aux);
   json := SimpleJSONToList(Result.JSON);
   try
     Result.Codigo    := json.Values['Codigo'];
@@ -565,7 +566,7 @@ function TACBrIBPTax.API_ConsultarServico(const ANBS_LC116, AUF,
   ADescricaoServico, AUnidadeMedida: String;
   const AValorUnitario: Double): TACBrIBPTaxServicoDTO;
 var
-  UrlConsulta: String;
+  UrlConsulta, aux: String;
   json: TStringList;
 begin
   if Trim(FToken) = '' then
@@ -602,7 +603,8 @@ begin
   Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));
 
   // retorno em JSON
-  Result.JSON := TraduzStrToAnsi(Self.RespHTTP.Text);
+  aux := DecodeToString(HTTPResponse, RespIsUTF8);
+  Result.JSON := TraduzStrToAnsi(aux);
   json := SimpleJSONToList(Result.JSON);
   try
     Result.Codigo    := json.Values['Codigo'];

@@ -392,12 +392,12 @@ begin
     {$IfDef USE_JSONDATAOBJECTS_UNIT}
      // Json de retorno
      FreeAndNil(FJson);
-     FJson := TJsonObject.Parse(RespHTTP.Text) as TJsonObject;
+     FJson := TJsonObject.Parse(DecodeToString(HTTPResponse, RespIsUTF8)) as TJsonObject;
      // Se não retorno Message, OK
      Result := (Json['message'].Value = '');
     {$Else}
      // Json de retorno
-     Json.Parse(RespHTTP.Text);
+     Json.Parse(DecodeToString(HTTPResponse, RespIsUTF8));
      // Se não retorno Message, OK
      Result := (Json['message'].AsString = '');
     {$EndIf}
@@ -446,12 +446,12 @@ begin
     {$IfDef USE_JSONDATAOBJECTS_UNIT}
      // Json de retorno
      FreeAndNil(FJson);
-     FJson := TJsonObject.Parse(RespHTTP.Text) as TJsonObject;
+     FJson := TJsonObject.Parse(DecodeToString(HTTPResponse, RespIsUTF8)) as TJsonObject;
      // Se não retorno Message, OK
      Result := (Json['message'].Value = '');
     {$Else}
      // Json de retorno
-     Json.Parse(RespHTTP.Text);
+     Json.Parse(DecodeToString(HTTPResponse, RespIsUTF8));
      // Se não retorno Message, OK
      Result := (Json['message'].AsString = '');
     {$EndIf}

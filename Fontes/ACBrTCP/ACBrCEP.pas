@@ -208,24 +208,20 @@ type
   { TACBrWSRepublicaVirtual }
 
   TACBrWSRepublicaVirtual = class(TACBrCEPWSClass)
-    private
-      FCepBusca: String;
-      procedure ProcessaResposta ;
-    public
-      constructor Create( AOwner : TACBrCEP ) ; override ;
-
-      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro, AUF, ABairro : String ) ; override ;
-  end ;
+  private
+    FCepBusca: String;
+    procedure ProcessaResposta;
+  public
+    constructor Create(AOwner: TACBrCEP); override;
+    Procedure BuscarPorCEP(const ACEP: String); override;
+  end;
 
   TACBrWSBases4you = class(TACBrCEPWSClass)
-    private
-    public
-      constructor Create( AOwner : TACBrCEP ) ; override ;
-
-      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro, AUF, ABairro : String ) ; override ;
-  end ;
+  private
+  public
+    constructor Create(AOwner: TACBrCEP); override;
+    Procedure BuscarPorCEP(const ACEP: String); override;
+  end;
 
   TACBrWSRNSolucoes = class(TACBrCEPWSClass)
   private
@@ -240,13 +236,11 @@ type
   TACBrWSKingHost = class(TACBrCEPWSClass)
   private
     FCepBusca: String;
-    procedure ProcessaResposta ;
+    procedure ProcessaResposta;
   public
-    constructor Create( AOwner : TACBrCEP ) ; override ;
-
-    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
-    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro, AUF, ABairro : String ) ; override ;
-  end ;
+    constructor Create(AOwner: TACBrCEP); override;
+    procedure BuscarPorCEP(const ACEP: String); override;
+  end;
 
   { TACBrWSByJG }
 
@@ -267,15 +261,13 @@ type
   { TACBrDevMedia }
 
   TACBrWSDevMedia = class(TACBrCEPWSClass)
-    private
-      FCepBusca: String;
-      procedure ProcessaResposta;
-    public
-      constructor Create( AOwner : TACBrCEP ) ; override ;
-
-      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro, AUF, ABairro : String ) ; override ;
-  end ;
+  private
+    FCepBusca: String;
+    procedure ProcessaResposta;
+  public
+    constructor Create(AOwner: TACBrCEP); override;
+    procedure BuscarPorCEP(const ACEP: String); override;
+  end;
 
   { TACBrWSViaCEP }
   TACBrWSViaCEP = class(TACBrCEPWSClass)
@@ -305,12 +297,12 @@ type
 
   TACBrWSCEPAberto= class(TACBrCEPWSClass)
   private
-    procedure ProcessaResposta ;
+    procedure ProcessaResposta;
   public
-    constructor Create( AOwner : TACBrCEP ) ; override ;
-    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
-    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
-  end ;
+    constructor Create( AOwner: TACBrCEP); override;
+    Procedure BuscarPorCEP(const ACEP: String); override;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro: String); override;
+  end;
 
   { TACBrWSWSCEP } // WSCep é o nome do servico
 
@@ -328,10 +320,8 @@ type
     FCepBusca: String;
     procedure ProcessaResposta;
   public
-    constructor Create( AOwner : TACBrCEP ); override;
-
-    Procedure BuscarPorCEP(const ACEP : String ); override;
-    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
+    constructor Create(AOwner: TACBrCEP); override;
+    procedure BuscarPorCEP(const ACEP: String); override;
   end;
 
   { TACBrWSBrasilAPI } // https://brasilapi.com.br/docs
@@ -340,13 +330,12 @@ type
     FCepBusca: String;
     procedure ProcessaResposta;
   public
-    constructor Create( AOwner : TACBrCEP ); override;
-
-    Procedure BuscarPorCEP(const ACEP : String ); override;
-    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
+    constructor Create(AOwner: TACBrCEP); override;
+    procedure BuscarPorCEP(const ACEP: String); override;
   end;
 
 implementation
+
 uses
   strutils,
   math,
@@ -592,19 +581,20 @@ begin
   ProcessaResposta;
 end ;
 
-Procedure TACBrWSBuscarCEP.ProcessaResposta ;
-Var
-   LSL1, LSL2 : TStringList;
-   LBuffer    : string;
-   LACBrCEPEnderecos : TACBrCEPEndereco;
-   LPosIni, I : integer ;
+Procedure TACBrWSBuscarCEP.ProcessaResposta;
+var
+  LSL1, LSL2: TStringList;
+  LBuffer, aux: String;
+  LACBrCEPEnderecos: TACBrCEPEndereco;
+  LPosIni, I: Integer;
 begin
   fOwner.fEnderecos.Clear;
 
   LSL1 := TStringList.Create;
   LSL2 := TStringList.Create;
   try
-    LSL1.Text := StringReplace( fOwner.RespHTTP.Text, '&cep=', sLineBreak+'&cep=', [rfReplaceAll] );
+    aux := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
+    LSL1.Text := StringReplace(aux, '&cep=', sLineBreak+'&cep=', [rfReplaceAll]);
 
     For I := 0 to Pred( LSL1.Count ) do
     begin
@@ -679,18 +669,18 @@ begin
 end;
 
 Procedure TACBrWSCEPLivre.ProcessaResposta;
-Var
+var
    LSL1, LSL2 : TStringList;
-   LBuffer, LLinha : String;
-   LACBrCEPEnderecos : TACBrCEPEndereco;
-   I, J : Integer;
+   LBuffer, LLinha: String;
+   LACBrCEPEnderecos: TACBrCEPEndereco;
+   I, J: Integer;
 begin
   fOwner.fEnderecos.Clear;
 
   LSL1 := TStringList.Create;
   LSL2 := TStringList.Create;
   try
-    LBuffer := fOwner.RespHTTP.Text ;
+    LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
     // CEP livre retorna vários endereços na mesma linha... tratando...
     LSL1.Text := StringReplace( LBuffer, '""', '"'+sLineBreak+'"', [rfReplaceAll] );
 
@@ -752,12 +742,6 @@ begin
   ProcessaResposta ;
 end;
 
-procedure TACBrWSRepublicaVirtual.BuscarPorLogradouro(const AMunicipio,
-  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
-begin
-  inherited;
-end;
-
 procedure TACBrWSRepublicaVirtual.ProcessaResposta;
 var
   LBuffer : string ;
@@ -765,7 +749,7 @@ var
 begin
   fOwner.fEnderecos.Clear;
 
-  LBuffer := fOwner.RespHTTP.Text;
+  LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
   if StrToIntDef(SeparaDados(LBuffer, 'resultado'), 0) > 0 then
   begin
     LACBrCEPEnderecos := fOwner.Enderecos.New;
@@ -789,8 +773,6 @@ end ;
 constructor TACBrWSBases4you.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-
-  fOwner.ParseText := True;
   fpURL := 'http://www.bases4you.com/wscep.php';
 end;
 
@@ -831,18 +813,10 @@ begin
   end;
 end;
 
-procedure TACBrWSBases4you.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
-  ALogradouro, AUF, ABairro: String);
-begin
-  inherited;
-end;
-
 { TACBrWSRNSolucoes }
 constructor TACBrWSRNSolucoes.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-
-  fOwner.ParseText := False;
   fpURL := 'http://www.rnsolucoes.com/wsRN.php?type=xml';
 end;
 
@@ -899,7 +873,7 @@ begin
   LSL := TStringList.Create;
 
   try
-    LBuffer := fOwner.RespHTTP.Text;
+    LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
     LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '<dados>', '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '</dados>', '', [rfReplaceAll]);
@@ -944,43 +918,37 @@ procedure TACBrWSKingHost.BuscarPorCEP(const ACEP: String);
 begin
   FCepBusca := ACep;
 
-  fOwner.HTTPGet( fpURL + 'web_cep.php?'+
-                          'auth='+ Trim(fOwner.ChaveAcesso) +
-                          '&formato=xml'+
-                          '&cep='+ OnlyNumber( ACEP ) ) ;
-  ProcessaResposta ;
-end;
-
-procedure TACBrWSKingHost.BuscarPorLogradouro(const AMunicipio,
-    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
-begin
-  inherited;
+  fOwner.HTTPGet(fpURL +
+    'web_cep.php?' +
+    'auth='+ Trim(fOwner.ChaveAcesso) +
+    '&formato=xml'+
+    '&cep='+ OnlyNumber(ACEP));
+  ProcessaResposta;
 end;
 
 procedure TACBrWSKingHost.ProcessaResposta;
 var
-  LBuffer    : string ;
-  LACBrCEPEnderecos : TACBrCEPEndereco;
+  LBuffer: String;
+  LACBrCEPEnderecos: TACBrCEPEndereco;
 begin
   fOwner.fEnderecos.Clear;
-
-  LBuffer := fOwner.RespHTTP.Text;
-  if StrToIntDef(SeparaDados(LBuffer, 'resultado'), 0) > 0 then
+  LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
+  if (StrToIntDef(SeparaDados(LBuffer, 'resultado'), 0) > 0) then
   begin
     LACBrCEPEnderecos := fOwner.Enderecos.New;
     LACBrCEPEnderecos.CEP             := FCepBusca ; // kingHost nao devolve o cep na resposta
-    LACBrCEPEnderecos.Tipo_Logradouro := SeparaDados(LBuffer,'tipo_logradouro') ;
-    LACBrCEPEnderecos.Logradouro      := SeparaDados(LBuffer,'logradouro') ;
-    LACBrCEPEnderecos.Complemento     := SeparaDados(LBuffer,'complemento') ;
-    LACBrCEPEnderecos.Bairro          := SeparaDados(LBuffer,'bairro') ;
-    LACBrCEPEnderecos.Municipio       := SeparaDados(LBuffer,'cidade') ;
-    LACBrCEPEnderecos.UF              := SeparaDados(LBuffer,'uf') ;
+    LACBrCEPEnderecos.Tipo_Logradouro := SeparaDados(LBuffer,'tipo_logradouro');
+    LACBrCEPEnderecos.Logradouro      := SeparaDados(LBuffer,'logradouro');
+    LACBrCEPEnderecos.Complemento     := SeparaDados(LBuffer,'complemento');
+    LACBrCEPEnderecos.Bairro          := SeparaDados(LBuffer,'bairro');
+    LACBrCEPEnderecos.Municipio       := SeparaDados(LBuffer,'cidade');
+    LACBrCEPEnderecos.UF              := SeparaDados(LBuffer,'uf');
     LACBrCEPEnderecos.IBGE_Municipio  := '';
-  end ;
+  end;
 
-  if Assigned( fOwner.OnBuscaEfetuada ) then
-    fOwner.OnBuscaEfetuada( Self );
-end ;
+  if Assigned(fOwner.OnBuscaEfetuada) then
+    fOwner.OnBuscaEfetuada(Self);
+end;
 
 { TACBrWSByJG  http://www.byjg.com.br/ ************************************}
 
@@ -1039,13 +1007,14 @@ end;
 procedure TACBrWSByJG.ProcessaCEP;
 var
   LBuffer, LResp, LTLog: TStringList;
-  LTipoLogradouro, LLogra, LComp: string;
+  LTipoLogradouro, LLogra, LComp, aux: string;
   LACBrCEPEnderecos : TACBrCEPEndereco;
   i, k : Integer;
 begin
   LBuffer := TStringList.Create;
   try
-    ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), LBuffer);
+    aux := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
+    ExtractStrings(['|'],[], PChar(aux), LBuffer);
 
     i := CompareText(LBuffer[1], ACBrStr('Cep '+FCepBusca+' não encontrado'));
     k := CompareText(LBuffer[1], ACBrStr('CEP não está no formato 00000-000 ou 00000000'));
@@ -1097,12 +1066,13 @@ procedure TACBrWSByJG.ProcessaLogradouro;
 var
    LBuffer, LResp, LTLog: TStringList;
    Qtd, i, k : Integer;
-   LTipoLogradouro, LLogra, LComp: string;
+   LTipoLogradouro, LLogra, LComp, aux: string;
    LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
   LBuffer := TStringList.Create;
   try
-    ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), LBuffer);
+    aux := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
+    ExtractStrings(['|'],[], PChar(aux), LBuffer);
 
     if CompareText(LBuffer[2], ACBrStr('Logradouro não encontrado')) <> 0 then
     begin
@@ -1179,20 +1149,13 @@ begin
   ProcessaResposta;
 end;
 
-procedure TACBrWSDevMedia.BuscarPorLogradouro(const AMunicipio,
-    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
-begin
-  inherited;
-end;
-
 procedure TACBrWSDevMedia.ProcessaResposta;
 var
   LResultado, LBuffer : String ;
   LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
   fOwner.fEnderecos.Clear;
-
-  LBuffer    := fOwner.RespHTTP.Text;
+  LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
   LResultado := SeparaDados(LBuffer, 'resultado_txt') ;
 
   if LResultado = 'sucesso' then
@@ -1221,7 +1184,6 @@ end ;
 constructor TACBrWSViaCEP.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-  fOwner.ParseText := True;
   fpURL := 'http://viacep.com.br/ws/';
 end;
 
@@ -1271,9 +1233,8 @@ var
   i: Integer;
 begin
   LSL := TStringList.Create;
-  fOwner.RespHTTP.Text := UTF8ToNativeString(fOwner.RespHTTP.Text);
   try
-    LBuffer := fOwner.RespHTTP.Text;
+    LBuffer := UTF8ToNativeString(ParseText(fOwner.HTTPResponse, True, fOwner.RespIsUTF8));
     LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '<enderecos>', '', [rfReplaceAll]);
     LBuffer := StringReplace(LBuffer, '</enderecos>', '', [rfReplaceAll]);
@@ -1312,8 +1273,6 @@ constructor TACBrWSCorreiosSIGEP.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
   fACBrIBGE := TACBrIBGE.Create(nil);
-
-  fOwner.ParseText := false;
   fpURL := 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
 end;
 
@@ -1375,7 +1334,7 @@ begin
   fACBrIBGE.ProxyUser := fOwner.ProxyUser;
 
   try
-    LBuffer := fOwner.RespHTTP.Text;
+    LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
     LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
 
     LSL.Text := LBuffer;
@@ -1467,8 +1426,6 @@ end;
 constructor TACBrWSCEPAberto.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-
-  fOwner.ParseText := False;
   fpURL := 'http://www.cepaberto.com/api/v3/';
 end;
 
@@ -1492,10 +1449,12 @@ end;
 
 procedure TACBrWSCEPAberto.ProcessaResposta;
 var
-  LJson      : TACBrJSONObject;
-  LACBrCEPEnderecos : TACBrCEPEndereco;
+  aux: String;
+  LJson: TACBrJSONObject;
+  LACBrCEPEnderecos: TACBrCEPEndereco;
 begin
-  LJson := TACBrJSONObject.Parse(fOwner.RespHTTP.Text);
+  aux := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
+  LJson := TACBrJSONObject.Parse(aux);
 
   if (LJson.AsString['cep'] <> '') then
   begin
@@ -1546,7 +1505,6 @@ end;
 constructor TACBrWSWSCEP.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-  fOwner.ParseText := False;
   fpURL := 'http://api.wscep.com/cep?key=%s&val=%s';
 end;
 
@@ -1555,8 +1513,7 @@ var
   LBuffer: string;
   LACBrCEPEnderecos : TACBrCEPEndereco;
 begin
-  LBuffer := fOwner.RespHTTP.Text;
-
+  LBuffer := DecodeToString(fOwner.HTTPResponse, fOwner.RespIsUTF8);
   LBuffer := StringReplace(LBuffer, '<?xml version="1.0" encoding="UTF-8"?>' +sLineBreak+ '<cep>', '<?xml version="1.0" encoding="UTF-8"?>' +sLineBreak+ '<resposta>', [rfReplaceAll]);
   LBuffer := StringReplace(LBuffer, '</estado>' +sLineBreak+ '</cep>', '</estado>' +sLineBreak+ '</resposta>', [rfReplaceAll]);
   LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
@@ -1595,26 +1552,20 @@ begin
   ProcessaResposta();
 end;
 
-procedure TACBrWSOpenCEP.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
-  ALogradouro, AUF, ABairro: String);
-begin
-  inherited;
-end;
-
 constructor TACBrWSOpenCEP.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-  fOwner.ParseText := True;
   fpURL := 'https://opencep.com/v1/';
 end;
 
 procedure TACBrWSOpenCEP.ProcessaResposta;
 var
-  LJson : TACBrJSONObject;
-  LACBrCEPEnderecos : TACBrCEPEndereco;
+  aux: String;
+  LJson: TACBrJSONObject;
+  LACBrCEPEnderecos: TACBrCEPEndereco;
 begin
-  fOwner.RespHTTP.Text := UTF8ToNativeString(fOwner.RespHTTP.Text);
-  LJson := TACBrJSONObject.Parse( fOwner.RespHTTP.Text );
+  aux := UTF8ToNativeString(ParseText(fOwner.HTTPResponse, True, fOwner.RespIsUTF8));
+  LJson := TACBrJSONObject.Parse(aux);
 
   try
     LACBrCEPEnderecos := fOwner.Enderecos.New;
@@ -1649,26 +1600,20 @@ begin
   ProcessaResposta();
 end;
 
-procedure TACBrWSBrasilAPI.BuscarPorLogradouro(const AMunicipio,
-  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
-begin
-  inherited;
-end;
-
 constructor TACBrWSBrasilAPI.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-  fOwner.ParseText := True;
   fpURL := 'https://brasilapi.com.br/api/cep/v2/';
 end;
 
 procedure TACBrWSBrasilAPI.ProcessaResposta;
 var
-  LJson : TACBrJSONObject;
-  LACBrCEPEnderecos : TACBrCEPEndereco;
+  aux: String;
+  LJson: TACBrJSONObject;
+  LACBrCEPEnderecos: TACBrCEPEndereco;
 begin
-  fOwner.RespHTTP.Text := UTF8ToNativeString(fOwner.RespHTTP.Text);
-  LJson := TACBrJSONObject.Parse( fOwner.RespHTTP.Text );
+  aux := UTF8ToNativeString(ParseText(fOwner.HTTPResponse, True, fOwner.RespIsUTF8));
+  LJson := TACBrJSONObject.Parse(aux);
 
   try
     LACBrCEPEnderecos := fOwner.Enderecos.New;

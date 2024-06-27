@@ -354,7 +354,7 @@ begin
     raise EACBrSedexException.Create('Erro ao consultar Sedex' + sLineBreak + E.Message);
   end;
 
-  LResposta := Self.RespHTTP.Text;
+  LResposta := DecodeToString(HTTPResponse, RespIsUTF8);
 
   LJson := TACBrJSONObject.Parse(NativeStringToUTF8(LResposta));
   try
@@ -389,7 +389,7 @@ procedure TACBrSedex.Rastrear(const ACodRastreio: String);
 var
   LLista: TStringList;
   Index: integer;
-  LObservacoes, LErro, LData, LHora, LLocal, LLinha: String;
+  LObservacoes, LErro, LData, LHora, LLocal, LLinha, aux: String;
   LDeveCriar: Boolean;
   LRastreio : TACBrRastreio;
 begin
@@ -407,23 +407,24 @@ begin
     end;
   end;
 
-  if Pos(ACBrStr('tente novamente mais tarde'), Self.RespHTTP.Text) > 0 then
+  aux := DecodeToString(HTTPResponse, RespIsUTF8);
+  if Pos(ACBrStr('tente novamente mais tarde'), aux) > 0 then
   begin
-    LErro := Trim(StripHTML(Self.RespHTTP.Text));
+    LErro := Trim(StripHTML(aux));
     LErro := Trim(StringReplace(LErro,'SRO - Internet','',[rfReplaceAll]));
     LErro := Trim(StringReplace(LErro,'Resultado da Pesquisa','',[rfReplaceAll]));
 
     raise EACBrSedexException.Create(LErro);
   end;
 
-  if Pos(ACBrStr('O rastreamento não está disponível no momento:'), Self.RespHTTP.Text) > 0 then
+  if Pos(ACBrStr('O rastreamento não está disponível no momento:'), aux) > 0 then
      raise EACBrSedexException.Create('O rastreamento não está disponível no momento: '  + sLineBreak +
                                       ' - Verifique se o código do objeto está correto ' + sLineBreak +
                                       ' - O objeto pode demorar até 24 horas (após postagem) para ser rastreado no sistema do Correios.');
 
   LLista := TStringList.Create;
   try
-    LLista.Text := Self.RespHTTP.Text;
+    LLista.Text := aux;
     LDeveCriar := False;
     for Index := 0 to Pred(LLista.Count) do
     begin

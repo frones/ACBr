@@ -565,7 +565,7 @@ begin
   { Convertendo uma string para json object }
   JsonResponse := TJSon.Create;
   try
-    JsonResponse.Parse(Self.RespHTTP.Text);
+    JsonResponse.Parse(DecodeToString(HTTPResponse, RespIsUTF8));
     for I := 0 to JsonResponse.Count - 1 do
     begin
 
@@ -645,7 +645,7 @@ begin
   { Convertendo uma string para json object }
   JsonResponse := TJSon.Create;
   try
-    JsonResponse.Parse(Self.RespHTTP.Text);
+    JsonResponse.Parse(DecodeToString(HTTPResponse, RespIsUTF8));
     for I := 0 to JsonResponse.Count - 1 do
     begin
 
@@ -668,7 +668,7 @@ begin
 
 end;
 
-function TACBrPicPay.Cancelar(const aAuthorizationId: string): Boolean;
+function TACBrPicPay.Cancelar(const aAuthorizationId: String): Boolean;
 var
   JsonPicPay: TJsonObject;
   JsonResponse: TJSONObject;
@@ -712,12 +712,12 @@ begin
 
     { Convertendo uma string para json object }
 
-    if Self.RespHTTP.Text = '' then
+    if EstaVazio(HTTPResponse) then
       Exit;
 
     JsonResponse := TJsonObject.Create(nil);
     try
-      JsonResponse.Parse(Self.RespHTTP.Text);
+      JsonResponse.Parse(DecodeToString(HTTPResponse, RespIsUTF8));
       for I := 0 to JsonResponse.Count - 1 do
       begin
         fReferenceId := JsonResponse.Values['referenceId'].AsString;

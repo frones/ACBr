@@ -113,7 +113,6 @@ begin
   {$MESSAGE WARN 'No momento, este componente não é funcional. Qualquer atualização ou novo suporte será notificado no fórum. Estamos à disposição para esclarecer eventuais dúvidas.'}
   inherited Create(AOwner);
   HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
-  Self.IsUTF8 := False;
   FResourceName := 'ACBrConsultaCPFServicos';
   FParams := TStringList.Create;
   LerParams;
@@ -131,7 +130,7 @@ var
 begin
   try
     Self.HTTPGet(LerSessaoChaveIni('ENDERECOS','CAPTCH'));
-    Html := Self.RespHTTP.Text;
+    Html := DecodeToString(HTTPResponse, RespIsUTF8);
     //Debug
     //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);
     AURL := RetornarConteudoEntre(Html, 'src="data:image/png;base64,', '">');
@@ -314,14 +313,14 @@ begin
     //Debug
     //RespHTTP.SaveToFile('C:\TEMP\ACBrConsultaCPF-1.TXT');
 
-    Erro := VerificarErros(RespHTTP.Text);
+    Erro := VerificarErros(DecodeToString(HTTPResponse, RespIsUTF8));
 
     if Erro = '' then
     begin
       Result:= True;
       Resposta := TStringList.Create;
       try
-        Resposta.Text := StripHTML(RespHTTP.Text);
+        Resposta.Text := StripHTML(DecodeToString(HTTPResponse, RespIsUTF8));
         Resposta.Text := ACBrUtil.XMLHTML.ParseText( Resposta.Text );
         RemoveEmptyLines( Resposta );
 

@@ -108,7 +108,8 @@ var
   Dia: Word;
   Tipo: Integer;
 begin
-  Buffer := TACBrFeriado(fOwner).RespHTTP.Text;
+  with TACBrFeriado(fOwner) do
+    Buffer := DecodeToString(HTTPResponse, RespIsUTF8);
   if (Buffer = EmptyStr) then
     Exit;
 

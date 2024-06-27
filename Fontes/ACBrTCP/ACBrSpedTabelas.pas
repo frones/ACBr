@@ -211,7 +211,7 @@ begin
     end;
   end;
 
-  Buffer := Self.RespHTTP.Text;
+  Buffer := DecodeToString(HTTPResponse, RespIsUTF8);
   fUrlDownload := SeparaDados(Buffer, 'urlDownloadArquivo');
   Buffer := SeparaDados(Buffer, 'metadadosXml');
   Buffer := StringReplace(Buffer, '&lt;', '<', [rfReplaceAll]);

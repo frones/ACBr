@@ -61,15 +61,15 @@ type
 
 implementation
 
-Uses ACBrUtil.Strings ;
+uses
+  ACBrUtil.Strings;
 
 function TACBrTaxaDolar.Consulta: Boolean;
 var
-  Buffer : String ;
+  Buffer: String;
 begin
-
   Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/taxas.asp');
-  Buffer := StripHTML( Self.RespHTTP.Text );
+  Buffer := StripHTML(DecodeToString(HTTPResponse, RespIsUTF8));
 
   //DEBUG
   //WriteToTXT( 'c:\temp\bobo.txt', Buffer, False)

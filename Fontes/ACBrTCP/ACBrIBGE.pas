@@ -876,9 +876,7 @@ end;
 
 function TACBrIBGE.UnZipHttpDoc: String;
 var
-  CT: String;
   Resp: AnsiString;
-  RespIsUTF8: Boolean;
   zt: TCompressType;
 begin
   zt := DetectCompressType(HTTPSend.Document);
@@ -890,8 +888,6 @@ begin
   else
     Resp := ACBrUtil.FilesIO.UnZip(HTTPSend.Document);
 
-  CT := LowerCase( GetHeaderValue('Content-Type:') );
-  RespIsUTF8 := (pos('utf-8', CT) > 0);
   if RespIsUTF8 then
     Result := UTF8ToNativeString(Resp)
   else
@@ -902,7 +898,7 @@ procedure TACBrIBGE.HTTPGetCompressed(const AURL: String);
 begin
   HTTPSend.Clear;
   HTTPSend.Headers.Add('Accept-Encoding: deflate, gzip');
-  HTTPMethod( 'GET', AURL );
+  HTTPGet(AURL);
 end;
 
 constructor TACBrIBGE.Create(AOwner : TComponent) ;
@@ -938,7 +934,6 @@ function TACBrIBGE.BuscarPorCodigo(const ACodMun : Integer) : Integer ;
 var
   ACodUF, iCidade: Integer;
 begin
-  RespHTTP.Clear;
   fCidadesEncontradas.Clear;
   if ACodMun = 0 then
      raise EACBrIBGEException.Create( ACBrStr('Código do Município deve ser informado') );
@@ -960,7 +955,6 @@ function TACBrIBGE.BuscarPorcUF(const AcUF: Integer): Integer;
 var
   I, CidadeMin: Integer;
 begin
-  RespHTTP.Clear;
   fCidadesEncontradas.Clear;
   ObterCidades( AcUF );
 
@@ -987,7 +981,6 @@ var
   I , CodUF: Integer ;
   CidadeEncontrar, CidadeAtual: String;
 begin
-  RespHTTP.Clear;
   fCidadesEncontradas.Clear;
 
   if (Trim(ACidade) = '') then

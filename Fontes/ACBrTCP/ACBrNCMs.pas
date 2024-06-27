@@ -454,13 +454,11 @@ end;
 
 function TACBrNCMs.UnZipHttpDoc: String;
 var
-  //CT: String;
   Resp: AnsiString;
-  RespIsUTF8: Boolean;
   zt: TCompressType;
 begin
   zt := DetectCompressType(HTTPSend.Document);
-  if zt = ctUnknown then
+  if (zt = ctUnknown) then
   begin
     HTTPSend.Document.Position := 0;
     Resp := ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size);
@@ -468,8 +466,6 @@ begin
   else
     Resp := ACBrUtil.FilesIO.UnZip(HTTPSend.Document);
 
-  //CT := LowerCase( GetHeaderValue('Content-Type:') );
-  RespIsUTF8 := True; //(pos('utf-8', CT) > 0);
   if RespIsUTF8 then
     Result := UTF8ToNativeString(Resp)
   else

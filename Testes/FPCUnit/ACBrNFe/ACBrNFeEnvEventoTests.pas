@@ -315,14 +315,13 @@ begin
   Item_new.InfEvento.detEvento.xCondUso := 'Autorizado o acesso';
 
   FEnvEvento_New.GerarXML;
-  sxml_new := UTF8ToNativeString(FEnvEvento_New.XmlEnvio);
+  sxml_new := FEnvEvento_New.XmlEnvio;
+//  sxml_new := UTF8ToNativeString(FEnvEvento_New.XmlEnvio);
 
   CheckEquals(sxml_old, sxml_new, 'Xml novo de EnvEvento diferente do antigo');
 end;
 
 procedure ACBrNFeEnvEventoTest.GerarXml_Evento_InsucessoEntrega;
-var
-  Item: TautXMLCollectionItem;
 begin
   sxml_old := sxml_EventoInsucessoEntrega;
 
@@ -348,8 +347,6 @@ begin
 end;
 
 procedure ACBrNFeEnvEventoTest.GerarXml_Evento_CancInsucessoEntrega;
-var
-  Item: TautXMLCollectionItem;
 begin
   sxml_old := sxml_EventoCancInsucessoEntrega;
 

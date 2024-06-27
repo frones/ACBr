@@ -133,7 +133,6 @@ end;
 procedure ACBrNFeRetConsSitTest.LoadFromFile_Ret_Vazio;
 var
   sxml: string;
-  i: Integer;
 begin
   sxml := sxml_Ret_Vazio;
 

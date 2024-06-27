@@ -37,6 +37,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+-- ACBrJSON --
+[*] Refatoração para facilitar a manipulação/conversão de "TACBrJSONValue"
+[+] Adicionada o método "function Count: Integer;" em "TACBrJSONObject"
+[+] Adicionado a propriedade em "TACBrJSONObject"
+    property ItemAsValue[const AIndex: Integer]: TACBrJSONValue read GetItemAsJSONValue;
+    (por: DSA)
+[-] Correção de A.V. em TACBrJSONObject.GetAsValue, quando o próprio Objeto é Nulo
+    (por: Panda)
+
 17/05/2024
 [*]TK-5466 ACBrJSON - Compatibilizar Escrita de Currency (JsonNumbers) Delphi x Lazarus
   por Victor H Gonzales - Pandaaa

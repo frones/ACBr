@@ -36,6 +36,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+-- ACBrIBGE --
+[*] Refatoração, para utilizar ACBrJson
+[-] Correção em "TACBrIBGE.ObterEstatisticasCidadesUF" para encontrar a Cidade
+    quando o índice encontrado igual a 0
+[-] Ajuste em TACBrIBGE.HTTPGetCompressed, para limpar atributos da conexão HTTP,
+    antes de tentar nova conexão.
+    (por: DSA)
+
 14/03/2024
 [*]TK-5198 - ACBrCEP - Corrigido WSViaCEP e WSOpenCEP encode de retorno.
 https://www.projetoacbr.com.br/forum/topic/76743-tacbrcep-nome-do-munícipio-com-caracteres-especiais/

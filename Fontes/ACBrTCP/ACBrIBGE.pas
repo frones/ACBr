@@ -270,11 +270,7 @@ implementation
 
 uses
   strutils, dateutils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonDataObjects_ACBr,
-  {$Else}
-    Jsons,
-  {$EndIf}
+  ACBrJSON,
   blcksock, synautil,
   ACBrUtil.Base,
   ACBrUtil.Strings,
@@ -452,142 +448,75 @@ end;
 
 procedure TACBrIBGEUFs.AddFromJSonStr(const AJSonStr: String);
 var
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  AJSonArr: TJsonArray;
-  {$Else}
-  AJSon: TJson;
-  {$EndIf}
-  JSonUF: TJsonObject;
+  AJSon: TACBrJSONArray;
+  JSonUF, JSonRegiao: TACBrJSONObject;
   I: Integer;
   AUF: TACBrIBGEUF;
 begin
   Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    AJSonArr := TJsonObject.Parse(AJSonStr) as TJsonArray;
-    try
-      For I := 0 to AJSonArr.Count-1 do
-      begin
-        JSonUF := AJSonArr.Items[I].ObjectValue;
+  AJSon := TACBrJSONArray.Parse(AJSonStr);
+  try
+    For I := 0 to AJSon.Count-1 do
+    begin
+      JSonUF := AJSon.ItemAsJSONObject[I];
 
-        AUF := TACBrIBGEUF.Create;
-        AUF.CodUF     := JSonUF.I['id'];
-        AUF.UF        := JSonUF.S['sigla'];
-        AUF.Nome      := JSonUF.S['nome'];
-        AUF.CodRegiao := JSonUF.O['regiao'].S['sigla'];
-        AUF.Regiao    := JSonUF.O['regiao'].S['nome'];
+      AUF := TACBrIBGEUF.Create;
+      AUF.CodUF := JSonUF.AsInteger['id'];
+      AUF.UF := JSonUF.AsString['sigla'];
+      AUF.Nome := JSonUF.AsString['nome'];
 
-        Add(AUF);
-      end;
-    finally
-      AJSonArr.Free;
+      JSonRegiao := JSonUF.AsJSONObject['regiao'];
+      AUF.CodRegiao := JSonRegiao.AsString['sigla'];
+      AUF.Regiao := JSonRegiao.AsString['nome'];
+
+      Add(AUF);
     end;
-  {$Else}
-    Clear;
-    AJSon := TJson.Create;
-    try
-      AJSon.Parse(AJSonStr);
-
-      For I := 0 to AJSon.Count-1 do
-      begin
-        JSonUF := AJSon.Get(I).AsObject;
-
-        AUF := TACBrIBGEUF.Create;
-        AUF.CodUF     := JSonUF.Values['id'].AsInteger;
-        AUF.UF        := JSonUF.Values['sigla'].AsString;
-        AUF.Nome      := JSonUF.Values['nome'].AsString;
-        AUF.CodRegiao := JSonUF.Values['regiao'].AsObject.Values['sigla'].AsString;
-        AUF.Regiao    := JSonUF.Values['regiao'].AsObject.Values['nome'].AsString;
-
-        Add(AUF);
-      end;
-    finally
-      AJSon.Free;
-    end;
-  {$EndIf}
+  finally
+    AJSon.Free;
+  end;
 end;
 
 procedure TACBrIBGEUFs.ParseJSonStat(const AJSonStr: String);
 var
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  AJSonArr: TJsonArray;
-  {$Else}
-  AJSon: TJson;
-  {$EndIf}
+  AJSon: TACBrJSONArray;
   I, J, idPesq, CodUF, iUF: Integer;
-  JSonPesq, JSonRespUF, JSonRespUFAnos: TJsonObject;
-  JSonResp: TJsonArray;
+  JSonPesq, JSonRespUF, JSonRespUFAnos: TACBrJSONObject;
+  JSonResp: TACBrJSONArray;
   Valor: Extended;
   oUF: TACBrIBGEUF;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    AJSonArr := TJsonObject.Parse(AJSonStr) as TJsonArray;
-    try
-      For I := 0 to AJSonArr.Count-1 do
+  AJSon := TACBrJSONArray.Parse(AJSonStr);
+  try
+    For I := 0 to AJSon.Count-1 do
+    begin
+      JSonPesq := AJSon.ItemAsJSONObject[I];
+      idPesq := JSonPesq.AsInteger['id'];
+      JSonResp := JSonPesq.AsJSONArray['res'];
+
+      For J := 0 to JSonResp.Count-1 do
       begin
-        JSonPesq := AJSonArr.Items[I].ObjectValue;
-        idPesq := JSonPesq.I['id'];
-        JSonResp := JSonPesq.A['res'];
-
-        For J := 0 to JSonResp.Count-1 do
+        JSonRespUF := JSonResp.ItemAsJSONObject[J];
+        CodUF := JSonRespUF.AsInteger['localidade'];
+        iUF := Find(CodUF);
+        if (iUF >= 0) then
         begin
-          JSonRespUF := JSonResp[J].ObjectValue;
-          CodUF := JSonRespUF.I['localidade'];
-          iUF := Find(CodUF);
-          if (iUF >= 0) then
-          begin
-            oUF := Objects[iUF];
-            JSonRespUFAnos := JSonRespUF.O['res'];
-            if JSonRespUFAnos.Count > 0 then
-              Valor := JSonRespUFAnos.Items[JSonRespUFAnos.Count-1].IntValue
-            else
-              Valor := 0;
+          oUF := Objects[iUF];
+          JSonRespUFAnos := JSonRespUF.AsJSONObject['res'];
+          if JSonRespUFAnos.Count > 0 then
+            Valor := TACBrJSONValueAs.AsFloat(JSonRespUFAnos.ItemAsValue[JSonRespUFAnos.Count-1])
+          else
+            Valor := 0;
 
-            case idPesq of
-              CIBGE_IND_UF_AREA: oUF.Area := Valor;
-              CIBGE_IND_UF_POPULACAO: oUF.Populacao := trunc( Valor );
-            end;
+          case idPesq of
+            CIBGE_IND_UF_AREA: oUF.Area := Valor;
+            CIBGE_IND_UF_POPULACAO: oUF.Populacao := trunc( Valor );
           end;
         end;
       end;
-    finally
-      AJSonArr.Free;
     end;
-  {$Else}
-    AJSon := TJson.Create;
-    try
-      AJSon.Parse(AJSonStr);
-
-      For I := 0 to AJSon.Count-1 do
-      begin
-        JSonPesq := AJSon.Get(I).AsObject;
-        idPesq := JSonPesq.Values['id'].AsInteger;
-        JSonResp := JSonPesq.Values['res'].AsArray;
-
-        For J := 0 to JSonResp.Count-1 do
-        begin
-          JSonRespUF := JSonResp[J].AsObject;
-          CodUF := JSonRespUF.Values['localidade'].AsInteger;
-          iUF := Find(CodUF);
-          if (iUF >= 0) then
-          begin
-            oUF := Objects[iUF];
-            JSonRespUFAnos := JSonRespUF.Values['res'].AsObject;
-            if JSonRespUFAnos.Count > 0 then
-              Valor := JSonRespUFAnos.Items[JSonRespUFAnos.Count-1].Value.AsNumber
-            else
-              Valor := 0;
-
-            case idPesq of
-              CIBGE_IND_UF_AREA: oUF.Area := Valor;
-              CIBGE_IND_UF_POPULACAO: oUF.Populacao := trunc( Valor );
-            end;
-          end;
-        end;
-      end;
-    finally
-      AJSon.Free;
-    end;
-  {$EndIf}
+  finally
+    AJSon.Free;
+  end;
 end;
 
 function CompUFCodUFAsc(const pUF1, pUF2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -805,167 +734,88 @@ end;
 
 procedure TACBrIBGECidades.AddFromJSonStr(const AJSonStr: String);
 var
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  AJSonArr: TJsonArray;
-  {$Else}
-  AJSon: TJson;
-  {$EndIf}
+  AJSon: TACBrJSONArray;
   I, CodMunicipio: Integer;
   oCidade: TACBrIBGECidade;
-  JSonCidade: TJsonObject;
+  JSonCidade: TACBrJSONObject;
   //t1: TDateTime;
 begin
   // DEBUG
   //t1 := now;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    AJSonArr := TJsonObject.Parse(AJSonStr) as TJsonArray;
-    try
-      For I := 0 to AJSonArr.Count-1 do
+  AJSon := TACBrJSONArray.Parse(AJSonStr);
+  try
+    For I := 0 to AJSon.Count-1 do
+    begin
+      JSonCidade := AJSon.ItemAsJSONObject[I];
+
+      CodMunicipio := JSonCidade.AsInteger['id'];
+      oCidade := TACBrIBGECidade.Create;
+      oCidade.CodMunicipio := CodMunicipio;
+      oCidade.Municipio := JSonCidade.AsString['nome'];
+      if FIBGE.IgnorarCaixaEAcentos then
+        oCidade.MunicipioIdx := LowerCase(TiraAcentos(oCidade.Municipio))
+      else
+        oCidade.MunicipioIdx := oCidade.Municipio;
+
+      with JSonCidade.AsJSONObject['microrregiao'].AsJSONObject['mesorregiao'].AsJSONObject['UF'] do
       begin
-        JSonCidade := AJSonArr.Items[I].ObjectValue;
-
-        CodMunicipio := JSonCidade.I['id'];
-        oCidade := TACBrIBGECidade.Create;
-        oCidade.CodMunicipio := CodMunicipio;
-        oCidade.Municipio := JSonCidade.S['nome'];
-        if FIBGE.IgnorarCaixaEAcentos then
-          oCidade.MunicipioIdx := LowerCase(TiraAcentos(oCidade.Municipio))
-        else
-          oCidade.MunicipioIdx := oCidade.Municipio;
-
-        with JSonCidade.O['microrregiao'].O['mesorregiao'].O['UF'] do
-        begin
-          oCidade.CodUF := I['id'];
-          oCidade.UF    := S['sigla'];
-        end;
-
-        Add(oCidade);
+        oCidade.CodUF := AsInteger['id'];
+        oCidade.UF    := AsString['sigla'];
       end;
-    finally
-      AJSonArr.Free;
+
+      Add(oCidade);
     end;
-  {$Else}
-    AJSon := TJson.Create;
-    try
-      AJSon.Parse(AJSonStr);
-
-      For I := 0 to AJSon.Count-1 do
-      begin
-        JSonCidade := AJSon.Get(I).AsObject;
-
-        CodMunicipio := JSonCidade.Values['id'].AsInteger;
-        oCidade := TACBrIBGECidade.Create;
-        oCidade.CodMunicipio := CodMunicipio;
-        oCidade.Municipio := JSonCidade.Values['nome'].AsString;
-        if FIBGE.IgnorarCaixaEAcentos then
-          oCidade.MunicipioIdx := LowerCase(TiraAcentos(oCidade.Municipio))
-        else
-          oCidade.MunicipioIdx := oCidade.Municipio;
-
-        with JSonCidade.Values['microrregiao'].AsObject.Values['mesorregiao'].AsObject.Values['UF'].AsObject do
-        begin
-          oCidade.CodUF := Values['id'].AsInteger;
-          oCidade.UF    := Values['sigla'].AsString;
-        end;
-
-        Add(oCidade);
-      end;
-    finally
-      AJSon.Free;
-    end;
-  {$EndIf}
+  finally
+    AJSon.Free;
+  end;
   //DEBUG
   //WriteToTXT('./ibge.txt' , 'Tempo de Processamento: '+ FormatFloat('##0.000',SecondSpan(t1,Now))+' segundos' );
 end;
 
 procedure TACBrIBGECidades.ParseJSonStat(const AJSonStr: String);
 var
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  AJSonArr: TJsonArray;
-  {$Else}
-  AJSon: TJson;
-  {$EndIf}
+  AJSon: TACBrJSONArray;
   I, J, idPesq, CodMun, iCidade: Integer;
-  JSonPesq, JSonRespMun, JSonRespMunAnos: TJsonObject;
-  JSonResp: TJsonArray;
+  JSonPesq, JSonRespMun, JSonRespMunAnos: TACBrJSONObject;
+  JSonResp: TACBrJSONArray;
   Valor: Extended;
   oCidade: TACBrIBGECidade;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    AJSonArr := TJsonObject.Parse(AJSonStr) as TJsonArray;
-    try
-      For I := 0 to AJSonArr.Count-1 do
+  AJSon := TACBrJSONArray.Parse(AJSonStr);
+  try
+    For I := 0 to AJSon.Count-1 do
+    begin
+      JSonPesq := AJSon.ItemAsJSONObject[I];
+      idPesq := JSonPesq.AsInteger['id'];
+      JSonResp := JSonPesq.AsJSONArray['res'];
+
+      For J := 0 to JSonResp.Count-1 do
       begin
-        JSonPesq := AJSonArr.Items[I].ObjectValue;
-        idPesq := JSonPesq.I['id'];
-        JSonResp := JSonPesq.A['res'];
-
-        For J := 0 to JSonResp.Count-1 do
+        JSonRespMun := JSonResp.ItemAsJSONObject[J];
+        CodMun := JSonRespMun.AsInteger['localidade'];
+        iCidade := Find(CodMun * 10, False);   // Municipo vem sem o dígito verificador
+        if (iCidade >= 0) then
         begin
-          JSonRespMun := JSonResp[J].ObjectValue;
-          CodMun := JSonRespMun.I['localidade'];
-          iCidade := Find(CodMun * 10, False);   // Municipo vem sem o dígito verificador
-          if (iCidade >= 0) then
+          oCidade := Objects[iCidade];
+          if trunc(oCidade.CodMunicipio/10) = CodMun then
           begin
-            oCidade := Objects[iCidade];
-            if trunc(oCidade.CodMunicipio/10) = CodMun then
-            begin
-              JSonRespMunAnos := JSonRespMun.O['res'];
-              if JSonRespMunAnos.Count > 0 then
-                Valor := JSonRespMunAnos.Items[JSonRespMunAnos.Count-1].IntValue
-              else
-                Valor := 0;
+            JSonRespMunAnos := JSonRespMun.AsJSONObject['res'];
+            if JSonRespMunAnos.Count > 0 then
+              Valor := TACBrJSONValueAs.AsFloat(JSonRespMunAnos.ItemAsValue[JSonRespMunAnos.Count-1])
+            else
+              Valor := 0;
 
-              case idPesq of
-                CIBGE_IND_MUN_AREA: oCidade.Area := Valor;
-                CIBGE_IND_MUN_POPULACAO: oCidade.Populacao := trunc( Valor );
-              end;
+            case idPesq of
+              CIBGE_IND_MUN_AREA: oCidade.Area := Valor;
+              CIBGE_IND_MUN_POPULACAO: oCidade.Populacao := trunc( Valor );
             end;
           end;
         end;
       end;
-    finally
-      AJSonArr.Free;
     end;
-  {$Else}
-    AJSon := TJson.Create;
-    try
-      AJSon.Parse(AJSonStr);
-
-      For I := 0 to AJSon.Count-1 do
-      begin
-        JSonPesq := AJSon.Get(I).AsObject;
-        idPesq := JSonPesq.Values['id'].AsInteger;
-        JSonResp := JSonPesq.Values['res'].AsArray;
-
-        For J := 0 to JSonResp.Count-1 do
-        begin
-          JSonRespMun := JSonResp[J].AsObject;
-          CodMun := JSonRespMun.Values['localidade'].AsInteger;
-          iCidade := Find(CodMun * 10, False);   // Municipo vem sem o dígito verificador
-          if (iCidade >= 0) then
-          begin
-            oCidade := Objects[iCidade];
-            if trunc(oCidade.CodMunicipio/10) = CodMun then
-            begin
-              JSonRespMunAnos := JSonRespMun.Values['res'].AsObject;
-              if JSonRespMunAnos.Count > 0 then
-                Valor := JSonRespMunAnos.Items[JSonRespMunAnos.Count-1].Value.AsNumber
-              else
-                Valor := 0;
-
-              case idPesq of
-                CIBGE_IND_MUN_AREA: oCidade.Area := Valor;
-                CIBGE_IND_MUN_POPULACAO: oCidade.Populacao := trunc( Valor );
-              end;
-            end;
-          end;
-        end;
-      end;
-    finally
-      AJSon.Free;
-    end;
-  {$EndIf}
+  finally
+    AJSon.Free;
+  end;
 end;
 
 function CompCidadeCodMunicipioAsc(const pCidade1, pCidade2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -1050,6 +900,7 @@ end;
 
 procedure TACBrIBGE.HTTPGetCompressed(const AURL: String);
 begin
+  HTTPSend.Clear;
   HTTPSend.Headers.Add('Accept-Encoding: deflate, gzip');
   HTTPMethod( 'GET', AURL );
 end;
@@ -1341,7 +1192,7 @@ begin
     ListaMunicipios := '';
     Itens := 0;
     I := fListaCidades.Find(ACodUF * 100000, False);  // Acha a primeira cidade dessa UF
-    while (I > 0) and (I < fListaCidades.Count) and (fListaCidades[I].CodUF = ACodUF) do
+    while (I >= 0) and (I < fListaCidades.Count) and (fListaCidades[I].CodUF = ACodUF) do
     begin
       ListaMunicipios := ListaMunicipios + IntToStr(fListaCidades[I].CodMunicipio)+'|';
       Inc(Itens);

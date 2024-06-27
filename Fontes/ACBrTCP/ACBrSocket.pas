@@ -1103,7 +1103,8 @@ var
   {$IFDEF UPDATE_SCREEN_CURSOR}
    OldCursor: TCursor;
   {$ENDIF}
-   HeadersOld, qp, Location, wErro, wCEC: String;
+   HeadersOld, qp, Location, wErro: String;
+   //wCEC: String;
    i, ContaRedirecionamentos: Integer;
    ce: THttpContentEncodingCompress;
    AddUTF8InHeader: Boolean;
@@ -1123,7 +1124,7 @@ begin
      AddUTF8InHeader := FIsUTF8;
     {$EndIf}
 
-    wCEC := EmptyStr;
+    {wCEC := EmptyStr;
     for ce in fContenstEncodingCompress do
       if EstaVazio(wCEC) then
         wCEC := cHTTPHeaderAcceptEncoding + ContentEncodingCompressToString(ce)
@@ -1131,7 +1132,7 @@ begin
         wCEC := wCEC + ',' + ContentEncodingCompressToString(ce);
 
     if NaoEstaVazio(wCEC) then
-      fHttpSend.Headers.Add(wCEC);
+      fHttpSend.Headers.Add(wCEC);}
 
     if NaoEstaZerado(fURLPathParams.Count) then
       for i := 0 to fURLPathParams.Count - 1 do

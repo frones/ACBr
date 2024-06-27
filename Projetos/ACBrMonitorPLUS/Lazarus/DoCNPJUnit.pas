@@ -224,6 +224,7 @@ begin
       Resp.CNAE2:= StringReplace(CNAE2.Text, #13#10,' | ',[rfReplaceAll]);
       Resp.NaturezaJuridica:= NaturezaJuridica;
       Resp.InscricaoEstadual:= InscricaoEstadual;
+      Resp.CapitalSocial := CapitalSocial;
       fpCmd.Resposta := sLineBreak + Resp.Gerar;
     end;
   finally

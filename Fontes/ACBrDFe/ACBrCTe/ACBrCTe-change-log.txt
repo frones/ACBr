@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+-- ACBrCTe.EnvEvento.pas/ACBrCTe.RetConsSit/ACBrCTe.RetEnvEvento --
+[*] Correções nas novas Units.
+  Por: Italo Giurizzato Junior
+
 14/06/2024
 -- ACBrCTe.XmlHandler --
 [+] Nova Unit de Leitura do XML do conhecimento.

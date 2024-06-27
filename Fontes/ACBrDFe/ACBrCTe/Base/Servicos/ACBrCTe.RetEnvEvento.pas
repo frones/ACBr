@@ -368,8 +368,6 @@ procedure TRetEventoCTe.Ler_InfEventos(const ANode: TACBrXmlNode);
 var
   Item: TRetInfEventoCollectionItem;
   ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -389,6 +387,7 @@ begin
   Item.RetInfEvento.tpEvento := StrToTpEventoCTe(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr));
   Item.RetInfEvento.xEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('xEvento'), tcStr);
   Item.RetInfEvento.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+  Item.RetInfEvento.CNPJDest := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJDest'), tcStr);
   Item.RetInfEvento.dhRegEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
   Item.RetInfEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
 

@@ -101,7 +101,6 @@ type
     function CreateOptions: TACBrXmlWriterOptions; override;
 
     function Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
-    function Gerar_Evento: TACBrXmlNodeArray;
     function Gerar_DetEvento(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_CCe(Idx: Integer): TACBrXmlNode;
     function Gerar_InfCorrecao(Idx: Integer): TACBrXmlNodeArray;
@@ -201,64 +200,25 @@ end;
 function TEventoCTe.GerarXML: Boolean;
 var
   EventoNode: TACBrXmlNode;
-  nodeArray: TACBrXmlNodeArray;
-  i: Integer;
 begin
   ListaDeAlertas.Clear;
 
   FDocument.Clear();
 
-  EventoNode := CreateElement('envEvento');
+  EventoNode := CreateElement('eventoCTe');
   EventoNode.SetNamespace('http://www.portalfiscal.inf.br/cte');
   EventoNode.SetAttribute('versao', Versao);
 
   FDocument.Root := EventoNode;
 
-  EventoNode.AppendChild(AddNode(tcInt64, '#1', 'idLote', 1, 15, 1,
-                                                          FidLote, DSC_IDLOTE));
+  EventoNode.AppendChild(Gerar_InfEvento(0));
 
-  nodeArray := Gerar_Evento;
-  if nodeArray <> nil then
-  begin
-    for i := 0 to Length(nodeArray) - 1 do
-    begin
-      EventoNode.AppendChild(nodeArray[i]);
-    end;
-  end;
+  // Incluir a assinatura no XML
+  if Evento[0].signature.URI <> '' then
+    EventoNode.AppendChild(GerarSignature(Evento[0].signature));
 
   Result := True;
   XmlEnvio := ChangeLineBreak(Document.Xml, '');
-end;
-
-function TEventoCTe.Gerar_Evento: TACBrXmlNodeArray;
-var
-  i: integer;
-begin
-  Result := nil;
-  SetLength(Result, Evento.Count);
-
-  for i := 0 to Evento.Count - 1 do
-  begin
-    Evento[i].InfEvento.id := 'ID' + Evento[i].InfEvento.TipoEvento +
-                               OnlyNumber(Evento[i].InfEvento.chCTe) +
-                               Format('%.2d', [Evento[i].InfEvento.nSeqEvento]);
-
-    if Length(Evento[i].InfEvento.id) < 54 then
-      wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
-
-    Result[i] := CreateElement('evento');
-    Result[i].SetNamespace('http://www.portalfiscal.inf.br/cte');
-    Result[i].SetAttribute('versao', Versao);
-
-    Result[i].AppendChild(Gerar_InfEvento(i));
-
-    // Incluir a assinatura no XML
-    if Evento[i].signature.URI <> '' then
-      Result[i].AppendChild(GerarSignature(Evento[i].signature));
-  end;
-
-  if Evento.Count > 20 then
-    wAlerta('#1', 'evento', '', ERR_MSG_MAIOR_MAXIMO + '20');
 end;
 
 function TEventoCTe.Gerar_Evento_CCe(Idx: Integer): TACBrXmlNode;
@@ -532,7 +492,6 @@ end;
 
 function TEventoCTe.Gerar_InfEspecie(IdxEv, IdxEs: Integer): TACBrXmlNodeArray;
 var
-  nodeArray: TACBrXmlNodeArray;
   i: Integer;
 begin
   Result := nil;
@@ -759,6 +718,13 @@ var
   sDoc: string;
   Serie: Integer;
 begin
+  Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
+                             OnlyNumber(Evento[Idx].InfEvento.chCTe) +
+                             Format('%.2d', [Evento[Idx].InfEvento.nSeqEvento]);
+
+  if Length(Evento[Idx].InfEvento.id) < 54 then
+    wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
+
   Result := CreateElement('infEvento');
   Result.SetAttribute('Id', Evento[Idx].InfEvento.id);
 
@@ -817,9 +783,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP15', 'nSeqEvento', 1, 2, 1,
                                             Evento[Idx].FInfEvento.nSeqEvento));
 
-  Result.AppendChild(AddNode(tcStr, 'HP16', 'verEvento', 1, 4, 1, Versao));
-
-  Result.AppendChild(Gerar_DetEvento(Idx));
+  Result.AppendChild(Gerar_DetEvento(0));
 end;
 
 function TEventoCTe.Gerar_DetEvento(Idx: Integer): TACBrXmlNode;

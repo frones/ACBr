@@ -175,6 +175,8 @@ begin
 
   try
     try
+      Result := False;
+
       if XmlRetorno = '' then Exit;
 
       Document.LoadFromXml(XmlRetorno);
@@ -216,8 +218,14 @@ begin
                   protCTe.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
                   protCTe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
                   protCTe.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
-                  protCTe.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
-                  protCTe.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
+
+                  ANodeAux := ANodeAux.Childrens.FindAnyNs('infFisco');
+
+                  if ANodeAux <> nil then
+                  begin
+                    protCTe.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
+                    protCTe.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
+                  end;
                 end;
               end;
             end;
@@ -267,8 +275,6 @@ begin
           Result := True;
         end;
       end;
-
-      Result := True;
     except
       Result := False;
     end;

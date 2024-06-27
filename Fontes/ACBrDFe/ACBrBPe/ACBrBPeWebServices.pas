@@ -44,9 +44,6 @@ uses
   ACBrBPeClass, ACBrBPeConversao,
   ACBrDFeComum.Proc,
   ACBrBPeEnvEvento, ACBrBPeRetEnvEvento, ACBrBPeRetConsSit,
-//  ACBrDFeComum.DistDFeInt,
-//  ACBrDFeComum.RetDistDFeInt,
-  ACBrDFeComum.RetEnvio,
   ACBrBPeBilhetes, ACBrBPeConfiguracoes;
 
 type
@@ -252,46 +249,6 @@ type
     property EventoRetorno: TRetEventoBPe read FEventoRetorno;
   end;
 
-  { TDistribuicaoDFe }
-{
-  TDistribuicaoDFe = class(TBPeWebService)
-  private
-    FOwner: TACBrDFe;
-    FcUFAutor: Integer;
-    FCNPJCPF: String;
-    FultNSU: String;
-    FNSU: String;
-    FchBPe: String;
-    FNomeArq: String;
-    FlistaArqs: TStringList;
-
-    FretDistDFeInt: TretDistDFeInt;
-
-    function GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-    function GerarMsgErro(E: Exception): String; override;
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-    procedure Clear; override;
-
-    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
-    property ultNSU: String read FultNSU write FultNSU;
-    property NSU: String read FNSU write FNSU;
-    property chBPe: String read FchBPe write FchBPe;
-    property NomeArq: String read FNomeArq;
-    property ListaArqs: TStringList read FlistaArqs;
-
-    property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
-  end;
-}
   { TBPeEnvioWebService }
 
   TBPeEnvioWebService = class(TBPeWebService)
@@ -330,7 +287,6 @@ type
     FEnviar: TBPeRecepcao;
     FConsulta: TBPeConsulta;
     FEnvEvento: TBPeEnvEvento;
-//    FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TBPeEnvioWebService;
   public
     constructor Create(AOwner: TACBrDFe); overload;
@@ -344,8 +300,6 @@ type
     property Enviar: TBPeRecepcao read FEnviar write FEnviar;
     property Consulta: TBPeConsulta read FConsulta write FConsulta;
     property EnvEvento: TBPeEnvEvento read FEnvEvento write FEnvEvento;
-//    property DistribuicaoDFe: TDistribuicaoDFe
-//      read FDistribuicaoDFe write FDistribuicaoDFe;
     property EnvioWebService: TBPeEnvioWebService
       read FEnvioWebService write FEnvioWebService;
   end;
@@ -1688,201 +1642,6 @@ begin
   Result := IntToStr(FidLote);
 end;
 
-{ TDistribuicaoDFe }
-(*
-constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
-begin
-  inherited Create(AOwner);
-
-  FOwner := AOwner;
-end;
-
-destructor TDistribuicaoDFe.Destroy;
-begin
-  FretDistDFeInt.Free;
-  FlistaArqs.Free;
-
-  inherited;
-end;
-
-procedure TDistribuicaoDFe.Clear;
-begin
-  inherited Clear;
-
-  FPStatus := stDistDFeInt;
-  FPLayout := LayDistDFeInt;
-  FPArqEnv := 'con-dist-dfe';
-  FPArqResp := 'dist-dfe';
-  FPBodyElement := 'bpeDistDFeInteresse';
-  FPHeaderElement := '';
-
-  if Assigned(FretDistDFeInt) then
-    FretDistDFeInt.Free;
-
-  FretDistDFeInt := TRetDistDFeInt.Create(FOwner, 'BPe');
-
-  if Assigned(FlistaArqs) then
-    FlistaArqs.Free;
-
-  FlistaArqs := TStringList.Create;
-end;
-
-procedure TDistribuicaoDFe.DefinirURL;
-var
-  UF : String;
-  Versao: Double;
-begin
-  { Esse método é tratado diretamente pela RFB }
-
-  UF := 'AN';
-
-  Versao := 0;
-  FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoBPeToDbl(FPConfiguracoesBPe.Geral.VersaoDF);
-
-  TACBrBPe(FPDFeOwner).LerServicoDeParams(
-    TACBrBPe(FPDFeOwner).GetNomeModeloDFe,
-    UF ,
-    FPConfiguracoesBPe.WebServices.Ambiente,
-    LayOutBPeToServico(FPLayout),
-    Versao,
-    FPURL);
-
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
-end;
-
-procedure TDistribuicaoDFe.DefinirServicoEAction;
-begin
-  FPServico := GetUrlWsd + 'BPeDistribuicaoDFe';
-  FPSoapAction := FPServico + '/bpeDistDFeInteresse';
-end;
-
-procedure TDistribuicaoDFe.DefinirDadosMsg;
-var
-  DistDFeInt: TDistDFeInt;
-begin
-  DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE_BPE,
-                                     'bpeDadosMsg', 'consChBPe', 'chBPe', True);
-  try
-    DistDFeInt.TpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
-    DistDFeInt.cUFAutor := FcUFAutor;
-    DistDFeInt.CNPJCPF := FCNPJCPF;
-    DistDFeInt.ultNSU := trim(FultNSU);
-    DistDFeInt.NSU := trim(FNSU);
-    DistDFeInt.Chave := trim(FchBPe);
-
-    FPDadosMsg := DistDFeInt.GerarXML;
-  finally
-    DistDFeInt.Free;
-  end;
-end;
-
-function TDistribuicaoDFe.TratarResposta: Boolean;
-var
-  I: Integer;
-  AXML, aPath: String;
-begin
-  FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeDistDFeInteresseResult'], FPRetornoWS );
-
-  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
-  FretDistDFeInt.LerXml;
-
-  for I := 0 to FretDistDFeInt.docZip.Count - 1 do
-  begin
-    AXML := FretDistDFeInt.docZip.Items[I].XML;
-    FNomeArq := '';
-    if (AXML <> '') then
-    begin
-      case FretDistDFeInt.docZip.Items[I].schema of
-        schresBPe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-resBPe.xml';
-
-        schresEvento:
-          FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-                     FretDistDFeInt.docZip.Items[I].resEvento.chDFe +
-                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-                     '-resEventoBPe.xml';
-
-        schprocBPe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-bpe.xml';
-
-        schprocEventoBPe:
-          FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
-                     '-procEventoBPe.xml';
-      end;
-
-      if NaoEstaVazio(NomeArq) then
-        FlistaArqs.Add( FNomeArq );
-
-      aPath := GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]);
-      FretDistDFeInt.docZip.Items[I].NomeArq := aPath + FNomeArq;
-
-      if (FPConfiguracoesBPe.Arquivos.Salvar) and NaoEstaVazio(FNomeArq) then
-      begin
-        if FPConfiguracoesBPe.Arquivos.SalvarEvento then
-          if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoBPe]) then
-            FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
-
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocBPe]) then
-          FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
-      end;
-    end;
-  end;
-
-  FPMsg := FretDistDFeInt.xMotivo;
-  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
-end;
-
-function TDistribuicaoDFe.GerarMsgLog: String;
-begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'Resposta: %s ' + LineBreak +
-                           'Último NSU: %s ' + LineBreak +
-                           'Máximo NSU: %s ' + LineBreak),
-                   [FretDistDFeInt.versao, TpAmbToStr(FretDistDFeInt.tpAmb),
-                    FretDistDFeInt.verAplic, IntToStr(FretDistDFeInt.cStat),
-                    FretDistDFeInt.xMotivo,
-                    IfThen(FretDistDFeInt.dhResp = 0, '',
-                           FormatDateTimeBr(RetDistDFeInt.dhResp)),
-                    FretDistDFeInt.ultNSU, FretDistDFeInt.maxNSU]);
-end;
-
-function TDistribuicaoDFe.GerarMsgErro(E: Exception): String;
-begin
-  Result := ACBrStr('WebService Distribuição de DFe:' + LineBreak +
-                    '- Inativo ou Inoperante tente novamente.');
-end;
-
-function TDistribuicaoDFe.GerarPathDistribuicao(AItem: TdocZipCollectionItem): String;
-var
-  Data: TDateTime;
-begin
-  if FPConfiguracoesBPe.Arquivos.EmissaoPathBPe then
-    Data := AItem.resDFe.dhEmi
-  else
-    Data := Now;
-
-  case AItem.schema of
-    schprocEventoBPe:
-      Result := FPConfiguracoesBPe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
-                                                          AItem.resDFe.xNome,
-                                                          AItem.resDFe.CNPJCPF,
-                                                          AItem.resDFe.IE,
-                                                          Data);
-
-    schprocBPe:
-      Result := FPConfiguracoesBPe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
-                                                        AItem.resDFe.CNPJCPF,
-                                                        AItem.resDFe.IE,
-                                                        Data);
-  end;
-end;
-*)
 { TBPeEnvioWebService }
 
 constructor TBPeEnvioWebService.Create(AOwner: TACBrDFe);
@@ -1963,7 +1722,6 @@ begin
   FEnviar := TBPeRecepcao.Create(FACBrBPe, TACBrBPe(FACBrBPe).Bilhetes);
   FConsulta := TBPeConsulta.Create(FACBrBPe, TACBrBPe(FACBrBPe).Bilhetes);
   FEnvEvento := TBPeEnvEvento.Create(FACBrBPe, TACBrBPe(FACBrBPe).EventoBPe);
-//  FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrBPe);
   FEnvioWebService := TBPeEnvioWebService.Create(FACBrBPe);
 end;
 
@@ -1973,7 +1731,6 @@ begin
   FEnviar.Free;
   FConsulta.Free;
   FEnvEvento.Free;
-//  FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;

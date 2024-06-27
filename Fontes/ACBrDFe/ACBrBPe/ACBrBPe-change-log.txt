@@ -46,6 +46,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/05/2024
+-- ACBrBPeWebServices/ACBrBPeXmlWriter --
+[*] Remoção de código não utilizado.
+   Por: Italo Giurizzato Junior
+
+08/05/2024
 -- ACBrBPeBilhetes --
 [*] Reversão da alteração que visava o uso das configurações na geração do XML.
    Por: Italo Giurizzato Junior

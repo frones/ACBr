@@ -135,7 +135,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; override;
-    function ObterNomeArquivo: string; override;
+    function ObterNomeArquivo: string; overload;
 
     property Opcoes: TBPeXmlWriterOptions read GetOpcoes write SetOpcoes;
     property BPe: TBPe read FBPe write FBPe;

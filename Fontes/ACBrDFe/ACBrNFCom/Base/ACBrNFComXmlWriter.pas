@@ -143,7 +143,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; override;
-    function ObterNomeArquivo: string; override;
+    function ObterNomeArquivo: string; overload;
 
     property Opcoes: TNFComXmlWriterOptions read GetOpcoes write SetOpcoes;
     property NFCom: TNFCom read FNFCom write FNFCom;

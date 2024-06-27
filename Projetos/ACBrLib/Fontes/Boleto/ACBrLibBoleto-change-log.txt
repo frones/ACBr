@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+--- ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST ---
+[*] #TK-5657 - ACBrLibBoleto: Removidos parâmetros não utilizados, eDir e eNomeArq, da assinatura da GerarRemessaStream()
+--- FrmMain.cs, ACBrBoleto.cs, ACBrBoleto.Delegates.cs ---
+[*] #TK-5657 - Exemplo em C#: Configurada nova assinatura e alterado retorno de FileStream para MemoryStream, jogando o resultado no memo
+    Por: Renato Rubinho
+
 12/06/2024
 --- ACBrLibBoletoRespostas ---
 [*] #TK-5559 - ACBrBoleto implementar  retorno da propriedade NumeroArquivo dos banco q nao conter CNAB240/400

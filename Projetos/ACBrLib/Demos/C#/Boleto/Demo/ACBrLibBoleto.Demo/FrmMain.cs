@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing.Printing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using ACBrLib;
 using ACBrLib.Boleto;
@@ -480,17 +481,22 @@ namespace ACBrLibBoleto.Demo
 
         private async void btnGerarRemessaStream_Click(object sender, EventArgs e)
         {
-            var nomeArquivo = "RemessaStream.rem";
+            MemoryStream aStream = new MemoryStream();
+            boleto.GerarRemessaStream(1, aStream);
 
-            FileStream aStream = File.Create(nomeArquivo);
+            aStream.Position = 0;
+            string base64String = Convert.ToBase64String(aStream.ToArray());
 
-            var ret = "";
-            if (string.IsNullOrEmpty(txtDirRemessa.Text))
-                ret = Application.StartupPath;
-            else
-                ret = txtDirRemessa.Text;
-            boleto.GerarRemessaStream(ret, 1, txtNomeRemessa.Text, aStream);
-            rtbRespostas.AppendLine("Remessa Gerada.");
+            rtbRespostas.AppendLine("Remessa Gerada Base64:");
+            rtbRespostas.AppendLine(base64String);
+
+            byte[] convBase64 = Convert.FromBase64String(base64String);
+
+            // Converter o array de bytes para uma string comum (UTF-8)
+            string remessa = Encoding.UTF8.GetString(convBase64);
+
+            rtbRespostas.AppendLine("Remessa Gerada Texto:");
+            rtbRespostas.AppendLine(remessa);
         }
 
         private void BtnTotalTitulo_Click(object sender, EventArgs e)

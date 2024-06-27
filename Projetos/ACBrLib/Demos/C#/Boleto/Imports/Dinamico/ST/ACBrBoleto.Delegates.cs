@@ -79,7 +79,7 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_GerarRemessa(string eDir, int eNumArquivo, string eNomeArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int Boleto_GerarRemessaStream(string eDir, int eNumArquivo, string eNomeArq, StringBuilder buffer, ref int bufferSize);
+        public delegate int Boleto_GerarRemessaStream(int eNumArquivo, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_ObterRetorno(string eDir, string eNomeArq, StringBuilder buffer, ref int bufferSize);

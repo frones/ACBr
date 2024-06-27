@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2024
+-- ACBrNFSeXGravarXml --
+[*] Alteração na assinatura da função: ObterNomeArquivo. 
+   Por: Italo Giurizzato Junior
+
 26/06/2024
 -- ACBrNFSeXServicos --
 [*] Alteração na URL da cidade de Cachoeira do Sul/RS, provedor é o mesmo.

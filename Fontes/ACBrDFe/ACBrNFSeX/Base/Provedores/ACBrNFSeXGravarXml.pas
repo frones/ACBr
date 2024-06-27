@@ -128,7 +128,7 @@ type
     constructor Create(AOwner: IACBrNFSeXProvider); virtual;
     destructor Destroy; override;
 
-    function ObterNomeArquivo: String; Override;
+    function ObterNomeArquivo: String; overload;
     function GerarXml: Boolean; Override;
     function ConteudoTxt: String;
 

@@ -323,6 +323,8 @@ begin
 
             if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
               LConsulta.Add('page=' + IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
+            
+            LConsulta.Add('view=full');
           end;
         tpConsultaDetalhe :
           begin
@@ -333,6 +335,8 @@ begin
 
             if LNossoNumero <> EmptyStr then
                LConsulta.Add('nosso_numero=' + LNossoNumero);
+
+            LConsulta.Add('view=full');
           end;
         tpAltera :
           begin
@@ -519,25 +523,37 @@ begin
     if (ATitulo.Instrucao1) <> '' then
     begin
       LJsonDados.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 1, 2));
-      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2));
+      if Boleto.Cedente.CedenteWS.IndicadorPix then
+        LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2))
+      else
+        LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 3, 2));
+      LJsonDados.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
       LJsonArray.AddElementJSON(LJsonDados);
     end;
     if ATitulo.Instrucao2 <> '' then
     begin
       LJsonDados2 := TACBrJSONObject.Create;
-      LJsonDados2.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 1, 2));
-      LJsonDados2.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao2)), 3, 2));
+      LJsonDados2.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 1, 1));
+      if Boleto.Cedente.CedenteWS.IndicadorPix then
+        LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2))
+      else
+        LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 3, 2));
+      LJsonDados2.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
       LJsonArray.AddElementJSON(LJsonDados2);
     end;
     if ATitulo.Instrucao3 <> '' then
     begin
       LJsonDados3 := TACBrJSONObject.Create;
-      LJsonDados3.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 1, 2));
-      LJsonDados3.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao3)), 3, 2));
+      LJsonDados3.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 1,1));
+      if Boleto.Cedente.CedenteWS.IndicadorPix then
+        LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2))
+      else
+        LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 3, 2));
+      LJsonDados3.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
       LJsonArray.AddElementJSON(LJsonDados3);
     end;
 
-    AJson.AddPair('instrucao_cobranca',LJsonDados);
+    AJson.AddPair('instrucao_cobranca',LJsonArray);
   end;
 end;
 
@@ -668,11 +684,11 @@ begin
         3: // RemessaConcederAbatimento
           begin
             if (ATitulo.ValorAbatimento > 0) then
-              LJson.AddPair('valor_abatimento', ATitulo.ValorAbatimento);
+              LJson.AddPair('valor_abatimento', StringReplace(FormatFloat('0.00',ATitulo.ValorAbatimento),',','.',[]));
           end;
         4: // RemessaCancelarAbatimento
           begin
-            LJson.AddPair('valor_abatimento', '0');
+            LJson.AddPair('valor_abatimento', StringReplace(FormatFloat('0.00',0),',','.',[]));
           end;
         5: //RemessaConcederDesconto
           begin

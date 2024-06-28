@@ -438,11 +438,11 @@ begin
                 ListaRetorno.DadosRet.TituloRet.LinhaDig             := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['numero_linha_digitavel'];
                 ListaRetorno.DadosRet.TituloRet.DataProcessamento    := StringToDateTimeDef(LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['data_processamento'], 0, 'yyyy-mm-dd');
                 ListaRetorno.DadosRet.TituloRet.UsoBanco             := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['uso_banco'];
-                ListaRetorno.DadosRet.TituloRet.ValorDesconto        := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['valor_desconto'].Replace('.', ','), 0);
-                ListaRetorno.DadosRet.TituloRet.ValorDespesaCobranca := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['valor_outra_deducao'].Replace('.', ','), 0);
-                ListaRetorno.DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['valor_juro_multa'].Replace('.', ','), 0);
-                ListaRetorno.DadosRet.TituloRet.ValorOutrosCreditos  := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['valor_outro_acrescimo'].Replace('.', ','), 0);
-                ListaRetorno.DadosRet.TituloRet.ValorPago            := StrToFloatDef(LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['valor_total_cobrado'].Replace('.', ','), 0);
+                ListaRetorno.DadosRet.TituloRet.ValorDesconto        := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsCurrency['valor_desconto'];
+                ListaRetorno.DadosRet.TituloRet.ValorDespesaCobranca := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsCurrency['valor_outra_deducao'];
+                ListaRetorno.DadosRet.TituloRet.ValorMoraJuros       := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsCurrency['valor_juro_multa'];
+                ListaRetorno.DadosRet.TituloRet.ValorOutrosCreditos  := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsCurrency['valor_outro_acrescimo'];
+                ListaRetorno.DadosRet.TituloRet.ValorPago            := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsCurrency['valor_total_cobrado'];
                 ListaRetorno.DadosRet.TituloRet.ValorDocumento       := LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsFloat['valor_titulo'];
 
                 ListaRetorno.DadosRet.TituloRet.Informativo.Add( LJsonBoletoIndividualArray.ItemAsJSONObject[J].AsString['texto_informacao_cliente_beneficiario'] );

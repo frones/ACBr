@@ -192,6 +192,7 @@ type
     FMultaValorFixo            : Boolean;
     FSeuNumero                 : String;
     FTipoDiasProtesto          : TACBrTipoDiasIntrucao;
+    FValorTarifa               : Extended;
     FVencimento                : TDateTime;
     FDataDocumento             : TDateTime;
     FNumeroDocumento           : String;

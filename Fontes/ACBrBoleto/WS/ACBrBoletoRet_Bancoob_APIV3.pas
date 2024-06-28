@@ -116,6 +116,16 @@ begin
   ARetornoWS.JSONEnvio       := EnvWs;
   ARetornoWS.Header.Operacao := TipoOperacao;
 
+  if (HttpResultCode = 204) and (TipoOperacao = tpConsultaDetalhe) then
+  begin
+    HttpResultCode   := 400;
+    Result := False;
+    LRejeicao := ARetornoWS.CriarRejeicaoLista;
+    LRejeicao.Codigo := '400';
+    LRejeicao.Ocorrencia  := '204';
+    LRejeicao.Mensagem := 'A requisição foi processada com êxito e não está retornando conteúdo.';
+  end;
+
   if Trim(RetWS) <> '' then
   begin
     try

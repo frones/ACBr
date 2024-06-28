@@ -164,7 +164,9 @@ begin
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarSeuNumero then
          FPURL := FPURL + '/boletos/seu-numero'
        else if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarEspecieTitulo then
-         FPURL := FPURL + '/boletos/especie-documento';
+         FPURL := FPURL + '/boletos/especie-documento'
+       else if ATitulo.OcorrenciaOriginal.Tipo in [ACBrBoleto.ToRemessaPedidoNegativacao, ACBrBoleto.ToRemessaExcluirNegativacaoBaixar, ACBrBoleto.ToRemessaExcluirNegativacaoSerasaBaixar] then
+          FPURL := FPURL + '/boletos/negativacoes';
     end;
     tpConsultaDetalhe:  FPURL := FPURL + '/boletos?numeroContrato='+LContrato+'&modalidade=1&nossoNumero='+LNossoNumero;
     tpBaixa:  FPURL := FPURL + '/boletos/baixa';
@@ -263,6 +265,8 @@ end;
 
 procedure TBoletoW_Bancoob.DefinirParamOAuth;
 begin
+  if Boleto.Cedente.CedenteWS.ClientSecret = '' then
+    Boleto.Cedente.CedenteWS.ClientSecret:= Boleto.Cedente.CedenteWS.ClientID;
   FParamsOAuth := Format( 'client_id=%s&scope=%s&grant_type=client_credentials',
                    [Boleto.Cedente.CedenteWS.ClientID,
                     Boleto.Cedente.CedenteWS.Scope] );
@@ -355,6 +359,8 @@ begin
 
     LJson.AddPair('valor',aTitulo.ValorDocumento);
     LJson.AddPair('dataVencimento',DateTimeToDateBancoob(aTitulo.Vencimento));
+    if (ATitulo.DataLimitePagto <> 0) then
+      LJson.AddPair('dataLimitePagamento', DateTimeToDateBancoob(ATitulo.DataLimitePagto));
     LJson.AddPair('numeroParcela',max(1,ATitulo.Parcela));
     LJson.AddPair('aceite',ATitulo.Aceite = atSim);
 
@@ -432,6 +438,12 @@ begin
         AtribuirAbatimento(LJson);
       toRemessaAlterarEspecieTitulo:
         AlterarEspecie(LJson);
+      ToRemessaPedidoNegativacao:
+        FMetodoHTTP := HtPOST;
+      ToRemessaExcluirNegativacaoBaixar:
+        FMetodoHTTP := HtPATCH;
+      ToRemessaExcluirNegativacaoSerasaBaixar:
+        FMetodoHTTP := HtDELETE;
     end;
 
     FPDadosMsg := '['+LJson.ToJSON+']';
@@ -507,12 +519,6 @@ begin
   LJsonSacadorAvalista := TACBrJSONObject.Create;
   LJsonSacadorAvalista.AddPair('nome',aTitulo.Sacado.SacadoAvalista.NomeAvalista);
   LJsonSacadorAvalista.AddPair('cpfCnpj',OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF));
-  LJsonSacadorAvalista.AddPair('tipoPessoa',IfThen(Length(OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF)) = 11, 'FISICA', 'JURIDICA'));
-  LJsonSacadorAvalista.AddPair('cep',aTitulo.Sacado.SacadoAvalista.CEP);
-  LJsonSacadorAvalista.AddPair('endereco',aTitulo.Sacado.SacadoAvalista.Logradouro);
-  LJsonSacadorAvalista.AddPair('bairro',aTitulo.Sacado.SacadoAvalista.Bairro);
-  LJsonSacadorAvalista.AddPair('cidade',aTitulo.Sacado.SacadoAvalista.Cidade);
-  LJsonSacadorAvalista.AddPair('uf',aTitulo.Sacado.SacadoAvalista.UF);
   AJson.AddPair('beneficiarioFinal', LJsonSacadorAvalista);
 end;
 
@@ -600,43 +606,73 @@ end;
 
 procedure TBoletoW_Bancoob.GerarDesconto(AJson: TACBrJSONObject);
 begin
-  if not Assigned(aTitulo) or not Assigned(AJson) then
+  if not Assigned(ATitulo) or not Assigned(AJson) then
     Exit;
-
-  // '0'  =  Não Conceder desconto
-  // '1'  =  Valor Fixo Até a Data Informada
-  // '2'  =  Percentual Até a Data Informada"
-
-  if (aTitulo.DataDesconto > 0) then
+  (*
+    Informar o tipo de desconto atribuido ao boleto.
+    - 0 Sem Desconto
+    - 1 Valor Fixo Até a Data Informada
+    - 2 Percentual até a data informada
+    - 3 Valor por antecipação dia corrido
+    - 4 Valor por antecipação dia útil
+    - 5 Percentual por antecipação dia corrido
+    - 6 Percentual por antecipação dia útil
+  *)
+  if ATitulo.TipoDesconto = tdNaoConcederDesconto then
   begin
-    case Integer(aTitulo.TipoDesconto) of
-      1:
+    AJson.AddPair('tipoDesconto',0);
+  end else
+  begin
+    case ATitulo.TipoDesconto of
+      tdValorFixoAteDataInformada:
         begin
           AJson.AddPair('tipoDesconto',1);
           AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
           AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
         end;
-      2:
+      tdPercentualAteDataInformada:
         begin
           AJson.AddPair('tipoDesconto',2);
           AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
           AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
         end;
+      tdValorAntecipacaoDiaCorrido:
+        begin
+          AJson.AddPair('tipoDesconto',3);
+          AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
+          AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
+        end;
+      tdValorAntecipacaoDiaUtil:
+        begin
+          AJson.AddPair('tipoDesconto',4);
+          AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
+          AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
+        end;
+      tdPercentualSobreValorNominalDiaCorrido:
+        begin
+          AJson.AddPair('tipoDesconto',5);
+          AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
+          AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
+        end;
+      tdPercentualSobreValorNominalDiaUtil:
+        begin
+          AJson.AddPair('tipoDesconto',6);
+          AJson.AddPair('dataPrimeiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto));
+          AJson.AddPair('valorPrimeiroDesconto',aTitulo.ValorDesconto);
+        end;
     end;
-  end
-  else
-    AJson.AddPair('tipoDesconto',0);
 
-  if (aTitulo.DataDesconto2 > 0) then
-  begin
-    AJson.AddPair('dataSegundoDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto2));
-    AJson.AddPair('valorSegundoDesconto',aTitulo.ValorDesconto2);
-  end;
+    if (ATitulo.DataDesconto2 > 0) then
+    begin
+      AJson.AddPair('dataSegundoDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto2));
+      AJson.AddPair('valorSegundoDesconto',aTitulo.ValorDesconto2);
+    end;
 
-  if (aTitulo.DataDesconto3 > 0) then
-  begin
-    AJson.AddPair('dataTerceiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto3));
-    AJson.AddPair('valorTerceiroDesconto',aTitulo.ValorDesconto3);
+    if (ATitulo.DataDesconto3 > 0) then
+    begin
+      AJson.AddPair('dataTerceiroDesconto',DateTimeToDateBancoob(aTitulo.DataDesconto3));
+      AJson.AddPair('valorTerceiroDesconto',aTitulo.ValorDesconto3);
+    end;
   end;
 end;
 

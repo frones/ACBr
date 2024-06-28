@@ -45,7 +45,7 @@ type
   { TBoletoW_PenseBank_API }
   TBoletoW_PenseBank_API = class(TBoletoWSREST)
   private
-    function CodigoTipoTitulo(AEspecieDoc:String): Integer;
+    function CodigoTipoTitulo(AEspecieDoc:string): Integer;
   protected
     procedure DefinirURL; override;
     procedure DefinirContentType; override;
@@ -100,7 +100,7 @@ uses
 
 procedure TBoletoW_PenseBank_API.DefinirURL;
 var
-  ID, NConvenio : String;
+  ID, NConvenio : string;
 begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
 

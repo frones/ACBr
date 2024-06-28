@@ -255,6 +255,9 @@ begin
                                  ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := LJSONObject.AsString['settlementDescription'];
                                 if EstaVazio(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca) then
                                  ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca := LJSONObject.AsString['status'];
+
+                                ARetornoWS.DadosRet.TituloRet.ValorTarifa :=  LJSONObject.AsFloat['settlementDutyValue'];
+
                              end;
                          end;
 

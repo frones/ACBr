@@ -347,6 +347,7 @@ type
     property EMV: String read Femv write Femv;
     property UrlPix: String read FurlPix write FurlPix;
     property TxId: String read FtxId write FtxId;
+    property ValorTarifa: Extended read FValorTarifa write FValorTarifa;
   end;
 
     { TACBrBoletoDadosRet }

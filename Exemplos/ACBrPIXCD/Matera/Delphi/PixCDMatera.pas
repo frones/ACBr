@@ -48,6 +48,7 @@ uses
 const
   cURL_ACBR = 'https://projetoacbr.com.br/pix/';
   CURL_MateraPagto = 'https://flagship-payment-app-hml.vercel.app/';
+  cURL_IP2Location = 'https://api.ip2location.io/';
   cMoeda = 'BRL';
   cPais = 'BRA';
   CMaxConsultas = 36;
@@ -74,11 +75,16 @@ type
     ACBrPSPMatera1: TACBrPSPMatera;
     btAcharArqCertificado: TSpeedButton;
     btAcharChavePrivada: TSpeedButton;
+    btContaCriarProcuracao: TSpeedButton;
+    btGeolocalizacaoPesquisar: TBitBtn;
     btContaCriarRepresentanteFoto: TSpeedButton;
-    btContaCriarRepresentanteMostrarFotoFrente: TSpeedButton;
+    btContaCriarContratoSocial: TSpeedButton;
+    btContaCriarRepresentanteMostrarFoto: TSpeedButton;
     btContaCriarRepresentanteMostrarRGFotoFrente: TSpeedButton;
+    btContaCriarVerDocumentoCNH: TSpeedButton;
     btContaCriarRepresentanteMostrarRGFotoVerso: TSpeedButton;
     btContaCriarRepresentanteRGFotoFrente: TSpeedButton;
+    btContaCriarAbrirDocumentoCNH: TSpeedButton;
     btContaCriarRepresentanteRGFotoVerso: TSpeedButton;
     btVerClientID: TSpeedButton;
     btVerClientSecret: TSpeedButton;
@@ -145,6 +151,7 @@ type
     chkQRCodeADshowToPayer: TCheckBox;
     cbQRCodeTipoCobranca: TComboBox;
     cbDevolucaoReasonCode: TComboBox;
+    edContaCriarProcuracao: TEdit;
     edArqCertificado: TEdit;
     edArqChavePrivada: TEdit;
     edChavePIXConsultar: TEdit;
@@ -164,6 +171,9 @@ type
     edContaCriarBairro: TEdit;
     edContaCriarCelular: TEdit;
     edContaCriarCEP: TEdit;
+    edGeolocalizacaoLatitude: TEdit;
+    edGeolocalizacaoLongitude: TEdit;
+    edGeolocalizacaoIP: TEdit;
     edContaCriarCidade: TEdit;
     edContaCriarComplemento: TEdit;
     edContaCriarEmail: TEdit;
@@ -181,11 +191,13 @@ type
     edContaCriarRepresentanteCPF: TEdit;
     edContaCriarRepresentanteEmail: TEdit;
     edContaCriarRepresentanteFoto: TEdit;
+    edContaCriarContratoSocial: TEdit;
     edContaCriarRepresentanteLogradouro: TEdit;
     edContaCriarRepresentanteMae: TEdit;
     edContaCriarRepresentanteNome: TEdit;
     edContaCriarRepresentanteNumero: TEdit;
     edContaCriarRepresentanteRGFotoFrente: TEdit;
+    edContaCriarDocumentoCNH: TEdit;
     edContaCriarRepresentanteRGFotoVerso: TEdit;
     edContaCriarRepresentanteUF: TEdit;
     edContaCriarUF: TEdit;
@@ -203,6 +215,7 @@ type
     edFluxoCopiaECola: TEdit;
     edLogArquivo: TEdit;
     edProxyHost: TEdit;
+    edIP2LocationAPIKey: TEdit;
     edProxyPorta: TSpinEdit;
     edProxySenha: TEdit;
     edProxyUsuario: TEdit;
@@ -260,7 +273,6 @@ type
     gbconsultaSaldoEC: TGroupBox;
     gbconsultaSaldoIntegrador: TGroupBox;
     gbContaCriarEndereco: TGroupBox;
-    gbDadosAdicionais: TGroupBox;
     gbFluxoCliente: TGroupBox;
     gbFluxoStatus: TGroupBox;
     gbFluxoTotal: TGroupBox;
@@ -280,6 +292,9 @@ type
     gbQRCodeValuesReduction: TGroupBox;
     gbGerarQRCodeInfoAdicional: TGroupBox;
     gbQRCodeDiscount: TGroupBox;
+    gbIP2Location: TGroupBox;
+    gbGeolocalizacao: TGroupBox;
+    ImageList1: TImageList;
     Imagem: TImage;
     imGerarQRCodeImg: TImage;
     imErroCertificado: TImage;
@@ -299,6 +314,10 @@ type
     lbConsultaStart1: TLabel;
     lbContaCriarBairro: TLabel;
     lbContaCriarCEP: TLabel;
+    lbContaCriarProcuracao: TLabel;
+    lbGeolocalizacaoLatitude: TLabel;
+    lbGeolocalizacaoLongitude: TLabel;
+    lbGeolocalizacaoIP: TLabel;
     lbContaCriarCidade: TLabel;
     lbContaCriarComplemento: TLabel;
     lbContaCriarFundacao: TLabel;
@@ -314,10 +333,12 @@ type
     lbContaCriarRepresentanteCPF: TLabel;
     lbContaCriarRepresentanteEmail: TLabel;
     lbContaCriarRepresentanteFoto: TLabel;
+    lbContaCriarContratoSocial: TLabel;
     lbContaCriarRepresentanteLogradouro: TLabel;
     lbContaCriarRepresentanteMae: TLabel;
     lbContaCriarRepresentanteNumero: TLabel;
     lbContaCriarRepresentanteRGFrente: TLabel;
+    lbContaCriarDocumentoCNH: TLabel;
     lbContaCriarRepresentanteRGVerso: TLabel;
     lbContaCriarRepresentanteUF: TLabel;
     lbContaCriarUF: TLabel;
@@ -328,6 +349,7 @@ type
     lbChavePIXConsultar: TLabel;
     lbMediatoravaliable: TLabel;
     lbMediatoravaliableStr: TLabel;
+    lbIP2LocationAPIKey: TLabel;
     lbQRCodeADname: TLabel;
     lbQRCodeADcontent: TLabel;
     lbQRCodeCallBack: TLabel;
@@ -420,8 +442,16 @@ type
     mmLogGerencial: TMemo;
     mmLogOperacoes: TMemo;
     OpenDialog1: TOpenDialog;
+    pnGeolocalizacaoResult: TPanel;
+    pnIP2Location: TPanel;
+    pnCriarContaTipoRG: TPanel;
+    pcContaCriarDados: TPageControl;
     pnContaCriarCorporate: TPanel;
+    pnContaCriarCorporate1: TPanel;
+    pnCriarContaTipoCNH: TPanel;
     pnFluxoValor: TPanel;
+    pnImagem: TPanel;
+    pnRodapeImagem: TPanel;
     pnTEDRetirada: TPanel;
     pnPIXRetirada: TPanel;
     pnConsultaAliasRetirada: TPanel;
@@ -435,8 +465,6 @@ type
     pgConsultas: TPageControl;
     pnMediatorExtrato: TPanel;
     pnConsultasExtratoEC: TPanel;
-    pnRodapeImagem: TPanel;
-    pnImagem: TPanel;
     pnDevolucaoBotoes: TPanel;
     pnMotivosDevolucao: TPanel;
     pnFluxoCopiaECola: TPanel;
@@ -499,11 +527,14 @@ type
     pnPSP: TPanel;
     pnPSPMatera: TPanel;
     pnRetiradaBotoes: TPanel;
+    rgContaCriarTipoDocumento: TRadioGroup;
     seCobrancaExpiracao: TSpinEdit;
     sgMediatorExtrato: TStringGrid;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     sgAccExtrato: TStringGrid;
+    tsContaCriarDadosAdicionais: TTabSheet;
+    tsContaCriarDocumentos: TTabSheet;
     tsConsultaTxID: TTabSheet;
     tsConsultaSaldoEC: TTabSheet;
     tsConsultaMediator: TTabSheet;
@@ -523,8 +554,12 @@ type
     tsMatera: TTabSheet;
     tsPIX: TTabSheet;
     tsTestes: TTabSheet;
-    ImageList1: TImageList;
     procedure btAcharArqCertificadoClick(Sender: TObject);
+    procedure btContaCriarAbrirDocumentoCNHClick(Sender: TObject);
+    procedure btContaCriarContratoSocialClick(Sender: TObject);
+    procedure btContaCriarProcuracaoClick(Sender: TObject);
+    procedure btContaCriarVerDocumentoCNHClick(Sender: TObject);
+    procedure btGeolocalizacaoPesquisarClick(Sender: TObject);
     procedure btVerClientIDClick(Sender: TObject);
     procedure btVerClientSecretClick(Sender: TObject);
     procedure btVerSecretKeyClick(Sender: TObject);
@@ -546,7 +581,7 @@ type
     procedure btContaCriarLimparDadosClick(Sender: TObject);
     procedure btContaCriarPreencherDadosClick(Sender: TObject);
     procedure btContaCriarRepresentanteFotoClick(Sender: TObject);
-    procedure btContaCriarRepresentanteMostrarFotoFrenteClick(Sender: TObject);
+    procedure btContaCriarRepresentanteMostrarFotoClick(Sender: TObject);
     procedure btContaCriarRepresentanteMostrarRGFotoFrenteClick(Sender: TObject);
     procedure btContaCriarRepresentanteMostrarRGFotoVersoClick(Sender: TObject);
     procedure btContaCriarRepresentanteRGFotoFrenteClick(Sender: TObject);
@@ -599,6 +634,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btContaCriarExternalIDClick(Sender: TObject);
     procedure pgPrincipalChange(Sender: TObject);
+    procedure rgContaCriarTipoDocumentoClick(Sender: TObject);
     procedure tmConsultarEstornoTimer(Sender: TObject);
     procedure tmConsultarPagtoTimer(Sender: TObject);
     procedure tsDevolucoesShow(Sender: TObject);
@@ -667,7 +703,8 @@ uses
   {$IfDef FPC}
    fpjson, jsonparser, jsonscanner, Jsons,
   {$EndIf}
-  synacode, synautil, TypInfo, pcnConversao, ACBrPIXUtil, ACBrValidador,
+  synacode, synautil, TypInfo, pcnConversao,
+  ACBrPIXUtil, ACBrValidador, ACBrJSON,
   ACBrUtil.Compatibilidade,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
@@ -801,6 +838,12 @@ procedure TfrPixCDMatera.pgPrincipalChange(Sender: TObject);
 begin
   pnLogs.Visible:=not (pgPrincipal.ActivePage = tsConfig);
   Splitter1.Visible:=pnLogs.Visible;
+end;
+
+procedure TfrPixCDMatera.rgContaCriarTipoDocumentoClick(Sender: TObject);
+begin
+  pnCriarContaTipoCNH.Visible := (rgContaCriarTipoDocumento.ItemIndex = 0);
+  pnCriarContaTipoRG.Visible := (rgContaCriarTipoDocumento.ItemIndex = 1);
 end;
 
 procedure TfrPixCDMatera.tmConsultarEstornoTimer(Sender: TObject);
@@ -965,6 +1008,75 @@ begin
   if OpenDialog1.Execute then
     edArqCertificado.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarCertificado;
+end;
+
+procedure TfrPixCDMatera.btContaCriarAbrirDocumentoCNHClick(Sender: TObject);
+begin
+  edContaCriarDocumentoCNH.Text := SelecionarFoto(edContaCriarDocumentoCNH.Text);
+end;
+
+procedure TfrPixCDMatera.btContaCriarContratoSocialClick(Sender: TObject);
+begin
+  edContaCriarContratoSocial.Text := SelecionarFoto(edContaCriarContratoSocial.Text);
+end;
+
+procedure TfrPixCDMatera.btContaCriarProcuracaoClick(Sender: TObject);
+begin
+  edContaCriarProcuracao.Text := SelecionarFoto(edContaCriarProcuracao.Text);
+end;
+
+procedure TfrPixCDMatera.btContaCriarVerDocumentoCNHClick(Sender: TObject);
+begin
+  MostraImagem(edContaCriarDocumentoCNH.Text);
+end;
+
+procedure TfrPixCDMatera.btGeolocalizacaoPesquisarClick(Sender: TObject);
+var
+  lat, lon: Double;
+  wHttp: TACBrHTTP;
+  wJson: TACBrJSONObject;
+begin
+  lat := 0;
+  lon := 0;
+  wHttp := TACBrHTTP.Create(Nil);
+  try
+    wHttp.ArqLOG := edLogArquivo.Text;
+    wHttp.NivelLog := cbLogNivel.ItemIndex;
+    wHttp.ContentsEncodingCompress := [ecDeflate];
+    if NaoEstaVazio(edProxyHost.Text) then
+    begin
+      wHttp.ProxyHost := edProxyHost.Text;
+      wHttp.ProxyPass := edProxySenha.Text;
+      wHttp.ProxyUser := edProxyUsuario.Text;
+      wHttp.ProxyPort := IntToStr(edProxyPorta.Value);
+    end;
+
+    wHttp.URLQueryParams.Add('key=' + edIP2LocationAPIKey.Text);
+    if NaoEstaVazio(edGeolocalizacaoIP.Text) then
+      wHttp.URLQueryParams.Add('ip=' + edGeolocalizacaoIP.Text);
+
+    wHttp.HTTPGet(cURL_IP2Location);
+    mmLogOperacoes.Lines.Add(' Comando IP2Location: ');
+    mmLogOperacoes.Lines.Add(' Resposta: ' + wHttp.HTTPResponse);
+    if (wHttp.HTTPResultCode = HTTP_OK) then
+    begin
+      wJson := TACBrJSONObject.Parse(wHttp.HTTPResponse);
+      try
+        wJson
+          .Value('latitude', lat)
+          .Value('longitude', lon);
+        edGeolocalizacaoLatitude.Text := FloatToStr(lat);
+        edGeolocalizacaoLongitude.Text := FloatToStr(lon);
+        pnGeolocalizacaoResult.Visible := True;
+      finally
+        wJson.Free;
+      end;
+    end;
+
+    mmLogGerencial.Lines.Add(wHttp.HTTPResponse);
+  finally
+    wHttp.Free;
+  end;
 end;
 
 procedure TfrPixCDMatera.btVerClientIDClick(Sender: TObject);
@@ -1497,6 +1609,7 @@ begin
       wFs.Position := 0;
       wFile := ReadStrFromStream(wFs, wFs.Size);
       wBase64 := EncodeBase64(wFile);
+      //WriteToTXT('_foto64.txt', 'Foto:'+wBase64);
     finally
       wFs.Free;
     end;
@@ -1505,12 +1618,12 @@ begin
     LDocument.content := wBase64;
   end;
 
-  // Preenchendo foto do RG(Frente) do representante
-  if NaoEstaVazio(edContaCriarRepresentanteRGFotoFrente.Text) then
+  // Preenchendo o Contrato Social
+  if NaoEstaVazio(edContaCriarContratoSocial.Text) then
   begin
     LDocument := LClientRepresentative.documents.New;
     // Lê conteúdo do arquivo e converte para Base64
-    wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoFrente.Text, fmOpenRead or fmShareDenyWrite);
+    wFs := TFileStream.Create(edContaCriarContratoSocial.Text, fmOpenRead or fmShareDenyWrite);
     try
       wFs.Position := 0;
       wFile := ReadStrFromStream(wFs, wFs.Size);
@@ -1519,26 +1632,86 @@ begin
       wFs.Free;
     end;
 
-    LDocument.type_ := mdtIdentityFront;
+    LDocument.type_ := mdtUnknown;
+    LDocument.content := wBase64;
+  end; 
+
+  // Preenchendo a Procuração
+  // A necessidade ou não de envio varia de acordo com o modelo de operação. Verificar com a Flagship!
+  if NaoEstaVazio(edContaCriarProcuracao.Text) then
+  begin
+    LDocument := LClientRepresentative.documents.New;
+    // Lê conteúdo do arquivo e converte para Base64
+    wFs := TFileStream.Create(edContaCriarProcuracao.Text, fmOpenRead or fmShareDenyWrite);
+    try
+      wFs.Position := 0;
+      wFile := ReadStrFromStream(wFs, wFs.Size);
+      wBase64 := EncodeBase64(wFile);
+    finally
+      wFs.Free;
+    end;
+
+    LDocument.type_ := mdtUnknown;
     LDocument.content := wBase64;
   end;
 
-  // Preenchendo os documentos do representante
-  if NaoEstaVazio(edContaCriarRepresentanteRGFotoVerso.Text) then
+  if (rgContaCriarTipoDocumento.ItemIndex = 0) then
   begin
-    LDocument := LClientRepresentative.documents.New;
-    // Lê conteúdo do arquivo e converte para Base64
-    wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoVerso.Text, fmOpenRead or fmShareDenyWrite);
-    try
-      wFs.Position := 0;
-      wFile := ReadStrFromStream(wFs, wFs.Size);
-      wBase64 := EncodeBase64(wFile);
-    finally
-      wFs.Free;
+    // Preenchendo foto do CNH do representante
+    if NaoEstaVazio(edContaCriarDocumentoCNH.Text) then
+    begin
+      LDocument := LClientRepresentative.documents.New;
+      // Lê conteúdo do arquivo e converte para Base64
+      wFs := TFileStream.Create(edContaCriarDocumentoCNH.Text, fmOpenRead or fmShareDenyWrite);
+      try
+        wFs.Position := 0;
+        wFile := ReadStrFromStream(wFs, wFs.Size);
+        wBase64 := EncodeBase64(wFile);
+      finally
+        wFs.Free;
+      end;
+
+      LDocument.type_ := mdtCNH;
+      LDocument.content := wBase64;
+    end;
+  end
+  else
+  begin
+    // Preenchendo foto do RG(Frente) do representante
+    if NaoEstaVazio(edContaCriarRepresentanteRGFotoFrente.Text) then
+    begin
+      LDocument := LClientRepresentative.documents.New;
+      // Lê conteúdo do arquivo e converte para Base64
+      wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoFrente.Text, fmOpenRead or fmShareDenyWrite);
+      try
+        wFs.Position := 0;
+        wFile := ReadStrFromStream(wFs, wFs.Size);
+        wBase64 := EncodeBase64(wFile);
+      finally
+        wFs.Free;
+      end;
+
+      LDocument.type_ := mdtIdentityFront;
+      LDocument.content := wBase64;
     end;
 
-    LDocument.type_ := mdtIdentityBack;
-    LDocument.content := wBase64;
+    // Preenchendo foto do RG(Verso) do representante
+    if NaoEstaVazio(edContaCriarRepresentanteRGFotoVerso.Text) then
+    begin
+      LDocument := LClientRepresentative.documents.New;
+      // Lê conteúdo do arquivo e converte para Base64
+      wFs := TFileStream.Create(edContaCriarRepresentanteRGFotoVerso.Text, fmOpenRead or fmShareDenyWrite);
+      try
+        wFs.Position := 0;
+        wFile := ReadStrFromStream(wFs, wFs.Size);
+        wBase64 := EncodeBase64(wFile);
+      finally
+        wFs.Free;
+      end;
+
+      LDocument.type_ := mdtIdentityBack;
+      LDocument.content := wBase64;
+    end;
   end;
 
   try
@@ -1644,8 +1817,7 @@ begin
   edContaCriarRepresentanteFoto.Text := SelecionarFoto(edContaCriarRepresentanteFoto.Text);
 end;
 
-procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarFotoFrenteClick(
-  Sender: TObject);
+procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarFotoClick(Sender: TObject);
 begin
   MostraImagem(edContaCriarRepresentanteFoto.Text);
 end;
@@ -1657,26 +1829,22 @@ begin
   pnImagem.Visible := True;
 end;
 
-procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarRGFotoFrenteClick(
-  Sender: TObject);
+procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarRGFotoFrenteClick(Sender: TObject);
 begin
   MostraImagem(edContaCriarRepresentanteRGFotoFrente.Text);
 end;
 
-procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarRGFotoVersoClick(
-  Sender: TObject);
+procedure TfrPixCDMatera.btContaCriarRepresentanteMostrarRGFotoVersoClick(Sender: TObject);
 begin
   MostraImagem(edContaCriarRepresentanteRGFotoVerso.Text);
 end;
 
-procedure TfrPixCDMatera.btContaCriarRepresentanteRGFotoFrenteClick(
-  Sender: TObject);
+procedure TfrPixCDMatera.btContaCriarRepresentanteRGFotoFrenteClick(Sender: TObject);
 begin
   edContaCriarRepresentanteRGFotoFrente.Text := SelecionarFoto(edContaCriarRepresentanteRGFotoFrente.Text);
 end;
 
-procedure TfrPixCDMatera.btContaCriarRepresentanteRGFotoVersoClick(
-  Sender: TObject);
+procedure TfrPixCDMatera.btContaCriarRepresentanteRGFotoVersoClick(Sender: TObject);
 begin
   edContaCriarRepresentanteRGFotoVerso.Text := SelecionarFoto(edContaCriarRepresentanteRGFotoVerso.Text);
 end;
@@ -2425,6 +2593,7 @@ begin
     edTimeout.Value := wIni.ReadInteger('PIX', 'TimeOut', ChttpTimeOutDef);
 
     seCobrancaExpiracao.Value := wIni.ReadInteger('Cobranca', 'Expiracao', seCobrancaExpiracao.Value);
+    edIP2LocationAPIKey.Text := wIni.ReadString('IP2Location', 'APIKey', EmptyStr);
 
     edProxyHost.Text := wIni.ReadString('Proxy', 'Host', '');
     edProxyPorta.Text := wIni.ReadString('Proxy', 'Porta', '');
@@ -2526,6 +2695,7 @@ begin
     wIni.WriteInteger('PIX', 'TimeOut', edTimeout.Value);
 
     wIni.WriteInteger('Cobranca', 'Expiracao', seCobrancaExpiracao.Value);
+    wIni.WriteString('IP2Location', 'APIKey', Trim(edIP2LocationAPIKey.Text));
 
     wIni.WriteString('Proxy', 'Host', edProxyHost.Text);
     wIni.WriteString('Proxy', 'Porta', edProxyPorta.Text);
@@ -2955,7 +3125,11 @@ begin
   ImageList1.GetBitmap(9, btContaCriarRepresentanteFoto.Glyph);
   ImageList1.GetBitmap(9, btContaCriarRepresentanteRGFotoFrente.Glyph);
   ImageList1.GetBitmap(9, btContaCriarRepresentanteRGFotoVerso.Glyph);
-  ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarFotoFrente.Glyph);
+  ImageList1.GetBitmap(9, btContaCriarAbrirDocumentoCNH.Glyph);
+  ImageList1.GetBitmap(9, btContaCriarProcuracao.Glyph);
+  ImageList1.GetBitmap(9, btContaCriarContratoSocial.Glyph);
+  ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarFoto.Glyph);
+  ImageList1.GetBitmap(7, btContaCriarVerDocumentoCNH.Glyph);
   ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarRGFotoFrente.Glyph);
   ImageList1.GetBitmap(7, btContaCriarRepresentanteMostrarRGFotoVerso.Glyph);
   
@@ -2972,7 +3146,6 @@ begin
   ACBrPixCD1.PSP := ACBrPSPMatera1;
   lbErroCertificado.Caption := EmptyStr;
   lbErroChavePrivada.Caption := EmptyStr;
-  pnContaCriarCorporate.Parent := gbDadosAdicionais;
 
   cbAmbiente.Items.Clear;
   for i := Low(TACBrPixCDAmbiente) to High(TACBrPixCDAmbiente) do

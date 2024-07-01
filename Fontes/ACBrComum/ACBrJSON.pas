@@ -1042,19 +1042,17 @@ begin
   {$EndIf}{$EndIf}
 end;
 
-class function TACBrJSONValueAs.AsISODateTime(AJSonValue: TACBrJSONValue
-  ): TDateTime;
+class function TACBrJSONValueAs.AsISODateTime(AJSonValue: TACBrJSONValue): TDateTime;
 var
   LStrValue: string;
 begin
   Result := 0;
   LStrValue := AsString(AJSonValue);
   if (LStrValue <> '') then
-    Result := EncodeDataHora(LStrValue, 'DD-MM-YYYY');
+    Result := Iso8601ToDateTime(LStrValue);
 end;
 
-class function TACBrJSONValueAs.AsISODate(AJSonValue: TACBrJSONValue
-  ): TDateTime;
+class function TACBrJSONValueAs.AsISODate(AJSonValue: TACBrJSONValue): TDateTime;
 var
   LStrValue: string;
 begin
@@ -1064,10 +1062,14 @@ begin
     Result := EncodeDataHora(LStrValue, 'yyyy-MM-dd');
 end;
 
-class function TACBrJSONValueAs.AsDateTimeBr(AJSonValue: TACBrJSONValue
-  ): TDateTime;
+class function TACBrJSONValueAs.AsDateTimeBr(AJSonValue: TACBrJSONValue): TDateTime;
+var
+  LStrValue: string;
 begin
-  Result := AsISODateTime(AJSonValue);
+  Result := 0;
+  LStrValue := AsString(AJSonValue);
+  if (LStrValue <> '') then
+    Result := EncodeDataHora(LStrValue, 'DD-MM-YYYY');
 end;
 
 class function TACBrJSONValueAs.AsISOTime(AJSonValue: TACBrJSONValue

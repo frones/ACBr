@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = edtDirDestino
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -13,16 +13,18 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  PixelsPerInch = 96
   TextHeight = 13
   object wizPrincipal: TJvWizard
     Left = 0
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgConfiguracao
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -85,9 +87,9 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
       object Label20: TLabel
-        Left = 25
-        Top = 350
-        Width = 489
+        Left = 6
+        Top = 351
+        Width = 531
         Height = 32
         Caption = 
           'Quer suporte profissional do ACBr, cursos e outras vantagens e d' +
@@ -101,8 +103,8 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object Label6: TLabel
-        Left = 25
-        Top = 70
+        Left = 6
+        Top = 44
         Width = 492
         Height = 80
         Caption = 
@@ -118,8 +120,8 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object lblUrlACBrSac1: TLabel
-        Left = 334
-        Top = 366
+        Left = 267
+        Top = 369
         Width = 171
         Height = 14
         Cursor = crHandPoint
@@ -133,8 +135,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object lblUrlForum1: TLabel
-        Left = 297
-        Top = 282
+        Left = 278
+        Top = 258
         Width = 219
         Height = 14
         Cursor = crHandPoint
@@ -148,8 +150,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object lblUrlACBr1: TLabel
-        Left = 322
-        Top = 200
+        Left = 303
+        Top = 176
         Width = 182
         Height = 14
         Cursor = crHandPoint
@@ -163,8 +165,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object Label19: TLabel
-        Left = 25
-        Top = 200
+        Left = 6
+        Top = 176
         Width = 291
         Height = 14
         Caption = 'Para maiores informa'#231#245'es sobre o projeto ACBr visite:'
@@ -176,8 +178,8 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label21: TLabel
-        Left = 25
-        Top = 282
+        Left = 6
+        Top = 258
         Width = 266
         Height = 14
         Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
@@ -189,8 +191,8 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label7: TLabel
-        Left = 18
-        Top = 440
+        Left = 6
+        Top = 315
         Width = 533
         Height = 18
         Alignment = taCenter
@@ -200,6 +202,23 @@ object frmPrincipal: TfrmPrincipal
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 757469
         Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        WordWrap = True
+      end
+      object lblNotaDelphiAntigo: TLabel
+        Left = 6
+        Top = 443
+        Width = 545
+        Height = 30
+        AutoSize = False
+        Caption = 
+          'NOTA: Se voc'#234' utiliza uma vers'#227'o pr'#233' Delphi 2009, por favor atua' +
+          'lize seu Delphi ou mude para Lazarus. '
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
@@ -312,23 +331,6 @@ object frmPrincipal: TfrmPrincipal
         ParentShowHint = False
         ShowHint = True
         OnClick = btnSelecDirInstallClick
-      end
-      object Label22: TLabel
-        Left = 6
-        Top = 459
-        Width = 545
-        Height = 30
-        AutoSize = False
-        Caption = 
-          'NOTA: Se voc'#234' utiliza uma vers'#227'o pr'#233' Delphi 2009, por favor atua' +
-          'lize seu Delphi ou mude para Lazarus. '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        WordWrap = True
       end
       object edtDirDestino: TEdit
         Left = 6
@@ -608,357 +610,357 @@ object frmPrincipal: TfrmPrincipal
         inherited ScrollBox1: TScrollBox
           Width = 548
           Height = 452
-          VertScrollBar.Position = 925
+          VertScrollBar.Position = 0
           inherited Label1: TLabel
-            Top = -907
+            Top = 18
           end
           inherited Label2: TLabel
-            Top = -835
+            Top = 90
           end
           inherited Label3: TLabel
-            Top = -818
+            Top = 107
           end
           inherited Label4: TLabel
-            Top = -465
+            Top = 460
           end
           inherited Label8: TLabel
-            Top = -531
+            Top = 394
           end
           inherited Label9: TLabel
-            Top = 112
+            Top = 1037
           end
           inherited Label5: TLabel
-            Top = 127
+            Top = 1052
           end
           inherited Label6: TLabel
-            Top = 148
+            Top = 1073
           end
           inherited Label7: TLabel
-            Top = 164
+            Top = 1089
           end
           inherited Label10: TLabel
-            Top = 198
+            Top = 1123
           end
           inherited Label11: TLabel
-            Top = 215
+            Top = 1140
           end
           inherited Label12: TLabel
-            Top = 247
+            Top = 1172
           end
           inherited Label13: TLabel
-            Top = 303
+            Top = 1228
           end
           inherited Label14: TLabel
-            Top = 353
+            Top = 1278
           end
           inherited Label15: TLabel
-            Top = 320
+            Top = 1245
           end
           inherited Label16: TLabel
-            Top = 370
+            Top = 1295
           end
           inherited Label17: TLabel
-            Top = 387
+            Top = 1312
           end
           inherited Label18: TLabel
-            Top = 421
+            Top = 1346
           end
           inherited Label19: TLabel
-            Top = 404
+            Top = 1329
           end
           inherited Label20: TLabel
-            Top = 269
+            Top = 1194
           end
           inherited Label21: TLabel
-            Top = -699
+            Top = 226
           end
           inherited Label22: TLabel
-            Top = -750
+            Top = 175
           end
           inherited Label23: TLabel
-            Top = -515
+            Top = 410
           end
           inherited Label24: TLabel
-            Top = -716
+            Top = 209
           end
           inherited Label25: TLabel
-            Top = -648
+            Top = 277
           end
           inherited Label26: TLabel
-            Top = -579
+            Top = 346
           end
           inherited Label27: TLabel
-            Top = 286
+            Top = 1211
           end
           inherited Label28: TLabel
-            Top = 232
+            Top = 1157
           end
           inherited lbl1: TLabel
-            Top = -397
+            Top = 528
           end
           inherited lbl2: TLabel
-            Top = -381
+            Top = 544
           end
           inherited lbl3: TLabel
-            Top = 182
+            Top = 1107
           end
           inherited Label29: TLabel
-            Top = 337
+            Top = 1262
           end
           inherited lblacb: TLabel
-            Top = 9
+            Top = 934
           end
           inherited lblSubTituloFPDF: TLabel
-            Top = 32
+            Top = 957
           end
           inherited lblFPDF_BoletoDPK: TLabel
-            Top = 46
+            Top = 971
           end
           inherited Label30: TLabel
-            Top = -481
+            Top = 444
           end
           inherited Label31: TLabel
-            Top = 62
+            Top = 987
           end
           inherited Label32: TLabel
-            Top = 78
+            Top = 1003
           end
           inherited lblNFCom: TLabel
-            Top = -365
+            Top = 560
           end
           inherited Label33: TLabel
-            Top = 95
+            Top = 1020
           end
           inherited ACBr_synapse_dpk: TCheckBox
-            Top = -925
+            Top = 0
           end
           inherited ACBr_Comum_dpk: TCheckBox
-            Top = -908
+            Top = 17
           end
           inherited ACBr_Diversos_dpk: TCheckBox
-            Top = -873
+            Top = 52
           end
           inherited ACBr_Serial_dpk: TCheckBox
-            Top = -839
+            Top = 86
           end
           inherited ACBr_TCP_dpk: TCheckBox
-            Top = -600
+            Top = 325
           end
           inherited ACBr_BPe_dpk: TCheckBox
-            Top = -180
+            Top = 745
           end
           inherited ACBr_TEFD_dpk: TCheckBox
-            Top = -43
+            Top = 882
           end
           inherited ACBr_Boleto_dpk: TCheckBox
-            Top = -515
+            Top = 410
           end
           inherited ACBr_Sintegra_dpk: TCheckBox
-            Top = -720
+            Top = 205
           end
           inherited ACBr_SPED_dpk: TCheckBox
-            Top = -703
+            Top = 222
           end
           inherited ACBr_PAF_dpk: TCheckBox
-            Top = -754
+            Top = 171
           end
           inherited ACBr_OpenSSL_dpk: TCheckBox
-            Top = -891
+            Top = 34
           end
           inherited ACBr_PCNComum_dpk: TCheckBox
-            Top = -856
+            Top = 69
           end
           inherited ACBr_NFe_dpk: TCheckBox
-            Top = -466
+            Top = 459
           end
           inherited ACBr_CTe_dpk: TCheckBox
-            Top = -415
+            Top = 510
           end
           inherited ACBr_NFSe_dpk: TCheckBox
-            Top = -398
+            Top = 527
           end
           inherited ACBr_MDFe_dpk: TCheckBox
-            Top = -349
+            Top = 576
           end
           inherited ACBr_GNRE_dpk: TCheckBox
-            Top = -332
+            Top = 593
           end
           inherited ACBr_Convenio115_dpk: TCheckBox
-            Top = -805
+            Top = 120
           end
           inherited ACBr_SEF2_dpk: TCheckBox
-            Top = -737
+            Top = 188
           end
           inherited ACBr_SAT_dpk: TCheckBox
-            Top = -281
+            Top = 644
           end
           inherited ACBr_NFeDanfeESCPOS_dpk: TCheckBox
-            Top = -432
+            Top = 493
           end
           inherited ACBr_SATExtratoESCPOS_dpk: TCheckBox
-            Top = -247
+            Top = 678
           end
           inherited ACBr_LFD_dpk: TCheckBox
-            Top = -788
+            Top = 137
           end
           inherited ACBr_SPEDImportar_dpk: TCheckBox
-            Top = -686
+            Top = 239
           end
           inherited ACBr_DFeComum_dpk: TCheckBox
-            Top = -532
+            Top = 393
           end
           inherited ACBr_NFCeECFVirtual_dpk: TCheckBox
-            Top = -449
+            Top = 476
           end
           inherited ACBr_SATECFVirtual_dpk: TCheckBox
-            Top = -264
+            Top = 661
           end
           inherited ACBr_TXTComum_dpk: TCheckBox
-            Top = -822
+            Top = 103
           end
           inherited ACBr_NFeDanfeFR_dpk: TCheckBox
-            Top = 126
+            Top = 1051
           end
           inherited ACBr_CTeDacteFR_dpk: TCheckBox
-            Top = 143
+            Top = 1068
           end
           inherited ACBr_NFSeDanfseFR_dpk: TCheckBox
-            Top = 160
+            Top = 1085
           end
           inherited ACBr_BoletoFR_dpk: TCheckBox
-            Top = 194
+            Top = 1119
           end
           inherited ACBr_MDFeDamdfeFR_dpk: TCheckBox
-            Top = 211
+            Top = 1136
           end
           inherited ACBr_GNREGuiaFR_dpk: TCheckBox
-            Top = 246
+            Top = 1171
           end
           inherited ACBr_NFeDanfeRL_dpk: TCheckBox
-            Top = 299
+            Top = 1224
           end
           inherited ACBr_CTeDacteRL_dpk: TCheckBox
-            Top = 350
+            Top = 1275
           end
           inherited ACBr_NFSeDanfseRL_dpk: TCheckBox
-            Top = 316
+            Top = 1241
           end
           inherited ACBr_BoletoRL_dpk: TCheckBox
-            Top = 367
+            Top = 1292
           end
           inherited ACBr_MDFeDamdfeRL_dpk: TCheckBox
-            Top = 384
+            Top = 1309
           end
           inherited ACBr_SATExtratoRL_dpk: TCheckBox
-            Top = 401
+            Top = 1326
           end
           inherited ACBr_GNREGuiaRL_dpk: TCheckBox
-            Top = 418
+            Top = 1343
           end
           inherited ACBr_BlocoX_dpk: TCheckBox
-            Top = -213
+            Top = 712
           end
           inherited ACBr_DeSTDA_dpk: TCheckBox
-            Top = -669
+            Top = 256
           end
           inherited ACBr_Ponto_dpk: TCheckBox
-            Top = -652
+            Top = 273
           end
           inherited ACBr_MTER_dpk: TCheckBox
-            Top = -583
+            Top = 342
           end
           inherited ACBr_SATWS_dpk: TCheckBox
-            Top = -230
+            Top = 695
           end
           inherited ACBr_ANe_dpk: TCheckBox
-            Top = -147
+            Top = 778
           end
           inherited ACBr_Integrador_dpk: TCheckBox
-            Top = -549
+            Top = 376
           end
           inherited ACBre_Social_dpk: TCheckBox
-            Top = -315
+            Top = 610
           end
           inherited ACBr_Reinf_dpk: TCheckBox
-            Top = -298
+            Top = 627
           end
           inherited ACBr_BPeDabpeESCPOS_dpk: TCheckBox
-            Top = -164
+            Top = 761
           end
           inherited ACBr_DFeReportRL_dpk: TCheckBox
-            Top = 282
+            Top = 1207
           end
           inherited ACBr_CIOT_dpk: TCheckBox
-            Top = -130
+            Top = 795
           end
           inherited ACBr_LCDPR_dpk: TCheckBox
-            Top = -633
+            Top = 292
           end
           inherited ACBr_ONE_dpk: TCheckBox
-            Top = -113
+            Top = 812
           end
           inherited ACBr_EDI_dpk: TCheckBox
-            Top = -771
+            Top = 154
           end
           inherited ACBr_NF3e_dpk: TCheckBox
-            Top = -96
+            Top = 829
           end
           inherited ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
-            Top = -80
+            Top = 845
           end
           inherited ACBr_ADRCST_dpk: TCheckBox
-            Top = -616
+            Top = 309
           end
           inherited ACBr_SATExtratoFR_dpk: TCheckBox
-            Top = 228
+            Top = 1153
           end
           inherited ACBr_PagFor_dpk: TCheckBox
-            Top = -498
+            Top = 427
           end
           inherited ACBr_NFSeX_dpk: TCheckBox
-            Top = -382
+            Top = 543
           end
           inherited ACBr_NFSeXDanfseRL_dpk: TCheckBox
-            Top = 333
+            Top = 1258
           end
           inherited ACBr_NFSeXDanfseFR_dpk: TCheckBox
-            Top = 177
+            Top = 1102
           end
           inherited ACBr_OFX_dpk: TCheckBox
-            Top = -26
+            Top = 899
           end
           inherited ACBr_GTIN_dpk: TCheckBox
-            Top = -62
+            Top = 863
           end
           inherited ACBr_OpenDelivery_dpk: TCheckBox
-            Top = -9
+            Top = 916
           end
           inherited ACBr_PAFNFCe_dpk: TCheckBox
-            Top = -197
+            Top = 728
           end
           inherited ACBr_PIXCD_dpk: TCheckBox
-            Top = -566
+            Top = 359
           end
           inherited ACBr_Android_dpk: TCheckBox
-            Top = 8
+            Top = 933
           end
           inherited ACBr_BoletoFPDF_dpk: TCheckBox
-            Top = 45
+            Top = 970
           end
           inherited ACBr_DebitoAutomatico_dpk: TCheckBox
-            Top = -483
+            Top = 442
           end
           inherited ACBr_NFeDanfeFPDF_dpk: TCheckBox
-            Top = 61
+            Top = 986
           end
           inherited ACBr_NFSeXDanfseFPDF_dpk: TCheckBox
-            Top = 78
+            Top = 1003
           end
           inherited ACBr_NFCom_dpk: TCheckBox
-            Top = -366
+            Top = 559
           end
           inherited ACBr_SATExtratoFPDF_dpk: TCheckBox
-            Top = 95
+            Top = 1020
           end
         end
       end
@@ -1079,15 +1081,32 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
+      object lblSombra: TLabel
+        Left = 20
+        Top = 306
+        Width = 486
+        Height = 46
+        Alignment = taCenter
+        Caption = 
+          'Este instalador '#233' mantido gra'#231'as aos usu'#225'rios que assinam o ACBr' +
+          ' PRO.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -19
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        WordWrap = True
+      end
       object Label3: TLabel
         Left = 6
-        Top = 188
-        Width = 547
-        Height = 25
-        Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito'
+        Top = 153
+        Width = 545
+        Height = 24
+        Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 183620
-        Font.Height = -21
+        Font.Height = -20
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
@@ -1095,7 +1114,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label1: TLabel
         Left = 19
-        Top = 263
+        Top = 215
         Width = 291
         Height = 14
         Caption = 'Para maiores informa'#231#245'es sobre o projeto ACBr visite:'
@@ -1108,7 +1127,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label4: TLabel
         Left = 316
-        Top = 263
+        Top = 215
         Width = 182
         Height = 14
         Cursor = crHandPoint
@@ -1123,7 +1142,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label5: TLabel
         Left = 19
-        Top = 313
+        Top = 265
         Width = 266
         Height = 14
         Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
@@ -1136,7 +1155,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label11: TLabel
         Left = 291
-        Top = 313
+        Top = 265
         Width = 219
         Height = 14
         Cursor = crHandPoint
@@ -1149,40 +1168,9 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         OnClick = URLClick
       end
-      object Label12: TLabel
-        Left = 20
-        Top = 357
-        Width = 531
-        Height = 32
-        Caption = 
-          'Quer suporte profissional do ACBr, cursos e outras vantagens e d' +
-          'e quebra ajudar o projeto? Conhe'#231'a o "ACBr Pro" visite:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        WordWrap = True
-      end
-      object Label13: TLabel
-        Left = 291
-        Top = 375
-        Width = 200
-        Height = 14
-        Cursor = crHandPoint
-        Caption = 'http://www.projetoacbr.com.br/pro'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -12
-        Font.Name = 'Tahoma'
-        Font.Style = [fsUnderline]
-        ParentFont = False
-        OnClick = URLClick
-      end
       object Label14: TLabel
-        Left = 15
-        Top = 424
+        Left = 21
+        Top = 305
         Width = 486
         Height = 46
         Alignment = taCenter
@@ -1199,7 +1187,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object imgOK: TImage
         Left = 216
-        Top = 66
+        Top = 42
         Width = 105
         Height = 105
         Center = True
@@ -1438,6 +1426,37 @@ object frmPrincipal: TfrmPrincipal
           AA32064092650C8024CB180049963100922C63002459C60048B28C0190641903
           20C932064092E53F01894014330D4E40A30000000049454E44AE426082}
       end
+      object Label12: TLabel
+        Left = 6
+        Top = 381
+        Width = 518
+        Height = 38
+        Caption = 
+          'Quer suporte profissional do ACBr, cursos e outras vantagens e d' +
+          'e quebra ajudar o projeto? Conhe'#231'a o "ACBr Pro" visite:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        WordWrap = True
+      end
+      object Label13: TLabel
+        Left = 141
+        Top = 431
+        Width = 253
+        Height = 19
+        Cursor = crHandPoint
+        Caption = 'http://www.projetoacbr.com.br/pro'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = [fsUnderline]
+        ParentFont = False
+        OnClick = URLClick
+      end
     end
     object wizMapa: TJvWizardRouteMapNodes
       Left = 0
@@ -1469,11 +1488,11 @@ object frmPrincipal: TfrmPrincipal
       ParentBackground = False
       TabOrder = 2
       object Label9: TLabel
-        Left = 14
-        Top = 19
-        Width = 312
-        Height = 19
-        Caption = 'Assistente de instala'#231#227'o do Projeto ACBr'
+        Left = 13
+        Top = 14
+        Width = 331
+        Height = 38
+        Caption = 'Assistente de instala'#231#227'o dos componentes do Projeto ACBr'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
@@ -1483,15 +1502,17 @@ object frmPrincipal: TfrmPrincipal
         ParentColor = False
         ParentFont = False
         Transparent = True
+        WordWrap = True
       end
       object imgGifPropagandaACBrSAC: TJvGIFAnimator
-        Left = 386
-        Top = 14
-        Width = 319
-        Height = 40
+        Left = 360
+        Top = 8
+        Width = 357
+        Height = 57
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
@@ -2612,8 +2633,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = imgPropaganda1Click
       end
       object Label10: TLabel
-        Left = 14
-        Top = 41
+        Left = 149
+        Top = 35
         Width = 157
         Height = 13
         Cursor = crHandPoint

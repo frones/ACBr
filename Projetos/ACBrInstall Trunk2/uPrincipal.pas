@@ -81,7 +81,6 @@ type
     pnlInfoCompilador: TPanel;
     wizPgPacotes: TJvWizardInteriorPage;
     lbInfo: TListBox;
-    Label22: TLabel;
     framePacotes1: TframePacotes;
     wizPgSelectIDEs: TJvWizardInteriorPage;
     grpCompilacao: TGroupBox;
@@ -104,8 +103,6 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label11: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
     Label14: TLabel;
     scrlbxDelphiVersion: TScrollBox;
     chkSobrescreverDLLs: TCheckBox;
@@ -115,6 +112,10 @@ type
     imgLogomarca: TImage;
     pnlLogo: TPanel;
     imgOK: TImage;
+    lblNotaDelphiAntigo: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    lblSombra: TLabel;
     procedure btnDesmarcarTodasClick(Sender: TObject);
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);

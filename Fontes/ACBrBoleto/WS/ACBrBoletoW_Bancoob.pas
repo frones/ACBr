@@ -518,7 +518,7 @@ begin
 
   LJsonSacadorAvalista := TACBrJSONObject.Create;
   LJsonSacadorAvalista.AddPair('nome',aTitulo.Sacado.SacadoAvalista.NomeAvalista);
-  LJsonSacadorAvalista.AddPair('cpfCnpj',OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF));
+  LJsonSacadorAvalista.AddPair('numeroCpfCnpj',OnlyNumber(aTitulo.Sacado.SacadoAvalista.CNPJCPF));
   AJson.AddPair('beneficiarioFinal', LJsonSacadorAvalista);
 end;
 

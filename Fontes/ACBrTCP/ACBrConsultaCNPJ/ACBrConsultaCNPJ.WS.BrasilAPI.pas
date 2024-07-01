@@ -96,7 +96,7 @@ begin
           FResposta.CNAE2.Add(IntToStr(LJsonArray.ItemAsJSONObject[Z].AsInteger['codigo']) + ' ' + LJsonArray.ItemAsJSONObject[Z].AsString['descricao']);
 
         FResposta.EmpresaTipo          := LJsonObject.AsString['descricao_matriz_filial'];
-        FResposta.Endereco             := LJsonObject.AsString['logradouro'];
+        FResposta.Endereco             := Trim(LJsonObject.AsString['descricao_tipo_de_logradouro'] + ' ' + LJsonObject.AsString['logradouro']);
         FResposta.Numero               := LJsonObject.AsString['numero'];
         FResposta.Complemento          := LJsonObject.AsString['complemento'];
         FResposta.CEP                  := IntToStr( LJsonObject.AsInteger['cep']);

@@ -262,7 +262,7 @@ namespace ACBrLibeSocial.Demo
         {
             try
             {
-                var protocolo = 123456789;
+                var protocolo = "123456789";
                 if (InputBox.Show("Consultar eSocial", "Consultar", ref protocolo) != DialogResult.OK) return;
 
                 var ret = ACBreSocial.ConsultareSocial(protocolo.ToString());

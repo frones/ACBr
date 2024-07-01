@@ -1197,7 +1197,7 @@ begin
   if ACEP = '' then
      raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
 
-  fOwner.HTTPGet( fpURL + LCEP + '/xml' ) ;
+  fOwner.HTTPGet( fpURL + LCEP + '/json' ) ;
   ProcessaResposta();
 end;
 
@@ -1218,7 +1218,7 @@ begin
   LUF         := LowerCase(TiraAcentos(AUF));
   LMunicipio  := LowerCase(TiraAcentos(AMunicipio));
   LLogradouro := LowerCase(TiraAcentos(ALogradouro));
-  LURL := EncodeURL(fpURL + LUF + '/' + LMunicipio + '/' + LLogradouro + '/xml');
+  LURL := EncodeURL(fpURL + LUF + '/' + LMunicipio + '/' + LLogradouro + '/json');
 
   fOwner.HTTPGet(LURL);
   ProcessaResposta;
@@ -1226,42 +1226,34 @@ end;
 
 procedure TACBrWSViaCEP.ProcessaResposta;
 var
-  LBuffer: string;
-  LSL: TStringList;
   LACBrCEPEnderecos : TACBrCEPEndereco;
   s: string;
   i: Integer;
+  LJson : TACBrJSONArray;
+  LAux : string;
 begin
-  LSL := TStringList.Create;
+  LAux := ParseText(fOwner.HTTPResponse);
+  if Copy(LAux,1,1) <> '[' then
+    LAux := '[' + LAux + ']';
+
+  LJson := TACBrJSONArray.Parse(UTF8ToNativeString(LAux));
+
   try
-    LBuffer := UTF8ToNativeString(ParseText(fOwner.HTTPResponse, True, fOwner.RespIsUTF8));
-    LBuffer := StringReplace(LBuffer, sLineBreak, '', [rfReplaceAll]);
-    LBuffer := StringReplace(LBuffer, '<enderecos>', '', [rfReplaceAll]);
-    LBuffer := StringReplace(LBuffer, '</enderecos>', '', [rfReplaceAll]);
-    LBuffer := StringReplace(LBuffer, '</endereco>', '</endereco>' + sLineBreak, [rfReplaceAll]);
-
-    LSL.Text := LBuffer;
-
-    for i := 0 to Pred( LSL.Count ) do
+    for I := 0 to LJson.Count -1 do
     begin
-      s := LSL.Strings[i];
+      LACBrCEPEnderecos := fOwner.Enderecos.New;
 
-      if SeparaDados(s, 'cep') <> '' then
-      begin
-        LACBrCEPEnderecos := fOwner.Enderecos.New;
-
-        LACBrCEPEnderecos.CEP             := SeparaDados(s, 'cep');
-        LACBrCEPEnderecos.Tipo_Logradouro := '';
-        LACBrCEPEnderecos.Logradouro      := SeparaDados(s, 'logradouro');
-        LACBrCEPEnderecos.Complemento     := SeparaDados(s, 'complemento');
-        LACBrCEPEnderecos.Bairro          := SeparaDados(s, 'bairro');
-        LACBrCEPEnderecos.Municipio       := SeparaDados(s, 'localidade');
-        LACBrCEPEnderecos.UF              := SeparaDados(s, 'uf');
-        LACBrCEPEnderecos.IBGE_Municipio  := SeparaDados(s, 'ibge');
-      end;
+      LACBrCEPEnderecos.CEP             := LJson.ItemAsJSONObject[I].AsString['cep'];
+      LACBrCEPEnderecos.Tipo_Logradouro := '';
+      LACBrCEPEnderecos.Logradouro      := LJson.ItemAsJSONObject[I].AsString['logradouro'];
+      LACBrCEPEnderecos.Complemento     := LJson.ItemAsJSONObject[I].AsString['complemento'];
+      LACBrCEPEnderecos.Bairro          := LJson.ItemAsJSONObject[I].AsString['bairro'];
+      LACBrCEPEnderecos.Municipio       := LJson.ItemAsJSONObject[I].AsString['localidade'];
+      LACBrCEPEnderecos.UF              := LJson.ItemAsJSONObject[I].AsString['uf'];
+      LACBrCEPEnderecos.IBGE_Municipio  := LJson.ItemAsJSONObject[I].AsString['ibge'];
     end;
   finally
-    LSL.Free;
+    LJson.Free;
     BuscaEfetuada;
   end;
 end;

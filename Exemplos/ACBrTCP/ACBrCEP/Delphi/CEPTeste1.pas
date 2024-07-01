@@ -213,7 +213,7 @@ begin
 
   Memo1.Lines.Add('');
   Memo1.Lines.Add('Resposta HTTP:');
-  Memo1.Lines.AddStrings( ACBrCEP1.RespHTTP );
+  Memo1.Lines.AddStrings( ACBrCEP1.HTTPResponse );
 end;
 
 //******************************************************************************
@@ -253,7 +253,7 @@ begin
 
   Memo1.Lines.Add('');
   Memo1.Lines.Add('Resposta HTTP:');
-  Memo1.Lines.AddStrings( ACBrIBGE1.RespHTTP );
+  Memo1.Lines.AddStrings( ACBrIBGE1.HTTPResponse );
 end;
 
 //******************************************************************************

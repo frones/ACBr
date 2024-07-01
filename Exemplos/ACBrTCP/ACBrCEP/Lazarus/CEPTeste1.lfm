@@ -406,8 +406,9 @@ object Form1: TForm1
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
     TimeOut = 5000
+    ContentsEncodingCompress = []
+    NivelLog = 0
     OnAntesAbrirHTTP = ACBrCEP1AntesAbrirHTTP
-    WebService = wsRepublicaVirtual
     PesquisarIBGE = True
     OnBuscaEfetuada = ACBrCEP1BuscaEfetuada
     left = 248
@@ -416,6 +417,8 @@ object Form1: TForm1
   object ACBrIBGE1: TACBrIBGE
     ProxyPort = '8080'
     TimeOut = 10000
+    ContentsEncodingCompress = []
+    NivelLog = 0
     OnAntesAbrirHTTP = ACBrIBGE1AntesAbrirHTTP
     CacheArquivo = 'ACBrIBGE.txt'
     CacheDiasValidade = 1

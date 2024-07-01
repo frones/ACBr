@@ -37,6 +37,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/06/2024
+-- ACBrSocket --
+[*] Refatoração da classe TACBrHTTP;
+[+] Inclusão das propriedades URLQueryParams e URLPathParams para facilitar a utilização de 
+    parâmetros de Path e Query;
+[+] Inclusão da propriedade ContentsEncodingCompress para possibilitar a inclusão dos tipos de 
+    compactação aceitos.
+	
+-- ACBrPicPay, ACBrCEP, ACBrConsultaCPF, ACBrCotacao, ACBrFeriado, ACBrFrenet, ACBrIBGE --
+-- ACBrIBPTax, ACBrNCMs, ACBrNFPw, ACBrSedex, ACBrSPEDTabelas, ACBrSuframa, ACBrTaxaDolar --
+[*] Compatibilização com as alterações da classe ACBrHTTP.
+    por: Elias César
+
+27/06/2024
 -- ACBrIBGE --
 [*] Refatoração, para utilizar ACBrJson
 [-] Correção em "TACBrIBGE.ObterEstatisticasCidadesUF" para encontrar a Cidade

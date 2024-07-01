@@ -30,6 +30,9 @@ var
 
 implementation
 
+uses
+  ACBrUtil.Base;
+
 {$R *.lfm}
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
@@ -43,12 +46,12 @@ procedure TfrmPrincipal.btnConsultarClick(Sender: TObject);
 
   procedure AddXMLResposta;
   begin
-    if ACBrSuframa1.RespHTTP.Text <> '' then
+    if NaoEstaVazio(ACBrSuframa1.HTTPResponse) then
     begin
       memResposta.Lines.Add('');
       memResposta.Lines.Add('XML Resposta:');
       memResposta.Lines.Add(StringOfChar('-', 30));
-      memResposta.Lines.Add(ACBrSuframa1.RespHTTP.Text);
+      memResposta.Lines.Add(ACBrSuframa1.HTTPResponse);
     end;
   end;
 

@@ -69,7 +69,6 @@ object frmPrincipal: TfrmPrincipal
   end
   object ACBrSuframa1: TACBrSuframa
     ProxyPort = '8080'
-    ParseText = True
     Left = 148
     Top = 69
   end

@@ -345,7 +345,6 @@ object Form1: TForm1
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
-    ParseText = True
     OnAntesAbrirHTTP = ACBrCEP1AntesAbrirHTTP
     WebService = wsBuscarCep
     PesquisarIBGE = True

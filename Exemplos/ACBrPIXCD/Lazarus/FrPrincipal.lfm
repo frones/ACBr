@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 282
+  Left = 332
   Height = 652
-  Top = 142
+  Top = 135
   Width = 1008
   Caption = 'ACBrPIXCD Teste'
   ClientHeight = 652
@@ -87,7 +87,7 @@ object Form1: TForm1
     0000
   }
   OnCreate = FormCreate
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '2.2.4.0'
   object pgPrincipal: TPageControl
     Left = 0
     Height = 621
@@ -7368,6 +7368,202 @@ object Form1: TForm1
                 end
               end
             end
+            object tsC6Bank: TTabSheet
+              Caption = 'C6 Bank'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnC6Bank: TPanel
+                Left = 48
+                Height = 322
+                Top = 72
+                Width = 880
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                ClientHeight = 322
+                ClientWidth = 880
+                TabOrder = 0
+                object lbC6BankTipoChave: TLabel
+                  Left = 681
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbC6BankClientSecret: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 132
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object lbC6BankClientID: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbC6BankChave: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object imC6BankErroChavePix: TImage
+                  Left = 844
+                  Height = 17
+                  Top = 43
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object edC6BankClientSecret: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 148
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 3
+                end
+                object edC6BankClientID: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 90
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edC6BankChavePIX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 638
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edC6BankChavePIXChange
+                  TabOrder = 0
+                end
+                object cbC6BankTipoChave: TComboBox
+                  Left = 681
+                  Height = 23
+                  Top = 40
+                  Width = 157
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+                object edC6BankChavePrivada: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 197
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edC6BankArqsChange
+                  OnExit = edC6BankChavePrivadaExit
+                  TabOrder = 4
+                  Text = 'C6BankChavePrivada.key'
+                end
+                object lbC6BankChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 181
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object lbC6BankErroChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 222
+                  Width = 143
+                  Caption = 'lbC6BankErroChavePrivada'
+                  ParentColor = False
+                end
+                object imC6BankErroChavePrivada: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 200
+                  Width = 16
+                  Visible = False
+                end
+                object btC6BankAcharChavePrivada: TSpeedButton
+                  Left = 844
+                  Height = 23
+                  Top = 197
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btC6BankAcharChavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btC6BankAcharCertificado: TSpeedButton
+                  Left = 844
+                  Height = 23
+                  Top = 267
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = btC6BankAcharCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edC6BankCertificado: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 267
+                  Width = 816
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnExit = edC6BankCertificadoExit
+                  TabOrder = 5
+                  Text = 'C6BankCertificado.pem'
+                end
+                object imC6BankErroCertificado: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 271
+                  Width = 16
+                  Visible = False
+                end
+                object lbC6BankErroCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 294
+                  Width = 129
+                  Caption = 'lbC6BankErroCertificado'
+                  ParentColor = False
+                end
+                object lbC6BankCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 251
+                  Width = 103
+                  Caption = 'Arquivo Certificado'
+                  ParentColor = False
+                end
+              end
+            end
           end
         end
       end
@@ -7617,6 +7813,8 @@ object Form1: TForm1
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     WebService = wsCorreios
     PesquisarIBGE = True
     Left = 160
@@ -7715,6 +7913,11 @@ object Form1: TForm1
   object ACBrPSPBanrisul1: TACBrPSPBanrisul
     Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
     Left = 632
+    Top = 416
+  end
+  object ACBrPSPC6Bank1: TACBrPSPC6Bank
+    Scopes = [scCobWrite, scCobRead, scPixWrite, scPixRead]
+    Left = 664
     Top = 416
   end
 end

@@ -47,8 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2024
+-- ACBrPSPC6Bank -- 
+[+] Inclusão do novo PSP C6Bank (EM DESENVOLVIMENTO)
+    por Elias César
+
 14/06/2024
---- ACBrSchemasMatera --
+-- ACBrSchemasMatera --
 [*] Incluído novo status da conta: REJECTED
     por: Elias César
 

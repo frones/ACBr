@@ -22,7 +22,8 @@ uses
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, 
   ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
-  ACBrShipaySchemas, ACBrSchemasMatera, ACBrSchemasGate2All, LazarusPackageIntf;
+  ACBrShipaySchemas, ACBrSchemasMatera, ACBrSchemasGate2All, ACBrPIXPSPC6Bank, 
+  LazarusPackageIntf;
 
 implementation
 

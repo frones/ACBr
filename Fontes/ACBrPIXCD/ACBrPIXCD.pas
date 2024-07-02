@@ -1918,6 +1918,13 @@ var
       RegistrarLog('  Req.Body:'+ sLineBreak + vHttpBody);
     end;
 
+    if (NivelLog > 3) then
+      RegistrarLog(sLineBreak +
+        'Http.Sock.SSL.CertificateFile: ' + Http.Sock.SSL.CertificateFile + sLineBreak +
+        'Http.Sock.SSL.PrivateKeyFile: ' + Http.Sock.SSL.PrivateKeyFile + sLineBreak +
+        'Http.Sock.SSL.Certificate: ' + Http.Sock.SSL.Certificate + sLineBreak +
+        'Http.Sock.SSL.PrivateKey: ' + Http.Sock.SSL.PrivateKey + sLineBreak);
+
     fHttpRespStream.Clear;
     Result := fHttpSend.HTTPMethod(vMethod, vURL);  // HTTP call
     ResultCode := fHttpSend.ResultCode;

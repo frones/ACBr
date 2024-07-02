@@ -37,7 +37,9 @@
   Documentação
   https://developers.c6bank.com.br/pix-api
 
-*)
+*) 
+
+{$I ACBr.inc}
 
 unit ACBrPIXPSPC6Bank;
 
@@ -49,8 +51,8 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cC6URLSandbox      = 'htpps://baas-api-sandbox.c6bank.info';
-  cC6URLProducao     = 'htpps://baas-api.c6bank.info';
+  cC6URLSandbox      = 'https://baas-api-sandbox.c6bank.info';
+  cC6URLProducao     = 'https://baas-api.c6bank.info';
   cC6PathAuthToken   = '/v1/auth';
   cC6PathAPIPix      = '/v2/pix';
   cC6URLAuthTeste    = cC6URLSandbox + cC6PathAuthToken;
@@ -64,9 +66,12 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrPSPC6Bank = class(TACBrPSPCertificate)
+  private
+    procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
   public
+    constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
   published
     property ClientID;
@@ -80,12 +85,27 @@ uses
 
 { TACBrPSPC6Bank }
 
+procedure TACBrPSPC6Bank.QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
+begin
+  if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) and (aResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
+
+  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCob) and (aResultCode = HTTP_OK) then
+    AResultCode := HTTP_CREATED;
+end;
+
 function TACBrPSPC6Bank.ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String;
 begin
   if (aAmbiente = ambProducao) then
     Result := cC6URLProducao + cC6PathAPIPix
   else
     Result := cC6URLSandbox + cC6PathAPIPix;
+end;
+
+constructor TACBrPSPC6Bank.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
 end;
 
 procedure TACBrPSPC6Bank.Autenticar;
@@ -95,57 +115,8 @@ var
   wResultCode, sec: Integer;
   js: TACBrJSONObject;
   qp: TACBrQueryParams;
-  //h: TACBrHTTP;
-  //q: TACBrHTTPQueryParams;
 begin
   raise Exception.Create('EM DESENVOLVIMENTO');
-  {h := TACBrHTTP.Create(Nil);
-  try
-    h.ArqLOG := '_log.txt';
-    h.NivelLog := 4;
-
-    h.HTTPSend.Sock.SSL.CertificateFile := 'cert_C6Bank.crt';
-    h.HTTPSend.Sock.SSL.PrivateKeyFile := 'cert_C6Bank.key';
-    h.HTTPSend.UserName := '924728b8-be7b-4307-a75c-73abc2f5a3ef';
-    h.HTTPSend.Password := 'KqHSWjKbHHGeFICmfHtMfuSxTrKETRmi';
-
-    q := TACBrHTTPQueryParams.Create;
-    try
-      q.Values['grant_type'] := 'client_credentials';
-      //q.Values['scope'] := ScopesToString(Scopes);
-      Body := q.AsURL;
-      WriteStrToStream(h.HTTPSend.Document, Body);
-      h.HTTPSend.MimeType := cContentTypeApplicationWwwFormUrlEncoded;
-    finally
-      q.Free;
-    end;
-
-    h.HTTPPost('https://baas-api-sandbox.c6bank.info/v1/auth');
-
-    wResultCode := h.HTTPResultCode;
-    wRespostaHttp := h.HTTPResponse;
-    if (wResultCode = HTTP_OK) then
-    begin
-      js := TACBrJSONObject.Parse(wRespostaHttp);
-      try
-        fpToken := js.AsString['access_token'];
-        sec := js.AsInteger['expires_in'];
-      finally
-        js.Free;
-      end;
-
-      if (Trim(fpToken) = EmptyStr) then
-        DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
-
-      fpValidadeToken := IncSecond(Now, sec);
-      fpAutenticado := True;
-    end
-    else
-      DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp, [Http.ResultCode, ChttpMethodPOST, wURL]));
-  finally
-    h.Free;
-  end;}
-
   LimparHTTP;
 
   if (ACBrPixCD.Ambiente = ambProducao) then

@@ -792,10 +792,8 @@ begin
       if NFCePagto.tPag = fpOutro then
         NFCePagto.xPag := fpFormasPagamentos[Pagto.PosFPG].Descricao;
 
-      if (NFCePagto.tPag in [fpCartaoCredito, fpCartaoDebito]) then
-      begin
+      if (NFCePagto.tPag in [fpCartaoCredito, fpCartaoDebito, fpPagamentoInstantaneo]) then
         NFCePagto.tpIntegra := tiPagNaoIntegrado;
-      end;
 
       if Assigned(fsQuandoEfetuarPagamento) then
         fsQuandoEfetuarPagamento(NFCePagto);

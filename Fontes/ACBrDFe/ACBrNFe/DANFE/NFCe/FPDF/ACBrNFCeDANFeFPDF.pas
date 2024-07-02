@@ -2266,7 +2266,7 @@ begin
   LFormatSettings.DecimalSeparator  := ',';
   LFormatSettings.ThousandSeparator := '.';
   FNFeUtils.FormatSettings := LFormatSettings;
-
+  SetUTF8(false);
   FFontFamily := 'Arial';
   FDashWidth := 1;
   FVia := 'Via Consumidor';

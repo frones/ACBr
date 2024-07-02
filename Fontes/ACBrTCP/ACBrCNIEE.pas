@@ -215,33 +215,35 @@ end;
 
 
 function TACBrCNIEE.DownloadTabela: Boolean;
-Var
-  URLVersao, ArquivoVersao : String ;
+var
+  URLVersao, ArquivoVersao: String;
 begin
   if Trim(FURLDownload) = '' then
-    raise EACBrCNIEE.Create( ACBrStr('URL de Download não informada.') );
+    raise EACBrCNIEE.Create( ACBrStr('URL de Download não informada.'));
 
   if Trim(FArquivo) = '' then
-    raise EACBrCNIEE.Create( ACBrStr('Nome do arquivo em disco não especificado.') );
+    raise EACBrCNIEE.Create( ACBrStr('Nome do arquivo em disco não especificado.'));
 
   try
-     HTTPGet( FURLDownload );
-     HTTPSend.Document.Seek(0, soBeginning);
-     HTTPSend.Document.SaveToFile( FArquivo );
-     Result := True;
+    HTTPGet(FURLDownload);
+    HTTPSend.OutputStream.Position := 0;
+    if (HTTPSend.OutputStream is TMemoryStream) then
+      TMemoryStream(HTTPSend.OutputStream).SaveToFile(FArquivo);
+    Result := True;
 
-     // Baixando o arquivo de Versao //
-     try
-        URLVersao     := StringReplace( FURLDownload, 'Tabela_CNIEE.bin', 'versao.txt', [] ) ;
-        ArquivoVersao := ExtractFilePath( FArquivo ) + 'versao.txt';
-        HTTPGet( URLVersao );
-        HTTPSend.Document.Seek(0, soBeginning);
-        HTTPSend.Document.SaveToFile( ArquivoVersao );
-     except
-     end ;
+    // Baixando o arquivo de Versao //
+    try
+      URLVersao := StringReplace( FURLDownload, 'Tabela_CNIEE.bin', 'versao.txt', []);
+      ArquivoVersao := ExtractFilePath(FArquivo) + 'versao.txt';
+      HTTPGet(URLVersao);
+      HTTPSend.OutputStream.Position := 0;
+      if (HTTPSend.OutputStream is TMemoryStream) then
+        TMemoryStream(HTTPSend.OutputStream).SaveToFile(ArquivoVersao);
+    except
+    end;
   except
-     Result := False ;
-  end ;
+    Result := False;
+  end;
 end;
 
 function TACBrCNIEE.AbrirTabela: Boolean;

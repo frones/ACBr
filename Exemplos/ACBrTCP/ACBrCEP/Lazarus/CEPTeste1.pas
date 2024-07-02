@@ -183,7 +183,7 @@ begin
 
   Memo1.Lines.Add('');
   Memo1.Lines.Add('Resposta HTTP:');
-  Memo1.Lines.AddStrings( ACBrCEP1.HTTPResponse );
+  Memo1.Lines.Add( ACBrCEP1.HTTPResponse );
 end;
 
 procedure TForm1.ACBrIBGE1AntesAbrirHTTP(var AURL : String) ;
@@ -221,7 +221,7 @@ begin
 
   Memo1.Lines.Add('');
   Memo1.Lines.Add('Resposta HTTP:');
-  Memo1.Lines.AddStrings( ACBrIBGE1.HTTPResponse );
+  Memo1.Lines.Add( ACBrIBGE1.HTTPResponse );
 end;
 
 procedure TForm1.bBuscarCEP1Click(Sender : TObject) ;

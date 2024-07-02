@@ -1166,6 +1166,13 @@ begin
       end;
     end;
 
+    if (NivelLog > 3) then
+      RegistrarLog(sLineBreak +
+        'Http.Sock.SSL.Certificate: ' + HTTPSend.Sock.SSL.Certificate + sLineBreak +
+        'Http.Sock.SSL.PrivateKey: ' + HTTPSend.Sock.SSL.PrivateKey + sLineBreak +
+        'Http.Sock.SSL.CertificateFile: ' + HTTPSend.Sock.SSL.CertificateFile + sLineBreak +
+        'Http.Sock.SSL.PrivateKeyFile: ' + HTTPSend.Sock.SSL.PrivateKeyFile + sLineBreak);
+
     HeadersOld := HTTPSend.Headers.Text;
     HTTPSend.HTTPMethod(Method, fURL);
 

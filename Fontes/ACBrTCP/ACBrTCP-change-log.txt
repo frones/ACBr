@@ -36,6 +36,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2024
+-- ACBrCNIEE, ACBrIBGE, ACBrNCMs --
+[-] Correção na leitura da resposta das requisições após refatoração do ACBrHTTP.
+
+-- ACBrSocket --
+[*] Inclusão de log para verificar se o Certificado/ChavePrivada estão atribuídos.
+    por: Elias César
+
 27/06/2024
 -- ACBrSocket --
 [*] Refatoração da classe TACBrHTTP;

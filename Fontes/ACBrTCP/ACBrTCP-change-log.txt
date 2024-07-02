@@ -37,6 +37,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/07/2024
+-- ACBrSocket --
+[+] Inclusão de possibilidade de enviar "Accept-Encoding" no header da requisição;
+[-] Correção para receber corretamente respostas compactadas (ACBrHTTP).
+    por: Elias César
+
+02/07/2024
 -- ACBrCNIEE, ACBrIBGE, ACBrNCMs --
 [-] Correção na leitura da resposta das requisições após refatoração do ACBrHTTP.
 

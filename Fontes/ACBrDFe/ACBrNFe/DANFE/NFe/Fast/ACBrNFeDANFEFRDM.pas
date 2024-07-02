@@ -2111,9 +2111,9 @@ begin
   begin
     if Assigned(DANFEClassOwner.ACBrNFe) then
     begin
-      if DANFEClassOwner.FIndexImpressaoIndividual >= 0  then
+      if DANFEClassOwner.FIndexImpressaoIndividual > 0  then
       begin
-        NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais[DANFEClassOwner.FIndexImpressaoIndividual].NFe;
+        NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais[DANFEClassOwner.FIndexImpressaoIndividual-1].NFe;
         CarregaDadosNFe;
         Result := frxReport.PrepareReport( DANFEClassOwner.FIndexImpressaoIndividual > 0 );
       end else
@@ -2415,7 +2415,7 @@ var
   NomeArq: String;
   I : Integer;
 begin
-  for I := 0 to TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Count -1 do
+  for I := 1 to TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Count do
   begin
     DANFEClassOwner.FIndexImpressaoIndividual := I;
     if PrepareReport(ANFE) then

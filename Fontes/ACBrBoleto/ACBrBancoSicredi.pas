@@ -1036,6 +1036,7 @@ begin
         end;
         toRetornoLiquidado,
         toRetornoBaixado,
+        toRetornoBaixadoViaArquivo,
         toRetornoLiquidadoAposBaixaouNaoRegistro:
         begin
           case StrToIntDef(CodMotivo,0) of
@@ -1053,7 +1054,8 @@ begin
           else
             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
           end;
-          if (TipoOcorrencia = toRetornoBaixado) then begin
+          if (TipoOcorrencia in [toRetornoBaixado,toRetornoBaixadoViaArquivo])then
+          begin
             case StrToIntDef(CodMotivo,0) of
               09: Result := '09 - Comandada banco';
               10: Result := '10 - Comandada cliente arquivo';

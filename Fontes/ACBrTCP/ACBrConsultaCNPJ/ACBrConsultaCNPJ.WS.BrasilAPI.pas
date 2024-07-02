@@ -99,7 +99,7 @@ begin
         FResposta.Endereco             := Trim(LJsonObject.AsString['descricao_tipo_de_logradouro'] + ' ' + LJsonObject.AsString['logradouro']);
         FResposta.Numero               := LJsonObject.AsString['numero'];
         FResposta.Complemento          := LJsonObject.AsString['complemento'];
-        FResposta.CEP                  := IntToStr( LJsonObject.AsInteger['cep']);
+        FResposta.CEP                  := FormatFloat('00000000', LJsonObject.AsInteger['cep']);
         FResposta.Bairro               := LJsonObject.AsString['bairro'];
         FResposta.Cidade               := LJsonObject.AsString['municipio'];
         FResposta.CodigoIBGE           := IntToStr(LJsonObject.AsInteger['codigo_municipio_ibge']);

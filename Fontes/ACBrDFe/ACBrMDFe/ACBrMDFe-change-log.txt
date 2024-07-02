@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/07/2024
+-- ACBrMDFeWebServices --
+[*] Alteração visando atender o envio no modo síncrono.
+    A partir de 01/07/2024 o modo de envio passa a ser exclusivamente síncrono.
+  Por: Italo Giurizzato Junior
+
 07/06/2024
 -- ACBrMDFeWebServices --
 [*] Incluido a leitura da tag dhRecbto do retorno do envio síncrono.

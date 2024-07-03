@@ -200,7 +200,7 @@ end;
 function TinutNFe.LerXMLFromString(const AXML: string): Boolean;
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, AuxNode2: TACBrXmlNode;
   ok: Boolean;
   RetornoInutNFe: TRetInutNFe;
 begin
@@ -218,26 +218,35 @@ begin
         begin
           XML := AXML;
 
-          // versao é um atributo da tag inutNFe
-          versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+          if ANode.LocalName = 'ProcInutNFe' then
+          begin
+            versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 
-          AuxNode := ANode.Childrens.FindAnyNs('infInut');
+            AuxNode := ANode.Childrens.FindAnyNs('inutNFe');
+          end
+          else
+            AuxNode := ANode;
 
           if AuxNode <> nil then
           begin
-            FIDInutilizacao := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
-            tpAmb := StrToTpAmb(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
-            cUF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
-            ano := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ano'), tcInt);
-            CNPJ := ObterConteudoTagCNPJCPF(AuxNode);
-            modelo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('mod'), tcInt);
-            serie := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('serie'), tcInt);
-            nNFIni := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFIni'), tcInt);
-            nNFFin := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFFin'), tcInt);
-            xJust := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xJust'), tcStr);
-          end;
+            AuxNode2 := AuxNode.Childrens.FindAnyNs('infInut');
 
-          LerSignature(ANode.Childrens.Find('Signature'), signature);
+            if AuxNode2 <> nil then
+            begin
+              FIDInutilizacao := ObterConteudoTag(AuxNode2.Attributes.Items['Id']);
+              tpAmb := StrToTpAmb(ok, ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('tpAmb'), tcStr));
+              cUF := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('cUF'), tcInt);
+              ano := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('ano'), tcInt);
+              CNPJ := ObterConteudoTagCNPJCPF(AuxNode2);
+              modelo := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('mod'), tcInt);
+              serie := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('serie'), tcInt);
+              nNFIni := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('nNFIni'), tcInt);
+              nNFFin := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('nNFFin'), tcInt);
+              xJust := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('xJust'), tcStr);
+            end;
+
+            LerSignature(AuxNode.Childrens.Find('Signature'), signature);
+          end;
         end;
 
         // Lendo dados do retorno, se houver

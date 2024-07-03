@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/07/2024
+-- ACBrNFe.Inut/ACBrNFe.RetInut --
+[*] Alteração visando a leitura correta do XML de retorno de Inutilização.
+   Por: Italo Giurizzato Junior
+
 27/06/2024
 -- ACBrNFe.RetEnvEvento --
 [*] Alteração visando a leitura correta do XML de retorno de eventos.

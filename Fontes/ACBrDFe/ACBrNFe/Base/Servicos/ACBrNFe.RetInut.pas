@@ -126,12 +126,14 @@ begin
 
       if ANode <> nil then
       begin
-        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-
         AuxNode := ANode.Childrens.FindAnyNs('retInutNFe');
 
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+
         if AuxNode = nil then
-          AuxNode := ANode.Childrens.FindAnyNs('infInut');
+          AuxNode := ANode.Childrens.FindAnyNs('infInut')
+        else
+          AuxNode := AuxNode.Childrens.FindAnyNs('infInut');
 
         if AuxNode <> nil then
         begin

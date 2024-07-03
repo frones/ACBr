@@ -335,7 +335,10 @@ end;
 function TACBrNFSeXWebserviceFiorilli200.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Result := ConverteANSIparaUTF8(aXml);
+  Result := RemoverDeclaracaoXML(Result);
+
+  Result := inherited TratarXmlRetornado(Result);
 
   Result := StringReplace(Result, '&#xd;', '\s\n', [rfReplaceAll]);
   Result := StringReplace(Result, ''#$A'', '\s\n', [rfReplaceAll]);

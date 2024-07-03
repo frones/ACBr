@@ -42,6 +42,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2024
+-- Fiorilli.Provider --
+[*] Ajustes para converter o XML de retorno em UTF-8 se necessário.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Incluído o Params NaoAssinar para a cidade de Aracoiaba da Serra/SP.
+   Por: Italo Giurizzato Junior
+[*] A cidade de Corupá/SC, trocou de provedor, agora é IPM.
+   Por: C4Dev
+[*] Alteração de versão da cidade de Picada Café/RS, o provedor continua o mesmo.
+   Por: DNA Automação
+[*] Alteração de versão da cidade de Palmas/PR, o provedor continua o mesmo.
+   Por: Alex Heinen
+
 02/07/2024
 -- ACBrNFSeXServicos --
 [*] Removido as portas das URLs da cidade de Cruzeiro/SP, o provedor continua o mesmo.

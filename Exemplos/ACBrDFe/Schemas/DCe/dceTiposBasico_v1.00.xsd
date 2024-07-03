@@ -72,9 +72,11 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 									<xs:element name="tpEmit">
 										<xs:annotation>
 											<xs:documentation>Tipo do Emitente da DCe</xs:documentation>
-											<xs:documentation>0 - App Fisco
+											<xs:documentation>
+0 - App Fisco
 1 - Marketplace
 2 - Emissor próprio
+3 - Transportadora
 </xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
@@ -82,7 +84,7 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 												<xs:whiteSpace value="preserve" />
 												<xs:minLength value="1" />
 												<xs:maxLength value="1" />
-												<xs:pattern value="[0-2]{1}" />
+												<xs:pattern value="[0-3]{1}" />
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>

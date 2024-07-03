@@ -159,6 +159,8 @@ namespace ACBrLib.NFe
         /// </summary>
         public decimal? vICMSDeson { get; set; }
 
+        public int? indDeduzDeson { get; set; }
+
         /// <summary>
         /// Alíquota aplicável de cálculo do crédito (Simples Nacional).
         /// </summary>
@@ -303,6 +305,8 @@ namespace ACBrLib.NFe
         /// </summary>
         ///
         public decimal? vFCPEfet { get; set; }
+
+        
         #endregion Properties
     }
 }

@@ -279,6 +279,9 @@ begin
             dhRecbto := RetornoInutNFe.dhRecbto;
             nProt    := RetornoInutNFe.nProt;
           end;
+
+          if FRetInutNFe.xJust = '' then
+            FRetInutNFe.xJust := xJust;
         end;
 
         Result := True;

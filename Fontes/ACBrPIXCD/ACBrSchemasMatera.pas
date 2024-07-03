@@ -46,7 +46,7 @@ unit ACBrSchemasMatera;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, IniFiles,
   ACBrPIXBase, ACBrJSON, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 type  
@@ -320,6 +320,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -354,6 +355,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -395,6 +397,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -421,6 +424,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String = ''); override;
     procedure Clear; override;
@@ -439,6 +443,7 @@ type
     procedure SetItem(aIndex: Integer; aValue: TMateraDocument);
   protected
     function NewSchema: TACBrPIXSchema; override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
   public
     function Add(aItem: TMateraDocument): Integer;
     procedure Insert(aIndex: Integer; AItem: TMateraDocument);
@@ -461,6 +466,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String); virtual;
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -506,6 +512,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String); override;
   public
     constructor Create(const aObjectName: String = ''); override;
     procedure Clear; override;
@@ -523,6 +530,7 @@ type
     procedure SetItem(aIndex: Integer; aValue: TMateraClientRepresentative);
   protected
     function NewSchema: TACBrPIXSchema; override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
   public
     function Add(aItem: TMateraClientRepresentative): Integer;
     procedure Insert(aIndex: Integer; aItem: TMateraClientRepresentative);
@@ -542,6 +550,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -566,6 +575,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -590,6 +600,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -628,6 +639,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String); virtual;
 
     property birthCity: String read fbirthCity write fbirthCity;
     property birthCountry: String read fbirthCountry write fbirthCountry;
@@ -694,6 +706,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -732,6 +745,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String); virtual;
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -766,12 +780,15 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String); override;
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraCreateAccountTransactionRequest);
+
+    function LoadFromIni(aIniStr: String): Boolean;
 
     property checkingAccountBranch: Integer read fcheckingAccountBranch write fcheckingAccountBranch;
     property checkingAccountNumber: Integer read fcheckingAccountNumber write fcheckingAccountNumber;
@@ -1121,6 +1138,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -1143,6 +1161,7 @@ type
     procedure SetItem(aIndex: Integer; aValue: TMateraRecipient);
   protected
     function NewSchema: TACBrPIXSchema; override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
   public
     Function Add(aItem: TMateraRecipient): Integer;
     Procedure Insert(aIndex: Integer; aItem: TMateraRecipient);
@@ -1161,6 +1180,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -1185,6 +1205,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -1204,6 +1225,7 @@ type
     procedure SetItem(aIndex: Integer; aValue: TMateraAdditionalInformation);
   protected
     function NewSchema: TACBrPIXSchema; override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
   public
     Function Add(aItem: TMateraAdditionalInformation): Integer;
     Procedure Insert(aIndex: Integer; aItem: TMateraAdditionalInformation);
@@ -1221,6 +1243,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -1239,6 +1262,7 @@ type
     procedure SetItem(aIndex: Integer; aValue: TMateraFixedDateDiscount);
   protected
     function NewSchema: TACBrPIXSchema; override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
   public
     Function Add(aItem: TMateraFixedDateDiscount): Integer;
     Procedure Insert(aIndex: Integer; aItem: TMateraFixedDateDiscount);
@@ -1256,6 +1280,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -1277,6 +1302,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -1297,6 +1323,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -1320,6 +1347,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -1344,6 +1372,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -1367,6 +1396,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -1392,6 +1422,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
@@ -1422,6 +1453,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
@@ -1449,6 +1481,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
@@ -1519,12 +1552,15 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraQRCodeRequest);
+
+    function LoadFromIni(aIniStr: String): Boolean;
 
     property currency: String read Fcurrency write fcurrency;
     property totalAmount: Currency read FtotalAmount write ftotalAmount;
@@ -1766,11 +1802,13 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraDevolucaoRequest);
+    function LoadFromIni(aIniStr: String): Boolean;
 
     property externalIdentifier: String read fexternalIdentifier write fexternalIdentifier;
     property amount: currency read famount write famount;
@@ -1811,6 +1849,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -2304,6 +2343,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
 
     property documentNumber: String read fdocumentNumber write fdocumentNumber;
     property barcode: String read fbarcode write fbarcode;
@@ -2361,6 +2401,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
 
     property barcode: String read fbarcode write fbarcode;
     property interestAmount: Currency read finterestAmount write finterestAmount;
@@ -2433,6 +2474,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -2462,6 +2504,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -2484,6 +2527,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -2509,6 +2553,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -2529,6 +2574,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -2561,6 +2607,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -2600,6 +2647,7 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String); override;
     destructor Destroy; override;
@@ -2630,12 +2678,14 @@ type
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+    procedure LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TMateraRetiradaRequest);
+    function LoadFromIni(aIniStr: String): Boolean;
 
     property totalAmount: Currency read ftotalAmount write ftotalAmount;
     property mediatorFee: Currency read fmediatorFee write fmediatorFee;
@@ -5155,6 +5205,12 @@ begin
   fmodality := StringToMateraWithdrawAgentType(s);
 end;
 
+procedure TMateraWithdrawAgent.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  modality := StringToMateraWithdrawAgentType(aMemIni.ReadString(aSecao, aPrefixo + 'modality', EmptyStr));
+  serviceProvider := aMemIni.ReadString(aSecao, aPrefixo + 'serviceProvider', EmptyStr);
+end;
+
 constructor TMateraWithdrawAgent.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -5199,6 +5255,12 @@ begin
   aJSon
     .Value('transactionValue', ftransactionValue)
     .Value('cashValue', fcashValue);
+end;
+
+procedure TMateraTransactionValuesDetails.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  cashValue := aMemIni.ReadFloat(aSecao, aPrefixo + 'cashValue', 0);
+  transactionValue := aMemIni.ReadFloat(aSecao, aPrefixo + 'transactionValue', 0);
 end;
 
 constructor TMateraTransactionValuesDetails.Create(const aObjectName: String);
@@ -5250,6 +5312,15 @@ begin
     .Value('alias', falias_)
     .Value('endToEndIdQuery', fendToEndIdQuery);
   faccountDestination.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraInstantPaymentRecipient.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  accountDestination.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'accountDestination_');
+  alias_ := aMemIni.ReadString(aSecao, aPrefixo + 'alias', EmptyStr);
+  endToEndIdQuery := aMemIni.ReadString(aSecao, aPrefixo + 'endToEndIdQuery', EmptyStr);
+  pspid := aMemIni.ReadString(aSecao, aPrefixo + 'pspid', EmptyStr);
+  TaxIdentifierRequest.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'TaxIdentifierRequest_');
 end;
 
 constructor TMateraInstantPaymentRecipient.Create(const aObjectName: String);
@@ -5372,6 +5443,24 @@ begin
 
 end;
 
+procedure TMateraInstantPaymentRequest.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  recipient.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'recipient_');
+  receiverReconciliationIdentifier := aMemIni.ReadString(aSecao, aPrefixo + 'receiverReconciliationIdentifier', EmptyStr);
+  initiatingInstitution := aMemIni.ReadString(aSecao, aPrefixo + 'initiatingInstitution', EmptyStr);
+  initiationForm := StringToMaterainitiationForm(aMemIni.ReadString(aSecao, aPrefixo + 'initiationForm', EmptyStr));
+  additionalInformation := aMemIni.ReadString(aSecao, aPrefixo + 'additionalInformation', EmptyStr);
+  qrcodeType := StringToMateraqrcodeType(aMemIni.ReadString(aSecao, aPrefixo + 'qrcodeType', EmptyStr));
+  historyCode := aMemIni.ReadString(aSecao, aPrefixo + 'historyCode', EmptyStr);
+  initiationProcedure := StringToMaterainitiationProcedure(aMemIni.ReadString(aSecao, aPrefixo + 'initiationProcedure', EmptyStr));
+  instructionPriority := StringToMaterainstructionPriority(aMemIni.ReadString(aSecao, aPrefixo + 'instructionPriority', EmptyStr));
+  transactionPurpose := StringToMateratransactionPurpose(aMemIni.ReadString(aSecao, aPrefixo + 'transactionPurpose', EmptyStr));
+  transactionValuesDetails.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'transactionValuesDetails_');
+  instructionType := StringToMaterainstructionType(aMemIni.ReadString(aSecao, aPrefixo + 'instructionType', EmptyStr));
+  withdrawAgent.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'withdrawAgent_');
+  performDebit := aMemIni.ReadBool(aSecao, aPrefixo + 'performDebit', False);
+end;
+
 constructor TMateraInstantPaymentRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -5461,6 +5550,11 @@ begin
   aJSon.Value('historyCode', fhistoryCode);
 end;
 
+procedure TMateraExternal.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  historyCode := aMemIni.ReadString(aSecao, aPrefixo + 'historyCode', EmptyStr);
+end;
+
 constructor TMateraExternal.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -5511,6 +5605,17 @@ begin
     .ValueISODate('dueDate', fdueDate)
     .Value('paidAmount', fpaidAmount)
     .Value('historyCode', fhistoryCode);
+end;
+
+procedure TMateraUtilitiesBasic.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  documentNumber := aMemIni.ReadString(aSecao, aPrefixo + 'documentNumber', EmptyStr);
+  barcode := aMemIni.ReadString(aSecao, aPrefixo + 'barcode', EmptyStr);
+  beneficiaryTaxIdentifier := aMemIni.ReadString(aSecao, aPrefixo + 'beneficiaryTaxIdentifier', EmptyStr);
+  typeableLine := aMemIni.ReadString(aSecao, aPrefixo + 'typeableLine', EmptyStr);
+  dueDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'dueDate', 0); //validar valor padrão...
+  paidAmount := aMemIni.ReadFloat(aSecao, aPrefixo + 'paidAmount', 0);
+  historyCode := aMemIni.ReadString(aSecao, aPrefixo + 'historyCode', EmptyStr);
 end;
 
 constructor TMateraUtilitiesBasic.Create(const aObjectName: String);
@@ -5599,6 +5704,23 @@ begin
     .Value('bankAuthentication', fbankAuthentication)
     .Value('authenticationCode', fauthenticationCode);
   fstatus := StringToMateraTransactionStatus(s);
+end;
+
+procedure TMateraBoletoBasic.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  authenticationCode := aMemIni.ReadString(aSecao, aPrefixo + 'authenticationCode', EmptyStr);
+  bankAuthentication := aMemIni.ReadString(aSecao, aPrefixo + 'bankAuthentication', EmptyStr);
+  barcode := aMemIni.ReadString(aSecao, aPrefixo + 'barcode', EmptyStr);
+  beneficiaryTaxIdentifier := aMemIni.ReadString(aSecao, aPrefixo + 'beneficiaryTaxIdentifier', EmptyStr);
+  discount := aMemIni.ReadFloat(aSecao, aPrefixo + 'discount', 0);
+  documentNumber := aMemIni.ReadString(aSecao, aPrefixo + 'documentNumber', EmptyStr);
+  dueDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'dueDate', 0); //validar valor padrão..
+  fineAmount := aMemIni.ReadFloat(aSecao, aPrefixo + 'fineAmount', 0);
+  historyCode := aMemIni.ReadString(aSecao, aPrefixo + 'historyCode', EmptyStr);
+  interestAmount := aMemIni.ReadFloat(aSecao, aPrefixo + 'interestAmount', 0);
+  paidAmount := aMemIni.ReadFloat(aSecao, aPrefixo + 'paidAmount', 0);
+  status := StringToMateraTransactionStatus(aMemIni.ReadString(aSecao, aPrefixo + 'status', EmptyStr));
+  typeableLine := aMemIni.ReadString(aSecao, aPrefixo + 'typeableLine', EmptyStr);
 end;
 
 constructor TMateraBoletoBasic.Create(const aObjectName: String);
@@ -5998,6 +6120,21 @@ begin
   faccountTypeDestination := StringToMateraAccountTypeDestination(s);
 end;
 
+procedure TMateraBankTransfer.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  accountDestination := aMemIni.ReadString(aSecao, 'accountDestination', EmptyStr);
+  accountDigitDestination := aMemIni.ReadString(aSecao, 'accountDigitDestination', EmptyStr);
+  accountTypeDestination := StringToMateraAccountTypeDestination(aMemIni.ReadString(aSecao, 'accountTypeDestination', EmptyStr));
+  bankDestination := aMemIni.ReadString(aSecao, 'bankDestination', EmptyStr);
+  branchDestination := aMemIni.ReadString(aSecao, 'branchDestination', EmptyStr);
+  historyCode := aMemIni.ReadString(aSecao, 'historyCode', EmptyStr);
+  name := aMemIni.ReadString(aSecao, 'name', EmptyStr);
+  personType := aMemIni.ReadString(aSecao, 'personType', EmptyStr);
+  purposeCode := aMemIni.ReadString(aSecao, 'purposeCode', EmptyStr);
+  taxIdentifier.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'taxIdentifier_');
+  transferMethod := aMemIni.ReadString(aSecao, 'transferMethod', EmptyStr);
+end;
+
 constructor TMateraBankTransfer.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -6097,6 +6234,18 @@ begin
   finstantPayment.ReadFromJSon(aJSon);
 end;
 
+procedure TMateraWithdrawInfo.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  bankTransfer.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'bankTransfer_');
+  boleto.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'boleto_');
+  external_.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'external_');
+  futureDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'futureDate', 0); //validar valor padrão...
+  instantPayment.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'instantPayment_');
+  senderComment := aMemIni.ReadString(aSecao, aPrefixo + 'senderComment', EmptyStr);
+  utilities.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'utilities_');
+  withdrawType := StringToMateraWithdrawType(aMemIni.ReadString(aSecao, aPrefixo + 'withdrawType', EmptyStr));
+end;
+
 constructor TMateraWithdrawInfo.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -6180,6 +6329,15 @@ begin
   aJSon.Value('externalIdentifier', fexternalIdentifier);
 end;
 
+procedure TMateraRetiradaRequest.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  currency := aMemIni.ReadString(aSecao, aPrefixo + 'currency', EmptyStr);
+  externalIdentifier := aMemIni.ReadString(aSecao, aPrefixo + 'externalIdentifier', EmptyStr);
+  mediatorFee := aMemIni.ReadFloat(aSecao, aPrefixo + 'mediatorFee', 0);
+  totalAmount := aMemIni.ReadFloat(aSecao, aPrefixo + 'totalAmount', 0);
+  withdrawInfo.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'withdrawInfo_');
+end;
+
 constructor TMateraRetiradaRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -6218,6 +6376,24 @@ begin
   fcurrency := aSource.currency;
   fexternalIdentifier := aSource.externalIdentifier;
   fwithdrawInfo.Assign(aSource.withdrawInfo);
+end;
+
+function TMateraRetiradaRequest.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+    wSecao := 'SolicitarRetirada';
+    LoadFromMemIni(wIni, wSecao, EmptyStr);
+    Result := True;
+  finally
+    wIni.Free;
+  end;
 end;
 
 { TMateraPSP }
@@ -7003,6 +7179,13 @@ begin
   faccountType := StringToMateraAccountTypeDestination(s);
 end;
 
+procedure TMateraDestinationAccount.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  account := aMemIni.ReadString(aSecao, aPrefixo + 'account', EmptyStr);
+  accountType := StringToMateraAccountTypeDestination(aMemIni.ReadString(aSecao, aPrefixo + 'accountType', EmptyStr));
+  branch := aMemIni.ReadString(aSecao, aPrefixo + 'branch', EmptyStr);
+end;
+
 constructor TMateraDestinationAccount.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -7479,6 +7662,18 @@ begin
   freturnType := StringToMateraReturnType(s);
 end;
 
+procedure TMateraDevolucaoRequest.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  additionalInformation := aMemIni.ReadString(aSecao, 'additionalInformation', EmptyStr);
+  amount := aMemIni.ReadFloat(aSecao, 'amount', 0);
+  externalIdentifier := aMemIni.ReadString(aSecao, 'externalIdentifier', EmptyStr);
+  mediatorFee := aMemIni.ReadFloat(aSecao, 'mediatorFee', 0);
+  performDebit := aMemIni.ReadBool(aSecao, 'performDebit', False);
+  returnReasonCode := aMemIni.ReadString(aSecao, 'returnReasonCode', EmptyStr);
+  returnReasonInformation := aMemIni.ReadString(aSecao, 'returnReasonInformation', EmptyStr);
+  returnType := StringToMateraReturnType(aMemIni.ReadString(aSecao, 'returnType', EmptyStr));
+end;
+
 constructor TMateraDevolucaoRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -7518,6 +7713,25 @@ begin
   freturnReasonCode := aSource.returnReasonCode;
   freturnReasonInformation := aSource.returnReasonInformation;
   freturnType := aSource.returnType;
+end;
+
+function TMateraDevolucaoRequest.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+
+    wSecao := 'SolicitarDevolucao';
+    LoadFromMemIni(wIni, wSecao, EmptyStr);
+    Result := True;
+  finally
+    wIni.Free;
+  end;
 end;
 
 { TMateraReturnCode }
@@ -7668,6 +7882,12 @@ begin
     .Value('modality', fmodality);
 end;
 
+procedure TMateraValueCalculation.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  modality := aMemIni.ReadInteger(aSecao, aPrefixo + 'modality', 0);
+  valuePerc := aMemIni.ReadFloat(aSecao, aPrefixo + 'valuePerc', 0);
+end;
+
 constructor TMateraValueCalculation.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -7718,6 +7938,14 @@ begin
     .Value('name', fname)
     .Value('email', femail);
   faddressing.ReadFromJSon(aJson);
+end;
+
+procedure TMateraQRCodeDynamicPayerInformationComplete.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  addressing.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'addressing_');
+  cpfCnpj := aMemIni.ReadString(aSecao, aPrefixo + 'cpfCnpj', EmptyStr);
+  email := aMemIni.ReadString(aSecao, aPrefixo + 'email', EmptyStr);
+  name := aMemIni.ReadString(aSecao, aPrefixo + 'name', EmptyStr);
 end;
 
 constructor TMateraQRCodeDynamicPayerInformationComplete.Create(const aObjectName: String);
@@ -7776,6 +8004,24 @@ begin
   Result := New;
 end;
 
+procedure TMateraFixedDateDiscountArray.LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
+var
+  i: Integer;
+  wSecao: String;
+begin
+  if (not Assigned(aMemIni)) then
+     Exit;
+
+  i := 1;
+  wSecao := aPrefixo + 'fixedDateDiscount' + IntToStrZero(i, 3);
+  while aMemIni.SectionExists(wSecao) do
+  begin
+    New.LoadFromMemIni(aMemIni, wSecao, EmptyStr);
+    Inc(i);
+    wSecao := aPrefixo + 'fixedDateDiscount' + IntToStrZero(i, 3);
+  end;
+end;
+
 function TMateraFixedDateDiscountArray.Add(aItem: TMateraFixedDateDiscount): Integer;
 begin
   Result := inherited Add(aItem);
@@ -7813,6 +8059,12 @@ begin
   aJSon
   .Value('valuePerc', fvaluePerc)
   .ValueISODate('date', fdate);
+end;
+
+procedure TMateraFixedDateDiscount.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  date := aMemIni.ReadDateTime(aSecao, aPrefixo + 'date', 0); //validar valor padrão
+  valuePerc := aMemIni.ReadFloat(aSecao, aPrefixo + 'valuePerc', 0);
 end;
 
 constructor TMateraFixedDateDiscount.Create(const aObjectName: String);
@@ -7856,6 +8108,12 @@ procedure TMateraFixedDateDiscountList.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon.Value('modality', fmodality);
   ffixedDateDiscounts.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraFixedDateDiscountList.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  fixedDateDiscounts.LoadFromMemIni(aMemIni, aPrefixo);
+  modality := aMemIni.ReadInteger(aSecao, aPrefixo + 'modality', 0);
 end;
 
 constructor TMateraFixedDateDiscountList.Create(const aObjectName: String);
@@ -7908,6 +8166,12 @@ begin
   aJSon
     .Value('uniqueValuePercDiscount', funiqueValuePercDiscount)
     .Value('modality', fmodality);
+end;
+
+procedure TMateraUniqueDiscount.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  modality := aMemIni.ReadInteger(aSecao, aPrefixo + 'modality', 0);
+  uniqueValuePercDiscount := aMemIni.ReadFloat(aSecao, aPrefixo + 'uniqueValuePercDiscount', 0);
 end;
 
 constructor TMateraUniqueDiscount.Create(const aObjectName: String);
@@ -8720,6 +8984,12 @@ begin
   funiqueDiscount.ReadFromJSon(aJSon);
 end;
 
+procedure TMateraDiscountsCalculation.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  fixedDateDiscountList.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'fixedDateDiscountList_');
+  uniqueDiscount.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'uniqueDiscount_');
+end;
+
 constructor TMateraDiscountsCalculation.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -8784,6 +9054,17 @@ begin
   fdiscounts.ReadFromJSon(aJSon);
   finterests.ReadFromJSon(aJSon);
   fpayerInformation.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraBillingDueDate.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  dueDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'dueDate', 0); //validar valor padrão.
+  daysAfterDueDate := aMemIni.ReadInteger(aSecao, aPrefixo + 'daysAfterDueDate', 0);
+  fines.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'fines_');
+  interests.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'interests_');
+  reduction.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'reduction_');
+  discounts.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'discounts_');
+  payerInformation.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'payerInformation_');
 end;
 
 constructor TMateraBillingDueDate.Create(const aObjectName: String);
@@ -8909,6 +9190,24 @@ end;
 function TMateraAdditionalInformationArray.NewSchema: TACBrPIXSchema;
 begin
   Result := New;
+end;
+
+procedure TMateraAdditionalInformationArray.LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
+var
+  i: Integer;
+  wSecao: String;
+begin
+  if (not Assigned(aMemIni)) then
+     Exit;
+
+  i := 1;
+  wSecao := aPrefixo + 'additionalInformation' + IntToStrZero(i, 3);
+  while aMemIni.SectionExists(wSecao) do
+  begin
+    New.LoadFromMemIni(aMemIni, wSecao, EmptyStr);
+    Inc(i);
+    wSecao := aPrefixo + 'additionalInformation' + IntToStrZero(i, 3)
+  end;
 end;
 
 function TMateraAdditionalInformationArray.Add(aItem: TMateraAdditionalInformation): Integer;
@@ -9308,6 +9607,13 @@ begin
     .Value('showToPayer',FshowToPlayer);
 end;
 
+procedure TMateraAdditionalInformation.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  content := aMemIni.ReadString(aSecao, aPrefixo + 'content', EmptyStr);
+  name := aMemIni.ReadString(aSecao, aPrefixo + 'name', EmptyStr);
+  showToPlayer := aMemIni.ReadBool(aSecao, aPrefixo + 'showToPlayer', False);
+end;
+
 constructor TMateraAdditionalInformation.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -9351,6 +9657,24 @@ begin
   Result := New;
 end;
 
+procedure TMateraRecipientsArray.LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
+var
+  i: Integer;
+  wSecao: String;
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  i := 1;
+  wSecao := aPrefixo + 'recipient' + IntToStrZero(i, 3);
+  while aMemIni.SectionExists(wSecao) do
+  begin
+    New.LoadFromMemIni(aMemIni, wSecao, EmptyStr);
+    Inc(i);
+    wSecao := aPrefixo + 'recipient' + IntToStrZero(i, 3);
+  end;
+end;
+
 function TMateraRecipientsArray.Add(aItem: TMateraRecipient): Integer;
 begin
   Result := inherited Add(aItem);
@@ -9385,6 +9709,12 @@ procedure TMateraPaymentInfo.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon.Value('transactionType', ftransactionType);
   finstantPayment.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraPaymentInfo.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  instantPayment.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'instantPayment_');
+  transactionType := aMemIni.ReadString(aSecao, aPrefixo + 'transactionType', EmptyStr);
 end;
 
 constructor TMateraPaymentInfo.Create(const aObjectName: String);
@@ -9453,6 +9783,16 @@ begin
   fbillingDueDate.ReadFromJSon(aJSon);
   FadditionalInformation.ReadFromJSon(aJSon);
   FqrCodeImageGenerationSpecification.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraInstantPayment.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  expiration := aMemIni.ReadInteger(aSecao, aPrefixo + 'expiration', 0);
+  alias_:= aMemIni.ReadString(aSecao, aPrefixo + 'alias_', EmptyStr);
+  billingDueDate.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'billingDueDate_');
+  dynamicQRCodeType := StringToMateraDynamicQRCodeType(aMemIni.ReadString(aSecao, aPrefixo + 'dynamicQRCodeType', EmptyStr));
+  additionalInformation.LoadFromMemIni(aMemIni, aPrefixo);
+  qrCodeImageGenerationSpecification.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'qrCodeImageGenerationSpecification_');
 end;
 
 constructor TMateraInstantPayment.Create(const aObjectName: String);
@@ -9538,6 +9878,15 @@ begin
     .Value('recipientComment', FrecipientComment);
 end;
 
+procedure TMateraRecipient.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  amount := aMemIni.ReadFloat(aSecao, aPrefixo + 'amount', 0);
+  currency := aMemIni.ReadString(aSecao, aPrefixo + 'currency', EmptyStr);
+  mediatorfee := aMemIni.ReadFloat(aSecao, aPrefixo + 'mediatorfee', 0);
+  recipientComment := aMemIni.ReadString(aSecao, aPrefixo + 'recipientComment', EmptyStr);
+  account.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'account_');
+end;
+
 constructor TMateraRecipient.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -9611,6 +9960,16 @@ begin
   frecipients.ReadFromJSon(aJSon);
 end;
 
+procedure TMateraQRCodeRequest.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  currency := aMemIni.ReadString(aSecao, aPrefixo + 'currency', EmptyStr);
+  totalAmount := aMemIni.ReadFloat(aSecao, aPrefixo + 'totalAmount', 0);
+  callbackAddress := aMemIni.ReadString(aSecao, aPrefixo + 'callbackAddress', EmptyStr);
+  externalIdentifier := aMemIni.ReadString(aSecao, aPrefixo + 'externalIdentifier', EmptyStr);
+  paymentInfo.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'paymentInfo_');
+  recipients.LoadFromMemIni(aMemIni, aPrefixo);
+end;
+
 constructor TMateraQRCodeRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -9657,6 +10016,24 @@ begin
 
   Frecipients.Clear;
   FpaymentInfo.Clear;
+end;
+
+function TMateraQRCodeRequest.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+    wSecao := 'IncluirQRCode';
+    LoadFromMemIni(wIni, wSecao, EmptyStr);
+    Result := True;
+  finally
+    wIni.Free;
+  end;
 end;
 
 { TMateraAlias }
@@ -9824,6 +10201,14 @@ begin
     .Value('cep', fcep);
 end;
 
+procedure TMateraPayerInformationAddressing.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  cep := aMemIni.ReadString(aSecao, aPrefixo + 'cep', EmptyStr);
+  city := aMemIni.ReadString(aSecao, aPrefixo + 'city', EmptyStr);
+  street := aMemIni.ReadString(aSecao, aPrefixo + 'street', EmptyStr);
+  uf := aMemIni.ReadString(aSecao, aPrefixo + 'uf', EmptyStr);
+end;
+
 constructor TMateraPayerInformationAddressing.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -9877,6 +10262,13 @@ begin
     .Value('errorCorrectionLevel', ferrorCorrectionLevel)
     .Value('imageWidth', fimageWidth)
     .Value('generateImageRendering', fgenerateImageRendering);
+end;
+
+procedure TMateraQRCodeSpecification.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  errorCorrectionLevel := aMemIni.ReadString(aSecao, aPrefixo + 'errorCorrectionLevel', EmptyStr);
+  generateImageRendering := aMemIni.ReadBool(aSecao, aPrefixo + 'generateImageRendering', False);
+  imageWidth := aMemIni.ReadInteger(aSecao, aPrefixo + 'imageWidth', 0);
 end;
 
 constructor TMateraQRCodeSpecification.Create(const aObjectName: String);
@@ -10158,6 +10550,16 @@ begin
   fclient.ReadFromJSon(aJSon);
 end;
 
+procedure TMateraCreateAccountTransactionRequest.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  inherited LoadFromMemIni(aMemIni, aSecao, aPrefixo);
+
+  client.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'client_');
+  customData   := aMemIni.ReadString(aSecao, aPrefixo + 'customData', EmptyStr);
+  checkingAccountBranch := aMemIni.ReadInteger(aSecao, aPrefixo + 'checkingAccountBranch', 0);
+  checkingAccountNumber := aMemIni.ReadInteger(aSecao, aPrefixo + 'checkingAccountNumber', 0);
+end;
+
 constructor TMateraCreateAccountTransactionRequest.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -10196,6 +10598,24 @@ begin
   fcheckingAccountBranch := aSource.checkingAccountBranch;
   fcheckingAccountNumber := aSource.checkingAccountNumber;
   fclient.Assign(aSource.client);
+end;
+
+function TMateraCreateAccountTransactionRequest.LoadFromIni(aIniStr: String): Boolean;
+var
+  wSecao: String;
+  wIni: TMemIniFile;
+begin
+  Result := False;
+
+  wIni := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(aIniStr, wIni);
+    wSecao := 'IncluirConta';
+    LoadFromMemIni(wIni, wSecao, EmptyStr);
+    Result := True;
+  finally
+    wIni.Free;
+  end;
 end;
 
 { TMateraAccountQueryResponse }
@@ -10773,6 +11193,14 @@ begin
   fmobilePhone.ReadFromJSon(aJSon);
 end;
 
+procedure TMateraAccount.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  account := aMemIni.ReadInteger(aSecao, aPrefixo + 'account', 0);
+  accountID := aMemIni.ReadString(aSecao, aPrefixo + 'accountID', EmptyStr);
+  branch := aMemIni.ReadInteger(aSecao, aPrefixo + 'branch', 0);
+  mobilePhone.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'mobilePhone_');
+end;
+
 constructor TMateraAccount.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -10933,6 +11361,27 @@ begin
   fadditionalDetailsForeigner.ReadFromJSon(aJSon);
 end;
 
+procedure TMateraAccountTransactionRequestBasic.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+  
+  accountInternalTypeId := aMemIni.ReadInteger(aSecao, aPrefixo + 'accountInternalTypeId', 0);
+  externalIdentifier    := aMemIni.ReadString(aSecao, aPrefixo + 'externalIdentifier', EmptyStr);
+
+  sharedAccount := aMemIni.ReadString(aSecao, aPrefixo + 'sharedAccount', EmptyStr);
+  ibkPwdHash    := aMemIni.ReadString(aSecao, aPrefixo + 'ibkPwdHash', EmptyStr);
+  clientType    := TMateraClientType(aMemIni.ReadInteger(aSecao, aPrefixo + 'clientType', 0));
+  accountType   := TMateraAccountType(aMemIni.ReadInteger(aSecao, aPrefixo + 'accountType', 0));
+
+  additionalDetailsCorporate.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'additionalDetailsCorporate_');
+  additionalDetailsPerson.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'additionalDetailsPerson_');
+  additionalDetailsForeigner.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'additionalDetailsForeigner_');
+  billingAddress.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'billingAddress_');
+  documents.LoadFromMemIni(aMemIni, aPrefixo + 'documents_');
+  mobilePhone.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'mobilePhone_');
+end;
+
 constructor TMateraAccountTransactionRequestBasic.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -11025,6 +11474,24 @@ begin
   Result := New;
 end;
 
+procedure TMateraClientRepresentativeArray.LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
+var
+  i: Integer;
+  wSecao: String;
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  i := 1;
+  wSecao := aPrefixo + 'representative' + IntToStrZero(i, 3);
+  while aMemIni.SectionExists(wSecao) do
+  begin
+    New.LoadFromMemIni(aMemIni, wSecao, EmptyStr);
+    Inc(i);
+    wSecao := aPrefixo + 'representative' + IntToStrZero(i, 3);
+  end;
+end;
+
 function TMateraClientRepresentativeArray.Add(aItem: TMateraClientRepresentative): Integer;
 begin
   Result := inherited Add(aItem);
@@ -11074,6 +11541,21 @@ begin
     .Value('monthlyIncome', fmonthlyIncome)
     .Value('stateRegistration', fstateRegistration);
   frepresentatives.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraAdditionalDetailsCorporate.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+  
+  businessLine := aMemIni.ReadInteger(aSecao, aPrefixo + 'businessLine', 0);
+  companyName := aMemIni.ReadString(aSecao, aPrefixo + 'companyName', EmptyStr);
+  establishmentDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'establishmentDate', 0);
+  establishmentForm := aMemIni.ReadString(aSecao, aPrefixo + 'establishmentForm', EmptyStr);
+  financialStatistic := aMemIni.ReadFloat(aSecao, aPrefixo + 'financialStatistic', 0);
+  monthlyIncome := aMemIni.ReadFloat(aSecao, aPrefixo + 'monthlyIncome', 0);
+  stateRegistration := aMemIni.ReadString(aSecao, aPrefixo + 'stateRegistration', EmptyStr);
+  representatives.LoadFromMemIni(aMemIni, aPrefixo);
 end;
 
 constructor TMateraAdditionalDetailsCorporate.Create(const aObjectName: String);
@@ -11144,6 +11626,15 @@ procedure TMateraClientRepresentative.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   inherited DoReadFromJSon(aJSon);
   aJSon.Value('accountHolderId', faccountHolderId);
+end;
+
+procedure TMateraClientRepresentative.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  accountHolderId := aMemIni.ReadString(aSecao, aPrefixo + 'accountHolderId', EmptyStr);
+  inherited LoadFromMemIni(aMemIni, aSecao, aPrefixo);
 end;
 
 constructor TMateraClientRepresentative.Create(const aObjectName: String);
@@ -11221,6 +11712,32 @@ begin
   frg.ReadFromJSon(aJSon);
   flegalResponsible.ReadFromJSon(aJSon);
   fotherDocument.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraAdditionalDetailsBasic.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  birthCity := aMemIni.ReadString(aSecao, aPrefixo + 'birthCity', EmptyStr);
+  birthCountry := aMemIni.ReadString(aSecao, aPrefixo + 'birthCountry', EmptyStr);
+  birthState := aMemIni.ReadString(aSecao, aPrefixo + 'birthState', EmptyStr);
+  documentType := aMemIni.ReadString(aSecao, aPrefixo + 'documentType', EmptyStr);
+  father := aMemIni.ReadString(aSecao, aPrefixo + 'father', EmptyStr);
+  gender := aMemIni.ReadString(aSecao, aPrefixo + 'gender', EmptyStr);
+  maritalStatus := aMemIni.ReadString(aSecao, aPrefixo + 'maritalStatus', EmptyStr);
+  mother := aMemIni.ReadString(aSecao, aPrefixo + 'mother', EmptyStr);
+  partner := aMemIni.ReadString(aSecao, aPrefixo + 'partner', EmptyStr);
+
+  birthDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'birthDate', 0);
+  businessLine := aMemIni.ReadInteger(aSecao, aPrefixo + 'businessLine', 0);
+  financialStatistic := aMemIni.ReadFloat(aSecao, aPrefixo + 'financialStatistic', 0);
+  occupation := aMemIni.ReadInteger(aSecao, aPrefixo + 'occupation', 0);
+  monthlyIncome := aMemIni.ReadFloat(aSecao, aPrefixo + 'monthlyIncome', 0);
+                                  
+  legalResponsible.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'legalResponsible_');
+  otherDocument.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'otherDocument_');
+  rg.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'rg_');
 end;
 
 constructor TMateraAdditionalDetailsBasic.Create(const aObjectName: String);
@@ -11386,6 +11903,17 @@ begin
     .Value('type', ftype);
 end;
 
+procedure TMateraOtherDoc.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+  
+  issueDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'issueDate', 0);
+  issuer := aMemIni.ReadString(aSecao, aPrefixo + 'issuer', EmptyStr);
+  number := aMemIni.ReadString(aSecao, aPrefixo + 'number', EmptyStr);
+  type_ := aMemIni.ReadString(aSecao, aPrefixo + 'type', EmptyStr);
+end;
+
 constructor TMateraOtherDoc.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -11445,6 +11973,17 @@ begin
     .Value('state', fstate);
 end;
 
+procedure TMateraRG.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+  
+  issueDate := aMemIni.ReadDateTime(aSecao, aPrefixo + 'issueDate', 0);
+  issuer := aMemIni.ReadString(aSecao, aPrefixo + 'issuer', EmptyStr);
+  number := aMemIni.ReadString(aSecao, aPrefixo + 'number', EmptyStr);
+  state := aMemIni.ReadString(aSecao, aPrefixo + 'state', EmptyStr);
+end;
+
 constructor TMateraRG.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -11493,6 +12032,24 @@ begin
   Result := New;
 end;
 
+procedure TMateraDocumentArray.LoadFromMemIni(const aMemIni: TMemIniFile; aPrefixo: String);
+var
+  i: Integer;
+  wSecao: String;
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  i := 1;
+  wSecao := aPrefixo + 'document' + IntToStrZero(i, 3);
+  while aMemIni.SectionExists(wSecao) do
+  begin
+    New.LoadFromMemIni(aMemIni, wSecao, EmptyStr);
+    Inc(i);
+    wSecao := aPrefixo + 'document' + IntToStrZero(i, 3);
+  end;
+end;
+
 function TMateraDocumentArray.Add(aItem: TMateraDocument): Integer;
 begin
   Result := inherited Add(aItem);
@@ -11535,6 +12092,15 @@ begin
     .Value('type', s);
 
   ftype := StringToMateraDocumentType(s);
+end;
+
+procedure TMateraDocument.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  content := aMemIni.ReadString(aSecao, aPrefixo + 'content', EmptyStr);
+  type_   := TMateraDocumentType(aMemIni.ReadInteger(aSecao, aPrefixo + 'type', 0));
 end;
 
 constructor TMateraDocument.Create(const aObjectName: String);
@@ -11592,6 +12158,21 @@ begin
     .Value('logradouro', flogradouro)
     .Value('numero', fnumero)
     .Value('pais', fpais);
+end;
+
+procedure TMateraEndereco.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+  
+  bairro      := aMemIni.ReadString(aSecao, aPrefixo + 'bairro', EmptyStr);
+  cep         := aMemIni.ReadString(aSecao, aPrefixo + 'cep', EmptyStr);
+  cidade      := aMemIni.ReadString(aSecao, aPrefixo + 'cidade', EmptyStr);
+  complemento := aMemIni.ReadString(aSecao, aPrefixo + 'complemento', EmptyStr);
+  estado      := aMemIni.ReadString(aSecao, aPrefixo + 'estado', EmptyStr);
+  logradouro  := aMemIni.ReadString(aSecao, aPrefixo + 'logradouro', EmptyStr);
+  numero      := aMemIni.ReadString(aSecao, aPrefixo + 'numero', EmptyStr);
+  pais        := aMemIni.ReadString(aSecao, aPrefixo + 'pais', EmptyStr);
 end;
 
 constructor TMateraEndereco.Create(const aObjectName: String);
@@ -11661,6 +12242,16 @@ begin
     .Value('taxIdMasked', ftaxIdMasked);
 end;
 
+procedure TMateraTaxIdentifierBasic.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  taxId       := aMemIni.ReadString(aSecao, aPrefixo + 'taxId', EmptyStr);
+  country     := aMemIni.ReadString(aSecao, aPrefixo + 'country', EmptyStr);
+  taxIdMasked := aMemIni.ReadString(aSecao, aPrefixo + 'taxIdMasked', EmptyStr);
+end;
+
 constructor TMateraTaxIdentifierBasic.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
@@ -11709,6 +12300,14 @@ begin
   AJSon
     .Value('country', fcountry)
     .Value('phoneNumber', fphoneNumber);
+end;
+
+procedure TMateraMobilePhone.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+  country     := aMemIni.ReadString(aSecao, aPrefixo + 'country', EmptyStr);
+  phoneNumber := aMemIni.ReadString(aSecao, aPrefixo + 'phoneNumber', EmptyStr);
 end;
 
 constructor TMateraMobilePhone.Create(const aObjectName: String);
@@ -11766,6 +12365,21 @@ begin
   fmailAddress.ReadFromJSon(aJSon);
   fmobilePhone.ReadFromJSon(aJSon);
   ftaxIdentifier.ReadFromJSon(aJSon);
+end;
+
+procedure TMateraBasicClient.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
+begin
+  if (not Assigned(aMemIni)) then
+    Exit;
+
+  email      := aMemIni.ReadString(aSecao, aPrefixo + 'email', EmptyStr);
+  name       := aMemIni.ReadString(aSecao, aPrefixo + 'name', EmptyStr);
+  socialName := aMemIni.ReadString(aSecao, aPrefixo + 'socialName', EmptyStr);
+
+  mailAddress.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'mailAddress_');
+  mobilePhone.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'mobilePhone_');
+  taxIdentifier.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'taxIdentifier_');
+  documents.LoadFromMemIni(aMemIni, aPrefixo);
 end;
 
 constructor TMateraBasicClient.Create(const aObjectName: String);

@@ -159,7 +159,6 @@ type
     Proxy_User        : String;
     Proxy_Pass        : String;
     IBGEAcentos       : Boolean;
-    IBGEUTF8          : Boolean;
   end;
 
   TConsultaCNPJ = record
@@ -1006,7 +1005,6 @@ begin
       Ini.WriteString( CSecCEP, CKeyCEPProxy_Port, Proxy_Port );
       Ini.WriteString( CSecCEP, CKeyCEPProxy_User, Proxy_User );
       Ini.WriteBool( CSecCEP, CKeyCEPIBGEAcentos, IBGEAcentos );
-      Ini.WriteBool( CSecCEP, CKeyCEPIBGEUTF8, IBGEUTF8 );
       GravaINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, Proxy_Pass, _C);
     end;
 
@@ -1803,7 +1801,6 @@ begin
       Proxy_Port                := Ini.ReadString( CSecCEP, CKeyCEPProxy_Port, Proxy_Port );
       Proxy_User                := Ini.ReadString( CSecCEP, CKeyCEPProxy_User, Proxy_User );
       IBGEAcentos               := Ini.ReadBool( CSecCEP, CKeyCEPIBGEAcentos, IBGEAcentos);
-      IBGEUTF8                  := Ini.ReadBool( CSecCEP, CKeyCEPIBGEUTF8, IBGEUTF8 );
       Proxy_Pass                := LeINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, _C);
     end;
 
@@ -2583,7 +2580,6 @@ begin
     Proxy_User                := '';
     Proxy_Pass                := '';
     IBGEAcentos               := False;
-    IBGEUTF8                  := False;
   end;
 
   with ConsultaCNPJ do

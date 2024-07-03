@@ -24019,16 +24019,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ParentFont = False
               TabOrder = 2
             end
-            object ckIBGEUTF8: TCheckBox
-              Left = 158
-              Height = 21
-              Top = 69
-              Width = 47
-              Caption = 'UTF8'
-              Font.Height = -13
-              ParentFont = False
-              TabOrder = 3
-            end
           end
           object gbConsCNPJ: TGroupBox
             Left = 10

@@ -206,6 +206,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoEnviaremailEvento}
+TMetodoEnviaremailEvento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoInutilizarMDFe}
 TMetodoInutilizarMDFe = class(TACBrMetodo)
 public
@@ -460,6 +466,7 @@ begin
   ListaDeMetodos.Add(CMetodoGetPathMDFe);
   ListaDeMetodos.Add(CMetodoGetPathCan);
   ListaDeMetodos.Add(CMetodoGetPathEvento);
+  ListaDeMetodos.Add(CMetodoEnviaremailEvento);
 
   ListaDeMetodos.Add(CMetodoSavetofile);
   ListaDeMetodos.Add(CMetodoLoadfromfile);
@@ -530,6 +537,8 @@ begin
     35 : AMetodoClass := TMetodoGetPathMDFe;
     36 : AMetodoClass := TMetodoGetPathCan;
     37 : AMetodoClass := TMetodoGetPathEvento;
+    38 : AMetodoClass := TMetodoEnviaremailEvento;
+
 
     else
       begin
@@ -1358,6 +1367,123 @@ begin
         end;
       finally
         CargaDFe.Free;
+      end;
+    finally
+      slCC.Free;
+      slAnexos.Free;
+      slMensagemEmail.Free;
+      slReplay.Free;
+    end;
+  end;
+end;
+
+{ TMetodoEnviarEmailEvento }
+{ Params: 0 - Email: String com email Destinatário
+          1 - XML: String com path do XML Evento
+          2 - XML: String com path do XML MDFe
+          3 - Boolean 1 : Envia PDF
+          4 - Assunto: String com Assunto do e-mail
+          5 - Copia: String com e-mails copia (Separados ;)
+          6 - Anexo: String com Path de Anexos (Separados ;)
+          7 - Replay: String com Replay (Separados ;)
+}
+procedure TMetodoEnviarEmailEvento.Executar;
+var
+  sAssunto, ADestinatario, APathXMLEvento, APathXML, AAssunto, AEmailCopias,
+  AAnexos, ArqPDF, ArqEvento, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
+  CargaDFeEvento: TACBrCarregarMDFeEvento;
+  CargaDFe: TACBrCarregarMDFe;
+  AEnviaPDF: Boolean;
+  TipoEvento: TpcnTpEvento;
+begin
+  ADestinatario := fpCmd.Params(0);
+  APathXMLEvento := fpCmd.Params(1);
+  APathXML := fpCmd.Params(2);
+  AEnviaPDF := StrToBoolDef(fpCmd.Params(3), False);
+  AAssunto := fpCmd.Params(4);
+  AEmailCopias := fpCmd.Params(5);
+  AAnexos := fpCmd.Params(6);
+  AReplay := fpCmd.Params(7);
+  ArqEvento := '';
+
+  with TACBrObjetoMDFe(fpObjetoDono) do
+  begin
+    ACBrMDFe.EventoMDFe.Evento.Clear;
+    ACBrMDFe.Manifestos.Clear;
+
+    slMensagemEmail := TStringList.Create;
+    slCC := TStringList.Create;
+    slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
+    try
+      CargaDFeEvento := TACBrCarregarMDFeEvento.Create(ACBrMDFe, APathXMLEvento);
+      if NaoEstaVazio(APathXML) then
+        CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, APathXML);
+      try
+  //      DoConfiguraDANFe(True, '');
+
+        if AEnviaPDF then
+        begin
+          try
+            ACBrMDFe.ImprimirEventoPDF;
+            ArqPDF := ACBrMDFe.DAMDFE.ArquivoPDF;
+            if not FileExists(ArqPDF) then
+               raise Exception.Create('Arquivo ' + ArqPDF + ' não encontrado.');
+          except
+            on E: Exception do
+              raise Exception.Create('Erro ao criar o arquivo PDF. ' + sLineBreak + E.Message);
+          end;
+        end;
+
+        with MonitorConfig.DFE.Email do
+        begin
+          slMensagemEmail.Text := DoSubstituirVariaveis( StringToBinaryString(MensagemMDFe) );
+          sAssunto := AssuntoMDFe;
+        end;
+
+        QuebrarLinha(AEmailCopias, slCC);
+        QuebrarLinha(AAnexos, slAnexos);
+        QuebrarLinha(AReplay, slReplay);
+
+        // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
+        if  StringIsXML( APathXMLEvento ) then
+        begin
+          tipoEvento := ACBrMDFe.EventoMDFe.Evento[0].InfEvento.tpEvento;
+          ArqEvento  := ACBrMDFe.EventoMDFe.ObterNomeArquivo(tipoEvento);
+          ArqEvento  := PathWithDelim(ACBrMDFe.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
+          WriteToTxt(ArqEvento, ACBrMDFe.EventoMDFe.Evento[0].RetInfEvento.XML, False, False);
+          slAnexos.Add(ArqEvento)
+        end
+        else
+          slAnexos.Add(APathXMLEvento);
+
+        if AEnviaPDF then
+          slAnexos.Add(ArqPDF);
+
+        try
+          ACBrMDFe.EnviarEmail(ADestinatario,
+            DoSubstituirVariaveis( IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
+            slMensagemEmail,
+            slCC,      // Lista com emails que serão enviado cópias - TStrings
+            slAnexos,  // Lista de slAnexos - TStrings
+            Nil,
+            '',
+            slReplay); // Lista com Endereços Replay - TStrings
+
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
+        except
+          on E: Exception do
+            raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
+        end;
+      finally
+        if NaoEstaVazio(APathXML) then
+          CargaDFe.Free;
+        CargaDFeEvento.Free;
       end;
     finally
       slCC.Free;

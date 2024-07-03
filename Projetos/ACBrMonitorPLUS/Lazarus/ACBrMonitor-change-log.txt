@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2024
+-- DoACBrMDFeUnit, ACBrMonitor1, ACBrMonitorConsts --
+[*] Adiciona o comando MDFe.EnviarEmailEvento e remove o parâmetro IsUTF8 do IBGE que foi removido em refactoring.
+Por: Diego Folieni
+
 18/06/2024
 -- DoACBrBPeUnit/DoACBrCTeUnit/DoACBrNFeUnit --
 [*] Alteração os métodos de envio de e-mail de evento e inutilização.

@@ -481,7 +481,6 @@ type
     ckCamposFatObrigatorio: TCheckBox;
     ckgBOLMostrar: TCheckGroup;
     ckIBGEAcentos: TCheckBox;
-    ckIBGEUTF8: TCheckBox;
     ckMemoria: TCheckBox;
     ckNFCeUsarIntegrador: TCheckBox;
     //ckNFCeUsarIntegrador: TCheckBox;
@@ -2208,6 +2207,7 @@ begin
   FDoMDFe := TACBrObjetoMDFe.Create(MonitorConfig, ACBrMDFe1);
   FDoMDFe.OnAntesDeImprimir := @AntesDeImprimir;
   FDoMDFe.OnDepoisDeImprimir := @DepoisDeImprimir;
+  FDoMDFe.OnSubstituirVariaveis := @SubstituirVariaveis;
   
   FDoBoleto := TACBrObjetoBoleto.Create(MonitorConfig, ACBrBoleto1);
   FDoBoleto.OnAntesDeImprimir := @AntesDeImprimir;
@@ -5731,7 +5731,6 @@ begin
     edCONProxyUser.Text               := Proxy_User;
     edCONProxyPass.Text               := Proxy_Pass;
     ckIBGEAcentos.Checked             := IBGEAcentos;
-    ckIBGEUTF8.Checked                := IBGEUTF8;
   end;
 
   { Parametros da Consulta CNPJ }
@@ -5754,7 +5753,6 @@ begin
       ProxyUser := edCONProxyUser.Text;
       ProxyPass := edCONProxyPass.Text;
       IgnorarCaixaEAcentos:= ckIBGEAcentos.Checked;
-      IsUTF8    :=  ckIBGEUTF8.Checked;
     end;
 
   {Parametros do Boleto}
@@ -7164,7 +7162,6 @@ begin
       Proxy_User                  := edCONProxyUser.Text;
       Proxy_Pass                  := edCONProxyPass.Text;
       IBGEAcentos                 := ckIBGEAcentos.Checked;
-      IBGEUTF8                    := ckIBGEUTF8.Checked;
     end;
 
     with FMonitorConfig.ConsultaCNPJ do

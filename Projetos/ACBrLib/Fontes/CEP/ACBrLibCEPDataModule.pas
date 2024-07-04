@@ -94,6 +94,7 @@ begin
     Usuario       := pLibConfig.CEPConfig.Usuario;
     Senha         := pLibConfig.CEPConfig.Senha;
     PesquisarIBGE := pLibConfig.CEPConfig.PesquisarIBGE;
+    HTTPSend.Sock.SSL.SSLType := pLibConfig.CEPConfig.SSLType;
   end;
 end;
 

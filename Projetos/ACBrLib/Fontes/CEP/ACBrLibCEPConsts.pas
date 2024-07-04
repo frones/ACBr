@@ -52,6 +52,7 @@ const
   CChavePesquisarIBGE = 'PesquisarIBGE';
   CChaveUsuario = 'Usuario';
   CChaveSenha = 'Senha';
+  CChaveSSLType = 'SSLType';
 
 implementation
 

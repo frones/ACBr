@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2024
+--- ACBrLibCEPConfig, ACBrLibCEPConsts, ACBrLibCEPDataModule ---
+[+] Nova propriedade SSLType para uso ACBrLib em Android
+Por: Antonio Carlos Junior
+
 13/03/2024
 --- ACBrLibCEPBase, ACBrLibCEPDataModule --
 [*] Adicionado uses ACBrUtil.filesIO

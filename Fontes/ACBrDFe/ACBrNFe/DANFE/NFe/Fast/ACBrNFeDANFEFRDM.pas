@@ -2122,8 +2122,6 @@ begin
         begin
           NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais[I].NFe;
           CarregaDadosNFe;
-
-          //Result := frxReport.PrepareReport( not (i > 0) );
           Result := frxReport.PrepareReport( not (i > 0) );
         end;
       end;

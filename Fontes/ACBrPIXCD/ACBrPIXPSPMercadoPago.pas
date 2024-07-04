@@ -37,7 +37,7 @@ unit ACBrPIXPSPMercadoPago;
 interface
 
 uses
-  Classes, SysUtils, Dialogs,
+  Classes, SysUtils,
   {$IFDEF RTL230_UP}ACBrBase,{$ENDIF RTL230_UP}
   ACBrPIXCD, ACBrPIXBase, ACBrPIXSchemasMercadoPago,
   ACBrPIXSchemasProblema, ACBrPIXSchemasCob, ACBrPIXSchemasDevolucao;

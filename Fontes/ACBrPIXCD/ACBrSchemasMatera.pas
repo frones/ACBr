@@ -1524,6 +1524,7 @@ type
   private
     fcode: String;
     fdescription: String;
+    ffield: String;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -1535,6 +1536,7 @@ type
     procedure Assign(aSource: TMateraError);
 
     property code: String read fcode write fcode;
+    property field: String read ffield write ffield;
     property description: String read fdescription write fdescription;
   end;
 
@@ -10919,14 +10921,16 @@ procedure TMateraError.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .AddPair('code', fcode)
-    .AddPair('description', fdescription);
+    .AddPair('description', fdescription)
+    .AddPair('field', ffield);
 end;
 
 procedure TMateraError.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   aJSon
     .Value('code', fcode)
-    .Value('description', fdescription);
+    .Value('description', fdescription)
+    .Value('field', ffield);
 end;
 
 constructor TMateraError.Create(const aObjectName: String);
@@ -10939,16 +10943,18 @@ procedure TMateraError.Clear;
 begin
   fcode := EmptyStr;
   fdescription := EmptyStr;
+  ffield := EmptyStr;
 end;
 
 function TMateraError.IsEmpty: Boolean;
 begin
-  Result := EstaVazio(fcode) and EstaVazio(fdescription);
+  Result := EstaVazio(fcode) and EstaVazio(fdescription) and EstaVazio(ffield);
 end;
 
 procedure TMateraError.Assign(aSource: TMateraError);
 begin
   fcode := aSource.code;
+  ffield := aSource.field;
   fdescription := aSource.description;
 end;
 

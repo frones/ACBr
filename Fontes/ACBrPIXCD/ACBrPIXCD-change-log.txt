@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2024
+-- ACBrSchemasMatera --
+[*] Inclusão do campo "field" na classe TMateraError.
+    por: Luiz Carlos Ruiz Cestaro
+	
+-- ACBrPSPMercadoPago --
+[-] Remoção do uses da unit Dialogs.
+    por: Gabriel Franciscon
+
 03/07/2024
 -- ACBrSchemasMatera --
 [+] Incluídos métodos "LoadFromIni" e "LoadFromMemIni" para serem utilizados pela lib

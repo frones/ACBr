@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/07/2024
+-- SystemPro.Provider/SystemPro.GravarXml --
+[*] Revertido algumas alterações que foram feitas.
+   Por: Italo Giurizzato Junior
 -- Infisc.Provider --
 [*] Adiciona configuração para que a CancPreencherSerieNfse na versão 2.03 para que 
     consta no pedido de cancelamento a série da nota.

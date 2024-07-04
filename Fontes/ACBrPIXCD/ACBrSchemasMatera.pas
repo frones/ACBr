@@ -5460,7 +5460,7 @@ begin
   transactionValuesDetails.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'transactionValuesDetails_');
   instructionType := StringToMaterainstructionType(aMemIni.ReadString(aSecao, aPrefixo + 'instructionType', EmptyStr));
   withdrawAgent.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'withdrawAgent_');
-  performDebit := aMemIni.ReadBool(aSecao, aPrefixo + 'performDebit', False);
+  performDebit := aMemIni.ReadBool(aSecao, aPrefixo + 'performDebit', True);
 end;
 
 constructor TMateraInstantPaymentRequest.Create(const aObjectName: String);
@@ -7670,7 +7670,7 @@ begin
   amount := aMemIni.ReadFloat(aSecao, 'amount', 0);
   externalIdentifier := aMemIni.ReadString(aSecao, 'externalIdentifier', EmptyStr);
   mediatorFee := aMemIni.ReadFloat(aSecao, 'mediatorFee', 0);
-  performDebit := aMemIni.ReadBool(aSecao, 'performDebit', False);
+  performDebit := aMemIni.ReadBool(aSecao, 'performDebit', True);
   returnReasonCode := aMemIni.ReadString(aSecao, 'returnReasonCode', EmptyStr);
   returnReasonInformation := aMemIni.ReadString(aSecao, 'returnReasonInformation', EmptyStr);
   returnType := StringToMateraReturnType(aMemIni.ReadString(aSecao, 'returnType', EmptyStr));
@@ -9790,7 +9790,7 @@ end;
 procedure TMateraInstantPayment.LoadFromMemIni(const aMemIni: TMemIniFile; aSecao, aPrefixo: String);
 begin
   expiration := aMemIni.ReadInteger(aSecao, aPrefixo + 'expiration', 0);
-  alias_:= aMemIni.ReadString(aSecao, aPrefixo + 'alias_', EmptyStr);
+  alias_:= aMemIni.ReadString(aSecao, aPrefixo + 'alias', EmptyStr);
   billingDueDate.LoadFromMemIni(aMemIni, aSecao, aPrefixo + 'billingDueDate_');
   dynamicQRCodeType := StringToMateraDynamicQRCodeType(aMemIni.ReadString(aSecao, aPrefixo + 'dynamicQRCodeType', EmptyStr));
   additionalInformation.LoadFromMemIni(aMemIni, aPrefixo);

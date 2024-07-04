@@ -49,6 +49,12 @@ Símbolo : Significado
 
 04/07/2024
 -- ACBrSchemasMatera --
+[*] Ajuste no valor padrão da propriedade performDebit nas classes TMateraInstantPaymentRequest e TMateraDevolucaoRequest.
+[*] Ajuste no nome da propriedade Alias na classe TMateraInstantPayment.
+    Por: Antonio Carlos Junior 
+
+04/07/2024
+-- ACBrSchemasMatera --
 [*] propriedade taxIdentifier da classe TMateraParticipantInstantPayment deve ser do tipo TMateraTaxIdentifier.
     Por: Antonio Carlos Junior
 

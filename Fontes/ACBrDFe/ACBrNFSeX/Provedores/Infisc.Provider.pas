@@ -277,8 +277,6 @@ begin
       end;
 
       ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
     except
       on E:Exception do
       begin
@@ -381,8 +379,6 @@ begin
         AResumo.Situacao := Response.Situacao;
 
         ProcessarMensagemErros(ANode, Response);
-
-        Response.Sucesso := (Response.Erros.Count = 0);
       end;
     except
       on E:Exception do
@@ -501,8 +497,6 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFS-e');
 
       if ANodeArray = nil then
@@ -608,8 +602,6 @@ begin
       ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFS-e');
 
@@ -720,8 +712,6 @@ begin
       ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
 
       with Response do
       begin
@@ -1205,6 +1195,7 @@ procedure TACBrNFSeProviderInfisc203.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.CancPreencherSerieNfse := True;
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
   with ConfigAssinar do

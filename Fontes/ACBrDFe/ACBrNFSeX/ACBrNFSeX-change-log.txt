@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/07/2024
+-- Infisc.Provider --
+[*] Adiciona configuração para que a CancPreencherSerieNfse na versão 2.03 para que 
+    consta no pedido de cancelamento a série da nota.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Arvoredo trocou de provedor, agora é IPM na versão 1.01
    Por: Lilian

@@ -49,6 +49,11 @@ Símbolo : Significado
 
 04/07/2024
 -- ACBrSchemasMatera --
+[*] propriedade taxIdentifier da classe TMateraParticipantInstantPayment deve ser do tipo TMateraTaxIdentifier.
+    Por: Antonio Carlos Junior
+
+04/07/2024
+-- ACBrSchemasMatera --
 [*] Inclusão do campo "field" na classe TMateraError.
     por: Luiz Carlos Ruiz Cestaro
 	

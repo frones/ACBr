@@ -2704,7 +2704,7 @@ type
     falias: String;
     fname: String;
     fpsp: TMateraPSP;
-    ftaxIdentifier: TMateraTaxIdentifierBasic;
+    ftaxIdentifier: TMateraTaxIdentifier;
   protected
     procedure AssignSchema(aSource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
@@ -2718,7 +2718,7 @@ type
 
     property alias_: String read falias write falias;
     property name: String read fname write fname;
-    property taxIdentifier: TMateraTaxIdentifierBasic read ftaxIdentifier write ftaxIdentifier;
+    property taxIdentifier: TMateraTaxIdentifier read ftaxIdentifier write ftaxIdentifier;
     property account: TMateraDestinationAccount read faccount write faccount;
     property psp: TMateraPSP read fpsp write fpsp;
   end;
@@ -6036,7 +6036,7 @@ end;
 constructor TMateraParticipantInstantPayment.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  ftaxIdentifier := TMateraTaxIdentifierBasic.Create('taxIdentifier');
+  ftaxIdentifier := TMateraTaxIdentifier.Create('taxIdentifier');
   faccount := TMateraDestinationAccount.Create('account');
   fpsp := TMateraPSP.Create('psp');
   Clear;

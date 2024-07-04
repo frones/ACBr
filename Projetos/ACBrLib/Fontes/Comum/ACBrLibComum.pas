@@ -102,7 +102,7 @@ type
     property Descricao: String read GetDescricao;
     property TraduzirUltimoRetorno: Boolean read FTraduzirUltimoRetorno write FTraduzirUltimoRetorno;
 
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure GravarLog(const AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure MoverStringParaPChar(const AString: String; sDest: PChar; var esTamanho: longint);
 
     function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
@@ -328,7 +328,7 @@ function TACBrLib.CalcularNomeArqLog: String;
 var
   APath: String;
 begin
-  if (Date <> FLogData) then
+  if (Date <> FLogData) then  // Mudou de dia ? Se SIM, Recalcule o nome do Log
   begin
     FLogData := Date;
     APath := PathWithDelim(fpConfig.Log.Path);
@@ -338,7 +338,13 @@ begin
         raise EACBrLibException.Create(ErrDiretorioNaoExiste, Format(SErrDiretorioInvalido, [APath]));
     end
     else
-      APath := ApplicationPath;
+    begin
+      {$IfDef ANDROID}
+       APath := PathWithDelim(ExtractFilePath(fpConfig.NomeArquivo));
+      {$Else}
+       APath := ApplicationPath;
+      {$EndIf}
+    end;
 
     FLogNome := APath + Self.Nome + '-' + DtoS(FLogData) + '.log';
   end;
@@ -346,16 +352,22 @@ begin
   Result := FLogNome;
 end;
 
-procedure TACBrLib.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
+procedure TACBrLib.GravarLog(const AMsg: String; NivelLog: TNivelLog;
+  Traduzir: Boolean);
 var
-  NomeArq: String;
+  NomeArq, s: String;
 begin
   if (FLogData < 0) or (Self.Nome = '') or
     (not Assigned(fpConfig)) or (NivelLog > fpConfig.Log.Nivel) then
     Exit;
 
+  s := FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + ' - ' + AMsg;
+  {$IfDef ANDROID}{$IfDef FPC}
+   SysLogWrite(PAnsiChar(s));      // Write a message to the Android system log.
+  {$EndIf}{$EndIf}
+
   NomeArq := CalcularNomeArqLog;
-  WriteLog(NomeArq, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + ' - ' + AMsg, Traduzir);
+  WriteLog(NomeArq, s, Traduzir);
 end;
 
 procedure TACBrLib.MoverStringParaPChar(const AString: String; sDest: PChar; var esTamanho: longint);

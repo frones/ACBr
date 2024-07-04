@@ -65,7 +65,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile);
 
     property Nivel: TNivelLog read FNivel;
-    property Path: String read FPath;
+    property Path: String read FPath write SetPath;
   end;
 
   { TSistemaConfig }
@@ -800,7 +800,13 @@ var
   APath: String;
 begin
   if EstaVazio(FNomeArquivo) then
-    FNomeArquivo := ApplicationPath + CNomeArqConf;
+  begin
+    {$IfDef ANDROID}
+     raise EACBrLibException.Create(ErrDiretorioNaoExiste, SErrArquivoConfigSemPathNoInicializar);
+    {$Else}
+     FNomeArquivo := ApplicationPath + CNomeArqConf;
+    {$EndIf}
+  end;
 
   APath := ExtractFilePath(FNomeArquivo);
   if NaoEstaVazio(APath) then
@@ -809,7 +815,13 @@ begin
       raise EACBrLibException.Create(ErrDiretorioNaoExiste, Format(SErrDiretorioInvalido, [APath]));
   end
   else
-    FNomeArquivo := ApplicationPath + ExtractFileName(FNomeArquivo);
+  begin
+    {$IfDef ANDROID}
+     raise EACBrLibException.Create(ErrDiretorioNaoExiste, Format(SErrDiretorioNaoInformado, [FNomeArquivo]));
+    {$Else}
+     FNomeArquivo := ApplicationPath + ExtractFileName(FNomeArquivo);
+    {$EndIf}
+  end;
 
   if (not Gravando) and (not FileExists(FNomeArquivo)) then
     raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [FNomeArquivo]));

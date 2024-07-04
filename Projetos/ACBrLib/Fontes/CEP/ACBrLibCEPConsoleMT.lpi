@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="ACBrLibCEP"/>
+      <ResourceType Value="res"/>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <RevisionNr Value="1"/>
+      <BuildNr Value="195"/>
+      <Language Value="0416"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
+    </VersionInfo>
+    <MacroValues Count="2">
+      <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+      <Macro2 Name="LCLWidgetType" Value="nogui"/>
+    </MacroValues>
+    <BuildModes Count="4">
+      <Item1 Name="i386-CDECL-DEBUG" Default="True"/>
+      <Item2 Name="Linux-x86_64">
+        <MacroValues Count="2">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Linux\Console\libacbrcep64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <DebugInfoType Value="dsDwarf3"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="android-armeabi-v7a">
+        <MacroValues Count="3">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+          <Macro3 Name="NDK" Value="$Env(NDK_DIR)"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Android\jniLibs\armeabi-v7a\libacbrcep"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="arm"/>
+            <TargetOS Value="android"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <DebugInfoType Value="dsDwarf3"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dANDROID
+-dMT 
+-dNOGUI 
+-Xd 
+-CfVFPv3 
+-CpARMV7A 
+-XParm-linux-androideabi-"/>
+          </Other>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="android-arm64-v8a">
+        <MacroValues Count="3">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+          <Macro3 Name="NDK" Value="$Env(NDK_DIR)"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Android\jniLibs\arm64-v8a\libacbrcep"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="aarch64"/>
+            <TargetOS Value="android"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dANDROID
+-dMT 
+-dNOGUI 
+-Xd 
+-XPaarch64-linux-android-"/>
+          </Other>
+        </CompilerOptions>
+      </Item4>
+      <SharedMatrixOptions Count="3">
+        <Item1 ID="426319760571" Modes="android-armeabi-v7a,Linux-x86_64,i386-CDECL-DEBUG,android-arm64-v8a" Type="IDEMacro" MacroName="ACBrDir" Value="$Env(ACBR_HOME)"/>
+        <Item2 ID="674480765109" Modes="i386-CDECL-DEBUG,Linux-x86_64,android-armeabi-v7a,android-arm64-v8a" Type="IDEMacro" MacroName="LCLWidgetType" Value="nogui"/>
+        <Item3 ID="366060019559" Modes="android-armeabi-v7a,android-arm64-v8a" Type="IDEMacro" MacroName="NDK" Value="$Env(NDK_DIR)"/>
+      </SharedMatrixOptions>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
+      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
+          </local>
+        </Mode0>
+      </Modes>
+    </RunParams>
+    <RequiredPackages Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPackages>
+    <Units Count="12">
+      <Unit0>
+        <Filename Value="ACBrLibCEP.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ACBrLibCEPConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Comum\ACBrLibComum.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Comum\ACBrLibConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Comum\ACBrLibConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="ACBrLibCEPDataModule.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="LibCEPDM"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="ACBrLibCEPST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="ACBrLibCEPConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="ACBrLibCEPRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ACBrLibCEPBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="ACBrLibCEPMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\Testes\CEP\bin\ACBrCEP32"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+      <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace"/>
+      <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
+      </Debugging>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <CustomOptions Value="-dDEBUG -dMT -dNOGUI"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="1">
+      <Item1>
+        <Name Value="EACBrLibException"/>
+      </Item1>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

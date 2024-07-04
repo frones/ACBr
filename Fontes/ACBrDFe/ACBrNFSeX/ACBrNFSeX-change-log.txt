@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Arvoredo trocou de provedor, agora é IPM na versão 1.01
+   Por: Lilian
+
 03/07/2024
 -- Fiorilli.Provider --
 [*] Ajustes para converter o XML de retorno em UTF-8 se necessário.

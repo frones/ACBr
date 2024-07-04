@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2024
+-- ACBrTEFAPICliSiTef --
+[*] Ajuste para não perguntar campos, que foram informados anteriormente por
+    "RespostasPorTipo"
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=78597
+    (por: DataCamp)
+
 25/06/2024
 -- ACBrTEFPayGoComum --
 [*] Workaround, para situações onde a VERO / BANRICOMPRAS não retorna o 

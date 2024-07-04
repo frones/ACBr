@@ -564,7 +564,8 @@ begin
              DefinicaoCampo.MascaraDeCaptura := EmptyStr;
 
              Validado := True;
-             TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+             if Resposta = '' then
+               TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
 
              if Resposta = '-1' then
                Interromper := True
@@ -583,9 +584,9 @@ begin
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
 
-             Resposta := '';
              Validado := True;
-             TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+             if Resposta = '' then
+               TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
 
              if Resposta = '-1' then
                Interromper := True
@@ -605,9 +606,10 @@ begin
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
 
-             Resposta := '';
              Validado := True;
-             TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+             if Resposta = '' then
+               TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+
              if Resposta = '-1' then
                Interromper := True
              else if Resposta = '-2' then
@@ -628,9 +630,10 @@ begin
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
 
-             Resposta := '';
              Validado := True;
-             TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+             if Resposta = '' then
+               TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+
              if Resposta = '-1' then
                Interromper := True
              else if Resposta = '-2' then
@@ -648,9 +651,10 @@ begin
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
              DefinicaoCampo.OcultarDadosDigitados := True;
 
-             Resposta := '';
              Validado := True;
-             TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+             if Resposta = '' then
+               TefAPI.QuandoPerguntarCampo(DefinicaoCampo, Resposta, Validado, Interromper);
+
              if Resposta = '-1' then
                Interromper := True
              else if Resposta = '-2' then

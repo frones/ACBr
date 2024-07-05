@@ -2259,12 +2259,12 @@ begin
                LFill( SER,4 )             +
                LFill( SUB,3 )             +
                LFill( COD_CONS,2 )        +
-               LFill( QTD_CONS,0,2 )      +
-               LFill( QTD_CANC,0,2 )      +
+               LFill( QTD_CONS,0 )        +
+               LFill( QTD_CANC,0 )        +
                LFill( DT_DOC )            +
                LFill( VL_DOC,0,2 )        +
                LFill( VL_DESC,0,2 )       +
-               LFill( CONS,0,2 )          +
+               LFill( CONS,0 )            +
                LFill( VL_FORN,0,2 )       +
                LFill( VL_SERV_NT,0,2 )    +
                LFill( VL_TERC,0,2 )       +

@@ -2571,12 +2571,12 @@ type
     fSER: String;          /// Série do documento fiscal
     fSUB: String;          /// Subsérie do documento fiscal
     fCOD_CONS: String;     /// Código de classe de consumo de energia elétrica, conforme a Tabela 4.4.5, ou Código de Consumo de Fornecimento D’água - Tabela 4.4.2 ou Código da classe de consumo de gás canalizado   conforme Tabela 4.4.3.
-    fQTD_CONS: Currency;   /// Quantidade de documentos consolidados neste registro
-    fQTD_CANC: Currency;   /// Quantidade de documentos cancelados
+    fQTD_CONS: Integer;    /// Quantidade de documentos consolidados neste registro
+    fQTD_CANC: Integer;    /// Quantidade de documentos cancelados
     fDT_DOC: TDateTime;    /// Data dos documentos consolidados
     fVL_DOC: currency;     /// Valor total dos documentos
     fVL_DESC: currency;    /// Valor acumulado dos descontos
-    fCONS: Currency;       /// Consumo total acumulado, em kWh (Código 06)
+    fCONS: Integer ;       /// Consumo total acumulado, em kWh (Código 06)
     fVL_FORN: currency;    /// Valor acumulado do fornecimento
     fVL_SERV_NT: currency; /// Valor acumulado dos serviços não-tributados pelo ICMS
     fVL_TERC: currency;    /// Valores cobrados em nome de terceiros
@@ -2600,12 +2600,12 @@ type
     property SER: String read fSER write fSER;
     property SUB: String read fSUB write fSUB;
     property COD_CONS: String read fCOD_CONS write fCOD_CONS;
-    property QTD_CONS: Currency read fQTD_CONS write fQTD_CONS;
-    property QTD_CANC: Currency read fQTD_CANC write fQTD_CANC;
+    property QTD_CONS: Integer read fQTD_CONS write fQTD_CONS;
+    property QTD_CANC: Integer read fQTD_CANC write fQTD_CANC;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
     property VL_DOC: currency read fVL_DOC write fVL_DOC;
     property VL_DESC: currency read fVL_DESC write fVL_DESC;
-    property CONS: Currency read fCONS write fCONS;
+    property CONS: Integer read fCONS write fCONS;
     property VL_FORN: currency read fVL_FORN write fVL_FORN;
     property VL_SERV_NT: currency read fVL_SERV_NT write fVL_SERV_NT;
     property VL_TERC: currency read fVL_TERC write fVL_TERC;

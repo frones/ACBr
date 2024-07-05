@@ -100,10 +100,11 @@ const
   C_URL_HOM         = 'https://cdpj.partners.bancointer.com.br/cobranca/v2';
 
   C_URLPIX          = 'https://cdpj.partners.bancointer.com.br/cobranca/v3';
-  C_URL_HOMPIX      = 'https://cdpj.partners.bancointer.com.br/cobranca/v3';
+  C_URL_HOMPIX      = 'https://cdpj-sandbox.partners.uatinter.co/cobranca/v3';
 
-  C_URL_OAUTH_PROD  = 'https://cdpj.partners.bancointer.com.br/oauth/v2/token';
-  C_URL_OAUTH_HOM   = 'https://cdpj.partners.bancointer.com.br/oauth/v2/token';
+  C_URL_OAUTH_PROD  = 'https://cdpj.partners.bancointer.com.br/oauth/v2/token';  
+  C_URL_OAUTH_HOM   = 'https://cdpj-sandbox.partners.uatinter.co/oauth/v2/token';  
+    
 
   C_CONTENT_TYPE    = 'application/json';
   C_ACCEPT          = 'application/json';

@@ -1382,6 +1382,9 @@ begin
     Result := AReader.LerXml;
     ATipo := AReader.tpXML;
     aXmlTratado := AReader.Arquivo;
+
+    if aNFSe.Tomador.RazaoSocial = '' then
+      aNFSe.Tomador.RazaoSocial := 'Tomador Não Identificado';
   finally
     AReader.Destroy;
   end;

@@ -44,10 +44,12 @@ Símbolo : Significado
 
 05/07/2024
 -- Diversos --
+[*] Refatorado a alteração anterior referente a ausencia do grupo <Tomador>
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Se o grupo <Tomador> não constar no XML o campo RazaoSocial do Tomador vai 
     receber a mensagem: 'Tomador Não Identificado' 
    Por: Italo Giurizzato Junior
-
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Tres Barras do Parana/PR, o provedor é Pronim versão 2.03
    Por: Alex Heinen

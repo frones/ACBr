@@ -125,9 +125,6 @@ begin
   else
     Result := LerXmlRps(XmlNode);
 
-  if NFSe.Tomador.RazaoSocial = '' then
-    NFSe.Tomador.RazaoSocial := 'Tomador Não Identificado';
-
   FreeAndNil(FDocument);
 end;
 
@@ -196,9 +193,9 @@ end;
 
 function TNFSeR_Siappa.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
-  if not Assigned(ANode) then Exit;
-
   Result := False;
+
+  if not Assigned(ANode) then Exit;
 end;
 
 end.

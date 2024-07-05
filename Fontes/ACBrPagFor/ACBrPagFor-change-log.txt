@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/07/2024
+-- PagFor.Bradesco.GravarTxtRemessa --
+[-] Correção, ao gerar o Registro 0 se PIX estava colocando o literal Pix sendo
+    que o correto é PIX.
+   Por: Eduardo Rodrigues de Faria
+
 20/06/2024
 --- Diversos ---
 [+] Implementação o Segmento J53 conforme a versão 10.11 do Manual CNAB240 - Febraban.

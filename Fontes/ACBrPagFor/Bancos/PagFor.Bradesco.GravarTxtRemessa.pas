@@ -97,7 +97,7 @@ begin
 
   if (PagFor.Lote.Count > 0) and
      (PagFor.Lote[0].Registro1.Servico.FormaLancamento in [flPIXTransferencia, flPIXQRCode]) then
-    LIdentificacaoRemessa := 'Pix';
+    LIdentificacaoRemessa := 'PIX';
 
   GravarCampo(LIdentificacaoRemessa, 3, tcStr);
   GravarCampo(PagFor.Registro0.ReservadoBanco, 17, tcStr);
@@ -114,50 +114,51 @@ begin
   Inc(FQtdeRegistros);
   Inc(FQtdeLotes);
 
-  if PagFor.Lote.Items[I].Registro1.Servico.Operacao = toExtrato then
+  if PagFor.Lote[I].Registro1.Servico.Operacao = toExtrato then
     Inc(FQtdeContasConc);
 
   FQtdeRegistrosLote := 1;
   FSequencialDoRegistroNoLote := 0;
 
-  FpFormaLancamento := PagFor.Lote.Items[I].Registro1.Servico.FormaLancamento;
+  FpFormaLancamento := PagFor.Lote[I].Registro1.Servico.FormaLancamento;
 
   GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
   GravarCampo(FQtdeLotes, 4, tcInt);
   GravarCampo(1, 1, tcInt);
-  GravarCampo(TpOperacaoToStr(PagFor.Lote.Items[I].Registro1.Servico.Operacao), 1, tcStr);
-  GravarCampo(TpServicoToStr(PagFor.Lote.Items[I].Registro1.Servico.TipoServico), 2, tcStr);
+  GravarCampo(TpOperacaoToStr(PagFor.Lote[I].Registro1.Servico.Operacao), 1, tcStr);
+  GravarCampo(TpServicoToStr(PagFor.Lote[I].Registro1.Servico.TipoServico), 2, tcStr);
   GravarCampo(FmLancamentoToStr(FpFormaLancamento), 2, tcStr);
 
-  if PagFor.Lote.Items[I].SegmentoA.Count > 0 then
+  if PagFor.Lote[I].SegmentoA.Count > 0 then
     // Se for parte do Header (Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente)
     // Segmento A - Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente
     GravarCampo('045', 3, tcStr)
   else
-    if PagFor.Lote.Items[I].SegmentoO.Count > 0 then
+    if PagFor.Lote[I].SegmentoO.Count > 0 then
       GravarCampo('012', 3, tcStr)
     else
       GravarCampo('040', 3, tcStr);
 
   GravarCampo(' ', 1, tcStr);
-  GravarCampo(TpInscricaoToStr(PagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Tipo), 1, tcStr);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Numero, 14, tcStrZero);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Convenio, 20, tcStr);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.DV, 1, tcStr);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.DV, 1, tcStr);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.DV, 1, tcStr);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Nome, 30, tcStr, True);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Informacao1, 40, tcStr, True);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Logradouro, 30, tcStr, True);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Numero, 5, tcStrZero);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Complemento, 15, tcStr, True);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Cidade, 20, tcStr, True);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.CEP, 8, tcInt);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Estado, 2, tcStr);
+  GravarCampo(TpInscricaoToStr(PagFor.Lote[I].Registro1.Empresa.Inscricao.Tipo), 1, tcStr);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.Inscricao.Numero, 14, tcStrZero);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.Convenio, 20, tcStr);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.ContaCorrente.Agencia.DV, 1, tcStr);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.ContaCorrente.Conta.DV, 1, tcStr);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.ContaCorrente.DV, 1, tcStr);
+  GravarCampo(PagFor.Lote[I].Registro1.Empresa.Nome, 30, tcStr, True);
+  GravarCampo(PagFor.Lote[I].Registro1.Informacao1, 40, tcStr, True);
+  GravarCampo(PagFor.Lote[I].Registro1.Endereco.Logradouro, 30, tcStr, True);
+  GravarCampo(PagFor.Lote[I].Registro1.Endereco.Numero, 5, tcStrZero);
+  GravarCampo(PagFor.Lote[I].Registro1.Endereco.Complemento, 15, tcStr, True);
+  GravarCampo(PagFor.Lote[I].Registro1.Endereco.Cidade, 20, tcStr, True);
+  GravarCampo(PagFor.Lote[I].Registro1.Endereco.CEP, 8, tcInt);
+  GravarCampo(PagFor.Lote[I].Registro1.Endereco.Estado, 2, tcStr);
 
-  if (PagFor.Lote.Items[I].SegmentoA.Count > 0) or (PagFor.Lote.Items[I].SegmentoO.Count > 0) then
+  if (PagFor.Lote[I].SegmentoA.Count > 0) or (PagFor.Lote[I].SegmentoO.Count > 0) or
+     (PagFor.Lote[0].Registro1.Servico.FormaLancamento in [flPIXTransferencia, flPIXQRCode])  then
   begin
     // Se for parte do Header (Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente)
     // Segmento A - Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente
@@ -179,7 +180,7 @@ begin
   begin
     FpLinha := '';
 
-    with mSegmentoBList.Items[J] do
+    with mSegmentoBList[J] do
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
@@ -242,7 +243,7 @@ begin
   begin
     FpLinha := '';
 
-    with mSegmentoJ52List.Items[J] do
+    with mSegmentoJ52List[J] do
     begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);

@@ -211,6 +211,8 @@ type
       C_CountryName: String = ''; EMAIL_EmailAddress: String = '';
       Algorithm: TACBrOpenSSLAlgorithm = algSHA512): String;
 
+    procedure CreatePFX(AStrem: TStream; const Senha: AnsiString; const FriendlyName: String);
+
     property PrivateKeyAsString: AnsiString read GetPrivateKeyAsString;
     property PublicKeyAsString: AnsiString read GetPublicKeyAsString;
     property PublicKeyAsOpenSSH: AnsiString read GetPublicKeyAsOpenSSH;
@@ -1512,6 +1514,29 @@ begin
     end;
   finally
     X509Free(x);
+  end;
+end;
+
+procedure TACBrOpenSSLUtils.CreatePFX(AStrem: TStream; const Senha: AnsiString;
+  const FriendlyName: String);
+var
+  s: AnsiString;
+  pfx: SslPtr;
+  bio: PBIO;
+begin
+  CheckPrivateKeyIsLoaded;
+  CheckCertificateIsLoaded;
+
+  pfx := PKCS12create(Senha, FriendlyName, fEVP_PrivateKey, fCertX509, nil, 0, 0, 0, 0, 0);
+  bio := BioNew(BioSMem);
+  try
+    if (i2dPKCS12bio(bio, pfx) <> 1) then
+      raise EACBrOpenSSLException.Create('i2d_PKCS12_bio' + sLineBreak + GetLastOpenSSLError);
+    s := BioToStr(bio);
+    AStrem.Size := 0;
+    WriteStrToStream(AStrem, s);
+  finally
+    BioFreeAll(bio);
   end;
 end;
 

@@ -1319,8 +1319,12 @@ var
   procedure ErrRemoveState(pid: cInt);
   procedure RandScreen;
   function d2iPKCS12bio(b:PBIO; Pkcs12: SslPtr): SslPtr;
+  function i2dPKCS12bio(b:PBIO; Pkcs12: SslPtr): cint;
   function PKCS12parse(p12: SslPtr; pass: AnsiString; var pkey: pEVP_PKEY;
      var cert: pX509; var ca: SslPtr): cInt;
+  function PKCS12create(pass: AnsiString; name: AnsiString; pkey: PEVP_PKEY;
+     cert: pX509; ca: SslPtr; nid_key: cint = 0; nid_cert: cint = 0; iter: cint = 0;
+     mac_iter: cint = 0; keytype: cint = 0): SslPtr;
   procedure PKCS12free(p12: SslPtr);
   function Asn1StringTypeNew(aType : cint): PASN1_STRING;
   Function Asn1UtctimePrint(b : PBio; a: PASN1_UTCTIME) : integer;
@@ -1892,8 +1896,12 @@ type
   TBioWrite = function(b: PBIO; Buf: PAnsiChar; Len: cInt): cInt; cdecl;
   TBioReset = function(b: pBIO): cint; cdecl;
   Td2iPKCS12bio = function(b:PBIO; Pkcs12: SslPtr): SslPtr; cdecl;
+  Ti2dPKCS12bio = function(b:PBIO; Pkcs12: SslPtr): cint; cdecl;
   TPKCS12parse = function(p12: SslPtr; pass: PAnsiChar; var pkey: pEVP_PKEY;
     var cert: pX509; var ca: SslPtr): cInt; cdecl;
+  TPKCS12create = function(pass: AnsiString; name: AnsiString; pkey: PEVP_PKEY;
+     cert: pX509; ca: SslPtr; nid_key: cint = 0; nid_cert: cint = 0; iter: cint = 0;
+     mac_iter: cint = 0; keytype: cint = 0): SslPtr; cdecl;
   TPKCS12free = procedure(p12: SslPtr); cdecl;
   TAsn1StringTypeNew = function(aype : cint): SSlPtr; cdecl;
   TAsn1UtcTimeSetString = function(t : PASN1_UTCTIME; S : PAnsiChar): cint; cdecl;
@@ -2176,7 +2184,9 @@ var
   _BioWrite: TBioWrite = nil;
   _BioReset: TBioReset = nil;
   _d2iPKCS12bio: Td2iPKCS12bio = nil;
+  _i2dPKCS12bio: Ti2dPKCS12bio = nil;
   _PKCS12parse: TPKCS12parse = nil;
+  _PKCS12Create: TPKCS12create = nil;
   _PKCS12free: TPKCS12free = nil;
   _Asn1StringTypeNew: TAsn1StringTypeNew = nil;
   _Asn1UtctimeSetString : TAsn1UtctimeSetString = Nil;
@@ -3195,6 +3205,14 @@ begin
     Result := nil;
 end;
 
+function i2dPKCS12bio(b: PBIO; Pkcs12: SslPtr): cint;
+begin
+  if InitSSLInterface and Assigned(_i2dPKCS12bio) then
+    Result := _i2dPKCS12bio(b, Pkcs12)
+  else
+    Result := 0;
+end;
+
 function PKCS12parse(p12: SslPtr; pass: AnsiString; var pkey: pEVP_PKEY;
   var cert: pX509; var ca: SslPtr): cInt;
 begin
@@ -3202,6 +3220,16 @@ begin
     Result := _PKCS12parse(p12, PAnsiChar(pass), pkey, cert, ca)
   else
     Result := 0;
+end;
+
+function PKCS12create(pass: AnsiString; name: AnsiString; pkey: PEVP_PKEY;
+  cert: pX509; ca: SslPtr; nid_key: cint; nid_cert: cint; iter: cint;
+  mac_iter: cint; keytype: cint): SslPtr;
+begin
+  if InitSSLInterface and Assigned(_PKCS12Create) then
+    Result := _PKCS12Create(pass, name, pkey, cert, ca, nid_key, nid_cert, iter, mac_iter, keytype)
+  else
+    Result := nil;
 end;
 
 procedure PKCS12free(p12: SslPtr);
@@ -5684,7 +5712,9 @@ begin
   _BioWrite := GetProcAddr(SSLUtilHandle, 'BIO_write');
   _BioReset := GetProcAddr(SSLUtilHandle, 'BIO_reset');
   _d2iPKCS12bio := GetProcAddr(SSLUtilHandle, 'd2i_PKCS12_bio');
+  _i2dPKCS12bio := GetProcAddr(SSLUtilHandle, 'i2d_PKCS12_bio');
   _PKCS12parse := GetProcAddr(SSLUtilHandle, 'PKCS12_parse');
+  _PKCS12Create := GetProcAddr(SSLUtilHandle, 'PKCS12_create');
   _PKCS12free := GetProcAddr(SSLUtilHandle, 'PKCS12_free');
   _Asn1UtctimeSetString := GetProcAddr(SSLUtilHandle, 'ASN1_UTCTIME_set_string');
   _Asn1StringTypeNew := GetProcAddr(SSLUtilHandle, 'ASN1_STRING_type_new');
@@ -6229,7 +6259,9 @@ begin
   _BioWrite := nil;
   _BioReset := nil;
   _d2iPKCS12bio := nil;
+  _i2dPKCS12bio := nil;
   _PKCS12parse := nil;
+  _PKCS12Create := nil;
   _PKCS12free := nil;
   _Asn1UtctimeSetString := nil;
   _Asn1StringTypeNew := nil;

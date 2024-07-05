@@ -573,6 +573,10 @@ begin
         Result := LerXmlNfse(AuxNode);
       end;
     end;
+
+    if NFSe.Tomador.RazaoSocial = '' then
+      NFSe.Tomador.RazaoSocial := 'Tomador Não Identificado';
+
   finally
     FreeAndNil(FDocument);
     FreeAndNil(DadosTxt);

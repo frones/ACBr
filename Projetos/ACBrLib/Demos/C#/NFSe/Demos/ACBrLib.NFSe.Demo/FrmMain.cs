@@ -427,7 +427,7 @@ namespace ACBrLibNFSe.Demo
                 var aLote = "1";
                 if (InputBox.Show("Enviar Síncrono", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
-                var ret = ACBrNFSe.Emitir(aLote, 3, false);
+                var ret = ACBrNFSe.Emitir(aLote, 2, false);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)
@@ -445,7 +445,7 @@ namespace ACBrLibNFSe.Demo
                 var aLote = "1";
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
-                var ret = ACBrNFSe.Emitir(aLote, 4, false);
+                var ret = ACBrNFSe.Emitir(aLote, 3, false);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)

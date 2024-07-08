@@ -43,10 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/07/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Mato Castelhano/RS, o provedor é SystemPro
+   Por: BSSoft
 -- ACBrNFSeXClass/ACBrNFSeXLerXml_ABRASFv2 --
 [*] Criando um campo para conter o ID da confirmação do cancelamento.
    Por: Italo Giurizzato Junior
-
 -- Diversos --
 [+] Implementado o provedor ISSCampinas, uma vez que a prefeitura comprou o sistema
     do provedor ISSDSF e para garantir que não ocorra efeito colateral quando um dos

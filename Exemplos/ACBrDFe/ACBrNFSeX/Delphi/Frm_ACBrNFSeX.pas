@@ -685,7 +685,7 @@ begin
   begin
     NotasFiscais.NumeroLote := NumLote;
 
-    // Provedor ISSDSF e ISSSaoPaulo
+    // Provedor ISSCampinas, ISSDSF e ISSSaoPaulo
     NotasFiscais.Transacao := True;
 
     with NotasFiscais.New.NFSe do
@@ -721,7 +721,7 @@ begin
       cNFSe := GerarCodigoDFe(StrToIntDef(Numero, 0));
       ModeloNFSe := '90';
 
-      // Para os provedores ISSDSF e Siat no campo SeriePrestacao devemos informar:
+      // Para os provedores ISSCampinas, ISSDSF e Siat no campo SeriePrestacao devemos informar:
       {
         Número do equipamento emissor do RPS ou série de prestação.
         Caso não utilize a série, preencha o campo com o valor ‘99’ que indica
@@ -731,7 +731,8 @@ begin
       }
       // Para o provedor ISSBarueri usar esse campo para informar a série da nota
       // a ser cancelada ou substituida.
-      if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat] then
+      if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSCampinas, proISSDSF,
+           proSiat] then
         SeriePrestacao := '99'
       else
         SeriePrestacao := '1';
@@ -742,7 +743,7 @@ begin
         proEquiplano:
           IdentificacaoRps.Serie := '1';
 
-        proISSDSF, proSiat:
+        proISSCampinas, proISSDSF, proSiat:
           IdentificacaoRps.Serie := 'NF';
       else
         IdentificacaoRps.Serie := '85';
@@ -825,7 +826,8 @@ begin
       if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEquiplano, proFacundo, proFGMaiss, proEL,
            proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSam,
-           proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS, proSoftPlan] then
+           proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS, proISSCampinas,
+           proSoftPlan] then
       begin
         Servico.Valores.ValorServicos := 0;
 
@@ -1020,7 +1022,7 @@ begin
       end;
 
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
-        proSiat, proISSDSF, proCTAConsult:
+        proSiat, proISSCampinas, proISSDSF, proCTAConsult:
           // código com 9 digitos
           Servico.CodigoCnae := '452000200';
       else
@@ -1041,7 +1043,7 @@ begin
       // Provedor SoftPlan
       Servico.CFPS := '9201';
 
-      // Provedor ISSDSF
+      // Provedor ISSCampinas e ISSDSF
       // (ttIsentaISS, ttNaoIncidencianoMunic, ttImune, ttExigibilidadeSusp,
       //  ttNaoTributavel, ttTributavel, ttTributavelFixo, ttTributavelSN,
       //  ttMEI);
@@ -1291,7 +1293,7 @@ begin
 
       // Provedores que permitem informar mais de 1 serviço:
       if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEloTech, profintelISS,
-          proSimplISS, proSystemPro] then
+          proSimplISS] then
       begin
         // Provedor Elotech
         Servico.Valores.RetidoPis := snNao;
@@ -1734,7 +1736,7 @@ begin
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
       proISSDSF, proISSLencois, proModernizacaoPublica, proPrescon, proPriMax, proPublica,
       proSiat, proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
-      proWebFisco, proCenti, proCTA, proBauhaus, proSigISSWeb] then
+      proWebFisco, proCenti, proCTA, proBauhaus, proSigISSWeb, proISSCampinas] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -1750,7 +1752,8 @@ begin
 
     // Os Provedores da lista requerem que seja informado o código de verificação
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proInfisc, proISSDSF, proSiappa,
-         proISSLencois, proGoverna, proSiat, proSigep, proElotech, proCenti] then
+         proISSLencois, proGoverna, proSiat, proSigep, proElotech, proCenti,
+         proISSCampinas] then
     begin
       CodVerif := '12345678';
       if not (InputQuery(Titulo, 'Código de Verificação ou Chave de Autenticação', CodVerif)) then
@@ -1962,7 +1965,7 @@ begin
   Lote := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico, proElotech,
        proInfisc, proIPM, proISSDSF, proEquiplano, proeGoverneISS, proGeisWeb,
-       proSiat, proISSSaoPaulo] then
+       proSiat, proISSSaoPaulo, proISSCampinas] then
   begin
     if not (InputQuery('Consultar Lote', 'Número do Lote:', Lote)) then
       exit;
@@ -2057,7 +2060,7 @@ begin
     exit;
 
   NumLote := '1';
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat, proISSCampinas] then
   begin
     if not(InputQuery(xTitulo, 'Numero do Lote:', NumLote)) then
       exit;
@@ -2105,7 +2108,7 @@ begin
       CNPJInter := CPFCNPJ_Inter;
       IMInter   := IM_Inter;
 
-      // Necessário para os provedores: proISSDSF, proSiat
+      // Necessário para os provedores: proISSCampinas, proISSDSF, proSiat
       NumeroLote := NumLote;
 
       // Necessário para os provedores que seguem a versão 2 do layout da ABRASF
@@ -2159,7 +2162,7 @@ begin
         exit;
     end;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat] then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat, proISSCampinas] then
     begin
       if not(InputQuery(xTitulo, 'Numero do Lote:', NumLote)) then
         exit;
@@ -2192,6 +2195,7 @@ begin
   end;
 
   case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+    proISSCampinas,
     proISSDSF,
     proSiat:
       begin
@@ -2351,7 +2355,7 @@ begin
     exit;
 
   NumLote := '1';
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat, proISSCampinas] then
   begin
     if not(InputQuery(xTitulo, 'Numero do Lote:', NumLote)) then
       exit;
@@ -2381,7 +2385,7 @@ begin
     exit;
 
   // Provedor ISSDSF e Siat
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat, proISSCampinas] then
   begin
     // Utilizado como serie da prestação
     SerieRps := '99';
@@ -3727,7 +3731,7 @@ begin
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proConam, proEquiplano,
     proGoverna, proIPM, proISSDSF, proISSLencois, proModernizacaoPublica,
     proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco, proSudoeste,
-    proBauhaus] then
+    proBauhaus, proISSCampinas] then
   begin
     Motivo := 'Teste de Cancelamento';
     if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then

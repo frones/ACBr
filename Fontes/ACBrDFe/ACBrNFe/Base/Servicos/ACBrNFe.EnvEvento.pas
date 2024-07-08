@@ -412,7 +412,7 @@ begin
     end;
   end;
 
-  Result.AppendChild(AddNode(tcStr, 'HP27', 'tpAutorizacao', 1, 1, 1,
+  Result.AppendChild(AddNode(tcStr, 'HP27', 'tpAutorizacao', 1, 1, 0,
               AutorizacaoToStr(Evento[Idx].InfEvento.detEvento.tpAutorizacao)));
 
   if Evento[Idx].InfEvento.detEvento.tpAutorizacao = taPermite then
@@ -1222,7 +1222,7 @@ begin
           teAtorInteressadoNFe:
             begin
               infEvento.detEvento.tpAutor := StrToTipoAutor(ok, INIRec.ReadString(sSecao, 'tpAutor', '1'));
-              infEvento.detEvento.tpAutorizacao := StrToAutorizacao(ok, INIRec.ReadString(sSecao, 'tpAutorizacao', '0'));
+              infEvento.detEvento.tpAutorizacao := StrToAutorizacao(ok, INIRec.ReadString(sSecao, 'tpAutorizacao', ''));
 
               J := 1;
               while true do

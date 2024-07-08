@@ -188,10 +188,10 @@ const
     '2', '3', '4', '9');
 
 type
-  TAutorizacao = (taNaoPermite, taPermite);
+  TAutorizacao = (taNaoPermite, taPermite, taNaoInformar);
 
 const
-  TAutorizacaoArrayStrings: array[TAutorizacao] of string = ('0', '1');
+  TAutorizacaoArrayStrings: array[TAutorizacao] of string = ('0', '1', '');
 
 type
   TindIntermed = (iiSemOperacao, iiOperacaoSemIntermediador,
@@ -779,12 +779,14 @@ end;
 
 function AutorizacaoToStr(const t: TAutorizacao): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1'], [taNaoPermite, taPermite]);
+  result := EnumeradoToStr(t, ['0', '1', ''],
+                              [taNaoPermite, taPermite, taNaoInformar]);
 end;
 
 function StrToAutorizacao(out ok: boolean; const s: string): TAutorizacao;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1'], [taNaoPermite, taPermite]);
+  result := StrToEnumerado(ok, s, ['0', '1', ''],
+                                  [taNaoPermite, taPermite, taNaoInformar]);
 end;
 
 function IndIntermedToStr(const t: TindIntermed): string;

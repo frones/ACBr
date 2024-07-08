@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/07/2024
+-- ACBrNFe.EnvEvento/pcnConversaoNFe --
+[*] Acrescentado o enumerador: taNaoInformar com o objetivo de fazer com que a
+    tag <tpAutorizacao> do evento Ator Interessado não seja gerada.
+   Por: Italo Giurizzato Junior
+
 03/07/2024
 -- ACBrNFe.Inut --
 [-] Estava perdendo o conteudo do campo xJust.

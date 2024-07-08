@@ -164,6 +164,8 @@ begin
 
   if AuxNode <> nil then
   begin
+    NFSe.NfseCancelamento.ID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+
     LerPedido(AuxNode);
     LerInfConfirmacaoCancelamento(AuxNode);
 

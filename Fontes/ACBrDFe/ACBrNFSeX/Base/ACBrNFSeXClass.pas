@@ -818,6 +818,7 @@ type
     FValorTotalRecebido: Double;
     // Provedor ISSBarueri
     FPrestadoEmViasPublicas: Boolean;
+    FLocalPrestacao: TLocalPrestacao;
     // Provedor GeisWeb
     FTipoLancamento: TTipoLancamento;
     FCodigoNBS: string;
@@ -873,6 +874,7 @@ type
 
     // Provedor ISSBarueri
     property PrestadoEmViasPublicas: Boolean read FPrestadoEmViasPublicas write FPrestadoEmViasPublicas;
+    property LocalPrestacao: TLocalPrestacao read FLocalPrestacao write FLocalPrestacao;
     // Provedor GeisWeb
     property TipoLancamento: TTipoLancamento read FTipoLancamento write FTipoLancamento;
     // Provedor PadraoNacional
@@ -1153,6 +1155,7 @@ type
 
   TConfirmacaoCancelamento = class(TObject)
   private
+    FID: string;
     FInfID: TInfID;
     FPedido: TPedidoCancelamento;
     FSucesso: Boolean;
@@ -1161,6 +1164,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    property ID: string read FID write FID;
     property InfID: TInfID read FInfID write FInfID;
     property Pedido: TPedidoCancelamento read FPedido write FPedido;
     property Sucesso: Boolean read FSucesso write FSucesso;
@@ -1592,6 +1596,7 @@ begin
 
   FDescricao := '';
   FPrestadoEmViasPublicas := False;
+  FLocalPrestacao := lpMunicipio;
 
   FEndereco := TEndereco.Create;
 end;

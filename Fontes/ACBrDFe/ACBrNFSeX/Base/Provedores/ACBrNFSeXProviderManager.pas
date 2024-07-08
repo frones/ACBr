@@ -185,6 +185,7 @@ uses
   Intertec.Provider,
   ISSBarueri.Provider,
   ISSCambe.Provider,
+  ISSCampinas.Provider,
   ISSDSF.Provider,
   ISSLencois.Provider,
   ISSSaoPaulo.Provider,
@@ -403,7 +404,8 @@ begin
       proISSCamacari:
         Result := TACBrNFSeProviderISSCamacari201.Create(ACBrNFSe);
 
-      proISSCambe: Result := TACBrNFSeProviderISSCambe.Create(ACBrNFSe);
+      proISSCambe:    Result := TACBrNFSeProviderISSCambe.Create(ACBrNFSe);
+      proISSCampinas: Result := TACBrNFSeProviderISSCampinas.Create(ACBrNFSe);
 
       proISSCuritiba:
         Result := TACBrNFSeProviderISSCuritiba.Create(ACBrNFSe);

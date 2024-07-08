@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2024
+-- Diversos --
+[+] Implementado o provedor ISSCampinas, uma vez que a prefeitura comprou o sistema
+    do provedor ISSDSF e para garantir que não ocorra efeito colateral quando um dos
+    dois resolverem fazer alguma alteração.
+   Por: Italo Giurizzato Junior
+
 05/07/2024
 -- Diversos --
 [*] Refatorado a alteração anterior referente a ausencia do grupo <Tomador>

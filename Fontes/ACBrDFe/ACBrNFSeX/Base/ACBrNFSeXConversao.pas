@@ -128,18 +128,18 @@ type
                    proGestaoISS, proGiap, proGinfes, proGiss, proGovBR,
                    proGovDigital, proGoverna, proHorus, proiiBrasil, proInfisc,
                    proIntertec, proIPM, proIsaneto, proISSBarueri, proISSCamacari,
-                   proISSCambe, proISSCuritiba, proISSDigital, proISSDSF, proISSe,
-                   proISSFortaleza, proISSGoiania, proISSIntel, proISSJoinville,
-                   proISSLegal, proISSLencois, proISSNatal, proISSNet,
-                   proISSPortoVelho, proISSRecife, proISSRio, proISSSalvador,
-                   proISSSaoPaulo, proISSSJP, proISSVitoria, proLexsom, proLibre,
-                   proLink3, proMegaSoft, proMetropolisWeb, proMitra,
-                   proModernizacaoPublica, proNEAInformatica, proNFSeBrasil,
-                   proNotaInteligente, proPrescon, proPriMax, proProdata,
-                   proPRODAUB, proPronim, proPublica, proPublicSoft, proRLZ,
-                   proSam, proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet,
-                   proSiappa, proSiapSistemas, proSiat, proSigCorp, proSigep,
-                   proSigISS, proSigISSWeb, proSilTecnologia, proSimple,
+                   proISSCambe, proISSCampinas, proISSCuritiba, proISSDigital,
+                   proISSDSF, proISSe, proISSFortaleza, proISSGoiania, proISSIntel,
+                   proISSJoinville, proISSLegal, proISSLencois, proISSNatal,
+                   proISSNet, proISSPortoVelho, proISSRecife, proISSRio,
+                   proISSSalvador, proISSSaoPaulo, proISSSJP, proISSVitoria,
+                   proLexsom, proLibre, proLink3, proMegaSoft, proMetropolisWeb,
+                   proMitra, proModernizacaoPublica, proNEAInformatica,
+                   proNFSeBrasil, proNotaInteligente, proPrescon, proPriMax,
+                   proProdata, proPRODAUB, proPronim, proPublica, proPublicSoft,
+                   proRLZ, proSam, proSaatri, proSafeWeb, proSH3, proSiam,
+                   proSiapNet, proSiappa, proSiapSistemas, proSiat, proSigCorp,
+                   proSigep, proSigISS, proSigISSWeb, proSilTecnologia, proSimple,
                    proSimplISS, proSintese, proSisPMJP, proSistemas4R, proSmarAPD,
                    proSoftPlan, proSpeedGov, proSSInformatica, proSudoeste,
                    proSysISS, proSystemPro, proTcheInfo, proTecnos, proThema,
@@ -600,6 +600,12 @@ type
 const
   TNaoNIFArrayStrings: array[TNaoNIF] of string = ('0', '1', '2');
 
+type
+  TLocalPrestacao = (lpMunicipio, lpForaMunicipio);
+
+const
+  TLocalPrestacaoArrayStrings: array[TLocalPrestacao] of string = ('1', '2');
+
 {
   Declaração das funções de conversão
 }
@@ -768,6 +774,9 @@ function NaoNIFToStr(const t: TNaoNIF): string;
 
 function CodIBGEPaisToSiglaISO2(t: Integer): string;
 function SiglaISO2ToCodIBGEPais(const t: string): Integer;
+
+function LocalPrestacaoToStr(t: TLocalPrestacao): string;
+function StrToLocalPrestacao(out ok: boolean; const s: string): TLocalPrestacao;
 
 const
   SiglaISO2Pais: array[0..247] of string = ('AF', 'AL', 'CW', 'DE', 'BF', 'AD',
@@ -13207,4 +13216,16 @@ begin
   end;
 end;
 
+function LocalPrestacaoToStr(t: TLocalPrestacao): string;
+begin
+  Result := EnumeradoToStr(t, ['1', '2'],
+                           [lpMunicipio, lpForaMunicipio]);
+end;
+
+function StrToLocalPrestacao(out ok: boolean; const s: string): TLocalPrestacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [lpMunicipio, lpForaMunicipio]);
+end;
 end.

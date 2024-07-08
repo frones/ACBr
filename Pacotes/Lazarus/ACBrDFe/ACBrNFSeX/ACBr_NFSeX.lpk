@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="423">
+    <Files Count="426">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1707,6 +1707,18 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Sam.Provider.pas"/>
         <UnitName Value="Sam.Provider"/>
       </Item423>
+      <Item424>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCampinas.GravarXml.pas"/>
+        <UnitName Value="ISSCampinas.GravarXml"/>
+      </Item424>
+      <Item425>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCampinas.LerXml.pas"/>
+        <UnitName Value="ISSCampinas.LerXml"/>
+      </Item425>
+      <Item426>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCampinas.Provider.pas"/>
+        <UnitName Value="ISSCampinas.Provider"/>
+      </Item426>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

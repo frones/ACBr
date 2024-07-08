@@ -122,6 +122,7 @@ uses
   PRODAUB.GravarXml, PRODAUB.LerXml, PRODAUB.Provider, Isaneto.GravarXml, 
   Isaneto.LerXml, Isaneto.Provider, Elmar.GravarXml, Elmar.LerXml, 
   Elmar.Provider, Sam.GravarXml, Sam.LerXml, Sam.Provider, 
+  ISSCampinas.GravarXml, ISSCampinas.LerXml, ISSCampinas.Provider, 
   LazarusPackageIntf;
 
 implementation

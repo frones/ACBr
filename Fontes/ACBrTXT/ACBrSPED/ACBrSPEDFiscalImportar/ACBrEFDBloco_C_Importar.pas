@@ -410,6 +410,7 @@ begin
     ALIQ_COFINS_R := ValorF;
     VL_COFINS := ValorF;
     COD_CTA := Valor;
+    VL_ABAT_NT := ValorF
   end;
 end;
 

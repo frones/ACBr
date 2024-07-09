@@ -522,7 +522,7 @@ begin
     LJsonArray := TACBrJSONArray.Create;
     if (ATitulo.Instrucao1) <> '' then
     begin
-      LJsonDados.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 1, 2));
+      LJsonDados.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 1, 1));
       if Boleto.Cedente.CedenteWS.IndicadorPix then
         LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2))
       else

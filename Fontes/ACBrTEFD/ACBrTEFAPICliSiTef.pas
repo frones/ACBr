@@ -126,7 +126,7 @@ type
     procedure AbortarTransacaoEmAndamento; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
-    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000;
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: integer = 30000;
       MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
 
     property TEFCliSiTefAPI: TACBrTEFCliSiTefAPI read fTEFCliSiTefAPI;
@@ -1058,7 +1058,7 @@ begin
 end;
 
 function TACBrTEFAPIClassCliSiTef.ObterDadoPinPad(
-  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt; MinLen: SmallInt;
+  TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: integer; MinLen: SmallInt;
   MaxLen: SmallInt): String;
 Var
   DadoPortador: String;

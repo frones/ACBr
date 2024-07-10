@@ -167,7 +167,7 @@ type
   public
     procedure ExibirMensagemPinPad(const MsgPinPad: String); virtual;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-      TimeOut: SmallInt = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; virtual;
+      TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; virtual;
     function VerificarPresencaPinPad: Byte; virtual;
   end;
 
@@ -201,7 +201,7 @@ type
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-      TimeOut: SmallInt = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String;
+      TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String;
     function VerificarPresencaPinPad: Byte;
 
     property TEF: TACBrTEFAPIClass read GetTEFAPIClass;
@@ -309,7 +309,7 @@ begin
 end;
 
 function TACBrTEFAPIClass.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-  TimeOut: SmallInt; MinLen: SmallInt; MaxLen: SmallInt): String;
+  TimeOut: Integer; MinLen: SmallInt; MaxLen: SmallInt): String;
 begin
   Result := '';
   ErroAbstract('ObterDadoPinPad');
@@ -365,7 +365,7 @@ begin
 end;
 
 function TACBrTEFAPI.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
-  TimeOut: SmallInt; MinLen: SmallInt; MaxLen: SmallInt): String;
+  TimeOut: Integer; MinLen: SmallInt; MaxLen: SmallInt): String;
 begin
   GravarLog('ObterDadoPinPad( '+
             GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) )+', '+

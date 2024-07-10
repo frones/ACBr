@@ -37,7 +37,7 @@ unit ACBrLibCEPDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCEP, ACBrUtil.FilesIO;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrCEP, ACBrUtil.FilesIO, ACBrBase;
 
 type
 
@@ -46,6 +46,8 @@ type
   TLibCEPDM = class(TDataModule)
     ACBrCEP1: TACBrCEP;
 
+    procedure ACBrCEP1QuandoGravarLog(const ALogLine: String;
+      var Tratado: Boolean);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
 
@@ -76,6 +78,14 @@ begin
   FLock := TCriticalSection.Create;
 end;
 
+procedure TLibCEPDM.ACBrCEP1QuandoGravarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  Tratado := True;
+  if (Lib.Config.Log.Nivel > logNenhum) then
+    GravarLog('TACBrCEP: '+ALogLine, logNormal);
+end;
+
 procedure TLibCEPDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
@@ -95,6 +105,7 @@ begin
     Senha         := pLibConfig.CEPConfig.Senha;
     PesquisarIBGE := pLibConfig.CEPConfig.PesquisarIBGE;
     HTTPSend.Sock.SSL.SSLType := pLibConfig.CEPConfig.SSLType;
+    NivelLog := Integer(pLibConfig.Log.Nivel);
   end;
 end;
 

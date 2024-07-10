@@ -8,6 +8,9 @@ object LibCEPDM: TLibCEPDM
   Width = 150
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
+    OnQuandoGravarLog = ACBrCEP1QuandoGravarLog
     PesquisarIBGE = True
     Left = 61
     Top = 32

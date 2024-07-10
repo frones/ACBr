@@ -216,6 +216,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
               <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
             </Debugging>
@@ -444,13 +445,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\CEP\bin\ACBrLibCEPTest.exe"/>
           </local>
         </Mode0>
       </Modes>
@@ -550,4 +551,11 @@
       <CustomOptions Value="-dNOGUI"/>
     </Other>
   </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="1">
+      <Item1>
+        <Name Value="EACBrLibException"/>
+      </Item1>
+    </Exceptions>
+  </Debugging>
 </CONFIG>

@@ -1153,7 +1153,8 @@ begin
     // DEBUG //
     //HTTPSend.Document.SaveToFile( '_HttpSend.txt' );
     RegistrarLog('HTTPMethod( ' + Method + ', URL: ' + fURL + ' )');
-    RegistrarLog(' - Req.Headers: ' + HTTPSend.Headers.Text);
+    if (NivelLog > 2) then
+      RegistrarLog(' - Req.Headers: ' + HTTPSend.Headers.Text);
 
     if (FTimeOut > 0) then
     begin
@@ -1221,11 +1222,9 @@ begin
 
     fHTTPResultCode := fHttpSend.ResultCode;
     if (NivelLog > 1) then
-      RegistrarLog('  ResultCode: ' + IntToStr(fHTTPResultCode));
-    if (NivelLog > 2) then
-      RegistrarLog('  ResultString: ' + fHttpSend.ResultString);
-    if (NivelLog > 3) then
-      RegistrarLog('  Sock.LastError: ' + IntToStr(fHttpSend.Sock.LastError));
+      RegistrarLog('  ResultCode: ' + IntToStr(fHTTPResultCode)+' - '+ HTTPSend.ResultString);
+    if (fHttpSend.Sock.LastError > 0) and (NivelLog > 3) then
+      RegistrarLog('  Sock.LastError: ' + IntToStr(fHttpSend.Sock.LastError)+' - '+ HTTPSend.Sock.LastErrorDesc);
 
     if ContentIsCompressed(fHttpSend.Headers) then
     begin
@@ -1241,7 +1240,7 @@ begin
     end;
 
     if (NivelLog > 2) then
-      RegistrarLog('Resp.Body: ' + sLineBreak + fHTTPResponse);
+      RegistrarLog('  Resp.Body: ' + sLineBreak + fHTTPResponse);
 
     if (not (fHTTPResultCode in [HTTP_OK, HTTP_CREATED, HTTP_ACCEPTED])) then
     begin

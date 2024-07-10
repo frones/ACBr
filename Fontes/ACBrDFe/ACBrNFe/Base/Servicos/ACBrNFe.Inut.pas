@@ -218,7 +218,7 @@ begin
         begin
           XML := AXML;
 
-          if ANode.LocalName = 'ProcInutNFe' then
+          if LowerCase(ANode.LocalName) = 'procinutnfe' then
           begin
             versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 

@@ -49,6 +49,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/07/2024
+[*]TK-5713 ACBrOFX - Alteração pois não esta tratando a tag <TRNTYPE> adequadamente,
+   conforme Manual de Especificações do OFX. 
+  por Nelson Santos
+
 31/05/2024
 [*]TK-5436 ACBrOFX - Alteração na leitura de valores de ponto flutuante, visando
    atender a configuração do sistema operacional. 

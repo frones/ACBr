@@ -13013,7 +13013,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Left = 19
       Top = 8
       Width = 756
-      Height = 384
+      Height = 370
+      AutoExpand = False
       BeforePrint = RLBand3BeforePrint
       object txtNomeSacadoCarne: TRLMemo
         Left = 0
@@ -14183,9 +14184,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object memoEndCedenteCarne: TRLMemo
         Left = 0
-        Top = 225
+        Top = 226
         Width = 139
-        Height = 42
+        Height = 40
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Charset = ANSI_CHARSET
@@ -14325,7 +14326,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 153
         Top = 237
         Width = 412
-        Height = 24
+        Height = 12
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

@@ -558,6 +558,10 @@ begin
         Servico.Endereco.Numero := INIRec.ReadString(sSecao, 'Numero', '');
         Servico.Endereco.xPais := INIRec.ReadString(sSecao, 'xPais', '');
         Servico.Endereco.UF := INIRec.ReadString(sSecao, 'UF', '');
+
+        // Provedor ISSBarueri
+        Servico.LocalPrestacao := StrToLocalPrestacao(Ok, INIRec.ReadString(sSecao, 'LocalPrestacao', '1'));
+        Servico.PrestadoEmViasPublicas := INIRec.ReadBool(sSecao, 'PrestadoEmViasPublicas', True);
       end;
 
 //      with Servico do

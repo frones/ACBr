@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/07/2024
+-- ACBrNFSeXNotasFiscais/ISSBarueri.GravarXml --
+[*] Alteração visando gerar corretamente informações sobre o local da prestação do
+    serviço.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Alteração visando o uso dos parâmetros de configuração: FpFormatoDataRecebimento,
     FpFormatoDataEmissao e FpFormatoDataHora ao realizar a leitura do retorno do

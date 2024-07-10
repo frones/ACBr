@@ -49,7 +49,7 @@ type
 
   TNFSeW_ISSBarueri = class(TNFSeWClass)
   private
-    function LocalPrestacaoServico(const ATipo: TTipoPessoa): String;
+
   protected
     procedure GerarRegistroTipo1(const AIdentificacaoRemessa: String);
     procedure GerarRegistroTipo2;
@@ -127,22 +127,27 @@ begin
     PadRight(IfThen(SituacaoRPS = 'C', FormatDateTime('YYYYMMDD', NFSe.DataEmissao), ''), 8, ' ')+ // Data de emissão da NF-e a ser cancelada/substituida S* AAAAMMDD 8 55 62
     PadRight(IfThen(SituacaoRPS = 'C', MotCancelamento, ''), 180, ' ')+ // Descricao do Cancelamento S* Texto 180 63 242
     PadRight(NFSe.Servico.CodigoTributacaoMunicipio, 9, ' ')+ // Código do Serviço Prestado S Numérico 9 243 251
-    LocalPrestacaoServico(NFSe.Tomador.IdentificacaoTomador.Tipo)+ // Local da Prestação do Serviço S* Texto 1 252 252
+
+    LocalPrestacaoToStr(NFSe.Servico.LocalPrestacao)+ // Local da Prestação do Serviço S* Texto 1 252 252
     IfThen(NFSe.Servico.PrestadoEmViasPublicas, '1', '2')+ // Serviço Prestado em Vias Publicas S* Texto 1 253 253
-    PadRight(NFSe.Tomador.Endereco.Endereco, 75, ' ')+ // Endereço Logradouro do local do Serviço Prestado S* Texto 75 254 328
-    PadRight(NFSe.Tomador.Endereco.Numero, 9, ' ')+ // Numero Logradouro do local do Serviço Prestado S* Texto 9 329 337
-    PadRight(NFSe.Tomador.Endereco.Complemento, 30, ' ')+ // Complemento Logradouro do local do Serviço Prestado S* Texto 30 338 367
-    PadRight(NFSe.Tomador.Endereco.Bairro, 40, ' ')+ // Bairro Logradouro do local do Serviço Prestado S* Texto 40 368 407
-    PadRight(NFSe.Tomador.Endereco.xMunicipio, 40, ' ')+ // Cidade Logradouro do local do Serviço Prestado S* Texto 40 408 447
-    PadRight(NFSe.Tomador.Endereco.UF, 2, ' ')+ // UF Logradouro do local do Serviço Prestado S* Texto 2 448 449
-    PadRight(NFSe.Tomador.Endereco.CEP, 8, ' ')+ // CEP Logradouro do local do Serviço Prestado S* Texto 8 450 457
+
+    PadRight(NFSe.Servico.Endereco.Endereco, 75, ' ')+ // Endereço Logradouro do local do Serviço Prestado S* Texto 75 254 328
+    PadRight(NFSe.Servico.Endereco.Numero, 9, ' ')+ // Numero Logradouro do local do Serviço Prestado S* Texto 9 329 337
+    PadRight(NFSe.Servico.Endereco.Complemento, 30, ' ')+ // Complemento Logradouro do local do Serviço Prestado S* Texto 30 338 367
+    PadRight(NFSe.Servico.Endereco.Bairro, 40, ' ')+ // Bairro Logradouro do local do Serviço Prestado S* Texto 40 368 407
+    PadRight(NFSe.Servico.Endereco.xMunicipio, 40, ' ')+ // Cidade Logradouro do local do Serviço Prestado S* Texto 40 408 447
+    PadRight(NFSe.Servico.Endereco.UF, 2, ' ')+ // UF Logradouro do local do Serviço Prestado S* Texto 2 448 449
+    PadRight(NFSe.Servico.Endereco.CEP, 8, ' ')+ // CEP Logradouro do local do Serviço Prestado S* Texto 8 450 457
+
     PadLeft(IntToStr(Quantidade), 6, '0')+ // Quantidade de Serviço S Numérico 6 458 463
     PadLeft(FloatToStr(NFSe.Servico.Valores.ValorServicos * 100), 15, '0')+ // Valor do Serviço S Numérico 15 464 478 Exemplo: R$10,25 = 000000000001025
     '     '+ //  Reservado N Texto 5 479 483
     PadLeft(FloatToStr(ValorTotalRetencoes * 100), 15, '0')+ // Valor Total das Retenções S Numérico 15 484 498
+
     IfThen(Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) >= 11, '2', '1')+ // Tomador Estrangeiro S Numérico 1 499 499 1 Para Tomador Estrangeiro 2 para Tomador Brasileiro
     PadRight('', 3, ' ')+ // Pais da Nacionalidade do Tomador Estrangeiro S* Numérico 3 500 502 Códido do pais de nacionalidade do tomador, conforme tabela de paises, quando o tomador for estrangeiro
     '2'+ // Serviço Prestado é exportação S* Numérico 1 503 503 1 Para Serviço exportado 2 para Serviço não exportado
+
     IfThen(Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) > 11, '2', '1')+ // Indicador do CPF/CNPJ do Tomador, pegar do Pessoas a constante S* Numérico 1 504 504 1 para CPF / 2 para CNPJ
     PadLeft(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, 14, ' ')+ // CPF/ CNPJ do Tomador S* Numérico 14 505 518
     PadRight(NFSe.Tomador.RazaoSocial, 60, ' ')+ // Razão Social / Nome do Tomador S Texto 60 519 578
@@ -154,6 +159,7 @@ begin
     PadRight(NFSe.Tomador.Endereco.UF, 2, ' ')+ // UF Logradouro Tomador S* Texto 2 773 774
     PadRight(NFSe.Tomador.Endereco.CEP, 8, ' ')+ // CEP Logradouro Tomador S* Texto 8 775 782
     PadRight(NFSe.Tomador.Contato.Email, 152, ' ')+ // e-mail Tomador S* Texto 152 783 934
+
     PadRight('', 6, ' ')+ // Fatura N Numérico 6 935 940 Número da Fatura
     PadLeft('', 15, ' ')+ // Valor Fatura S* Numérico 15 941 955
     PadRight('', 15, ' ')+ // Forma de Pagamento S* Texto 15 956 970
@@ -219,14 +225,6 @@ begin
     PadLeft(FloatToStr(NFSe.Servico.Valores.ValorServicos * 100), 15, '0')+ // Valor Total dos Serviços contidos no Arquivo S Numérico 15 9 23
     PadLeft(FloatToStr(ValorTotalRetencoes * 100), 15, '0') // Valor Total dos Valores contidos no registro 3 S Numérico 15 24 38 Valor Total das Retenções e outros valores informados no registro 3
   );
-end;
-
-function TNFSeW_ISSBarueri.LocalPrestacaoServico(const ATipo: TTipoPessoa): String;
-begin
-  if (ATipo in [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio]) then
-    Result := '1'
-  else
-    Result := '2';
 end;
 
 function TNFSeW_ISSBarueri.GerarXml: Boolean;

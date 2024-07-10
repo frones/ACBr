@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/07/2024
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Alteração visando o uso dos parâmetros de configuração: FpFormatoDataRecebimento,
+    FpFormatoDataEmissao e FpFormatoDataHora ao realizar a leitura do retorno do
+    WebService, pois tem provedor que não segue o que consta no manual da ABRASF.
+   Por: Italo Giurizzato Junior
+
 08/07/2024
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Mato Castelhano/RS, o provedor é SystemPro

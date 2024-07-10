@@ -329,14 +329,6 @@ begin
        Gerador.wGrupo('/evPagtoOperMDFe');
      end;
 
-    teConfirmaServMDFe:
-      begin
-        Gerador.wGrupo('evConfirmaServMDFe');
-        Gerador.wCampo(tcStr, 'HP02', 'descEvento', 05, 24, 1, Evento.Items[0].InfEvento.DescEvento);
-        Gerador.wCampo(tcStr, 'HP03', 'nProt     ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
-        Gerador.wGrupo('/evConfirmaServMDFe');
-      end;
-
     teAlteracaoPagtoServMDFe:
       begin
         Gerador.wGrupo('evAlteracaoPagtoServMDFe');
@@ -407,6 +399,14 @@ begin
          end;
 
         Gerador.wGrupo('/evAlteracaoPagtoServMDFe');
+      end;
+
+    teConfirmaServMDFe:
+      begin
+        Gerador.wGrupo('evConfirmaServMDFe');
+        Gerador.wCampo(tcStr, 'HP02', 'descEvento', 05, 24, 1, Evento.Items[0].InfEvento.DescEvento);
+        Gerador.wCampo(tcStr, 'HP03', 'nProt     ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+        Gerador.wGrupo('/evConfirmaServMDFe');
       end;
   end;
 

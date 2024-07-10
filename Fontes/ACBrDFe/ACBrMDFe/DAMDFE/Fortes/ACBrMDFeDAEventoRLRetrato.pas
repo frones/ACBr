@@ -273,6 +273,15 @@ begin
         'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE CONDUTOR NO SITE DA SEFAZ AUTORIZADORA.');
     end;
 
+    teInclusaoDFe:
+    begin
+      rllLinha1.Caption := ACBrStr('INCLUSÃO DE DOCUMENTOS FISCAIS ELETRÔNICOS');
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação do Pagamento da Operação de Transporte indicada abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE DF-e NO SITE DA SEFAZ AUTORIZADORA.');
+    end;
+
     tePagamentoOperacao:
     begin
       rllLinha1.Caption := ACBrStr('PAGAMENTO DA OPERAÇÃO DE TRANSPORTE');
@@ -282,13 +291,22 @@ begin
         'CONSULTE A AUTENTICIDADE DO PAGAMENTO DA OPERAÇÃO NO SITE DA SEFAZ AUTORIZADORA.');
     end;
 
-    teInclusaoDFe:
+    teAlteracaoPagtoServMDFe:
     begin
-      rllLinha1.Caption := ACBrStr('INCLUSÃO DE DOCUMENTOS FISCAIS ELETRÔNICOS');
+      rllLinha1.Caption := ACBrStr('CANCELAMENTO DO PAGAMENTO DA OPERAÇÃO DE TRANSPORTE');
       rllLinha2.Caption := ACBrStr(
-        'Não possui valor fiscal, simples representação do Pagamento da Operação de Transporte indicada abaixo.');
+        'Não possui valor fiscal, simples representação do Cancelamento do Pag. da Operação de Transp. indicada abaixo.');
       rllLinha3.Caption := ACBrStr(
-        'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE DF-e NO SITE DA SEFAZ AUTORIZADORA.');
+        'CONSULTE A AUTENTICIDADE DO CANCELAMENTO DO PAG. DA OPERAÇÃO NO SITE DA SEFAZ AUTORIZADORA.');
+    end;
+
+    teConfirmaServMDFe:
+    begin
+      rllLinha1.Caption := ACBrStr('CONFIRMAÇÃO DO SERVIÇO DE TRANSPORTE');
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação da Confirmação do Serviço de Transp. indicada abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA CONFIRMAÇÃO DO SERVIÇO DE TRANSPORTE NO SITE DA SEFAZ AUTORIZADORA.');
     end;
   end;
 end;
@@ -324,8 +342,10 @@ begin
       teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
       teEncerramento: rllTituloEvento.Caption := 'ENCERRAMENTO';
       teInclusaoCondutor: rllTituloEvento.Caption := ACBrStr('INCLUSÃO DE CONDUTOR');
-      tePagamentoOperacao: rllTituloEvento.Caption := ACBrStr('PAGAMENTO DA OPERAÇÃO DE TRANSPORTE');
       teInclusaoDFe: rllTituloEvento.Caption := ACBrStr('INCLUSÃO DE DF-e');
+      tePagamentoOperacao: rllTituloEvento.Caption := ACBrStr('PAGAMENTO DA OPERAÇÃO DE TRANSPORTE');
+      teAlteracaoPagtoServMDFe: rllTituloEvento.Caption := ACBrStr('CANCELAMENTO DO PAG. DA OPERAÇÃO DE TRANSP.');
+      teConfirmaServMDFe: rllTituloEvento.Caption := ACBrStr('CONFIRMAÇÃO DO SERVIÇO DE TRANSPORTE');
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -384,8 +404,10 @@ begin
   Exibir := (fpEventoMDFe.InfEvento.tpEvento = teCancelamento) or
             (fpEventoMDFe.InfEvento.tpEvento = teEncerramento) or
             (fpEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor) or
+            (fpEventoMDFe.InfEvento.tpEvento = teInclusaoDFe) or
             (fpEventoMDFe.InfEvento.tpEvento = tePagamentoOperacao) or
-            (fpEventoMDFe.InfEvento.tpEvento = teInclusaoDFe);
+            (fpEventoMDFe.InfEvento.tpEvento = teAlteracaoPagtoServMDFe) or
+            (fpEventoMDFe.InfEvento.tpEvento = teConfirmaServMDFe);
 
   printIt := Exibir or (fpEventoMDFe.InfEvento.tpAmb = taHomologacao);
 
@@ -428,11 +450,6 @@ begin
       rlmDescricao.Lines.Add('Nome: ' + fpEventoMDFe.InfEvento.detEvento.xNome);
     end;
 
-    tePagamentoOperacao:
-    begin
-      rlmDescricao.Lines.Add('Protocolo do MDFe Pago: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
-    end;
-
     teInclusaoDFe:
     begin
       rlmDescricao.Lines.Add('Chaves das NF-e - Local de Carregamento: ' + fpEventoMDFe.InfEvento.detEvento.xMunCarrega);
@@ -442,6 +459,21 @@ begin
         rlmDescricao.Lines.Add(fpEventoMDFe.InfEvento.detEvento.infDoc.Items[i].chNFe + ' - ' +
                                fpEventoMDFe.InfEvento.detEvento.infDoc.Items[i].xMunDescarga);
       end;
+    end;
+
+    tePagamentoOperacao:
+    begin
+      rlmDescricao.Lines.Add('Protocolo do MDFe Pago: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
+    end;
+
+    teAlteracaoPagtoServMDFe:
+    begin
+      rlmDescricao.Lines.Add('Protocolo de Alteração do MDFe Pago: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
+    end;
+
+    teConfirmaServMDFe:
+    begin
+      rlmDescricao.Lines.Add('Protocolo de Confirmação do Serviço: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
     end;
   end;
 end;

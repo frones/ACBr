@@ -2258,12 +2258,6 @@ begin
             end;
           end;
 
-          teConfirmaServMDFe:
-          begin
-            SchemaEventoMDFe := schevConfirmaServMDFe;
-            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
-          end;
-
           teAlteracaoPagtoServMDFe:
           begin
             SchemaEventoMDFe := schevAlteracaoPagtoServMDFe;
@@ -2307,6 +2301,12 @@ begin
             ItemInfPag.infBanc.CNPJIPEF   := FEvento.Evento[i].InfEvento.detEvento.infPag[0].infBanc.CNPJIPEF;
             ItemInfPag.infBanc.codBanco   := FEvento.Evento[i].InfEvento.detEvento.infPag[0].infBanc.codBanco;
             ItemInfPag.infBanc.codAgencia := FEvento.Evento[i].InfEvento.detEvento.infPag[0].infBanc.codAgencia;
+          end;
+
+          teConfirmaServMDFe:
+          begin
+            SchemaEventoMDFe := schevConfirmaServMDFe;
+            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
           end;
         end;
       end;
@@ -2377,18 +2377,18 @@ begin
                         '</evPagtoOperMDFe>';
         end;
 
-      schevConfirmaServMDFe:
-        begin
-          AXMLEvento := '<evConfirmaServMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                          Trim(RetornarConteudoEntre(AXMLEvento, '<evConfirmaServMDFe>', '</evConfirmaServMDFe>')) +
-                        '</evConfirmaServMDFe>';
-        end;
-
       schevAlteracaoPagtoServMDFe:
         begin
           AXMLEvento := '<evAlteracaoPagtoServMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evAlteracaoPagtoServMDFe>', '</evAlteracaoPagtoServMDFe>')) +
                         '</evAlteracaoPagtoServMDFe>';
+        end;
+
+      schevConfirmaServMDFe:
+        begin
+          AXMLEvento := '<evConfirmaServMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evConfirmaServMDFe>', '</evConfirmaServMDFe>')) +
+                        '</evConfirmaServMDFe>';
         end;
     else
       AXMLEvento := '';

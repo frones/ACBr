@@ -7,7 +7,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
   TextHeight = 10
   inherited RLMDFeEvento: TRLReport
     Left = 0
@@ -152,12 +151,12 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Brush.Style = bsClear
       end
       object rllLinha1: TRLLabel
-        Left = 227
+        Left = 302
         Top = 2
-        Width = 290
+        Width = 140
         Height = 19
         Alignment = taCenter
-        Caption = 'CARTA DE CORRE'#199#195'O ELETR'#212'NICA'
+        Caption = 'CANCELAMENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -169,14 +168,14 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Transparent = False
       end
       object rllLinha2: TRLLabel
-        Left = 179
+        Left = 154
         Top = 24
-        Width = 382
+        Width = 432
         Height = 15
         Alignment = taCenter
         Caption = 
-          'N'#227'o possui valor fiscal, simples representa'#231#227'o da CC-e indicada ' +
-          'abaixo.'
+          'N'#227'o possui valor fiscal, simples representa'#231#227'o do Cancelamento i' +
+          'ndicada abaixo.'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -188,14 +187,14 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Transparent = False
       end
       object rllLinha3: TRLLabel
-        Left = 47
+        Left = 102
         Top = 45
-        Width = 646
+        Width = 536
         Height = 15
         Alignment = taCenter
         Caption = 
-          'CONSULTE A AUTENTICIDADE DA CARTA DE CORRE'#199#195'O ELETR'#212'NICA NO SITE' +
-          ' DA SEFAZ AUTORIZADORA.'
+          'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORI' +
+          'ZADORA.'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -424,9 +423,9 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       object rllTituloEvento: TRLLabel
         Left = 6
         Top = 2
-        Width = 203
+        Width = 98
         Height = 13
-        Caption = 'CARTA DE CORRE'#199#195'O ELETR'#212'NICA'
+        Caption = 'CANCELAMENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

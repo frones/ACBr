@@ -1,11 +1,9 @@
 inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
-  Left = 260
-  Height = 562
-  Top = 118
-  Width = 818
+  Left = 267
+  Top = 209
+  Width = 783
   Caption = 'Evento - Retrato'
-  ClientHeight = 562
-  ClientWidth = 818
+  ClientWidth = 783
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -27,10 +25,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       Width = 742
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_09_ItensBeforePrint
       object rldbtTpDoc2: TRLDBText
         Left = 373
@@ -45,10 +39,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtTpDoc1: TRLDBText
@@ -64,10 +54,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
@@ -83,10 +69,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
@@ -102,10 +84,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
@@ -120,10 +98,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
@@ -138,10 +112,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -153,30 +123,21 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btTitle
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_01_TituloBeforePrint
       object rlShape46: TRLDraw
         Left = 0
         Height = 67
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllLinha1: TRLLabel
-        Left = 227
+        Left = 302
         Height = 19
         Top = 2
-        Width = 290
+        Width = 140
         Alignment = taCenter
-        Caption = 'CARTA DE CORREÇÃO ELETRÔNICA'
+        Caption = 'CANCELAMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -16
@@ -184,48 +145,36 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllLinha2: TRLLabel
-        Left = 179
+        Left = 154
         Height = 15
         Top = 24
-        Width = 382
+        Width = 432
         Alignment = taCenter
-        Caption = 'Não possui valor fiscal, simples representação da CC-e indicada abaixo.'
+        Caption = 'Não possui valor fiscal, simples representação do Cancelamento indicada abaixo.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllLinha3: TRLLabel
-        Left = 47
+        Left = 102
         Height = 15
         Top = 45
-        Width = 646
+        Width = 536
         Alignment = taCenter
-        Caption = 'CONSULTE A AUTENTICIDADE DA CARTA DE CORREÇÃO ELETRÔNICA NO SITE DA SEFAZ AUTORIZADORA.'
+        Caption = 'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
@@ -237,10 +186,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_08_HeaderItensBeforePrint
     end
     object rlb_10_Sistema: TRLBand[3]
@@ -252,10 +197,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_10_SistemaBeforePrint
       object rlLabel15: TRLLabel
         Left = 2
@@ -269,10 +210,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlSysData1: TRLSystemInfo
         Left = 143
@@ -285,10 +222,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllblSistema: TRLLabel
@@ -305,10 +238,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_05_Evento: TRLBand[4]
@@ -319,70 +248,41 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_05_EventoBeforePrint
       object rlsQuadro01: TRLDraw
         Left = 0
         Height = 113
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV01: TRLDraw
         Left = 68
         Height = 33
         Top = 48
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV09: TRLDraw
         Left = 590
         Height = 33
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV10: TRLDraw
         Left = 43
         Height = 33
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH04: TRLDraw
         Left = 0
         Height = 1
         Top = 48
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel2: TRLLabel
         Left = 4
@@ -396,10 +296,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllOrgao: TRLLabel
@@ -415,10 +311,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel78: TRLLabel
         Left = 74
@@ -432,10 +324,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllDescricaoEvento: TRLLabel
@@ -449,10 +337,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllDescricao: TRLLabel
         Left = 414
@@ -466,10 +350,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllProtocolo: TRLLabel
@@ -485,29 +365,20 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape88: TRLDraw
         Left = 0
         Height = 1
         Top = 80
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllTituloEvento: TRLLabel
         Left = 6
         Height = 13
         Top = 2
-        Width = 203
-        Caption = 'CARTA DE CORREÇÃO ELETRÔNICA'
+        Width = 98
+        Caption = 'CANCELAMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -515,10 +386,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape48: TRLDraw
@@ -527,12 +394,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel9: TRLLabel
         Left = 50
@@ -546,10 +408,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTipoAmbiente: TRLLabel
@@ -564,10 +422,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel6: TRLLabel
         Left = 598
@@ -581,10 +435,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllEmissaoEvento: TRLLabel
@@ -598,10 +448,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel28: TRLLabel
@@ -616,10 +462,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllTipoEvento: TRLLabel
@@ -635,10 +477,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel17: TRLLabel
         Left = 598
@@ -652,10 +490,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSeqEvento: TRLLabel
@@ -669,10 +503,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape49: TRLDraw
@@ -680,24 +510,14 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Height = 33
         Top = 48
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape50: TRLDraw
         Left = 410
         Height = 33
         Top = 80
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel18: TRLLabel
         Left = 4
@@ -711,10 +531,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllStatus: TRLLabel
@@ -728,10 +544,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_03_Emitente: TRLBand[5]
@@ -742,46 +554,27 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_03_EmitenteBeforePrint
       object rlsQuadro02: TRLDraw
         Left = 0
         Height = 113
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH07: TRLDraw
         Left = 1
         Height = 1
         Top = 80
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaH06: TRLDraw
         Left = 1
         Height = 1
         Top = 48
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllRazaoEmitente: TRLLabel
         Left = 4
@@ -794,10 +587,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllMunEmitente: TRLLabel
         Left = 4
@@ -810,10 +599,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllInscEstEmitente: TRLLabel
         Left = 624
@@ -826,10 +611,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEnderecoEmitente: TRLLabel
         Left = 4
@@ -842,10 +623,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCNPJEmitente: TRLLabel
         Left = 608
@@ -858,10 +635,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllCEPEmitente: TRLLabel
         Left = 669
@@ -875,10 +648,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel98: TRLLabel
         Left = 669
@@ -892,10 +661,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel93: TRLLabel
@@ -910,10 +675,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel24: TRLLabel
@@ -928,10 +689,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel22: TRLLabel
@@ -946,10 +703,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel16: TRLLabel
@@ -964,10 +717,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel13: TRLLabel
@@ -982,10 +731,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel12: TRLLabel
@@ -1001,10 +746,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape51: TRLDraw
@@ -1013,48 +754,28 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape53: TRLDraw
         Left = 604
         Height = 33
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape82: TRLDraw
         Left = 665
         Height = 33
         Top = 48
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape99: TRLDraw
         Left = 448
         Height = 33
         Top = 48
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel4: TRLLabel
         Left = 452
@@ -1068,10 +789,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllBairroEmitente: TRLLabel
@@ -1085,22 +802,13 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape108: TRLDraw
         Left = 620
         Height = 33
         Top = 80
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel5: TRLLabel
         Left = 452
@@ -1114,10 +822,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllFoneEmitente: TRLLabel
@@ -1131,22 +835,13 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape109: TRLDraw
         Left = 448
         Height = 33
         Top = 80
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_04_Tomador: TRLBand[6]
@@ -1157,22 +852,13 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_04_TomadorBeforePrint
       object rlsQuadro03: TRLDraw
         Left = 0
         Height = 113
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel1: TRLLabel
         Left = 6
@@ -1187,10 +873,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape52: TRLDraw
@@ -1199,12 +881,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel14: TRLLabel
         Left = 4
@@ -1218,10 +895,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllRazaoTomador: TRLLabel
@@ -1235,10 +908,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel25: TRLLabel
         Left = 4
@@ -1252,10 +921,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllEnderecoTomador: TRLLabel
@@ -1269,10 +934,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel27: TRLLabel
         Left = 4
@@ -1286,10 +947,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllMunTomador: TRLLabel
@@ -1303,10 +960,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel30: TRLLabel
         Left = 608
@@ -1320,10 +973,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCNPJTomador: TRLLabel
@@ -1337,10 +986,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel32: TRLLabel
         Left = 452
@@ -1354,10 +999,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllBairroTomador: TRLLabel
@@ -1371,10 +1012,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel35: TRLLabel
         Left = 669
@@ -1388,10 +1025,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllCEPTomador: TRLLabel
@@ -1406,10 +1039,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel37: TRLLabel
         Left = 452
@@ -1423,10 +1052,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllFoneTomador: TRLLabel
@@ -1440,10 +1065,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel40: TRLLabel
         Left = 624
@@ -1457,10 +1078,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllInscEstTomador: TRLLabel
@@ -1474,94 +1091,55 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape7: TRLDraw
         Left = 604
         Height = 33
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape8: TRLDraw
         Left = 1
         Height = 1
         Top = 48
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape9: TRLDraw
         Left = 1
         Height = 1
         Top = 80
         Width = 740
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape55: TRLDraw
         Left = 448
         Height = 33
         Top = 48
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape56: TRLDraw
         Left = 448
         Height = 33
         Top = 80
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape58: TRLDraw
         Left = 665
         Height = 33
         Top = 48
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape59: TRLDraw
         Left = 620
         Height = 33
         Top = 80
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_06_Descricao: TRLBand[7]
@@ -1572,22 +1150,13 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_06_DescricaoBeforePrint
       object rlsQuadro04: TRLDraw
         Left = 0
         Height = 105
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmDescricao: TRLMemo
         Left = 5
@@ -1605,10 +1174,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel59: TRLLabel
         Left = 6
@@ -1623,10 +1188,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllMsgTeste: TRLLabel
@@ -1643,10 +1204,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape5: TRLDraw
         Left = 1
@@ -1654,12 +1211,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_07_Correcao: TRLBand[8]
@@ -1670,58 +1222,34 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_07_CorrecaoBeforePrint
       object rlsQuadro05: TRLDraw
         Left = 0
         Height = 353
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape18: TRLDraw
         Left = 160
         Height = 338
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape19: TRLDraw
         Left = 270
         Height = 338
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlShape15: TRLDraw
         Left = 50
         Height = 338
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmNumItemAlterado: TRLMemo
         Left = 8
@@ -1743,10 +1271,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmCampoAlterado: TRLMemo
         Left = 164
@@ -1767,10 +1291,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmValorAlterado: TRLMemo
         Left = 274
@@ -1791,10 +1311,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmGrupoAlterado: TRLMemo
         Left = 54
@@ -1815,10 +1331,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         )
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel46: TRLLabel
         Left = 164
@@ -1832,10 +1344,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel45: TRLLabel
@@ -1850,10 +1358,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel44: TRLLabel
@@ -1868,10 +1372,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel42: TRLLabel
@@ -1886,10 +1386,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel38: TRLLabel
@@ -1905,10 +1401,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape17: TRLDraw
@@ -1917,12 +1409,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlb_02_Documento: TRLBand[9]
@@ -1933,22 +1420,13 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb_02_DocumentoBeforePrint
       object rlShape10: TRLDraw
         Left = 0
         Height = 81
         Top = 0
         Width = 741
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel65: TRLLabel
         Left = 6
@@ -1963,10 +1441,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape81: TRLDraw
@@ -1975,12 +1449,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 44
         Width = 368
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel8: TRLLabel
         Left = 5
@@ -1995,10 +1464,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllModelo: TRLLabel
@@ -2015,10 +1480,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel21: TRLLabel
@@ -2034,10 +1495,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllSerie: TRLLabel
@@ -2054,10 +1511,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlLabel23: TRLLabel
@@ -2074,10 +1527,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllNumMDFe: TRLLabel
@@ -2094,10 +1543,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlsLinhaV05: TRLDraw
@@ -2105,36 +1550,21 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Height = 30
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV06: TRLDraw
         Left = 100
         Height = 30
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlsLinhaV08: TRLDraw
         Left = 236
         Height = 30
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel33: TRLLabel
         Left = 246
@@ -2149,10 +1579,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllEmissao: TRLLabel
@@ -2167,10 +1593,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlsLinhaV07: TRLDraw
@@ -2178,12 +1600,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Height = 66
         Top = 15
         Width = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlLabel74: TRLLabel
         Left = 6
@@ -2198,10 +1615,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllChave: TRLLabel
@@ -2218,10 +1631,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlShape2: TRLDraw
@@ -2230,12 +1639,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
-        Angle = 0
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLBarcode1: TRLBarcode
         Left = 375
@@ -2244,11 +1648,15 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Width = 87
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
+  end
+  inherited Datasource1: TDataSource
+    Left = 488
+    Top = 128
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    Left = 416
+    Top = 128
   end
 end

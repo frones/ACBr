@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2024
+-- ACBrCTeServicos --
+[*] Revisão nas URLs de todas UF de envio do evento EPEC que não 
+    utiliza o webservice de recepção  normal.
+   Por: Italo Giurizzato Junior
+
 27/06/2024
 -- ACBrCTe.EnvEvento.pas/ACBrCTe.RetConsSit/ACBrCTe.RetEnvEvento --
 [*] Correções nas novas Units.

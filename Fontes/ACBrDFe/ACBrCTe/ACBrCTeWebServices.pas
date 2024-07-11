@@ -3306,6 +3306,8 @@ begin
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evCancIECTe>', '</evCancIECTe>')) +
                         '</evCancIECTe>';
         end;
+    else
+      AXMLEvento := '';
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;

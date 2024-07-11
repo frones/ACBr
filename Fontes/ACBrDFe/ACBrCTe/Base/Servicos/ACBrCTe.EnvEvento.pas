@@ -105,11 +105,14 @@ type
     function Gerar_Evento_CCe(Idx: Integer): TACBrXmlNode;
     function Gerar_InfCorrecao(Idx: Integer): TACBrXmlNodeArray;
     function Gerar_Evento_Cancelamento(Idx: Integer): TACBrXmlNode;
+
     function Gerar_Evento_EPEC(Idx: Integer): TACBrXmlNode;
     function Gerar_EPECTomador(const EventoItem: TInfEventoCollectionItem): TACBrXmlNode;
+
     function Gerar_Evento_MultiModal(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_PrestacaoDesacordo(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_CancPrestacaoDesacordo(Idx: Integer): TACBrXmlNode;
+
     function Gerar_Evento_GTV(Idx: Integer): TACBrXmlNode;
     function Gerar_InfGTV(Idx: Integer): TACBrXmlNodeArray;
     function Gerar_InfEspecie(IdxEv, IdxEs: Integer): TACBrXmlNodeArray;
@@ -118,6 +121,7 @@ type
 
     function Gerar_Evento_ComprEntrega(Idx: Integer): TACBrXmlNode;
     function Gerar_InfEntrega(Idx: Integer): TACBrXmlNodeArray;
+
     function Gerar_Evento_CancComprEntrega(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_InsucessoEntrega(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_CancInsucessoEntrega(Idx: Integer): TACBrXmlNode;
@@ -200,7 +204,9 @@ end;
 function TEventoCTe.GerarXML: Boolean;
 var
   EventoNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
+  VersaoDF := StrToVersaoCTe(Ok, Versao);
   ListaDeAlertas.Clear;
 
   FDocument.Clear();
@@ -720,7 +726,7 @@ var
 begin
   Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
                              OnlyNumber(Evento[Idx].InfEvento.chCTe) +
-                             Format('%.2d', [Evento[Idx].InfEvento.nSeqEvento]);
+                             Format('%.3d', [Evento[Idx].InfEvento.nSeqEvento]);
 
   if Length(Evento[Idx].InfEvento.id) < 54 then
     wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
@@ -789,7 +795,7 @@ end;
 function TEventoCTe.Gerar_DetEvento(Idx: Integer): TACBrXmlNode;
 begin
   Result := CreateElement('detEvento');
-  Result.SetAttribute('versao', Versao);
+  Result.SetAttribute('versaoEvento', Versao);
 
   case Evento[Idx].InfEvento.tpEvento of
     teCCe: Result.AppendChild(Gerar_Evento_CCe(Idx));
@@ -806,7 +812,7 @@ begin
 
     teGTV: Result.AppendChild(Gerar_Evento_GTV(Idx));
 
-    teComprEntregaCTe: Result.AppendChild(Gerar_Evento_ComprEntrega(Idx));
+    teComprEntrega: Result.AppendChild(Gerar_Evento_ComprEntrega(Idx));
 
     teCancComprEntrega: Result.AppendChild(Gerar_Evento_CancComprEntrega(Idx));
 
@@ -1008,7 +1014,7 @@ begin
 
       with Self.Evento.New do
       begin
-        infEvento.chCTe := INIRec.ReadString(sSecao, 'chCTe', '');
+        infEvento.chCTe := sFim;
         infEvento.cOrgao := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
         infEvento.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
         infEvento.dhEvento := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));

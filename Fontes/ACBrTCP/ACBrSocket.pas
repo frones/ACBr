@@ -310,6 +310,12 @@ end;
   protected
     function GetHeaderValue(aHeader: String): String;
     procedure RegistrarLog(const aLinha: String);
+
+    procedure OnHookSocketStatus(Sender: TObject; Reason: THookSocketReason; const Value: String);
+    procedure OnHookCreateSocket(Sender: TObject);
+    procedure OnHookAfterConnect(Sender: TObject);
+    procedure OnHookMonitor(Sender: TObject; Writing: Boolean; const Buffer: TMemory; Len: Integer);
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -360,13 +366,13 @@ function StringToContentEncodingCompress(aValue: String): THttpContentEncodingCo
 implementation
 
 uses
-  math, StrUtils, synacode,
+  Math, StrUtils, TypInfo,
+  synacode, synautil,
   ACBrCompress,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  synautil
+  ACBrUtil.XMLHTML
   {$IFDEF UPDATE_SCREEN_CURSOR}
     ,Controls, Forms
   {$ENDIF};
@@ -1044,8 +1050,14 @@ begin
   fURLQueryParams := TACBrHTTPQueryParams.Create;
   fURLPathParams := TStringList.Create;
   fHttpRespStream := TMemoryStream.Create;
+
   fHttpSend := THTTPSend.Create;
   fHttpSend.OutputStream := fHttpRespStream;
+  fHTTPSend.Sock.OnAfterConnect := OnHookAfterConnect;
+  fHTTPSend.Sock.OnCreateSocket := OnHookCreateSocket;
+  fHTTPSend.Sock.OnStatus := OnHookSocketStatus;
+  fHTTPSend.Sock.OnMonitor := OnHookMonitor;
+
   fOnAntesAbrirHTTP := Nil;
   fHTTPResultCode := 0;
   fURL := EmptyStr;
@@ -1488,6 +1500,32 @@ begin
 
   if (not wTratado) and NaoEstaVazio(fArqLOG) then
     WriteLog(fArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', Now) + ' - ' + aLinha);
+end;
+
+procedure TACBrHTTP.OnHookSocketStatus(Sender: TObject;
+  Reason: THookSocketReason; const Value: String);
+begin
+  if NivelLog > 3 then
+    RegistrarLog('  Socket Status: '+GetEnumName(TypeInfo(THookSocketReason), integer(Reason) )+' - '+Value);
+end;
+
+procedure TACBrHTTP.OnHookCreateSocket(Sender: TObject);
+begin
+  if NivelLog > 3 then
+    RegistrarLog('  Socket Created');
+end;
+
+procedure TACBrHTTP.OnHookAfterConnect(Sender: TObject);
+begin
+  if NivelLog > 3 then
+    RegistrarLog('  Socket Connected');
+end;
+
+procedure TACBrHTTP.OnHookMonitor(Sender: TObject; Writing: Boolean;
+  const Buffer: TMemory; Len: Integer);
+begin
+  if NivelLog > 3 then
+    RegistrarLog('  Socket Monitor, Writing:'+IfThen(Writing,'Yes','No')+', Len:'+IntToStr(Len) );
 end;
 
 end.

@@ -74,6 +74,7 @@ const
   CChaveData = 'Data';
 
   CSessaoProxy = 'Proxy';
+  CSessaoSocket = 'Socket';
   CSessaoEmail = 'Email';
   CChaveEmailConta = 'Conta';
   CChaveEmailCodificacao = 'Codificacao';
@@ -97,6 +98,9 @@ const
   CChaveEmail = 'Email';
   CChaveTelefone = 'Telefone';
   CChaveResponsavel = 'Responsavel';
+
+  CChaveArqLog = 'ArqLog';
+  CChaveNivelLog = 'NivelLog';
 
   CChavePathLogo = 'PathLogo';
   CChavePathPDF = 'PathPDF';
@@ -133,7 +137,6 @@ const
   CChaveCasasDecimaisAliquota = 'CasasDecimais.Aliquota';
 
   CSessaoIntegrador = 'Integrador';
-  CChaveArqLog = 'ArqLog';
   CChavePastaInput = 'PastaInput';
   CChavePastaOutput = 'PastaOutput';
 

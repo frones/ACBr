@@ -1232,12 +1232,15 @@ var
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('ideAdv tpInsc="' + eSTpInscricaoToStr(obj[i].tpInsc) + '"' +
-                         ' nrInsc="' + obj[i].nrInsc + '"' + 
-                         IfThen(obj[i].vlrAdv > 0, ' vlrAdv="' + FloatToString(obj[i].vlrAdv, '.', FloatMask(2,False)) + '"', '')
-                  );       
+    if obj[i].vlrAdv > 0 then
+    begin
+      Gerador.wGrupo('ideAdv tpInsc="' + eSTpInscricaoToStr(obj[i].tpInsc) + '"' +
+                           ' nrInsc="' + obj[i].nrInsc + '"' +
+                           ' vlrAdv="' + FloatToString(obj[i].vlrAdv, '.', FloatMask(2,False)) + '"'
+                    );
 
-    Gerador.wGrupo('/ideAdv');
+      Gerador.wGrupo('/ideAdv');
+    end;
   end;
 
   if obj.Count > 99 then

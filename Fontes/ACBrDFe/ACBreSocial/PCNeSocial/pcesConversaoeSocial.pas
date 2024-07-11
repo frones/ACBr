@@ -317,9 +317,9 @@ type
 
   type
 
-  tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaoJudicialFGTSMensal, cdfIncidenciadecisaoJudicialFGTS13Sal, cdfIncidenciadecisaoJudicial);
+  tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfDescontoeConsignado, cdfIncidenciadecisaoJudicialFGTSMensal, cdfIncidenciadecisaoJudicialFGTS13Sal, cdfIncidenciadecisaoJudicial);
   const
-  tpCodIncFGTSArrayStrings: array[tpCodIncFGTS] of string = ( '00', '11', '12', '21', '91', '92', '93' );
+  tpCodIncFGTSArrayStrings: array[tpCodIncFGTS] of string = ( '00', '11', '12', '21', '31', '91', '92', '93' );
 
   type
 
@@ -378,7 +378,8 @@ type
   tpLocalAmb              = (laEstabProprioEmpregador, laEstabTerceiro, laPrestInstalacaoTerceiro);
 
   tpTpAcConv              = (tacAcordoColTrab, tacLegislacaoFederalEstadualMunicipalDistrital, tacConvencaoColTrab,
-                             tacSetencNormativa, tacConversaoLicenSaudeAcidTrabalho, tacOutrasVerbas, tacAntecipacaoDif);
+                             tacSetencNormativa, tacConversaoLicenSaudeAcidTrabalho, tacOutrasVerbas, tacAntecipacaoDif,
+                             tacDeclaracaoBaseCalcFGTSAntAoInicFGTSDigital, tacSentencJudicial, tacParcelasComplementares);
 
   tpIndSusp               = (siLiminarMandadoSeguranca, siDepositoJudicial, siDepositoAdministrativo, siAntecipacaoTutela, siLiminarMedidaCautelar,
                              siSentencaMandadoSegurancaFavoravelContribuinte, siSentencaAcaoOrdinariaFavContribuinteConfirmadaPeloTRF,
@@ -1409,6 +1410,8 @@ const
 
   TGenericosStringA_G : array[0..6] of string = ('A','B','C','D','E','F','G');
 
+  TGenericosStringA_J : array[0..9] of string = ('A','B','C','D','E','F','G','H','I','J');
+
   TGenericosStringO_N : array[0..1] of string = ('O', 'N');
 
   TGenericosString01_10 : array[0..9] of string = ('01','02','03','04','05',
@@ -2405,12 +2408,12 @@ end;
 
 function eSTpAcConvToStr(const t: tpTpAcConv): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosStringA_G);
+  result := EnumeradoToStr2(t, TGenericosStringA_J);
 end;
 
 function eSStrToTpAcConv(var ok: Boolean; const s: string): tpTpAcConv;
 begin
-  result := tpTpAcConv( StrToEnumerado2(ok , s, TGenericosStringA_G ));
+  result := tpTpAcConv( StrToEnumerado2(ok , s, TGenericosStringA_J ));
 end;
 
 function eSTpNatEstagioToStr(const t: tpNatEstagio): string;

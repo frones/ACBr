@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2024
+-- pcesConversaoeSocial, pcesS2501, pcesS5003 --
+[*] Implementa as alterações da NT2024/04 Revisada.
+Por: Diego Folieni
+
 25/06/2024
 --- pcesS2500 ---
 [*] Corrigido critério para geração do grupo infoCompl do evento S2500

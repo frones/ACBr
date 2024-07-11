@@ -90,6 +90,8 @@ type
   TBasePerAntECollection = class;
   TBasePerAntECollectionItem = class;
   TProcCS = class;
+  TeConsignadoCollection = class;
+  TeConsignadoCollectionItem = class;
   
   TS5003 = class(TInterfacedObject, IEventoeSocial)
   private
@@ -288,9 +290,31 @@ end;
     
     function BasePerApurInst(): Boolean;
     function InfoBasePerAntEInst(): Boolean;
-    
+
     property basePerApur: TBasePerApurCollection read getBasePerApur write FBasePerApur;
     property infoBasePerAntE: TinfoBasePerAntECollection read getInfoBasePerAntE write FInfoBasePerAntE;
+  end;
+
+
+  TeConsignadoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TeConsignadoCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TeConsignadoCollectionItem);
+  public
+    function Add: TeConsignadoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New' {$EndIf};
+    function New: TeConsignadoCollectionItem;
+    property Items[Index: Integer]: TeConsignadoCollectionItem read GetItem write SetItem;
+  end;
+
+  TeConsignadoCollectionItem = class
+  private
+    FinstFinanc: string;
+    FnrContrato: string;
+    FvreConsignado: double;
+  public
+    property instFinanc: string read FinstFinanc write FinstFinanc;
+    property nrContrato: string read FnrContrato write FnrContrato;
+    property vreConsignado: double read FvreConsignado write FvreConsignado;
   end;
 
   TInfoTrabFGTSCollection = class(TACBrObjectList)
@@ -319,6 +343,7 @@ end;
     FProcCS: TProcCS;
     FInfoBaseFGTS: TInfoBaseFGTS;
     FsucessaoVinc: TSucessaoVinc;
+    FeConsignado: TeConsignadoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -337,6 +362,7 @@ end;
     property InfoBaseFGTS   : TInfoBaseFGTS read FInfoBaseFGTS write FInfoBaseFGTS;
     property sucessaoVinc   : TSucessaoVinc read FsucessaoVinc write FsucessaoVinc;
     property ProcCS         : TProcCS read FProcCS write FProcCS;
+    property eConsignado    : TeConsignadoCollection read FeConsignado write FeConsignado;
   end;
 
   TIdeEstabLot2Collection = class(TACBrObjectList)
@@ -838,6 +864,17 @@ begin
                     infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoTrabFGTS.Items[k].procCS.nrProcJud := leitor.rCampo(tcStr, 'nrProcJud');
                 end;
 
+                l := 0;
+                while Leitor.rExtrai(6, 'eConsignado', '', l + 1) <> '' do
+                begin
+                  infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoTrabFGTS.Items[k].eConsignado.New;
+                  infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoTrabFGTS.Items[k].eConsignado.Items[l].instFinanc := leitor.rCampo(tcStr, 'instFinanc');
+                  infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoTrabFGTS.Items[k].eConsignado.Items[l].nrContrato := leitor.rCampo(tcStr, 'nrContrato');
+                  infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoTrabFGTS.Items[k].eConsignado.Items[l].vreConsignado := leitor.rCampo(tcDe2, 'vreConsignado');
+
+                  inc(l);
+                end;
+
                 inc(k);
               end;
 
@@ -1022,6 +1059,7 @@ begin
   FInfoBaseFGTS := TInfoBaseFGTS.Create;
   FSucessaoVinc := TSucessaoVinc.Create;
   FProcCS       := TProcCS.Create;
+  FeConsignado  := TeConsignadoCollection.Create;
 end;
 
 destructor TInfoTrabFGTSCollectionItem.Destroy;
@@ -1029,6 +1067,7 @@ begin
   FInfoBaseFGTS.Free;
   FSucessaoVinc.Free;
   FProcCS.Free;
+  FeConsignado.Free;
 
   inherited;
 end;
@@ -1515,6 +1554,30 @@ end;
 function TBasePerAntECollectionItem.detRubrSuspInst(): Boolean;
 begin
   Result := Assigned(FdetRubrSusp);
+end;
+
+{ TeConsignadoCollection }
+
+function TeConsignadoCollection.Add: TeConsignadoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TeConsignadoCollection.GetItem(Index: Integer): TeConsignadoCollectionItem;
+begin
+  Result := TeConsignadoCollectionITem(inherited Items[Index]);
+end;
+
+function TeConsignadoCollection.New: TeConsignadoCollectionItem;
+begin
+  Result := TeConsignadoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TeConsignadoCollection.SetItem(Index: Integer;
+  const Value: TeConsignadoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

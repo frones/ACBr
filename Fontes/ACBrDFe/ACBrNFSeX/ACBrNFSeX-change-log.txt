@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Joao Pinheiro/MG, o provedor é NFSeBrasil.
+   Por: João Antônio
+[+] Incluída a cidade de Santa Rosa do Sul/SC, o provedor é IPM.
+   Por: Mario Inacio
+[*] A cidade de Pocone/MT trocou de provedor, agora é Agili.
+   Por: Diego Reckziegel
+
 10/07/2024
 -- ACBrNFSeXNotasFiscais/ISSBarueri.GravarXml --
 [*] Alteração visando gerar corretamente informações sobre o local da prestação do

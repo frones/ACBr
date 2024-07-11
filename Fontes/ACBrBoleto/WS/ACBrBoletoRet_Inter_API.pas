@@ -155,6 +155,18 @@ begin
                                                   +' Valor :'
                                                   + LJsonArray.ItemAsJSONObject[X].AsString['valor'];
             end;
+          end
+          else
+          begin
+            if NaoEstaVazio(LJsonObject.asString['title']) or
+               NaoEstaVazio(LJsonObject.asString['detail']) then
+            begin
+              LRejeicaoMensagem            := ARetornoWS.CriarRejeicaoLista;
+              LRejeicaoMensagem.Codigo     := LJsonObject.AsString['title'];
+              LRejeicaoMensagem.Versao     := ''; // LJsonObject.AsString['parametro'];
+              LRejeicaoMensagem.Mensagem   := LJsonObject.AsString['detail'] +
+                                               ' Data e Hora: '+ LJsonObject.AsString['timestamp'];
+            end;
           end;
         end;
 

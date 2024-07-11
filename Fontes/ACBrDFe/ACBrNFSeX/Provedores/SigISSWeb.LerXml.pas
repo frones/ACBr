@@ -169,8 +169,8 @@ begin
     SeriePrestacao := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
 
     DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('data_emissao'), tcDatVcto);
-//    <forma_de_pagamento></forma_de_pagamento>
 
+    Servico.xFormaPagamento := ObterConteudo(ANode.Childrens.FindAnyNs('forma_de_pagamento'), tcStr);
     Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
                                     sLineBreak, [rfReplaceAll, rfIgnoreCase]);

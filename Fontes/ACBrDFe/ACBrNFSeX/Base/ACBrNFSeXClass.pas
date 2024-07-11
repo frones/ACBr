@@ -834,6 +834,7 @@ type
     FCFPS: string;
     FEndereco: TEndereco;
     FInfAdicional: string;
+    FxFormaPagamento: string;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -893,6 +894,7 @@ type
     property Endereco: TEndereco read FEndereco write FEndereco;
     // Provedor Megasoft
     property InfAdicional: string read FInfAdicional write FInfAdicional;
+    property xFormaPagamento: string read FxFormaPagamento write FxFormaPagamento;
   end;
 
   TDadosPessoa = class(TObject)

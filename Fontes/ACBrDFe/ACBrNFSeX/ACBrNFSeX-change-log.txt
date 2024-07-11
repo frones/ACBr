@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2024
+-- ACBrNFSeXClass/ACBrNFSeXNotasFiscais/SigISSWeb.GravarXml/SigISSWeb.LerXml --
+[+] Incluído o campo xFormaPagamento para conter a descrição da forma de pagamento,
+    este canpo é utilizado pelo provedor SigISSWeb.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Joao Pinheiro/MG, o provedor é NFSeBrasil.
    Por: João Antônio

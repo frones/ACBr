@@ -159,8 +159,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcDatVcto, '#1', 'data_emissao', 10, 10, 1,
                                                          NFSe.DataEmissao, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'forma_de_pagamento', 1, 2, 1,
-                                                                       '', ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'forma_de_pagamento', 1, 100, 1,
+                                             NFSe.Servico.xFormaPagamento, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'descricao', 1, 100, 1,
                                                NFSe.Servico.Discriminacao, ''));

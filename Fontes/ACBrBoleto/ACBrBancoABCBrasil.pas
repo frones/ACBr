@@ -960,7 +960,7 @@ end;
 
 function TACBrBancoABCBrasil.GetLocalPagamento: string;
 begin
-  Result := CInstrucaoPagamentoTodaRede;
+  Result := ACBrStr(CInstrucaoPagamentoTodaRede);
 end;
 
 function TACBrBancoABCBrasil.GerarRegistroTrailler240(

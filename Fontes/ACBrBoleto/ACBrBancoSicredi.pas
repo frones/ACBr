@@ -635,7 +635,7 @@ end;
 
 function TACBrBancoSicredi.GetLocalPagamento: String;
 begin
-  Result := Format(ACBrStr(CInstrucaoPagamentoCooperativa), [fpNome]);
+  Result := ACBrStr(Format(CInstrucaoPagamentoCooperativa, [fpNome]));
 end;
 
 procedure TACBrBancoSicredi.GerarRegistroTrailler400( ARemessa:TStringList );

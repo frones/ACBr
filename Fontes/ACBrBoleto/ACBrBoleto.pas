@@ -5502,7 +5502,7 @@ end ;
 
 function TACBrBancoClass.GetLocalPagamento: String;
 begin
-  Result := Format(ACBrStr(CInstrucaoPagamento), [fpNome] );
+  Result := ACBrStr(Format(CInstrucaoPagamento, [fpNome]));
 end;
 
 function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDateTime): String;

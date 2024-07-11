@@ -81,7 +81,7 @@ end;
 procedure TLibCEPDM.ACBrCEP1QuandoGravarLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
-  Tratado := True;
+  Tratado := (ACBrCEP1.ArqLOG = '');
   if (Lib.Config.Log.Nivel > logNenhum) then
     GravarLog('TACBrCEP: '+ALogLine, logNormal);
 end;
@@ -99,13 +99,20 @@ begin
 
   with ACBrCEP1 do
   begin
-    WebService    := pLibConfig.CEPConfig.WebService;
-    ChaveAcesso   := pLibConfig.CEPConfig.ChaveAcesso;
-    Usuario       := pLibConfig.CEPConfig.Usuario;
-    Senha         := pLibConfig.CEPConfig.Senha;
+    WebService := pLibConfig.CEPConfig.WebService;
+    ChaveAcesso := pLibConfig.CEPConfig.ChaveAcesso;
+    Usuario := pLibConfig.CEPConfig.Usuario;
+    Senha := pLibConfig.CEPConfig.Senha;
     PesquisarIBGE := pLibConfig.CEPConfig.PesquisarIBGE;
     HTTPSend.Sock.SSL.SSLType := pLibConfig.CEPConfig.SSLType;
-    NivelLog := Integer(pLibConfig.Log.Nivel);
+
+    NivelLog := pLibConfig.Socket.NivelLog;
+    ArqLOG := pLibConfig.Socket.ArqLog;
+
+    ProxyHost := pLibConfig.ProxyInfo.Servidor;
+    ProxyPort := IntToStr(pLibConfig.ProxyInfo.Porta);
+    ProxyUser := pLibConfig.ProxyInfo.Usuario;
+    ProxyPass := pLibConfig.ProxyInfo.Senha;
   end;
 end;
 

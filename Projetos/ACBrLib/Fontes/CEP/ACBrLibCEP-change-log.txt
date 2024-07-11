@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- ACBrLibCEPDataModule --
+[*] Ajustes para considerar seções "Socket" e "Proxy" do Config padrão
+    (por: DSA)
+
 04/07/2024
 --- ACBrLibCEPConfig, ACBrLibCEPConsts, ACBrLibCEPDataModule ---
 [+] Nova propriedade SSLType para uso ACBrLib em Android

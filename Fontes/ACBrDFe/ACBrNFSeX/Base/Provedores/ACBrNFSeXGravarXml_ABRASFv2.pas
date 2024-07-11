@@ -550,10 +550,12 @@ begin
                                         NFSe.ValorCargaTributariaEstadual, ''));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'OutrasInformacoes', 0, 255, NrOcorrOutrasInformacoes,
-                                        NFSe.OutrasInformacoes, DSC_OUTRASINF));
+    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
+                                 [rfReplaceAll, rfIgnoreCase]), DSC_OUTRASINF));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'InformacoesComplementares', 0, 2000, NrOcorrInformacoesComplemetares,
-                                NFSe.InformacoesComplementares, DSC_OUTRASINF));
+    StringReplace(NFSe.InformacoesComplementares, ';', FpAOwner.ConfigGeral.QuebradeLinha,
+                                            [rfReplaceAll, rfIgnoreCase]), ''));
 
   Result.AppendChild(AddNode(tcInt, '#9', 'TipoNota', 1, 3, NrOcorrTipoNota,
                                                             NFSe.TipoNota, ''));

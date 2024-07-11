@@ -277,7 +277,8 @@ begin
                        FpAOwner.StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS));
 
   Result.AppendChild(AddNode(tcStr, '#11', 'OutrasInformacoes', 1, 255, NrOcorrOutrasInformacoes,
-                                        NFSe.OutrasInformacoes, DSC_OUTRASINF));
+    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
+                                 [rfReplaceAll, rfIgnoreCase]), DSC_OUTRASINF));
 
   Result.AppendChild(GerarRPSSubstituido);
   Result.AppendChild(GerarServico);
@@ -350,7 +351,8 @@ begin
                                      [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
 
   Result.AppendChild(AddNode(tcStr, '#', 'InformacoesComplementares', 1, 255, NrOcorrInformacoesComplemetares,
-                                           NFSe.InformacoesComplementares, ''));
+    StringReplace(NFSe.InformacoesComplementares, ';', FpAOwner.ConfigGeral.QuebradeLinha,
+                                            [rfReplaceAll, rfIgnoreCase]), ''));
 
   Result.AppendChild(GerarServicoCodigoMunicipio);
 

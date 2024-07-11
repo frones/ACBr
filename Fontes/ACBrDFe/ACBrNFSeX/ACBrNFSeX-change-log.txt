@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2024
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Alteração visando tratar a quebra de linhas nos campos: OutrasInformacoes e
+    InformacoesComplementares da mesma forma que é feita no campo Discriminacao.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXClass/ACBrNFSeXNotasFiscais/SigISSWeb.GravarXml/SigISSWeb.LerXml --
 [+] Incluído o campo xFormaPagamento para conter a descrição da forma de pagamento,
     este canpo é utilizado pelo provedor SigISSWeb.

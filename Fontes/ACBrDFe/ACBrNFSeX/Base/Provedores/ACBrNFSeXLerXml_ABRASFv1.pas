@@ -726,6 +726,10 @@ begin
       xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
     end;
 
+    NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
+    NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, FpQuebradeLinha,
+                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+
     LerItensServico(AuxNode);
   end;
 end;

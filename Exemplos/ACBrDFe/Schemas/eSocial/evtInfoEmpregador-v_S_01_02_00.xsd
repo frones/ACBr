@@ -232,13 +232,14 @@
                 <xs:annotation>
                     <xs:documentation>Data da transformação em sociedade de fins lucrativos - Lei 11.096/2005.</xs:documentation>
                     <xs:documentation>Validação: Não preencher se {classTrib}(./classTrib) = [21, 22].</xs:documentation>
+                    <xs:documentation>Se informada, deve ser maior que [2005-11-21] e menor ou igual à data atual.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="indTribFolhaPisCofins" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
-                        <xs:documentation>Indicador de tributação sobre a folha de pagamento - PIS e COFINS.</xs:documentation>
-                        <xs:documentation>Preenchimento exclusivo para o empregador em situação de tributação de PIS e COFINS sobre a folha de pagamento.</xs:documentation>
+                        <xs:documentation>Indicador de tributação sobre a folha de pagamento - PIS e PASEP.</xs:documentation>
+                        <xs:documentation>Preenchimento exclusivo para o empregador em situação de tributação de PIS e PASEP sobre a folha de pagamento.</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="S">

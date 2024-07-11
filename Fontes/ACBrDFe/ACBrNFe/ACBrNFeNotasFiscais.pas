@@ -669,11 +669,6 @@ begin
         //B21-10
         AdicionaErro('709-Rejeição: NFC-e com formato de DANFE inválido');
 
-      GravaLog('Validar: 712-NFCe contingência off-line');
-      if (NFe.Ide.tpEmis = teOffLine) and
-        (AnsiIndexStr(NFe.Emit.EnderEmit.UF, ['SP']) <> -1) then  //B22-20
-        AdicionaErro('712-Rejeição: NF-e com contingência off-line');
-
       GravaLog('Validar: 782-NFCe e SCAN');
       if (NFe.Ide.tpEmis = teSCAN) then //B22-50
         AdicionaErro('782-Rejeição: NFC-e não é autorizada pelo SCAN');

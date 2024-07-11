@@ -798,7 +798,7 @@ begin
              (FNFComRetornoSincrono.protNFCom.digVal <> '') and
              (NFCom.signature.DigestValue <> FNFComRetornoSincrono.protNFCom.digVal) then
           begin
-            raise EACBrNFComException.Create('DigestValue do documento ' + NumID + ' não coNFComre.');
+            raise EACBrNFComException.Create('DigestValue do documento ' + NumID + ' não confere.');
           end;
 
           NFCom.procNFCom.cStat := FNFComRetornoSincrono.protNFCom.cStat;
@@ -1682,9 +1682,9 @@ begin
 
                 FRetNFComDFe := '<' + ENCODING_UTF8 + '>' +
                                 '<NFComDFe>' +
-                                 '<nfComProc versao="' + FVersao + '">' +
+                                 '<nfcomProc versao="' + FVersao + '">' +
                                    SeparaDados(XMLOriginal, 'nfComProc') +
-                                 '</nfComProc>' +
+                                 '</nfcomProc>' +
                                  '<procEventoNFCom versao="' + FVersao + '">' +
                                    aEventos +
                                  '</procEventoNFCom>' +

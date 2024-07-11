@@ -1594,6 +1594,9 @@ begin
   begin
     P := pos('</NFComProc>', XMLStr);
 
+    if P = 0 then
+      P := pos('</nfcomProc>', XMLStr);
+
     if P <= 0 then
       P := pos('</procNFCom>', XMLStr);  // NFCom obtida pelo Portal da Receita
 

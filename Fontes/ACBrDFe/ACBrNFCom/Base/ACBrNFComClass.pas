@@ -1029,6 +1029,8 @@ begin
   FImposto := TImposto.Create;
   FgProcRef := TgProcRef.Create;
   FgRessarc := TgRessarc.Create;
+
+  indNFComAntPapelFatCentral := tiNao;
 end;
 
 destructor TDetCollectionItem.Destroy;

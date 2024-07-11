@@ -114,7 +114,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if Document.Root.Name = 'NFComProc' then
+  if Document.Root.Name = 'nfcomProc' then
   begin
     Ler_ProtNFCom(Document.Root.Childrens.FindAnyNs('protNFCom'));
     NFComNode := Document.Root.Childrens.FindAnyNs('NFCom');
@@ -407,6 +407,7 @@ end;
 procedure TNFComXmlReader.Ler_Det(const ANode: TACBrXmlNode);
 var
   Item: TDetCollectionItem;
+  sAux: string;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -415,7 +416,12 @@ begin
   Item.nItem := StrToInt(ObterConteudoTag(ANode.Attributes.Items['nItem']));
   Item.chNFComAnt := ObterConteudoTag(ANode.Attributes.Items['chNFComAnt']);
   Item.nItemAnt := StrToIntDef(ObterConteudoTag(ANode.Attributes.Items['nItemAnt']), 0);
-  Item.indNFComAntPapelFatCentral := StrToTIndicador(ObterConteudoTag(ANode.Attributes.Items['indNFComAntPapelFatCentral']));
+
+  sAux := ObterConteudoTag(ANode.Attributes.Items['indNFComAntPapelFatCentral']);
+  Item.indNFComAntPapelFatCentral := tiNao;
+
+  if sAux <> '' then
+    Item.indNFComAntPapelFatCentral := StrToTIndicador(sAux);
 
   Item.infAdProd := ObterConteudo(ANode.Childrens.FindAnyNs('infAdProd'), tcStr);
 

@@ -258,7 +258,7 @@ begin
 
   if NFCom.procNFCom.nProt <> '' then
   begin
-    xmlNode := FDocument.CreateElement('NFComProc', 'http://www.portalfiscal.inf.br/nfCom');
+    xmlNode := FDocument.CreateElement('nfcomProc', 'http://www.portalfiscal.inf.br/nfCom');
 
     xmlNode.SetAttribute('versao', FloatToString(NFCom.infNFCom.Versao, '.', '#0.00'));
 

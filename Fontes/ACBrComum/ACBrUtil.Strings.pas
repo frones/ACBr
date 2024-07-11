@@ -86,6 +86,7 @@ type
   TSplitResult = array of string;
 
 function Split(const ADelimiter: Char; const AString: string): TSplitResult;
+function SplitToString(ASplit: TSplitResult; aDelimiter: string = ''):String;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
 
@@ -210,6 +211,24 @@ begin
       Result[i] := vRows.Strings[i];
   finally
     FreeAndNil(vRows);
+  end;
+end;
+
+function SplitToString(ASplit: TSplitResult; aDelimiter: string): String;
+var
+  i, k: integer;
+begin
+    result := '';
+
+  if aDelimiter = '' then begin
+     for i := low(ASplit) to high(ASplit) do
+       result := result + ASplit[i];
+  end else begin
+     k := high(ASplit);
+     for i := low(ASplit) to k do begin
+        result := result + ASplit[i];
+        if k <> i then result := result + aDelimiter;
+     end;
   end;
 end;
 

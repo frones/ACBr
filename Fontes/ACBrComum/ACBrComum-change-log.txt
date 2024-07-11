@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/224
+---ACBrUtil.Strings---
+[+] Função para converter TSplitResult para String
+    Por: Antonio Carlos Junior / Juliomar Marchetti
+
 01/07/2024
 -- ACBrJSON --
 [-] Correção para converter corretamente string Iso8601 para TDateTime.

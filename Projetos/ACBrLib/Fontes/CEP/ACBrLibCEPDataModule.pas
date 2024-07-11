@@ -82,7 +82,7 @@ procedure TLibCEPDM.ACBrCEP1QuandoGravarLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
   Tratado := (ACBrCEP1.ArqLOG = '');
-  if (Lib.Config.Log.Nivel > logNenhum) then
+  if (Lib.Config.Socket.NivelLog > 0) then
     GravarLog('TACBrCEP: '+ALogLine, logNormal);
 end;
 

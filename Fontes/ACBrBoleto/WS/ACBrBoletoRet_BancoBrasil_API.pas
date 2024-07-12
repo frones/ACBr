@@ -239,6 +239,12 @@ begin
             ARetornoWS.DadosRet.TituloRet.DataDocumento              := DateBBtoDateTime(LJsonObject.AsString['dataEmissaoTituloCobranca']);
             ARetornoWS.DadosRet.TituloRet.DataCredito                := DateBBtoDateTime(LJsonObject.AsString['dataCreditoLiquidacao']);
             ARetornoWS.DadosRet.TituloRet.DataBaixa                  := DateBBtoDateTime(LJsonObject.AsString['dataRecebimentoTitulo']);
+            ARetornoWS.DadosRet.TituloRet.DataDesconto               := DateBBtoDateTime(LJsonObject.AsString['dataDescontoTitulo']);
+            ARetornoWS.DadosRet.TituloRet.DataDesconto2              := DateBBtoDateTime(LJsonObject.AsString['dataSegundoDescontoTitulo']);
+            ARetornoWS.DadosRet.TituloRet.DataDesconto3              := DateBBtoDateTime(LJsonObject.AsString['dataTerceiroDescontoTitulo']);
+            ARetornoWS.DadosRet.TituloRet.DataMulta                  := DateBBtoDateTime(LJsonObject.AsString['dataMultaTitulo']);
+            ARetornoWS.DadosRet.TituloRet.DataProtesto               := DateBBtoDateTime(LJsonObject.AsString['dataProtestoTituloCobranca']);
+
             ARetornoWS.DadosRet.TituloRet.ValorAtual                 := LJsonObject.AsFloat['valorAtualTituloCobranca'];
             ARetornoWS.DadosRet.TituloRet.ValorPago                  := LJsonObject.AsFloat['valorPagoSacado'];
 
@@ -404,7 +410,7 @@ begin
 
             LListaRetorno.DadosRet.TituloRet.NossoNumero                := LListaRetorno.DadosRet.IDBoleto.NossoNum;
             LListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente  := TrataNossoNumero(LListaRetorno.DadosRet.IDBoleto.NossoNum);
-            LListaRetorno.DadosRet.TituloRet.DataRegistro               := DateBBtoDateTime(LItemObject.AsString['dataRegistro']);
+
             LListaRetorno.DadosRet.TituloRet.Vencimento                 := DateBBtoDateTime(LItemObject.AsString['dataVencimento']);
             LListaRetorno.DadosRet.TituloRet.ValorDocumento             := LItemObject.AsFloat['valorOriginal'];
             LListaRetorno.DadosRet.TituloRet.Carteira                   := OnlyNumber(LItemObject.AsString['carteiraConvenio']);
@@ -412,8 +418,16 @@ begin
             LListaRetorno.DadosRet.TituloRet.codigoEstadoTituloCobranca := OnlyNumber(LItemObject.AsString['codigoEstadoTituloCobranca']);
             LListaRetorno.DadosRet.TituloRet.estadoTituloCobranca       := LItemObject.AsString['estadoTituloCobranca'];
             LListaRetorno.DadosRet.TituloRet.contrato                   := LItemObject.AsString['contrato'];
+            LListaRetorno.DadosRet.TituloRet.DataRegistro               := DateBBtoDateTime(LItemObject.AsString['dataRegistro']);
             LListaRetorno.DadosRet.TituloRet.DataMovimento              := DateBBtoDateTime(LItemObject.AsString['dataMovimento']);
-            LListaRetorno.DadosRet.TituloRet.dataCredito                := DateBBtoDateTime(LItemObject.AsString['dataCredito']);
+            LListaRetorno.DadosRet.TituloRet.DataCredito                := DateBBtoDateTime(LItemObject.AsString['dataCredito']);
+            LListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateBBtoDateTime(LItemObject.AsString['dataRecebimentoTitulo']);
+            LListaRetorno.DadosRet.TituloRet.DataDesconto               := DateBBtoDateTime(LJsonObject.AsString['dataDescontoTitulo']);
+            LListaRetorno.DadosRet.TituloRet.DataDesconto2              := DateBBtoDateTime(LJsonObject.AsString['dataSegundoDescontoTitulo']);
+            LListaRetorno.DadosRet.TituloRet.DataDesconto3              := DateBBtoDateTime(LJsonObject.AsString['dataTerceiroDescontoTitulo']);
+            LListaRetorno.DadosRet.TituloRet.DataMulta                  := DateBBtoDateTime(LJsonObject.AsString['dataMultaTitulo']);
+            LListaRetorno.DadosRet.TituloRet.DataProtesto               := DateBBtoDateTime(LJsonObject.AsString['dataProtestoTituloCobranca']);
+
             LListaRetorno.DadosRet.TituloRet.ValorAtual                 := LItemObject.AsFloat['valorAtual'];
             LListaRetorno.DadosRet.TituloRet.ValorPago                  := LItemObject.AsFloat['valorPago'];
           end;

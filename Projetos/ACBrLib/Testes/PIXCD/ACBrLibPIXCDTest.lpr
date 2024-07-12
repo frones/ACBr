@@ -3,7 +3,7 @@ program ACBrLibPIXCDTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, ACBrLibPIXCDStaticImportMT, GuiTestRunner,
+  Interfaces, Forms, OpenSSLExt, ACBrLibPIXCDStaticImportMT, GuiTestRunner,
   ACBrLibConsts, ACBrLibPIXCDTestCase;
 
 {$R *.res}

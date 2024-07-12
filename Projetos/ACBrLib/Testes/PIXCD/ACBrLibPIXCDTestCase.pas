@@ -79,6 +79,23 @@ type
     procedure Test_PIXCD_CancelarCobrancaImediata;
     procedure Test_PIXCD_CancelarCobranca;
     procedure Test_PIXCD_ConfigPSPSicoob;
+
+    //Matera
+    procedure Test_PIXCD_Matera_IncluirConta;
+    procedure Test_PIXCD_Matera_ConsultarConta;
+    procedure Test_PIXCD_Matera_InativarConta;
+    procedure Test_PIXCD_Matera_IncluirChavePix;
+    procedure Test_PIXCD_Matera_ConsultarChavePix;
+    procedure Test_PIXCD_Matera_ExcluirChavePix;
+    procedure Test_PIXCD_Matera_GerarQRCode_Normal;
+    procedure Test_PIXCD_Matera_GerarQRCode_Vencimento;
+    procedure Test_PIXCD_Matera_ConsultarTransacao;
+    procedure Test_PIXCD_Matera_ConsultarSaldoEC;
+    procedure Test_PIXCD_Matera_ConsultarExtratoEC;
+    procedure Test_PIXCD_Matera_ConsultarMotivosDevolucao;
+    procedure Test_PIXCD_Matera_MateraSolicitarDevolucao;
+    procedure Test_PIXCD_Matera_MateraConsultarAliasRetirada;
+    procedure Test_PIXCD_Matera_MateraSolicitarRetirada;
   end;
 
 implementation
@@ -421,6 +438,22 @@ begin
 
   AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
 
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '15')); //Gate2All
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '16')); //Banrisul
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+  AssertEquals(ErrOK, PIXCD_ConfigLerValor(Handle, 'PIXCD', 'PSP', PChar(AStr), Bufflen));
+
+  AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '17')); //C6Bank
+
+  AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
   AStr := copy(AStr,1,Bufflen);
 
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
@@ -715,6 +748,400 @@ begin
   AssertEquals(ErrOk, PIXCD_ConfigLerValor(Handle, CSessaoPIXCDSicoobConfig, CChaveArqCertificadoSicoob, PChar(AStr), Bufflen));
 
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_IncluirConta;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Incluir Conta', ErrOK,
+   PIXCD_Matera_IncluirConta(Handle, PChar(fCaminhoExec +'\IncluirConta.ini'), Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ConsultarConta;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Consultar Conta', ErrOK,
+   PIXCD_Matera_ConsultarConta(Handle, 'accountid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_InativarConta;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Inativar Conta', ErrOK,
+   PIXCD_Matera_InativarConta(Handle, 'accountid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_IncluirChavePix;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Incluir Chave PIX', ErrOK,
+   PIXCD_Matera_IncluirChavePix(Handle, 'accountid', 'externalid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ConsultarChavePix;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Consultar Chave Pix', ErrOK,
+   PIXCD_Matera_ConsultarChavePix(Handle, 'accountid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ExcluirChavePix;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Excluir Chave PIX', ErrOK,
+   PIXCD_Matera_ExcluirChavePix(Handle, 'accountid', 'chavepix', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_GerarQRCode_Normal;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Gerar QRCode', ErrOK,
+   PIXCD_Matera_GerarQRCode(Handle, PChar(fCaminhoExec +'\IncluirQRCode_Normal.ini'), Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_GerarQRCode_Vencimento;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Gerar QRCode', ErrOK,
+   PIXCD_Matera_GerarQRCode(Handle, PChar(fCaminhoExec +'\IncluirQRCode_Vencto.ini'), Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ConsultarTransacao;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Consultar Transação', ErrOK,
+   PIXCD_Matera_ConsultarTransacao(Handle, 'accountid', 'transactionid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ConsultarSaldoEC;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Consultar Saldo EC', ErrOK,
+   PIXCD_Matera_ConsultarSaldoEC(Handle, 'accountid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ConsultarExtratoEC;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+  dataInicial, dataFinal: TDateTime;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   dataInicial:= EncodeDate(2024, 07, 12);
+   dataFinal:= EncodeDate(2024, 07, 12);
+
+   AssertEquals('Erro ao Consultar Extrato EC', ErrOK,
+   PIXCD_Matera_ConsultarExtratoEC(Handle, 'accountid', dataInicial, dataFinal, Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_ConsultarMotivosDevolucao;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Consultar Motivos Devolução', ErrOK,
+   PIXCD_Matera_ConsultarMotivosDevolucao(Handle, Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_MateraSolicitarDevolucao;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Solicitar Devolução', ErrOK,
+   PIXCD_Matera_SolicitarDevolucao(Handle, PChar(fCaminhoExec +'\SolicitarDevolucao.ini'), 'accountid', 'transactionid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_MateraConsultarAliasRetirada;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Consultar Alias Retirada', ErrOK,
+   PIXCD_Matera_ConsultarAliasRetirada(Handle, 'accountid', 'alias', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_Matera_MateraSolicitarRetirada;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+begin
+  try
+   AssertEquals(ErrOk, PIXCD_Inicializar(Handle, '', ''));
+
+   AssertEquals('Erro ao Mudar PSP', ErrOk, PIXCD_ConfigGravarValor(Handle, 'PIXCD', 'PSP', '12')); //Matera
+   AssertEquals(ErrOK, PIXCD_ConfigGravar(Handle,'ACBrLib.ini'));
+
+   Resposta:= '';
+   Tamanho:= 0;
+
+   AssertEquals('Erro ao Solicitar Retirada', ErrOK,
+   PIXCD_Matera_SolicitarRetirada(Handle, PChar(fCaminhoExec +'\SolicitarRetirada.ini'), 'accountid', Resposta, Tamanho));
+   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+  except
+    on E: Exception do
+    ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
+  end;
 end;
 
 initialization

@@ -272,8 +272,11 @@ begin
   begin
     if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada
     begin
-
-      ANFe := TACBrNFe(ACBrNFe).NotasFiscais[FIndexImpressaoIndividual].NFe;   // Pegue informações da Primeira Nota
+      if (TACBrNFe(ACBrNFe).DANFE.ClassName = 'TACBrNFeDANFCEFR') or
+         (TACBrNFe(ACBrNFe).DANFE.ClassName = 'TACBrNFeDANFEFR') then
+        ANFe := TACBrNFe(ACBrNFe).NotasFiscais[FIndexImpressaoIndividual - 1].NFe
+      else
+        ANFe := TACBrNFe(ACBrNFe).NotasFiscais[FIndexImpressaoIndividual].NFe;
 
       if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
         dhEmissao := ANFe.Ide.dEmi

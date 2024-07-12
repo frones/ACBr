@@ -116,21 +116,31 @@ begin
   ARetornoWS.JSONEnvio       := EnvWs;
   ARetornoWS.Header.Operacao := TipoOperacao;
 
+  if (HttpResultCode = 204) and (TipoOperacao = tpConsultaDetalhe) then
+  begin
+    HttpResultCode   := 400;
+    Result := False;
+    LRejeicao := ARetornoWS.CriarRejeicaoLista;
+    LRejeicao.Codigo := '400';
+    LRejeicao.Ocorrencia  := '204';
+    LRejeicao.Mensagem := 'A requisição foi processada com êxito e não está retornando conteúdo.';
+  end;
+
   if Trim(RetWS) <> '' then
   begin
     try
       LJson := TACBrJSONObject.Parse(RetWS);
       try
         ARetornoWS.JSON :=  LJson.ToJSON;
-        if HTTPResultCode >= 300 then
-        begin
+        //if HTTPResultCode >= 300 then
+        //begin
           if LJson.IsJSONArray('resultado') then
           begin
             LJsonViolacoesArray := LJson.AsJSONArray['resultado'];
             for x := 0 to LJsonViolacoesArray.Count-1 do
             begin
               LJsonViolacao := LJsonViolacoesArray.ItemAsJSONObject[x];
-              if (LJsonViolacao.AsJSONObject['status'].AsString['codigo'] <> '200') then
+              if (LJsonViolacao.AsJSONObject['status'].AsInteger['codigo'] > 299) then
               begin
                 LRejeicao            := ARetornoWS.CriarRejeicaoLista;
                 LRejeicao.Codigo     := LJsonViolacao.AsJSONObject['status'].AsString['codigo'];
@@ -138,7 +148,7 @@ begin
               end;
             end;
           end;
-        end;
+        //end;
         if LJson.ValueExists('httpCode') then
         begin
           LRejeicao            := ARetornoWS.CriarRejeicaoLista;
@@ -370,7 +380,7 @@ begin
             AJsonBoletosArray := ajson.AsJSONArray['mensagens'];
             for I := 0 to Pred(AJsonBoletosArray.Count) do
             begin
-              aJsonViolacao                := AJsonBoletosArray.ItemAsJSONObject[I];  // <<< pq isso
+              aJsonViolacao                := AJsonBoletosArray.ItemAsJSONObject[I];
               LMensagemRejeicao            := ListaRetorno.CriarRejeicaoLista;
               LMensagemRejeicao.Codigo     := AJsonViolacao.AsString['codigo'];
               LMensagemRejeicao.mensagem   := AJsonViolacao.AsString['mensagem'];

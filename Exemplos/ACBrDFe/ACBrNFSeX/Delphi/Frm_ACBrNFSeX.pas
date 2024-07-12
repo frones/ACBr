@@ -3696,7 +3696,8 @@ end;
 
 procedure TfrmACBrNFSe.btnSubsNFSeClick(Sender: TObject);
 var
-  vNumRPS, Codigo, Motivo, sNumNFSe, sSerieNFSe, NumLote, CodVerif: String;
+  vNumRPS, Codigo, Motivo, sNumNFSe, sSerieNFSe, NumLote, CodVerif,
+  sNumNFSeSub: String;
   CodCanc: Integer;
 begin
   vNumRPS := '';
@@ -3764,8 +3765,15 @@ begin
       exit;
   end;
 
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proBauhaus] then
+  begin
+    sNumNFSeSub := '1';
+    if not(InputQuery('Substituir NFSe', 'Numero da NFSe Substituta', sNumNFSeSub)) then
+      exit;
+  end;
+
   ACBrNFSeX1.SubstituirNFSe(sNumNFSe, sSerieNFSe, Codigo,
-                                        Motivo, NumLote, CodVerif);
+                                        Motivo, NumLote, CodVerif, sNumNFSeSub);
 
   ChecarResposta(tmSubstituirNFSe);
 end;
@@ -4336,6 +4344,7 @@ end;
 procedure TfrmACBrNFSe.ChecarResposta(aMetodo: TMetodo);
 var
   i: Integer;
+  Ambiente: string;
 
   procedure ListaDeErros(aErros: TNFSeEventoCollection);
   var
@@ -4418,6 +4427,13 @@ var
     end;
   end;
 begin
+  Ambiente := TpAmbToStr(ACBrNFSeX1.Configuracoes.WebServices.Ambiente);
+
+  if Ambiente = '1' then
+    Ambiente := Ambiente + ' - Produção'
+  else
+    Ambiente := Ambiente + ' - Homologação';
+
   memoLog.Clear;
   memoLog.Lines.Clear;
   memoLog.Update;
@@ -4431,7 +4447,7 @@ begin
   memoLog.Lines.Add('------------------------------');
 
   memoLog.Lines.Add('Requisição');
-  memoLog.Lines.Add('Ambiente : ' + TpAmbToStr(ACBrNFSeX1.Configuracoes.WebServices.Ambiente));
+  memoLog.Lines.Add('Ambiente : ' + Ambiente);
   memoLog.Lines.Add('Cidade   : ' + ACBrNFSeX1.Configuracoes.Geral.xMunicipio + '/' +
                                    ACBrNFSeX1.Configuracoes.Geral.xUF);
   memoLog.Lines.Add('Provedor : ' + ACBrNFSeX1.Configuracoes.Geral.xProvedor +

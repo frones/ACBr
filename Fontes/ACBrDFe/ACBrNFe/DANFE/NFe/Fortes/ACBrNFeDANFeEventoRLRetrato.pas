@@ -266,8 +266,20 @@ begin
     rllSeqEvento.Caption := IntToStr(InfEvento.nSeqEvento);
     rllVersaoEvento.Caption := InfEvento.versaoEvento;
     rllStatusEvento.Caption := IntToStr(RetInfEvento.cStat) + ' - ' + RetInfEvento.xMotivo;
+
+    if RetInfEvento.cStat = 0 then
+      rllStatusEvento.Visible := False
+    else
+      rllStatusEvento.Visible := True;
+
     rllProtocoloEvento.Caption := RetInfEvento.nProt;
     rllDataHoraRegistro.Caption := FormatDateTimeBr(RetInfEvento.dhRegEvento);
+
+    if RetInfEvento.dhRegEvento < StrToDate( '01/01/1900' ) then
+      rllDataHoraRegistro.Visible := False
+    else
+      rllDataHoraRegistro.Visible := True;
+
 
     // Se o XML da NF-e foi carregado, preenche os campos
     // do Emitente e do Destinatário
@@ -307,6 +319,13 @@ begin
       end; // with NFe
     end; // if fpNFe <> nil
 
+    RLDraw50.Visible := True;
+    RLLabel21.Visible := True;
+    rlmCondUso.Visible := True;
+
+    rlbCorrecao.Visible := True;
+    RLLabel6.Visible := True;
+    rlmCorrecao.Visible := True;
     // Preenche os campos específicos de acordo com o evento
     case InfEvento.tpEvento of
       teCCe:
@@ -366,6 +385,33 @@ begin
         rlmCondUso.Lines.Add('Valor da Nota   : ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vNF));
         rlmCondUso.Lines.Add('Valor do ICMS   : ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vICMS));
         rlmCondUso.Lines.Add('Valor do ICMS ST: ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vST));
+      end;
+      teInsucessoEntregaNFe:
+      begin
+        rllTitulo.Caption := ACBrStr('INSUCESSO DE ENTREGA DE NFE');
+        rlmJustificativa.Lines.Text := InfEvento.detEvento.xJustMotivo;
+
+        RLDraw50.Visible := False;
+        RLLabel21.Visible := False;
+        rlmCondUso.Visible := False;
+
+        rlbCorrecao.Visible := False;
+        RLLabel6.Visible := False;
+        rlmCorrecao.Visible := False;
+      end;
+
+      teCancInsucessoEntregaNFe:
+      begin
+        rllTitulo.Caption := ACBrStr('CANCELAMENTO DE INSUCESSO DE ENTREGA DE NFE');
+        rlmJustificativa.Lines.Text := InfEvento.detEvento.xJustMotivo;
+
+        RLDraw50.Visible := False;
+        RLLabel21.Visible := False;
+        rlmCondUso.Visible := False;
+
+        rlbCorrecao.Visible := False;
+        RLLabel6.Visible := False;
+        rlmCorrecao.Visible := False;
       end;
     end; // case InfEvento.tpEvento
 

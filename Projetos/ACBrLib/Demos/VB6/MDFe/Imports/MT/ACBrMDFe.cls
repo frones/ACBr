@@ -261,14 +261,14 @@ Private Declare Function MDFE_ImprimirEventoPDF _
                                       ByVal eArquivoXmlNFe As String, _
                                       ByVal eArquivoXmlEvento As String) As Long
 
-Private Declare Function MDFE_ConsultaMDFENaoEnc _
+Private Declare Function MDFE_ConsultaMDFeNaoEnc _
                 Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _
                                       ByVal nCNPJ As String, _
                                       ByVal buffer As String, _
                                       ByRef bufferSize As Long) As Long
 
-Private Declare Function MDFE_EncerrarMDFE _
-                Lib "ABCrMDFE32.dll" (ByVal libHandler As Long, _
+Private Declare Function MDFE_EncerrarMDFe _
+                Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _
                                       ByVal eChaveouMDFe As String, _
                                       ByVal eDtEnc As String, _
                                       ByVal cMunicipioDescarga As String, _
@@ -305,14 +305,14 @@ Public Function ConsultaMDFeNaoEnc(ByVal nCNPJ As String) As String
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = MDFE_ConsultaMDFENaoEnc(libHandler, nCNPJ, buffer, bufferLen)
+    retorno = MDFE_ConsultaMDFeNaoEnc(libHandler, nCNPJ, buffer, bufferLen)
     CheckResult retorno
     
     ConsultaMDFeNaoEnc = processResult(buffer, bufferLen)
 
 End Function
 
-Public Sub EncerrarMDFE(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
+Public Sub EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
                         ByVal cMunicipioDescarga As String, _
                         Optional ByVal nCNPJ As String = "", _
                         Optional ByVal nProtocolo As String = "")
@@ -325,7 +325,7 @@ Public Sub EncerrarMDFE(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
     buffer = String$(bufferLen, " ")
     
     
-    retorno = MDFE_EncerrarMDFE(libHandler, eChaveouMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen)
+    retorno = MDFE_EncerrarMDFe(libHandler, eChaveouMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen)
     CheckResult retorno
 
 End Sub

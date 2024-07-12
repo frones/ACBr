@@ -51,12 +51,11 @@ Begin VB.Form FrmMain
       _Version        =   393216
       Style           =   1
       Tabs            =   4
-      Tab             =   1
       TabsPerRow      =   4
       TabHeight       =   520
       TabCaption(0)   =   "Envio"
       TabPicture(0)   =   "FrmMain.frx":0000
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "btnGerarXml"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "btnEnviarSincrono"
@@ -84,41 +83,44 @@ Begin VB.Form FrmMain
       Tab(0).ControlCount=   12
       TabCaption(1)   =   "Consultas"
       TabPicture(1)   =   "FrmMain.frx":001C
-      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "btnStatusServ"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "btnConsultaXml"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "btnConsultaChave"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).Control(3)=   "btnConsultarRecibo"
-      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "btnConsNaoEncerrados"
-      Tab(1).Control(4).Enabled=   0   'False
       Tab(1).ControlCount=   5
       TabCaption(2)   =   "Eventos"
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "btnCancelar"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "btnEncerrar"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "btnEnviarEvento"
+      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "btnCarregarEvento"
+      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "btnImprimirEvento"
+      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).Control(5)=   "btnEnviarEmailEvento"
+      Tab(2).Control(5).Enabled=   0   'False
       Tab(2).Control(6)=   "btnLimparListaEvento"
+      Tab(2).Control(6).Enabled=   0   'False
       Tab(2).Control(7)=   "btnImprimirEventoPDF"
+      Tab(2).Control(7).Enabled=   0   'False
       Tab(2).ControlCount=   8
       TabCaption(3)   =   "Distribuição DFe"
       TabPicture(3)   =   "FrmMain.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "btnDFePorChave"
+      Tab(3).Control(0)=   "btnDFePorUltNSU"
       Tab(3).Control(1)=   "btnDFePorNSU"
-      Tab(3).Control(2)=   "btnDFePorUltNSU"
+      Tab(3).Control(2)=   "btnDFePorChave"
       Tab(3).ControlCount=   3
       Begin VB.CommandButton btnGerarChaveMDFe 
          Caption         =   "Gerar Chave MDFe"
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   139
          Top             =   2880
          Width           =   1935
@@ -214,7 +216,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnConsNaoEncerrados 
          Caption         =   "Consultar Não Enc."
          Height          =   360
-         Left            =   2160
+         Left            =   -72840
          TabIndex        =   126
          Top             =   960
          Width           =   1935
@@ -222,7 +224,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnConsultarRecibo 
          Caption         =   "Consultar Recibo"
          Height          =   360
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   125
          Top             =   960
          Width           =   1935
@@ -230,7 +232,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnConsultaChave 
          Caption         =   "Consultar com Chave"
          Height          =   360
-         Left            =   4200
+         Left            =   -70800
          TabIndex        =   124
          Top             =   480
          Width           =   1935
@@ -238,7 +240,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnConsultaXml 
          Caption         =   "Consultar com Xml"
          Height          =   360
-         Left            =   2160
+         Left            =   -72840
          TabIndex        =   123
          Top             =   480
          Width           =   1935
@@ -246,7 +248,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnStatusServ 
          Caption         =   "Status de Serviço"
          Height          =   360
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   122
          Top             =   480
          Width           =   1935
@@ -254,7 +256,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnLimparLista 
          Caption         =   "Limpar Lista MDFe"
          Height          =   360
-         Left            =   -70800
+         Left            =   4200
          TabIndex        =   121
          Top             =   960
          Width           =   1935
@@ -262,7 +264,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnValidarRegra 
          Caption         =   "Val. Regra de Neg."
          Height          =   360
-         Left            =   -72840
+         Left            =   2160
          TabIndex        =   120
          Top             =   2400
          Width           =   1935
@@ -270,7 +272,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnImprimirPDF 
          Caption         =   "Imprimir PDF DAMDFe"
          Height          =   360
-         Left            =   -72840
+         Left            =   2160
          TabIndex        =   119
          Top             =   1440
          Width           =   1935
@@ -278,7 +280,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnCarregarXml 
          Caption         =   "Carregar Xml MDFe"
          Height          =   360
-         Left            =   -72840
+         Left            =   2160
          TabIndex        =   118
          Top             =   960
          Width           =   1935
@@ -286,7 +288,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnAssinar 
          Caption         =   "Assinar MDFe "
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   117
          Top             =   2400
          Width           =   1935
@@ -294,7 +296,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnEnviarEmail 
          Caption         =   "Enviar MDFe Email"
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   116
          Top             =   1920
          Width           =   1935
@@ -302,7 +304,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnImprimir 
          Caption         =   "Imprimir DAMDFe"
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   115
          Top             =   1440
          Width           =   1935
@@ -310,7 +312,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnCarregarIni 
          Caption         =   "Carregar INI MDFe"
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   114
          Top             =   960
          Width           =   1935
@@ -318,7 +320,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnEnviarAssincrono 
          Caption         =   "Enviar Assincrono"
          Height          =   360
-         Left            =   -70800
+         Left            =   4200
          TabIndex        =   113
          Top             =   480
          Width           =   1935
@@ -326,7 +328,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnEnviarSincrono 
          Caption         =   "Enviar Sincrono"
          Height          =   360
-         Left            =   -72840
+         Left            =   2160
          TabIndex        =   112
          Top             =   480
          Width           =   1935
@@ -334,7 +336,7 @@ Begin VB.Form FrmMain
       Begin VB.CommandButton btnGerarXml 
          Caption         =   "Gerar Xml"
          Height          =   360
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   111
          Top             =   480
          Width           =   1935
@@ -360,19 +362,19 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Documento Auxiliar"
       TabPicture(1)   =   "FrmMain.frx":008C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Label13"
-      Tab(1).Control(1)=   "txtLogomarca"
-      Tab(1).Control(2)=   "btnLogomarca"
-      Tab(1).Control(3)=   "Frame4"
+      Tab(1).Control(0)=   "Frame4"
+      Tab(1).Control(1)=   "btnLogomarca"
+      Tab(1).Control(2)=   "txtLogomarca"
+      Tab(1).Control(3)=   "Label13"
       Tab(1).ControlCount=   4
       TabCaption(2)   =   "Email"
       TabPicture(2)   =   "FrmMain.frx":00A8
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "txtMensagem"
-      Tab(2).Control(1)=   "txtAssunto"
+      Tab(2).Control(0)=   "Label40"
+      Tab(2).Control(1)=   "Label41"
       Tab(2).Control(2)=   "Frame5"
-      Tab(2).Control(3)=   "Label41"
-      Tab(2).Control(4)=   "Label40"
+      Tab(2).Control(3)=   "txtAssunto"
+      Tab(2).Control(4)=   "txtMensagem"
       Tab(2).ControlCount=   5
       Begin VB.TextBox txtMensagem 
          Height          =   1365
@@ -743,47 +745,47 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "Webservices"
          TabPicture(1)   =   "FrmMain.frx":00E0
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "Frame2"
-         Tab(1).Control(1)=   "ckbSalvarSOAP"
-         Tab(1).Control(2)=   "ckbVisualizar"
-         Tab(1).Control(3)=   "Frame1"
-         Tab(1).Control(4)=   "FraAmbiente"
-         Tab(1).Control(5)=   "txtTimeOut"
-         Tab(1).Control(6)=   "cmbSSlType"
-         Tab(1).Control(7)=   "cmbUfDestino"
-         Tab(1).Control(8)=   "timeout"
-         Tab(1).Control(9)=   "Label27"
-         Tab(1).Control(10)=   "Label26"
-         Tab(1).Control(11)=   "Label2"
+         Tab(1).Control(0)=   "Label2"
+         Tab(1).Control(1)=   "Label26"
+         Tab(1).Control(2)=   "Label27"
+         Tab(1).Control(3)=   "timeout"
+         Tab(1).Control(4)=   "cmbUfDestino"
+         Tab(1).Control(5)=   "cmbSSlType"
+         Tab(1).Control(6)=   "txtTimeOut"
+         Tab(1).Control(7)=   "FraAmbiente"
+         Tab(1).Control(8)=   "Frame1"
+         Tab(1).Control(9)=   "ckbVisualizar"
+         Tab(1).Control(10)=   "ckbSalvarSOAP"
+         Tab(1).Control(11)=   "Frame2"
          Tab(1).ControlCount=   12
          TabCaption(2)   =   "Certificados"
          TabPicture(2)   =   "FrmMain.frx":00FC
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "Label6"
-         Tab(2).Control(1)=   "Label7"
-         Tab(2).Control(2)=   "Label32"
-         Tab(2).Control(3)=   "cmbCrypt"
-         Tab(2).Control(4)=   "cmbHttp"
-         Tab(2).Control(5)=   "cmbXmlSign"
-         Tab(2).Control(6)=   "Frame3"
-         Tab(2).Control(7)=   "btnObterCertificados"
+         Tab(2).Control(0)=   "btnObterCertificados"
+         Tab(2).Control(1)=   "Frame3"
+         Tab(2).Control(2)=   "cmbXmlSign"
+         Tab(2).Control(3)=   "cmbHttp"
+         Tab(2).Control(4)=   "cmbCrypt"
+         Tab(2).Control(5)=   "Label32"
+         Tab(2).Control(6)=   "Label7"
+         Tab(2).Control(7)=   "Label6"
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Arquivos"
          TabPicture(3)   =   "FrmMain.frx":0118
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "Label11"
-         Tab(3).Control(1)=   "Label12"
-         Tab(3).Control(2)=   "ckbSalvarArqs"
-         Tab(3).Control(3)=   "ckbPastaMensal"
-         Tab(3).Control(4)=   "ckbAdicionaLiteral"
-         Tab(3).Control(5)=   "ckbEmissaoPathNFe"
+         Tab(3).Control(0)=   "btnArqEvento"
+         Tab(3).Control(1)=   "txtArqEvento"
+         Tab(3).Control(2)=   "btnArqMDFe"
+         Tab(3).Control(3)=   "txtArqMDFe"
+         Tab(3).Control(4)=   "ckbSepararPorModelo"
+         Tab(3).Control(5)=   "ckbSepararPorCNPJ"
          Tab(3).Control(6)=   "ckbSalvaPathEvento"
-         Tab(3).Control(7)=   "ckbSepararPorCNPJ"
-         Tab(3).Control(8)=   "ckbSepararPorModelo"
-         Tab(3).Control(9)=   "txtArqMDFe"
-         Tab(3).Control(10)=   "btnArqMDFe"
-         Tab(3).Control(11)=   "txtArqEvento"
-         Tab(3).Control(12)=   "btnArqEvento"
+         Tab(3).Control(7)=   "ckbEmissaoPathNFe"
+         Tab(3).Control(8)=   "ckbAdicionaLiteral"
+         Tab(3).Control(9)=   "ckbPastaMensal"
+         Tab(3).Control(10)=   "ckbSalvarArqs"
+         Tab(3).Control(11)=   "Label12"
+         Tab(3).Control(12)=   "Label11"
          Tab(3).ControlCount=   13
          Begin VB.CommandButton btnArqEvento 
             Caption         =   "..."
@@ -2295,7 +2297,7 @@ Private Sub btnEncerrar_Click()
     Dim Municipio As String
     
     Chave = InputBox("Informe Chave MDFe", "WebServices Encerrar", "")
-    Municipio = InputBox("Informe Chave MDFe", "WebServices Encerrar", "")
+    Municipio = InputBox("Informe o código do municipio", "WebServices Encerrar", "")
     
     mdfe.EncerrarMDFE Chave, DateTime.Now, Municipio
     
@@ -2763,7 +2765,7 @@ End Sub
 Private Sub SalvarConfig()
     Dim retorno As Long
     
-    mdfe.ConfigGravarValor SESSAO_MDFe, "VersaoDF", CStr(cmbVersao.ListIndex)
+    'mdfe.ConfigGravarValor SESSAO_MDFe, "VersaoDF", CStr(cmbVersao.ListIndex)
     mdfe.ConfigGravarValor SESSAO_DFE, "SSLCryptLib", CStr(cmbCrypt.ListIndex)
     mdfe.ConfigGravarValor SESSAO_DFE, "SSLHttpLib", CStr(cmbHttp.ListIndex)
     mdfe.ConfigGravarValor SESSAO_DFE, "SSLXmlSignLib", CStr(cmbXmlSign.ListIndex)

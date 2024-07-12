@@ -558,16 +558,106 @@ end;
 
 procedure TACBrNFSeProviderBauhaus.PrepararSubstituiNFSe(
   Response: TNFSeSubstituiNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Emitente: TEmitenteConfNFSe;
+  jo: TACBrJSONObject;
 begin
-  inherited;
+  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod108;
+    AErro.Descricao := ACBrStr(Desc108);
+    Exit;
+  end;
 
+  if EstaVazio(Response.InfCancelamento.NumeroNFSeSubst) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod135;
+    AErro.Descricao := ACBrStr(Desc135);
+    Exit;
+  end;
+
+  if EstaVazio(Response.InfCancelamento.MotCancelamento) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod110;
+    AErro.Descricao := ACBrStr(Desc110);
+    Exit;
+  end;
+
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  jo := TACBrJSONObject.Create;
+  try
+    with Response.InfCancelamento do
+      jo
+        .AddPairJSONObject('DadosNota', EmptyStr)
+        .AsJSONObject['DadosNota']
+          .AddPair('Numero', StrToIntDef(NumeroNFSe, 0))
+          .AddPair('Substituta', StrToIntDef(NumeroNFSeSubst, 0))
+          .AddPair('Cancelamento', TACBrJSONObject.Create
+                                     .AddPair('Motivo', MotCancelamento))
+          .AddPair('Prestador', TACBrJSONObject.Create
+                                  .AddPair('InscricaoMunicipal', StrToIntDef(OnlyNumber(Emitente.InscMun), 0)));
+
+    Response.ArquivoEnvio := jo.ToJSON;
+  finally
+    jo.Free;
+  end;
+
+  FpMethod := 'POST';
+  FpPath := '';
 end;
 
 procedure TACBrNFSeProviderBauhaus.TratarRetornoSubstituiNFSe(
   Response: TNFSeSubstituiNFSeResponse);
+var
+  jDocument, jNfse: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+//  ANota: TNotaFiscal;
 begin
-  inherited;
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := ACBrStr(Desc201);
+    Exit
+  end;
 
+  jDocument := TACBrJSONObject.Parse(Response.ArquivoRetorno);
+
+  try
+    try
+      ProcessarMensagemDeErros(jDocument, Response);
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      if Response.Sucesso then
+      begin
+        jNfse := jDocument.AsJSONObject['DadosNfse'];
+
+        if Assigned(jNfse) then
+        begin
+          with Response do
+          begin
+            NumeroNota := jNfse.AsString['Numero'];
+            DataCanc := jNfse.AsISODate['DataCancelamento'];
+          end;
+        end;
+      end;
+    except
+      on E: Exception do
+      begin
+        Response.Sucesso := False;
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(jDocument);
+  end;
 end;
 
 { TACBrNFSeXWebserviceBauhaus }

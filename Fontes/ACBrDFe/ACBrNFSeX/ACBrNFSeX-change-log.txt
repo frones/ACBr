@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 12/07/2024
+-- ACBrNFSeX/ACBrNFSeXConsts --
+[*] Incluído um parâmetro opcional no método SubstituirNFSe para conter o 
+    numero da NFSe susbtituida que é usado pelo provedor Bauhaus.
+   Por: Italo Giurizzato Junior
+-- Bauhaus.Provider --
+[*] Implementado o método de Substituição de NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Ceu Azul/PR trocou de provedor, agora é IPM versão 2.04
    Por: Rafael Luís Acco

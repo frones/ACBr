@@ -237,6 +237,8 @@ resourcestring
   Desc133	= 'Geral.CNPJPrefeitura não informado.';
   Cod134 = 'X134';
   Desc134 = 'Número da NFSe ou RPS não informado.';
+  Cod135 = 'X135';
+  Desc135 = 'Número da NFSe Substituta não informado.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';

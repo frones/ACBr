@@ -167,7 +167,8 @@ type
 
     procedure SubstituirNFSe(const ANumNFSe: String; const ASerieNFSe: String;
       const ACodCancelamento: string; const AMotCancelamento: String = '';
-      const ANumLote: String = ''; const ACodVerificacao: String = '');
+      const ANumLote: String = ''; const ACodVerificacao: String = '';
+      const ANumNFSeSub: String = '');
 
     function LinkNFSe(const ANumNFSe: String; const ACodVerificacao: String;
       const AChaveAcesso: String = ''; const AValorServico: String = '';
@@ -1089,7 +1090,8 @@ begin
 end;
 
 procedure TACBrNFSeX.SubstituirNFSe(const ANumNFSe, ASerieNFSe, ACodCancelamento: String;
-  const AMotCancelamento, ANumLote, ACodVerificacao: String);
+  const AMotCancelamento, ANumLote, ACodVerificacao: String;
+  const ANumNFSeSub: String);
 begin
   if ANumNFSe = '' then
     GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
@@ -1113,6 +1115,7 @@ begin
     MotCancelamento := TiraAcentos(ChangeLineBreak(aMotCancelamento));
     NumeroLote := aNumLote;
     CodVerificacao := aCodVerificacao;
+    NumeroNFSeSubst := ANumNFSeSub;
   end;
 
   FProvider.SubstituiNFSe;

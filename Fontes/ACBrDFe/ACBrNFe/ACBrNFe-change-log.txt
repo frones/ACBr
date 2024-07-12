@@ -46,6 +46,10 @@ Símbolo : Significado
 
 
 12/07/2024
+-- ACBrNFe.RetEnvEvento --
+[*] Possível solução para carregar corretamente o XML do evento gerado por outra
+    aplicação.
+   Por: Italo Giurizzato Junior
 -- ACBrNFe.EnvEvento --
 [*] O valor para a tag <tpAutor> do evento Ator Interessado na NF-e estava 
     com o valor fixo, alteração feita para conter os valores: 1, 2 ou 3 

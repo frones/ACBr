@@ -278,7 +278,7 @@ begin
   begin
     xmlNode := NFComNode.AddChild('infNFComSupl');
     xmlNode.AppendChild(AddNode(tcStr, '#318', 'qrCodNFCom', 50, 1000, 1,
-     NFCom.infNFComSupl.qrCodNFCom, DSC_QRCODNFCOM));
+     NFCom.infNFComSupl.qrCodNFCom, DSC_QRCODNFCOM, False));
 //     '<![CDATA[' + NFCom.infNFComSupl.qrCodNFCom + ']]>', DSC_QRCODNFCOM, False));
   end;
 

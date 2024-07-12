@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/07/2024
+-- ACBrNFComXmlWriter --
+[*] Possível solução para a geração correta da string do QR-Code.
+   Por: Diego Folieni/Italo Giurizzato Junior
+
 11/07/2024
 -- ACBrNFComNotasFiscais/ACBrNFComWebServices/ACBrNFComClass/ACBrNFComXmlReader/
    ACBrNFComXmlWriter --

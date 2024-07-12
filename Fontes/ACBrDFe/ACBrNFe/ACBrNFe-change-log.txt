@@ -45,6 +45,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/07/2024
+-- ACBrNFe.EnvEvento --
+[*] O valor para a tag <tpAutor> do evento Ator Interessado na NF-e estava 
+    com o valor fixo, alteração feita para conter os valores: 1, 2 ou 3 
+    conforme o Schema
+   Por: Marcelo Santos
+
 08/07/2024
 -- ACBrNFe.EnvEvento/pcnConversaoNFe --
 [*] Acrescentado o enumerador: taNaoInformar com o objetivo de fazer com que a

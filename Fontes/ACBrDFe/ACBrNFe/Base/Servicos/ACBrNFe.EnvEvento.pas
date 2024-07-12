@@ -398,7 +398,8 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP20', 'cOrgaoAutor', 1, 2, 1,
                                  Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
 
-  Result.AppendChild(AddNode(tcStr, 'HP21', 'tpAutor', 1, 1, 1, '1'));
+  Result.AppendChild(AddNode(tcStr, 'HP21', 'tpAutor', 1, 1, 1,
+                     TipoAutorToStr(Evento[Idx].FInfEvento.detEvento.tpAutor)));
 
   Result.AppendChild(AddNode(tcStr, 'HP22', 'verAplic', 1, 20, 1,
                                     Evento[Idx].FInfEvento.detEvento.verAplic));
@@ -433,6 +434,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP20', 'cOrgaoAutor', 1, 2, 1,
                                  Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
 
+  // Conforme o Schema o unico valor aceita é 1
   Result.AppendChild(AddNode(tcStr, 'HP21', 'tpAutor', 1, 1, 1, '1'));
 
   Result.AppendChild(AddNode(tcStr, 'HP22', 'verAplic', 1, 20, 1,
@@ -483,6 +485,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP20', 'cOrgaoAutor', 1, 2, 1,
                                  Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
 
+  // Conforme o Schema o unico valor aceita é 1
   Result.AppendChild(AddNode(tcStr, 'HP21', 'tpAutor', 1, 1, 1, '1'));
 
   Result.AppendChild(AddNode(tcStr, 'HP22', 'verAplic', 1, 20, 1,
@@ -527,6 +530,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP20', 'cOrgaoAutor', 1, 2, 1,
                                  Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
 
+  // Conforme o Schema o unico valor aceita é 1
   Result.AppendChild(AddNode(tcStr, 'HP21', 'tpAutor', 1, 1, 1, '1'));
 
   Result.AppendChild(AddNode(tcStr, 'HP22', 'verAplic', 1, 20, 1,
@@ -573,6 +577,7 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP20', 'cOrgaoAutor', 1, 2, 1,
                                  Evento[Idx].FInfEvento.detEvento.cOrgaoAutor));
 
+  // Conforme o Schema o unico valor aceita é 1
   Result.AppendChild(AddNode(tcStr, 'HP21', 'tpAutor', 1, 1, 1, '1'));
 
   Result.AppendChild(AddNode(tcStr, 'HP22', 'verAplic', 1, 20, 1,

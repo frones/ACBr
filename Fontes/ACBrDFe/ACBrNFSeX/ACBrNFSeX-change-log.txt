@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/07/2024
+-- SigISS.Provider --
+[*] Ajustes na função: TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX/ACBrNFSeXConsts --
 [*] Incluído um parâmetro opcional no método SubstituirNFSe para conter o 
     numero da NFSe susbtituida que é usado pelo provedor Bauhaus.

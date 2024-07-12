@@ -128,7 +128,6 @@ type
     procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-//    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
   end;
 
@@ -573,9 +572,11 @@ end;
 function TACBrNFSeXWebserviceSigISS.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Result := ConverteANSIparaUTF8(aXml);
+  Result := RemoverDeclaracaoXML(Result);
 
-  Result := ConverteXMLtoUTF8(Result);
+  Result := inherited TratarXmlRetornado(Result);
+
   Result := ParseText(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverDeclaracaoXML(Result);

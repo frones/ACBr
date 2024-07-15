@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2024
+-- PagFor.Sicredi.GravarTxtRemessa --
+[*] Altera o parâmetro da GravarCampo do numero da conta corrente para corresponder ao tipo da propriedade.
+  Por: Diego Folieni
 
 05/07/2024
 -- PagFor.Bradesco.GravarTxtRemessa --

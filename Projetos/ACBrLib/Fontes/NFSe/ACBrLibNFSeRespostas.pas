@@ -80,7 +80,6 @@ type
   private
     FNumeroNota: String;
     FCodigoVerificacao: String;
-    FDataEmissao: TDateTime;
     FNumeroRPS: String;
     FSerieRPS: String;
   public
@@ -88,7 +87,6 @@ type
   published
     property NumeroNota: String read FNumeroNota write FNumeroNota;
     property CodigoVerificacao: String read FCodigoVerificacao write FCodigoVerificacao;
-    property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
     property NumeroRPS: String read FNumeroRPS write FNumeroRPS;
     property SerieRPS: String read FSerieRPS write FSerieRPS;
   end;
@@ -631,7 +629,6 @@ begin
   Self.CaminhoCompleto := Resumo.NomeArq;
   Self.NumeroNota := Resumo.NumeroNota;
   Self.CodigoVerificacao := Resumo.CodigoVerificacao;
-  Self.DataEmissao := Resumo.Data;
   Self.NumeroRPS := Resumo.NumeroRps;
   Self.SerieRPS := Resumo.SerieRps;
 end;

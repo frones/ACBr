@@ -44,6 +44,8 @@ Símbolo : Significado
 
 15/07/2024
 -- ACBrLibNFSeRespostas --
+[*] Remove a Data das informações de identificação que foram adicionadas.
+    Por: Diego Folieni
 [*] Adiciona Numero da nota e mais algumas informações de identificação na resposta que recebe as informações do resumo.
     Por: Diego Folieni
 

@@ -37,12 +37,12 @@ unit ACBrLibPIXCDDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum,
-  ACBrLibDataModule, ACBrPIXCD, ACBrPIXPSPBradesco, ACBrPIXPSPItau,
-  ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXPSPShipay,
-  ACBrPIXPSPSicredi, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro,
-  ACBrPIXPSPGerenciaNet, ACBrPIXPSPPixPDV, ACBrPIXPSPInter, ACBrPIXPSPAilos,
-  ACBrPIXPSPMatera, ACBrPIXPSPCielo, ACBrPIXPSPMercadoPago;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule, ACBrPIXCD,
+  ACBrPIXPSPBradesco, ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil,
+  ACBrPIXPSPSantander, ACBrPIXPSPShipay, ACBrPIXPSPSicredi, ACBrPIXPSPSicoob,
+  ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet, ACBrPIXPSPPixPDV, ACBrPIXPSPInter,
+  ACBrPIXPSPAilos, ACBrPIXPSPMatera, ACBrPIXPSPCielo, ACBrPIXPSPMercadoPago,
+  ACBrPIXPSPBanrisul, ACBrPIXPSPGate2All, ACBrPIXPSPC6Bank;
 
 type
 
@@ -60,16 +60,22 @@ type
                  Ailos,
                  Matera,
                  Cielo,
-                 MercadoPago);
+                 MercadoPago,
+                 Gate2All,
+                 Banrisul,
+                 C6Bank);
 
   { TLibPIXCDDM }
 
   TLibPIXCDDM = class(TLibDataModule)
     ACBrPixCD1: TACBrPixCD;
+    ACBrPSPBanrisul1: TACBrPSPBanrisul;
     ACBrPSPBradesco1: TACBrPSPBradesco;
     ACBrPSPAilos1: TACBrPSPAilos;
     ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil;
+    ACBrPSPC6Bank1: TACBrPSPC6Bank;
     ACBrPSPCielo1: TACBrPSPCielo;
+    ACBrPSPGate2All1: TACBrPSPGate2All;
     ACBrPSPGerenciaNet1: TACBrPSPGerenciaNet;
     ACBrPSPInter1: TACBrPSPInter;
     ACBrPSPItau1: TACBrPSPItau;
@@ -117,6 +123,9 @@ begin
       Matera: ACBrPixCD1.PSP := ACBrPSPMatera1;
       Cielo: ACBrPixCD1.PSP := ACBrPSPCielo1;
       MercadoPago: ACBrPixCD1.PSP := ACBrPSPMercadoPago1;
+      Gate2All: ACBrPixCD1.PSP := ACBrPSPGate2All1;
+      Banrisul: ACBrPixCD1.PSP := ACBrPSPBanrisul1;
+      C6Bank: ACBrPixCD1.PSP := ACBrPSPC6Bank1;
     end;
 
     with ACBrPixCD1 do
@@ -307,6 +316,30 @@ begin
       ChavePIX    := pLibPIXCDConfig.PIXCDMercadoPago.ChavePIX;
       AccessToken := pLibPIXCDConfig.PIXCDMercadoPago.AccessToken;
       Scopes      := pLibPIXCDConfig.PIXCDMercadoPago.Scopes;
+    end;
+
+    with ACBrPSPGate2All1 do
+    begin
+      AuthenticationApi := pLibPIXCDConfig.PIXCDGate2All.AuthenticationApi;
+      AuthenticationKey := pLibPIXCDConfig.PIXCDGate2All.AuthenticationKey;
+    end;
+
+    with ACBrPSPBanrisul1 do
+    begin
+      ChavePIX           := pLibPIXCDConfig.PIXCDBanrisul.ChavePIX;
+      ClientID           := pLibPIXCDConfig.PIXCDBanrisul.ClientID;
+      ClientSecret       := pLibPIXCDConfig.PIXCDBanrisul.ClientSecret;
+      ArquivoCertificado := pLibPIXCDConfig.PIXCDBanrisul.ArquivoCertificado;
+      SenhaPFX           := pLibPIXCDConfig.PIXCDBanrisul.SenhaPFX;
+    end;
+
+    with ACBrPSPC6Bank1 do
+    begin
+      ChavePIX            := pLibPIXCDConfig.PIXCDC6Bank.ChavePIX;
+      ClientID            := pLibPIXCDConfig.PIXCDC6Bank.ClientID;
+      ClientSecret        := pLibPIXCDConfig.PIXCDC6Bank.ClientSecret;
+      ArquivoChavePrivada := pLibPIXCDConfig.PIXCDC6Bank.ArqChavePrivada;
+      ArquivoCertificado  := pLibPIXCDConfig.PIXCDC6Bank.ArqCertificado;
     end;
 
     {$IFDEF Demo}

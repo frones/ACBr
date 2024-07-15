@@ -37,8 +37,9 @@ library ACBrLibPIXCD;
 uses
   Interfaces, Forms, sysutils, Classes,
   {$IFDEF MT} ACBrLibPIXCDMT{$ELSE}ACBrLibPIXCDST{$ENDIF},
-  ACBrLibPIXCDDataModule, ACBrLibPIXCDConfig, ACBrLibPIXCDBase, ACBrLibConfig,
-  ACBrLibResposta, ACBrLibComum, ACBrLibConsts, ACBrLibDataModule;
+  ACBrLibPIXCDDataModule, ACBrLibPIXCDConfig, ACBrLibPIXCDBase,
+  ACBrLibPIXCDMateraRespostas, ACBrLibConfig, ACBrLibResposta, ACBrLibComum,
+  ACBrLibConsts, ACBrLibDataModule;
 
 {$R *.res}
 
@@ -81,7 +82,24 @@ exports
   PIXCD_CriarCobranca,
   PIXCD_ConsultarCobranca,
   PIXCD_RevisarCobranca,
-  PIXCD_CancelarCobranca;
+  PIXCD_CancelarCobranca,
+
+  //PSP Matera
+  PIXCD_Matera_IncluirConta,
+  PIXCD_Matera_ConsultarConta,
+  PIXCD_Matera_InativarConta,
+  PIXCD_Matera_IncluirChavePix,
+  PIXCD_Matera_ConsultarChavePix,
+  PIXCD_Matera_ExcluirChavePix,
+
+  PIXCD_Matera_GerarQRCode,
+  PIXCD_Matera_ConsultarTransacao,
+  PIXCD_Matera_ConsultarSaldoEC,
+  PIXCD_Matera_ConsultarExtratoEC,
+  PIXCD_Matera_ConsultarMotivosDevolucao,
+  PIXCD_Matera_SolicitarDevolucao,
+  PIXCD_Matera_ConsultarAliasRetirada,
+  PIXCD_Matera_SolicitarRetirada;
 
 begin
   {$IFDEF DEBUG}

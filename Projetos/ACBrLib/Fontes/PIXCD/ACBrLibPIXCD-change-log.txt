@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2024
+-- ACBrLibPIXCDBase, ACBrLibPIXCDConfig, ACBrLibPIXCDConsts, ACBrLibPIXCDDataModule, ACBrLibPIXCDMateraRespostas,
+   ACBrLibPIXCDST, ACBrLibPIXCDMT, ACBrLibPIXCDStaticImportST, ACBrLibPIXCDStaticImportMT -- 
+[+] Novos métodos para uso PSP Matera.
+[+] Inclusão novos PSPs.
+Por: Antonio Carlos Junior / Revisão: Elias Cesar
+
+
 28/05/2024
 -- ACBrLibPIXCDRespostas --
 [*] Adiciona seção Violações na resposta quando houver erro e a informação for devolvida.

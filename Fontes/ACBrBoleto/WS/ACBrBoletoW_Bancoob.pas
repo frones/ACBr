@@ -502,6 +502,10 @@ begin
     JsonArrayInstrucao.AddElement(ATitulo.Instrucao2);
   if NaoEstaVazio(ATitulo.Instrucao3) then
     JsonArrayInstrucao.AddElement(ATitulo.Instrucao3);
+  if NaoEstaVazio(ATitulo.Instrucao4) then
+    JsonArrayInstrucao.AddElement(ATitulo.Instrucao4);
+  if NaoEstaVazio(ATitulo.Instrucao5) then
+    JsonArrayInstrucao.AddElement(ATitulo.Instrucao5);
   JsonDadosInstrucao.AddPair('mensagens', JsonArrayInstrucao);
   AJson.AddPair('mensagensInstrucao', JsonDadosInstrucao);
 end;

@@ -1196,6 +1196,8 @@ type
     fInstrucao1        : String;
     fInstrucao2        : String;
     fInstrucao3        : String;
+    fInstrucao4        : String;
+    fInstrucao5        : String;
     fLocalPagamento    : String;
     fOcorrenciaOriginal: TACBrOcorrencia;
     fTipoDesconto      : TACBrTipoDesconto;
@@ -1348,6 +1350,8 @@ type
      property Instrucao1        : String      read fInstrucao1        write fInstrucao1;
      property Instrucao2        : String      read fInstrucao2        write fInstrucao2;
      property Instrucao3        : String      read fInstrucao3        write fInstrucao3;
+     property Instrucao4        : String      read fInstrucao4        write fInstrucao4;
+     property Instrucao5        : String      read fInstrucao5        write fInstrucao5;
      property Sacado            : TACBrSacado read fSacado            write fSacado;
      property Parcela           :Integer      read fParcela           write SetParcela default 1;
      property TotalParcelas     :Integer      read fTotalParcelas     write SetTotalParcelas default 1;
@@ -2601,6 +2605,8 @@ begin
   fInstrucao1        := '';
   fInstrucao2        := '';
   fInstrucao3        := '';
+  fInstrucao4        := '';
+  fInstrucao5        := '';
   fMensagem          := TStringList.Create;
   fDetalhamento      := TStringList.Create;
   fInformativo       := TStringList.Create;

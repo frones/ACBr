@@ -1441,8 +1441,15 @@ type
     Tipo     : TACBrTipoOcorrencia;
     Descricao: String;
   end;
+  
+  {TACBrTipoOcorrenciaRetorno}
+  TACBrOcorrenciaRetorno = Record
+    Tipo     : TACBrTipoOcorrencia;
+    Descricao: String;
+  end;
 
   TACBrOcorrenciasRemessa =  array of TACBrOcorrenciaRemessa;
+  TACBrOcorrenciasRetorno =  array of TACBrOcorrenciaRetorno;
 
   { TACBrBoleto }
   {$IFDEF RTL230_UP}
@@ -1535,6 +1542,7 @@ type
     function Enviar: Boolean;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
+	function GetOcorrenciasRetorno() : TACBrOcorrenciasRetorno;
     function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
     function LerConfiguracao(const AIniBoletos: String): Boolean;
@@ -3767,6 +3775,25 @@ begin
     end;
   end;
   Result := LACBrOcorrenciasRemessa;
+end;
+
+function TACBrBoleto.GetOcorrenciasRetorno(): TACBrOcorrenciasRetorno;
+var I: Integer;
+  LACBrOcorrenciasRetorno : TACBrOcorrenciasRetorno;
+  LOcorrencia : String;
+begin
+  SetLength(LACBrOcorrenciasRetorno, 0);
+  for I := Ord(Low(TACBrTipoOcorrencia)) to Ord(High(TACBrTipoOcorrencia)) do
+  begin
+    LOcorrencia := GetEnumName(TypeInfo(TACBrTipoOcorrencia), I);
+    if Copy(LOcorrencia, 1, Length('toRetorno')) = 'toRetorno' then
+    begin
+      SetLength(LACBrOcorrenciasRetorno, Length(LACBrOcorrenciasRetorno) + 1);
+      LACBrOcorrenciasRetorno[High(LACBrOcorrenciasRetorno)].Tipo := TACBrTipoOcorrencia(I);
+      LACBrOcorrenciasRetorno[High(LACBrOcorrenciasRetorno)].descricao := cACBrTipoOcorrenciaDecricao[TACBrTipoOcorrencia(I)];
+    end;
+  end;
+  Result := LACBrOcorrenciasRetorno;
 end;
 
 function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;

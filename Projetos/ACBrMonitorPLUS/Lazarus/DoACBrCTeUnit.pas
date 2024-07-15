@@ -901,7 +901,7 @@ end;
 
 { TMetodoSetVersaoDF }
 
-{ Params: 0 - Inteiro com numero da Versao CTe valores: 2.00 - 3.00
+{ Params: 0 - Inteiro com numero da Versao CTe valores: 2.00 - 3.00 - 4.00
 }
 procedure TMetodoSetVersaoDF.Executar;
 var

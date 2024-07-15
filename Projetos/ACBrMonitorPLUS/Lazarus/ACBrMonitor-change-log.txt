@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2024
+-- DoACBrCTeUnit, ACBrMonitorConfig --
+[*] Alteração VersaoCTe para 4.00 #TK-5740
+    Por: Antonio Carlos Junior
+
 02/07/2024
 -- DoACBrMDFeUnit, ACBrMonitor1, ACBrMonitorConsts --
 [*] Adiciona o comando MDFe.EnviarEmailEvento e remove o parâmetro IsUTF8 do IBGE que foi removido em refactoring.

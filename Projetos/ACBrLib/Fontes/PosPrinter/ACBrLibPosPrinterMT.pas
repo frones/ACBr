@@ -114,6 +114,9 @@ function POS_LerInfoImpressora(const libHandle: PLibHandle; const sResposta: PCh
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_LerStatusImpressora(const libHandle: PLibHandle; Tentativas: Integer; var status: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_LerStatusImpressoraFormatado(const libHandle: PLibHandle; Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function POS_RetornarTags(const libHandle: PLibHandle; IncluiAjuda: Boolean; const sResposta: PChar;
                           var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -500,6 +503,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibPosPrinter(libHandle^.Lib).LerStatusImpressora(Tentativas, status);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function POS_LerStatusImpressoraFormatado(const libHandle: PLibHandle; Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibPosPrinter(libHandle^.Lib).LerStatusImpressoraFormatado(Tentativas, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

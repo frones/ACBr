@@ -83,6 +83,8 @@ type
     function LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): longint;
 
     function LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
+    function LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+
     function RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
     function AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
     function GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;
@@ -640,6 +642,38 @@ begin
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
   end;
+end;
+
+function TACBrLibPosPrinter.LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  RetStatus: TACBrPosPrinterStatus;
+  Resposta: string;
+begin
+  try
+    if Config.Log.Nivel > logNormal then
+      GravarLog('POS_LerStatusImpressoraFormatado(' + IntToStr(Tentativas) + ' )', logCompleto, True)
+    else
+      GravarLog('POS_LerStatusImpressoraFormatado', logNormal);
+
+    Resposta := '';
+    PosDM.Travar;
+    try
+      RetStatus := PosDM.ACBrPosPrinter1.LerStatusImpressora(Tentativas);
+      Resposta := ACBrPosPrinter.FormataPrinterStatus(RetStatus);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      PosDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+
 end;
 
 function TACBrLibPosPrinter.RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;  

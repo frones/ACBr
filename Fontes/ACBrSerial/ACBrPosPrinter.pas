@@ -168,7 +168,12 @@ type
                         stGavetaAberta, stImprimindo, stOffLine, stTampaAberta,
                         stErroLeitura, stSlip, stMICR, stAguardandoSlip, stTOF, stBOF);
   TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
-
+const
+  TACBrPosTipoStatusArrayStrings:array[TACBrPosTipoStatus] of string =
+                       ('Erro', 'ApenasEscrita', 'PoucoPapel', 'SemPapel',
+                        'GavetaAberta', 'Imprimindo', 'OffLine', 'TampaAberta',
+                        'ErroLeitura', 'Slip', 'MICR', 'AguardandoSlip', 'TOF', 'BOF');
+type
   { TACBrPosRazaoColunaFonte }
   {$M+}
   TACBrPosRazaoColunaFonte = class
@@ -640,6 +645,8 @@ type
     property OnAguardarCheque: TACBrPosOnAguardarCheque read FOnAguardarCheque write FOnAguardarCheque;
   end;
 
+  function FormataPrinterStatus(ConjuntoDeStatus: TACBrPosPrinterStatus): string;
+
 implementation
 
 {$IFDEF FPC}
@@ -669,6 +676,28 @@ uses
   {$IfDef MSWINDOWS}
   ,ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL
   {$EndIf};
+
+
+
+function FormataPrinterStatus(ConjuntoDeStatus: TACBrPosPrinterStatus): string;
+var
+  UmStatus: TACBrPosTipoStatus;
+begin
+  Result := '';
+  for UmStatus := High(TACBrPosTipoStatus) downto Low(TACBrPosTipoStatus) do
+  begin
+    if Result <> '' then
+    begin
+      Result := '|' + Result;
+    end;
+
+    if UmStatus in ConjuntoDeStatus then
+      Result := '1' + Result
+    else
+      Result := '0' + Result;
+  end;
+end;
+
 
 { TACBrPosCheque }
 

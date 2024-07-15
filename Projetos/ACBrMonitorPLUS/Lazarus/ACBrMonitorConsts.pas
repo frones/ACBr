@@ -782,6 +782,7 @@ const
   CMetodoAcharPortasSeriais     = 'acharportasseriais';
   CMetodoAcharPortasUSB         = 'acharportasusb';
   CMetodoAcharPortasRAW         = 'acharportasraw';
+  CMetodoLerStatusImpressoraFormatado    = 'lerstatusimpressoraformatado';
 
   CExtensaoXML =                     '.xml';
 

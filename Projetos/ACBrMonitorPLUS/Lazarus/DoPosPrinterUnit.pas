@@ -100,6 +100,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoLerStatusImpressoraFormatado}
+TMetodoLerStatusImpressoraFormatado = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoLerInfoImpressora}
 TMetodoLerInfoImpressora = class(TACBrMetodo)
 public
@@ -308,6 +314,7 @@ begin
   ListaDeMetodos.Add(CMetodoAcharPortasSeriais);
   ListaDeMetodos.Add(CMetodoAcharPortasUSB);
   ListaDeMetodos.Add(CMetodoAcharPortasRAW);
+  ListaDeMetodos.Add(CMetodoLerStatusImpressoraFormatado);
 
 end;
 
@@ -358,6 +365,8 @@ begin
    32  : AMetodoClass := TMetodoAcharPortasSeriais;
    33  : AMetodoClass := TMetodoAcharPortasUSB;
    34  : AMetodoClass := TMetodoAcharPortasRAW;
+   35  : AMetodoClass := TMetodoLerStatusImpressoraFormatado;
+
   end;
 
   if Assigned(AMetodoClass) then
@@ -473,6 +482,21 @@ begin
 
       fpcmd.Resposta := astr;
     end;
+  end;
+end;
+
+{ TMetodoLerStatusImpressoraFormatado }
+
+procedure TMetodoLerStatusImpressoraFormatado.Executar;
+var
+  status: TACBrPosPrinterStatus;
+  astr: string;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    status := ACBrPosPrinter.LerStatusImpressora;
+    astr := FormataPrinterStatus(status);
+    fpcmd.Resposta := astr;
   end;
 end;
 

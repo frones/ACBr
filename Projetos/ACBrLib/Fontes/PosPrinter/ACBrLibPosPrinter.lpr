@@ -87,6 +87,7 @@ exports
   POS_AbrirGaveta,
   POS_LerInfoImpressora,
   POS_LerStatusImpressora,
+  POS_LerStatusImpressoraFormatado,
   POS_RetornarTags,
   POS_AcharPortas,
   POS_GravarLogoArquivo,

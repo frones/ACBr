@@ -246,7 +246,6 @@ function TACBrPIXDevolucaoSolicitada.LoadFromIni(aIniStr: String): Boolean;
 var
   wSecao: String;
   wIni: TMemIniFile;
-  i: Integer;
 begin
   Result := False;
 

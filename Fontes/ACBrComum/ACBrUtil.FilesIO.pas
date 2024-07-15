@@ -1558,8 +1558,8 @@ function SetGlobalEnvironment(const AName, AValue: string; const UserEnvironment
 const
   REG_MACHINE_LOCATION = 'System\CurrentControlSet\Control\Session Manager\Environment';
   REG_USER_LOCATION = 'Environment';
-var
-  dwReturnValue: {$IfDef CPU64}PDWORD_PTR{$Else}Cardinal{$EndIf};
+//var
+//  dwReturnValue: {$IfDef CPU64}PDWORD_PTR{$Else}Cardinal{$EndIf};
 begin
   with TRegistry.Create do
   try

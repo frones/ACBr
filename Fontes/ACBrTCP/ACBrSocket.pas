@@ -1254,7 +1254,8 @@ begin
     if (NivelLog > 2) then
       RegistrarLog('  Resp.Body: ' + sLineBreak + fHTTPResponse);
 
-    if (not (fHTTPResultCode in [HTTP_OK, HTTP_CREATED, HTTP_ACCEPTED])) then
+    //if (not (fHTTPResultCode in [HTTP_OK, HTTP_CREATED, HTTP_ACCEPTED])) then
+    if (fHTTPResultCode < 200) or (fHTTPResultCode > 299) then
     begin
       wErro :=
         'Erro HTTP: ' + IntToStr(fHTTPResultCode) +' '+ HTTPSend.ResultString + sLineBreak +

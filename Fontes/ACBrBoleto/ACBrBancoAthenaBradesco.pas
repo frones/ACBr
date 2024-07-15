@@ -85,20 +85,12 @@ end;
 
 procedure TACBrBancoAthenaBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  wLinha,ChaveNFe : String;
+  LLinha : String;
 begin
-   {Chave da NFe}
-   if ACBrTitulo.ListaDadosNFe.Count>0 then
-     ChaveNFe := ACBrTitulo.ListaDadosNFe[0].ChaveNFe
-   else
-     ChaveNFe := '';
+   LLinha := GerarLinhaRegistroTransacao400(ACBrTitulo, aRemessa);
+   LLinha := Copy(LLinha, 1, 20) +  PadLeft('', 17, '0') + Copy(LLinha, 38,LengthNativeString(LLinha));  // 021 a 037 Identificacao da Empresa Cedente no Banco - Preencher com zeros
 
-   wLinha := GerarLinhaRegistroTransacao400(ACBrTitulo, aRemessa);
-   wLinha := Copy(wLinha, 1, 20) +  PadLeft('', 17, '0') + Copy(wLinha, 38,LengthNativeString(wLinha));  // 021 a 037 Identificacao da Empresa Cedente no Banco - Preencher com zeros
-   ChaveNFe := PadLeft(ChaveNFe, 44, '0');                                    // 401 a 444 Chave da NF-e - Em caso de NF de Servico (normalmente 9 posicoes) completar com zeros a esquerda
-   wLinha := wLinha + ChaveNFe;
-
-   aRemessa.Add(UpperCase(wLinha));
+   aRemessa.Add(UpperCase(LLinha));
 end;
 
 end.

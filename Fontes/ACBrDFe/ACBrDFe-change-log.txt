@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2024
+-- ACBrDFeXsLibXml2.pas --
+[*] Quando usando Delphi para linux ele não consegue pegar a informação da propriedade prtUltimoErroXml^.message
+TK-5628 AV Quando Compilado em Delphi para LINUX usando PAServer
+   Por: Daniel Morais InfoCotidiano, Elton, Pandaaa
+
 27/06/2024
 -- ACBrXmlWriter --
 [*] Alteração na assinatura da função: ObterNomeArquivo. 

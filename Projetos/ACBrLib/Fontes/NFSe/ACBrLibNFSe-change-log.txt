@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2024
+-- ACBrLibNFSeRespostas --
+[*] Adiciona Numero da nota e mais algumas informações de identificação na resposta que recebe as informações do resumo.
+    Por: Diego Folieni
+
 31/05/2024
 -- ACBrLibNFSeRespostas --
 [*] Melhora a resposta do Cancelamento e do ObterInformacoesProvedor.

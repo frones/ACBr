@@ -78,8 +78,19 @@ type
 
   TNFSeArquivoItem = class(TACBrLibArquivosResposta)
   private
+    FNumeroNota: String;
+    FCodigoVerificacao: String;
+    FDataEmissao: TDateTime;
+    FNumeroRPS: String;
+    FSerieRPS: String;
   public
     procedure Processar(const Resumo: TNFSeResumoCollectionItem);
+  published
+    property NumeroNota: String read FNumeroNota write FNumeroNota;
+    property CodigoVerificacao: String read FCodigoVerificacao write FCodigoVerificacao;
+    property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
+    property NumeroRPS: String read FNumeroRPS write FNumeroRPS;
+    property SerieRPS: String read FSerieRPS write FSerieRPS;
   end;
 
   { TLibNFSeServiceResposta }
@@ -618,6 +629,11 @@ procedure TNFSeArquivoItem.Processar(const Resumo: TNFSeResumoCollectionItem);
 begin
   Self.NomeArquivo := ExtractFileName(Resumo.NomeArq);
   Self.CaminhoCompleto := Resumo.NomeArq;
+  Self.NumeroNota := Resumo.NumeroNota;
+  Self.CodigoVerificacao := Resumo.CodigoVerificacao;
+  Self.DataEmissao := Resumo.Data;
+  Self.NumeroRPS := Resumo.NumeroRps;
+  Self.SerieRPS := Resumo.SerieRps;
 end;
 
 { TNFSeEventoItem }

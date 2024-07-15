@@ -528,9 +528,6 @@ var
 begin
   Result := True;
 
-  LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
-  LListaRetorno.HTTPResultCode := HTTPResultCode;
-  LListaRetorno.JSONEnvio      := EnvWs;
   if RetWS <> '' then
   begin
     if ACBrBoleto.Cedente.CedenteWS.IndicadorPix then
@@ -538,6 +535,11 @@ begin
       LerListaRetornoPix;
       Exit;
     end;
+
+
+  LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+  LListaRetorno.HTTPResultCode := HTTPResultCode;
+  LListaRetorno.JSONEnvio      := EnvWs;
 
     try
       LJsonObject := TACBrJSONObject.Parse(RetWS);

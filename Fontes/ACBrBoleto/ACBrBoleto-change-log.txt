@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2024
+-- ACBrBoletoRet_Inter_API.pas --
+[*]TK-5731 - Ajustado o tratamento PIX que o bloco de condição estava em posição incorreta.
+   https://www.projetoacbr.com.br/forum/topic/78721-erro-consulta-t%C3%ADtulos-banco-inter/#comment-508671
+   Por Daniel Morais InfoCotidiano
+
 26/06/2024
 -- ACBrBoletoRet_BancoBrasil_API --
 [*]TK-5627 - Ajuste nas propriedades de retorno qdo httpcode >= 400, novo obj retorno errors  

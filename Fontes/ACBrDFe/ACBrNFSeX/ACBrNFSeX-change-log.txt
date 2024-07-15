@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/07/2024
+-- Diversos --
+[*] Alterações em diversas units para uma possível solução para o provedor
+    SigISS.
+   Por: Italo Giurizzato Junior
+
 12/07/2024
 -- SigISS.Provider --
 [*] Ajustes na função: TratarXmlRetornado.

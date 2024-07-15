@@ -1005,7 +1005,7 @@ end;
 
 procedure TACBrNFSeXProvider.SalvarXmlNfse(aNota: TNotaFiscal);
 var
-  aPath, aNomeArq, Extensao: string;
+  aPath, aNomeArq, Extensao, aXML: string;
   aConfig: TConfiguracoesNFSe;
   ConteudoEhXml: Boolean;
 begin
@@ -1029,9 +1029,14 @@ begin
       Extensao := '.xml';
     end;
 
+    aXml := aNota.XmlNfse;
+
+    if aXml = '' then
+      aXml := aNota.XmlEspelho;
+
     if ConfigGeral.FormatoArqNota <> tfaXml then
     begin
-      aNota.XmlNfse := RemoverDeclaracaoXML(aNota.XmlNfse);
+      aXml := RemoverDeclaracaoXML(aXml);
       ConteudoEhXml := False;
     end
     else
@@ -1040,7 +1045,7 @@ begin
     if not ConteudoEhXml then
       aNota.NomeArq := StringReplace(aNota.NomeArq, '.xml', Extensao, [rfReplaceAll]);
 
-    TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aNota.XmlNfse, '', ConteudoEhXml);
+    TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aXml, '', ConteudoEhXml);
   end;
 end;
 

@@ -123,6 +123,7 @@ type
   protected
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure PrepararConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSeporNumero(Response: TNFSeConsultaNFSeResponse); override;
@@ -224,7 +225,7 @@ begin
     aCorrecao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
     aMensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
 
-    if (aCorrecao = '') or (aCorrecao = 'Sem erros') then
+    if (aCorrecao = '') or (aCorrecao = 'Sem erros') or (Copy(aID, 1, 1) = 'A') then
     begin
       if aMensagem <> '' then
       begin
@@ -673,6 +674,24 @@ begin
   Result.NFSe := ANFSe;
 end;
 
+function TACBrNFSeProviderSigISS103.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceSigISS103.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
 procedure TACBrNFSeProviderSigISS103.PrepararConsultaNFSeporNumero(
   Response: TNFSeConsultaNFSeResponse);
 var
@@ -726,7 +745,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode, ANodeNFSe: TACBrXmlNode;
-  NumRps: String;
+  NumRps, aXml: String;
   ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -787,7 +806,9 @@ begin
 
               ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-              ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+              aXml := SeparaDados(ANode.OuterXml, 'RetornoNota');
+
+              ANota := CarregarXmlNfse(ANota, aXml);
               SalvarXmlNfse(ANota);
             end;
           end;

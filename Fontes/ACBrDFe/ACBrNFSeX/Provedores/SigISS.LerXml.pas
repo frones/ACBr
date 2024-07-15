@@ -256,7 +256,7 @@ begin
 
     aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
 
-    if aValor = 'Cancelada' then
+    if (aValor = 'Cancelada') or (aValor = '2') then
       SituacaoNfse := snCancelado;
 
     aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('OpcaoSimples'), tcStr);

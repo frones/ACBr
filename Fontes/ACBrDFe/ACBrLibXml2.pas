@@ -80,6 +80,12 @@ type
     PPAnsiChar = ^PUTF8Char;
   {$EndIf}
 
+{$IFDEF POSIX}
+   cint = Int32;
+{$Else}
+  cint = LongInt;
+{$EndIf}
+
   xmlElementType = (
     XML_ELEMENT_NODE = 1,
     XML_ATTRIBUTE_NODE = 2,
@@ -164,8 +170,8 @@ type
     Next: xmlNodePtr; { next sibling link }
     prev: xmlNodePtr; { previous sibling link }
     doc: xmlDocPtr; { autoreference to itself End of common part}
-    compression: longint; { level of zlib compression}
-    standalone: longint; { standalone document (no external refs)
+    compression: cint; { level of zlib compression}
+    standalone: cint; { standalone document (no external refs)
                            1 if standalone="yes"
                            0 if standalone="no"
                            -1 if there is no XML declaration
@@ -179,7 +185,7 @@ type
     ids: Pointer; { Hash table for ID attributes if any}
     refs: Pointer; { Hash table for IDREFs attributes if any}
     URL: xmlCharPtr; { The URI for that document}
-    charset: longint; { encoding of the in-memory content actually an xmlCharEncoding}
+    charset: cint; { encoding of the in-memory content actually an xmlCharEncoding}
     dict: xmlDictPtr; { dict used to allocate names or NULL}
     psvi: Pointer; { for type/PSVI informations}
   end;
@@ -223,8 +229,8 @@ type
   end;
 
   xmlNodeSet = record
-    nodeNr: longint; { number of nodes in the set}
-    nodeMax: longint; { size of the array as allocated}
+    nodeNr: cint; { number of nodes in the set}
+    nodeMax: cint; { size of the array as allocated}
     nodeTab: xmlNodePtrPtr; { array of nodes in no particular order @@ with_ns to check wether namespace nodes should be looked at @@}
   end;
 
@@ -251,8 +257,8 @@ type
     atype: xmlAttributeType; { the a       xmlHashTablePtr = ^xmlHashTable;
 ttribute type if validating}
     psvi: Pointer; { for type/PSVI informations}
-    parseFlags: longint; { set of xmlParserOption used to parse the document}
-    properties: longint; { set of xmlDocProperties for this document set at the end of parsing}
+    parseFlags: cint; { set of xmlParserOption used to parse the document}
+    properties: cint; { set of xmlDocProperties for this document set at the end of parsing}
   end;
 
   xmlSchema = record
@@ -262,7 +268,7 @@ ttribute type if validating}
     id : xmlCharPtr; { Obsolete}
     doc : xmlDocPtr; {}
     annot : xmlSchemaAnnotPtr; {}
-    flags : Longint; {}
+    flags : cint; {}
     typeDecl : xmlHashTablePtr; {}
     attrDecl : xmlHashTablePtr; {}
     attrgrpDecl : xmlHashTablePtr; {}
@@ -273,8 +279,8 @@ ttribute type if validating}
     groupDecl : xmlHashTablePtr; {}
     dict : xmlDictPtr; {}
     includes : Pointer; { the includes, this is opaque for now}
-    preserve : Longint; { whether to free the document}
-    counter : Longint; { used to give ononymous components unique names}
+    preserve : cint; { whether to free the document}
+    counter : cint; { used to give ononymous components unique names}
     idcDef : xmlHashTablePtr; { All identity-constraint defs.}
     volatiles : Pointer; { Obsolete}
   end;
@@ -294,17 +300,17 @@ ttribute type if validating}
   end;
 
   xmlError = record
-    domain : Longint; { What part of the library raised this error}
-    code : Longint; { The error code, e.g. an xmlParserError}
+    domain : cint; { What part of the library raised this error}
+    code : cint; { The error code, e.g. an xmlParserError}
     message : PAnsiChar; { human-readable informative error message}
     level : xmlErrorLevel; { how consequent is the error}
     file_ : PAnsiChar; { the filename}
-    line : Longint; { the line number if available}
+    line : cint; { the line number if available}
     str1 : PAnsiChar; { extra string information}
     str2 : PAnsiChar; { extra string information}
     str3 : PAnsiChar; { extra string information}
-    int1 : Longint; { extra number information}
-    int2 : Longint; { column number of the error or 0 if N/A (todo: rename this field when we would break ABI)}
+    int1 : cint; { extra number information}
+    int2 : cint; { column number of the error or 0 if N/A (todo: rename this field when we would break ABI)}
     ctxt : Pointer; { the parser context if available}
     node : Pointer; { the node in the tree}
   end;
@@ -329,19 +335,19 @@ type
 
   TxmlDocGetRootElement = function(doc: xmlDocPtr): xmlNodePtr; cdecl;
   TxmlDocSetRootElement = function(doc: xmlDocPtr; root: xmlNodePtr): xmlNodePtr; cdecl;
-  TxmlDocCopyNode = function(const node: xmlNodePtr; doc: xmlDocPtr; extended: Longint): xmlNodePtr; cdecl;
+  TxmlDocCopyNode = function(const node: xmlNodePtr; doc: xmlDocPtr; extended: cint): xmlNodePtr; cdecl;
   TxmlNewDocNode = function(doc: xmlDocPtr; ns: xmlNsPtr; const name: xmlCharPtr; const content: xmlCharPtr): xmlNodePtr; cdecl;
-  TxmlNewCDataBlock = function(doc: xmlDocPtr; const content: xmlCharPtr; len: Longint): xmlNodePtr; cdecl;
+  TxmlNewCDataBlock = function(doc: xmlDocPtr; const content: xmlCharPtr; len: cint): xmlNodePtr; cdecl;
   TxmlDocDumpMemory = procedure(cur: xmlDocPtr; mem: xmlCharPtrPtr; size: PInteger); cdecl;
   TxmlAddChild = function(parent: xmlNodePtr; cur: xmlNodePtr): xmlNodePtr; cdecl;
   TxmlAddChildList =function(parent: xmlNodePtr; cur: xmlNodePtr): xmlNodePtr; cdecl;
-  TxmlC14NDocDumpMemory = function(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: longint;
-    inclusive_ns_prefixes: xmlCharPtrPtr; with_comments: longint; doc_txt_ptr: xmlCharPtrPtr): longint; cdecl;
+  TxmlC14NDocDumpMemory = function(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: cint;
+    inclusive_ns_prefixes: xmlCharPtrPtr; with_comments: cint; doc_txt_ptr: xmlCharPtrPtr): cint; cdecl;
   TxmlNewDoc = function(const version: xmlCharPtr): xmlDocPtr; cdecl;
-  TxmlSaveDoc = function(ctxt: xmlSaveCtxtPtr; doc: xmlDocPtr): Longint; cdecl;
-  TxmlSaveClose = function(ctxt: xmlSaveCtxtPtr): Longint; cdecl;
-  TxmlSaveToFilename = function(const filename: PAnsiChar; const encoding: PAnsiChar; options: Longint): xmlSaveCtxtPtr; cdecl;
-  TxmlCopyNode = function(const node: xmlNodePtr; extended: longint): xmlNodePtr; cdecl;
+  TxmlSaveDoc = function(ctxt: xmlSaveCtxtPtr; doc: xmlDocPtr): cint; cdecl;
+  TxmlSaveClose = function(ctxt: xmlSaveCtxtPtr): cint; cdecl;
+  TxmlSaveToFilename = function(const filename: PAnsiChar; const encoding: PAnsiChar; options: cint): xmlSaveCtxtPtr; cdecl;
+  TxmlCopyNode = function(const node: xmlNodePtr; extended: cint): xmlNodePtr; cdecl;
   TxmlNodeGetContent = function(cur: xmlNodePtr): xmlCharPtr; cdecl;
   TxmlNodeSetContent = procedure(cur: xmlNodePtr; const content: xmlCharPtr); cdecl;
   TxmlNodeAddContent = procedure(cur: xmlNodePtr; const content: xmlCharPtr); cdecl;
@@ -351,33 +357,33 @@ type
   TxmlGetNoNsProp = function(node: xmlNodePtr; const name: xmlCharPtr): xmlCharPtr; cdecl;
   TxmlFreeNs = procedure(cur: xmlNsPtr); cdecl;
   TxmlSetProp = function(node: xmlNodePtr; const name: xmlCharPtr; const value: xmlCharPtr): xmlAttrPtr; cdecl;
-  TxmlRemoveProp = function(cur: xmlAttrPtr): Longint; cdecl;
-  TxmlUnsetNsProp = function(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): Longint; cdecl;
+  TxmlRemoveProp = function(cur: xmlAttrPtr): cint; cdecl;
+  TxmlUnsetNsProp = function(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): cint; cdecl;
   TxmlUnlinkNode = procedure(cur: xmlNodePtr); cdecl;
-  TxmlReadMemory = function(const buffer: PAnsiChar; size: Longint; const URL: PAnsiChar;
-    const encoding: PAnsiChar; options: Longint) : xmlDocPtr; cdecl;
+  TxmlReadMemory = function(const buffer: PAnsiChar; size: cint; const URL: PAnsiChar;
+    const encoding: PAnsiChar; options: cint) : xmlDocPtr; cdecl;
   TxmlFreeNode = procedure(cur: xmlNodePtr); cdecl;
   TxmlFreeDoc = procedure(cur: xmlDocPtr); cdecl;
 
   TxmlSchemaNewParserCtxt = function(const URL: PAnsiChar): xmlSchemaParserCtxtPtr; cdecl;
   TxmlSchemaParse = function(ctxt: xmlSchemaParserCtxtPtr): xmlSchemaPtr; cdecl;
   TxmlSchemaNewValidCtxt = function(schema: xmlSchemaPtr): xmlSchemaValidCtxtPtr; cdecl;
-  TxmlSchemaValidateDoc = function(ctxt: xmlSchemaValidCtxtPtr; doc: xmlDocPtr): Longint; cdecl;
+  TxmlSchemaValidateDoc = function(ctxt: xmlSchemaValidCtxtPtr; doc: xmlDocPtr): cint; cdecl;
   TxmlSchemaFreeParserCtxt = procedure(ctxt: xmlSchemaParserCtxtPtr); cdecl;
   TxmlSchemaFreeValidCtxt = procedure(ctxt: xmlSchemaValidCtxtPtr); cdecl;
   TxmlSchemaFree = procedure(schema: xmlSchemaPtr); cdecl;
 
   TxmlBufferCreate = function(): xmlBufferPtr; cdecl;
-  TxmlSaveToBuffer = function(buffer: xmlBufferPtr; const encoding: PAnsiChar; options: Longint): xmlSaveCtxtPtr; cdecl;
+  TxmlSaveToBuffer = function(buffer: xmlBufferPtr; const encoding: PAnsiChar; options: cint): xmlSaveCtxtPtr; cdecl;
   TxmlNodeDump = function(buf: xmlBufferPtr; doc: xmlDocPtr; cur: xmlNodePtr;
-    level: Longint; format: Longint) : Longint; cdecl;
+    level: cint; format: cint) : cint; cdecl;
   TxmlBufferFree = procedure(buf: xmlBufferPtr); cdecl;
 
   TxmlGetLastError = function(): xmlErrorPtr; cdecl;
 
   TxmlFree = procedure(mem: Pointer); cdecl;
   xmlFreeFuncPtr = ^TxmlFree;
-  TxmlSubstituteEntitiesDefault = function(val: Longint): Longint; cdecl;
+  TxmlSubstituteEntitiesDefault = function(val: cint): cint; cdecl;
   TFunctionPInteger = function(): PInteger; cdecl;
 
 
@@ -396,20 +402,20 @@ function xmlParseDoc(const cur: xmlCharPtr): xmlDocPtr;
 function xmlParseFile(const filename: PAnsiChar): xmlDocPtr;
 
 function xmlNewDoc(const version: xmlCharPtr): xmlDocPtr;
-function xmlSaveDoc(ctxt: xmlSaveCtxtPtr; doc: xmlDocPtr): Longint;
-function xmlSaveClose(ctxt: xmlSaveCtxtPtr): Longint;
-function xmlSaveToFilename(const filename: PAnsiChar; const encoding: PAnsiChar; options: Longint): xmlSaveCtxtPtr;
+function xmlSaveDoc(ctxt: xmlSaveCtxtPtr; doc: xmlDocPtr): cint;
+function xmlSaveClose(ctxt: xmlSaveCtxtPtr): cint;
+function xmlSaveToFilename(const filename: PAnsiChar; const encoding: PAnsiChar; options: cint): xmlSaveCtxtPtr;
 function xmlDocGetRootElement(doc: xmlDocPtr): xmlNodePtr;
 function xmlDocSetRootElement(doc: xmlDocPtr; root: xmlNodePtr): xmlNodePtr;
-function xmlDocCopyNode(const node: xmlNodePtr; doc: xmlDocPtr; extended: Longint): xmlNodePtr;
+function xmlDocCopyNode(const node: xmlNodePtr; doc: xmlDocPtr; extended: cint): xmlNodePtr;
 function xmlNewDocNode(doc: xmlDocPtr; ns: xmlNsPtr; const name: xmlCharPtr; const content: xmlCharPtr): xmlNodePtr;
-function xmlNewCDataBlock(doc: xmlDocPtr; const content: xmlCharPtr; len: Longint): xmlNodePtr;
+function xmlNewCDataBlock(doc: xmlDocPtr; const content: xmlCharPtr; len: cint): xmlNodePtr;
 procedure xmlDocDumpMemory(cur: xmlDocPtr; mem: xmlCharPtrPtr; size: PInteger);
 function xmlAddChild(parent: xmlNodePtr; cur: xmlNodePtr): xmlNodePtr;
 function xmlAddChildList(parent: xmlNodePtr; cur: xmlNodePtr): xmlNodePtr;
-function xmlC14NDocDumpMemory(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: longint;
-  inclusive_ns_prefixes: xmlCharPtrPtr; with_comments: longint; doc_txt_ptr: xmlCharPtrPtr): longint;
-function xmlCopyNode(const node: xmlNodePtr; extended: longint): xmlNodePtr;
+function xmlC14NDocDumpMemory(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: cint;
+  inclusive_ns_prefixes: xmlCharPtrPtr; with_comments: cint; doc_txt_ptr: xmlCharPtrPtr): cint;
+function xmlCopyNode(const node: xmlNodePtr; extended: cint): xmlNodePtr;
 function xmlNodeGetContent(cur: xmlNodePtr): xmlCharPtr;
 procedure xmlNodeSetContent(cur: xmlNodePtr; const content: xmlCharPtr);
 procedure xmlNodeAddContent(cur: xmlNodePtr; const content: xmlCharPtr);
@@ -419,34 +425,34 @@ procedure xmlSetNs(node: xmlNodePtr; ns: xmlNsPtr);
 function xmlGetNoNsProp(node: xmlNodePtr; const name: xmlCharPtr): xmlCharPtr;
 procedure xmlFreeNs(cur: xmlNsPtr);
 function xmlSetProp(node: xmlNodePtr; const name: xmlCharPtr; const value: xmlCharPtr): xmlAttrPtr;
-function xmlRemoveProp(cur: xmlAttrPtr): Longint;
-function xmlUnsetNsProp(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): Longint;
+function xmlRemoveProp(cur: xmlAttrPtr): cint;
+function xmlUnsetNsProp(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): cint;
 procedure xmlUnlinkNode(cur: xmlNodePtr);
-function xmlReadMemory(const buffer: PAnsiChar; size: Longint; const URL: PAnsiChar;
-  const encoding: PAnsiChar; options: Longint): xmlDocPtr;
+function xmlReadMemory(const buffer: PAnsiChar; size: cint; const URL: PAnsiChar;
+  const encoding: PAnsiChar; options: cint): xmlDocPtr;
 procedure xmlFreeNode(cur: xmlNodePtr);
 procedure xmlFreeDoc(cur: xmlDocPtr);
 
 function xmlSchemaNewParserCtxt(const URL: PAnsiChar): xmlSchemaParserCtxtPtr;
 function xmlSchemaParse(ctxt: xmlSchemaParserCtxtPtr): xmlSchemaPtr;
 function xmlSchemaNewValidCtxt(schema: xmlSchemaPtr): xmlSchemaValidCtxtPtr;
-function xmlSchemaValidateDoc (ctxt: xmlSchemaValidCtxtPtr; doc: xmlDocPtr) : Longint;
+function xmlSchemaValidateDoc (ctxt: xmlSchemaValidCtxtPtr; doc: xmlDocPtr) : cint;
 procedure xmlSchemaFreeParserCtxt(ctxt: xmlSchemaParserCtxtPtr);
 procedure xmlSchemaFreeValidCtxt (ctxt: xmlSchemaValidCtxtPtr);
 procedure xmlSchemaFree(schema: xmlSchemaPtr);
 
 function xmlBufferCreate(): xmlBufferPtr;
-function xmlSaveToBuffer(buffer: xmlBufferPtr; const encoding: PAnsiChar; options: Longint): xmlSaveCtxtPtr;
+function xmlSaveToBuffer(buffer: xmlBufferPtr; const encoding: PAnsiChar; options: cint): xmlSaveCtxtPtr;
 function xmlNodeDump(buf: xmlBufferPtr; doc: xmlDocPtr; cur: xmlNodePtr;
-  level: Longint; format: Longint) : Longint;
+  level: cint; format: cint) : cint;
 procedure xmlBufferFree(buf: xmlBufferPtr);
 
 function xmlGetLastError(): xmlErrorPtr;
 procedure xmlFree(mem: Pointer);
-function xmlSubstituteEntitiesDefault(const val: Longint): Longint;
-procedure xmlLoadExtDtdDefaultValue(const val: LongInt);
-procedure xmlIndentTreeOutput(const val: LongInt);
-procedure xmlSaveNoEmptyTags(const val: LongInt);
+function xmlSubstituteEntitiesDefault(const val: cint): cint;
+procedure xmlLoadExtDtdDefaultValue(const val: cint);
+procedure xmlIndentTreeOutput(const val: cint);
+procedure xmlSaveNoEmptyTags(const val: cint);
 
 var
   LibXml2LoadVerbose: Boolean = False;
@@ -809,7 +815,7 @@ begin
     _xmlCleanupThreads;
 end;
 
-function xmlSubstituteEntitiesDefault(const val: Longint): Longint;
+function xmlSubstituteEntitiesDefault(const val: cint): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlSubstituteEntitiesDefault) then
     Result := _xmlSubstituteEntitiesDefault(val)
@@ -841,7 +847,7 @@ begin
     Result := nil;
 end;
 
-function xmlSaveDoc(ctxt: xmlSaveCtxtPtr; doc: xmlDocPtr): Longint;
+function xmlSaveDoc(ctxt: xmlSaveCtxtPtr; doc: xmlDocPtr): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlSaveDoc) then
     Result := _xmlSaveDoc(ctxt, doc)
@@ -849,7 +855,7 @@ begin
     Result := -1;
 end;
 
-function xmlSaveClose(ctxt: xmlSaveCtxtPtr): Longint;
+function xmlSaveClose(ctxt: xmlSaveCtxtPtr): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlSaveClose) then
     Result := _xmlSaveClose(ctxt)
@@ -858,7 +864,7 @@ begin
 end;
 
 function xmlSaveToFilename(const filename: PAnsiChar;
-  const encoding: PAnsiChar; options: Longint): xmlSaveCtxtPtr;
+  const encoding: PAnsiChar; options: cint): xmlSaveCtxtPtr;
 begin
   if InitLibXml2Interface and Assigned(_xmlSaveToFilename) then
     Result := _xmlSaveToFilename(filename, encoding, options)
@@ -883,7 +889,7 @@ begin
 end;
 
 function xmlDocCopyNode(const node: xmlNodePtr; doc: xmlDocPtr;
-  extended: Longint): xmlNodePtr;
+  extended: cint): xmlNodePtr;
 begin
   if InitLibXml2Interface and Assigned(_xmlDocCopyNode) then
     Result := _xmlDocCopyNode(node, doc, extended)
@@ -901,7 +907,7 @@ begin
 end;
 
 function xmlNewCDataBlock(doc: xmlDocPtr; const content: xmlCharPtr;
-  len: Longint): xmlNodePtr;
+  len: cint): xmlNodePtr;
 begin
   if InitLibXml2Interface and Assigned(_xmlNewCDataBlock) then
     Result := _xmlNewCDataBlock(doc, content, len)
@@ -931,7 +937,7 @@ begin
     Result := nil;
 end;
 
-function xmlC14NDocDumpMemory(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: longint; inclusive_ns_prefixes: xmlCharPtrPtr; with_comments: longint; doc_txt_ptr: xmlCharPtrPtr): longint;
+function xmlC14NDocDumpMemory(doc: xmlDocPtr; nodes: xmlNodeSetPtr; exclusive: cint; inclusive_ns_prefixes: xmlCharPtrPtr; with_comments: cint; doc_txt_ptr: xmlCharPtrPtr): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlC14NDocDumpMemory) then
     Result := _xmlC14NDocDumpMemory(doc, nodes, exclusive, inclusive_ns_prefixes, with_comments, doc_txt_ptr)
@@ -939,7 +945,7 @@ begin
     Result := -1;
 end;
 
-function xmlCopyNode(const node: xmlNodePtr; extended: longint): xmlNodePtr;
+function xmlCopyNode(const node: xmlNodePtr; extended: cint): xmlNodePtr;
 begin
   if InitLibXml2Interface and Assigned(_xmlCopyNode) then
     Result := _xmlCopyNode(node, extended)
@@ -1010,7 +1016,7 @@ begin
     Result := nil;
 end;
 
-function xmlRemoveProp(cur: xmlAttrPtr): Longint;
+function xmlRemoveProp(cur: xmlAttrPtr): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlRemoveProp) then
     Result := _xmlRemoveProp(cur)
@@ -1018,7 +1024,7 @@ begin
     Result := -1;
 end;
 
-function xmlUnsetNsProp(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): Longint;
+function xmlUnsetNsProp(node: xmlNodePtr; ns: xmlNsPtr; const name: xmlCharPtr): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlUnsetNsProp) then
     Result := _xmlUnsetNsProp(node, ns, name)
@@ -1032,8 +1038,8 @@ begin
     _xmlUnlinkNode(cur);
 end;
 
-function xmlReadMemory(const buffer: PAnsiChar; size: Longint;
-  const URL: PAnsiChar; const encoding: PAnsiChar; options: Longint): xmlDocPtr;
+function xmlReadMemory(const buffer: PAnsiChar; size: cint;
+  const URL: PAnsiChar; const encoding: PAnsiChar; options: cint): xmlDocPtr;
 begin
   if InitLibXml2Interface and Assigned(_xmlReadMemory) then
     Result := _xmlReadMemory(buffer, size, URL, encoding, options)
@@ -1067,19 +1073,19 @@ begin
     Result := nil;
 end;
 
-procedure xmlLoadExtDtdDefaultValue(const val: LongInt);
+procedure xmlLoadExtDtdDefaultValue(const val: cint);
 begin
   if InitLibXml2Interface and Assigned(_xmlLoadExtDtdDefaultValue) then
     _xmlLoadExtDtdDefaultValue^ := val;
 end;
 
-procedure xmlIndentTreeOutput(const val: LongInt);
+procedure xmlIndentTreeOutput(const val: cint);
 begin
   if InitLibXml2Interface and Assigned(_xmlIndentTreeOutput) then
     _xmlIndentTreeOutput^ := val;
 end;
 
-procedure xmlSaveNoEmptyTags(const val: LongInt);
+procedure xmlSaveNoEmptyTags(const val: cint);
 begin
   if InitLibXml2Interface and Assigned(_xmlSaveNoEmptyTags) then
     _xmlSaveNoEmptyTags^ := val;
@@ -1110,7 +1116,7 @@ begin
 end;
 
 function xmlSchemaValidateDoc(ctxt: xmlSchemaValidCtxtPtr; doc: xmlDocPtr
-  ): Longint;
+  ): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlSchemaValidateDoc) then
     Result := _xmlSchemaValidateDoc(ctxt, doc)
@@ -1145,7 +1151,7 @@ begin
 end;
 
 function xmlSaveToBuffer(buffer: xmlBufferPtr; const encoding: PAnsiChar;
-  options: Longint): xmlSaveCtxtPtr;
+  options: cint): xmlSaveCtxtPtr;
 begin
   if InitLibXml2Interface and Assigned(_xmlSaveToBuffer) then
     Result := _xmlSaveToBuffer(buffer, encoding, options)
@@ -1154,7 +1160,7 @@ begin
 end;
 
 function xmlNodeDump(buf: xmlBufferPtr; doc: xmlDocPtr; cur: xmlNodePtr;
-  level: Longint; format: Longint): Longint;
+  level: cint; format: cint): cint;
 begin
   if InitLibXml2Interface and Assigned(_xmlNodeDump) then
     Result := _xmlNodeDump(buf, doc, cur, level, format)

@@ -556,15 +556,8 @@ begin
 
   Result := MsgErroAtual + ' --> ' + IntToStr(prtUltimoErroXml^.code);
 
-  {$IFDEF DELPHILANGUAGE}
-    {$IFDEF WINDOWS}
-      if (prtUltimoErroXml^.message <> nil) then
-        Result := Result + ' - ' + prtUltimoErroXml^.message;
-    {$ENDIF}
-  {$ELSE}
-      if (prtUltimoErroXml^.message <> nil) then
-        Result := Result + ' - ' + prtUltimoErroXml^.message;
-  {$ENDIF}
+  if (prtUltimoErroXml^.message <> nil) then
+    Result := Result + ' - ' + prtUltimoErroXml^.message;
 end;
 
 procedure TDFeSSLXmlSignLibXml2.VerificarValoresPadrao(var SignatureNode

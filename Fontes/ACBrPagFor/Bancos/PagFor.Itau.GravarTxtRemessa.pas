@@ -109,7 +109,7 @@ begin
   GravarCampo(' ', 20, tcStr);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
   GravarCampo(' ', 1, tcStr);
-  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
+  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt64);
   GravarCampo(' ', 1, tcStr);
 
   if Trim(PagFor.Registro0.Empresa.ContaCorrente.DV) <> '' then
@@ -171,7 +171,7 @@ begin
   GravarCampo(' ', 20, tcStr);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
   GravarCampo(' ', 1, tcStr);
-  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
+  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt64);
   GravarCampo(' ', 1, tcStr);
 
   if PadRight(TiraAcentos(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.DV), 1) <> ' ' then

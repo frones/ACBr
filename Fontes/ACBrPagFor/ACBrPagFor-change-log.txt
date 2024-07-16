@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/07/2024
+-- ACBrPagForClass/CNAB240.LerTxtRetorno --
+[*] Alteração para ler o campo que contem o código do movimento de remessa.
+  Por: Eduardo Rodrigues de Faria
+--- Diversos ---
+[*] Trocado o tipo tcInt por tcInt64 na geração do campo Conta.Numero
+   Por: Italo Giurizzato Junior
+
 15/07/2024
 -- PagFor.Sicredi.GravarTxtRemessa --
 [*] Altera o parâmetro da GravarCampo do numero da conta corrente para corresponder ao tipo da propriedade.

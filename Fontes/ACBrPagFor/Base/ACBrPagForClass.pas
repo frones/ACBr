@@ -880,6 +880,7 @@ type
 
   TSegmentoG = class(TObject)
   private
+    FMovimentoRemessa: string;
     FCodigoBarras: string;
     FCedente: TCedente;
     FVencimento: TDateTime;
@@ -906,6 +907,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
+	property MovimentoRemessa: string read FMovimentoRemessa write FMovimentoRemessa;
     property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
     property Cedente: TCedente read FCedente write FCedente;
     property Vencimento: TDateTime read FVencimento write FVencimento;

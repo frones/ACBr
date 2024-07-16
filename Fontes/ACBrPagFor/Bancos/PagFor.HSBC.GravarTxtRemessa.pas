@@ -86,7 +86,7 @@ begin
   GravarCampo(PagFor.Registro0.Empresa.Convenio, 20, tcStr);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
   GravarCampo(' ', 1, tcStr);
-  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
+  GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.Numero, 12, tcInt64);
   GravarCampo(PagFor.Registro0.Empresa.ContaCorrente.Conta.DV, 1, tcStr);
   GravarCampo(' ', 1, tcStr);
   GravarCampo(PagFor.Registro0.Empresa.Nome, 30, tcStr, True);
@@ -138,7 +138,7 @@ begin
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Convenio, 20, tcStr);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo, 5, tcInt);
   GravarCampo(' ', 1, tcStr);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.Numero, 12, tcInt);
+  GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.Numero, 12, tcInt64);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.DV, 1, tcStr);
   GravarCampo(' ', 1, tcStr);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Nome, 30, tcStr, True);
@@ -219,7 +219,7 @@ begin
       GravarCampo(BancoToStr(Favorecido.Banco), 3, tcStr);
       GravarCampo(Favorecido.ContaCorrente.Agencia.Codigo, 5, tcInt);
       GravarCampo(' ', 1, tcStr);
-      GravarCampo(Favorecido.ContaCorrente.Conta.Numero, 12, tcInt);
+      GravarCampo(Favorecido.ContaCorrente.Conta.Numero, 12, tcInt64);
       GravarCampo(Favorecido.ContaCorrente.Conta.DV, 1, tcStr);
       GravarCampo(' ', 1, tcStr);
       GravarCampo(Favorecido.Nome, 30, tcStr, True);

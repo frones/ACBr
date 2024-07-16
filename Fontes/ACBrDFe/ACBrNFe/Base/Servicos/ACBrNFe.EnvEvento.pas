@@ -773,7 +773,7 @@ begin
 
   for i := 0 to Evento[Idx].FInfEvento.detEvento.detPag.Count - 1 do
   begin
-    Result[i] := CreateElement('dePag');
+    Result[i] := CreateElement('detPag');
 
     Result[i].AppendChild(AddNode(tcStr, 'P22', 'indPag', 01, 01, 0,
       IndpagToStr(Evento[Idx].InfEvento.detEvento.detPag[i].indPag), DSC_INDPAG));
@@ -805,6 +805,7 @@ begin
 
     Result[i].AppendChild(AddNode(tcStr, 'P31', 'tBand', 02, 02, 0,
       BandeiraCartaoToStr(Evento[Idx].InfEvento.detEvento.detPag[i].tBand), DSC_TBAND));
+
     Result[i].AppendChild(AddNode(tcStr, 'P32', 'cAut', 01, 128, 0,
                      Evento[Idx].InfEvento.detEvento.detPag[i].cAut, DSC_CAUT));
 
@@ -1078,6 +1079,22 @@ begin
       infEvento.detEvento.dhHashTentativaEntrega := RetEventoNFe.InfEvento.detEvento.dhHashTentativaEntrega;
       infEvento.detEvento.UF := RetEventoNFe.InfEvento.detEvento.UF;
 
+      for i := 0 to RetEventoNFe.InfEvento.detEvento.detPag.Count -1 do
+      begin
+        InfEvento.detEvento.detPag[i].indPag := RetEventoNFe.InfEvento.detEvento.detPag[i].indPag;
+        InfEvento.detEvento.detPag[i].tPag := RetEventoNFe.InfEvento.detEvento.detPag[i].tPag;
+        InfEvento.detEvento.detPag[i].xPag := RetEventoNFe.InfEvento.detEvento.detPag[i].xPag;
+        InfEvento.detEvento.detPag[i].vPag := RetEventoNFe.InfEvento.detEvento.detPag[i].vPag;
+        InfEvento.detEvento.detPag[i].dPag := RetEventoNFe.InfEvento.detEvento.detPag[i].dPag;
+        InfEvento.detEvento.detPag[i].CNPJPag := RetEventoNFe.InfEvento.detEvento.detPag[i].CNPJPag;
+        InfEvento.detEvento.detPag[i].UFPag := RetEventoNFe.InfEvento.detEvento.detPag[i].UFPag;
+        InfEvento.detEvento.detPag[i].CNPJIF := RetEventoNFe.InfEvento.detEvento.detPag[i].CNPJIF;
+        InfEvento.detEvento.detPag[i].tBand := RetEventoNFe.InfEvento.detEvento.detPag[i].tBand;
+        InfEvento.detEvento.detPag[i].cAut := RetEventoNFe.InfEvento.detEvento.detPag[i].cAut;
+        InfEvento.detEvento.detPag[i].CNPJReceb := RetEventoNFe.InfEvento.detEvento.detPag[i].CNPJReceb;
+        InfEvento.detEvento.detPag[i].UFReceb := RetEventoNFe.InfEvento.detEvento.detPag[i].UFReceb;
+      end;
+
       signature.URI             := RetEventoNFe.signature.URI;
       signature.DigestValue     := RetEventoNFe.signature.DigestValue;
       signature.SignatureValue  := RetEventoNFe.signature.SignatureValue;
@@ -1115,6 +1132,7 @@ var
   INIRec: TMemIniFile;
   ok: Boolean;
   Item: TitemPedidoCollectionItem;
+  ItemDetPag: TdetPagCollectionItem;
 begin
 {$IFNDEF COMPILER23_UP}
   Result := False;
@@ -1247,11 +1265,12 @@ begin
           teInsucessoEntregaNFe:
             begin
               infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 92);
-              infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
               infEvento.detEvento.dhTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhTentativaEntrega', ''));
               infEvento.detEvento.nTentativa := INIRec.ReadInteger(sSecao, 'nTentativa', 1);
               infEvento.detEvento.tpMotivo := StrTotpMotivo(ok, INIRec.ReadString(sSecao, 'tpMotivo', '1'));
               infEvento.detEvento.xJustMotivo := INIRec.ReadString(sSecao, 'xJustMotivo', '');
+              infEvento.detEvento.latGPS := StringToFloatDef(INIRec.ReadString(sSecao, 'latGPS', ''), 0);
+              infEvento.detEvento.longGPS := StringToFloatDef(INIRec.ReadString(sSecao, 'longGPS', ''), 0);
               infEvento.detEvento.hashTentativaEntrega := INIRec.ReadString(sSecao, 'hashTentativaEntrega', '');
               infEvento.detEvento.dhHashTentativaEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashTentativaEntrega', ''));
               infEvento.detEvento.UF := INIRec.ReadString(sSecao, 'UF', '');
@@ -1260,7 +1279,41 @@ begin
           teCancInsucessoEntregaNFe:
             begin
               infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 92);
-              infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+              infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
+            end;
+
+          teConcFinanceira:
+            begin
+              J := 1;
+              while true do
+              begin
+                sSecao := 'dePag' + IntToStrZero(J, 3);
+                sFim := OnlyNumber(INIRec.ReadString(sSecao,'vPag', 'FIM'));
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                ItemDetPag := infEvento.detEvento.detPag.New;
+
+                ItemDetPag.indPag := StrToIndpag(ok, INIRec.ReadString(sSecao, 'indPag', ''));
+                ItemDetPag.tPag := StrToFormaPagamento(ok, INIRec.ReadString(sSecao, 'tPag', '01'));
+                ItemDetPag.xPag := INIRec.ReadString(sSecao, 'xPag', '');
+                ItemDetPag.vPag := StringToFloatDef(sFim, 0);
+                ItemDetPag.dPag := StringToDateTime(INIRec.ReadString(sSecao, 'dPag', ''));
+                ItemDetPag.CNPJPag := INIRec.ReadString(sSecao, 'CNPJPag', '');
+                ItemDetPag.UFPag := INIRec.ReadString(sSecao, 'UFPag', '');
+                ItemDetPag.CNPJIF := INIRec.ReadString(sSecao, 'CNPJIF', '');
+                ItemDetPag.tBand := StrToBandeiraCartao(ok, INIRec.ReadString(sSecao, 'tBand', ''));
+                ItemDetPag.cAut := INIRec.ReadString(sSecao, 'cAut', '');
+                ItemDetPag.CNPJReceb := INIRec.ReadString(sSecao, 'CNPJReceb', '');
+                ItemDetPag.UFReceb := INIRec.ReadString(sSecao, 'UFReceb', '');
+
+                Inc(J);
+              end;
+            end;
+
+          teCancConcFinanceira:
+            begin
               infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
             end;
         end;

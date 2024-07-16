@@ -864,7 +864,7 @@ begin
 
   NFeRetorno := TRetConsStatServ.Create('');
   try
-    NFeRetorno.XmlRetorno := ParseText(FPRetWS);
+    NFeRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
     NFeRetorno.LerXml;
 
     Fversao := NFeRetorno.versao;
@@ -1187,7 +1187,7 @@ begin
     else
       AXML := FPRetWS;
 
-    FNFeRetornoSincrono.XmlRetorno := ParseText(AXML);
+    FNFeRetornoSincrono.XmlRetorno := AXML; // ParseText(AXML);
     FNFeRetornoSincrono.LerXml;
 
     Fversao := FNFeRetornoSincrono.versao;
@@ -2215,7 +2215,7 @@ begin
 
     VerificarSemResposta;
 
-    NFeRetorno.XmlRetorno := ParseText(FPRetWS);
+    NFeRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
     NFeRetorno.LerXML;
 
     NFCancelada := False;
@@ -2738,7 +2738,7 @@ begin
 
     VerificarSemResposta;
 
-    NFeRetorno.XmlRetorno := ParseText(FPRetWS);
+    NFeRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
     NFeRetorno.LerXml;
 
     Fversao := NFeRetorno.versao;
@@ -3500,7 +3500,7 @@ begin
 
   VerificarSemResposta;
 
-  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
+  EventoRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;
@@ -3676,7 +3676,7 @@ begin
 
   VerificarSemResposta;
 
-  FretAdmCSCNFCe.XmlRetorno := ParseText(FPRetWS);
+  FretAdmCSCNFCe.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
   FretAdmCSCNFCe.LerXml;
 
   FPMsg := FretAdmCSCNFCe.xMotivo;

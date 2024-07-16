@@ -171,7 +171,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; override;
-    function ObterNomeArquivo: string; override;
+    function ObterNomeArquivo: string; overload;
 
     property Opcoes: TNFeXmlWriterOptions read GetOpcoes write SetOpcoes;
     property NFe: TNFe read FNFe write FNFe;

@@ -45,6 +45,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/07/2024
+-- ACBrNFeWebServices --
+[*] Alteração visando não usar o ParseText nos retornos dos webservices.
+  Por: BigWings
+-- ACBrNFe.EnvEvento --
+[-] Correções na geração e leitura do retorno referente aos novos eventos
+    de Conciliação Financeira e Cancelamento de Conciliação Financeira.
+   Por: Italo Giurizzato Junior
+-- ACBrNFeXmlWriter --
+[-] Trocado o override por overload na assinatura da função: ObterNomeArquivo.
+   Por: Italo Giurizzato Junior
+
 12/07/2024
 -- ACBrNFe.RetEnvEvento --
 [*] Possível solução para carregar corretamente o XML do evento gerado por outra

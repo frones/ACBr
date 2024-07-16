@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="196"/>
+      <BuildNr Value="197"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
     </VersionInfo>
@@ -551,11 +551,4 @@
       <CustomOptions Value="-dNOGUI"/>
     </Other>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="1">
-      <Item1>
-        <Name Value="EACBrLibException"/>
-      </Item1>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

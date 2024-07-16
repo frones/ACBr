@@ -1,0 +1,1 @@
+Salve nesta pasta a ACBrCEP32.dll ST e as dependências para x86.

@@ -196,7 +196,7 @@ end;
 function GetThumbPrint( cert: pX509 ): String;
 var
   md_type: PEVP_MD;
-  md_len: LongInt;
+  md_len: cint;
   md: AnsiString;
 begin
   md_type := EVP_get_digestbyname( 'sha1' );

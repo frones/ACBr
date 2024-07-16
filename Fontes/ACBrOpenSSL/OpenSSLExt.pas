@@ -154,7 +154,11 @@ var
    {$If not DECLARED(TBytes)}
     TBytes = array of Byte;
    {$IfEnd}
-   cint = LongInt;
+    {$IFDEF POSIX}
+     cint = Int32;
+    {$Else}
+     cint = LongInt;
+    {$EndIf}
    pcint = ^cint;
    cuint = LongWord;
    pcuint = ^cuint;

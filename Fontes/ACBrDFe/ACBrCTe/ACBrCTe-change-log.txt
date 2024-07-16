@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/07/2024
+-- pcteConversaoCTe --
+[+] Incluído a função de conversão: tpMotivoToDesc (Motivo da não entrega).
+   Por: Italo Giurizzato Junior
+-- ACBrCTeDAEventoRLRetrato --
+[*] Revisado a impressão de todos os eventos.
+   Por: Italo Giurizzato Junior
 -- ACBrCTeServicos --
 [*] Alterado as URLs envio do evento EPEC de MG, o que tudo indica tem que
     enviar o evento para a SEFAZ-MG e não para o SVC.

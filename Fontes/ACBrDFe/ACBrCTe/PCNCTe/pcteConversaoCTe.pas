@@ -407,6 +407,7 @@ function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
 
 function tpMotivoToStr(const t: TtpMotivo): string;
 function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
+function tpMotivoToDesc(const t: TtpMotivo): string;
 
 implementation
 
@@ -1000,6 +1001,12 @@ end;
 function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
+    [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
+end;
+
+function tpMotivoToDesc(const t: TtpMotivo): string;
+begin
+  result := EnumeradoToStr(t, ['Não Encontrado', 'Recusa', 'Inexistente', 'Outro'],
     [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
 end;
 

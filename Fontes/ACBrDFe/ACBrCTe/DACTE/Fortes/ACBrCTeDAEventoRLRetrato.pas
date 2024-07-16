@@ -250,14 +250,14 @@ begin
     teEPEC:
       rllLinha1.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
 
+    teMultiModal:
+      rllLinha1.Caption := 'REGISTROS DO MULTIMODAL';
+
     tePrestDesacordo:
       rllLinha1.Caption := 'PRESTAÇÃO DE SERVIÇO EM DESACORDO';
 
     teCancPrestDesacordo:
       rllLinha1.Caption := 'CANCELAMENTO PRESTAÇÃO DE SERVIÇO EM DESACORDO';
-
-    teMultiModal:
-      rllLinha1.Caption := 'REGISTROS DO MULTIMODAL';
 
     teGTV:
       rllLinha1.Caption := 'INFORMAÇÕES DA GTV';
@@ -267,6 +267,12 @@ begin
 
     teCancComprEntrega:
       rllLinha1.Caption := 'CANCELAMENTO DO COMPROVANTE DE ENTREGA';
+
+    teInsucessoEntregaCTe:
+      rllLinha1.Caption := 'INSUCESSO NA ENTREGA';
+
+    teCancInsucessoEntregaCTe:
+      rllLinha1.Caption := 'CANCELAMENTO DO INSUCESSO NA ENTREGA';
   end;
 
   rllLinha2.Caption := ACBrStr(
@@ -312,14 +318,14 @@ begin
       teEPEC:
         rllTituloEvento.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
 
+      teMultiModal:
+        rllTituloEvento.Caption := 'REGISTROS DO MULTIMODAL';
+
       tePrestDesacordo:
         rllTituloEvento.Caption := ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
 
       teCancPrestDesacordo:
         rllTituloEvento.Caption := ACBrStr('CANCELAMENTO PRESTAÇÃO DE SERVIÇO EM DESACORDO');
-
-      teMultiModal:
-        rllTituloEvento.Caption := 'REGISTROS DO MULTIMODAL';
 
       teGTV:
         rllTituloEvento.Caption := 'INFORMAÇÕES DA GTV';
@@ -329,6 +335,12 @@ begin
 
       teCancComprEntrega:
         rllTituloEvento.Caption := 'CANCELAMENTO DO COMPROVANTE DE ENTREGA';
+
+      teInsucessoEntregaCTe:
+        rllTituloEvento.Caption := 'INSUCESSO NA ENTREGA';
+
+      teCancInsucessoEntregaCTe:
+        rllTituloEvento.Caption := 'CANCELAMENTO DO INSUCESSO NA ENTREGA';
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -403,6 +415,7 @@ begin
               rllFoneTomador.Caption := FormatarFone(fpCTe.Rem.fone);
               rllInscEstTomador.Caption := fpCTe.Rem.IE;
             end;
+
             tmExpedidor:
             begin
               rllRazaoTomador.Caption := fpCTe.Exped.xNome;
@@ -416,6 +429,7 @@ begin
               rllFoneTomador.Caption := FormatarFone(fpCTe.Exped.fone);
               rllInscEstTomador.Caption := fpCTe.Exped.IE;
             end;
+
             tmRecebedor:
             begin
               rllRazaoTomador.Caption := fpCTe.Receb.xNome;
@@ -429,6 +443,7 @@ begin
               rllFoneTomador.Caption := FormatarFone(fpCTe.Receb.fone);
               rllInscEstTomador.Caption := fpCTe.Receb.IE;
             end;
+
             tmDestinatario:
             begin
               rllRazaoTomador.Caption := fpCTe.Dest.xNome;
@@ -486,11 +501,13 @@ begin
             (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
             (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
             (fpEventoCTe.InfEvento.tpEvento = teMultiModal) or
+            (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo) or
+            (fpEventoCTe.InfEvento.tpEvento = teCancPrestDesacordo) or
             (fpEventoCTe.InfEvento.tpEvento = teGTV) or
             (fpEventoCTe.InfEvento.tpEvento = teComprEntrega) or
             (fpEventoCTe.InfEvento.tpEvento = teCancComprEntrega) or
-            (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo) or
-            (fpEventoCTe.InfEvento.tpEvento = teCancPrestDesacordo);
+            (fpEventoCTe.InfEvento.tpEvento = teInsucessoEntregaCTe) or
+            (fpEventoCTe.InfEvento.tpEvento = teCancInsucessoEntregaCTe);
 
   PrintIt := Exibir or (fpEventoCTe.InfEvento.tpAmb = taHomologacao);
 
@@ -551,6 +568,13 @@ begin
         fpEventoCTe.InfEvento.detEvento.UFFim);
     end;
 
+    teMultiModal:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Registro : ' + fpEventoCTe.InfEvento.detEvento.xRegistro);
+      rlmCondicoes.Lines.Add('Documento: ' + fpEventoCTe.InfEvento.detEvento.nDoc);
+    end;
+
     tePrestDesacordo:
     begin
       lblTitulo_06.Caption := ACBrStr('JUSTIFICATIVA');
@@ -562,13 +586,6 @@ begin
       lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
       rlmCondicoes.Lines.Add('Protocolo do Evento de Prestação Cancelado: ' +
         fpEventoCTe.InfEvento.detEvento.nProt);
-    end;
-
-    teMultiModal:
-    begin
-      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
-      rlmCondicoes.Lines.Add('Registro : ' + fpEventoCTe.InfEvento.detEvento.xRegistro);
-      rlmCondicoes.Lines.Add('Documento: ' + fpEventoCTe.InfEvento.detEvento.nDoc);
     end;
 
     teGTV:
@@ -594,8 +611,30 @@ begin
     teCancComprEntrega:
     begin
       lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
-      rlmCondicoes.Lines.Add('Protocolo do Evento Cancelado: ' +
+      rlmCondicoes.Lines.Add('Protocolo do Evento de Cancelamento: ' +
         fpEventoCTe.InfEvento.detEvento.nProtCE);
+    end;
+
+    teInsucessoEntregaCTe:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Protocolo: ' + fpEventoCTe.InfEvento.detEvento.nProt);
+      rlmCondicoes.Lines.Add('Data/Hora: ' + DateTimeToStr(fpEventoCTe.InfEvento.detEvento.dhTentativaEntrega));
+      rlmCondicoes.Lines.Add('Tentativa: ' + IntToStr(fpEventoCTe.InfEvento.detEvento.nTentativa));
+      rlmCondicoes.Lines.Add('Latitude : ' + FormatFloat('#0.000000', fpEventoCTe.InfEvento.detEvento.latitude));
+      rlmCondicoes.Lines.Add('Longitude: ' + FormatFloat('#0.000000', fpEventoCTe.InfEvento.detEvento.longitude));
+
+      if fpEventoCTe.InfEvento.detEvento.tpMotivo = tmOutro then
+        rlmCondicoes.Lines.Add('Motivo   : ' + fpEventoCTe.InfEvento.detEvento.xJustMotivo)
+      else
+        rlmCondicoes.Lines.Add('Motivo   : ' + tpMotivoToDesc(fpEventoCTe.InfEvento.detEvento.tpMotivo));
+    end;
+
+    teCancInsucessoEntregaCTe:
+    begin
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
+      rlmCondicoes.Lines.Add('Protocolo do Evento de Cancelamento: ' +
+        fpEventoCTe.InfEvento.detEvento.nProt);
     end;
   end;
 end;

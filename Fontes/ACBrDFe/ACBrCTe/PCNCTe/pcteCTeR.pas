@@ -1023,13 +1023,13 @@ begin
           pos1 := PosLast('</infUnidCarga>', sAux);
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
-//          len  := pos3 - pos2;
+          len  := pos3 - pos2;
 
 //          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
 //            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, pos3 -8), 0)
+            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
           else
             qtdRat_UnidTransp := 0.0;
 

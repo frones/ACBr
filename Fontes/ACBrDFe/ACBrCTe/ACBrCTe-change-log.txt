@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/07/2024
+-- pcteCTeR --
+[-] Correção para leitura correta do grupo infOutros no que se refere as 
+    Unidades de Transporte.
+   Por: Leandro Araújo
+
 11/07/2024
 -- ACBrCTeServicos --
 [*] Revisão nas URLs de todas UF de envio do evento EPEC que não 

@@ -72,6 +72,7 @@ type
     procedure Test_Boleto_GerarRemessa;
     procedure Test_Boleto_GerarRemessaStream;
     procedure Test_Boleto_LerRetorno;
+    procedure Test_Boleto_LerRetornoStream;
     procedure Test_Boleto_SetDiretorioArquivo;
     procedure Test_Boleto_ListaBancos;
     procedure Test_Boleto_ListaCaractTitulo;
@@ -90,7 +91,8 @@ implementation
 
 uses
   Printers, OSPrinters,
-  ACBrLibBoletoStaticImportMT, ACBrLibConsts, ACBrLibBoletoConsts, ACBrUtil, Dialogs;
+  ACBrLibBoletoStaticImportMT, ACBrLibConsts, ACBrLibBoletoConsts, ACBrUtil, Dialogs
+  ,synacode;
 
 { TACBrLibBoletoTest }
 
@@ -479,6 +481,29 @@ begin
   //AssertEquals('Erro ao tentar Ler Retorno', ErrOK, Boleto_LerRetorno(Handle, 'C:\Projeto ACBR\ACBR\Projetos\ACBrLib\Testes\Boleto','RetornoBB400.ret'));
   AssertEquals(ErrOK, Boleto_Finalizar(Handle));
 
+end;
+
+procedure TACBrLibBoletoTest.Test_Boleto_LerRetornoStream;
+var
+  Handle: THandle;
+  Resposta: PChar;
+  Tamanho: Longint;
+  Stream: TStringStream;
+begin
+  AssertEquals(ErrOk, Boleto_Inicializar(Handle,'',''));
+  //Resposta:= '';
+  //Tamanho:= 0;
+  //
+  //Stream := TStringStream.Create;
+  //Stream.LoadFromFile('C:/Temp/CNAB400.ret');
+  //
+  //AssertEquals('Erro ao Ler Retorno Stream', ErrOK,
+  //Boleto_LerRetornoStream(Handle,PChar(EncodeBase64(Stream.DataString)), Resposta, Tamanho));
+  //
+  //AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  //AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+  AssertEquals(ErrOk, Boleto_Finalizar(Handle));
 end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_SetDiretorioArquivo;

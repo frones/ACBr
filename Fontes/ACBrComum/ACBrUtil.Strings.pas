@@ -218,17 +218,22 @@ function SplitToString(ASplit: TSplitResult; aDelimiter: string): String;
 var
   i, k: integer;
 begin
-    result := '';
+  result := '';
 
-  if aDelimiter = '' then begin
-     for i := low(ASplit) to high(ASplit) do
-       result := result + ASplit[i];
-  end else begin
-     k := high(ASplit);
-     for i := low(ASplit) to k do begin
-        result := result + ASplit[i];
-        if k <> i then result := result + aDelimiter;
-     end;
+  if aDelimiter = '' then
+  begin
+    for i := low(ASplit) to high(ASplit) do
+      result := result + ASplit[i];
+  end
+  else
+  begin
+    k := high(ASplit);
+    for i := low(ASplit) to k do
+    begin
+      result := result + ASplit[i];
+      if k <> i then
+        result := result + aDelimiter;
+    end;
   end;
 end;
 

@@ -112,7 +112,7 @@ function BioToStr(ABio: pBIO): AnsiString;
 implementation
 
 uses
-  strutils, dateutils, typinfo, synautil, synacode,
+  strutils, dateutils, typinfo, synautil, synacode, ctypes,
   ACBrOpenSSLUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,

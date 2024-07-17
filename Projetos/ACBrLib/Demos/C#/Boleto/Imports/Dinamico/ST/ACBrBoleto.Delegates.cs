@@ -88,6 +88,9 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_LerRetorno(string eDir, string eNomeArq);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_LerRetornoStream(string ARetornoBase64, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_EnviarEmail(string ePara, string eAssunto, string eMensagem, string eCC);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -160,6 +163,7 @@ namespace ACBrLib.Boleto
             AddMethod<Boleto_GerarRemessaStream>("Boleto_GerarRemessaStream");
             AddMethod<Boleto_ObterRetorno>("Boleto_ObterRetorno");
             AddMethod<Boleto_LerRetorno>("Boleto_LerRetorno");
+            AddMethod<Boleto_LerRetornoStream>("Boleto_LerRetornoStream");
             AddMethod<Boleto_EnviarEmail>("Boleto_EnviarEmail");
             AddMethod<Boleto_EnviarEmailBoleto>("Boleto_EnviarEmailBoleto");
             AddMethod<Boleto_SetDiretorioArquivo>("Boleto_SetDiretorioArquivo");

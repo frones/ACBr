@@ -308,6 +308,19 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
+        public string LerRetornoStream(string ARetornoBase64)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_LerRetornoStream>();
+            var ret = ExecuteMethod(() => method(ToUTF8(ARetornoBase64), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public void EnviarEmail(string ePara, string eAssunto, string eMensagem, string eCC)
         {
             var method = GetMethod<Boleto_EnviarEmail>();

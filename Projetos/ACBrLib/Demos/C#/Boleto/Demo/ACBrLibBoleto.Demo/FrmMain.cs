@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing.Printing;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Windows.Forms;
 using ACBrLib;
@@ -569,6 +571,43 @@ namespace ACBrLibBoleto.Demo
             rtbRespostas.AppendLine(ret.Retorno);
         }
 
+        private void btnLerRetornoStream_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Arquivos RET (*.ret)|*.ret|Todos os Arquivos (*.*)|*.*",
+                Title = "Selecione um arquivo de retorno"
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string file = ofd.FileName;
+
+                try
+                {
+                    using (FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read))
+                    {
+                        using (StreamReader reader = new StreamReader(fileStream))
+                        {
+                            string retString = reader.ReadToEnd();
+                            byte[] retByte = Encoding.UTF8.GetBytes(retString);
+                            var retBase64 = System.Convert.ToBase64String(retByte);
+                            var ret = boleto.LerRetornoStream(retBase64);
+                            rtbRespostas.AppendLine(ret);
+                        }
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    MessageBox.Show($"Ocorreu um erro ao ler o arquivo: {ex.Message}");
+                }
+            }  
+            else
+            {
+                MessageBox.Show("Nenhum arquivo foi selecionado.");
+            }
+        }
+
         private void BtnListarOcorrencias_Click(object sender, EventArgs e)
         {
             var ret = boleto.ListaOcorrencias();
@@ -793,5 +832,7 @@ namespace ACBrLibBoleto.Demo
                 rtbRespostas.AppendLine(ex.Message);
             }
         }
+
+        
     }
 }

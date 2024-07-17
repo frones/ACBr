@@ -189,6 +189,7 @@
             this.btnConsultaDetalhe = new System.Windows.Forms.Button();
             this.btnArray = new System.Windows.Forms.Button();
             this.btnGerarRemessaStream = new System.Windows.Forms.Button();
+            this.btnLerRetornoStream = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1587,7 +1588,7 @@
             // 
             // btnLimparLista
             // 
-            this.btnLimparLista.Location = new System.Drawing.Point(12, 476);
+            this.btnLimparLista.Location = new System.Drawing.Point(144, 709);
             this.btnLimparLista.Name = "btnLimparLista";
             this.btnLimparLista.Size = new System.Drawing.Size(126, 23);
             this.btnLimparLista.TabIndex = 4;
@@ -1895,11 +1896,23 @@
             this.btnGerarRemessaStream.UseVisualStyleBackColor = true;
             this.btnGerarRemessaStream.Click += new System.EventHandler(this.btnGerarRemessaStream_Click);
             // 
+            // btnLerRetornoStream
+            // 
+            this.btnLerRetornoStream.Location = new System.Drawing.Point(12, 475);
+            this.btnLerRetornoStream.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLerRetornoStream.Name = "btnLerRetornoStream";
+            this.btnLerRetornoStream.Size = new System.Drawing.Size(126, 24);
+            this.btnLerRetornoStream.TabIndex = 34;
+            this.btnLerRetornoStream.Text = "Ler Retorno (Stream)";
+            this.btnLerRetornoStream.UseVisualStyleBackColor = true;
+            this.btnLerRetornoStream.Click += new System.EventHandler(this.btnLerRetornoStream_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 747);
+            this.Controls.Add(this.btnLerRetornoStream);
             this.Controls.Add(this.btnGerarRemessaStream);
             this.Controls.Add(this.btnArray);
             this.Controls.Add(this.btnConsultaDetalhe);
@@ -2128,6 +2141,7 @@
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.TextBox txtNomeArquivoLog;
         private System.Windows.Forms.Button btnGerarRemessaStream;
+        private System.Windows.Forms.Button btnLerRetornoStream;
     }
 }
 

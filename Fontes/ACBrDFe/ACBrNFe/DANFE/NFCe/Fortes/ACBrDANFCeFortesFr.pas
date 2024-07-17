@@ -1408,20 +1408,11 @@ begin
 
       Resumido := DanfeResumido or (not Self.ImprimeItens);
 
-      if (NumCopias > 0) and (RLPrinter.Copies <> NumCopias) then
-      begin
-        RLPrinter.Copies := NumCopias;
-      end;
-
-      if not EstaVazio(Impressora) then
-        RLPrinter.PrinterName := Impressora;
+      TDFeReportFortes.AjustarReport(RLLayout, ACBrNFeDANFCeFortes);
 
       RLLayout.JobTitle := NomeDocumento;
       if (RLLayout.JobTitle = '') then
         RLLayout.JobTitle := OnlyNumber(FpNFe.infNFe.ID) + IfThen(Cancelado, '-cancelado', '')+'-nfe.xml';
-
-      RLLayout.ShowProgress := MostraStatus;
-      RLLayout.PrintDialog  := (not MostraPreview) and EstaVazio(Impressora);
 
       // Largura e Margens do Relatório //
       RLLayout.Width := LarguraBobina;

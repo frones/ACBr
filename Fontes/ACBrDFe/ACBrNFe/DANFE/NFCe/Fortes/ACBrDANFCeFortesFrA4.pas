@@ -1006,16 +1006,8 @@ begin
       RLLayout := rlReportA4;
       Resumido := DanfeResumido;
 
-      if (NumCopias > 0) and (RLPrinter.Copies <> NumCopias) then
-      begin
-        RLPrinter.Copies := NumCopias;
-      end;
+      TDFeReportFortes.AjustarReport(RLLayout, FACBrNFeDANFCeFortesA4);
 
-      if FACBrNFeDANFCeFortesA4.Impressora <> '' then
-        RLPrinter.PrinterName := FACBrNFeDANFCeFortesA4.Impressora;
-
-      RLLayout.PrintDialog := FACBrNFeDANFCeFortesA4.MostraPreview;
-      RLLayout.ShowProgress:= False ;
 
       if Filtro = fiNenhum then
       begin

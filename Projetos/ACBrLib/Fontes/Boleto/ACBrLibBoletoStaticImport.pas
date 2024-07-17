@@ -127,6 +127,9 @@ function Boleto_GerarRemessaStream(eDir: PChar; eNumArquivo: longInt; eNomeArq: 
 function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
+function Boleto_LerRetornoStream(const ARetornoBase64: PChar; const sResposta : PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
+
 function Boleto_ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;

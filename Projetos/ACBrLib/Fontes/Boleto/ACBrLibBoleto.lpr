@@ -77,6 +77,7 @@ exports
   Boleto_GerarRemessa,
   Boleto_GerarRemessaStream,
   Boleto_LerRetorno,
+  Boleto_LerRetornoStream,
   Boleto_ObterRetorno,
   Boleto_EnviarEmail,
   Boleto_EnviarEmailBoleto,

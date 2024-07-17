@@ -92,7 +92,10 @@ function Boleto_GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar)
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_GerarRemessaStream(eNumArquivo: longInt; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_LerRetornoStream(const ARetornoBase64: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
@@ -389,6 +392,7 @@ begin
 end;
 
 function Boleto_GerarRemessaStream(eNumArquivo: longInt; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -402,11 +406,27 @@ begin
   end;
 end;
 
-function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
     Result := TACBrLibBoleto(pLib^.Lib).LerRetorno(eDir, eNomeArq);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function Boleto_LerRetornoStream(const ARetornoBase64: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibBoleto(pLib^.Lib).LerRetornoStream(ARetornoBase64, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

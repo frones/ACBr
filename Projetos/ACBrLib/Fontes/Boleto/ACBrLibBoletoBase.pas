@@ -77,6 +77,7 @@ type
     function GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
     function GerarRemessaStream(eNumArquivo: longInt; const sResposta: PChar; var esTamanho: longint): longint;
     function LerRetorno(eDir, eNomeArq: PChar): longint;
+    function LerRetornoStream(const ARetornoBase64: PChar; const sResposta: PChar; var esTamanho: longint): longInt;
     function ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
     function EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
     function EnviarEmailBoleto(eIndice: longint; ePara, eAssunto, eMensagem, eCC: PChar): longint;
@@ -102,7 +103,7 @@ uses
   ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, strutils, typinfo,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibResposta, ACBrBoleto, ACBrLibBoletoConfig, ACBrMail,
-  ACBrLibBoletoRespostas, ACBrObjectSerializer;
+  ACBrLibBoletoRespostas, ACBrObjectSerializer, synacode;
   
 constructor TACBrLibBoleto.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
@@ -594,6 +595,40 @@ begin
       Result := SetRetorno(ErrOK);
     finally
       BoletoDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
+function TACBrLibBoleto.LerRetornoStream(const ARetornoBase64: PChar; const sResposta: PChar; var esTamanho: longint): longInt;
+var
+  Stream: TStringStream;
+  Base64, Resposta : Ansistring;
+begin
+  try
+    GravarLog('Boleto_LerRetornoStream', logNormal);
+    Base64 := ACBrUTF8ToAnsi(DecodeBase64(ARetornoBase64));
+    Stream := TStringStream.Create(Base64);
+    try
+      BoletoDM.Travar;
+      try
+        BoletoDM.ACBrBoleto1.LerRetorno(Stream);
+
+        Resposta := ACBrUTF8ToAnsi(BoletoDM.ACBrBoleto1.GravarArqIni('','',False));
+        Resposta := EncodeBase64(Resposta);
+
+        MoverStringParaPChar (Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        BoletoDM.Destravar;
+      end;
+    finally
+      Stream.Free;
     end;
   except
     on E: EACBrLibException do

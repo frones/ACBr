@@ -38,7 +38,6 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IfDef FPC}cTypes,{$EndIf}
   ACBrDFeSSL,
   {$IfDef MSWINDOWS}ACBrDFeWinCrypt, ACBr_WinCrypt,{$EndIf}
   OpenSSLExt;
@@ -113,7 +112,8 @@ function BioToStr(ABio: pBIO): AnsiString;
 implementation
 
 uses
-  strutils, dateutils, typinfo, synautil, synacode, ctypes,
+  strutils, dateutils, typinfo, synautil, synacode,
+  {$IfDef FPC}ctypes,{$EndIf}
   ACBrOpenSSLUtils,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,

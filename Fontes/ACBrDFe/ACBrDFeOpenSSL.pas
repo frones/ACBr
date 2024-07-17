@@ -38,6 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IfDef FPC}cTypes,{$EndIf}
   ACBrDFeSSL,
   {$IfDef MSWINDOWS}ACBrDFeWinCrypt, ACBr_WinCrypt,{$EndIf}
   OpenSSLExt;

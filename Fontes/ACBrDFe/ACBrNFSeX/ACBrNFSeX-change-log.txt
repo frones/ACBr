@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2024
+-- TabServicos --
+[+] Incluído o serviço 16.02
+   Por: C Almeida 79
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Campinapolis/MT, o provedor é Agili.
 [+] Incluída a cidade de Novo São Joaquim/MT, o provedor é Agili.

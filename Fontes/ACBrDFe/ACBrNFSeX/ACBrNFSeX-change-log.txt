@@ -45,7 +45,7 @@ Símbolo : Significado
 
 18/07/2024
 -- Diversos --
-[*] Alterações visando elinintar regras de negócios do gerador de relatório
+[*] Alterações visando eliminar regras de negócios do gerador de relatório
     Fast Report.
    Por: Italo Giurizzato Junior
 -- TabServicos --

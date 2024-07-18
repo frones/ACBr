@@ -1113,7 +1113,7 @@ begin
   LCDS.FieldByName('IncentivadorCultural').AsString := FProvider.SimNaoDescricao(ANFSe.IncentivadorCultural);
   LCDS.FieldByName('CodigoMunicipio').AsString := IntToStr(LDadosServico.MunicipioIncidencia);
   LCDS.FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(LDadosServico.ExigibilidadeISS);
-  LCDS.FieldByName('MunicipioIncidencia').AsString := xMunicipioIncidencia;
+  LCDS.FieldByName('MunicipioIncidencia').AsString := LDadosServico.xMunicipioIncidencia;
   LCDS.FieldByName('TipoRecolhimento').AsString := ANFSe.TipoRecolhimento;
   {
   if Provedor = proEL then

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/07/2024
+-- ACBrNFSeXClass/SoftPlan.GravarXml/SoftPlan.LerXml/SoftPlan.Provider --
+[*] Alteração visando a leitura e impressão da descrição do CNAE.
+   Por: Italo Giurizzato Junior/Diego Folieni/Pandaa
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Santo Antonio dos Lopes/MA, o provedor é CTAConsult.
    Por: Diego Reckziegel

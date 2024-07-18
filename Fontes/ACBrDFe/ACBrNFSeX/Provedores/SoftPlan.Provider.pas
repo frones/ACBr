@@ -119,6 +119,7 @@ begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     Identificador := '';
+    DetalharServico := True;
 
     Autenticacao.RequerLogin := True;
     Autenticacao.RequerFraseSecreta := True;

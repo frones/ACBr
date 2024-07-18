@@ -100,7 +100,11 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#1', 'descricaoServico', 0, 1500, 1,
                                     NFSe.Servico.ItemServico[i].Descricao, ''));
 
-    Result[i].AppendChild(AddNode(tcStr, '#1', 'idCNAE', 0, 5, 1,
+    if NFSe.Servico.ItemServico[i].idCnae <>'' then
+      Result[i].AppendChild(AddNode(tcStr, '#1', 'idCNAE', 0, 5, 1,
+                                   NFSe.Servico.ItemServico[i].idCnae, ''))
+    else
+      Result[i].AppendChild(AddNode(tcStr, '#1', 'idCNAE', 0, 5, 1,
                                    NFSe.Servico.ItemServico[i].CodigoCnae, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'quantidade', 1, 8, 1,

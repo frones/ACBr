@@ -559,6 +559,7 @@ type
     FValorTributavel: Double;
 
     FDadosProfissionalParceiro: TDadosProfissionalParceiro;
+    FidCnae: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -635,6 +636,9 @@ type
 
     // Provedor Agili
     property DadosProfissionalParceiro: TDadosProfissionalParceiro read FDadosProfissionalParceiro write FDadosProfissionalParceiro;
+
+    // Provedor SoftPlan
+    property idCnae: string read FidCnae write FidCnae;
   end;
 
   TItemServicoCollection = class(TACBrObjectList)

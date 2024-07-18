@@ -88,11 +88,15 @@ begin
         BaseCalculo := ObterConteudo(ANodes[i].Childrens.FindAnyNs('baseCalculo'), tcDe2);
         CodigoCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigoCNAE'), tcStr);
         CodServ := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cst'), tcStr);
-  			// <descricaoCNAE>Estúdios de extração de árvores</descricaoCNAE>
-        Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('descricaoServico'), tcStr);
+        Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('descricaoCNAE'), tcStr);
+
+        Descricao := '(' + CodigoCnae + ' - ' + Descricao + ')' + FpQuebradeLinha +
+          ObterConteudo(ANodes[i].Childrens.FindAnyNs('descricaoServico'), tcStr);
+
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
                                       sLineBreak, [rfReplaceAll, rfIgnoreCase]);
-//        CodigoCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('idCNAE'), tcStr);
+
+        idCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('idCNAE'), tcStr);
         Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('quantidade'), tcDe2);
         ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valorTotal'), tcDe2);
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valorUnitario'), tcDe2);

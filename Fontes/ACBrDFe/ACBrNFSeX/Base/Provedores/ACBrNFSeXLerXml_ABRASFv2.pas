@@ -989,17 +989,26 @@ begin
       if CodigoMunicipio = '' then
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioPrestacaoServico'), tcStr);
 
-      MunicipioPrestacaoServico := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
-      MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
+      MunicipioPrestacaoServico := '';
+
+      if CodigoMunicipio <> '' then
+      begin
+        MunicipioPrestacaoServico := ObterNomeMunicipioUF(StrToIntDef(CodigoMunicipio, 0), xUF);
+        MunicipioPrestacaoServico := MunicipioPrestacaoServico + '/' + xUF;
+      end;
 
       CodigoPais          := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       ExigibilidadeISS    := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
       IdentifNaoExigibilidade := ObterConteudo(AuxNode.Childrens.FindAnyNs('IdentifNaoExigibilidade'), tcStr);
 
       MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
-      xMunicipioIncidencia := ObterNomeMunicipioUF(MunicipioIncidencia, xUF);
+      xMunicipioIncidencia := '';
 
-      xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
+      if MunicipioIncidencia > 0 then
+      begin
+        xMunicipioIncidencia := ObterNomeMunicipioUF(MunicipioIncidencia, xUF);
+        xMunicipioIncidencia := xMunicipioIncidencia + '/' + xUF;
+      end;
 
       NumeroProcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
 
@@ -1027,6 +1036,8 @@ begin
                                       Valores.DescontoIncondicionado +
                                       Valores.ValorTaxaTurismo;
     end;
+
+    NFSe.TipoRecolhimento := FpAOwner.SituacaoTributariaDescricao(NFSe.Servico.Valores.IssRetido);
   end;
 end;
 

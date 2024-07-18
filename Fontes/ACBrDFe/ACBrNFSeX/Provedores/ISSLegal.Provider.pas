@@ -142,7 +142,6 @@ begin
   begin
     Rps               := False;
     LoteRps           := False;
-    ConsultarSituacao := False;
     ConsultarLote     := False;
     ConsultarNFSeRps  := False;
     ConsultarNFSe     := False;

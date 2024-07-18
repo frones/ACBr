@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/07/2024
+-- Diversos --
+[*] Alterações visando elinintar regras de negócios do gerador de relatório
+    Fast Report.
+   Por: Italo Giurizzato Junior
 -- TabServicos --
 [+] Incluído o serviço 16.02
    Por: C Almeida 79

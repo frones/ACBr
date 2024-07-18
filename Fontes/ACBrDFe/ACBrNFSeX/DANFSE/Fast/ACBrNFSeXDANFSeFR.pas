@@ -1108,7 +1108,14 @@ begin
 
   LCDS.FieldByName('OutrasInformacoes').AsString := ANFSe.OutrasInformacoes;
   LCDS.FieldByName('NaturezaOperacao').AsString  := FProvider.NaturezaOperacaoDescricao(ANFSe.NaturezaOperacao);
-
+  LCDS.FieldByName('RegimeEspecialTributacao').AsString := FProvider.RegimeEspecialTributacaoDescricao(ANFSe.RegimeEspecialTributacao);
+  LCDS.FieldByName('OptanteSimplesNacional').AsString := FProvider.SimNaoDescricao(ANFSe.OptanteSimplesNacional);
+  LCDS.FieldByName('IncentivadorCultural').AsString := FProvider.SimNaoDescricao(ANFSe.IncentivadorCultural);
+  LCDS.FieldByName('CodigoMunicipio').AsString := IntToStr(LDadosServico.MunicipioIncidencia);
+  LCDS.FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(LDadosServico.ExigibilidadeISS);
+  LCDS.FieldByName('MunicipioIncidencia').AsString := xMunicipioIncidencia;
+  LCDS.FieldByName('TipoRecolhimento').AsString := ANFSe.TipoRecolhimento;
+  {
   if Provedor = proEL then
   begin
     if ANFSe.RegimeEspecialTributacao = retNenhum then
@@ -1126,22 +1133,8 @@ begin
     LCDS.FieldByName('CodigoMunicipio').AsString  := ANFSe.Prestador.Endereco.xMunicipio; //xMunicipio;
     LCDS.FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(LDadosServico.ExigibilidadeISS);
 
-    {
-      Incluido por: Italo em 12/01/2024
-    }
-    if LDadosServico.MunicipioIncidencia <> 0 then
-      LCDS.FieldByName('MunicipioIncidencia').AsString :=
-        IntToStr(LDadosServico.MunicipioIncidencia) + ' / ' +
-        LDadosServico.xMunicipioIncidencia
-    else
-      LCDS.FieldByName('MunicipioIncidencia').AsString := '';
+    LCDS.FieldByName('MunicipioIncidencia').AsString := xMunicipioIncidencia;
 
-    {  Comentado por: Italo em 12/01/2024
-    if ANFSe.NaturezaOperacao = no2 then
-      LCDS.FieldByName('MunicipioIncidencia').AsString := 'Fora do Município'
-    else
-      LCDS.FieldByName('MunicipioIncidencia').AsString := 'No Município';
-    }
     if LDadosServico.Valores.IssRetido = stRetencao then
       LCDS.FieldByName('TipoRecolhimento').AsString := 'Retido na Fonte'
     else
@@ -1182,7 +1175,7 @@ begin
       end;
     end;
   end;
-
+  }
   LCDS.FieldByName('MunicipioPrestacao').AsString := LDadosServico.MunicipioPrestacaoServico;
   LCDS.FieldByName('CodigoObra').AsString         := ANFSe.ConstrucaoCivil.CodigoObra;
   LCDS.FieldByName('Art').AsString                := ANFSe.ConstrucaoCivil.Art;
@@ -1534,14 +1527,7 @@ begin
   LOutrasInformacoes       := LowerCase(cdsParametros.FieldByName('outrasinformacoes').Value);
   LOutrasInformacoesLength := length(LOutrasInformacoes);
 
-  if pos('http://', LOutrasInformacoes) > 0 then
-    LQrCode := Trim(MidStr(LOutrasInformacoes, pos('http://', LOutrasInformacoes), LOutrasInformacoesLength))
-  else
-    if pos('https://', LowerCase(LOutrasInformacoes)) > 0 then
-      LQrCode := Trim(MidStr(LOutrasInformacoes, pos('https://', LOutrasInformacoes), LOutrasInformacoesLength));
-
-  if cdsIdentificacao.FieldByName('LinkNFSe').Value <> '' then
-    LQrCode := cdsIdentificacao.FieldByName('LinkNFSe').Value;
+  LQrCode := cdsIdentificacao.FieldByName('LinkNFSe').Value;
 
   if Assigned(Sender) and (Sender.Name = 'imgQrCode') then
   begin

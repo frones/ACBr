@@ -703,7 +703,7 @@ begin
   begin
     try
       ACBrUtil.FilesIO.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'Temp.xml',
-                          ACBrUtil.XMLHTML.ConverteXMLtoUTF8(RetWS), False, False);
+                          RetWS, False, False);
 
       Sleep(200);
 

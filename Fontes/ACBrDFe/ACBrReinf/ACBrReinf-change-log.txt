@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/07/2024
+-- Frm_ACBrReinf --
+[*] TK-5706 - Correção na codificação do xml temporário gerado para exibição no TWebBrowser de retorno
+  Por: Renato Rubinho
+
 25/03/2024
 -- ACBrReinfWebServices --
 [*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação

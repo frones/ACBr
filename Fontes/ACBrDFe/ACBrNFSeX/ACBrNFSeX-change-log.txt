@@ -43,6 +43,23 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/07/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Santo Antonio dos Lopes/MA, o provedor é CTAConsult.
+   Por: Diego Reckziegel
+[*] A cidade de São José do Rio Claro/MT trocou de provedor, agora é Coplan.
+   Por: Diego Reckziegel
+[*] A cidade de São Mateus/ES mudou para a versão 2.04, o provedor continua o 
+    mesmo: EL.
+   Por: Data Lider
+[*] A cidade de Socorro/SP trocou de provedor, agora é GovDigital.
+   Por: Daniel Afonso
+
+17/07/2024
+-- ACBrNFSeXServicos --
+[*] Incluído o Params: ParametroExtra para a cidade de São Bento do Sul/SC.
+   Por: C4 Dev
+
 15/07/2024
 -- Diversos --
 [*] Alterações em diversas units para uma possível solução para o provedor

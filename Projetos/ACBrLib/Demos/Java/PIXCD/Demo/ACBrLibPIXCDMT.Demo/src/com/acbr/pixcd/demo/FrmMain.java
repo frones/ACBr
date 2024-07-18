@@ -304,7 +304,7 @@ public class FrmMain extends javax.swing.JFrame {
         rtbRespostas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ACBrLibNFSe Demo");
+        setTitle("ACBrLibPIXCD Demo");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         setSize(new java.awt.Dimension(744, 588));
@@ -2217,21 +2217,24 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnConsultarPixRecebidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPixRecebidosActionPerformed
         
-        String dataInicio = JOptionPane.showInputDialog("Informe Data Inicio");
-        String dataFim = JOptionPane.showInputDialog("Informe a Data Fim");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        String inicio = JOptionPane.showInputDialog("Informe Data Inicio");
+        String fim = JOptionPane.showInputDialog("Informe a Data Fim");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         try
         {
-            Date Inicio = formato.parse(dataInicio);
-            Date Fim = formato.parse(dataFim);
+            Date dataInicio = sdf.parse(inicio);
+            Date dataFim = sdf.parse(fim);
             
             String txid = JOptionPane.showInputDialog("Informe TxId");
             String CPFCNPJ = JOptionPane.showInputDialog("Informe CPF ou CNPJ");
             String pagAtual = JOptionPane.showInputDialog("Informe Página Atual");
             String ItenPagina = JOptionPane.showInputDialog("Informe Itens por Página");
             
-            String ret = acbrPIXCD.ConsultarPixRecebidos(Inicio, Fim, txid, CPFCNPJ, Integer.parseInt(pagAtual), Integer.parseInt(ItenPagina));
+            double tDateTimeInicio = acbrPIXCD.convertDateToTDateTime(dataInicio);
+            double tDateTimeFim = acbrPIXCD.convertDateToTDateTime(dataFim);
+            
+            String ret = acbrPIXCD.ConsultarPixRecebidos(tDateTimeInicio, tDateTimeFim, txid, CPFCNPJ, Integer.parseInt(pagAtual), Integer.parseInt(ItenPagina));
             rtbRespostas.append(ret);
         }
         catch (Exception ex)

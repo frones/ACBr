@@ -79,7 +79,7 @@ public final class ACBrPIXCD extends ACBrLibBase {
         
         int PIXCD_ConsultarPix(Pointer libHandler, String Ae2eid, ByteBuffer buffer, IntByReference bufferSize);
     
-        int PIXCD_ConsultarPixRecebidos(Pointer libHandler, Date ADataInicio, Date ADataFim, String ATxId, String ACpfCnpj, Integer PagAtual, Integer ItensPorPagina, ByteBuffer buffer, IntByReference bufferSize);
+        int PIXCD_ConsultarPixRecebidos(Pointer libHandler, double ADataInicio, double ADataFim, String ATxId, String ACpfCnpj, Integer PagAtual, Integer ItensPorPagina, ByteBuffer buffer, IntByReference bufferSize);
     
         int PIXCD_SolicitarDevolucaoPix(Pointer libHandler, String AInfDevolucao, String Ae2eid, String AidDevolucao, ByteBuffer buffer, IntByReference bufferSize);
         
@@ -222,7 +222,7 @@ public final class ACBrPIXCD extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String ConsultarPixRecebidos(Date ADataInicio, Date ADataFim, String ATxId, String ACpfCnpj, Integer PagAtual, Integer ItensPorPagina) throws Exception {
+    public String ConsultarPixRecebidos(double ADataInicio, double ADataFim, String ATxId, String ACpfCnpj, Integer PagAtual, Integer ItensPorPagina) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         

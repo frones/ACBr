@@ -9,6 +9,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Date;
 
 /**
  *
@@ -132,5 +133,19 @@ public abstract class ACBrLibBase implements AutoCloseable {
         }
 
         return fromUTF8(buffer, bufferLen);
-    }    
+    } 
+    
+     /**
+     * Função para converter um objeto do tipo Date em um double compatível com o TDateTime do Pascal
+     * @param date
+     * @return double
+     */
+    public double convertDateToTDateTime(Date date)
+    {
+        // Obtém o timestamp Unix em milissegundos
+        long unixMillis = date.getTime();
+        // Converte o timestamp para TDateTime
+        double pascalDateTime = unixMillis / 86400000.0 + 25569.0;
+        return pascalDateTime;
+    }
 }

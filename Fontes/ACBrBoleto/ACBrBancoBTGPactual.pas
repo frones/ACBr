@@ -354,10 +354,12 @@ begin
             + '0';                                                       // zero fixo
 end;
 
-function TACBrBancoBTGPactual.DefineDataOcorrencia(
-  const ALinha: String): String;
+function TACBrBancoBTGPactual.DefineDataOcorrencia(const ALinha: String): String;
 begin
-  Result := copy(ALinha, 158, 2)+'/'+copy(ALinha, 160, 2)+'/'+copy(ALinha, 162, 4);
+  if (trim(copy(ALinha, 158, 2)) <> '') and (trim(copy(ALinha, 158, 2)) <> '00') then
+    Result := copy(ALinha, 158, 2)+'/'+copy(ALinha, 160, 2)+'/'+copy(ALinha, 162, 4)
+  else
+    Result := copy(ALinha, 138, 2)+'/'+copy(ALinha, 140, 2)+'/'+copy(ALinha, 142, 4);
 end;
 
 function TACBrBancoBTGPactual.DefinePosicaoNossoNumeroRetorno: Integer;

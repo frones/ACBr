@@ -992,6 +992,13 @@ object frmACBrNFSe: TfrmACBrNFSe
               Font.Style = [fsBold]
               ParentFont = False
             end
+            object Label50: TLabel
+              Left = 149
+              Top = 328
+              Width = 107
+              Height = 13
+              Caption = 'Cidades com Provedor'
+            end
             object edtEmitCNPJ: TEdit
               Left = 8
               Top = 20
@@ -1095,7 +1102,7 @@ object frmACBrNFSe: TfrmACBrNFSe
             object edtTotalCidades: TEdit
               Left = 167
               Top = 304
-              Width = 89
+              Width = 93
               Height = 21
               TabStop = False
               Font.Charset = DEFAULT_CHARSET
@@ -1313,6 +1320,21 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 123
               Height = 21
               TabOrder = 15
+            end
+            object edtCidComProv: TEdit
+              Left = 149
+              Top = 344
+              Width = 111
+              Height = 21
+              TabStop = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clRed
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
+              ReadOnly = True
+              TabOrder = 16
             end
           end
           object TabSheet13: TTabSheet

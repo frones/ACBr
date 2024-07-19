@@ -272,6 +272,8 @@ type
     btnCNPJ: TButton;
     btnLeituraX509: TButton;
     btnInformacoes: TButton;
+    Label50: TLabel;
+    edtCidComProv: TEdit;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -1584,10 +1586,13 @@ var
   Cidades: TStringList;
   I: Integer;
   sNome, sCod, sUF: String;
+  CidComProv: Integer;
 begin
   IniCidades := TMemIniFile.Create('');
   try
+    CidComProv := 0;
     Cidades := TStringList.Create;
+
     try
       IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
       IniCidades.ReadSections(Cidades);
@@ -1603,6 +1608,9 @@ begin
           sUF   := IniCidades.ReadString(sCod, 'UF', '');
 
           cbCidades.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+
+          if IniCidades.ReadString(sCod, 'Provedor', '') <> '' then
+            Inc(CidComProv);
         end;
       end;
 
@@ -1610,6 +1618,7 @@ begin
       cbCidades.Sorted := false;
       cbCidades.Sorted := true;
       edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
+      edtCidComProv.Text := IntToStr(CidComProv);
     finally
       FreeAndNil(Cidades);
     end;

@@ -211,6 +211,7 @@ end;
 
 procedure TACBrNFSeXDANFSeFR.ImprimirDANFSe(NFSe: TNFSe);
 begin
+  DANFSeXClassOwner.FIndexImpressaoIndividual := -1;
   if PrepareReport(NFSe) then
   begin
     if MostraPreview then

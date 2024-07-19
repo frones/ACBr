@@ -257,35 +257,44 @@ var
   LArquivoPDF  : string;
   OldShowDialog: Boolean;
 begin
-  if PrepareReport(NFSe) then
+
+
+  for I := 1 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count do
   begin
-    frxPDFExport.Author        := Sistema;
-    frxPDFExport.Creator       := Sistema;
-    frxPDFExport.Subject       := TITULO_PDF;
-    frxPDFExport.EmbeddedFonts := false;
-    frxPDFExport.Background    := IncorporarBackgroundPdf;
-    frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    DANFSeXClassOwner.FIndexImpressaoIndividual := I;
+    if PrepareReport(NFSe) then
+    begin
+      frxPDFExport.Author        := Sistema;
+      frxPDFExport.Creator       := Sistema;
+      frxPDFExport.Subject       := TITULO_PDF;
+      frxPDFExport.EmbeddedFonts := false;
+      frxPDFExport.Background    := IncorporarBackgroundPdf;
+      frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
 
-    OldShowDialog := frxPDFExport.ShowDialog;
-    try
-      frxPDFExport.ShowDialog := false;
-      for I                   := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
-      begin
+      OldShowDialog := frxPDFExport.ShowDialog;
+      try
+        frxPDFExport.ShowDialog := false;
+          LArquivoPDF := Trim(DANFSeXClassOwner.NomeDocumento);
 
-        LArquivoPDF := Trim(DANFSeXClassOwner.NomeDocumento);
-        if EstaVazio(LArquivoPDF) then
-          LArquivoPDF         := TACBrNFSeX(ACBrNFSe).NumID[ TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[ I ].NFSe ] + '-nfse.pdf';
-        frxPDFExport.FileName := PathWithDelim(DANFSeXClassOwner.PathPDF) + LArquivoPDF;
+          if EstaVazio(LArquivoPDF) then
+            if Assigned(NFSe) then
+              LArquivoPDF         := TACBrNFSeX(ACBrNFSe).NumID[ NFSe ] + '-nfse.pdf'
+            else
+              LArquivoPDF         := TACBrNFSeX(ACBrNFSe).NumID[ TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[ I -1].NFSe ] + '-nfse.pdf';
 
-        if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
-          ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+          frxPDFExport.FileName := PathWithDelim(DANFSeXClassOwner.PathPDF) + LArquivoPDF;
 
-        frxReport.Export(frxPDFExport);
+          if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+            ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
-        FPArquivoPDF := frxPDFExport.FileName;
+          frxReport.Export(frxPDFExport);
+
+          FPArquivoPDF := frxPDFExport.FileName;
+          if Assigned(NFSe) then
+            Break;
+      finally
+        frxPDFExport.ShowDialog := OldShowDialog;
       end;
-    finally
-      frxPDFExport.ShowDialog := OldShowDialog;
     end;
   end;
 end;
@@ -373,13 +382,17 @@ begin
   begin
     if Assigned(ACBrNFSe) then
     begin
-      for I := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
+      if DANFSeXClassOwner.FIndexImpressaoIndividual > 0  then
       begin
-        CarregaDados(TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[ I ].NFSe);
-        if (I > 0) then
-          Result := frxReport.PrepareReport(false)
-        else
-          Result := frxReport.PrepareReport;
+        CarregaDados(TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[ DANFSeXClassOwner.FIndexImpressaoIndividual -1 ].NFSe);
+        Result := frxReport.PrepareReport( DANFSeXClassOwner.FIndexImpressaoIndividual > 0 );
+      end else
+      begin
+        for I := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
+        begin
+          CarregaDados(TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[ I ].NFSe);
+          Result := frxReport.PrepareReport( not (i > 0) );
+        end;
       end;
     end
     else

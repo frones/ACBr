@@ -86,7 +86,7 @@ type
     procedure SetTipoDANFE(AValue: TpcnTipoImpressao); virtual;
 
   public
-    FIndexImpressaoIndividual : Integer;
+
     constructor Create(AOwner: TComponent); override;
 
     procedure ImprimirDANFE(ANFe: TNFe = nil); virtual;

@@ -179,6 +179,7 @@ type
     function AplicarAtributoTexto(const ATexto, ABloco, ATag: String): String;
 
   public
+    FIndexImpressaoIndividual : Integer;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 

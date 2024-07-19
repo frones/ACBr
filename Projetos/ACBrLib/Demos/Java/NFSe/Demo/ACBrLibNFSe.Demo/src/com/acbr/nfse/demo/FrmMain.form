@@ -13,7 +13,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="ACBrLibNFSe Demo"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Cursor Padr&#xe3;o"/>
+      <Color id="Default Cursor"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2109,7 +2109,7 @@
                               <Component id="btnImprimirDANFSe" max="32767" attributes="0"/>
                               <Component id="btnLimparListaNFSe" max="32767" attributes="0"/>
                               <Component id="btnGerarLotaRPS" max="32767" attributes="0"/>
-                              <Component id="btnCarregarXMLNFse" pref="180" max="32767" attributes="0"/>
+                              <Component id="btnCarregarXMLNFse" max="32767" attributes="0"/>
                               <Component id="btnGravarXMLNFSe" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -2322,7 +2322,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnConsultarSituacaoLote" pref="177" max="32767" attributes="0"/>
+                              <Component id="btnConsultarSituacaoLote" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSePorNumero" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSeGenerico" max="32767" attributes="0"/>
                               <Component id="btnConsultarLoteRPS" max="32767" attributes="0"/>
@@ -2453,7 +2453,7 @@
                               <Component id="btnConsultarNFSeServicoPrestadoPorNumero" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSeServicoPrestadoPorTomador" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSeServicoPrestadoPorPeriodo" max="32767" attributes="0"/>
-                              <Component id="btnConsultarNFSeServicoPrestadoPorIntermediario" pref="297" max="32767" attributes="0"/>
+                              <Component id="btnConsultarNFSeServicoPrestadoPorIntermediario" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="199" max="32767" attributes="0"/>
                       </Group>
@@ -2529,7 +2529,7 @@
                               <Component id="btnConsultarNFSeServicoTomadoPorPrestador" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSeServicoTomadoPorTomador" max="32767" attributes="0"/>
                               <Component id="btnConsultarNFSeServicoTomadoPorPeriodo" max="32767" attributes="0"/>
-                              <Component id="btnConsultarNFSeServicoTomadoPorIntermediario" pref="296" max="32767" attributes="0"/>
+                              <Component id="btnConsultarNFSeServicoTomadoPorIntermediario" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="201" max="32767" attributes="0"/>
                       </Group>

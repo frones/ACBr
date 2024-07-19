@@ -13,7 +13,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="ACBrLibNFSe Demo"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Cursor Padr&#xe3;o"/>
+      <Color id="Default Cursor"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -169,7 +169,7 @@
                                       <Component id="btnSelectLog" min="-2" pref="28" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="cmbLayoutNFSe" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                                  <Component id="btnInformacoesProvedor" alignment="0" min="-2" pref="190" max="-2" attributes="0"/>
+                                  <Component id="btnInformacoesProvedor" alignment="0" min="-2" pref="198" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="45" max="32767" attributes="0"/>
                           </Group>
@@ -216,9 +216,9 @@
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cmbLayoutNFSe" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               <Component id="btnInformacoesProvedor" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="219" max="32767" attributes="0"/>
+                              <EmptySpace pref="223" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -354,7 +354,11 @@
                     <Component class="javax.swing.JButton" name="btnInformacoesProvedor">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Informa&#xe7;&#xf5;es sobre o Provedor"/>
+                        <Property name="name" type="java.lang.String" value="btnInformacoesProvedor" noResource="true"/>
                       </Properties>
+                      <AccessibilityProperties>
+                        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="btnInformacoesProvedor"/>
+                      </AccessibilityProperties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInformacoesProvedorActionPerformed"/>
                       </Events>

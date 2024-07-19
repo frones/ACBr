@@ -9,9 +9,6 @@ import com.acbr.ACBrSessao;
 import com.acbr.nfse.ACBrNFSe;
 import com.acbr.nfse.CodigoMunicipio;
 import com.acbr.nfse.LayoutNFSe;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.String;
-import static java.lang.String.format;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +17,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -329,6 +325,7 @@ public class FrmMain extends javax.swing.JFrame {
         cmbLayoutNFSe.setToolTipText("");
 
         btnInformacoesProvedor.setText("Informações sobre o Provedor");
+        btnInformacoesProvedor.setName("btnInformacoesProvedor"); // NOI18N
         btnInformacoesProvedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInformacoesProvedorActionPerformed(evt);
@@ -364,7 +361,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSelectLog, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cmbLayoutNFSe, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInformacoesProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInformacoesProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         ckbAtualizarXMLLayout.setVerticalGroup(
@@ -406,10 +403,12 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbLayoutNFSe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(26, 26, 26)
                 .addComponent(btnInformacoesProvedor)
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
+
+        btnInformacoesProvedor.getAccessibleContext().setAccessibleName("btnInformacoesProvedor");
 
         jTabbedPane3.addTab("Geral", ckbAtualizarXML);
 
@@ -1479,7 +1478,7 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnImprimirDANFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimparListaNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGerarLotaRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCarregarXMLNFse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCarregarXMLNFse, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                     .addComponent(btnGravarXMLNFSe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1598,7 +1597,7 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnConsultarSituacaoLote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultarSituacaoLote, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSePorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSeGenerico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarLoteRPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1672,7 +1671,7 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnConsultarNFSeServicoPrestadoPorNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSeServicoPrestadoPorTomador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSeServicoPrestadoPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoPrestadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnConsultarNFSeServicoPrestadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
                 .addContainerGap(199, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
@@ -1737,7 +1736,7 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnConsultarNFSeServicoTomadoPorPrestador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSeServicoTomadoPorTomador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnConsultarNFSeServicoTomadoPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarNFSeServicoTomadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnConsultarNFSeServicoTomadoPorIntermediario, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
                 .addContainerGap(201, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
@@ -2429,26 +2428,25 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarLoteRPSActionPerformed
 
     private void btnConsultarNFSePorPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSePorPeriodoActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try
         {
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             String numeroLote = JOptionPane.showInputDialog("Informe o Numero do Lote");
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String ret = acbrNFSe.consultarNFSePorPeriodo(Inicial, Final, Integer.parseInt(pagina), numeroLote, Integer.parseInt(tipoPeriodo));
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSePorPeriodo(TDateTimeInicial, TDateTimeFinal, pagina, numeroLote, tipoPeriodo);
             rtbRespostas.append(ret);
         }
-                catch (Exception ex)
-            {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnConsultarNFSePorPeriodoActionPerformed
 
     private void btnConsultarNFSePorRPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSePorRPSActionPerformed
@@ -2486,22 +2484,20 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSePorFaixaActionPerformed
 
     private void btnConsultarNFSeServicoPrestadoPorNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoPrestadoPorNumeroActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try
         {
             String numero = JOptionPane.showInputDialog("Informe o Número");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página")); 
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
             
-            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorNumero(numero, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorNumero(numero, pagina, TDateTimeInicial, TDateTimeFinal , tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2511,23 +2507,21 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoPrestadoPorNumeroActionPerformed
 
     private void btnConsultarNFSeServicoPrestadoPorTomadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoPrestadoPorTomadorActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try 
         {
             String cnpj = JOptionPane.showInputDialog("Informe o CNPJ");
             String inscMunicipal = JOptionPane.showInputDialog("Informe a Inscrição Municipal");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
             
-            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorTomador(cnpj, inscMunicipal, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorTomador(cnpj, inscMunicipal, pagina, TDateTimeInicial, TDateTimeFinal, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2537,20 +2531,18 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoPrestadoPorTomadorActionPerformed
 
     private void btnConsultarNFSeServicoPrestadoPorPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoPrestadoPorPeriodoActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try 
         {
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
             
-            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorPeriodo(Inicial, Final, Integer.parseInt(pagina), Integer.parseInt(tipoPeriodo));
+            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorPeriodo(TDateTimeInicial, TDateTimeFinal, pagina, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2560,23 +2552,22 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoPrestadoPorPeriodoActionPerformed
 
     private void btnConsultarNFSeServicoPrestadoPorIntermediarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoPrestadoPorIntermediarioActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try
-        {
+        { 
             String cnpj = JOptionPane.showInputDialog("Informe o CNPJ");
             String inscMunicipal = JOptionPane.showInputDialog("Informe a Inscrição Municipal");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
             
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorIntermediario(cnpj, inscMunicipal, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSeServicoPrestadoPorIntermediario(cnpj, inscMunicipal, pagina, TDateTimeInicial, TDateTimeFinal, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2586,22 +2577,21 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoPrestadoPorIntermediarioActionPerformed
 
     private void btnConsultarNFSeServicoTomadoPorNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoTomadoPorNumeroActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try 
         {
             String numero = JOptionPane.showInputDialog("Informe o Número");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
-                    
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
             
-            String ret = acbrNFSe.consultarNFSeServicoTomadoPorNumero(numero, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
+            
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSeServicoTomadoPorNumero(numero, pagina, TDateTimeInicial, TDateTimeFinal, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2611,23 +2601,22 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoTomadoPorNumeroActionPerformed
 
     private void btnConsultarNFSeServicoTomadoPorPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoTomadoPorPrestadorActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try
         {
             String cnpj = JOptionPane.showInputDialog("Informe o CNPJ");
             String inscMunicipal = JOptionPane.showInputDialog("Informe a Inscrição Municipal");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
             
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String ret = acbrNFSe.consultarNFSeServicoTomadoPorPrestador(cnpj, inscMunicipal, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSeServicoTomadoPorPrestador(cnpj, inscMunicipal, pagina, TDateTimeInicial, TDateTimeFinal, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2637,23 +2626,22 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoTomadoPorPrestadorActionPerformed
 
     private void btnConsultarNFSeServicoTomadoPorTomadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoTomadoPorTomadorActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try
         {
             String cnpj = JOptionPane.showInputDialog("Informe o CNPJ");
             String inscMunicipal = JOptionPane.showInputDialog("Informe a Inscrição Municipal");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
             
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String ret = acbrNFSe.consultarNFSeServicoTomadoPorTomador(cnpj, inscMunicipal, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            double TDateTimeInicial = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSeServicoTomadoPorTomador(cnpj, inscMunicipal, pagina, TDateTimeInicial, TDateTimeFinal, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2663,20 +2651,19 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoTomadoPorTomadorActionPerformed
 
     private void btnConsultarNFSeServicoTomadoPorPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoTomadoPorPeriodoActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try 
         {
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
             
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String ret = acbrNFSe.consultarNFSeServicoTomadoPorPeriodo(Inicial, Final, Integer.parseInt(pagina), Integer.parseInt(tipoPeriodo));
+            double TDateTimeInicio = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSeServicoTomadoPorPeriodo(TDateTimeInicio, TDateTimeFinal, pagina, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2686,23 +2673,22 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarNFSeServicoTomadoPorPeriodoActionPerformed
 
     private void btnConsultarNFSeServicoTomadoPorIntermediarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarNFSeServicoTomadoPorIntermediarioActionPerformed
-        
-        String dataInicial = JOptionPane.showInputDialog("Informe Data Inicial");
-        String dataFinal = JOptionPane.showInputDialog("Informe a Data Final");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        
         try
         {
             String cnpj = JOptionPane.showInputDialog("Informe o CNPJ");
             String inscMunicipal = JOptionPane.showInputDialog("Informe a Inscrição Municipal");
-            String pagina = JOptionPane.showInputDialog("Informe a Página");
+            int pagina = Integer.parseInt(JOptionPane.showInputDialog("Informe a Página"));
             
-            Date Inicial = formato.parse(dataInicial);
-            Date Final = formato.parse(dataFinal);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicial = sdf.parse(JOptionPane.showInputDialog("Informe Data Inicial"));
+            Date dataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a Data Final"));
             
-            String tipoPeriodo = JOptionPane.showInputDialog("Informe o Tipo do Período");
+            int tipoPeriodo = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Período"));
             
-            String ret = acbrNFSe.consultarNFSeServicoTomadoPorIntermediario(cnpj, inscMunicipal, Integer.parseInt(pagina), Inicial, Final, Integer.parseInt(tipoPeriodo));
+            double TDateTimeInicio = acbrNFSe.convertDateToTDateTime(dataInicial);
+            double TDateTimeFinal = acbrNFSe.convertDateToTDateTime(dataFinal);
+            
+            String ret = acbrNFSe.consultarNFSeServicoTomadoPorIntermediario(cnpj, inscMunicipal, pagina, TDateTimeInicio, TDateTimeFinal, tipoPeriodo);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2826,18 +2812,19 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnObterDANFSeActionPerformed
 
     private void btnConsultarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarParametrosActionPerformed
-        
-        String competencia = JOptionPane.showInputDialog("Informe a Competencia");
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-       
         try
         {
-            String tipoParametroMunicipio = JOptionPane.showInputDialog("Informe o Parametro do Municipio");
+            int tipoParametroMunicipio = Integer.parseInt(JOptionPane.showInputDialog("Informe o Parametro do Municipio"));
             String codigoServico = JOptionPane.showInputDialog("Informe o Código de Serviço");
-            Date Competencia = formato.parse(competencia);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date competencia = sdf.parse(JOptionPane.showInputDialog("Informe a Competencia"));
+       
             String numeroBeneficio = JOptionPane.showInputDialog("Informe o Numero do Beneficio");
             
-            String ret = acbrNFSe.consultarParametros(Integer.parseInt(tipoParametroMunicipio), codigoServico, Competencia, numeroBeneficio);
+            double TDateTimeCompetencia = acbrNFSe.convertDateToTDateTime(competencia);
+            
+            String ret = acbrNFSe.consultarParametros(tipoParametroMunicipio, codigoServico, TDateTimeCompetencia, numeroBeneficio);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -2847,13 +2834,13 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarParametrosActionPerformed
 
     private void btnSalvarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarPDFActionPerformed
-        try
+        try 
         {
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFSe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-
+            
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
             acbrNFSe.limparLista();
             acbrNFSe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
@@ -2862,7 +2849,7 @@ public class FrmMain extends javax.swing.JFrame {
         }
         catch (Exception ex)
         {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex); 
         }
     }//GEN-LAST:event_btnSalvarPDFActionPerformed
 
@@ -2888,13 +2875,10 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarLinkNFSeActionPerformed
 
     private void btnInformacoesProvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformacoesProvedorActionPerformed
-        try
-        {                    
-            String ret = acbrNFSe.obterInformacoesProvedor();
-            rtbRespostas.append(ret);
-        }
-        catch (Exception ex)
-        {
+        try {                       
+            String infoProvedor = acbrNFSe.obterInformacoesProvedor();
+            rtbRespostas.append(infoProvedor);
+        } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnInformacoesProvedorActionPerformed

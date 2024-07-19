@@ -10,9 +10,6 @@ import com.sun.jna.ptr.IntByReference;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public final class ACBrNFSe extends ACBrLibBase {
 
@@ -109,7 +106,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_ConsultarNFSePorNumero(String aNumero, Integer aPagina, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSePorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, String aNumeroLote, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSePorPeriodo(double aDataInicial, double aDataFinal, Integer aPagina, String aNumeroLote, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
         int NFSE_ConsultarNFSePorFaixa(String aNumeroInicial, String aNumeroFinal, Integer aPagina, ByteBuffer buffer, IntByReference bufferSize);
         
@@ -125,23 +122,23 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_SalvarPDF(ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoPrestadoPorNumero(String aNumero, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoPrestadoPorNumero(String aNumero, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(double aDataInicial, double aDataFinal, Integer aPagina, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoPrestadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoPrestadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoTomadoPorNumero(String aNumero, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoTomadoPorNumero(String aNumero, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoTomadoPorPrestador(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoTomadoPorPrestador(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoTomadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoTomadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoTomadoPorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoTomadoPorPeriodo(double aDataInicial, double aDataFinal, Integer aPagina, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarNFSeServicoTomadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarNFSeServicoTomadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo, ByteBuffer buffer, IntByReference bufferSize);
         
         int NFSE_EnviarEvento(String aInfEvento, ByteBuffer buffer, IntByReference bufferSize);
         
@@ -155,7 +152,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         
         int NFSE_ObterDANFSE(String aChaveNFSe, ByteBuffer buffer, IntByReference bufferSize);
         
-        int NFSE_ConsultarParametros(Integer aTipoParametroMunicipio, String aCodigoServico, Date aCompetencia, String aNumeroBeneficio, ByteBuffer buffer, IntByReference bufferSize);
+        int NFSE_ConsultarParametros(Integer aTipoParametroMunicipio, String aCodigoServico, double aCompetencia, String aNumeroBeneficio, ByteBuffer buffer, IntByReference bufferSize);
         
         int NFSE_ObterInformacoesProvedor(ByteBuffer buffer, IntByReference buffSize);
         
@@ -400,7 +397,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultarNFSePorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, String aNumeroLote, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSePorPeriodo(double aDataInicial, double aDataFinal, Integer aPagina, String aNumeroLote, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
                 
@@ -472,7 +469,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultarNFSeServicoPrestadoPorNumero(String aNumero, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoPrestadoPorNumero(String aNumero, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -481,7 +478,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultarNFSeServicoPrestadoPorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoPrestadoPorPeriodo(double aDataInicial, double aDataFinal, Integer aPagina, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -490,7 +487,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultarNFSeServicoPrestadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoPrestadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -499,7 +496,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
         
-    public String consultarNFSeServicoPrestadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoPrestadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -508,7 +505,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
         
-    public String consultarNFSeServicoTomadoPorNumero(String aNumero, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoTomadoPorNumero(String aNumero, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -517,7 +514,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
         
-    public String consultarNFSeServicoTomadoPorPrestador(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoTomadoPorPrestador(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -526,7 +523,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
         
-    public String consultarNFSeServicoTomadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoTomadoPorTomador(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -535,7 +532,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
         
-    public String consultarNFSeServicoTomadoPorPeriodo(Date aDataInicial, Date aDataFinal, Integer aPagina, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoTomadoPorPeriodo(double aDataInicial, double aDataFinal, Integer aPagina, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -544,7 +541,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
         
-    public String consultarNFSeServicoTomadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, Date aDataInicial, Date aDataFinal, Integer aTipoPeriodo) throws Exception {
+    public String consultarNFSeServicoTomadoPorIntermediario(String aCNPJ, String aInscMun, Integer aPagina, double aDataInicial, double aDataFinal, Integer aTipoPeriodo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
@@ -607,7 +604,7 @@ public final class ACBrNFSe extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultarParametros(Integer aTipoParametroMunicipio, String aCodigoServico, Date aCompetencia, String aNumeroBeneficio) throws Exception {
+    public String consultarParametros(Integer aTipoParametroMunicipio, String aCodigoServico, double aCompetencia, String aNumeroBeneficio) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         

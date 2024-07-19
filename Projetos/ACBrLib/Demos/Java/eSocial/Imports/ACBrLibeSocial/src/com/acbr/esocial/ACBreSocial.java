@@ -90,13 +90,13 @@ public final class ACBreSocial extends ACBrLibBase {
         
         int eSocial_SetVersaoDF(String sVersao);
         
-        int eSocial_ConsultaIdentificadoresEventosEmpregador(String aIdEmpregador, Integer aTipoEvento, Date aPeriodoApuracao, ByteBuffer buffer, IntByReference bufferSize);
+        int eSocial_ConsultaIdentificadoresEventosEmpregador(String aIdEmpregador, Integer aTipoEvento, double aPeriodoApuracao, ByteBuffer buffer, IntByReference bufferSize);
     
-        int eSocial_ConsultaIdentificadoresEventosTabela(String aIdEmpregador, Integer aTipoEvento, String aChave, Date aDataInicial, Date aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
+        int eSocial_ConsultaIdentificadoresEventosTabela(String aIdEmpregador, Integer aTipoEvento, String aChave, double aDataInicial, double aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
         
-        int eSocial_ConsultaIdentificadoresEventosTrabalhador(String aIdEmpregador, String aCPFTrabalhador, Date aDataInicial, Date aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
+        int eSocial_ConsultaIdentificadoresEventosTrabalhador(String aIdEmpregador, String aCPFTrabalhador, double aDataInicial, double aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
     
-        int eSocial_DownloadEventos(String aIdEmpregador, String aCPFTrabalhador, Date aDataInicial, Date aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
+        int eSocial_DownloadEventos(String aIdEmpregador, String aCPFTrabalhador, double aDataInicial, double aDataFinal, ByteBuffer buffer, IntByReference bufferSize);
         
         int eSocial_ObterCertificados(ByteBuffer buffer, IntByReference bufferSize);
     }
@@ -259,7 +259,7 @@ public final class ACBreSocial extends ACBrLibBase {
         checkResult(ret);
     }
     
-    public String consultaIdentificadoresEventosEmpregador(String aIdEmpregador, Integer aTipoEvento, Date aPeriodoApuracao) throws Exception{
+    public String consultaIdentificadoresEventosEmpregador(String aIdEmpregador, Integer aTipoEvento, double aPeriodoApuracao) throws Exception{
         
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -270,7 +270,7 @@ public final class ACBreSocial extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultaIdentificadoresEventosTabela(String aIdEmpregador, Integer aTipoEvento, String aChave, Date aDataInicial, Date aDataFinal) throws Exception {
+    public String consultaIdentificadoresEventosTabela(String aIdEmpregador, Integer aTipoEvento, String aChave, double aDataInicial, double aDataFinal) throws Exception {
         
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -281,7 +281,7 @@ public final class ACBreSocial extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String consultaIdentificadoresEventosTrabalhador(String aIdEmpregador, String aCPFTrabalhador, Date aDataInicial, Date aDataFinal)throws Exception {
+    public String consultaIdentificadoresEventosTrabalhador(String aIdEmpregador, String aCPFTrabalhador, double aDataInicial, double aDataFinal)throws Exception {
         
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -292,7 +292,7 @@ public final class ACBreSocial extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
-    public String downloadEventos(String aIdEmpregador, String aCPFTrabalhador, Date aDataInicial, Date aDataFinal) throws Exception {
+    public String downloadEventos(String aIdEmpregador, String aCPFTrabalhador, double aDataInicial, double aDataFinal) throws Exception {
         
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);

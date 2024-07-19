@@ -1300,14 +1300,14 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnConsultaIdentificadoresEventosEmpregadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaIdentificadoresEventosEmpregadorActionPerformed
         try 
         {
-            String aTipoEvento = JOptionPane.showInputDialog("Informe o Tipo do Evento");
-            int tipoEvento = Integer.parseInt(aTipoEvento);
+            int tipoEvento = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Evento"));
             
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataApuracao = new Date(System.currentTimeMillis());
-            System.out.println(formatter.format(dataApuracao));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date dPeriodoApuracao = sdf.parse(JOptionPane.showInputDialog("Informe o período de apuração"));
             
-            String ret = acbreSocial.consultaIdentificadoresEventosEmpregador(txtEmpregador.getText(), tipoEvento, dataApuracao);
+            double TDateTimePeriodoApuracao = acbreSocial.convertDateToTDateTime(dPeriodoApuracao);
+            
+            String ret = acbreSocial.consultaIdentificadoresEventosEmpregador(txtEmpregador.getText(), tipoEvento, TDateTimePeriodoApuracao);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -1319,20 +1319,17 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnConsultaIdentificadoresEventosTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaIdentificadoresEventosTabelaActionPerformed
         try
         {
-            String aTipoEvento = JOptionPane.showInputDialog("Informe o Tipo do Evento");
-            int tipoEvento = Integer.parseInt(aTipoEvento);
-            
+            int aTipoEvento = Integer.parseInt(JOptionPane.showInputDialog("Informe o Tipo do Evento"));
             String chave = JOptionPane.showInputDialog("Informe a Chave");
             
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataInicial = new Date(System.currentTimeMillis());
-            System.out.println(formatter.format(dataInicial));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date dDataInicial = sdf.parse(JOptionPane.showInputDialog("Informe a data inicial"));
+            Date dDataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a data final"));
             
-            SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataFinal = new Date(System.currentTimeMillis());
-            System.out.println(formatter1.format(dataFinal));
+            double TDateTimeInicio = acbreSocial.convertDateToTDateTime(dDataInicial);
+            double TDateTimeFinal = acbreSocial.convertDateToTDateTime(dDataFinal);
             
-            String ret = acbreSocial.consultaIdentificadoresEventosTabela(txtEmpregador.getText(), tipoEvento, chave, dataInicial, dataFinal);
+            String ret = acbreSocial.consultaIdentificadoresEventosTabela(txtEmpregador.getText(), aTipoEvento, chave, TDateTimeInicio, TDateTimeFinal);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -1346,15 +1343,14 @@ public class FrmMain extends javax.swing.JFrame {
         {
             String cpfTrabalhador = JOptionPane.showInputDialog("Informe o CPF do trabalhador");
             
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataInicial = new Date(System.currentTimeMillis());
-            System.out.println(formatter.format(dataInicial));
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date dDataInicial = sdf.parse(JOptionPane.showInputDialog("Informe a data inicial"));
+            Date dDataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a data final"));
             
-            SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataFinal = new Date(System.currentTimeMillis());
-            System.out.println(formatter1.format(dataFinal));
+            double TDateTimeInicio = acbreSocial.convertDateToTDateTime(dDataInicial);
+            double TDateTimeFinal = acbreSocial.convertDateToTDateTime(dDataFinal);
             
-            String ret = acbreSocial.consultaIdentificadoresEventosTrabalhador(txtEmpregador.getText(), cpfTrabalhador, dataInicial, dataFinal);
+            String ret = acbreSocial.consultaIdentificadoresEventosTrabalhador(txtEmpregador.getText(), cpfTrabalhador, TDateTimeInicio, TDateTimeFinal);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)
@@ -1367,16 +1363,15 @@ public class FrmMain extends javax.swing.JFrame {
         try 
         {
             String cpfTrabalhador = JOptionPane.showInputDialog("Informe o CPF do trabalhador");
+           
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date dDataInicial = sdf.parse(JOptionPane.showInputDialog("Informe a data inicial"));
+            Date dDataFinal = sdf.parse(JOptionPane.showInputDialog("Informe a data final"));
             
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataInicial = new Date(System.currentTimeMillis());
-            System.out.println(formatter.format(dataInicial));
+            double TDateTimeInicial = acbreSocial.convertDateToTDateTime(dDataInicial);
+            double TDateTimeFinal = acbreSocial.convertDateToTDateTime(dDataFinal);
             
-            SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date dataFinal = new Date(System.currentTimeMillis());
-            System.out.println(formatter1.format(dataFinal));
-            
-            String ret = acbreSocial.downloadEventos(txtEmpregador.getText(), cpfTrabalhador, dataInicial, dataFinal);
+            String ret = acbreSocial.downloadEventos(txtEmpregador.getText(), cpfTrabalhador, TDateTimeInicial, TDateTimeFinal);
             rtbRespostas.append(ret);
         }
         catch (Exception ex)

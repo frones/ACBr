@@ -74,6 +74,7 @@ type
     function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
     function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
     function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string; override;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
   end;
 
 implementation
@@ -214,6 +215,13 @@ begin
   Result := StrToEnumerado(ok, s,
                              ['0', '1', '2', ''],
                              [stNormal, stRetencao, stSubstituicao, stNenhum]);
+end;
+
+function TACBrNFSeProviderCenti202.StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['S', 'N', ''],
+                           [snSim, snNao, snNao]);
 end;
 
 procedure TACBrNFSeProviderCenti202.TratarRetornoEmitir(

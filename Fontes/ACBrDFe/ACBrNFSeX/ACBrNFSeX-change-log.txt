@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 19/07/2024
+-- Centi.LerXml/Centi.Provider --
+[*] Ajustes na leitura do XML da nota e acrescentado um override da função
+    StrToSimNao.
+   Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] A cidade de Triunfo/ES mudou as URLs, o provedor continua o 
     mesmo: Pronim.

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/07/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Triunfo/ES mudou as URLs, o provedor continua o 
+    mesmo: Pronim.
+   Por: C4 Dev
+[+] Incluída a cidade de Itaguara/MG, o provedor é Betha versão 2.02
+   Por: João Antônio
+
 18/07/2024
 -- Diversos --
 [*] Alterações visando eliminar regras de negócios do gerador de relatório

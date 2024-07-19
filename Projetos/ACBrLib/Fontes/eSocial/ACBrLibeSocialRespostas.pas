@@ -101,6 +101,7 @@ type
     FDhRecepcao: TDateTime;
     FVersaoAplic: String;
     FProtocolo: String;
+    FPathNome: String;
     FItemOcorrencia: TObjectList;
 
   public
@@ -117,6 +118,7 @@ type
     property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
     property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
     property Protocolo: String read FProtocolo write FProtocolo;
+    property PathNome: String read FPathNome write FPathNome;
     property ItemOcorrencia: TObjectList read FItemOcorrencia;
 
   end;
@@ -250,6 +252,7 @@ type
   private
     FQtdeTotal : Integer;
     FDhUltimoEvento : TDateTime;
+    FPathNome: String;
     FItemIdent: TObjectList;
 
   public
@@ -261,6 +264,7 @@ type
   published
     property QtdeTotal: Integer read FQtdeTotal write FQtdeTotal;
     property DhUltimoEvento: TDateTime read FDhUltimoEvento write FDhUltimoEvento;
+    property PathNome: String read FPathNome write FPathNome;
     property ItemIdent: TObjectList read FItemIdent;
 
   end;
@@ -276,6 +280,7 @@ type
     FDhRecepcao: TDateTime;
     FVersaoAplic: String;
     FProtocolo: String;
+    FPathNome: String;
     FItemConsulta: TObjectList;
     FItemOcorrencia: TObjectList;
 
@@ -293,6 +298,7 @@ type
     property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
     property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
     property Protocolo: String read FProtocolo write FProtocolo;
+    property PathNome: String read FPathNome write FPathNome;
     property ItemConsulta: TObjectList read FItemConsulta;
     property ItemOcorrencia: TObjectList read FItemOcorrencia;
 
@@ -323,6 +329,7 @@ type
 
   TConsultaEventos = class(TPadraoeSocialResposta)
   private
+    FPathNome: String;
     FItem: TObjectList;
 
   public
@@ -332,6 +339,7 @@ type
     destructor Destroy; override;
 
   published
+    property PathNome: String read FPathNome write FPathNome;
     property Item: TObjectList read FItem;
 
   end;
@@ -355,6 +363,8 @@ var
   i: Integer;
   Item : TConsultaIdentEvento;
 begin
+  PathNome := ACBreSocial.WebServices.DownloadEventos.PathNome;
+
   for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.Status.Ocorrencias.Count - 1 do
   begin
     Item := TConsultaIdentEvento.Create(i+1, Tipo, Formato);
@@ -474,6 +484,7 @@ begin
     DhRecepcao   := dadosRecLote.dhRecepcao;
     VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
     Protocolo    := dadosRecLote.Protocolo;
+    PathNome     := ACBreSocial.WebServices.ConsultaLote.PathNome;
 
     if Status.cdResposta in [201, 202] then
     begin
@@ -539,6 +550,7 @@ begin
     Mensagem:= Status.descResposta;
     QtdeTotal:= RetIdentEvts.qtdeTotEvtsConsulta;
     DhUltimoEvento:= RetIdentEvts.dhUltimoEvtRetornado;
+    PathNome := ACBreSocial.WebServices.ConsultaIdentEventos.PathNome;
 
     for i := 0 to RetIdentEvts.Count - 1 do
     begin
@@ -726,6 +738,8 @@ begin
     DhRecepcao   := dadosRecLote.dhRecepcao;
     VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
     Protocolo    := dadosRecLote.Protocolo;
+    PathNome     := ACBreSocial.WebServices.EnvioLote.PathNome;
+  end;
 
   end;
   for i := 0 to ACBreSocial.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do

@@ -357,42 +357,21 @@ const
                       '</procEventoCTe>' +
                     '</retConsSitCTe>';
 
-  sxml_RetEnvEvento =  '<retEnvEvento xmlns="http://www.portalfiscal.inf.br/cte" versao="1.00">' +
-                         '<idLote>8</idLote>' +
-                         '<tpAmb>1</tpAmb>' +
-                         '<verAplic>AN_1.0.0</verAplic>' +
-                         '<cOrgao>91</cOrgao>' +
-                         '<cStat>128</cStat>' +
-                         '<xMotivo>Lote de evento processado</xMotivo>' +
-                         '<retEvento versao="1.00">' +
-                           '<infEvento Id="ID891120000074187">' +
-                             '<tpAmb>1</tpAmb>' +
-                             '<verAplic>AN_1.0.0</verAplic>' +
-                             '<cOrgao>91</cOrgao>' +
-                             '<cStat>135</cStat>' +
-                             '<xMotivo>Evento registrado e vinculado a NF-e</xMotivo>' +
-                             '<chCTe>35121012345678000123550010000003911000003915</chCTe>' +
-                             '<tpEvento>210210</tpEvento>' +
-                             '<nSeqEvento>1</nSeqEvento>' +
-                             '<dhRegEvento>2012-11-21T23:51:55-02:00</dhRegEvento>' +
-                             '<nProt>891120000074187</nProt>' +
-                           '</infEvento>' +
-                         '</retEvento>' +
-                         '<retEvento versao="1.00">' +
-                           '<infEvento Id="ID891120000074188">' +
-                             '<tpAmb>1</tpAmb>' +
-                             '<verAplic>AN_1.0.0</verAplic>' +
-                             '<cOrgao>91</cOrgao>' +
-                             '<cStat>135</cStat>' +
-                             '<xMotivo>Evento registrado e vinculado a NF-e</xMotivo>' +
-                             '<chCTe>35121012345678000123550010000068961010068962</chCTe>' +
-                             '<tpEvento>210210</tpEvento>' +
-                             '<nSeqEvento>1</nSeqEvento>' +
-                             '<dhRegEvento>2012-11-21T23:51:55-02:00</dhRegEvento>' +
-                             '<nProt>891120000074188</nProt>' +
-                           '</infEvento>' +
-                         '</retEvento>' +
-                       '</retEnvEvento>';
+  sxml_RetEnvEvento =  '<retEventoCTe versao="4.00">' +
+                         '<infEvento>' +
+                           '<tpAmb>2</tpAmb>' +
+                           '<verAplic>SP-CTe-2023-10-05-1</verAplic>' +
+                           '<cOrgao>35</cOrgao>' +
+                           '<cStat>135</cStat>' +
+                           '<xMotivo>Evento registrado e vinculado a CT-e.</xMotivo>' +
+                           '<chCTe>12345678901234567890123456789012345678901234</chCTe>' +
+                           '<tpEvento>110111</tpEvento>' +
+                           '<xEvento>Cancelamento</xEvento>' +
+                           '<nSeqEvento>1</nSeqEvento>' +
+                           '<dhRegEvento>2023-10-23T17:15:05-03:00</dhRegEvento>' +
+                           '<nProt>123456789012345</nProt>' +
+                         '</infEvento>' +
+                       '</retEventoCTe>';
 
 implementation
 

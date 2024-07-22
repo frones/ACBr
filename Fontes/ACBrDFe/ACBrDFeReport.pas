@@ -180,6 +180,7 @@ type
 
   public
     FIndexImpressaoIndividual : Integer;
+    FIndexImpressaoEventosIndividual : Integer;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 

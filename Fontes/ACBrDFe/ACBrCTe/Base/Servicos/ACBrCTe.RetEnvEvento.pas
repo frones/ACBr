@@ -87,7 +87,6 @@ type
 
   protected
     procedure Ler_InfEventos(const ANode: TACBrXmlNode);
-//    procedure Ler_RetEvento(const ANode: TACBrXmlNode);
     procedure Ler_InfEvento(const ANode: TACBrXmlNode);
     procedure Ler_DetEvento(const ANode: TACBrXmlNode);
     procedure Ler_InfCorrecao(const ANode: TACBrXmlNode);
@@ -154,12 +153,14 @@ end;
 constructor TRetInfEventoCollectionItem.Create;
 begin
   inherited Create;
+
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
 destructor TRetInfEventoCollectionItem.Destroy;
 begin
   FRetInfEvento.Free;
+
   inherited;
 end;
 
@@ -426,30 +427,7 @@ begin
   cStat := Item.RetInfEvento.cStat;
   xMotivo := Item.RetInfEvento.xMotivo;
 end;
-{
-procedure TRetEventoCTe.Ler_RetEvento(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
-  ANodes: TACBrXmlNodeArray;
-  i: Integer;
-begin
-  if not Assigned(ANode) then Exit;
 
-  versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-  idLote := ObterConteudoTag(ANode.Childrens.FindAnyNs('idLote'), tcInt64);
-  tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
-  verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-  cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
-  cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-  xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
-
-  ANodes := ANode.Childrens.FindAll('retEvento');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    Ler_InfEventos(ANodes[i].Childrens.FindAnyNs('infEvento'));
-  end;
-end;
-}
 function TRetEventoCTe.LerXml: Boolean;
 var
   Document: TACBrXmlDocument;
@@ -473,15 +451,28 @@ begin
         begin
           versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
 
-          AuxNode := ANode.Childrens.FindAnyNs('retEnvEvento');
+          AuxNode := ANode.Childrens.FindAnyNs('eventoCTe');
 
           if AuxNode = nil then
-            AuxNode := ANode.Childrens.FindAnyNs('retEventoCTe');
+            AuxNode := ANode.Childrens.FindAnyNs('evento');
 
-          if AuxNode = nil then
-            AuxNode := ANode.Childrens.FindAnyNs('retEvento');
+          Ler_InfEvento(AuxNode.Childrens.FindAnyNs('infEvento'));
 
-          ANodes := AuxNode.Childrens.FindAllAnyNs('infEvento');
+          AuxNode := ANode.Childrens.FindAnyNs('retEventoCTe');
+
+          if AuxNode <> nil then
+          begin
+            ANodes := AuxNode.Childrens.FindAllAnyNs('infEvento');
+            for i := 0 to Length(ANodes) - 1 do
+            begin
+              Ler_InfEventos(ANodes[i]);
+            end;
+          end;
+        end;
+
+        if ANode.LocalName = 'retEventoCTe' then
+        begin
+          ANodes := ANode.Childrens.FindAllAnyNs('infEvento');
           for i := 0 to Length(ANodes) - 1 do
           begin
             Ler_InfEventos(ANodes[i]);

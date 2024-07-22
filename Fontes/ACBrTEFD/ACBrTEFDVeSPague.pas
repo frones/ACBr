@@ -64,6 +64,7 @@ type
     fsIsColeta : Boolean ;
     fsParams : TStringList ;
     fsSequencial : Integer ;
+    fsSequencialServico : Integer ;
     function GetFrameEnvio : AnsiString ;
     function GetRetorno : Integer ;
     function GetSequencial : Integer ;
@@ -153,6 +154,7 @@ type
       fTransacaoPendente : String ;
       fTransacaoReImpressao: String;
       fTransacaoPix: String;
+      FAplicacaoTela: String;
 
      procedure ExecutarTranscaoPendente(NSU : String ; Valor : Double) ;
      procedure FinalizarTranscaoPendente;
@@ -165,6 +167,7 @@ type
      procedure ServicoFinalizar ;
 
      procedure AvaliaErro( Retorno : Integer) ;
+     procedure SetAplicacaoTela(const Value: String);
    protected
      procedure SetNumVias(const AValue : Integer); override;
 
@@ -222,6 +225,7 @@ type
    published
      property Aplicacao       : String read fAplicacao       write fAplicacao ;
      property AplicacaoVersao : String read fAplicacaoVersao write fAplicacaoVersao ;
+     property AplicacaoTela : String  read FAplicacaoTela write SetAplicacaoTela;
 
      property GPExeName;
      property GPExeParams : String read fGPExeParams write fGPExeParams ;
@@ -376,6 +380,7 @@ begin
   inherited ;
   fsParams := TStringList.Create;
   Clear;
+  fsSequencialServico := 0;
 end ;
 
 destructor TACBrTEFDVeSPagueCmd.Destroy ;
@@ -475,6 +480,9 @@ end;
 procedure TACBrTEFDVeSPagueCmd.SetSequencial(const AValue : Integer) ;
 begin
   fsSequencial := AValue;
+  if (not IsColeta) then
+     fsSequencialServico := AValue;
+     
   AddParamInteger(ifthen(IsColeta,'automacao_coleta_sequencial','sequencial'),AValue);
 end;
 
@@ -572,7 +580,9 @@ begin
         fpCodigoAutorizacaoTransacao := Linha.Informacao.AsString;
      end
      else if Chave = 'transacao_codigo_vespague' then
-        fpNumeroLoteTransacao := Linha.Informacao.AsInteger
+        fpNumeroLoteTransacao := Linha.Informacao.AsInt64
+     else if Chave = 'transacao_codigo_vspague' then
+        fpNumeroLoteTransacao := Linha.Informacao.AsInt64
      else if Chave = 'transacao_comprovante_1via' then
         fpImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
      else if Chave = 'transacao_comprovante_2via' then
@@ -620,6 +630,8 @@ begin
        fpEstabelecimento := Linha.Informacao.AsString
      else if Chave = 'transacao_rede_cnpj' then
        fpNFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString
+     else if Chave = 'transacao_cartao_numero' then
+       fpNFCeSAT.UltimosQuatroDigitos := Linha.Informacao.AsString
      else
        ProcessarTipoInterno(Linha);
    end ;
@@ -687,6 +699,7 @@ begin
 
   fAplicacao       := '' ;
   fAplicacaoVersao := '' ;
+  FAplicacaoTela   := '' ;
 
   fSocket := nil ;
   fReqVS  := TACBrTEFDVeSPagueCmd.Create;
@@ -928,6 +941,7 @@ begin
   if Transacao = '' then
   begin
     ServicoIniciar;
+    //
     ReqVS.Servico := 'consultar' ;
     TransmiteCmd;
 
@@ -963,7 +977,7 @@ begin
 
   if Transacao <> '' then
   begin
-     Retorno := FazerRequisicao( Transacao, 'ADM' ) ;
+     Retorno := FazerRequisicao( Transacao, 'ADM' , 0, '', Req.Conteudo.Conteudo.Text) ;
 
      if Retorno in [0,1] then
         Retorno := ContinuarRequisicao( True ) ;  { True = Imprimir Comprovantes agora }
@@ -973,11 +987,13 @@ begin
      ProcessarResposta ;         { Faz a Impressão e / ou exibe Mensagem ao Operador }
      ServicoFinalizar;
   end ;
-
-  ReqVS.Params.Clear;
-  RespVS.Params.Clear;
-  ReqVS.Clear;
-  RespVS.Clear;
+  //
+  // Piubello - 20/03/2024 17:20:20
+  // Ao executar essas chamadas aos Clear, tudo é eliminado e o sequencial volta para 0
+//  ReqVS.Params.Clear;
+//  RespVS.Params.Clear;
+//  ReqVS.Clear;
+//  RespVS.Clear;
 end;
 
 function TACBrTEFDVeSPague.CRT(Valor: Double; IndiceFPG_ECF: String;
@@ -988,9 +1004,9 @@ begin
   VerificarTransacaoPagamento( Valor );
 
   if LowerCase(fTransacaoPix) = 'digital pagar' then
-    Retorno := FazerRequisicao('Digital Pagar', 'CRT', Valor, DocumentoVinculado)
+    Retorno := FazerRequisicao('Digital Pagar', 'CRT', Valor, DocumentoVinculado, Req.Conteudo.Conteudo.Text)
   else
-    Retorno := FazerRequisicao(fTransacaoCRT, 'CRT', Valor, DocumentoVinculado);
+    Retorno := FazerRequisicao(fTransacaoCRT, 'CRT', Valor, DocumentoVinculado, Req.Conteudo.Conteudo.Text);
 
   if Retorno = 0 then
      Retorno := ContinuarRequisicao( False ) ;  { False = NAO Imprimir Comprovantes agora }
@@ -1059,13 +1075,14 @@ function TACBrTEFDVeSPague.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 var
    Retorno : Integer;
-   ListaParams : AnsiString ;
 begin
-  ListaParams := '' ;
   if NSU <> '' then
-     ListaParams := 'transacao_nsu="'+Trim(NSU)+'"';
+     Req.Conteudo.GravaInformacao('transacao_nsu', '"'+Trim(NSU)+'"');
 
-  Retorno := FazerRequisicao( fTransacaoCNC, 'CNC', Valor, '', ListaParams  ) ;
+  if DataHoraTransacao > 0 then
+     Req.Conteudo.GravaInformacao('transacao_data', '"'+FormatDateTime('dd/mm/yyyy', DataHoraTransacao)+'"');
+
+  Retorno := FazerRequisicao( fTransacaoCNC, 'CNC', Valor, '', Req.Conteudo.Conteudo.Text  ) ;
 
   if Retorno = 0 then
      Retorno := ContinuarRequisicao( True ) ;  { True = Imprimir Comprovantes agora }
@@ -1135,26 +1152,34 @@ end;
 
 procedure TACBrTEFDVeSPague.ServicoIniciar ;
 begin
-  repeat
-     fFinalizado := false;
-     ReqVS.Servico := 'iniciar';
-     ReqVS.AddParamString('aplicacao', fAplicacao);
-     ReqVS.AddParamString('versao', fAplicacaoVersao);
-     ReqVS.AddParamString('aplicacao_tela', fAplicacao);
-     //ReqVS.AddParamString('computador_nome', fComputadorNome);
-     //ReqVS.AddParamString('computador_endereco', fComputadorEndereco);
-     //ReqVS.AddParamString('estabelecimento', fEstabelecimento);
-     //ReqVS.AddParamString('loja', fLoja);
-     ReqVS.AddParamString('terminal', fTerminal);
-     //ReqVS.AddParamString('estado', '7');
+  if fFinalizado then 
+  begin
+    repeat
+      fFinalizado := false;
+      ReqVS.Servico := 'iniciar';
+      ReqVS.AddParamString('aplicacao', fAplicacao);
+      ReqVS.AddParamString('versao', fAplicacaoVersao);
+      ReqVS.AddParamString('aplicacao_tela', FAplicacaoTela);
+      ReqVS.AddParamString('terminal', fTerminal);
+      //ReqVS.AddParamString('computador_nome', fComputadorNome);
+      //ReqVS.AddParamString('computador_endereco', fComputadorEndereco);
+      //ReqVS.AddParamString('estabelecimento', fEstabelecimento);
+      //ReqVS.AddParamString('loja', fLoja);
+      //ReqVS.AddParamString('estado', '7');
 
-     TransmiteCmd;
+      TransmiteCmd;
 
-     if RespVS.Sequencial < ReqVS.Sequencial then
+      if RespVS.Sequencial < ReqVS.Sequencial then
         ReqVS.Sequencial := RespVS.Sequencial;
 
-  until (RespVS.Retorno = 1) and (RespVS.Servico = ReqVS.Servico) ;
+    until (RespVS.Retorno = 1) and (RespVS.Servico = ReqVS.Servico) ;
+  end;
 end ;
+
+procedure TACBrTEFDVeSPague.SetAplicacaoTela(const Value: String);
+begin
+  FAplicacaoTela := Value;
+end;
 
 procedure TACBrTEFDVeSPague.ServicoFinalizar ;
 begin
@@ -1566,7 +1591,22 @@ begin
            Erro := 2 ;                             // Tenta novamente
            Continue;
         end ;
+        //
+        if Retorno = 9 then    // Erro de dados inválidos, como o valor mínimo
+         begin
+           GravaLog('** Erro de dados inválidos **');
 
+           Seq := ReqVS.Sequencial;  // Salva o ultimo sequencial
+
+           // Envia novo comando com Retorno=9 para cancelar //
+           ReqVS.Clear;
+           ReqVS.IsColeta   := True ;
+           ReqVS.Sequencial := Seq + 1;
+           ReqVS.Retorno    := 9 ;
+
+           EnviarCmd;
+         end;
+        //
         AvaliaErro(Retorno) ;              // Dispara Exception se houver erro
       end
      else
@@ -1613,7 +1653,7 @@ var
 begin
   // 0, 1 : Tudo Ok
   // 9   : Interrompido, deve ser tratado pela função chamadora, (chame ExibirMensagens)
-  if Retorno in [0,1,3,9] then
+  if Retorno in [0,1,3] then
      exit ;
 
   if RespVS.IsColeta then
@@ -1626,14 +1666,22 @@ begin
     Case Retorno of
       2 : Erro := 'Sequencial Inválido' ;
       // 3, 4 : Não são utilizados
-      5 : Erro := 'Parâmetros insuficientes ou inválidos' ;
+      5, 9 : Erro := 'Parâmetros insuficientes ou inválidos' ;
       // 6, 7 : Não são utilizados
       8 : Erro := 'Tempo limite de espera excedido' ;
     end ;
   end ;
 
   if Erro <> '' then
+  begin
+     if (Retorno = 9) then
+     begin
+        ReqVS.Sequencial := ReqVS.fsSequencialServico;
+        ServicoFinalizar;
+     end;
+     //
      raise EACBrTEFDSTSInvalido.Create( ACBrStr(Erro) );
+  end;
 
 {  if RespVS.Sequencial <> ReqVS.Sequencial then
      raise EACBrTEFDSTSInvalido.Create( ACBrStr('Sequencia da Resposta inválida') );}

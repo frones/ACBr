@@ -655,7 +655,7 @@ begin
   if not FilesExists(NomeArquivo) then
     raise EACBrTEFArquivo.CreateFmt( cACBrArquivoNaoEncontrado, [NomeArquivo] );
 
-  FStringList.LoadFromFile(NomeArquivo, {$IfDef POSIX}TEncoding.Unicode{$EndIf});
+  FStringList.LoadFromFile(NomeArquivo {$IfDef POSIX}, TEncoding.Unicode{$EndIf});
 end;
 
 procedure TACBrTEFArquivo.GravaInformacao(const Chave, Informacao: AnsiString);

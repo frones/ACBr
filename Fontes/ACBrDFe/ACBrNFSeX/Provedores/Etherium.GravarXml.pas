@@ -82,7 +82,8 @@ end;
 procedure TNFSeW_Etherium204.Configuracao;
 begin
   inherited Configuracao;
-
+  FormatoEmissao := tcDat;
+  FormatoCompetencia := tcDat;
   FormatoAliq := tcDe2;
 
   NrOcorrInformacoesComplemetares := 0;

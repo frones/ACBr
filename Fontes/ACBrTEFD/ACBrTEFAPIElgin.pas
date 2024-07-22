@@ -260,30 +260,36 @@ function TACBrTEFAPIClassElgin.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: String; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: String; const Rede: String): Boolean;
 var
-  payload: TACBrJSONObject;
+  vJson: TACBrJSONObject;
   Resultado, sValor: String;
   iOp: integer;
 begin
   fpACBrTEFAPI.GravarLog('CancelarTransacao( '+NSU+', '+CodigoAutorizacaoTransacao+', '+
                          DateTimeToStr(DataHoraTransacao)+', '+FloatToStr(Valor)+', '+
                          CodigoFinalizacao+', '+Rede+ ' )');
-  payload := TACBrJSONObject.Create();
+  vJson := TACBrJSONObject.Create();
   try
     fSequencial := TACBrTEFElginUtils.incrementarSequencial(fSequencial);
-    payload.AddPair('sequencial', fSequencial);
-    payload.Addpair('transacao_data', FormatDateTime('dd/MM/yy', DataHoraTransacao));
-    payload.Addpair('transacao_nsu', NSU);
+    vJson.AddPair('sequencial', fSequencial);
+    vJson.Addpair('transacao_data', FormatDateTime('dd/MM/yy', DataHoraTransacao));
+    vJson.Addpair('transacao_nsu', NSU);
 
     sVAlor := TACBrTEFElginUtils.FloatToJsonString(Valor);
-    payload.Addpair('transacao_valor', SValor);
-    fpACBrTEFAPI.GravarLog('CancelarTransacao Payload:' + payload.ToJson);
+    vJson.Addpair('transacao_valor', SValor);
+    fpACBrTEFAPI.GravarLog('CancelarTransacao Payload:' + vJson.ToJson);
 
     iOP := TACBrTEFElginUtils.OperacaoAdminToElginint(tefopCancelamento);
-    Resultado := String(fTEFElginAPI.RealizarAdmTEF( iOP, TACBrTEFElginUtils.stringify(payload), True));
+    Resultado := String(fTEFElginAPI.RealizarAdmTEF( iOP, TACBrTEFElginUtils.stringify(vJson), True));
     Result := TratarRetornoOperacao(Resultado);
-    fpACBrTEFAPI.GravarLog('  Resultado: ' + TACBrTEFElginUtils.jsonify(Resultado).ToJson);
   finally
-    FreeAndNil(payload);
+    FreeAndNil(vJson);
+  end;
+
+  vJson := TACBrTEFElginUtils.jsonify(Resultado);
+  try
+    fpACBrTEFAPI.GravarLog('  Resultado: ' + vJson.ToJson);
+  finally
+    FreeAndNil(vJson);
   end;
 end;
 
@@ -297,7 +303,7 @@ var
   coletaTipo,         // In
   coletaOpcao,        // In
   coletaMascara, coletaInformacao: String;   // Out
-  payload: TACBrJSONObject;
+  vJson: TACBrJSONObject;
   resp, retorno: String;
   pPayload: PAnsiChar;
   opcoes, elements: TStringList;
@@ -361,11 +367,11 @@ begin
     Exit;
   end;
 
-  // em caso de sucesso, monta o (novo) payload e continua a coleta
-  payload := TACBRJsonObject.Create;
+  // em caso de sucesso, monta o (novo) vJson e continua a coleta
+  vJson := TACBRJsonObject.Create;
   try
-    payload.AddPair('automacao_coleta_retorno', coletaRetorno);
-    payload.AddPair('automacao_coleta_sequencial', coletaSequencial);
+    vJson.AddPair('automacao_coleta_retorno', coletaRetorno);
+    vJson.AddPair('automacao_coleta_sequencial', coletaSequencial);
 
     if (coletaTipo <> '') and (coletaOpcao = '') then  // coleta dados do usuário
     begin // valor inserido (texto)
@@ -380,12 +386,12 @@ begin
       // se houve cancelamento, adiciona a chave com cancelamento para avisar a dll
       if (fCancelarColeta <> '') then
       begin
-        //payload.RemovePair('automacao_coleta_retorno');
-        payload.AddPair('automacao_coleta_retorno', fCancelarColeta);
+        //vJson.RemovePair('automacao_coleta_retorno');
+        vJson.AddPair('automacao_coleta_retorno', fCancelarColeta);
         fCancelarColeta := '';
       end;
 
-      payload.AddPair('automacao_coleta_informacao', coletaInformacao);
+      vJson.AddPair('automacao_coleta_informacao', coletaInformacao);
     end
 
     else if (coletaTipo <> '') and (coletaOpcao <> '') then
@@ -411,11 +417,11 @@ begin
         // se houve cancelamento, adiciona a chave com cancelamento para avisar a dll
         if (fCancelarColeta <> '') then
         begin
-          //payload.RemovePair('automacao_coleta_retorno');
-          payload.AddPair('automacao_coleta_retorno', fCancelarColeta);
+          //vJson.RemovePair('automacao_coleta_retorno');
+          vJson.AddPair('automacao_coleta_retorno', fCancelarColeta);
           fCancelarColeta := '';
         end;
-        payload.AddPair('automacao_coleta_informacao', coletaInformacao);
+        vJson.AddPair('automacao_coleta_informacao', coletaInformacao);
       finally
         FreeAndNil(elements);
         FreeAndNil(opcoes);
@@ -436,7 +442,7 @@ begin
     end;
 
     // informa os dados coletados
-    pPayload := TACBrTEFElginUtils.stringify(payload);
+    pPayload := TACBrTEFElginUtils.stringify(vJson);
     case fpMetodoOperacao of
       tefmtdAdministrativa, tefmtdCancelamento:
         resp := fTEFElginAPI.RealizarAdmTEF(0, pPayload, False);
@@ -450,6 +456,7 @@ begin
       end;
     end;
   finally
+    FreeAndNil(vJson);
     fpACBrTEFAPI.GravarLog('verifica fim da coleta');
     fpACBrTEFAPI.GravarLog('sroot:' + sroot);
     fpACBrTEFAPI.GravarLog('Payload:' + String(pPayload));
@@ -464,16 +471,19 @@ begin
 
     if not (StrToIntDef(coletaRetorno, 0) in [0, 1]) then
       TefAPI.QuandoExibirMensagem(coletaMensagem, telaoperador, 5000);
-
-    FreeAndNil(payload);
   end;
 
-  // verifica fim da coleta
-  retorno := TACBrTEFElginUtils.getRetorno(resp);
-  if (retorno <> '') then
-    Result := TACBrTEFElginUtils.jsonify(resp).ToJSON
-  else
-    Result := Coletar(TACBrTEFElginUtils.jsonify(resp));
+  vJson := TACBrTEFElginUtils.jsonify(resp);
+  try
+    // verifica fim da coleta
+    retorno := TACBrTEFElginUtils.getRetorno(resp);
+    if (retorno <> '') then
+      Result := vJson.ToJSON
+    else
+      Result := Coletar(vJson);
+  finally
+    FreeAndNil(vJson);
+  end;
 end;
 
 function TACBrTEFAPIClassElgin.ConfirmarOperacao: String;
@@ -510,17 +520,23 @@ end;
 
 function TACBrTEFAPIClassElgin.Administrativo(opcao: Integer; const sequencial: String): String;
 var
-  payload: TACBrJSONObject;
+  vJson: TACBrJSONObject;
 begin
   Result := '';
-  payload := TACBrJSONObject.Create;
+  vJson := TACBrJSONObject.Create;
   try
     fpACBrTEFAPI.GravarLog('Administrativo: ' +IntToStr(opcao)+', seq:'+ fSequencial);
-    payload.AddPair('sequencial', fSequencial);
-    Result := String(fTEFElginAPI.RealizarAdmTEF(opcao, TACBrTEFElginUtils.stringify(payload), True));
-    fpACBrTEFAPI.GravarLog('  Resultado: ' + TACBrTEFElginUtils.jsonify(Result).ToJSON);
+    vJson.AddPair('sequencial', fSequencial);
+    Result := String(fTEFElginAPI.RealizarAdmTEF(opcao, TACBrTEFElginUtils.stringify(vJson), True));
   finally
-    FreeAndNil(payload);
+    FreeAndNil(vJson);
+  end;
+
+  vJson := TACBrTEFElginUtils.jsonify(Result);
+  try
+    fpACBrTEFAPI.GravarLog('  Resultado: ' + vJson.ToJSON);
+  finally
+    FreeAndNil(vJson);
   end;
 end;
 
@@ -610,6 +626,7 @@ function TACBrTEFAPIClassElgin.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
 var
   TipoDocumento, RetornoInt: integer;
   RetornoDLL, resultadoCapturaPinPad: String;
+  vJson: TACBrJSONObject;
 begin
   case TipoDado of
     dpRG, dpRedRG:
@@ -626,6 +643,7 @@ begin
   end;
 
   //sRet := fTEFElginAPI.IniciarOperacaoTEF(PAnsiChar('{}'));
+  vJSon := nil;
   Inicializar;
   try
     RetornoDLL := String(fTEFElginAPI.RealizarColetaPinPad(TipoDocumento, fConfirmaColeta));
@@ -633,24 +651,25 @@ begin
     with TACBrTEFELginUtils do
       RetornoInt := StrToIntDef(getRetorno(RetornoDLL), -1);
 
+    vJson := TACBrTEFELginUtils.jsonify(RetornoDLL);
     if (RetornoInt = 1) then
     begin
       // pega o valor digitado pelo usuário no pinpad
       with TACBrTEFELginUtils do
-        resultadoCapturaPinPad := getStringValue(jsonify(RetornoDLL), 'tef.resultadoCapturaPinPad');
+        resultadoCapturaPinPad := getStringValue(vJson, 'tef.resultadoCapturaPinPad');
 
       fpACBrTEFAPI.GravarLog('  tef.resultadoCapturaPinPad: ' + resultadoCapturaPinPad);
     end
     else if (RetornoInt > 0) then
     begin
       with TACBrTEFELginUtils do
-        fpACBrTEFAPI.GravarLog(getStringValue(jsonify(RetornoDLL), 'mensagem'));
+        fpACBrTEFAPI.GravarLog(getStringValue(vJson, 'mensagem'));
       Exit;
     end
     else
     begin
       with TACBrTEFELginUtils do
-        fpACBrTEFAPI.GravarLog(getStringValue(jsonify(RetornoDLL), 'tef.mensagemResultado'));
+        fpACBrTEFAPI.GravarLog(getStringValue(vJson, 'tef.mensagemResultado'));
       Exit;
     end;
 
@@ -675,10 +694,14 @@ begin
     with TACBrTEFELginUtils do
       RetornoInt := StrToIntDef(getRetorno(RetornoDLL), -1);
 
+    if vJson <> nil then
+      FreeAndNil(vJson);
+      
+    vJson := TACBrTEFELginUtils.jsonify(RetornoDLL);
     if (RetornoInt = 1) then
     begin
       with TACBrTEFELginUtils do
-        resultadoCapturaPinPad := getStringValue(jsonify(retornoDll), 'tef.resultadoCapturaPinPad');
+        resultadoCapturaPinPad := getStringValue(vJson, 'tef.resultadoCapturaPinPad');
 
       Result := resultadoCapturaPinPad;
       fpACBrTEFAPI.GravarLog('  tef.resultadoCapturaPinPad: ' + resultadoCapturaPinPad);
@@ -687,16 +710,19 @@ begin
     else if (RetornoInt > 0) then
     begin
       with TACBrTEFELginUtils do
-        fpACBrTEFAPI.GravarLog(getStringValue(jsonify(RetornoDLL), 'mensagem'));
+        fpACBrTEFAPI.GravarLog(getStringValue(vJson, 'mensagem'));
       exit;
     end
     else
     begin
       with TACBrTEFELginUtils do
-        fpACBrTEFAPI.GravarLog(getStringValue(jsonify(RetornoDLL), 'tef.mensagemResultado'));
+        fpACBrTEFAPI.GravarLog(getStringValue(vJson, 'tef.mensagemResultado'));
     end;
   finally
     DesInicializar;
+
+    if vJson <> nil then
+      FreeAndNil(vJson);
   end;
 end;
 
@@ -704,6 +730,7 @@ function TACBrTEFAPIClassElgin.TratarRetornoOperacao(var Resposta: String): bool
 var
   retorno: String;
   RespElginTef: TACBrTEFRespElgin;
+  vJson: TACBrJSONObject;
 begin
   Result := False;
   RespElginTef := TACBrTEFRespElgin(fpACBrTEFAPI.UltimaRespostaTEF);
@@ -712,7 +739,12 @@ begin
   retorno := TACBrTEFElginUtils.getRetorno(Resposta);
   if (retorno = '') then // Continuar operacao/Iniciar o processo de coleta
   begin                  // 0 para Coletar vendas, 1 para Coletar Administrativo
-    Resposta := Coletar(TACBrTEFElginUtils.jsonify(Resposta));
+    vJson := TACBrTEFElginUtils.jsonify(Resposta);
+    try
+      Resposta := Coletar(vJson);
+    finally
+      FreeAndNil(vJson);
+    end;
     fpACBrTEFAPI.GravarLog('tratarRetornoOperacao:' + Resposta);
     retorno := TACBrTEFElginUtils.getRetorno(Resposta);
     fpACBrTEFAPI.GravarLog('Conclusão da coleta...');
@@ -751,16 +783,16 @@ function TACBrTEFAPIClassElgin.Vender(cartao: integer; const sequencial,
 var
   iPos, iQtdParc: integer;
   sQtdParc, sValorTotal: String;
-  payload: TACBRJsonObject;
+  vJson: TACBRJsonObject;
 begin
-  payload := TACbrJsonObject.Create;
+  vJson := TACbrJsonObject.Create;
   try
     iQtdParc := Parcelas;
     sQtdParc := IntToStr(iQtdParc);
     sValorTotal := pValorTotal;
 
     fpACBrTEFAPI.GravarLog('Vender: ' + fSequencial);
-    payload.AddPair('sequencial', fSequencial);
+    vJson.AddPair('sequencial', fSequencial);
     if (sValorTotal <> '') then
     begin
       iPos := pos(sValorTotal, ',');
@@ -768,48 +800,53 @@ begin
         sValorTotal := ACBrUtil.Strings.PadRight(pValorTotal, (length(sValorTotal) - iPos), '0');
 
       sValorTotal := TACBrTEFElginUtils.RemoveNonNumericChars(sValorTotal);
-      payload.AddPair('valorTotal', sValorTotal);
+      vJson.AddPair('valorTotal', sValorTotal);
     end;
 
     case cartao of
       1, 5:
-        payload.AddPair('tipoCartao', 'Credito');
+        vJson.AddPair('tipoCartao', 'Credito');
       2, 3, 4:
-        payload.AddPair('tipoCartao', 'Debito');
+        vJson.AddPair('tipoCartao', 'Debito');
     end;
 
     case Financiamento of
       tefmfAVista:
-        payload.AddPair('formaPagamento', 'A vista');
+        vJson.AddPair('formaPagamento', 'A vista');
 
       tefmfParceladoEmissor:
       begin
-        payload.AddPair('formaPagamento', 'Parcelado');
-        payload.AddPair('tipoFinanciamento', 'Administradora');
+        vJson.AddPair('formaPagamento', 'Parcelado');
+        vJson.AddPair('tipoFinanciamento', 'Administradora');
         if iQtdParc > 1 then
-          payload.AddPair('numeroParcelas', sQtdParc);
+          vJson.AddPair('numeroParcelas', sQtdParc);
       end;
 
       tefmfParceladoEstabelecimento:
       begin
-        payload.AddPair('formaPagamento', 'Parcelado');
-        payload.AddPair('tipoFinanciamento', 'Estabelecimento');
+        vJson.AddPair('formaPagamento', 'Parcelado');
+        vJson.AddPair('tipoFinanciamento', 'Estabelecimento');
         if iQtdParc > 1 then
-          payload.AddPair('numeroParcelas', sQtdParc);
+          vJson.AddPair('numeroParcelas', sQtdParc);
       end;
 
       tefmfPredatado:
-        payload.AddPair('formaPagamento', 'Pre-datado');
+        vJson.AddPair('formaPagamento', 'Pre-datado');
     end;
 
     if (fModPagamento = tefmpCarteiraVirtual) then
-      Result := String(fTEFElginAPI.RealizarPixTEF(TACBrTEFElginUtils.stringify(payload), True))
+      Result := String(fTEFElginAPI.RealizarPixTEF(TACBrTEFElginUtils.stringify(vJson), True))
     else
-      Result := String(fTEFElginAPI.RealizarPagamentoTEF(Cartao, TACBrTEFElginUtils.stringify(payload), True));
-
-    fpACBrTEFAPI.GravarLog('  Vender: ' + TACBrTEFElginUtils.jsonify((Result)).ToJSON);
+      Result := String(fTEFElginAPI.RealizarPagamentoTEF(Cartao, TACBrTEFElginUtils.stringify(vJson), True));
   finally
-    FreeAndNil(payload);
+    FreeAndNil(vJson);
+  end;
+
+  vJson := TACBrTEFElginUtils.jsonify(Result);
+  try
+    fpACBrTEFAPI.GravarLog('  Vender: ' + vJson.ToJSON);
+  finally
+    FreeAndNil(vJson);
   end;
 end;
 

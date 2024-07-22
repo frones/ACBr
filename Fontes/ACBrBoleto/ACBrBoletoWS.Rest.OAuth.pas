@@ -263,7 +263,10 @@ begin
   if not Assigned(FHTTPSend) then
     raise EACBrBoletoWSException.Create(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DFESSL ]));
 
-    //Definindo Header da requisição OAuth
+  //Definido Valor para Timeout com a configuração da Classe
+  FHTTPSend.Timeout := FACBrBoleto.Configuracoes.WebService.TimeOut;
+
+  //Definindo Header da requisição OAuth
   FHTTPSend.Headers.Clear;
   LHeaders := TStringList.Create;
   try

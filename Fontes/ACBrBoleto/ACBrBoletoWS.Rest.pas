@@ -255,6 +255,10 @@ var
 begin
   LStream  := TStringStream.Create('');
   LHeaders := TStringList.Create;
+
+  //Definido Valor para Timeout com a configuração da Classe
+  httpsend.Timeout := Boleto.Configuracoes.WebService.TimeOut;
+
   try
     httpsend.OutputStream := LStream;
     httpsend.Headers.Clear;

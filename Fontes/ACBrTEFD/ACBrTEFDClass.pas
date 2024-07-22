@@ -794,6 +794,8 @@ begin
            case Linha.Sequencia of
              0 : fpRede := Linha.Informacao.AsString;
              1 : fpNFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
+             2 : fpNFCeSAT.Bandeira := Linha.Informacao.AsString;  //Elgin
+             3 : fpCodigoBandeiraPadrao := Linha.Informacao.AsString;  //Elgin
              4 : fpBin := Linha.Informacao.AsString; //Seis primeiros digitos do cartão
              5 : fpNFCeSAT.UltimosQuatroDigitos := Linha.Informacao.AsString;
            end;
@@ -857,6 +859,17 @@ begin
              L := StrToIntDef(copy(Linha.Informacao.AsString,3,2),2);
              fpDocumentoPessoa := copy(Linha.Informacao.AsString, 5, L);
            end;
+        end;
+        715 :
+        begin //elgin
+          case Linha.Sequencia of
+             17 : fpNFCeSAT.DonoCartao := Linha.Informacao.AsString;
+             18 :
+             begin
+               fpNFCeSAT.UltimosQuatroDigitos := copy(trim(Linha.Informacao.AsString),8,4);
+               fpBin := copy(trim(Linha.Informacao.AsString),1,6);
+             end;
+          end;
         end;
        999 : fpTrailer := Linha.Informacao.AsString ;
      else

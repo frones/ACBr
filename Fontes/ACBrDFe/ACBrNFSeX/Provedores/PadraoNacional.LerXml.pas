@@ -176,7 +176,12 @@ begin
     with NFSe.Servico do
     begin
       ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('cTribNac'), tcStr);
-      xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
+
+      if NFSe.infNFSe.xTribNac = '' then
+        xItemListaServico := ItemListaServicoDescricao(ItemListaServico)
+      else
+        xItemListaServico := NFSe.infNFSe.xTribNac;
+
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cTribMun'), tcStr);
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('xDescServ'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,

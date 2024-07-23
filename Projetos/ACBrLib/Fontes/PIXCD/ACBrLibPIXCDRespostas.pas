@@ -35,7 +35,7 @@ unit ACBrLibPIXCDRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrLibPIXCDDataModule,ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase,
+  Classes, SysUtils, ACBrBase, ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase,
   ACBrPIXSchemasCob, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
   ACBrPIXSchemasPix, ACBrPixSchemasDevolucao, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,

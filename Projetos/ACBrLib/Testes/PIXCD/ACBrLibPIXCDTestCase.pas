@@ -78,6 +78,8 @@ type
     procedure Test_PIXCD_CriarCobranca;
     procedure Test_PIXCD_CancelarCobrancaImediata;
     procedure Test_PIXCD_CancelarCobranca;
+    procedure Test_PIXCD_ConsultarCobrancasCob;
+    procedure Test_PIXCD_ConsultarCobrancasCobV;
     procedure Test_PIXCD_ConfigPSPSicoob;
 
     //Matera
@@ -716,6 +718,44 @@ begin
   AStr := Space(Bufflen);
 
   AssertEquals(ErrOK, PIXCD_CancelarCobranca(Handle, 'teste', PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarCobrancasCob;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+  DataInicio, DataFim: TDateTime;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  DataInicio:= EncodeDate(2024, 07, 01);
+  DataFim:= EncodeDate(2024, 07, 22);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarCobrancasCob(Handle, DataInicio, DataFim, '', False, 2, 1, 10, PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
+end;
+
+procedure TTestACBrPIXCDLib.Test_PIXCD_ConsultarCobrancasCobV;
+var
+  Bufflen: Integer;
+  AStr: String;
+  Handle: THandle;
+  DataInicio, DataFim: TDateTime;
+begin
+  AssertEquals(ErrOK, PIXCD_Inicializar(Handle, '', ''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  DataInicio:= EncodeDate(2024, 07, 01);
+  DataFim:= EncodeDate(2024, 07, 22);
+
+  AssertEquals(ErrOK, PIXCD_ConsultarCobrancasCobV(Handle, DataInicio, DataFim, '', False, 2, 1, 10, PChar(AStr), Bufflen));
 
   AssertEquals(ErrOK, PIXCD_Finalizar(Handle));
 end;

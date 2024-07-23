@@ -65,6 +65,8 @@ type
 
     procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); override;
 
+    procedure GeraSegmentoJ53(mSegmentoJ53List: TSegmentoJ53List); override;
+
     procedure GeraSegmentoN1(I: Integer); override;
 
     procedure GeraSegmentoN2(I: Integer); override;

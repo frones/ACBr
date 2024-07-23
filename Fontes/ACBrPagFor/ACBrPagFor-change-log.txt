@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2024
+-- CNAB240.GravarTxtRemessa --
+[-] Alteração no Segmento J53, visando gerar com 240 caracteres.
+  Por: Centrodata Sistemas
+
 16/07/2024
 -- ACBrPagForClass/CNAB240.LerTxtRetorno --
 [*] Alteração para ler o campo que contem o código do movimento de remessa.

@@ -609,7 +609,7 @@ begin
       GravarCampo(Agregador.Inscricao.Numero, 15, tcStrZero);
       GravarCampo(Agregador.Nome, 40, tcStr, True);
       GravarCampo(' ', 55, tcStr);
-      GravarCampo(' ', 53, tcStr);
+      GravarCampo(' ', 54, tcStr);
 
       ValidarLinha('J53');
       IncluirLinha;

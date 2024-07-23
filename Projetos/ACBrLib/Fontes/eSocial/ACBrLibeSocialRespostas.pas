@@ -741,7 +741,6 @@ begin
     PathNome     := ACBreSocial.WebServices.EnvioLote.PathNome;
   end;
 
-  end;
   for i := 0 to ACBreSocial.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do
   begin
     Item := TOcorrenciaResposta.Create(i+1, Tipo, Formato);

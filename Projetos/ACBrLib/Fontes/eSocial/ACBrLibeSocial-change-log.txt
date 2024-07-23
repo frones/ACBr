@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2024
+--- ACBrLibeSocialRespostas ---
+[-] Removido um end a mais que estava impedindo a compilação ACBrMonitorPlus
+    Por: Daniel Morais InfoCotidiano
+
 19/07/2024
 --- ACBrLibeSocialRespostas ---
 [*]TK-5360-1 - Configurada lib e monitor para retornar na chave PathNome o nome do xml gerado

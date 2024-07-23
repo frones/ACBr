@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2024
+-- ACBrNFSeXWebserviceBase --
+[*] Alterações na função: ConverteANSIparaUTF8, agora ela realiza a conversão sem
+    verficar se o XML esta ou não em UTF-8.
+   Por: Italo Giurizzato Junior
+
 22/07/2024
 -- PadraoNacional.LerXml.pas --
 [*] Ajustes quando o existir o conteudo da tag xTribNac ele utilizar o valor devolvido;

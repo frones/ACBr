@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2024
+-- pcesGerador --
+[*] TK-5761 - Correção ao ler xmls assinados para preencher a propriedade ID do evento.
+Por: Renato Rubinho
+
 11/07/2024
 -- pcesConversaoeSocial, pcesS2501, pcesS5003 --
 [*] Implementa as alterações da NT2024/04 Revisada.

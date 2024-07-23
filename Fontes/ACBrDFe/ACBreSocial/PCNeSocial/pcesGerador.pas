@@ -318,8 +318,20 @@ procedure TeSocialEvento.SetXML(const Value: String);
 var
   NomeEvento: String;
   Ok: Boolean;
-  Leitor: TLeitor;
   typVersaoeSocial: TVersaoeSocial;
+
+  procedure LerIdEvento(const xmlEvento: String);
+  var
+    Leitor: TLeitor;
+  begin
+    Leitor := TLeitor.Create;
+    try
+      Leitor.Grupo := FXML;
+      Self.Id      := Leitor.rAtributo('Id=');
+    finally
+      Leitor.Free;
+    end;
+  end;
 begin
   typVersaoeSocial := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
   FXML             := Value;
@@ -329,15 +341,14 @@ begin
     NomeEvento := TipoEventoToStrEvento(StringXMLToTipoEvento(Ok, FXML, typVersaoeSocial), typVersaoeSocial);
     FXML       := Assinar(FXML, NomeEvento);
 
-    Leitor := TLeitor.Create;
-    try
-      Leitor.Grupo := FXML;
-      Self.Id      := Leitor.rAtributo('Id=');
-    finally
-      Leitor.Free;
-    end;
+    LerIdEvento(FXML);
 
     Validar(TipoEventoToSchemaeSocial(StringXMLToTipoEvento(Ok, FXML, typVersaoeSocial), typVersaoeSocial));
+  end
+  else
+  begin
+    if Self.Id = '' then
+      LerIdEvento(FXML);
   end;
 end;
 

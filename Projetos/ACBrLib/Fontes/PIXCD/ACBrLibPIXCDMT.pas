@@ -97,6 +97,9 @@ function PIXCD_CriarCobrancaImediata(const libHandle: PLibHandle; AInfCobSolicit
 function PIXCD_ConsultarCobrancaImediata(const libHandle: PLibHandle; const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function PIXCD_ConsultarCobrancasCob(const libHandle: PLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 function PIXCD_RevisarCobrancaImediata(const libHandle: PLibHandle; AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
@@ -107,6 +110,9 @@ function PIXCD_CriarCobranca(const libHandle: PLibHandle; AInfCobVSolicitada: PC
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function PIXCD_ConsultarCobranca(const libHandle: PLibHandle; const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+function PIXCD_ConsultarCobrancasCobV(const libHandle: PLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function PIXCD_RevisarCobranca(const libHandle: PLibHandle; AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
@@ -341,6 +347,21 @@ begin
   end;
 end;
 
+function PIXCD_ConsultarCobrancasCob(const libHandle: PLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result:= TACBrLibPIXCD(libHandle^.Lib).ConsultarCobrancasCob(ADataInicio, ADataFim, ACpfCnpj, ALocationPresente, AStatus, PagAtual, ItensPorPagina, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function PIXCD_RevisarCobrancaImediata(const libHandle: PLibHandle; AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -394,6 +415,21 @@ begin
     Result:= TACBrLibPIXCD(libHandle^.Lib).ConsultarCobranca(ATxId, ARevisao, sResposta, esTamanho);
   except
         on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function PIXCD_ConsultarCobrancasCobV(const libHandle: PLibHandle; ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result:= TACBrLibPIXCD(libHandle^.Lib).ConsultarCobrancasCobV(ADataInicio, ADataFim, ACpfCnpj, ALocationPresente, AStatus, PagAtual, ItensPorPagina, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
      Result := E.Erro;
 
     on E: Exception do

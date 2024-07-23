@@ -54,6 +54,20 @@ const
   CSessaoRespDevolucao = 'Devolucao';
   CSessaoRespConsultarPixRecebidos = 'ConsultarPIXRecebidos';
 
+  CSessaoRespCobsConsultadas = 'CobsConsultadas';
+  CSessaoRespParametrosConsultaCob = 'Parametros';
+  CSessaoRespPaginacaoCob = 'Paginacao';
+  CSessaoRespCobCompleta = 'CobCompleta';
+  CSessaoRespCobsInfo = 'CobsInfo';
+  CSessaoRespCobs = 'Cobs';
+
+  CSessaoRespCobsVConsultadas = 'CobsVConsultadas';
+  CSessaoRespParametrosConsultaCobV = 'Parametros';
+  CSessaoRespPaginacaoCobV = 'Paginacao';
+  CSessaoRespCobVCompleta = 'CobVCompleta';
+  CSessaoRespCobsVInfo = 'CobsVInfo';
+  CSessaoRespCobsV = 'CobsV';
+
   CSessaoRespIncluirContaMatera = 'IncluirContaMatera';
   CSessaoRespConsultarContaMatera = 'ConsultarContaMatera';
   CSessaoRespInativarContaMatera = 'InativarContaMatera';

@@ -75,12 +75,14 @@ exports
   //EndPoint /cob
   PIXCD_CriarCobrancaImediata,
   PIXCD_ConsultarCobrancaImediata,
+  PIXCD_ConsultarCobrancasCob,
   PIXCD_RevisarCobrancaImediata,
   PIXCD_CancelarCobrancaImediata,
 
   //EndPoint /cobv
   PIXCD_CriarCobranca,
   PIXCD_ConsultarCobranca,
+  PIXCD_ConsultarCobrancasCobV,
   PIXCD_RevisarCobranca,
   PIXCD_CancelarCobranca,
 

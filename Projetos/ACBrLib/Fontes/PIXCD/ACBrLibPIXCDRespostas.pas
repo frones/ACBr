@@ -35,362 +35,513 @@ unit ACBrLibPIXCDRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase,
+  Classes, SysUtils, ACBrBase, ACBrLibPIXCDDataModule,ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase,
   ACBrPIXSchemasCob, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
   ACBrPIXSchemasPix, ACBrPixSchemasDevolucao, ACBrPIXSchemasPixConsultados,
+  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
   ACBrPixSchemasPaginacao, ACBrPixSchemasCobV, ACBrPIXSchemasProblema, ACBrUtil.Base;
 
 type
 
   { TLibPIXCDProblemaRespostaViolacao }
-
   TLibPIXCDProblemaRespostaViolacao = class(TACBrLibRespostaBase)
-  private
-    fPropriedade: String;
-    fRazao: String;
-    fValor: String;
-  public
-    procedure Processar(const Violacao: TACBrPIXViolacao);
-  published
-    property Propriedade: String read fPropriedade;
-    property Razao: String read fRazao;
-    property Valor: String read fValor;
+    private
+      fPropriedade: String;
+      fRazao: String;
+      fValor: String;
+
+    public
+      procedure Processar(const Violacao: TACBrPIXViolacao);
+
+    published
+      property Propriedade: String read fPropriedade;
+      property Razao: String read fRazao;
+      property Valor: String read fValor;
   end;
 
   { TLibPIXCDProblemaResposta }
   TLibPIXCDProblemaResposta = class (TACBrLibRespostaBase)
-  private
-    fDetail: String;
-    fStatus: integer;
-    fTitle: String;
-    fViolacoes: TACBrObjectList;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy; override;
+    private
+      fcorrelationId: String;
+      fDetail: String;
+      fStatus: integer;
+      fTitle: String;
+      ftype_uri: String;
+      fViolacoes: TACBrObjectList;
 
-    procedure Clear;
-    procedure Processar(const Problema: TACBrPIXProblema);
-  published
-    property Status: integer read fStatus write fStatus;
-    property Title: String read fTitle write fTitle;
-    property Detail: String read fDetail write fDetail;
-    property Violacoes: TACBrObjectList read fViolacoes;
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const Problema: TACBrPIXProblema);
+
+    published
+      property correlationId: String read fcorrelationId write fcorrelationId;
+      property Status: integer read fStatus write fStatus;
+      property Title: String read fTitle write fTitle;
+      property Detail: String read fDetail write fDetail;
+      property type_uri: String read ftype_uri write ftype_uri;
+      property Violacoes: TACBrObjectList read fViolacoes;
   end;
 
   { TLibPixCDValorVInfo }
   TLibPixCDValorVInfo = class(TACBrLibRespostaBase)
-  private
-    fModalidadeAbatimento: TACBrPIXValoresModalidade;
-    fvalorPercAbatimento: Currency;
-    fModalidadeDesconto: TACBrPIXDescontoModalidade;
-    fValorPercDesconto: Currency;
-    fModalidadeJuros: TACBrPIXJurosModalidade;
-    fValorPercJuros: Currency;
-    fModalidadeMulta: TACBrPixValoresModalidade;
-    fValorPercMulta: Currency;
-    foriginal: Currency;
-  public
-    procedure Clear;
-    procedure Processar(const ValorV: TACBrPIXCobVValor);
-  published
-    property ModalidadeAbatimento: TACBrPIXValoresModalidade read fModalidadeAbatimento write fModalidadeAbatimento;
-    property valorPercAbatimento: Currency read fValorPercAbatimento write fValorPercAbatimento;
-    property ModalidadeDesconto: TACBrPIXDescontoModalidade read fModalidadeDesconto write fModalidadeDesconto;
-    property ValorPercDesconto: Currency read fValorPercDesconto write fValorPercDesconto;
-    property ModalidadeJuros: TACBrPIXJurosModalidade read fModalidadeJuros write fModalidadeJuros;
-    property ValorPercJuros: Currency read fValorPercJuros write fValorPercJuros;
-    property ModalidadeMulta: TACBrPixValoresModalidade read fModalidadeMulta write fModalidadeMulta;
-    property ValorPercMulta: Currency read fValorPercMulta write fValorPercMulta;
-    property original: Currency read fOriginal write fOriginal;
+    private
+      fModalidadeAbatimento: TACBrPIXValoresModalidade;
+      fvalorPercAbatimento: Currency;
+      fModalidadeDesconto: TACBrPIXDescontoModalidade;
+      fValorPercDesconto: Currency;
+      fModalidadeJuros: TACBrPIXJurosModalidade;
+      fValorPercJuros: Currency;
+      fModalidadeMulta: TACBrPixValoresModalidade;
+      fValorPercMulta: Currency;
+      foriginal: Currency;
+
+    public
+      procedure Clear;
+      procedure Processar(const ValorV: TACBrPIXCobVValor);
+
+    published
+      property ModalidadeAbatimento: TACBrPIXValoresModalidade read fModalidadeAbatimento write fModalidadeAbatimento;
+      property valorPercAbatimento: Currency read fValorPercAbatimento write fValorPercAbatimento;
+      property ModalidadeDesconto: TACBrPIXDescontoModalidade read fModalidadeDesconto write fModalidadeDesconto;
+      property ValorPercDesconto: Currency read fValorPercDesconto write fValorPercDesconto;
+      property ModalidadeJuros: TACBrPIXJurosModalidade read fModalidadeJuros write fModalidadeJuros;
+      property ValorPercJuros: Currency read fValorPercJuros write fValorPercJuros;
+      property ModalidadeMulta: TACBrPixValoresModalidade read fModalidadeMulta write fModalidadeMulta;
+      property ValorPercMulta: Currency read fValorPercMulta write fValorPercMulta;
+      property original: Currency read fOriginal write fOriginal;
   end;
 
   { TLibPIXCDCalendarioVInfo }
   TLibPIXCDCalendarioVInfo = class(TACBrLibRespostaBase)
-  private
-    Fcriacao: TDateTime;
-    Fcriacao_Bias: Integer;
-    FdataDeVencimento: TDateTime;
-    FvalidadeAposVencimento: Integer;
-  public
-    procedure Clear;
-    procedure Processar(const CalendarioV: TACBrPIXCalendarioCobVGerada);
-  published
-    property criacao: TDateTime read fcriacao write fcriacao;
-    property criacao_Bias: Integer read fcriacao_Bias write fCriacao_Bias;
-    property dataDeVencimento: TDateTime read fDataDeVencimento write FDataDeVencimento;
-    property validadeAposVencimento: Integer read FValidadeAposVencimento write FValidadeAposVencimento;
+    private
+      Fcriacao: TDateTime;
+      Fcriacao_Bias: Integer;
+      FdataDeVencimento: TDateTime;
+      FvalidadeAposVencimento: Integer;
+
+    public
+      procedure Clear;
+      procedure Processar(const CalendarioV: TACBrPIXCalendarioCobVGerada);
+
+    published
+      property criacao: TDateTime read fcriacao write fcriacao;
+      property criacao_Bias: Integer read fcriacao_Bias write fCriacao_Bias;
+      property dataDeVencimento: TDateTime read fDataDeVencimento write FDataDeVencimento;
+      property validadeAposVencimento: Integer read FValidadeAposVencimento write FValidadeAposVencimento;
   end;
 
   { TLibPIXCDValorInfo }
   TLibPIXCDValorInfo = class(TACBrLibRespostaBase)
-  private
-    fOriginal: Currency;
-    fModalidadeAlteracao: Boolean;
-  public
-    procedure Clear;
-    procedure Processar(const Valor: TACBrPIXCobValor);
-  published
-    property original: Currency read fOriginal write fOriginal;
-    property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
+    private
+      fOriginal: Currency;
+      fModalidadeAlteracao: Boolean;
+
+    public
+      procedure Clear;
+      procedure Processar(const Valor: TACBrPIXCobValor);
+
+    published
+      property original: Currency read fOriginal write fOriginal;
+      property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
   end;
 
   { TLibPIXCDLocInfo }
   TLibPIXCDLocInfo = class(TACBrLibRespostaBase)
-  private
-    fId: Int64;
-    fTxId: String;
-    fLocation: String;
-    fCriacao: TDateTime;
-    fCriacao_Bias: Integer;
-  public
-    procedure Clear;
-    procedure Processar(const Loc: TACBrPIXLocationCompleta);
-  published
-    property id: Int64 read fId write fId;
-    property txId: String read fTxId write fTxId;
-    property location: String read fLocation write fLocation;
-    property criacao: TDateTime read fCriacao write fCriacao;
-    property criacao_Bias: Integer read fCriacao_Bias write fCriacao_Bias;
+    private
+      fId: Int64;
+      fTxId: String;
+      fLocation: String;
+      fCriacao: TDateTime;
+      fCriacao_Bias: Integer;
+
+    public
+      procedure Clear;
+      procedure Processar(const Loc: TACBrPIXLocationCompleta);
+
+    published
+      property id: Int64 read fId write fId;
+      property txId: String read fTxId write fTxId;
+      property location: String read fLocation write fLocation;
+      property criacao: TDateTime read fCriacao write fCriacao;
+      property criacao_Bias: Integer read fCriacao_Bias write fCriacao_Bias;
   end;
 
   { TLibPIXCDDevedorInfo }
   TLibPIXCDDevedorInfo = class(TACBrLibRespostaBase)
-  private
-    fCpf: String;
-    fCnpj: String;
-    fNome: String;
-    fEmail: String;
-    fLogradouro: String;
-    fCidade: String;
-    fUf: String;
-    fCep: String;
-  public
-    procedure Clear;
-    procedure Processar(const Devedor: TACBrPIXDevedor);
-    procedure ProcessarDadosDevedor(const Devedor: TACBrPIXDadosDevedor);
-    procedure ProcessarDadosRecebedor(const Recebedor: TACBrPIXDadosRecebedor);
-  published
-    property cpf: String read fCpf write fCpf;
-    property cnpj: String read fCnpj write fCnpj;
-    property nome: String read fNome write fNome;
-    property Email: String read FEmail write FEmail;
-    property Logradouro: String read FLogradouro write FLogradouro;
-    property Cidade: String read FCidade write FCidade;
-    property Uf: String read FUf write FUf;
-    property Cep: String read FCep write FCep;
+    private
+      fCpf: String;
+      fCnpj: String;
+      fNome: String;
+      fEmail: String;
+      fLogradouro: String;
+      fCidade: String;
+      fUf: String;
+      fCep: String;
+
+    public
+      procedure Clear;
+      procedure Processar(const Devedor: TACBrPIXDevedor);
+      procedure ProcessarDadosDevedor(const Devedor: TACBrPIXDadosDevedor);
+      procedure ProcessarDadosRecebedor(const Recebedor: TACBrPIXDadosRecebedor);
+
+    published
+      property cpf: String read fCpf write fCpf;
+      property cnpj: String read fCnpj write fCnpj;
+      property nome: String read fNome write fNome;
+      property Email: String read FEmail write FEmail;
+      property Logradouro: String read FLogradouro write FLogradouro;
+      property Cidade: String read FCidade write FCidade;
+      property Uf: String read FUf write FUf;
+      property Cep: String read FCep write FCep;
   end;
 
   { TLibPIXCDCalendarioInfo }
   TLibPIXCDCalendarioInfo = class(TACBrLibRespostaBase)
-  private
-    fCriacao: TDateTime;
-    fCriacao_Bias: Integer;
-    fExpiracao: Integer;
-  public
-    procedure Clear;
-    procedure Processar(const Calendario: TACBrPIXCalendarioCobGerada);
-  published
-    property criacao: TDateTime read fCriacao write fCriacao;
-    property criacao_Bias: Integer read fCriacao_Bias write fCriacao_Bias;
-    property expiracao: Integer read fExpiracao write fExpiracao;
+    private
+      fCriacao: TDateTime;
+      fCriacao_Bias: Integer;
+      fExpiracao: Integer;
+
+    public
+      procedure Clear;
+      procedure Processar(const Calendario: TACBrPIXCalendarioCobGerada);
+
+    published
+      property criacao: TDateTime read fCriacao write fCriacao;
+      property criacao_Bias: Integer read fCriacao_Bias write fCriacao_Bias;
+      property expiracao: Integer read fExpiracao write fExpiracao;
   end;
 
   { TLibPIXCDCobVResposta }
   TLibPIXCDCobVResposta = class (TACBrLibRespostaBase)
-  private
-    fcalendario: TLibPIXCDCalendarioVInfo;
-    fdevedor: TLibPIXCDDevedorInfo;
-    floc: TLibPIXCDLocInfo;
-    frecebedor: TLibPIXCDDevedorInfo;
-    frevisao: Integer;
-    fstatus: TACBrPIXStatusCobranca;
-    ftxId: String;
-    fvalor: TLibPixCDValorVInfo;
-    fPix: TACBrObjectList;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy; override;
+    private
+      fcalendario: TLibPIXCDCalendarioVInfo;
+      fdevedor: TLibPIXCDDevedorInfo;
+      floc: TLibPIXCDLocInfo;
+      frecebedor: TLibPIXCDDevedorInfo;
+      frevisao: Integer;
+      fstatus: TACBrPIXStatusCobranca;
+      ftxId: String;
+      fvalor: TLibPixCDValorVInfo;
+      fPix: TACBrObjectList;
 
-    procedure Clear;
-    procedure ProcessarCobVGerada(const CobVGerada: TACBrPIXCobVGerada);
-    procedure ProcessarCobVCompleta(const CobVCompleta: TACBrPIXCobVCompleta);
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
 
-  published
-    property calendario: TLibPIXCDCalendarioVInfo read fcalendario;
-    property devedor: TLibPIXCDDevedorInfo read fdevedor;
-    property loc: TLibPIXCDLocInfo read floc;
-    property recebedor: TLibPIXCDDevedorInfo read frecebedor;
-    property revisao: Integer read frevisao;
-    property status: TACBrPIXStatusCobranca read fstatus;
-    property txId: String read fTxId;
-    property valor: TLibPixCDValorVInfo read fvalor;
+      procedure Clear;
+      procedure ProcessarCobVGerada(const CobVGerada: TACBrPIXCobVGerada);
+      procedure ProcessarCobVCompleta(const CobVCompleta: TACBrPIXCobVCompleta);
+
+    published
+      property calendario: TLibPIXCDCalendarioVInfo read fcalendario;
+      property devedor: TLibPIXCDDevedorInfo read fdevedor;
+      property loc: TLibPIXCDLocInfo read floc;
+      property recebedor: TLibPIXCDDevedorInfo read frecebedor;
+      property revisao: Integer read frevisao;
+      property status: TACBrPIXStatusCobranca read fstatus;
+      property txId: String read fTxId;
+      property valor: TLibPixCDValorVInfo read fvalor;
   end;
 
   { TLibPIXCDCobResposta }
   TLibPIXCDCobResposta = class(TACBrLibRespostaBase)
-  private
-    fCalendario: TLibPIXCDCalendarioInfo;
-    fTxId: String;
-    fRevisao: Integer;
-    fDevedor: TLibPIXCDDevedorInfo;
-    fLoc: TLibPIXCDLocInfo;
-    fStatus: TACBrPIXStatusCobranca;
-    fValor: TLibPIXCDValorInfo;
-    fPixCopiaeCola: String;
-    fPix: TACBrObjectList;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy; override;
+    private
+      fCalendario: TLibPIXCDCalendarioInfo;
+      fTxId: String;
+      fRevisao: Integer;
+      fDevedor: TLibPIXCDDevedorInfo;
+      fLoc: TLibPIXCDLocInfo;
+      fStatus: TACBrPIXStatusCobranca;
+      fValor: TLibPIXCDValorInfo;
+      fPixCopiaeCola: String;
+      fPix: TACBrObjectList;
 
-    procedure Clear;
-    procedure ProcessarCobGerada(const CobGerada: TACBrPIXCobGerada);
-    procedure ProcessarCobCompleta(const CobCompleta: TACBrPIXCobCompleta);
-  published
-    property txId: String read fTxId write fTxId;
-    property revisao: Integer read fRevisao write fRevisao;
-    property status: TACBrPIXStatusCobranca read fStatus write fStatus;
-    property calendario: TLibPIXCDCalendarioInfo read fCalendario write fCalendario;
-    property devedor: TLibPIXCDDevedorInfo read fDevedor write fDevedor;
-    property loc: TLibPIXCDLocInfo read fLoc write fLoc;
-    property valor: TLibPIXCDValorInfo read fValor write fValor;
-    property pixCopiaeCola: String read FPixCopiaeCola write fPixCopiaeCola;
-    property Pix: TACBrObjectList read FPix write fPix;
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure ProcessarCobGerada(const CobGerada: TACBrPIXCobGerada);
+      procedure ProcessarCobCompleta(const CobCompleta: TACBrPIXCobCompleta);
+
+    published
+      property txId: String read fTxId write fTxId;
+      property revisao: Integer read fRevisao write fRevisao;
+      property status: TACBrPIXStatusCobranca read fStatus write fStatus;
+      property calendario: TLibPIXCDCalendarioInfo read fCalendario write fCalendario;
+      property devedor: TLibPIXCDDevedorInfo read fDevedor write fDevedor;
+      property loc: TLibPIXCDLocInfo read fLoc write fLoc;
+      property valor: TLibPIXCDValorInfo read fValor write fValor;
+      property pixCopiaeCola: String read FPixCopiaeCola write fPixCopiaeCola;
+      property Pix: TACBrObjectList read FPix write fPix;
+  end;
+
+  { TLibPIXCDPaginacao }
+  TLibPIXCDPaginacao = class(TACBrLibRespostaBase)
+    private
+      fitensPorPagina: Integer;
+      fpaginaAtual: Integer;
+      fquantidadeDePaginas: Integer;
+      fquantidadeTotalDeItens: Integer;
+
+    public
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const Paginacao: TACBrPIXPaginacao);
+
+    published
+      property itensPorPagina: Integer read fitensPorPagina write fitensPorPagina;
+      property paginaAtual: Integer read fpaginaAtual write fpaginaAtual;
+      property quantidadeDePaginas: Integer read fquantidadeDePaginas write fquantidadeDePaginas;
+      property quantidadeTotalDeItens: Integer read fquantidadeTotalDeItens write fquantidadeTotalDeItens;
+  end;
+
+  { TLibPIXCDParametrosConsultaCob }
+  TLibPIXCDParametrosConsultaCob = class(TACBrLibRespostaBase)
+    private
+      fcnpj: String;
+      fcpf: String;
+      flocationPresente: Boolean;
+      ffim: TDateTime;
+      finicio: TDateTime;
+      fpaginacao: TLibPIXCDPaginacao;
+      fstatus: String;
+
+    public
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const ParametrosConsultaCob: TACBrPIXParametrosConsultaCob);
+    published
+      property cnpj: String read fcnpj write fcnpj;
+      property cpf: String read fcpf write fcpf;
+      property locationPresente: Boolean read flocationPresente write flocationPresente;
+      property fim: TDateTime read ffim write ffim;
+      property inicio: TDateTime read finicio write finicio;
+      property paginacao: TLibPIXCDPaginacao read fpaginacao write fpaginacao;
+      property status: String read fstatus write fstatus;
+  end;
+
+  { TLibPIXCDCobVCompletaArray }
+  TLibPIXCDCobVCompletaArray = class(TACBrLibRespostaBase)
+    private
+      fcobsV: TACBrObjectList;
+
+    public
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const CobVCompleta: TACBrPIXArray);
+
+    published
+      property cobsV: TACBrObjectList read fcobsV write fcobsV;
+  end;
+
+  { TLibPIXCDCobsVConsultadas }
+  TLibPIXCDCobsVConsultadas = class(TACBrLibRespostaBase)
+    private
+      fcobsV: TLibPIXCDCobVCompletaArray;
+      fparametros: TLibPIXCDParametrosConsultaCob;
+
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const CobsVConsultadas: TACBrPIXCobsVConsultadas);
+
+    published
+      property cobsV: TLibPIXCDCobVCompletaArray read fcobsV write fcobsV;
+      property parametros: TLibPIXCDParametrosConsultaCob read fparametros write fparametros;
+  end;
+
+  { TLibPIXCDCobCompletaArray }
+  TLibPIXCDCobCompletaArray = class(TACBrLibRespostaBase)
+    private
+      fcobs: TACBrObjectList;
+
+    public
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const CobCompleta: TACBrPIXArray);
+
+    published
+      property cobs: TACBrObjectList read fcobs write fcobs;
+  end;
+
+  { TLibPIXCDCobsConsultadas }
+  TLibPIXCDCobsConsultadas = class(TACBrLibRespostaBase)
+    private
+      fcobs: TLibPIXCDCobCompletaArray;
+      fparametros: TLibPIXCDParametrosConsultaCob;
+
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const CobsConsultadas: TACBrPIXCobsConsultadas);
+
+    published
+      property cobs: TLibPIXCDCobCompletaArray read fcobs write fcobs;
+      property parametros: TLibPIXCDParametrosConsultaCob read fparametros write fparametros;
   end;
 
   { TLibPIXCDDevolucaoPixResposta }
   TLibPIXCDDevolucaoPixResposta = class(TACBrLibRespostaBase)
-  private
-    fliquidacao: TDateTime;
-    fliquidacao_Bias: Integer;
-    fsolicitacao: TDateTime;
-    fsolicitacao_Bias: Integer;
-    fid: String;
-    fmotivo: String;
-    frtrId: String;
-    fstatus: TACBrPIXStatusDevolucao;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce; overload;
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); overload;
+    private
+      fliquidacao: TDateTime;
+      fliquidacao_Bias: Integer;
+      fsolicitacao: TDateTime;
+      fsolicitacao_Bias: Integer;
+      fid: String;
+      fmotivo: String;
+      frtrId: String;
+      fstatus: TACBrPIXStatusDevolucao;
 
-    procedure Clear;
-    procedure Processar(const Devolucao: TACBrPIXDevolucao);
-  published
-    property liquidacao: TDateTime read fliquidacao write fliquidacao;
-    property liquidacao_Bias: Integer read fliquidacao_Bias write fliquidacao_Bias;
-    property solicitacao: TDateTime read fsolicitacao write fsolicitacao;
-    property solicitacao_Bias: Integer read fsolicitacao_Bias write fsolicitacao_Bias;
-    property id: String read fId write fId;
-    property motivo: String read fmotivo write fmotivo;
-    property rtrId: String read frtrId write frtrId;
-    property status: TACBrPIXStatusDevolucao read fStatus write fStatus;
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce; overload;
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); overload;
+
+      procedure Clear;
+      procedure Processar(const Devolucao: TACBrPIXDevolucao);
+
+    published
+      property liquidacao: TDateTime read fliquidacao write fliquidacao;
+      property liquidacao_Bias: Integer read fliquidacao_Bias write fliquidacao_Bias;
+      property solicitacao: TDateTime read fsolicitacao write fsolicitacao;
+      property solicitacao_Bias: Integer read fsolicitacao_Bias write fsolicitacao_Bias;
+      property id: String read fId write fId;
+      property motivo: String read fmotivo write fmotivo;
+      property rtrId: String read frtrId write frtrId;
+      property status: TACBrPIXStatusDevolucao read fStatus write fStatus;
   end;
 
   { TLibPIXCDConsultarPixRecebidosResposta }
   TLibPIXCDConsultarPixRecebidosResposta = class(TACBrLibRespostaBase)
-  private
-    fcnpj: String;
-    fcpf: String;
-    fdevolucaoPresente: Boolean;
-    ffim: TDateTime;
-    finicio: TDateTime;
-    fPaginaAtual: Integer;
-    fItensPorPagina: Integer;
-    fQuantidadeDePaginas: Integer;
-    fQuantidadeTotaldeItens: Integer;
-    ftxid: String;
-    ftxIdPresente: Boolean;
-    FPix: TACBrObjectList;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy; override;
-    procedure Clear;
-    procedure Processar(const PixConsultados: TACBrPIXConsultados);
-  published
-    property cnpj: String read FCnpj write FCnpj;
-    property cpf: String read FCpf write FCpf;
-    property devolucaoPresente: Boolean  read FdevolucaoPresente write FdevolucaoPresente;
-    property fim: TDateTime read Ffim write Ffim;
-    property inicio: TDateTime read Finicio write finicio;
-    property paginaAtual: Integer read fpaginaAtual write fpaginaAtual;
-    property itensPorPagina: Integer read fitensPorPagina write fitensPorPagina;
-    property quantidadeDePaginas: Integer read fquantidadeDePaginas write fquantidadeDePaginas;
-    property quantidadeTotalDeItens: Integer read fquantidadeTotalDeItens write fquantidadeTotalDeItens;
-    property TxId: String read FTxId write FTxId;
-    property TxIdPresente: Boolean read FTxIdPresente write FTxIdPresente;
-    property Pix: TACBrObjectList read FPix write FPix;
+    private
+      fcnpj: String;
+      fcpf: String;
+      fdevolucaoPresente: Boolean;
+      ffim: TDateTime;
+      finicio: TDateTime;
+      fPaginaAtual: Integer;
+      fItensPorPagina: Integer;
+      fQuantidadeDePaginas: Integer;
+      fQuantidadeTotaldeItens: Integer;
+      ftxid: String;
+      ftxIdPresente: Boolean;
+      FPix: TACBrObjectList;
+
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const PixConsultados: TACBrPIXConsultados);
+
+    published
+      property cnpj: String read FCnpj write FCnpj;
+      property cpf: String read FCpf write FCpf;
+      property devolucaoPresente: Boolean  read FdevolucaoPresente write FdevolucaoPresente;
+      property fim: TDateTime read Ffim write Ffim;
+      property inicio: TDateTime read Finicio write finicio;
+      property paginaAtual: Integer read fpaginaAtual write fpaginaAtual;
+      property itensPorPagina: Integer read fitensPorPagina write fitensPorPagina;
+      property quantidadeDePaginas: Integer read fquantidadeDePaginas write fquantidadeDePaginas;
+      property quantidadeTotalDeItens: Integer read fquantidadeTotalDeItens write fquantidadeTotalDeItens;
+      property TxId: String read FTxId write FTxId;
+      property TxIdPresente: Boolean read FTxIdPresente write FTxIdPresente;
+      property Pix: TACBrObjectList read FPix write FPix;
   end;
 
   { TLibPIXCDSaqueTrocoInfo }
   TLibPIXCDSaqueTrocoInfo = class(TACBrLibRespostaBase)
-  private
-    fmodalidadeAgente: TACBrPIXModalidadeAgente;
-    fmodalidadeAlteracao: Boolean;
-    fprestadorDoServicoDeSaque: Integer;
-    fvalor: Currency;
-  public
-    procedure Clear;
-    procedure Processar(const SaqueTroco: TACBrPIXSaqueTroco);
-  published
-    property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
-    property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
-    property prestadorDoServicoDeSaque: Integer read fprestadorDoServicoDeSaque write fprestadorDoServicoDeSaque;
-    property valor: Currency read fValor write fValor;
+    private
+      fmodalidadeAgente: TACBrPIXModalidadeAgente;
+      fmodalidadeAlteracao: Boolean;
+      fprestadorDoServicoDeSaque: Integer;
+      fvalor: Currency;
+
+    public
+      procedure Clear;
+      procedure Processar(const SaqueTroco: TACBrPIXSaqueTroco);
+
+    published
+      property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
+      property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
+      property prestadorDoServicoDeSaque: Integer read fprestadorDoServicoDeSaque write fprestadorDoServicoDeSaque;
+      property valor: Currency read fValor write fValor;
   end;
 
   { TLibPIXCDComponentesValorInfo }
   TLibPIXCDComponentesValorInfo = class(TACBrLibRespostaBase)
-  private
-    fabatimento: Currency;
-    fdesconto: Currency;
-    fjuros: Currency;
-    fmulta: Currency;
-    foriginal: Currency;
-    fsaque: TLibPIXCDSaqueTrocoInfo;
-    ftroco: TLibPIXCDSaqueTrocoInfo;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-    destructor Destroy; override;
-    procedure Clear;
-    procedure Processar(const ComponentesValor: TACBrPIXComponentesValor);
-  published
-    property abatimento: Currency read fabatimento write fabatimento;
-    property desconto: Currency read fdesconto write fdesconto;
-    property juros: Currency read fjuros write fjuros;
-    property multa: Currency read fmulta write fmulta;
-    property original: Currency read foriginal write foriginal;
-    property saque: TLibPIXCDSaqueTrocoInfo read fsaque;
-    property troco: TLibPIXCDSaqueTrocoInfo read ftroco;
+    private
+      fabatimento: Currency;
+      fdesconto: Currency;
+      fjuros: Currency;
+      fmulta: Currency;
+      foriginal: Currency;
+      fsaque: TLibPIXCDSaqueTrocoInfo;
+      ftroco: TLibPIXCDSaqueTrocoInfo;
+
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      destructor Destroy; override;
+      procedure Clear;
+      procedure Processar(const ComponentesValor: TACBrPIXComponentesValor);
+
+    published
+      property abatimento: Currency read fabatimento write fabatimento;
+      property desconto: Currency read fdesconto write fdesconto;
+      property juros: Currency read fjuros write fjuros;
+      property multa: Currency read fmulta write fmulta;
+      property original: Currency read foriginal write foriginal;
+      property saque: TLibPIXCDSaqueTrocoInfo read fsaque;
+      property troco: TLibPIXCDSaqueTrocoInfo read ftroco;
   end;
 
   { TLibPIXCDConsultarPixResposta }
   TLibPIXCDConsultarPixResposta = class(TACBrLibRespostaBase)
-  private
-    fchave: String;
-    fcomponentesValor: TLibPIXCDComponentesValorInfo;
-    fdevolucoes: TACBrObjectList;
-    fendToEndId: String;
-    fhorario: TDateTime;
-    fhorario_Bias: Integer;
-    finfoPagador: String;
-    ftxid: String;
-    fvalor: Currency;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce; overload;
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); overload;
-    destructor Destroy; override;
+    private
+      fchave: String;
+      fcomponentesValor: TLibPIXCDComponentesValorInfo;
+      fdevolucoes: TACBrObjectList;
+      fendToEndId: String;
+      fhorario: TDateTime;
+      fhorario_Bias: Integer;
+      finfoPagador: String;
+      ftxid: String;
+      fvalor: Currency;
 
-    procedure Clear;
-    procedure Processar(const Pix: TACBrPIX);
-  published
-    property chave: String read fchave write fchave;
-    property componentesValor: TLibPIXCDComponentesValorInfo read fcomponentesValor;
-    property devolucoes: TACBrObjectList read fDevolucoes;
-    property endToEndId: String read FendToEndId write fendToEndId;
-    property horario: TDateTime read Fhorario write Fhorario;
-    property horario_Bias: Integer read fhorario_Bias write fhorario_Bias;
-    property infoPagador: String read fInfoPagador write fInfoPagador;
-    property TxId: String read fTxId write fTxId;
-    property valor: Currency read fValor write fValor;
+    public
+      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce; overload;
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); overload;
+      destructor Destroy; override;
+
+      procedure Clear;
+      procedure Processar(const Pix: TACBrPIX);
+
+    published
+      property chave: String read fchave write fchave;
+      property componentesValor: TLibPIXCDComponentesValorInfo read fcomponentesValor;
+      property devolucoes: TACBrObjectList read fDevolucoes;
+      property endToEndId: String read FendToEndId write fendToEndId;
+      property horario: TDateTime read Fhorario write Fhorario;
+      property horario_Bias: Integer read fhorario_Bias write fhorario_Bias;
+      property infoPagador: String read fInfoPagador write fInfoPagador;
+      property TxId: String read fTxId write fTxId;
+      property valor: Currency read fValor write fValor;
   end;
 
   { TLibPIXCDResposta }
@@ -441,9 +592,11 @@ end;
 
 procedure TLibPIXCDProblemaResposta.Clear;
 begin
+  fcorrelationId := EmptyStr;
   fStatus := 0;
   fTitle := EmptyStr;
   fDetail := EmptyStr;
+  ftype_uri := EmptyStr;
   fViolacoes.Clear;
 end;
 
@@ -455,6 +608,8 @@ begin
   fStatus := Problema.status;
   fTitle := Problema.title;
   fDetail := Problema.detail;
+  fcorrelationId := Problema.correlationId;
+  ftype_uri := Problema.type_uri;
 
   for i:=0 to Pred(Problema.violacoes.Count) do
   begin
@@ -689,8 +844,6 @@ begin
 end;
 
 procedure TLibPIXCDCobResposta.ProcessarCobGerada(const CobGerada: TACBrPIXCobGerada);
-var
-  i: Integer;
 begin
   TxId := CobGerada.txId;
   Revisao := CobGerada.revisao;
@@ -941,6 +1094,201 @@ begin
   fStatus := PIXCD.status;
   fTitle := PIXCD.title;
   fDetail := PIXCD.detail;
+end;
+
+{ TLibPIXCDCobsConsultadas }
+constructor TLibPIXCDCobsConsultadas.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespCobsConsultadas, ATipo, AFormato);
+  fcobs := TLibPIXCDCobCompletaArray.Create(CSessaoRespCobCompleta, ATipo, AFormato);
+  fparametros := TLibPIXCDParametrosConsultaCob.Create(CSessaoRespParametrosConsultaCob, ATipo, AFormato);
+end;
+
+destructor TLibPIXCDCobsConsultadas.Destroy;
+begin
+  fcobs.Free;
+  fparametros.Free;
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDCobsConsultadas.Clear;
+begin
+  fcobs.Clear;
+  fparametros.Clear;
+end;
+
+procedure TLibPIXCDCobsConsultadas.Processar(const CobsConsultadas: TACBrPIXCobsConsultadas);
+var
+  i: Integer;
+  InfoCobs: TLibPIXCDCobCompletaArray;
+begin
+
+  for i := 0 to CobsConsultadas.cobs.Count - 1 do
+  begin
+    InfoCobs := TLibPIXCDCobCompletaArray.Create(CSessaoRespCobsInfo + IntToStr(i), Tipo, Formato);
+    InfoCobs.Processar(CobsConsultadas.cobs.Items[i].pix);
+    cobs.cobs.Add(InfoCobs);
+  end;
+  parametros.Processar(CobsConsultadas.parametros);
+end;
+
+{ TLibPIXCDCobsVConsultadas }
+constructor TLibPIXCDCobsVConsultadas.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespCobsVConsultadas, ATipo, AFormato);
+  fcobsV := TLibPIXCDCobVCompletaArray.Create(CSessaoRespCobCompleta, ATipo, AFormato);
+  fparametros := TLibPIXCDParametrosConsultaCob.Create(CSessaoRespParametrosConsultaCobV, ATipo, AFormato);
+end;
+
+destructor TLibPIXCDCobsVConsultadas.Destroy;
+begin
+  fcobsV.Free;
+  fparametros.Free;
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDCobsVConsultadas.Clear;
+begin
+  fcobsV.Clear;
+  fparametros.Clear;
+end;
+
+procedure TLibPIXCDCobsVConsultadas.Processar(const CobsVConsultadas: TACBrPIXCobsVConsultadas);
+var
+  i: Integer;
+  InfoCobsV: TLibPIXCDCobVCompletaArray;
+begin
+  for i := 0 to CobsVConsultadas.cobs.Count - 1 do
+  begin
+    InfoCobsV := TLibPIXCDCobVCompletaArray.Create(CSessaoRespCobsVInfo + IntToStr(i), Tipo, Formato);;
+    InfoCobsV.Processar(CobsVConsultadas.cobs.Items[i].pix);
+    cobsV.cobsV.Add(InfoCobsV);
+  end;
+  parametros.Processar(CobsVConsultadas.parametros);
+end;
+
+{ TLibPIXCDCobCompletaArray }
+constructor TLibPIXCDCobCompletaArray.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(ASessao, ATipo, AFormato);
+  fcobs := TACBrObjectList.Create;
+end;
+
+destructor TLibPIXCDCobCompletaArray.Destroy;
+begin
+  fcobs.Free;
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDCobCompletaArray.Clear;
+begin
+  fcobs.Clear;
+end;
+
+procedure TLibPIXCDCobCompletaArray.Processar(const CobCompleta: TACBrPIXArray);
+var
+  i: Integer;
+  cobsInfo: TLibPIXCDConsultarPixResposta;
+begin
+  for i := 0 to CobCompleta.Count -1 do
+  begin
+    cobsInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespCobs + IntToStr(i), Tipo, Formato);
+    cobsInfo.Processar(CobCompleta[i]);
+    cobs.Add(cobsInfo);
+  end;
+end;
+
+{ TLibPIXCDParametrosConsultaCob }
+constructor TLibPIXCDParametrosConsultaCob.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespParametrosConsultaCob, ATipo, AFormato);
+  fpaginacao := TLibPIXCDPaginacao.Create(CSessaoRespPaginacaoCobV, ATipo, AFormato);
+end;
+
+destructor TLibPIXCDParametrosConsultaCob.Destroy;
+begin
+  fpaginacao.Free;
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDParametrosConsultaCob.Clear;
+begin
+  fcnpj := EmptyStr;
+  fcpf := EmptyStr;
+  flocationPresente := False;
+  ffim := 0;
+  finicio := 0;
+  fpaginacao.Clear;
+  fstatus := EmptyStr;
+end;
+
+procedure TLibPIXCDParametrosConsultaCob.Processar(const ParametrosConsultaCob: TACBrPIXParametrosConsultaCob);
+begin
+  cnpj := ParametrosConsultaCob.cnpj;
+  cpf := ParametrosConsultaCob.cpf;
+  locationPresente := ParametrosConsultaCob.locationPresente;
+  fim := ParametrosConsultaCob.fim;
+  inicio := ParametrosConsultaCob.inicio;
+  paginacao.Processar(ParametrosConsultaCob.paginacao);
+  status := ParametrosConsultaCob.status;
+end;
+
+{ TLibPIXCDCobVCompletaArray }
+constructor TLibPIXCDCobVCompletaArray.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(ASessao, ATipo, AFormato);
+  fcobsV := TACBrObjectList.Create;
+end;
+
+destructor TLibPIXCDCobVCompletaArray.Destroy;
+begin
+  fcobsV.Free;
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDCobVCompletaArray.Clear;
+begin
+  fcobsV.Clear;
+end;
+
+procedure TLibPIXCDCobVCompletaArray.Processar(const CobVCompleta: TACBrPIXArray);
+var
+  i: Integer;
+  cobsVInfo: TLibPIXCDConsultarPixResposta;
+begin
+  for i := 0 to CobVCompleta.Count -1 do
+  begin
+   cobsVInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespCobsV + IntToStr(i), Tipo, Formato);
+   cobsVInfo.Processar(CobVCompleta[i]);
+   cobsV.Add(cobsVInfo);
+  end;
+end;
+
+{ TLibPIXCDPaginacao }
+constructor TLibPIXCDPaginacao.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespPaginacaoCob, ATipo, AFormato);
+end;
+
+destructor TLibPIXCDPaginacao.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TLibPIXCDPaginacao.Clear;
+begin
+  fitensPorPagina := 0;
+  fpaginaAtual := 0;
+  fquantidadeDePaginas := 0;
+  fquantidadeTotalDeItens := 0;
+end;
+
+procedure TLibPIXCDPaginacao.Processar(const Paginacao: TACBrPIXPaginacao);
+begin
+  itensPorPagina := Paginacao.itensPorPagina;
+  paginaAtual := Paginacao.paginaAtual;
+  quantidadeDePaginas := Paginacao.quantidadeDePaginas;
+  quantidadeTotalDeItens := Paginacao.quantidadeTotalDeItens;
 end;
 
 end.

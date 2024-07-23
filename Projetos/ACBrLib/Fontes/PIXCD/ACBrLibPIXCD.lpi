@@ -524,7 +524,7 @@
         <PackageName Value="ACBr_PIXCD"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="ACBrLibPIXCD.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -580,6 +580,10 @@
         <Filename Value="ACBrLibPIXCDStaticImportMT.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="ACBrLibPIXCDMateraRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

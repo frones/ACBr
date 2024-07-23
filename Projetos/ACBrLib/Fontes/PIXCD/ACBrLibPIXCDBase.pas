@@ -62,10 +62,12 @@ type
       function ConsultarDevolucaoPix(const Ae2eid, AidDevolucao: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function CriarCobrancaImediata(AInfCobSolicitada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarCobrancaImediata(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+      function ConsultarCobrancasCob(ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
       function RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function CancelarCobrancaImediata(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function CriarCobranca(AinfCobVSolicitada: PChar; ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function ConsultarCobranca(const ATxId: PChar; ARevisao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+      function ConsultarCobrancasCobV(ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
       function RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
       function CancelarCobranca(ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 
@@ -481,6 +483,63 @@ begin
   end;
 end;
 
+function TACBrLibPIXCD.ConsultarCobrancasCob(ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  CpfCnpj: String;
+  Resposta: AnsiString;
+  status: TACBrPIXStatusCobranca;
+  Resp: TLibPIXCDCobsConsultadas;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
+begin
+  try
+    CpfCnpj := ConverterAnsiParaUTF8(ACpfCnpj);
+
+    if not (TEnum.TryParse<TACBrPIXStatusCobranca>(AStatus, status)) then
+       status := TACBrPIXStatusCobranca.stcNENHUM;
+
+    if Config.Log.Nivel > logNormal then
+       GravarLog('PIXCD_ConsultarCobrancasCob(' + DateToStr(ADataInicio) + ',' + DateToStr(ADataFim) + ',' + CpfCnpj + ',' + BoolToStr(ALocationPresente) + ',' + PIXStatusCobrancaToString(status) + ',' + IntToStr(PagAtual) + ',' + IntToStr(ItensPorPagina) + ' )', logCompleto, True)
+    else
+       GravarLog('PIXCD_ConsultarCobrancasCob', logNormal);
+
+    PIXCDDM.Travar;
+    try
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCob.ConsultarCobrancas(ADataInicio, ADataFim, CpfCnpj, ALocationPresente, status, PagAtual, ItensPorPagina);
+
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobsConsultadas.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.CobsConsultadas);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
+      end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      PIXCDDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
 function TACBrLibPIXCD.RevisarCobrancaImediata(AInfCobRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint):longint;
 var
   TxId: String;
@@ -707,6 +766,63 @@ begin
   end;
 end;
 
+function TACBrLibPIXCD.ConsultarCobrancasCobV(ADataInicio: TDateTime; ADataFim: TDateTime; ACpfCnpj: PChar; ALocationPresente: Boolean; AStatus: longint; PagAtual: longint; ItensPorPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  CpfCnpj: String;
+  Resposta: AnsiString;
+  status: TACBrPIXStatusCobranca;
+  Resp: TLibPIXCDCobsVConsultadas;
+  RespProb: TLibPIXCDProblemaResposta;
+  Ok: Boolean;
+begin
+  try
+    CpfCnpj := ConverterAnsiParaUTF8(ACpfCnpj);
+
+    if not (TEnum.TryParse<TACBrPIXStatusCobranca>(AStatus, status)) then
+       status := TACBrPIXStatusCobranca.stcNENHUM;
+
+    if Config.Log.Nivel > logNormal then
+       GravarLog('PIXCD_ConsultarCobrancasCobV(' + DateToStr(ADataInicio) + ',' + DateToStr(ADataFim) + ',' + CpfCnpj + ',' + BoolToStr(ALocationPresente) + ',' + PIXStatusCobrancaToString(status) + ',' + IntToStr(PagAtual) + ',' + IntToStr(ItensPorPagina) + ' )', logCompleto, True)
+    else
+       GravarLog('PIXCD_ConsultarCobrancasCobV', logNormal);
+
+    PIXCDDM.Travar;
+    try
+      Ok := PIXCDDM.ACBrPixCD1.PSP.epCobV.ConsultarCobrancas(ADataInicio, ADataFim, CpfCnpj, ALocationPresente, status, PagAtual, ItensPorPagina);
+
+      if Ok then
+      begin
+        Resp := TLibPIXCDCobsVConsultadas.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.CobsVConsultadas);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+      end else
+      begin
+        RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
+        try
+          RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
+          Resposta := RespProb.Gerar;
+        finally
+          RespProb.Free;
+        end;
+      end;
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      PIXCDDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+  end;
+end;
+
 function TACBrLibPIXCD.RevisarCobranca(AInfCobVRevisada: PChar; const ATxId: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   TxId: String;
@@ -823,7 +939,8 @@ begin
   end;
 end;
 
-function TACBrLibpixcd.MateraIncluirConta(aInfIncluirConta: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.MateraIncluirConta(aInfIncluirConta: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resposta: AnsiString;
   Resp: TLibPIXCDIncluirContaResposta;
@@ -968,7 +1085,8 @@ begin
   end;
 end;
 
-function TACBrLibPIXCD.MateraIncluirChavePix(aAccountId: PChar; aExternalID: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPIXCD.MateraIncluirChavePix(aAccountId, aExternalID: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
 var
   accountid, externalid: String;
   Resposta: AnsiString;

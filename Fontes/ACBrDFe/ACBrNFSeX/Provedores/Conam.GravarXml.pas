@@ -114,7 +114,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DtEmi', 1, 10, 1,
                         FormatDateTime('dd/mm/yyyy', NFse.DataEmissaoRps), ''));
 
-  if NFSe.Servico.Valores.IssRetido = stNormal then
+  if NFSe.Servico.Valores.IssRetido in [stNormal, stDevidoForaMunicipioNaoRetido] then
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RetFonte', 1, 3, 1, 'NAO', ''))
   else
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RetFonte', 1, 3, 1, 'SIM', ''));

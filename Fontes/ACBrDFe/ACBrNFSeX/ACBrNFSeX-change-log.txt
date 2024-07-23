@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/07/2024
+-- Conam.GravarXml --
+[*] Alteração para que o valor de RetFonte seja "NAO" para quando IssRetido tenha
+    os valores stNormal e stDevidoForaMunicipioNaoRetido.
+   Por: Bruno
 -- ACBrNFSeXWebserviceBase --
 [*] Alterações na função: ConverteANSIparaUTF8, agora ela realiza a conversão sem
     verficar se o XML esta ou não em UTF-8.

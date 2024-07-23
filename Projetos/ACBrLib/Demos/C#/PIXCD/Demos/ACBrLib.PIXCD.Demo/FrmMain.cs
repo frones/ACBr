@@ -630,6 +630,50 @@ namespace ACBrLibPIXCD.Demo
             }
         }
 
+        private void btnConsultarCobrancasCob_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dataInicial = "dd/MM/yyyy";
+                if (InputBox.Show("Consultar Cobranças Cob", "Informe a Data Inicial", ref dataInicial) != DialogResult.OK) return;
+
+                var dataFinal = "dd/MM/yyyy";
+                if (InputBox.Show("Consultar Cobranças Cob", "Informe a Data Final", ref dataFinal) != DialogResult.OK) return;
+
+                var status = 0;
+                if (InputBox.Show("Consultar Cobranças Cob", "Informe o status:", ref status) != DialogResult.OK) return;
+
+                var ret = ACBrPIXCD.ConsultarCobrancasCob(DateTime.Parse(dataInicial), DateTime.Parse(dataFinal), "", false, status, 1, 30);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnConsultarCobrancasCobV_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dataInicial = "dd/MM/yyyy";
+                if (InputBox.Show("Consultar Cobranças CobV", "Informe a Data Inicial", ref dataInicial) != DialogResult.OK) return;
+
+                var dataFinal = "dd/MM/yyyy";
+                if (InputBox.Show("Consultar Cobranças CobV", "Informe a Data Final", ref dataFinal) != DialogResult.OK) return;
+
+                var status = 0;
+                if (InputBox.Show("Consultar Cobranças CobV", "Informe o status:", ref status) != DialogResult.OK) return;
+
+                var ret = ACBrPIXCD.ConsultarCobrancasCobV(DateTime.Parse(dataInicial), DateTime.Parse(dataFinal), "", false, status, 1, 30);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnRevisarCobrancaImediata_Click(object sender, EventArgs e)
         {
             try

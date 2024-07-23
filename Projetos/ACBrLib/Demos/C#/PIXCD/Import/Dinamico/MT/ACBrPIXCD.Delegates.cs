@@ -62,6 +62,9 @@ namespace ACBrLib.PIXCD
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int PIXCD_ConsultarCobrancaImediata(IntPtr handle, string ATxId, int ARevisao, StringBuilder buffer, ref int bufferSize);
+        
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int PIXCD_ConsultarCobrancasCob(IntPtr handle, DateTime ADataInicio, DateTime ADataFim, string ACpfCnpj, Boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int PIXCD_RevisarCobrancaImediata(IntPtr handle, string AInfCobRevisada, string ATxId, StringBuilder buffer, ref int bufferSize);
@@ -74,6 +77,9 @@ namespace ACBrLib.PIXCD
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int PIXCD_ConsultarCobranca(IntPtr handle, string ATxId, int ARevisao, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int PIXCD_ConsultarCobrancasCobV(IntPtr handle, DateTime ADataInicio, DateTime ADataFim, string ACpfCnpj, Boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina, StringBuilder buffer, ref int bufferSize);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int PIXCD_RevisarCobranca(IntPtr handle, string AInfCobVRevisada, string ATxId, StringBuilder buffer, ref int bufferSize);
@@ -104,10 +110,12 @@ namespace ACBrLib.PIXCD
             AddMethod<PIXCD_ConsultarDevolucaoPix>("PIXCD_ConsultarDevolucaoPix");
             AddMethod<PIXCD_CriarCobrancaImediata>("PIXCD_CriarCobrancaImediata");
             AddMethod<PIXCD_ConsultarCobrancaImediata>("PIXCD_ConsultarCobrancaImediata");
+            AddMethod<PIXCD_ConsultarCobrancasCob>("PIXCD_ConsultarCobrancasCob");
             AddMethod<PIXCD_RevisarCobrancaImediata>("PIXCD_RevisarCobrancaImediata");
             AddMethod<PIXCD_CancelarCobrancaImediata>("PIXCD_CancelarCobrancaImediata");
             AddMethod<PIXCD_CriarCobranca>("PIXCD_CriarCobranca");
             AddMethod<PIXCD_ConsultarCobranca > ("PIXCD_ConsultarCobranca");
+            AddMethod<PIXCD_ConsultarCobrancasCobV>("PIXCD_ConsultarCobrancasCobV");
             AddMethod<PIXCD_RevisarCobranca>("PIXCD_RevisarCobranca");
             AddMethod<PIXCD_CancelarCobranca>("PIXCD_CancelarCobranca");
             AddMethod<PIXCD_OpenSSLInfo>("PIXCD_OpenSSLInfo");

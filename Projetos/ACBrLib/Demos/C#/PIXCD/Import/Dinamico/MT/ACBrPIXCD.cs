@@ -225,6 +225,19 @@ namespace ACBrLib.PIXCD
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string ConsultarCobrancasCob(DateTime ADataInicio, DateTime ADataFim, string ACpfCnpj, Boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<PIXCD_ConsultarCobrancasCob>();
+            var ret = ExecuteMethod(() => method(libHandle, ADataInicio, ADataFim, ToUTF8(ACpfCnpj), ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public string RevisarCobrancaImediata(string AInfCobRevisada, string ATxId)
         {
             var bufferLen = BUFFER_LEN;
@@ -271,6 +284,19 @@ namespace ACBrLib.PIXCD
 
             var method = GetMethod<PIXCD_ConsultarCobranca>();
             var ret = ExecuteMethod(() => method(libHandle, ToUTF8(ATxId), ARevisao, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public string ConsultarCobrancasCobV(DateTime ADataInicio, DateTime ADataFim, string ACpfCnpj, Boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<PIXCD_ConsultarCobrancasCobV>();
+            var ret = ExecuteMethod(() => method(libHandle, ADataInicio, ADataFim, ToUTF8(ACpfCnpj), ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer, ref bufferLen));
 
             CheckResult(ret);
 

@@ -100,7 +100,7 @@ Private Declare Function PIXCD_CriarCobrancaImediata _
                                        
 Private Declare Function PIXCD_ConsultarCobrancaImediata _
                 Lib "ACBrPIXCD32.dll" (ByVal ATxId As String, _
-                                       ByVal ARevisao As String, _
+                                       ByVal ARevisao As Long, _
                                        ByVal buffer As String, _
                                        ByRef bufferLen As Long) As Long
                                        
@@ -123,7 +123,7 @@ Private Declare Function PIXCD_CriarCobranca _
                                        
 Private Declare Function PIXCD_ConsultarCobranca _
                 Lib "ACBrPIXCD32.dll" (ByVal ATxId As String, _
-                                       ByVal ARevisao As String, _
+                                       ByVal ARevisao As Long, _
                                        ByVal buffer As String, _
                                        ByRef bufferLen As Long) As Long
                                        
@@ -346,7 +346,7 @@ Public Function CriarCobrancaImediata(ByVal AInfCobSolicitada As String, ByVal A
 
 End Function
 
-Public Function ConsultarCobrancaImediata(ByVal ATxId As String, ByVal ARevisao As String) As String
+Public Function ConsultarCobrancaImediata(ByVal ATxId As String, ByVal ARevisao As Long) As String
 
     Dim retorno As Long
     Dim buffer As String
@@ -406,7 +406,7 @@ Public Function CriarCobranca(ByVal AInfCobVSolicitada As String, ByVal ATxId As
 
 End Function
 
-Public Function ConsultarCobranca(ByVal ATxId As String, ByVal ARevisao As String) As String
+Public Function ConsultarCobranca(ByVal ATxId As String, ByVal ARevisao As Long) As String
 
     Dim retorno As Long
     Dim buffer As String

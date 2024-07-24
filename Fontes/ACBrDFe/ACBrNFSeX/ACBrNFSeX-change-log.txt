@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/07/2024
+-- ACBrNFSeXDANFSeRLISSNet --
+[-] Corrigido a impressão do campo Responsável pela Retenção.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado a versão 2.03 da ABRASF para o provedor ISSCampinas.
    Por: Daniel Afonso/Italo Giurizzato Junior

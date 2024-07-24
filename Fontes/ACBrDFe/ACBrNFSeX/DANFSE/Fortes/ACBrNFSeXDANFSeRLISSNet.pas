@@ -52,7 +52,7 @@ uses
   RLReport,
   ACBrDelphiZXingQRCode,
   ACBrNFSeXConversao,
-  ACBrNFSeXDANFSeRL, ACBrBase, ACBrDFe, ACBrNFSeX, Types;
+  ACBrNFSeXDANFSeRL, ACBrBase, ACBrDFe, ACBrNFSeX, Types, ACBrNFSeXInterface;
 
 type
 
@@ -267,6 +267,7 @@ type
   private
     { Private declarations }
     FNumItem: Integer;
+    FProvider: IACBrNFSeXProvider;
   public
     { Public declarations }
     class procedure QuebradeLinha(const sQuebradeLinha: String); override;
@@ -281,7 +282,7 @@ uses
   StrUtils, DateUtils,
   ACBrUtil.Base, ACBrUtil.Strings,
   ACBrDFeUtil,
-  ACBrNFSeXClass, ACBrNFSeXInterface,
+  ACBrNFSeXClass,
   ACBrValidador, ACBrDFeReportFortes;
 
 {$IFNDEF FPC}
@@ -396,12 +397,8 @@ end;
 
 procedure TfrlXDANFSeRLISSnet.rlbDadosNotaBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
-var
-  FProvider: IACBrNFSeXProvider;
 begin
   inherited;
-
-  FProvider := ACBrNFSe.Provider;
 
   With fpNFSe do
   begin
@@ -410,7 +407,6 @@ begin
     rllDataRPS.Caption := FormatDateTime('dd/mm/yyyy', DataEmissaoRps);
     rllLocalServico.Caption := Servico.MunicipioPrestacaoServico;
     rllMunicipioIncidencia.Caption := Servico.xMunicipioIncidencia;
-    rllRespRetencao.Caption := ACBrStr(FProvider.ResponsavelRetencaoDescricao(Servico.ResponsavelRetencao));
   end;
 end;
 
@@ -431,12 +427,8 @@ begin
 end;
 
 procedure TfrlXDANFSeRLISSnet.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);
-var
-  FProvider: IACBrNFSeXProvider;
 begin
   inherited;
-
-  FProvider := ACBrNFSe.Provider;
 
   with fpNFSe do
   begin
@@ -493,6 +485,7 @@ begin
     rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn:ss', DataEmissao);
     rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('dd/mm/yyyy', Competencia), '');
     rllCodVerificacao.Caption := CodigoVerificacao;
+    rllRespRetencao.Caption := ACBrStr(FProvider.ResponsavelRetencaoDescricao(Servico.ResponsavelRetencao));
   end;
 
   if not rliPrestLogo.Visible then
@@ -587,7 +580,6 @@ begin
     '-Tomador:' + fpNFSe.Tomador.RazaoSocial +
     '-Total:' +
     FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
-
 end;
 
 procedure TfrlXDANFSeRLISSnet.rlbTomadorBeforePrint(Sender: TObject;
@@ -654,6 +646,8 @@ var
   Detalhar: Boolean;
 begin
   inherited;
+
+  FProvider := ACBrNFSe.Provider;
 
   Detalhar := ACBrNFSe.Provider.ConfigGeral.DetalharServico;
 

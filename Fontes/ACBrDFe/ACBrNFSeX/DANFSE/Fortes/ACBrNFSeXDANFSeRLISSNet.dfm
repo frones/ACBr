@@ -506,7 +506,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       end
       object rllRespRetencao: TRLLabel
         Left = 490
-        Top = 135
+        Top = 136
         Width = 122
         Height = 16
         Alignment = taCenter

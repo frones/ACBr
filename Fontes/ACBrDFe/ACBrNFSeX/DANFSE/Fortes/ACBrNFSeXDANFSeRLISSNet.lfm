@@ -1,6 +1,6 @@
 inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
-  Left = 234
-  Top = 128
+  Left = 220
+  Top = 123
   Caption = 'frlXDANFSeRLISSNet'
   inherited RLNFSe: TRLReport
     Left = 32
@@ -469,7 +469,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
       object rllRespRetencao: TRLLabel
         Left = 490
         Height = 16
-        Top = 135
+        Top = 136
         Width = 122
         Alignment = taCenter
         AutoSize = False
@@ -2359,7 +2359,7 @@ inherited frlXDANFSeRLISSnet: TfrlXDANFSeRLISSnet
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 280
+    Left = 288
     Top = 40
   end
 end

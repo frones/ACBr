@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils, synacode,
   ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXConversao, ACBrNFSeXLerXml;
+  ACBrNFSeXConversao, ACBrNFSeXLerXml, ACBrNFSeXLerXml_ABRASFv2;
 
 type
   { Provedor com layout próprio }
@@ -54,6 +54,13 @@ type
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+  end;
+
+  TNFSeR_ISSCampinas203 = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
+
   end;
 
 implementation

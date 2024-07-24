@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2024
+-- Diversos --
+[+] Implementado a versão 2.03 da ABRASF para o provedor ISSCampinas.
+   Por: Daniel Afonso/Italo Giurizzato Junior
+
 23/07/2024
 -- Conam.GravarXml --
 [*] Alteração para que o valor de RetFonte seja "NAO" para quando IssRetido tenha

@@ -405,7 +405,18 @@ begin
         Result := TACBrNFSeProviderISSCamacari201.Create(ACBrNFSe);
 
       proISSCambe:    Result := TACBrNFSeProviderISSCambe.Create(ACBrNFSe);
-      proISSCampinas: Result := TACBrNFSeProviderISSCampinas.Create(ACBrNFSe);
+
+      proISSCampinas:
+        begin
+          case Versao of
+            // Layout Próprio
+            ve100: Result := TACBrNFSeProviderISSCampinas.Create(ACBrNFSe);
+            // Layout ABRASF
+            ve203: Result := TACBrNFSeProviderISSCampinas203.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
 
       proISSCuritiba:
         Result := TACBrNFSeProviderISSCuritiba.Create(ACBrNFSe);

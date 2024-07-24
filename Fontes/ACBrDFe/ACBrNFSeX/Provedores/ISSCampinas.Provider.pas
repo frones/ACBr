@@ -43,7 +43,7 @@ uses
   ACBrNFSeXNotasFiscais,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderProprio,
+  ACBrNFSeXProviderProprio, ACBrNFSeXProviderABRASFv2,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
@@ -100,6 +100,31 @@ type
 
     function LerChaveNFe(ANode: TACBrXmlNode): string;
     function LerChaveRPS(ANode: TACBrXmlNode): string;
+  end;
+
+  TACBrNFSeXWebserviceISSCampinas203 = class(TACBrNFSeXWebserviceSoap11)
+  public
+    function Recepcionar(const ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
+    function GerarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorFaixa(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoPrestado(const ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(const ACabecalho, AMSG: String): string; override;
+    function Cancelar(const ACabecalho, AMSG: String): string; override;
+    function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
+  end;
+
+  TACBrNFSeProviderISSCampinas203 = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
   end;
 
 implementation
@@ -1721,6 +1746,238 @@ begin
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
+end;
+
+{ TACBrNFSeXWebserviceISSCampinas203 }
+
+function TACBrNFSeXWebserviceISSCampinas203.Recepcionar(const ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:RecepcionarLoteRps>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:RecepcionarLoteRps>';
+
+  Result := Executar('', Request,
+                     ['RecepcionarLoteRpsResponse', 'EnviarLoteRpsResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.RecepcionarSincrono(
+  const ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:EnviarLoteRpsSincrono>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:EnviarLoteRpsSincrono>';
+
+  Result := Executar('', Request,
+                     ['EnviarLoteRpsSincronoResponse', 'EnviarLoteRpsSincronoResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.GerarNFSe(const ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:GerarNfse>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:GerarNfse>';
+
+  Result := Executar('', Request,
+                     ['GerarNfseResponseResponse', 'GerarNfseResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.ConsultarLote(const ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarLoteRps>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:ConsultarLoteRps>';
+
+  Result := Executar('', Request,
+                     ['ConsultarLoteRpsResponse', 'ConsultarLoteRpsResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.ConsultarNFSePorRps(
+  const ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfsePorRps>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:ConsultarNfsePorRps>';
+
+  Result := Executar('', Request,
+                     ['ConsultarNfsePorRpsResponse', 'ConsultarNfseRpsResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.ConsultarNFSePorFaixa(
+  const ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfsePorFaixa>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:ConsultarNfsePorFaixa>';
+
+  Result := Executar('', Request,
+                     ['ConsultarNfseResponse', 'ConsultarNfseFaixaResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.ConsultarNFSeServicoPrestado(
+  const ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfseServicoPrestado>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:ConsultarNfseServicoPrestado>';
+
+  Result := Executar('', Request,
+                     ['ConsultarNfseServicoPrestadoResponse', 'ConsultarNfseServicoPrestadoResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.ConsultarNFSeServicoTomado(
+  const ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfseServicoTomado>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:ConsultarNfseServicoTomado>';
+
+  Result := Executar('', Request,
+                     ['ConsultarNfseServicoTomadoResponse', 'ConsultarNfseServicoTomadoResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.Cancelar(const ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:CancelarNfse>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:CancelarNfse>';
+
+  Result := Executar('', Request,
+                     ['CancelarNfseResponse', 'CancelarNfseResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.SubstituirNFSe(const ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:SubstituirNfse>';
+  Request := Request + AMSG;
+  Request := Request + '</nfse:SubstituirNfse>';
+
+  Result := Executar('', Request,
+                     ['SubstituirNfseResponse', 'SubstituirNfseResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceISSCampinas203.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := ConverteANSIparaUTF8(aXML);
+  Result := RemoverDeclaracaoXML(Result);
+
+  Result := inherited TratarXmlRetornado(Result);
+
+end;
+
+{ TACBrNFSeProviderISSCampinas203 }
+
+procedure TACBrNFSeProviderISSCampinas203.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.03';
+    VersaoAtrib := '2.03';
+  end;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    RpsGerarNFSe := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
+    ConsultarNFSePorFaixa := True;
+    ConsultarNFSeServicoPrestado := True;
+    ConsultarNFSeServicoTomado := True;
+    CancelarNFSe := True;
+    RpsSubstituirNFSe := True;
+    SubstituirNFSe := True;
+  end;
+end;
+
+function TACBrNFSeProviderISSCampinas203.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_ISSCampinas203.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderISSCampinas203.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_ISSCampinas203.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderISSCampinas203.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceISSCampinas203.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

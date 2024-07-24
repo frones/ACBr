@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, StrUtils, synacode,
   ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_ISSCampinas }
@@ -55,6 +55,13 @@ type
     function GerarItem: TACBrXmlNodeArray;
   public
     function GerarXml: Boolean; override;
+
+  end;
+
+  TNFSeW_ISSCampinas203 = class(TNFSeW_ABRASFv2)
+  protected
+
+  public
 
   end;
 

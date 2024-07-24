@@ -76,6 +76,7 @@ ISSBarueri           1.00  19/09/2022
 ISSCamacari          2.01
 ISSCambe             1.00
 ISSCampinas          1.00
+ISSCampinas          2.03
 ISSCuritiba          1.00
 ISSDigital           2.00
 ISSDSF               1.00

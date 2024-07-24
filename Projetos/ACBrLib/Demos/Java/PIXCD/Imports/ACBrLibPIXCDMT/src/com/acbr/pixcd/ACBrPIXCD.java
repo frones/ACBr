@@ -89,6 +89,8 @@ public final class ACBrPIXCD extends ACBrLibBase {
         
         int PIXCD_ConsultarCobrancaImediata(Pointer libHandler, String ATxId, Integer ARevisao, ByteBuffer buffer, IntByReference bufferSize);
         
+        int PIXCD_ConsultarCobrancasCob(Pointer libHandler, double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, Integer AStatus, Integer PagAtual, Integer ItensPorPagina, ByteBuffer buffer, IntByReference bufferSize);
+
         int PIXCD_RevisarCobrancaImediata(Pointer libHandler, String AInfCobRevisada, String ATxId, ByteBuffer buffer, IntByReference bufferSize);
         
         int PIXCD_CancelarCobrancaImediata(Pointer libHandler, String ATxId, ByteBuffer buffer, IntByReference bufferSize);
@@ -96,6 +98,8 @@ public final class ACBrPIXCD extends ACBrLibBase {
         int PIXCD_CriarCobranca(Pointer libHandler, String AInfCobVSolicitada, String ATxId, ByteBuffer buffer, IntByReference bufferSize);
         
         int PIXCD_ConsultarCobranca(Pointer libHandler, String ATxId, Integer ARevisao, ByteBuffer buffer, IntByReference bufferSize);
+        
+        int PIXCD_ConsultarCobrancasCobV(Pointer libHandler, double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, Integer AStatus, Integer PagAtual, Integer ItensPorPagina, ByteBuffer buffer, IntByReference bufferSize);
         
         int PIXCD_RevisarCobranca(Pointer libHandler, String AInfCobVRevisada, String ATxId, ByteBuffer buffer, IntByReference bufferSize);
         
@@ -267,6 +271,15 @@ public final class ACBrPIXCD extends ACBrLibBase {
         return processResult(buffer, bufferLen);
     }
     
+    public String ConsultarCobrancasCob(double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, Integer AStatus, Integer PagAtual, Integer ItensPorPagina) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        
+        int ret = ACBrPIXCDLib.INSTANCE.PIXCD_ConsultarCobrancasCob(getHandle(), ADataInicio, ADataFim, toUTF8(ACpfCnpj), ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
+    }
+    
     public String RevisarCobrancaImediata(String AInfCobRevisada, String ATxId) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -299,6 +312,15 @@ public final class ACBrPIXCD extends ACBrLibBase {
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
         
         int ret = ACBrPIXCDLib.INSTANCE.PIXCD_ConsultarCobranca(getHandle(), toUTF8(ATxId), ARevisao, buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
+    }
+    
+    public String ConsultarCobrancasCobV(double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, Integer AStatus, Integer PagAtual, Integer ItensPorPagina) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        
+        int ret = ACBrPIXCDLib.INSTANCE.PIXCD_ConsultarCobrancasCobV(getHandle(), ADataInicio, ADataFim, toUTF8(ACpfCnpj), ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }

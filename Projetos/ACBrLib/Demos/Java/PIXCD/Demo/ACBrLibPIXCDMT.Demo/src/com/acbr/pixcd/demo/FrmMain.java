@@ -294,17 +294,19 @@ public class FrmMain extends javax.swing.JFrame {
         btnRevisarCobrancaImediata = new javax.swing.JButton();
         btnConsultarCobrancaImediata = new javax.swing.JButton();
         btnCancelarCobrancaImediata = new javax.swing.JButton();
+        btnConsultarCobrancasCob = new javax.swing.JButton();
         jPanel18 = new javax.swing.JPanel();
         btnCriarCobranca = new javax.swing.JButton();
         btnRevisarCobranca = new javax.swing.JButton();
         btnCancelarCobranca = new javax.swing.JButton();
         btnConsultarCobranca = new javax.swing.JButton();
+        btnConsultarCobrancasCobV = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         rtbRespostas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ACBrLibPIXCD Demo");
+        setTitle("ACBrLibNFSe Demo");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         setSize(new java.awt.Dimension(744, 588));
@@ -1900,7 +1902,7 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnGerarQRCodeEstatico)
-                .addContainerGap(347, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1953,7 +1955,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnConsultarDevolucaoPix)
                     .addComponent(btnConsultarPixRecebidos))
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1999,6 +2001,14 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarCobrancasCob.setText("Consultar Cobrança Cob");
+        btnConsultarCobrancasCob.setToolTipText("");
+        btnConsultarCobrancasCob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarCobrancasCobActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
@@ -2012,7 +2022,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnConsultarCobrancaImediata, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(btnCancelarCobrancaImediata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarCobrancasCob, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2020,7 +2032,8 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCriarCobrancaImediata)
-                    .addComponent(btnConsultarCobrancaImediata))
+                    .addComponent(btnConsultarCobrancaImediata)
+                    .addComponent(btnConsultarCobrancasCob))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRevisarCobrancaImediata)
@@ -2058,6 +2071,14 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarCobrancasCobV.setText("Consultar Cobrança CobV");
+        btnConsultarCobrancasCobV.setToolTipText("");
+        btnConsultarCobrancasCobV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarCobrancasCobVActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
@@ -2071,7 +2092,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnConsultarCobranca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelarCobranca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarCobrancasCobV, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addGap(117, 117, 117))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2079,7 +2102,8 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCriarCobranca)
-                    .addComponent(btnConsultarCobranca))
+                    .addComponent(btnConsultarCobranca)
+                    .addComponent(btnConsultarCobrancasCobV))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarCobranca)
@@ -2102,9 +2126,7 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2116,7 +2138,7 @@ public class FrmMain extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar)
@@ -2124,10 +2146,11 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnCarregarConfiguracoes))
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2149,7 +2172,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnCarregarConfiguracoes.getAccessibleContext().setAccessibleName("Salvar Carregar Configurações");
         jTabbedPane4.getAccessibleContext().setAccessibleName("EndPoints");
 
-        setSize(new java.awt.Dimension(1068, 639));
+        setSize(new java.awt.Dimension(1142, 639));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2765,6 +2788,56 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnConsultarCobrancasCobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCobrancasCobActionPerformed
+        String inicio = JOptionPane.showInputDialog("Informe Data Inicio");
+        String fim = JOptionPane.showInputDialog("Informe a Data Fim");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        try 
+        {
+            Date dataInicio = sdf.parse(inicio);
+            Date dataFim = sdf.parse(fim);
+            
+            String cpfCNPJ = JOptionPane.showInputDialog("Informe CPF/CNPJ");
+            String status = JOptionPane.showInputDialog("Informe Status");
+            
+            double tDateTimeInicio = acbrPIXCD.convertDateToTDateTime(dataInicio);
+            double tDateTimeFim = acbrPIXCD.convertDateToTDateTime(dataFim);
+            
+            String ret = acbrPIXCD.ConsultarCobrancasCob(tDateTimeInicio, tDateTimeFim, cpfCNPJ, false, Integer.parseInt(status), 1, 30);
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarCobrancasCobActionPerformed
+
+    private void btnConsultarCobrancasCobVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCobrancasCobVActionPerformed
+        String inicio = JOptionPane.showInputDialog("Informe Data Inicio");
+        String fim = JOptionPane.showInputDialog("Informe a Data Fim");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        try 
+        {
+            Date dataInicio = sdf.parse(inicio);
+            Date dataFim = sdf.parse(fim);
+            
+            String cpfCNPJ = JOptionPane.showInputDialog("Informe CPF/CNPJ");
+            String status = JOptionPane.showInputDialog("Informe Status");
+            
+            double tDateTimeInicio = acbrPIXCD.convertDateToTDateTime(dataInicio);
+            double tDateTimeFim = acbrPIXCD.convertDateToTDateTime(dataFim);
+            
+            String ret = acbrPIXCD.ConsultarCobrancasCobV(tDateTimeInicio, tDateTimeFim, cpfCNPJ, false, Integer.parseInt(status), 1, 30);
+            rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarCobrancasCobVActionPerformed
+
     private void loadConfig() {
         try 
         {    
@@ -3052,6 +3125,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnCertificadoBradesco;
     private javax.swing.JButton btnConsultarCobranca;
     private javax.swing.JButton btnConsultarCobrancaImediata;
+    private javax.swing.JButton btnConsultarCobrancasCob;
+    private javax.swing.JButton btnConsultarCobrancasCobV;
     private javax.swing.JButton btnConsultarDevolucaoPix;
     private javax.swing.JButton btnConsultarPix;
     private javax.swing.JButton btnConsultarPixRecebidos;

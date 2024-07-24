@@ -5769,10 +5769,11 @@ begin
     CarregarListaDeCidades(UFtoCUF(UF));
     cbxBOLUF.ItemIndex                := cbxBOLUF.Items.IndexOf(UF);
     edtBOLCodCidade.Caption           := IntToStr(CodCidade);
+    cbxEmitCidade.Text                := cidade;
     if ( CodCidade = 0 ) then
     begin
-      if ( cbxEmitCidade.Items.IndexOf(Cidade) > 0 ) and (fcMunList.IndexOf(IntToStr(CodCidade)) > 0 ) then
-        cbxEmitCidade.ItemIndex           := FcMunList.IndexOf(IntToStr(CodCidade))
+      if ( cbxEmitCidade.Items.IndexOf(Cidade) > 0 ) and (fcMunList.IndexOf(Cidade) > 0 ) then
+         cbxEmitCidade.ItemIndex  := FcMunList.IndexOf(IntToStr(cbxEmitCidade.Items.IndexOf(Cidade)))
       else
       begin
         cbxEmitCidade.Items.Add(Cidade);
@@ -5782,7 +5783,7 @@ begin
       end;
     end
     else
-      cbxEmitCidade.ItemIndex           := FcMunList.IndexOf(IntToStr(CodCidade));
+      cbxEmitCidade.ItemIndex := cbxEmitCidade.Items.IndexOf(Cidade);
 
     edtBOLComplemento.Text            := Complemento;
 

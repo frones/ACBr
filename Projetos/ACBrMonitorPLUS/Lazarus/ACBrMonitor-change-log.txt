@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/07/2024
+-- ACBrMonitor1 --
+[*] Alteração para atualizar a cidade do cedente nos metodos de configuraçãoCedente
+#TK-5641 https://www.projetoacbr.com.br/forum/topic/78380-n%C3%A3o-esta-alterando-cidade-e-c%C3%B3digo-cidade-em-benefici%C3%A1rio-boleto/
+    Por: Daniel Morais Infocotidiano / Panda
+
 15/07/2024
 -- DoACBrCTeUnit, ACBrMonitorConfig --
 [*] Alteração VersaoCTe para 4.00 #TK-5740

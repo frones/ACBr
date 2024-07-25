@@ -1289,6 +1289,16 @@ begin
        end;
 
        aRemessa.Text := aRemessa.Text + UpperCase(wLinha);
+
+       if (StrToIntDef(ATipoOcorrencia,0) in [1,85,86]) and ((Instrucao1 = '88') or (Instrucao2 = '88')) then
+       begin
+         wLinha := '5'                                          + //001 - 001 Identificação do Registro Transação Tipo 5
+                   '08'                                         + //002 - 003 Tipo de Serviço 08
+                   PadLeft(OrgaoNegativador,2,'0')              + //004 - 005 Agente Negativador 10 - Serasa ou 11 Quod
+                   Space(395);                                    //006 - 400 Brancos
+
+         aRemessa.Add(UpperCase(wLinha));
+       end;
      end;
    end;
 end;

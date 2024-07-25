@@ -2141,8 +2141,11 @@ function TACBrNFeFRClass.PrepareReportEvento(ANFE: TNFe = nil): Boolean;
 var
  wProjectStream: TStringStream;
   I, J: Integer;
+  LResetar : Boolean;
 begin
   SetDataSetsToFrxReport;
+  LResetar := not (DANFEClassOwner.FIndexImpressaoIndividual = -2)
+               or (DANFEClassOwner.FIndexImpressaoEventosIndividual = 1);
   if NaoEstaVazio(Trim(FastFileEvento)) then
   begin
     if not (uppercase(copy(FastFileEvento,length(FastFileEvento)-3,4))='.FR3') then
@@ -2209,7 +2212,7 @@ begin
       CarregaDadosNFe;
     end;
 
-    Result := frxReport.PrepareReport;
+    Result := frxReport.PrepareReport(LResetar);
   end
   else
     raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
@@ -2476,14 +2479,22 @@ begin
 end;
 
 procedure TACBrNFeFRClass.ImprimirEVENTO(ANFE: TNFe);
+var I : Integer;
+  OK : boolean;
 begin
-  if PrepareReportEvento then
+  for I := 1 to TACBrNFe(DANFEClassOwner.ACBrNFe).EventoNFe.Evento.Count do
+  begin
+    DANFEClassOwner.FIndexImpressaoIndividual        := -2;
+    DANFEClassOwner.FIndexImpressaoEventosIndividual := I;
+    OK := PrepareReportEvento;
+  end;
+  if OK then
   begin
     if DANFEClassOwner.MostraPreview then
       frxReport.ShowPreparedReport
     else
       frxReport.Print;
-  end;
+    end;
 end;
 
 procedure TACBrNFeFRClass.ImprimirEVENTOPDF(ANFE: TNFe = nil; AStream: TStream = nil);
@@ -2540,6 +2551,7 @@ end;
 
 procedure TACBrNFeFRClass.ImprimirINUTILIZACAO(ANFE: TNFe);
 begin
+
   if PrepareReportInutilizacao then
   begin
     if DANFEClassOwner.MostraPreview then

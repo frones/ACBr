@@ -106,7 +106,7 @@ begin
     if (Pos(DecimalSeparator, String(wResposta)) > 0) then
       Result := StrToFloat(wResposta)
     else
-      Result := (StrToInt(wResposta) / wDecimais);
+      Result := (StrToInt( OnlyNumber(wResposta) ) / wDecimais);
   except
     case PadLeft(Trim(aResposta),1)[1] of
       'I': Result := -1;   { Instavel }

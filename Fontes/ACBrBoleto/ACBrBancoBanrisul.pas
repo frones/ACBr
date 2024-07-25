@@ -97,7 +97,7 @@ begin
   fpTamanhoCarteira       := 1;
   fpLayoutVersaoArquivo   := 40;
   fpLayoutVersaoLote      := 20;
-  fpCodigosMoraAceitos    :='01';
+  fpCodigosMoraAceitos    :='0123';
   fpOrientacoesBanco.Clear;
   fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
                                  'OUVIDORIA BANRISUL - 0800 644 2200'));

@@ -418,9 +418,9 @@ begin
 
   if Evento[Idx].InfEvento.detEvento.tpAutorizacao = taPermite then
     Result.AppendChild(AddNode(tcStr, 'HP28', 'xCondUso', 1, 255, 1,
-      'O emitente ou destinatário da NF-e, declara que permite o transportador ' +
+      ACBrStr('O emitente ou destinatário da NF-e, declara que permite o transportador ' +
       'declarado no campo CNPJ/CPF deste evento a autorizar os transportadores ' +
-      'subcontratados ou redespachados a terem acesso ao download da NF-e'));
+      'subcontratados ou redespachados a terem acesso ao download da NF-e')));
 end;
 
 function TEventoNFe.Gerar_Evento_CancComprEntrega(Idx: Integer): TACBrXmlNode;

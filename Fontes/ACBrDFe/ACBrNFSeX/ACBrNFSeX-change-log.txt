@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2024
+-- SigISSWeb.Provider --
+[*] Alteração visando tratar o XML retornado, pois o provedor esta retornando
+    os XML com codificação em ANSI em vez UTF-8.
+   Por: Italo Giurizzato Junior
+
 24/07/2024
 -- ACBrNFSeXDANFSeRLISSNet --
 [-] Corrigido a impressão do campo Responsável pela Retenção.

@@ -603,13 +603,18 @@ end;
 
 function TACBrNFSeXWebserviceSigISSWeb.TratarXmlRetornado(
   const aXML: string): string;
+var
+  Xml: string;
 begin
-  if StringIsXML(aXML) then
+  Xml := ConverteANSIparaUTF8(aXML);
+  Xml := RemoverDeclaracaoXML(Xml);
+
+  if StringIsXML(Xml) then
   begin
-    Result := inherited TratarXmlRetornado(aXML);
+    Result := inherited TratarXmlRetornado(Xml);
 
     Result := ParseText(Result);
-    Result := RemoverDeclaracaoXML(Result);
+//    Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
     Result := RemoverPrefixosDesnecessarios(Result);
@@ -621,7 +626,7 @@ begin
                 '<erros>' +
                   '<erro>' +
                     '<codigo>' + '</codigo>' +
-                    '<descricao>' + aXML + '</descricao>' +
+                    '<descricao>' + Xml + '</descricao>' +
                     '<correcao>' + '</correcao>' +
                   '</erro>' +
                 '</erros>' +

@@ -92,6 +92,9 @@ contains
   DebitoAutomatico.Banrisul.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Banrisul.Provider.pas',
   DebitoAutomatico.Santander.GravarTxtRemessa in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.GravarTxtRemessa.pas',
   DebitoAutomatico.Santander.LerTxtRetorno in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.LerTxtRetorno.pas',
-  DebitoAutomatico.Santander.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.Provider.pas';
+  DebitoAutomatico.Santander.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Santander.Provider.pas',
+  DebitoAutomatico.Sicredi.GravarTxtRemessa in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Sicredi.GravarTxtRemessa.pas',
+  DebitoAutomatico.Sicredi.LerTxtRetorno in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Sicredi.LerTxtRetorno.pas',
+  DebitoAutomatico.Sicredi.Provider in '..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Sicredi.Provider.pas';
 
 end.

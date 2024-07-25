@@ -22,7 +22,7 @@
     <Description Value="ACBr - Debito Automático - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="25">
+    <Files Count="28">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\ACBrDebitoAutomatico.pas"/>
         <UnitName Value="ACBrDebitoAutomatico"/>
@@ -124,6 +124,18 @@
         <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Base\Provider\Febraban150.Provider.pas"/>
         <UnitName Value="Febraban150.Provider"/>
       </Item25>
+      <Item26>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Sicredi.GravarTxtRemessa.pas"/>
+        <UnitName Value="DebitoAutomatico.Sicredi.GravarTxtRemessa"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Sicredi.LerTxtRetorno.pas"/>
+        <UnitName Value="DebitoAutomatico.Sicredi.LerTxtRetorno"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\Fontes\ACBrDebitoAutomatico\Bancos\DebitoAutomatico.Sicredi.Provider.pas"/>
+        <UnitName Value="DebitoAutomatico.Sicredi.Provider"/>
+      </Item28>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

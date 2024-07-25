@@ -244,7 +244,7 @@ end;
 
 function TACBrPSPSantander.VerificarSeIncluiPFX(const Method, AURL: String): Boolean;
 begin
-  Result := (inherited VerificarSeIncluiPFX(Method, AURL)) and (ACBrPixCD.Ambiente = ambProducao);
+  Result := (inherited VerificarSeIncluiPFX(Method, AURL));
 end;
 
 end.

@@ -54,7 +54,8 @@ uses
 
   DebitoAutomatico.BancodoBrasil.Provider,
   DebitoAutomatico.Banrisul.Provider,
-  DebitoAutomatico.Santander.Provider;
+  DebitoAutomatico.Santander.Provider,
+  DebitoAutomatico.Sicredi.Provider;
 
   { TACBrDebitoAutomaticoProviderManager }
 
@@ -71,6 +72,9 @@ begin
 
       debSantander:
         Result := TACBrDebitoAutomaticoProviderSantander.Create(ACBrDebitoAutomatico);
+
+      debSicredi:
+        Result := TACBrDebitoAutomaticoProviderSicredi.Create(ACBrDebitoAutomatico);
     else
       Result := nil;
     end;

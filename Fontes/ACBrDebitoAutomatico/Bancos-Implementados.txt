@@ -3,3 +3,4 @@ Bancos            Funcional (Data)
 Banco do Brasil
 Banrisul
 Santander
+Sicredi

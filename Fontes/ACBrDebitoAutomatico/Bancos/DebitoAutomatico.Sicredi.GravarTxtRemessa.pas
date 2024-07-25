@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -30,47 +30,24 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrDebitoAutomatico
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit DebitoAutomatico.Sicredi.GravarTxtRemessa;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-25/07/2024
--- Diversos --
-[+] Implementação do Banco: Sicredi.
-    Por: Ariel Guareschi
+uses
+  SysUtils, Classes,
+  ACBrDebitoAutomaticoClass, Febraban150.GravarTxtRemessa;
 
-04/08/2023
--- Diversos --
-[+] Implementação dos Bancos: Banco do Brasil e Banrisul.
-    Por: Italo Giurizzato Junior
+type
+ { TArquivoW_Sicredi }
 
-15/06/2023
----------------
-[*] Componente refatorado para utilizar Interface aos moldes do ACBrPagFor e
-    ACBrNFSeX.
-    Por: Italo Giurizzato Junior
+  TArquivoW_Sicredi = class(TArquivoW_Febraban150)
+  protected
 
-22/05/2022
----------------
-[+] Implementado a versão: 08 
-    Por: Valter Patrick Silva Ferreira e
-         Belizário Gonçalves Ribeiro Filho
+  end;
 
-07/04/2017
----------------
-[+] Início do Projeto
-    Implementado as versões: 04 e 05
-    Por: Valter Patrick Silva Ferreira e
-         Belizário Gonçalves Ribeiro Filho
+implementation
 
-
-
-
+end.

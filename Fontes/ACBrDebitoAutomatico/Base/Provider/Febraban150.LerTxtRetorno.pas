@@ -69,8 +69,8 @@ type
     procedure LerRegistroX; virtual;
     procedure LerRegistroZ; virtual;
 
-    procedure GerarAvisos(const aCodOcorrencia: TDebitoRetorno; aDescOcorrencia,
-      aSegmento, aIdentificacao: string);
+    procedure GerarAvisos(const aCodOcorrencia: TDebitoRetorno;
+      const aDescOcorrencia, aSegmento, aIdentificacao: string);
 
     function GetRetorno(aOcorrencia: TDebitoRetorno): string; virtual;
   public
@@ -89,7 +89,7 @@ uses
 { TArquivoR_Febraban150 }
 
 procedure TArquivoR_Febraban150.GerarAvisos(const aCodOcorrencia: TDebitoRetorno;
-  aDescOcorrencia, aSegmento, aIdentificacao: string);
+  const aDescOcorrencia, aSegmento, aIdentificacao: string);
 begin
   if aCodOcorrencia <> trEsp then
   begin
@@ -153,7 +153,7 @@ var
 begin
   // O código de ocorrencia pode ter até 5 códigos de 2 dígitos cada
   xDesc := ADesc;
-
+  Result := '';
   while length(xDesc) > 0 do
   begin
     xOcorr := Copy(xDesc, 1, 2);

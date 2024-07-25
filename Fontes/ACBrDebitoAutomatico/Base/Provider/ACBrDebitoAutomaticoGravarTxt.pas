@@ -126,8 +126,6 @@ var
   valorInt, Fator: Integer;
   valorInt64: Int64;
 begin
-  Fator := 1;
-
   case Tipo of
     tcStr:
       begin
@@ -175,6 +173,8 @@ begin
           tcDe2: Fator := 100;
           tcDe5: Fator := 100000;
           tcDe8: Fator := 100000000;
+        else
+          Fator := 1;
         end;
 
         try

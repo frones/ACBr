@@ -91,7 +91,7 @@ type
 
     function LoadFromFile(const aCaminhoArquivo: String): Boolean;
     function LoadFromStream(aStream: TStringStream): Boolean;
-    function LoadFromString(aTxtString: String): Boolean;
+    function LoadFromString(const aTxtString: String): Boolean;
 
     property Items[Index: Integer]: TRegistro read GetItem  write SetItem;
     property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
@@ -159,10 +159,7 @@ end;
 function TRegistro.Ler(const aArquivoTXT: String): boolean;
 var
   FProvider: IACBrDebitoAutomaticoProvider;
-  Ok: Boolean;
 begin
-  TACBrDebitoAutomatico(FACBrDebitoAutomatico).Configuracoes.Geral.Banco := StrToBanco(Ok, Copy(aArquivoTXT, 1, 3));
-
   FProvider := TACBrDebitoAutomatico(FACBrDebitoAutomatico).Provider;
 
   if not Assigned(FProvider) then
@@ -280,7 +277,7 @@ begin
   Result := Self.LoadFromString(aTxt);
 end;
 
-function TArquivos.LoadFromString(aTxtString: String): Boolean;
+function TArquivos.LoadFromString(const aTxtString: String): Boolean;
 begin
   with Self.New do
   begin

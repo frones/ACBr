@@ -30,47 +30,25 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrDebitoAutomatico
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit DebitoAutomatico.Sicredi.LerTxtRetorno;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-25/07/2024
--- Diversos --
-[+] Implementação do Banco: Sicredi.
-    Por: Ariel Guareschi
+uses
+  SysUtils, Classes,
+  Febraban150.LerTxtRetorno;
 
-04/08/2023
--- Diversos --
-[+] Implementação dos Bancos: Banco do Brasil e Banrisul.
-    Por: Italo Giurizzato Junior
+type
+ { TArquivoR_Sicredi }
 
-15/06/2023
----------------
-[*] Componente refatorado para utilizar Interface aos moldes do ACBrPagFor e
-    ACBrNFSeX.
-    Por: Italo Giurizzato Junior
+  TArquivoR_Sicredi = class(TArquivoR_Febraban150)
+  protected
 
-22/05/2022
----------------
-[+] Implementado a versão: 08 
-    Por: Valter Patrick Silva Ferreira e
-         Belizário Gonçalves Ribeiro Filho
+  end;
 
-07/04/2017
----------------
-[+] Início do Projeto
-    Implementado as versões: 04 e 05
-    Por: Valter Patrick Silva Ferreira e
-         Belizário Gonçalves Ribeiro Filho
+implementation
 
-
-
+end.
 

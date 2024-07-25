@@ -30,47 +30,46 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{******************************************************************************
-|* ACBrDebitoAutomatico
-|*
-|* PROPÓSITO: Registro de Alterações
-******************************************************************************}
+{$I ACBr.inc}
 
-Símbolo : Significado
+unit DebitoAutomatico.Sicredi.Provider;
 
-[+]     : Novo recurso
-[*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos)
+interface
 
-25/07/2024
--- Diversos --
-[+] Implementação do Banco: Sicredi.
-    Por: Ariel Guareschi
+uses
+  SysUtils, Classes,
+  ACBrDebitoAutomaticoClass,
+  ACBrDebitoAutomaticoGravarTxt, ACBrDebitoAutomaticoLerTxt,
+  Febraban150.Provider;
 
-04/08/2023
--- Diversos --
-[+] Implementação dos Bancos: Banco do Brasil e Banrisul.
-    Por: Italo Giurizzato Junior
+type
 
-15/06/2023
----------------
-[*] Componente refatorado para utilizar Interface aos moldes do ACBrPagFor e
-    ACBrNFSeX.
-    Por: Italo Giurizzato Junior
+  TACBrDebitoAutomaticoProviderSicredi = class (TFebraban150Provider)
+  protected
+    function CriarGeradorTxt(const aDebitoAutomatico: TDebitoAutomatico): TArquivoWClass; override;
+    function CriarLeitorTxt(const aDebitoAutomatico: TDebitoAutomatico): TArquivoRClass; override;
+  end;
 
-22/05/2022
----------------
-[+] Implementado a versão: 08 
-    Por: Valter Patrick Silva Ferreira e
-         Belizário Gonçalves Ribeiro Filho
+implementation
 
-07/04/2017
----------------
-[+] Início do Projeto
-    Implementado as versões: 04 e 05
-    Por: Valter Patrick Silva Ferreira e
-         Belizário Gonçalves Ribeiro Filho
+uses
+  DebitoAutomatico.Sicredi.GravarTxtRemessa,
+  DebitoAutomatico.Sicredi.LerTxtRetorno;
 
+{ TACBrDebitoAutomaticoProviderSicredi }
 
+function TACBrDebitoAutomaticoProviderSicredi.CriarGeradorTxt(
+  const aDebitoAutomatico: TDebitoAutomatico): TArquivoWClass;
+begin
+  Result := TArquivoW_Sicredi.Create(Self);
+  Result.DebitoAutomatico := aDebitoAutomatico;
+end;
 
+function TACBrDebitoAutomaticoProviderSicredi.CriarLeitorTxt(
+  const aDebitoAutomatico: TDebitoAutomatico): TArquivoRClass;
+begin
+  Result := TArquivoR_Sicredi.Create(Self);
+  Result.DebitoAutomatico := aDebitoAutomatico;
+end;
 
+end.

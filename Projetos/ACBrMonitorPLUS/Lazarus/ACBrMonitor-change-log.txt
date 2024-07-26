@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2024
+-- DoSATUnit, ACBrMonitorConsts  --
+[+] Adiciona o método ObterIniCFe
+   Por: Diego Folieni
 
 24/07/2024
 -- ACBrMonitor1 --

@@ -144,6 +144,7 @@ const
   CMetodoEnviarEmailCFe =              'enviaremailcfe';
   CMetodoConsultarModeloSAT =          'consultarmodelosat';
   CMetodoConsultarUltimaSessaoFiscal=  'consultarultimasessaofiscal';
+  CMetodoObterIniCFe = 'obterinicfe';
 
   CMetodoECFachar =                                      'achar';
   CMetodoECFativar =                                     'ativar';

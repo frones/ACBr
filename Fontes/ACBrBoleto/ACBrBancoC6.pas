@@ -925,6 +925,8 @@ begin
       + '/'
       + Copy(ARetorno[0], 129, 2), 0, 'DD/MM/YY');
 
+  LBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],22,5),0);
+
   if LBoleto.LeCedenteRetorno then
   begin
     LBoleto.Cedente.Nome          := Trim(Copy(ARetorno[0], 47, 30));

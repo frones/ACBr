@@ -4,7 +4,6 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Caption = 'frlDANFeEventoRLRetrato'
   ClientHeight = 926
   ClientWidth = 827
-  PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport
     Margins.LeftMargin = 7.000000000000000000

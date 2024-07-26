@@ -208,6 +208,7 @@ uses
 procedure TfrlDANFeEventoRLRetrato.InicializarDados;
 var
   CarregouLogo: Boolean;
+  i: Integer;
 begin
   // Carrega logomarca
   CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
@@ -381,11 +382,52 @@ begin
         rllTitulo.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
         RLLabel21.Caption := ACBrStr('DESCRIÇÃO');
         rlmCondUso.Lines.Clear;
-        rlmCondUso.Lines.Add('Destinatário    : ' + fpEventoNFe.InfEvento.detEvento.dest.CNPJCPF);
-        rlmCondUso.Lines.Add('Valor da Nota   : ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vNF));
-        rlmCondUso.Lines.Add('Valor do ICMS   : ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vICMS));
-        rlmCondUso.Lines.Add('Valor do ICMS ST: ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vST));
+        rlmCondUso.Lines.Add('Destinatário    : ' + InfEvento.detEvento.dest.CNPJCPF);
+        rlmCondUso.Lines.Add('Valor da Nota   : ' + FormatFloatBr(msk13x2, InfEvento.detEvento.vNF));
+        rlmCondUso.Lines.Add('Valor do ICMS   : ' + FormatFloatBr(msk13x2, InfEvento.detEvento.vICMS));
+        rlmCondUso.Lines.Add('Valor do ICMS ST: ' + FormatFloatBr(msk13x2, InfEvento.detEvento.vST));
       end;
+
+      tePedProrrog1,
+      tePedProrrog2:
+      begin
+        rllTitulo.Caption := ACBrStr('EVENTO DE PEDIDO DE PRORROGAÇÃO');
+      end;
+
+      teCanPedProrrog1,
+      teCanPedProrrog2:
+      begin
+        rllTitulo.Caption := ACBrStr('EVENTO DE CANCELAMENTO DO PEDIDO DE PRORROGAÇÃO');
+        RLLabel21.Caption := ACBrStr('Identificação do Pedido Cancelado');
+        rlmCondUso.Lines.Clear;
+        rlmCondUso.Lines.Add(InfEvento.detEvento.idPedidoCancelado);
+      end;
+
+      teComprEntregaNFe:
+      begin
+        rllTitulo.Caption := ACBrStr('EVENTO DE COMPROVANTE DE ENTREGA');
+        RLLabel21.Caption := ACBrStr('DESCRIÇÃO');
+        rlmCondUso.Lines.Clear;
+        rlmCondUso.Lines.Add('Destinatário: ' + InfEvento.detEvento.xNome);
+        rlmCondUso.Lines.Add('Data/Hora   : ' + DateTimeTodh(InfEvento.detEvento.dhEntrega));
+        rlmCondUso.Lines.Add('Num. Doc.   : ' + InfEvento.detEvento.nDoc);
+      end;
+
+      teCancComprEntregaNFe:
+      begin
+        rllTitulo.Caption := ACBrStr('EVENTO DE CANCELAMENTO DO COMPROVANTE DE ENTREGA');
+      end;
+
+      teAtorInteressadoNFe:
+      begin
+        rllTitulo.Caption := ACBrStr('EVENTO DE ATOR INTERESSADO');
+        RLLabel21.Caption := ACBrStr('ATOR');
+        rlmCondUso.Lines.Clear;
+
+        for i := 0 to InfEvento.detEvento.autXML.Count -1 do
+          rlmCondUso.Lines.Add('CNPJ/CPF: ' + InfEvento.detEvento.autXML[i].CNPJCPF);
+      end;
+
       teInsucessoEntregaNFe:
       begin
         rllTitulo.Caption := ACBrStr('INSUCESSO DE ENTREGA DE NFE');
@@ -412,6 +454,16 @@ begin
         rlbCorrecao.Visible := False;
         RLLabel6.Visible := False;
         rlmCorrecao.Visible := False;
+      end;
+
+      teConcFinanceira:
+      begin
+        // Evento ainda não disponível
+      end;
+
+      teCancConcFinanceira:
+      begin
+        // Evento ainda não disponível
       end;
     end; // case InfEvento.tpEvento
 

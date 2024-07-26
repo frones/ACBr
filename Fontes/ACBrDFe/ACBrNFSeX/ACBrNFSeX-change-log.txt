@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2024
+-- DSF.Provider --
+[*] Alteração visando tratar o XML retornado, pois o provedor esta retornando
+    os XML com codificação em ANSI em vez UTF-8.
+   Por: Italo Giurizzato Junior
+
 25/07/2024
 -- SigISSWeb.Provider --
 [*] Alteração visando tratar o XML retornado, pois o provedor esta retornando

@@ -213,11 +213,16 @@ begin
 end;
 
 function TACBrNFSeXWebserviceDSF.TratarXmlRetornado(const aXML: string): string;
+var
+  Xml: string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Xml := ConverteANSIparaUTF8(aXML);
+  Xml := RemoverDeclaracaoXML(Xml);
+
+  Result := inherited TratarXmlRetornado(Xml);
 
   Result := ParseText(Result);
-  Result := RemoverDeclaracaoXML(Result);
+//  Result := RemoverDeclaracaoXML(Result);
 end;
 
 { TACBrNFSeProviderDSF }
@@ -433,8 +438,13 @@ end;
 
 function TACBrNFSeXWebserviceDSF200.TratarXmlRetornado(
   const aXML: string): string;
+var
+  Xml: string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Xml := ConverteANSIparaUTF8(aXML);
+  Xml := RemoverDeclaracaoXML(Xml);
+
+  Result := inherited TratarXmlRetornado(Xml);
 
   Result := ParseText(Result);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);

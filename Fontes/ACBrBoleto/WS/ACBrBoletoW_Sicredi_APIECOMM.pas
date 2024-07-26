@@ -134,8 +134,9 @@ procedure TBoletoW_Sicredi_APIECOMM.DefinirURL;
 var
 aNossoNumero  : string;
 begin
-
-  aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
+  if (Boleto.Configuracoes.WebService.Operacao = tpConsultaDetalhe)
+  and (ATitulo <> nil) then
+    aNossoNumero  := OnlyNumber( ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
 
   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
   case Boleto.Configuracoes.WebService.Operacao of

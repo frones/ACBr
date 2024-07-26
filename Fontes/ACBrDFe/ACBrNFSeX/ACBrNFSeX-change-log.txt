@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/07/2024
+-- ACBrNFSeXGravarXml_ABRASFv2/MegaSoft.GravarXml --
+[*] Ajustes na posição que o provedor gera a tag <Cep>.
+   Por: Italo Giurizzato Junior
 -- DSF.Provider --
 [*] Alteração visando tratar o XML retornado, pois o provedor esta retornando
     os XML com codificação em ANSI em vez UTF-8.

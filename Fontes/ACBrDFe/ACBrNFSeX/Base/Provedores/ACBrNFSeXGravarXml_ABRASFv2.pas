@@ -100,6 +100,7 @@ type
     FNrOcorrTipoRPS: Integer;
     FNrOcorrUFTomador: Integer;
     FNrOcorrCepTomador: Integer;
+    FNrOcorrCepTomador_2: Integer;
     FNrOcorrCodigoCNAE: Integer;
     FNrOcorrDiscriminacao_1: Integer;
     FNrOcorrDiscriminacao_2: Integer;
@@ -232,6 +233,7 @@ type
     property NrOcorrLogradouro: Integer         read FNrOcorrLogradouro         write FNrOcorrLogradouro;
     property NrOcorrUFTomador: Integer          read FNrOcorrUFTomador          write FNrOcorrUFTomador;
     property NrOcorrCepTomador: Integer         read FNrOcorrCepTomador         write FNrOcorrCepTomador;
+    property NrOcorrCepTomador_2: Integer       read FNrOcorrCepTomador_2       write FNrOcorrCepTomador_2;
     property NrOcorrIncentCultural: Integer     read FNrOcorrIncentCultural     write FNrOcorrIncentCultural;
     property NrOcorrDiscriminacao_1: Integer    read FNrOcorrDiscriminacao_1    write FNrOcorrDiscriminacao_1;
     property NrOcorrDiscriminacao_2: Integer    read FNrOcorrDiscriminacao_2    write FNrOcorrDiscriminacao_2;
@@ -381,6 +383,7 @@ begin
   FNrOcorrTipoTelefone := -1;
   FNrOcorrProducao := -1;
   FNrOcorrAtualizaTomador := -1;
+  FNrOcorrCepTomador_2 := -1;
   FNrOcorrTomadorExterior := -1;
   FNrOcorrCodigoMunic_2 := -1;
   FNrOcorrCodigoMunicInterm := -1;
@@ -970,6 +973,9 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#42', 'Bairro', 1, 60, 0,
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
+
+    Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, NrOcorrCepTomador_2,
+                               OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP));
 
     Result.AppendChild(AddNode(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0,
                   OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN));

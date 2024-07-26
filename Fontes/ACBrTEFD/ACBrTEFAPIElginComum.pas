@@ -388,6 +388,7 @@ begin
 
   AACBrTEFResp.DataHoraTransacaoHost := JsonKeyDateTime('tef.dataHoraTransacao');
   AACBrTEFResp.NSU_TEF := JsonKey('tef.nsuTerminal');
+  AACBrTEFResp.CodigoAutorizacaoTransacao := JsonKey('tef.codigoAutorizacao');
   AACBrTEFResp.ValorTotal := JsonKeyFloat('tef.valorTotal');
   AACBrTEFResp.ValorOriginal := JsonKeyFloat('tef.valorTotal');
   AACBrTEFResp.NSU := JsonKey('tef.nsuTransacao');

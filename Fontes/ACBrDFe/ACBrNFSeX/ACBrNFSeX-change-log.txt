@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/07/2024
+-- ACBrNFSeXGravarXml/ACBrNFSeXLerXml --
+[*] Padronização na geração e leitura dos itens no formato tabulado e Json na 
+    tag Discriminacao.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Jaragua/GO, o provedor é MegaSoft
    Por: Danilo Martins Xavier

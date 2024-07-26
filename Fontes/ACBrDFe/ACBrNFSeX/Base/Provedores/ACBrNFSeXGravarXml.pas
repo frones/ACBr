@@ -114,8 +114,9 @@ type
     function GerarTabulado(const xDescricao: string; const xCodigoItem: string;
       aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
       aAliquota: Double): string;
-    function GerarJson(const xDescricao: string;
-      aQuantidade, aValorUnitario, aValorServico: Double): string;
+    function GerarJson(const xDescricao: string; const xCodigoItem: string;
+      aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
+      aAliquota: Double): string;
 
     function GerarCNPJ(const CNPJ: string): TACBrXmlNode; virtual;
     function GerarCPFCNPJ(const CPFCNPJ: string): TACBrXmlNode; virtual;
@@ -309,9 +310,12 @@ begin
 
               xDiscriminacao := xDiscriminacao +
                                   GerarJson(ItemServico[i].Descricao,
+                                    ItemServico[i].ItemListaServico,
                                     ItemServico[i].Quantidade,
                                     ItemServico[i].ValorUnitario,
-                                    ItemServico[i].ValorTotal);
+                                    ItemServico[i].ValorTotal,
+                                    ItemServico[i].BaseCalculo,
+                                    ItemServico[i].Aliquota);
             end;
         else
           xDiscriminacao := xDiscriminacao + ';' + ItemServico[i].Descricao;
@@ -367,13 +371,17 @@ begin
              '[Aliquota=' + FloatToStr(aAliquota) + ']]';
 end;
 
-function TNFSeWClass.GerarJson(const xDescricao: string; aQuantidade,
-  aValorUnitario, aValorServico: Double): string;
+function TNFSeWClass.GerarJson(const xDescricao, xCodigoItem: string;
+  aQuantidade, aValorUnitario, aValorServico, aBaseCalculo,
+  aAliquota: Double): string;
 begin
   Result := '{"Descricao":"' + xDescricao + '",' +
+             '"ItemServico":"' + xCodigoItem + '",' +
              '"ValorUnitario":' + FloatToStr(aValorUnitario) + ',' +
              '"Quantidade":' + FloatToStr(aQuantidade) + ',' +
-             '"ValorServico":' + FloatToStr(aValorServico) + '}';
+             '"ValorServico":' + FloatToStr(aValorServico) + ',' +
+             '"ValorBaseCalculo":' + FloatToStr(aBaseCalculo) + ',' +
+             '"Aliquota":' + FloatToStr(aAliquota) + '}';
 end;
 
 function TNFSeWClass.ConteudoTxt: String;

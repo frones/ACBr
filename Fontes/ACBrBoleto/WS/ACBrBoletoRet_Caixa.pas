@@ -52,7 +52,7 @@ type
 
  TRetornoEnvio_Caixa = class(TRetornoEnvioSOAP)
   private
-
+    function RetornaCodigoOcorrencia(const ASituacao: string) : String;
   public
     constructor Create(ABoletoWS: TACBrBoleto); override;
     destructor  Destroy; Override;
@@ -142,6 +142,7 @@ begin
               begin
                 Retorno := Leitor.rCampo(tcStr, 'RETORNO');
                 TituloRet.EstadoTituloCobranca := Retorno;
+                TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(AnsiUpperCase(Retorno));
               end;
             end;
           end;
@@ -312,6 +313,34 @@ begin
     Result := False;
   end;
 
+end;
+
+function TRetornoEnvio_Caixa.RetornaCodigoOcorrencia(const ASituacao: string) : String;
+begin
+  Result := '';
+  if pos('EM ABERTO', ASituacao) > 0 then
+    Result := '01'
+  else
+  if pos('BAIXA POR DEVOLUCAO', ASituacao) > 0 then
+    Result := '07'
+  else
+  if pos('BAIXA POR ESTORNO', ASituacao) > 0 then
+    Result := '07'
+  else
+  if pos('BAIXA POR PROTESTO', ASituacao) > 0 then
+    Result := '13'
+  else
+  if pos('ENVIADO AO CARTORIO', ASituacao) > 0 then
+    Result := '02'
+  else
+  if pos('LIQUIDADO NO CARTORIO', ASituacao) > 0 then
+    Result := '10'
+  else
+  if pos('LIQUIDADO', ASituacao) > 0 then
+    Result := '06'
+  else
+  if pos('TITULO JA PAGO NO DIA', ASituacao) > 0 then
+    Result := '06'
 end;
 
 function TRetornoEnvio_Caixa.RetornoEnvio(const AIndex: Integer): Boolean;

@@ -191,6 +191,11 @@ begin
             ARetornoWS.DadosRet.IDBoleto.LinhaDig       := LJsonObject.AsString['codigoLinhaDigitavel'];
             ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['id'];
 
+            if ARetornoWS.DadosRet.IDBoleto.NossoNum = '' then
+              ARetornoWS.DadosRet.IDBoleto.NossoNum := '000'
+                                                      + Copy(ARetornoWS.DadosRet.IDBoleto.LinhaDig,12,7)
+                                                      + Copy(ARetornoWS.DadosRet.IDBoleto.LinhaDig,20,10);
+
             ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
             ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
             ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
@@ -201,7 +206,9 @@ begin
 
             // Dados Adicionais
 
-            ARetornoWS.DadosRet.TituloRet.NumeroDocumento            := LJsonObject.AsString['numeroTituloCedenteCobranca'];
+            ARetornoWS.DadosRet.TituloRet.SeuNumero                  := LJsonObject.AsString['numeroTituloCedenteCobranca'];
+            ARetornoWS.DadosRet.TituloRet.NumeroDocumento            := LJsonObject.AsString['textoCampoUtilizacaoCedente'];
+
             ARetornoWS.DadosRet.TituloRet.DataRegistro               := DateBBtoDateTime( LJsonObject.AsString['dataRegistroTituloCobranca'] );
             ARetornoWS.DadosRet.TituloRet.Vencimento                 := DateBBtoDateTime( LJsonObject.AsString['dataVencimentoTituloCobranca'] );
             ARetornoWS.DadosRet.TituloRet.ValorDocumento             := LJsonObject.AsFloat['valorOriginalTituloCobranca'];

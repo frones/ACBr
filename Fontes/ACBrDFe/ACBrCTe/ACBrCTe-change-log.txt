@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2024
+-- ACBrCTeConfiguracoes --
+[*] Alterado o valor padrão da propriedade de configuração VersaoDF para ve400.
+   Por: Italo Giurizzato Junior
+
 16/07/2024
 -- pcteConversaoCTe --
 [+] Incluído a função de conversão: tpMotivoToDesc (Motivo da não entrega).

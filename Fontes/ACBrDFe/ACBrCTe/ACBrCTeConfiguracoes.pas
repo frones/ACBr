@@ -62,7 +62,7 @@ type
   published
     property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
-    property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve300;
+    property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve400;
   end;
 
   { TArquivosConfCTe }
@@ -178,7 +178,7 @@ begin
 
   FModeloDF := moCTe;
   FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
-  FVersaoDF := ve300;
+  FVersaoDF := ve400;
 end;
 
 procedure TGeralConfCTe.GravarIni(const AIni: TCustomIniFile);

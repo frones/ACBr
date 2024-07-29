@@ -242,6 +242,7 @@ type
     MargemDir         : Double;
     MargemEsq         : Double;
     LarguraBobina     : Double;
+    ImprimeNNFFormatadoNFCe : Boolean;
   end;
 
   TDANFCeTipoPagto = record
@@ -364,6 +365,7 @@ type
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
     ImprimirCampoFormaPagamento      : Integer;
     ImprimeXPedNitemPed              : boolean;
+    ImprimeNNFFormatadoNFe           : boolean;
   end;
 
   TDACTE = record
@@ -1212,6 +1214,7 @@ begin
       Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemDir      , MargemDir );
       Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemEsq      , MargemEsq );
       Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeLarguraBobina  , LarguraBobina );
+      Ini.WriteBool(  CSecDANFCe,   CKeyDANFCEImprimeNNFFormatadoNFCe   , ImprimeNNFFormatadoNFCe );
     end;
 
     with DFE.Impressao.NFCe.Emissao.DANFCeTipoPagto do
@@ -1277,6 +1280,7 @@ begin
       Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe     , ImprimeDescAcrescItemNFe);
       Ini.WriteBool( CSecDANFE,  CKeyDANFELogoEmCima                     , LogoEmCima );
       Ini.WriteBool( CSecDANFE, CKeyDANFEImprimeInscSuframa              , ImprimeInscSuframa);
+      Ini.WriteBool( CSecDANFE, CKeyDANFEImprimeNNFFormatadoNFe          , ImprimeNNFFormatadoNFe);
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto , ExpandirDadosAdicionaisAuto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
       Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimirCampoFormaPagamento, ImprimirCampoFormaPagamento);
@@ -1988,6 +1992,7 @@ begin
       MargemDir                 :=  Ini.ReadFloat( CSecDANFCe,   CKeyDANFCEMargemDir,     MargemDir     );
       MargemEsq                 :=  Ini.ReadFloat( CSecDANFCe,   CKeyDANFCEMargemEsq,     MargemEsq     );
       LarguraBobina             :=  Ini.ReadFloat( CSecDANFCe,   CKeyDANFCeLarguraBobina, LarguraBobina );
+      ImprimeNNFFormatadoNFCe   :=  Ini.ReadBool( CSecDANFCE, CKeyDANFCEImprimeNNFFormatadoNFCe          , ImprimeNNFFormatadoNFCe);
     end;
 
     with DFE.Impressao.NFCe.Emissao.DANFCeTipoPagto do
@@ -2058,6 +2063,7 @@ begin
       ImprimeDescAcrescItemNFe   := Ini.ReadInteger( CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe        , ImprimeDescAcrescItemNFe );
       LogoEmCima                 := Ini.ReadBool( CSecDANFE,  CKeyDANFELogoEmCima                        , LogoEmCima );
       ImprimeInscSuframa         := Ini.ReadBool( CSecDANFE, CKeyDANFEImprimeInscSuframa                 , ImprimeInscSuframa);
+      ImprimeNNFFormatadoNFe     := Ini.ReadBool( CSecDANFE, CKeyDANFEImprimeNNFFormatadoNFe             , ImprimeNNFFormatadoNFe);
       ExpandirDadosAdicionaisAuto:= Ini.ReadBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto      , ExpandirDadosAdicionaisAuto );
       ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina,
                                                         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
@@ -2763,6 +2769,7 @@ begin
     MargemDir                 :=  0.51;
     MargemEsq                 :=  0.6;
     LarguraBobina             :=  302;
+    ImprimeNNFFormatadoNFCe    := True;
   end;
 
   with DFE.Impressao.NFCe.Emissao.DANFCeTipoPagto do
@@ -2826,6 +2833,7 @@ begin
     ImprimirCampoFormaPagamento:= 0;
     LogoEmCima                 := False;
     ImprimeInscSuframa         := True;
+    ImprimeNNFFormatadoNFe     := True;
     ExpandirDadosAdicionaisAuto := False;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= False;
     ImprimeXPedNitemPed        := False;

@@ -20,7 +20,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '3.2.0.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -17382,12 +17381,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 549
         Top = 1
         Width = 1129
-        ActivePage = tsSat
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 17
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -22523,9 +22522,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object lblBolMotorRelatorio: TLabel
                 Left = 593
-                Height = 14
+                Height = 13
                 Top = 144
-                Width = 92
+                Width = 97
                 Caption = 'Motor Relatório *'
                 Font.Color = clWindowText
                 Font.Height = -11
@@ -25327,12 +25326,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 519
             Top = 0
             Width = 1121
-            ActivePage = tsCertificadoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 3
             TabOrder = 0
             OnChange = pgDFeChange
             object tsCertificadoDFe: TTabSheet
@@ -29491,6 +29490,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Caption = 'Imprimir Inscrição Suframa'
                     TabOrder = 26
                   end
+                  object cbxImprimeNNFFormatadoNFe: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 320
+                    Width = 271
+                    Caption = 'Imprime número do documento formatado'
+                    Font.Height = -13
+                    ParentFont = False
+                    TabOrder = 27
+                  end
                 end
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
@@ -29555,12 +29564,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object gbDANFeESCPOS: TGroupBox
                     Left = 216
-                    Height = 224
+                    Height = 272
                     Top = 0
                     Width = 873
                     Anchors = [akTop, akLeft, akRight]
                     Caption = 'Impressão dos Itens'
-                    ClientHeight = 202
+                    ClientHeight = 250
                     ClientWidth = 869
                     Font.Height = -13
                     ParentBackground = False
@@ -29652,7 +29661,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnFonteItens: TButton
                       Left = 804
                       Height = 25
-                      Top = 172
+                      Top = 216
                       Width = 30
                       Anchors = []
                       Caption = '...'
@@ -29669,7 +29678,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       AnchorSideBottom.Control = btnFonteItens
                       Left = 646
                       Height = 17
-                      Top = 172
+                      Top = 216
                       Width = 158
                       Alignment = taRightJustify
                       Anchors = [akTop, akRight]
@@ -29736,6 +29745,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Height = -13
                       ParentFont = False
                       TabOrder = 10
+                    end
+                    object cbxImprimeNNFFormatadoNFCe: TCheckBox
+                      Left = 10
+                      Height = 21
+                      Top = 194
+                      Width = 271
+                      Caption = 'Imprime número do documento formatado'
+                      Font.Height = -13
+                      ParentFont = False
+                      TabOrder = 11
                     end
                   end
                   object cbxImpressoraNFCe: TComboBox
@@ -35115,12 +35134,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     PesquisarIBGE = True
     Left = 464
     Top = 600
   end
   object ACBrIBGE1: TACBrIBGE
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     CacheArquivo = 'ACBrIBGE.txt'
     Left = 496
     Top = 600
@@ -35150,6 +35173,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     Formato = TpfCaixaPacote
     Servico = Tps04510PAC
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
@@ -36024,6 +36049,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     IniServicos = 'C:\lazarus\ACBrConsultaCPFServicos.ini'
     Left = 1000
     Top = 448
@@ -36203,6 +36230,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrNCMs1: TACBrNCMs
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     UrlConsulta = 'https://portalunico.siscomex.gov.br/classif/api/publico/nomenclatura/download/json'
     CacheArquivo = 'ACBrNCM.json'
     Left = 656
@@ -36274,6 +36303,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     PesquisarIBGE = False
     IniServicos = 'D:\lazarus_32\ACBrConsultaCNPJServicos.ini'
     Left = 934

@@ -1183,6 +1183,7 @@ var
   AParamIndice: Integer;
   ASenha, AParamDest, AParamAssunto ,AParamMensagem : String;
   LMensagem: TStringList;
+  LCalcularNomeIndividual : boolean;
   FACBrBoletoFPDF   : TACBrBoletoFPDF;
 begin
   AParamIndice  := StrToIntDef(fpCmd.Params(0),0);
@@ -1190,7 +1191,6 @@ begin
   AParamAssunto := Trim(fpCmd.Params(2));
   AParamMensagem:= Trim(fpCmd.Params(3));
   ASenha        := Trim(fpCmd.Params(4));
-
 
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
@@ -1206,16 +1206,17 @@ begin
        begin
          FACBrBoletoFPDF   := TACBrBoletoFPDF.Create(ACBrBoleto);
          if ACBrBoleto.ACBrBoletoFC.ClassName <> FACBrBoletoFPDF.ClassName then
-            raise Exception.Create('A Função GerarPDFComSenha() não funciona com o motor selecionado !');
+            raise Exception.Create('O Metodo EnviarEmailBoleto Com Senha não funciona com o motor selecionado !');
        end;
 
 
     with MonitorConfig.BOLETO.Email do
     begin
       LMensagem := TStringList.Create;
+      LCalcularNomeIndividual:=ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual;
       AParamAssunto := IfThen(NaoEstaVazio(AParamAssunto), AParamAssunto, EmailAssuntoBoleto);
-
       try
+        ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual:=true;
         LMensagem.Text:= StringToBinaryString(IfThen(NaoEstaVazio(AParamMensagem), AParamMensagem, EmailMensagemBoleto));
 
         try
@@ -1235,8 +1236,8 @@ begin
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
         end;
-
       finally
+        ACBrBoleto.ACBrBoletoFC.CalcularNomeArquivoPDFIndividual:=LCalcularNomeIndividual;
         LMensagem.Free;
       end;
     end;

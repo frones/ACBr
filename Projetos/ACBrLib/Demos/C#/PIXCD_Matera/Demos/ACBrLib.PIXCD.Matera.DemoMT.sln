@@ -5,12 +5,12 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.Core", "..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj", "{D7A15051-F5B5-4F6D-A452-08138852375A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.PIXCDMT.Demo", "ACBrLib.PIXCD.Matera.Demo\ACBrLib.PIXCDMT.Matera.Demo.csproj", "{C6AAB316-8B0B-41EC-A5E1-A4A0C543A53B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLib.PIXCDMT.Matera.Demo", "ACBrLib.PIXCD.Matera.Demo\ACBrLib.PIXCDMT.Matera.Demo.csproj", "{C6AAB316-8B0B-41EC-A5E1-A4A0C543A53B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{99F69CE8-31AF-4348-A6C1-4D57239C2E1D} = {99F69CE8-31AF-4348-A6C1-4D57239C2E1D}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.PIXCDMT", "..\Import\Dinamico\MT\ACBrLib.PIXCDMT.csproj", "{99F69CE8-31AF-4348-A6C1-4D57239C2E1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBrLib.PIXCDMateraMT", "..\Import\Dinamico\MT\ACBrLib.PIXCDMateraMT.csproj", "{99F69CE8-31AF-4348-A6C1-4D57239C2E1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

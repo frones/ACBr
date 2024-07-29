@@ -137,7 +137,7 @@
       <Project>{D7A15051-F5B5-4F6D-A452-08138852375A}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Import\Dinamico\ST\ACBrLib.PIXCD.csproj">
+    <ProjectReference Include="..\..\Import\Dinamico\ST\ACBrLib.PIXCDMatera.csproj">
       <Project>{99F69CE8-31AF-4348-A6C1-4D57239C2E1D}</Project>
       <Name>ACBrLib.PIXCD</Name>
     </ProjectReference>

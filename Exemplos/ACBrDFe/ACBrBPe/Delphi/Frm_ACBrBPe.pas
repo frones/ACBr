@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -206,8 +206,6 @@ type
     btnNaoEmbarque: TButton;
     btnImprimirEvento: TButton;
     btnEnviarEventoEmail: TButton;
-    tsDistribuicao: TTabSheet;
-    btnDistribuicaoDFe: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -300,7 +298,6 @@ type
     procedure btnCancelarChaveClick(Sender: TObject);
     procedure btnImprimirEventoClick(Sender: TObject);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
-    procedure btnDistribuicaoDFeClick(Sender: TObject);
     procedure ACBrBPe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
@@ -450,6 +447,7 @@ begin
     //
     Ide.cUF := UFtoCUF(edtEmitUF.Text);
 
+    {
     // TpcnTipoAmbiente = (taProducao, taHomologacao);
     case rgTipoAmb.ItemIndex of
       0: Ide.tpAmb := TACBrTipoAmbiente(taProducao);
@@ -457,6 +455,8 @@ begin
     end;
 
     Ide.modelo  := 63;
+    }
+
     Ide.serie   := 1;
     Ide.nBP    := StrToIntDef(NumDFe, 0);
     Ide.cBP    := GerarCodigoDFe(Ide.nBP);
@@ -676,6 +676,7 @@ begin
     //
     Ide.cUF := UFtoCUF(edtEmitUF.Text);
 
+    {
     // TpcnTipoAmbiente = (taProducao, taHomologacao);
     case rgTipoAmb.ItemIndex of
       0: Ide.tpAmb := taProducao;
@@ -683,6 +684,7 @@ begin
     end;
 
     Ide.modelo  := 63;
+    }
     Ide.serie   := 1;
     Ide.nBP    := StrToIntDef(NumDFe, 0);
     Ide.cBP    := GerarCodigoDFe(Ide.nBP);
@@ -1156,35 +1158,6 @@ end;
 procedure TfrmACBrBPe.btnDataValidadeClick(Sender: TObject);
 begin
   ShowMessage(FormatDateBr(ACBrBPe1.SSL.CertDataVenc));
-end;
-
-procedure TfrmACBrBPe.btnDistribuicaoDFeClick(Sender: TObject);
-var
-  cUFAutor, CNPJ, ultNSU, ANSU: string;
-begin
-  cUFAutor := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then
-     exit;
-
-  CNPJ := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
-     exit;
-
-  ultNSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Último NSU recebido pelo ator', ultNSU)) then
-     exit;
-
-  ANSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'NSU específico', ANSU)) then
-     exit;
-
-  ACBrBPe1.DistribuicaoDFe(StrToInt(cUFAutor), CNPJ, ultNSU, ANSU);
-  {
-  MemoResp.Lines.Text := ACBrBPe1.WebServices.DistribuicaoDFe.RetWS;
-  memoRespWS.Lines.Text := ACBrBPe1.WebServices.DistribuicaoDFe.RetornoWS;
-
-  LoadXML(ACBrBPe1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
-  }
 end;
 
 procedure TfrmACBrBPe.btnEnviarEmailClick(Sender: TObject);

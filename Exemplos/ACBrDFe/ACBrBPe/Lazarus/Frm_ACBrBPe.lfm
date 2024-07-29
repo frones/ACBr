@@ -1765,8 +1765,8 @@ object frmACBrBPe: TfrmACBrBPe
       end
       object tsEventos: TTabSheet
         Caption = 'Eventos'
-        ClientHeight = 0
-        ClientWidth = 0
+        ClientHeight = 139
+        ClientWidth = 559
         ImageIndex = 4
         object btnCancelarXML: TButton
           Left = 8
@@ -1821,21 +1821,6 @@ object frmACBrBPe: TfrmACBrBPe
           Caption = 'Alteração de Poltrona'
           OnClick = btnAlteracaoPoltronaClick
           TabOrder = 5
-        end
-      end
-      object tsDistribuicao: TTabSheet
-        Caption = 'Distribuição DFe'
-        ClientHeight = 0
-        ClientWidth = 0
-        ImageIndex = 5
-        object btnDistribuicaoDFe: TButton
-          Left = 8
-          Height = 25
-          Top = 9
-          Width = 178
-          Caption = 'Distribuição Documentos Fiscais'
-          OnClick = btnDistribuicaoDFeClick
-          TabOrder = 0
         end
       end
     end

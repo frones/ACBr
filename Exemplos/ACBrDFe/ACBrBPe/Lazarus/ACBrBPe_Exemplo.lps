@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="675"/>
-        <CursorPos Y="684"/>
+        <TopLine Value="293"/>
+        <CursorPos Y="301"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -125,7 +125,7 @@
         <UsageCount Value="10"/>
       </Unit14>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="26" HistoryIndex="25">
       <Position1>
         <Filename Value="Frm_ACBrBPe.pas"/>
         <Caret Line="793" Column="16" TopLine="781"/>
@@ -214,6 +214,22 @@
         <Filename Value="Frm_ACBrBPe.pas"/>
         <Caret Line="315" TopLine="309"/>
       </Position22>
+      <Position23>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="684" TopLine="675"/>
+      </Position23>
+      <Position24>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="1181" TopLine="1165"/>
+      </Position24>
+      <Position25>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="1180" TopLine="1164"/>
+      </Position25>
+      <Position26>
+        <Filename Value="Frm_ACBrBPe.pas"/>
+        <Caret Line="1179" TopLine="1163"/>
+      </Position26>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

@@ -211,8 +211,6 @@ type
     btnNaoEmbarque: TButton;
     btnImprimirEvento: TButton;
     btnEnviarEventoEmail: TButton;
-    tsDistribuicao: TTabSheet;
-    btnDistribuicaoDFe: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -300,7 +298,6 @@ type
     procedure btnCancelarChaveClick(Sender: TObject);
     procedure btnImprimirEventoClick(Sender: TObject);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
-    procedure btnDistribuicaoDFeClick(Sender: TObject);
     procedure ACBrBPe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
@@ -1176,35 +1173,6 @@ end;
 procedure TfrmACBrBPe.btnDataValidadeClick(Sender: TObject);
 begin
   ShowMessage(FormatDateBr(ACBrBPe1.SSL.CertDataVenc));
-end;
-
-procedure TfrmACBrBPe.btnDistribuicaoDFeClick(Sender: TObject);
-var
-  cUFAutor, CNPJ, ultNSU, ANSU: string;
-begin
-  cUFAutor := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then
-     exit;
-
-  CNPJ := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
-     exit;
-
-  ultNSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Último NSU recebido pelo ator', ultNSU)) then
-     exit;
-
-  ANSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'NSU específico', ANSU)) then
-     exit;
-
-  ACBrBPe1.DistribuicaoDFe(StrToInt(cUFAutor), CNPJ, ultNSU, ANSU);
-  {
-  MemoResp.Lines.Text := ACBrBPe1.WebServices.DistribuicaoDFe.RetWS;
-  memoRespWS.Lines.Text := ACBrBPe1.WebServices.DistribuicaoDFe.RetornoWS;
-
-  LoadXML(MemoResp, WBResposta);
-  }
 end;
 
 procedure TfrmACBrBPe.btnEnviarEmailClick(Sender: TObject);

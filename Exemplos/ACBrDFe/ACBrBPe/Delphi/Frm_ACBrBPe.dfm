@@ -1721,19 +1721,6 @@ object frmACBrBPe: TfrmACBrBPe
           OnClick = btnExcessoBagagemClick
         end
       end
-      object tsDistribuicao: TTabSheet
-        Caption = 'Distribui'#231#227'o DFe'
-        ImageIndex = 5
-        object btnDistribuicaoDFe: TButton
-          Left = 8
-          Top = 9
-          Width = 178
-          Height = 25
-          Caption = 'Distribui'#231#227'o Documentos Fiscais'
-          TabOrder = 0
-          OnClick = btnDistribuicaoDFeClick
-        end
-      end
     end
     object pgRespostas: TPageControl
       Left = 1

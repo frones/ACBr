@@ -80,6 +80,7 @@ begin
   begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+    ImprimirOptanteSN := False;
 
     ServicosDisponibilizados.EnviarLoteAssincrono := False;
     ServicosDisponibilizados.EnviarLoteSincrono := False;

@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+29/07/2024
+-- ACBrNFSeXDANFSeFR --
+[-] Não estava identificando o provedor configurado pelo código do municipio.
+-- ACBrNFSeXDANFSeRLISSNet --
+[*] O campo Natureza da Operação no DANFSE na verdade apresenta o conteúdo do
+    campo ExigibilidadeISS.
+-- MegaSoft.Provider --
+[*] Alterado o valor do parâmetro ImprimirOptanteSN para false pois esse provedor
+    não retorna no XML da NFS-e a tag OptanteSimplesNacional.
+   Por: Italo Giurizzato Junior
+
 26/07/2024
 -- ACBrNFSeXGravarXml/ACBrNFSeXLerXml --
 [*] Padronização na geração e leitura dos itens no formato tabulado e Json na 

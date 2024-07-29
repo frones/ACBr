@@ -211,6 +211,8 @@ end;
 
 procedure TACBrNFSeXDANFSeFR.ImprimirDANFSe(NFSe: TNFSe);
 begin
+  Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
+
   DANFSeXClassOwner.FIndexImpressaoIndividual := -1;
   if PrepareReport(NFSe) then
   begin
@@ -229,6 +231,8 @@ var
   LArquivoPDF   : string;
   LOldShowDialog: Boolean;
 begin
+  Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
+
   if PrepareReport(NFSe) then
   begin
     frxPDFExport.Author        := Sistema;
@@ -258,7 +262,7 @@ var
   LArquivoPDF  : string;
   OldShowDialog: Boolean;
 begin
-
+  Provedor := TACBrNFSeX(ACBrNFSe).Configuracoes.Geral.Provedor;
 
   for I := 1 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count do
   begin

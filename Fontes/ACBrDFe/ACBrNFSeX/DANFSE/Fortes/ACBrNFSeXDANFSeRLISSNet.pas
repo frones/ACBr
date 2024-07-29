@@ -402,7 +402,8 @@ begin
 
   With fpNFSe do
   begin
-    rllNatOperacao.Caption := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
+//    rllNatOperacao.Caption := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
+    rllNatOperacao.Caption := ACBrStr(FProvider.ExigibilidadeISSDescricao(Servico.ExigibilidadeISS));
     rllNumeroRPS.Caption := IdentificacaoRps.Numero;
     rllDataRPS.Caption := FormatDateTime('dd/mm/yyyy', DataEmissaoRps);
     rllLocalServico.Caption := Servico.MunicipioPrestacaoServico;
@@ -476,9 +477,9 @@ begin
   inherited;
 
   if FileExists(fpDANFSe.Prestador.Logo) then
-     TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.Prestador.Logo)
+    TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.Prestador.Logo)
   else
-     rliPrestLogo.Visible:=False;
+    rliPrestLogo.Visible:=False;
 
   with fpNFSe do
   begin

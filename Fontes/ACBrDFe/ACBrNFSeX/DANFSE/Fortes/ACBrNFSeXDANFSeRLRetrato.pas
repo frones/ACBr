@@ -426,9 +426,6 @@ begin
     txtServicoTotal.Caption := FormatFloatBr(ValorTotal);
     txtBaseCalculo.Caption := FormatFloatBr(BaseCalculo);
 
-//    if ValorISS = 0.0 then
-//      ValorISS := BaseCalculo * Aliquota/100;
-
     txtISS.Caption := FormatFloatBr(ValorISS);
   end;
 end;

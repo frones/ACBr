@@ -1,51 +1,60 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 unit Frm_ACBrNFCom;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls,
+  SynEdit, SynHighlighterXML,
+  zlib,
   ACBrDFe, ACBrDFeReport, ACBrBase,
   ACBrNFComDANFComClass, ACBrMail, ACBrNFCom;
 
 type
+
+  { TfrmACBrNFCom }
+
   TfrmACBrNFCom = class(TForm)
+    btnImprimirDANFCOM: TButton;
+    btnImprimirDANFCOMOffline: TButton;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
+    sbPathNFCom: TSpeedButton;
     TabSheet1: TTabSheet;
     PageControl4: TPageControl;
     TabSheet3: TTabSheet;
@@ -199,11 +208,10 @@ type
     btnEnviarEventoEmail: TButton;
     pgRespostas: TPageControl;
     TabSheet6: TTabSheet;
-    wbXmlRetorno: TWebBrowser;
+//    wbXmlRetorno: TWebBrowser;
     TabSheet8: TTabSheet;
     memoLog: TMemo;
     TabSheet9: TTabSheet;
-    trvwDocumento: TTreeView;
     TabSheet10: TTabSheet;
     ACBrMail1: TACBrMail;
     OpenDialog1: TOpenDialog;
@@ -212,7 +220,10 @@ type
     btnStatusServ: TButton;
     rgTipoDANFCom: TRadioGroup;
     ACBrNFCom1: TACBrNFCom;
-    wbXmlEnvio: TWebBrowser;
+    wbXmlEnvio: TSynEdit;
+    wbXmlRetorno: TSynEdit;
+    wbXmlNotas: TSynEdit;
+//    wbXmlEnvio: TWebBrowser;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -269,7 +280,7 @@ type
     procedure ConfigurarComponente;
     procedure ConfigurarEmail;
     Procedure AlimentarComponente(NumDFe: String);
-    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+    procedure LoadXML(RetWS: String; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
   public
     { Public declarations }
@@ -281,7 +292,7 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  strutils, math, TypInfo, DateUtils, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrUtil.Strings,
@@ -294,7 +305,7 @@ uses
 const
   SELDIRHELP = 1000;
 
-{$R *.dfm}
+{$R *.lfm}
 
 { TfrmACBrNFCom }
 
@@ -304,7 +315,7 @@ begin
 
   with ACBrNFCom1.NotasFiscais.Add.NFCom do
   begin
-    // Dados de IdentificaÁ„o do NFCom
+    // Dados de Identifica√ß√£o do NFCom
     //
     Ide.cUF := UFtoCUF(edtEmitUF.Text);
 
@@ -318,10 +329,10 @@ begin
     Ide.serie  := 1;
     Ide.nNF    := StrToIntDef(NumDFe, 0);
     {
-      A funÁ„o GerarCodigoDFe possui 2 par‚metros:
-      sendo que o primeiro (obrigatÛrio) È o numero do documento
-      e o segundo (opcional) È a quantidade de digitos que o cÛdigo tem.
-      Os valores aceitos para o segundo par‚mentros s„o: 7 ou 8 (padr„o)
+      A fun√ß√£o GerarCodigoDFe possui 2 par√¢metros:
+      sendo que o primeiro (obrigat√≥rio) √© o numero do documento
+      e o segundo (opcional) √© a quantidade de digitos que o c√≥digo tem.
+      Os valores aceitos para o segundo par√¢mentros s√£o: 7 ou 8 (padr√£o)
     }
     Ide.cNF := GerarCodigoDFe(Ide.nNF, 7);
 
@@ -331,14 +342,14 @@ begin
     Ide.nSiteAutoriz := sa0;
     Ide.cMunFG  := 3503208;
     Ide.finNFCom := fnNormal;
-    Ide.verProc := 'ACBrNFCom'; //Vers„o do seu sistema
+    Ide.verProc := 'ACBrNFCom'; //Vers√£o do seu sistema
     Ide.indPrePago := tiNao;
     Ide.indCessaoMeiosRede := tiNao;
     Ide.indNotaEntrada := tiNao;
 
-    // Alimentar os 2 campos abaixo sÛ em caso de contingÍncia
+    // Alimentar os 2 campos abaixo s√≥ em caso de conting√™ncia
 //   Ide.dhCont  := Now;
-//   Ide.xJust   := 'Motivo da ContingÍncia';
+//   Ide.xJust   := 'Motivo da Conting√™ncia';
 
     // Dados do
     //
@@ -358,7 +369,7 @@ begin
     Emit.EnderEmit.fone    := edtEmitFone.Text;
     Emit.enderEmit.email   := 'endereco@provedor.com.br';
 
-    // Dados do Destinat·rio
+    // Dados do Destinat√°rio
     //
     Dest.xNome     := 'Nome do Destinatario';
     Dest.CNPJCPF   := '06760213874';
@@ -394,13 +405,13 @@ begin
     assinante.dContratoIni := StrToDate('01/01/2024');
     assinante.dContratoFim := StrToDate('01/12/2024');
 
-    // Em se tratando de plano de prestaÁ„o de serviÁo telefÙnico corporativo,
-    // familiar ou similares, informar o n˙mero do terminal telefÙnico principal
+    // Em se tratando de plano de presta√ß√£o de servi√ßo telef√¥nico corporativo,
+    // familiar ou similares, informar o n√∫mero do terminal telef√¥nico principal
     // do plano.
     assinante.NroTermPrinc := '';
     assinante.cUFPrinc := 0;
 
-    // N˙mero dos Terminais adicionais do serviÁo contratado
+    // N√∫mero dos Terminais adicionais do servi√ßo contratado
     {
     with assinante.TermAdic.New do
     begin
@@ -408,7 +419,7 @@ begin
       cUFAdic := 0;
     end;
     }
-    // Grupo de InformaÁıes da SubstituiÁ„o
+    // Grupo de Informa√ß√µes da Substitui√ß√£o
     gSub.chNFCom := '';
     // ou
     gSub.gNF.CNPJ := '';
@@ -422,15 +433,8 @@ begin
     //  msErroTributacao, msDescontServico, msComplValores);
     gSub.motSub := msErroPreco;
 
-    // Grupo de InformaÁıes do Cofaturamento
+    // Grupo de Informa√ß√µes do Cofaturamento
     gCofat.chNFComLocal := '';
-    // ou
-    gCofat.gNF.CNPJ := '';
-    gCofat.gNF.Modelo := 21; // 21 ou 22
-    gCofat.gNF.serie := '';
-    gCofat.gNF.nNF := 0;
-    gCofat.gNF.CompetEmis := StrToDate('01/01/2024');
-    gCofat.gNF.hash115 := '';
 
     // Detalhamento de Produtos e Servicos
     with Det.New do
@@ -438,7 +442,6 @@ begin
       nItem := 1;
       chNFComAnt := '';
       nItemAnt := 0;
-      indNFComAntPapelFatCentral := tiNao;
 
       with Prod do
       begin
@@ -461,19 +464,12 @@ begin
 
       with Imposto do
       begin
-        // Indicador de Sem CST para ICMS
-        // se Sim, n„o vai ser gerado as informaÁıes do ICMS
-        indSemCST := tiNao;
-
         with ICMS do
         begin
           CST   := cst00;
           vBC   := 100;
           pICMS := 18;
           vICMS := vBC * pICMS / 100;
-
-          // Indicador de Simples Nacional
-          indSN := tiNao;
         end;
 
         with PIS do
@@ -620,9 +616,9 @@ begin
       CNPJCPF := '23456789000110';
     end;
     }
-    // InformaÁıes Adicionais
+    // Informa√ß√µes Adicionais
     infAdic.infAdFisco := '';
-    infAdic.infCpl := 'InformaÁıes Complementares';
+    infAdic.infCpl := 'Informa√ß√µes Complementares';
     {
     with infRespTec do
     begin
@@ -660,14 +656,13 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFCom1.Consultar;
 
     ShowMessage(ACBrNFCom1.WebServices.Consulta.Protocolo);
 
-//    MemoResp.Lines.Text := ACBrNFCom1.WebServices.Consulta.RetWS;
-//    memoRespWS.Lines.Text := ACBrNFCom1.WebServices.Consulta.RetornoWS;
-    LoadXML(ACBrNFCom1.WebServices.Consulta.RetornoWS, wbXmlRetorno);
+    LoadXML(ACBrNFCom1.WebServices.Consulta.RetWS, WBXmlRetorno);
+
     NomeArq := OpenDialog1.FileName;
 
     if pos(UpperCase('-NFCom.xml'), UpperCase(NomeArq)) > 0 then
@@ -693,7 +688,7 @@ begin
   if not(InputQuery('WebServices Eventos: Cancelamento', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
      exit;
   Protocolo:='';
-  if not(InputQuery('WebServices Eventos: Cancelamento', 'Protocolo de AutorizaÁ„o', Protocolo)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento', 'Protocolo de Autoriza√ß√£o', Protocolo)) then
      exit;
   Justificativa := 'Justificativa do Cancelamento';
   if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa do Cancelamento', Justificativa)) then
@@ -713,7 +708,7 @@ begin
 
   ACBrNFCom1.EnviarEvento(StrToInt(idLote));
 
-  LoadXML(ACBrNFCom1.WebServices.EnvEvento.RetWS, wbXmlRetorno);
+  LoadXML(ACBrNFCom1.WebServices.EnvEvento.RetWS, WBXmlRetorno);
   (*
   ACBrNFCom1.WebServices.EnvEvento.EventoRetorno.TpAmb
   ACBrNFCom1.WebServices.EnvEvento.EventoRetorno.verAplic
@@ -738,7 +733,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     idLote := '1';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
@@ -759,9 +754,8 @@ begin
 
     ACBrNFCom1.EnviarEvento(StrToInt(idLote));
 
-//    MemoResp.Lines.Text := ACBrNFCom1.WebServices.EnvEvento.RetWS;
-//    memoRespWS.Lines.Text := ACBrNFCom1.WebServices.EnvEvento.RetornoWS;
-    LoadXML(ACBrNFCom1.WebServices.EnvEvento.RetornoWS, wbXmlRetorno);
+    LoadXML(ACBrNFCom1.WebServices.EnvEvento.RetWS, WBXmlRetorno);
+
     ShowMessage(IntToStr(ACBrNFCom1.WebServices.EnvEvento.cStat));
     ShowMessage(ACBrNFCom1.WebServices.EnvEvento.EventoRetorno.RetInfEvento.nProt);
   end;
@@ -800,9 +794,7 @@ begin
 
     ACBrNFCom1.Enviar;
 
-//    MemoResp.Lines.Text := ACBrNFCom1.WebServices.Retorno.RetWS;
-//    memoRespWS.Lines.Text := ACBrNFCom1.WebServices.Retorno.RetornoWS;
-    LoadXML(ACBrNFCom1.WebServices.Enviar.RetWS, wbXmlRetorno);
+    LoadXML(ACBrNFCom1.WebServices.Enviar.RetWS, WBXmlRetorno);
 
     memoLog.Lines.Add('');
     memoLog.Lines.Add('Envio NFCom');
@@ -834,12 +826,12 @@ begin
   ACBrNFCom1.NotasFiscais.Clear;
   ACBrNFCom1.Consultar(vChave);
 
-  LoadXML(ACBrNFCom1.WebServices.Consulta.RetWS, wbXmlRetorno);
+  LoadXML(ACBrNFCom1.WebServices.Consulta.RetWS, WBXmlRetorno);
 
   pgRespostas.ActivePageIndex := 0;
 
   memoLog.Lines.Add('');
-  memoLog.Lines.Add('Consultar SituaÁ„o');
+  memoLog.Lines.Add('Consultar Situa√ß√£o');
   memoLog.Lines.Add('tpAmb: '    + TipoAmbienteToStr(ACBrNFCom1.WebServices.Consulta.tpAmb));
   memoLog.Lines.Add('verAplic: ' + ACBrNFCom1.WebServices.Consulta.verAplic);
   memoLog.Lines.Add('cStat: '    + IntToStr(ACBrNFCom1.WebServices.Consulta.cStat));
@@ -862,15 +854,15 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFCom1.Consultar;
 
-    LoadXML(ACBrNFCom1.WebServices.Consulta.RetWS, wbXmlRetorno);
+    LoadXML(ACBrNFCom1.WebServices.Consulta.RetWS, WBXmlRetorno);
 
     pgRespostas.ActivePageIndex := 0;
 
     memoLog.Lines.Add('');
-    memoLog.Lines.Add('Consultar SituaÁ„o');
+    memoLog.Lines.Add('Consultar Situa√ß√£o');
     memoLog.Lines.Add('Protocolo: ' + ACBrNFCom1.WebServices.Consulta.Protocolo);
     memoLog.Lines.Add('');
     memoLog.Lines.Add('tpAmb: '     + TipoAmbienteToStr(ACBrNFCom1.WebServices.Consulta.tpAmb));
@@ -898,7 +890,7 @@ begin
 
   pgRespostas.ActivePageIndex := 0;
 
-  LoadXML(ACBrNFCom1.WebServices.Enviar.RetWS, wbXmlRetorno);
+  LoadXML(ACBrNFCom1.WebServices.Enviar.RetWS, WBXmlRetorno);
 
   memoLog.Lines.Add('');
   memoLog.Lines.Add('Envio NFCom');
@@ -943,7 +935,7 @@ begin
     Exit;
 
   ACBrNFCom1.NotasFiscais.Clear;
-  ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+  ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
   CC := TStringList.Create;
   try
@@ -977,7 +969,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
   end;
 
   OpenDialog1.Title := 'Selecione ao Evento';
@@ -1027,15 +1019,13 @@ begin
   ACBrNFCom1.NotasFiscais.Assinar;
   ACBrNFCom1.NotasFiscais.Validar;
 
-//  ACBrNFCom1.NotasFiscais.Items[0].GravarXML();
-
   ShowMessage('Arquivo gerado em: ' + ACBrNFCom1.NotasFiscais.Items[0].NomeArq);
   memoLog.Lines.Add('Arquivo gerado em: ' + ACBrNFCom1.NotasFiscais.Items[0].NomeArq);
 
-  ACBrNFCom1.NotasFiscais.LoadFromFile(ACBrNFCom1.NotasFiscais.Items[0].NomeArq, False);
+  ACBrNFCom1.NotasFiscais.LoadFromFile(ACBrNFCom1.NotasFiscais.Items[0].NomeArq);
   Xml := ACBrNFCom1.NotasFiscais.Items[0].XMLAssinado;
 
-  LoadXML(Xml, wbXmlRetorno);
+  LoadXML(Xml, wbXmlNotas);
 
   pgRespostas.ActivePageIndex := 0;
 end;
@@ -1051,7 +1041,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
     ACBrNFCom1.NotasFiscais.Imprimir;
   end;
 end;
@@ -1067,7 +1057,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
     ACBrNFCom1.NotasFiscais.Imprimir;
   end;
 end;
@@ -1083,7 +1073,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
   end;
 
   OpenDialog1.Title := 'Selecione o Evento';
@@ -1150,7 +1140,7 @@ begin
   pgRespostas.ActivePageIndex := 0;
 
   memoLog.Lines.Add('');
-  memoLog.Lines.Add('Status ServiÁo');
+  memoLog.Lines.Add('Status Servi√ßo');
   memoLog.Lines.Add('tpAmb: '    +TipoAmbienteToStr(ACBrNFCom1.WebServices.StatusServico.tpAmb));
   memoLog.Lines.Add('verAplic: ' +ACBrNFCom1.WebServices.StatusServico.verAplic);
   memoLog.Lines.Add('cStat: '    +IntToStr(ACBrNFCom1.WebServices.StatusServico.cStat));
@@ -1165,7 +1155,7 @@ end;
 procedure TfrmACBrNFCom.btnSubNameClick(Sender: TObject);
 begin
   ShowMessage(ACBrNFCom1.SSL.CertSubjectName + sLineBreak + sLineBreak +
-              'Raz„o Social: ' + ACBrNFCom1.SSL.CertRazaoSocial);
+              'Raz√£o Social: ' + ACBrNFCom1.SSL.CertRazaoSocial);
 end;
 
 procedure TfrmACBrNFCom.btnValidarAssinaturaClick(Sender: TObject);
@@ -1181,7 +1171,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     pgRespostas.ActivePageIndex := 0;
     memoLog.Lines.Add('');
     memoLog.Lines.Add('');
@@ -1190,13 +1180,13 @@ begin
       memoLog.Lines.Add('Erro: '+Msg)
     else
     begin
-      memoLog.Lines.Add('OK: Assinatura V·lida');
+      memoLog.Lines.Add('OK: Assinatura V√°lida');
       ACBrNFCom1.SSL.CarregarCertificadoPublico( ACBrNFCom1.NotasFiscais[0].NFCom.signature.X509Certificate );
       memoLog.Lines.Add('Assinado por: '+ ACBrNFCom1.SSL.CertRazaoSocial);
       memoLog.Lines.Add('CNPJ: '+ ACBrNFCom1.SSL.CertCNPJ);
-      memoLog.Lines.Add('Num.SÈrie: '+ ACBrNFCom1.SSL.CertNumeroSerie);
+      memoLog.Lines.Add('Num.S√©rie: '+ ACBrNFCom1.SSL.CertNumeroSerie);
 
-      ShowMessage('ASSINATURA V¡LIDA');
+      ShowMessage('ASSINATURA V√ÅLIDA');
     end;
   end;
 end;
@@ -1216,7 +1206,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFCom1.NotasFiscais.Clear;
-    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFCom1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     Inicio := Now;
     Ok := ACBrNFCom1.NotasFiscais.ValidarRegrasdeNegocios(Msg);
     Tempo := FormatDateTime('hh:nn:ss:zzz', Now - Inicio);
@@ -1239,7 +1229,7 @@ begin
 
   OpenDialog1.InitialDir := ACBrNFCom1.Configuracoes.Arquivos.PathSalvar;
 
-  // Sugest„o de configuraÁ„o para apresentaÁ„o de mensagem mais amig·vel ao usu·rio final
+  // Sugest√£o de configura√ß√£o para apresenta√ß√£o de mensagem mais amig√°vel ao usu√°rio final
   ACBrNFCom1.Configuracoes.Geral.ExibirErroSchema := False;
   ACBrNFCom1.Configuracoes.Geral.FormatoAlerta := 'Campo:%DESCRICAO% - %MSG%';
 
@@ -1254,7 +1244,7 @@ begin
       if ACBrNFCom1.NotasFiscais.Items[0].Alertas <> '' then
         memoLog.Lines.Add('Alertas: ' + ACBrNFCom1.NotasFiscais.Items[0].Alertas);
 
-      ShowMessage('Nota Fiscal de ComunicaÁ„o Valida');
+      ShowMessage('Nota Fiscal de Comunica√ß√£o Valida');
     except
       on E: Exception do
       begin
@@ -1680,15 +1670,21 @@ begin
   ACBrMail1.FromName := 'Projeto ACBr - ACBrNFCom';
 end;
 
-procedure TfrmACBrNFCom.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+procedure TfrmACBrNFCom.LoadXML(RetWS: String; SynEdit: TSynEdit);
+var
+  vText: String;
 begin
-  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      RetWS, False, False);
+  vText := RetWS;
 
-  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
+  // formata resposta
+  vText := StringReplace(vText, '>', '>' + LineEnding + '    ', [rfReplaceAll]);
+  vText := StringReplace(vText, '<', LineEnding + '  <', [rfReplaceAll]);
+  vText := StringReplace(vText, '>' + LineEnding + '    ' + LineEnding +
+           '  <', '>' + LineEnding + '  <', [rfReplaceAll]);
+  vText := StringReplace(vText, '  </ret', '</ret', []);
 
-  if ACBrNFCom1.NotasFiscais.Count > 0 then
-    memoLog.Lines.Add('Empresa: ' + ACBrNFCom1.NotasFiscais.Items[0].NFCom.Emit.xNome);
+  // exibe resposta
+  SynEdit.Text := Trim(vText);
 end;
 
 procedure TfrmACBrNFCom.PathClick(Sender: TObject);
@@ -1760,8 +1756,8 @@ begin
     ColWidths[3] := 80;
     ColWidths[4] := 150;
 
-    Cells[0, 0] := 'Num.SÈrie';
-    Cells[1, 0] := 'Raz„o Social';
+    Cells[0, 0] := 'Num.S√©rie';
+    Cells[1, 0] := 'Raz√£o Social';
     Cells[2, 0] := 'CNPJ';
     Cells[3, 0] := 'Validade';
     Cells[4, 0] := 'Certificadora';

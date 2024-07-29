@@ -132,176 +132,201 @@ namespace ACBrLib.PIXCD
         #endregion Ini
 
         #region Diversos
-
-        public string GerarQRCodeEstatico(float AValor, string AinfoAdicional, string ATxID)
+        public string OpenSSLInfo()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_GerarQRCodeEstatico>();
-            var ret = ExecuteMethod(() => method(AValor, ToUTF8(AinfoAdicional), ToUTF8(ATxID), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_OpenSSLInfo>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string ConsultarPix(string Ae2eid)
+        public string IncluirConta(string aInfIncluirConta)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_ConsultarPix>();
-            var ret = ExecuteMethod(() => method(ToUTF8(Ae2eid), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_IncluirConta>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aInfIncluirConta), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string ConsultarPixRecebidos(DateTime ADataInicio, DateTime ADataFim, string ATxId, string ACpfCnpj, int PagAtual, int ItensPorPagina)
+        public string ConsultarConta(string aAccountId)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_ConsultarPixRecebidos>();
-            var ret = ExecuteMethod(() => method(ADataInicio, ADataFim, ToUTF8(ATxId), ToUTF8(ACpfCnpj), PagAtual, ItensPorPagina, buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ConsultarConta>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string SolicitarDevolucaoPix(string AInfDevolucao, string Ae2eid, string AidDevolucao)
+        public string InativarConta(string aAccountId)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_SolicitarDevolucaoPix>();
-            var ret = ExecuteMethod(() => method(ToUTF8(AInfDevolucao), ToUTF8(Ae2eid), ToUTF8(AidDevolucao), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_InativarConta>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string ConsultarDevolucaoPix(string Ae2eid, string AidDevolucao)
+        public string IncluirChavePix(string aAccountId, string aExternalID)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_ConsultarDevolucaoPix>();
-            var ret = ExecuteMethod(() => method(ToUTF8(Ae2eid), ToUTF8(AidDevolucao), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_IncluirChavePix>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), ToUTF8(aExternalID), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string CriarCobrancaImediata(string AInfCobSolicitada, string ATxId)
+        public string ConsultarChavePix(string aAccountId)
         {
-
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_CriarCobrancaImediata>();
-            var ret = ExecuteMethod(() => method(ToUTF8(AInfCobSolicitada), ToUTF8(ATxId), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ConsultarChavePix>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string ConsultarCobrancaImediata(string ATxId, int ARevisao)
+        public string ExcluirChavePix(string aAccountId, string aChavePIX)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_ConsultarCobrancaImediata>();
-            var ret = ExecuteMethod(() => method(ToUTF8(ATxId), ARevisao, buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ExcluirChavePix>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), ToUTF8(aChavePIX), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string RevisarCobrancaImediata(string AInfCobRevisada, string ATxId)
+        public string GerarQRCode(string aInfQRCode)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_RevisarCobrancaImediata>();
-            var ret = ExecuteMethod(() => method(ToUTF8(AInfCobRevisada), ToUTF8(ATxId), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_GerarQRCode>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aInfQRCode), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string CancelarCobrancaImediata(string ATxId)
+        public string ConsultarTransacao(string aAccountId, string aTransactionID)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_CancelarCobrancaImediata>();
-            var ret = ExecuteMethod(() => method(ToUTF8(ATxId), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ConsultarTransacao>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), ToUTF8(aTransactionID), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string CriarCobranca(string AInfCobVSolicitada, string ATxId)
+        public string ConsultarSaldoEC(string aAccountId)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_CriarCobranca>();
-            var ret = ExecuteMethod(() => method(ToUTF8(AInfCobVSolicitada), ToUTF8(ATxId), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ConsultarSaldoEC>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string ConsultarCobranca(string ATxId, int ARevisao)
+        public string ConsultarExtratoEC(string aAccountId, DateTime aInicio, DateTime aFim)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_ConsultarCobranca>();
-            var ret = ExecuteMethod(() => method(ToUTF8(ATxId), ARevisao, buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ConsultarExtratoEC>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), aInicio, aFim, buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string RevisarCobranca(string AInfCobVRevisada, string ATxId)
+        public string ConsultarMotivosDevolucao()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_RevisarCobranca>();
-            var ret = ExecuteMethod(() => method(ToUTF8(AInfCobVRevisada), ToUTF8(ATxId), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_ConsultarMotivosDevolucao>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string CancelarCobranca(string ATxId)
+        public string SolicitarDevolucao(string aInfSolicitarDevolucao, string aAccountId, string aTransactionID)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
-            var method = GetMethod<PIXCD_CancelarCobranca>();
-            var ret = ExecuteMethod(() => method(ToUTF8(ATxId), buffer, ref bufferLen));
+            var method = GetMethod<PIXCD_Matera_SolicitarDevolucao>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aInfSolicitarDevolucao), ToUTF8(aAccountId), ToUTF8(aTransactionID), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
+
+        public string ConsultarAliasRetirada(string aAccountId, string aAlias)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<PIXCD_Matera_ConsultarAliasRetirada>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aAccountId), ToUTF8(aAlias), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public string SolicitarRetirada(string aInfSolicitarRetirada, string aAccountId)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<PIXCD_Matera_SolicitarRetirada>();
+            var ret = ExecuteMethod(() => method(ToUTF8(aInfSolicitarRetirada), ToUTF8(aAccountId), buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
 
         #endregion Diversos
 

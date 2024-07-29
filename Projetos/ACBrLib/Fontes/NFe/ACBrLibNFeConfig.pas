@@ -87,7 +87,7 @@ type
     FImprimeInscSuframa: Boolean;
     FImprimeXPedNitemPed: Boolean;
     FImprimeDescAcrescItemNFe: TpcnImprimeDescAcrescItem;
-
+    FImprimeNNFFormatadoNFe: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -135,7 +135,7 @@ type
     property ImprimeInscSuframa: Boolean read FImprimeInscSuframa write FImprimeInscSuframa;
     property ImprimeXPedNitemPed: Boolean read FImprimeXPedNitemPed write FImprimeXPedNitemPed;
     property ImprimeDescAcrescItemNFe: TpcnImprimeDescAcrescItem read FImprimeDescAcrescItemNFe write FImprimeDescAcrescItemNFe;
-
+    property ImprimeNNFFormatadoNFe: Boolean read FImprimeNNFFormatadoNFe write FImprimeNNFFormatadoNFe;
   end;
 
   { TDANFeNFCeConfig }
@@ -161,7 +161,7 @@ type
     FMargemEsquerda: Double;
     FMargemDireita: Double;
     FFonteLinhaItem: TFont;
-
+    FImprimeNNFFormatadoNFCe : Boolean;
     procedure setImprimeEmUmaLinha(const Value: Boolean);
     procedure setImprimeEmDuasLinhas(const Value: Boolean);
 
@@ -193,6 +193,7 @@ type
     property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
     property FonteLinhaItem: TFont read FFonteLinhaItem write FFonteLinhaItem;
+    property ImprimeNNFFormatadoNFCe: Boolean read FImprimeNNFFormatadoNFCe write FImprimeNNFFormatadoNFCe;
 
   end;
 
@@ -329,7 +330,7 @@ begin
   FImprimeInscSuframa:= True;
   FImprimeXPedNitemPed:= False;
   FImprimeDescAcrescItemNFe:= idaiSempre;
-
+  FImprimeNNFFormatadoNFe:=True;
   if Assigned(FFonte) then FFonte.Free;
   FFonte := TFonte.Create(nil);
 
@@ -376,7 +377,7 @@ begin
   ImprimeInscSuframa:= AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeInscSuframa, ImprimeInscSuframa);
   ImprimeXPedNitemPed:= AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeXPedNitemPed, ImprimeXPedNitemPed);
   ImprimeDescAcrescItemNFe:= TpcnImprimeDescAcrescItem(AIni.ReadInteger(CSessaoDANFENFE, CChaveImprimeDescAcrescItemNFe, Integer(ImprimeDescAcrescItemNFe)));
-
+  ImprimeNNFFormatadoNFe := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeNNFFormatadoNFe, ImprimeNNFFormatadoNFe);
   with Fonte do
   begin
     Nome := TNomeFonte(AIni.ReadInteger(CSessaoDANFENFE, CChaveFonteNome, Integer(Nome)));
@@ -429,6 +430,7 @@ begin
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeInscSuframa, ImprimeInscSuframa);
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeXPedNitemPed, ImprimeXPedNitemPed);
   AIni.WriteInteger(CSessaoDANFENFE, CChaveImprimeDescAcrescItemNFe, Integer(ImprimeDescAcrescItemNFe));
+  AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeNNFFormatadoNFe, ImprimeNNFFormatadoNFe);
 
   with Fonte do
   begin
@@ -484,6 +486,7 @@ begin
     ImprimeInscSuframa:= FImprimeInscSuframa;
     ImprimeXPedNItemPed:= FImprimeXPedNitemPed;
     ImprimeDescAcrescItemNFe:= FImprimeDescAcrescItemNFe;
+    FormatarNumeroDocumento := FImprimeNNFFormatadoNFe;
 
     with Fonte do
     begin
@@ -550,6 +553,7 @@ begin
   FFonteLinhaItem := TFont.Create;
   FFonteLinhaItem.Name := 'Lucida Console';
   FFonteLinhaItem.Size := 7;
+  FImprimeNNFFormatadoNFCe:=True;
 end;
 
 procedure TDANFeNFCeConfig.LerIni(const AIni: TCustomIniFile);
@@ -585,6 +589,7 @@ begin
     FonteLinhaItem.Style := FonteLinhaItem.Style + [fsUnderline];
   if AIni.ReadBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemStrikeOut , False ) then
     FonteLinhaItem.Style := FonteLinhaItem.Style + [fsStrikeOut];
+  ImprimeNNFFormatadoNFCe := AIni.ReadBool(CSessaoDANFENFCE, CChaveImprimeNNFFormatadoNFCe, ImprimeNNFFormatadoNFCe);
 end;
 
 procedure TDANFeNFCeConfig.GravarIni(const AIni: TCustomIniFile);
@@ -615,6 +620,7 @@ begin
   AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemItalic , fsItalic in FonteLinhaItem.Style );
   AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemUnderline , fsUnderline in FonteLinhaItem.Style );
   AIni.WriteBool( CSessaoDANFENFCE,   CChaveFonteLinhaItemStrikeOut , fsStrikeOut in FonteLinhaItem.Style );
+  AIni.WriteBool(CSessaoDANFENFCE,    CChaveImprimeNNFFormatadoNFCe, ImprimeNNFFormatadoNFCe);
 end;
 
 procedure TDANFeNFCeConfig.Apply(const DFeReport: TACBrNFeDANFCEClass);
@@ -641,6 +647,7 @@ begin
     MargemSuperior := FMargemSuperior;
     MargemEsquerda := FMargemEsquerda;
     MargemDireita := FMargemDireita;
+    FormatarNumeroDocumento:= FImprimeNNFFormatadoNFCe;
   end;
 
   if DFeReport is TACBrNFeDANFCeFortes then

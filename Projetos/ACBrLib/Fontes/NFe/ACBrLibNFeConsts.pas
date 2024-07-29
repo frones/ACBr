@@ -101,6 +101,7 @@ const
   CChaveFonteTamanhoFonteInformacoesComplementares = 'Fonte.TamanhoFonteInformacoesComplementares';
   CChaveFonteTamanhoFonteDemaisCampos = 'Fonte.TamanhoFonteDemaisCampos';
   CChaveImprimeDescAcrescItemNFe = 'ImprimeDescAcrescItemNFe';
+  CChaveImprimeNNFFormatadoNFe = 'FormatarNumeroDocumento';
 
   CSessaoDANFENFCE = 'DANFENFCe';
   CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
@@ -121,6 +122,7 @@ const
   CChaveFonteLinhaItemItalic = 'FonteLinhaItem.Italic';
   CChaveFonteLinhaItemUnderline = 'FonteLinhaItem.Underline';
   CChaveFonteLinhaItemStrikeOut = 'FonteLinhaItem.StrikeOut';
+  CChaveImprimeNNFFormatadoNFCe = 'FormatarNumeroDocumento';
 
   CSessaoRespStatus = 'Status';
   CSessaoRespInutilizacao = 'Inutilizacao';

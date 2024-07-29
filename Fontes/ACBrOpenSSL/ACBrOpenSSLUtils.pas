@@ -1696,7 +1696,6 @@ initialization
 finalization
   FreeOpenSSL;
 
-end.
 
 (*
 
@@ -1784,3 +1783,4 @@ begin
 end;
 *)
 
+end.

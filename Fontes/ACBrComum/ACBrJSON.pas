@@ -182,6 +182,7 @@ implementation
 
 constructor TACBrJSONObject.Create;
 begin
+  inherited Create;
   FJSON := TJsonObject.Create;
   FOwnerJSON := True;
   FContexts := TList.Create;
@@ -604,6 +605,7 @@ end;
 
 constructor TACBrJSONObject.Create(AJSONObject: TJsonObject);
 begin
+  inherited Create;
   FOwnerJSON := False;
   FJSON := AJSONObject;
   FContexts := TList.Create;
@@ -777,6 +779,7 @@ end;
 
 constructor TACBrJSONArray.Create;
 begin
+  inherited Create;
   FOwnerJSON := True;
   FJSON := TJsonArray.Create;
   FContexts := TList.Create;
@@ -825,6 +828,7 @@ end;
 
 constructor TACBrJSONArray.Create(AJSONArray: TJsonArray);
 begin
+  inherited Create;
   if (not Assigned(AJSONArray)) then
   begin
     Create;

@@ -1817,7 +1817,7 @@ end;
 procedure TfrmACBrNF3e.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
   WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ConverteXMLtoUTF8(RetWS), False, False);
+                      RetWS, False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

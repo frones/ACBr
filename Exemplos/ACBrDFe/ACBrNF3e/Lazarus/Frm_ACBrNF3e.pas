@@ -37,9 +37,12 @@ interface
 uses
   LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls,
-  SynEdit, SynHighlighterXML, ACBrXmlBase,ACBrNF3eConversao,
-  ACBrDFe, ACBrDFeReport, ACBrBase, ACBrUtil,
-  ACBrPosPrinter, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS, ACBrNF3e, ACBrMail;
+  SynEdit, SynHighlighterXML,
+  ACBrBase,
+  ACBrDFe, ACBrDFeReport,
+  ACBrXmlBase,
+  ACBrNF3e, ACBrNF3eConversao, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS,
+  ACBrPosPrinter, ACBrMail;
 
 type
 
@@ -331,6 +334,10 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   IniFiles, Printers,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Base,
   pcnAuxiliar, pcnConversao,
   ACBrDFeUtil, ACBrDFeSSL,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
@@ -705,7 +712,7 @@ begin
     memoRespWS.Lines.Text := ACBrNF3e1.WebServices.EnvEvento.RetornoWS;
     LoadXML(MemoResp, WBResposta);
     ShowMessage(IntToStr(ACBrNF3e1.WebServices.EnvEvento.cStat));
-    ShowMessage(ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.RetInfEvento.nProt);
   end;
 end;
 
@@ -748,7 +755,7 @@ begin
 
     MemoDados.Lines.Add('');
     MemoDados.Lines.Add('Envio NF3e');
-    MemoDados.Lines.Add('tpAmb: '+ TpAmbToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
+    MemoDados.Lines.Add('tpAmb: '+ TipoAmbienteToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
     MemoDados.Lines.Add('verAplic: '+ ACBrNF3e1.WebServices.Retorno.verAplic);
     MemoDados.Lines.Add('cStat: '+ IntToStr(ACBrNF3e1.WebServices.Retorno.cStat));
     MemoDados.Lines.Add('cUF: '+ IntToStr(ACBrNF3e1.WebServices.Retorno.cUF));
@@ -918,7 +925,7 @@ begin
 
     MemoDados.Lines.Add('');
     MemoDados.Lines.Add('Envio NF3e');
-    MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
+    MemoDados.Lines.Add('tpAmb: ' + TipoAmbienteToStr(ACBrNF3e1.WebServices.Retorno.TpAmb));
     MemoDados.Lines.Add('verAplic: ' + ACBrNF3e1.WebServices.Retorno.verAplic);
     MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrNF3e1.WebServices.Retorno.cStat));
     MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrNF3e1.WebServices.Retorno.cUF));
@@ -1282,7 +1289,7 @@ begin
 
   ACBrNF3e1.EnviarEvento(StrToInt(IDLote));
 
-  with ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
+  with ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.RetInfEvento do
   begin
     lMsg:=
     'Id: ' + Id + #13 +

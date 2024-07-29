@@ -45,6 +45,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+29/07/2024
+ACBrBoletoFCFortesFr .pas .lfm e dfm
+[*] TK-5788 ACBrBoletoFCFortesFr - Copia e cola nao estava cabendo no label, alterado para memolines para suportar quebra de linha
+  Por : Daniel Morais InfoCotidiano
 
 15/05/2024
 [*] TK-5381 ACBrBoleto - verificar possibilidade de ajustar impresso para que o valor  de NomeArquivo preencha automático no preview ao Salvar

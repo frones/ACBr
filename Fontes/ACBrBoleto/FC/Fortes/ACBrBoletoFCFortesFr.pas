@@ -1234,7 +1234,6 @@ type
     imgLogoEmpresaBoleto: TRLImage;
     imgQRCodePixCarne: TRLImage;
     RLBand9: TRLBand;
-    lblCopiaeCola: TRLLabel;
     RLDraw302: TRLDraw;
     RLDraw303: TRLDraw;
     RLDraw298: TRLDraw;
@@ -1260,6 +1259,7 @@ type
     txtCodigoBaixa2: TRLLabel;
     RLLabel98: TRLLabel;
     txtCarteiraRecPagDet2: TRLLabel;
+    mmoCopiaeCola: TRLMemo;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -2130,8 +2130,8 @@ begin
     txtCNPJCedentePix.Caption     := Cedente.CNPJCPF;
     txtEnderecoPIX.Caption        := EnderecoCed;
     txtValorPix.Caption           := FormatFloatBr(Titulo.ValorDocumento,',R$ 0.00');
-    lblCopiaeCola.Visible := (Titulo.QrCode.emv <> '');
-    lblCopiaeCola.Caption := Titulo.QrCode.emv;
+    mmoCopiaeCola.Visible := (Titulo.QrCode.emv <> '');
+    mmoCopiaeCola.Lines.Text := Titulo.QrCode.emv;
     printEMVPix(Titulo.QrCode.emv, imgQRCodePix);
 
   end;

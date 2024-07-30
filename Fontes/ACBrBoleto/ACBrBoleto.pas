@@ -1546,7 +1546,7 @@ type
     function Enviar: Boolean;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
-	function GetOcorrenciasRetorno() : TACBrOcorrenciasRetorno;
+  	function GetOcorrenciasRetorno() : TACBrOcorrenciasRetorno;
     function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
     function LerConfiguracao(const AIniBoletos: String): Boolean;
@@ -4377,6 +4377,10 @@ begin
        IniRetorno.WriteString(CWebService,'Scope',Cedente.CedenteWS.Scope);
        IniRetorno.WriteInteger(CWebService,'Ambiente',Integer(Configuracoes.WebService.Ambiente));
        IniRetorno.WriteInteger(CWebService,'SSLHttpLib',Integer(Configuracoes.WebService.SSLHttpLib));
+
+       IniRetorno.WriteInteger(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
+       IniRetorno.WriteInteger(CWebService,'ArquivoKEY', Configuracoes.WebService.ArquivoKEY);
+       IniRetorno.WriteInteger(CWebService,'ArquivoPFX', Configuracoes.WebService.ArquivoPFX);
 
        if not SomenteConfig then
        begin

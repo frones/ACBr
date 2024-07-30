@@ -45,7 +45,6 @@ type
 
   TACBrBancoCresol = class(TACBrBancoCresolSCRS)
   private
-    FNumeroSequencialRegistroNoLote: Int64;
   protected
     function DefineCodigoMulta(const ACBrTitulo: TACBrTitulo): String; override;
   public
@@ -73,7 +72,6 @@ begin
   fpDigito                        := 3;
   fpCodigosMoraAceitos            := '012';
   fpNumeroCorrespondente          := 0;
-  FNumeroSequencialRegistroNoLote := 0;
   fpLayoutVersaoArquivo           := 84;
   fpLayoutVersaoLote              := 42;
 end;
@@ -407,7 +405,7 @@ begin
     Result := IntToStrZero(ACBrBanco.Numero, 3)                         + //1 a 3 - Código do banco
               '0001'                                                    + //4 a 7 - Lote de serviço
               '3'                                                       + //8 - Tipo do registro: Registro detalhe
-              IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1, 5)     + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+              IntToStrZero((fpQtdRegsLote)+ 1, 5)     + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
               'P'                                                       + //14 - Código do segmento do registro detalhe
               ' '                                                       + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
               ATipoOcorrencia                                           + //16 a 17 - Código de movimento
@@ -456,7 +454,7 @@ begin
               space(3)                                                  + //225 a 227 - Dias para baixa
               '09'                                                      + //228 a 229 - Código da Moeda
               '00000000000';                                              //230 a 240 zeros
-    Inc(FNumeroSequencialRegistroNoLote);
+    Inc(fpQtdRegsLote);
 
     {SEGMENTO Q}
     {Pegando tipo de pessoa do Sacado}
@@ -470,7 +468,7 @@ begin
               IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
               '0001'                                                     + //4 a 7 - Número do lote
               '3'                                                        + //8 - Tipo do registro: Registro detalhe
-              IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1, 5)      + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+              IntToStrZero((fpQtdRegsLote)+ 1, 5)      + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
               'Q'                                                        + //14 - Código do segmento do registro detalhe
               ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
               ATipoOcorrencia                                            + //16 a 17 - Código de movimento
@@ -488,7 +486,7 @@ begin
               space(40)                                                  + //170 a 209 - Nome do sacador/avalista
               '000'                                                      + //210 a 212 - Uso exclusivo FEBRABAN/CNAB
               space(28);                                                   //213 a 240 - Uso exclusivo FEBRABAN/CNAB
-    Inc(FNumeroSequencialRegistroNoLote);
+    Inc(fpQtdRegsLote);
 
     {SEGMENTO R OPCIONAL }
     if (TipoDesconto2<>tdNaoConcederDesconto) or
@@ -499,7 +497,7 @@ begin
                 IntToStrZero(ACBrBanco.Numero, 3)                      + //1 a 3 - Código do banco
                 '0001'                                                 + //4 a 7 - Número do lote
                 '3'                                                    + //8 - Tipo do registro: Registro detalhe
-                IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1, 5)  + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+                IntToStrZero((fpQtdRegsLote)+ 1, 5)  + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                 'R'                                                    + //14 - Código do segmento do registro detalhe
                 ' '                                                    + //CNAB Uso Exclusivo FEBRABAN/CNAB 15 15 1 - Alfa Brancos G004
                 ATipoOcorrencia                                        + //Código de Movimento Remessa 16 17 2 - Num *C004
@@ -527,11 +525,10 @@ begin
                 PadLeft('', 1, ' ')                                    + //DV Dígito Verificador Ag/Conta 230 230 1 - Alfa *G012
                 PadLeft('', 1, '0')                                    + //Ident. da Emissão do Aviso Déb. Aviso para Débito Automático 231 231 1 - Num *C039
                 PadLeft('',9, ' ');                                      //CNAB Uso Exclusivo FEBRABAN/CNAB 232 240 9 - Alfa Brancos G004
-      Inc(FNumeroSequencialRegistroNoLote);
+      Inc(fpQtdRegsLote);
     end;
 
   end;
-  fpQtdRegsLote := FNumeroSequencialRegistroNoLote;
 end;
 
 end.

@@ -607,7 +607,7 @@ begin
         AJson.AddPair('fineQuantityDays', '0');
     end else
     begin
-      AJson.AddPair('finePercentage', '0');
+      AJson.AddPair('finePercentage', '0.00');
       AJson.AddPair('fineQuantityDays', '0');
     end;
   end;

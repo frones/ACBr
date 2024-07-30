@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2024
+-- ACBrBoletoW_Santander_API --
+[*]TK-5703 - Formatado do finePercentage qdo zero 0.00 que estava retornando erro.
+   https://www.projetoacbr.com.br/forum/topic/78291-erro-santander-httpresultcode502/
+   Por Daniel Morais InfoCotidiano
+
 15/07/2024
 -- ACBrBoletoRet_Inter_API.pas --
 [*]TK-5731 - Ajustado o tratamento PIX que o bloco de condição estava em posição incorreta.

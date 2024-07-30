@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2024
+-- ACBrPIXCD --
+[*] Ajuste para enviar o TimeZone nos parâmetros de consulta com datas.
+    por: Elias César
+
 04/07/2024
 -- ACBrSchemasMatera --
 [*] Ajuste no valor padrão da propriedade performDebit nas classes TMateraInstantPaymentRequest e TMateraDevolucaoRequest.

@@ -4378,9 +4378,9 @@ begin
        IniRetorno.WriteInteger(CWebService,'Ambiente',Integer(Configuracoes.WebService.Ambiente));
        IniRetorno.WriteInteger(CWebService,'SSLHttpLib',Integer(Configuracoes.WebService.SSLHttpLib));
 
-       IniRetorno.WriteInteger(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
-       IniRetorno.WriteInteger(CWebService,'ArquivoKEY', Configuracoes.WebService.ArquivoKEY);
-       IniRetorno.WriteInteger(CWebService,'ArquivoPFX', Configuracoes.WebService.ArquivoPFX);
+       IniRetorno.WriteString(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
+       IniRetorno.WriteString(CWebService,'ArquivoKEY', Configuracoes.WebService.ArquivoKEY);
+       IniRetorno.WriteString(CWebService,'ArquivoPFX', Configuracoes.WebService.ArquivoPFX);
 
        if not SomenteConfig then
        begin

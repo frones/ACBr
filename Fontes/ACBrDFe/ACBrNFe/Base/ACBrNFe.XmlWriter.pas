@@ -173,7 +173,7 @@ type
     destructor Destroy; override;
 
     function GerarXml: boolean; override;
-    function ObterNomeArquivo: string; override;
+    function ObterNomeArquivo: string; overload;
 
     property Opcoes: TNFeXmlWriterOptions read GetOpcoes write SetOpcoes;
     property NFe: TNFe read FNFe write FNFe;
@@ -1810,7 +1810,7 @@ begin
         cst02 :
         begin
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMono',
-            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
+            01, 15, 1, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMS',
             01, 5, 1, NFe.Det[i].Imposto.ICMS.adRemICMS, DSC_ADREMICMS));
           xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMono',
@@ -1820,13 +1820,13 @@ begin
         cst15 :
         begin
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMono',
-            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
+            01, 15, 1, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMS',
             01, 5, 1, NFe.Det[i].Imposto.ICMS.adRemICMS, DSC_ADREMICMS));
           xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMono',
             01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSMono, DSC_VICMSMONO));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMonoReten',
-            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMonoReten, DSC_QBCMONORETEN));
+            01, 15, 1, NFe.Det[i].Imposto.ICMS.qBCMonoReten, DSC_QBCMONORETEN));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMSReten',
             01, 5, 1, NFe.Det[i].Imposto.ICMS.adRemICMSReten, DSC_ADREMICMSRETEN));
           xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMonoReten',
@@ -1844,7 +1844,7 @@ begin
         cst53 :
         begin
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMono',
-            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
+            01, 15, 1, NFe.Det[i].Imposto.ICMS.qBCMono, DSC_QBCMONO));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMS',
             01, 5, 0, NFe.Det[i].Imposto.ICMS.adRemICMS, DSC_ADREMICMS));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'vICMSMonoOp',
@@ -1860,7 +1860,7 @@ begin
         cst61 :
         begin
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'qBCMonoRet',
-            01, 15, 0, NFe.Det[i].Imposto.ICMS.qBCMonoRet, DSC_QBCMONORET));
+            01, 15, 1, NFe.Det[i].Imposto.ICMS.qBCMonoRet, DSC_QBCMONORET));
           xmlNode.AppendChild(AddNode(tcDe4, 'N15', 'adRemICMSRet',
             01, 5, 1, NFe.Det[i].Imposto.ICMS.adRemICMSRet, DSC_ADREMICMSRET));
           xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMSMonoRet',

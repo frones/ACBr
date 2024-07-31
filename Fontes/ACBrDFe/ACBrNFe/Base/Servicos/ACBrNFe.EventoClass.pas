@@ -402,7 +402,7 @@ begin
     teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
     teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
     teConcFinanceira           : Result := 'ECONF';
-    teCancConcFinanceira       : Result := 'Cancelamento Conciliacao Financeira';
+    teCancConcFinanceira       : Result := 'Cancelamento Conciliação Financeira';
   else
     Result := '';
   end;
@@ -461,7 +461,7 @@ begin
     teInsucessoEntregaNFe      : Result := 'Insucesso na Entrega da NF-e';
     teCancInsucessoEntregaNFe  : Result := 'Cancelamento Insucesso na Entrega da NF-e';
     teConcFinanceira           : Result := 'ECONF';
-    teCancConcFinanceira       : Result := 'Cancelamento Conciliacao Financeira';
+    teCancConcFinanceira       : Result := 'Cancelamento Conciliação Financeira';
   else
     Result := 'Não Definido';
   end;

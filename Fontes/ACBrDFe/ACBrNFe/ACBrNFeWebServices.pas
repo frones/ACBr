@@ -3095,7 +3095,7 @@ begin
       recepcionados pela SVRS - SEFAZ Virtual do RS.
     }
     if FEvento.Evento.Items[0].InfEvento.tpEvento in [teInsucessoEntregaNFe,
-            teCancInsucessoEntregaNFe] then
+            teCancInsucessoEntregaNFe, teConcFinanceira, teCancConcFinanceira] then
     begin
       FPLayout := LayNFeEvento;
       UF       := 'SVRS';

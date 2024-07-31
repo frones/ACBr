@@ -316,8 +316,8 @@ begin
              '111501', '111502', '111503', '210200', '210210', '210220',
              '210240', '610600', '610614', '790700', '990900', '990910',
              '110180', '610554', '610510', '610615', '610610', '110130',
-             '110131', '110150', '610130', '610131', '610601',
-             '110192', '110193', '610514', '610500'],
+             '110131', '110150', '610130', '610131', '610601', '110192',
+             '110193', '610514', '610500', '110750', '110751'],
             [teNaoMapeado, teCCe, teCancelamento, teCancSubst, teEPECNFe,
              tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2,
              teManifDestConfirmacao, teManifDestCiencia,
@@ -329,7 +329,8 @@ begin
              teComprEntregaNFe, teCancComprEntregaNFe, teAtorInteressadoNFe,
              teComprEntregaCTe, teCancComprEntregaCTe, teCTeCancelado,
              teInsucessoEntregaNFe, teCancInsucessoEntregaNFe,
-             teRegPasNfeProMDFeCte, teRegistroPassagemNFe]);
+             teRegPasNfeProMDFeCte, teRegistroPassagemNFe, teConcFinanceira,
+             teCancConcFinanceira]);
 end;
 
 function LayOutToServico(const t: TLayOut): String;

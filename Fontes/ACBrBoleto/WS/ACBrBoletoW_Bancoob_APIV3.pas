@@ -446,7 +446,7 @@ end;
 
 procedure TBoletoW_Bancoob_APIV3.GerarInstrucao(AJson: TACBrJSONObject);
 var
-  JsonPairInstrucao, JsonDadosInstrucao: TACBrJSONObject;
+  JsonDadosInstrucao: TACBrJSONObject;
   JsonArrayInstrucao: TACBrJSONArray;
 begin
   if not Assigned(aTitulo) or not Assigned(AJson) then
@@ -467,8 +467,7 @@ begin
     JsonArrayInstrucao.AddElement(ATitulo.Instrucao4);
   if NaoEstaVazio(ATitulo.Instrucao5) then
     JsonArrayInstrucao.AddElement(ATitulo.Instrucao5);
-  JsonDadosInstrucao.AddPair('mensagensInstrucao', JsonArrayInstrucao);
-  //AJson.AddPair('mensagensInstrucao', JsonDadosInstrucao);
+  AJson.AddPair('mensagensInstrucao', JsonArrayInstrucao);
 end;
 
 procedure TBoletoW_Bancoob_APIV3.GerarBenificiarioFinal(AJson: TACBrJSONObject);

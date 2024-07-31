@@ -33,7 +33,8 @@
 */
 header('Content-Type: application/json; charset=UTF-8');
 
-function ValidaFFI(){
+function ValidaFFI()
+{
     if (!extension_loaded('ffi')) {
         echo json_encode(["mensagem" => "A extensão FFI não está habilitada."]);
         return -10;
@@ -42,18 +43,22 @@ function ValidaFFI(){
     return 0;
 }
 
-function CarregaDll(){
-    if (strpos(PHP_OS, 'WIN') === false) 
+function CarregaDll()
+{
+    if (strpos(PHP_OS, 'WIN') === false) {
+        $prefixo = "libacbrcep";
         $extensao = ".so";
-    else
+    } else {
+        $prefixo = "ACBrCEP";
         $extensao = ".dll";
-    
-    if (strpos(php_uname('m'), '64') === false) 
+    }
+
+    if (strpos(php_uname('m'), '64') === false)
         $arquitetura = "86";
-    else   
+    else
         $arquitetura = "64";
 
-    $biblioteca = "ACBrCEP" . $arquitetura . $extensao;
+    $biblioteca = $prefixo . $arquitetura . $extensao;
 
     $dllPath = __DIR__ . DIRECTORY_SEPARATOR . $biblioteca;
 
@@ -72,7 +77,8 @@ function CarregaDll(){
     return $dllPath;
 }
 
-function CarregaImports(){
+function CarregaImports()
+{
     $importsPath = __DIR__ . DIRECTORY_SEPARATOR . 'ACBrCEP.h';
 
     if (!file_exists($importsPath)) {
@@ -83,19 +89,23 @@ function CarregaImports(){
     return $importsPath;
 }
 
-function CarregaIniPath(){
+function CarregaIniPath()
+{
     return __DIR__ . DIRECTORY_SEPARATOR . "ACBrCEP.INI";
 }
 
-function CarregaContents($importsPath, $dllPath){
+function CarregaContents($importsPath, $dllPath)
+{
     $ffi = FFI::cdef(
         file_get_contents($importsPath),
-        $dllPath);
+        $dllPath
+    );
 
     return $ffi;
 }
 
-function Inicializar($ffi, $iniPath) {
+function Inicializar($ffi, $iniPath)
+{
     $retorno = $ffi->CEP_Inicializar($iniPath, "");
     $sMensagem = FFI::new("char[535]");
 
@@ -105,9 +115,10 @@ function Inicializar($ffi, $iniPath) {
     }
 
     return 0;
-}    
+}
 
-function Finalizar($ffi) {
+function Finalizar($ffi)
+{
     $retorno = $ffi->CEP_Finalizar();
 
     if ($retorno !== 0) {
@@ -116,9 +127,10 @@ function Finalizar($ffi) {
     }
 
     return 0;
-}    
+}
 
-function ConfigLerValor($ffi, $eSessao, $eChave, &$sValor){
+function ConfigLerValor($ffi, $eSessao, $eChave, &$sValor)
+{
     $sResposta = FFI::new("char[9048]");
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 9048;
@@ -126,7 +138,7 @@ function ConfigLerValor($ffi, $eSessao, $eChave, &$sValor){
 
     $sMensagem = FFI::new("char[535]");
 
-    if ($retorno !== 0){
+    if ($retorno !== 0) {
         if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao ler valor na secao[$eSessao] e chave[$eChave]. ", 1) != 0)
             return -10;
     }
@@ -135,7 +147,8 @@ function ConfigLerValor($ffi, $eSessao, $eChave, &$sValor){
     return 0;
 }
 
-function ConfigGravarValor($ffi, $eSessao, $eChave, $value){
+function ConfigGravarValor($ffi, $eSessao, $eChave, $value)
+{
     $retorno = $ffi->CEP_ConfigGravarValor($eSessao, $eChave, $value);
     $sMensagem = FFI::new("char[535]");
 
@@ -145,20 +158,21 @@ function ConfigGravarValor($ffi, $eSessao, $eChave, $value){
     return 0;
 }
 
-function UltimoRetorno($ffi, $retornolib, &$sMensagem, $msgErro, $retMensagem = 0) {
+function UltimoRetorno($ffi, $retornolib, &$sMensagem, $msgErro, $retMensagem = 0)
+{
     if (($retornolib !== 0) || ($retMensagem == 1)) {
         $esTamanho = FFI::new("long");
         $esTamanho->cdata = 9048;
         $ffi->CEP_UltimoRetorno($sMensagem, FFI::addr($esTamanho));
 
-        if ($retornolib !== 0){
+        if ($retornolib !== 0) {
             $ultimoRetorno = FFI::string($sMensagem);
             $retorno = "$msgErro Código de erro: $retornolib. ";
-    
+
             if ($ultimoRetorno != "") {
                 $retorno = $retorno . "Último retorno: " . mb_convert_encoding($ultimoRetorno, "UTF-8", "ISO-8859-1");
             }
-        
+
             echo json_encode(["mensagem" => $retorno]);
             return -10;
         }
@@ -167,7 +181,8 @@ function UltimoRetorno($ffi, $retornolib, &$sMensagem, $msgErro, $retMensagem = 
     return 0;
 }
 
-function BuscarPorCEP($ffi, $cep, &$iniContent) {
+function BuscarPorCEP($ffi, $cep, &$iniContent)
+{
     $sResposta = FFI::new("char[9048]");
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 9048;
@@ -175,16 +190,17 @@ function BuscarPorCEP($ffi, $cep, &$iniContent) {
 
     $sMensagem = FFI::new("char[535]");
 
-    if ($retorno !== 0){
+    if ($retorno !== 0) {
         if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao consultar o cep.", 1) != 0)
             return -10;
     }
-    
+
     $iniContent = FFI::string($sResposta);
     return 0;
-}    
+}
 
-function BuscarPorLogradouro($ffi, $cidadecons, $tipocons, $logradourocons, $ufcons, $bairrocons, &$iniContent) {
+function BuscarPorLogradouro($ffi, $cidadecons, $tipocons, $logradourocons, $ufcons, $bairrocons, &$iniContent)
+{
     $sResposta = FFI::new("char[9048]");
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 9048;
@@ -192,16 +208,17 @@ function BuscarPorLogradouro($ffi, $cidadecons, $tipocons, $logradourocons, $ufc
 
     $sMensagem = FFI::new("char[535]");
 
-    if ($retorno !== 0){
+    if ($retorno !== 0) {
         if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao consultar o cep.", 1) != 0)
             return -10;
     }
-    
+
     $iniContent = FFI::string($sResposta);
     return 0;
-}    
+}
 
-function parseIniToStr($ini) {
+function parseIniToStr($ini)
+{
     $lines = explode("\r\n", $ini);
     $config = [];
     $section = null;
@@ -231,5 +248,3 @@ function parseIniToStr($ini) {
 
     return $config;
 }
-
-?>

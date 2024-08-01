@@ -65,9 +65,12 @@ namespace ACBrLib.Boleto
 
         public IdentDistribuicao IdentDistribuicao { get; set; }
 
+        [IniKey("PIX.Chave")]
         public string ChavePIX { get; set; }
 
+        [IniKey("PIX.TipoChavePIX")]
         public TipoChavePIX TipoChavePIX { get; set; }
+
 
         #endregion Properties
 

@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/08/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Franca/SP, trocou de provedor, agora é SilTecnologia versão 2.04
+   Por: Cleber HHP
+[+] Incluída a cidade de Nova Brasilandia D Oeste/RO, o provedor é EloTech.
+   Por: Bill Barsch
+[+] Incluída a cidade de Humaita/AM, o provedor é CTAConsult.
+   Por: Destak
+
 29/07/2024
 -- ACBrNFSeXDANFSeFR --
 [-] Não estava identificando o provedor configurado pelo código do municipio.

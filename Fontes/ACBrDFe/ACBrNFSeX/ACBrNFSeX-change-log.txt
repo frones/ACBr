@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/08/2024
+-- ACBrNFSeXNotasFiscais --
+[*] Adiciona na leitura e na escrita do INI o campo ValorTotalNotaFiscal
+   Por: Diego Folieni
 -- EloTeck.Provider --
 [*] Reescrita as funções de conversão do Regime Especial de Tributação.
    Por: Jaisson

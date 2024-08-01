@@ -744,6 +744,10 @@ begin
 
         Servico.Valores.ValorLiquidoNfse := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorLiquidoNfse', ''), 0);
 
+        Servico.Valores.ValorTotalNotaFiscal := StringToFloatDef(IniRec.ReadString(sSecao, 'ValorTotalNotaFiscal', ''), 0);
+        if Servico.Valores.ValorTotalNotaFiscal = 0 then
+          Servico.Valores.ValorTotalNotaFiscal := Servico.Valores.ValorServicos - Servico.Valores.DescontoCondicionado - Servico.Valores.DescontoIncondicionado;
+
         //Padrão Nacional
         Servico.Valores.ValorRecebido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorRecebido', ''), 0);
       end;
@@ -1187,6 +1191,7 @@ begin
       INIRec.WriteFloat(sSecao, 'ValorIss', Servico.Valores.ValorIss);
       INIRec.WriteFloat(sSecao, 'ValorIssRetido', Servico.Valores.ValorIssRetido);
       INIRec.WriteFloat(sSecao, 'ValorLiquidoNfse', Servico.Valores.ValorLiquidoNfse);
+      INIRec.WriteFloat(sSecao, 'ValorTotalNotaFiscal', Servico.Valores.ValorTotalNotaFiscal);
       INIRec.WriteFloat(sSecao, 'ValorRecebido', Servico.Valores.ValorRecebido);
 
       //Padrão Nacional

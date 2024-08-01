@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2024
+-- ACBrBoletoRet_Itau_API --
+[*]TK-5799 - Ajustados algumas propriedades de retorno do boleto, mas alguns campos nao estao sendo devolvido em sandbox. 
+   https://www.projetoacbr.com.br/forum/topic/78971-relat%C3%B3rio-de-consulta-de-t%C3%ADtulos-api-ita%C3%BA-sem-informa%C3%A7%C3%B5es/
+   Por Daniel Morais InfoCotidiano
+
 30/07/2024
 -- ACBrBoletoW_Santander_API --
 [*]TK-5703 - Formatado do finePercentage qdo zero 0.00 que estava retornando erro.

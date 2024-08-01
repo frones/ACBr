@@ -288,24 +288,127 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tbpCancelamento = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txtTxIdQRCodeEstatico = new System.Windows.Forms.TextBox();
+            this.label105 = new System.Windows.Forms.Label();
             this.btnGerarQRCodeEstatico = new System.Windows.Forms.Button();
+            this.txtValor = new System.Windows.Forms.TextBox();
+            this.label103 = new System.Windows.Forms.Label();
+            this.txtInformacoesAdicionais = new System.Windows.Forms.TextBox();
+            this.label104 = new System.Windows.Forms.Label();
             this.tabPage18 = new System.Windows.Forms.TabPage();
-            this.btnConsultarDevolucaoPix = new System.Windows.Forms.Button();
-            this.btnSolicitarDevolucaoPix = new System.Windows.Forms.Button();
-            this.btnConsultarPixRecebidos = new System.Windows.Forms.Button();
+            this.tabControl6 = new System.Windows.Forms.TabControl();
+            this.tabPage21 = new System.Windows.Forms.TabPage();
+            this.txte2eidConsultarPIX = new System.Windows.Forms.TextBox();
+            this.label106 = new System.Windows.Forms.Label();
             this.btnConsultarPix = new System.Windows.Forms.Button();
+            this.tabPage22 = new System.Windows.Forms.TabPage();
+            this.label112 = new System.Windows.Forms.Label();
+            this.nudItensPorPaginaConsultarPIXRecebidos = new System.Windows.Forms.NumericUpDown();
+            this.label111 = new System.Windows.Forms.Label();
+            this.nudPagAtualConsultarPIXRecebidos = new System.Windows.Forms.NumericUpDown();
+            this.txtCPFCNPJConsultarPIXRecebidos = new System.Windows.Forms.TextBox();
+            this.label110 = new System.Windows.Forms.Label();
+            this.txtTxIdConsultarPIXRecebidos = new System.Windows.Forms.TextBox();
+            this.label109 = new System.Windows.Forms.Label();
+            this.txtDataFinalConsultarPIXRecebidos = new System.Windows.Forms.TextBox();
+            this.label108 = new System.Windows.Forms.Label();
+            this.txtDataInicialConsultarPIXRecebidos = new System.Windows.Forms.TextBox();
+            this.label107 = new System.Windows.Forms.Label();
+            this.btnConsultarPixRecebidos = new System.Windows.Forms.Button();
+            this.tabPage23 = new System.Windows.Forms.TabPage();
+            this.txtIdDevolucaoSolicitarDevolucaoPIX = new System.Windows.Forms.TextBox();
+            this.label114 = new System.Windows.Forms.Label();
+            this.txte2eidSolicitarDevolucaoPIX = new System.Windows.Forms.TextBox();
+            this.label113 = new System.Windows.Forms.Label();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.rtbSolicitarDevolucaoPIX = new System.Windows.Forms.RichTextBox();
+            this.btnSolicitarDevolucaoPix = new System.Windows.Forms.Button();
+            this.tabPage24 = new System.Windows.Forms.TabPage();
+            this.txtIdDevolucaoConsultarDevolucaoPIX = new System.Windows.Forms.TextBox();
+            this.label115 = new System.Windows.Forms.Label();
+            this.txte2eidConsultarDevolucaoPIX = new System.Windows.Forms.TextBox();
+            this.label116 = new System.Windows.Forms.Label();
+            this.btnConsultarDevolucaoPix = new System.Windows.Forms.Button();
             this.tabPage19 = new System.Windows.Forms.TabPage();
-            this.btnConsultarCobrancasCob = new System.Windows.Forms.Button();
-            this.btnCancelarCobrancaImediata = new System.Windows.Forms.Button();
-            this.btnRevisarCobrancaImediata = new System.Windows.Forms.Button();
-            this.btnConsultarCobrancaImediata = new System.Windows.Forms.Button();
+            this.tabControl7 = new System.Windows.Forms.TabControl();
+            this.tabPage25 = new System.Windows.Forms.TabPage();
+            this.txtTxIdCriarCobrancaImediata = new System.Windows.Forms.TextBox();
+            this.label117 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rtbCriarCobrancaImediata = new System.Windows.Forms.RichTextBox();
             this.btnCriarCobrancaImediata = new System.Windows.Forms.Button();
+            this.tabPage26 = new System.Windows.Forms.TabPage();
+            this.txtRevisaoConsultarCobrancaImediata = new System.Windows.Forms.TextBox();
+            this.label119 = new System.Windows.Forms.Label();
+            this.txtTxIdConsultarCobrancaImediata = new System.Windows.Forms.TextBox();
+            this.label118 = new System.Windows.Forms.Label();
+            this.btnConsultarCobrancaImediata = new System.Windows.Forms.Button();
+            this.tabPage27 = new System.Windows.Forms.TabPage();
+            this.ckbLocationConsultarCobrancasCob = new System.Windows.Forms.CheckBox();
+            this.cmbStatusConsultarCobrancasCob = new System.Windows.Forms.ComboBox();
+            this.txtDataFinalConsultarCobrancasCob = new System.Windows.Forms.TextBox();
+            this.label120 = new System.Windows.Forms.Label();
+            this.nudItensPorPaginaConsultarCobrancasCob = new System.Windows.Forms.NumericUpDown();
+            this.label121 = new System.Windows.Forms.Label();
+            this.nudPagAtualConsultarCobrancasCob = new System.Windows.Forms.NumericUpDown();
+            this.txtCPFCNPJConsultarCobrancasCob = new System.Windows.Forms.TextBox();
+            this.label122 = new System.Windows.Forms.Label();
+            this.label123 = new System.Windows.Forms.Label();
+            this.label124 = new System.Windows.Forms.Label();
+            this.txtDataInicialConsultarCobrancasCob = new System.Windows.Forms.TextBox();
+            this.label125 = new System.Windows.Forms.Label();
+            this.btnConsultarCobrancasCob = new System.Windows.Forms.Button();
+            this.tabPage28 = new System.Windows.Forms.TabPage();
+            this.txtTxIdRevisarCobrancaImediata = new System.Windows.Forms.TextBox();
+            this.label127 = new System.Windows.Forms.Label();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.rtbRevisarCobrancaImediata = new System.Windows.Forms.RichTextBox();
+            this.btnRevisarCobrancaImediata = new System.Windows.Forms.Button();
+            this.tabPage29 = new System.Windows.Forms.TabPage();
+            this.txtTxIdCancelarCobrancaImediata = new System.Windows.Forms.TextBox();
+            this.label128 = new System.Windows.Forms.Label();
+            this.btnCancelarCobrancaImediata = new System.Windows.Forms.Button();
             this.tabPage20 = new System.Windows.Forms.TabPage();
-            this.btnCancelarCobranca = new System.Windows.Forms.Button();
-            this.btnRevisarCobranca = new System.Windows.Forms.Button();
-            this.btnConsultarCobranca = new System.Windows.Forms.Button();
+            this.tabControl8 = new System.Windows.Forms.TabControl();
+            this.tabPage30 = new System.Windows.Forms.TabPage();
+            this.txtTxIdCriarCobranca = new System.Windows.Forms.TextBox();
+            this.label126 = new System.Windows.Forms.Label();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.rtbCriarCobranca = new System.Windows.Forms.RichTextBox();
             this.btnCriarCobranca = new System.Windows.Forms.Button();
+            this.tabPage31 = new System.Windows.Forms.TabPage();
+            this.txtRevisaoConsultarCobranca = new System.Windows.Forms.TextBox();
+            this.label129 = new System.Windows.Forms.Label();
+            this.txtTxIdConsultarCobranca = new System.Windows.Forms.TextBox();
+            this.label130 = new System.Windows.Forms.Label();
+            this.btnConsultarCobranca = new System.Windows.Forms.Button();
+            this.tabPage32 = new System.Windows.Forms.TabPage();
+            this.ckbLocationConsultarCobrancasCobV = new System.Windows.Forms.CheckBox();
+            this.cmbStatusConsultarCobrancasCobV = new System.Windows.Forms.ComboBox();
+            this.txtDataFinalConsultarCobrancasCobV = new System.Windows.Forms.TextBox();
+            this.label131 = new System.Windows.Forms.Label();
+            this.nudItensPorPaginaConsultarCobrancasCobV = new System.Windows.Forms.NumericUpDown();
+            this.label132 = new System.Windows.Forms.Label();
+            this.nudPagAtualConsultarCobrancasCobV = new System.Windows.Forms.NumericUpDown();
+            this.txtCPFCNPJConsultarCobrancasCobV = new System.Windows.Forms.TextBox();
+            this.label133 = new System.Windows.Forms.Label();
+            this.label134 = new System.Windows.Forms.Label();
+            this.label135 = new System.Windows.Forms.Label();
+            this.txtDataInicialConsultarCobrancasCobV = new System.Windows.Forms.TextBox();
+            this.label136 = new System.Windows.Forms.Label();
             this.btnConsultarCobrancasCobV = new System.Windows.Forms.Button();
+            this.tabPage33 = new System.Windows.Forms.TabPage();
+            this.txtTxIdRevisarCobranca = new System.Windows.Forms.TextBox();
+            this.label137 = new System.Windows.Forms.Label();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.rtbRevisarCobranca = new System.Windows.Forms.RichTextBox();
+            this.btnRevisarCobranca = new System.Windows.Forms.Button();
+            this.tabPage34 = new System.Windows.Forms.TabPage();
+            this.txtTxIdCancelarCobranca = new System.Windows.Forms.TextBox();
+            this.label138 = new System.Windows.Forms.Label();
+            this.btnCancelarCobranca = new System.Windows.Forms.Button();
+            this.btnLimparRespostas = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -338,17 +441,46 @@
             this.tabPage1.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tbpCancelamento.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.tabPage18.SuspendLayout();
+            this.tabControl6.SuspendLayout();
+            this.tabPage21.SuspendLayout();
+            this.tabPage22.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudItensPorPaginaConsultarPIXRecebidos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPagAtualConsultarPIXRecebidos)).BeginInit();
+            this.tabPage23.SuspendLayout();
+            this.groupBox16.SuspendLayout();
+            this.tabPage24.SuspendLayout();
             this.tabPage19.SuspendLayout();
+            this.tabControl7.SuspendLayout();
+            this.tabPage25.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.tabPage26.SuspendLayout();
+            this.tabPage27.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudItensPorPaginaConsultarCobrancasCob)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPagAtualConsultarCobrancasCob)).BeginInit();
+            this.tabPage28.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.tabPage29.SuspendLayout();
             this.tabPage20.SuspendLayout();
+            this.tabControl8.SuspendLayout();
+            this.tabPage30.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.tabPage31.SuspendLayout();
+            this.tabPage32.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudItensPorPaginaConsultarCobrancasCobV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPagAtualConsultarCobrancasCobV)).BeginInit();
+            this.tabPage33.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.tabPage34.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.rtbRespostas);
-            this.groupBox2.Location = new System.Drawing.Point(455, 139);
+            this.groupBox2.Location = new System.Drawing.Point(997, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(569, 399);
+            this.groupBox2.Size = new System.Drawing.Size(405, 530);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Respostas";
@@ -358,7 +490,7 @@
             this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
             this.rtbRespostas.Name = "rtbRespostas";
-            this.rtbRespostas.Size = new System.Drawing.Size(563, 380);
+            this.rtbRespostas.Size = new System.Drawing.Size(399, 511);
             this.rtbRespostas.TabIndex = 3;
             this.rtbRespostas.Text = "";
             // 
@@ -2967,7 +3099,7 @@
             this.tabControl4.Location = new System.Drawing.Point(451, 5);
             this.tabControl4.Name = "tabControl4";
             this.tabControl4.SelectedIndex = 0;
-            this.tabControl4.Size = new System.Drawing.Size(577, 128);
+            this.tabControl4.Size = new System.Drawing.Size(540, 575);
             this.tabControl4.TabIndex = 29;
             // 
             // tabPage1
@@ -2976,7 +3108,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(569, 102);
+            this.tabPage1.Size = new System.Drawing.Size(532, 549);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "EndPoints";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -2990,218 +3122,1371 @@
             this.tabControl3.Location = new System.Drawing.Point(6, 6);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(561, 93);
+            this.tabControl3.Size = new System.Drawing.Size(523, 537);
             this.tabControl3.TabIndex = 26;
             // 
             // tbpCancelamento
             // 
-            this.tbpCancelamento.Controls.Add(this.btnGerarQRCodeEstatico);
+            this.tbpCancelamento.Controls.Add(this.groupBox7);
             this.tbpCancelamento.Location = new System.Drawing.Point(4, 22);
             this.tbpCancelamento.Name = "tbpCancelamento";
-            this.tbpCancelamento.Size = new System.Drawing.Size(553, 67);
+            this.tbpCancelamento.Size = new System.Drawing.Size(515, 511);
             this.tbpCancelamento.TabIndex = 4;
             this.tbpCancelamento.Text = "PIXCD";
             this.tbpCancelamento.UseVisualStyleBackColor = true;
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.txtTxIdQRCodeEstatico);
+            this.groupBox7.Controls.Add(this.label105);
+            this.groupBox7.Controls.Add(this.btnGerarQRCodeEstatico);
+            this.groupBox7.Controls.Add(this.txtValor);
+            this.groupBox7.Controls.Add(this.label103);
+            this.groupBox7.Controls.Add(this.txtInformacoesAdicionais);
+            this.groupBox7.Controls.Add(this.label104);
+            this.groupBox7.Location = new System.Drawing.Point(6, 10);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(503, 208);
+            this.groupBox7.TabIndex = 23;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Gerar QRCode Estatico";
+            // 
+            // txtTxIdQRCodeEstatico
+            // 
+            this.txtTxIdQRCodeEstatico.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdQRCodeEstatico.Location = new System.Drawing.Point(6, 120);
+            this.txtTxIdQRCodeEstatico.Name = "txtTxIdQRCodeEstatico";
+            this.txtTxIdQRCodeEstatico.Size = new System.Drawing.Size(491, 20);
+            this.txtTxIdQRCodeEstatico.TabIndex = 48;
+            // 
+            // label105
+            // 
+            this.label105.AutoSize = true;
+            this.label105.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label105.Location = new System.Drawing.Point(3, 104);
+            this.label105.Name = "label105";
+            this.label105.Size = new System.Drawing.Size(32, 13);
+            this.label105.TabIndex = 47;
+            this.label105.Text = "TxId";
+            // 
             // btnGerarQRCodeEstatico
             // 
-            this.btnGerarQRCodeEstatico.Location = new System.Drawing.Point(3, 10);
+            this.btnGerarQRCodeEstatico.Location = new System.Drawing.Point(161, 159);
             this.btnGerarQRCodeEstatico.Name = "btnGerarQRCodeEstatico";
             this.btnGerarQRCodeEstatico.Size = new System.Drawing.Size(177, 23);
-            this.btnGerarQRCodeEstatico.TabIndex = 9;
+            this.btnGerarQRCodeEstatico.TabIndex = 46;
             this.btnGerarQRCodeEstatico.Text = "Gerar QRCode Estático";
             this.btnGerarQRCodeEstatico.UseVisualStyleBackColor = true;
             this.btnGerarQRCodeEstatico.Click += new System.EventHandler(this.btnGerarQRCodeEstatico_Click);
             // 
+            // txtValor
+            // 
+            this.txtValor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtValor.Location = new System.Drawing.Point(6, 39);
+            this.txtValor.Name = "txtValor";
+            this.txtValor.Size = new System.Drawing.Size(491, 20);
+            this.txtValor.TabIndex = 45;
+            // 
+            // label103
+            // 
+            this.label103.AutoSize = true;
+            this.label103.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label103.Location = new System.Drawing.Point(3, 23);
+            this.label103.Name = "label103";
+            this.label103.Size = new System.Drawing.Size(36, 13);
+            this.label103.TabIndex = 44;
+            this.label103.Text = "Valor";
+            // 
+            // txtInformacoesAdicionais
+            // 
+            this.txtInformacoesAdicionais.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInformacoesAdicionais.Location = new System.Drawing.Point(6, 79);
+            this.txtInformacoesAdicionais.Name = "txtInformacoesAdicionais";
+            this.txtInformacoesAdicionais.Size = new System.Drawing.Size(491, 20);
+            this.txtInformacoesAdicionais.TabIndex = 40;
+            // 
+            // label104
+            // 
+            this.label104.AutoSize = true;
+            this.label104.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label104.Location = new System.Drawing.Point(3, 63);
+            this.label104.Name = "label104";
+            this.label104.Size = new System.Drawing.Size(138, 13);
+            this.label104.TabIndex = 39;
+            this.label104.Text = "Informações Adicionais";
+            // 
             // tabPage18
             // 
-            this.tabPage18.Controls.Add(this.btnConsultarDevolucaoPix);
-            this.tabPage18.Controls.Add(this.btnSolicitarDevolucaoPix);
-            this.tabPage18.Controls.Add(this.btnConsultarPixRecebidos);
-            this.tabPage18.Controls.Add(this.btnConsultarPix);
+            this.tabPage18.Controls.Add(this.tabControl6);
             this.tabPage18.Location = new System.Drawing.Point(4, 22);
             this.tabPage18.Name = "tabPage18";
             this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage18.Size = new System.Drawing.Size(590, 67);
+            this.tabPage18.Size = new System.Drawing.Size(515, 511);
             this.tabPage18.TabIndex = 5;
             this.tabPage18.Text = "/Pix";
             this.tabPage18.UseVisualStyleBackColor = true;
             // 
-            // btnConsultarDevolucaoPix
+            // tabControl6
             // 
-            this.btnConsultarDevolucaoPix.Location = new System.Drawing.Point(189, 33);
-            this.btnConsultarDevolucaoPix.Name = "btnConsultarDevolucaoPix";
-            this.btnConsultarDevolucaoPix.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarDevolucaoPix.TabIndex = 13;
-            this.btnConsultarDevolucaoPix.Text = "Consultar Devolução Pix";
-            this.btnConsultarDevolucaoPix.UseVisualStyleBackColor = true;
-            this.btnConsultarDevolucaoPix.Click += new System.EventHandler(this.btnConsultarDevolucaoPix_Click);
+            this.tabControl6.Controls.Add(this.tabPage21);
+            this.tabControl6.Controls.Add(this.tabPage22);
+            this.tabControl6.Controls.Add(this.tabPage23);
+            this.tabControl6.Controls.Add(this.tabPage24);
+            this.tabControl6.Location = new System.Drawing.Point(6, 3);
+            this.tabControl6.Name = "tabControl6";
+            this.tabControl6.SelectedIndex = 0;
+            this.tabControl6.Size = new System.Drawing.Size(503, 502);
+            this.tabControl6.TabIndex = 14;
             // 
-            // btnSolicitarDevolucaoPix
+            // tabPage21
             // 
-            this.btnSolicitarDevolucaoPix.Location = new System.Drawing.Point(6, 35);
-            this.btnSolicitarDevolucaoPix.Name = "btnSolicitarDevolucaoPix";
-            this.btnSolicitarDevolucaoPix.Size = new System.Drawing.Size(177, 23);
-            this.btnSolicitarDevolucaoPix.TabIndex = 12;
-            this.btnSolicitarDevolucaoPix.Text = "Solicitar Devolução Pix";
-            this.btnSolicitarDevolucaoPix.UseVisualStyleBackColor = true;
-            this.btnSolicitarDevolucaoPix.Click += new System.EventHandler(this.btnSolicitarDevolucaoPix_Click);
+            this.tabPage21.Controls.Add(this.txte2eidConsultarPIX);
+            this.tabPage21.Controls.Add(this.label106);
+            this.tabPage21.Controls.Add(this.btnConsultarPix);
+            this.tabPage21.Location = new System.Drawing.Point(4, 22);
+            this.tabPage21.Name = "tabPage21";
+            this.tabPage21.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage21.Size = new System.Drawing.Size(495, 476);
+            this.tabPage21.TabIndex = 0;
+            this.tabPage21.Text = "Consultar PIX";
+            this.tabPage21.UseVisualStyleBackColor = true;
             // 
-            // btnConsultarPixRecebidos
+            // txte2eidConsultarPIX
             // 
-            this.btnConsultarPixRecebidos.Location = new System.Drawing.Point(189, 6);
-            this.btnConsultarPixRecebidos.Name = "btnConsultarPixRecebidos";
-            this.btnConsultarPixRecebidos.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarPixRecebidos.TabIndex = 11;
-            this.btnConsultarPixRecebidos.Text = "Consultar Pix Recebidos";
-            this.btnConsultarPixRecebidos.UseVisualStyleBackColor = true;
-            this.btnConsultarPixRecebidos.Click += new System.EventHandler(this.btnConsultarPixRecebidos_Click);
+            this.txte2eidConsultarPIX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txte2eidConsultarPIX.Location = new System.Drawing.Point(6, 24);
+            this.txte2eidConsultarPIX.Name = "txte2eidConsultarPIX";
+            this.txte2eidConsultarPIX.Size = new System.Drawing.Size(483, 20);
+            this.txte2eidConsultarPIX.TabIndex = 47;
+            // 
+            // label106
+            // 
+            this.label106.AutoSize = true;
+            this.label106.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label106.Location = new System.Drawing.Point(3, 8);
+            this.label106.Name = "label106";
+            this.label106.Size = new System.Drawing.Size(38, 13);
+            this.label106.TabIndex = 46;
+            this.label106.Text = "e2eid";
             // 
             // btnConsultarPix
             // 
-            this.btnConsultarPix.Location = new System.Drawing.Point(6, 6);
+            this.btnConsultarPix.Location = new System.Drawing.Point(150, 52);
             this.btnConsultarPix.Name = "btnConsultarPix";
             this.btnConsultarPix.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarPix.TabIndex = 10;
-            this.btnConsultarPix.Text = "Consultar Pix";
+            this.btnConsultarPix.TabIndex = 11;
+            this.btnConsultarPix.Text = "Consultar PIX";
+            this.btnConsultarPix.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnConsultarPix.UseVisualStyleBackColor = true;
             this.btnConsultarPix.Click += new System.EventHandler(this.btnConsultarPix_Click);
             // 
+            // tabPage22
+            // 
+            this.tabPage22.Controls.Add(this.label112);
+            this.tabPage22.Controls.Add(this.nudItensPorPaginaConsultarPIXRecebidos);
+            this.tabPage22.Controls.Add(this.label111);
+            this.tabPage22.Controls.Add(this.nudPagAtualConsultarPIXRecebidos);
+            this.tabPage22.Controls.Add(this.txtCPFCNPJConsultarPIXRecebidos);
+            this.tabPage22.Controls.Add(this.label110);
+            this.tabPage22.Controls.Add(this.txtTxIdConsultarPIXRecebidos);
+            this.tabPage22.Controls.Add(this.label109);
+            this.tabPage22.Controls.Add(this.txtDataFinalConsultarPIXRecebidos);
+            this.tabPage22.Controls.Add(this.label108);
+            this.tabPage22.Controls.Add(this.txtDataInicialConsultarPIXRecebidos);
+            this.tabPage22.Controls.Add(this.label107);
+            this.tabPage22.Controls.Add(this.btnConsultarPixRecebidos);
+            this.tabPage22.Location = new System.Drawing.Point(4, 22);
+            this.tabPage22.Name = "tabPage22";
+            this.tabPage22.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage22.Size = new System.Drawing.Size(495, 476);
+            this.tabPage22.TabIndex = 1;
+            this.tabPage22.Text = "Consultar PIX Recebidos";
+            this.tabPage22.UseVisualStyleBackColor = true;
+            // 
+            // label112
+            // 
+            this.label112.AutoSize = true;
+            this.label112.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label112.Location = new System.Drawing.Point(189, 190);
+            this.label112.Name = "label112";
+            this.label112.Size = new System.Drawing.Size(101, 13);
+            this.label112.TabIndex = 59;
+            this.label112.Text = "Itens Por Página";
+            // 
+            // nudItensPorPaginaConsultarPIXRecebidos
+            // 
+            this.nudItensPorPaginaConsultarPIXRecebidos.Location = new System.Drawing.Point(192, 206);
+            this.nudItensPorPaginaConsultarPIXRecebidos.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudItensPorPaginaConsultarPIXRecebidos.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudItensPorPaginaConsultarPIXRecebidos.Name = "nudItensPorPaginaConsultarPIXRecebidos";
+            this.nudItensPorPaginaConsultarPIXRecebidos.Size = new System.Drawing.Size(180, 20);
+            this.nudItensPorPaginaConsultarPIXRecebidos.TabIndex = 58;
+            this.nudItensPorPaginaConsultarPIXRecebidos.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudItensPorPaginaConsultarPIXRecebidos.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // label111
+            // 
+            this.label111.AutoSize = true;
+            this.label111.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label111.Location = new System.Drawing.Point(3, 190);
+            this.label111.Name = "label111";
+            this.label111.Size = new System.Drawing.Size(79, 13);
+            this.label111.TabIndex = 57;
+            this.label111.Text = "Página Atual";
+            // 
+            // nudPagAtualConsultarPIXRecebidos
+            // 
+            this.nudPagAtualConsultarPIXRecebidos.Location = new System.Drawing.Point(6, 206);
+            this.nudPagAtualConsultarPIXRecebidos.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudPagAtualConsultarPIXRecebidos.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudPagAtualConsultarPIXRecebidos.Name = "nudPagAtualConsultarPIXRecebidos";
+            this.nudPagAtualConsultarPIXRecebidos.Size = new System.Drawing.Size(180, 20);
+            this.nudPagAtualConsultarPIXRecebidos.TabIndex = 56;
+            this.nudPagAtualConsultarPIXRecebidos.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudPagAtualConsultarPIXRecebidos.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // txtCPFCNPJConsultarPIXRecebidos
+            // 
+            this.txtCPFCNPJConsultarPIXRecebidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCPFCNPJConsultarPIXRecebidos.Location = new System.Drawing.Point(6, 161);
+            this.txtCPFCNPJConsultarPIXRecebidos.Name = "txtCPFCNPJConsultarPIXRecebidos";
+            this.txtCPFCNPJConsultarPIXRecebidos.Size = new System.Drawing.Size(483, 20);
+            this.txtCPFCNPJConsultarPIXRecebidos.TabIndex = 55;
+            // 
+            // label110
+            // 
+            this.label110.AutoSize = true;
+            this.label110.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label110.Location = new System.Drawing.Point(3, 145);
+            this.label110.Name = "label110";
+            this.label110.Size = new System.Drawing.Size(83, 13);
+            this.label110.TabIndex = 54;
+            this.label110.Text = "CPF ou CNPJ";
+            // 
+            // txtTxIdConsultarPIXRecebidos
+            // 
+            this.txtTxIdConsultarPIXRecebidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdConsultarPIXRecebidos.Location = new System.Drawing.Point(6, 114);
+            this.txtTxIdConsultarPIXRecebidos.Name = "txtTxIdConsultarPIXRecebidos";
+            this.txtTxIdConsultarPIXRecebidos.Size = new System.Drawing.Size(483, 20);
+            this.txtTxIdConsultarPIXRecebidos.TabIndex = 53;
+            // 
+            // label109
+            // 
+            this.label109.AutoSize = true;
+            this.label109.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label109.Location = new System.Drawing.Point(3, 98);
+            this.label109.Name = "label109";
+            this.label109.Size = new System.Drawing.Size(32, 13);
+            this.label109.TabIndex = 52;
+            this.label109.Text = "TxId";
+            // 
+            // txtDataFinalConsultarPIXRecebidos
+            // 
+            this.txtDataFinalConsultarPIXRecebidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataFinalConsultarPIXRecebidos.Location = new System.Drawing.Point(6, 68);
+            this.txtDataFinalConsultarPIXRecebidos.Name = "txtDataFinalConsultarPIXRecebidos";
+            this.txtDataFinalConsultarPIXRecebidos.Size = new System.Drawing.Size(483, 20);
+            this.txtDataFinalConsultarPIXRecebidos.TabIndex = 51;
+            this.txtDataFinalConsultarPIXRecebidos.Text = "dd/MM/yyyy";
+            // 
+            // label108
+            // 
+            this.label108.AutoSize = true;
+            this.label108.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label108.Location = new System.Drawing.Point(3, 52);
+            this.label108.Name = "label108";
+            this.label108.Size = new System.Drawing.Size(65, 13);
+            this.label108.TabIndex = 50;
+            this.label108.Text = "Data Final";
+            // 
+            // txtDataInicialConsultarPIXRecebidos
+            // 
+            this.txtDataInicialConsultarPIXRecebidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataInicialConsultarPIXRecebidos.Location = new System.Drawing.Point(6, 24);
+            this.txtDataInicialConsultarPIXRecebidos.Name = "txtDataInicialConsultarPIXRecebidos";
+            this.txtDataInicialConsultarPIXRecebidos.Size = new System.Drawing.Size(483, 20);
+            this.txtDataInicialConsultarPIXRecebidos.TabIndex = 49;
+            this.txtDataInicialConsultarPIXRecebidos.Text = "dd/MM/yyyy";
+            // 
+            // label107
+            // 
+            this.label107.AutoSize = true;
+            this.label107.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label107.Location = new System.Drawing.Point(3, 8);
+            this.label107.Name = "label107";
+            this.label107.Size = new System.Drawing.Size(72, 13);
+            this.label107.TabIndex = 48;
+            this.label107.Text = "Data Inicial";
+            // 
+            // btnConsultarPixRecebidos
+            // 
+            this.btnConsultarPixRecebidos.Location = new System.Drawing.Point(153, 245);
+            this.btnConsultarPixRecebidos.Name = "btnConsultarPixRecebidos";
+            this.btnConsultarPixRecebidos.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarPixRecebidos.TabIndex = 12;
+            this.btnConsultarPixRecebidos.Text = "Consultar PIX Recebidos";
+            this.btnConsultarPixRecebidos.UseVisualStyleBackColor = true;
+            this.btnConsultarPixRecebidos.Click += new System.EventHandler(this.btnConsultarPixRecebidos_Click);
+            // 
+            // tabPage23
+            // 
+            this.tabPage23.Controls.Add(this.txtIdDevolucaoSolicitarDevolucaoPIX);
+            this.tabPage23.Controls.Add(this.label114);
+            this.tabPage23.Controls.Add(this.txte2eidSolicitarDevolucaoPIX);
+            this.tabPage23.Controls.Add(this.label113);
+            this.tabPage23.Controls.Add(this.groupBox16);
+            this.tabPage23.Controls.Add(this.btnSolicitarDevolucaoPix);
+            this.tabPage23.Location = new System.Drawing.Point(4, 22);
+            this.tabPage23.Name = "tabPage23";
+            this.tabPage23.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage23.Size = new System.Drawing.Size(495, 476);
+            this.tabPage23.TabIndex = 2;
+            this.tabPage23.Text = "Solicitar Devolução PIX";
+            this.tabPage23.UseVisualStyleBackColor = true;
+            // 
+            // txtIdDevolucaoSolicitarDevolucaoPIX
+            // 
+            this.txtIdDevolucaoSolicitarDevolucaoPIX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIdDevolucaoSolicitarDevolucaoPIX.Location = new System.Drawing.Point(9, 321);
+            this.txtIdDevolucaoSolicitarDevolucaoPIX.Name = "txtIdDevolucaoSolicitarDevolucaoPIX";
+            this.txtIdDevolucaoSolicitarDevolucaoPIX.Size = new System.Drawing.Size(477, 20);
+            this.txtIdDevolucaoSolicitarDevolucaoPIX.TabIndex = 52;
+            // 
+            // label114
+            // 
+            this.label114.AutoSize = true;
+            this.label114.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label114.Location = new System.Drawing.Point(9, 305);
+            this.label114.Name = "label114";
+            this.label114.Size = new System.Drawing.Size(85, 13);
+            this.label114.TabIndex = 51;
+            this.label114.Text = "ID Devolução";
+            // 
+            // txte2eidSolicitarDevolucaoPIX
+            // 
+            this.txte2eidSolicitarDevolucaoPIX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txte2eidSolicitarDevolucaoPIX.Location = new System.Drawing.Point(9, 277);
+            this.txte2eidSolicitarDevolucaoPIX.Name = "txte2eidSolicitarDevolucaoPIX";
+            this.txte2eidSolicitarDevolucaoPIX.Size = new System.Drawing.Size(477, 20);
+            this.txte2eidSolicitarDevolucaoPIX.TabIndex = 50;
+            // 
+            // label113
+            // 
+            this.label113.AutoSize = true;
+            this.label113.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label113.Location = new System.Drawing.Point(6, 261);
+            this.label113.Name = "label113";
+            this.label113.Size = new System.Drawing.Size(38, 13);
+            this.label113.TabIndex = 49;
+            this.label113.Text = "e2eid";
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.rtbSolicitarDevolucaoPIX);
+            this.groupBox16.Location = new System.Drawing.Point(6, 8);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(483, 252);
+            this.groupBox16.TabIndex = 48;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Ini para Solicitar Devolução PIX";
+            // 
+            // rtbSolicitarDevolucaoPIX
+            // 
+            this.rtbSolicitarDevolucaoPIX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbSolicitarDevolucaoPIX.Location = new System.Drawing.Point(3, 16);
+            this.rtbSolicitarDevolucaoPIX.Name = "rtbSolicitarDevolucaoPIX";
+            this.rtbSolicitarDevolucaoPIX.Size = new System.Drawing.Size(477, 233);
+            this.rtbSolicitarDevolucaoPIX.TabIndex = 3;
+            this.rtbSolicitarDevolucaoPIX.Text = "";
+            // 
+            // btnSolicitarDevolucaoPix
+            // 
+            this.btnSolicitarDevolucaoPix.Location = new System.Drawing.Point(162, 363);
+            this.btnSolicitarDevolucaoPix.Name = "btnSolicitarDevolucaoPix";
+            this.btnSolicitarDevolucaoPix.Size = new System.Drawing.Size(177, 23);
+            this.btnSolicitarDevolucaoPix.TabIndex = 13;
+            this.btnSolicitarDevolucaoPix.Text = "Solicitar Devolução PIX";
+            this.btnSolicitarDevolucaoPix.UseVisualStyleBackColor = true;
+            this.btnSolicitarDevolucaoPix.Click += new System.EventHandler(this.btnSolicitarDevolucaoPix_Click);
+            // 
+            // tabPage24
+            // 
+            this.tabPage24.Controls.Add(this.txtIdDevolucaoConsultarDevolucaoPIX);
+            this.tabPage24.Controls.Add(this.label115);
+            this.tabPage24.Controls.Add(this.txte2eidConsultarDevolucaoPIX);
+            this.tabPage24.Controls.Add(this.label116);
+            this.tabPage24.Controls.Add(this.btnConsultarDevolucaoPix);
+            this.tabPage24.Location = new System.Drawing.Point(4, 22);
+            this.tabPage24.Name = "tabPage24";
+            this.tabPage24.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage24.Size = new System.Drawing.Size(495, 476);
+            this.tabPage24.TabIndex = 3;
+            this.tabPage24.Text = "Consultar Devolução PIX";
+            this.tabPage24.UseVisualStyleBackColor = true;
+            // 
+            // txtIdDevolucaoConsultarDevolucaoPIX
+            // 
+            this.txtIdDevolucaoConsultarDevolucaoPIX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIdDevolucaoConsultarDevolucaoPIX.Location = new System.Drawing.Point(6, 68);
+            this.txtIdDevolucaoConsultarDevolucaoPIX.Name = "txtIdDevolucaoConsultarDevolucaoPIX";
+            this.txtIdDevolucaoConsultarDevolucaoPIX.Size = new System.Drawing.Size(483, 20);
+            this.txtIdDevolucaoConsultarDevolucaoPIX.TabIndex = 56;
+            // 
+            // label115
+            // 
+            this.label115.AutoSize = true;
+            this.label115.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label115.Location = new System.Drawing.Point(6, 52);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(85, 13);
+            this.label115.TabIndex = 55;
+            this.label115.Text = "ID Devolução";
+            // 
+            // txte2eidConsultarDevolucaoPIX
+            // 
+            this.txte2eidConsultarDevolucaoPIX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txte2eidConsultarDevolucaoPIX.Location = new System.Drawing.Point(6, 24);
+            this.txte2eidConsultarDevolucaoPIX.Name = "txte2eidConsultarDevolucaoPIX";
+            this.txte2eidConsultarDevolucaoPIX.Size = new System.Drawing.Size(483, 20);
+            this.txte2eidConsultarDevolucaoPIX.TabIndex = 54;
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label116.Location = new System.Drawing.Point(3, 8);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(38, 13);
+            this.label116.TabIndex = 53;
+            this.label116.Text = "e2eid";
+            // 
+            // btnConsultarDevolucaoPix
+            // 
+            this.btnConsultarDevolucaoPix.Location = new System.Drawing.Point(154, 105);
+            this.btnConsultarDevolucaoPix.Name = "btnConsultarDevolucaoPix";
+            this.btnConsultarDevolucaoPix.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarDevolucaoPix.TabIndex = 14;
+            this.btnConsultarDevolucaoPix.Text = "Consultar Devolução PIX";
+            this.btnConsultarDevolucaoPix.UseVisualStyleBackColor = true;
+            this.btnConsultarDevolucaoPix.Click += new System.EventHandler(this.btnConsultarDevolucaoPix_Click);
+            // 
             // tabPage19
             // 
-            this.tabPage19.Controls.Add(this.btnConsultarCobrancasCob);
-            this.tabPage19.Controls.Add(this.btnCancelarCobrancaImediata);
-            this.tabPage19.Controls.Add(this.btnRevisarCobrancaImediata);
-            this.tabPage19.Controls.Add(this.btnConsultarCobrancaImediata);
-            this.tabPage19.Controls.Add(this.btnCriarCobrancaImediata);
+            this.tabPage19.Controls.Add(this.tabControl7);
             this.tabPage19.Location = new System.Drawing.Point(4, 22);
             this.tabPage19.Name = "tabPage19";
             this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage19.Size = new System.Drawing.Size(553, 67);
+            this.tabPage19.Size = new System.Drawing.Size(515, 511);
             this.tabPage19.TabIndex = 6;
             this.tabPage19.Text = "/Cob";
             this.tabPage19.UseVisualStyleBackColor = true;
             // 
-            // btnConsultarCobrancasCob
+            // tabControl7
             // 
-            this.btnConsultarCobrancasCob.Location = new System.Drawing.Point(372, 7);
-            this.btnConsultarCobrancasCob.Name = "btnConsultarCobrancasCob";
-            this.btnConsultarCobrancasCob.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarCobrancasCob.TabIndex = 15;
-            this.btnConsultarCobrancasCob.Text = "Consultar Cobrancas Cob";
-            this.btnConsultarCobrancasCob.UseVisualStyleBackColor = true;
-            this.btnConsultarCobrancasCob.Click += new System.EventHandler(this.btnConsultarCobrancasCob_Click);
+            this.tabControl7.Controls.Add(this.tabPage25);
+            this.tabControl7.Controls.Add(this.tabPage26);
+            this.tabControl7.Controls.Add(this.tabPage27);
+            this.tabControl7.Controls.Add(this.tabPage28);
+            this.tabControl7.Controls.Add(this.tabPage29);
+            this.tabControl7.Location = new System.Drawing.Point(6, 6);
+            this.tabControl7.Name = "tabControl7";
+            this.tabControl7.SelectedIndex = 0;
+            this.tabControl7.Size = new System.Drawing.Size(500, 499);
+            this.tabControl7.TabIndex = 16;
             // 
-            // btnCancelarCobrancaImediata
+            // tabPage25
             // 
-            this.btnCancelarCobrancaImediata.Location = new System.Drawing.Point(189, 35);
-            this.btnCancelarCobrancaImediata.Name = "btnCancelarCobrancaImediata";
-            this.btnCancelarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
-            this.btnCancelarCobrancaImediata.TabIndex = 14;
-            this.btnCancelarCobrancaImediata.Text = "Cancelar Cobrança Imediata";
-            this.btnCancelarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnCancelarCobrancaImediata.Click += new System.EventHandler(this.btnCancelarCobrancaImediata_Click);
+            this.tabPage25.Controls.Add(this.txtTxIdCriarCobrancaImediata);
+            this.tabPage25.Controls.Add(this.label117);
+            this.tabPage25.Controls.Add(this.groupBox6);
+            this.tabPage25.Controls.Add(this.btnCriarCobrancaImediata);
+            this.tabPage25.Location = new System.Drawing.Point(4, 22);
+            this.tabPage25.Name = "tabPage25";
+            this.tabPage25.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage25.Size = new System.Drawing.Size(492, 473);
+            this.tabPage25.TabIndex = 0;
+            this.tabPage25.Text = "Criar Cobrança Imediata";
+            this.tabPage25.UseVisualStyleBackColor = true;
             // 
-            // btnRevisarCobrancaImediata
+            // txtTxIdCriarCobrancaImediata
             // 
-            this.btnRevisarCobrancaImediata.Location = new System.Drawing.Point(6, 35);
-            this.btnRevisarCobrancaImediata.Name = "btnRevisarCobrancaImediata";
-            this.btnRevisarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
-            this.btnRevisarCobrancaImediata.TabIndex = 13;
-            this.btnRevisarCobrancaImediata.Text = "Revisar Cobrança Imediata";
-            this.btnRevisarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnRevisarCobrancaImediata.Click += new System.EventHandler(this.btnRevisarCobrancaImediata_Click);
+            this.txtTxIdCriarCobrancaImediata.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdCriarCobrancaImediata.Location = new System.Drawing.Point(6, 239);
+            this.txtTxIdCriarCobrancaImediata.Name = "txtTxIdCriarCobrancaImediata";
+            this.txtTxIdCriarCobrancaImediata.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdCriarCobrancaImediata.TabIndex = 55;
             // 
-            // btnConsultarCobrancaImediata
+            // label117
             // 
-            this.btnConsultarCobrancaImediata.Location = new System.Drawing.Point(189, 6);
-            this.btnConsultarCobrancaImediata.Name = "btnConsultarCobrancaImediata";
-            this.btnConsultarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarCobrancaImediata.TabIndex = 12;
-            this.btnConsultarCobrancaImediata.Text = "Consultar Cobrança Imediata";
-            this.btnConsultarCobrancaImediata.UseVisualStyleBackColor = true;
-            this.btnConsultarCobrancaImediata.Click += new System.EventHandler(this.btnConsultarCobrancaImediata_Click);
+            this.label117.AutoSize = true;
+            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label117.Location = new System.Drawing.Point(3, 223);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(32, 13);
+            this.label117.TabIndex = 54;
+            this.label117.Text = "TxId";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.rtbCriarCobrancaImediata);
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(480, 204);
+            this.groupBox6.TabIndex = 49;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Ini para Criar Cobrança Imediata";
+            // 
+            // rtbCriarCobrancaImediata
+            // 
+            this.rtbCriarCobrancaImediata.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbCriarCobrancaImediata.Location = new System.Drawing.Point(3, 16);
+            this.rtbCriarCobrancaImediata.Name = "rtbCriarCobrancaImediata";
+            this.rtbCriarCobrancaImediata.Size = new System.Drawing.Size(474, 185);
+            this.rtbCriarCobrancaImediata.TabIndex = 3;
+            this.rtbCriarCobrancaImediata.Text = "";
             // 
             // btnCriarCobrancaImediata
             // 
-            this.btnCriarCobrancaImediata.Location = new System.Drawing.Point(6, 6);
+            this.btnCriarCobrancaImediata.Location = new System.Drawing.Point(163, 274);
             this.btnCriarCobrancaImediata.Name = "btnCriarCobrancaImediata";
             this.btnCriarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
-            this.btnCriarCobrancaImediata.TabIndex = 11;
+            this.btnCriarCobrancaImediata.TabIndex = 12;
             this.btnCriarCobrancaImediata.Text = "Criar Cobrança Imediata";
             this.btnCriarCobrancaImediata.UseVisualStyleBackColor = true;
             this.btnCriarCobrancaImediata.Click += new System.EventHandler(this.btnCriarCobrancaImediata_Click);
             // 
+            // tabPage26
+            // 
+            this.tabPage26.Controls.Add(this.txtRevisaoConsultarCobrancaImediata);
+            this.tabPage26.Controls.Add(this.label119);
+            this.tabPage26.Controls.Add(this.txtTxIdConsultarCobrancaImediata);
+            this.tabPage26.Controls.Add(this.label118);
+            this.tabPage26.Controls.Add(this.btnConsultarCobrancaImediata);
+            this.tabPage26.Location = new System.Drawing.Point(4, 22);
+            this.tabPage26.Name = "tabPage26";
+            this.tabPage26.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage26.Size = new System.Drawing.Size(492, 473);
+            this.tabPage26.TabIndex = 1;
+            this.tabPage26.Text = "Consultar Cobrança Imediata";
+            this.tabPage26.UseVisualStyleBackColor = true;
+            // 
+            // txtRevisaoConsultarCobrancaImediata
+            // 
+            this.txtRevisaoConsultarCobrancaImediata.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRevisaoConsultarCobrancaImediata.Location = new System.Drawing.Point(6, 76);
+            this.txtRevisaoConsultarCobrancaImediata.Name = "txtRevisaoConsultarCobrancaImediata";
+            this.txtRevisaoConsultarCobrancaImediata.Size = new System.Drawing.Size(480, 20);
+            this.txtRevisaoConsultarCobrancaImediata.TabIndex = 59;
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label119.Location = new System.Drawing.Point(3, 60);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(53, 13);
+            this.label119.TabIndex = 58;
+            this.label119.Text = "Revisão";
+            // 
+            // txtTxIdConsultarCobrancaImediata
+            // 
+            this.txtTxIdConsultarCobrancaImediata.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdConsultarCobrancaImediata.Location = new System.Drawing.Point(6, 30);
+            this.txtTxIdConsultarCobrancaImediata.Name = "txtTxIdConsultarCobrancaImediata";
+            this.txtTxIdConsultarCobrancaImediata.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdConsultarCobrancaImediata.TabIndex = 57;
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label118.Location = new System.Drawing.Point(3, 14);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(32, 13);
+            this.label118.TabIndex = 56;
+            this.label118.Text = "TxId";
+            // 
+            // btnConsultarCobrancaImediata
+            // 
+            this.btnConsultarCobrancaImediata.Location = new System.Drawing.Point(155, 120);
+            this.btnConsultarCobrancaImediata.Name = "btnConsultarCobrancaImediata";
+            this.btnConsultarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarCobrancaImediata.TabIndex = 13;
+            this.btnConsultarCobrancaImediata.Text = "Consultar Cobrança Imediata";
+            this.btnConsultarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnConsultarCobrancaImediata.Click += new System.EventHandler(this.btnConsultarCobrancaImediata_Click);
+            // 
+            // tabPage27
+            // 
+            this.tabPage27.Controls.Add(this.ckbLocationConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.cmbStatusConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.txtDataFinalConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.label120);
+            this.tabPage27.Controls.Add(this.nudItensPorPaginaConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.label121);
+            this.tabPage27.Controls.Add(this.nudPagAtualConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.txtCPFCNPJConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.label122);
+            this.tabPage27.Controls.Add(this.label123);
+            this.tabPage27.Controls.Add(this.label124);
+            this.tabPage27.Controls.Add(this.txtDataInicialConsultarCobrancasCob);
+            this.tabPage27.Controls.Add(this.label125);
+            this.tabPage27.Controls.Add(this.btnConsultarCobrancasCob);
+            this.tabPage27.Location = new System.Drawing.Point(4, 22);
+            this.tabPage27.Name = "tabPage27";
+            this.tabPage27.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage27.Size = new System.Drawing.Size(492, 473);
+            this.tabPage27.TabIndex = 2;
+            this.tabPage27.Text = "Consultar Cobrancas Cob";
+            this.tabPage27.UseVisualStyleBackColor = true;
+            // 
+            // ckbLocationConsultarCobrancasCob
+            // 
+            this.ckbLocationConsultarCobrancasCob.AutoSize = true;
+            this.ckbLocationConsultarCobrancasCob.Location = new System.Drawing.Point(204, 160);
+            this.ckbLocationConsultarCobrancasCob.Name = "ckbLocationConsultarCobrancasCob";
+            this.ckbLocationConsultarCobrancasCob.Size = new System.Drawing.Size(67, 17);
+            this.ckbLocationConsultarCobrancasCob.TabIndex = 73;
+            this.ckbLocationConsultarCobrancasCob.Text = "Location";
+            this.ckbLocationConsultarCobrancasCob.UseVisualStyleBackColor = true;
+            // 
+            // cmbStatusConsultarCobrancasCob
+            // 
+            this.cmbStatusConsultarCobrancasCob.FormattingEnabled = true;
+            this.cmbStatusConsultarCobrancasCob.Items.AddRange(new object[] {
+            "Nenhum",
+            "Ativa",
+            "Concluida",
+            "Removida Pelo Usuário Recebedor",
+            "Removida Pelo PSP"});
+            this.cmbStatusConsultarCobrancasCob.Location = new System.Drawing.Point(6, 160);
+            this.cmbStatusConsultarCobrancasCob.Name = "cmbStatusConsultarCobrancasCob";
+            this.cmbStatusConsultarCobrancasCob.Size = new System.Drawing.Size(183, 21);
+            this.cmbStatusConsultarCobrancasCob.TabIndex = 72;
+            // 
+            // txtDataFinalConsultarCobrancasCob
+            // 
+            this.txtDataFinalConsultarCobrancasCob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataFinalConsultarCobrancasCob.Location = new System.Drawing.Point(6, 72);
+            this.txtDataFinalConsultarCobrancasCob.Name = "txtDataFinalConsultarCobrancasCob";
+            this.txtDataFinalConsultarCobrancasCob.Size = new System.Drawing.Size(480, 20);
+            this.txtDataFinalConsultarCobrancasCob.TabIndex = 71;
+            this.txtDataFinalConsultarCobrancasCob.Text = "dd/MM/yyyy";
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label120.Location = new System.Drawing.Point(201, 191);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(101, 13);
+            this.label120.TabIndex = 70;
+            this.label120.Text = "Itens Por Página";
+            // 
+            // nudItensPorPaginaConsultarCobrancasCob
+            // 
+            this.nudItensPorPaginaConsultarCobrancasCob.Location = new System.Drawing.Point(204, 207);
+            this.nudItensPorPaginaConsultarCobrancasCob.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudItensPorPaginaConsultarCobrancasCob.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudItensPorPaginaConsultarCobrancasCob.Name = "nudItensPorPaginaConsultarCobrancasCob";
+            this.nudItensPorPaginaConsultarCobrancasCob.Size = new System.Drawing.Size(180, 20);
+            this.nudItensPorPaginaConsultarCobrancasCob.TabIndex = 69;
+            this.nudItensPorPaginaConsultarCobrancasCob.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudItensPorPaginaConsultarCobrancasCob.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label121.Location = new System.Drawing.Point(3, 191);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(79, 13);
+            this.label121.TabIndex = 68;
+            this.label121.Text = "Página Atual";
+            // 
+            // nudPagAtualConsultarCobrancasCob
+            // 
+            this.nudPagAtualConsultarCobrancasCob.Location = new System.Drawing.Point(6, 207);
+            this.nudPagAtualConsultarCobrancasCob.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudPagAtualConsultarCobrancasCob.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudPagAtualConsultarCobrancasCob.Name = "nudPagAtualConsultarCobrancasCob";
+            this.nudPagAtualConsultarCobrancasCob.Size = new System.Drawing.Size(183, 20);
+            this.nudPagAtualConsultarCobrancasCob.TabIndex = 67;
+            this.nudPagAtualConsultarCobrancasCob.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudPagAtualConsultarCobrancasCob.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // txtCPFCNPJConsultarCobrancasCob
+            // 
+            this.txtCPFCNPJConsultarCobrancasCob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCPFCNPJConsultarCobrancasCob.Location = new System.Drawing.Point(6, 118);
+            this.txtCPFCNPJConsultarCobrancasCob.Name = "txtCPFCNPJConsultarCobrancasCob";
+            this.txtCPFCNPJConsultarCobrancasCob.Size = new System.Drawing.Size(480, 20);
+            this.txtCPFCNPJConsultarCobrancasCob.TabIndex = 66;
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label122.Location = new System.Drawing.Point(3, 102);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(83, 13);
+            this.label122.TabIndex = 65;
+            this.label122.Text = "CPF ou CNPJ";
+            // 
+            // label123
+            // 
+            this.label123.AutoSize = true;
+            this.label123.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label123.Location = new System.Drawing.Point(3, 144);
+            this.label123.Name = "label123";
+            this.label123.Size = new System.Drawing.Size(43, 13);
+            this.label123.TabIndex = 63;
+            this.label123.Text = "Status";
+            // 
+            // label124
+            // 
+            this.label124.AutoSize = true;
+            this.label124.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label124.Location = new System.Drawing.Point(3, 56);
+            this.label124.Name = "label124";
+            this.label124.Size = new System.Drawing.Size(65, 13);
+            this.label124.TabIndex = 62;
+            this.label124.Text = "Data Final";
+            // 
+            // txtDataInicialConsultarCobrancasCob
+            // 
+            this.txtDataInicialConsultarCobrancasCob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataInicialConsultarCobrancasCob.Location = new System.Drawing.Point(6, 28);
+            this.txtDataInicialConsultarCobrancasCob.Name = "txtDataInicialConsultarCobrancasCob";
+            this.txtDataInicialConsultarCobrancasCob.Size = new System.Drawing.Size(480, 20);
+            this.txtDataInicialConsultarCobrancasCob.TabIndex = 61;
+            this.txtDataInicialConsultarCobrancasCob.Text = "dd/MM/yyyy";
+            // 
+            // label125
+            // 
+            this.label125.AutoSize = true;
+            this.label125.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label125.Location = new System.Drawing.Point(3, 12);
+            this.label125.Name = "label125";
+            this.label125.Size = new System.Drawing.Size(72, 13);
+            this.label125.TabIndex = 60;
+            this.label125.Text = "Data Inicial";
+            // 
+            // btnConsultarCobrancasCob
+            // 
+            this.btnConsultarCobrancasCob.Location = new System.Drawing.Point(160, 258);
+            this.btnConsultarCobrancasCob.Name = "btnConsultarCobrancasCob";
+            this.btnConsultarCobrancasCob.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarCobrancasCob.TabIndex = 17;
+            this.btnConsultarCobrancasCob.Text = "Consultar Cobrancas Cob";
+            this.btnConsultarCobrancasCob.UseVisualStyleBackColor = true;
+            this.btnConsultarCobrancasCob.Click += new System.EventHandler(this.btnConsultarCobrancasCob_Click);
+            // 
+            // tabPage28
+            // 
+            this.tabPage28.Controls.Add(this.txtTxIdRevisarCobrancaImediata);
+            this.tabPage28.Controls.Add(this.label127);
+            this.tabPage28.Controls.Add(this.groupBox8);
+            this.tabPage28.Controls.Add(this.btnRevisarCobrancaImediata);
+            this.tabPage28.Location = new System.Drawing.Point(4, 22);
+            this.tabPage28.Name = "tabPage28";
+            this.tabPage28.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage28.Size = new System.Drawing.Size(492, 473);
+            this.tabPage28.TabIndex = 3;
+            this.tabPage28.Text = "Revisar Cobrança Imediata";
+            this.tabPage28.UseVisualStyleBackColor = true;
+            // 
+            // txtTxIdRevisarCobrancaImediata
+            // 
+            this.txtTxIdRevisarCobrancaImediata.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdRevisarCobrancaImediata.Location = new System.Drawing.Point(6, 242);
+            this.txtTxIdRevisarCobrancaImediata.Name = "txtTxIdRevisarCobrancaImediata";
+            this.txtTxIdRevisarCobrancaImediata.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdRevisarCobrancaImediata.TabIndex = 58;
+            // 
+            // label127
+            // 
+            this.label127.AutoSize = true;
+            this.label127.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label127.Location = new System.Drawing.Point(3, 226);
+            this.label127.Name = "label127";
+            this.label127.Size = new System.Drawing.Size(32, 13);
+            this.label127.TabIndex = 57;
+            this.label127.Text = "TxId";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.rtbRevisarCobrancaImediata);
+            this.groupBox8.Location = new System.Drawing.Point(6, 9);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(480, 204);
+            this.groupBox8.TabIndex = 56;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Ini para Revisar Cobrança Imediata";
+            // 
+            // rtbRevisarCobrancaImediata
+            // 
+            this.rtbRevisarCobrancaImediata.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbRevisarCobrancaImediata.Location = new System.Drawing.Point(3, 16);
+            this.rtbRevisarCobrancaImediata.Name = "rtbRevisarCobrancaImediata";
+            this.rtbRevisarCobrancaImediata.Size = new System.Drawing.Size(474, 185);
+            this.rtbRevisarCobrancaImediata.TabIndex = 3;
+            this.rtbRevisarCobrancaImediata.Text = "";
+            // 
+            // btnRevisarCobrancaImediata
+            // 
+            this.btnRevisarCobrancaImediata.Location = new System.Drawing.Point(155, 287);
+            this.btnRevisarCobrancaImediata.Name = "btnRevisarCobrancaImediata";
+            this.btnRevisarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
+            this.btnRevisarCobrancaImediata.TabIndex = 14;
+            this.btnRevisarCobrancaImediata.Text = "Revisar Cobrança Imediata";
+            this.btnRevisarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnRevisarCobrancaImediata.Click += new System.EventHandler(this.btnRevisarCobrancaImediata_Click);
+            // 
+            // tabPage29
+            // 
+            this.tabPage29.Controls.Add(this.txtTxIdCancelarCobrancaImediata);
+            this.tabPage29.Controls.Add(this.label128);
+            this.tabPage29.Controls.Add(this.btnCancelarCobrancaImediata);
+            this.tabPage29.Location = new System.Drawing.Point(4, 22);
+            this.tabPage29.Name = "tabPage29";
+            this.tabPage29.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage29.Size = new System.Drawing.Size(492, 473);
+            this.tabPage29.TabIndex = 4;
+            this.tabPage29.Text = "Cancelar Cobrança Imediata";
+            this.tabPage29.UseVisualStyleBackColor = true;
+            // 
+            // txtTxIdCancelarCobrancaImediata
+            // 
+            this.txtTxIdCancelarCobrancaImediata.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdCancelarCobrancaImediata.Location = new System.Drawing.Point(6, 21);
+            this.txtTxIdCancelarCobrancaImediata.Name = "txtTxIdCancelarCobrancaImediata";
+            this.txtTxIdCancelarCobrancaImediata.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdCancelarCobrancaImediata.TabIndex = 60;
+            // 
+            // label128
+            // 
+            this.label128.AutoSize = true;
+            this.label128.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label128.Location = new System.Drawing.Point(3, 5);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(32, 13);
+            this.label128.TabIndex = 59;
+            this.label128.Text = "TxId";
+            // 
+            // btnCancelarCobrancaImediata
+            // 
+            this.btnCancelarCobrancaImediata.Location = new System.Drawing.Point(157, 49);
+            this.btnCancelarCobrancaImediata.Name = "btnCancelarCobrancaImediata";
+            this.btnCancelarCobrancaImediata.Size = new System.Drawing.Size(177, 23);
+            this.btnCancelarCobrancaImediata.TabIndex = 15;
+            this.btnCancelarCobrancaImediata.Text = "Cancelar Cobrança Imediata";
+            this.btnCancelarCobrancaImediata.UseVisualStyleBackColor = true;
+            this.btnCancelarCobrancaImediata.Click += new System.EventHandler(this.btnCancelarCobrancaImediata_Click);
+            // 
             // tabPage20
             // 
-            this.tabPage20.Controls.Add(this.btnConsultarCobrancasCobV);
-            this.tabPage20.Controls.Add(this.btnCancelarCobranca);
-            this.tabPage20.Controls.Add(this.btnRevisarCobranca);
-            this.tabPage20.Controls.Add(this.btnConsultarCobranca);
-            this.tabPage20.Controls.Add(this.btnCriarCobranca);
+            this.tabPage20.Controls.Add(this.tabControl8);
             this.tabPage20.Location = new System.Drawing.Point(4, 22);
             this.tabPage20.Name = "tabPage20";
             this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage20.Size = new System.Drawing.Size(553, 67);
+            this.tabPage20.Size = new System.Drawing.Size(515, 511);
             this.tabPage20.TabIndex = 7;
             this.tabPage20.Text = "/CobV";
             this.tabPage20.UseVisualStyleBackColor = true;
             // 
-            // btnCancelarCobranca
+            // tabControl8
             // 
-            this.btnCancelarCobranca.Location = new System.Drawing.Point(189, 35);
-            this.btnCancelarCobranca.Name = "btnCancelarCobranca";
-            this.btnCancelarCobranca.Size = new System.Drawing.Size(177, 23);
-            this.btnCancelarCobranca.TabIndex = 15;
-            this.btnCancelarCobranca.Text = "Cancelar Cobranca";
-            this.btnCancelarCobranca.UseVisualStyleBackColor = true;
-            this.btnCancelarCobranca.Click += new System.EventHandler(this.btnCancelarCobranca_Click);
+            this.tabControl8.Controls.Add(this.tabPage30);
+            this.tabControl8.Controls.Add(this.tabPage31);
+            this.tabControl8.Controls.Add(this.tabPage32);
+            this.tabControl8.Controls.Add(this.tabPage33);
+            this.tabControl8.Controls.Add(this.tabPage34);
+            this.tabControl8.Location = new System.Drawing.Point(7, 6);
+            this.tabControl8.Name = "tabControl8";
+            this.tabControl8.SelectedIndex = 0;
+            this.tabControl8.Size = new System.Drawing.Size(500, 499);
+            this.tabControl8.TabIndex = 17;
             // 
-            // btnRevisarCobranca
+            // tabPage30
             // 
-            this.btnRevisarCobranca.Location = new System.Drawing.Point(6, 35);
-            this.btnRevisarCobranca.Name = "btnRevisarCobranca";
-            this.btnRevisarCobranca.Size = new System.Drawing.Size(177, 23);
-            this.btnRevisarCobranca.TabIndex = 14;
-            this.btnRevisarCobranca.Text = "Revisar Cobranca";
-            this.btnRevisarCobranca.UseVisualStyleBackColor = true;
-            this.btnRevisarCobranca.Click += new System.EventHandler(this.btnRevisarCobranca_Click);
+            this.tabPage30.Controls.Add(this.txtTxIdCriarCobranca);
+            this.tabPage30.Controls.Add(this.label126);
+            this.tabPage30.Controls.Add(this.groupBox9);
+            this.tabPage30.Controls.Add(this.btnCriarCobranca);
+            this.tabPage30.Location = new System.Drawing.Point(4, 22);
+            this.tabPage30.Name = "tabPage30";
+            this.tabPage30.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage30.Size = new System.Drawing.Size(492, 473);
+            this.tabPage30.TabIndex = 0;
+            this.tabPage30.Text = "Criar Cobrança";
+            this.tabPage30.UseVisualStyleBackColor = true;
             // 
-            // btnConsultarCobranca
+            // txtTxIdCriarCobranca
             // 
-            this.btnConsultarCobranca.Location = new System.Drawing.Point(189, 6);
-            this.btnConsultarCobranca.Name = "btnConsultarCobranca";
-            this.btnConsultarCobranca.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarCobranca.TabIndex = 13;
-            this.btnConsultarCobranca.Text = "Consultar Cobranca";
-            this.btnConsultarCobranca.UseVisualStyleBackColor = true;
-            this.btnConsultarCobranca.Click += new System.EventHandler(this.btnConsultarCobranca_Click);
+            this.txtTxIdCriarCobranca.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdCriarCobranca.Location = new System.Drawing.Point(6, 239);
+            this.txtTxIdCriarCobranca.Name = "txtTxIdCriarCobranca";
+            this.txtTxIdCriarCobranca.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdCriarCobranca.TabIndex = 55;
+            // 
+            // label126
+            // 
+            this.label126.AutoSize = true;
+            this.label126.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label126.Location = new System.Drawing.Point(3, 223);
+            this.label126.Name = "label126";
+            this.label126.Size = new System.Drawing.Size(32, 13);
+            this.label126.TabIndex = 54;
+            this.label126.Text = "TxId";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.rtbCriarCobranca);
+            this.groupBox9.Location = new System.Drawing.Point(6, 6);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(480, 204);
+            this.groupBox9.TabIndex = 49;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Ini para Criar Cobrança";
+            // 
+            // rtbCriarCobranca
+            // 
+            this.rtbCriarCobranca.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbCriarCobranca.Location = new System.Drawing.Point(3, 16);
+            this.rtbCriarCobranca.Name = "rtbCriarCobranca";
+            this.rtbCriarCobranca.Size = new System.Drawing.Size(474, 185);
+            this.rtbCriarCobranca.TabIndex = 3;
+            this.rtbCriarCobranca.Text = "";
             // 
             // btnCriarCobranca
             // 
-            this.btnCriarCobranca.Location = new System.Drawing.Point(6, 6);
+            this.btnCriarCobranca.Location = new System.Drawing.Point(163, 274);
             this.btnCriarCobranca.Name = "btnCriarCobranca";
             this.btnCriarCobranca.Size = new System.Drawing.Size(177, 23);
             this.btnCriarCobranca.TabIndex = 12;
-            this.btnCriarCobranca.Text = "Criar Cobranca";
+            this.btnCriarCobranca.Text = "Criar Cobrança";
             this.btnCriarCobranca.UseVisualStyleBackColor = true;
             this.btnCriarCobranca.Click += new System.EventHandler(this.btnCriarCobranca_Click);
             // 
+            // tabPage31
+            // 
+            this.tabPage31.Controls.Add(this.txtRevisaoConsultarCobranca);
+            this.tabPage31.Controls.Add(this.label129);
+            this.tabPage31.Controls.Add(this.txtTxIdConsultarCobranca);
+            this.tabPage31.Controls.Add(this.label130);
+            this.tabPage31.Controls.Add(this.btnConsultarCobranca);
+            this.tabPage31.Location = new System.Drawing.Point(4, 22);
+            this.tabPage31.Name = "tabPage31";
+            this.tabPage31.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage31.Size = new System.Drawing.Size(492, 473);
+            this.tabPage31.TabIndex = 1;
+            this.tabPage31.Text = "Consultar Cobrança";
+            this.tabPage31.UseVisualStyleBackColor = true;
+            // 
+            // txtRevisaoConsultarCobranca
+            // 
+            this.txtRevisaoConsultarCobranca.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRevisaoConsultarCobranca.Location = new System.Drawing.Point(6, 76);
+            this.txtRevisaoConsultarCobranca.Name = "txtRevisaoConsultarCobranca";
+            this.txtRevisaoConsultarCobranca.Size = new System.Drawing.Size(480, 20);
+            this.txtRevisaoConsultarCobranca.TabIndex = 59;
+            // 
+            // label129
+            // 
+            this.label129.AutoSize = true;
+            this.label129.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label129.Location = new System.Drawing.Point(3, 60);
+            this.label129.Name = "label129";
+            this.label129.Size = new System.Drawing.Size(53, 13);
+            this.label129.TabIndex = 58;
+            this.label129.Text = "Revisão";
+            // 
+            // txtTxIdConsultarCobranca
+            // 
+            this.txtTxIdConsultarCobranca.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdConsultarCobranca.Location = new System.Drawing.Point(6, 30);
+            this.txtTxIdConsultarCobranca.Name = "txtTxIdConsultarCobranca";
+            this.txtTxIdConsultarCobranca.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdConsultarCobranca.TabIndex = 57;
+            // 
+            // label130
+            // 
+            this.label130.AutoSize = true;
+            this.label130.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label130.Location = new System.Drawing.Point(3, 14);
+            this.label130.Name = "label130";
+            this.label130.Size = new System.Drawing.Size(32, 13);
+            this.label130.TabIndex = 56;
+            this.label130.Text = "TxId";
+            // 
+            // btnConsultarCobranca
+            // 
+            this.btnConsultarCobranca.Location = new System.Drawing.Point(155, 120);
+            this.btnConsultarCobranca.Name = "btnConsultarCobranca";
+            this.btnConsultarCobranca.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarCobranca.TabIndex = 13;
+            this.btnConsultarCobranca.Text = "Consultar Cobrança";
+            this.btnConsultarCobranca.UseVisualStyleBackColor = true;
+            this.btnConsultarCobranca.Click += new System.EventHandler(this.btnConsultarCobranca_Click);
+            // 
+            // tabPage32
+            // 
+            this.tabPage32.Controls.Add(this.ckbLocationConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.cmbStatusConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.txtDataFinalConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.label131);
+            this.tabPage32.Controls.Add(this.nudItensPorPaginaConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.label132);
+            this.tabPage32.Controls.Add(this.nudPagAtualConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.txtCPFCNPJConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.label133);
+            this.tabPage32.Controls.Add(this.label134);
+            this.tabPage32.Controls.Add(this.label135);
+            this.tabPage32.Controls.Add(this.txtDataInicialConsultarCobrancasCobV);
+            this.tabPage32.Controls.Add(this.label136);
+            this.tabPage32.Controls.Add(this.btnConsultarCobrancasCobV);
+            this.tabPage32.Location = new System.Drawing.Point(4, 22);
+            this.tabPage32.Name = "tabPage32";
+            this.tabPage32.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage32.Size = new System.Drawing.Size(492, 473);
+            this.tabPage32.TabIndex = 2;
+            this.tabPage32.Text = "Consultar Cobrancas CobV";
+            this.tabPage32.UseVisualStyleBackColor = true;
+            // 
+            // ckbLocationConsultarCobrancasCobV
+            // 
+            this.ckbLocationConsultarCobrancasCobV.AutoSize = true;
+            this.ckbLocationConsultarCobrancasCobV.Location = new System.Drawing.Point(204, 160);
+            this.ckbLocationConsultarCobrancasCobV.Name = "ckbLocationConsultarCobrancasCobV";
+            this.ckbLocationConsultarCobrancasCobV.Size = new System.Drawing.Size(67, 17);
+            this.ckbLocationConsultarCobrancasCobV.TabIndex = 73;
+            this.ckbLocationConsultarCobrancasCobV.Text = "Location";
+            this.ckbLocationConsultarCobrancasCobV.UseVisualStyleBackColor = true;
+            // 
+            // cmbStatusConsultarCobrancasCobV
+            // 
+            this.cmbStatusConsultarCobrancasCobV.FormattingEnabled = true;
+            this.cmbStatusConsultarCobrancasCobV.Items.AddRange(new object[] {
+            "Nenhum",
+            "Ativa",
+            "Concluida",
+            "Removida Pelo Usuário Recebedor",
+            "Removida Pelo PSP"});
+            this.cmbStatusConsultarCobrancasCobV.Location = new System.Drawing.Point(6, 160);
+            this.cmbStatusConsultarCobrancasCobV.Name = "cmbStatusConsultarCobrancasCobV";
+            this.cmbStatusConsultarCobrancasCobV.Size = new System.Drawing.Size(183, 21);
+            this.cmbStatusConsultarCobrancasCobV.TabIndex = 72;
+            // 
+            // txtDataFinalConsultarCobrancasCobV
+            // 
+            this.txtDataFinalConsultarCobrancasCobV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataFinalConsultarCobrancasCobV.Location = new System.Drawing.Point(6, 72);
+            this.txtDataFinalConsultarCobrancasCobV.Name = "txtDataFinalConsultarCobrancasCobV";
+            this.txtDataFinalConsultarCobrancasCobV.Size = new System.Drawing.Size(480, 20);
+            this.txtDataFinalConsultarCobrancasCobV.TabIndex = 71;
+            this.txtDataFinalConsultarCobrancasCobV.Text = "dd/MM/yyyy";
+            // 
+            // label131
+            // 
+            this.label131.AutoSize = true;
+            this.label131.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label131.Location = new System.Drawing.Point(201, 191);
+            this.label131.Name = "label131";
+            this.label131.Size = new System.Drawing.Size(101, 13);
+            this.label131.TabIndex = 70;
+            this.label131.Text = "Itens Por Página";
+            // 
+            // nudItensPorPaginaConsultarCobrancasCobV
+            // 
+            this.nudItensPorPaginaConsultarCobrancasCobV.Location = new System.Drawing.Point(204, 207);
+            this.nudItensPorPaginaConsultarCobrancasCobV.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudItensPorPaginaConsultarCobrancasCobV.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudItensPorPaginaConsultarCobrancasCobV.Name = "nudItensPorPaginaConsultarCobrancasCobV";
+            this.nudItensPorPaginaConsultarCobrancasCobV.Size = new System.Drawing.Size(180, 20);
+            this.nudItensPorPaginaConsultarCobrancasCobV.TabIndex = 69;
+            this.nudItensPorPaginaConsultarCobrancasCobV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudItensPorPaginaConsultarCobrancasCobV.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // label132
+            // 
+            this.label132.AutoSize = true;
+            this.label132.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label132.Location = new System.Drawing.Point(3, 191);
+            this.label132.Name = "label132";
+            this.label132.Size = new System.Drawing.Size(79, 13);
+            this.label132.TabIndex = 68;
+            this.label132.Text = "Página Atual";
+            // 
+            // nudPagAtualConsultarCobrancasCobV
+            // 
+            this.nudPagAtualConsultarCobrancasCobV.Location = new System.Drawing.Point(6, 207);
+            this.nudPagAtualConsultarCobrancasCobV.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudPagAtualConsultarCobrancasCobV.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudPagAtualConsultarCobrancasCobV.Name = "nudPagAtualConsultarCobrancasCobV";
+            this.nudPagAtualConsultarCobrancasCobV.Size = new System.Drawing.Size(183, 20);
+            this.nudPagAtualConsultarCobrancasCobV.TabIndex = 67;
+            this.nudPagAtualConsultarCobrancasCobV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudPagAtualConsultarCobrancasCobV.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // txtCPFCNPJConsultarCobrancasCobV
+            // 
+            this.txtCPFCNPJConsultarCobrancasCobV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCPFCNPJConsultarCobrancasCobV.Location = new System.Drawing.Point(6, 118);
+            this.txtCPFCNPJConsultarCobrancasCobV.Name = "txtCPFCNPJConsultarCobrancasCobV";
+            this.txtCPFCNPJConsultarCobrancasCobV.Size = new System.Drawing.Size(480, 20);
+            this.txtCPFCNPJConsultarCobrancasCobV.TabIndex = 66;
+            // 
+            // label133
+            // 
+            this.label133.AutoSize = true;
+            this.label133.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label133.Location = new System.Drawing.Point(3, 102);
+            this.label133.Name = "label133";
+            this.label133.Size = new System.Drawing.Size(83, 13);
+            this.label133.TabIndex = 65;
+            this.label133.Text = "CPF ou CNPJ";
+            // 
+            // label134
+            // 
+            this.label134.AutoSize = true;
+            this.label134.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label134.Location = new System.Drawing.Point(3, 144);
+            this.label134.Name = "label134";
+            this.label134.Size = new System.Drawing.Size(43, 13);
+            this.label134.TabIndex = 63;
+            this.label134.Text = "Status";
+            // 
+            // label135
+            // 
+            this.label135.AutoSize = true;
+            this.label135.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label135.Location = new System.Drawing.Point(3, 56);
+            this.label135.Name = "label135";
+            this.label135.Size = new System.Drawing.Size(65, 13);
+            this.label135.TabIndex = 62;
+            this.label135.Text = "Data Final";
+            // 
+            // txtDataInicialConsultarCobrancasCobV
+            // 
+            this.txtDataInicialConsultarCobrancasCobV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataInicialConsultarCobrancasCobV.Location = new System.Drawing.Point(6, 28);
+            this.txtDataInicialConsultarCobrancasCobV.Name = "txtDataInicialConsultarCobrancasCobV";
+            this.txtDataInicialConsultarCobrancasCobV.Size = new System.Drawing.Size(480, 20);
+            this.txtDataInicialConsultarCobrancasCobV.TabIndex = 61;
+            this.txtDataInicialConsultarCobrancasCobV.Text = "dd/MM/yyyy";
+            // 
+            // label136
+            // 
+            this.label136.AutoSize = true;
+            this.label136.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label136.Location = new System.Drawing.Point(3, 12);
+            this.label136.Name = "label136";
+            this.label136.Size = new System.Drawing.Size(72, 13);
+            this.label136.TabIndex = 60;
+            this.label136.Text = "Data Inicial";
+            // 
             // btnConsultarCobrancasCobV
             // 
-            this.btnConsultarCobrancasCobV.Location = new System.Drawing.Point(372, 6);
+            this.btnConsultarCobrancasCobV.Location = new System.Drawing.Point(160, 258);
             this.btnConsultarCobrancasCobV.Name = "btnConsultarCobrancasCobV";
             this.btnConsultarCobrancasCobV.Size = new System.Drawing.Size(177, 23);
-            this.btnConsultarCobrancasCobV.TabIndex = 16;
+            this.btnConsultarCobrancasCobV.TabIndex = 17;
             this.btnConsultarCobrancasCobV.Text = "Consultar Cobrancas CobV";
             this.btnConsultarCobrancasCobV.UseVisualStyleBackColor = true;
             this.btnConsultarCobrancasCobV.Click += new System.EventHandler(this.btnConsultarCobrancasCobV_Click);
+            // 
+            // tabPage33
+            // 
+            this.tabPage33.Controls.Add(this.txtTxIdRevisarCobranca);
+            this.tabPage33.Controls.Add(this.label137);
+            this.tabPage33.Controls.Add(this.groupBox10);
+            this.tabPage33.Controls.Add(this.btnRevisarCobranca);
+            this.tabPage33.Location = new System.Drawing.Point(4, 22);
+            this.tabPage33.Name = "tabPage33";
+            this.tabPage33.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage33.Size = new System.Drawing.Size(492, 473);
+            this.tabPage33.TabIndex = 3;
+            this.tabPage33.Text = "Revisar Cobrança";
+            this.tabPage33.UseVisualStyleBackColor = true;
+            // 
+            // txtTxIdRevisarCobranca
+            // 
+            this.txtTxIdRevisarCobranca.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdRevisarCobranca.Location = new System.Drawing.Point(6, 242);
+            this.txtTxIdRevisarCobranca.Name = "txtTxIdRevisarCobranca";
+            this.txtTxIdRevisarCobranca.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdRevisarCobranca.TabIndex = 58;
+            // 
+            // label137
+            // 
+            this.label137.AutoSize = true;
+            this.label137.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label137.Location = new System.Drawing.Point(3, 226);
+            this.label137.Name = "label137";
+            this.label137.Size = new System.Drawing.Size(32, 13);
+            this.label137.TabIndex = 57;
+            this.label137.Text = "TxId";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.rtbRevisarCobranca);
+            this.groupBox10.Location = new System.Drawing.Point(6, 9);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(480, 204);
+            this.groupBox10.TabIndex = 56;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Ini para Revisar Cobrança";
+            // 
+            // rtbRevisarCobranca
+            // 
+            this.rtbRevisarCobranca.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbRevisarCobranca.Location = new System.Drawing.Point(3, 16);
+            this.rtbRevisarCobranca.Name = "rtbRevisarCobranca";
+            this.rtbRevisarCobranca.Size = new System.Drawing.Size(474, 185);
+            this.rtbRevisarCobranca.TabIndex = 3;
+            this.rtbRevisarCobranca.Text = "";
+            // 
+            // btnRevisarCobranca
+            // 
+            this.btnRevisarCobranca.Location = new System.Drawing.Point(155, 287);
+            this.btnRevisarCobranca.Name = "btnRevisarCobranca";
+            this.btnRevisarCobranca.Size = new System.Drawing.Size(177, 23);
+            this.btnRevisarCobranca.TabIndex = 14;
+            this.btnRevisarCobranca.Text = "Revisar Cobrança";
+            this.btnRevisarCobranca.UseVisualStyleBackColor = true;
+            this.btnRevisarCobranca.Click += new System.EventHandler(this.btnRevisarCobranca_Click);
+            // 
+            // tabPage34
+            // 
+            this.tabPage34.Controls.Add(this.txtTxIdCancelarCobranca);
+            this.tabPage34.Controls.Add(this.label138);
+            this.tabPage34.Controls.Add(this.btnCancelarCobranca);
+            this.tabPage34.Location = new System.Drawing.Point(4, 22);
+            this.tabPage34.Name = "tabPage34";
+            this.tabPage34.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage34.Size = new System.Drawing.Size(492, 473);
+            this.tabPage34.TabIndex = 4;
+            this.tabPage34.Text = "Cancelar Cobrança";
+            this.tabPage34.UseVisualStyleBackColor = true;
+            // 
+            // txtTxIdCancelarCobranca
+            // 
+            this.txtTxIdCancelarCobranca.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTxIdCancelarCobranca.Location = new System.Drawing.Point(6, 21);
+            this.txtTxIdCancelarCobranca.Name = "txtTxIdCancelarCobranca";
+            this.txtTxIdCancelarCobranca.Size = new System.Drawing.Size(480, 20);
+            this.txtTxIdCancelarCobranca.TabIndex = 60;
+            // 
+            // label138
+            // 
+            this.label138.AutoSize = true;
+            this.label138.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label138.Location = new System.Drawing.Point(3, 5);
+            this.label138.Name = "label138";
+            this.label138.Size = new System.Drawing.Size(32, 13);
+            this.label138.TabIndex = 59;
+            this.label138.Text = "TxId";
+            // 
+            // btnCancelarCobranca
+            // 
+            this.btnCancelarCobranca.Location = new System.Drawing.Point(157, 49);
+            this.btnCancelarCobranca.Name = "btnCancelarCobranca";
+            this.btnCancelarCobranca.Size = new System.Drawing.Size(177, 23);
+            this.btnCancelarCobranca.TabIndex = 15;
+            this.btnCancelarCobranca.Text = "Cancelar Cobrança";
+            this.btnCancelarCobranca.UseVisualStyleBackColor = true;
+            this.btnCancelarCobranca.Click += new System.EventHandler(this.btnCancelarCobranca_Click);
+            // 
+            // btnLimparRespostas
+            // 
+            this.btnLimparRespostas.Location = new System.Drawing.Point(1263, 548);
+            this.btnLimparRespostas.Name = "btnLimparRespostas";
+            this.btnLimparRespostas.Size = new System.Drawing.Size(139, 23);
+            this.btnLimparRespostas.TabIndex = 31;
+            this.btnLimparRespostas.Text = "Limpar Respostas";
+            this.btnLimparRespostas.UseVisualStyleBackColor = true;
+            this.btnLimparRespostas.Click += new System.EventHandler(this.btnLimparRespostas_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1033, 582);
+            this.ClientSize = new System.Drawing.Size(1414, 582);
+            this.Controls.Add(this.btnLimparRespostas);
             this.Controls.Add(this.tabControl4);
             this.Controls.Add(this.btnCarregarConfiguracoes);
             this.Controls.Add(this.btnSalvarConfiguracoes);
@@ -3266,9 +4551,53 @@
             this.tabPage1.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tbpCancelamento.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.tabPage18.ResumeLayout(false);
+            this.tabControl6.ResumeLayout(false);
+            this.tabPage21.ResumeLayout(false);
+            this.tabPage21.PerformLayout();
+            this.tabPage22.ResumeLayout(false);
+            this.tabPage22.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudItensPorPaginaConsultarPIXRecebidos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPagAtualConsultarPIXRecebidos)).EndInit();
+            this.tabPage23.ResumeLayout(false);
+            this.tabPage23.PerformLayout();
+            this.groupBox16.ResumeLayout(false);
+            this.tabPage24.ResumeLayout(false);
+            this.tabPage24.PerformLayout();
             this.tabPage19.ResumeLayout(false);
+            this.tabControl7.ResumeLayout(false);
+            this.tabPage25.ResumeLayout(false);
+            this.tabPage25.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.tabPage26.ResumeLayout(false);
+            this.tabPage26.PerformLayout();
+            this.tabPage27.ResumeLayout(false);
+            this.tabPage27.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudItensPorPaginaConsultarCobrancasCob)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPagAtualConsultarCobrancasCob)).EndInit();
+            this.tabPage28.ResumeLayout(false);
+            this.tabPage28.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.tabPage29.ResumeLayout(false);
+            this.tabPage29.PerformLayout();
             this.tabPage20.ResumeLayout(false);
+            this.tabControl8.ResumeLayout(false);
+            this.tabPage30.ResumeLayout(false);
+            this.tabPage30.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.tabPage31.ResumeLayout(false);
+            this.tabPage31.PerformLayout();
+            this.tabPage32.ResumeLayout(false);
+            this.tabPage32.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudItensPorPaginaConsultarCobrancasCobV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPagAtualConsultarCobrancasCobV)).EndInit();
+            this.tabPage33.ResumeLayout(false);
+            this.tabPage33.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.tabPage34.ResumeLayout(false);
+            this.tabPage34.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -3506,19 +4835,6 @@
         private System.Windows.Forms.ComboBox cmbTipoChave;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TabPage tabPage20;
-        private System.Windows.Forms.Button btnGerarQRCodeEstatico;
-        private System.Windows.Forms.Button btnConsultarDevolucaoPix;
-        private System.Windows.Forms.Button btnSolicitarDevolucaoPix;
-        private System.Windows.Forms.Button btnConsultarPixRecebidos;
-        private System.Windows.Forms.Button btnConsultarPix;
-        private System.Windows.Forms.Button btnCancelarCobrancaImediata;
-        private System.Windows.Forms.Button btnRevisarCobrancaImediata;
-        private System.Windows.Forms.Button btnConsultarCobrancaImediata;
-        private System.Windows.Forms.Button btnCriarCobrancaImediata;
-        private System.Windows.Forms.Button btnCancelarCobranca;
-        private System.Windows.Forms.Button btnRevisarCobranca;
-        private System.Windows.Forms.Button btnConsultarCobranca;
-        private System.Windows.Forms.Button btnCriarCobranca;
         private System.Windows.Forms.TextBox txtScopesBancoBrasil;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtScopesBradesco;
@@ -3550,8 +4866,124 @@
         private System.Windows.Forms.Label label102;
         private System.Windows.Forms.TextBox txtScopesSantander;
         private System.Windows.Forms.Button btnOpenSSLInfo;
+        private System.Windows.Forms.Button btnLimparRespostas;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button btnGerarQRCodeEstatico;
+        private System.Windows.Forms.TextBox txtValor;
+        private System.Windows.Forms.Label label103;
+        private System.Windows.Forms.TextBox txtInformacoesAdicionais;
+        private System.Windows.Forms.Label label104;
+        private System.Windows.Forms.TextBox txtTxIdQRCodeEstatico;
+        private System.Windows.Forms.Label label105;
+        private System.Windows.Forms.TabControl tabControl6;
+        private System.Windows.Forms.TabPage tabPage21;
+        private System.Windows.Forms.TabPage tabPage22;
+        private System.Windows.Forms.Button btnConsultarPix;
+        private System.Windows.Forms.Button btnConsultarPixRecebidos;
+        private System.Windows.Forms.TabPage tabPage23;
+        private System.Windows.Forms.Button btnSolicitarDevolucaoPix;
+        private System.Windows.Forms.TabPage tabPage24;
+        private System.Windows.Forms.Button btnConsultarDevolucaoPix;
+        private System.Windows.Forms.TabControl tabControl7;
+        private System.Windows.Forms.TabPage tabPage25;
+        private System.Windows.Forms.TabPage tabPage26;
+        private System.Windows.Forms.Button btnCriarCobrancaImediata;
+        private System.Windows.Forms.Button btnConsultarCobrancaImediata;
+        private System.Windows.Forms.TabPage tabPage27;
+        private System.Windows.Forms.TabPage tabPage28;
+        private System.Windows.Forms.TabPage tabPage29;
         private System.Windows.Forms.Button btnConsultarCobrancasCob;
+        private System.Windows.Forms.Button btnRevisarCobrancaImediata;
+        private System.Windows.Forms.Button btnCancelarCobrancaImediata;
+        private System.Windows.Forms.TextBox txte2eidConsultarPIX;
+        private System.Windows.Forms.Label label106;
+        private System.Windows.Forms.TextBox txtDataFinalConsultarPIXRecebidos;
+        private System.Windows.Forms.Label label108;
+        private System.Windows.Forms.TextBox txtDataInicialConsultarPIXRecebidos;
+        private System.Windows.Forms.Label label107;
+        private System.Windows.Forms.TextBox txtCPFCNPJConsultarPIXRecebidos;
+        private System.Windows.Forms.Label label110;
+        private System.Windows.Forms.TextBox txtTxIdConsultarPIXRecebidos;
+        private System.Windows.Forms.Label label109;
+        private System.Windows.Forms.Label label112;
+        private System.Windows.Forms.NumericUpDown nudItensPorPaginaConsultarPIXRecebidos;
+        private System.Windows.Forms.Label label111;
+        private System.Windows.Forms.NumericUpDown nudPagAtualConsultarPIXRecebidos;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private System.Windows.Forms.RichTextBox rtbSolicitarDevolucaoPIX;
+        private System.Windows.Forms.TextBox txtIdDevolucaoSolicitarDevolucaoPIX;
+        private System.Windows.Forms.Label label114;
+        private System.Windows.Forms.TextBox txte2eidSolicitarDevolucaoPIX;
+        private System.Windows.Forms.Label label113;
+        private System.Windows.Forms.TextBox txtIdDevolucaoConsultarDevolucaoPIX;
+        private System.Windows.Forms.Label label115;
+        private System.Windows.Forms.TextBox txte2eidConsultarDevolucaoPIX;
+        private System.Windows.Forms.Label label116;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RichTextBox rtbCriarCobrancaImediata;
+        private System.Windows.Forms.TextBox txtTxIdCriarCobrancaImediata;
+        private System.Windows.Forms.Label label117;
+        private System.Windows.Forms.TextBox txtRevisaoConsultarCobrancaImediata;
+        private System.Windows.Forms.Label label119;
+        private System.Windows.Forms.TextBox txtTxIdConsultarCobrancaImediata;
+        private System.Windows.Forms.Label label118;
+        private System.Windows.Forms.TextBox txtDataFinalConsultarCobrancasCob;
+        private System.Windows.Forms.Label label120;
+        private System.Windows.Forms.NumericUpDown nudItensPorPaginaConsultarCobrancasCob;
+        private System.Windows.Forms.Label label121;
+        private System.Windows.Forms.NumericUpDown nudPagAtualConsultarCobrancasCob;
+        private System.Windows.Forms.TextBox txtCPFCNPJConsultarCobrancasCob;
+        private System.Windows.Forms.Label label122;
+        private System.Windows.Forms.Label label123;
+        private System.Windows.Forms.Label label124;
+        private System.Windows.Forms.TextBox txtDataInicialConsultarCobrancasCob;
+        private System.Windows.Forms.Label label125;
+        private System.Windows.Forms.ComboBox cmbStatusConsultarCobrancasCob;
+        private System.Windows.Forms.TextBox txtTxIdRevisarCobrancaImediata;
+        private System.Windows.Forms.Label label127;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.RichTextBox rtbRevisarCobrancaImediata;
+        private System.Windows.Forms.TextBox txtTxIdCancelarCobrancaImediata;
+        private System.Windows.Forms.Label label128;
+        private System.Windows.Forms.CheckBox ckbLocationConsultarCobrancasCob;
+        private System.Windows.Forms.TabControl tabControl8;
+        private System.Windows.Forms.TabPage tabPage30;
+        private System.Windows.Forms.TextBox txtTxIdCriarCobranca;
+        private System.Windows.Forms.Label label126;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.RichTextBox rtbCriarCobranca;
+        private System.Windows.Forms.Button btnCriarCobranca;
+        private System.Windows.Forms.TabPage tabPage31;
+        private System.Windows.Forms.TextBox txtRevisaoConsultarCobranca;
+        private System.Windows.Forms.Label label129;
+        private System.Windows.Forms.TextBox txtTxIdConsultarCobranca;
+        private System.Windows.Forms.Label label130;
+        private System.Windows.Forms.Button btnConsultarCobranca;
+        private System.Windows.Forms.TabPage tabPage32;
+        private System.Windows.Forms.CheckBox ckbLocationConsultarCobrancasCobV;
+        private System.Windows.Forms.ComboBox cmbStatusConsultarCobrancasCobV;
+        private System.Windows.Forms.TextBox txtDataFinalConsultarCobrancasCobV;
+        private System.Windows.Forms.Label label131;
+        private System.Windows.Forms.NumericUpDown nudItensPorPaginaConsultarCobrancasCobV;
+        private System.Windows.Forms.Label label132;
+        private System.Windows.Forms.NumericUpDown nudPagAtualConsultarCobrancasCobV;
+        private System.Windows.Forms.TextBox txtCPFCNPJConsultarCobrancasCobV;
+        private System.Windows.Forms.Label label133;
+        private System.Windows.Forms.Label label134;
+        private System.Windows.Forms.Label label135;
+        private System.Windows.Forms.TextBox txtDataInicialConsultarCobrancasCobV;
+        private System.Windows.Forms.Label label136;
         private System.Windows.Forms.Button btnConsultarCobrancasCobV;
+        private System.Windows.Forms.TabPage tabPage33;
+        private System.Windows.Forms.TextBox txtTxIdRevisarCobranca;
+        private System.Windows.Forms.Label label137;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.RichTextBox rtbRevisarCobranca;
+        private System.Windows.Forms.Button btnRevisarCobranca;
+        private System.Windows.Forms.TabPage tabPage34;
+        private System.Windows.Forms.TextBox txtTxIdCancelarCobranca;
+        private System.Windows.Forms.Label label138;
+        private System.Windows.Forms.Button btnCancelarCobranca;
     }
 }
 

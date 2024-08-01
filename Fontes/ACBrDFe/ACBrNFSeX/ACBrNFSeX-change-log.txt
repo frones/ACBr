@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/08/2024
+-- EloTeck.Provider --
+[*] Reescrita as funções de conversão do Regime Especial de Tributação.
+   Por: Jaisson
 -- ACBrNFSeXServicos --
 [*] A cidade de Franca/SP, trocou de provedor, agora é SilTecnologia versão 2.04
    Por: Cleber HHP

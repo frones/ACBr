@@ -89,6 +89,10 @@ type
 
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   public
+    function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
+    function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
+    function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string; override;
+
     function TipoDeducaoToStr(const t: TTipoDeducao): string; override;
     function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao; override;
   end;
@@ -513,6 +517,45 @@ begin
                              Xml +
                            '</' + Prefixo + 'SubstituicaoNfse>' +
                          '</' + Prefixo + TagEnvio + '>';
+  end;
+end;
+
+function TACBrNFSeProviderEloTech203.RegimeEspecialTributacaoToStr(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                       ['0', '1', '2', '3', '4', '5', '6','7'],
+                       [retNenhum, retMicroempresaMunicipal, retEstimativa,
+                        retSociedadeProfissionais, retCooperativa,
+                        retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
+                        retSimplesNacional]);
+end;
+
+function TACBrNFSeProviderEloTech203.StrToRegimeEspecialTributacao(
+  out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                       ['0', '1', '2', '3', '4', '5', '6','7'],
+                       [retNenhum, retMicroempresaMunicipal, retEstimativa,
+                        retSociedadeProfissionais, retCooperativa,
+                        retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
+                        retSimplesNacional]);
+end;
+
+function TACBrNFSeProviderEloTech203.RegimeEspecialTributacaoDescricao(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  case t of
+    retNenhum                    : Result := '0 - Nenhum';
+    retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
+    retEstimativa                : Result := '2 - Estimativa';
+    retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
+    retCooperativa               : Result := '4 - Cooperativa';
+    retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
+    retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+    retSimplesNacional           : Result := '7 - Optante pelo Simples Nacional';
+  else
+    Result := '';
   end;
 end;
 

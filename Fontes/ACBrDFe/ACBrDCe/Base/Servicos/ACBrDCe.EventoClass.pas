@@ -53,88 +53,96 @@ type
 
   TDetEvento = class
   private
-    FVersao: String;
-    FDescEvento: String;
-    FnProt: String;        // Cancelamento
-    FxJust: String;        // Cancelamento
+    FVersao: string;
+    FDescEvento: string;
+    FnProt: string;        // Cancelamento
+    FxJust: string;        // Cancelamento
 
-    FidPedidoCancelado: String;
+    FidPedidoCancelado: string;
   public
-    property versao: String     read FVersao     write FVersao;
-    property descEvento: String read FDescEvento write FDescEvento;
-    property nProt: String      read FnProt      write FnProt;
-    property xJust: String      read FxJust      write FxJust;
+    property versao: string     read FVersao     write FVersao;
+    property descEvento: string read FDescEvento write FDescEvento;
+    property nProt: string      read FnProt      write FnProt;
+    property xJust: string      read FxJust      write FxJust;
 
-    property idPedidoCancelado: String read FidPedidoCancelado write FidPedidoCancelado;
+    property idPedidoCancelado: string read FidPedidoCancelado write FidPedidoCancelado;
   end;
 
   TInfEvento = class
   private
-    FID: String;
+    FID: string;
     FtpAmbiente: TACBrTipoAmbiente;
-    FCNPJCPF: String;
+    FtpEmit: TEmitenteDCe;
+    FCNPJCPF: string;
+    FCNPJCPFEmit: string;
+    FIdOutrosEmit: string;
+
     FcOrgao: Integer;
-    FChave: String;
+    FChave: string;
     FDataEvento: TDateTime;
     FTpEvento: TpcnTpEvento;
     FnSeqEvento: Integer;
     FDetEvento: TDetEvento;
 
     function getcOrgao: Integer;
-    function getDescEvento: String;
-    function getTipoEvento: String;
+    function getDescEvento: string;
+    function getTipoEvento: string;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): String;
+    function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): string;
 
-    property id: String               read FID             write FID;
+    property id: string               read FID             write FID;
     property cOrgao: Integer          read getcOrgao       write FcOrgao;
     property tpAmb: TACBrTipoAmbiente read FtpAmbiente     write FtpAmbiente;
-    property CNPJCPF: String          read FCNPJCPF        write FCNPJCPF;
-    property chDCe: String            read FChave          write FChave;
+    property tpEmit: TEmitenteDCe     read FtpEmit         write FtpEmit;
+    property CNPJCPF: string          read FCNPJCPF        write FCNPJCPF;
+    property CNPJCPFEmit: string      read FCNPJCPFEmit    write FCNPJCPFEmit;
+    property IdOutrosEmit: string     read FIdOutrosEmit   write FIdOutrosEmit;
+
+    property chDCe: string            read FChave          write FChave;
     property dhEvento: TDateTime      read FDataEvento     write FDataEvento;
     property tpEvento: TpcnTpEvento   read FTpEvento       write FTpEvento;
     property nSeqEvento: Integer      read FnSeqEvento     write FnSeqEvento;
     property detEvento: TDetEvento    read FDetEvento      write FDetEvento;
-    property DescEvento: String       read getDescEvento;
-    property TipoEvento: String       read getTipoEvento;
+    property DescEvento: string       read getDescEvento;
+    property TipoEvento: string       read getTipoEvento;
   end;
 
   { TRetInfEvento }
 
   TRetInfEvento = class(TObject)
   private
-    FId: String;
-    FNomeArquivo: String;
+    FId: string;
+    FNomeArquivo: string;
     FtpAmb: TACBrTipoAmbiente;
-    FverAplic: String;
+    FverAplic: string;
     FcOrgao: Integer;
     FcStat: Integer;
-    FxMotivo: String;
-    FchDCe: String;
+    FxMotivo: string;
+    FchDCe: string;
     FtpEvento: TpcnTpEvento;
-    FxEvento: String;
+    FxEvento: string;
     FnSeqEvento: Integer;
     FdhRegEvento: TDateTime;
-    FnProt: String;
+    FnProt: string;
     FXML: AnsiString;
   public
-    property Id: String               read FId          write FId;
+    property Id: string               read FId          write FId;
     property tpAmb: TACBrTipoAmbiente read FtpAmb       write FtpAmb;
-    property verAplic: String         read FverAplic    write FverAplic;
+    property verAplic: string         read FverAplic    write FverAplic;
     property cOrgao: Integer          read FcOrgao      write FcOrgao;
     property cStat: Integer           read FcStat       write FcStat;
-    property xMotivo: String          read FxMotivo     write FxMotivo;
-    property chDCe: String            read FchDCe       write FchDCe;
+    property xMotivo: string          read FxMotivo     write FxMotivo;
+    property chDCe: string            read FchDCe       write FchDCe;
     property tpEvento: TpcnTpEvento   read FtpEvento    write FtpEvento;
-    property xEvento: String          read FxEvento     write FxEvento;
+    property xEvento: string          read FxEvento     write FxEvento;
     property nSeqEvento: Integer      read FnSeqEvento  write FnSeqEvento;
     property dhRegEvento: TDateTime   read FdhRegEvento write FdhRegEvento;
-    property nProt: String            read FnProt       write FnProt;
-    property XML: AnsiString          read FXML         write FXML;
-    property NomeArquivo: String      read FNomeArquivo write FNomeArquivo;
+    property nProt: string            read FnProt       write FnProt;
+    property XML: Ansistring          read FXML         write FXML;
+    property NomeArquivo: string      read FNomeArquivo write FNomeArquivo;
   end;
 
 implementation
@@ -165,7 +173,7 @@ begin
     Result := StrToIntDef(copy(FChave, 1, 2), 0);
 end;
 
-function TInfEvento.getDescEvento: String;
+function TInfEvento.getDescEvento: string;
 begin
   case fTpEvento of
     teCancelamento: Result := 'Cancelamento';
@@ -174,7 +182,7 @@ begin
   end;
 end;
 
-function TInfEvento.getTipoEvento: String;
+function TInfEvento.getTipoEvento: string;
 begin
   try
     Result := TpEventoToStr( FTpEvento );
@@ -183,7 +191,7 @@ begin
   end;
 end;
 
-function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
+function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): string;
 begin
   case TipoEvento of
     teCancelamento: Result := 'CANCELAMENTO DE DC-e';

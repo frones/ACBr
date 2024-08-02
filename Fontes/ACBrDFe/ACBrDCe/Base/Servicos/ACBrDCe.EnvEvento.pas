@@ -97,7 +97,7 @@ type
     function CreateOptions: TACBrXmlWriterOptions; override;
 
     function Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
-    function Gerar_Evento: TACBrXmlNodeArray;
+    function Gerar_DetEvento(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_Cancelamento(Idx: Integer): TACBrXmlNode;
 
   public
@@ -109,7 +109,7 @@ type
     function LerXML(const CaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
-    function LerFromIni(const AIniString: string; CCe: Boolean = True): Boolean;
+    function LerFromIni(const AIniString: string): Boolean;
 
     property idLote: Int64                read FidLote  write FidLote;
     property Evento: TInfEventoCollection read FEvento  write SetEvento;
@@ -162,85 +162,75 @@ end;
 function TEventoDCe.GerarXML: Boolean;
 var
   EventoNode: TACBrXmlNode;
-  nodeArray: TACBrXmlNodeArray;
-  i: Integer;
 begin
   ListaDeAlertas.Clear;
 
   FDocument.Clear();
 
-  EventoNode := CreateElement('envEvento');
+  EventoNode := CreateElement('eventoDCe');
   EventoNode.SetNamespace('http://www.portalfiscal.inf.br/dce');
   EventoNode.SetAttribute('versao', Versao);
 
   FDocument.Root := EventoNode;
 
-  EventoNode.AppendChild(AddNode(tcInt64, '#1', 'idLote', 1, 15, 1,
-                                                          FidLote, DSC_IDLOTE));
 
-  nodeArray := Gerar_Evento;
-  if nodeArray <> nil then
-  begin
-    for i := 0 to Length(nodeArray) - 1 do
-    begin
-      EventoNode.AppendChild(nodeArray[i]);
-    end;
-  end;
+  EventoNode.AppendChild(Gerar_InfEvento(0));
+
+  // Incluir a assinatura no XML
+  if Evento[0].signature.URI <> '' then
+    EventoNode.AppendChild(GerarSignature(Evento[0].signature));
 
   Result := True;
   XmlEnvio := ChangeLineBreak(Document.Xml, '');
 end;
 
-function TEventoDCe.Gerar_Evento: TACBrXmlNodeArray;
-var
-  i: integer;
-begin
-  Result := nil;
-  SetLength(Result, Evento.Count);
-
-  for i := 0 to Evento.Count - 1 do
-  begin
-    Evento[i].InfEvento.id := 'ID' + Evento[i].InfEvento.TipoEvento +
-                               OnlyNumber(Evento[i].InfEvento.chDCe) +
-                               Format('%.2d', [Evento[i].InfEvento.nSeqEvento]);
-
-    if Length(Evento[i].InfEvento.id) < 54 then
-      wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
-
-    Result[i] := CreateElement('evento');
-    Result[i].SetNamespace('http://www.portalfiscal.inf.br/dce');
-    Result[i].SetAttribute('versao', Versao);
-
-    Result[i].AppendChild(Gerar_InfEvento(i));
-
-    // Incluir a assinatura no XML
-    if Evento[i].signature.URI <> '' then
-      Result[i].AppendChild(GerarSignature(Evento[i].signature));
-  end;
-
-  if Evento.Count > 20 then
-    wAlerta('#1', 'evento', '', ERR_MSG_MAIOR_MAXIMO + '20');
-end;
-
 function TEventoDCe.Gerar_Evento_Cancelamento(Idx: Integer): TACBrXmlNode;
 begin
-//italo
+  Result := CreateElement('evCancDCe');
+
+  Result.AppendChild(AddNode(tcStr, 'EP02', 'descEvento', 4, 60, 1,
+                                            Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcStr, 'EP03', 'nProt', 15, 15, 1,
+                                       Evento[Idx].FInfEvento.detEvento.nProt));
+
+  Result.AppendChild(AddNode(tcStr, 'EP04', 'xJust', 15, 255, 1,
+                                       Evento[Idx].FInfEvento.detEvento.xJust));
+
+end;
+
+function TEventoDCe.Gerar_DetEvento(Idx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('detEvento');
+  Result.SetAttribute('versaoEvento', Versao);
+
+  case Evento[Idx].InfEvento.tpEvento of
+    teCancelamento: Result.AppendChild(Gerar_Evento_Cancelamento(Idx));
+  end;
 end;
 
 function TEventoDCe.Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
 var
   sDoc: string;
-  Serie: Integer;
 begin
+  Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
+                             OnlyNumber(Evento[Idx].InfEvento.chDCe) +
+                             Format('%.3d', [Evento[Idx].InfEvento.nSeqEvento]);
+
+  if Length(Evento[Idx].InfEvento.id) < 54 then
+    wAlerta('P04', 'ID', '', 'ID de Evento inválido');
+
   Result := CreateElement('infEvento');
   Result.SetAttribute('Id', Evento[Idx].InfEvento.id);
 
-  Result.AppendChild(AddNode(tcInt, 'HP08', 'cOrgao', 1, 2, 1,
+  Result.AppendChild(AddNode(tcInt, 'P05', 'cOrgao', 1, 2, 1,
                                                 Evento[Idx].FInfEvento.cOrgao));
 
-//italo  Result.AppendChild(AddNode(tcStr, 'HP09', 'tpAmb', 1, 1, 1,
-//                           TpAmbToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
+  Result.AppendChild(AddNode(tcStr, 'P06', 'tpAmb', 1, 1, 1,
+                    TipoAmbienteToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
 
+(*
+  { Segundo o Schema}
   sDoc := OnlyNumber(Evento[Idx].InfEvento.CNPJCPF);
 
   if EstaVazio(sDoc) then
@@ -250,8 +240,7 @@ begin
   // o emitente é pessoa fisica, logo na chave temos um CPF.
   Serie := ExtrairSerieChaveAcesso(Evento[Idx].InfEvento.chDCe);
 
-  if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) and
-     not (Evento[Idx].InfEvento.tpEvento in [teManifDestConfirmacao..teManifDestOperNaoRealizada]) then
+  if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) then
   begin
     sDoc := Copy(sDoc, 4, 11);
   end;
@@ -272,6 +261,48 @@ begin
     if not ValidarCPF(sDoc) then
       wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
   end;
+*)
+  Result.AppendChild(AddNode(tcStr, 'P06a', 'tpEmit', 1, 1, 1,
+                    EmitenteDCeToStr(Evento[Idx].InfEvento.tpEmit), DSC_TPEMIT));
+
+  { Segundo o Manual }
+  sDoc := OnlyNumber(Evento[Idx].InfEvento.CNPJCPF);
+
+  if EstaVazio(sDoc) then
+    sDoc := ExtrairCNPJCPFChaveAcesso(Evento[Idx].InfEvento.chDCe);
+
+  Result.AppendChild(AddNode(tcStr, 'HP10', 'CNPJAutor', 14, 14, 1,
+                                                              sDoc , DSC_CNPJ));
+
+  if not ValidarCNPJ(sDoc) then
+    wAlerta('HP10', 'CNPJAutor', DSC_CNPJ, ERR_MSG_INVALIDO);
+
+  sDoc := OnlyNumber(Evento[Idx].InfEvento.IdOutrosEmit);
+
+  if EstaVazio(sDoc) then
+  begin
+    sDoc := OnlyNumber(Evento[Idx].InfEvento.CNPJCPFEmit);
+
+    if Length(sDoc) = 14 then
+    begin
+      Result.AppendChild(AddNode(tcStr, 'HP10', 'CNPJUsEmit', 14, 14, 1,
+                                                              sDoc , DSC_CNPJ));
+
+      if not ValidarCNPJ(sDoc) then
+        wAlerta('HP10', 'CNPJUsEmit', DSC_CNPJ, ERR_MSG_INVALIDO);
+    end
+    else
+    begin
+      Result.AppendChild(AddNode(tcStr, 'HP11', 'CPFUsEmit', 11, 11, 1,
+                                                               sDoc , DSC_CPF));
+
+      if not ValidarCPF(sDoc) then
+        wAlerta('HP11', 'CPFUsEmit', DSC_CPF, ERR_MSG_INVALIDO);
+    end;
+  end
+  else
+    Result.AppendChild(AddNode(tcStr, 'HP11', 'IdOutrosUsEmit', 2, 60, 1,
+                                                          sDoc , DSC_IDOUTROS));
 
   Result.AppendChild(AddNode(tcStr, 'HP12', 'chDCe', 44, 44, 1,
                                       Evento[Idx].FInfEvento.chDCe, DSC_CHAVE));
@@ -287,17 +318,12 @@ begin
   Result.AppendChild(AddNode(tcInt, 'HP14', 'tpEvento', 6, 6, 1,
                                             Evento[Idx].FInfEvento.TipoEvento));
 
-  Result.AppendChild(AddNode(tcInt, 'HP15', 'nSeqEvento', 1, 2, 1,
+  Result.AppendChild(AddNode(tcInt, 'HP15', 'nSeqEvento', 1, 3, 1,
                                             Evento[Idx].FInfEvento.nSeqEvento));
 
-  Result.AppendChild(AddNode(tcStr, 'HP16', 'verEvento', 1, 4, 1, Versao));
+//  Result.AppendChild(AddNode(tcStr, 'HP16', 'verEvento', 1, 4, 1, Versao));
 
-  if Evento[Idx].InfEvento.tpEvento = teAtorInteressadoNFe then
-    FOpcoes.RetirarAcentos := False;  // Não funciona sem acentos
-
-  case Evento[Idx].InfEvento.tpEvento of
-    teCancelamento: Result.AppendChild(Gerar_Evento_Cancelamento(Idx));
-  end;
+  Result.AppendChild(Gerar_DetEvento(Idx));
 end;
 
 function TEventoDCe.GetOpcoes: TACBrXmlWriterOptions;
@@ -332,7 +358,6 @@ end;
 function TEventoDCe.LerXMLFromString(const AXML: string): Boolean;
 var
   RetEventoDCe: TRetEventoDCe;
-  i: Integer;
 begin
   RetEventoDCe := TRetEventoDCe.Create;
 
@@ -399,12 +424,11 @@ begin
   end;
 end;
 
-function TEventoDCe.LerFromIni(const AIniString: string; CCe: Boolean): Boolean;
+function TEventoDCe.LerFromIni(const AIniString: string): Boolean;
 var
-  I, J: Integer;
+  I: Integer;
   sSecao, sFim: string;
   INIRec: TMemIniFile;
-  ok: Boolean;
 begin
 {$IFNDEF COMPILER23_UP}
   Result := False;

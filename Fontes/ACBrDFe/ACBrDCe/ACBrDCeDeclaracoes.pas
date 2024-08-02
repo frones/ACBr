@@ -48,9 +48,9 @@ uses
 
 type
 
-  { Declaracao }
+  { TDeclaracao }
 
-  Declaracao = class(TCollectionItem)
+  TDeclaracao = class(TCollectionItem)
   private
     FDCe: TDCe;
     FDCeW: TDCeXmlWriter;
@@ -64,6 +64,7 @@ type
     FErroValidacaoCompleto: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
+    FNomeArqPDF: String;
 
     function GetConfirmado: Boolean;
     function GetProcessado: Boolean;
@@ -106,6 +107,7 @@ type
       PathArquivo: String = ''): String;
 
     property NomeArq: String read FNomeArq write FNomeArq;
+    property NomeArqPDF: String read FNomeArqPDF write FNomeArqPDF;
 
     property DCe: TDCe read FDCe;
 
@@ -135,8 +137,8 @@ type
     FACBrDCe: TComponent;
     FConfiguracoes: TConfiguracoesDCe;
 
-    function GetItem(Index: integer): Declaracao;
-    procedure SetItem(Index: integer; const Value: Declaracao);
+    function GetItem(Index: integer): TDeclaracao;
+    procedure SetItem(Index: integer; const Value: TDeclaracao);
 
     procedure VerificarDADCe;
   public
@@ -150,10 +152,10 @@ type
     procedure Imprimir;
     procedure ImprimirPDF;
 
-    function Add: Declaracao;
-    function Insert(Index: integer): Declaracao;
+    function Add: TDeclaracao;
+    function Insert(Index: integer): TDeclaracao;
 
-    property Items[Index: integer]: Declaracao read GetItem write SetItem; default;
+    property Items[Index: integer]: TDeclaracao read GetItem write SetItem; default;
 
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarDCe que determina se após carregar os dados do DCe
@@ -188,7 +190,7 @@ uses
 
 { Declaracao }
 
-constructor Declaracao.Create(Collection2: TCollection);
+constructor TDeclaracao.Create(Collection2: TCollection);
 begin
   inherited Create(Collection2);
 
@@ -208,7 +210,7 @@ begin
   end;
 end;
 
-destructor Declaracao.Destroy;
+destructor TDeclaracao.Destroy;
 begin
   FDCeW.Free;
   FDCeR.Free;
@@ -217,7 +219,7 @@ begin
   inherited Destroy;
 end;
 
-procedure Declaracao.Imprimir;
+procedure TDeclaracao.Imprimir;
 begin
   with TACBrDCe(TDeclaracoes(Collection).ACBrDCe) do
   begin
@@ -228,7 +230,7 @@ begin
   end;
 end;
 
-procedure Declaracao.ImprimirPDF;
+procedure TDeclaracao.ImprimirPDF;
 begin
   with TACBrDCe(TDeclaracoes(Collection).ACBrDCe) do
   begin
@@ -239,7 +241,7 @@ begin
   end;
 end;
 
-procedure Declaracao.Assinar;
+procedure TDeclaracao.Assinar;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
@@ -315,7 +317,7 @@ begin
   end;
 end;
 
-procedure Declaracao.Validar;
+procedure TDeclaracao.Validar;
 var
   Erro, AXML, AXMLModal, TagModal: String;
   DCeEhValida, ModalEhValido: Boolean;
@@ -356,7 +358,7 @@ begin
   end;
 end;
 
-function Declaracao.VerificarAssinatura: Boolean;
+function TDeclaracao.VerificarAssinatura: Boolean;
 var
   Erro, AXML: String;
   AssEhValida: Boolean;
@@ -386,7 +388,7 @@ begin
   Result := AssEhValida;
 end;
 
-function Declaracao.ValidarRegrasdeNegocios: Boolean;
+function TDeclaracao.ValidarRegrasdeNegocios: Boolean;
 var
   Erros{, Log}: String;
   Agora: TDateTime;
@@ -455,7 +457,7 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function Declaracao.LerXML(const AXML: String): Boolean;
+function TDeclaracao.LerXML(const AXML: String): Boolean;
 var
   XMLStr: String;
 begin
@@ -467,7 +469,7 @@ begin
   Result := True;
 end;
 
-function Declaracao.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
+function TDeclaracao.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -477,7 +479,7 @@ begin
   Result := TACBrDCe(TDeclaracoes(Collection).ACBrDCe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
-function Declaracao.GravarStream(AStream: TStream): Boolean;
+function TDeclaracao.GravarStream(AStream: TStream): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -487,7 +489,7 @@ begin
   Result := True;
 end;
 
-procedure Declaracao.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+procedure TDeclaracao.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArqTemp : String;
@@ -527,7 +529,7 @@ begin
   end;
 end;
 
-function Declaracao.GerarDCeIni: String;
+function TDeclaracao.GerarDCeIni: String;
 var
   i, j, k, l, m: integer;
   sSecao: string;
@@ -1181,7 +1183,7 @@ begin
   end;
 end;
 
-function Declaracao.GerarXML: String;
+function TDeclaracao.GerarXML: String;
 var
   IdAnterior : String;
 begin
@@ -1217,7 +1219,7 @@ begin
   Result := FXMLOriginal;
 end;
 
-function Declaracao.CalcularNomeArquivo: String;
+function TDeclaracao.CalcularNomeArquivo: String;
 var
   xID: String;
 begin
@@ -1229,7 +1231,7 @@ begin
   Result := xID + '-DCe.xml';
 end;
 
-function Declaracao.CalcularPathArquivo: String;
+function TDeclaracao.CalcularPathArquivo: String;
 var
   Data: TDateTime;
 begin
@@ -1244,7 +1246,7 @@ begin
   end;
 end;
 
-function Declaracao.CalcularNomeArquivoCompleto(NomeArquivo: String;
+function TDeclaracao.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
 var
   PathNoArquivo: String;
@@ -1266,7 +1268,7 @@ begin
   Result := PathArquivo + NomeArquivo;
 end;
 
-function Declaracao.ValidarConcatChave: Boolean;
+function TDeclaracao.ValidarConcatChave: Boolean;
 var
   wAno, wMes, wDia: word;
 begin
@@ -1284,40 +1286,40 @@ begin
     (Copy(DCe.infDCe.ID, 40, 8) <> IntToStrZero(DCe.Ide.cDC, 8)));
 end;
 
-function Declaracao.GetConfirmado: Boolean;
+function TDeclaracao.GetConfirmado: Boolean;
 begin
   Result := TACBrDCe(TDeclaracoes(Collection).ACBrDCe).cStatConfirmado(
     FDCe.procDCe.cStat);
 end;
 
-function Declaracao.GetcStat: Integer;
+function TDeclaracao.GetcStat: Integer;
 begin
   Result := FDCe.procDCe.cStat;
 end;
 
-function Declaracao.GetProcessado: Boolean;
+function TDeclaracao.GetProcessado: Boolean;
 begin
   Result := TACBrDCe(TDeclaracoes(Collection).ACBrDCe).cStatProcessado(
     FDCe.procDCe.cStat);
 end;
 
-function Declaracao.GetCancelado: Boolean;
+function TDeclaracao.GetCancelado: Boolean;
 begin
   Result := TACBrDCe(TDeclaracoes(Collection).ACBrDCe).cStatCancelado(
     FDCe.procDCe.cStat);
 end;
 
-function Declaracao.GetMsg: String;
+function TDeclaracao.GetMsg: String;
 begin
   Result := FDCe.procDCe.xMotivo;
 end;
 
-function Declaracao.GetNumID: String;
+function TDeclaracao.GetNumID: String;
 begin
   Result := Trim(OnlyNumber(DCe.infDCe.ID));
 end;
 
-function Declaracao.GetXMLAssinado: String;
+function TDeclaracao.GetXMLAssinado: String;
 begin
   if EstaVazio(FXMLAssinado) then
     Assinar;
@@ -1325,12 +1327,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure Declaracao.SetXML(const AValue: String);
+procedure TDeclaracao.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure Declaracao.SetXMLOriginal(const AValue: String);
+procedure TDeclaracao.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin
@@ -1346,7 +1348,7 @@ begin
     FXMLAssinado := '';
 end;
 
-function Declaracao.LerArqIni(const AIniString: String): Boolean;
+function TDeclaracao.LerArqIni(const AIniString: String): Boolean;
 var
   I, J, K, L, M: Integer;
   versao, sSecao, sFim: String;
@@ -2406,9 +2408,9 @@ begin
   FConfiguracoes := TACBrDCe(FACBrDCe).Configuracoes;
 end;
 
-function TDeclaracoes.Add: Declaracao;
+function TDeclaracoes.Add: TDeclaracao;
 begin
-  Result := Declaracao(inherited Add);
+  Result := TDeclaracao(inherited Add);
 end;
 
 procedure TDeclaracoes.Assinar;
@@ -2434,9 +2436,9 @@ begin
     Self.Items[i].GerarXML;
 end;
 
-function TDeclaracoes.GetItem(Index: integer): Declaracao;
+function TDeclaracoes.GetItem(Index: integer): TDeclaracao;
 begin
-  Result := Declaracao(inherited Items[Index]);
+  Result := TDeclaracao(inherited Items[Index]);
 end;
 
 function TDeclaracoes.GetNamePath: String;
@@ -2462,12 +2464,12 @@ begin
   TACBrDCe(FACBrDCe).DACE.ImprimirDACEPDF(nil);
 end;
 
-function TDeclaracoes.Insert(Index: integer): Declaracao;
+function TDeclaracoes.Insert(Index: integer): TDeclaracao;
 begin
-  Result := Declaracao(inherited Insert(Index));
+  Result := TDeclaracao(inherited Insert(Index));
 end;
 
-procedure TDeclaracoes.SetItem(Index: integer; const Value: Declaracao);
+procedure TDeclaracoes.SetItem(Index: integer; const Value: TDeclaracao);
 begin
   Items[Index].Assign(Value);
 end;

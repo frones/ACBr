@@ -42,6 +42,7 @@ uses
 resourcestring
   NAME_SPACE_DCE = 'xmlns="http://www.portalfiscal.inf.br/dce"';
 
+  DSC_TPEMIT = 'Tipo de Emitente';
   DSC_INFADPROD = 'Informações adicionais do Produto';
   DSC_NITEM = 'Numero do item';
   DSC_XPROD = 'Descrição do Produto ou Serviço';

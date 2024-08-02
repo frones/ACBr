@@ -93,8 +93,6 @@ begin
 end;
 
 procedure TDCeXmlReader.Ler_Dest(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -137,7 +135,6 @@ end;
 procedure TDCeXmlReader.Ler_Det(const ANode: TACBrXmlNode);
 var
   Item: TDetCollectionItem;
-  AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -150,10 +147,6 @@ end;
 
 procedure TDCeXmlReader.Ler_DetProd(const Item: TDetCollectionItem;
   const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
@@ -166,8 +159,6 @@ begin
 end;
 
 procedure TDCeXmlReader.Ler_Emit(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -226,8 +217,6 @@ end;
 procedure TDCeXmlReader.Ler_Ide(const ANode: TACBrXmlNode);
 var
   ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -246,10 +235,6 @@ begin
 end;
 
 procedure TDCeXmlReader.Ler_InfAdic(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -257,24 +242,6 @@ begin
   DCe.InfAdic.infCpl := ObterConteudo(ANode.Childrens.Find('infCpl'), tcStr);
   DCe.InfAdic.infAdMarketplace := ObterConteudo(ANode.Childrens.Find('infAdMarketplace'), tcStr);
   DCe.InfAdic.infAdTransp := ObterConteudo(ANode.Childrens.Find('infAdTransp'), tcStr);
-
-  DCe.InfAdic.obsCont.Clear;
-  ANodes := ANode.Childrens.FindAll('obsCont');
-  for i := 0 to Length(ANodes) - 1 do
-    begin
-      DCe.InfAdic.obsCont.New;
-      DCe.InfAdic.obsCont[i].xCampo := ANodes[i].Attributes.Items['xCampo'].Content;
-      DCe.InfAdic.obsCont[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
-    end;
-
-  DCe.InfAdic.obsMarketplace.Clear;
-  ANodes := ANode.Childrens.FindAll('obsMarketplace');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    DCe.InfAdic.obsMarketplace.New;
-    DCe.InfAdic.obsMarketplace[i].xCampo := ANodes[i].Attributes.Items['xCampo'].Content;
-    DCe.InfAdic.obsMarketplace[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
-  end;
 end;
 
 procedure TDCeXmlReader.Ler_InfDCe(const ANode: TACBrXmlNode);
@@ -308,6 +275,25 @@ begin
   Ler_Total(ANode.Childrens.Find('total'));
   Ler_Transp(ANode.Childrens.Find('transp'));
   Ler_InfAdic(ANode.Childrens.Find('infAdic'));
+
+  DCe.obsCont.Clear;
+  ANodes := ANode.Childrens.FindAll('obsCont');
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    DCe.obsCont.New;
+    DCe.obsCont[i].xCampo := ANodes[i].Attributes.Items['xCampo'].Content;
+    DCe.obsCont[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
+  end;
+
+  DCe.obsMarketplace.Clear;
+  ANodes := ANode.Childrens.FindAll('obsMarketplace');
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    DCe.obsMarketplace.New;
+    DCe.obsMarketplace[i].xCampo := ANodes[i].Attributes.Items['xCampo'].Content;
+    DCe.obsMarketplace[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
+  end;
+
   Ler_InfDec(ANode.Childrens.Find('infDec'));
   Ler_InfSolicDCe(ANode.Childrens.Find('infSolicDCe'));
 end;
@@ -365,13 +351,10 @@ begin
 end;
 
 procedure TDCeXmlReader.Ler_Total(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
-  AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
 
-  DCe.Total.vDC := ObterConteudo(AuxNode.Childrens.Find('vDC'), tcDe2);
+  DCe.Total.vDC := ObterConteudo(ANode.Childrens.Find('vDC'), tcDe2);
 end;
 
 procedure TDCeXmlReader.Ler_Transp(const ANode: TACBrXmlNode);
@@ -395,13 +378,14 @@ var
   DCeNode, infDCeNode: TACBrXmlNode;
   att: TACBrXmlAttribute;
 begin
+  Result := False;
+
   if not Assigned(FDCe) then
     raise Exception.Create('Destino não informado, informe a classe [TDCe] de destino.');
 
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml da DCe não carregado.');
 
-  Result := False;
   infDCeNode := nil;
   Document.Clear();
   Document.LoadFromXml(Arquivo);

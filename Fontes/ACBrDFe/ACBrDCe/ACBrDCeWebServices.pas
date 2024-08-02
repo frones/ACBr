@@ -223,13 +223,13 @@ type
   TDCeEnvEvento = class(TDCeWebService)
   private
     FidLote: Integer;
-//    FEvento: TEventoDCe;
+    FEvento: TEventoDCe;
     FcStat: Integer;
     FxMotivo: string;
-    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FCNPJ: string;
 
-//    FEventoRetorno: TRetEventoDCe;
+    FEventoRetorno: TRetEventoDCe;
 
     function GerarPathEvento(const ACNPJ: string = ''; const AIE: string = ''): string;
   protected
@@ -241,7 +241,7 @@ type
     function GerarMsgLog: string; override;
     function GerarPrefixoArquivo: string; override;
   public
-    constructor Create; //(AOwner: TACBrDFe; AEvento: TEventoDCe);
+    constructor Create(AOwner: TACBrDFe; AEvento: TEventoDCe);
       reintroduce; overload;
     destructor Destroy; override;
     procedure Clear; override;
@@ -249,9 +249,9 @@ type
     property idLote: Integer read FidLote write FidLote;
     property cStat: Integer read FcStat;
     property xMotivo: string read FxMotivo;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
 
-//    property EventoRetorno: TRetEventoDCe read FEventoRetorno;
+    property EventoRetorno: TRetEventoDCe read FEventoRetorno;
   end;
 
  { TDCeEnvioWebService }
@@ -547,8 +547,8 @@ begin
 end;
 
 procedure TDCeRecepcao.InicializarServico;
-var
-  ok: Boolean;
+//var
+//  ok: Boolean;
 begin
   if FDeclaracoes.Count > 0 then    // Tem DCe ? Se SIM, use as informações do XML
     FVersaoDF := DblToVersaoDCe({ok,} FDeclaracoes.Items[0].DCe.infDCe.Versao)
@@ -612,9 +612,6 @@ begin
 end;
 
 procedure TDCeRecepcao.DefinirDadosMsg;
-var
-  I: Integer;
-  vDCe: string;
 begin
   if FDeclaracoes.Count > 1 then
     GerarException(ACBrStr('ERRO: Conjunto de DC-e transmitidos (máximo de 1 DC-e)' +
@@ -625,11 +622,12 @@ begin
       RetornarConteudoEntre(FDeclaracoes.Items[0].XMLAssinado, '<DCe', '</DCe>') +
       '</DCe>';
 
+//  FMsgUnZip := '<DCe>' + CUTF8DeclaracaoXML+FPDadosMsg + '</DCe>';
   FMsgUnZip := FPDadosMsg;
 
   if Zipado then
-//    FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
-    FPDadosMsg := EncodeBase64(GZipCompress(CUTF8DeclaracaoXML+FPDadosMsg));
+    FPDadosMsg := EncodeBase64(GZipCompress(FMsgUnZip));
+//    FPDadosMsg := EncodeBase64(GZipCompress(CUTF8DeclaracaoXML+FMsgUnZip));
 
   // FPDadosMsg tem mais de 1024kb ? //
   if Length(FPDadosMsg) > (1024 * 1024) then
@@ -931,7 +929,7 @@ begin
     else
       aIDEvento := Copy(aProcEvento, Inicio, Fim);
 
-//    TipoEvento  := StrToTpEventoDCe(Ok, SeparaDados(aEvento, 'tpEvento'));
+    TipoEvento  := StrToTpEventoDCe(Ok, SeparaDados(aEvento, 'tpEvento'));
     sCNPJ       := SeparaDados(aEvento, 'CNPJ');
     sPathEvento := PathWithDelim(FPConfiguracoesDCe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
 
@@ -945,7 +943,7 @@ var
   SalvarXML, DCeCancelado, Atualiza: Boolean;
   aEventos, sPathDCe, NomeXMLSalvo: string;
   AProcDCe: TProcDFe;
-  I, J, Inicio, Fim: Integer;
+  I, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
 begin
   FDCeRetorno := TRetConsSitDCe.Create;
@@ -1218,6 +1216,7 @@ begin
       end;
     end;
   finally
+    Result := True;
     FDCeRetorno.Free;
   end;
 end;
@@ -1247,17 +1246,17 @@ end;
 
 { TDCeEnvEvento }
 
-constructor TDCeEnvEvento.Create; //(AOwner: TACBrDFe; AEvento: TEventoDCe);
+constructor TDCeEnvEvento.Create(AOwner: TACBrDFe; AEvento: TEventoDCe);
 begin
-//  inherited Create(AOwner);
+  inherited Create(AOwner);
 
-//  FEvento := AEvento;
+  FEvento := AEvento;
 end;
 
 destructor TDCeEnvEvento.Destroy;
 begin
-//  if Assigned(FEventoRetorno) then
-//    FEventoRetorno.Free;
+  if Assigned(FEventoRetorno) then
+    FEventoRetorno.Free;
 
   inherited;
 end;
@@ -1276,23 +1275,20 @@ begin
   FCNPJ := '';
 
   if Assigned(FPConfiguracoesDCe) then
-    FtpAmb := FPConfiguracoesDCe.WebServices.Ambiente;
-  {
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesDCe.WebServices.Ambiente);
+
   if Assigned(FEventoRetorno) then
     FEventoRetorno.Free;
 
   FEventoRetorno := TRetEventoDCe.Create;
-  }
 end;
 
 function TDCeEnvEvento.GerarPathEvento(const ACNPJ, AIE: string): string;
 begin
- {
   with FEvento.Evento.Items[0].InfEvento do
   begin
     Result := FPConfiguracoesDCe.Arquivos.GetPathEvento(tpEvento, ACNPJ, AIE);
   end;
-  }
 end;
 
 procedure TDCeEnvEvento.DefinirURL;
@@ -1300,15 +1296,12 @@ var
   UF, Modelo : string;
   VerServ: Double;
 begin
-  { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
-    os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
-  {
   VerServ := VersaoDCeToDbl(FPConfiguracoesDCe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJCPF;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := 'DCe';
   UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chDCe));
-  }
+
   FPLayout := LayDCeEvento;
 
   FPURL := '';
@@ -1316,7 +1309,7 @@ begin
   TACBrDCe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     UF,
-    FTpAmb,
+    TpcnTipoAmbiente(FTpAmb),
     LayOutDCeToServico(FPLayout),
     VerServ,
     FPURL
@@ -1333,30 +1326,31 @@ end;
 
 procedure TDCeEnvEvento.DefinirDadosMsg;
 var
-//  EventoDCe: TEventoDCe;
-  I, J, k, F: Integer;
+  EventoDCe: TEventoDCe;
+  I, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
   FErroValidacao: string;
   EventoEhValido: Boolean;
   SchemaEventoDCe: TSchemaDCe;
 begin
-(*
   EventoDCe := TEventoDCe.Create;
   try
     EventoDCe.idLote := FidLote;
-    SchemaEventoDCe := schErro;
-    
+    SchemaEventoDCe := schErroDCe;
+
     for I := 0 to FEvento.Evento.Count - 1 do
     begin
       with EventoDCe.Evento.New do
       begin
-        infEvento.tpAmb      := FTpAmb;
-        infEvento.CNPJCPF    := FEvento.Evento[i].InfEvento.CNPJCPF;
-        infEvento.chDCe     := FEvento.Evento[i].InfEvento.chDCe;
-        infEvento.dhEvento   := FEvento.Evento[i].InfEvento.dhEvento;
-        infEvento.tpEvento   := FEvento.Evento[i].InfEvento.tpEvento;
+        infEvento.tpAmb := FTpAmb;
+        infEvento.tpEmit := FEvento.Evento[i].InfEvento.tpEmit;
+        infEvento.CNPJCPF := FEvento.Evento[i].InfEvento.CNPJCPF;
+        infEvento.CNPJCPFEmit := FEvento.Evento[i].InfEvento.CNPJCPFEmit;
+        infEvento.IdOutrosEmit := FEvento.Evento[i].InfEvento.IdOutrosEmit;
+        infEvento.chDCe := FEvento.Evento[i].InfEvento.chDCe;
+        infEvento.dhEvento := FEvento.Evento[i].InfEvento.dhEvento;
+        infEvento.tpEvento := FEvento.Evento[i].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[i].InfEvento.nSeqEvento;
-        infEvento.versaoEvento := FEvento.Evento[i].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCancelamento:
@@ -1365,102 +1359,15 @@ begin
             infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
             infEvento.detEvento.xJust := FEvento.Evento[i].InfEvento.detEvento.xJust;
           end;
-
-          teEncerramento:
-          begin
-            SchemaEventoDCe := schevEncDCe;
-            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
-            infEvento.detEvento.dtEnc := FEvento.Evento[i].InfEvento.detEvento.dtEnc;
-            infEvento.detEvento.cUF   := FEvento.Evento[i].InfEvento.detEvento.cUF;
-            infEvento.detEvento.cMun  := FEvento.Evento[i].InfEvento.detEvento.cMun;
-          end;
-
-          teInclusaoCondutor:
-          begin
-            SchemaEventoDCe := schevIncCondutorDCe;
-            infEvento.detEvento.xNome := FEvento.Evento[i].InfEvento.detEvento.xNome;
-            infEvento.detEvento.CPF   := FEvento.Evento[i].InfEvento.detEvento.CPF;
-          end;
-
-          teInclusaoDFe:
-          begin
-            SchemaEventoDCe := schevInclusaoDFeDCe;
-            infEvento.detEvento.nProt       := FEvento.Evento[i].InfEvento.detEvento.nProt;
-            infEvento.detEvento.cMunCarrega := FEvento.Evento[i].InfEvento.detEvento.cMunCarrega;
-            infEvento.detEvento.xMunCarrega := FEvento.Evento[i].InfEvento.detEvento.xMunCarrega;
-
-            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infDoc.Count - 1 do
-            begin
-              with EventoDCe.Evento[i].InfEvento.detEvento.infDoc.New do
-              begin
-                cMunDescarga := FEvento.Evento[i].InfEvento.detEvento.infDoc[j].cMunDescarga;
-                xMunDescarga := FEvento.Evento[i].InfEvento.detEvento.infDoc[j].xMunDescarga;
-                chNFe        := FEvento.Evento[i].InfEvento.detEvento.infDoc[j].chNFe;
-              end;
-            end;
-          end;
-
-          tePagamentoOperacao:
-          begin
-            SchemaEventoDCe := schevPagtoOperDCe;
-            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
-
-            infEvento.detEvento.infViagens.qtdViagens := FEvento.Evento[i].InfEvento.detEvento.infViagens.qtdViagens;
-            infEvento.detEvento.infViagens.nroViagem  := FEvento.Evento[i].InfEvento.detEvento.infViagens.nroViagem;
-
-            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infPag.Count - 1 do
-            begin
-              with EventoDCe.Evento[i].InfEvento.detEvento.infPag.New do
-              begin
-                xNome         := FEvento.Evento[i].InfEvento.detEvento.infPag[j].xNome;
-                idEstrangeiro := FEvento.Evento[i].InfEvento.detEvento.infPag[j].idEstrangeiro;
-                CNPJCPF       := FEvento.Evento[i].InfEvento.detEvento.infPag[j].CNPJCPF;
-
-                for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp.Count - 1 do
-                begin
-                  with EventoDCe.Evento[i].InfEvento.detEvento.infPag[j].Comp.New do
-                  begin
-                    tpComp := FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp[k].tpComp;
-                    vComp  := FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp[k].vComp;
-                    xComp  := FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp[k].xComp;
-                  end;
-                end;
-
-                vContrato := FEvento.Evento[i].InfEvento.detEvento.infPag[j].vContrato;
-                indPag    := FEvento.Evento[i].InfEvento.detEvento.infPag[j].indPag;
-                vAdiant   := FEvento.Evento[i].InfEvento.detEvento.infPag[j].vAdiant;
-
-                if indPag = ipPrazo then
-                begin
-                  for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo.Count - 1 do
-                  begin
-                    with EventoDCe.Evento[i].InfEvento.detEvento.infPag[j].infPrazo.New do
-                    begin
-                      nParcela := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo[k].nParcela;
-                      dVenc    := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo[k].dVenc;
-                      vParcela := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo[k].vParcela;
-                    end;
-                  end;
-                end;
-
-                infBanc.PIX        := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.PIX;
-                infBanc.CNPJIPEF   := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.CNPJIPEF;
-                infBanc.codBanco   := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.codBanco;
-                infBanc.codAgencia := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.codAgencia;
-              end;
-            end;
-          end;
         end;
       end;
     end;
 
     EventoDCe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( EventoDCe.Gerador.Opcoes );
-
     EventoDCe.GerarXML;
 
-    Eventos := NativeStringToUTF8( EventoDCe.Gerador.ArquivoFormatoXML );
+    Eventos := NativeStringToUTF8(EventoDCe.XmlEnvio);
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
@@ -1490,38 +1397,12 @@ begin
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evCancDCe>', '</evCancDCe>')) +
                         '</evCancDCe>';
         end;
-
-      schevEncDCe:
-        begin
-          AXMLEvento := '<evEncDCe xmlns="' + ACBRDCe_NAMESPACE + '">' +
-                          Trim(RetornarConteudoEntre(AXMLEvento, '<evEncDCe>', '</evEncDCe>')) +
-                        '</evEncDCe>';
-        end;
-
-      schevIncCondutorDCe:
-        begin
-          AXMLEvento := '<evIncCondutorDCe xmlns="' + ACBRDCe_NAMESPACE + '">' +
-                          Trim(RetornarConteudoEntre(AXMLEvento, '<evIncCondutorDCe>', '</evIncCondutorDCe>')) +
-                        '</evIncCondutorDCe>';
-        end;
-
-      schevInclusaoDFeDCe:
-        begin
-          AXMLEvento := '<evIncDFeDCe xmlns="' + ACBRDCe_NAMESPACE + '">' +
-                          Trim(RetornarConteudoEntre(AXMLEvento, '<evIncDFeDCe>', '</evIncDFeDCe>')) +
-                        '</evIncDFeDCe>';
-        end;
-
-      schevPagtoOperDCe:
-        begin
-          AXMLEvento := '<evPagtoOperDCe xmlns="' + ACBRDCe_NAMESPACE + '">' +
-                          Trim(RetornarConteudoEntre(AXMLEvento, '<evPagtoOperDCe>', '</evPagtoOperDCe>')) +
-                        '</evPagtoOperDCe>';
-        end;
+    else
+      AXMLEvento := '';
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;
-
+{
     with TACBrDCe(FPDFeOwner) do
     begin
       EventoEhValido := SSL.Validar(FPDadosMsg,
@@ -1541,124 +1422,92 @@ begin
 
       raise EACBrDCeException.CreateDef(FErroValidacao);
     end;
-
+}
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoDCe.Evento[I].InfEvento.id;
   finally
     EventoDCe.Free;
   end;
-  *)
 end;
 
 function TDCeEnvEvento.TratarResposta: Boolean;
 var
-//italo  Leitor: TLeitor;
-  I, J: Integer;
-  NomeArq, PathArq, VersaoEvento, Texto: string;
+  PedEvento, RetEvento, NomeArq, PathArq, VersaoEvento, Texto: string;
 begin
- (*
   FEvento.idLote := idLote;
 
   FPRetWS := SeparaDados(FPRetornoWS, 'dceRecepcaoEventoResult');
 
-  EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
-  FcStat := EventoRetorno.cStat;
-  FxMotivo := EventoRetorno.xMotivo;
-  FPMsg := EventoRetorno.xMotivo;
-  FTpAmb := EventoRetorno.tpAmb;
+  FcStat := EventoRetorno.retInfEvento.cStat;
+  FxMotivo := EventoRetorno.retInfEvento.xMotivo;
+  FPMsg := EventoRetorno.retInfEvento.xMotivo;
+  FTpAmb := EventoRetorno.retInfEvento.tpAmb;
 
   Result := (FcStat in [135, 136]);
 
   //gerar arquivo proc de evento
   if Result then
   begin
-    Leitor := TLeitor.Create;
-    try
-      for I := 0 to FEvento.Evento.Count - 1 do
+    if FEvento.Evento[0].InfEvento.chDCe = EventoRetorno.RetInfEvento.chDCe then
+    begin
+      FEvento.Evento[0].RetInfEvento.tpAmb := EventoRetorno.RetInfEvento.tpAmb;
+      FEvento.Evento[0].RetInfEvento.nProt := EventoRetorno.RetInfEvento.nProt;
+      FEvento.Evento[0].RetInfEvento.dhRegEvento := EventoRetorno.RetInfEvento.dhRegEvento;
+      FEvento.Evento[0].RetInfEvento.cStat := EventoRetorno.RetInfEvento.cStat;
+      FEvento.Evento[0].RetInfEvento.xMotivo := EventoRetorno.RetInfEvento.xMotivo;
+
+      VersaoEvento := TACBrDCe(FPDFeOwner).LerVersaoDeParams(LayDCeEvento);
+
+      PedEvento := SeparaDados(FPDadosMsg, 'eventoDCe');
+      RetEvento := SeparaDados(FPRetWS, 'retEventoDCe');
+
+      Texto := '<procEventoDCe versao="' + VersaoEvento + '" xmlns="' + ACBRDCe_NAMESPACE + '">' +
+                '<eventoDCe versao="' + VersaoEvento + '">' +
+                 PedEvento +
+                '</eventoDCe>' +
+                '<retEventoDCe versao="' + VersaoEvento + '">' +
+                 RetEvento +
+                '</retEventoDCe>' +
+               '</procEventoDCe>';
+
+      if FPConfiguracoesDCe.Arquivos.Salvar then
       begin
-        for J := 0 to EventoRetorno.retEvento.Count - 1 do
-        begin
-          if FEvento.Evento.Items[I].InfEvento.chDCe =
-            EventoRetorno.retEvento.Items[J].RetInfEvento.chDCe then
-          begin
-            FEvento.Evento.Items[I].RetInfEvento.tpAmb :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.tpAmb;
-            FEvento.Evento.Items[I].RetInfEvento.nProt :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
-            FEvento.Evento.Items[I].RetInfEvento.dhRegEvento :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.dhRegEvento;
-            FEvento.Evento.Items[I].RetInfEvento.cStat :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.cStat;
-            FEvento.Evento.Items[I].RetInfEvento.xMotivo :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
+        NomeArq := OnlyNumber(FEvento.Evento[0].InfEvento.Id) + '-procEventoDCe.xml';
+        PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento[0].InfEvento.CNPJCPF));
 
-            VersaoEvento := TACBrDCe(FPDFeOwner).LerVersaoDeParams(LayDCeEvento);
-
-
-            Leitor.Arquivo := FPDadosMsg;
-            Texto := '<procEventoDCe versao="' + VersaoEvento + '" xmlns="' + ACBRDCe_NAMESPACE + '">' +
-                      '<eventoDCe versao="' + VersaoEvento + '">' +
-                       Leitor.rExtrai(1, 'infEvento', '', I + 1) +
-                       '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                        Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                        Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                        Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                       '</Signature>' +
-                      '</eventoDCe>';
-
-            Leitor.Arquivo := FPRetWS;
-            Texto := Texto +
-                       '<retEventoDCe versao="' + VersaoEvento + '">' +
-                        Leitor.rExtrai(1, 'infEvento', '', J + 1) +
-                       '</retEventoDCe>' +
-                      '</procEventoDCe>';
-
-            if FPConfiguracoesDCe.Arquivos.Salvar then
-            begin
-              NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoDCe.xml';
-              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJCPF));
-
-              FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
-              FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-              FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-            end;
-
-            Texto := ParseText(Texto);
-            FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
-            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
-
-            break;
-          end;
-        end;
+        FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+        FEventoRetorno.RetInfEvento.NomeArquivo := PathArq + NomeArq;
+        FEvento.Evento[0].RetInfEvento.NomeArquivo := PathArq + NomeArq;
       end;
-    finally
-      Leitor.Free;
+
+      Texto := ParseText(Texto);
+      FEventoRetorno.RetInfEvento.XML := Texto;
+      FEvento.Evento[0].RetInfEvento.XML := Texto;
     end;
   end;
-  *)
 end;
 
 function TDCeEnvEvento.GerarMsgLog: string;
 var
   aMsg: string;
 begin
-(*
   aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                          'Ambiente: %s ' + LineBreak +
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
-                         'Status Descrição: %s ' + LineBreak),
-                 [FEventoRetorno.versao, TpAmbToStr(FEventoRetorno.tpAmb),
-                  FEventoRetorno.verAplic, IntToStr(FEventoRetorno.cStat),
-                  FEventoRetorno.xMotivo]);
+                         'Status Descrição: %s ' + LineBreak +
+                         'Recebimento: %s ' + LineBreak),
+                 [FEventoRetorno.versao,
+                  TipoAmbienteToStr(FEventoRetorno.RetInfEvento.tpAmb),
+                  FEventoRetorno.RetInfEvento.verAplic,
+                  IntToStr(FEventoRetorno.RetInfEvento.cStat),
+                  FEventoRetorno.RetInfEvento.xMotivo,
+                  IfThen(FEventoRetorno.RetInfEvento.dhRegEvento = 0, '',
+                   FormatDateTimeBr(FEventoRetorno.RetInfEvento.dhRegEvento))]);
 
-  if FEventoRetorno.retEvento.Count > 0 then
-    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
-       [IfThen(FEventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0, '',
-               FormatDateTimeBr(FEventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento))]);
-  *)
   Result := aMsg;
 end;
 
@@ -1747,7 +1596,7 @@ begin
   FStatusServico := TDCeStatusServico.Create(FACBrDCe);
   FEnviar := TDCeRecepcao.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
   FConsulta := TDCeConsulta.Create(FACBrDCe, TACBrDCe(FACBrDCe).Declaracoes);
-//  FEnvEvento := TDCeEnvEvento.Create(FACBrDCe, TACBrDCe(FACBrDCe).EventoDCe);
+  FEnvEvento := TDCeEnvEvento.Create(FACBrDCe, TACBrDCe(FACBrDCe).EventoDCe);
   FEnvioWebService := TDCeEnvioWebService.Create(FACBrDCe);
 end;
 
@@ -1756,7 +1605,7 @@ begin
   FStatusServico.Free;
   FEnviar.Free;
   FConsulta.Free;
-//  FEnvEvento.Free;
+  FEnvEvento.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;

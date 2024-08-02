@@ -156,15 +156,15 @@ constructor TACBrDCe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FDeclaracoes := TDeclaracoes.Create(Self, Declaracao);
-//  FEventoDCe := TEventoDCe.Create;
+  FDeclaracoes := TDeclaracoes.Create(Self, TDeclaracao);
+  FEventoDCe := TEventoDCe.Create;
   FWebServices := TWebServices.Create(Self);
 end;
 
 destructor TACBrDCe.Destroy;
 begin
   FDeclaracoes.Free;
-//  FEventoDCe.Free;
+  FEventoDCe.Free;
   FWebServices.Free;
 
   inherited;
@@ -203,7 +203,7 @@ begin
     ImprimirEventoPDF;
     AnexosEmail.Add(DACE.ArquivoPDF);
 
-//    NomeArq := OnlyNumber(EventoDCe.Evento[0].InfEvento.Id);
+    NomeArq := OnlyNumber(EventoDCe.Evento[0].InfEvento.Id);
     EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamDCe,
 	    NomeArq + '-procEventoDCe.xml', sReplyTo);
   finally
@@ -274,7 +274,7 @@ function TACBrDCe.GetURLQRCode(const CUF: integer;
   const Versao: Double): String;
 var
   idDCe,
-  sEntrada, urlUF, Passo2, Passo3, Passo4, Sign: String;
+  sEntrada, urlUF, Passo3, Passo4, Sign: String;
 //  VersaoDFe: TVersaoDCe;
 //  ok: Boolean;
 begin
@@ -368,11 +368,10 @@ begin
     I := pos('<infEvento', AXML);
     if I > 0 then
     begin
-//      lTipoEvento := StrToTpEventoDCe(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
+      lTipoEvento := StrToTpEventoDCe(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
 
       case lTipoEvento of
         teCancelamento: Result := schevCancDCe;
-//        teEncerramento: Result := schevEncDCe;
       else 
         Result := schErroDCe;
       end;
@@ -408,7 +407,7 @@ end;
 function TACBrDCe.GerarNomeArqSchemaEvento(ASchemaEventoDCe: TSchemaDCe;
   VersaoServico: Double): String;
 begin
-  if VersaoServico = 0.0 then
+  if VersaoServico = 0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
@@ -529,7 +528,7 @@ begin
     try
       EnviarEvento(ALote);
     except
-//italo      raise Exception.Create(WebServices.EnvEvento.EventoRetorno.xMotivo);
+      raise Exception.Create(WebServices.EnvEvento.EventoRetorno.retInfEvento.xMotivo);
     end;
   end;
 
@@ -597,7 +596,6 @@ var
   i, j: integer;
   chDCe: String;
 begin
-  (*
   if EventoDCe.Evento.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum Evento adicionado ao Lote'));
 
@@ -613,7 +611,7 @@ begin
     if EventoDCe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
       EventoDCe.Evento.Items[i].infEvento.nSeqEvento := 1;
 
-    FEventoDCe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+    FEventoDCe.Evento.Items[i].InfEvento.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
 
     if Declaracoes.Count > 0 then
     begin
@@ -664,7 +662,6 @@ begin
 
   if not Result then
     GerarException( WebServices.EnvEvento.Msg );
-  *)
 end;
 
 procedure TACBrDCe.ImprimirEvento;

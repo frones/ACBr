@@ -125,25 +125,25 @@ var
 begin
   if Value <> FACBrDCe then
   begin
-     if Value <> nil then
-        if not (Value is TACBrDCe) then
-           raise Exception.Create('DACE deve ser do tipo TACBrDCe');
+    if Value <> nil then
+      if not (Value is TACBrDCe) then
+        raise Exception.Create('DACE deve ser do tipo TACBrDCe');
 
-     if Assigned(FACBrDCe) then
-        FACBrDCe.RemoveFreeNotification(Self);
+    if Assigned(FACBrDCe) then
+      FACBrDCe.RemoveFreeNotification(Self);
 
-     OldValue := TACBrDCe(FACBrDCe);   // Usa outra variavel para evitar Loop Infinito
-     FACBrDCe := Value;                 // na remoção da associação dos componentes
+    OldValue := TACBrDCe(FACBrDCe);   // Usa outra variavel para evitar Loop Infinito
+    FACBrDCe := Value;                 // na remoção da associação dos componentes
 
-     if Assigned(OldValue) then
-        if Assigned(OldValue.DACE) then
-           OldValue.DACE := nil;
+    if Assigned(OldValue) then
+      if Assigned(OldValue.DACE) then
+        OldValue.DACE := nil;
 
-     if Value <> nil then
-     begin
-        Value.FreeNotification(self);
-        TACBrDCe(Value).DACE := self;
-     end;
+    if Value <> nil then
+    begin
+      Value.FreeNotification(self);
+      TACBrDCe(Value).DACE := self;
+    end;
   end;
 end;
 
@@ -182,24 +182,25 @@ begin
 
   if Assigned(ACBrDCe) then  // Se tem o componente ACBrDCe
   begin
-     if TACBrDCe(ACBrDCe).Declaracoes.Count > 0 then  // Se tem alguma Declaração carregada
-     begin
-       ADCe := TACBrDCe(ACBrDCe).Declaracoes.Items[0].DCe;
-       if TACBrDCe(ACBrDCe).Configuracoes.Arquivos.EmissaoPathDCe then
-         dhEmissao := ADCe.Ide.dhEmi
-       else
-         dhEmissao := Now;
+    if TACBrDCe(ACBrDCe).Declaracoes.Count > 0 then  // Se tem alguma Declaração carregada
+    begin
+     ADCe := TACBrDCe(ACBrDCe).Declaracoes.Items[0].DCe;
 
-       DescricaoModelo := 'DCe';
+     if TACBrDCe(ACBrDCe).Configuracoes.Arquivos.EmissaoPathDCe then
+       dhEmissao := ADCe.Ide.dhEmi
+     else
+       dhEmissao := Now;
 
-       Result := TACBrDCe(FACBrDCe).Configuracoes.Arquivos.GetPath(
-                         Result,
-                         DescricaoModelo,
-                         ADCe.Emit.CNPJCPF,
-                         '',
-                         dhEmissao,
-                         DescricaoModelo);
-     end;
+     DescricaoModelo := 'DCe';
+
+     Result := TACBrDCe(FACBrDCe).Configuracoes.Arquivos.GetPath(
+                       Result,
+                       DescricaoModelo,
+                       ADCe.Emit.CNPJCPF,
+                       '',
+                       dhEmissao,
+                       DescricaoModelo);
+    end;
   end;
 end;
 

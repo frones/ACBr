@@ -67,6 +67,17 @@ type
     property signature: Tsignature read Fsignature write Fsignature;
 
     property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
+    {
+    property idLote: Int64                      read FidLote    write FidLote;
+    property versao: String                     read Fversao    write Fversao;
+    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
+    property verAplic: String                   read FverAplic  write FverAplic;
+    property cOrgao: Integer                    read FcOrgao    write FcOrgao;
+    property cStat: Integer                     read FcStat     write FcStat;
+    property xMotivo: String                    read FxMotivo   write FxMotivo;
+    property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
+    property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
+    }
   end;
 
 implementation
@@ -99,12 +110,13 @@ var
   Document: TACBrXmlDocument;
   ANode, ANodeAux: TACBrXmlNode;
   ok: Boolean;
-  i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
   try
     try
+      Result := False;
+
       if XmlRetorno = '' then Exit;
 
       Document.LoadFromXml(XmlRetorno);
@@ -142,9 +154,9 @@ begin
           signature.SignatureValue := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('SignatureValue'), tcStr);
           signature.X509Certificate := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('X509Certificate'), tcStr);
         end;
-      end;
 
-      Result := True;
+        Result := True;
+      end;
     except
       Result := False;
     end;

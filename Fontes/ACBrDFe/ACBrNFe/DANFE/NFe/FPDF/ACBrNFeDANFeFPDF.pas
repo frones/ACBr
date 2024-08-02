@@ -50,7 +50,7 @@ uses
   pcnNFe,
   pcnConversao,
   pcnConversaoNFe,
-  pcnEventoNFe,
+	ACBrNFe.EventoClass,
   ACBrNFe.EnvEvento,
   pcnRetDistDFeInt,
   ACBrValidador,
@@ -2923,7 +2923,7 @@ begin
   PDF := Args.PDF;
 
   InfEvento := FProcEvento;
-  EvCCe := pcnEventoNFe.TDetEvento(FProcEvento.InfEvento.detEvento);
+  EvCCe := TDetEvento(FProcEvento.InfEvento.detEvento);
 
   CondicoesUso := EvCCe.xCondUso;
   CondicoesUso := StringReplace(CondicoesUso, 'com: I', 'com:' + sLineBreak + 'I', [rfReplaceAll]);

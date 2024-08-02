@@ -9,13 +9,12 @@ interface
 
 uses
   ACBrNFe, ACBrNFeReg, ACBrNFeNotasFiscais, ACBrNFeConfiguracoes, 
-  ACBrNFeWebServices, ACBrNFeDANFEClass, pcnAdmCSCNFCe, pcnConsSitNFe, 
-  pcnEnvEventoNFe, pcnEventoNFe, pcnInutNFe, pcnLayoutTXT, pcnNFe, pcnNFeR, 
-  pcnNFeRTXT, pcnNFeW, pcnProcNFe, pcnRetAdmCSCNFCe, pcnRetConsSitNFe, 
-  pcnRetEnvEventoNFe, pcnRetEnvNFe, pcnRetInutNFe, pcnConversaoNFe, 
+  ACBrNFeWebServices, ACBrNFeDANFEClass, pcnLayoutTXT, pcnNFe, pcnNFeR, 
+  pcnNFeRTXT, pcnNFeW, pcnProcNFe, pcnRetEnvNFe, pcnConversaoNFe, 
   pcnNFeConsts, ACBrDFeDANFeReport, ACBrNFe.AdmCSC, ACBrNFe.ConsSit, 
   ACBrNFe.EnvEvento, ACBrNFe.EventoClass, ACBrNFe.Inut, ACBrNFe.RetAdmCSC, 
-  ACBrNFe.RetConsSit, ACBrNFe.RetEnvEvento, ACBrNFe.RetInut, LazarusPackageIntf;
+  ACBrNFe.RetConsSit, ACBrNFe.RetEnvEvento, ACBrNFe.RetInut, 
+  ACBrNFe.XmlReader, ACBrNFe.XmlWriter, LazarusPackageIntf;
 
 implementation
 

@@ -329,9 +329,9 @@ begin
         tpConsultaDetalhe :
           begin
             LConsulta.Add('id_beneficiario=' + LId_Beneficiario);
-
-            if LCarteira <> EmptyStr then
-              LConsulta.Add('codigo_carteira=' + LCarteira);
+            if Assigned(ATitulo) then
+              if LCarteira <> EmptyStr then
+                LConsulta.Add('codigo_carteira=' + LCarteira);
 
             if LNossoNumero <> EmptyStr then
                LConsulta.Add('nosso_numero=' + LNossoNumero);

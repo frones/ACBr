@@ -19,6 +19,12 @@
             set => SetProperty(value);
         }
 
+        public string InscricaoEstadual
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         public string Telefone
         {
             get => GetProperty<string>();

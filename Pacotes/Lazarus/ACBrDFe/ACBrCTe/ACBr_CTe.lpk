@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -94,8 +94,8 @@
         <UnitName Value="pcteConsts"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\ACBrCTeXmlHandler.pas"/>
-        <UnitName Value="ACBrCTeXmlHandler"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas"/>
+        <UnitName Value="ACBrCTe.XmlHandler"/>
       </Item20>
     </Files>
     <RequiredPkgs Count="1">

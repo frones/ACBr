@@ -10,7 +10,8 @@ uses
   ACBrCTeConhecimentos, ACBrCTe, pcteConversaoCTe, ACBrCTeConfiguracoes, 
   ACBrCTeReg, ACBrCTeWebServices, pcteConsSitCTe, pcteCTe, pcteCTeR, pcteCTeW, 
   pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, pcteLayoutTXT, pcteModeloCTe, 
-  pcteProcCTe, ACBrCTeDACTEClass, pcteConsts, ACBrCTeXmlHandler, 
+  pcteProcCTe, ACBrCTeDACTEClass, pcteConsts, 
+  ACBrCTe.XmlHandler, 
   LazarusPackageIntf;
 
 implementation

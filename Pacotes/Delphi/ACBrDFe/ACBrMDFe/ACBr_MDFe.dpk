@@ -74,21 +74,29 @@ contains
   ACBrMDFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeConfiguracoes.pas',
   ACBrMDFeManifestos in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeManifestos.pas',
   ACBrMDFeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeWebServices.pas',
+
   pmdfeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsts.pas',
+  pmdfeMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFe.pas',
+  pmdfeMDFeW in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeW.pas',
+  pmdfeProcMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcMDFe.pas',
+
+  {$IFDEF USE_ACBr_XMLDOCUMENT}
+  ACBrMDFe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas',
+  {$ELSE}
+  pmdfeMDFeR in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeR.pas',
+  {$ENDIF}
+
   pmdfeConsMDFeNaoEnc in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsMDFeNaoEnc.pas',
   pmdfeConsSitMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsSitMDFe.pas',
   pmdfeConversaoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConversaoMDFe.pas',
   pmdfeEnvEventoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeEnvEventoMDFe.pas',
   pmdfeEventoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeEventoMDFe.pas',
-  pmdfeMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFe.pas',
-  pmdfeMDFeR in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeR.pas',
-  pmdfeMDFeW in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeW.pas',
-  pmdfeProcMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcMDFe.pas',
   pmdfeRetConsMDFeNaoEnc in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetConsMDFeNaoEnc.pas',
   pmdfeRetConsSitMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetConsSitMDFe.pas',
   pmdfeRetEnvEventoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetEnvEventoMDFe.pas',
   pmdfeRetEnvMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeRetEnvMDFe.pas',
-  ACBrMDFeDAMDFEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFEClass.pas',
-  pmdfeProcInfraSA in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcInfraSA.pas';
+  pmdfeProcInfraSA in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcInfraSA.pas',
+  
+  ACBrMDFeDAMDFEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFEClass.pas';
 
 end.

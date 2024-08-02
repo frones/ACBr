@@ -9,13 +9,13 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="21">
+    <Files Count="22">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas"/>
         <UnitName Value="ACBrMDFe"/>
@@ -101,6 +101,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcInfraSA.pas"/>
         <UnitName Value="pmdfeProcInfraSA"/>
       </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas"/>
+        <UnitName Value="ACBrMDFe.XmlReader"/>
+      </Item22>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

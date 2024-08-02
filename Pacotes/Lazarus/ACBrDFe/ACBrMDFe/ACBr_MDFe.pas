@@ -13,7 +13,9 @@ uses
   pmdfeConversaoMDFe, pmdfeEnvEventoMDFe, pmdfeEventoMDFe, pmdfeMDFe, 
   pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, pmdfeRetConsMDFeNaoEnc, 
   pmdfeRetConsSitMDFe, pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
-  ACBrMDFeDAMDFeClass, pmdfeConsts, pmdfeProcInfraSA, LazarusPackageIntf;
+  ACBrMDFeDAMDFeClass, pmdfeConsts, pmdfeProcInfraSA, 
+  ACBrMDFe.XmlReader, 
+  LazarusPackageIntf;
 
 implementation
 

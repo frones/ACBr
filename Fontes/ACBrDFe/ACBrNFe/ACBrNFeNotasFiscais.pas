@@ -41,7 +41,7 @@ uses
   Classes, SysUtils, StrUtils,
   ACBrNFeConfiguracoes, pcnNFe,
   {$IfDef USE_ACBr_XMLDOCUMENT}
-    ACBrNFeXmlReader, ACBrNFeXmlWriter,
+    ACBrNFe.XmlReader, ACBrNFe.XmlWriter,
   {$Else}
     pcnNFeR, pcnNFeW,
   {$EndIf}

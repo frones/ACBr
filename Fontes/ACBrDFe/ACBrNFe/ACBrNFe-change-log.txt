@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2024
+-- ACBrNFeNotasFiscais --
+[*] Alterado o nome da nova unit responsável pela leitura do XML da NF-e/NFC-e.
+[*] Remoção das units: ACBrNFeXmlReader, ACBrNFeXmlWriter, pcnAdmCSCNFCe, 
+    pcnConsSitNFe, pcnEnvEventoNFe, pcnEventoNFe, pcnInutNFe, pcnRetAdmCSCNFCe, 
+    pcnRetConsSitNFe, pcnRetEnvEventoNFe, pcnRetInutNFe.
+   Por: Italo Giurizzato Junior
+
 31/07/2024
 -- Diversos --
 [*] Ajustes para o envio correto dos eventos: ECONF e Cancelamento de 

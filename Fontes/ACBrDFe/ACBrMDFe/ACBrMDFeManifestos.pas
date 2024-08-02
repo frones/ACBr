@@ -42,9 +42,13 @@ uses
   StrUtils,
   ACBrMDFeConfiguracoes,
   pmdfeMDFe, 
-  pmdfeMDFeR, 
-  pmdfeMDFeW, 
-  pcnConversao, 
+  pmdfeMDFeW,
+  {$IfDef USE_ACBr_XMLDOCUMENT}
+  ACBrMDFe.XmlReader,
+  {$Else}
+  pmdfeMDFeR,
+  {$EndIf}
+  pcnConversao,
   pcnLeitor;
 
 type
@@ -55,7 +59,11 @@ type
   private
     FMDFe: TMDFe;
     FMDFeW: TMDFeW;
+    {$IfDef USE_ACBr_XMLDOCUMENT}
+    FMDFeR: TMDFeXmlReader;
+    {$Else}
     FMDFeR: TMDFeR;
+    {$EndIf}
 
     FConfiguracoes: TConfiguracoesMDFe;
     FXMLAssinado: String;
@@ -195,7 +203,12 @@ begin
 
   FMDFe := TMDFe.Create;
   FMDFeW := TMDFeW.Create(FMDFe);
+  {$IfDef USE_ACBr_XMLDOCUMENT}
+  FMDFeR := TMDFeXmlReader.Create(FMDFe);
+  {$Else}
   FMDFeR := TMDFeR.Create(FMDFe);
+  {$EndIf}
+
   FConfiguracoes := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes;
 
   FMDFe.Ide.verProc := 'ACBrMDFe';
@@ -487,16 +500,22 @@ begin
 end;
 
 function TManifesto.LerXML(const AXML: String): Boolean;
+{$IfNDef USE_ACBr_XMLDOCUMENT}
 var
   XMLStr: String;
+{$EndIf}
 begin
   XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
+  {$IfDef USE_ACBr_XMLDOCUMENT}
+  FMDFeR.Arquivo := XMLOriginal;
+  {$Else}
   { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
     Isso é necessário, para que as propriedades fiquem com a acentuação correta }
   XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
 
   FMDFeR.Leitor.Arquivo := XMLStr;
+  {$EndIf}
   FMDFeR.LerXml;
 
   Result := True;

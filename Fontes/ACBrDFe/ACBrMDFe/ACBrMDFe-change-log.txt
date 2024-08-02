@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/08/2024
+-- ACBrMDFe.XmlReader --
+[+] Escrito a nova unit responsável pela leitura do XML do MDF-e.
+-- ACBrMDFeManifestos --
+[*] Alteração visando o desenvolvedor optar por qual unit deseja usar para a 
+    leitura do XML mediante a diretiva de compilação: USE_ACBr_XMLDOCUMENT.
+  Por: Italo Giurizzato Junior
+
 10/07/2024
 -- Diversos --
 [*] Ajustes para a impressão de todos os tipos de eventos do MDF-e.

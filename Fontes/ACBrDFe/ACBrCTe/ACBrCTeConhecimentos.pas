@@ -40,7 +40,14 @@ interface
 uses
   Classes, Sysutils, StrUtils,
   ACBrCTeConfiguracoes,
-  pcteCTe, {$IfDef USE_ACBr_XMLDOCUMENT}ACBrCTeXmlHandler{$Else}pcteCTeR{$EndIf}, pcteCTeW, pcnConversao, pcnLeitor;
+  pcteCTe,
+  pcteCTeW,
+  {$IfDef USE_ACBr_XMLDOCUMENT}
+  ACBrCTe.XmlHandler,
+  {$Else}
+  pcteCTeR,
+  {$EndIf}
+  pcnConversao, pcnLeitor;
 
 type
 
@@ -195,13 +202,11 @@ begin
 
   FCTe := TCTe.Create;
   FCTeW := TCTeW.Create(FCTe);
-
   {$IfDef USE_ACBr_XMLDOCUMENT}
   FCTeR := TCTeXmlReader.Create(FCTe);
   {$Else}
   FCTeR := TCTeR.Create(FCTe);
   {$EndIf}
-
 
   FConfiguracoes := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes;
 

@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2024
+-- ACBrCTeConhecimentos --
+[*] Alterado o nome da nova unit responsável pela leitura do XML do CT-e.
+[*] Remoção da unit ACBrCTeXmlHandler que esta na pasta PCNCTe pois a mesma
+    agora se encontra na pasta Base.
+   Por: Italo Giurizzato Junior
+
 29/07/2024
 -- ACBrCTeConfiguracoes --
 [*] Alterado o valor padrão da propriedade de configuração VersaoDF para ve400.

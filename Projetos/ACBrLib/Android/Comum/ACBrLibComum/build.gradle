@@ -1,0 +1,52 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+android {
+    namespace 'br.com.acbr.lib.comum'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.jna
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
+
+def jarFolder = "../libs/jars/";
+def jarName = "ACBrLibComum.jar";
+
+tasks.register('deleteJar', Delete) {
+    delete(jarFolder+jarName);
+    //delete(jarFolder);
+}
+
+tasks.register('createJar', Copy) {
+    from('build/intermediates/aar_main_jar/release/syncReleaseLibJars/')
+    into(jarFolder)
+    include('classes.jar')
+    rename('classes.jar', jarName)
+}
+
+createJar.dependsOn(deleteJar, build)
+clean.dependsOn(deleteJar)

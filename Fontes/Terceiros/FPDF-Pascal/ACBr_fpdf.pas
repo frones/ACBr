@@ -2453,7 +2453,7 @@ begin
     Result := StringReplace( Result, '(', '\(', [rfReplaceAll]);
 
   if (pos(CR, sText) > 0) then
-    Result := StringReplace( Result, CR, '\'+CR, [rfReplaceAll]);
+    Result := StringReplace( Result, CR, '\r', [rfReplaceAll]);
 end;
 
 function TFPDF._textstring(const AString: String): String;

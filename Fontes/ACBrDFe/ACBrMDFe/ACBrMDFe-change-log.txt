@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/08/2024
+-- ACBrMDFe.XmlReader --
+[*] Correção para ler a string do QR-Code.
+  Por: Italo Giurizzato Junior
+
 02/08/2024
 -- ACBrMDFe.XmlReader --
 [+] Escrito a nova unit responsável pela leitura do XML do MDF-e.

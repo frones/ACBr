@@ -221,6 +221,7 @@ begin
     MDFe.infMDFe.Versao := StringToFloat(att.Content);
 
     Ler_InfMDFe(infMDFeNode);
+    Ler_InfMDFeSupl(MDFeNode.Childrens.Find('infMDFeSupl'));
 
     LerSignature(MDFeNode.Childrens.Find('Signature'), MDFe.signature);
   end;
@@ -284,7 +285,6 @@ begin
 
   Ler_InfAdic(ANode.Childrens.Find('infAdic'));
   Ler_infRespTec(ANode.Childrens.Find('infRespTec'));
-  Ler_InfMDFeSupl(ANode.Childrens.Find('infMDFeSupl'));
 end;
 
 procedure TMDFeXmlReader.Ler_Ide(const ANode: TACBrXmlNode);

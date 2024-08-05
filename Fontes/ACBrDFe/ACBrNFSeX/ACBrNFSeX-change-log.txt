@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 05/08/2024
+-- ISSFortaleza.Provider --
+[*] O provedor esta retornando o XML no formato ANSI, feita a alteração visando
+    converter o XML para o formato UTF-8.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv1 --
 [*] Alteração visando tomadores do exterior.
    Por: Alexandre Felippeto Henzen

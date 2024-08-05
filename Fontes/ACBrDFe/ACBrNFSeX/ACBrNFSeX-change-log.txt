@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/08/2024
+-- ACBrNFSeXServicos --
+[*] Alterado o link de impressão da cidade de Jaú/SP.
+   Por: Ronaldo Negreiros Danieli
+[*] Alterado para a versão 2.03 do layout para a cidade de Franca/SP.
+   Por: Cleber HHP
+
 01/08/2024
 -- ACBrNFSeXNotasFiscais --
 [*] Adiciona na leitura e na escrita do INI o campo ValorTotalNotaFiscal

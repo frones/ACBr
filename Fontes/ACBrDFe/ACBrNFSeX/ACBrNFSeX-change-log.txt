@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 05/08/2024
+-- ACBrNFSeXGravarXml_ABRASFv1 --
+[*] Alteração visando tomadores do exterior.
+   Por: Alexandre Felippeto Henzen
 -- ACBrNFSeXServicos --
 [*] Alterado o link de impressão da cidade de Jaú/SP.
    Por: Ronaldo Negreiros Danieli

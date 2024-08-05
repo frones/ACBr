@@ -484,9 +484,8 @@ begin
   begin
     Result := CreateElement('Tomador');
 
-    if ((NFSe.Tomador.Endereco.UF <> 'EX') and
-        ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
-         (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> ''))) then
+    if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+       (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') then
     begin
       Result.AppendChild(GerarIdentificacaoTomador);
     end;

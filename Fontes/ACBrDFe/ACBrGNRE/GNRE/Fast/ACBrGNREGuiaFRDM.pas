@@ -214,8 +214,8 @@ begin
       FieldByName('ValorPrincipal').AsCurrency       := ValorPrincipal;
       FieldByName('ValorGNRE').AsCurrency            := ValorGNRE;
       FieldByName('AtualizacaoMonetaria').AsCurrency := AtualizacaoMonetaria;
-      FieldByName('Juros').AsCurrency                := Juros;
-      FieldByName('Multa').AsCurrency                := Multa;
+      FieldByName('Juros').AsCurrency                := Juros + JurosFCP;
+      FieldByName('Multa').AsCurrency                := Multa + MultaFCP;
       FieldByName('RepresentacaoNumerica').AsString  := RepresentacaoNumerica;
       FieldByName('CodigoBarras').AsString           := CodigoBarras;
       FieldByName('QtdeVias').AsInteger              := QtdeVias;

@@ -411,9 +411,9 @@ begin
   RLLabel30.Caption := IfThen(FGNRe.AtualizacaoMonetaria = 0 , '' ,
                               FormatFloat('R$ ,0.00', FGNRe.AtualizacaoMonetaria));
   RLLabel32.Caption := IfThen(FGNRe.Juros = 0 , '' ,
-                              FormatFloat('R$ ,0.00', FGNRe.Juros));
+                              FormatFloat('R$ ,0.00', FGNRe.Juros + FGNRe.JurosFCP));
   RLLabel34.Caption := IfThen(FGNRe.Multa = 0 , '' ,
-                              FormatFloat('R$ ,0.00', FGNRe.Multa));
+                              FormatFloat('R$ ,0.00', FGNRe.Multa + FGNRe.MultaFCP));
 
   RLLabel36.Caption := FormatFloat('R$ ,0.00', FGNRe.valorGNRE);
 {

@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2024
+-- ACBrGNReGuiaRLRetrato, ACBrGNREGuiaFRDM --
+[*] Altera a rotina para somar o valor de MultaFCP a Multa e JurosFCP e Juros.
+Por: FabioTellini / Diego Folieni #TK-4864
+
 24/05/2024
 -- Diversos --
 [+] Adiciona suporte ao PIX, conforme versão 2.10 do Manual do GNRe

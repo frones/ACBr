@@ -305,8 +305,8 @@ const
 
 type
   u_short = Word;
-  u_int = Integer;
-  u_long = Longint;
+  u_int = Cardinal;
+  u_long = Cardinal;
   pu_long = ^u_long;
   pu_short = ^u_short;
 {$IFDEF FPC}
@@ -967,9 +967,9 @@ type
                     sin_addr: TInAddr;
                     sin_zero: array[0..7] of byte);
           AF_INET6: (sin6_port:     u_short;
-                		sin6_flowinfo: u_long;
-      	    	      sin6_addr:     TInAddr6;
-      		          sin6_scope_id: u_long);
+                     sin6_flowinfo: u_long;
+                     sin6_addr:     TInAddr6;
+                     sin6_scope_id: u_long);
           );
   end;
 

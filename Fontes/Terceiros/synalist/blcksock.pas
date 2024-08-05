@@ -1953,7 +1953,7 @@ begin
       b := NonBlockMode;
       NonBlockMode := true;
       SockCheck(synsock.Connect(FSocket, Sin));
-      if (FLastError = WSAEINPROGRESS) OR (FLastError = WSAEWOULDBLOCK) then
+      if (FLastError = WSAEINPROGRESS) OR (FLastError = WSAEWOULDBLOCK){$IfDef ANDROID} OR (FLastError = WSATRY_AGAIN){$EndIf} then
         if not CanWrite(FConnectionTimeout) then
           FLastError := WSAETIMEDOUT;
       NonBlockMode := b;

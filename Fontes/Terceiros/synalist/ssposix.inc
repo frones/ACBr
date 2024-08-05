@@ -164,9 +164,9 @@ const
   INADDR_LOOPBACK  = $7F000001;
   INADDR_BROADCAST = $FFFFFFFF;
   INADDR_NONE      = $FFFFFFFF;
-  ADDR_ANY		 = INADDR_ANY;
-  INVALID_SOCKET		= TSocket(NOT(0));
-  SOCKET_ERROR			= -1;
+  ADDR_ANY         = INADDR_ANY;
+  INVALID_SOCKET   = TSocket(NOT(0));
+  SOCKET_ERROR	   = -1;
 
 Const
   IP_TOS             = Posix.NetinetIn.IP_TOS;             { int; IP type of service and precedence.  }
@@ -384,9 +384,9 @@ type
                     sin_addr: TInAddr;
                     sin_zero: array[0..7] of byte);
           AF_INET6: (sin6_port:     word;
-                		sin6_flowinfo: longword;
-      	    	      sin6_addr:     TInAddr6;
-      		          sin6_scope_id: longword);
+                     sin6_flowinfo: Cardinal;
+                     sin6_addr:     TInAddr6;
+                     sin6_scope_id: Cardinal);
           );
   end;
 
@@ -406,11 +406,11 @@ function SizeOfVarSin(sin: TVarSin): integer;
   function SendTo(s: TSocket; Buf: TMemory; len, flags: Integer; addrto: TVarSin): Integer;
   function RecvFrom(s: TSocket; Buf: TMemory; len, flags: Integer; var from: TVarSin): Integer;
   function ntohs(netshort: word): word;
-  function ntohl(netlong: longword): longword;
+  function ntohl(netlong: Cardinal): Cardinal;
   function Listen(s: TSocket; backlog: Integer): Integer;
   function IoctlSocket(s: TSocket; cmd: Integer; var arg: integer): Integer;
   function htons(hostshort: word): word;
-  function htonl(hostlong: longword): longword;
+  function htonl(hostlong: Cardinal): Cardinal;
   function GetSockName(s: TSocket; var name: TVarSin): Integer;
   function GetPeerName(s: TSocket; var name: TVarSin): Integer;
   function Connect(s: TSocket; const name: TVarSin): Integer;
@@ -671,7 +671,7 @@ begin
   Result := Posix.ArpaInet.ntohs(NetShort);
 end;
 
-function  ntohl(netlong: longword): longword;
+function  ntohl(netlong: Cardinal): Cardinal;
 begin
   Result := Posix.ArpaInet.ntohl(NetLong);
 end;
@@ -694,7 +694,7 @@ begin
   Result := Posix.ArpaInet.htons(Hostshort);
 end;
 
-function  htonl(hostlong: longword): longword;
+function  htonl(hostlong: Cardinal): Cardinal;
 begin
   Result := Posix.ArpaInet.htonl(HostLong);
 end;

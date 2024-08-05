@@ -88,11 +88,9 @@ const
   cLocalHostStr = 'localhost';
 
 type
-  TSocket = longint;
+  TSocket = ptruint;
   TAddrFamily = integer;
-
   TMemory = pointer;
-
 
 type
   TFDSet = Baseunix.TFDSet;
@@ -101,9 +99,9 @@ type
   Ttimeval = Baseunix.ttimeval;
 
 const
-  FIONREAD        = termio.FIONREAD;
-  FIONBIO         = termio.FIONBIO;
-  FIOASYNC        = termio.FIOASYNC;
+  FIONREAD = termio.FIONREAD;
+  FIONBIO  = termio.FIONBIO;
+  FIOASYNC = termio.FIOASYNC;
 
 const
   IPPROTO_IP     =   0;		{ Dummy					}
@@ -149,25 +147,25 @@ const
   INADDR_LOOPBACK  = $7F000001;
   INADDR_BROADCAST = $FFFFFFFF;
   INADDR_NONE      = $FFFFFFFF;
-  ADDR_ANY		 = INADDR_ANY;
-  INVALID_SOCKET		= TSocket(NOT(0));
-  SOCKET_ERROR			= -1;
+  ADDR_ANY         = INADDR_ANY;
+  INVALID_SOCKET   = TSocket(NOT(0));
+  SOCKET_ERROR	   = -1;
 
 Const
   IP_TOS             = sockets.IP_TOS;             { int; IP type of service and precedence.  }
   IP_TTL             = sockets.IP_TTL;             { int; IP time to live.  }
   IP_HDRINCL         = sockets.IP_HDRINCL;         { int; Header is included with data.  }
   IP_OPTIONS         = sockets.IP_OPTIONS;         { ip_opts; IP per-packet options.  }
-//  IP_ROUTER_ALERT    = sockets.IP_ROUTER_ALERT;    { bool }
+//IP_ROUTER_ALERT    = sockets.IP_ROUTER_ALERT;    { bool }
   IP_RECVOPTS        = sockets.IP_RECVOPTS;        { bool }
   IP_RETOPTS         = sockets.IP_RETOPTS;         { bool }
-//  IP_PKTINFO         = sockets.IP_PKTINFO;         { bool }
-//  IP_PKTOPTIONS      = sockets.IP_PKTOPTIONS;
-//  IP_PMTUDISC        = sockets.IP_PMTUDISC;        { obsolete name? }
-//  IP_MTU_DISCOVER    = sockets.IP_MTU_DISCOVER;    { int; see below }
-//  IP_RECVERR         = sockets.IP_RECVERR;         { bool }
-//  IP_RECVTTL         = sockets.IP_RECVTTL;         { bool }
-//  IP_RECVTOS         = sockets.IP_RECVTOS;         { bool }
+//IP_PKTINFO         = sockets.IP_PKTINFO;         { bool }
+//IP_PKTOPTIONS      = sockets.IP_PKTOPTIONS;
+//IP_PMTUDISC        = sockets.IP_PMTUDISC;        { obsolete name? }
+//IP_MTU_DISCOVER    = sockets.IP_MTU_DISCOVER;    { int; see below }
+//IP_RECVERR         = sockets.IP_RECVERR;         { bool }
+//IP_RECVTTL         = sockets.IP_RECVTTL;         { bool }
+//IP_RECVTOS         = sockets.IP_RECVTOS;         { bool }
   IP_MULTICAST_IF    = sockets.IP_MULTICAST_IF;    { in_addr; set/get IP multicast i/f }
   IP_MULTICAST_TTL   = sockets.IP_MULTICAST_TTL;   { u_char; set/get IP multicast ttl }
   IP_MULTICAST_LOOP  = sockets.IP_MULTICAST_LOOP;  { i_char; set/get IP multicast loopback }
@@ -186,13 +184,13 @@ Const
   SO_RCVBUF     = sockets.SO_RCVBUF;
   SO_KEEPALIVE  = sockets.SO_KEEPALIVE;
   SO_OOBINLINE  = sockets.SO_OOBINLINE;
-//  SO_NO_CHECK   = sockets.SO_NO_CHECK;
-//  SO_PRIORITY   = sockets.SO_PRIORITY;
+//SO_NO_CHECK   = sockets.SO_NO_CHECK;
+//SO_PRIORITY   = sockets.SO_PRIORITY;
   SO_LINGER     = sockets.SO_LINGER;
-//  SO_BSDCOMPAT  = sockets.SO_BSDCOMPAT;
-//  SO_REUSEPORT  = sockets.SO_REUSEPORT;
-//  SO_PASSCRED   = sockets.SO_PASSCRED;
-//  SO_PEERCRED   = sockets.SO_PEERCRED;
+//SO_BSDCOMPAT  = sockets.SO_BSDCOMPAT;
+//SO_REUSEPORT  = sockets.SO_REUSEPORT;
+//SO_PASSCRED   = sockets.SO_PASSCRED;
+//SO_PEERCRED   = sockets.SO_PEERCRED;
   SO_RCVLOWAT   = sockets.SO_RCVLOWAT;
   SO_SNDLOWAT   = sockets.SO_SNDLOWAT;
   SO_RCVTIMEO   = sockets.SO_RCVTIMEO;
@@ -234,13 +232,17 @@ const
   AF_UNSPEC       = 0;               { unspecified }
   AF_INET         = 2;               { internetwork: UDP, TCP, etc. }
   AF_INET6        = 10;              { Internetwork Version 6 }
-  AF_MAX          = 24;
+  {$IFDEF ANDROID}
+  AF_MAX = 43; //not declared for Android
+  {$Else}
+  AF_MAX = 24;
+  {$ENDIF}
 
 { Protocol families, same as address families for now. }
-  PF_UNSPEC       = AF_UNSPEC;
-  PF_INET         = AF_INET;
-  PF_INET6        = AF_INET6;
-  PF_MAX          = AF_MAX;
+  PF_UNSPEC = AF_UNSPEC;
+  PF_INET   = AF_INET;
+  PF_INET6  = AF_INET6;
+  PF_MAX    = AF_MAX;
 
 type
 { Structure used for manipulating linger option. }
@@ -315,8 +317,9 @@ const
   WSANO_DATA = -6;
 
 const
-  WSADESCRIPTION_LEN     =   256;
-  WSASYS_STATUS_LEN      =   128;
+  WSADESCRIPTION_LEN = 256;
+  WSASYS_STATUS_LEN  = 128;
+
 type
   PWSAData = ^TWSAData;
   TWSAData = packed record
@@ -366,9 +369,9 @@ type
                     sin_addr: TInAddr;
                     sin_zero: array[0..7] of byte);
           AF_INET6: (sin6_port:     word;
-                		sin6_flowinfo: longword;
-      	    	      sin6_addr:     TInAddr6;
-      		          sin6_scope_id: longword);
+                     sin6_flowinfo: longword;
+                     sin6_addr:     TInAddr6;
+                     sin6_scope_id: longword);
           );
   end;
 

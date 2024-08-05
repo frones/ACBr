@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2024
+-- ACBrDFeConsts --
+[*] Alteração, acrescentado a constante: DSC_IDOUTROS.
+   Por: Italo Giurizzato Junior
+
 15/07/2024
 -- ACBrDFeXsLibXml2.pas --
 [*] Quando usando Delphi para linux ele não consegue pegar a informação da propriedade prtUltimoErroXml^.message

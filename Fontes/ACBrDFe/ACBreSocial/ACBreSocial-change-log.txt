@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2024
+-- pcesGerador --
+[*] TK-5811 - Configurados valores padrão para tpPlanRP e tpContr no S2200 e corrigidas funções de conversão
+Por: Renato Rubinho
+
 23/07/2024
 -- pcesGerador --
 [*] TK-5761 - Correção ao ler xmls assinados para preencher a propriedade ID do evento.

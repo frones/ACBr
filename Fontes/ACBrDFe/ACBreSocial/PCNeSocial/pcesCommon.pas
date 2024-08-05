@@ -453,6 +453,8 @@ type
     FclauAssec: tpSimNao;
     FobjDet: string;
   public
+    constructor Create;
+
     property TpContr: tpTpContr read FTpContr write FTpContr;
     property dtTerm: TDateTime read FdtTerm write FdtTerm;
     property clauAssec: tpSimNao read FclauAssec write FclauAssec;
@@ -2420,6 +2422,7 @@ end;
 
 constructor TInfoEstatutario.Create;
 begin
+  FTpPlanRP := prpNenhum;
   FInfoDecJud := TInfoDecJud.Create;
 end;
 
@@ -3071,6 +3074,13 @@ function TIdeAdvCollection.New: TIdeAdvCollectionItem;
 begin
   Result := TIdeAdvCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TDuracao }
+
+constructor TDuracao.Create;
+begin
+  FTpContr := PrazoNaoAplicavel;
 end;
 
 end.

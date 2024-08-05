@@ -632,6 +632,7 @@ function TACBrBanrisul.GerarRegistroTransacao240(
 var
     aAceite, DiasProt, Juros, TipoInscSacado, Ocorrencia: String;
     sDiasBaixaDevol, ACaracTitulo, ATipoBoleto, AEspecieCobranca : String;
+    LTipoMoraJuros : byte;
 begin
    with ACBrTitulo do begin
       case Aceite of
@@ -668,11 +669,29 @@ begin
         end;
       // Número de dias para baixa/devolução
       sDiasBaixaDevol:= ifThen(DataBaixa > 0, IntToStrZero(DaysBetween(Vencimento,DataBaixa),3), '   ');
-
-      if (DataMoraJuros > 0) then
-         Juros := '1'+ FormatDateTime('ddmmyyyy', DataMoraJuros) + PadLeft(StringReplace(FormatFloat('#####0.00', ValorMoraJuros), ',', '', []), 15, '0')
+      if(fpLayoutVersaoArquivo >= 103) then
+      begin
+       case StrToIntDef(CodigoMora,0) of
+       1 : LTipoMoraJuros := 1;
+       2 : LTipoMoraJuros := 2;
+       else
+         LTipoMoraJuros := 3;
+       end;
+       if ((ValorMoraJuros > 0) and (LTipoMoraJuros in [1,2])) or (CaracTitulo <> tcDescontada) then
+        begin
+          if (LTipoMoraJuros = 2) then
+            if ValorMoraJuros > 99.99 then
+               raise Exception.Create('Percentual ValorMoraJuros não pode ser maior que 99,99% !');
+          Juros := IntToStr(LTipoMoraJuros) + FormatDateTime('ddmmyyyy', DataMoraJuros) + PadLeft(StringReplace(FormatFloat('#####0.00', ValorMoraJuros), ',', '', []), 15, '0')
+        end
+       else
+        Juros := '3'+DupeString('0', 23)
+      end
       else
-         Juros := DupeString('0', 24);
+        if (DataMoraJuros > 0) then
+           Juros := '1'+ FormatDateTime('ddmmyyyy', DataMoraJuros) + PadLeft(StringReplace(FormatFloat('#####0.00', ValorMoraJuros), ',', '', []), 15, '0')
+        else
+           Juros := DupeString('0', 24);
 
       case Sacado.Pessoa of
          pFisica:   TipoInscSacado := '1';

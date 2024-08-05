@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2024
+-- ACBrBancoBanrisul --
+[*]TK-5823 - Ajustado qdo versao layout arquivo 103 (Manual 10.3) o envio JurosMora Seg P Posicao 118
+   https://www.projetoacbr.com.br/forum/topic/79033-banrisul-juros-de-mora/
+   Por Daniel Morais InfoCotidiano
+
+
 01/08/2024
 -- ACBrBoletoRet_Itau_API --
 [*]TK-5799 - Ajustados algumas propriedades de retorno do boleto, mas alguns campos nao estao sendo devolvido em sandbox. 

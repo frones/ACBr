@@ -47,7 +47,7 @@ uses
   ACBrBase;
 
 type
-  EventoException = class(Exception);
+  EventoException = class(EACBrException);
 
   TDestinatario = class(TObject)
   private

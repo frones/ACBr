@@ -1893,9 +1893,9 @@ begin
 
   end;
 
-  ACBrSAT1.Extrato.ImprimeLogoLateral := cbLogoLateral.Checked;
-  ACBrSAT1.Extrato.ImprimeQRCodeLateral := cbQRCodeLateral.Checked;
-  ACBrSAT1.Extrato.ImprimeEmUmaLinha := cbImprimir1Linha.Checked;
+  ACBrSAT1.Extrato.ImprimeLogoLateral    := cbLogoLateral.Checked;
+  ACBrSAT1.Extrato.ImprimeQRCodeLateral  := cbQRCodeLateral.Checked;
+  ACBrSAT1.Extrato.ImprimeEmUmaLinha     := cbImprimir1Linha.Checked;
   ACBrSAT1.Extrato.ImprimeDescAcrescItem := cbImprimirDescAcres.Checked;
 end;
 

@@ -4057,7 +4057,7 @@ end;
 
 procedure TfrmACBrNFe.btnManifDestConfirmacaoClick(Sender: TObject);
 var
-  Chave, idLote, CNPJ, lMsg, Titulo: string;
+  Chave, idLote, CNPJ, Titulo: string;
   AtpEvento: TpcnTpEvento;
 begin
   if Sender = btnManifDestConfirmacao then
@@ -4067,7 +4067,9 @@ begin
   else if Sender = btnManifDestCiencia then
     AtpEvento := teManifDestCiencia
   else if Sender = btnManifDestOperNaoRealizada then
-    AtpEvento := teManifDestOperNaoRealizada;
+    AtpEvento := teManifDestOperNaoRealizada
+  else
+    AtpEvento := teNaoMapeado;
 
   Titulo := 'Manifestação Destinatario - ' + StringReplace(TpEventoToDescStr(AtpEvento),'ManifDest','',[rfReplaceAll]);
 

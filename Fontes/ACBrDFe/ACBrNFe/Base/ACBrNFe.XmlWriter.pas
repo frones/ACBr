@@ -76,7 +76,7 @@ type
     Usar_tcDe4: boolean;
     FormatoValor4ou2: TACBrTipoCampo;
     FormatoValor10ou4: TACBrTipoCampo;
-    Versao: string;
+//    Versao: string;
     ChaveNFe: string;
     FIdCSRT: integer;
     FCSRT: string;
@@ -1020,7 +1020,7 @@ const
 var
   ErroValidarGTIN: string;
   nodeArray: TACBrXmlNodeArray;
-  j, idx: integer;
+  j: integer;
 begin
   Result := FDocument.CreateElement('prod');
   Result.AppendChild(AddNode(tcStr, 'I02', 'cProd', 01, 60, 1,

@@ -50,6 +50,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/08/2024
+-- ACBrBancoC6 --
+[*]TK-5821 - Ajustado fpCodigosMoraAceitos para permitir 0 e 1 pois na conversao da classe basica CodigoMora quando nao informado passa ser 1 ocasionando erro raise.
+   https://www.projetoacbr.com.br/forum/topic/78988-problema-com-c%C3%B3digo-de-morajuros-ao-emitir-boletos-no-c6-bank/
+   Por Daniel Morais InfoCotidiano
+
+
+05/08/2024
 -- ACBrBancoBanrisul --
 [*]TK-5823 - Ajustado qdo versao layout arquivo 103 (Manual 10.3) o envio JurosMora Seg P Posicao 118
    https://www.projetoacbr.com.br/forum/topic/79033-banrisul-juros-de-mora/

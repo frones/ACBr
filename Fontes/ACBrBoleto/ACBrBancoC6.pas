@@ -154,7 +154,7 @@ begin
    fpModuloMultiplicadorInicial := 2;
    fpModuloMultiplicadorFinal   := 7;
    fpCodParametroMovimento      := '';
-   fpCodigosMoraAceitos         := '0';
+   fpCodigosMoraAceitos         := '01';
 end;
 
 function TACBrBancoC6.MontarCampoNossoNumero (

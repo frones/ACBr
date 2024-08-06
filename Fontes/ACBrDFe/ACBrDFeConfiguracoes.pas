@@ -1046,6 +1046,7 @@ begin
   NumeroSerie := DeCertificadosConf.NumeroSerie;
   ArquivoPFX := DeCertificadosConf.ArquivoPFX;
   URLPFX := DeCertificadosConf.URLPFX;
+  VerificarValidade := DeCertificadosConf.VerificarValidade;
 end;
 
 procedure TCertificadosConf.GravarIni(const AIni: TCustomIniFile);

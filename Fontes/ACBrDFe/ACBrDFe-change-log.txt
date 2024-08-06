@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/08/2024
+-- ACBrDFeConfiguracoes --
+[*] #TK-5207: Adiciona o VerificarValidade no Assign do método para que a config seja respeitada na Lib.
+   Por: Diego Folieni
+
 05/08/2024
 -- ACBrDFeConsts --
 [*] Alteração, acrescentado a constante: DSC_IDOUTROS.

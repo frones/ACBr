@@ -448,8 +448,10 @@ begin
                      Space(1)                                                           +  // 326 a 326 - Filler - Brancos
                      PadRight( OnlyNumber(Sacado.CEP), 8 )                              +  // 327 a 334 - CEP do sacado
                      PadRight('', 5, '0')                                               +  // 335 a 339 - Código do sacado junto ao cliente (zeros quando inexistente)
-                     PadRight(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, ' ')       +  // 340 a 353 - CIC/CGC do sacador avalista
-                     PadRight(TiraAcentos(Sacado.Avalista), 41, ' ')                                    // 354 a 394 - Nome do sacador avalista ---Anderson
+                     ifthen(NaoEstaVazio(Sacado.SacadoAvalista.CNPJCPF),
+                          PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0'),
+                          Space(14))                                                     +  // 340 a 353 - CIC/CGC do sacador avalista
+                     PadRight(TiraAcentos(Sacado.Avalista), 41, ' ')                        // 354 a 394 - Nome do sacador avalista ---Anderson
          else
             wLinha:= wLinha +
                      PadRight(TiraAcentos(Sacado.Logradouro + ',' + Sacado.Numero + ',' +
@@ -2072,7 +2074,9 @@ begin
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              Ocorrencia                                                     + // 016 a 017 - Código de movimento de remessa
              TipoSacado                                                     + // 018 a 018 - Tipo de inscrição
-             PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')                   + // 019 a 033 - Número de inscrição
+             ifthen(NaoEstaVazio(Sacado.CNPJCPF),
+                  PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0'),
+                  Space(15))                                                + // 019 a 033 - Número de inscrição
              PadRight(TiraAcentos(Sacado.NomeSacado), 40)                   + // 034 a 073 - Nome
              EndSacado                                                      + // 074 a 113 - Endereço
              PadRight(TiraAcentos(Sacado.Bairro), 15)                       + // 114 a 128 - Bairro
@@ -2081,7 +2085,9 @@ begin
              PadRight(TiraAcentos(Sacado.Cidade), 15)                       + // 137 a 151 - Cidade
              PadLeft(Sacado.UF, 2)                                          + // 152 a 153 - Unidade da Federação
              TipoAvalista                                                   + // 154 a 154 - Tipo de inscrição
-             PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')    + // 155 a 169 - Número de inscrição
+             ifthen(NaoEstaVazio(Sacado.SacadoAvalista.CNPJCPF),
+                  PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0'),
+                  Space(15))                                                + // 155 a 169 - Número de inscrição
              PadRight(TiraAcentos(Sacado.SacadoAvalista.NomeAvalista),40,' ')            + // 170 a 209 - Nome do sacador/avalista
              PadRight('', 3, '0')                                           + // 210 a 212 - Cód. bco corresp. na compensação
              Space(20)                                                      + // 213 a 232 - Nosso nº no banco correspondente

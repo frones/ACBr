@@ -406,6 +406,8 @@ begin
     LJsonDados.AddPair('valor_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
     LJsonDados.AddPair('texto_uso_beneficiario', '0');
     LJsonDados.AddPair('texto_seu_numero', IfThen(ATitulo.SeuNumero <> '',  ATitulo.SeuNumero, ATitulo.NossoNumero));
+    if ATitulo.DataLimitePagto > 0 then
+       LJsonDados.AddPair('data_limite_pagamento', FormatDateBr(ATitulo.DataLimitePagto, 'YYYY-MM-DD'));
     LJsonArray.AddElementJSON(LJsonDados);
     AJson.AddPair('dados_individuais_boleto', LJsonArray);
   end;

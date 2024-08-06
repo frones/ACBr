@@ -6,7 +6,7 @@
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda                   }
-{ Delmar de Lima, Daniel de Morais InfoCotidiano, ActioSistemas                }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -414,27 +414,6 @@ var
 begin
   DefinirCertificado;
   Result := inherited Enviar;
-  (*
-  Tratamento automatico qdo tpINCLUI com pix.
-  Entao ele vai enviar capturar a reposta para pegar o codigoSolicitacao e realizar uma consulta
-  detalhe automaticamente para retornar o boleto com QrCODE
-  *)
-  if (Boleto.Cedente.CedenteWS.IndicadorPix) and (Boleto.Configuracoes.WebService.Operacao = tpInclui) then
-  begin
-    try
-      LJsonObject := TACBrJSONObject.Parse( FRetornoWS );
-      if NaoEstaVazio(LJsonObject.AsString['codigoSolicitacao']) then
-      begin
-        ATitulo.NossoNumeroCorrespondente := LJsonObject.AsString['codigoSolicitacao'];
-        Boleto.Configuracoes.WebService.Operacao := tpConsultaDetalhe;
-        GerarDados;
-        Result := inherited Enviar;
-      end;
-    finally
-      LJsonObject.Free;
-      Boleto.Configuracoes.WebService.Operacao := tpInclui;
-    end;
-  end;
 end;
 
 end.

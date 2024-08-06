@@ -106,9 +106,13 @@ const
 implementation
 
 uses
- synacode, ACBrBoletoPcnConsts,
+ synacode,
+ ACBrBoletoPcnConsts,
  ACBrDFeConsts,
- ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML;
+ ACBrUtil.Base,
+ ACBrUtil.Strings,
+ ACBrUtil.XMLHTML,
+ StrUtils;
 
 { TBoletoW_Caixa }
 
@@ -155,11 +159,12 @@ begin
     tpInclui:   Acao := TipoOperacaoToStr( tpInclui );
     tpAltera:   Acao := TipoOperacaoToStr( tpAltera );
     tpBaixa:    Acao := TipoOperacaoToStr( tpBaixa );
-    tpConsulta:
-               begin
-                 Acao     := TipoOperacaoToStr( tpConsulta );
-                 Servico  := C_SERVICO_CONSULTA;
-               end;
+    tpConsulta : raise Exception.Create(Format(S_METODO_NAO_IMPLEMENTADO + 'utilizar tpConsultaDetalhe.',['tpConsulta']));
+    tpConsultaDetalhe:
+       begin
+         Acao     := TipoOperacaoToStr( tpConsulta );
+         Servico  := C_SERVICO_CONSULTA;
+       end;
   end;
 
   FPServico := C_URL + Servico;
@@ -171,12 +176,16 @@ procedure TBoletoW_Caixa.DefinirRootElement;
 var
   Prefixo, NameSpaceServico, NameSpaceBase: String;
 begin
+
+  // Versões :
+  // 3.0 Boleto Convencional
+  // 3.2 Boleto Hibrido
+  // 5.4 Nova Consulta
+
   if Boleto.Cedente.CedenteWS.IndicadorPix then
     FPVersaoServico := '3.2'
   else
     FPVersaoServico := '3.0';
-
-  Boleto.Configuracoes.WebService.VersaoDF := FPVersaoServico;
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui,
@@ -187,18 +196,18 @@ begin
         NameSpaceServico := C_NAMESPACE_MANUTENCAO;
       end;
 
-    tpConsulta:
+    tpConsultaDetalhe:
       begin
+        FPVersaoServico := '5.4';
         Prefixo := C_CONSULTA_COBRANCA_BANCARIA;
         NameSpaceServico := C_NAMESPACE_CONSULTA;
       end;
   end;
 
+  Boleto.Configuracoes.WebService.VersaoDF := FPVersaoServico;
   NameSpaceBase := C_NAMESPACE_BASE;
-
   FPRootElement:= Prefixo + C_SERVICO_ENTRADA + ' ' + NameSpaceServico + ' ' + NameSpaceBase;
   FPCloseRootElement:= Prefixo + C_SERVICO_ENTRADA ;
-
 end;
 
 function TBoletoW_Caixa.GerarAutenticacao(Operacao: TOperacao; NossoNumero,
@@ -220,7 +229,7 @@ begin
             + FormatFloat(ACBrUtil.Strings.Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
       end;
 
-    tpBaixa, tpConsulta:
+    tpBaixa, tpConsultaDetalhe:
       begin
         sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + sNossoNumero
             + ACBrUtil.Strings.Poem_Zeros('',8)
@@ -267,7 +276,7 @@ begin
                                                                                   ATitulo.ValorDocumento,
                                                                                   ATitulo.Vencimento), DSC_AUTENTICACAO);
     Gerador.wCampo(tcStr, '#3', 'USUARIO_SERVICO', 01, 08, 1, sUsuarioServico, DSC_USUARIO_SERVICO);
-    Gerador.wCampo(tcStr, '#4', 'OPERACAO       ', 01, 50, 1, TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ), DSC_TIPO_SERVICO);
+    Gerador.wCampo(tcStr, '#4', 'OPERACAO       ', 01, 50, 1, ifThen(Boleto.Configuracoes.WebService.Operacao = tpConsultaDetalhe, TipoOperacaoToStr( tpConsulta ) ,TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao )), DSC_TIPO_SERVICO);
     Gerador.wCampo(tcStr, '#5', 'SISTEMA_ORIGEM ', 01, 05, 1, C_SISTEMA_ORIGEM, DSC_SISTEMA_ORIGEM);
     Gerador.wCampo(tcStr, '#6', 'UNIDADE        ', 01, 04, 1, Cedente.Agencia, DSC_AGENCIA);
     Gerador.wCampo(tcStr, '#7', 'DATA_HORA      ', 14, 14, 1, FormatDateTime('YYYYMMDDHHNNSS', Now), DSC_DATA_HORA);
@@ -303,7 +312,7 @@ begin
           end;
 
         tpBaixa,
-        tpConsulta:
+        tpConsultaDetalhe:
           begin
             if (Boleto.Configuracoes.WebService.Operacao = tpBaixa) then
               Gerador.wGrupo('BAIXA_BOLETO')

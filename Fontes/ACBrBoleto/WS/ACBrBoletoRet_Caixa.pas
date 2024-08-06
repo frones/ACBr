@@ -93,6 +93,10 @@ begin
   Leitor.Arquivo := lXML;
   Leitor.Grupo := Leitor.Arquivo;//StringReplace(Leitor.Arquivo, 'sibar_base:"', '', [rfReplaceAll] );
 
+  ARetornoWS.HTTPResultCode  := HTTPResultCode;
+  ARetornoWS.JSONEnvio       := EnvWs;
+  ARetornoWS.Header.Operacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+
   //RetornoCaixa:= ACBrBoleto.CriarRetornoWebNaLista;
   try
     //with RetornoCaixa do
@@ -140,7 +144,7 @@ begin
 
               if leitor.rExtrai(3, 'MENSAGENS') <> '' then
               begin
-                Retorno := Leitor.rCampo(tcStr, 'RETORNO');
+                Retorno := Leitor.rCampo(tcStr, 'SITUACAO');
                 TituloRet.EstadoTituloCobranca := Retorno;
                 TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(AnsiUpperCase(Retorno));
               end;
@@ -176,6 +180,7 @@ begin
               TituloRet.EspecieDoc              := Leitor.rCampo(tcStr, 'TIPO_ESPECIE');
               TituloRet.Aceite                  := StrToAceite(Ok, Leitor.rCampo(tcStr, 'FLAG_ACEITE'));
               TituloRet.DataDocumento           := Leitor.rCampo(tcDat, 'DATA_EMISSAO');
+              TituloRet.DataRegistro            := Leitor.rCampo(tcDat, 'DATA_EMISSAO');
               TituloRet.ValorAbatimento         := Leitor.rCampo(tcDe2, 'VALOR_ABATIMENTO');
               TituloRet.EspecieMod              := Leitor.rCampo(tcInt, 'CODIGO_MOEDA');
 
@@ -185,6 +190,10 @@ begin
               TituloRet.CodBarras               := Leitor.rCampo(tcStr, 'CODIGO_BARRAS');
               TituloRet.LinhaDig                := Leitor.rCampo(tcStr, 'LINHA_DIGITAVEL');
               TituloRet.URL                     := Leitor.rCampo(tcStr, 'URL');
+
+              TituloRet.ValorPago               := Leitor.rCampo(tcDe2, 'VALOR_PAGO');
+              TituloRet.DataCredito             := Leitor.rCampo(tcDatHor, 'DATA_HORA_PAGAMENTO');
+              TituloRet.DataBaixa               := Leitor.rCampo(tcDatHor, 'DATA_HORA_PAGAMENTO');
 
               if ACBrBoleto.Cedente.CedenteWS.IndicadorPix then
                 DadosRet.TituloRet.EMV := Leitor.rCampo(tcStr, 'QRCODE');

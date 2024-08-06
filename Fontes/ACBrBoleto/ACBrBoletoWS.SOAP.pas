@@ -306,6 +306,8 @@ begin
     Executar;
   finally
     Result := (DFeSSL.HTTPResultCode in [ 200, 201, 202 ]);
+    BoletoWS.RetornoBanco.HTTPResultCode := DFeSSL.HTTPResultCode;
+    BoletoWS.RetornoBanco.Msg            := Trim('HTTP_Code=' + IntToStr(DFeSSL.HTTPResultCode) + ' ' + FRetornoWS);
     BoletoWS.DoLog('Retorno Envio: ' + Self.ClassName, logSimples);
     BoletoWS.DoLog('Código do Envio: ' + IntToStr(BoletoWS.RetornoBanco.HTTPResultCode), logSimples);
 

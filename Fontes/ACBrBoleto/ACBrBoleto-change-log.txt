@@ -49,11 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-06/08/2024
+06/08/2024 
 -- ACBrBancoSicredi --
 [*]TK-5798 - Ajustado CNPJ para enviar zeros a esq. ou em branco.CNAB 400 Seg1 Pos 340 e CNAB 240 SEQ 18.3Q conforme manual
    https://www.projetoacbr.com.br/forum/topic/78920-acbrlib-boleto-sicredi-homologa%C3%A7%C3%A3o-erro-no-via-remessa-de-arquivos-sicredi-do-mt-esta-exigindo-avalista-na-homologa%C3%A7%C3%A3o/#comment-511023
    Por Daniel Morais InfoCotidiano
+
+-- ACBrBancoC6WS--
+[+]TK5510 - Adicionar Banco C6 - Webservices.
+  Por Victor H Gonzales - Pandaaa
 
 05/08/2024
 -- ACBrBancoC6 --

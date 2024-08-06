@@ -202,7 +202,7 @@ uses
   StrUtils, DateUtils,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrValidador, ACBrDFeUtil,
-  ACBrDFeReportFortes, pcnNFe, pcnConversao;
+  ACBrDFeReportFortes, pcnNFe, pcnConversao, pcnConversaoNFe;
 
 {$IfNDef FPC}
   {$R *.dfm}

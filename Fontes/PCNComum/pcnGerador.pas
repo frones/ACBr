@@ -62,6 +62,8 @@ uses
 
 type
 
+  TpcnFormatoGravacao = (fgXML, fgTXT);
+
   TGeradorOpcoes = class;
 
   { TGerador }

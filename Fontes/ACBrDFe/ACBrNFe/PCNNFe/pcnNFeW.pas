@@ -60,8 +60,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnGerador, pcnNFe, pcnConversao, pcnNFeConsts,
-  ACBrValidador, pcnConversaoNFe;
+  pcnGerador, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeConsts,
+  ACBrValidador;
 
 type
 

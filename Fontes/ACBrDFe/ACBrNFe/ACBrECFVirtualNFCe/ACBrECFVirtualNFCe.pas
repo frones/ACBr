@@ -39,7 +39,7 @@ interface
 uses Classes, SysUtils,
 {$IFDEF FPC}LResources, {$ENDIF}
   ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrNFe, ACBrECF, ACBrDevice, ACBrBase,
-  pcnNFe, pcnConversao;
+  pcnNFe, pcnConversao, pcnConversaoNFe;
 
 const
   ACBrECFVirtualNFCe_VERSAO = '0.1.0a';
@@ -184,7 +184,7 @@ type
 
 implementation
 
-uses pcnConversaoNFe,
+uses
   ACBrConsts, ACBrECFClass, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrNFeDANFEClass;
 	
 { TACBrECFVirtualNFCe }

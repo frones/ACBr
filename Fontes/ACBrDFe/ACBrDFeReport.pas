@@ -48,6 +48,8 @@ uses
 
 type
 
+  TDetFormato   = (tdetInteger, tdetMascara);
+
   { TCasasDecimais }
   {@class TCasasDecimais - Propriedades para configurar a formatação das casas decimais.
    Determina como será a formatação das casas decimais existentes no relátorio.

@@ -57,29 +57,26 @@ uses
 
 type
 
-  TDetFormato   = (tdetInteger,tdetMascara);
                   // tcEsp = String: somente numeros;
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64, tcDe1,
                    tcDatBol);
-  TpcnFormatoGravacao = (fgXML, fgTXT);
+
   TpcnTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada);
 
-  TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras, ipNenhum);
   TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
                        tiNFCe, tiMsgEletronica);
-  TpcnPercentualTributos = (ptValorProdutos, ptValorNF, ptPersonalizado);
 
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
   TpcnTipoAmbiente = (taProducao, taHomologacao);
-  TpcnSituacaoEmissor = (seHomologacao, seProducao);
+
   TpcnProcessoEmissao = (peAplicativoContribuinte, peAvulsaFisco, peAvulsaContribuinte, peContribuinteAplicativoFisco);
   TpcnOrigemMercadoria = (oeNacional, oeEstrangeiraImportacaoDireta, oeEstrangeiraAdquiridaBrasil,
                           oeNacionalConteudoImportacaoSuperior40, oeNacionalProcessosBasicos,
                           oeNacionalConteudoImportacaoInferiorIgual40,
                           oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
-                          oeNacionalConteudoImportacaoSuperior70, oeReservadoParaUsoFuturo, 
+                          oeNacionalConteudoImportacaoSuperior70, oeReservadoParaUsoFuturo,
                           oeVazio);
 
   TpcnCSTIcms = (cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
@@ -88,38 +85,21 @@ type
                  cst02, cst15, cst53, cst61, cst01, cst12, cst13, cst14, cst21, cst72, cst73, cst74); //80 e 81 apenas para CTe
 
   TpcnCSOSNIcms = (csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900 );
-  TpcnDeterminacaoBaseIcms = (dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum);
-  TpcnDeterminacaoBaseIcmsST = (dbisPrecoTabelado, dbisListaNegativa,
-                                dbisListaPositiva, dbisListaNeutra,
-                                dbisMargemValorAgregado, dbisPauta,
-                                dbisValordaOperacao);
-  TpcnMotivoDesoneracaoICMS = (mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora, mdiDiplomaticoConsular,
-                               mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos, mdiOutros, mdiDeficienteCondutor,
-                               mdiDeficienteNaoCondutor, mdiOrgaoFomento, mdiOlimpiadaRio2016, mdiSolicitadoFisco );
-  TpcnCstIpi = (ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55);
+
   TpcnCstPis = (pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53,
                 pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72,
                 pis73, pis74, pis75, pis98, pis99);
   TpcnCstCofins = (cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53,
                    cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72,
                    cof73, cof74, cof75, cof98, cof99);
-  TpcnIndicadorProcesso = (ipSEFAZ, ipJusticaFederal, ipJusticaEstadual,
-                           ipSecexRFB, ipCONFAZ, ipOutros);
-  TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal, crtMEI);
-  TpcnIndicadorTotal = (itSomaTotalNFe, itNaoSomaTotalNFe );
 
-  TpcnECFModRef = (ECFModRefVazio, ECFModRef2B,ECFModRef2C,ECFModRef2D);
-  TpcnISSQNcSitTrib  = ( ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA);
+
 
   TpcteTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros);
   TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
 
   TPosRecibo = (prCabecalho, prRodape, prEsquerda);
   TPosReciboLayout = (prlPadrao, prlBarra);
-
-  TpcnImprimeDescAcrescItem = (idaiSempre, idaiNunca, idaiComValor);
-
-  TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
   TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento,
                   teManifDestConfirmacao, teManifDestCiencia, teManifDestDesconhecimento,
@@ -149,26 +129,7 @@ type
                   teCancInsucessoEntregaCTe, teInsucessoEntregaNFe,
                   teCancInsucessoEntregaNFe, teConcFinanceira, teCancConcFinanceira);
 
-  TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
-  TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
-  TpcnSituacaoManifDest = (smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia);
   TpcnTamanhoPapel = (tpA4, tpA4_2vias, tpA5);
-
-  TpcnDestinoOperacao = (doInterna, doInterestadual, doExterior);
-  TpcnConsumidorFinal = (cfNao, cfConsumidorFinal);
-  TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcPresencialForaEstabelecimento, pcOutros);
-  TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
-                        fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                        fpDuplicataMercantil, fpBoletoBancario, fpDepositoBancario,
-                        fpPagamentoInstantaneo, fpTransfBancario, fpProgramaFidelidade,
-                        fpSemPagamento, fpRegimeEspecial, fpOutro, fpPagamentoInstantaneoEstatico,
-                        fpCreditoEmLojaPorDevolucao, fpFalhaHardware);
-  TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
-                        bcElo, bcHipercard, bcAura, bcCabal, bcAlelo, bcBanesCard,
-                        bcCalCard, bcCredz, bcDiscover, bcGoodCard, bcGreenCard,
-                        bcHiper, bcJcB, bcMais, bcMaxVan, bcPolicard, bcRedeCompras,
-                        bcSodexo, bcValeCard, bcVerocheque, bcVR, bcTicket,
-                        bcOutros);
 
   TpcnRegTrib = (RTSimplesNacional, RTRegimeNormal);
   TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI, RTISSMEEPP, RTISSNenhum);
@@ -181,22 +142,14 @@ type
   TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
   TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
   TpcnindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
-  TpcnTipoViaTransp = (tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
-                       tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                       tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque);
-  TpcnTipoIntermedio = (tiContaPropria, tiContaOrdem, tiEncomenda);
-  TpcnindISSRet = (iirSim, iirNao);
-  TpcnindISS = (iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao, iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm);
+
   TpcnindIncentivo = (iiSim, iiNao);
-  TpcnTipoAutor = (taEmpresaEmitente, taEmpresaDestinataria, taEmpresa, taFisco, taRFB, taOutros);
-  TpcnIndOperacao = (ioConsultaCSC, ioNovoCSC, ioRevogaCSC);
 
   TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal);
   TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
   TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
 
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
-  TImprimirUnidQtdeValor = (iuComercial, iuTributavel, iuComercialETributavel);
 
   TTipoNavegacao = (tnInterior, tnCabotagem);
 
@@ -213,11 +166,6 @@ type
                 schresBPe, schprocBPe, schprocEventoBPe,
                 schprocGTVe);
 
-  TForcarGeracaoTag = (fgtNunca, fgtSomenteProducao, fgtSomenteHomologacao, fgtSempre);
-
-  TIndSomaPISST = (ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe);
-
-  TIndSomaCOFINSST = (iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe);
 
   TStrToTpEvento = function (out ok: boolean; const s: String): TpcnTpEvento;
   TStrToTpEventoDFe = record
@@ -280,18 +228,14 @@ function TpModalToStr(const t: TpcteModal): string;
 function TpModalToStrText(const t: TpcteModal): string;
 function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 
-function IndpagToStr(const t: TpcnIndicadorPagamento): string;
-function StrToIndpag(out ok: boolean; const s: string): TpcnIndicadorPagamento;
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 function StrToTpImp(out ok: boolean; const s: string): TpcnTipoImpressao;
-function PercTribToStr(const t: TpcnPercentualTributos): string;
-function StrToPercTrib(out ok: boolean; const s: string): TpcnPercentualTributos;
+
 function TpEmisToStr(const t: TpcnTipoEmissao): string;
 function StrToTpEmis(out ok: boolean; const s: string): TpcnTipoEmissao;
 function TpAmbToStr(const t: TpcnTipoAmbiente): string;
 function StrToTpAmb(out ok: boolean; const s: string): TpcnTipoAmbiente;
-function TpSitToStr(const t: TpcnSituacaoEmissor): string;
-function StrToTpSit(out ok: boolean; const s: string): TpcnSituacaoEmissor;
+
 function procEmiToStr(const t: TpcnProcessoEmissao): string;
 function StrToprocEmi(out ok: boolean; const s: string): TpcnProcessoEmissao;
 function OrigToStr(const t: TpcnOrigemMercadoria): string;
@@ -307,68 +251,21 @@ function CSOSNToStrID(const t: TpcnCSOSNIcms): string;
 function CSOSNToStrTagPosText(const t: TpcnCSOSNIcms): string;
 function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;
 function CSTPISToStrTagPosText(const t: TpcnCstPis): string;
-function CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
 function CSTCOFINSToStrTagPosText(const t: TpcnCstCofins): string;
 
-function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
-function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
-function modBCSTToStr(const t: TpcnDeterminacaoBaseIcmsST): string;
-function StrTomodBCST(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
-function motDesICMSToStr(const t: TpcnMotivoDesoneracaoICMS): string;
-function StrTomotDesICMS(out ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
-function CSTIPIToStr(const t: TpcnCstIpi): string;
-function StrToCSTIPI(out ok: boolean; const s: string): TpcnCstIpi;
 function CSTPISToStr(const t: TpcnCstPIS): string;
 function StrToCSTPIS(out ok: boolean; const s: string): TpcnCstPIS;
 function CSTCOFINSToStr(const t: TpcnCstCOFINS): string;
 function StrToCSTCOFINS(out ok: boolean; const s: string): TpcnCstCOFINS;
-function indProcToStr(const t: TpcnIndicadorProcesso): string;
-function indProcToDescrStr(const t: TpcnIndicadorProcesso): string;
-function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
-function CRTToStr(const t: TpcnCRT): string;
-function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
-function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
-function indTotToStr(const t: TpcnIndicadorTotal): string;
-function StrToindTot(out ok: boolean; const s: string): TpcnIndicadorTotal;
-
-function ECFModRefToStr(const t:  TpcnECFModRef ): string;
-function StrToECFModRef(out ok: boolean; const s: string): TpcnECFModRef;
-
-function ISSQNcSitTribToStr(const t: TpcnISSQNcSitTrib ): string;
-function StrToISSQNcSitTrib(out ok: boolean; const s: string) : TpcnISSQNcSitTrib;
 
 function TpRodadoToStr(const t: TpcteTipoRodado): string;
 function StrToTpRodado(out ok: boolean; const s: string): TpcteTipoRodado;
 function TpCarroceriaToStr(const t: TpcteTipoCarroceria): string;
 function StrToTpCarroceria(out ok: boolean; const s: string): TpcteTipoCarroceria;
 
-function ModeloNFToStr(const t: TpcteModeloNF): string;
-function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
-
 function StrToTpEvento_Old(out ok: boolean; const s: string): TpcnTpEvento;
 function TpEventoToStr(const t: TpcnTpEvento): string;
 function TpEventoToDescStr(const t: TpcnTpEvento): string;
-
-function IndicadorEmissorToStr(const t: TpcnIndicadorEmissor): string;
-function StrToIndicadorEmissor(out ok: boolean; const s: string): TpcnIndicadorEmissor;
-function IndicadorContinuacaoToStr(const t: TpcnIndicadorContinuacao): string;
-function StrToIndicadorContinuacao(out ok: boolean; const s: string): TpcnIndicadorContinuacao;
-function SituacaoManifDestToStr(const t: TpcnSituacaoManifDest): string;
-function StrToSituacaoManifDest(out ok: boolean; const s: string): TpcnSituacaoManifDest;
-
-function DestinoOperacaoToStr(const t: TpcnDestinoOperacao): string;
-function StrToDestinoOperacao(out ok: boolean; const s: string): TpcnDestinoOperacao;
-function ConsumidorFinalToStr(const t: TpcnConsumidorFinal): string;
-function StrToConsumidorFinal(out ok: boolean; const s: string): TpcnConsumidorFinal;
-function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
-function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
-function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String)'{$EndIf};
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string; overload;
-function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
-function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
-function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
-function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;
 function StrToRegTrib(out ok: boolean; const s: string): TpcnRegTrib ;
@@ -388,24 +285,9 @@ function UnidCargaToStr(const t: TpcnUnidCarga):string;
 function StrToUnidCarga(out ok: boolean; const s: string):TpcnUnidCarga;
 function indIEDestToStr(const t: TpcnindIEDest ): string;
 function StrToindIEDest(out ok: boolean; const s: string): TpcnindIEDest;
-function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
-function StrToTipoViaTransp(out ok: boolean; const s: string): TpcnTipoViaTransp;
-function TipoViaTranspToDescricao(const t: TpcnTipoViaTransp): string;
-function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
-function StrToTipoIntermedio(out ok: boolean; const s: string): TpcnTipoIntermedio;
-function TipoIntermedioToDescricao(const t: TpcnTipoIntermedio ): string;
-function indISSRetToStr(const t: TpcnindISSRet ): string;
-function StrToindISSRet(out ok: boolean; const s: string): TpcnindISSRet;
-function indISSToStr(const t: TpcnindISS ): string;
-function StrToindISS(out ok: boolean; const s: string): TpcnindISS;
+
 function indIncentivoToStr(const t: TpcnindIncentivo ): string;
 function StrToindIncentivo(out ok: boolean; const s: string): TpcnindIncentivo;
-
-function TipoAutorToStr(const t: TpcnTipoAutor ): string;
-function StrToTipoAutor(out ok: boolean; const s: string): TpcnTipoAutor;
-
-function IndOperacaoToStr(const t: TpcnIndOperacao ): string;
-function StrToIndOperacao(out ok: boolean; const s: string): TpcnIndOperacao;
 
 function TpPropToStr(const t: TpcteProp): String;
 function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
@@ -416,9 +298,6 @@ function UnidMedToDescricaoStr(const t: TUnidMed): string;
 
 function SituacaoDFeToStr(const t: TSituacaoDFe): String;
 function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
-
-function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
-function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 
 function TpNavegacaoToStr(const t: TTipoNavegacao): string;
 function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
@@ -438,16 +317,7 @@ function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
 function SchemaDFeToStr(const t: TSchemaDFe): String;
 function StrToSchemaDFe(const s: String): TSchemaDFe;
 
-function motDesICMSToStrTagPosText(const t: TpcnMotivoDesoneracaoICMS): string;
-function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib ): string;
-function indISSToStrTagPosText(const t: TpcnindISS ): string;
 function indIncentivoToStrTagPosText(const t: TpcnindIncentivo ): string;
-
-function indSomaPISSTToStr(const t: TIndSomaPISST): String;
-function StrToindSomaPISST(out ok: Boolean; const s: String): TIndSomaPISST;
-
-function indSomaCOFINSSTToStr(const t: TIndSomaCOFINSST): String;
-function StrToindSomaCOFINSST(out ok: Boolean; const s: String): TIndSomaCOFINSST;
 
 function StrToTpEventoDFe(out ok: boolean; const s, aDFe: string): TpcnTpEvento;
 
@@ -524,17 +394,6 @@ begin
   end;
 end;
 
-// Indicador do Tipo de pagamento **********************************************
-function IndpagToStr(const t: TpcnIndicadorPagamento): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2', ''], [ipVista, ipPrazo, ipOutras, ipNenhum]);
-end;
-
-function StrToIndpag(out ok: boolean; const s: string): TpcnIndicadorPagamento;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', ''], [ipVista, ipPrazo, ipOutras, ipNenhum]);
-end;
-
 // B21 - Formato de Impressão do DANFE *****************************************
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 begin
@@ -548,18 +407,6 @@ begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
                                   [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
                                    tiNFCe, tiMsgEletronica]);
-end;
-
-function PercTribToStr(const t: TpcnPercentualTributos): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2'],
-                              [ptValorProdutos, ptValorNF, ptPersonalizado]);
-end;
-
-function StrToPercTrib(out ok: boolean; const s: string): TpcnPercentualTributos;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2'],
-                                  [ptValorProdutos, ptValorNF, ptPersonalizado]);
 end;
 
 // B22 - Forma de Emissão da NF-e **********************************************
@@ -584,17 +431,6 @@ end;
 function StrToTpAmb(out ok: boolean; const s: string): TpcnTipoAmbiente;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
-end;
-
-// *** - Situacao Emissor ******************************************************
-function TpSitToStr(const t: TpcnSituacaoEmissor): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1'], [seHomologacao, seProducao]);
-end;
-
-function StrToTpSit(out ok: boolean; const s: string): TpcnSituacaoEmissor;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1'], [seHomologacao, seProducao]);
 end;
 
 // B26 - Processo de emissão da NF-e *******************************************
@@ -711,26 +547,6 @@ begin
           '98 - Outras Operações de Entrada',
           '99 - Outras Operações'],
           [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
-end;
-
-function CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
-begin
-  case t of
-    ipi00 : Result := '00 - Entrada com Recuperação de Crédito';
-    ipi01 : Result := '01 - Entrada Tributável com Alíquota Zero';
-    ipi02 : Result := '02 - Entrada Isenta';
-    ipi03 : Result := '03 - Entrada Não-Tributada';
-    ipi04 : Result := '04 - Entrada Imune';
-    ipi05 : Result := '05 - Entrada com Suspensão';
-    ipi49 : Result := '49 - Outras Entradas';
-    ipi50 : Result := '50 - Saída Tributada';
-    ipi51 : Result := '51 - Saída Tributável com Alíquota Zero';
-    ipi52 : Result := '52 - Saída Isenta';
-    ipi53 : Result := '53 - Saída Não-Tributada';
-    ipi54 : Result := '54 - Saída Imune';
-    ipi55 : Result := '55 - Saída com Suspensão';
-    ipi99 : Result := '99 - Outras Saídas';
-  end;
 end;
 
 function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;
@@ -891,116 +707,6 @@ begin
     cst02, cst15, cst53, cst61]);
 end;
 
-// N13 - Modalidade de determinação da BC do ICMS ******************************
-function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
-begin
-  result := EnumeradoToStr(t, ['0 - Margem Valor Agregado (%)', '1 - Pauta (Valor)', '2 - Preço Tabelado Máx. (valor)', '3 - Valor da operação', ''],
-    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
-end;
-
-function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
-begin
-  // 0 - Margem Valor Agregado (%);
-  // 1 - Pauta (Valor);
-  // 2 - Preço Tabelado Máx. (valor);
-  // 3 - valor da operação.
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', ''],
-    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
-end;
-
-function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', ''],
-    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
-end;
-
-// N18 - Modalidade de determinação da BC do ICMS ST ***************************
-function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
-begin
-  result := EnumeradoToStr(t, ['0 - Preço tabelado ou máximo sugerido', '1 - Lista Negativa (valor)',
-   '2 - Lista Positiva (valor)', '3 - Lista Neutra (valor)',
-   '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)', '6 - Valor da Operação', ''],
-    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
-     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao,
-     TpcnDeterminacaoBaseIcmsST(-1)]);
-end;
-
-function modBCSTToStr(const t: TpcnDeterminacaoBaseIcmsST): string;
-begin
-  // 0 – Preço tabelado ou máximo sugerido;
-  // 1 - Lista Negativa (valor);
-  // 2 - Lista Positiva (valor);
-  // 3 - Lista Neutra (valor);
-  // 4 - Margem Valor Agregado (%);
-  // 5 - Pauta (valor);
-  // 6 - Valor da Operação
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6', ''],
-    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
-     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao,
-     TpcnDeterminacaoBaseIcmsST(-1)]);
-end;
-
-function StrTomodBCST(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', ''],
-    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
-     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao,
-     TpcnDeterminacaoBaseIcmsST(-1)]);
-end;
-
-// N28 - Motivo da desoneração do ICMS ***************************
-function motDesICMSToStr(const t: TpcnMotivoDesoneracaoICMS): string;
-begin
-    // 1 – Táxi;
-    // 2 – Deficiente Físico;
-    // 3 – Produtor Agropecuário;
-    // 4 – Frotista/Locadora;
-    // 5 – Diplomático/Consular;
-    // 6 – Utilitários e Motocicletas da
-    // Amazônia Ocidental e Áreas de
-    // Livre Comércio (Resolução
-    // 714/88 e 790/94 – CONTRAN e
-    // suas alterações);
-    // 7 – SUFRAMA;
-    // 8 – Venda a Orgãos Publicos;
-    // 9 – outros. (v2.0)
-    // 10 – Deficiente Condutor (Convênio ICMS 38/12). (v3.1)
-    // 11 – Deficiente não Condutor (Convênio ICMS 38/12). (v3.1)
-    // 12 - Orgão Fomento
-    // 16 - Olimpiadas Rio 2016
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-                               '11', '12', '16', '90', ''],
-    [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
-     mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
-     mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
-     mdiOlimpiadaRio2016, mdiSolicitadoFisco,
-     TpcnMotivoDesoneracaoICMS(-1)]);
-end;
-
-function StrTomotDesICMS(out ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                                   '10', '11', '12', '16', '90', ''],
-    [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
-     mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
-     mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
-     mdiOlimpiadaRio2016, mdiSolicitadoFisco,
-     TpcnMotivoDesoneracaoICMS(-1)]);
-end;
-
-// CST IPI *********************************************************************
-function CSTIPIToStr(const t: TpcnCstIpi): string;
-begin
-  result := EnumeradoToStr(t, ['00', '49', '50', '99', '01', '02', '03', '04', '05', '51', '52', '53', '54', '55'],
-    [ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55]);
-end;
-
-function StrToCSTIPI(out ok: boolean; const s: string): TpcnCstIpi;
-begin
-  result := StrToEnumerado(ok, s, ['00', '49', '50', '99', '01', '02', '03', '04', '05', '51', '52', '53', '54', '55'],
-    [ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55]);
-end;
-
 // CST PIS *********************************************************************
 function CSTPISToStr(const t: TpcnCstPIS): string;
 begin
@@ -1027,86 +733,6 @@ begin
     [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
 end;
 
-// 401i - Indicador da origem do processo **************************************
-function indProcToStr(const t: TpcnIndicadorProcesso): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
-  [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipCONFAZ, ipOutros]);
-end;
-
-function indProcToDescrStr(const t: TpcnIndicadorProcesso): string;
-begin
-  case t of
-    ipSEFAZ           : result  := 'SEFAZ';
-    ipJusticaFederal  : result  := 'JUSTIÇA FEDERAL';
-    ipJusticaEstadual : result  := 'JUSTIÇA ESTADUAL';
-    ipSecexRFB        : result  := 'SECEX / RFB';
-    ipCONFAZ          : Result  := 'CONFAZ';
-    ipOutros          : result  := 'OUTROS';
-  end;
-end;
-
-function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '9'],
-  [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipCONFAZ, ipOutros]);
-end;
-
-// 49a - Código do Regime Tributário **************************************
-function CRTToStr(const t: TpcnCRT): string;
-begin
-  result := EnumeradoToStr(t, ['','1', '2', '3', '4'],
-    [crtRegimeNormal, crtSimplesNacional, crtSimplesExcessoReceita,
-     crtRegimeNormal, crtMEI]);
-end;
-
-function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
-begin
-  result := StrToEnumerado(ok, s, ['','1', '2', '3', '4'],
-    [crtRegimeNormal, crtSimplesNacional, crtSimplesExcessoReceita,
-     crtRegimeNormal, crtMEI]);
-end;
-
-function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
-begin
-  if T = crtSimplesNacional then
-    Result := RTSimplesNacional
-  else
-    Result := RTRegimeNormal;
-end;
-
-// 117b - Indicador de soma no total da NFe **************************************
-function indTotToStr(const t: TpcnIndicadorTotal): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1'], [itNaoSomaTotalNFe, itSomaTotalNFe]);
-end;
-
-function StrToindTot(out ok: boolean; const s: string): TpcnIndicadorTotal;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1'], [itNaoSomaTotalNFe, itSomaTotalNFe]);
-end;
-
-// B20k - Modelo Refenciado  **************************************
-function ECFModRefToStr(const t: TpcnECFModRef): string;
-begin
-    result := EnumeradoToStr(t, ['', '2B', '2C','2D'],[ECFModRefVazio ,ECFModRef2B,ECFModRef2C,ECFModRef2D]);
-end;
-
-function StrToECFModRef(out ok: boolean; const s: string): TpcnECFModRef;
-begin
-  result := StrToEnumerado(ok, s, ['', '2B', '2C','2D'],[ECFModRefVazio, ECFModRef2B,ECFModRef2C,ECFModRef2D]);
-end;
-
-function ISSQNcSitTribToStr(const t: TpcnISSQNcSitTrib ): string;
-begin
-    result := EnumeradoToStr(t, ['','N','R','S','I'],[ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
-end;
-
-function StrToISSQNcSitTrib(out ok: boolean; const s: string) : TpcnISSQNcSitTrib;
-begin
-  result := StrToEnumerado(ok, s, ['','N','R','S','I'],[ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
-end;
-
 function TpRodadoToStr(const t: TpcteTipoRodado): string;
 begin
   result := EnumeradoToStr(t, ['00','01','02','03','04','05','06'],
@@ -1129,18 +755,6 @@ function StrToTpCarroceria(out ok: boolean; const s: string): TpcteTipoCarroceri
 begin
   result := StrToEnumerado(ok, s, ['00','01','02','03','04','05'],
    [tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider]);
-end;
-
-function ModeloNFToStr(const t: TpcteModeloNF): string;
-begin
-  result := EnumeradoToStr(t, ['01','04'],
-   [moNF011AAvulsa, moNFProdutor]);
-end;
-
-function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
-begin
-  result := StrToEnumerado(ok, s, ['01','04'],
-   [moNF011AAvulsa, moNFProdutor]);
 end;
 
 function StrToTpEvento_Old(out ok: boolean;const s: string): TpcnTpEvento;
@@ -1231,204 +845,6 @@ begin
   result := AString[ integer( t ) ];
 end;
 
-function IndicadorEmissorToStr(const t: TpcnIndicadorEmissor): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1'],
-                              [ieTodos, ieRaizCNPJDiferente]);
-end;
-
-function StrToIndicadorEmissor(out ok: boolean; const s: string): TpcnIndicadorEmissor;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1'],
-                                  [ieTodos, ieRaizCNPJDiferente]);
-end;
-
-function IndicadorContinuacaoToStr(const t: TpcnIndicadorContinuacao): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1'],
-                              [icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos]);
-end;
-
-function StrToIndicadorContinuacao(out ok: boolean; const s: string): TpcnIndicadorContinuacao;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1'],
-                                  [icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos]);
-end;
-
-function SituacaoManifDestToStr(const t: TpcnSituacaoManifDest): string;
-begin
-  result := EnumeradoToStr(t, ['0','1','2','3','4'],
-                              [smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia]);
-end;
-
-function StrToSituacaoManifDest(out ok: boolean; const s: string): TpcnSituacaoManifDest;
-begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3','4'],
-                                  [smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia]);
-end;
-
-function DestinoOperacaoToStr(const t: TpcnDestinoOperacao): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2', '3'],
-                              [doInterna, doInterestadual, doExterior]);
-end;
-
-function StrToDestinoOperacao(out ok: boolean; const s: string): TpcnDestinoOperacao;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3'],
-                                  [doInterna, doInterestadual, doExterior]);
-end;
-
-function ConsumidorFinalToStr(const t: TpcnConsumidorFinal): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1'],
-                              [cfNao, cfConsumidorFinal]);
-end;
-
-function StrToConsumidorFinal(out ok: boolean; const s: string): TpcnConsumidorFinal;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1'],
-                                  [cfNao, cfConsumidorFinal]);
-end;
-
-function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '9'],
-                              [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio,
-                              pcPresencialForaEstabelecimento, pcOutros]);
-end;
-
-function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '9'],
-                                  [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio,
-                                  pcPresencialForaEstabelecimento, pcOutros]);
-end;
-
-function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
-begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12',
-                               '13', '14', '15', '16', '17', '18', '19', '90',
-                               '98', '99', '20', '21', '22'],
-                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
-                               fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
-                               fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
-                               fpBoletoBancario, fpDepositoBancario,
-                               fpPagamentoInstantaneo, fpTransfBancario,
-                               fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
-                               fpOutro, fpPagamentoInstantaneoEstatico,
-                               fpCreditoEmLojaPorDevolucao, fpFalhaHardware]);
-end;
-
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string; overload;
-begin
-  Result := FormaPagamentoToDescricao(t, '');
-end;
-
-function FormaPagamentoToDescricao(const t: TpcnFormaPagamento; const xPag: String): string; overload;
-begin
-  if (t = fpOutro) and (xPag <> '') then
-    result := xPag
-  else
-    result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito',
-                                'Cartão de Débito', 'Cartão da Loja (Private Label)',
-                                'Vale Alimentação', 'Vale Refeição', 'Vale Presente',
-                                'Vale Combustível', 'Duplicata Mercantil',
-                                'Boleto Bancário', 'Deposito Bancário',
-                                'PIX - Dinâmico', 'Transferência Bancária',
-                                'Programa Fidelidade', 'Sem Pagamento',
-                                'Regime Especial NFF', 'Outro', 'PIX - Estático',
-                                'Crédito em Loja', 'Falha de hardware do sistema emissor'],
-                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
-                               fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
-                               fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
-                               fpBoletoBancario, fpDepositoBancario,
-                               fpPagamentoInstantaneo, fpTransfBancario,
-                               fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
-                               fpOutro, fpPagamentoInstantaneoEstatico,
-                               fpCreditoEmLojaPorDevolucao, fpFalhaHardware]);
-end;
-
-
-function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
-begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12',
-                                   '13', '14', '15', '16', '17', '18', '19', '90',
-                                   '98', '99', '20', '21', '22'],
-                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito,
-                               fpCreditoLoja, fpValeAlimentacao, fpValeRefeicao,
-                               fpValePresente, fpValeCombustivel, fpDuplicataMercantil,
-                               fpBoletoBancario, fpDepositoBancario,
-                               fpPagamentoInstantaneo, fpTransfBancario,
-                               fpProgramaFidelidade, fpSemPagamento, fpRegimeEspecial,
-                               fpOutro,fpPagamentoInstantaneoEstatico,
-                               fpCreditoEmLojaPorDevolucao, fpFalhaHardware]);
-end;
-
-function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
-begin
-  case t of
-    bcVisa:            Result := 'Visa';
-    bcMasterCard:      Result := 'MasterCard';
-    bcAmericanExpress: Result := 'AmericanExpress';
-    bcSorocred:        Result := 'Sorocred';
-    bcDinersClub:      Result := 'Diners Club';
-    bcElo:             Result := 'Elo';
-    bcHipercard:       Result := 'Hipercard';
-    bcAura:            Result := 'Aura';
-    bcCabal:           Result := 'Cabal';
-    bcAlelo:           Result := 'Alelo';
-    bcBanesCard:       Result := 'BanesCard';
-    bcCalCard:         Result := 'CalCard';
-    bcCredz:           Result := 'Credz';
-    bcDiscover:        Result := 'Discover';
-    bcGoodCard:        Result := 'GoodCard';
-    bcGreenCard:       Result := 'GreenCard';
-    bcHiper:           Result := 'Hiper';
-    bcJcB:             Result := 'JcB';
-    bcMais:            Result := 'Mais';
-    bcMaxVan:          Result := 'MaxVan';
-    bcPolicard:        Result := 'Policard';
-    bcRedeCompras:     Result := 'RedeCompras';
-    bcSodexo:          Result := 'Sodexo';
-    bcValeCard:        Result := 'ValeCard';
-    bcVerocheque:      Result := 'Verocheque';
-    bcVR:              Result := 'VR';
-    bcTicket:          Result := 'Ticket';
-    bcOutros:          Result := 'Outros'
-  end;
-end;
-
-
-function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
-begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
-                               '09', '10', '11', '12', '13', '14', '15', '16',
-                               '17', '18', '19', '20', '21', '22', '23', '24',
-                               '25', '26', '27', '99', ''],
-                              [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
-                               bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
-                               bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
-                               bcGoodCard, bcGreenCard, bcHiper, bcJcB, bcMais,
-                               bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
-                               bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros,
-                               TpcnBandeiraCartao(-1)]);
-end;
-
-function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
-begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08',
-                                   '09', '10', '11', '12', '13', '14', '15', '16',
-                                   '17', '18', '19', '20', '21', '22', '23', '24',
-                                   '25', '26', '27', '99', ''],
-                                  [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
-                                   bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
-                                   bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
-                                   bcGoodCard, bcGreenCard, bcHiper, bcJcB, bcMais,
-                                   bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
-                                   bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros,
-                                   TpcnBandeiraCartao(-1)]);
-end;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;
 begin
@@ -1558,90 +974,6 @@ begin
   result := StrToEnumerado(ok, s, ['1', '2', '9'], [inContribuinte, inIsento, inNaoContribuinte]);
 end;
 
-function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                               '10', '11', '12', '13'],
-                              [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
-                               tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                               tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
-end;
-
-function StrToTipoViaTransp(out ok: boolean; const s: string): TpcnTipoViaTransp;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
-                                   '10', '11', '12', '13'],
-                                  [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
-                                   tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                                   tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
-end;
-
-function TipoViaTranspToDescricao(const t: TpcnTipoViaTransp): string;
-begin
-  result := EnumeradoToStr(t, ['01 - Marítima',
-                               '02 - Fluvial',
-                               '03 - Lacustre',
-                               '04 - Aérea',
-                               '05 - Postal',
-                               '06 - Ferroviária',
-                               '07 - Rodoviária',
-                               '08 - Conduto / Rede Transmissão',
-                               '09 - Meios Próprios',
-                               '10 - Entrada / Saída ficta',
-                               '11 - Courier',
-                               '12 - Em mãos',
-                               '13 - Por reboque'],
-                              [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
-                               tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
-                               tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
-end;
-
-function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2', '3'],
-                              [tiContaPropria, tiContaOrdem, tiEncomenda]);
-end;
-
-function StrToTipoIntermedio(out ok: boolean; const s: string): TpcnTipoIntermedio;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3'],
-                                  [tiContaPropria, tiContaOrdem, tiEncomenda]);
-end;
-
-function TipoIntermedioToDescricao(const t: TpcnTipoIntermedio): string;
-begin
-  result := EnumeradoToStr(t, ['1 - Importação por conta própria',
-                               '2 - Importação por conta e ordem',
-                               '3 - Importação por encomenda'],
-                              [tiContaPropria, tiContaOrdem, tiEncomenda]);
-end;
-
-function indISSRetToStr(const t: TpcnindISSRet ): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2'],
-                              [iirSim, iirNao]);
-end;
-
-function StrToindISSRet(out ok: boolean; const s: string): TpcnindISSRet;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2'],
-                                  [iirSim, iirNao]);
-end;
-
-function indISSToStr(const t: TpcnindISS ): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7'],
-                              [iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao,
-                               iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm]);
-end;
-
-function StrToindISS(out ok: boolean; const s: string): TpcnindISS;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7'],
-                                  [iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao,
-                                   iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm]);
-end;
-
 function indIncentivoToStr(const t: TpcnindIncentivo ): string;
 begin
   result := EnumeradoToStr(t, ['1', '2'],
@@ -1652,32 +984,6 @@ function StrToindIncentivo(out ok: boolean; const s: string): TpcnindIncentivo;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [iiSim, iiNao]);
-end;
-
-function TipoAutorToStr(const t: TpcnTipoAutor ): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '5', '6', '9'],
-                              [taEmpresaEmitente, taEmpresaDestinataria,
-                               taEmpresa, taFisco, taRFB, taOutros]);
-end;
-
-function StrToTipoAutor(out ok: boolean; const s: string): TpcnTipoAutor;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '5', '6', '9'],
-                                  [taEmpresaEmitente, taEmpresaDestinataria,
-                                   taEmpresa, taFisco, taRFB, taOutros]);
-end;
-
-function IndOperacaoToStr(const t: TpcnIndOperacao ): string;
-begin
-  result := EnumeradoToStr(t, ['1', '2', '3'],
-                              [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);
-end;
-
-function StrToIndOperacao(out ok: boolean; const s: string): TpcnIndOperacao;
-begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3'],
-                                  [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);
 end;
 
 function TpPropToStr(const t: TpcteProp): String;
@@ -1830,80 +1136,10 @@ begin
   Result := TSchemaDFe( CodSchema );
 end;
 
-function motDesICMSToStrTagPosText(const t: TpcnMotivoDesoneracaoICMS): string;
-begin
-  // 1 – Táxi;
-  // 2 – Deficiente Físico;
-  // 3 – Produtor Agropecuário;
-  // 4 – Frotista/Locadora;
-  // 5 – Diplomático/Consular;
-  // 6 – Utilitários e Motocicletas da
-  // Amazônia Ocidental e Áreas de
-  // Livre Comércio (Resolução
-  // 714/88 e 790/94 – CONTRAN e
-  // suas alterações);
-  // 7 – SUFRAMA;
-  // 8 – Venda a Orgãos Publicos;
-  // 9 – outros. (v2.0)
-  // 10 – Deficiente Condutor (Convênio ICMS 38/12). (v3.1)
-  // 11 – Deficiente não Condutor (Convênio ICMS 38/12). (v3.1)
-  // 12 - Orgão Fomento
-  // 16 - Olimpiadas Rio 2016
-  // 90 - Solicitado pelo Fisco
-result := EnumeradoToStr(t, ['1 – Táxi', '2 – Deficiente Físico', '3 – Produtor Agropecuário',
-  '4 – Frotista/Locadora', '5 – Diplomático/Consular', '6 - Utilit./Motos da Am./Áreas Livre Com.',
-  '7 – SUFRAMA', '8 – Venda a Orgãos Publicos', '9 – Outros', '10 – Deficiente Condutor',
-  '11 – Deficiente não Condutor', '12 - Orgão Fomento', '16 - Olimpiadas Rio 2016',
-  '90 - Solicitado pelo Fisco', ''],
-  [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
-   mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
-   mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
-   mdiOlimpiadaRio2016, mdiSolicitadoFisco,
-   TpcnMotivoDesoneracaoICMS(-1)]);
-end;
-
-function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib): string;
-begin
-  result := EnumeradoToStr(t, ['','N - Normal','R - Retida','S - Substituta','I - Isenta'],
-  [ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
-end;
-
-function indISSToStrTagPosText(const t: TpcnindISS): string;
-begin
-  result := EnumeradoToStr(t, ['1 - Exigível', '2 - Não incidência', '3 - Isenção', '4 - Exportação',
-                               '5 - Imunidade', '6 - Exig. Susp. Dec. Jud.', '7 - Exig. Susp. Proc. Adm.'],
-                              [iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao,
-                               iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm]);
-end;
-
 function indIncentivoToStrTagPosText(const t: TpcnindIncentivo): string;
 begin
   result := EnumeradoToStr(t, ['1 - Sim', '2 - Não'],
                               [iiSim, iiNao]);
-end;
-
-function indSomaPISSTToStr(const t: TIndSomaPISST): String;
-begin
-  Result := EnumeradoToStr(t, ['', '0', '1'],
-                                [ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe]);
-end;
-
-function StrToindSomaPISST(out ok: Boolean; const s: String): TIndSomaPISST;
-begin
-  Result := StrToEnumerado(ok, s, ['', '0', '1'],
-                                [ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe]);
-end;
-
-function indSomaCOFINSSTToStr(const t: TIndSomaCOFINSST): String;
-begin
-  Result := EnumeradoToStr(t, ['', '0', '1'],
-                          [iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe]);
-end;
-
-function StrToindSomaCOFINSST(out ok: Boolean; const s: String): TIndSomaCOFINSST;
-begin
-  Result := StrToEnumerado(ok, s, ['', '0', '1'],
-                          [iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe]);
 end;
 
 function StrToTpEventoDFe(out ok: boolean; const s, aDFe: string): TpcnTpEvento;

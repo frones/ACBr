@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao;
+  pcnConversao,
+  pcnConversaoNFe;
 
 type
 

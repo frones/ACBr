@@ -38,7 +38,18 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
+  ACBrBase,
   pcnConversao;
+
+type
+  TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
+const
+  TpcteModeloNFArrayStrings: array[TpcteModeloNF] of string = ('01','04');
+
+function ModeloNFToStr(const t: TpcteModeloNF): string;  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função ModeloNFToStrEX'{$ENDIF};
+function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS}'Use a função StrToModeloNFEX'{$ENDIF};
+function ModeloNFToStrEX(const t: TpcteModeloNF): string;
+function StrToModeloNFEX(const s: string): TpcteModeloNF;
 
 type
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
@@ -413,6 +424,39 @@ implementation
 
 uses
   typinfo;
+
+
+function ModeloNFToStr(const t: TpcteModeloNF): string;
+begin
+  result := EnumeradoToStr(t, ['01','04'],
+   [moNF011AAvulsa, moNFProdutor]);
+end;
+
+function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
+begin
+  result := StrToEnumerado(ok, s, ['01','04'],
+   [moNF011AAvulsa, moNFProdutor]);
+end;
+
+function ModeloNFToStrEX(const t: TpcteModeloNF): string;
+begin
+  Result := TpcteModeloNFArrayStrings[t];
+end;
+
+function StrToModeloNFEX(const s: string): TpcteModeloNF;
+var
+  idx: TpcteModeloNF;
+begin
+  for idx:= Low(TpcteModeloNFArrayStrings) to High(TpcteModeloNFArrayStrings)do
+  begin
+    if(TpcteModeloNFArrayStrings[idx] = s)then
+    begin
+      Result := idx;
+      Exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TpcteModeloNF: %s', [s]);
+end;
 
 function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 begin

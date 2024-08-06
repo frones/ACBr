@@ -45,6 +45,7 @@ uses
   {$IfEnd}
   ACBrBase,
   pcnConversao,
+  pcnConversaoNFe,
   ACBrXmlBase;
 
 type

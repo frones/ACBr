@@ -513,7 +513,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnConversao,
+  pcnAuxiliar, pcnConversao, pcnConversaoNFe,
   ACBrLibNFeConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TPathNFeResposta }

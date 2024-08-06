@@ -215,7 +215,8 @@ begin
   FExpire          := 0;
   FErroComunicacao := '';
   try
-    LJson := TACBrJSONObject.Parse(UTF8ToNativeString(ARetorno));
+    LJson := TACBrJSONObject.Parse(UTF8ToNativeString(StringReplace(ARetorno,#$A,'',[rfReplaceAll])));
+
     try
       if (FHTTPSend.ResultCode in [ 200 .. 205 ]) then
       begin

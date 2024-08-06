@@ -132,7 +132,10 @@ type
     cobBancoAthenaBradesco,
     cobBancoQITechSCD,
     cobBancoUY3,
-    cobBancoBocomBBM
+    cobBancoBocomBBM,
+    cobBancoSicoob,
+    cobBancoSisprime,
+    cobBancoAilos
     );
 
   TACBrTitulo = class;
@@ -1292,6 +1295,7 @@ type
     fOrgaoNegativador:String;
 
     function GetQrCode: TACBrBoletoPIXQRCode;
+    function GetNossoNumero: string;
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(const AValue: String);
     procedure SetDiasDeProtesto(AValue: Integer);
@@ -1333,7 +1337,7 @@ type
      property EspecieDoc        : String      read fEspecieDoc        write fEspecieDoc;
      property Aceite            : TACBrAceiteTitulo   read fAceite           write fAceite      default atNao;
      property DataProcessamento : TDateTime   read fDataProcessamento write fDataProcessamento;
-     property NossoNumero       : String      read fNossoNumero       write SetNossoNumero;
+     property NossoNumero       : String      read GetNossoNumero       write SetNossoNumero;
      property NossoNumeroCorrespondente : String  read fNossoNumeroCorrespondente write fNossoNumeroCorrespondente;
      property UsoBanco          : String      read fUsoBanco          write fUsoBanco;
      property Carteira          : String      read fCarteira          write SetCarteira;
@@ -2688,6 +2692,7 @@ var
    wNossoNumero: String;
 begin
    wNossoNumero:= OnlyNumber(AValue);
+
    with ACBrBoleto.Banco do
    begin
       wTamNossoNumero:= CalcularTamMaximoNossoNumero(Carteira, wNossoNumero,
@@ -2698,6 +2703,16 @@ begin
 
       fNossoNumero := PadLeft(wNossoNumero,wTamNossoNumero,'0');
    end;
+end;
+
+function TACBrTitulo.GetNossoNumero: string;
+  var LTamNossoNumero : Integer;
+begin
+  LTamNossoNumero:= ACBrBoleto.Banco.CalcularTamMaximoNossoNumero(Carteira, fNossoNumero,
+                                                     ACBrBoleto.Cedente.Convenio);
+  if ((fNossoNumero = '0') or (fNossoNumero = Poem_Zeros('',LTamNossoNumero)) ) and (fRetornoWeb.DadosRet.TituloRet.NossoNumero <> '') then
+    fNossoNumero := fRetornoWeb.DadosRet.TituloRet.NossoNumero;
+  Result := fNossoNumero;
 end;
 
 function TACBrTitulo.GetQrCode: TACBrBoletoPIXQRCode;
@@ -4666,7 +4681,8 @@ begin
      cobBanrisul             : fBancoClass := TACBrBanrisul.create(Self);            {041}
      cobBRB                  : fBancoClass := TACBrBancoBRB.create(Self);            {070}
      cobUnicredRS            : fBancoClass := TACbrBancoUnicredRS.Create(Self);      {091}
-     cobBancoCECRED          : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
+     cobBancoCECRED,
+     cobBancoAilos           : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
      cobCrediSIS             : fBancoClass := TACBrBancoCrediSIS.Create(Self);       {097}
      cobUniprime             : fBancoClass := TACBrUniprime.create(Self);            {099}
      cobCaixaEconomica       : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
@@ -4677,7 +4693,8 @@ begin
      cobItau                 : fBancoClass := TACBrBancoItau.Create(Self);           {341}
      cobBancoMercantil       : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
      cobSicred               : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
-     cobBancoob              : fBancoClass := TACBrBancoob.create(Self);             {756}
+     cobBancoob,
+     cobBancoSicoob          : fBancoClass := TACBrBancoob.create(Self);             {756}
      cobHSBC                 : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
      cobBicBanco             : fBancoClass := TACBrBancoBic.create(Self);            {237}
      cobBradescoSICOOB       : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
@@ -4688,7 +4705,8 @@ begin
      cobCitiBank             : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
      cobBancoABCBrasil       : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
      cobDaycoval             : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
-     cobUniprimeNortePR      : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}
+     cobUniprimeNortePR,
+     cobBancoSisprime        : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}
      cobBancoPine            : fBancoClass := TACBrBancoPine.create(Self);
      cobBancoPineBradesco    : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
      cobUnicredSC            : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}

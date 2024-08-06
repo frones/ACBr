@@ -262,6 +262,7 @@ type
     FCodigoOcorrenciaCartorio  : String;
     FCodigoCanalTituloCobranca : String;
     FNossoNumeroCorrespondente : string;
+    FResponsavelPelaEmissao    : TACBrResponEmissao;
   public
     constructor Create;
     destructor Destroy; override;
@@ -349,6 +350,7 @@ type
     property UrlPix: String read FurlPix write FurlPix;
     property TxId: String read FtxId write FtxId;
     property ValorTarifa: Extended read FValorTarifa write FValorTarifa;
+    property ResponsavelPelaEmissao: TACBrResponEmissao read FResponsavelPelaEmissao write FResponsavelPelaEmissao;
   end;
 
     { TACBrBoletoDadosRet }

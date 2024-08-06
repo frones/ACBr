@@ -63,6 +63,9 @@ Símbolo : Significado
 https://www.projetoacbr.com.br/forum/topic/78771-caixa-retorno-via-api-da-data-de-pagamento/
   Por Victor H Gonzales
 
+[+]TK-5825 - ACBrBoleto - Enumerados de Bancos que trocam o Nome
+  Por  Victor H Gonzales - Pandaaa
+
 05/08/2024
 -- ACBrBancoC6 --
 [*]TK-5821 - Ajustado fpCodigosMoraAceitos para permitir 0 e 1 pois na conversao da classe basica CodigoMora quando nao informado passa ser 1 ocasionando erro raise.

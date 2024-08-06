@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFe_DanfeFPDF"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF;..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\FPDF"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - DANFe em FPDF - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="5">
+      <Item1>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeDANFeFPDF.pas"/>
+        <UnitName Value="ACBrNFeDANFeFPDF"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeDANFeFPDFReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFeDANFeFPDFReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\FPDF\ACBrNFeUtilsFPDF.pas"/>
+        <UnitName Value="ACBrNFeUtilsFPDF"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\FPDF\ACBrNFCeDANFeFPDF.pas"/>
+        <UnitName Value="ACBrNFCeDANFeFPDF"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\FPDF\ACBrNFCeDANFeFPDFReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFCeDANFeFPDFReg"/>
+      </Item5>
+    </Files>
+    <CompatibilityMode Value="True"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBr_NFe"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

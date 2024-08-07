@@ -1263,7 +1263,9 @@ begin
         NumRps := LerChaveRPS(ANode);
         NumNFSe := LerChaveNFe(ANode);
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := nil;
+        if (NumRPS <> '') then
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if ANota = nil then
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);

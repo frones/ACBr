@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/08/2024
+-- ISSSaoPaulo.Provider --
+[*] #TK-5774 - Alteração para que conte corretamente a quantidade de notas no retorno da ConsultarNFSeServicoTomadoPorTomador
+  Por: Diego Folieni 
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Chapadao do Sul/MS, o provedor é Fiorilli - TK-5820.
 [+] Incluída a cidade de Ubirata/PR, o provedor é Pronim - TK-5819.

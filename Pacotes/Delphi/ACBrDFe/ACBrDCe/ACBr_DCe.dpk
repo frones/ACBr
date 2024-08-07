@@ -1,0 +1,90 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+package ACBr_DCe;
+
+{$R *.res}
+{$R *.otares}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$DEFINITIONINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Declaração de Conteudo Eletrônica - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  rtl,
+  ACBr_DFeComum,
+  ACBr_PCNComum;
+
+contains
+  ACBrDCe in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCe.pas',
+  ACBrDCeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeConfiguracoes.pas',
+  ACBrDCeDeclaracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeDeclaracoes.pas',
+  ACBrDCeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeWebServices.pas',
+  ACBrDCe.DACEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\ACBrDCe.DACEClass.pas',
+  ACBrDCe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Classes.pas',
+  ACBrDCe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Consts.pas',
+  ACBrDCe.Conversao in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Conversao.pas',
+  ACBrDCe.XmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.XmlWriter.pas',
+  ACBrDCe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.XmlReader.pas',
+  ACBrDCe.ConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.ConsSit.pas',
+  ACBrDCe.EnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.EnvEvento.pas',
+  ACBrDCe.EventoClass in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.EventoClass.pas',
+  ACBrDCe.RetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.RetConsSit.pas',
+  ACBrDCe.RetEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.RetEnvEvento.pas';
+
+end.

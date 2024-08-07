@@ -42,7 +42,7 @@ interface
 uses
   SysUtils, Classes, ACBrCTeDACTEClass, ACBrBase,
   pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
-  pcteEnvEventoCTe, pcteInutCTe, pcteRetInutCTe, ACBrCTe,
+  ACBrCTe.EnvEvento, pcteInutCTe, pcteRetInutCTe, ACBrCTe,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,

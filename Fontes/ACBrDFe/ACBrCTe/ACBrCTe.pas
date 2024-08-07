@@ -44,7 +44,7 @@ uses
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTEClass, ACBrDFeException,
   pcteCTe, pcnConversao, pcteConversaoCTe,
-  pcteEnvEventoCTe, pcteInutCTe, 
+  ACBrCTe.EnvEvento, pcteInutCTe,
   ACBrDFeUtil;
 
 const
@@ -350,11 +350,11 @@ end;
 
 function TACBrCTe.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoCTe.Gerador.ArquivoFormatoXML) then
+  if EstaVazio(FEventoCTe.XmlEnvio) then
     FEventoCTe.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoCTe.Gerador.ArquivoFormatoXML));
+  WriteStrToStream(AStream, AnsiString(FEventoCTe.XmlEnvio));
   Result := True;
 end;
 

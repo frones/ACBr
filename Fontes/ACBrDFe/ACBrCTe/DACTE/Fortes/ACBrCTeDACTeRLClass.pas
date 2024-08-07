@@ -82,7 +82,7 @@ uses
   ACBrUtil.Strings, 
   ACBrUtil.FilesIO,
   ACBrCTe, 
-  pcteEnvEventoCTe,
+  ACBrCTe.EnvEvento,
   ACBrCTeDAInutRL, 
   ACBrCTeDAInutRLRetrato,
   ACBrCTeDACTeRL, 

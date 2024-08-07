@@ -9,13 +9,13 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="20">
+    <Files Count="25">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas"/>
         <UnitName Value="ACBrCTeConhecimentos"/>
@@ -97,6 +97,26 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas"/>
         <UnitName Value="ACBrCTe.XmlHandler"/>
       </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.ConsSit.pas"/>
+        <UnitName Value="ACBrCTe.ConsSit"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.RetConsSit.pas"/>
+        <UnitName Value="ACBrCTe.RetConsSit"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.EventoClass.pas"/>
+        <UnitName Value="ACBrCTe.EventoClass"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.EnvEvento.pas"/>
+        <UnitName Value="ACBrCTe.EnvEvento"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.RetEnvEvento.pas"/>
+        <UnitName Value="ACBrCTe.RetEnvEvento"/>
+      </Item25>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

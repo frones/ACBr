@@ -66,5 +66,7 @@ public enum  ACBrSessao {
     Ailos,
     Matera,
     Cielo,
-    MercadoPago;
+    MercadoPago,
+    AbecsPinpad,
+    AbecsPinpad_Device;
 }

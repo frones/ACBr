@@ -320,7 +320,7 @@ begin
               Gerador.wGrupo('CONSULTA_BOLETO');
 
             Gerador.wCampo(tcStr, '#01', 'CODIGO_BENEFICIARIO', 07, 07, 1, Boleto.Cedente.CodigoCedente, DSC_CODIGO_CEDENTE);
-            Gerador.wCampo(tcStr, '#02', 'NOSSO_NUMERO       ', 17, 17, 1, '14' + PadLeft(NossoNumero, 15, '0'), DSC_NOSSO_NUMERO);
+            Gerador.wCampo(tcStr, '#02', 'NOSSO_NUMERO       ', 17, 17, 1, '14' + ACBrUtil.Strings.PadLeft(NossoNumero, 15, '0'), DSC_NOSSO_NUMERO);
 
             if (Boleto.Configuracoes.WebService.Operacao = tpBaixa) then
               Gerador.wGrupo('/BAIXA_BOLETO')

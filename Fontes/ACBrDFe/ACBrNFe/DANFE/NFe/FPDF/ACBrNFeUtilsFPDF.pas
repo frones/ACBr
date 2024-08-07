@@ -39,15 +39,15 @@ unit ACBrNFeUtilsFPDF;
 interface
 
 uses
-  Classes,
   SysUtils,
   StrUtils,
-
   pcnNFe,
   pcnConversao,
+  pcnConversaoNFe,
   ACBrNFe,
   ACBrNFeDANFEClass,
-  StrUtilsEx, ACBrDFeDANFeReport;
+  StrUtilsEx,
+  ACBrDFeDANFeReport;
 
 type
   TLogoAlign = (laLeft, laCenter, laRight, laFull);

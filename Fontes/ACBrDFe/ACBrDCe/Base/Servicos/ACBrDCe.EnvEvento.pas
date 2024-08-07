@@ -302,7 +302,7 @@ begin
   end
   else
     Result.AppendChild(AddNode(tcStr, 'HP11', 'IdOutrosUsEmit', 2, 60, 1,
-                                                          sDoc , DSC_IDOUTROS));
+                                                          sDoc, DSC_IDOUTROS));
 
   Result.AppendChild(AddNode(tcStr, 'HP12', 'chDCe', 44, 44, 1,
                                       Evento[Idx].FInfEvento.chDCe, DSC_CHAVE));

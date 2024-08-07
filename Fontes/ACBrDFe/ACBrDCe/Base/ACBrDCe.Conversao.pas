@@ -77,6 +77,8 @@ type
 
 const
   TModTransArrayStrings: array[TModTrans] of string = ('0', '1', '2');
+  TModTransArrayStringsDesc: array[TModTrans] of string = ('0=Transporte pelos correios',
+    '1=Transporte por contra própria', '2=Transporte por empresa transportadora');
 
 {
   Declaração das funções de conversão
@@ -102,6 +104,7 @@ function StrToEmitenteDCe(const s: String): TEmitenteDCe;
 
 function ModTransToStr(const t: TModTrans): String;
 function StrToModTrans(const s: String): TModTrans;
+function ModTransToDesc(const t: TModTrans): String;
 
 implementation
 
@@ -265,6 +268,11 @@ begin
   end;
 
   raise EACBrException.CreateFmt('Valor string inválido para TModTrans: %s', [s]);
+end;
+
+function ModTransToDesc(const t: TModTrans): String;
+begin
+  result := TModTransArrayStringsDesc[t];
 end;
 
 initialization

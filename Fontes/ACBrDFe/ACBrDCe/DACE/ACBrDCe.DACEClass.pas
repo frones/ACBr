@@ -70,9 +70,11 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDACE(ADCe: TDCe = nil); virtual;
-    procedure ImprimirDACEPDF(ADCe: TDCe = nil); virtual;
+    procedure ImprimirDACEPDF(ADCe: TDCe = nil); overload; virtual;
+    procedure ImprimirDACEPDF(AStream: TStream; ADCe: TDCe = nil); overload; virtual;
     procedure ImprimirEVENTO(ADCe: TDCe = nil); virtual;
-    procedure ImprimirEVENTOPDF(ADCe: TDCe = nil); virtual;
+    procedure ImprimirEVENTOPDF(ADCe: TDCe = nil); overload; virtual;
+    procedure ImprimirEVENTOPDF(AStream: TStream; ADCe: TDCe = nil); overload; virtual;
   published
     property ACBrDCe: TComponent            read FACBrDCe                write SetACBrDCe;
     property ImprimeHoraSaida: Boolean      read FImprimirHoraSaida      write FImprimirHoraSaida;
@@ -162,12 +164,22 @@ begin
   ErroAbstract('ImprimirDACEPDF');
 end;
 
+procedure TACBrDCeDACEClass.ImprimirDACEPDF(AStream: TStream; ADCe: TDCe);
+begin
+  ErroAbstract('ImprimirDACEPDF');
+end;
+
 procedure TACBrDCeDACEClass.ImprimirEVENTO(ADCe: TDCe);
 begin
   ErroAbstract('ImprimirEVENTO');
 end;
 
 procedure TACBrDCeDACEClass.ImprimirEVENTOPDF(ADCe: TDCe);
+begin
+  ErroAbstract('ImprimirEVENTOPDF');
+end;
+
+procedure TACBrDCeDACEClass.ImprimirEVENTOPDF(AStream: TStream; ADCe: TDCe);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;

@@ -677,7 +677,7 @@ begin
   if not Assigned(DACE) then
      raise EACBrDCeException.Create('Componente DACE não associado.')
   else
-     DACE.ImprimirEVENTOPDF(nil);
+     DACE.ImprimirEVENTOPDF;
 end;
 
 end.

@@ -2461,7 +2461,7 @@ end;
 procedure TDeclaracoes.ImprimirPDF;
 begin
   VerificarDADCe;
-  TACBrDCe(FACBrDCe).DACE.ImprimirDACEPDF(nil);
+  TACBrDCe(FACBrDCe).DACE.ImprimirDACEPDF;
 end;
 
 function TDeclaracoes.Insert(Index: integer): TDeclaracao;

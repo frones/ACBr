@@ -3378,17 +3378,20 @@ var AValorMulta : Currency;
   ATipoMulta : String;
 begin
 
-  if ATitulo.MultaValorFixo then
-    AValorMulta := ATitulo.PercentualMulta
-  else
-    AValorMulta := RoundABNT((ATitulo.PercentualMulta / 100) * ATitulo.ValorDocumento,2);
+  //if ATitulo.MultaValorFixo then
+    AValorMulta := ATitulo.PercentualMulta;
+  //else
+  //  AValorMulta := RoundABNT((ATitulo.PercentualMulta / 100) * ATitulo.ValorDocumento,2);
 
   if (ATitulo.DataMulta <> 0) and (ATitulo.DataMulta > ATitulo.Vencimento) then
     ATipoMulta := 'a partir de ' + FormatDateTime('dd/mm/yyyy',ATitulo.DataMulta)
   else
     ATipoMulta := 'após o vencimento';
 
-  Result := ACBrStr(Format('Cobrar multa de R$%s para pagamento %s.',[FormatFloatBr(AValorMulta),ATipoMulta]));
+  if ATitulo.MultaValorFixo then
+    Result := ACBrStr(Format('Cobrar multa de R$%s para pagamento %s.',[FormatFloatBr(AValorMulta),ATipoMulta]))
+  else
+    Result := ACBrStr(Format('Cobrar multa de %s%s  para pagamento %s.',[FormatFloatBr(AValorMulta),'%',ATipoMulta]));
 end;
 
 function TACBrBoleto.GerarMensagemPadraoNegativacao(ATitulo: TACBrTitulo): String;

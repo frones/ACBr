@@ -48,6 +48,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+07/08/2024
+--ACBrBoleto--
+[*]TK-5749 ACBrBoleto - Multa Valor Fixo = true imprimir valor monetário, false imprimir percentual, removido cálculos (que forçava sempre monetário)
+  por tdpsistemas
 
 06/08/2024 
 -- ACBrBancoSicredi --

@@ -40,10 +40,11 @@ uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase,
+  ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceGiss204 = class(TACBrNFSeXWebserviceSoap12)
+  TACBrNFSeXWebserviceGiss204 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
@@ -56,6 +57,7 @@ type
     function Cancelar(const ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderGiss204 = class (TACBrNFSeProviderABRASFv2)
@@ -66,12 +68,15 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
 
 uses
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil.XMLHTML,
   ACBrNFSeXNotasFiscais, Giss.GravarXml, Giss.LerXml;
 
 { TACBrNFSeProviderGiss204 }
@@ -82,6 +87,7 @@ begin
 
   with ConfigAssinar do
   begin
+    Rps := True;
     LoteRps := True;
     CancelarNFSe := True;
   end;
@@ -94,8 +100,11 @@ begin
 
   with ConfigMsgDados do
   begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+
     GerarPrestadorLoteRps := True;
-    {
+
     XmlRps.xmlns := 'http://www.giss.com.br/tipos-v2_04.xsd';
 
     LoteRps.xmlns := 'http://www.giss.com.br/enviar-lote-rps-envio-v2_04.xsd';
@@ -114,13 +123,9 @@ begin
 
     SubstituirNFSe.xmlns := 'http://www.giss.com.br/substituir-nfse-envio-v2_04.xsd';
 
-    DadosCabecalho := '<cabecalho versao="1.0" xmlns="http://www.giss.com.br/cabecalho-v2_04.xsd">' +
-                      '<versaoDados>1.0</versaoDados>' +
-                      '</cabecalho>';
-    }
-    DadosCabecalho := GetCabecalho('');
+    DadosCabecalho := GetCabecalho('http://www.giss.com.br/cabecalho-v2_04.xsd');
   end;
-  {
+
   with ConfigSchemas do
   begin
     Recepcionar := 'enviar-lote-rps-envio-v2_04.xsd';
@@ -135,9 +140,7 @@ begin
     GerarNFSe := 'gerar-nfse-envio-v2_04.xsd';
     RecepcionarSincrono := 'enviar-lote-rps-sincrono-envio-v2_04.xsd';
     SubstituirNFSe := 'substituir-nfse-envio-v2_04.xsd';
-    Validar := False;
   end;
-  }
 end;
 
 function TACBrNFSeProviderGiss204.CriarGeradorXml(
@@ -172,6 +175,44 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderGiss204.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  InfoCanc: TInfCancelamento;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  InfoCanc := Response.InfCancelamento;
+
+  with Params do
+  begin
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+                           '<' + Prefixo + 'Pedido>' +
+                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + NameSpace2 + '>' +
+                               '<' + Prefixo2 + 'IdentificacaoNfse>' +
+                                 '<' + Prefixo2 + 'Numero>' +
+                                    InfoCanc.NumeroNFSe +
+                                 '</' + Prefixo2 + 'Numero>' +
+                                 Serie +
+                                 '<' + Prefixo2 + 'CpfCnpj>' +
+                                   GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                                 '</' + Prefixo2 + 'CpfCnpj>' +
+                                 GetInscMunic(Emitente.InscMun, Prefixo2) +
+                                 '<' + Prefixo2 + 'CodigoMunicipio>' +
+                                    IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                                 '</' + Prefixo2 + 'CodigoMunicipio>' +
+                                 CodigoVerificacao +
+                               '</' + Prefixo2 + 'IdentificacaoNfse>' +
+                               '<' + Prefixo2 + 'CodigoCancelamento>' +
+                                  InfoCanc.CodCancelamento +
+                               '</' + Prefixo2 + 'CodigoCancelamento>' +
+                               Motivo +
+                             '</' + Prefixo2 + 'InfPedidoCancelamento>' +
+                           '</' + Prefixo + 'Pedido>' +
+                         '</' + Prefixo + 'CancelarNfseEnvio>';
+  end;
+end;
+
 { TACBrNFSeXWebserviceGiss204 }
 
 function TACBrNFSeXWebserviceGiss204.Recepcionar(const ACabecalho,
@@ -187,7 +228,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
-                     ['return', 'outputXML', 'EnviarLoteRpsResposta'],
+                     ['outputXML', 'EnviarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -204,7 +245,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
-                     ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'],
+                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -221,7 +262,7 @@ begin
   Request := Request + '</nfse:GerarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
-                     ['return', 'outputXML', 'GerarNfseResposta'],
+                     ['outputXML', 'GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -238,7 +279,7 @@ begin
   Request := Request + '</nfse:ConsultarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarLoteRps', Request,
-                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'],
+                     ['outputXML', 'ConsultarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -255,7 +296,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
-                     ['return', 'outputXML', 'ConsultarNfsePorFaixaResposta'],
+                     ['outputXML', 'ConsultarNfsePorFaixaResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -272,7 +313,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'],
+                     ['outputXML', 'ConsultarNfseRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -289,7 +330,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
-                     ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'],
+                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -306,7 +347,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
-                     ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'],
+                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -322,7 +363,7 @@ begin
   Request := Request + '</nfse:CancelarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
-                     ['return', 'outputXML', 'CancelarNfseResposta'],
+                     ['outputXML', 'CancelarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -339,8 +380,20 @@ begin
   Request := Request + '</nfse:SubstituirNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
-                     ['return', 'outputXML', 'SubstituirNfseResposta'],
+                     ['outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceGiss204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverCaracteresDesnecessarios(Result);
+  Result := ParseText(Result);
+  Result := RemoverDeclaracaoXML(Result);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

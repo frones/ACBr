@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/08/2024
+-- Giss.GravarXml/Giss.Provider --
+[*] Diversas alterações para deixar o provedor funcional - TK-5831
+  Por: Italo Giurizzato Junior/Diego Folieni
 -- EloTech.Provider --
 [*] Alteração nas funções de conversão da propriedade RegimeEspecialTributacao - TK-5832
   Por: Ramon Valentim

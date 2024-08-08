@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, contnrs,
-  pcteRetEnvEventoCTe, pcteEventoCTe,
+  pcteRetEnvEventoCTe, ACBrCTe.EventoClass,
   ACBrLibConsReciDFe, ACBrLibResposta, ACBrCTe;
 
 type
@@ -238,7 +238,7 @@ type
 implementation
 
 uses
-  pcnConversao, pcteConversaoCTe,
+  pcnConversao, pcteConversaoCTe, ACBrXMLBase,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibCTeConsts;
 
@@ -390,11 +390,11 @@ begin
   end
   else if (ACBrCTe.Configuracoes.Geral.ModeloDF = moCTeOS) and (ACBrCTe.Conhecimentos.Count > 0) then
   begin
-    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chCTe), Tipo, Formato);
+    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chDFe), Tipo, Formato);
     FItem.Id := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.Id;
-    FItem.tpAmb := TpAmbToStr(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.tpAmb);
+    FItem.tpAmb := TipoAmbienteToStr(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.tpAmb);
     FItem.verAplic := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.verAplic;
-    FItem.chDFe := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chCTe;
+    FItem.chDFe := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chDFe;
     FItem.dhRecbto := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.dhRecbto;
     FItem.nProt := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.nProt;
     FItem.digVal := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.digVal;

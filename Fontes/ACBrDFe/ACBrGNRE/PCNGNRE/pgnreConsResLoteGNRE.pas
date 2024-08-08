@@ -85,7 +85,7 @@ begin
   Gerador.wGrupo('TConsLote_GNRE ' + NAME_SPACE_GNRE);
 
   Gerador.wCampo(tcStr, '', 'ambiente    ', 01, 01, 1, tpAmbToStr(FAmbiente), DSC_TPAMB);
-  Gerador.wCampo(tcStr, '', 'numeroRecibo', 10, 10, 1, FnumeroRecibo, DSC_NREC);
+  Gerador.wCampo(tcNumStr, '', 'numeroRecibo', 10, 14, 1, FnumeroRecibo, DSC_NREC);
 
   if IncluirPDFGuias then
     Gerador.wCampo(tcStr, '', 'incluirPDFGuias', 1, 1, 1, 'S', '');

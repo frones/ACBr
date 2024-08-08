@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2024
+-- pgnreConsResLoteGNRE --
+[*] #TK-5791: Altera os parâmetros de tamanho min e max do numeroRecibo na geração do XML de consulta para coincidir com versão 2.11 do manual e schemas.
+Por: Diego Folieni
+
 05/08/2024
 -- ACBrGNReGuiaRLRetrato, ACBrGNREGuiaFRDM --
 [*] Altera a rotina para somar o valor de MultaFCP a Multa e JurosFCP e Juros.

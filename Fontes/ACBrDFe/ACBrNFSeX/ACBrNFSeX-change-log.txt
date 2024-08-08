@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/08/2024
+-- EloTech.Provider --
+[*] Alteração nas funções de conversão da propriedade RegimeEspecialTributacao - TK-5832
+  Por: Ramon Valentim
 -- ACBrNFSeXServicos --
 [*] Incluída as URLs de homologação da cidade de Sete Lagoas/MT, o provedor é Libre.
    Por: Arimateia Jr

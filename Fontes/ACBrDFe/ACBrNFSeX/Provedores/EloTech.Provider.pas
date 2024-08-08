@@ -524,7 +524,7 @@ function TACBrNFSeProviderEloTech203.RegimeEspecialTributacaoToStr(
   const t: TnfseRegimeEspecialTributacao): string;
 begin
   Result := EnumeradoToStr(t,
-                       ['0', '1', '2', '3', '4', '5', '6','7'],
+                       ['', '1', '2', '3', '4', '5', '6','7'],
                        [retNenhum, retMicroempresaMunicipal, retEstimativa,
                         retSociedadeProfissionais, retCooperativa,
                         retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
@@ -535,7 +535,7 @@ function TACBrNFSeProviderEloTech203.StrToRegimeEspecialTributacao(
   out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
 begin
   Result := StrToEnumerado(ok, s,
-                       ['0', '1', '2', '3', '4', '5', '6','7'],
+                       ['', '1', '2', '3', '4', '5', '6','7'],
                        [retNenhum, retMicroempresaMunicipal, retEstimativa,
                         retSociedadeProfissionais, retCooperativa,
                         retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
@@ -546,7 +546,7 @@ function TACBrNFSeProviderEloTech203.RegimeEspecialTributacaoDescricao(
   const t: TnfseRegimeEspecialTributacao): string;
 begin
   case t of
-    retNenhum                    : Result := '0 - Nenhum';
+    retNenhum                    : Result := 'Nenhum';
     retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
     retEstimativa                : Result := '2 - Estimativa';
     retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';

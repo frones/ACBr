@@ -325,7 +325,7 @@ type
     FCEST: string;
     FCFOP: string;
     FuCom: string;
-    FqCom: currency;
+    FqCom: double;
     FvUnCom: double;
     FvProd: currency;
     FindRegra: TpcnindRegra;
@@ -349,7 +349,7 @@ type
     property CFOP: string read FCFOP write FCFOP;
     property uCom: string read FuCom write FuCom;
     property EhCombustivel: Boolean read FEhCombustivel write FEhCombustivel;
-    property qCom: currency read FqCom write FqCom;
+    property qCom: double read FqCom write FqCom;
     property vUnCom: double read FvUnCom write FvUnCom;
     property vProd: currency read FvProd write FvProd;
     property indRegra : TpcnindRegra read FindRegra write FindRegra;

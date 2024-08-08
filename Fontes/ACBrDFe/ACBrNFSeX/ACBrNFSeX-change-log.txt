@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2024
+-- ACBrNFSeXServicos --
+[*] Incluída as URLs de homologação da cidade de Sete Lagoas/MT, o provedor é Libre.
+   Por: Arimateia Jr
+[+] Incluída a cidade de Agua Azul do Norte/PA, o provedor é Fiorilli - TK-5829.
+   Por: Joemil
+[*] Alterado as URLs da cidade de Mirassol D Oeste/MT, o provedor é mesmo - TK-5839.
+   Por: Diego Reckziegel
+
 07/08/2024
 -- ISSSaoPaulo.Provider --
 [*] #TK-5774 - Alteração para que conte corretamente a quantidade de notas no retorno da ConsultarNFSeServicoTomadoPorTomador
@@ -50,6 +59,11 @@ Símbolo : Significado
 [+] Incluída a cidade de Chapadao do Sul/MS, o provedor é Fiorilli - TK-5820.
 [+] Incluída a cidade de Ubirata/PR, o provedor é Pronim - TK-5819.
    Por: eazschornack, Higor, Júlio Cavalcanti 
+
+06/08/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Faxinalzinho/RS, o provedor é DataSmart- TK-5838.
+   Por: Willian Delan
 
 05/08/2024
 -- ISSFortaleza.Provider --

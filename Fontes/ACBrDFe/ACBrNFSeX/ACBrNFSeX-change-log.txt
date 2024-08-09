@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/08/2024
+-- ISSCampinas.Provider --
+[*] TK-5844: Corrige o namespace dos métodos RecepcionarLoteRPSSincrono e ConsultarNFSeFaixa.
+  Por: Diego Folieni
 -- ACBrNFSeXServicos -
 [*] Adiciona o parâmetro versão para a cidade de São Pedro da Aldeia
   Por: Diego Folieni

@@ -1773,9 +1773,9 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:EnviarLoteRpsSincrono>';
+  Request := '<nfse:RecepcionarLoteRpsSincrono>';
   Request := Request + AMSG;
-  Request := Request + '</nfse:EnviarLoteRpsSincrono>';
+  Request := Request + '</nfse:RecepcionarLoteRpsSincrono>';
 
   Result := Executar('', Request,
                      ['EnviarLoteRpsSincronoResponse', 'EnviarLoteRpsSincronoResposta'],
@@ -1837,9 +1837,9 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:ConsultarNfsePorFaixa>';
+  Request := '<nfse:ConsultarNfseFaixa>';
   Request := Request + AMSG;
-  Request := Request + '</nfse:ConsultarNfsePorFaixa>';
+  Request := Request + '</nfse:ConsultarNfseFaixa>';
 
   Result := Executar('', Request,
                      ['ConsultarNfseResponse', 'ConsultarNfseFaixaResposta'],

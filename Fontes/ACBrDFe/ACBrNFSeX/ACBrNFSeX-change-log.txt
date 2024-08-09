@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2024
+-- ACBrNFSeXServicos -
+[*] Adiciona o parâmetro versão para a cidade de São Pedro da Aldeia
+  Por: Diego Folieni
+
 08/08/2024
 -- Giss.GravarXml/Giss.Provider --
 [*] Diversas alterações para deixar o provedor funcional - TK-5831

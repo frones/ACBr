@@ -289,6 +289,7 @@ begin
     pgvDuplaDigitacao: DefCampo.ValidacaoDado := valdDuplaDigitacao;
     pgvSenhaLojista: DefCampo.ValidacaoDado := valdSenhaLojista;
     pgvSenhaTecnica: DefCampo.ValidacaoDado := valdSenhaTecnica;
+    pgvQuantidadeParcelas: DefCampo.ValidacaoDado := valdQuantidadeParcelas;
   else
     DefCampo.ValidacaoDado := valdNenhuma;
   end;

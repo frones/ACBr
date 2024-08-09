@@ -46,6 +46,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2024
+-- ACBrTEFAPI --
+[*] "TACBrTEFAPIValidacaoDado", adicionado enumerado, "valdQuantidadeParcelas"
+    Evento "QuandoPerguntarCampoAPI", permite indicar que a pergunta é
+    referente a um parcelamento
+
+-- ACBrTEFPayGoWebComum, ACBrTEFAPIPaygoWeb --
+[*] "TACBrTEFPGWebAPIValidacaoDado", adicionado enumerado "pgvQuantidadeParcelas = 102"
+[*] método "PW_GetDataToDefinicaoCampo" alterado para mapear PWINFO_INSTALLMENTS para
+    pgvQuantidadeParcelas
+(por: Guilherme Geraldo - GPlus)
+
 10/07/2024
 -- ACBrTEFAPI --
 [-] Ajueste em "ObterDadoPinPad", para permitir valores maiores

@@ -81,7 +81,8 @@ type
                                  valdDuplaDigitacao,
                                  valdSenhaGerente,
                                  valdSenhaLojista,
-                                 valdSenhaTecnica);
+                                 valdSenhaTecnica,
+                                 valdQuantidadeParcelas);
 
     TACBrTEFAPITipoBarras = ( tbQualquer,
                               tbDigitado,

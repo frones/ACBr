@@ -1065,6 +1065,7 @@ type
     procedure InicializarActivePages;
     procedure InicializarComponentesDefault;
 
+    function GetInfoOpenSSL: String;
     function GetNomeArquivoConfiguracao: String;
     procedure AdicionarLinhaLog(AMensagem: String);
     procedure TratarException(Sender: TObject; E: Exception);
@@ -1168,9 +1169,14 @@ uses
    fpjson, jsonparser, jsonscanner, Jsons,
   {$EndIf}
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
-  ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil,
-  ACBrPIXSchemasCobV, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrUtil.DateTime, ACBrUtil.Compatibilidade, ACBrJSON, ACBrConsts;
+  ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil, ACBrConsts,
+  ACBrPIXSchemasCobV, OpenSSLExt,
+  ACBrJSON,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.Compatibilidade;
 
 {$R *.lfm}
 
@@ -1187,6 +1193,7 @@ begin
   LerConfiguracao;
   VerificarConfiguracao;
   ReiniciarFluxo;
+  AdicionarLinhaLog(GetInfoOpenSSL);
 end;
 
 procedure TForm1.imgInfoMCCClick(Sender: TObject);
@@ -4456,6 +4463,17 @@ begin
   edCobVVencimento.DateTime := IncDay(Now, 7);
   pnBBPFX.Parent := pnBBCertificados;
   pnBBChaveECert.Parent := pnBBCertificados;
+end;
+
+function TForm1.GetInfoOpenSSL: String;
+begin
+  with ACBrOpenSSLUtils1 do
+    Result := 'Info OpenSSL: ' + sLineBreak +
+      OpenSSLExt.OpenSSLFullVersion + sLineBreak +
+      OpenSSLExt.SSLUtilFile + sLineBreak +
+      OpenSSLExt.SSLLibFile + sLineBreak +
+      OpenSSLExt.OpenSSLVersion(0) + sLineBreak +
+      IntToStr(OpenSSLExt.OpenSSLVersionNum) + sLineBreak;
 end;
 
 procedure TForm1.ConfigurarACBrPIXCD;

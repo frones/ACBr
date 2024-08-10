@@ -30,116 +30,51 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit ACBrLibCEPDataModule;
+{$I ACBr.inc}
 
-{$IfDef FPC}
-{$mode delphi}
-{$EndIf}
-
-interface
-
-uses
-  Classes, SysUtils, syncobjs,
-  ACBrLibComum, ACBrLibConfig,
-  ACBrCEP,
-  ACBrUtil.FilesIO;
-
-type
-
-  { TLibCEPDM }
-
-  TLibCEPDM = class(TDataModule)
-    ACBrCEP1: TACBrCEP;
-
-    procedure ACBrCEP1QuandoGravarLog(const ALogLine: String;
-      var Tratado: Boolean);
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
-
-  private
-    FLock: TCriticalSection;
-    fpLib: TACBrLib;
-
-  public
-    procedure AplicarConfiguracoes;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
-
-    property Lib: TACBrLib read fpLib write fpLib;
-  end;
-
-implementation
+{$IfDef POSIX}
+program ACBrLibCEP;
+{$ELSE}
+library ACBrLibCEP;
+{$ENDIF}
 
 uses
-  ACBrLibCEPConfig, ACBrLibCEPBase;
+  System.SysUtils,
+  System.Classes,
+  ACBrLibConfig, ACBrLibComum,
+  ACBrLibCEPConfig, ACBrLibCEPDataModule, ACBrLibCEPBase,
+  {$IFDEF MT}ACBrLibCEPMT{$ELSE}ACBrLibCEPST{$ENDIF};
 
-{$R *.lfm}
+{$R *.res}
 
-{ TLibCEPDM }
+exports
+  // Importadas de ACBrLibComum
+  CEP_Inicializar,
+  CEP_Finalizar,
+  CEP_Nome,
+  CEP_Versao,
+  CEP_OpenSSLInfo,
+  CEP_UltimoRetorno,
+  CEP_ConfigImportar,
+  CEP_ConfigExportar,
+  CEP_ConfigLer,
+  CEP_ConfigGravar,
+  CEP_ConfigLerValor,
+  CEP_ConfigGravarValor,
 
-procedure TLibCEPDM.DataModuleCreate(Sender: TObject);
+  // CEP
+  CEP_BuscarPorCEP,
+  CEP_BuscarPorLogradouro;
+
 begin
-  FLock := TCriticalSection.Create;
-end;
+  {$IfDef FPC}
+  {$IFDEF DEBUG}
+   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';
+   DeleteFile( HeapTraceFile );
+   SetHeapTraceOutput( HeapTraceFile );
+  {$EndIf}
 
-procedure TLibCEPDM.ACBrCEP1QuandoGravarLog(const ALogLine: String;
-  var Tratado: Boolean);
-begin
-  Tratado := (ACBrCEP1.ArqLOG = '');
-  if (Lib.Config.Socket.NivelLog > 0) then
-    GravarLog('TACBrCEP: '+ALogLine, logNormal);
-end;
-
-procedure TLibCEPDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
-
-procedure TLibCEPDM.AplicarConfiguracoes;
-var
-  pLibConfig: TLibCEPConfig;
-begin
-  pLibConfig := TLibCEPConfig(TACBrLibCEP(Lib).Config);
-
-  with ACBrCEP1 do
-  begin
-    WebService := pLibConfig.CEPConfig.WebService;
-    ChaveAcesso := pLibConfig.CEPConfig.ChaveAcesso;
-    Usuario := pLibConfig.CEPConfig.Usuario;
-    Senha := pLibConfig.CEPConfig.Senha;
-    PesquisarIBGE := pLibConfig.CEPConfig.PesquisarIBGE;
-    HTTPSend.Sock.SSL.SSLType := pLibConfig.CEPConfig.SSLType;
-
-    NivelLog := pLibConfig.Socket.NivelLog;
-    ArqLOG := pLibConfig.Socket.ArqLog;
-    TimeOut := pLibConfig.Socket.TimeOut;
-
-    ProxyHost := pLibConfig.ProxyInfo.Servidor;
-    ProxyPort := IntToStr(pLibConfig.ProxyInfo.Porta);
-    ProxyUser := pLibConfig.ProxyInfo.Usuario;
-    ProxyPass := pLibConfig.ProxyInfo.Senha;
-  end;
-end;
-
-procedure TLibCEPDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
-  Traduzir: Boolean);
-begin
-  if Assigned(Lib) then
-    TACBrLibCEP(Lib).GravarLog(AMsg, NivelLog, Traduzir);
-end;
-
-procedure TLibCEPDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibCEPDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
-end;
-
+  MainThreadID := GetCurrentThreadId();
+  {$EndIf}
 end.
 

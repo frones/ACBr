@@ -37,120 +37,120 @@ unit ACBrLibCEPST;
 interface
 
 uses
-  Classes, SysUtils, Forms,
+  Classes, SysUtils,
   ACBrLibComum;
 
-function CEP_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function CEP_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_Finalizar: longint;
+function CEP_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function CEP_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function CEP_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function CEP_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function CEP_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_ConfigImportar(const eArqConfig: PChar): longint;
+function CEP_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function CEP_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_ConfigLer(const eArqConfig: PChar): longint;
+function CEP_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_ConfigGravar(const eArqConfig: PChar): longint;
+function CEP_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function CEP_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CEP_BuscarPorCEP(eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CEP_BuscarPorCEP(eCEP: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CEP_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CEP_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
 
 Uses
   ACBrLibConsts, ACBrLibCEPBase;
 
-function CEP_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function CEP_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibCEP, eArqConfig, eChaveCrypt);
 end;
 
-function CEP_Finalizar: longint;
+function CEP_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
   pLib := nil;
 end;
 
-function CEP_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function CEP_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function CEP_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function CEP_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function CEP_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function CEP_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function CEP_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function CEP_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function CEP_ConfigImportar(const eArqConfig: PChar): longint;
+function CEP_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function CEP_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function CEP_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function CEP_ConfigLer(const eArqConfig: PChar): longint;
+function CEP_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function CEP_ConfigGravar(const eArqConfig: PChar): longint;
+function CEP_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function CEP_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function CEP_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function CEP_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 
-function CEP_BuscarPorCEP(eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CEP_BuscarPorCEP(eCEP: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -165,8 +165,8 @@ begin
   end;
 end;
 
-function CEP_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CEP_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);

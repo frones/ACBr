@@ -91,7 +91,7 @@ type
 implementation
 
 uses
-  ACBrLibCEPBase, ACBrLibCEPConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil.FilesIO;
+  ACBrLibCEPBase, ACBrLibCEPConsts, ACBrLibConsts, ACBrUtil.FilesIO;
 
 { TCEPConfig }
 

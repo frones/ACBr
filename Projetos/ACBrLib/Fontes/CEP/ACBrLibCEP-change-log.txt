@@ -42,6 +42,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2024
+-- ACBrLibCEP.dpr --
+[+] Adicionado Projeto para compilação em Delphi
+
+-- ACBrLIBCEPConsoleMT.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+
+-- ACBrLibCEPBase, ACBrLibCEPMT, ACBrLibCEPST, ACBrLibCEPStaticImportMT,
+   ACBrLibCEPStaticImportST --
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+[*] Remoção de Units não utilizadas
+
+-- ACBrLibCEPConfig --
+[*] Remoção de Units não utilizadas
+
+-- ACBrLibCEPRespostas --
+[*] Ajustes para usar nova nomenclatura de Codificacao
+
+-- ACBrLibCEPDataModule --
+[*] Ajustes para compilação em Delphi
+[*] método 'TLibCEPDM.AplicarConfiguracoes' modificado, para considerar
+    'TLibConfig.Socket.TimeOut'
+
+
 -- ACBrLibCEPDataModule --
 [*] Ajustes para considerar seções "Socket" e "Proxy" do Config padrão
     (por: DSA)

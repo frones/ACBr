@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, contnrs,
-  ACBrLibResposta, ACBrCEP;
+  ACBrLibResposta, ACBrLibConfig,
+  ACBrCEP;
 
 type
 
@@ -144,7 +145,7 @@ begin
   FQtd := ACBrCEP.Enderecos.Count;
   for I := 0 to ACBrCEP.Enderecos.Count - 1 do
   begin
-    Item := TEnderecoResposta.Create(I + 1, Tipo, Formato);
+    Item := TEnderecoResposta.Create(I + 1, Tipo, Codificacao);
     Item.Processar(ACBrCEP.Enderecos[I]);
     FItems.Add(Item);
   end;

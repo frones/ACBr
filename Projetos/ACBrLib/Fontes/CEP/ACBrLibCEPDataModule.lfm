@@ -3,8 +3,8 @@ object LibCEPDM: TLibCEPDM
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 150
-  HorizontalOffset = 257
-  VerticalOffset = 127
+  HorizontalOffset = 205
+  VerticalOffset = 103
   Width = 150
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'

@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="195"/>
+      <BuildNr Value="201"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
     </VersionInfo>
@@ -78,7 +78,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Android\jniLibs\armeabi-v7a\libacbrcep"/>
+            <Filename Value="bin\Android\jniLibs\armeabi-v7a\libACBrLibCep"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
@@ -106,11 +106,11 @@
           </Linking>
           <Other>
             <CustomOptions Value="-dANDROID
--dMT 
--dNOGUI 
--Xd 
--CfVFPv3 
--CpARMV7A 
+-dNOGUI
+-dMT
+-Xd
+-CfVFPv3
+-CpARMV7A
 -XParm-linux-androideabi-"/>
           </Other>
         </CompilerOptions>
@@ -125,7 +125,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Android\jniLibs\arm64-v8a\libacbrcep"/>
+            <Filename Value="bin\Android\jniLibs\arm64-v8a\libACBrLibCep"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
@@ -152,9 +152,9 @@
           </Linking>
           <Other>
             <CustomOptions Value="-dANDROID
--dMT 
--dNOGUI 
--Xd 
+-dNOGUI
+-dMT
+-Xd
 -XPaarch64-linux-android-"/>
           </Other>
         </CompilerOptions>
@@ -256,7 +256,6 @@
     </SearchPaths>
     <Linking>
       <Debugging>
-        <DebugInfoType Value="dsDwarf3"/>
         <UseHeaptrc Value="True"/>
         <TrashVariables Value="True"/>
       </Debugging>

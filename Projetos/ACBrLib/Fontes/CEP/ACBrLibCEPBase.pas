@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -58,9 +58,9 @@ type
 
     property CEPDM: TLibCEPDM read FCEPDM;
 
-    function BuscarPorCEP(eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PChar;
-                                 const sResposta: PChar; var esTamanho: longint): longint;
+    function BuscarPorCEP(eCEP: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PAnsiChar;
+                                 const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   end;
 
 implementation
@@ -97,20 +97,19 @@ begin
   FCEPDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibCEP.BuscarPorCEP(eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibCEP.BuscarPorCEP(eCEP: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   ACEP: AnsiString;
   Resp: TCepResposta;
   AResposta: String;
 begin
   try
-    ACEP := ConverterAnsiParaUTF8(eCEP);
+    ACEP := ConverterStringEntrada(eCEP);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CEP_BuscarPorCEP( ' + ACEP + ' )', logCompleto, True)
     else
       GravarLog('CEP_BuscarPorCEP', logNormal);
-
 
     CEPDM.Travar;
     try
@@ -127,28 +126,28 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibCEP.BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibCEP.BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF, eBairro: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   ACidade, ATipo_Logradouro, ALogradouro, AUF, ABairro: AnsiString;
   Resp: TCepResposta;
   AResposta: String;
 begin
   try
-    ACidade := ConverterAnsiParaUTF8(eCidade);
-    ATipo_Logradouro := ConverterAnsiParaUTF8(eTipo_Logradouro);
-    ALogradouro := ConverterAnsiParaUTF8(eLogradouro);
-    AUF := ConverterAnsiParaUTF8(eUF);
-    ABairro := ConverterAnsiParaUTF8(eBairro);
+    ACidade := ConverterStringEntrada(eCidade);
+    ATipo_Logradouro := ConverterStringEntrada(eTipo_Logradouro);
+    ALogradouro := ConverterStringEntrada(eLogradouro);
+    AUF := ConverterStringEntrada(eUF);
+    ABairro := ConverterStringEntrada(eBairro);
 
-    if Config.Log.Nivel > logNormal then
+    if (Config.Log.Nivel > logNormal) then
       GravarLog('CEP_BuscarPorLogradouro( ' + ACidade + ',' + ATipo_Logradouro + ',' +
         ALogradouro + ',' + AUF + ',' +ABairro + ' )', logCompleto, True)
     else
@@ -170,10 +169,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

@@ -354,10 +354,18 @@ end;
 end;
 
 function GetURLBasePath(const URL: String): String;
-function IsAbsoluteURL(const URL: String): Boolean;
+function GetURLRoot(const URL: String): String;
+
+// Tipos de Location: https://en.wikipedia.org/wiki/HTTP_location
+function LocationIsAbsoluteURL(const ALocation: String): Boolean;
+function LocationIsRelativeURLAbsolutePath(const ALocation: String): Boolean;
+function LocationIsRelativeURLRelativePath(const ALocation: String): Boolean;
+
 function URLWithDelim(aURL: String): String;
 function URLWithoutDelim(aURL: String): String;
+
 function GetHeaderValue(const aValue: String; aStringList: TStringList): String;
+
 function ContentIsCompressed(aHeader: TStringList): Boolean;
 function DecompressStream(aStream: TStream): AnsiString;
 function ContentEncodingCompressToString(aValue: THttpContentEncodingCompress): String;
@@ -382,21 +390,36 @@ begin
   Result := Copy(URL, 1, PosLast('/',URL) );
 end;
 
-function IsAbsoluteURL(const URL: String): Boolean;
+function GetURLRoot(const URL: String): String;
+var
+  i: Integer;
+begin
+  i := Pos('//',URL);
+  if (i > 0) then
+    i := PosEx('/', URL, i+2)
+  else
+    i := Pos('/',URL);
+
+  if (i = 0) then
+    i := Length(URL);
+
+  Result := URLWithoutDelim( Copy(URL, 1, i) );
+end;
+
+function LocationIsAbsoluteURL(const ALocation: String): Boolean;
 var
  i: Integer;
 begin
   Result := False;
 
   //Testa se é um tipo absoluto relativo ao protocolo
-  if Pos('//', URL) = 1 then
+  if Pos('//', ALocation) = 1 then
   begin
     Result := True;
     Exit;
   end;
 
-  //Testa se é um tipo relativo
-  if Pos('/', URL) = 1 then
+  if LocationIsRelativeURLAbsolutePath(ALocation) then
   begin
     Result := False;
     Exit;
@@ -405,7 +428,7 @@ begin
   //Testa se inicia por protocolos...
   for I := 0 to High(cHTTPProtocols) do
   begin
-    if Pos(UpperCase(cHTTPProtocols[i])+'://', UpperCase(URL)) = 1 then
+    if Pos(UpperCase(cHTTPProtocols[i])+'://', UpperCase(ALocation)) = 1 then
     begin
       Result := True;
       Break;
@@ -415,11 +438,23 @@ begin
   if Result then Exit;
 
   //Começa com "www."
-  if Pos('www.', URL) = 1 then
+  if Pos('www.', ALocation) = 1 then
   begin
     Result := True;
     Exit;
   end;
+end;
+
+function LocationIsRelativeURLAbsolutePath(const ALocation: String): Boolean;
+begin
+  Result := (copy(ALocation,1,1) =  '/') and
+            (copy(ALocation,2,1) <> '/');
+end;
+
+function LocationIsRelativeURLRelativePath(const ALocation: String): Boolean;
+begin
+  Result := (not LocationIsAbsoluteURL(ALocation)) and
+            (not LocationIsRelativeURLAbsolutePath(ALocation));
 end;
 
 function URLWithDelim(aURL: String): String;
@@ -1207,9 +1242,10 @@ begin
           Location := GetHeaderValue('Location:');
           Location := Trim(SeparateLeft( Location, ';' ));
 
-          //Location pode ser relativa ou absoluta http://stackoverflow.com/a/25643550/460775
-          if IsAbsoluteURL(Location) then
+          if LocationIsAbsoluteURL(Location) then
             fURL := Location
+          else if LocationIsRelativeURLAbsolutePath(Location) then
+            fURL := GetURLRoot(fURL) + Location
           else
             fURL := GetURLBasePath(fURL) + Location;
 

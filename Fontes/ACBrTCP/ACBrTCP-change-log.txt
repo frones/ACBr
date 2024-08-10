@@ -36,6 +36,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2024
+-- ACBrSocket --
+[-] Correção em TACBrHTTP.HTTPMethod, para Redirecionamentos onde Location é
+    do tipo URL absoluta e Path relativo
+    https://www.projetoacbr.com.br/forum/topic/79139-tacbrhttp-tratamento-de-redirect/
+    (por: DSA e Innovae Brasil Engenharia)
+
+-- ACBrCEP --
+[-] Correção de Constantes para Resourcestrings e correto tratamento de acentos
+    (por: DSA)
+
 02/07/2024
 -- ACBrSocket --
 [+] Inclusão de possibilidade de enviar "Accept-Encoding" no header da requisição;

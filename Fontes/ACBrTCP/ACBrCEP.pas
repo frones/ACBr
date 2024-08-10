@@ -347,16 +347,17 @@ uses
   ACBrUtil.XMLHTML,
   ACBrJSON;
 
-  CONST ERROR_METODO_NAO_DISPONIVEL_WS         = 'WebService %s não implementa o método: %s!';
-  CONST ERROR_CEP_OBRIGATORIO                  = 'CEP é obrigatório e deve ser informado!';
-  CONST ERROR_MUNICIPIO_OBRIGATORIO            = 'Município é obrigatório e deve ser informado!';
-  CONST ERROR_UF_OBRIGATORIO                   = 'UF é obrigatório e deve ser informado!';
-  CONST ERROR_LOGRADOURO_OBRIGATORIO           = 'Logradouro é obrigatório e deve ser informado!';
-  CONST ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO = 'Logradouro, Cidade e UF é obrigatório e deve ser informado!';
-  CONST ERROR_API_KEY                          = 'Chave de Autenticação é obrigatório e deve ser informado!';
-  CONST ERROR_USUARIO                          = 'Usuario é obrigatório e deve ser informado!';
-  CONST ERROR_SENHA                            = 'Senha é obrigatório e deve ser informado!';
-  CONST ERROR_CEP_NAO_ENCONTRADO               = 'CEP Não foi encontrado.';
+resourcestring
+  ERROR_METODO_NAO_DISPONIVEL_WS         = 'WebService %s não implementa o método: %s!';
+  ERROR_CEP_OBRIGATORIO                  = 'CEP é obrigatório e deve ser informado!';
+  ERROR_MUNICIPIO_OBRIGATORIO            = 'Município é obrigatório e deve ser informado!';
+  ERROR_UF_OBRIGATORIO                   = 'UF é obrigatório e deve ser informado!';
+  ERROR_LOGRADOURO_OBRIGATORIO           = 'Logradouro é obrigatório e deve ser informado!';
+  ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO = 'Logradouro, Cidade e UF é obrigatório e deve ser informado!';
+  ERROR_API_KEY                          = 'Chave de Autenticação é obrigatório e deve ser informado!';
+  ERROR_USUARIO                          = 'Usuario é obrigatório e deve ser informado!';
+  ERROR_SENHA                            = 'Senha é obrigatório e deve ser informado!';
+  ERROR_CEP_NAO_ENCONTRADO               = 'CEP Não foi encontrado.';
 
 { TACBrCEPEndereco ************************************************************}
 
@@ -469,7 +470,7 @@ begin
 
   ACEP := Trim( OnlyNumber( ACEP ) ) ;
   if ACEP = '' then
-     raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_OBRIGATORIO) );
 
   fACBrCEPWS.BuscarPorCEP(ACEP);
 
@@ -497,15 +498,15 @@ end ;
 procedure TACBrCEPWSClass.TestarChave;
 begin
   if fOwner.ChaveAcesso = EmptyStr then
-    raise EACBrCEPException.Create( ERROR_API_KEY );
+    raise EACBrCEPException.Create( ACBrStr(ERROR_API_KEY) );
 end;
 
 procedure TACBrCEPWSClass.TestarUsuario;
 begin
   if fOwner.Usuario = EmptyStr then
-    raise EACBrCEPException.Create( ERROR_USUARIO )
+    raise EACBrCEPException.Create( ACBrStr(ERROR_USUARIO) )
   else if fOwner.Senha = EmptyStr then
-    raise EACBrCEPException.Create( ERROR_SENHA );
+    raise EACBrCEPException.Create( ACBrStr(ERROR_SENHA) );
 end;
 
 constructor TACBrCEPWSClass.Create( AOwner : TACBrCEP) ;
@@ -562,7 +563,7 @@ begin
   LUF              := fOwner.AjustaParam( AUF );
 
   if (LMunicipio = '') or (LLogradouro = '') or (LUF = '') then
-     raise EACBrCEPException.Create( ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO) );
 
   LParams := '?logradouro=' + LLogradouro+
             '&cidade='      + LMunicipio+
@@ -662,7 +663,7 @@ begin
 
   Logradouro := fOwner.AjustaParam( ALogradouro ) ;
   if (Logradouro = '') then
-     raise EACBrCEPException.Create('Cidade e Logradouro devem ser informados');
+     raise EACBrCEPException.Create( ACBrStr(ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO) );
 
   fOwner.HTTPGet( fpURL + 'logradouro/' + Trim( fOwner.ChaveAcesso ) + '/' + Logradouro + '/csv' ) ;
   ProcessaResposta ;
@@ -985,7 +986,7 @@ begin
   LUF              := fOwner.AjustaParam( AUF );
 
   if (LMunicipio = '') or (LEndereco = '') or (LUF = '') then
-     raise EACBrCEPException.Create( ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_LOGRADOURO_CIDADE_UF_OBRIGATORIO) );
 
   FTipoBusca := 2;
 
@@ -1195,7 +1196,7 @@ begin
   LCEP := OnlyNumber( ACEP );
 
   if ACEP = '' then
-     raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_OBRIGATORIO) );
 
   fOwner.HTTPGet( fpURL + LCEP + '/json' ) ;
   ProcessaResposta();
@@ -1207,13 +1208,13 @@ var
   LMunicipio, LLogradouro, LUF, LURL: string;
 begin
   if AMunicipio = '' then
-     raise EACBrCEPException.Create( ERROR_MUNICIPIO_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_MUNICIPIO_OBRIGATORIO) );
 
   if ALogradouro = '' then
-     raise EACBrCEPException.Create( ERROR_LOGRADOURO_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_LOGRADOURO_OBRIGATORIO) );
 
   if AUF = '' then
-     raise EACBrCEPException.Create( ERROR_UF_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_UF_OBRIGATORIO) );
 
   LUF         := LowerCase(TiraAcentos(AUF));
   LMunicipio  := LowerCase(TiraAcentos(AMunicipio));
@@ -1302,9 +1303,9 @@ begin
     on E: Exception do
     begin
       if Pos('CEP NAO ENCONTRADO', E.Message) <> 0  then
-        raise EACBrCEPException.Create( ERROR_CEP_NAO_ENCONTRADO )
+        raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_NAO_ENCONTRADO) )
       else
-        raise EACBrCEPException.Create( 'Ocorreu o seguinte erro ao consumir o WebService dos correios:' + sLineBreak + '  - ' + E.Message );
+        raise EACBrCEPException.Create( ACBrStr('Ocorreu o seguinte erro ao consumir o WebService dos correios:') + sLineBreak + '  - ' + E.Message );
     end;
   end;
 end;
@@ -1387,10 +1388,10 @@ begin
   TestarChave;
 
   if AUF = '' then
-     raise EACBrCEPException.Create( ERROR_UF_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_UF_OBRIGATORIO) );
 
   if AMunicipio = '' then
-     raise EACBrCEPException.Create( ERROR_MUNICIPIO_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_MUNICIPIO_OBRIGATORIO) );
 
   LUF         := fOwner.AjustaParam(AUF);
   LMunicipio  := fOwner.AjustaParam(AMunicipio);
@@ -1428,7 +1429,7 @@ begin
   LCEP := OnlyNumber( ACEP );
 
   if LCEP = '' then
-    raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+    raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_OBRIGATORIO) );
 
   TestarChave;
 
@@ -1484,7 +1485,7 @@ begin
   LCEP := OnlyNumber( ACEP );
 
   if LCEP = '' then
-    raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+    raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_OBRIGATORIO) );
 
   TestarChave;
 
@@ -1538,7 +1539,7 @@ begin
   LCEP := OnlyNumber( ACEP );
 
   if ACEP = '' then
-     raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_OBRIGATORIO) );
 
   fOwner.HTTPGet( fpURL + LCEP ) ;
   ProcessaResposta();
@@ -1586,7 +1587,7 @@ begin
   LCEP := OnlyNumber( ACEP );
 
   if ACEP = '' then
-     raise EACBrCEPException.Create( ERROR_CEP_OBRIGATORIO );
+     raise EACBrCEPException.Create( ACBrStr(ERROR_CEP_OBRIGATORIO) );
 
   fOwner.HTTPGet( fpURL + LCEP ) ;
   ProcessaResposta();

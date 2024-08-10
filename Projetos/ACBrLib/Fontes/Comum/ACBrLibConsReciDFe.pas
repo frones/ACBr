@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils, contnrs,
-  ACBrLibResposta, pcnRetConsReciDFe;
+  ACBrLibResposta, ACBrLibConfig,
+  pcnRetConsReciDFe;
 
 type
   { TRetornoItemResposta }
@@ -215,7 +216,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + IntToStr(ExtrairNumeroChaveAcesso(ProtDFe.Items[i].chDFe)), Tipo, Formato);
+      Item := TRetornoItemResposta.Create(FPrefix + IntToStr(ExtrairNumeroChaveAcesso(ProtDFe.Items[i].chDFe)), Tipo, Codificacao);
       Item.Processar(ProtDFe.Items[i]);
       FItems.Add(Item);
     end;
@@ -258,7 +259,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + IntToStr(ExtrairNumeroChaveAcesso(ProtDFe.Items[i].chDFe)), Tipo, Formato);
+      Item := TRetornoItemResposta.Create(FPrefix + IntToStr(ExtrairNumeroChaveAcesso(ProtDFe.Items[i].chDFe)), Tipo, Codificacao);
       Item.Processar(ProtDFe.Items[i]);
       FItens.Add(Item);
     end;

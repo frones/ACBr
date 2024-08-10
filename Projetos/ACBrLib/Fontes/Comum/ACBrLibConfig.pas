@@ -42,14 +42,15 @@ uses
   IniFiles,
   synachar,
   mimemess,
-  ACBrLibResposta,
-  ACBrDeviceConfig,
   blcksock,
+  ACBrDeviceConfig,
   ACBrUtil.FilesIO;
 
 type
   //                 0       1
   TTipoFuncao = (tfGravar, tfLer);
+  TACBrLibRespostaTipo = (resINI, resXML, resJSON);
+  TACBrLibCodificacao = (codUTF8, codANSI);
 
   { TLogConfig }
 
@@ -118,6 +119,7 @@ type
   private
     FArqLog: String;
     FNivelLog: Byte;
+    FTimeOut: Integer;
   public
     constructor Create;
     procedure DefinirValoresPadroes;
@@ -126,6 +128,7 @@ type
 
     property NivelLog: Byte read FNivelLog;
     property ArqLog: String read FArqLog;
+    property TimeOut: Integer read FTimeOut;
   end;
 
 
@@ -349,7 +352,7 @@ type
     function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; virtual;
 
     property NomeArquivo: String read FNomeArquivo write SetNomeArquivo;
-    property ChaveCrypt: String read FChaveCrypt;
+    property ChaveCrypt: AnsiString read FChaveCrypt;
 
     property EhMemory: boolean read FEhMemory;
     property TipoResposta: TACBrLibRespostaTipo read FTipoResposta;
@@ -372,7 +375,7 @@ implementation
 uses
   TypInfo, strutils,
   ACBrLibConsts, ACBrLibComum,
-  ACBrLibHelpers, ACBrUtil.Base, ACBrUtil.Strings;
+  ACBrLibHelpersIni, ACBrUtil.Base, ACBrUtil.Strings;
 
 { TSistemaConfig }
 
@@ -456,18 +459,21 @@ procedure TSocketConfig.DefinirValoresPadroes;
 begin
   FNivelLog := 0;
   FArqLog := '';
+  FTimeOut := 0;
 end;
 
 procedure TSocketConfig.LerIni(const AIni: TCustomIniFile);
 begin
   FNivelLog := AIni.ReadInteger(CSessaoSocket, CChaveNivelLog, FNivelLog);
   FArqLog := AIni.ReadString(CSessaoSocket, CChaveArqLog, FArqLog);
+  FTimeOut := AIni.ReadInteger(CSessaoSocket, CChaveTimeOut, FTimeOut);
 end;
 
 procedure TSocketConfig.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteInteger(CSessaoSocket, CChaveNivelLog, FNivelLog);
   AIni.WriteString(CSessaoSocket, CChaveArqLog, FArqLog);
+  AIni.WriteInteger(CSessaoSocket, CChaveTimeOut, FTimeOut);
 end;
 
 { TEmailConfig }
@@ -735,7 +741,11 @@ end;
 
 procedure TLogConfig.DefinirValoresPadroes;
 begin
-  FNivel := logNenhum;
+  {$IfDef ANDROID}
+   FNivel := logParanoico;
+  {$Else}
+   FNivel := logNenhum;
+  {$EndIf}
   FPath := '';
 end;
 
@@ -828,7 +838,7 @@ end;
 
 procedure TLibConfig.VerificarSeIniFoiModificado;
 var
-  NewIniAge: LongInt;
+  NewIniAge: Integer;
 begin
   if (FEhMemory or  not FileExists(FNomeArquivo)) then Exit;
 
@@ -943,6 +953,11 @@ begin
     if not EhMemory then
     begin
       ArquivoInformado := (FNomeArquivo <> '') and FileExists(FNomeArquivo);
+      {$IfDef ANDROID}
+      if DirectoryExists(FNomeArquivo) then
+        FNomeArquivo := PathWithDelim(FNomeArquivo) + CNomeArqConf;
+      {$EndIf};
+
       VerificarNomeEPath(not ArquivoInformado);
 
       TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);

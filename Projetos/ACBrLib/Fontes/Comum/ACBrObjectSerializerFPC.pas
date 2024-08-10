@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -32,87 +32,48 @@
 
 {$I ACBr.inc}
 
-unit ACBrObjectSerializer;
+unit ACBrObjectSerializerFPC;
 
 interface
 
 uses
-  SysUtils, Classes, laz2_DOM, laz2_XMLWrite,
-  inifiles, fpjson, jsonparser, TypInfo,
-  rttiutils, ACBrUtil.Strings, ACBrLibResposta;
+  SysUtils, Classes,
+  TypInfo, rttiutils,
+  laz2_DOM, laz2_XMLWrite,
+  IniFiles,
+  fpjson, jsonparser,
+  ACBrLibResposta;
 
 const
   CSessionFormat = '%s%.3d';
   CSufixFormat = '%.3d';
 
 type
-  { TACBrObjectSerializer }
-  TACBrObjectSerializer = class
+
+  { TACBrObjectSerializerFPC }
+
+  TACBrObjectSerializerFPC = class(TACBrObjectSerializer)
   private
-    class function  GerarXml(Item: TACBrLibRespostaBase): Ansistring;
-    class procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject);
-    class function  GerarIni(Item: TACBrLibRespostaBase): Ansistring;
-    class procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject;
-                              const ASufix: string = '');
-    class function  GerarJson(Item: TACBrLibRespostaBase): Ansistring;
-    class procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject);
-
-  public
-    class function Gerar<T: TACBrLibRespostaBase>(const Item: T; Tipo: TACBrLibRespostaTipo; Formato:
-                         TACBrLibCodificacao = codUTF8): Ansistring; overload;
-    class function Gerar<T: TACBrLibRespostaBase>(const Items: TArray<T>; Tipo: TACBrLibRespostaTipo;
-                         Formato: TACBrLibCodificacao = codUTF8): Ansistring; overload;
-
+    procedure GravarIni(const AIni: TCustomIniFile;
+      const ASessao: String; const Target: TObject; const ASufix: string = '');
+    procedure GravarJson(const JSON: TJSONObject; const ASessao: String;
+      const Target: TObject);
+    procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject);
+  protected
+    function GerarXml(Item: TACBrLibRespostaBase): Ansistring; override;
+    function GerarIni(Item: TACBrLibRespostaBase): Ansistring; override;
+    function GerarJson(Item: TACBrLibRespostaBase): Ansistring; override;
   end;
 
 implementation
 
 uses
-  ACBrRtti, ACBrLibHelpers, DateUtils;
+  DateUtils,
+  ACBrRtti, ACBrLibHelpers, ACBrLibHelpersIni;
 
-{ TACBrObjectSerializer }
+{ TACBrObjectSerializerFPC }
 
-class function TACBrObjectSerializer.Gerar<T>(const Item: T; Tipo: TACBrLibRespostaTipo;
-  Formato: TACBrLibCodificacao): Ansistring;
-begin
-  case Tipo of
-    resXML: Result := TACBrObjectSerializer.GerarXml(Item);
-    resJSON: Result := TACBrObjectSerializer.GerarJson(Item);
-    else
-      Result := TACBrObjectSerializer.GerarIni(Item);
-  end;
-end;
-
-class function TACBrObjectSerializer.Gerar<T>(const Items: TArray<T>; Tipo: TACBrLibRespostaTipo;
-  Formato: TACBrLibCodificacao = codUTF8): Ansistring;
-Var
-  I: Integer;
-  Item: TACBrLibRespostaBase;
-  LJson : String;
-begin
-  Result := '';
-  For I := 0 to High(Items) do
-  begin
-    Item := Items[I] as TACBrLibRespostaBase;
-    case Tipo of
-      resXML: Result := Result + TACBrObjectSerializer.GerarXml(Item);
-      resJSON: 
-        begin
-          LJson := ifThen<String>(Result = '', '', Result + ',' );
-          Result := LJson + TACBrObjectSerializer.GerarJson(Item);
-        end;
-    else
-      Result := Result + TACBrObjectSerializer.GerarIni(Item);
-    end;
-  end;
-
-  case Tipo of
-    resXML: Result := '<Items>' + Result + '</Items>';
-    resJSON: Result := '[' + Result + ']';
-  end;
-end;
-
-class function TACBrObjectSerializer.GerarXml(Item: TACBrLibRespostaBase): Ansistring;
+function TACBrObjectSerializerFPC.GerarXml(Item: TACBrLibRespostaBase): Ansistring;
 var
   xDoc: TXMLDocument;
   RootNode: TDomNode;
@@ -127,7 +88,7 @@ begin
     GravarXml(xDoc, RootNode, Item);
     Stream := TMemoryStream.Create();
     WriteXML(xDoc.FirstChild, Stream);
-    SetString(Result, PChar(Stream.Memory), Stream.Size div SizeOf(char));
+    SetString(Result, PAnsiChar(Stream.Memory), Stream.Size div SizeOf(char));
   finally
     if Stream <> nil then
       Stream.Free;
@@ -136,7 +97,7 @@ begin
   end;
 end;
 
-class procedure TACBrObjectSerializer.GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode;
+procedure TACBrObjectSerializerFPC.GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode;
   const Target: TObject);
 Var
   PropList: TPropInfoList;
@@ -276,7 +237,7 @@ begin
   end;
 end;
 
-class function TACBrObjectSerializer.GerarIni(Item: TACBrLibRespostaBase): Ansistring;
+function TACBrObjectSerializerFPC.GerarIni(Item: TACBrLibRespostaBase): Ansistring;
 var
   AIni: TMemIniFile;
 begin
@@ -292,7 +253,7 @@ begin
   end;
 end;
 
-class procedure TACBrObjectSerializer.GravarIni(const AIni: TCustomIniFile; const ASessao: String;
+procedure TACBrObjectSerializerFPC.GravarIni(const AIni: TCustomIniFile; const ASessao: String;
   const Target: TObject; const ASufix: string);
 var
   PropList: TPropInfoList;
@@ -307,24 +268,26 @@ var
   Propertie: TRttiProperty;
   AValue, ARValue: TValue;
 begin
-  if Target = nil then Exit;
-  if Target.ClassType = nil then Exit;
+  if (Target = nil) then
+    Exit;
+  if (Target.ClassType = nil) then
+    Exit;
 
   PropList := TPropInfoList.Create(Target, tkProperties);
-
   try
     for Propertie in PropList.GetProperties do
     begin
       try
         if (not Propertie.IsReadable) then
-        continue;
+          continue;
 
         AValue := Propertie.GetValue(Target);
         case AValue.Kind of
           tkClass:
             begin
               ClassObject := AValue.AsObject;
-              if not Assigned(ClassObject) or (ClassObject = nil) then continue;
+              if not Assigned(ClassObject) or (ClassObject = nil) then
+                continue;
 
               if (ClassObject.InheritsFrom(TCollection)) then
               begin
@@ -446,7 +409,7 @@ begin
   end;
 end;
 
-class function TACBrObjectSerializer.GerarJson(Item: TACBrLibRespostaBase): Ansistring;
+function TACBrObjectSerializerFPC.GerarJson(Item: TACBrLibRespostaBase): Ansistring;
 var
   JSON: TJSONObject;
 begin
@@ -460,7 +423,7 @@ begin
   end;
 end;
 
-class procedure TACBrObjectSerializer.GravarJson(const JSON: TJSONObject; const ASessao: String;
+procedure TACBrObjectSerializerFPC.GravarJson(const JSON: TJSONObject; const ASessao: String;
   const Target: TObject);
 var
   PropList: TPropInfoList;

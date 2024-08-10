@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, contnrs,
   ACBrDFeComum.RetConsCad,
-  ACBrLibResposta;
+  ACBrLibResposta, ACBrLibConfig;
 
 type
   { TConsultaCadastroItemResposta }
@@ -219,7 +219,7 @@ begin
   begin
     for i := 0 to InfCad.Count - 1 do
     begin
-      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo, Formato);
+      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo, Codificacao);
       Item.Processar(InfCad.Items[i]);
       FItems.Add(Item);
     end;

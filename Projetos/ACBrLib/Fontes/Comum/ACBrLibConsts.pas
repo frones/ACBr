@@ -229,6 +229,7 @@ resourcestring
 
   SErrRetornoHttpWebService = 'WebService %s, retorno http: %d';
   SErroDemoExpirado = 'O Demo da %s expirou';
+  SErrNaoDisponivelEmModoConsole = 'Recurso não disponível em modo CONSOLE';
 
 const
 {$I ACBrLibErros.inc}

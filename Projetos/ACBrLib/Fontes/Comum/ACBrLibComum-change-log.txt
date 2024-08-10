@@ -42,6 +42,62 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2024
+-- ACBrLibComum --
+[+] Adicionada compatibilidade com Compilador Delphi
+[*] Método 'MoverStringParaPChar', ajustado para usar AnsiString
+[*] Método 'ConverterAnsiParaUTF8' modificado para 'ConverterStringEntrada',
+    para considerar se o compilador utilizado usa ANSI ou UTF8
+[*] Método 'ConverterUTF8ParaAnsi' modificado para 'ConverterStringSaida',
+    para considerar se o compilador utilizado usa ANSI ou UTF8
+[*] Métodos que usam PChar, modificados para usar PAnsiChar, para compatibilizar
+    com Delphi
+[*] Métodos que usam e retornam LongInt, modificados para usar Integer para
+    compatibilizar com Delphi e POSIX 64
+[*] Tipo 'TLibHandle' renomeado para 'TACBrLibHandle', para nao confundir com
+    tipo interno do Delphi e FPC
+[*] Adicionada mais entradas de Log, como por exemplo 'GetOpenSSLInfo'
+[*] Melhorias no Log para Android, inserindo a "Tag", com o nome da ACBrLib
+[*] Ajuste em 'MoverStringParaPChar', para não tentar mover Strings vazias e
+    evitar crash em Delphi
+[*] Melhorias nos métodos da Externo da ACBrLibComum, para usar 'ConverterStringSaida'
+    no conteúdo do retorno, e 'ConverterStringSaida', nos parâmetros de Entrada
+[+] Adicionadas as Unit functions
+    - ConverterStringEntradaParaNativa(AData: AnsiString; CodificacaoEntrada: TACBrLibCodificacao): AnsiString;
+    - ConverterStringNativaParaSaida(AData: AnsiString; CodificacaoSaida: TACBrLibCodificacao): AnsiString;
+    que consideram se o compilador utilizado usa ANSI ou UTF8
+
+-- ACBrLibConfig --
+[*] Tipos movidos de 'ACBrLibResposta' para 'ACBrLibConfig'
+    - TACBrLibRespostaTipo = (resINI, resXML, resJSON);
+    - TACBrLibCodificacao = (codUTF8, codANSI);
+[+] Adicionada propriedade 'TimeOut: Integer' em 'TSocketConfig'
+[*] Propriedade TLibConfig.ChaveCrypt modificada para usar 'AnsiString'
+[*] Método 'TLogConfig.DefinirValoresPadroes' assume 'logParanoico' para Android
+    para enviar mais informações ao 'Logcat' do Android
+[*] Ajuste em 'TLibConfig.Ler', em Android, para detetar se Arquivo informado é
+    na verdade um Diretório. Se for, adiciona nome padrão do arq.Config no NomeArq
+
+-- ACBrLibConsts --
+[+] Adicionada o Erro:
+    SErrNaoDisponivelEmModoConsole = 'Recurso não disponível em modo CONSOLE';
+
+-- ACBrLibHelpers, ACBrLibHelpersIni --
+[*] Classe 'TACBrMemIniFileHelper' movida para 'ACBrLibHelpersIni'
+
+-- ACBrLibResposta, ACBrObjectSerializerDelphi, ACBrObjectSerializerFPC -
+[*] Tipos movidos para 'ACBrLibConfig'
+    - TACBrLibRespostaTipo = (resINI, resXML, resJSON);
+    - TACBrLibCodificacao = (codUTF8, codANSI);
+[*] Classe 'TACBrLibRespostaBase' refatorada para melhor tratamento dos parâmetros
+    de Conversão do Formato da resposta de Saida em ANSI e UTF8 e de acordo com
+    o compilador utilizado
+    - A Resposta sempre será gerada no formato correto para a Saida, não
+      necessitando novas conversões das classes que a criaram
+[*] Classe 'TACBrObjectSerializer', refatorada, para permitir implementação em
+    Lazarus e Delphi
+
+
 11/07/2024
 -- ACBrLibConfig, ACBrLibConsts --
 [+] Adicionada seção de configuração para "ACBrSocket"

@@ -34,19 +34,22 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
       <Item2>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="ACBrComum"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="fpcunittestrunner"/>
       </Item3>
       <Item4>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
     </RequiredPackages>
     <Units Count="4">
       <Unit0>
@@ -74,16 +77,14 @@
       <Filename Value="bin\ACBrLibCEPTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);..\..\Comum"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
       <OtherUnitFiles Value="..\..\Comum;..\..\Fontes\CEP;..\..\Fontes\Comum"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
       <Debugging>
-        <DebugInfoType Value="dsDwarf2Set"/>
         <UseHeaptrc Value="True"/>
         <TrashVariables Value="True"/>
-        <UseExternalDbgSyms Value="True"/>
       </Debugging>
       <Options>
         <Win32>
@@ -93,7 +94,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -106,6 +107,9 @@
       <Item4>
         <Name Value="EAssertionFailedError"/>
       </Item4>
+      <Item5>
+        <Name Value="EACBrLibException"/>
+      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

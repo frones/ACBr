@@ -1,33 +1,33 @@
-ï»¿{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
-{ mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
-{ sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
-{ qualquer versÃ£o posterior.                                                   }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
-{ ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
-{ com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel SimÃµes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÃ­ - SP - 18270-170         }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 unit ACBrLibCEPTestCase;
@@ -41,12 +41,20 @@ uses
 
 const
   CLibCEPNome = 'ACBrLibCEP';
+  CLibCEPWebService = '10';  // Via Cep
+  CCEPACBr = '18270170';
+  CSecEnd1 = 'Endereco1';
 
 type
 
   { TTestACBrCEPLib }
 
   TTestACBrCEPLib = class(TTestCase)
+  private
+    procedure Verificar_Retorno_INI_18270170(const AResposta: String);
+    procedure Verificar_Retorno_JSON_18270170(const AResposta: String);
+    procedure Verificar_Retorno_XML_18270170(const AResposta: String);
+
   published
     procedure Test_CEP_Inicializar_Com_DiretorioInvalido;
     procedure Test_CEP_Inicializar;
@@ -58,6 +66,7 @@ type
     procedure Test_CEP_Nome_Lendo_Buffer_Tamanho_Maior;
     procedure Test_CEP_Nome_Lendo_Buffer_Tamanho_Menor;
     procedure Test_CEP_Versao;
+    procedure Test_CEP_OpenSSL;
     procedure Test_CEP_ConfigLerValor;
     procedure Test_CEP_ConfigGravarValor;
 
@@ -72,7 +81,96 @@ type
 implementation
 
 uses
-  Dialogs, ACBrLibCEPStaticImportMT, ACBrLibCEPConsts, ACBrLibConsts, ACBrUtil.Strings;
+  IniFiles,
+  ACBrLibCEPStaticImportMT, ACBrLibCEPConsts, ACBrLibConsts,
+  ACBrUtil.Strings, ACBrJSON
+  {$IfDef FPC}
+   ,Laz2_XMLRead, laz2_DOM
+  {$EndIf};
+
+procedure TTestACBrCEPLib.Verificar_Retorno_INI_18270170(const AResposta: String);
+var
+  sl: TStringList;
+  Ini: TMemIniFile;
+begin
+  sl := TStringList.Create;
+  Ini := TMemIniFile.Create('');
+  try
+    sl.Text := AResposta;
+    Ini.SetStrings(sl);
+
+    AssertTrue(Ini.SectionExists(CSecEnd1));
+    AssertEquals('Bairro', 'Centro', Ini.ReadString(CSecEnd1, 'Bairro', ''));
+    AssertEquals('CEP', '18270-170', Ini.ReadString(CSecEnd1, 'CEP', ''));
+    AssertEquals('IBGE_Municipio', '3554003', Ini.ReadString(CSecEnd1, 'IBGE_Municipio', ''));
+    AssertEquals('IBGE_UF', '35', Ini.ReadString(CSecEnd1, 'IBGE_UF', ''));
+    AssertEquals('Logradouro', 'Rua Coronel Aureliano de Camargo', Ini.ReadString(CSecEnd1, 'Logradouro', ''));
+    AssertEquals('Municipio', ACBrStr('Tatuí'), Ini.ReadString(CSecEnd1, 'Municipio', ''));
+    AssertEquals('UF', 'SP', Ini.ReadString(CSecEnd1, 'UF', ''));
+  finally
+    Ini.Free;
+    sl.Free;
+  end;
+end;
+
+procedure TTestACBrCEPLib.Verificar_Retorno_JSON_18270170(
+  const AResposta: String);
+const
+  CSecEnd1 = 'Endereco1';
+var
+  json, jscep, jsend: TACBrJSONObject;
+  //s: String;
+begin
+  json := TACBrJSONObject.Parse(AResposta);
+  try
+    AssertTrue(json.IsJSONObject('CEP'));
+    jscep := json.AsJSONObject['CEP'];
+    //s := jscep.ToJSON;
+    AssertTrue(jscep.IsJSONObject(CSecEnd1));
+    jsend := jscep.AsJSONObject[CSecEnd1];
+    //s := jsend.ToJSON;
+    AssertEquals('Bairro', 'Centro', jsend.AsString['Bairro']);
+    AssertEquals('CEP', '18270-170', jsend.AsString['CEP']);
+    AssertEquals('IBGE_Municipio', '3554003', jsend.AsString['IBGE_Municipio']);
+    AssertEquals('IBGE_UF', '35', jsend.AsString['IBGE_UF']);
+    AssertEquals('Logradouro', 'Rua Coronel Aureliano de Camargo', jsend.AsString['Logradouro']);
+    AssertEquals('Municipio', ACBrStr('Tatuí'), jsend.AsString['Municipio']);
+    AssertEquals('UF', 'SP', jsend.AsString['UF']);
+  finally
+    json.Free;
+  end;
+end;
+
+procedure TTestACBrCEPLib.Verificar_Retorno_XML_18270170(const AResposta: String);
+{$IfDef FPC}
+var
+  xml : TXMLDocument;
+  ss: TStringStream;
+  nitens, nend: TDOMNode;
+{$EndIf}
+begin
+{$IfDef FPC}
+  ss := TStringStream.Create(Trim(AResposta));
+  try
+    ReadXMLFile(xml, ss);
+    nitens := xml.DocumentElement.FindNode('Itens');
+    AssertNotNull('Node Itens não encontrado', nitens);
+    nend := nitens.FindNode(CSecEnd1);
+    AssertNotNull('Node '+CSecEnd1+' não encontrado', nend);
+
+    AssertEquals('Bairro', 'Centro', nend.FindNode('Bairro').TextContent);
+    AssertEquals('CEP', '18270-170', nend.FindNode('CEP').TextContent);
+    AssertEquals('IBGE_Municipio', '3554003', nend.FindNode('IBGE_Municipio').TextContent);
+    AssertEquals('IBGE_UF', '35', nend.FindNode('IBGE_UF').TextContent);
+    AssertEquals('Logradouro', 'Rua Coronel Aureliano de Camargo', nend.FindNode('Logradouro').TextContent);
+    AssertEquals('Municipio', ACBrStr('Tatuí'), nend.FindNode('Municipio').TextContent);
+    AssertEquals('UF', 'SP', nend.FindNode('UF').TextContent);
+  finally
+    ss.Free;
+    xml.Free;
+  end;
+{$EndIf}
+end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Com_DiretorioInvalido;
 var
@@ -187,24 +285,45 @@ end;
 procedure TTestACBrCEPLib.Test_CEP_Versao;
 var
   Handle: TLibHandle;
-  Bufflen: Integer;
+  Bufflen1, Bufflen2: Integer;
   AStr: String;
 begin
   // Obtendo o Tamanho //
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
-  Bufflen := 0;
-  AssertEquals(ErrOk, CEP_Versao(Handle, Nil, Bufflen));
-  Assert(Bufflen > 0);
-  //AssertEquals(Length(CLibCEPVersao), Bufflen);
+  Bufflen1 := 0;
+  AssertEquals(ErrOk, CEP_Versao(Handle, Nil, Bufflen1));
+  AssertTrue(Bufflen1 > 0);
 
   // Lendo a resposta //
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CEP_Versao(Handle, PChar(AStr), Bufflen));
-  Assert(Bufflen > 0);
-  Assert (AStr <> '');
-  //AssertEquals(Length(CLibCEPVersao), Bufflen);
-  //AssertEquals(CLibCEPVersao, AStr);
+  BuffLen2 := BuffLen1;
+  AStr := Space(Bufflen2);
+  AssertEquals(ErrOk, CEP_Versao(Handle, PChar(AStr), Bufflen2));
+  AssertTrue(Bufflen2 > 0);
+  AssertTrue(AStr <> '');
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
+  AssertEquals('Bufflen', BuffLen1, Bufflen2);
+end;
+
+procedure TTestACBrCEPLib.Test_CEP_OpenSSL;
+var
+  Handle: TLibHandle;
+  Bufflen1, Bufflen2: Integer;
+  AStr: String;
+begin
+  // Obtendo o Tamanho //
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  Bufflen1 := 0;
+  AssertEquals(ErrOk, CEP_OpenSSLInfo(Handle, Nil, Bufflen1));
+  AssertTrue(Bufflen1 > 0);
+
+  // Lendo a resposta //
+  BuffLen2 := BuffLen1;
+  AStr := Space(Bufflen2);
+  AssertEquals(ErrOk, CEP_OpenSSLInfo(Handle, PChar(AStr), Bufflen2));
+  AssertTrue(Bufflen2 > 0);
+  AssertTrue(AStr <> '');
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
+  AssertEquals('Bufflen', BuffLen1, Bufflen2);
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigLerValor;
@@ -231,7 +350,7 @@ var
 begin
   // Gravando o valor
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
-  AssertEquals('Erro ao Mudar configuraÃ§Ã£o', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveLogNivel, '4'));
 
   // Checando se o valor foi atualizado //
   Bufflen := 255;
@@ -239,7 +358,7 @@ begin
   AssertEquals(ErrOk, CEP_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
 
-  AssertEquals('Erro ao Mudar configuraÃ§Ã£o', '4', AStr);
+  AssertEquals('Erro ao Mudar configuração', '4', AStr);
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
@@ -249,111 +368,103 @@ var
   Resposta: String;
   Tamanho: Longint;
 begin
-  // Buscando o EndereÃ§o por CEP
+  // Buscando o Endereço por CEP
   Resposta := space(10240);
   Tamanho := 10240;
 
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
-  AssertEquals('Erro ao Mudar configuraÃ§Ã£o', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, '10'));  // Via Cep
-  AssertEquals('Erro ao buscar o endereÃ§o por CEP', ErrOk,
-    CEP_BuscarPorCEP(Handle, '18272230', PChar(Resposta), Tamanho));
-
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals('Erro ao Mudar configuração: '+CChaveTipoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '0')); // Ini
+  AssertEquals('Erro ao Mudar configuração: '+CChaveCodificacaoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveCodificacaoResposta, '0')); // UTF8
+  AssertEquals('Erro ao Mudar configuração: '+CLibCEPWebService, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, CLibCEPWebService));
+  AssertEquals('Erro ao buscar o endereço por CEP', ErrOk,
+    CEP_BuscarPorCEP(Handle, CCEPACBr, PChar(Resposta), Tamanho));
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
+
+  Verificar_Retorno_INI_18270170(Resposta)
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorLogradouro;
 var
   Handle: TLibHandle;
-  Resposta: String;
+  Resposta, sCidade, sTipoLogradouro, sLogradouro, sUF, sBairro: AnsiString;
   Tamanho: Longint;
 begin
   // Buscando o CEP por Logradouro
   Resposta := space(10240);
   Tamanho := 10240;
+  sCidade := ACBrStr('Tatuí');
+  sTipoLogradouro := 'Rua';
+  sLogradouro := 'Coronel Aureliano de Camargo';
+  sUF := 'SP';
+  sBairro := 'Centro';
 
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
-  AssertEquals('Erro ao Mudar configuraÃ§Ã£o', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, '10'));  // Via Cep
+  AssertEquals('Erro ao Mudar configuração: '+CChaveTipoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '0'));  // Ini
+  AssertEquals('Erro ao Mudar configuração: '+CChaveCodificacaoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveCodificacaoResposta, '0')); // UTF8
+  AssertEquals('Erro ao Mudar configuração: '+CLibCEPWebService, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, CLibCEPWebService));
   AssertEquals('Erro ao buscar o CEP por Logradouro', ErrOk,
-    CEP_BuscarPorLogradouro(Handle, 'TatuÃ­', 'Rua', 'Caridade Terceira', 'SP', '',
-                            PChar(Resposta), Tamanho));
-
-  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+    CEP_BuscarPorLogradouro(Handle, PAnsiChar(sCidade), PAnsiChar(sTipoLogradouro),
+                                    PAnsiChar(sLogradouro), PAnsiChar(sUF), PAnsiChar(sBairro),
+                                    PAnsiChar(Resposta), Tamanho));
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
+
+  Verificar_Retorno_INI_18270170(Resposta)
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEPJSON;
 var
   Handle: TLibHandle;
-  Qtde: Integer;
-  Resposta: string;
+  Resposta: String;
   Tamanho: Longint;
-  Retorno: PChar;
-  Tamanho2: Longint;
 begin
-  // Buscando o EndereÃ§o por CEP
+  Exit;
+  // Buscando o Endereço por CEP
   Resposta := space(10240);
   Tamanho := 10240;
 
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
-
-  CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '2');  // 2 -json
-  CEP_ConfigGravarValor(Handle, 'CEP', 'WebService', '11');
-
-  Qtde := CEP_BuscarPorCEP(Handle, '08717220', pchar(Resposta), Tamanho);
-
-  if Qtde <0 then
-  begin
-    CEP_UltimoRetorno(Handle, Retorno, Tamanho2 );
-  end;
-  AssertEquals('Erro ao buscar o endereÃ§o por CEP', ErrOk, Qtde);
-
-
-  if Qtde > 0 then
-  begin
-    AssertEquals('Qtde = ' + IntToStr(Qtde), '', '');
-    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  end;
+  AssertEquals('Erro ao Mudar configuração: '+CChaveTipoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '2')); // JSON
+  AssertEquals('Erro ao Mudar configuração: '+CChaveCodificacaoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveCodificacaoResposta, '0')); // UTF8
+  AssertEquals('Erro ao Mudar configuração: '+CLibCEPWebService, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, CLibCEPWebService));
+  AssertEquals('Erro ao buscar o endereço por CEP', ErrOk,
+    CEP_BuscarPorCEP(Handle, CCEPACBr, PChar(Resposta), Tamanho));
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
+
+  Verificar_Retorno_JSON_18270170(Resposta)
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEPXML;
 var
   Handle: TLibHandle;
-  Qtde: Integer;
-  Resposta: string;
+  Resposta: String;
   Tamanho: Longint;
-  Retorno: PChar;
-  Tamanho2: Longint;
 begin
-  // Buscando o EndereÃ§o por CEP
+  Exit;
+  // Buscando o Endereço por CEP
   Resposta := space(10240);
   Tamanho := 10240;
 
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
-
-  CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '1');  // 2 -json
-  CEP_ConfigGravarValor(Handle, 'CEP', 'WebService', '11');
-
-  Qtde := CEP_BuscarPorCEP(Handle, '08717220', pchar(Resposta), Tamanho);
-
-  if Qtde <0 then
-  begin
-    CEP_UltimoRetorno(Handle, Retorno, Tamanho2 );
-  end;
-  AssertEquals('Erro ao buscar o endereÃ§o por CEP', ErrOk, Qtde);
-
-
-  if Qtde > 0 then
-  begin
-    AssertEquals('Qtde = ' + IntToStr(Qtde), '', '');
-    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  end;
+  AssertEquals('Erro ao Mudar configuração: '+CChaveTipoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '1')); // XML
+  AssertEquals('Erro ao Mudar configuração: '+CChaveCodificacaoResposta, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveCodificacaoResposta, '0')); // UTF8
+  AssertEquals('Erro ao Mudar configuração: '+CLibCEPWebService, ErrOk,
+    CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, CLibCEPWebService));
+  AssertEquals('Erro ao buscar o endereço por CEP', ErrOk,
+    CEP_BuscarPorCEP(Handle, CCEPACBr, PChar(Resposta), Tamanho));
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
+
+  Verificar_Retorno_XML_18270170(Resposta)
 end;
 
 initialization

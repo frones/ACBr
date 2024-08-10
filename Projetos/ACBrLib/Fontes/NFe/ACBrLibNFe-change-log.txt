@@ -42,6 +42,33 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2024
+-- ACBrLibNFeConsoleMT.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+
+-- ACBrLibNFeBase, ACBrLibNFeMT, ACBrLibNFeST, ACBrLibNFeStaticImportMT,
+   ACBrLibNFeStaticImportST --
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+[*] Remoção de Units não utilizadas
+
+-- ACBrLibNFeConfig --
+[*] Ajuste para compilação com a diretiva 'NOREPORT', para não incluir o Fortes
+    Report na compilação final
+
+-- ACBrLibNFeRespostas --
+[*] Ajustes para usar nova nomenclatura de 'Codificacao'
+
+-- ACBrLibNFeDataModule --
+[*] Ajustes para compilação em Delphi
+[*] Ajuste para compilação com a diretiva 'NOREPORT', para não incluir o Fortes
+    Report na compilação final
+[+] Criado método 'TLibNFeDM.FreeReports', para liberar todos os DANFEs criados
+[*] Refatoração no método 'LibNFeDM.ConfigurarImpressao', para simplificar
+    código e ficar compatível com a diretiva 'NOREPORT', usando FPDF.
+    Melhorias no Log
+
 11/06/2024
 -- ACBrLibNFeRespostas --
 [*] Substituidas as units pcnEventoNFe, pcnRetEnvEventoNFe e pcnRetConsSitNFe

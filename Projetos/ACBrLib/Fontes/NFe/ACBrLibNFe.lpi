@@ -505,7 +505,6 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf3"/>
               <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
             </Debugging>
@@ -535,31 +534,34 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="8">
+    <RequiredPackages Count="9">
       <Item1>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="ACBr_NFe_DanfeFPDF"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrSerial"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBrTCP"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item6>
       <Item7>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item7>
       <Item8>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item8>
+      <Item9>
+        <PackageName Value="FCL"/>
+      </Item9>
     </RequiredPackages>
     <Units Count="21">
       <Unit0>

@@ -32,14 +32,23 @@
 
 unit ACBrLibNFeDataModule;
 
+{$IfDef FPC}
 {$mode delphi}
+{$EndIf}
 
 interface
 
 uses
   Classes, SysUtils,
-  ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail, ACBrPosPrinter,
-  ACBrDANFCeFortesFrA4, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrNFe,
+  {$IfNDef NOREPORT}
+  ACBrNFeDANFeRLClass,
+  ACBrDANFCeFortesFrA4,
+  ACBrDANFCeFortesFr,
+  {$EndIf}
+  ACBrMail, ACBrPosPrinter,
+  ACBrNFeDANFeESCPOS,
+  ACBrNFCeDANFeFPDF, ACBrNFeDANFeFPDF,
   ACBrLibDataModule, ACBrLibConfig, ACBrLibComum;
 
 type
@@ -51,10 +60,17 @@ type
     ACBrNFe1: TACBrNFe;
     ACBrPosPrinter1: TACBrPosPrinter;
   private
-    DANFCeFortes: TACBrNFeDANFCeFortes;
-    DANFCeA4: TACBrNFeDANFCeFortesA4;
-    DANFCeEscPos: TACBrNFeDANFeESCPOS;
-    NFeDANFe: TACBrNFeDANFeRL;
+    {$IfNDef NOREPORT}
+    FDANFCeFortes: TACBrNFeDANFCeFortes;
+    FDANFCeFortesA4: TACBrNFeDANFCeFortesA4;
+    FDANFeFortes: TACBrNFeDANFeRL;
+    {$EndIf}
+    FDANFCeEscPos: TACBrNFeDANFeESCPOS;
+    FDANFCeFPDF: TACBrNFCeDANFeFPDF;
+    FDANFeFPDF: TACBrNFeDANFeFPDF;
+
+  protected
+    procedure FreeReports;
 
   public
     procedure AplicarConfiguracoes; override;
@@ -72,11 +88,26 @@ uses
   pcnConversao, pcnConversaoNFe,
   FileUtil, ACBrDeviceSerial, ACBrNFeDANFEClass,
   {$IFDEF Demo}ACBrNFeNotasFiscais, ACBrNFe.EnvEvento,{$ENDIF}
-  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
+  ACBrLibConsts,
+  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrUtil.Base,
+  ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 {$R *.lfm}
 
 { TLibNFeDM }
+
+procedure TLibNFeDM.FreeReports;
+begin
+  ACBrNFe1.DANFE := nil;
+  {$IfNDef NOREPORT}
+  if Assigned(FDANFeFortes) then FreeAndNil(FDANFeFortes);
+  if Assigned(FDANFCeFortes) then FreeAndNil(FDANFCeFortes);
+  if Assigned(FDANFCeFortesA4) then FreeAndNil(FDANFCeFortesA4);
+  {$EndIf}
+  if Assigned(FDANFCeEscPos) then FreeAndNil(FDANFCeEscPos);
+  if Assigned(FDANFCeFPDF) then FreeAndNil(FDANFCeFPDF);
+  if Assigned(FDANFeFPDF) then FreeAndNil(FDANFeFPDF);
+end;
 
 procedure TLibNFeDM.AplicarConfiguracoes;
 var
@@ -186,59 +217,68 @@ procedure TLibNFeDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolea
   ViaConsumidor: String = ''; Simplificado: String = '');
 var
   LibConfig: TLibNFeConfig;
+  EhDANFCe, EhCancelada: Boolean;
 {$IFDEF Demo}
   I: Integer;
   ANota: NotaFiscal;
   AEvento: TInfEventoCollectionItem;
 {$ENDIF}
 begin
+  GravarLog('ConfigurarImpressao', logNormal);
+
   LibConfig := TLibNFeConfig(Lib.Config);
-
-  GravarLog('ConfigurarImpressao - Iniciado', logNormal);
-
-  if ACBrNFe1.NotasFiscais.Count > 0 then
+  FreeReports;
+  EhDANFCe := False;
+  EhCancelada := False;
+  if (ACBrNFe1.NotasFiscais.Count > 0) then
   begin
-    if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+    EhDANFCe := (ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65);
+    EhCancelada := (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]);
+  end;
+
+  if EhDANFCe then
+  begin
+    if (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpEscPos) then
     begin
-      if GerarPDF and not (LibConfig.DANFe.NFCe.TipoRelatorioBobina in [tpFortes, tpFortesA4]) then
-      begin
-        DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
-        ACBrNFe1.DANFE := DANFCeFortes
-      end
-      else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes then
-      begin
-        DANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
-        ACBrNFe1.DANFE := DANFCeFortes
-      end
-      else if LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4 then
-      begin
-        DANFCeA4 := TACBrNFeDANFCeFortesA4.Create(nil);
-        ACBrNFe1.DANFE := DANFCeA4
-      end
-      else
-      begin
-         DANFCeEscPos := TACBrNFeDANFeESCPOS.Create(nil);
-         DANFCeEscPos.PosPrinter := ACBrPosPrinter1;
-         ACBrNFe1.DANFE := DANFCeEscPos;
-      end;
+      FDANFCeEscPos := TACBrNFeDANFeESCPOS.Create(nil);
+      FDANFCeEscPos.PosPrinter := ACBrPosPrinter1;
+      ACBrNFe1.DANFE := FDANFCeEscPos;
+    end
+    else if (LibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
+    begin
+      {$IfNDef NOREPORT}
+      FDANFCeFortesA4 := TACBrNFeDANFCeFortesA4.Create(nil);
+      ACBrNFe1.DANFE := FDANFCeFortesA4;
+      {$Else}
+      raise EACBrLibException.Create(ErrLibNaoInicializada, SErrNaoDisponivelEmModoConsole);
+      {$EndIf}
     end
     else
     begin
-       NFeDANFe := TACBrNFeDANFeRL.Create(nil);
-       ACBrNFe1.DANFE := NFeDANFe;
-       NFeDANFe.ImprimeDescAcrescItem:=LibConfig.DANFe.NFe.ImprimeDescAcrescItemNFe;
-    end;
-
-    if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
-      ACBrNFe1.DANFE.Cancelada := True
-    else
-      ACBrNFe1.DANFE.Cancelada := False;
-  end
-  else
-  begin
-    NFeDANFe := TACBrNFeDANFeRL.Create(nil);
-    ACBrNFe1.DANFE := NFeDANFe;
+      {$IfNDef NOREPORT}
+      FDANFCeFortes := TACBrNFeDANFCeFortes.Create(nil);
+      ACBrNFe1.DANFE := FDANFCeFortes
+      {$Else}
+      FDANFCeFPDF := TACBrNFCeDANFeFPDF.Create(nil);
+      ACBrNFe1.DANFE := FDANFCeFPDF;
+      {$EndIf}
+    end
   end;
+
+  if not Assigned(ACBrNFe1.DANFE) then
+  begin
+    {$IfNDef NOREPORT}
+    FDANFeFortes := TACBrNFeDANFeRL.Create(nil);
+    ACBrNFe1.DANFE := FDANFeFortes;
+    {$Else}
+    FDANFeFPDF := TACBrNFeDANFeFPDF.Create(nil);
+    ACBrNFe1.DANFE := FDANFeFPDF;
+    {$EndIf}
+  end;
+
+  GravarLog('  DANFE = '+ACBrNFe1.DANFE.ClassName, logCompleto);
+
+  ACBrNFe1.DANFE.Cancelada := EhCancelada;
 
   if GerarPDF then
   begin
@@ -274,52 +314,46 @@ begin
   else
     ACBrNFe1.DANFE.Protocolo := '';
 
-  if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
-  begin
-     if NaoEstaVazio(ViaConsumidor) then
-       TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
+  if NaoEstaVazio(Simplificado) then
+    if StrToBoolDef(Simplificado, False) then
+      ACBrNFe1.DANFE.TipoDANFE := tiSimplificado;
 
-     if ACBrNFe1.DANFE = DANFCeEscPos then
-     begin
-        if not DANFCeEscPos.PosPrinter.ControlePorta then
-        begin
-          DANFCeEscPos.PosPrinter.Ativar;
-          if not DANFCeEscPos.PosPrinter.Device.Ativo then
-            DANFCeEscPos.PosPrinter.Device.Ativar;
-        end;
-     end;
-  end
-  else
+  if ACBrNFe1.DANFE is TACBrNFeDANFEClass then
+    TACBrNFeDANFEClass(ACBrNFe1.DANFE).ImprimeDescAcrescItem := LibConfig.DANFe.NFe.ImprimeDescAcrescItemNFe
+  else if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
+    TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
+
+  if Assigned(FDANFCeEscPos) then
   begin
-    if NaoEstaVazio(Simplificado) then
+    if not FDANFCeEscPos.PosPrinter.ControlePorta then
     begin
-      if StrToBoolDef(Simplificado, False) then
-        NFeDANFe.TipoDANFE := tiSimplificado;
+      FDANFCeEscPos.PosPrinter.Ativar;
+      if not FDANFCeEscPos.PosPrinter.Device.Ativo then
+        FDANFCeEscPos.PosPrinter.Device.Ativar;
     end;
-
-     if NaoEstaVazio(MarcaDagua) then
-       NFeDANFe.MarcaDagua := MarcaDagua
-     else
-       NFeDANFe.MarcaDagua := '';
   end;
 
-  GravarLog('ConfigurarImpressao - Feito', logNormal);
+  {$IfNDef NOREPORT}
+  if Assigned(FDANFeFortes) then
+  begin
+    if NaoEstaVazio(MarcaDagua) then
+      FDANFeFortes.MarcaDagua := MarcaDagua
+    else
+      FDANFeFortes.MarcaDagua := '';
+  end;
+  {$EndIf}
+
+  GravarLog('ConfigurarImpressao - Feito', logCompleto);
 end;
 
 procedure TLibNFeDM.FinalizarImpressao;
 begin
-  GravarLog('FinalizarImpressao - Iniciado', logNormal);
+  GravarLog('FinalizarImpressao', logNormal);
 
   if ACBrPosPrinter1.Ativo then
-          ACBrPosPrinter1.Desativar;
+    ACBrPosPrinter1.Desativar;
 
-  ACBrNFe1.DANFE := nil;
-  if Assigned(NFeDANFe) then FreeAndNil(NFeDANFe);
-  if Assigned(DANFCeFortes) then FreeAndNil(DANFCeFortes);
-  if Assigned(DANFCeA4) then FreeAndNil(DANFCeA4);
-  if Assigned(DANFCeEscPos) then FreeAndNil(DANFCeEscPos);
-
-  GravarLog('FinalizarImpressao - Feito', logNormal);
+  FreeReports;
 end;
 
 end.

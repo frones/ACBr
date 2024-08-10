@@ -43,133 +43,133 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function NFE_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Finalizar: longint;
+function NFE_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function NFE_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function NFE_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function NFE_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function NFE_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigImportar(const eArqConfig: PChar): longint;
+function NFE_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function NFE_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigLer(const eArqConfig: PChar): longint;
+function NFE_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigGravar(const eArqConfig: PChar): longint;
+function NFE_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function NFE_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region NFe}
-function NFE_CarregarXML(const eArquivoOuXML: PChar): longint;
+function NFE_CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_CarregarINI(const eArquivoOuINI: PChar): longint;
+function NFE_CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ObterXml(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function NFE_GravarXml(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ObterIni(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function NFE_GravarIni(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+function NFE_CarregarEventoXML(const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+function NFE_CarregarEventoINI(const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_LimparLista: longint;
+function NFE_LimparLista: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_LimparListaEventos: longint;
+function NFE_LimparListaEventos: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Assinar: longint;
+function NFE_Assinar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Validar: longint;
+function NFE_Validar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ValidarRegrasdeNegocios(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_VerificarAssinatura(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
-  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: Integer;
+  AEmissao, ACNPJCPF: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_GetPath(ATipo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_GetPathEvento(ACodEvento: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
-function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_StatusServico(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Consultar(const eChaveOuNFe: PChar; AExtrairEventos: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_Consultar(const eChaveOuNFe: PAnsiChar; AExtrairEventos: Boolean;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
+function NFE_Inutilizar(const ACNPJ, AJustificativa: PAnsiChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_Enviar(ALote: Integer; AImprimir, ASincrono, AZipado: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConsultarRecibo(ARecibo: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ConsultarRecibo(ARecibo: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PAnsiChar; ALote: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_EnviarEvento(idLote: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ConsultaCadastro(cUF, nDocumento: PAnsiChar; nIE: boolean;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_DistribuicaoDFe(const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFe(const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean;
-  const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function NFE_EnviarEmail(const ePara, eChaveNFe: PAnsiChar; const AEnviaPDF: Boolean;
+  const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
-  const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PAnsiChar;
+  const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
-  bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
+function NFE_Imprimir(const cImpressora: PAnsiChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PAnsiChar): Integer;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirPDF: longint;
+function NFE_ImprimirPDF: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_SalvarPDF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
+function NFE_ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
+function NFE_ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_SalvarEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
+function NFE_SalvarEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirInutilizacao(const eArquivoXml: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
+function NFE_ImprimirInutilizacao(const eArquivoXml: PAnsiChar): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_SalvarInutilizacaoPDF(const eArquivoXml, sResposta: PChar; var esTamanho: longint): longint;
+function NFE_SalvarInutilizacaoPDF(const eArquivoXml, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -184,75 +184,75 @@ uses
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
-function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function NFE_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibNFe, eArqConfig, eChaveCrypt);
 end;
 
-function NFE_Finalizar: longint;
+function NFE_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
   pLib := nil;
 end;
 
-function NFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function NFE_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function NFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function NFE_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib,sVersao, esTamanho);
 end;
 
-function NFE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function NFE_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function NFE_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function NFE_ConfigImportar(const eArqConfig: PChar): longint;
+function NFE_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function NFE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function NFE_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function NFE_ConfigLer(const eArqConfig: PChar): longint;
+function NFE_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function NFE_ConfigGravar(const eArqConfig: PChar): longint;
+function NFE_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function NFE_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
@@ -260,7 +260,7 @@ end;
 
 {%endregion}
 
-function NFE_CarregarXML(const eArquivoOuXML: PChar): longint;
+function NFE_CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -275,7 +275,7 @@ begin
   end;
 end;
 
-function NFE_CarregarINI(const eArquivoOuINI: PChar): longint;
+function NFE_CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -290,7 +290,7 @@ begin
   end;
 end;
 
-function NFE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ObterXml(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -305,7 +305,7 @@ begin
   end;
 end;
 
-function NFE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function NFE_GravarXml(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -320,7 +320,7 @@ begin
   end;
 end;
 
-function NFE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ObterIni(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -335,7 +335,7 @@ begin
   end;
 end;
 
-function NFE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function NFE_GravarIni(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -350,7 +350,7 @@ begin
   end;
 end;
 
-function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+function NFE_CarregarEventoXML(const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -365,7 +365,7 @@ begin
   end;
 end;
 
-function NFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+function NFE_CarregarEventoINI(const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -380,7 +380,7 @@ begin
   end;
 end;
 
-function NFE_LimparLista: longint;
+function NFE_LimparLista: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -395,7 +395,7 @@ begin
   end;
 end;
 
-function NFE_LimparListaEventos: longint;
+function NFE_LimparListaEventos: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -410,7 +410,7 @@ begin
   end;
 end;
 
-function NFE_Assinar: longint;
+function NFE_Assinar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -425,7 +425,7 @@ begin
   end;
 end;
 
-function NFE_Validar: longint;
+function NFE_Validar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -440,7 +440,7 @@ begin
   end;
 end;
 
-function NFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ValidarRegrasdeNegocios(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -455,7 +455,7 @@ begin
   end;
 end;
 
-function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_VerificarAssinatura(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -470,8 +470,8 @@ begin
   end;
 end;
 
-function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
-  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: Integer;
+  AEmissao, ACNPJCPF: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -487,7 +487,7 @@ begin
   end;
 end;
 
-function NFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -502,7 +502,7 @@ begin
   end;
 end;
 
-function NFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_GetPath(ATipo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -517,7 +517,7 @@ begin
   end;
 end;
 
-function NFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_GetPathEvento(ACodEvento: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -536,7 +536,7 @@ end;
 
 {%region Servicos}
 
-function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_StatusServico(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -551,7 +551,7 @@ begin
   end;
 end;
 
-function NFE_Consultar(const eChaveOuNFe: PChar; AExtrairEventos: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_Consultar(const eChaveOuNFe: PAnsiChar; AExtrairEventos: Boolean; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -566,9 +566,9 @@ begin
   end;
 end;
 
-function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
+function NFE_Inutilizar(const ACNPJ, AJustificativa: PAnsiChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -585,7 +585,7 @@ begin
 end;
 
 function NFE_Enviar(ALote: Integer; AImprimir, ASincrono, AZipado: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -600,7 +600,7 @@ begin
   end;
 end;
 
-function NFE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ConsultarRecibo(ARecibo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -615,8 +615,8 @@ begin
   end;
 end;
 
-function NFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PAnsiChar; ALote: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -631,7 +631,7 @@ begin
   end;
 end;
 
-function NFE_EnviarEvento(idLote: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_EnviarEvento(idLote: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -646,8 +646,8 @@ begin
   end;
 end;
 
-function NFE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
-    const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ConsultaCadastro(cUF, nDocumento: PAnsiChar; nIE: boolean;
+    const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -662,8 +662,8 @@ begin
   end;
 end;
 
-function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -678,8 +678,8 @@ begin
   end;
 end;
 
-function NFE_DistribuicaoDFe(const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFe(const AcUFAutor: integer; eCNPJCPF, eultNSU, eArquivoOuXML: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -694,8 +694,8 @@ begin
   end;
 end;
 
-function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -710,8 +710,8 @@ begin
   end;
 end;
 
-function NFE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -726,8 +726,8 @@ begin
   end;
 end;
 
-function NFE_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean;
-  const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function NFE_EnviarEmail(const ePara, eChaveNFe: PAnsiChar; const AEnviaPDF: Boolean;
+  const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -742,8 +742,8 @@ begin
   end;
 end;
 
-function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
-  const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PAnsiChar;
+  const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -759,8 +759,8 @@ begin
   end;
 end;
 
-function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
-  bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
+function NFE_Imprimir(const cImpressora: PAnsiChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -776,7 +776,7 @@ begin
   end;
 end;
 
-function NFE_ImprimirPDF: longint;
+function NFE_ImprimirPDF: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -791,7 +791,7 @@ begin
   end;
 end;
 
-function NFE_SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_SalvarPDF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -806,7 +806,7 @@ begin
   end;
 end;
 
-function NFE_ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
+function NFE_ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -821,7 +821,7 @@ begin
   end;
 end;
 
-function NFE_ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
+function NFE_ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -836,8 +836,8 @@ begin
   end;
 end;
 
-function NFE_SalvarEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_SalvarEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -851,7 +851,7 @@ begin
   end;
 end;
 
-function NFE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
+function NFE_ImprimirInutilizacao(const eArquivoXml: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -866,7 +866,7 @@ begin
   end;
 end;
 
-function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
+function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -881,8 +881,8 @@ begin
   end;
 end;
 
-function NFE_SalvarInutilizacaoPDF(const eArquivoXml, sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_SalvarInutilizacaoPDF(const eArquivoXml, sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);

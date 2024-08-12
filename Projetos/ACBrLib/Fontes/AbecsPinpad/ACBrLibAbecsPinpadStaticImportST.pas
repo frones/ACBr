@@ -62,103 +62,103 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function AbecsPinpad_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function AbecsPinpad_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_Finalizar: longint;
+function AbecsPinpad_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function AbecsPinpad_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function AbecsPinpad_ConfigImportar(const eArqConfig: PChar): longint;
+function AbecsPinpad_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_ConfigLer(const eArqConfig: PChar): longint;
+function AbecsPinpad_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_ConfigGravar(const eArqConfig: PChar): longint;
+function AbecsPinpad_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function AbecsPinpad_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 {%endregion}
 
 {%region AbecsPinpad}
-function AbecsPinpad_Ativar: longint;
+function AbecsPinpad_Ativar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_Desativar: longint;
+function AbecsPinpad_Desativar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_OPN: longint;
+function AbecsPinpad_OPN: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_CLO(const sMensagem: PChar): longint;
+function AbecsPinpad_CLO(const sMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_CLX(const sMensagemOuNomeImagem: PChar): longint;
+function AbecsPinpad_CLX(const sMensagemOuNomeImagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_GIX(const PP_DATA: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_GIX(const PP_DATA: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_GIN(const GIN_ACQIDX: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_GIN(const GIN_ACQIDX: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_PinPadCapabilities(const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_PinPadCapabilities(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_DSP(const sMensagem: PChar): longint;
+function AbecsPinpad_DSP(const sMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_DEX(const sMensagem: PChar): longint;
+function AbecsPinpad_DEX(const sMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_GKY: longint;
+function AbecsPinpad_GKY: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_RMC(const sMensagemRMC: PChar): longint;
+function AbecsPinpad_RMC(const sMensagemRMC: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_GCD(aMSGIDX: longint; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_GCD(aMSGIDX: Integer; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_MNU(const sMNUOPT: PChar; sDSPMSG: PChar; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_MNU(const sMNUOPT: PAnsiChar; sDSPMSG: PAnsiChar; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_LoadMedia(const sCaminhoImagem: PChar; aTipoImagem: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_LoadMedia(const sCaminhoImagem: PAnsiChar; aTipoImagem: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_LMF(const sResposta: PChar; var esTamanho: longint): longint;
+function AbecsPinpad_LMF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_DSI(const sNomeArquivo: PChar): longint;
+function AbecsPinpad_DSI(const sNomeArquivo: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 
-function AbecsPinpad_DMF(const sNomeArquivo: PChar): longint;
+function AbecsPinpad_DMF(const sNomeArquivo: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrAbecsPinpadLIBName;
 {%endregion}
 

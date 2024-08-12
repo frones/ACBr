@@ -62,22 +62,22 @@ type
       function Ativar: longint;
       function Desativar: longint;
       function OPN: longint;
-      function CLO(const sMensagem: PChar): longint;
-      function CLX(const sMensagemOuNomeImagem: PChar): longint;
-      function GIX(const PP_DATA: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-      function GIN(const GIN_ACQIDX: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function PinPadCapabilities(const sResposta: PChar; var esTamanho: longint): longint;
-      function DSP(const sMensagem: PChar): longint;
-      function DEX(const sMensagem: PChar): longint;
-      function GKY: longint;
-      function RMC(const sMensagemRMC: PChar): longint;
-      function GCD(aMSGIDX: longint; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function MNU(const sMNUOPT: PChar; sDSPMSG: PChar; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function LoadMedia(const sCaminhoImagem: PChar; aTipoImagem: longint; const sResposta: PChar; var esTamanho: longint): longint;
-      function LMF(const sResposta: PChar; var esTamanho: longint): longint;
-      function DSI(const sNomeArquivo: PChar): longint;
-      function DMF(const sNomeArquivo: PChar): longint;
+      function CLO(const sMensagem: PAnsiChar): Integer;
+      function CLX(const sMensagemOuNomeImagem: PAnsiChar): Integer;
+      function GIX(const PP_DATA: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function GIN(const GIN_ACQIDX: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function PinPadCapabilities(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function DSP(const sMensagem: PAnsiChar): Integer;
+      function DEX(const sMensagem: PAnsiChar): Integer;
+      function GKY: Integer;
+      function RMC(const sMensagemRMC: PAnsiChar): Integer;
+      function GCD(aMSGIDX: Integer; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function MNU(const sMNUOPT: PAnsiChar; sDSPMSG: PAnsiChar; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function LoadMedia(const sCaminhoImagem: PAnsiChar; aTipoImagem: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function LMF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+      function DSI(const sNomeArquivo: PAnsiChar): Integer;
+      function DMF(const sNomeArquivo: PAnsiChar): Integer;
   end;
 
 implementation
@@ -118,7 +118,7 @@ begin
   inherited Destroy;
 end;
 
-function TACBrLibAbecsPinpad.Ativar: longint;
+function TACBrLibAbecsPinpad.Ativar: Integer;
 begin
   try
      GravarLog('AbecsPinpad_Ativar', logNormal);
@@ -132,14 +132,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.Desativar: longint;
+function TACBrLibAbecsPinpad.Desativar: Integer;
 begin
   try
      GravarLog('AbecsPinpad_Desativar', logNormal);
@@ -154,14 +154,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.OPN: longint;
+function TACBrLibAbecsPinpad.OPN: Integer;
 begin
   try
      GravarLog('AbecsPinpad_OPN', logNormal);
@@ -175,19 +175,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.CLO(const sMensagem: PChar): longint;
+function TACBrLibAbecsPinpad.CLO(const sMensagem: PAnsiChar): Integer;
 var
   Mensagem: String;
 begin
   try
-     Mensagem := ConverterAnsiParaUTF8(sMensagem);
+     Mensagem := ConverterStringEntrada(sMensagem);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_CLO(' + Mensagem + ' )', logCompleto, True)
@@ -203,19 +203,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.CLX(const sMensagemOuNomeImagem: PChar): longint;
+function TACBrLibAbecsPinpad.CLX(const sMensagemOuNomeImagem: PAnsiChar): Integer;
 var
   MensagemOuNomeImagem: String;
 begin
   try
-     MensagemOuNomeImagem := ConverterAnsiParaUTF8(sMensagemOuNomeImagem);
+     MensagemOuNomeImagem := ConverterStringEntrada(sMensagemOuNomeImagem);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_CLX(' + MensagemOuNomeImagem + ' )', logCompleto, true)
@@ -231,14 +231,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.GIX(const PP_DATA: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.GIX(const PP_DATA: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibAbecsPinpadRespostaGIX;
   Resposta: AnsiString;
@@ -248,7 +248,7 @@ var
   sl: TStringList;
 begin
   Try
-     PPDATA := ConverterAnsiParaUTF8(PP_DATA);
+     PPDATA := ConverterStringEntrada(PP_DATA);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_GIX(' + PPDATA + ' )', logCompleto, True)
@@ -292,14 +292,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.GIN(const GIN_ACQIDX: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.GIN(const GIN_ACQIDX: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibAbecsPinpadRespostaGIN;
   Resposta: AnsiString;
@@ -328,14 +328,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.PinPadCapabilities(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.PinPadCapabilities(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibAbecsPinpadCapabilitiesResposta;
   Resposta: AnsiString;
@@ -361,19 +361,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.DSP(const sMensagem: PChar): longint;
+function TACBrLibAbecsPinpad.DSP(const sMensagem: PAnsiChar): Integer;
 var
   Mensagem: String;
 begin
   try
-     Mensagem := ConverterAnsiParaUTF8(sMensagem);
+     Mensagem := ConverterStringEntrada(sMensagem);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_DSP(' + Mensagem + ' )', logCompleto, True)
@@ -389,19 +389,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.DEX(const sMensagem: PChar): longint;
+function TACBrLibAbecsPinpad.DEX(const sMensagem: PAnsiChar): Integer;
 var
   Mensagem: String;
 begin
   try
-     Mensagem := ConverterAnsiParaUTF8(sMensagem);
+     Mensagem := ConverterStringEntrada(sMensagem);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_DEX(' + Mensagem + ' )', logCompleto, True)
@@ -417,14 +417,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.GKY: longint;
+function TACBrLibAbecsPinpad.GKY: Integer;
 var
   i:integer;
   s: String;
@@ -442,7 +442,7 @@ begin
            i := AbecsPinpadDM.ACBrAbecsPinPad1.GKY;
         except
           On E: EACBrAbecsPinPadTimeout do
-             Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+             Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
           else
           raise;
         end;
@@ -453,19 +453,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.RMC(const sMensagemRMC: PChar): longint;
+function TACBrLibAbecsPinpad.RMC(const sMensagemRMC: PAnsiChar): Integer;
 var
   MensagemRMC: String;
 begin
   try
-     MensagemRMC := ConverterAnsiParaUTF8(sMensagemRMC);
+     MensagemRMC := ConverterStringEntrada(sMensagemRMC);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_RMC(' + MensagemRMC + ' )', logCompleto, True)
@@ -481,14 +481,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.GCD(aMSGIDX: longint; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.GCD(aMSGIDX: Integer; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   MSGIDX: TACBrAbecsMSGIDX;
   Resp: TLibAbecsPinpadRespostaGCD;
@@ -519,16 +519,15 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.CEX(VerifyKey: Boolean; VerifyMagnetic: Boolean; VerifyICCInsertion: Boolean; VerifyICCRemoval: Boolean; VerifyCTLSPresence: Boolean; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
-  s: String;
   Resp: TLibAbecsPinpadRespostaCEX;
   Resposta: AnsiString;
 begin
@@ -556,14 +555,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.MNU(const sMNUOPT: PChar; sDSPMSG: PChar; aTimeOut: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.MNU(const sMNUOPT: PAnsiChar; sDSPMSG: PAnsiChar; aTimeOut: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   MNUOPT, DSPMSG: String;
   MNUOPTArray: Array of String;
@@ -573,8 +572,8 @@ var
   sl: TStringList;
 begin
   try
-     MNUOPT := ConverterAnsiParaUTF8(sMNUOPT);
-     DSPMSG := ConverterAnsiParaUTF8(sDSPMSG);
+     MNUOPT := ConverterStringEntrada(sMNUOPT);
+     DSPMSG := ConverterStringEntrada(sDSPMSG);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_MNU(' + MNUOPT + ',' + DSPMSG + ',' + IntToStr(aTimeOut) + ' )', logCompleto, True )
@@ -618,14 +617,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.LoadMedia(const sCaminhoImagem: PChar; aTipoImagem: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.LoadMedia(const sCaminhoImagem: PAnsiChar; aTipoImagem: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   ext, filename: String;
   AStream: TMemoryStream;
@@ -635,7 +634,7 @@ var
   Resposta: AnsiString;
 begin
   try
-     CaminhoImagem := ConverterAnsiParaUTF8(sCaminhoImagem);
+     CaminhoImagem := ConverterStringEntrada(sCaminhoImagem);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_MediaLoad(' + CaminhoImagem + ',' + IntToStr(aTipoImagem) + ' )', logCompleto, True)
@@ -669,14 +668,14 @@ begin
      end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.LMF(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibAbecsPinpad.LMF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibAbecsPinpadRespostaLMF;
   Resposta: AnsiString;
@@ -702,19 +701,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.DSI(const sNomeArquivo: PChar): longint;
+function TACBrLibAbecsPinpad.DSI(const sNomeArquivo: PAnsiChar): Integer;
 var
   NomeArquivo: String;
 begin
   try
-     NomeArquivo := ConverterAnsiParaUTF8(sNomeArquivo);
+     NomeArquivo := ConverterStringEntrada(sNomeArquivo);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_DSI(' + NomeArquivo + ' )', logCompleto, True)
@@ -730,19 +729,19 @@ begin
      end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibAbecsPinpad.DMF(const sNomeArquivo: PChar): longint;
+function TACBrLibAbecsPinpad.DMF(const sNomeArquivo: PAnsiChar): Integer;
 var
   NomeArquivo: String;
 begin
   try
-     NomeArquivo := ConverterAnsiParaUTF8(sNomeArquivo);
+     NomeArquivo := ConverterStringEntrada(sNomeArquivo);
 
      if Config.Log.Nivel > logNormal then
         GravarLog('AbecsPinpad_DMF(' + NomeArquivo + ' )', logCompleto, True)
@@ -758,10 +757,10 @@ begin
      end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

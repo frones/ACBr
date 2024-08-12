@@ -37,7 +37,7 @@ unit ACBrLibAbecsPinpadRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrAbecsPinPad, ACBrLibResposta, ACBrLibAbecsPinpadConsts;
+  Classes, SysUtils, ACBrAbecsPinPad, ACBrLibResposta, ACBrLibConfig, ACBrLibAbecsPinpadConsts;
 
 type
 

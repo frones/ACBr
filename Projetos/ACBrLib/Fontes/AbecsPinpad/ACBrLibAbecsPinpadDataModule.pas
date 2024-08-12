@@ -37,7 +37,7 @@ unit ACBrLibAbecsPinpadDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBrAbecsPinPad, ACBrUtil.FilesIO;
+  Classes, SysUtils, FileUtil, ACBrLibComum, syncobjs, ACBrAbecsPinPad, ACBrUtil.FilesIO;
 
 type
 

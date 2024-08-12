@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2024
+--- ACBrLibAbecsPinpadBase, ACBrLibAbecsPinpadDataModule, ACBrLibAbecsPinpadST, ACBrLibAbecsPinpadMT,
+    ACBrLibAbecsPinpadStaticImportST, ACBrLibAbecsPinpadStaticImportMT, ACBrLibAbecsPinpadRespostas ---
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+[*] Remoção de Units não utilizadas
+    Por: Antonio Carlos Junior
+
 13/05/2024
 --- ACBrLibAbecsPinpadBase, ACBrLibAbecsPinpadConsts, ACBrLibAbecsPinpadRespostas, 
     ACBrLibAbecsPinpadST, ACBrLibAbecsPinpadMT, ACBrLibAbecsPinpadStaticImportST, ACBrLibAbecsPinpadStaticImportMT ---

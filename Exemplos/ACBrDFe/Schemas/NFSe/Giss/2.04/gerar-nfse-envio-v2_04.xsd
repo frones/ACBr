@@ -14,8 +14,7 @@
 	<xsd:element name="GerarNfseEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Rps" type="tipos:tcDeclaracaoPrestacaoServico"
-					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="Rps" type="tipos:tcDeclaracaoPrestacaoServico" minOccurs="1" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

@@ -14,8 +14,7 @@
 	<xsd:element name="cabecalho">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="versaoDados" type="tipos:tsVersao"
-					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="versaoDados" type="tipos:tsVersao" minOccurs="1" maxOccurs="1" />
 			</xsd:sequence>
 			<xsd:attribute name="versao" type="tipos:tsVersao" use="required" />
 		</xsd:complexType>

@@ -14,21 +14,16 @@
 	<xsd:element name="SubstituirNfseEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="SubstituicaoNfse" minOccurs="1"
-					maxOccurs="1">
+				<xsd:element name="SubstituicaoNfse" minOccurs="1" maxOccurs="1">
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element name="Pedido" type="tipos:tcPedidoCancelamento"
-								minOccurs="1" maxOccurs="1" />
-							<xsd:element name="Rps"
-								type="tipos:tcDeclaracaoPrestacaoServico" minOccurs="1"
-								maxOccurs="1" />
+							<xsd:element name="Pedido" type="tipos:tcPedidoCancelamento" minOccurs="1" maxOccurs="1" />
+							<xsd:element name="Rps" type="tipos:tcDeclaracaoPrestacaoServico" minOccurs="1" maxOccurs="1" />
 						</xsd:sequence>
 						<xsd:attribute name="Id" type="tipos:tsIdTag" />
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element ref="dsig:Signature" minOccurs="0"
-					maxOccurs="1" />
+				<xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

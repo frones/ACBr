@@ -465,9 +465,9 @@ implementation
 
 uses
   TypInfo, strutils
-  {$IfDef ANDROID}
+  {$IfNDef FPC}{$IfDef ANDROID}
    ,System.IOUtils
-  {$EndIf};
+  {$EndIf}{$EndIf};
 
 var
   _xmlInitCharEncodingHandlers: TProcedureCdecl = nil;
@@ -662,6 +662,7 @@ begin
 
   LibXML2CS.Enter;
   try
+    {$IfNDef FPC}
     {$IfDef ANDROID}
     if (LibXml2Path = '') then     // Try to load from "./assets/internal/" first
       LibXml2Path := TPath.GetDocumentsPath;
@@ -672,6 +673,9 @@ begin
       LibXml2Path := '';
       Result := LoadLibraryLibXml2;
     end;
+    {$Else}
+    Result := LoadLibraryLibXml2;
+    {$EndIf}
     {$Else}
     Result := LoadLibraryLibXml2;
     {$EndIf}

@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+12/08/2024
+-- ACBrBancoBanrisul --
+[-]TK-5823-1 - Corrigido qdo CaracTitulo = descontado o envio JurosMora Seg P Posicao 118
+   https://www.projetoacbr.com.br/forum/topic/79033-banrisul-juros-de-mora/
+   Por Daniel Morais InfoCotidiano
+
 07/08/2024
 --ACBrBoleto--
 [*]TK-5749 ACBrBoleto - Multa Valor Fixo = true imprimir valor monetário, false imprimir percentual, removido cálculos (que forçava sempre monetário)

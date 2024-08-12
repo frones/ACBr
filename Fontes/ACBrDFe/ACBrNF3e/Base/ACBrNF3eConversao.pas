@@ -148,6 +148,15 @@ type
 const
   TtpGrpTensaoArrayStrings: array[TtpGrpTensao] of string = ('01', '02', '03',
     '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14');
+  TtpGrpTensaoDescArrayStrings: array[TtpGrpTensao] of string =
+    ('A1 - Alta Tensão (230kV ou mais)', 'A2 - Alta Tensão (88 a 138kV)',
+     'A3 - Alta Tensão (69kV)', 'A3a - Alta Tensão (30kV a 44kV)',
+     'A4 - Alta Tensão (2,3kV a 25kV)', 'AS - Alta Tensão Subterrâneo',
+     'B1 - Residencial', 'B1 - Residencial Baixa Renda',
+     'B2 - Rural', 'B2 - Cooperativa de Eletrificação Rural',
+     'B2 - Serviço Público de Irrigação', 'B3 - Demais Classes',
+     'B4a - Iluminação Pública - rede de distribuição',
+     'B4b - Iluminação Pública - bulbo de lâmpada');
 
 type
   TtpModTar = (tmtConvencionalMonomia, tmtConvencionalBinomia, tmtHorariaAzul,
@@ -170,12 +179,17 @@ type
 
 const
   TtpGrContratArrayStrings: array[TtpGrContrat] of string = ('1', '2', '3', '4');
+  TtpGrContratDescArrayStrings: array[TtpGrContrat] of string = ('Demanda',
+    'Montate de Uso do Sistema de Distribuição', 'Reserva de Capacidade',
+    'Energia Contratada');
 
 type
   TtpPosTar = (tpUnico, tpPonta, tpForaPonto, tpIntermediario);
 
 const
   TtpPosTarArrayStrings: array[TtpPosTar] of string = ('0', '1', '2', '3');
+  TtpPosTarDescArrayStrings: array[TtpPosTar] of string = ('Único', 'Ponta',
+    'Fora Ponta', 'Intermediário');
 
 type
   TtpPartComp = (tpMini, tpMultiplas, tpAutoconsumo, tpGeracaoCompartilhada,
@@ -399,6 +413,7 @@ function tpFaseToDesc(const t: TtpFase): string;
 
 function tpGrpTensaoToStr(const t: TtpGrpTensao): string;
 function StrTotpGrpTensao(const s: string): TtpGrpTensao;
+function tpGrpTensaoToDesc(const t: TtpGrpTensao): string;
 
 function tpModTarToStr(const t: TtpModTar): string;
 function StrTotpModTar(const s: string): TtpModTar;
@@ -408,9 +423,11 @@ function StrToMotSub(const s: string): TmotSub;
 
 function tpGrContratToStr(const t: TtpGrContrat): string;
 function StrTotpGrContrat(const s: string): TtpGrContrat;
+function tpGrContratToDesc(const t: TtpGrContrat): string;
 
 function tpPosTarToStr(const t: TtpPosTar): string;
 function StrTotpPosTar(const s: string): TtpPosTar;
+function tpPosTarDescToStr(const t: TtpPosTar): string;
 
 function tpPartCompToStr(const t: TtpPartComp): string;
 function StrTotpPartComp(const s: string): TtpPartComp;
@@ -776,6 +793,11 @@ begin
   raise EACBrException.CreateFmt('Valor string inválido para TtpGrpTensao: %s', [s]);
 end;
 
+function tpGrpTensaoToDesc(const t: TtpGrpTensao): string;
+begin
+  result := TtpGrpTensaoDescArrayStrings[t];
+end;
+
 function tpModTarToStr(const t: TtpModTar): string;
 begin
   result := TtpModTarArrayStrings[t];
@@ -839,6 +861,11 @@ begin
   raise EACBrException.CreateFmt('Valor string inválido para TtpGrContrat: %s', [s]);
 end;
 
+function tpGrContratToDesc(const t: TtpGrContrat): string;
+begin
+  result := TtpGrContratDescArrayStrings[t];
+end;
+
 function tpPosTarToStr(const t: TtpPosTar): string;
 begin
   result := TtpPosTarArrayStrings[t];
@@ -858,6 +885,11 @@ begin
   end;
 
   raise EACBrException.CreateFmt('Valor string inválido para TtpPosTar: %s', [s]);
+end;
+
+function tpPosTarDescToStr(const t: TtpPosTar): string;
+begin
+  result := TtpPosTarDescArrayStrings[t];
 end;
 
 function tpPartCompToStr(const t: TtpPartComp): string;

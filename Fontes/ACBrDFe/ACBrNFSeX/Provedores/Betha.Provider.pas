@@ -339,6 +339,8 @@ procedure TACBrNFSeProviderBetha.PrepararCancelaNFSe(
 var
   aXml: string;
 begin
+  ConfigMsgDados.Prefixo := '';
+
   inherited PrepararCancelaNFSe(Response);
 
   aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
@@ -346,6 +348,8 @@ begin
    '</CancelarNfseEnvio>', False);
 
   Response.ArquivoEnvio := aXml;
+
+  ConfigMsgDados.Prefixo := 'ns3';
 end;
 
 procedure TACBrNFSeProviderBetha.AssinarCancelaNFSe(
@@ -357,7 +361,7 @@ begin
                          Response.ArquivoEnvio +
                        '</ns3:CancelarNfseEnvio>';
 
-  ConfigMsgDados.Prefixo := 'ns3';
+
 end;
 
 function TACBrNFSeProviderBetha.CondicaoPagToStr(

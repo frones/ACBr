@@ -2,7 +2,7 @@ inherited LibNFeDM: TLibNFeDM
   Left = 346
   Top = 174
   Height = 269
-  HorizontalOffset = 498
+  HorizontalOffset = 0
   VerticalOffset = 233
   Width = 314
   object ACBrNFe1: TACBrNFe[0]

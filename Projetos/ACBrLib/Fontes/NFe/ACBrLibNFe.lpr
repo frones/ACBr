@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
 { mentos de Automação Comercial utilizados no Brasil                            }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                 }
 {                                                                               }
@@ -41,8 +41,8 @@ uses
     cthreads,
    {$ENDIF}
   {$ENDIF}
-  Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
-  ACBrLibComum, ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta,
+  Interfaces, sysutils, Classes, Forms,
+  ACBrLibConfig, ACBrLibComum, ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta,
   {$IFDEF MT}ACBrLibNFeMT{$ELSE}ACBrLibNFeST{$ENDIF},
   DFeReportConfig, ACBrLibNFeRespostas;
 

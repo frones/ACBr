@@ -43,51 +43,51 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Finalizar: longint;
+function BAL_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function BAL_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigImportar(const eArqConfig: PChar): longint;
+function BAL_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigGravar(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function BAL_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Balança}
-function BAL_Ativar: longint;
+function BAL_Ativar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_Desativar: longint;
+function BAL_Desativar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
+function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
+function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_SolicitarPeso: longint;
+function BAL_SolicitarPeso: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_UltimoPesoLido(var Peso: Double): longint;
+function BAL_UltimoPesoLido(var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
+function BAL_UltimoPesoLidoStr(sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+function BAL_InterpretarRespostaPeso(eResposta: PAnsiChar; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
+function BAL_InterpretarRespostaPesoStr(eResposta: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
@@ -104,74 +104,74 @@ uses
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
-function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibBAL, eArqConfig, eChaveCrypt);
 end;
 
-function BAL_Finalizar: longint;
+function BAL_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
 end;
 
-function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function BAL_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function BAL_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function BAL_ConfigImportar(const eArqConfig: PChar): longint;
+function BAL_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function BAL_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function BAL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function BAL_ConfigGravar(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function BAL_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
@@ -181,7 +181,7 @@ end;
 
 {%region Balanço}
 
-function BAL_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_Ativar: Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -195,7 +195,7 @@ begin
   end;
 end;
 
-function BAL_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_Desativar: Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -209,7 +209,7 @@ begin
   end;
 end;
 
-function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
+function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -224,7 +224,7 @@ begin
   end;
 end;
 
-function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PChar; var esTamanho: longint): longint;
+function BAL_LePesoStr(MillisecTimeOut: Integer; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Peso: Double;
@@ -249,7 +249,7 @@ begin
   end;
 end;
 
-function BAL_SolicitarPeso: longint;
+function BAL_SolicitarPeso: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -264,7 +264,7 @@ begin
   end;
 end;
 
-function BAL_UltimoPesoLido(var Peso: Double): longint;
+function BAL_UltimoPesoLido(var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -279,7 +279,7 @@ begin
   end;
 end;
 
-function BAL_UltimoPesoLidoStr(sValor: PChar; var esTamanho: longint): longint;
+function BAL_UltimoPesoLidoStr(sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Peso: Double;
@@ -304,7 +304,7 @@ begin
   end;
 end;
 
-function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+function BAL_InterpretarRespostaPeso(eResposta: PAnsiChar; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -319,7 +319,7 @@ begin
   end;
 end;
 
-function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esTamanho: longint): longint;
+function BAL_InterpretarRespostaPesoStr(eResposta: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Peso: Double;

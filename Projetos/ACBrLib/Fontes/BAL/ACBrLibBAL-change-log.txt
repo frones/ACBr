@@ -42,6 +42,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+12/08/2024
+--- ACBrLibBALBase, ACBrLibBALST, ACBrLibBALMT,
+    ACBrLibBALStaticImportST, ACBrLibBALStaticImportMT ---
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+[*] Remoção de Units não utilizadas
+    Por: Antonio Carlos Junior
+
+
 11/03/2024
 --- ACBrLibBALBase, ACBrLibBALDataModule ---
 [-] Inclusao em uses da unit ACBrUtil.FilesIO para novo Log

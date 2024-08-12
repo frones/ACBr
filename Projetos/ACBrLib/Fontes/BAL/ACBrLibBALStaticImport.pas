@@ -62,51 +62,51 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_Finalizar: longint;
+function BAL_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function BAL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function BAL_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function BAL_ConfigLer(const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_ConfigGravar(const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function BAL_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 
 {%region Balança}
-function BAL_Ativar: longint;
+function BAL_Ativar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_Desativar: longint;
+function BAL_Desativar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
+function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_SolicitarPeso: longint;
+function BAL_SolicitarPeso: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+function BAL_InterpretarRespostaPeso(eResposta: PAnsiChar; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 

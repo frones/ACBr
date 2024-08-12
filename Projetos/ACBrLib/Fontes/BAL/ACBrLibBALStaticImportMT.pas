@@ -62,51 +62,51 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function BAL_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function BAL_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_Finalizar(const libHandle: TLibHandle): longint;
+function BAL_Finalizar(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function BAL_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function BAL_Nome(const libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function BAL_Versao(const libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function BAL_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function BAL_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function BAL_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function BAL_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function BAL_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function BAL_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 
-function BAL_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function BAL_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 
 {%region Balança}
-function BAL_Ativar(const libHandle: TLibHandle): longint;
+function BAL_Ativar(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_Desativar(const libHandle: TLibHandle): longint;
+function BAL_Desativar(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_LePeso(const libHandle: TLibHandle; MillisecTimeOut: Integer; var Peso: Double): longint;
+function BAL_LePeso(const libHandle: TLibHandle; MillisecTimeOut: Integer; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_SolicitarPeso(const libHandle: TLibHandle): longint;
+function BAL_SolicitarPeso(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
-function BAL_InterpretarRespostaPeso(const libHandle: TLibHandle; eResposta: PChar; var Peso: Double): longint;
+function BAL_InterpretarRespostaPeso(const libHandle: TLibHandle; eResposta: PAnsiChar; var Peso: Double): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBALLIBName;
 {%endregion}
 

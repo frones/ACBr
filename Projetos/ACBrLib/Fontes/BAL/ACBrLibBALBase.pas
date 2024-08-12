@@ -59,12 +59,12 @@ type
 
     property BALDM: TLibBALDM read FBALDM;
 
-    function Ativar: longint;
-    function Desativar: longint;
-    function LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
-    function SolicitarPeso: longint;
-    function UltimoPesoLido(var Peso: Double): longint;
-    function InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+    function Ativar: Integer;
+    function Desativar: Integer;
+    function LePeso(MillisecTimeOut: Integer; var Peso: Double): Integer;
+    function SolicitarPeso: Integer;
+    function UltimoPesoLido(var Peso: Double): Integer;
+    function InterpretarRespostaPeso(eResposta: PAnsiChar; var Peso: Double): Integer;
 
   end;
 
@@ -107,7 +107,7 @@ begin
   FBALDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibBAL.Ativar: longint;
+function TACBrLibBAL.Ativar: Integer;
 begin
   try
     GravarLog('BAL_Ativar', logNormal);
@@ -121,14 +121,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibBAL.Desativar: longint;
+function TACBrLibBAL.Desativar: Integer;
 begin
   try
     GravarLog('BAL_Desativar', logNormal);
@@ -142,14 +142,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibBAL.LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
+function TACBrLibBAL.LePeso(MillisecTimeOut: Integer; var Peso: Double): Integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -166,14 +166,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibBAL.SolicitarPeso: longint;
+function TACBrLibBAL.SolicitarPeso: Integer;
 begin
   try
 
@@ -188,14 +188,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibBAL.UltimoPesoLido(var Peso: Double): longint;
+function TACBrLibBAL.UltimoPesoLido(var Peso: Double): Integer;
 begin
   try
     GravarLog('BAL_UltimoPesoLido', logNormal);
@@ -209,14 +209,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibBAL.InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
+function TACBrLibBAL.InterpretarRespostaPeso(eResposta: PAnsiChar; var Peso: Double): Integer;
 var
   AResposta: AnsiString;
 begin
@@ -237,10 +237,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

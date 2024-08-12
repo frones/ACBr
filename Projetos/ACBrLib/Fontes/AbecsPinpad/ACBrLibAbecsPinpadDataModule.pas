@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -37,7 +37,9 @@ unit ACBrLibAbecsPinpadDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, syncobjs, ACBrAbecsPinPad, ACBrUtil.FilesIO;
+  Classes, SysUtils, FileUtil, syncobjs,
+  ACBrUtil.FilesIO,
+  ACBrLibComum, ACBrAbecsPinPad;
 
 type
 

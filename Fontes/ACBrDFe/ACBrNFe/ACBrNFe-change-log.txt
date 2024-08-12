@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2024
+-- ACBrNFeNotasFiscais --
+[*] Ajuste para considerar o valor do ICMS Mono Retenção no ValidarRegrasdeNegocio.
+   Por: Italo Giurizzato Junior
+
 02/08/2024
 -- ACBrNFeNotasFiscais --
 [*] Alterado o nome da nova unit responsável pela leitura do XML da NF-e/NFC-e.

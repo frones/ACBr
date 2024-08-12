@@ -436,7 +436,7 @@ var
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete,
   fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF,
   fsvTotPag, fsvPISST, fsvCOFINSST, fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol,
-  fsvDup, fsvPISServico, fsvCOFINSServico : Currency;
+  fsvDup, fsvPISServico, fsvCOFINSServico, fsvICMSMonoReten: Currency;
   FaturamentoDireto, NFImportacao, UFCons, bServico : Boolean;
 
   procedure GravaLog(AString: String);
@@ -1026,6 +1026,8 @@ begin
     fsvCOFINSServico := 0;
     fsvPISST     := 0;
     fsvCOFINSST  := 0;
+    fsvICMSMonoReten := 0;
+
     FaturamentoDireto := False;
     NFImportacao := False;
     UFCons := False;
@@ -1334,6 +1336,7 @@ begin
           fsvFCP       := fsvFCP + Imposto.ICMS.vFCP;
           fsvFCPST     := fsvFCPST + Imposto.ICMS.vFCPST;
           fsvFCPSTRet  := fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;
+          fsvICMSMonoReten := fsvICMSMonoReten + Imposto.ICMS.vICMSMonoReten;
 
           // Verificar se compõe PIS ST e COFINS ST
           if (Imposto.PISST.indSomaPISST = ispPISSTCompoe) then
@@ -1368,9 +1371,12 @@ begin
     end;
 
     if FaturamentoDireto then
-      fsvNF := (fsvProd+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvPISST+fsvCOFINSST)-(fsvDesc+fsvICMSDeson)
+      fsvNF := (fsvProd + fsvFrete + fsvSeg + fsvOutro + fsvII + fsvIPI +
+                fsvServ + fsvPISST + fsvCOFINSST) - (fsvDesc + fsvICMSDeson)
     else
-      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvFCPST+fsvIPIDevol+fsvPISST+fsvCOFINSST)-(fsvDesc+fsvICMSDeson);
+      fsvNF := (fsvProd + fsvST + fsvFrete + fsvSeg + fsvOutro + fsvII + fsvIPI +
+                fsvServ + fsvFCPST + fsvICMSMonoReten + fsvIPIDevol + fsvPISST +
+                fsvCOFINSST) - (fsvDesc + fsvICMSDeson);
 
     GravaLog('Validar: 531-Total BC ICMS');
     if (NFe.Total.ICMSTot.vBC <> fsvBC) then

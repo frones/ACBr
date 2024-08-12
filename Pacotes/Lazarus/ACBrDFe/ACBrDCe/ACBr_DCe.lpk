@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_DCe"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe;..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE;..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes;..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base;..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrDCe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Declaração de Conteúdo Eletrônica - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="16">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCe.pas"/>
+        <UnitName Value="ACBrDCe"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeConfiguracoes.pas"/>
+        <UnitName Value="ACBrDCeConfiguracoes"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeDeclaracoes.pas"/>
+        <UnitName Value="ACBrDCeDeclaracoes"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrDCeReg"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\ACBrDCeWebServices.pas"/>
+        <UnitName Value="ACBrDCeWebServices"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\ACBrDCe.DACEClass.pas"/>
+        <UnitName Value="ACBrDCe.DACEClass"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Classes.pas"/>
+        <UnitName Value="ACBrDCe.Classes"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Consts.pas"/>
+        <UnitName Value="ACBrDCe.Consts"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.Conversao.pas"/>
+        <UnitName Value="ACBrDCe.Conversao"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.XmlReader.pas"/>
+        <UnitName Value="ACBrDCe.XmlReader"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\ACBrDCe.XmlWriter.pas"/>
+        <UnitName Value="ACBrDCe.XmlWriter"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.ConsSit.pas"/>
+        <UnitName Value="ACBrDCe.ConsSit"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.EnvEvento.pas"/>
+        <UnitName Value="ACBrDCe.EnvEvento"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.EventoClass.pas"/>
+        <UnitName Value="ACBrDCe.EventoClass"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.RetConsSit.pas"/>
+        <UnitName Value="ACBrDCe.RetConsSit"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDCe\Base\Servicos\ACBrDCe.RetEnvEvento.pas"/>
+        <UnitName Value="ACBrDCe.RetEnvEvento"/>
+      </Item16>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

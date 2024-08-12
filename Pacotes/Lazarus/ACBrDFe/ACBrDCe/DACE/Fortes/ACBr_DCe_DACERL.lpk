@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_DCe_DACERL"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrDCe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - DACE em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes\ACBrDCe.DACERL.pas"/>
+        <UnitName Value="ACBrDCe.DACERL"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes\ACBrDCe.DACERLClass.pas"/>
+        <UnitName Value="ACBrDCe.DACERLClass"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes\ACBrDCe.DACERLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrDCe.DACERLReg"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes\ACBrDCe.DACERLRetrato.pas"/>
+        <UnitName Value="ACBrDCe.DACERLRetrato"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes\ACBrDCe.DAEventoRL.pas"/>
+        <UnitName Value="ACBrDCe.DAEventoRL"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrDCe\DACE\Fortes\ACBrDCe.DAEventoRLRetrato.pas"/>
+        <UnitName Value="ACBrDCe.DAEventoRLRetrato"/>
+      </Item6>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrDFeReportRL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBr_DCe"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

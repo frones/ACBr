@@ -1,0 +1,83 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr - ACBrNFe                                          }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{******************************************************************************
+|* Historico
+|*
+|* xx/xx/2024: Italo Jurisato Junior
+|*  - Doação do componente para o Projeto ACBr
+******************************************************************************}
+package ACBr_NF3eDANF3eRL;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$DEFINITIONINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - DANF3e em FortesReport - (http://www.projetoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  dsnap,
+  ACBr_NF3e,
+  ACBrDFeReportRL;
+
+contains
+  ACBrNF3e.DAEventoRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DAEventoRL.pas' {frmNF3eDAEventoRL},
+  ACBrNF3e.DAEventoRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DAEventoRLRetrato.pas' {frmNF3eDAEventoRLRetrato},
+  ACBrNF3e.DANF3ERL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERL.pas' {frmDANF3eRL},
+  ACBrNF3e.DANF3ERLClass in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLClass.pas',
+  ACBrNF3e.DANF3ERLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLRetrato.pas' {frmDANF3eRLRetrato};
+
+end.

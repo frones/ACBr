@@ -38,9 +38,15 @@ unit ACBrNFeDANFEClass;
 interface
 
 uses
-  SysUtils, Classes,
-  ACBrBase, ACBrDFeDANFeReport,
-  pcnNFe, pcnConversao, pcnConversaoNFe, StrUtilsEx, TypInfo;
+  SysUtils, 
+  Classes,
+  ACBrBase, 
+  ACBrDFeDANFeReport,
+  pcnNFe, 
+  pcnConversao, 
+  pcnConversaoNFe, 
+  StrUtilsEx, 
+  TypInfo;
 
 type
   TDetVeiculo = (dv_tpOp, dv_chassi, dv_cCor, dv_xCor, dv_pot, dv_cilin,
@@ -187,8 +193,11 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrValidador,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrDFeUtil, 
+  ACBrValidador,
+  ACBrUtil.Base, 
+  ACBrUtil.Strings, 
+  ACBrUtil.DateTime,
   StrUtils;
 
 { TACBrNFeDANFEClass }
@@ -368,7 +377,7 @@ begin
       for i := 0 to med.Count - 1 do
       begin
         if (aNFE.infNFe.Versao >= 4) then
-          Result := Result + 'C.P. ANVISA ' + med.Items[i].cProdANVISA + sQuebraLinha
+          Result := Result + 'Registro ANVISA ' + med.Items[i].cProdANVISA + sQuebraLinha
         else
         begin
           if (dm_nLote in FDetMedicamentos) then

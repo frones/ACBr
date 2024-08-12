@@ -2,8 +2,9 @@ object LibDataModule: TLibDataModule
   OldCreateOrder = False
   Left = 498
   Top = 264
-  Height = 215
-  HorizontalOffset = 507
-  VerticalOffset = 239
-  Width = 262
+  Height = 269
+  HorizontalOffset = -1766
+  VerticalOffset = 299
+  Width = 328
+  PPI = 120
 end

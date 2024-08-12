@@ -27,37 +27,40 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="10">
+    <RequiredPackages Count="11">
       <Item1>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_NF3e_DANF3ERL"/>
       </Item1>
       <Item2>
-        <PackageName Value="laz_synapse"/>
+        <PackageName Value="SynEdit"/>
       </Item2>
       <Item3>
-        <PackageName Value="PCNComum"/>
+        <PackageName Value="laz_synapse"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="PCNComum"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrComum"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_NF3e_DANF3eESCPOS"/>
+        <PackageName Value="ACBrSerial"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_NF3e"/>
+        <PackageName Value="ACBr_NF3e_DANF3eESCPOS"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_NF3e"/>
       </Item9>
       <Item10>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item10>
+      <Item11>
+        <PackageName Value="LCL"/>
+      </Item11>
     </RequiredPackages>
     <Units Count="5">
       <Unit0>

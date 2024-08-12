@@ -858,6 +858,7 @@ begin
           Unidade := 'UN';
           Quantidade := 10;
           ValorUnitario := 5;
+          ValorTributavel := 5;
 
           QtdeDiaria := 0;
           ValorTaxaTurismo := 0;

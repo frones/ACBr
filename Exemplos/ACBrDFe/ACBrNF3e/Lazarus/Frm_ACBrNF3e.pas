@@ -35,20 +35,18 @@ unit Frm_ACBrNF3e;
 interface
 
 uses
-  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls,
-  SynEdit, SynHighlighterXML,
-  ACBrBase,
-  ACBrDFe, ACBrDFeReport,
-  ACBrXmlBase,
-  ACBrNF3e, ACBrNF3eConversao, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS,
-  ACBrPosPrinter, ACBrMail;
+  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, SynEdit,
+  SynHighlighterXML, ACBrBase, ACBrDFe, ACBrDFeReport, ACBrXmlBase, ACBrNF3e,
+  ACBrNF3eConversao, ACBrNF3eDANF3eClass, ACBrNF3e.DANF3ERLClass,
+  ACBrNF3eDANF3eESCPOS, ACBrPosPrinter, ACBrMail;
 
 type
 
   { TfrmACBrNF3e }
 
   TfrmACBrNF3e = class(TForm)
+    ACBrNF3eDANF3eRL1: TACBrNF3eDANF3eRL;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -1176,7 +1174,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    PrepararImpressao;
+    if ACBrNF3e1.DANF3E = ACBrNF3eDANF3eESCPOS1 then
+      PrepararImpressao;
 
     ACBrNF3e1.NotasFiscais.Clear;
     ACBrNF3e1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
@@ -1194,7 +1193,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    PrepararImpressao;
+    if ACBrNF3e1.DANF3E = ACBrNF3eDANF3eESCPOS1 then
+      PrepararImpressao;
 
     ACBrNF3e1.NotasFiscais.Clear;
     ACBrNF3e1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
@@ -1842,17 +1842,12 @@ begin
   ACBrNF3e1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNF3e1.Configuracoes.Certificados.Senha       := edtSenha.Text;
   ACBrNF3e1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-  {
-  if cbModeloDF.ItemIndex = 0 then
-    ACBrNF3e1.DANF3e := ACBrNF3eDANF3eRL1
-  else
-  begin
-    if rgDANFCE.ItemIndex = 0 then
-      ACBrNF3e1.DANF3e := ACBrNF3eDANFCeFortes1
-    else
-      ACBrNF3e1.DANF3e := ACBrNF3eDANF3eESCPOS1;
+
+  case rgDANF3E.ItemIndex of
+    0: ACBrNF3e1.DANF3E := ACBrNF3eDANF3eRL1;
+    1: ACBrNF3e1.DANF3E := ACBrNF3eDANF3eESCPOS1;
   end;
-  }
+
   ACBrNF3e1.SSL.DescarregarCertificado;
 
   with ACBrNF3e1.Configuracoes.Geral do

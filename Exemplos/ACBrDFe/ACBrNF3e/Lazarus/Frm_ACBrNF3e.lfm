@@ -1,7 +1,7 @@
 object frmACBrNF3e: TfrmACBrNF3e
-  Left = 448
+  Left = 234
   Height = 612
-  Top = 84
+  Top = 105
   Width = 866
   Caption = 'ACBrNF3e - Programa Exemplo'
   ClientHeight = 612
@@ -2873,5 +2873,32 @@ object frmACBrNF3e: TfrmACBrNF3e
     WantBracesParsed = False
     Left = 334
     Top = 344
+  end
+  object ACBrNF3eDANF3eRL1: TACBrNF3eDANF3eRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 8
+    MargemSuperior = 8
+    MargemEsquerda = 6
+    MargemDireita = 5.1
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
+    TipoDANF3e = tiSemGeracao
+    Cancelada = False
+    ViaConsumidor = True
+    ImprimeNomeFantasia = False
+    PrintDialog = True
+    Left = 592
+    Top = 240
   end
 end

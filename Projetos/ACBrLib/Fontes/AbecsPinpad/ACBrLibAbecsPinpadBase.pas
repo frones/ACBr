@@ -59,9 +59,9 @@ type
 
       property AbecsPinpadDM: TLibAbecsPinpadDM read FAbecsPinpadDM;
 
-      function Ativar: longint;
-      function Desativar: longint;
-      function OPN: longint;
+      function Ativar: Integer;
+      function Desativar: Integer;
+      function OPN: Integer;
       function CLO(const sMensagem: PAnsiChar): Integer;
       function CLX(const sMensagemOuNomeImagem: PAnsiChar): Integer;
       function GIX(const PP_DATA: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;

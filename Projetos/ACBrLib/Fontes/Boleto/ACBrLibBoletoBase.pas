@@ -670,7 +670,7 @@ begin
       RespRetorno := TRetornoBoleto.Create(Config.TipoResposta, Config.CodResposta);
       try
         RespRetorno.Processar(BoletoDM.ACBrBoleto1);
-        Resposta := ConverterStringSaida(RespRetorno.Gerar);
+        Resposta := RespRetorno.Gerar;
       Finally
         RespRetorno.Free;
       end;
@@ -1133,7 +1133,7 @@ var
    ICaractTitulo : TACBrCaracTitulo;
    SCaractTitulo : String;
 begin
-
+   Result := '';
    for ICaractTitulo := Low(TACBrCaracTitulo) to high(TACBrCaracTitulo) do
    begin
      SCaractTitulo := GetEnumName( TypeInfo(TACBrCaracTitulo), Integer(ICaractTitulo) );
@@ -1150,6 +1150,7 @@ var
    ITipoOcorrencia : TACBrTipoOcorrencia;
    SOcorrencia     : String;
 begin
+  Result := '';
   for ITipoOcorrencia := Low(TACBrTipoOcorrencia) to High(TACBrTipoOcorrencia) do
   begin
     SOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia), Integer(ITipoOcorrencia) ) ;
@@ -1166,7 +1167,7 @@ var
    SOcorrencia     : String;
    ValorIndice     : Integer;
 begin
-
+  Result := '';
   for ITipoOcorrencia := Low(TACBrTipoOcorrencia) to High(TACBrTipoOcorrencia) do
   begin
     ValorIndice := Integer(ITipoOcorrencia);

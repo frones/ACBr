@@ -37,8 +37,10 @@ unit ACBrLibConsultaCNPJBase;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrLibComum, ACBrLibConsultaCNPJDataModule, ACBrTCP, ACBrConsultaCNPJ, ACBrUtil.Base;
+  Classes, SysUtils,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrConsultaCNPJ,
+  ACBrLibComum, ACBrLibConsultaCNPJDataModule;
 
 Const
   CCAPTCHA_CNPJ = 'CaptchaCNPJ';

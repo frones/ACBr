@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -58,9 +58,9 @@ type
 
     property IBGEDM: TLibIBGEDM read FIBGEDM;
 
-    function BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint):longint;
-    function BuscarPorNome(const eCidade, eUF: PChar; Exata: Boolean; const sResposta: PChar;
-                           var esTamanho: longint):longint;
+    function BuscarPorCodigo(const ACodMun: Integer; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
+    function BuscarPorNome(const eCidade, eUF: PAnsiChar; Exata: Boolean; const sResposta: PAnsiChar;
+                           var esTamanho: Integer):Integer;
   end;
 
 implementation
@@ -97,7 +97,7 @@ begin
   FIBGEDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibIBGE.BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibIBGE.BuscarPorCodigo(const ACodMun: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibIBGEResposta;
   AResposta: String;
@@ -128,14 +128,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibIBGE.BuscarPorNome(const eCidade, eUF: PChar; Exata: Boolean; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibIBGE.BuscarPorNome(const eCidade, eUF: PAnsiChar; Exata: Boolean; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
 var
   ACidade, AUF: AnsiString;
   Items: TArray<TLibIBGEResposta>;
@@ -144,8 +144,8 @@ var
   I: Integer;
 begin
   try
-    ACidade := ConverterAnsiParaUTF8(eCidade);
-    AUF := ConverterAnsiParaUTF8(eUF);
+    ACidade := ConverterStringEntrada(eCidade);
+    AUF := ConverterStringEntrada(eUF);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('IBGE_BuscarPorNome ( ' + ACidade + ',' + AUF + ',' + BoolToStr(Exata, True) + ' )', logCompleto)
@@ -180,10 +180,10 @@ begin
   end;
     except
       on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
     end;
 end;
 

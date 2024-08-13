@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -40,115 +40,115 @@ uses
   Classes, SysUtils, Forms,
   ACBrLibComum;
 
-function IBGE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function IBGE_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_Finalizar: longint;
+function IBGE_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function IBGE_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function IBGE_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function IBGE_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function IBGE_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_ConfigLer(const eArqConfig: PChar): longint;
+function IBGE_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_ConfigGravar(const eArqConfig: PChar): longint;
+function IBGE_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function IBGE_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_ConfigImportar(const eArqConfig: PChar): longint;
+function IBGE_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function IBGE_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function IBGE_BuscarPorNome(const eCidade:PChar; eUF: PChar; Exata: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
+function IBGE_BuscarPorNome(const eCidade:PAnsiChar; eUF: PAnsiChar; Exata: Boolean;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 
 implementation
 
 Uses
   ACBrLibConsts, ACBrLibIBGEBase;
 
-function IBGE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function IBGE_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibIBGE, eArqConfig, eChaveCrypt);
 end;
 
-function IBGE_Finalizar: longint; {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
+function IBGE_Finalizar: Integer; {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
   pLib := nil;
 end;
 
-function IBGE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function IBGE_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function IBGE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function IBGE_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function IBGE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function IBGE_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function IBGE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function IBGE_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function IBGE_ConfigLer(const eArqConfig: PChar): longint;
+function IBGE_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function IBGE_ConfigGravar(const eArqConfig: PChar): longint;
+function IBGE_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function IBGE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function IBGE_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function IBGE_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 
-function IBGE_ConfigImportar(const eArqConfig: PChar): longint;
+function IBGE_ConfigImportar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function IBGE_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function IBGE_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function IBGE_BuscarPorCodigo(const ACodMun: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -163,7 +163,7 @@ begin
   end;
 end;
 
-function IBGE_BuscarPorNome(const eCidade:PChar; eUF: PChar; Exata: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function IBGE_BuscarPorNome(const eCidade:PAnsiChar; eUF: PAnsiChar; Exata: Boolean; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

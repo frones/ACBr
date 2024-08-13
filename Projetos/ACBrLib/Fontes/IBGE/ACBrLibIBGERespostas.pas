@@ -37,7 +37,7 @@ unit ACBrLibIBGERespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta, ACBrIBGE;
+  SysUtils, Classes, ACBrLibResposta, ACBrLibConfig, ACBrIBGE;
 
 type
 

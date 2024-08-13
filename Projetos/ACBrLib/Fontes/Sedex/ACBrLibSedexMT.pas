@@ -40,33 +40,33 @@ uses
   Classes, SysUtils, typinfo,
   ACBrLibComum;
 
-function Sedex_Inicializar(var libHandle: PLibHandle;const eArqConfig, eChaveCrypt: PChar): longint;
+function Sedex_Inicializar(var libHandle: PLibHandle;const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Finalizar(libHandle: PLibHandle): longint;
+function Sedex_Finalizar(libHandle: PLibHandle): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function Sedex_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function Sedex_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Sedex_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Sedex_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Sedex_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Sedex_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function Sedex_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Sedex_Consultar(const libHandle: PLibHandle; const eArqIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Consultar(const libHandle: PLibHandle; const eArqIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Rastrear(const libHandle: PLibHandle; const eCodRastreio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Rastrear(const libHandle: PLibHandle; const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -74,75 +74,75 @@ implementation
 uses
   ACBrLibSedexBase, ACBrLibConsts;
 
-function Sedex_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function Sedex_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibSedex, eArqConfig, eChaveCrypt);
 end;
 
-function Sedex_Finalizar(libHandle: PLibHandle): longint;
+function Sedex_Finalizar(libHandle: PLibHandle): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
   libHandle := nil;
 end;
 
-function Sedex_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function Sedex_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function Sedex_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function Sedex_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle,sVersao, esTamanho);
 end;
 
-function Sedex_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function Sedex_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Sedex_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function Sedex_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function Sedex_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Sedex_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function Sedex_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Sedex_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function Sedex_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Sedex_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function Sedex_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function Sedex_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
-function Sedex_Consultar(const libHandle: PLibHandle; const eArqIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Consultar(const libHandle: PLibHandle; const eArqIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -157,7 +157,7 @@ begin
   end;
 end;
 
-function Sedex_Rastrear(const libHandle: PLibHandle; const eCodRastreio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Rastrear(const libHandle: PLibHandle; const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

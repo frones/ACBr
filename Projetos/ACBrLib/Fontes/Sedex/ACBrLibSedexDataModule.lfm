@@ -8,6 +8,8 @@ object LibSedexDM: TLibSedexDM
   Width = 525
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
     Formato = TpfCaixaPacote
     Servico = Tps04510PAC
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'

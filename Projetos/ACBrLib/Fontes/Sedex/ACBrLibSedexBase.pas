@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -60,8 +60,8 @@ type
 
     property SedexDM: TLibSedexDM read FSedexDM;
 
-    function Consultar(const eArqIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function Rastrear(const eCodRastreio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function Consultar(const eArqIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function Rastrear(const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 
   end;
 
@@ -69,7 +69,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibConfig, ACBrLibSedexConfig,
-  ACBrObjectSerializer, ACBrLibResposta, ACBrLibSedexRespostas;
+  ACBrLibResposta, ACBrLibSedexRespostas;
 
 { TACBrLibSedex }
 
@@ -104,14 +104,14 @@ begin
   FSedexDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibSedex.Consultar(const eArqIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSedex.Consultar(const eArqIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resp: TLibSedexConsulta;
   AArqIni, AResposta: String;
 begin
   try
-    AArqIni := ConverterAnsiParaUTF8(eArqIni);
+    AArqIni := ConverterStringEntrada(eArqIni);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Sedex_Consultar( ' + AArqIni + ' )', logCompleto, True)
@@ -138,14 +138,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSedex.Rastrear(const eCodRastreio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSedex.Rastrear(const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   ACodRastreio: AnsiString;
@@ -155,7 +155,7 @@ var
   I: Integer;
 begin
   try
-    ACodRastreio := ConverterAnsiParaUTF8(eCodRastreio);
+    ACodRastreio := ConverterStringEntrada(eCodRastreio);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Sedex_Rastrear( ' + ACodRastreio + ' )', logCompleto, True)
@@ -177,7 +177,7 @@ begin
         Rastreios[I] := Item;
       end;
 
-      Resposta := TACBrObjectSerializer.Gerar<TLibSedexRastreio>(Rastreios, Config.TipoResposta, Config.CodResposta);
+      Resposta := GerarResposta<TLibSedexRastreio>(Rastreios);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -189,10 +189,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

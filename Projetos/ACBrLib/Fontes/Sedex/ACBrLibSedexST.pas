@@ -40,33 +40,33 @@ uses
   Classes, SysUtils, typinfo,
   ACBrLibComum;
 
-function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Finalizar: longint;
+function Sedex_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function Sedex_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function Sedex_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigImportar(const eArqConfig: PChar): longint;
+function Sedex_ConfigImportar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigLer(const eArqConfig: PChar): longint;
+function Sedex_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigGravar(const eArqConfig: PChar): longint;
+function Sedex_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Sedex_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function Sedex_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Sedex_Consultar(const eArqIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Consultar(const eArqIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Sedex_Rastrear(const eCodRastreio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Rastrear(const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -74,74 +74,74 @@ implementation
 uses
   ACBrLibSedexBase, ACBrLibConsts;
 
-function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibSedex, eArqConfig, eChaveCrypt);
 end;
 
-function Sedex_Finalizar: longint;
+function Sedex_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
   pLib := nil;
 end;
 
-function Sedex_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function Sedex_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function Sedex_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function Sedex_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib,sVersao, esTamanho);
 end;
 
-function Sedex_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function Sedex_ConfigImportar(const eArqConfig: PChar): longint;
+function Sedex_ConfigImportar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function Sedex_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function Sedex_ConfigLer(const eArqConfig: PChar): longint;
+function Sedex_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function Sedex_ConfigGravar(const eArqConfig: PChar): longint;
+function Sedex_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function Sedex_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Sedex_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function Sedex_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function Sedex_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 
-function Sedex_Consultar(const eArqIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Consultar(const eArqIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -156,7 +156,7 @@ begin
   end;
 end;
 
-function Sedex_Rastrear(const eCodRastreio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Rastrear(const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

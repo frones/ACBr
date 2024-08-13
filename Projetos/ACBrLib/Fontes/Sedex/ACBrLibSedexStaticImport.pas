@@ -62,45 +62,45 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function Sedex_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 
-function Sedex_Finalizar: longint;
+function Sedex_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function Sedex_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function Sedex_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 
-function Sedex_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function Sedex_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 
-function Sedex_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function Sedex_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function Sedex_ConfigLer(const eArqConfig: PChar): longint;
+function Sedex_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 
-function Sedex_ConfigGravar(const eArqConfig: PChar): longint;
+function Sedex_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 
-function Sedex_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function Sedex_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 
-function Sedex_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function Sedex_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 {%endregion}
 
 {%region Sedex}
-function Sedex_LerArqIni(const eArqIni: PChar): longint;
+function Sedex_LerArqIni(const eArqIni: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
-function Sedex_Consultar(const sResposta: PChar; var esTamanho: longint): longint;
+function Sedex_Consultar(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
-function Sedex_Rastrear(const eCodRastreio: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function Sedex_Rastrear(const eCodRastreio: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSedexLIBName;
 {%endregion}
 

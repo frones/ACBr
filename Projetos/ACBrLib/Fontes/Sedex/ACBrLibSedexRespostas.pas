@@ -37,8 +37,9 @@ unit ACBrLibSedexRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta,
-  ACBrSedex;
+  SysUtils, Classes,
+  ACBrSedex,
+  ACBrLibResposta, ACBrLibConfig;
 
 type
 

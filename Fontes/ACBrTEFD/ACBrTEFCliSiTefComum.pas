@@ -37,7 +37,8 @@ unit ACBrTEFCliSiTefComum;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes,
+  SysUtils,
   ACBrTEFComum;
 
 resourcestring
@@ -239,7 +240,9 @@ procedure ConteudoToPropertyCliSiTef(AACBrTEFResp: TACBrTEFResp);
 implementation
 
 uses
-  strutils, Math, dateutils,
+  StrUtils,
+  Math,
+  DateUtils,
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.Math,

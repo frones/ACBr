@@ -37,9 +37,11 @@ unit ACBrTEFComum;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes,
+  SysUtils,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
-   System.Generics.Collections, System.Generics.Defaults,
+   System.Generics.Collections,
+   System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$Else}
@@ -518,7 +520,8 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): Stri
 implementation
 
 uses
-  Math, strutils,
+  Math,
+  StrUtils,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrConsts;

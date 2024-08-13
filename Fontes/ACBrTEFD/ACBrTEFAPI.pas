@@ -37,8 +37,10 @@ unit ACBrTEFAPI;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrBase, ACBrTEFAPIComum;
+  Classes,
+  SysUtils,
+  ACBrBase,
+  ACBrTEFAPIComum;
 
 type
   TACBrTEFAPITipo = ( tefApiNenhum,
@@ -231,7 +233,9 @@ implementation
 
 uses
   TypInfo,
-  ACBrTEFAPIPayGoWeb, ACBrTEFAPICliSiTef, ACBrTEFAPIElgin;
+  ACBrTEFAPIPayGoWeb,
+  ACBrTEFAPICliSiTef,
+  ACBrTEFAPIElgin;
 
 { TACBrTEFAPIClass }
 

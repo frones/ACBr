@@ -45,8 +45,10 @@ unit ACBrTEFAPIComum;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrBase, ACBrTEFComum;
+  Classes,
+  SysUtils,
+  ACBrBase,
+  ACBrTEFComum;
 
 resourcestring
   sACBrTEFAPIIdentificadorVendaVazioException = 'IdentificadorVenda não pode ser vazio';
@@ -428,7 +430,8 @@ type
 implementation
 
 uses
-  StrUtils, TypInfo,
+  StrUtils,
+  TypInfo,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,

@@ -61,43 +61,43 @@ type
 
     property SatDM: TLibSatDM read FSatDM;
 
-    function InicializarSAT: longint;
-    function DesInicializar: longint;
-    function AtivarSAT(CNPJvalue: PChar; cUF: longint;
-      const sResposta: PChar; var esTamanho: longint):longint;
-    function AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
-                                const sResposta: PChar; var esTamanho: longint): longint;
-    function BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
-    function DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
-    function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: integer; novoCodigo: PChar;
-                                    const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarUltimaSessaoFiscal(const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarStatusOperacional(const sResposta: PChar;  var esTamanho: longint): longint;
-    function ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PChar; var esTamanho: longint): longint;
-    function SetNumeroSessao(cNumeroDeSessao: PChar):longint;
-    function AtualizarSoftwareSAT(const sResposta: PChar; var esTamanho: longint): longint;
-    function ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ExtrairLogs(eArquivo: PChar): longint;
-    function TesteFimAFim(eArquivoXmlVenda: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function GerarAssinaturaSAT(eCNPJSHW, eCNPJEmitente: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function CriarCFe(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function CriarEnviarCFe(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ValidarCFe(eArquivoXml: PChar): longint;
-    function CarregarXML(eArquivoXml: PChar): longint;
-    function ObterIni(const sResposta: PChar; var esTamanho: longint): longint;
-    function EnviarCFe(eArquivoXml: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function CancelarCFe(eArquivoXml: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PChar): longint;
-    function ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar): longint;
-    function ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar): longint;
-    function SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
-    function GerarImpressaoFiscalMFe(eArqXMLVenda: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
-                                  var esTamanho: longint): longint;
-    function GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar;
-                                  const sResposta: PChar; var esTamanho: longint): longint;
-    function EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem, sCC, eAnexos: PChar): longint;
+    function InicializarSAT: integer;
+    function DesInicializar: integer;
+    function AtivarSAT(CNPJvalue: PAnsiChar; cUF: integer;
+      const sResposta: PAnsiChar; var esTamanho: integer):integer;
+    function AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PAnsiChar;
+                                const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function BloquearSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function DesbloquearSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PAnsiChar; opcao: integer; novoCodigo: PAnsiChar;
+                                    const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ConsultarSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ConsultarUltimaSessaoFiscal(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ConsultarStatusOperacional(const sResposta: PAnsiChar;  var esTamanho: integer): integer;
+    function ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function SetNumeroSessao(cNumeroDeSessao: PAnsiChar):integer;
+    function AtualizarSoftwareSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ComunicarCertificadoICPBRASIL(certificado: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ExtrairLogs(eArquivo: PAnsiChar): integer;
+    function TesteFimAFim(eArquivoXmlVenda: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function GerarAssinaturaSAT(eCNPJSHW, eCNPJEmitente: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function CriarCFe(eArquivoIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function CriarEnviarCFe(eArquivoIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ValidarCFe(eArquivoXml: PAnsiChar): integer;
+    function CarregarXML(eArquivoXml: PAnsiChar): integer;
+    function ObterIni(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function EnviarCFe(eArquivoXml: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function CancelarCFe(eArquivoXml: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
+    function ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
+    function ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PAnsiChar): integer;
+    function SalvarPDF(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function GerarImpressaoFiscalMFe(eArqXMLVenda: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PAnsiChar; const sResposta: PAnsiChar;
+                                  var esTamanho: integer): integer;
+    function GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PAnsiChar;
+                                  const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem, sCC, eAnexos: PAnsiChar): integer;
 
   end;
 
@@ -140,7 +140,7 @@ begin
   FSatDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibSAT.InicializarSAT: longint;
+function TACBrLibSAT.InicializarSAT: integer;
 begin
   try
     GravarLog('SAT_InicializarSAT', logNormal);
@@ -161,14 +161,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.DesInicializar: longint;
+function TACBrLibSAT.DesInicializar: integer;
 begin
   try
     GravarLog('SAT_DesInicializar', logNormal);
@@ -189,21 +189,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.AtivarSAT(CNPJvalue: PChar; cUF: longint;
-                              const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibSAT.AtivarSAT(CNPJvalue: PAnsiChar; cUF: integer;
+                              const sResposta: PAnsiChar; var esTamanho: integer):integer;
 var
   CNPJ, Resposta: Ansistring;
   RespSat: TACBrLibSATResposta;
 begin
   try
-    CNPJ := ConverterAnsiParaUTF8(CNPJvalue);
+    CNPJ := ConverterStringEntrada(CNPJvalue);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_AtivarSAT(' + CNPJ + ',' + IntToStr(cUF) + ' )', logCompleto, True)
@@ -227,22 +227,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   CNPJ, Assinatura, Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
 begin
   try
-    CNPJ := ConverterAnsiParaUTF8(CNPJvalue);
-    Assinatura := ConverterAnsiParaUTF8(assinaturaCNPJs);
+    CNPJ := ConverterStringEntrada(CNPJvalue);
+    Assinatura := ConverterStringEntrada(assinaturaCNPJs);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' + Assinatura + ' )', logCompleto, True)
@@ -266,14 +266,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.BloquearSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -296,14 +296,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.DesbloquearSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -326,22 +326,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar;
-  opcao: integer; novoCodigo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PAnsiChar;
+  opcao: integer; novoCodigo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   CodigoAtivacao, NovoCodigoAtv, Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
 begin
   try
-    CodigoAtivacao := ConverterAnsiParaUTF8(codigoDeAtivacaoOuEmergencia);
-    NovoCodigoAtv := ConverterAnsiParaUTF8(novoCodigo);
+    CodigoAtivacao := ConverterStringEntrada(codigoDeAtivacaoOuEmergencia);
+    NovoCodigoAtv := ConverterStringEntrada(novoCodigo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_TrocarCodigoDeAtivacao(' + CodigoAtivacao + ',' + IntToStr(opcao) + ',' + NovoCodigoAtv +
@@ -365,14 +365,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.ConsultarSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -397,14 +397,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ConsultarUltimaSessaoFiscal(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.ConsultarUltimaSessaoFiscal(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -429,14 +429,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.ConsultarStatusOperacional(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -470,15 +470,15 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PChar;
-                                           var esTamanho: longint): longint;
+function TACBrLibSAT.ConsultarNumeroSessao(cNumeroDeSessao: integer; const sResposta: PAnsiChar;
+                                           var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -533,19 +533,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.SetNumeroSessao(cNumeroDeSessao: PChar):longint;
+function TACBrLibSAT.SetNumeroSessao(cNumeroDeSessao: PAnsiChar):integer;
 var
   Sessao: String;
 begin
   try
-    Sessao:= ConverterAnsiParaUTF8(cNumeroDeSessao);
+    Sessao:= ConverterStringEntrada(cNumeroDeSessao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_SetNumeroSessao(' + cNumeroDeSessao + ' )', logCompleto, True)
@@ -562,14 +562,14 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.AtualizarSoftwareSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.AtualizarSoftwareSAT(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
@@ -593,21 +593,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ComunicarCertificadoICPBRASIL(certificado: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.ComunicarCertificadoICPBRASIL(certificado: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   cCertificado, Resposta: ansistring;
   RespSat: TACBrLibSATResposta;
 begin
   try
-    cCertificado := ConverterAnsiParaUTF8(certificado);
+    cCertificado := ConverterStringEntrada(certificado);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ComunicarCertificadoICPBRASIL(' + cCertificado + ' )', logCompleto, True)
@@ -630,19 +630,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ExtrairLogs(eArquivo: PChar): longint;
+function TACBrLibSAT.ExtrairLogs(eArquivo: PAnsiChar): integer;
 var
   cArquivo: ansistring;
 begin
   try
-    cArquivo := ConverterAnsiParaUTF8(eArquivo);
+    cArquivo := ConverterStringEntrada(eArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ExtrairLogs(' + cArquivo + ' )', logCompleto, True)
@@ -658,22 +658,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.TesteFimAFim(eArquivoXmlVenda: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function TACBrLibSAT.TesteFimAFim(eArquivoXmlVenda: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
 var
   ArquivoXmlVenda: ansistring;
   Resposta: String;
   Resp: TRetornoTesteFimaFim;
 begin
   try
-    ArquivoXmlVenda := ConverterAnsiParaUTF8(eArquivoXmlVenda);
+    ArquivoXmlVenda := ConverterStringEntrada(eArquivoXmlVenda);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_TesteFimAFim(' + ArquivoXmlVenda + ' )', logCompleto, True)
@@ -695,21 +695,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.GerarAssinaturaSAT(eCNPJSHW, eCNPJEmitente: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.GerarAssinaturaSAT(eCNPJSHW, eCNPJEmitente: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
 Var
   cCNPJShw, cCNPJEmitente, cCodigoVinculacao, Resposta: String;
 begin
   try
-    cCNPJShw := OnlyNumber(ConverterAnsiParaUTF8(eCNPJSHW));
-    cCNPJEmitente := OnlyNumber(ConverterAnsiParaUTF8(eCNPJEmitente));
+    cCNPJShw := OnlyNumber(ConverterStringEntrada(eCNPJSHW));
+    cCNPJEmitente := OnlyNumber(ConverterStringEntrada(eCNPJEmitente));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarAssinaturaSAT(' + cCNPJShw + ', ' + cCNPJEmitente + ' )', logCompleto, True)
@@ -738,21 +738,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.CriarCFe(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.CriarCFe(eArquivoIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resp: TRetornoCriarCFe;
   Resposta: Ansistring;
   ArquivoIni: String;
 begin
    try
-    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
+    ArquivoIni := ConverterStringEntrada(eArquivoIni);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CriarCFe(' + ArquivoIni + ' )', logCompleto, True)
@@ -777,21 +777,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.CriarEnviarCFe(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.CriarEnviarCFe(eArquivoIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resp: TRetornoEnvio;
   Resposta: Ansistring;
   ArquivoIni: String;
 begin
    try
-    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
+    ArquivoIni := ConverterStringEntrada(eArquivoIni);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CriarEnviarCFe(' + ArquivoIni + ' )', logCompleto, True)
@@ -817,14 +817,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ValidarCFe(eArquivoXml: PChar): longint;
+function TACBrLibSAT.ValidarCFe(eArquivoXml: PAnsiChar): integer;
 var
   ArquivoXml, Erro: Ansistring;
   Arquivo: TStringList;
@@ -842,7 +842,7 @@ begin
       Arquivo.LoadFromFile(eArquivoXml);
       Erro := '';
       SatDM.ACBrSAT1.ValidarDadosVenda(Arquivo.Text, Erro);
-      Erro := ConverterUTF8ParaAnsi(Erro);
+      Erro := ConverterStringSaida(Erro);
       Result := SetRetorno(ErrOK, Erro);
      finally
        Arquivo.Free;
@@ -852,20 +852,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.CarregarXML(eArquivoXml: PChar): longint;
+function TACBrLibSAT.CarregarXML(eArquivoXml: PAnsiChar): integer;
 var
   EhArquivo: boolean;
   Arquivo: string;
 begin
   try
-    Arquivo := ConverterAnsiParaUTF8(eArquivoXml);
+    Arquivo := ConverterStringEntrada(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CarregarXML(' + Arquivo + ' )', logCompleto, True)
@@ -886,14 +886,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ObterIni(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.ObterIni(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
    Resposta: Ansistring;
 begin
@@ -903,7 +903,7 @@ begin
     SatDM.Travar;
     try
       Resposta := SatDM.ACBrSAT1.GerarCFeIni;
-      Resposta := ConverterUTF8ParaAnsi(Resposta);
+      Resposta := ConverterStringSaida(Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -911,21 +911,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.EnviarCFe(eArquivoXml: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.EnviarCFe(eArquivoXml: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resp: TRetornoEnvio;
   Resposta: Ansistring;
   ArquivoXml: Ansistring;
 begin
    try
-    ArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
+    ArquivoXml := ConverterStringEntrada(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_EnviarCFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -952,21 +952,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.CancelarCFe(eArquivoXml: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.CancelarCFe(eArquivoXml: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resp: TRetornoCancelarCFe;
   Resposta: Ansistring;
   ArquivoXml: String;
 begin
    try
-    ArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
+    ArquivoXml := ConverterStringEntrada(eArquivoXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_CancelarCFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -993,20 +993,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PChar): longint;
+function TACBrLibSAT.ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
 var
   ArquivoXml, NomeImpressora: String;
 begin
    try
-    ArquivoXml := ConverterAnsiParaUTF8(eArqXMLVenda);
-    NomeImpressora := ConverterAnsiParaUTF8(eNomeImpressora);
+    ArquivoXml := ConverterStringEntrada(eArqXMLVenda);
+    NomeImpressora := ConverterStringEntrada(eNomeImpressora);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ImprimirExtratoVenda(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
@@ -1028,14 +1028,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar): longint;
+function TACBrLibSAT.ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
 var
   ArquivoXml, NomeImpressora: String;
 begin
@@ -1063,21 +1063,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar): longint;
+function TACBrLibSAT.ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PAnsiChar): integer;
 var
   ArqXMLVenda, ArqXMLCancelamento, NomeImpressora: String;
 begin
    try
-    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
-    ArqXMLCancelamento := ConverterAnsiParaUTF8(eArqXMLCancelamento);
-    NomeImpressora := ConverterAnsiParaUTF8(eNomeImpressora);
+    ArqXMLVenda := ConverterStringEntrada(eArqXMLVenda);
+    ArqXMLCancelamento := ConverterStringEntrada(eArqXMLCancelamento);
+    NomeImpressora := ConverterStringEntrada(eNomeImpressora);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_ImprimirExtratoCancelamento(' + ArqXMLVenda + ',' + ArqXMLCancelamento +
@@ -1101,14 +1101,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.SalvarPDF(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   AStream: TMemoryStream;
   Resposta: AnsiString;
@@ -1136,19 +1136,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.GerarImpressaoFiscalMFe(eArqXMLVenda: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibSAT.GerarImpressaoFiscalMFe(eArqXMLVenda: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   ArquivoXml,  Resposta: String;
 begin
    try
-    ArquivoXml := ConverterAnsiParaUTF8(eArqXMLVenda);
+    ArquivoXml := ConverterStringEntrada(eArqXMLVenda);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarImpressaoFiscalMFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -1170,22 +1170,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function TACBrLibSAT.GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
 var
   Resp: TPadraoSATResposta;
   ArqXMLVenda, NomeArquivo, Resposta: String;
 begin
   try
-    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
-    NomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    ArqXMLVenda := ConverterStringEntrada(eArqXMLVenda);
+    NomeArquivo := ConverterStringEntrada(eNomeArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarPDFExtratoVenda(' + ArqXMLVenda + ',' + NomeArquivo + ' )', logCompleto, True)
@@ -1217,23 +1217,23 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibSAT.GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function TACBrLibSAT.GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
 var
   Resp: TPadraoSATResposta;
   ArqXMLVenda, ArqXMLCancelamento, NomeArquivo, Resposta: String;
 begin
    try
-    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
-    ArqXMLCancelamento := ConverterAnsiParaUTF8(eArqXMLCancelamento);
-    NomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
+    ArqXMLVenda := ConverterStringEntrada(eArqXMLVenda);
+    ArqXMLCancelamento := ConverterStringEntrada(eArqXMLCancelamento);
+    NomeArquivo := ConverterStringEntrada(eNomeArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_GerarPDFCancelamento(' + ArqXMLVenda + ',' + ArqXMLCancelamento +
@@ -1264,27 +1264,27 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibSAT.EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
-  sCC, eAnexos: PChar): longint;
+  sCC, eAnexos: PAnsiChar): integer;
 var
   ArqXMLVenda, Para, Assunto, NomeArquivo, Mensagem, CC, Anexos: String;
   slMensagem, slCC, slAnexos: TStrings;
 begin
    try
-    ArqXMLVenda := ConverterAnsiParaUTF8(eArqXMLVenda);
-    Para := ConverterAnsiParaUTF8(sPara);
-    Assunto := ConverterAnsiParaUTF8(sAssunto);
-    NomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
-    Mensagem := ConverterAnsiParaUTF8(sMensagem);
-    CC := ConverterAnsiParaUTF8(sCC);
-    Anexos := ConverterAnsiParaUTF8(eAnexos);
+    ArqXMLVenda := ConverterStringEntrada(eArqXMLVenda);
+    Para := ConverterStringEntrada(sPara);
+    Assunto := ConverterStringEntrada(sAssunto);
+    NomeArquivo := ConverterStringEntrada(eNomeArquivo);
+    Mensagem := ConverterStringEntrada(sMensagem);
+    CC := ConverterStringEntrada(sCC);
+    Anexos := ConverterStringEntrada(eAnexos);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('SAT_EnviarEmail(' + ArqXMLVenda + ',' + Para + ',' + Assunto
@@ -1323,10 +1323,10 @@ begin
      end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

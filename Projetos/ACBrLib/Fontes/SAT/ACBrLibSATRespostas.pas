@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
 { mentos de Automação Comercial utilizados no Brasil                            }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                 }
 {                                                                               }
@@ -39,7 +39,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrSat, ACBrLibResposta;
+  ACBrSat, ACBrLibResposta, ACBrLibConfig;
 
 type
 

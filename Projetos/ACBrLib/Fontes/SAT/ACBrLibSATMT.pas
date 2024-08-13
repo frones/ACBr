@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -42,100 +42,100 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function SAT_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function SAT_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_Finalizar(libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function SAT_Finalizar(libHandle: PLibHandle): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: integer): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function SAT_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: integer): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function SAT_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function SAT_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function SAT_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function SAT_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Ativar}
-function SAT_InicializarSAT(const libHandle: PLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_DesInicializar(const libHandle: PLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_InicializarSAT(const libHandle: PLibHandle): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_DesInicializar(const libHandle: PLibHandle): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Funções SAT}
-function SAT_AtivarSAT(const libHandle: PLibHandle; CNPJvalue: PChar; cUF: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_AssociarAssinatura(const libHandle: PLibHandle; CNPJvalue, assinaturaCNPJs: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_BloquearSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_AtivarSAT(const libHandle: PLibHandle; CNPJvalue: PAnsiChar; cUF: integer;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_AssociarAssinatura(const libHandle: PLibHandle; CNPJvalue, assinaturaCNPJs: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_BloquearSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_DesbloquearSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_DesbloquearSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_TrocarCodigoDeAtivacao(const libHandle: PLibHandle; codigoDeAtivacaoOuEmergencia: PChar;
-  opcao: integer; novoCodigo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConsultarSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
-function SAT_ConsultarUltimaSessaoFiscal(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_TrocarCodigoDeAtivacao(const libHandle: PLibHandle; codigoDeAtivacaoOuEmergencia: PAnsiChar;
+  opcao: integer; novoCodigo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConsultarSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+function SAT_ConsultarUltimaSessaoFiscal(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ConsultarStatusOperacional(const libHandle: PLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConsultarStatusOperacional(const libHandle: PLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ConsultarNumeroSessao(const libHandle: PLibHandle; cNumeroDeSessao: integer;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_SetNumeroSessao(const libHandle:PLibHandle; cNumeroDeSessao: PChar): longint;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_SetNumeroSessao(const libHandle:PLibHandle; cNumeroDeSessao: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_AtualizarSoftwareSAT(const libHandle: PLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ComunicarCertificadoICPBRASIL(const libHandle: PLibHandle; certificado: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ExtrairLogs(const libHandle: PLibHandle; eArquivo: PChar): longint;
+function SAT_AtualizarSoftwareSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ComunicarCertificadoICPBRASIL(const libHandle: PLibHandle; certificado: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ExtrairLogs(const libHandle: PLibHandle; eArquivo: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_TesteFimAFim(const libHandle: PLibHandle; eArquivoXmlVenda: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_GerarAssinaturaSAT(const libHandle: PLibHandle; eCNPJSHW, eCNPJEmitente: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_TesteFimAFim(const libHandle: PLibHandle; eArquivoXmlVenda: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarAssinaturaSAT(const libHandle: PLibHandle; eCNPJSHW, eCNPJEmitente: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region CFe}
-function SAT_CriarCFe(const libHandle: PLibHandle; eArquivoIni: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_CriarEnviarCFe(const libHandle: PLibHandle; eArquivoIni: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ValidarCFe(const libHandle: PLibHandle; eArquivoXml: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_CarregarXML(const libHandle: PLibHandle; eArquivoXml: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ObterIni(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_EnviarCFe(const libHandle: PLibHandle; eArquivoXml: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_CancelarCFe(const libHandle: PLibHandle; eArquivoXml: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CriarCFe(const libHandle: PLibHandle; eArquivoIni: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CriarEnviarCFe(const libHandle: PLibHandle; eArquivoIni: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ValidarCFe(const libHandle: PLibHandle; eArquivoXml: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CarregarXML(const libHandle: PLibHandle; eArquivoXml: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ObterIni(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_EnviarCFe(const libHandle: PLibHandle; eArquivoXml: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CancelarCFe(const libHandle: PLibHandle; eArquivoXml: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Impressão}
-function SAT_ImprimirExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PChar): longint;
+function SAT_ImprimirExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_ImprimirExtratoResumido(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PChar): longint;
+function SAT_ImprimirExtratoResumido(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ImprimirExtratoCancelamento(const libHandle: PLibHandle; eArqXMLVenda, eArqXMLCancelamento,
-  eNomeImpressora: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint)
-  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_GerarImpressaoFiscalMFe(const libHandle: PLibHandle; eArqXMLVenda: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_GerarPDFExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeArquivo: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_GerarPDFCancelamento(const libHandle: PLibHandle; eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  eNomeImpressora: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_SalvarPDF(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer)
+  : integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarImpressaoFiscalMFe(const libHandle: PLibHandle; eArqXMLVenda: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarPDFExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeArquivo: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarPDFCancelamento(const libHandle: PLibHandle; eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_EnviarEmail(const libHandle: PLibHandle; eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
-  sCC, eAnexos: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  sCC, eAnexos: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -148,74 +148,74 @@ uses
 { ACBrLibSAT }
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function SAT_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function SAT_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibSAT, eArqConfig, eChaveCrypt);
 end;
 
-function SAT_Finalizar(libHandle: PLibHandle): longint;
+function SAT_Finalizar(libHandle: PLibHandle): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
 end;
 
-function SAT_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function SAT_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function SAT_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function SAT_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function SAT_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function SAT_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
-function SAT_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function SAT_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function SAT_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function SAT_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function SAT_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function SAT_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function SAT_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function SAT_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function SAT_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function SAT_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function SAT_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function SAT_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
@@ -224,7 +224,7 @@ end;
 {%endregion}
 
 {%region Ativar}
-function SAT_InicializarSAT(const libHandle: PLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_InicializarSAT(const libHandle: PLibHandle): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -238,7 +238,7 @@ begin
   end;
 end;
 
-function SAT_DesInicializar(const libHandle: PLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_DesInicializar(const libHandle: PLibHandle): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -254,8 +254,8 @@ end;
 {%endregion}
 
 {%region Funções SAT}
-function SAT_AtivarSAT(const libHandle: PLibHandle; CNPJvalue: PChar; cUF: longint;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_AtivarSAT(const libHandle: PLibHandle; CNPJvalue: PAnsiChar; cUF: integer;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -269,8 +269,8 @@ begin
   end;
 end;
 
-function SAT_AssociarAssinatura(const libHandle: PLibHandle; CNPJvalue, assinaturaCNPJs: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_AssociarAssinatura(const libHandle: PLibHandle; CNPJvalue, assinaturaCNPJs: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -284,7 +284,7 @@ begin
   end;
 end;
 
-function SAT_BloquearSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_BloquearSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -299,7 +299,7 @@ begin
   end;
 end;
 
-function SAT_DesbloquearSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_DesbloquearSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -314,9 +314,9 @@ begin
   end;
 end;
 
-function SAT_TrocarCodigoDeAtivacao(const libHandle: PLibHandle; codigoDeAtivacaoOuEmergencia: PChar;
-  opcao: integer; novoCodigo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_TrocarCodigoDeAtivacao(const libHandle: PLibHandle; codigoDeAtivacaoOuEmergencia: PAnsiChar;
+  opcao: integer; novoCodigo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -331,7 +331,7 @@ begin
   end;
 end;
 
-function SAT_ConsultarSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ConsultarSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -346,7 +346,7 @@ begin
   end;
 end;
 
-function SAT_ConsultarUltimaSessaoFiscal(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ConsultarUltimaSessaoFiscal(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -361,8 +361,8 @@ begin
   end;
 end;
 
-function SAT_ConsultarStatusOperacional(const libHandle: PLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConsultarStatusOperacional(const libHandle: PLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -377,7 +377,7 @@ begin
 end;
 
 function SAT_ConsultarNumeroSessao(const libHandle: PLibHandle; cNumeroDeSessao: integer;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PAnsiChar; var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -391,7 +391,7 @@ begin
   end;
 end;
 
-function SAT_SetNumeroSessao(const libHandle: PLibHandle; cNumeroDeSessao: PChar): longint;
+function SAT_SetNumeroSessao(const libHandle: PLibHandle; cNumeroDeSessao: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -406,7 +406,7 @@ begin
   end;
 end;
 
-function SAT_AtualizarSoftwareSAT(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_AtualizarSoftwareSAT(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -421,8 +421,8 @@ begin
   end;
 end;
 
-function SAT_ComunicarCertificadoICPBRASIL(const libHandle: PLibHandle; certificado: PChar;  const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ComunicarCertificadoICPBRASIL(const libHandle: PLibHandle; certificado: PAnsiChar;  const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -436,7 +436,7 @@ begin
   end;
 end;
 
-function SAT_ExtrairLogs(const libHandle: PLibHandle; eArquivo: PChar): longint;
+function SAT_ExtrairLogs(const libHandle: PLibHandle; eArquivo: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -451,8 +451,8 @@ begin
   end;
 end;
 
-function SAT_TesteFimAFim(const libHandle: PLibHandle; eArquivoXmlVenda: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_TesteFimAFim(const libHandle: PLibHandle; eArquivoXmlVenda: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -466,8 +466,8 @@ begin
   end;
 end;
 
-function SAT_GerarAssinaturaSAT(const libHandle: PLibHandle; eCNPJSHW, eCNPJEmitente: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarAssinaturaSAT(const libHandle: PLibHandle; eCNPJSHW, eCNPJEmitente: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -485,8 +485,8 @@ end;
 
 {%region CFe}
 
-function SAT_CriarCFe(const libHandle: PLibHandle; eArquivoIni: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CriarCFe(const libHandle: PLibHandle; eArquivoIni: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -500,8 +500,8 @@ begin
   end;
 end;
 
-function SAT_CriarEnviarCFe(const libHandle: PLibHandle; eArquivoIni: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CriarEnviarCFe(const libHandle: PLibHandle; eArquivoIni: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -515,7 +515,7 @@ begin
   end;
 end;
 
-function SAT_ValidarCFe(const libHandle: PLibHandle; eArquivoXml: PChar):longint;
+function SAT_ValidarCFe(const libHandle: PLibHandle; eArquivoXml: PAnsiChar):integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -530,7 +530,7 @@ begin
   end;
 end;
 
-function SAT_CarregarXML(const libHandle: PLibHandle; eArquivoXml: PChar):longint;
+function SAT_CarregarXML(const libHandle: PLibHandle; eArquivoXml: PAnsiChar):integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -545,7 +545,7 @@ begin
   end;
 end;
 
-function SAT_ObterIni(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ObterIni(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -560,8 +560,8 @@ begin
   end;
 end;
 
-function SAT_EnviarCFe(const libHandle: PLibHandle; eArquivoXml: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_EnviarCFe(const libHandle: PLibHandle; eArquivoXml: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -575,8 +575,8 @@ begin
   end;
 end;
 
-function SAT_CancelarCFe(const libHandle: PLibHandle; eArquivoXml: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CancelarCFe(const libHandle: PLibHandle; eArquivoXml: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -594,8 +594,8 @@ end;
 
 {%region Impressão}
 
-function SAT_ImprimirExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PChar)
-  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ImprimirExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PAnsiChar)
+  : integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -609,7 +609,7 @@ begin
   end;
 end;
 
-function SAT_ImprimirExtratoResumido(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PChar): longint;
+function SAT_ImprimirExtratoResumido(const libHandle: PLibHandle; eArqXMLVenda, eNomeImpressora: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -625,7 +625,7 @@ begin
 end;
 
 function SAT_ImprimirExtratoCancelamento(const libHandle: PLibHandle; eArqXMLVenda, eArqXMLCancelamento,
-  eNomeImpressora: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  eNomeImpressora: PAnsiChar): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -639,7 +639,7 @@ begin
   end;
 end;
 
-function SAT_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_SalvarPDF(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -654,8 +654,8 @@ begin
   end;
 end;
 
-function SAT_GerarImpressaoFiscalMFe(const libHandle: PLibHandle; eArqXMLVenda: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarImpressaoFiscalMFe(const libHandle: PLibHandle; eArqXMLVenda: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -669,8 +669,8 @@ begin
   end;
 end;
 
-function SAT_GerarPDFExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeArquivo: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarPDFExtratoVenda(const libHandle: PLibHandle; eArqXMLVenda, eNomeArquivo: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -684,8 +684,8 @@ begin
   end;
 end;
 
-function SAT_GerarPDFCancelamento(const libHandle: PLibHandle; eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarPDFCancelamento(const libHandle: PLibHandle; eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -701,7 +701,7 @@ begin
 end;
 
 function SAT_EnviarEmail(const libHandle: PLibHandle; eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
-  sCC, eAnexos: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  sCC, eAnexos: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);

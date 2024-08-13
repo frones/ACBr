@@ -1,6 +1,6 @@
 ﻿{ criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: José M S Junior                                  }
 {                                                                               }
@@ -35,7 +35,7 @@ unit ACBrLibConsultaCNPJRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta, ACBrConsultaCNPJ, ACBrLibConsultaCNPJConsts;
+  SysUtils, Classes, ACBrLibResposta, ACBrConsultaCNPJ, ACBrLibConsultaCNPJConsts, ACBrLibConfig;
 
 type
 

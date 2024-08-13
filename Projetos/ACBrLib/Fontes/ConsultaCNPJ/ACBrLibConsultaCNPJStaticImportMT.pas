@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -62,46 +62,46 @@ const
  {$I ACBrLibErros.inc}
 
  {%region Constructor/Destructor}
- function CNPJ_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+ function CNPJ_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_Finalizar (const libHandle: TLibHandle): longint;
+ function CNPJ_Finalizar (const libHandle: TLibHandle): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
  {%endregion}
 
  {%region Versao/Retorno}
- function CNPJ_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+ function CNPJ_Nome(const libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+ function CNPJ_Versao(const libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+ function CNPJ_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+ function CNPJ_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
  {%endregion}
 
  {%region Ler/Gravar Config }
- function CNPJ_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+ function CNPJ_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+ function CNPJ_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+ function CNPJ_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+ function CNPJ_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
  {%endregion}
 
  {%region ConsultaCNPJ}
- function CNPJ_ConsultarCaptcha(const libHandle: TLibHandle; ePathDownload: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+ function CNPJ_ConsultarCaptcha(const libHandle: TLibHandle; ePathDownload: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
- function CNPJ_Consultar(const libHandle: TLibHandle; eCNPJ: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+ function CNPJ_Consultar(const libHandle: TLibHandle; eCNPJ: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrConsultaCNPJLIBName;
 
  {%endregion}

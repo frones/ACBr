@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -40,47 +40,47 @@ uses
     Classes, SysUtils, Forms,
     ACBrLibComum;
 
-function CNPJ_Inicializar (var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: Pchar): longint;
+function CNPJ_Inicializar (var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_Finalizar (libHandle: PLibHandle): longint;
+function CNPJ_Finalizar (libHandle: PLibHandle): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_Nome (const libHandle : PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function CNPJ_Nome (const libHandle : PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_Versao (const libHandle : PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function CNPJ_Versao (const libHandle : PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function CNPJ_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_UltimoRetorno (const libHandle : PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function CNPJ_UltimoRetorno (const libHandle : PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConfigImportar (const libHandle : PLibHandle; const eArqConfig: PChar): longint;
+function CNPJ_ConfigImportar (const libHandle : PLibHandle; const eArqConfig: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConfigExportar (const libHandle : PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function CNPJ_ConfigExportar (const libHandle : PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConfigLer (const libHandle : PLibHandle; const eArqConfig: PChar): longint;
+function CNPJ_ConfigLer (const libHandle : PLibHandle; const eArqConfig: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConfigGravar (const libHandle : PLibHandle; const eArqConfig: PChar): longint;
+function CNPJ_ConfigGravar (const libHandle : PLibHandle; const eArqConfig: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConfigLerValor (const libHandle : PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function CNPJ_ConfigLerValor (const libHandle : PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConfigGravarValor (const libHandle : PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function CNPJ_ConfigGravarValor (const libHandle : PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_ConsultarCaptcha (const libHandle : PLibHandle; ePathDownload: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CNPJ_ConsultarCaptcha (const libHandle : PLibHandle; ePathDownload: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function CNPJ_Consultar (const libHandle : PLibHandle; eCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CNPJ_Consultar (const libHandle : PLibHandle; eCNPJ: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -88,82 +88,82 @@ implementation
 Uses
     ACBrLibConsts, ACBrLibConsultaCNPJBase;
 
-function CNPJ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: Pchar): longint;
+function CNPJ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibConsultaCNPJ, eArqConfig, eChaveCrypt);
 end;
 
-function CNPJ_Finalizar (libHandle: PLibHandle): longint;
+function CNPJ_Finalizar (libHandle: PLibHandle): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
   libHandle := Nil;
 end;
 
-function CNPJ_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function CNPJ_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function CNPJ_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function CNPJ_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function CNPJ_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function CNPJ_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
-function CNPJ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function CNPJ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function CNPJ_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function CNPJ_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function CNPJ_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint
-  ): longint;
+function CNPJ_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer
+  ): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function CNPJ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function CNPJ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function CNPJ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function CNPJ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function CNPJ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function CNPJ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function CNPJ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function CNPJ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
-function CNPJ_ConsultarCaptcha(const libHandle: PLibHandle; ePathDownload: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CNPJ_ConsultarCaptcha(const libHandle: PLibHandle; ePathDownload: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -178,7 +178,7 @@ begin
   end;
 end;
 
-function CNPJ_Consultar(const libHandle: PLibHandle; eCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CNPJ_Consultar(const libHandle: PLibHandle; eCNPJ: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

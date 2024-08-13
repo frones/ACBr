@@ -2144,6 +2144,9 @@ var
   LResetar : Boolean;
 begin
   SetDataSetsToFrxReport;
+  if (DANFEClassOwner.FIndexImpressaoEventosIndividual = 0) then
+    DANFEClassOwner.FIndexImpressaoEventosIndividual := 1;
+
   LResetar := not (DANFEClassOwner.FIndexImpressaoIndividual = -2)
                or (DANFEClassOwner.FIndexImpressaoEventosIndividual = 1);
   if NaoEstaVazio(Trim(FastFileEvento)) then
@@ -2218,7 +2221,7 @@ begin
     raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
 
   AjustaMargensReports;
-
+  DANFEClassOwner.FIndexImpressaoEventosIndividual := 0;
 end;
 
 function TACBrNFeFRClass.PrepareReportInutilizacao: Boolean;

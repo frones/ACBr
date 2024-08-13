@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Elton Barbosa                                   }
 {                                                                              }
@@ -58,18 +58,18 @@ type
 
     property NCMsDM: TLibNCMsDM read FNCMsDM;
 
-    function DescricaoNCM(const cNCM: PChar;
-      const sResposta: PChar; var esTamanho: longint): longint;
-    function Validar(const cNCM: PChar;
-      const sResposta: PChar; var esTamanho: longint): longint;
-    function BaixarLista(const cNomeArquivo: PChar;
-      const sResposta: PChar; var esTamanho: longint): longint;
+    function DescricaoNCM(const cNCM: PAnsiChar;
+      const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function Validar(const cNCM: PAnsiChar;
+      const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function BaixarLista(const cNomeArquivo: PAnsiChar;
+      const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     function ObterNCMs(
-      const sResposta: PChar; var esTamanho: longint): longint;
-    function BuscarPorCodigo(const cNCM: PChar;
-      const sResposta: PChar; var esTamanho: longint): longint;
-    function BuscarPorDescricao(const cDesc: PChar; const nTipo: longint;
-      const sResposta: PChar; var esTamanho: longint): longint;
+      const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function BuscarPorCodigo(const cNCM: PAnsiChar;
+      const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function BuscarPorDescricao(const cDesc: PAnsiChar; const nTipo: Integer;
+      const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 
   end;
 
@@ -109,13 +109,13 @@ begin
   FNCMsDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibNCMs.DescricaoNCM(const cNCM: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNCMs.DescricaoNCM(const cNCM: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   aNCM: String;
   AResposta: String;
 begin
   try
-    aNCM := ConverterAnsiParaUTF8(cNCM);
+    aNCM := ConverterStringEntrada(cNCM);
     if Config.Log.Nivel > logNormal then
       GravarLog('NCM_DescricaoNCM( ' + cNCM + ' )', logCompleto, True)
     else
@@ -133,22 +133,22 @@ begin
 
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNCMs.Validar(const cNCM: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNCMs.Validar(const cNCM: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   aNCM: String;
   NCMehValido: Boolean;
   AResposta: String;
 begin
   try
-    aNCM := ConverterAnsiParaUTF8(cNCM);
+    aNCM := ConverterStringEntrada(cNCM);
     if Config.Log.Nivel > logNormal then
       GravarLog('NCM_Validar( ' + cNCM + ' )', logCompleto, True)
     else
@@ -175,20 +175,20 @@ begin
 
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNCMs.BaixarLista(const cNomeArquivo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNCMs.BaixarLista(const cNomeArquivo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   aNomeArquivo: String;
   AResposta: String;
 begin
   try
-    aNomeArquivo := ConverterAnsiParaUTF8(cNomeArquivo);
+    aNomeArquivo := ConverterStringEntrada(cNomeArquivo);
     if Config.Log.Nivel > logNormal then
       GravarLog('NCM_BaixarLista( ' + aNomeArquivo + ' )', logCompleto, True)
     else
@@ -207,14 +207,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNCMs.ObterNCMs(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNCMs.ObterNCMs(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   AResposta: String;
 begin
@@ -233,21 +233,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNCMs.BuscarPorCodigo(const cNCM: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNCMs.BuscarPorCodigo(const cNCM: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   AResposta: String;
   NCMsResposta: TNCMsRespostaFactory;
   wFiltro: String;
 begin
   try
-    wFiltro := ConverterAnsiParaUTF8(cNCM);
+    wFiltro := ConverterStringEntrada(cNCM);
     if Config.Log.Nivel > logNormal then
       GravarLog('NCM_BuscarPorCodigo( ' + wFiltro + ' )', logCompleto, True)
     else
@@ -281,15 +281,15 @@ begin
 
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNCMs.BuscarPorDescricao(const cDesc: PChar; const nTipo: longint; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function TACBrLibNCMs.BuscarPorDescricao(const cDesc: PAnsiChar; const nTipo: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
 var
   AResposta: String;
   wTipoFiltro: Integer;
@@ -297,7 +297,7 @@ var
   NCMsResposta: TNCMsRespostaFactory;
 begin
   try
-    wFiltro := ConverterAnsiParaUTF8(cDesc);
+    wFiltro := ConverterStringEntrada(cDesc);
     wTipoFiltro := nTipo;
 
     if Config.Log.Nivel > logNormal then
@@ -342,10 +342,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

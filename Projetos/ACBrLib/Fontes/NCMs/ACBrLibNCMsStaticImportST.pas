@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Elton Barbosa                                   }
 {                                                                              }
@@ -61,48 +61,48 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function NCM_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function NCM_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_Finalizar: longint;
+function NCM_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function NCM_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function NCM_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function NCM_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function NCM_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function NCM_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function NCM_ConfigLer(const eArqConfig: PChar): longint;
+function NCM_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_ConfigGravar(const eArqConfig: PChar): longint;
+function NCM_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function NCM_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 
-function NCM_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function NCM_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNCMsLIBName;
 {%endregion}
 
 {%region NCM}
-//function NCM_BuscarPorCEP(eCEP: PChar; var Qtde: Integer;
-//  const sResposta: PChar; var esTamanho: longint): longint;
+//function NCM_BuscarPorCEP(eCEP: PAnsiChar; var Qtde: Integer;
+//  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 //  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 //function NCM_BuscarPorLogradouro(eCidade, eTipo_Logradouro, eLogradouro, eUF,
-//  eBairro: PChar; var Qtde: Integer; const sResposta: PChar;
-//  var esTamanho: longint): longint;
+//  eBairro: PAnsiChar; var Qtde: Integer; const sResposta: PAnsiChar;
+//  var esTamanho: Integer): Integer;
 //  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}
 

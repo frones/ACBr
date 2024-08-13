@@ -1,6 +1,6 @@
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                            }
 {                                                                               }
@@ -35,7 +35,11 @@ unit ACBrLibPIXCDMateraRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase, ACBrSchemasMatera, ACBrUtil.Strings, ACBrPIXPSPMatera;
+  Classes, SysUtils,
+  ACBrBase, ACBrPIXCD, ACBrPIXBase, ACBrSchemasMatera,
+  ACBrUtil.Strings,
+  ACBrPIXPSPMatera,
+  ACBrLibPIXCDConsts, ACBrLibResposta, ACBrLibConfig;
 
 type
   { TLibPIXCDMateraGeneratedImage }
@@ -1812,7 +1816,7 @@ begin
   //Documents
   for i := 0 to MateraClientRepresentative.documents.Count - 1 do
   begin
-    contentsInfo := TLibPIXCDMateraDocument.Create(CSessaoRespDocumentsMatera + IntToStr(i+1), Tipo, Formato);
+    contentsInfo := TLibPIXCDMateraDocument.Create(CSessaoRespDocumentsMatera + IntToStr(i+1), Tipo, Codificacao);
     contentsInfo.Processar(MateraClientRepresentative.documents.Items[i]);
     fcontent.Add(contentsInfo);
   end;
@@ -1873,7 +1877,7 @@ begin
 
   for i := 0 to MateraAdditionalDetailsCorporate.representatives.Count - 1 do
   begin
-    representativesInfo := TLibPIXCDMateraClientRepresentative.Create(CSessaoRespRepresentativeMatera + IntToStr(i+1), Tipo, Formato);
+    representativesInfo := TLibPIXCDMateraClientRepresentative.Create(CSessaoRespRepresentativeMatera + IntToStr(i+1), Tipo, Codificacao);
     representativesInfo.Processar(MateraAdditionalDetailsCorporate.representatives.Items[i]);
     frepresentatives.Add(representativesInfo);
   end;
@@ -1940,7 +1944,7 @@ begin
 
   for i := 0 to MateraClient.documents.Count - 1 do
   begin
-    documentsInfo := TLibPIXCDMateraDocument.Create(CSessaoRespDocumentsMatera + IntToStr(i+1), Tipo, Formato);
+    documentsInfo := TLibPIXCDMateraDocument.Create(CSessaoRespDocumentsMatera + IntToStr(i+1), Tipo, Codificacao);
     documentsInfo.Processar(MateraClient.documents.Items[i]);
     fdocuments.Add(documentsInfo);
   end;
@@ -1998,7 +2002,7 @@ var
 begin
   for i := 0 to ChavesPIXResposta.Count - 1 do
   begin
-    item := TLibPIXCDMateraAlias.Create(CSessaoRespAliasMatera + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDMateraAlias.Create(CSessaoRespAliasMatera + IntToStr(i), Tipo, Codificacao);
     item.Processar(ChavesPIXResposta[i]);
     aliases.Add(item);
   end;
@@ -2011,7 +2015,7 @@ begin
   needsIdentifyConfirmation := ChavePIXResposta.needsIdentifyConfirmation;
   protocolId := ChavePIXResposta.protocolId;
 
-  item := TLibPIXCDMateraAlias.Create(CSessaoRespAliasMatera, Tipo, Formato);
+  item := TLibPIXCDMateraAlias.Create(CSessaoRespAliasMatera, Tipo, Codificacao);
   item.Processar(ChavePIXResposta.alias_);
   aliases.Add(item);
 end;
@@ -2060,7 +2064,7 @@ begin
 
   for i := 0 to TransacoesResposta.Count - 1 do
   begin
-    item := TLibPIXCDTransactionResponse.Create(CSessaoRespTransactionResponse + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDTransactionResponse.Create(CSessaoRespTransactionResponse + IntToStr(i), Tipo, Codificacao);
     item.Processar(TransacoesResposta[i]);
     Items.Add(item);
   end;
@@ -2432,7 +2436,7 @@ begin
 
   for i := 0 to MateraInstantPaymentTransactionResponse.paymentReceived.Count - 1 do
   begin
-    item := TLibPIXCDMateraPaymentReceived.Create(CSessaoRespMateraPaymentReceived + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDMateraPaymentReceived.Create(CSessaoRespMateraPaymentReceived + IntToStr(i), Tipo, Codificacao);
     item.Processar(MateraInstantPaymentTransactionResponse.paymentReceived[i]);
     paymentReceived.Add(item);
   end;
@@ -2760,7 +2764,7 @@ var
 begin
   for i := 0 to ExtratoECResposta.statement.Count - 1 do
   begin
-    item := TLibPIXCDMaterastatementEntry.Create(CSessaoRespMaterastatementEntry + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDMaterastatementEntry.Create(CSessaoRespMaterastatementEntry + IntToStr(i), Tipo, Codificacao);
     item.Processar(ExtratoECResposta.statement[i]);
     statement.Add(item);
   end;
@@ -2871,7 +2875,7 @@ var
 begin
   for i := 0 to StatementInstantPaymentCashValueDataArray.Count - 1 do
   begin
-    item := TLibPIXCDMateraStatementInstantPaymentCashValueData.Create(CSessaoRespMateraStatementInstantPaymentCashValue + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDMateraStatementInstantPaymentCashValueData.Create(CSessaoRespMateraStatementInstantPaymentCashValue + IntToStr(i), Tipo, Codificacao);
     item.Processar(StatementInstantPaymentCashValueDataArray[i]);
     values.Add(item);
   end;
@@ -2925,7 +2929,7 @@ var
 begin
   for i := 0 to MotivosDevolucaoResposta.Count - 1 do
   begin
-    item := TLibPIXCDMateraReturnCode.Create(CSessaoRespMateraReturnCode + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDMateraReturnCode.Create(CSessaoRespMateraReturnCode + IntToStr(i), Tipo, Codificacao);
     item.Processar(MotivosDevolucaoResposta[i]);
     returnCodes.Add(item);
   end;
@@ -3057,7 +3061,7 @@ var
 begin
   for i := 0 to MateraAntiFraudClearingInfo.counters.Count - 1 do
   begin
-    item := TLibPIXCDMateraCounter.Create(CSessaoRespMateraCounter + IntToStr(i), Tipo, Formato);
+    item := TLibPIXCDMateraCounter.Create(CSessaoRespMateraCounter + IntToStr(i), Tipo, Codificacao);
     item.Processar(MateraAntiFraudClearingInfo.counters[i]);
     counters.Add(item);
   end;

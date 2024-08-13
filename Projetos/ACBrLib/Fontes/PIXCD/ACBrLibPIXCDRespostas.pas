@@ -1,6 +1,6 @@
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                            }
 {                                                                               }
@@ -35,11 +35,14 @@ unit ACBrLibPIXCDRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrLibPIXCDConsts, ACBrLibResposta, ACBrPIXCD, ACBrPIXBase,
+  Classes, SysUtils,
+  ACBrBase, ACBrPIXCD, ACBrPIXBase,
   ACBrPIXSchemasCob, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
-  ACBrPIXSchemasPix, ACBrPixSchemasDevolucao, ACBrPIXSchemasPixConsultados,
+  ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
-  ACBrPixSchemasPaginacao, ACBrPixSchemasCobV, ACBrPIXSchemasProblema, ACBrUtil.Base;
+  ACBrPIXSchemasPaginacao, ACBrPIXSchemasCobV, ACBrPIXSchemasProblema,
+  ACBrUtil.Base,
+  ACBrLibPIXCDConsts, ACBrLibResposta, ACBrLibConfig;
 
 type
 
@@ -613,7 +616,7 @@ begin
 
   for i:=0 to Pred(Problema.violacoes.Count) do
   begin
-    LViolacao := TLibPIXCDProblemaRespostaViolacao.Create('Violacoes'+IntToStrZero(i+1, 3), Tipo, Formato);
+    LViolacao := TLibPIXCDProblemaRespostaViolacao.Create('Violacoes'+IntToStrZero(i+1, 3), Tipo, Codificacao);
     LViolacao.Processar(Problema.violacoes.Items[i]);
     fViolacoes.Add(LViolacao);
   end;
@@ -801,7 +804,7 @@ begin
   ProcessarCobVGerada(CobVCompleta);
   for i:=0 to CobVCompleta.pix.Count-1 do
   begin
-    PixInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespPixInfo+IntToStr(i), Tipo, Formato);
+    PixInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespPixInfo+IntToStr(i), Tipo, Codificacao);
     PixInfo.Processar(CobVCompleta.pix[i]);
     fPix.Add(PixInfo);
   end;
@@ -864,7 +867,7 @@ begin
   ProcessarCobGerada(CobCompleta);
   for i:=0 to CobCompleta.pix.Count-1 do
   begin
-    PixInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespPixInfo+IntToStr(i), Tipo, Formato);
+    PixInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespPixInfo+IntToStr(i), Tipo, Codificacao);
     PixInfo.Processar(CobCompleta.pix[i]);
     fPix.Add(PixInfo);
   end;
@@ -953,7 +956,7 @@ begin
   TxIdPresente := PixConsultados.parametros.txIdPresente;
   for i:=0 to PixConsultados.pix.Count-1 do
   begin
-    PixInfo := TLibPIXCDConsultarPixResposta.Create('PIX'+IntToStr(i+1), Tipo, Formato);
+    PixInfo := TLibPIXCDConsultarPixResposta.Create('PIX'+IntToStr(i+1), Tipo, Codificacao);
     PixInfo.Processar(PixConsultados.pix[i]);
     FPix.Add(PixInfo);
   end;
@@ -1058,7 +1061,7 @@ begin
   componentesValor.Processar(Pix.componentesValor);
   for i:=0 to Pix.devolucoes.Count-1 do
   begin
-    DevolucaoInfo := TLibPIXCDDevolucaoPixResposta.Create(CSessaoRespDevolucao+IntToStr(i+1), Tipo, Formato);
+    DevolucaoInfo := TLibPIXCDDevolucaoPixResposta.Create(CSessaoRespDevolucao+IntToStr(i+1), Tipo, Codificacao);
     DevolucaoInfo.Processar(Pix.devolucoes[i]);
     fdevolucoes.Add(DevolucaoInfo);
   end;
@@ -1125,7 +1128,7 @@ begin
 
   for i := 0 to CobsConsultadas.cobs.Count - 1 do
   begin
-    InfoCobs := TLibPIXCDCobCompletaArray.Create(CSessaoRespCobsInfo + IntToStr(i), Tipo, Formato);
+    InfoCobs := TLibPIXCDCobCompletaArray.Create(CSessaoRespCobsInfo + IntToStr(i), Tipo, Codificacao);
     InfoCobs.Processar(CobsConsultadas.cobs.Items[i].pix);
     cobs.cobs.Add(InfoCobs);
   end;
@@ -1160,7 +1163,7 @@ var
 begin
   for i := 0 to CobsVConsultadas.cobs.Count - 1 do
   begin
-    InfoCobsV := TLibPIXCDCobVCompletaArray.Create(CSessaoRespCobsVInfo + IntToStr(i), Tipo, Formato);;
+    InfoCobsV := TLibPIXCDCobVCompletaArray.Create(CSessaoRespCobsVInfo + IntToStr(i), Tipo, Codificacao);;
     InfoCobsV.Processar(CobsVConsultadas.cobs.Items[i].pix);
     cobsV.cobsV.Add(InfoCobsV);
   end;
@@ -1192,7 +1195,7 @@ var
 begin
   for i := 0 to CobCompleta.Count -1 do
   begin
-    cobsInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespCobs + IntToStr(i), Tipo, Formato);
+    cobsInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespCobs + IntToStr(i), Tipo, Codificacao);
     cobsInfo.Processar(CobCompleta[i]);
     cobs.Add(cobsInfo);
   end;
@@ -1258,7 +1261,7 @@ var
 begin
   for i := 0 to CobVCompleta.Count -1 do
   begin
-   cobsVInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespCobsV + IntToStr(i), Tipo, Formato);
+   cobsVInfo := TLibPIXCDConsultarPixResposta.Create(CSessaoRespCobsV + IntToStr(i), Tipo, Codificacao);
    cobsVInfo.Processar(CobVCompleta[i]);
    cobsV.Add(cobsVInfo);
   end;

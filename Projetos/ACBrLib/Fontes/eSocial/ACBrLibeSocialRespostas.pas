@@ -6,7 +6,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -39,7 +39,7 @@ unit ACBrLibeSocialRespostas;
 interface
 
 uses
-  Classes, SysUtils, contnrs, ACBrLibResposta, ACBrLibeSocialConsts, ACBreSocial,
+  Classes, SysUtils, contnrs, ACBrLibResposta, ACBrLibConfig, ACBrLibeSocialConsts, ACBreSocial,
   pcnAuxiliar, pcesConversaoeSocial;
 
 type
@@ -367,7 +367,7 @@ begin
 
   for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.Status.Ocorrencias.Count - 1 do
   begin
-    Item := TConsultaIdentEvento.Create(i+1, Tipo, Formato);
+    Item := TConsultaIdentEvento.Create(i+1, Tipo, Codificacao);
     Item.Processar(ACBreSocial, i);
     FItem.Add(Item);
 
@@ -490,7 +490,7 @@ begin
     begin
       for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.RetEventos.Count - 1 do
       begin
-        ItemCons := TConsultaResposta.Create(i+1, Tipo, Formato);
+        ItemCons := TConsultaResposta.Create(i+1, Tipo, Codificacao);
         ItemCons.Processar(ACBreSocial, i);
         FItemConsulta.Add(ItemCons);
       end;
@@ -499,7 +499,7 @@ begin
     begin
       for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.Status.Ocorrencias.Count - 1 do
       begin
-        ItemOcor := TOcorrenciaConsultaLote.Create(i+1, Tipo, Formato);
+        ItemOcor := TOcorrenciaConsultaLote.Create(i+1, Tipo, Codificacao);
         ItemOcor.Processar(ACBreSocial, i);
         FItemOcorrencia.Add(ItemOcor);
       end;
@@ -554,7 +554,7 @@ begin
 
     for i := 0 to RetIdentEvts.Count - 1 do
     begin
-      ItemRec :=  TConsultaIdentRecibo.Create(i+1, Tipo, Formato);
+      ItemRec :=  TConsultaIdentRecibo.Create(i+1, Tipo, Codificacao);
       ItemRec.Processar(ACBreSocial, i);
       FItemIdent.Add(itemRec);
     end;
@@ -659,14 +659,14 @@ begin
 
     for i := 0 to Processamento.Ocorrencias.Count - 1 do
     begin
-      Item := TOcorrenciaConsulta.Create(i+1, Tipo, Formato);
+      Item := TOcorrenciaConsulta.Create(i+1, Tipo, Codificacao);
       Item.Processar(ACBreSocial, ACont, i);
       FItemOcorrenciaConsulta.Add(Item);
     end;
 
     for i := 0 to tot.Count - 1 do
     begin
-      ItemTot := TConsultaTotResposta.Create(i+1, Tipo, Formato);
+      ItemTot := TConsultaTotResposta.Create(i+1, Tipo, Codificacao);
       ItemTot.Processar(ACBreSocial, ACont, i);
       FItemTotais.Add(ItemTot);
     end;
@@ -743,7 +743,7 @@ begin
 
   for i := 0 to ACBreSocial.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do
   begin
-    Item := TOcorrenciaResposta.Create(i+1, Tipo, Formato);
+    Item := TOcorrenciaResposta.Create(i+1, Tipo, Codificacao);
     Item.Processar(ACBreSocial, i);
     FItemOcorrencia.Add(Item);
   end;

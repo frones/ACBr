@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -62,89 +62,89 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function eSocial_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function eSocial_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_Finalizar: longint;
+function eSocial_Finalizar: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function eSocial_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function eSocial_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function eSocial_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function eSocial_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function eSocial_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function eSocial_ConfigLer(const eArqConfig: PChar): longint;
+function eSocial_ConfigLer(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConfigGravar(const eArqConfig: PChar): longint;
+function eSocial_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function eSocial_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function eSocial_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 {%endregion}
 
 {%region eSocial}
-function eSocial_CriarEventoeSocial(const eArqIni: PChar): longint;
+function eSocial_CriarEventoeSocial(const eArqIni: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_EnviareSocial(const Agrupo: Integer; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function eSocial_EnviareSocial(const Agrupo: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConsultareSocial(const eProtocolo, sResposta: PChar; var esTamanho: longint): longint;
+function eSocial_ConsultareSocial(const eProtocolo, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_CriarEnviareSocial(const eArqIni: PChar; aGrupo:integer):longint;
+function eSocial_CriarEnviareSocial(const eArqIni: PAnsiChar; aGrupo:integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_LimpareSocial: Longint;
+function eSocial_LimpareSocial: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_CarregarXMLEventoeSocial (const eArquivoOuXML: PChar): longint;
+function eSocial_CarregarXMLEventoeSocial (const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_SetIDEmpregador (const aIdEmpregador: PChar): longint;
+function eSocial_SetIDEmpregador (const aIdEmpregador: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_SetIDTransmissor (const aIdTransmissor: PChar): longint;
+function eSocial_SetIDTransmissor (const aIdTransmissor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_SetTipoEmpregador (aTipoEmpregador: integer):longint;
+function eSocial_SetTipoEmpregador (aTipoEmpregador: integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_SetVersaoDF (const sVersao: PChar):longint;
+function eSocial_SetVersaoDF (const sVersao: PAnsiChar):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
+function eSocial_ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PAnsiChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
+function eSocial_ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PAnsiChar; aTipoEvento: integer; aChave: PAnsiChar; aDataInicial: TDateTime; aDataFinal: TDateTime; sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
+function eSocial_ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PAnsiChar; aCPFTrabalhador: PAnsiChar; aDataInicial:TDateTime; aDataFinal: TDateTime; sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; sResposta: PChar; var esTamanho: longint):longint;
+function eSocial_DownloadEventos (const aIdEmpregador: PAnsiChar; aCPFTrabalhador: PAnsiChar; aDataInicial: TDateTime; aDataFinal: TDateTime; sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_ObterCertificados (const sResposta: PChar; var esTamanho: longint):longint;
+function eSocial_ObterCertificados (const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
-function eSocial_Validar: longint;
+function eSocial_Validar: Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 
 {%endregion}

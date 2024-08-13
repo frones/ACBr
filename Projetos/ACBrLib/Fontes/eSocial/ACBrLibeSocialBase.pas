@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 
@@ -59,22 +59,22 @@ type
     constructor Create (ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
 
-    function CriarEventoeSocial (eArqIni: PChar):longint;
-    function EnviareSocial (aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultareSocial (eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function CriarEnviareSocial (const eArqIni: PChar; aGrupo:integer): longint;
-    function LimpareSocial: Longint;
-    function CarregarXMLEventoeSocial (const eArquivoOuXML: PChar): longint;
-    function SetIDEmpregador (const aIdEmpregador: PChar): longint;
-    function SetIDTransmissor (const aIdTransmissor: PChar): longint;
-    function SetTipoEmpregador (aTipoEmpregador: integer):longint;
-    function SetVersaoDF (const sVersao: PChar):longint;
-    function ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-    function ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-    function ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-    function DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
-    function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
-    function Validar: longint;
+    function CriarEventoeSocial (eArqIni: PAnsiChar):Integer;
+    function EnviareSocial (aGrupo: integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultareSocial (eProtocolo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function CriarEnviareSocial (const eArqIni: PAnsiChar; aGrupo:integer): Integer;
+    function LimpareSocial: Integer;
+    function CarregarXMLEventoeSocial (const eArquivoOuXML: PAnsiChar): Integer;
+    function SetIDEmpregador (const aIdEmpregador: PAnsiChar): Integer;
+    function SetIDTransmissor (const aIdTransmissor: PAnsiChar): Integer;
+    function SetTipoEmpregador (aTipoEmpregador: integer):Integer;
+    function SetVersaoDF (const sVersao: PAnsiChar):Integer;
+    function ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PAnsiChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
+    function ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PAnsiChar; aTipoEvento: integer; aChave: PAnsiChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
+    function ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PAnsiChar; aCPFTrabalhador: PAnsiChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
+    function DownloadEventos (const aIdEmpregador: PAnsiChar; aCPFTrabalhador: PAnsiChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
+    function ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function Validar: Integer;
 
     property eSocialDM: TLibeSocialDM read FeSocialDM;
 
@@ -124,7 +124,7 @@ begin
   Result := SetRetorno(0, Format(SInfeSocialCarregadas, [NumeSocial]));
 end;
 
-function TACBrLibeSocial.CriarEventoeSocial(eArqIni: PChar): longint;
+function TACBrLibeSocial.CriarEventoeSocial(eArqIni: PAnsiChar): Integer;
 var
   AArqIni: String;
 begin
@@ -147,15 +147,15 @@ begin
 
   except
     on E:EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.EnviareSocial(aGrupo: integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibeSocial.EnviareSocial(aGrupo: integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   AResposta: string;
   Resp: TEnvioResposta;
@@ -193,15 +193,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.ConsultareSocial(eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibeSocial.ConsultareSocial(eProtocolo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   AProtocolo, AResposta: String;
   Resp : TConsulta;
@@ -237,15 +237,15 @@ begin
       
   except
     on E: EACBrLibException do
-     Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+     Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-     Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+     Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.CriarEnviareSocial(const eArqIni: PChar; aGrupo:integer): longint;
+function TACBrLibeSocial.CriarEnviareSocial(const eArqIni: PAnsiChar; aGrupo:integer): Integer;
 var
   AIniFile, ArqeSocial : String;
   ASalvar : Boolean;
@@ -309,15 +309,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.LimpareSocial: Longint;
+function TACBrLibeSocial.LimpareSocial: Integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -335,20 +335,20 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibeSocial.CarregarXMLEventoeSocial(const eArquivoOuXML: PChar): longint;
+function TACBrLibeSocial.CarregarXMLEventoeSocial(const eArquivoOuXML: PAnsiChar): Integer;
 var
   EhArquivo: boolean;
   ArquivoOuXml: string;
 begin
   try
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
     GravarLog('eSocial_CarregarXMLEventoeSocial(' + ArquivoOuXml + ' ) ', logCompleto, True)
@@ -374,20 +374,20 @@ begin
 
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.SetIDEmpregador (const aIdEmpregador: PChar): longint;
+function TACBrLibeSocial.SetIDEmpregador (const aIdEmpregador: PAnsiChar): Integer;
 var
   idEmpregador: AnsiString;
 begin
   try
-    idEmpregador:= ConverterAnsiParaUTF8(aIdEmpregador);
+    idEmpregador:= ConverterStringEntrada(aIdEmpregador);
 
     if Config.Log.Nivel > logNormal then
      GravarLog('eSocial_SetIDEmpregador (' + idEmpregador + ')', logCompleto, True)
@@ -407,18 +407,18 @@ begin
 
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibeSocial.SetIDTransmissor (const aIdTransmissor: PChar): longint;
+function TACBrLibeSocial.SetIDTransmissor (const aIdTransmissor: PAnsiChar): Integer;
 var
   idTransmissor: AnsiString;
 begin
   try
-    idTransmissor:= ConverterAnsiParaUTF8(aIdTransmissor);
+    idTransmissor:= ConverterStringEntrada(aIdTransmissor);
 
     if Config.Log.Nivel > logNormal then
     GravarLog('eSocial_SetIDTransmissor(' + idTransmissor + ' ) ', logCompleto, True)
@@ -438,15 +438,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.SetTipoEmpregador (aTipoEmpregador: integer):longint;
+function TACBrLibeSocial.SetTipoEmpregador (aTipoEmpregador: integer):Integer;
 var
   tipoEmpregador: Integer;
 begin
@@ -467,20 +467,20 @@ begin
 
    except
      on E: EACBrLibException do
-     Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+     Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
      on E: Exception do
-     Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+     Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
    end;
 
 end;
 
-function TACBrLibeSocial.SetVersaoDF (const sVersao: PChar):longint;
+function TACBrLibeSocial.SetVersaoDF (const sVersao: PAnsiChar):Integer;
 var
   versao: AnsiString;
 begin
   try
-    versao:= ConverterAnsiParaUTF8(sVersao);
+    versao:= ConverterStringEntrada(sVersao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('eSocial_SetVersaoDF(' + versao + ' ) ', logCompleto, True)
@@ -497,15 +497,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibeSocial.ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PAnsiChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
 var
   idEmpregador: String;
   APerApur: TDateTime;
@@ -552,15 +552,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.ConsultaIdentificadoresEventosTabela(const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibeSocial.ConsultaIdentificadoresEventosTabela(const aIdEmpregador: PAnsiChar; aTipoEvento: integer; aChave: PAnsiChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
 var
   idEmpregador: String;
   tpEvento: Integer;
@@ -608,14 +608,14 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibeSocial.ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibeSocial.ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PAnsiChar; aCPFTrabalhador: PAnsiChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
 var
   idEmpregador: String;
   CPFTrabalhador: String;
@@ -664,15 +664,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibeSocial.DownloadEventos (const aIdEmpregador: PAnsiChar; aCPFTrabalhador: PAnsiChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
 var
   idEmpregador: String;
   AId: String;
@@ -722,15 +722,15 @@ begin
 
   except
     on E: EACBrLibException do
-    Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-    Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+    Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibeSocial.ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibeSocial.ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resposta: Ansistring;
 begin
@@ -750,14 +750,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibeSocial.Validar():longint;
+function TACBrLibeSocial.Validar():Integer;
 begin
   try
     GravarLog('eSocial_Validar', logNormal);
@@ -769,17 +769,17 @@ begin
         Result := SetRetornoeSocialCarregadas(eSocialDM.ACBreSocial1.Eventos.Count);
       except
         on E: EACBreSocialException do
-          Result := SetRetorno(ErrValidacaoeSocial, ConverterUTF8ParaAnsi(E.Message));
+          Result := SetRetorno(ErrValidacaoeSocial, ConverterStringSaida(E.Message));
       end;
     finally
       eSocialDM.Destravar;
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+13/08/2024
+-- NFSeBrasil.Provider, Giap.Provider, GeisWeb.Provider --
+[*] #TK-5090: Ajustes visando corrigir erro de conversão na leitura das respostas.
+  Por: Diego Folieni
+
 12/08/2024
 -- Betha.Provider --
 [*] #TK-5850: Alteração visando corrigir erro de assinatura ao realizar mais de um cancelamento em sequência.

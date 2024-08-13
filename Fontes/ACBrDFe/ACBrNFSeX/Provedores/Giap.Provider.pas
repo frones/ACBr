@@ -417,16 +417,16 @@ begin
         Response.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
 
         if ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr) = 'Sim' then
-          Response.DescSituacao := 'Nota Autorizada'
+          Response.DescSituacao := ACBrStr('Nota Autorizada')
         else
         if ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr) = 'Cancelada' then
         begin
-          Response.DescSituacao := 'Nota Cancelada';
+          Response.DescSituacao := ACBrStr('Nota Cancelada');
           Response.Cancelamento.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('dataCancelamento'), tcDatVcto);
-          Response.Cancelamento.Motivo := 'Nota Cancelada';
+          Response.Cancelamento.Motivo := ACBrStr('Nota Cancelada');
         end
         else
-          Response.DescSituacao := 'Nota não Encontrada';
+          Response.DescSituacao := ACBrStr('Nota não Encontrada');
 
         Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
         Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('wsLink'), tcStr);

@@ -227,7 +227,8 @@ end;
 function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
   const aXML: string): string;
 begin
-  Result := inherited TratarXmlRetornado(aXML);
+  Result := ConverteANSIparaUTF8(aXML);
+  Result := inherited TratarXmlRetornado(Result);
 
   Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
   Result := ParseText(Result);

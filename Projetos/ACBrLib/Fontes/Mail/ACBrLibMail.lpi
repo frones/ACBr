@@ -533,7 +533,7 @@
         <PackageName Value="ACBrTCP"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrLibMail.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -573,10 +573,6 @@
         <Filename Value="ACBrLibMailMT.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
-      <Unit9>
-        <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

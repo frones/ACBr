@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -42,63 +42,63 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Finalizar: longint;
+function MAIL_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_Inicializada: Boolean;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function MAIL_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function MAIL_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function MAIL_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function MAIL_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigImportar(const eArqConfig: PChar): longint;
+function MAIL_ConfigImportar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function MAIL_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigLer(const eArqConfig: PChar): longint;
+function MAIL_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigGravar(const eArqConfig: PChar): longint;
+function MAIL_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function MAIL_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Diversos}
-function MAIL_SetSubject(const eSubject: PChar): longint;
+function MAIL_SetSubject(const eSubject: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAddress(const eEmail, eName: PChar): longint;
+function MAIL_AddAddress(const eEmail, eName: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;
+function MAIL_AddReplyTo(const eEmail, eName: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddCC(const eEmail, eName: PChar): longint;
+function MAIL_AddCC(const eEmail, eName: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddBCC(const eEmail: PChar): longint;
+function MAIL_AddBCC(const eEmail: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_ClearAttachment: longint;
+function MAIL_ClearAttachment: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAttachment(const eFileName, eDescription: PChar;
-            const aDisposition: Integer): longint;
+function MAIL_AddAttachment(const eFileName, eDescription: PAnsiChar;
+            const aDisposition: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddBody(const eBody: PChar): longint;
+function MAIL_AddBody(const eBody: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAltBody(const eAltBody: PChar): longint;
+function MAIL_AddAltBody(const eAltBody: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_SaveToFile(const eFileName: PChar): longint;
+function MAIL_SaveToFile(const eFileName: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Envio}
-function MAIL_Clear: longint;
+function MAIL_Clear: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Send: longint;
+function MAIL_Send: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -111,13 +111,13 @@ uses
 
 {%region Mail}
 
-function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibMail, eArqConfig, eChaveCrypt);
 end;
 
-function MAIL_Finalizar: longint;
+function MAIL_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
@@ -129,63 +129,63 @@ begin
   Result := LIB_Inicalizada(pLib);
 end;
 
-function MAIL_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function MAIL_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function MAIL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function MAIL_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function MAIL_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function MAIL_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function MAIL_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function MAIL_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function MAIL_ConfigImportar(const eArqConfig: PChar): longint;
+function MAIL_ConfigImportar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function MAIL_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function MAIL_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
 
-function MAIL_ConfigLer(const eArqConfig: PChar): longint;
+function MAIL_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function MAIL_ConfigGravar(const eArqConfig: PChar): longint;
+function MAIL_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function MAIL_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function MAIL_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
@@ -195,7 +195,7 @@ end;
 
 {%region Diversos}
 
-function MAIL_SetSubject(const eSubject: PChar): longint;
+function MAIL_SetSubject(const eSubject: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -210,7 +210,7 @@ begin
   end;
 end;
 
-function MAIL_AddAddress(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddAddress(const eEmail, eName: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -224,7 +224,7 @@ begin
   end;
 end;
 
-function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddReplyTo(const eEmail, eName: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -238,7 +238,7 @@ begin
   end;
 end;
 
-function MAIL_AddCC(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddCC(const eEmail, eName: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -252,7 +252,7 @@ begin
   end;
 end;
 
-function MAIL_AddBCC(const eEmail: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddBCC(const eEmail: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -266,7 +266,7 @@ begin
   end;
 end;
 
-function MAIL_AddBody(const eBody: PChar): longint;
+function MAIL_AddBody(const eBody: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -281,7 +281,7 @@ begin
   end;
 end;
 
-function MAIL_AddAltBody(const eAltBody: PChar): longint;
+function MAIL_AddAltBody(const eAltBody: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -296,7 +296,7 @@ begin
   end;
 end;
 
-function MAIL_ClearAttachment: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_ClearAttachment: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -310,8 +310,8 @@ begin
   end;
 end;
 
-function MAIL_AddAttachment(const eFileName, eDescription: PChar;
-  const aDisposition: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddAttachment(const eFileName, eDescription: PAnsiChar;
+  const aDisposition: Integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -325,7 +325,7 @@ begin
   end;
 end;
 
-function MAIL_SaveToFile(const eFileName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_SaveToFile(const eFileName: PAnsiChar): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -343,7 +343,7 @@ end;
 
 {%region Envio}
 
-function MAIL_Clear: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_Clear: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -357,7 +357,7 @@ begin
   end;
 end;
 
-function MAIL_Send: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_Send: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);

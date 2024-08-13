@@ -57,19 +57,19 @@ type
 
     property MailDM: TLibMailDM read FMailDM;
 
-    function SetSubject(const eSubject: PChar): longint;
-    function AddAddress(const eEmail, eName: PChar): longint;
-    function AddReplyTo(const eEmail, eName: PChar): longint;
-    function AddCC(const eEmail, eName: PChar): longint;
-    function AddBCC(const eEmail: PChar): longint;
-    function ClearAttachment: longint;
-    function AddAttachment(const eFileName, eDescription: PChar; const aDisposition: Integer): longint;
-    function AddBody(const eBody: PChar): longint;
-    function AddAltBody(const eAltBody: PChar): longint;
-    function SaveToFile(const eFileName: PChar): longint;
+    function SetSubject(const eSubject: PAnsiChar): integer;
+    function AddAddress(const eEmail, eName: PAnsiChar): integer;
+    function AddReplyTo(const eEmail, eName: PAnsiChar): integer;
+    function AddCC(const eEmail, eName: PAnsiChar): integer;
+    function AddBCC(const eEmail: PAnsiChar): integer;
+    function ClearAttachment: integer;
+    function AddAttachment(const eFileName, eDescription: PAnsiChar; const aDisposition: Integer): integer;
+    function AddBody(const eBody: PAnsiChar): integer;
+    function AddAltBody(const eAltBody: PAnsiChar): integer;
+    function SaveToFile(const eFileName: PAnsiChar): integer;
     function GetMail: Pointer;
-    function Clear: longint;
-    function Send: longint;
+    function Clear: integer;
+    function Send: integer;
 
   end;  
 
@@ -112,12 +112,12 @@ begin
   FMailDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibMail.SetSubject(const eSubject: PChar): longint;  
+function TACBrLibMail.SetSubject(const eSubject: PAnsiChar): integer;  
 var
   ASubject: String;
 begin
   try    
-    ASubject := ConverterAnsiParaUTF8(eSubject);
+    ASubject := ConverterStringEntrada(eSubject);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_SetSubject( ' + ASubject + ' )', logCompleto, True)
@@ -133,20 +133,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddAddress(const eEmail, eName: PChar): longint;
+function TACBrLibMail.AddAddress(const eEmail, eName: PAnsiChar): integer;
 var
   AEmail, AName: AnsiString;
 begin
   try    
-    AEmail := ConverterAnsiParaUTF8(eEmail);
-    AName := ConverterAnsiParaUTF8(eName);
+    AEmail := ConverterStringEntrada(eEmail);
+    AName := ConverterStringEntrada(eName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddAddress( ' + AEmail + ',' + AName + ' )', logCompleto, True)
@@ -162,20 +162,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddReplyTo(const eEmail, eName: PChar): longint;
+function TACBrLibMail.AddReplyTo(const eEmail, eName: PAnsiChar): integer;
 var
   AEmail, AName: AnsiString;
 begin
   try    
-    AEmail := ConverterAnsiParaUTF8(eEmail);
-    AName := ConverterAnsiParaUTF8(eName);
+    AEmail := ConverterStringEntrada(eEmail);
+    AName := ConverterStringEntrada(eName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddReplyTo( ' + AEmail + ',' + AName + ' )', logCompleto, True)
@@ -191,20 +191,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddCC(const eEmail, eName: PChar): longint;
+function TACBrLibMail.AddCC(const eEmail, eName: PAnsiChar): integer;
 var
   AEmail, AName: AnsiString;
 begin
   try    
-    AEmail := ConverterAnsiParaUTF8(eEmail);
-    AName := ConverterAnsiParaUTF8(eName);
+    AEmail := ConverterStringEntrada(eEmail);
+    AName := ConverterStringEntrada(eName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddCC( ' + AEmail + ',' + AName + ' )', logCompleto, True)
@@ -220,19 +220,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddBCC(const eEmail: PChar): longint;
+function TACBrLibMail.AddBCC(const eEmail: PAnsiChar): integer;
 var
   AEmail: AnsiString;
 begin
   try    
-    AEmail := ConverterAnsiParaUTF8(eEmail);
+    AEmail := ConverterStringEntrada(eEmail);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddBCC( ' + AEmail + ' )', logCompleto, True)
@@ -248,20 +248,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddBody(const eBody: PChar): longint;  
+function TACBrLibMail.AddBody(const eBody: PAnsiChar): integer;  
 var
   Body: TStringList;
 begin
   try
     Body := TStringList.Create;
-    Body.Text := ConverterAnsiParaUTF8(eBody);
+    Body.Text := ConverterStringEntrada(eBody);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddBody( ' + Body.Text + ' )', logCompleto, True)
@@ -278,20 +278,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddAltBody(const eAltBody: PChar): longint;  
+function TACBrLibMail.AddAltBody(const eAltBody: PAnsiChar): integer;  
 var
   AltBody: TStringList;
 begin
   try
     AltBody := TStringList.Create;
-    AltBody.Text := ConverterAnsiParaUTF8(eAltBody);
+    AltBody.Text := ConverterStringEntrada(eAltBody);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddAltBody( ' + AltBody.Text + ' )', logCompleto, True)
@@ -308,14 +308,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.ClearAttachment: longint;
+function TACBrLibMail.ClearAttachment: integer;
 begin
   try
     GravarLog('MAIL_ClearAttachment', logNormal);
@@ -329,21 +329,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.AddAttachment(const eFileName, eDescription: PChar;
-  const aDisposition: Integer): longint;
+function TACBrLibMail.AddAttachment(const eFileName, eDescription: PAnsiChar;
+  const aDisposition: Integer): integer;
 var
   AFileName, ADescription: AnsiString;
 begin
   try    
-    AFileName := ConverterAnsiParaUTF8(eFileName);
-    ADescription := ConverterAnsiParaUTF8(eDescription);
+    AFileName := ConverterStringEntrada(eFileName);
+    ADescription := ConverterStringEntrada(eDescription);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_AddAttachment( ' + AFileName + ',' + ADescription + ',' +
@@ -360,19 +360,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.SaveToFile(const eFileName: PChar): longint;
+function TACBrLibMail.SaveToFile(const eFileName: PAnsiChar): integer;
 var
   AFileName: AnsiString;
 begin
   try   
-    AFileName := ConverterAnsiParaUTF8(eFileName);
+    AFileName := ConverterStringEntrada(eFileName);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('MAIL_MailProcess( ' + AFileName + ' )', logCompleto, True)
@@ -388,10 +388,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -417,13 +417,13 @@ begin
 
     on E: Exception do
     begin
-      SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
       Result := Nil;
     end;
   end;
 end;
 
-function TACBrLibMail.Clear: longint;
+function TACBrLibMail.Clear: integer;
 begin
   try
     GravarLog('MAIL_Clear', logNormal);
@@ -437,14 +437,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibMail.Send: longint;
+function TACBrLibMail.Send: integer;
 begin
   try
     GravarLog('MAIL_Send', logNormal);
@@ -458,10 +458,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

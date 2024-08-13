@@ -537,7 +537,7 @@
         <PackageName Value="ACBrSerial"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="11">
       <Unit0>
         <Filename Value="ACBrLibPosPrinter.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -585,14 +585,6 @@
         <Filename Value="ACBrLibPosPrinterMT.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
-      <Unit11>
-        <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="..\Comum\ACBrRtti.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

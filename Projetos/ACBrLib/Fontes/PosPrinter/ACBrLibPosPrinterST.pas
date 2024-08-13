@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -43,93 +43,93 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function POS_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function POS_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_Finalizar: longint;
+function POS_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_Inicializada: Boolean;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function POS_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function POS_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function POS_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function POS_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ConfigImportar(const eArqConfig: PChar): longint;
+function POS_ConfigImportar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function POS_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ConfigLer(const eArqConfig: PChar): longint;
+function POS_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ConfigGravar(const eArqConfig: PChar): longint;
+function POS_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function POS_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function POS_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Ativar}
-function POS_Ativar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_Desativar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Ativar: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Desativar: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Impressão}
-function POS_Imprimir(eString: PChar; PulaLinha, DecodificarTags,
-  CodificarPagina: Boolean; Copias: Integer): longint;
+function POS_Imprimir(eString: PAnsiChar; PulaLinha, DecodificarTags,
+  CodificarPagina: Boolean; Copias: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ImprimirLinha(eString: PChar): longint;
+function POS_ImprimirLinha(eString: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ImprimirCmd(eComando: PChar): longint;
+function POS_ImprimirCmd(eComando: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ImprimirTags: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ImprimirImagemArquivo(aPath: PChar): longint;
+function POS_ImprimirTags: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_ImprimirImagemArquivo(aPath: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: longint): longint;
+function POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_ImprimirCheque(CodBanco: Integer; const AValor, ADataEmissao, AFavorecido,
-  ACidade, AComplemento: PChar; LerCMC7: Boolean; SegundosEspera: Integer): longint;
+  ACidade, AComplemento: PAnsiChar; LerCMC7: Boolean; SegundosEspera: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ImprimirTextoCheque(const X, Y: Integer; const AString: PChar;
-  AguardaCheque: Boolean; SegundosEspera: Integer): longint;
+function POS_ImprimirTextoCheque(const X, Y: Integer; const AString: PAnsiChar;
+  AguardaCheque: Boolean; SegundosEspera: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Diversos}
-function POS_TxRx(eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function POS_TxRx(eCmd: PAnsiChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_Zerar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_InicializarPos: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_Reset: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_PularLinhas(NumLinhas: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_CortarPapel(Parcial: Boolean): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_AbrirGaveta: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_Zerar: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_InicializarPos: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Reset: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_PularLinhas(NumLinhas: Integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_CortarPapel(Parcial: Boolean): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_AbrirGaveta: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_LerInfoImpressora(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
+function POS_LerStatusImpressora(Tentativas: Integer; var status: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_AcharPortas(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;
+function POS_GravarLogoArquivo(aPath: PAnsiChar; nAKC1, nAKC2: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_ApagarLogo(nAKC1, nAKC2: longint): longint;
+function POS_ApagarLogo(nAKC1, nAKC2: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_LeituraCheque(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LeituraCheque(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_LerCMC7(AguardaCheque: Boolean; SegundosEspera: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_EjetarCheque: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_PodeLerDaPorta: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_LerCaracteristicas(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_EjetarCheque: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_PodeLerDaPorta: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_LerCaracteristicas(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -143,13 +143,13 @@ uses
 {%region PosPrinter}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function POS_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function POS_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibPosPrinter,eArqConfig, eChaveCrypt);
 end;
 
-function POS_Finalizar: longint;
+function POS_Finalizar: integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
@@ -161,62 +161,62 @@ begin
   Result := LIB_Inicalizada(pLib);
 end;
 
-function POS_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function POS_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function POS_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function POS_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function POS_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function POS_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function POS_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function POS_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function POS_ConfigImportar(const eArqConfig: PChar): longint;
+function POS_ConfigImportar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function POS_ConfigExportar(const sMensagem: PChar; var esTamanho: longint): longint;
+function POS_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function POS_ConfigLer(const eArqConfig: PChar): longint;
+function POS_ConfigLer(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function POS_ConfigGravar(const eArqConfig: PChar): longint;
+function POS_ConfigGravar(const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function POS_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function POS_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function POS_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function POS_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
@@ -224,7 +224,7 @@ end;
 {%endregion}
 
 {%region Ativar}
-function POS_Ativar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Ativar: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -238,7 +238,7 @@ begin
   end;
 end;
 
-function POS_Desativar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Desativar: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -254,8 +254,8 @@ end;
 {%endregion}
 
 {%region Impressão}
-function POS_Imprimir(eString: PChar; PulaLinha, DecodificarTags,
-  CodificarPagina: Boolean; Copias: Integer): longint;
+function POS_Imprimir(eString: PAnsiChar; PulaLinha, DecodificarTags,
+  CodificarPagina: Boolean; Copias: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -270,7 +270,7 @@ begin
   end;
 end;
 
-function POS_ImprimirLinha(eString: PChar): longint;
+function POS_ImprimirLinha(eString: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -285,7 +285,7 @@ begin
   end;
 end;
 
-function POS_ImprimirCmd(eComando: PChar): longint;
+function POS_ImprimirCmd(eComando: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -300,7 +300,7 @@ begin
   end;
 end;
 
-function POS_ImprimirTags: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_ImprimirTags: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -314,7 +314,7 @@ begin
   end;
 end;
 
-function POS_ImprimirImagemArquivo(aPath: PChar): longint;
+function POS_ImprimirImagemArquivo(aPath: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -329,7 +329,7 @@ begin
   end;
 end;
 
-function POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: longint): longint;
+function POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -345,7 +345,7 @@ begin
 end;
 
 function POS_ImprimirCheque(CodBanco: Integer; const AValor, ADataEmissao, AFavorecido, ACidade,
-                            AComplemento: PChar; LerCMC7: Boolean; SegundosEspera: Integer): longint;
+                            AComplemento: PAnsiChar; LerCMC7: Boolean; SegundosEspera: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -361,8 +361,8 @@ begin
   end;
 end;
 
-function POS_ImprimirTextoCheque(const X, Y: Integer; const AString: PChar; AguardaCheque: Boolean;
-                                  SegundosEspera: Integer): longint;
+function POS_ImprimirTextoCheque(const X, Y: Integer; const AString: PAnsiChar; AguardaCheque: Boolean;
+                                  SegundosEspera: Integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -379,8 +379,8 @@ end;
 {%endregion}
 
 {%region Diversos}
-function POS_TxRx(eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function POS_TxRx(eCmd: PAnsiChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -395,7 +395,7 @@ begin
   end;
 end;
 
-function POS_Zerar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Zerar: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -409,7 +409,7 @@ begin
   end;
 end;
 
-function POS_InicializarPos: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_InicializarPos: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -423,7 +423,7 @@ begin
   end;
 end;
 
-function POS_Reset: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Reset: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -437,7 +437,7 @@ begin
   end;
 end;
 
-function POS_PularLinhas(NumLinhas: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_PularLinhas(NumLinhas: Integer): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -451,7 +451,7 @@ begin
   end;
 end;
 
-function POS_CortarPapel(Parcial: Boolean): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_CortarPapel(Parcial: Boolean): integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -465,7 +465,7 @@ begin
   end;
 end;
 
-function POS_AbrirGaveta: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_AbrirGaveta: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -479,7 +479,7 @@ begin
   end;
 end;
 
-function POS_LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerInfoImpressora(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -494,7 +494,7 @@ begin
   end;
 end;
 
-function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
+function POS_LerStatusImpressora(Tentativas: Integer; var status: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -509,7 +509,7 @@ begin
   end;
 end;
 
-function POS_LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -524,7 +524,7 @@ begin
   end;
 end;
 
-function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -539,7 +539,7 @@ begin
   end;
 end;
 
-function POS_AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_AcharPortas(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -554,7 +554,7 @@ begin
   end;
 end;
 
-function POS_GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;
+function POS_GravarLogoArquivo(aPath: PAnsiChar; nAKC1, nAKC2: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -569,7 +569,7 @@ begin
   end;
 end;
 
-function POS_ApagarLogo(nAKC1, nAKC2: longint): longint;
+function POS_ApagarLogo(nAKC1, nAKC2: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -584,7 +584,7 @@ begin
   end;
 end;
 
-function POS_LeituraCheque(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LeituraCheque(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -599,7 +599,7 @@ begin
   end;
 end;
 
-function POS_LerCMC7(AguardaCheque: Boolean; SegundosEspera: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerCMC7(AguardaCheque: Boolean; SegundosEspera: Integer; const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -614,7 +614,7 @@ begin
   end;
 end;
 
-function POS_EjetarCheque: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_EjetarCheque: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -628,7 +628,7 @@ begin
   end;
 end;
 
-function POS_PodeLerDaPorta: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_PodeLerDaPorta: integer;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
@@ -642,7 +642,7 @@ begin
   end;
 end;
 
-function POS_LerCaracteristicas(const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerCaracteristicas(const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

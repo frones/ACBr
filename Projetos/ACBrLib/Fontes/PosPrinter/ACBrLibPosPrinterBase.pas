@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -61,18 +61,18 @@ type
 
     function Ativar: longint;
     function Desativar: longint;
-    function Imprimir(eString: PChar; PulaLinha, DecodificarTags,  CodificarPagina: Boolean; Copias: Integer): longint;
-    function ImprimirLinha(eString: PChar): longint;
-    function ImprimirCmd(eComando: PChar): longint;
+    function Imprimir(eString: PAnsiChar; PulaLinha, DecodificarTags,  CodificarPagina: Boolean; Copias: Integer): longint;
+    function ImprimirLinha(eString: PAnsiChar): longint;
+    function ImprimirCmd(eComando: PAnsiChar): longint;
     function ImprimirTags: longint;
-    function ImprimirImagemArquivo(aPath: PChar): longint;
+    function ImprimirImagemArquivo(aPath: PAnsiChar): longint;
     function ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: longint): longint;
-    function ImprimirCheque(CodBanco: Integer; const AValor, ADataEmissao, AFavorecido,	ACidade, AComplemento: PChar;
+    function ImprimirCheque(CodBanco: Integer; const AValor, ADataEmissao, AFavorecido,	ACidade, AComplemento: PAnsiChar;
                             LerCMC7: Boolean; SegundosEspera: Integer): longint;
-    function ImprimirTextoCheque(const X, Y: Integer; const AString: PChar; AguardaCheque: Boolean;
+    function ImprimirTextoCheque(const X, Y: Integer; const AString: PAnsiChar; AguardaCheque: Boolean;
                                  SegundosEspera: Integer): longint;
-    function TxRx(eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
-                  const sResposta: PChar; var esTamanho: longint): longint;
+    function TxRx(eCmd: PAnsiChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
+                  const sResposta: PAnsiChar; var esTamanho: longint): longint;
 
     function Zerar: longint;
     function InicializarPos: longint;
@@ -80,21 +80,21 @@ type
     function PularLinhas(NumLinhas: Integer): longint;
     function CortarPapel(Parcial: Boolean): longint;
     function AbrirGaveta: longint;
-    function LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): longint;
+    function LerInfoImpressora(const sResposta: PAnsiChar; var esTamanho: longint): longint;
 
     function LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
-    function LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+    function LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PAnsiChar; var esTamanho: longint): longint;
 
-    function RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
-    function AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
-    function GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;
+    function RetornarTags(IncluiAjuda: Boolean; const sResposta: PAnsiChar; var esTamanho: longint): longint;
+    function AcharPortas(const sResposta: PAnsiChar; var esTamanho: longint): longint;
+    function GravarLogoArquivo(aPath: PAnsiChar; nAKC1, nAKC2: longint): longint;
     function ApagarLogo(nAKC1, nAKC2: longint): longint;
-    function LeituraCheque(const sResposta: PChar; var esTamanho: longint): longint;
+    function LeituraCheque(const sResposta: PAnsiChar; var esTamanho: longint): longint;
     function LerCMC7(AguardaCheque: Boolean; SegundosEspera: Integer;
-                     const sResposta: PChar; var esTamanho: longint): longint;
+                     const sResposta: PAnsiChar; var esTamanho: longint): longint;
     function EjetarCheque: longint;
     function PodeLerDaPorta: longint;
-    function LerCaracteristicas(const sResposta: PChar; var esTamanho: longint): longint;
+    function LerCaracteristicas(const sResposta: PAnsiChar; var esTamanho: longint): longint;
     function GetPosPrinter: Pointer;
 
   end;
@@ -102,8 +102,10 @@ type
 implementation
 
 uses
+  StrUtils,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig,
-  ACBrLibDeviceUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, StrUtils;
+  ACBrLibDeviceUtils;
 
 { TACBrLibPosPrinter }
 
@@ -152,10 +154,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -173,14 +175,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.Imprimir(eString: PChar; PulaLinha, DecodificarTags,
+function TACBrLibPosPrinter.Imprimir(eString: PAnsiChar; PulaLinha, DecodificarTags,
   CodificarPagina: Boolean; Copias: Integer): longint;  
 var
   AString: AnsiString;
@@ -198,7 +200,7 @@ begin
 
     PosDM.Travar;
     try
-      UTF8Str := ConverterAnsiParaUTF8(AString);
+      UTF8Str := ConverterStringEntrada(AString);
       PosDM.ACBrPosPrinter1.Imprimir(UTF8Str, PulaLinha, DecodificarTags, CodificarPagina, Copias);
       Result := SetRetorno(ErrOK);
     finally
@@ -206,14 +208,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.ImprimirLinha(eString: PChar): longint;  
+function TACBrLibPosPrinter.ImprimirLinha(eString: PAnsiChar): longint;  
 var
   AString: AnsiString;
   UTF8Str: String;
@@ -228,7 +230,7 @@ begin
 
     PosDM.Travar;
     try
-      UTF8Str := ConverterAnsiParaUTF8(AString);
+      UTF8Str := ConverterStringEntrada(AString);
       PosDM.ACBrPosPrinter1.ImprimirLinha(UTF8Str);
       Result := SetRetorno(ErrOK);
     finally
@@ -236,14 +238,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.ImprimirCmd(eComando: PChar): longint;  
+function TACBrLibPosPrinter.ImprimirCmd(eComando: PAnsiChar): longint;  
 var
   AComando: AnsiString;
 begin
@@ -264,10 +266,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -285,14 +287,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.ImprimirImagemArquivo(aPath: PChar): longint;  
+function TACBrLibPosPrinter.ImprimirImagemArquivo(aPath: PAnsiChar): longint;  
 Var
   Path: AnsiString;
 begin
@@ -313,10 +315,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -338,15 +340,15 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibPosPrinter.ImprimirCheque(CodBanco: Integer;
-      const AValor, ADataEmissao, AFavorecido, ACidade, AComplemento: PChar; LerCMC7: Boolean;
+      const AValor, ADataEmissao, AFavorecido, ACidade, AComplemento: PAnsiChar; LerCMC7: Boolean;
       SegundosEspera: Integer): longint;  
 Var
   Valor: Double;
@@ -356,9 +358,9 @@ begin
   try
     Valor := StringToFloatDef(AValor, 0);
     DataEmissao := StrToDate(ADataEmissao);
-    Favorecido := ConverterAnsiParaUTF8(ansistring(AFavorecido));
-    Cidade := ConverterAnsiParaUTF8(ansistring(ACidade));
-    Complemento := ConverterAnsiParaUTF8(ansistring(AComplemento));
+    Favorecido := ConverterStringEntrada(ansistring(AFavorecido));
+    Cidade := ConverterStringEntrada(ansistring(ACidade));
+    Complemento := ConverterStringEntrada(ansistring(AComplemento));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('POS_ImprimirCheque(' + IntToStr(CodBanco) + ','
@@ -382,20 +384,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.ImprimirTextoCheque(const X, Y: Integer; const AString: PChar;
+function TACBrLibPosPrinter.ImprimirTextoCheque(const X, Y: Integer; const AString: PAnsiChar;
   AguardaCheque: Boolean; SegundosEspera: Integer): longint;  
 Var
   Texto: string;
 begin
    try
-    Texto := ConverterAnsiParaUTF8(ansistring(AString));
+    Texto := ConverterStringEntrada(ansistring(AString));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('POS_ImprimirTextoCheque(' + IntToStr(x) + ',' + IntToStr(y) + ',' + Texto + ','
@@ -412,15 +414,15 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.TxRx(eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.TxRx(eCmd: PAnsiChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
+  const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 var
   ACmd, Resposta: AnsiString;
 begin
@@ -443,10 +445,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -464,10 +466,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -485,10 +487,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -506,10 +508,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -530,10 +532,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -554,10 +556,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -575,14 +577,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.LerInfoImpressora(const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 Var
   Resposta: string;
 begin
@@ -600,10 +602,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -637,14 +639,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibPosPrinter.LerStatusImpressoraFormatado(Tentativas: Integer; const sResposta: PAnsiChar; var esTamanho: longint): longint;
 var
   RetStatus: TACBrPosPrinterStatus;
   Resposta: string;
@@ -668,15 +670,15 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 
 end;
 
-function TACBrLibPosPrinter.RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.RetornarTags(IncluiAjuda: Boolean; const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 Var
   Tags: TStringList;
   Resposta: string;
@@ -701,14 +703,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.AcharPortas(const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 Var
   Resposta, Portas: string;
 begin
@@ -736,14 +738,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;  
+function TACBrLibPosPrinter.GravarLogoArquivo(aPath: PAnsiChar; nAKC1, nAKC2: longint): longint;  
 Var
   Path: AnsiString;
 begin
@@ -764,10 +766,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -788,14 +790,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.LeituraCheque(const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.LeituraCheque(const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 Var
   Resposta: string;
 begin
@@ -813,14 +815,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.LerCMC7(AguardaCheque: Boolean; SegundosEspera: Integer; const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.LerCMC7(AguardaCheque: Boolean; SegundosEspera: Integer; const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 Var
   Resposta: string;
 begin
@@ -842,10 +844,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -863,10 +865,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -886,14 +888,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibPosPrinter.LerCaracteristicas(const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibPosPrinter.LerCaracteristicas(const sResposta: PAnsiChar; var esTamanho: longint): longint;  
 Var
   Resposta: string;
 begin
@@ -913,10 +915,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -936,13 +938,13 @@ begin
   except
     on E: EACBrLibException do
     begin
-      SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      SetRetorno(E.Erro, ConverterStringSaida(E.Message));
       Result := Nil;
     end;
 
     on E: Exception do
     begin
-      SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
       Result := Nil;
     end;
   end;

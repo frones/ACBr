@@ -37,7 +37,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ComCtrls, IniFiles, ExtCtrls,
-  ACBrDebitoAutomatico;
+  ACBrDebitoAutomatico, ACBrBase;
 
 type
   TfrmACBrDebitoAutomatico_Exemplo = class(TForm)
@@ -255,10 +255,10 @@ begin
   with ACBrDebitoAutomatico1.Configuracoes.Geral do
   begin
     CNPJEmpresa := edtEmitCNPJ.Text;
+    LayoutVersao := TDebitoLayoutVersao(cbLayoutVersao.ItemIndex);
 
     // A propriedade Banco deve ser a ultima a ser definida
     Banco := TBanco(cbBanco.ItemIndex);
-    LayoutVersao := TDebitoLayoutVersao(cbLayoutVersao.ItemIndex);
   end;
 end;
 

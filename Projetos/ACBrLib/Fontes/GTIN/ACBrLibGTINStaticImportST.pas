@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -62,43 +62,43 @@ const
  {$I ACBrLibErros.inc}
 
  {%region Constructor/Destructor}
- function GTIN_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+ function GTIN_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_Finalizar: longint;
+ function GTIN_Finalizar: Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
  {%region Versao/Retorno}
- function GTIN_Nome(const sNome: PChar; var esTamanho: longint): longint;
+ function GTIN_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+ function GTIN_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+ function GTIN_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+ function GTIN_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
  {%region Ler/Gravar Config }
- function GTIN_ConfigLer(const eArqConfig: PChar): longint;
+ function GTIN_ConfigLer(const eArqConfig: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_ConfigGravar(const eArqConfig: PChar): longint;
+ function GTIN_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+ function GTIN_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+ function GTIN_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
  {%region GTIN}
- function GTIN_Consultar(const aGTIN, sResposta: PChar; var esTamanho: longint): longint;
+ function GTIN_Consultar(const aGTIN, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 
@@ -58,7 +58,7 @@ type
 
     property GTINDM: TLibGTINDM read FGTINDM;
 
-    function Consultar (aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    function Consultar (aGTIN: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 
   end;
 
@@ -96,13 +96,13 @@ begin
   FGTINDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibGTIN.Consultar(aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibGTIN.Consultar(aGTIN: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   GTIN, AResposta: String;
   Resp: TGTINResposta;
 begin
   try
-    GTIN:= AnsiString(aGTIN);
+    GTIN:= ConverterStringEntrada(aGTIN);
 
     if Config.Log.Nivel > logNormal then
      GravarLog('GTIN_Consultar (' + GTIN + ' ) ', logCompleto, True)
@@ -131,10 +131,10 @@ begin
 
   except
     on E: EACBrLibException do
-     Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+     Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-     Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+     Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

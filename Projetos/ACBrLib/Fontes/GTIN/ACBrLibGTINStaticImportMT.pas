@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -62,43 +62,43 @@ const
  {$I ACBrLibErros.inc}
 
  {%region Constructor/Destructor}
- function GTIN_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+ function GTIN_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_Finalizar (const libHandle: TLibHandle): longint;
+ function GTIN_Finalizar (const libHandle: TLibHandle): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
  {%region Versao/Retorno}
- function GTIN_Nome(var libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+ function GTIN_Nome(var libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_Versao(var libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+ function GTIN_Versao(var libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+ function GTIN_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_UltimoRetorno(var libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+ function GTIN_UltimoRetorno(var libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
  {%region Ler/Gravar Config }
- function GTIN_ConfigLer(var libHandle: TLibHandle; const eArqConfig: PChar): longint;
+ function GTIN_ConfigLer(var libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_ConfigGravar(var libHandle: TLibHandle; const eArqConfig: PChar): longint;
+ function GTIN_ConfigGravar(var libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_ConfigLerValor(var libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+ function GTIN_ConfigLerValor(var libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
 
- function GTIN_ConfigGravarValor(var libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+ function GTIN_ConfigGravarValor(var libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 
  {%region GTIN}
- function GTIN_Consultar(var libHandle: TLibHandle; const aGTIN, sResposta: PChar; var esTamanho: longint): longint;
+ function GTIN_Consultar(var libHandle: TLibHandle; const aGTIN, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGTINLIBName;
  {%endregion}
 

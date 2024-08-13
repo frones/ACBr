@@ -51,7 +51,7 @@ uses
     jpeg,
    {$IFEND}
   {$ENDIF}
-  ACBrNF3e.DANF3ERL, RLBarcode, RLFilters, RLPDFFilter, Data.DB;
+  ACBrNF3e.DANF3ERL, RLBarcode, RLFilters, RLPDFFilter, DB;
 
 type
 
@@ -172,10 +172,10 @@ type
     RLDraw34: TRLDraw;
     RLLabel32: TRLLabel;
     RLLabel33: TRLLabel;
-    rlmCol1: TRLMemo;
-    rlmCol2: TRLMemo;
-    rlmCol3: TRLMemo;
-    rlmCol4: TRLMemo;
+    rlmTributo: TRLMemo;
+    rlmBCTrib: TRLMemo;
+    rlmAliqTrib: TRLMemo;
+    rlmValorTrib: TRLMemo;
     RLDraw35: TRLDraw;
     RLDraw36: TRLDraw;
     RLDraw37: TRLDraw;
@@ -198,20 +198,33 @@ type
     RLDraw45: TRLDraw;
     rlmMedidor: TRLMemo;
     rlmGrandezas: TRLMemo;
-    rlm_Col3: TRLMemo;
-    rlm_Col4: TRLMemo;
-    rlm_Col5: TRLMemo;
-    rlm_Col6: TRLMemo;
-    rlm_Col7: TRLMemo;
-
-//    procedure rlbItensAfterPrint(Sender: TObject);
-//    procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-
-//    procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
-//      var EOF: Boolean; var RecordAction: TRLRecordAction);
-
-//    procedure RLNF3eDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
-//      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    rlmPostos: TRLMemo;
+    rlmleitAnt: TRLMemo;
+    rlmLeitAtual: TRLMemo;
+    rlmConstMedidor: TRLMemo;
+    rlmConsumo: TRLMemo;
+    RLLabel44: TRLLabel;
+    RLLabel45: TRLLabel;
+    RLLabel46: TRLLabel;
+    RLLabel47: TRLLabel;
+    RLLabel48: TRLLabel;
+    RLDraw46: TRLDraw;
+    RLLabel49: TRLLabel;
+    RLLabel50: TRLLabel;
+    RLLabel51: TRLLabel;
+    RLLabel52: TRLLabel;
+    rllMesRef: TRLLabel;
+    rllVencimento: TRLLabel;
+    rllTotPagar: TRLLabel;
+    rllUnidadeCons: TRLLabel;
+    RLDraw47: TRLDraw;
+    RLDraw48: TRLDraw;
+    RLDraw49: TRLDraw;
+    RLDraw50: TRLDraw;
+    rllLinhaDig: TRLLabel;
+    rllNumFat: TRLLabel;
+    rllCodDebito: TRLLabel;
+    rllCodAgencia: TRLLabel;
 
     procedure RLNF3eBeforePrint(Sender: TObject; var PrintIt: Boolean);
 
@@ -220,9 +233,6 @@ type
     procedure RLDivisao_03BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLDivisao_04BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLDivisao_05BeforePrint(Sender: TObject; var PrintIt: Boolean);
-
-  private
-    FNumItem: Integer;
   end;
 
 implementation
@@ -406,6 +416,8 @@ var
   i, j: Integer;
   xLinha: string;
   Valor, Percentual: Double;
+  Tributo: array[0..4] of string;
+  BCTrib, AliqTrib, ValorTrib: array[0..4] of Double;
 begin
   rlmItemDesc.Lines.Clear;
   rlmItemUnid.Lines.Clear;
@@ -418,6 +430,26 @@ begin
   rmlItemICMS.Lines.Clear;
   rlmItemTarifa.Lines.Clear;
   Percentual := 0;
+  Tributo[0] := 'ICMS';
+  Tributo[1] := 'PIS';
+  Tributo[2] := 'COFINS';
+  Tributo[3] := 'PISEfet';
+  Tributo[4] := 'COFINSEfet';
+  BCTrib[0] := 0;
+  BCTrib[1] := 0;
+  BCTrib[2] := 0;
+  BCTrib[3] := 0;
+  BCTrib[4] := 0;
+  AliqTrib[0] := 0;
+  AliqTrib[1] := 0;
+  AliqTrib[2] := 0;
+  AliqTrib[3] := 0;
+  AliqTrib[4] := 0;
+  ValorTrib[0] := 0;
+  ValorTrib[1] := 0;
+  ValorTrib[2] := 0;
+  ValorTrib[3] := 0;
+  ValorTrib[4] := 0;
 
   for i := 0 to fpNF3e.NFDet.Count - 1 do
   begin
@@ -439,6 +471,22 @@ begin
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vPISEfet +
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vCOFINS +
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vCOFINSEfet;
+
+      BCTrib[1] := BCTrib[1] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.PIS.vBC;
+      BCTrib[2] := BCTrib[2] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vBC;
+      BCTrib[3] := BCTrib[3] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vBCPISEfet;
+      BCTrib[4] := BCTrib[4] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vBCCOFINSEfet;
+
+      AliqTrib[1] := AliqTrib[1] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.PIS.pPIS;
+      AliqTrib[2] := AliqTrib[2] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.pCOFINS;
+      AliqTrib[3] := AliqTrib[3] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.pPISEfet;
+      AliqTrib[4] := AliqTrib[4] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.pCOFINSEfet;
+
+      ValorTrib[1] := ValorTrib[1] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.PIS.vPIS;
+      ValorTrib[2] := ValorTrib[2] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINS.vCOFINS;
+      ValorTrib[3] := ValorTrib[3] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.PISEfet.vPISEfet;
+      ValorTrib[4] := ValorTrib[4] + fpNF3e.NFDet[i].Det[j].detItem.Imposto.COFINSEfet.vCOFINSEfet;
+
       if Valor > 0 then
         rlmItemPIS.Lines.Add(fpDANF3e.FormatarQuantidade(Valor))
       else
@@ -446,6 +494,8 @@ begin
 
       Valor := fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vBC +
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vBCST;
+      BCTrib[0] := BCTrib[0] + Valor;
+
       if Valor > 0 then
         rlmItemBase.Lines.Add(fpDANF3e.FormatarQuantidade(Valor))
       else
@@ -456,6 +506,7 @@ begin
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pFCP +
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.pFCPST;
       Percentual := Percentual + Valor;
+      AliqTrib[0] := Percentual;
 
       if Valor > 0 then
         rmlItemAliquota.Lines.Add(fpDANF3e.FormatarAliquota(Valor))
@@ -466,12 +517,15 @@ begin
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vICMSST +
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vFCP +
                fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vFCPST;
+      ValorTrib[0] := ValorTrib[0] + Valor;
+
       if Valor > 0 then
         rmlItemICMS.Lines.Add(fpDANF3e.FormatarQuantidade(Valor))
       else
         rmlItemICMS.Lines.Add(' ');
 
 //      rlmItemTarifa.Lines.Add(fpDANF3e.FormatarQuantidade(fpNF3e.NFDet[i].Det[j].detItem.Imposto.ICMS.vICMS));
+
     end;
   end;
 
@@ -503,6 +557,21 @@ begin
   if Valor > 0 then
     rllICMS.Caption := fpDANF3e.FormatarQuantidade(Valor);
 
+  rlmTributo.Lines.Clear;
+  rlmBCTrib.Lines.Clear;
+  rlmAliqTrib.Lines.Clear;
+  rlmValorTrib.Lines.Clear;
+  for i := 0 to 4 do
+  begin
+    if BCTrib[i] > 0 then
+    begin
+      rlmTributo.Lines.Add(Tributo[i]);
+      rlmBCTrib.Lines.Add(fpDANF3e.FormatarQuantidade(BCTrib[i]));
+      rlmAliqTrib.Lines.Add(fpDANF3e.FormatarQuantidade(AliqTrib[i]));
+      rlmValorTrib.Lines.Add(fpDANF3e.FormatarQuantidade(ValorTrib[i]));
+    end;
+  end;
+
   rlmGrandContr.Lines.Clear;
   for i := 0 to fpNF3e.gGrContrat.Count - 1 do
   begin
@@ -514,66 +583,105 @@ begin
 end;
 
 procedure TfrmDANF3eRLRetrato.RLDivisao_04BeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  i, j, k: Integer;
+  nMed: array[0..19] of Integer;
+  LeitAnt, LeitAtual, Constante, Consumo: Double;
 begin
+  rlmMedidor.Lines.Clear;
+  rlmGrandezas.Lines.Clear;
+  rlmPostos.Lines.Clear;
+  rlmleitAnt.Lines.Clear;
+  rlmLeitAtual.Lines.Clear;
+  rlmConstMedidor.Lines.Clear;
+  rlmConsumo.Lines.Clear;
+  LeitAnt := 0;
+  LeitAtual := 0;
+  Constante := 0;
+  Consumo := 0;
+
+  for i := 0 to fpNF3e.gMed.Count - 1 do
+  begin
+    rlmMedidor.Lines.Add(fpNF3e.gMed[i].idMedidor);
+    nMed[i] := fpNF3e.gMed[i].nMed;
+
+    for k := 0 to fpNF3e.NFDet.Count - 1 do
+    begin
+      for j := 0 to fpNF3e.NFDet[k].Det.Count - 1 do
+      begin
+        if nMed[i] = fpNF3e.NFDet[k].Det[j].detItem.Prod.gMedicao.nMed then
+        begin
+          LeitAnt := LeitAnt +
+            fpNF3e.NFDet[k].Det[j].detItem.Prod.gMedicao.vMedAnt;
+          LeitAtual := LeitAtual +
+            fpNF3e.NFDet[k].Det[j].detItem.Prod.gMedicao.vMedAtu;
+          Constante := Constante +
+            fpNF3e.NFDet[k].Det[j].detItem.Prod.gMedicao.vConst;
+          Consumo := Consumo +
+            fpNF3e.NFDet[k].Det[j].detItem.Prod.gMedicao.vMed;
+        end
+        else
+        begin
+          if Consumo > 0 then
+          begin
+            rlmleitAnt.Lines.Add(fpDANF3e.FormatarQuantidade(LeitAnt, False));
+            rlmLeitAtual.Lines.Add(fpDANF3e.FormatarQuantidade(LeitAtual, False));
+            rlmConstMedidor.Lines.Add(fpDANF3e.FormatarQuantidade(Constante, False));
+            rlmConsumo.Lines.Add(fpDANF3e.FormatarQuantidade(Consumo, False));
+          end;
+
+          LeitAnt := 0;
+          LeitAtual := 0;
+          Constante := 0;
+          Consumo := 0;
+        end;
+      end;
+    end;
+  end;
+
+  for i := 0 to fpNF3e.gGrContrat.Count - 1 do
+  begin
+    rlmGrandezas.Lines.Add(tpGrContratToDesc(fpNF3e.gGrContrat[i].tpGrContrat));
+    rlmPostos.Lines.Add(tpPosTarDescToStr(fpNF3e.gGrContrat[i].tpPosTar));
+  end;
+
   rlmFisco.Lines.Clear;
   rlmFisco.Lines.Text := StringReplace(fpNF3e.infAdic.infAdFisco, ';', slineBreak, [rfReplaceAll]);
 end;
 
 procedure TfrmDANF3eRLRetrato.RLDivisao_05BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  Codigo: string;
 begin
+  rllUnidadeCons.Caption := fpNF3e.acessante.idCodCliente;
+  rllMesRef.Caption := Copy(DateToStr(fpNF3e.gFat.CompetFat), 4, 7);
+  rllVencimento.Caption := DateToStr(fpNF3e.gFat.dVencFat);
+  rllTotPagar.Caption := 'R$ ' + fpDANF3e.FormatarQuantidade(fpNF3e.Total.vNF);
+
+  rllNumFat.Caption := 'Número da Fatura: ' + fpNF3e.gFat.nFat;
+  if fpNF3e.gFat.codDebAuto <> '' then
+    rllCodDebito.Caption := 'Código de Débito: ' + fpNF3e.gFat.codDebAuto;
+
+  if fpNF3e.gFat.codAgencia <> '' then
+    rllCodAgencia.Caption := 'Agência: ' + fpNF3e.gFat.codAgencia + ' ' +
+                             'Banco: ' + fpNF3e.gFat.codBanco;
+
+  Codigo := fpNF3e.gFat.codBarras;
+  rllLinhaDig.Caption := Copy(Codigo, 01, 12) + ' ' + Copy(Codigo, 13, 12) + ' ' +
+                         Copy(Codigo, 25, 12) + ' ' + Copy(Codigo, 37, 12);
+  rlbCodigoBarras.Visible := True;
+  rlbCodigoBarras.Caption := OnlyNumber(fpNF3e.gFat.codBarras);
+
+  rllHomologacao.Visible := (fpNF3e.Ide.tpAmb = TACBrTipoAmbiente.taHomologacao);
+  rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
+
   rllSistema.Visible := NaoEstaVazio(fpDANF3e.Sistema);
   rllSistema.Caption := fpDANF3e.Sistema;
 
   rllUsuario.Visible := NaoEstaVazio(fpDANF3e.Usuario);
   rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + FormatDateTimeBr(Now) +
     ' - ' + fpDANF3e.Usuario;
-
-  rllHomologacao.Visible := (fpNF3e.Ide.tpAmb = TACBrTipoAmbiente.taHomologacao);
-  rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
-
-
-
-  rlbCodigoBarras.Visible := True;
-  rlbCodigoBarras.Caption := OnlyNumber(fpNF3e.gFat.codBarras);
 end;
 
-{
-procedure TfrmDANF3eRLRetrato.RLNF3eDataRecord(Sender: TObject; RecNo,
-  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
-begin
-  inherited;
-
-  EOF := (RecNo > 1);
-  RecordAction := raUseIt;
-end;
-}
-{
-procedure TfrmDANF3eRLRetrato.subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);
-begin
-  inherited;
-
-  FNumItem := RecNo - 1;
-//  EOF := (RecNo > fpNF3e.Det.Count);
-  RecordAction := raUseIt;
-end;
-}
-{
-procedure TfrmDANF3eRLRetrato.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-begin
-  with fpNF3e.Det.Items[FNumItem] do
-  begin
-    txtCodigo.Lines.Text := IntToStr(Prod.nItem);
-    rlmDescricao.Lines.Text := Prod.xProd;
-    txtQuantidade.Caption := fpDANF3e.FormatarQuantidade(Prod.qCom);
-    txtValor.Caption := fpDANF3e.FormatarQuantidade(Prod.vProd);
-  end;
-end;
-}
-{
-procedure TfrmDANF3eRLRetrato.rlbItensAfterPrint(Sender: TObject);
-begin
-  //Código removido
-end;
-}
 end.

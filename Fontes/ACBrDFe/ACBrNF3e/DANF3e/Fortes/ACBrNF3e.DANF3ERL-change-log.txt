@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/08/2024
+[*] Alteração visando a impressão de todos os quadros com os seus valores.
+   Por: Italo Giurizzato Junior
+
 12/08/2024
 [+] Doação do componente para o Projeto ACBr.
    Por: Italo Giurizzato Junior

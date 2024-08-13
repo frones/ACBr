@@ -19,7 +19,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="306"/>
+      <BuildNr Value="307"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibBoleto - Biblioteca para geração de Arquivos de Remessa e Retorno, e impressão de Boletos" InternalName="ACBrLibBoleto" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>
@@ -257,7 +257,6 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
             </Debugging>
@@ -549,7 +548,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="12">
       <Unit0>
         <Filename Value="ACBrLibBoleto.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -598,20 +597,9 @@
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="..\Comum\ACBrLibHelpers.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit11>
-      <Unit12>
         <Filename Value="ACBrLibBoletoRespostas.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="..\Comum\ACBrLibDataModule.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="LibDataModule"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit13>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

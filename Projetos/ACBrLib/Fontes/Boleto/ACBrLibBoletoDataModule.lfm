@@ -1,6 +1,10 @@
 inherited LibBoletoDM: TLibBoletoDM
   Left = 346
   Top = 174
+  Height = 269
+  HorizontalOffset = -1766
+  VerticalOffset = 299
+  Width = 328
   object ACBrBoleto1: TACBrBoleto[0]
     MAIL = ACBrMail1
     Banco.TamanhoMaximoNossoNum = 10

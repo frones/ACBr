@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="ACBrLibBoleto"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <XPManifest>
+        <DpiAware Value="True/PM"/>
+      </XPManifest>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MajorVersionNr Value="1"/>
+      <Language Value="0416"/>
+      <Attributes pvaPreRelease="True"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibBoleto - Biblioteca para geração de Arquivos de Remessa e Retorno, e impressão de Boletos" InternalName="ACBrLibBoleto" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrLibBoleto" ProductVersion="1.0.0.0"/>
+    </VersionInfo>
+    <MacroValues Count="2">
+      <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+      <Macro2 Name="LCLWidgetType" Value="nogui"/>
+    </MacroValues>
+    <BuildModes Count="4">
+      <Item1 Name="i386-CDECL-DEBUG" Default="True"/>
+      <Item2 Name="Linux-x86_64-MT">
+        <MacroValues Count="2">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Linux\Console\libacbrboleto64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrBoleto;$(ACBrDir)\Fontes\ACBrBoleto\WS;$(ACBrDir)\Fontes\ACBrBoleto\FC\FPDF;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrPIXCD;$(ACBrDir)\Fontes\ACBrDFe;$(ACBrDir)\Fontes\PCNComum;$(ACBrDir)\Fontes\ACBrIntegrador;$(ACBrDir)\Fontes\ACBrIntegrador\pcnVFPe;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\FPDF-Pascal;$(ACBrDir)\Fontes\Terceiros\DelphiZXingQRCode;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;$(ACBrDir)\Fontes\Terceiros\CodeGear;$(ACBrDir)\Fontes\Terceiros\Ole;$(ACBrDir)\Fontes\Terceiros\json4delphi\src"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI -dNOREPORT"/>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="android-armeabi-v7a">
+        <MacroValues Count="2">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Android\jniLibs\armeabi-v7a\libACBrLibBoleto"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrBoleto;$(ACBrDir)\Fontes\ACBrBoleto\WS;$(ACBrDir)\Fontes\ACBrBoleto\FC\FPDF;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrPIXCD;$(ACBrDir)\Fontes\ACBrDFe;$(ACBrDir)\Fontes\PCNComum;$(ACBrDir)\Fontes\ACBrIntegrador;$(ACBrDir)\Fontes\ACBrIntegrador\pcnVFPe;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\FPDF-Pascal;$(ACBrDir)\Fontes\Terceiros\DelphiZXingQRCode;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;$(ACBrDir)\Fontes\Terceiros\CodeGear;$(ACBrDir)\Fontes\Terceiros\Ole;$(ACBrDir)\Fontes\Terceiros\json4delphi\src"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="arm"/>
+            <TargetOS Value="android"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dANDROID
+-dNOGUI
+-dNOREPORT
+-dMT
+-Xd
+-CfVFPv3
+-CpARMV7A
+-XParm-linux-androideabi-"/>
+          </Other>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="android-arm64-v8a">
+        <MacroValues Count="2">
+          <Macro1 Name="ACBrDir" Value="$Env(ACBR_HOME)"/>
+          <Macro2 Name="LCLWidgetType" Value="nogui"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Android\jniLibs\arm64-v8a\libACBrLibBoleto"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+            <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrBoleto;$(ACBrDir)\Fontes\ACBrBoleto\WS;$(ACBrDir)\Fontes\ACBrBoleto\FC\FPDF;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrPIXCD;$(ACBrDir)\Fontes\ACBrDFe;$(ACBrDir)\Fontes\PCNComum;$(ACBrDir)\Fontes\ACBrIntegrador;$(ACBrDir)\Fontes\ACBrIntegrador\pcnVFPe;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\FPDF-Pascal;$(ACBrDir)\Fontes\Terceiros\DelphiZXingQRCode;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;$(ACBrDir)\Fontes\Terceiros\CodeGear;$(ACBrDir)\Fontes\Terceiros\Ole;$(ACBrDir)\Fontes\Terceiros\json4delphi\src"/>
+            <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="aarch64"/>
+            <TargetOS Value="android"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dANDROID
+-dNOGUI
+-dNOREPORT
+-dMT
+-Xd
+-XPaarch64-linux-android-"/>
+          </Other>
+        </CompilerOptions>
+      </Item4>
+      <SharedMatrixOptions Count="2">
+        <Item1 ID="236892288065" Modes="i386-CDECL-DEBUG,Linux-x86_64-MT,android-armeabi-v7a,android-arm64-v8a" Type="IDEMacro" MacroName="ACBrDir" Value="$Env(ACBR_HOME)"/>
+        <Item2 ID="523680024275" Modes="i386-CDECL-DEBUG,Linux-x86_64-MT,android-arm64-v8a,android-armeabi-v7a" Type="IDEMacro" MacroName="LCLWidgetType" Value="nogui"/>
+      </SharedMatrixOptions>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <HostApplicationFilename Value="C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\Boleto\bin\ACBrLibBoletoTest.exe"/>
+      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <HostApplicationFilename Value="C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\Boleto\bin\ACBrLibBoletoTest.exe"/>
+          </local>
+        </Mode0>
+      </Modes>
+    </RunParams>
+    <RequiredPackages Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPackages>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="ACBrLibBoleto.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ACBrLibBoletoDataModule.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="ACBrLibBoletoBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="ACBrLibBoletoConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="ACBrLibBoletoConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="ACBrLibBoletoMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\Testes\Boleto\bin\ACBrBoleto32"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
+      <OtherUnitFiles Value="..\Comum;$(ACBrDir)\Fontes\ACBrBoleto;$(ACBrDir)\Fontes\ACBrBoleto\WS;$(ACBrDir)\Fontes\ACBrBoleto\FC\FPDF;$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrOpenSSL;$(ACBrDir)\Fontes\ACBrDiversos;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrPIXCD;$(ACBrDir)\Fontes\ACBrDFe;$(ACBrDir)\Fontes\PCNComum;$(ACBrDir)\Fontes\ACBrIntegrador;$(ACBrDir)\Fontes\ACBrIntegrador\pcnVFPe;$(ACBrDir)\Fontes\Terceiros\synalist;$(ACBrDir)\Fontes\Terceiros\FPDF-Pascal;$(ACBrDir)\Fontes\Terceiros\DelphiZXingQRCode;$(ACBrDir)\Fontes\Terceiros\GZIPUtils;$(ACBrDir)\Fontes\Terceiros\FastStringReplace;$(ACBrDir)\Fontes\Terceiros\CodeGear;$(ACBrDir)\Fontes\Terceiros\Ole;$(ACBrDir)\Fontes\Terceiros\json4delphi\src"/>
+      <UnitOutputDirectory Value="lib\CONSOLE-$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <TargetCPU Value="i386"/>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
+      </Debugging>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <CustomOptions Value="-dMT -dDEBUG -dNOGUI -dNOREPORT"/>
+    </Other>
+  </CompilerOptions>
+</CONFIG>

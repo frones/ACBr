@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: José M. S. Junior                               }
 {                                                                              }
@@ -42,93 +42,93 @@ uses
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
-function Boleto_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function Boleto_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_Finalizar(libHandle: PLibHandle): longint;
+function Boleto_Finalizar(libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function Boleto_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function Boleto_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Boleto_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function Boleto_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function Boleto_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
 
 {%region Boleto}
 
-function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PChar): longint;
+function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PChar): longint;
+function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_LimparLista(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_TotalTitulosLista(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_Imprimir(const libHandle: PLibHandle; eNomeImpressora: PChar): longint;
+function Boleto_LimparLista(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_TotalTitulosLista(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_Imprimir(const libHandle: PLibHandle; eNomeImpressora: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ImprimirBoleto(const libHandle: PLibHandle; eIndice: longint; eNomeImpressora: PChar): longint;
+function Boleto_ImprimirBoleto(const libHandle: PLibHandle; eIndice: Integer; eNomeImpressora: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_GerarPDF(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarPDF(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SalvarPDF(const libHandle: PLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_GerarPDFBoleto(const libHandle: PLibHandle;
-  eIndice: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: longint; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_GerarHTML(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_GerarRemessa(const libHandle: PLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
+  eIndice: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarHTML(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarRemessa(const libHandle: PLibHandle; eDir: PAnsiChar; eNumArquivo: Integer; eNomeArq: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_GerarRemessaStream(const libHandle: PLibHandle; eNumArquivo: longInt; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_GerarRemessaStream(const libHandle: PLibHandle; eNumArquivo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_LerRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PChar): longint;
+function Boleto_LerRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function Boleto_LerRetornoStream(const libHandle: PLibHandle; const ARetornoBase64: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  function Boleto_LerRetornoStream(const libHandle: PLibHandle; const ARetornoBase64: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ObterRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ObterRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_EnviarEmail(const libHandle: PLibHandle; ePara, eAssunto, eMensagem, eCC: PChar): longint;
+function Boleto_EnviarEmail(const libHandle: PLibHandle; ePara, eAssunto, eMensagem, eCC: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_EnviarEmailBoleto(const libHandle: PLibHandle; eIndice: longint; ePara, eAssunto,
-  eMensagem, eCC: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PChar): longint;
+function Boleto_EnviarEmailBoleto(const libHandle: PLibHandle; eIndice: Integer; ePara, eAssunto,
+  eMensagem, eCC: PAnsiChar): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ListaBancos(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaBancos(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ListaCaractTitulo(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaCaractTitulo(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ListaOcorrencias(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaOcorrencias(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ListaOcorrenciasEX(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaOcorrenciasEX(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PChar): longint;
+function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_CodigosMoraAceitos(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_CodigosMoraAceitos(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PChar): longint;
+function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_MontarNossoNumero(const libHandle: PLibHandle; eIndice: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_RetornaLinhaDigitavel(const libHandle: PLibHandle; eIndice: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_RetornaCodigoBarras(const libHandle: PLibHandle; eIndice: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_EnviarBoleto(const libHandle: PLibHandle; eCodigoOperacao: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_ConsultarTitulosPorPeriodo(const libHandle: PLibHandle; eArquivoIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_MontarNossoNumero(const libHandle: PLibHandle; eIndice: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_RetornaLinhaDigitavel(const libHandle: PLibHandle; eIndice: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_RetornaCodigoBarras(const libHandle: PLibHandle; eIndice: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_EnviarBoleto(const libHandle: PLibHandle; eCodigoOperacao: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_ConsultarTitulosPorPeriodo(const libHandle: PLibHandle; eArquivoIni: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
 
@@ -139,74 +139,74 @@ uses
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
-function Boleto_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function Boleto_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibBoleto, eArqConfig, eChaveCrypt);
 end;
 
-function Boleto_Finalizar(libHandle: PLibHandle): longint;
+function Boleto_Finalizar(libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
 end;
 
-function Boleto_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function Boleto_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function Boleto_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function Boleto_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function Boleto_OpenSSLInfo(const libHandle: PLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(libHandle, sOpenSSLInfo, esTamanho);
 end;
 
-function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Boleto_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function Boleto_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function Boleto_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Boleto_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function Boleto_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function Boleto_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function Boleto_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function Boleto_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Boleto_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function Boleto_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function Boleto_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
@@ -216,7 +216,7 @@ end;
 
 {%region Boleto}
 
-function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PChar): longint;
+function Boleto_ConfigurarDados(const libHandle: PLibHandle; eArquivoIni: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -231,7 +231,7 @@ begin
   end;
 end;
 
-function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PChar): longint;
+function Boleto_IncluirTitulos(const libHandle: PLibHandle; eArquivoIni, eTpSaida: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -246,7 +246,7 @@ begin
   end;
 end;
 
-function Boleto_LimparLista(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_LimparLista(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -260,7 +260,7 @@ begin
   end;
 end;
 
-function Boleto_TotalTitulosLista(const libHandle: PLibHandle): longint;
+function Boleto_TotalTitulosLista(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -275,7 +275,7 @@ begin
   end;
 end;
 
-function Boleto_Imprimir(const libHandle: PLibHandle; eNomeImpressora: PChar): longint;
+function Boleto_Imprimir(const libHandle: PLibHandle; eNomeImpressora: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -290,7 +290,7 @@ begin
   end;
 end;
 
-function Boleto_ImprimirBoleto(const libHandle: PLibHandle; eIndice: longint; eNomeImpressora: PChar): longint;
+function Boleto_ImprimirBoleto(const libHandle: PLibHandle; eIndice: Integer; eNomeImpressora: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -305,7 +305,7 @@ begin
   end;
 end;
 
-function Boleto_GerarPDF(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarPDF(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -319,8 +319,8 @@ begin
   end;
 end;
 
-function Boleto_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SalvarPDF(const libHandle: PLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -335,8 +335,8 @@ begin
 end;
 
 
-function Boleto_GerarPDFBoleto(const libHandle: PLibHandle; eIndice: longint
-  ): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarPDFBoleto(const libHandle: PLibHandle; eIndice: Integer
+  ): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -351,8 +351,8 @@ begin
   end;
 end;
 
-function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: longint; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -366,7 +366,7 @@ begin
   end;
 end;
 
-function Boleto_GerarHTML(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarHTML(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -380,7 +380,7 @@ begin
   end;
 end;
 
-function Boleto_GerarRemessa(const libHandle: PLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
+function Boleto_GerarRemessa(const libHandle: PLibHandle; eDir: PAnsiChar; eNumArquivo: Integer; eNomeArq: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -395,7 +395,7 @@ begin
   end;
 end;
 
-function Boleto_GerarRemessaStream(const libHandle: PLibHandle; eNumArquivo: longInt; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_GerarRemessaStream(const libHandle: PLibHandle; eNumArquivo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -410,7 +410,7 @@ begin
   end;
 end;
 
-function Boleto_LerRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PChar): longint;
+function Boleto_LerRetorno(const libHandle: PLibHandle; eDir, eNomeArq: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -425,7 +425,7 @@ begin
   end;
 end;
 
-function Boleto_LerRetornoStream(const libHandle: PLibHandle; const ARetornoBase64: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_LerRetornoStream(const libHandle: PLibHandle; const ARetornoBase64: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -441,7 +441,7 @@ begin
 end;
 
 function Boleto_ObterRetorno(const libHandle: PLibHandle; eDir,
-  eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  eNomeArq: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -456,7 +456,7 @@ begin
   end;
 end;
 
-function Boleto_EnviarEmail(const libHandle: PLibHandle; ePara, eAssunto, eMensagem, eCC: PChar): longint;
+function Boleto_EnviarEmail(const libHandle: PLibHandle; ePara, eAssunto, eMensagem, eCC: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -471,8 +471,8 @@ begin
   end;
 end;
 
-function Boleto_EnviarEmailBoleto(const libHandle: PLibHandle; eIndice: longint; ePara, eAssunto, eMensagem,
-  eCC: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_EnviarEmailBoleto(const libHandle: PLibHandle; eIndice: Integer; ePara, eAssunto, eMensagem,
+  eCC: PAnsiChar): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -486,7 +486,7 @@ begin
   end;
 end;
 
-function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PChar): longint;
+function Boleto_SetDiretorioArquivo(const libHandle: PLibHandle; eDir, eArq: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -501,7 +501,7 @@ begin
   end;
 end;
 
-function Boleto_ListaBancos(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaBancos(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -516,7 +516,7 @@ begin
   end;
 end;
 
-function Boleto_ListaCaractTitulo(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaCaractTitulo(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -531,7 +531,7 @@ begin
   end;
 end;
 
-function Boleto_ListaOcorrencias(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaOcorrencias(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -546,7 +546,7 @@ begin
   end;
 end;
 
-function Boleto_ListaOcorrenciasEX(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaOcorrenciasEX(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -561,7 +561,7 @@ begin
   end;
 end;
 
-function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PChar): longint;
+function Boleto_TamNossoNumero(const libHandle: PLibHandle; eCarteira, enossoNumero, eConvenio: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -576,7 +576,7 @@ begin
   end;
 end;
 
-function Boleto_CodigosMoraAceitos(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_CodigosMoraAceitos(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -591,7 +591,7 @@ begin
   end;
 end;
 
-function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PChar): longint;
+function Boleto_SelecionaBanco(const libHandle: PLibHandle; eCodBanco: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -606,8 +606,8 @@ begin
   end;
 end;
 
-function Boleto_MontarNossoNumero(const libHandle: PLibHandle; eIndice: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_MontarNossoNumero(const libHandle: PLibHandle; eIndice: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -621,8 +621,8 @@ begin
   end;
 end;
 
-function Boleto_RetornaLinhaDigitavel(const libHandle: PLibHandle; eIndice: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_RetornaLinhaDigitavel(const libHandle: PLibHandle; eIndice: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -636,8 +636,8 @@ begin
   end;
 end;
 
-function Boleto_RetornaCodigoBarras(const libHandle: PLibHandle; eIndice: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_RetornaCodigoBarras(const libHandle: PLibHandle; eIndice: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -651,8 +651,8 @@ begin
   end;
 end;
 
-function Boleto_EnviarBoleto(const libHandle: PLibHandle; eCodigoOperacao: longint;
-  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_EnviarBoleto(const libHandle: PLibHandle; eCodigoOperacao: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -667,7 +667,7 @@ begin
 end;
 
 function Boleto_ConsultarTitulosPorPeriodo(const libHandle: PLibHandle;
-  eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  eArquivoIni: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
 { mentos de Automação Comercial utilizados no Brasil                            }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: José M S Junior                                  }
 {                                                                               }
@@ -38,8 +38,9 @@ unit ACBrLibBoletoRespostas;
 interface
 
 uses
-  SysUtils, Classes,
-  ACBrLibResposta, ACBrBoleto, ACBrBoletoRetorno, ACBrBoletoConversao, contnrs;
+  SysUtils, Classes, contnrs,
+  ACBrLibResposta, ACBrLibConfig,
+  ACBrBoleto, ACBrBoletoRetorno, ACBrBoletoConversao;
 
 type
 
@@ -807,16 +808,14 @@ begin
   IDNossoNum:= RetEnvio.DadosRet.IDBoleto.NossoNum;
   IDURL:= RetEnvio.DadosRet.IDBoleto.URL;
 
-
-
   for J:= 0 to  RetEnvio.ListaRejeicao.Count -1 do
   begin
-    Rejeicao := TRetornoRejeicoesWeb.Create(FID, J+1, Tipo, Formato);
+    Rejeicao := TRetornoRejeicoesWeb.Create(FID, J+1, Tipo, Codificacao);
     Rejeicao.Processar(RetEnvio.ListaRejeicao[J]);
     Rejeicoes.Add(Rejeicao);
   end;
 
-  TituloRetorno := TRetornoTituloWeb.Create(FID, Tipo, Formato);
+  TituloRetorno := TRetornoTituloWeb.Create(FID, Tipo, Codificacao);
   TituloRetorno.Processar(RetEnvio.DadosRet);
 end;
 
@@ -867,19 +866,19 @@ var
   I: Integer;
   Item: TRetornoDadosTitulo;
 begin
-  Cedente := TRetornoDadosCedente.Create(Tipo, Formato);
+  Cedente := TRetornoDadosCedente.Create(Tipo, Codificacao);
   Cedente.Processar(ACBrBoleto);
 
-  Banco := TRetornoDadosBanco.Create(Tipo, Formato);
+  Banco := TRetornoDadosBanco.Create(Tipo, Codificacao);
   Banco.Processar(ACBrBoleto);
 
-  Conta := TRetornoDadosConta.Create(Tipo, Formato);
+  Conta := TRetornoDadosConta.Create(Tipo, Codificacao);
   Conta.Processar(ACBrBoleto);
 
   FTitulo.Clear;
   for I:= 0 to  ACBrBoleto.ListadeBoletos.Count-1 do
   begin
-    Item := TRetornoDadosTitulo.Create(I, Tipo, Formato);
+    Item := TRetornoDadosTitulo.Create(I, Tipo, Codificacao);
     Item.Processar(ACBrBoleto);
     FTitulo.Add(Item);
   end;
@@ -940,7 +939,7 @@ begin
 
     for I:= 0 to  ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando.Count-1 do
     begin
-      Item := TRetornoRejeicoesTitulo.Create( I, FID , Tipo, Formato);
+      Item := TRetornoRejeicoesTitulo.Create( I, FID , Tipo, Codificacao);
       Item.Processar(ACBrBoleto);
       Rejeicoes.Add(Item);
     end;

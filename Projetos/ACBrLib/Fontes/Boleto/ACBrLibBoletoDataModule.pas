@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -37,8 +37,16 @@ unit ACBrLibBoletoDataModule;
 interface
 
 uses
-  Classes, SysUtils, SyncObjs, ACBrBoleto, ACBrBoletoFCFortesFr,
-  ACBrLibDataModule, ACBrLibComum, ACBrLibConfig, ACBrMail, ACBrBoletoConversao;
+  Classes, SysUtils, SyncObjs,
+  ACBrBoleto, ACBrMail,
+  {$IfNDef NOREPORT}
+  ACBrBoletoFCFortesFr,
+  {$Else}
+  ACBrBoletoFPDF,
+  {$EndIf}
+  ACBrBoletoConversao,
+  ACBrLibDataModule,
+  ACBrLibComum, ACBrLibConfig;
 
 type
 
@@ -48,7 +56,11 @@ type
     ACBrBoleto1: TACBrBoleto;
     ACBrMail1: TACBrMail;
   private
-    BoletoFortes: TACBrBoletoFCFortes;
+    {$IfNDef NOREPORT}
+    FBoletoFortes: TACBrBoletoFCFortes;
+    {$Else}
+    FBoletoFPDF: TACBrBoletoFPDF;
+    {$EndIf}
     FLayoutImpressao: Integer;
 
   protected
@@ -212,9 +224,15 @@ var
 begin
   LibConfig := TLibBoletoConfig(Lib.Config);
 
-  BoletoFortes := TACBrBoletoFCFortes.Create(nil);
+  {$IfNDef NOREPORT}
+  FBoletoFortes := TACBrBoletoFCFortes.Create(nil);
+  ACBrBoleto1.ACBrBoletoFC := FBoletoFortes;
+  {$Else}
+  FBoletoFPDF := TACBrBoletoFPDF.Create(nil);
+  ACBrBoleto1.ACBrBoletoFC := FBoletoFPDF;
+  {$EndIf}
 
-  with BoletoFortes do
+  with ACBrBoleto1.ACBrBoletoFC do
   begin
      DirLogo := LibConfig.BoletoFCFortesConfig.DirLogo;
      MargemInferior := LibConfig.BoletoFCFortesConfig.MargemInferior;
@@ -235,6 +253,9 @@ begin
      AlterarEscalaPadrao := LibConfig.BoletoFCFortesConfig.AlterarEscalaPadrao;
      NovaEscala := LibConfig.BoletoFCFortesConfig.NovaEscala;
      CalcularNomeArquivoPDFIndividual := LibConfig.BoletoFCFortesConfig.CalcularNomeArquivoPDFIndividual;
+     if NaoEstaVazio(NomeImpressora) then
+       PrinterName := NomeImpressora;
+
 {$IFDEF Demo}
      SoftwareHouse := Lib.Nome + ' v' + Lib.Versao;
 {$ELSE}
@@ -242,10 +263,6 @@ begin
 {$ENDIF}
   end;
 
-  if NaoEstaVazio(NomeImpressora) then
-    BoletoFortes.PrinterName := NomeImpressora;
-
-  ACBrBoleto1.ACBrBoletoFC := BoletoFortes;
 end;
 
 procedure TLibBoletoDM.FinalizarImpressao;
@@ -253,7 +270,11 @@ begin
   GravarLog('FinalizarImpressao - Iniciado', logNormal);
 
   ACBrBoleto1.ACBrBoletoFC := nil;
-  if Assigned(BoletoFortes) then FreeAndNil(BoletoFortes);
+  {$IfNDef NOREPORT}
+  if Assigned(FBoletoFortes) then FreeAndNil(FBoletoFortes);
+  {$Else}
+  if Assigned(FBoletoFPDF) then FreeAndNil(FBoletoFPDF);
+  {$EndIf}
 
   GravarLog('FinalizarImpressao - Feito', logNormal);
 end;

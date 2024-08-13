@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -62,84 +62,84 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function Reinf_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function Reinf_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_Finalizar(const libHandle: TLibHandle): longint;
+function Reinf_Finalizar(const libHandle: TLibHandle): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function Reinf_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function Reinf_Nome(const libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function Reinf_Versao(const libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function Reinf_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function Reinf_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function Reinf_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function Reinf_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function Reinf_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function Reinf_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function Reinf_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 {%endregion}
 
 {%region Reinf}
-function Reinf_CriarEventoReinf(const libHandle: TLibHandle; const eArqIni: PChar): longint;
+function Reinf_CriarEventoReinf(const libHandle: TLibHandle; const eArqIni: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_EnviarReinf(const libHandle: TLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function Reinf_EnviarReinf(const libHandle: TLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_ConsultarReinf(const libHandle: TLibHandle; const eProtocolo, sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_ConsultarReinf(const libHandle: TLibHandle; const eProtocolo, sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 function Reinf_ConsultarReciboReinf(const libHandle: TLibHandle;
-  const ePerApur: PChar; const aTipoEvento: Integer; const eNrInscEstab,
-  eCnpjPrestador, eNrInscTomador, eDtApur, eCpfCnpjBenef, eCnpjFonte: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const ePerApur: PAnsiChar; const aTipoEvento: Integer; const eNrInscEstab,
+  eCnpjPrestador, eNrInscTomador, eDtApur, eCpfCnpjBenef, eCnpjFonte: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_CriarEnviarReinf(const libHandle: TLibHandle; const eArqIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_CriarEnviarReinf(const libHandle: TLibHandle; const eArqIni: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_LimparReinf(const libHandle: TLibHandle): Longint;
+function Reinf_LimparReinf(const libHandle: TLibHandle): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_CarregarXMLEventoReinf (const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
+function Reinf_CarregarXMLEventoReinf (const libHandle: TLibHandle; const eArquivoOuXML: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetIDContribuinte (const libHandle: TLibHandle; const aIdContribuinte: PChar):longint;
+function Reinf_SetIDContribuinte (const libHandle: TLibHandle; const aIdContribuinte: PAnsiChar):integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetIDTransmissor (const libHandle: TLibHandle; const aIdTransmissor: PChar): longint;
+function Reinf_SetIDTransmissor (const libHandle: TLibHandle; const aIdTransmissor: PAnsiChar): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetTipoContribuinte (const libHandle: TLibHandle; aTipoContribuinte: integer):longint;
+function Reinf_SetTipoContribuinte (const libHandle: TLibHandle; aTipoContribuinte: integer):integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_SetVersaoDF (const libHandle: TLibHandle; const sVersao: PChar):longint;
+function Reinf_SetVersaoDF (const libHandle: TLibHandle; const sVersao: PAnsiChar):integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_ObterCertificados (const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
+function Reinf_ObterCertificados (const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: integer):integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
-function Reinf_Validar(const libHandle:TLibHandle): longint;
+function Reinf_Validar(const libHandle:TLibHandle): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrReinfLIBName;
 
 {%endregion}

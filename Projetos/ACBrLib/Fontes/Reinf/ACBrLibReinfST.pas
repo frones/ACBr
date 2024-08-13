@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -40,84 +40,84 @@ uses
   Classes, SysUtils, Forms,
   ACBrLibComum;
 
-function Reinf_Inicializar (const eArqConfig, eChaveCrypt: Pchar): longint;
+function Reinf_Inicializar (const eArqConfig, eChaveCrypt: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_Finalizar: longint;
+function Reinf_Finalizar: integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_Nome (const sNome: PChar; var esTamanho: longint): longint;
+function Reinf_Nome (const sNome: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_Versao (const sVersao: PChar; var esTamanho: longint): longint;
+function Reinf_Versao (const sVersao: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function Reinf_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_UltimoRetorno (const sMensagem: PChar; var esTamanho: longint): longint;
+function Reinf_UltimoRetorno (const sMensagem: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigImportar (const eArqConfig: PChar): longint;
+function Reinf_ConfigImportar (const eArqConfig: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigExportar (const sMensagem: PChar; var esTamanho: longint): longint;
+function Reinf_ConfigExportar (const sMensagem: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigLer (const eArqConfig: PChar): longint;
+function Reinf_ConfigLer (const eArqConfig: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigGravar (const eArqConfig: PChar): longint;
+function Reinf_ConfigGravar (const eArqConfig: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigLerValor (const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Reinf_ConfigLerValor (const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConfigGravarValor (const eSessao, eChave, eValor: PChar): longint;
+function Reinf_ConfigGravarValor (const eSessao, eChave, eValor: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_CriarEventoReinf (const eArqIni: PChar): longint;
+function Reinf_CriarEventoReinf (const eArqIni: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_EnviarReinf (const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_EnviarReinf (const sResposta: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConsultarReinf (eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_ConsultarReinf (eProtocolo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ConsultarReciboReinf (ePerApur: PChar; aTipoEvento: Integer; eNrInscEstab: PChar;
-  eCnpjPrestador: PChar; eNrInscTomador: PChar; eDtApur: PChar;
-  eCpfCnpjBenef: PChar; eCnpjFonte: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function Reinf_ConsultarReciboReinf (ePerApur: PAnsiChar; aTipoEvento: Integer; eNrInscEstab: PAnsiChar;
+  eCnpjPrestador: PAnsiChar; eNrInscTomador: PAnsiChar; eDtApur: PAnsiChar;
+  eCpfCnpjBenef: PAnsiChar; eCnpjFonte: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_CriarEnviarReinf (const eArqIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_CriarEnviarReinf (const eArqIni: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_LimparReinf: longint;
+function Reinf_LimparReinf: integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_CarregarXMLEventoReinf (const eArquivoOuXML: PChar):longint;
+function Reinf_CarregarXMLEventoReinf (const eArquivoOuXML: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_SetIDContribuinte (const aIdContribuinte: PChar):longint;
+function Reinf_SetIDContribuinte (const aIdContribuinte: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_SetIDTransmissor (const aIdTransmissor: PChar):longint;
+function Reinf_SetIDTransmissor (const aIdTransmissor: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_SetTipoContribuinte (aTipoContribuinte: integer):longint;
+function Reinf_SetTipoContribuinte (aTipoContribuinte: integer):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_SetVersaoDF (const sVersao: PChar):longint;
+function Reinf_SetVersaoDF (const sVersao: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_ObterCertificados(const sResposta: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function Reinf_Validar: longint;
+function Reinf_Validar: integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -125,82 +125,82 @@ implementation
 Uses
   ACBrLibConsts, ACBrLibReinfBase;
 
-function Reinf_Inicializar(const eArqConfig, eChaveCrypt: Pchar): longint;
+function Reinf_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(pLib, TACBrLibReinf, eArqConfig, eChaveCrypt);
 end;
 
-function Reinf_Finalizar: longint;
+function Reinf_Finalizar: integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(pLib);
   pLib := Nil;
 end;
 
-function Reinf_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function Reinf_Nome(const sNome: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(pLib, sNome, esTamanho);
 end;
 
-function Reinf_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function Reinf_Versao(const sVersao: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(pLib, sVersao, esTamanho);
 end;
 
-function Reinf_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function Reinf_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_OpenSSLInfo(pLib, sOpenSSLInfo, esTamanho);
 end;
 
-function Reinf_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function Reinf_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(pLib, sMensagem, esTamanho);
 end;
 
-function Reinf_ConfigImportar(const eArqConfig: PChar): longint;
+function Reinf_ConfigImportar(const eArqConfig: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(pLib, eArqConfig);
 end;
 
-function Reinf_ConfigExportar(const sMensagem: PChar; var esTamanho: longint
-  ): longint;
+function Reinf_ConfigExportar(const sMensagem: PAnsiChar; var esTamanho: integer
+  ): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(pLib, sMensagem, esTamanho);
 end;
 
-function Reinf_ConfigLer(const eArqConfig: PChar): longint;
+function Reinf_ConfigLer(const eArqConfig: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(pLib, eArqConfig);
 end;
 
-function Reinf_ConfigGravar(const eArqConfig: PChar): longint;
+function Reinf_ConfigGravar(const eArqConfig: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(pLib, eArqConfig);
 end;
 
-function Reinf_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function Reinf_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(pLib, eSessao, eChave, sValor, esTamanho);
 end;
 
-function Reinf_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function Reinf_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(pLib, eSessao, eChave, eValor);
 end;
 
-function Reinf_CriarEventoReinf(const eArqIni: PChar): longint;
+function Reinf_CriarEventoReinf(const eArqIni: PAnsiChar): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -215,8 +215,8 @@ begin
   end;
 end;
 
-function Reinf_EnviarReinf(const sResposta: PChar; var esTamanho: longint
-  ): longint;
+function Reinf_EnviarReinf(const sResposta: PAnsiChar; var esTamanho: integer
+  ): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -231,8 +231,8 @@ begin
   end;
 end;
 
-function Reinf_ConsultarReinf(eProtocolo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function Reinf_ConsultarReinf(eProtocolo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -247,10 +247,10 @@ begin
   end;
 end;
 
-function Reinf_ConsultarReciboReinf(ePerApur: PChar; aTipoEvento: Integer;
- eNrInscEstab: PChar; eCnpjPrestador: PChar; eNrInscTomador: PChar;
- eDtApur: PChar; eCpfCnpjBenef: PChar; eCnpjFonte: PChar;
- const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_ConsultarReciboReinf(ePerApur: PAnsiChar; aTipoEvento: Integer;
+ eNrInscEstab: PAnsiChar; eCnpjPrestador: PAnsiChar; eNrInscTomador: PAnsiChar;
+ eDtApur: PAnsiChar; eCpfCnpjBenef: PAnsiChar; eCnpjFonte: PAnsiChar;
+ const sResposta: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -267,8 +267,8 @@ begin
   end;
 end;
 
-function Reinf_CriarEnviarReinf (const eArqIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function Reinf_CriarEnviarReinf (const eArqIni: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: integer): integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -283,7 +283,7 @@ begin
   end;
 end;
 
-function Reinf_LimparReinf: longint;
+function Reinf_LimparReinf: integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -298,7 +298,7 @@ begin
   end;
 end;
 
-function Reinf_CarregarXMLEventoReinf (const eArquivoOuXML: PChar):longint;
+function Reinf_CarregarXMLEventoReinf (const eArquivoOuXML: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -313,7 +313,7 @@ begin
   end;
 end;
 
-function Reinf_SetIDContribuinte (const aIdContribuinte: PChar):longint;
+function Reinf_SetIDContribuinte (const aIdContribuinte: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -328,7 +328,7 @@ begin
   end;
 end;
 
-function Reinf_SetIDTransmissor (const aIdTransmissor: PChar):longint;
+function Reinf_SetIDTransmissor (const aIdTransmissor: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -343,7 +343,7 @@ begin
   end;
 end;
 
-function Reinf_SetTipoContribuinte (aTipoContribuinte: integer):longint;
+function Reinf_SetTipoContribuinte (aTipoContribuinte: integer):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -358,7 +358,7 @@ begin
   end;
 end;
 
-function Reinf_SetVersaoDF (const sVersao: PChar):longint;
+function Reinf_SetVersaoDF (const sVersao: PAnsiChar):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -373,7 +373,7 @@ begin
   end;
 end;
 
-function Reinf_ObterCertificados (const sResposta: PChar; var esTamanho: longint):longint;
+function Reinf_ObterCertificados (const sResposta: PAnsiChar; var esTamanho: integer):integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -388,7 +388,7 @@ begin
   end;
 end;
 
-function Reinf_Validar: longint;
+function Reinf_Validar: integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

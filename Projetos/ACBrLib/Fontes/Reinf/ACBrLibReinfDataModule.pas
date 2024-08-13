@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -37,7 +37,9 @@ unit ACBrLibReinfDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule, ACBrLibConfig, syncobjs, ACBrReinf, pcnConversao;
+  Classes, SysUtils, FileUtil,
+  ACBrReinf, pcnConversao,
+  ACBrLibComum, ACBrLibDataModule;
 
 type
 

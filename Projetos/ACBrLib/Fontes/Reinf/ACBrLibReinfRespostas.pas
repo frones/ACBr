@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -37,11 +37,13 @@ unit ACBrLibReinfRespostas;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, ACBrLibResposta,
-  ACBrUtil.Base, ACBrReinf, ACBrLibReinfConsts,
+  Classes, SysUtils, StrUtils,
+  ACBrUtil.Base,
+  ACBrReinf,
   pcnConversaoReinf, pcnReinfRetEventos, pcnCommonReinf,
   pcnReinfR9005, pcnReinfRetConsulta_R9015,
-  pcnReinfRetConsulta_R9011;
+  pcnReinfRetConsulta_R9011,
+  ACBrLibResposta, ACBrLibConfig, ACBrLibReinfConsts;
 
 type
 

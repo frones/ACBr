@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 
@@ -37,8 +37,10 @@ unit ACBrLibReinfBase;
 interface
 
 uses
-  Classes, SysUtils, Forms, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrLibComum, ACBrLibReinfDataModule, ACBrReinf, pcnConversaoReinf, ACBrLibReinfRespostas;
+  Classes, SysUtils, Forms,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrReinf, pcnConversaoReinf, ACBrLibReinfRespostas,
+  ACBrLibComum, ACBrLibReinfDataModule;
 
 type
 
@@ -59,22 +61,22 @@ type
     constructor Create (ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
 
-    function CriarEventoReinf(eArqIni: PChar):longint;
-    function EnviarReinf(const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarReinf(eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarReciboReinf(ePerApur: PChar; aTipoEvento: Integer; eNrInscEstab: PChar;
-      eCnpjPrestador: PChar; eNrInscTomador: PChar; eDtApur: PChar; eCpfCnpjBenef: PChar;
-      eCnpjFonte: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function CriarEnviarReinf(const eArqIni: PChar; const sResposta: PChar;
-      var esTamanho: longint): longint;
-    function LimparReinf: Longint;
-    function CarregarXMLEventoReinf(const eArquivoOuXML: PChar): longint;
-    function SetIDContribuinte(const aIdContribuinte: PChar): longint;
-    function SetIDTransmissor(const aIdTransmissor: PChar): longint;
-    function SetTipoContribuinte(aTipoContribuinte: integer):longint;
-    function SetVersaoDF(const sVersao: PChar):longint;
-    function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
-    function Validar: longint;
+    function CriarEventoReinf(eArqIni: PAnsiChar):integer;
+    function EnviarReinf(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ConsultarReinf(eProtocolo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function ConsultarReciboReinf(ePerApur: PAnsiChar; aTipoEvento: Integer; eNrInscEstab: PAnsiChar;
+      eCnpjPrestador: PAnsiChar; eNrInscTomador: PAnsiChar; eDtApur: PAnsiChar; eCpfCnpjBenef: PAnsiChar;
+      eCnpjFonte: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function CriarEnviarReinf(const eArqIni: PAnsiChar; const sResposta: PAnsiChar;
+      var esTamanho: integer): integer;
+    function LimparReinf: integer;
+    function CarregarXMLEventoReinf(const eArquivoOuXML: PAnsiChar): integer;
+    function SetIDContribuinte(const aIdContribuinte: PAnsiChar): integer;
+    function SetIDTransmissor(const aIdTransmissor: PAnsiChar): integer;
+    function SetTipoContribuinte(aTipoContribuinte: integer):integer;
+    function SetVersaoDF(const sVersao: PAnsiChar):integer;
+    function ObterCertificados(const sResposta: PAnsiChar; var esTamanho: integer): integer;
+    function Validar: integer;
 
     property ReinfDM: TLibReinfDM read FReinfDM;
 
@@ -124,7 +126,7 @@ begin
   Result := SetRetorno(0, Format(SInfReinfCarregadas, [NumReinf]));
 end;
 
-function TACBrLibReinf.CriarEventoReinf(eArqIni: PChar): longint;
+function TACBrLibReinf.CriarEventoReinf(eArqIni: PAnsiChar): integer;
 var
   AArqIni: String;
 begin
@@ -145,14 +147,14 @@ begin
     end;
   except
     on E:EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.EnviarReinf(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibReinf.EnviarReinf(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   AResposta: string;
   Resp: TRespostas;
@@ -187,14 +189,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.ConsultarReinf(eProtocolo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibReinf.ConsultarReinf(eProtocolo: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   AProtocolo, AResposta: String;
   Resp: TRespostas;
@@ -230,17 +232,17 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.ConsultarReciboReinf(ePerApur: PChar;
-  aTipoEvento: Integer; eNrInscEstab: PChar; eCnpjPrestador: PChar;
-  eNrInscTomador: PChar; eDtApur: PChar; eCpfCnpjBenef: PChar;
-  eCnpjFonte: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibReinf.ConsultarReciboReinf(ePerApur: PAnsiChar;
+  aTipoEvento: Integer; eNrInscEstab: PAnsiChar; eCnpjPrestador: PAnsiChar;
+  eNrInscTomador: PAnsiChar; eDtApur: PAnsiChar; eCpfCnpjBenef: PAnsiChar;
+  eCnpjFonte: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   AResposta: String;
   PerApur: String;
@@ -298,15 +300,15 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.CriarEnviarReinf(const eArqIni: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function TACBrLibReinf.CriarEnviarReinf(const eArqIni: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: integer): integer;
 var
   AIniFile, ArqReinf : String;
   ASalvar : Boolean;
@@ -364,14 +366,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.LimparReinf: Longint;
+function TACBrLibReinf.LimparReinf: integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -388,20 +390,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.CarregarXMLEventoReinf(const eArquivoOuXML: PChar): longint;
+function TACBrLibReinf.CarregarXMLEventoReinf(const eArquivoOuXML: PAnsiChar): integer;
 var
   EhArquivo: boolean;
   ArquivoOuXml: string;
 begin
   try
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Reinf_CarregarXMLEventoReinf(' + ArquivoOuXml + ' ) ', logCompleto, True)
@@ -426,19 +428,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.SetIDContribuinte(const aIdContribuinte: PChar): longint;
+function TACBrLibReinf.SetIDContribuinte(const aIdContribuinte: PAnsiChar): integer;
 var
   IdContribuinte: AnsiString;
 begin
   try
-    IdContribuinte:= ConverterAnsiParaUTF8(aIdContribuinte);
+    IdContribuinte:= ConverterStringEntrada(aIdContribuinte);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Reinf_SetIDContribuinte (' + IdContribuinte + ')', logCompleto, True)
@@ -457,19 +459,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.SetIDTransmissor (const aIdTransmissor: PChar): longint;
+function TACBrLibReinf.SetIDTransmissor (const aIdTransmissor: PAnsiChar): integer;
 var
   idTransmissor: AnsiString;
 begin
   try
-    idTransmissor := ConverterAnsiParaUTF8(aIdTransmissor);
+    idTransmissor := ConverterStringEntrada(aIdTransmissor);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Reinf_SetIDTransmissor(' + idTransmissor + ' ) ', logCompleto, True)
@@ -488,14 +490,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.SetTipoContribuinte (aTipoContribuinte: integer):longint;
+function TACBrLibReinf.SetTipoContribuinte (aTipoContribuinte: integer):integer;
 var
   TipoContribuinte: Integer;
 begin
@@ -515,20 +517,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.SetVersaoDF (const sVersao: PChar):longint;
+function TACBrLibReinf.SetVersaoDF (const sVersao: PAnsiChar):integer;
 var
   versao: AnsiString;
   ok: Boolean;
 begin
   try
-    versao := ConverterAnsiParaUTF8(sVersao);
+    versao := ConverterStringEntrada(sVersao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('Reinf_SetVersaoDF(' + versao + ' ) ', logCompleto, True)
@@ -544,14 +546,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibReinf.ObterCertificados(const sResposta: PAnsiChar; var esTamanho: integer): integer;
 var
   Resposta: Ansistring;
 begin
@@ -562,8 +564,7 @@ begin
 
     try
       Resposta := '';
-      Resposta := ObterCerticados(ReinfDM.ACBrReinf1.SSL);
-      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
+      Resposta := ConverterStringSaida( ObterCerticados(ReinfDM.ACBrReinf1.SSL) );
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -571,14 +572,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibReinf.Validar():longint;
+function TACBrLibReinf.Validar():integer;
 begin
   try
     GravarLog('Reinf_Validar', logNormal);
@@ -590,17 +591,17 @@ begin
         Result := SetRetornoReinfCarregadas(ReinfDM.ACBrReinf1.Eventos.Count);
       except
         on E: EACBrReinfException do
-          Result := SetRetorno(ErrValidacaoReinf, ConverterUTF8ParaAnsi(E.Message));
+          Result := SetRetorno(ErrValidacaoReinf, ConverterStringSaida(E.Message));
       end;
     finally
       ReinfDM.Destravar;
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

@@ -51,7 +51,7 @@ uses
     jpeg,
    {$IFEND}
   {$ENDIF}
-  ACBrDCe.DACERL, RLBarcode, RLFilters, RLPDFFilter, Data.DB;
+  ACBrDCe.DACERL, RLBarcode, RLFilters, RLPDFFilter, DB;
 
 type
 

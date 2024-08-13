@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -43,63 +43,63 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function ETQ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function ETQ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Finalizar(libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function ETQ_Finalizar(libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function ETQ_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function ETQ_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function ETQ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function ETQ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function ETQ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Diversos}
-function ETQ_Ativar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_Desativar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_IniciarEtiqueta(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_FinalizarEtiqueta(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_Ativar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_Desativar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_IniciarEtiqueta(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_FinalizarEtiqueta(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, eNomeImagem: PChar;
-      Flipped: Boolean): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, eNomeImagem: PAnsiChar;
+      Flipped: Boolean): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Impressão}
-function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_GerarStreamBase64(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_GerarStreamBase64(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 function ETQ_ImprimirTexto(const libHandle: PLibHandle; const Orientacao, Fonte, MultiplicadorH,
-  MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar; const SubFonte: Integer;
-  const ImprimirReverso: Boolean): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirTextoStr(const libHandle: PLibHandle; const Orientacao: Integer; const Fonte: PChar;
-  const MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar; const SubFonte: Integer;
-  const ImprimirReverso: Boolean): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar; const SubFonte: Integer;
+  const ImprimirReverso: Boolean): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ImprimirTextoStr(const libHandle: PLibHandle; const Orientacao: Integer; const Fonte: PAnsiChar;
+  const MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar; const SubFonte: Integer;
+  const ImprimirReverso: Boolean): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirBarras(const libHandle: PLibHandle; const Orientacao, TipoBarras, LarguraBarraLarga,
-  LarguraBarraFina, Vertical, Horizontal: Integer; const eTexto: PChar; const AlturaCodBarras,
-  ExibeCodigo: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): longint;
+  LarguraBarraFina, Vertical, Horizontal: Integer; const eTexto: PAnsiChar; const AlturaCodBarras,
+  ExibeCodigo: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirCaixa(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura,
-  EspessuraVertical, EspessuraHorizontal: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  EspessuraVertical, EspessuraHorizontal: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirImagem(const libHandle: PLibHandle; const MultiplicadorImagem, Vertical, Horizontal: Integer;
-  const eNomeImagem: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PChar;
-  LarguraModulo, ErrorLevel, Tipo: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ComandoGravaRFIDASCII(const libHandle: PLibHandle; const Texto: PChar): longint;
+  const eNomeImagem: PAnsiChar): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PAnsiChar;
+  LarguraModulo, ErrorLevel, Tipo: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ComandoGravaRFIDASCII(const libHandle: PLibHandle; const Texto: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function ETQ_ComandoGravaRFIDHexaDecimal(const libHandle: PLibHandle; const Texto: PChar): longint;
+function ETQ_ComandoGravaRFIDHexaDecimal(const libHandle: PLibHandle; const Texto: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -113,68 +113,68 @@ uses
 {%region ETQ}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function ETQ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function ETQ_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibETQ, eArqConfig, eChaveCrypt);
 end;
 
-function ETQ_Finalizar(libHandle: PLibHandle): longint;
+function ETQ_Finalizar(libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
 end;
 
-function ETQ_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function ETQ_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function ETQ_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function ETQ_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function ETQ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function ETQ_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function ETQ_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function ETQ_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function ETQ_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function ETQ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function ETQ_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function ETQ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function ETQ_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function ETQ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function ETQ_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function ETQ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function ETQ_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
@@ -182,7 +182,7 @@ end;
 {%endregion}
 
 {%region Diversos}
-function ETQ_Ativar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_Ativar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -196,7 +196,7 @@ begin
   end;
 end;
 
-function ETQ_Desativar(const libHandle: PLibHandle): longint;
+function ETQ_Desativar(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -211,7 +211,7 @@ begin
   end;
 end;
 
-function ETQ_IniciarEtiqueta(const libHandle: PLibHandle): longint;
+function ETQ_IniciarEtiqueta(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -226,7 +226,7 @@ begin
   end;
 end;
 
-function ETQ_FinalizarEtiqueta(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_FinalizarEtiqueta(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -241,8 +241,8 @@ begin
   end;
 end;
 
-function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, eNomeImagem: PChar;
-      Flipped: Boolean): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_CarregarImagem(const libHandle: PLibHandle; const eArquivoImagem, eNomeImagem: PAnsiChar;
+      Flipped: Boolean): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -258,7 +258,7 @@ end;
 {%endregion}
 
 {%region Impressão}
-function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): longint;
+function ETQ_Imprimir(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -273,7 +273,7 @@ begin
   end;
 end;
 
-function ETQ_GerarStreamBase64(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_GerarStreamBase64(const libHandle: PLibHandle; const ACopias, AAvancoEtq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -291,8 +291,8 @@ end;
 
 
 function ETQ_ImprimirTexto(const libHandle: PLibHandle; const Orientacao, Fonte, MultiplicadorH,
-            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
-            const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
+            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar;
+            const SubFonte: Integer; const ImprimirReverso: Boolean): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -308,9 +308,9 @@ begin
   end;
 end;
 
-function ETQ_ImprimirTextoStr(const libHandle: PLibHandle; const Orientacao: Integer; const Fonte: PChar;
-            const MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
-            const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
+function ETQ_ImprimirTextoStr(const libHandle: PLibHandle; const Orientacao: Integer; const Fonte: PAnsiChar;
+            const MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar;
+            const SubFonte: Integer; const ImprimirReverso: Boolean): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -328,7 +328,7 @@ end;
 
 function ETQ_ImprimirBarras(const libHandle: PLibHandle; const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
-     const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
+     const eTexto: PAnsiChar; const AlturaCodBarras, ExibeCodigo: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -345,7 +345,7 @@ begin
   end;
 end;
 
-function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): longint;
+function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -361,7 +361,7 @@ begin
 end;
 
 function ETQ_ImprimirCaixa(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura,
-      EspessuraVertical, EspessuraHorizontal: Integer): longint;
+      EspessuraVertical, EspessuraHorizontal: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -378,7 +378,7 @@ begin
 end;
 
 function ETQ_ImprimirImagem(const libHandle: PLibHandle; const MultiplicadorImagem, Vertical, Horizontal: Integer;
-      const eNomeImagem: PChar): longint;
+      const eNomeImagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -393,8 +393,8 @@ begin
   end;
 end;
 
-function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PChar;
-          LarguraModulo, ErrorLevel, Tipo: Integer): longint;
+function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PAnsiChar;
+          LarguraModulo, ErrorLevel, Tipo: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -409,7 +409,7 @@ begin
   end;
 end;
 
-function ETQ_ComandoGravaRFIDASCII(const libHandle: PLibHandle; const Texto: PChar): longint;
+function ETQ_ComandoGravaRFIDASCII(const libHandle: PLibHandle; const Texto: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -424,7 +424,7 @@ begin
   end;
 end;
 
-function ETQ_ComandoGravaRFIDHexaDecimal(const libHandle: PLibHandle; const Texto: PChar): longint;
+function ETQ_ComandoGravaRFIDHexaDecimal(const libHandle: PLibHandle; const Texto: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

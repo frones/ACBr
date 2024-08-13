@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/08/2024
+--- ACBrLibETQBase, ACBrLibETQST, ACBrLibETQMT,
+    ACBrLibETQStaticImportST, ACBrLibETQStaticImportMT ---
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+[*] Remoção de Units não utilizadas
+    Por: Antonio Carlos Junior
+
 10/05/2024
 --- ACBrLibETQStaticImport, ACBrLibETQStaticImportMT, ACBrLibETQMT, ACBrLibETQBase, ACBrLibETQ   --
 [*] TK-5390 - Ajustado o nome do novo metodo ETQ_GerarStreamBase64

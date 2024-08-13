@@ -59,33 +59,33 @@ type
 
     property ETQDM: TLibETQDM read FETQDM;
 
-    function Ativar: longint;
-    function Desativar: longint;
-    function IniciarEtiqueta: longint;
-    function FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;
-    function CarregarImagem(const eArquivoImagem, eNomeImagem: PChar; Flipped: Boolean): longint;
-    function Imprimir(const ACopias, AAvancoEtq: Integer): longint;
+    function Ativar: Integer;
+    function Desativar: Integer;
+    function IniciarEtiqueta: Integer;
+    function FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): Integer;
+    function CarregarImagem(const eArquivoImagem, eNomeImagem: PAnsiChar; Flipped: Boolean): Integer;
+    function Imprimir(const ACopias, AAvancoEtq: Integer): Integer;
 
-    function GerarStreamBase64(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+    function GerarStreamBase64(const ACopias, AAvancoEtq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 
     function ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
-                                       MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
-                                       const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
-    function ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; const MultiplicadorH,
-                                       MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
-                                       const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
+                                       MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar;
+                                       const SubFonte: Integer; const ImprimirReverso: Boolean): Integer;
+    function ImprimirTextoStr(const Orientacao: Integer; const Fonte: PAnsiChar; const MultiplicadorH,
+                                       MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar;
+                                       const SubFonte: Integer; const ImprimirReverso: Boolean): Integer;
     function ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
                                        LarguraBarraFina, Vertical, Horizontal: Integer;
-                                       const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
-    function ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): longint;
+                                       const eTexto: PAnsiChar; const AlturaCodBarras, ExibeCodigo: Integer): Integer;
+    function ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): Integer;
     function ImprimirCaixa(const Vertical, Horizontal, Largura, Altura,
-                                       EspessuraVertical, EspessuraHorizontal: Integer): longint;
+                                       EspessuraVertical, EspessuraHorizontal: Integer): Integer;
     function ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
-                                       const eNomeImagem: PChar): longint;
-    function ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
-                                       LarguraModulo, ErrorLevel, Tipo: Integer): longint;
-    function ComandoGravaRFIDASCII(const Texto: PChar): longint;
-    function ComandoGravaRFIDHexaDecimal(const Texto: PChar): longint;
+                                       const eNomeImagem: PAnsiChar): Integer;
+    function ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PAnsiChar;
+                                       LarguraModulo, ErrorLevel, Tipo: Integer): Integer;
+    function ComandoGravaRFIDASCII(const Texto: PAnsiChar): Integer;
+    function ComandoGravaRFIDHexaDecimal(const Texto: PAnsiChar): Integer;
 
   end;
 
@@ -127,7 +127,7 @@ begin
   FETQDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibETQ.Ativar: longint; 
+function TACBrLibETQ.Ativar: Integer;
 begin
   try
     GravarLog('ETQ_Ativar', logNormal);
@@ -141,14 +141,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.Desativar: longint; 
+function TACBrLibETQ.Desativar: Integer;
 begin
   try
     GravarLog('ETQ_Desativar', logNormal);
@@ -162,14 +162,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.IniciarEtiqueta: longint;  
+function TACBrLibETQ.IniciarEtiqueta: Integer;
 begin
   try
     GravarLog('ETQ_IniciarEtiqueta', logNormal);
@@ -183,14 +183,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): longint;  
+function TACBrLibETQ.FinalizarEtiqueta(const ACopias, AAvancoEtq: Integer): Integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -208,21 +208,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.CarregarImagem(const eArquivoImagem, eNomeImagem: PChar; Flipped: Boolean): longint;
+function TACBrLibETQ.CarregarImagem(const eArquivoImagem, eNomeImagem: PAnsiChar; Flipped: Boolean): Integer;
 var
   AArquivoImagem: AnsiString;
   ANomeImagem: AnsiString;
 begin
   try
-    AArquivoImagem := ConverterAnsiParaUTF8(eArquivoImagem);
-    ANomeImagem := ConverterAnsiParaUTF8(eNomeImagem);
+    AArquivoImagem := ConverterStringEntrada(eArquivoImagem);
+    ANomeImagem := ConverterStringEntrada(eNomeImagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_CarregarImagem( ' + AArquivoImagem + ',' +
@@ -239,14 +239,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.Imprimir(const ACopias, AAvancoEtq: Integer): longint;  
+function TACBrLibETQ.Imprimir(const ACopias, AAvancoEtq: Integer): Integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -264,14 +264,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.GerarStreamBase64(const ACopias, AAvancoEtq: Integer; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibETQ.GerarStreamBase64(const ACopias, AAvancoEtq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   LResposta : AnsiString;
 begin
@@ -292,21 +292,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibETQ.ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
-            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
-            const SubFonte: Integer; const ImprimirReverso: Boolean): longint;  
+            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar;
+            const SubFonte: Integer; const ImprimirReverso: Boolean): Integer;
 var
   ATexto: AnsiString;
 begin
   try
-    ATexto := ConverterAnsiParaUTF8(eTexto);
+    ATexto := ConverterStringEntrada(eTexto);
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirTexto( ' + IntToStr(Orientacao) + ',' +
         IntToStr(Fonte) + ',' + IntToStr(MultiplicadorH) + ',' +
@@ -327,23 +327,23 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; const MultiplicadorH,
-            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
-            const SubFonte: Integer; const ImprimirReverso: Boolean): longint;  
+function TACBrLibETQ.ImprimirTextoStr(const Orientacao: Integer; const Fonte: PAnsiChar; const MultiplicadorH,
+            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PAnsiChar;
+            const SubFonte: Integer; const ImprimirReverso: Boolean): Integer;
 var
   ATexto, AFonte: AnsiString;
 begin
   try
     
-    ATexto := ConverterAnsiParaUTF8(eTexto);
-    AFonte := ConverterAnsiParaUTF8(Fonte);
+    ATexto := ConverterStringEntrada(eTexto);
+    AFonte := ConverterStringEntrada(Fonte);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirTextoStr( ' + IntToStr(Orientacao) + ',' +
@@ -365,21 +365,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibETQ.ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
-     const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;  
+     const eTexto: PAnsiChar; const AlturaCodBarras, ExibeCodigo: Integer): Integer;
 var
   ATexto: AnsiString;
 begin
   try
-    ATexto := ConverterAnsiParaUTF8(eTexto);
+    ATexto := ConverterStringEntrada(eTexto);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirBarras( ' + IntToStr(Orientacao) + ',' +
@@ -401,14 +401,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): longint;  
+function TACBrLibETQ.ImprimirLinha(const Vertical, Horizontal, Largura, Altura: Integer): Integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -427,15 +427,15 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibETQ.ImprimirCaixa(const Vertical, Horizontal, Largura, Altura, EspessuraVertical,
-            EspessuraHorizontal: Integer): longint;
+            EspessuraHorizontal: Integer): Integer;
 begin
   try
     if Config.Log.Nivel > logNormal then
@@ -455,20 +455,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibETQ.ImprimirImagem(const MultiplicadorImagem, Vertical, Horizontal: Integer;
-      const eNomeImagem: PChar): longint;  
+      const eNomeImagem: PAnsiChar): Integer;
 var
   ANomeImagem: AnsiString;
 begin
   try
-    ANomeImagem := ConverterAnsiParaUTF8(eNomeImagem);
+    ANomeImagem := ConverterStringEntrada(eNomeImagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirImagem( ' + IntToStr(MultiplicadorImagem) + ',' +
@@ -486,20 +486,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
-          LarguraModulo, ErrorLevel, Tipo: Integer): longint;  
+function TACBrLibETQ.ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PAnsiChar;
+          LarguraModulo, ErrorLevel, Tipo: Integer): Integer;
 Var
   ATexto: string;
 begin
   try
-    ATexto := ConverterAnsiParaUTF8(Texto);
+    ATexto := ConverterStringEntrada(Texto);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ImprimirQRCode( ' + IntToStr(Vertical) + ',' +
@@ -517,19 +517,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.ComandoGravaRFIDASCII(const Texto: PChar): longint;
+function TACBrLibETQ.ComandoGravaRFIDASCII(const Texto: PAnsiChar): Integer;
 Var
   ATexto: string;
 begin
   try
-    ATexto := ConverterAnsiParaUTF8(Texto);
+    ATexto := ConverterStringEntrada(Texto);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ComandoGravaRFIDASCII( ' +  ATexto + ' )', logCompleto)
@@ -545,19 +545,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibETQ.ComandoGravaRFIDHexaDecimal(const Texto: PChar): longint;
+function TACBrLibETQ.ComandoGravaRFIDHexaDecimal(const Texto: PAnsiChar): Integer;
 Var
   ATexto: string;
 begin
   try
-    ATexto := ConverterAnsiParaUTF8(Texto);
+    ATexto := ConverterStringEntrada(Texto);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('ETQ_ComandoGravaRFIDHexaDecimal( ' +  ATexto + ' )', logCompleto)
@@ -573,10 +573,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

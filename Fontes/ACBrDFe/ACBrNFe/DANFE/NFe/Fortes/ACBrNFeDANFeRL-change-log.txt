@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/08/2024
+-- ACBrNFeDANFeRLSimplificado --
+[*] TK-5742 Não estava respeitando a propriedade ExibeInforAdicProduto
+  Por: Italo Giurizzato Junior
+
 22/04/2024
 -- ACBrNFeDANFeRLPaisagem DFM e ACBrNFeDANFeRLRetrato DFM --
 [*] TK-2944 ACBrNFCe/ACBrNFE - Removido StyleElements, ExplicitWidth e ExplicitHeight 

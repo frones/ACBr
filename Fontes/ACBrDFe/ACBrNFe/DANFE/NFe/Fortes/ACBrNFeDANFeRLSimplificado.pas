@@ -590,7 +590,7 @@ procedure TfrlDANFeRLSimplificado.rlb05b_Desc_ItensBeforePrint(Sender: TObject; 
   function ManterinfAdProd(sXProd: String; sinfAdProd: String): String;
   begin
     Result := sXProd;
-    if NaoEstaVazio(sinfAdProd) then
+    if NaoEstaVazio(sinfAdProd) and (fpDANFe.ManterinfAdProd(fpNFe, FNumItem) <> '') then
       Result := Result + sLineBreak  + sLineBreak + ' InfAd: ' + sinfAdProd;
   end;
 

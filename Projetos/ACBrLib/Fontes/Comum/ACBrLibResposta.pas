@@ -55,14 +55,13 @@ type
     FTipo: TACBrLibRespostaTipo;
     FCodificacao: TACBrLibCodificacao;
     FObjectSerializer: TACBrObjectSerializer;
-  protected
-    property Tipo: TACBrLibRespostaTipo read FTipo;
-    property Codificacao: TACBrLibCodificacao read FCodificacao;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao);
     destructor Destroy; override;
     function Gerar: Ansistring; virtual;
 
+    property Tipo: TACBrLibRespostaTipo read FTipo;
+    property Codificacao: TACBrLibCodificacao read FCodificacao;
     property Sessao: String read FSessao;
   end;
 
@@ -81,7 +80,7 @@ type
     FCodigoHTTP: Integer;
     FMsg: string;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao); reintroduce;
   published
     property WebService: String read FWebService write FWebService;
     property CodigoHTTP: Integer read FCodigoHTTP write FCodigoHTTP;
@@ -94,7 +93,7 @@ type
   private
     FInformacoesArquivo: TACBrObjectList;
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao);
     destructor Destroy; override;
   published
     property InformacoesArquivo: TACBrObjectList read FInformacoesArquivo;
@@ -105,7 +104,7 @@ type
   private
     FMsg: string;
   public
-    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao); reintroduce;
   published
     property Msg: string read FMsg write FMsg;
   end;
@@ -136,11 +135,15 @@ type
     property Tipo: TACBrLibRespostaTipo read FTipo;
     property Formato: TACBrLibCodificacao read FFormato;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao = codUTF8);
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao = codUTF8);
 
     function Gerar<T: TACBrLibRespostaBase>(const Item: T): Ansistring; overload;
     function Gerar<T: TACBrLibRespostaBase>(const Items: TArray<T>): Ansistring; overload;
   end;
+
+  function CreateObjectSerializer(const ATipo: TACBrLibRespostaTipo;
+    const ACodificacao: TACBrLibCodificacao): TACBrObjectSerializer;
+  function GerarResposta<T: TACBrLibRespostaBase>(const Items: TArray<T>): Ansistring;
 
 implementation
 
@@ -156,10 +159,11 @@ uses
 
 { TACBrLibRespostaEnvio }
 
-constructor TACBrLibRespostaEnvio.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+constructor TACBrLibRespostaEnvio.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao);
 begin
   FInformacoesArquivo := TACBrObjectList.Create(True);
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(ASessao, ATipo, ACodificacao);
 end;
 
 destructor TACBrLibRespostaEnvio.Destroy;
@@ -176,11 +180,7 @@ begin
   FSessao := ASessao;
   FTipo := ATipo;
   FCodificacao := ACodificacao;
-{$IfDef FPC}
-  FObjectSerializer := TACBrObjectSerializerFPC.Create(ATipo, ACodificacao);
-{$Else}
-  FObjectSerializer := TACBrObjectSerializerDelphi.Create(ATipo, ACodificacao);
-{$EndIf}
+  FObjectSerializer := CreateObjectSerializer(ATipo, ACodificacao);
 end;
 
 destructor TACBrLibRespostaBase.Destroy;
@@ -196,27 +196,59 @@ end;
 
 { TACBrLibHttpResposta }
 
-constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo;
+  const ACodificacao: TACBrLibCodificacao);
 begin
-  inherited Create(CSessaoHttpResposta, ATipo, AFormato);
+  inherited Create(CSessaoHttpResposta, ATipo, ACodificacao);
 end;
 
 { TLibImpressaoResposta }
 
-constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer;
+  const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao);
 begin
-  inherited Create('Impressao', ATipo, AFormato);
+  inherited Create('Impressao', ATipo, ACodificacao);
   Msg := Format('%d Documento (s) impresso(s) com sucesso', [QtdImpresso]);
 end;
 
 { TACBrObjectSerializer }
 
+function CreateObjectSerializer(const ATipo: TACBrLibRespostaTipo;
+  const ACodificacao: TACBrLibCodificacao): TACBrObjectSerializer;
+begin
+  {$IfDef FPC}
+    Result := TACBrObjectSerializerFPC.Create(ATipo, ACodificacao);
+  {$Else}
+    Result := TACBrObjectSerializerDelphi.Create(ATipo, ACodificacao);
+  {$EndIf}
+end;
+
+function GerarResposta<T>(const Items: TArray<T>): Ansistring;
+var
+  os: TACBrObjectSerializer;
+  ATipo: TACBrLibRespostaTipo;
+  ACodificacao: TACBrLibCodificacao;
+begin
+  Result := '';
+  if Length(Items) < 1 then
+    Exit;
+
+  ATipo := Items[0].Tipo;
+  ACodificacao := Items[0].Codificacao;
+  os := CreateObjectSerializer(ATipo, ACodificacao);
+  try
+    Result := os.Gerar(Items);
+  finally
+    os.Free;
+  end;
+end;
+
 constructor TACBrObjectSerializer.Create(const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodificacao);
+  const ACodificacao: TACBrLibCodificacao);
 begin
   inherited Create;
   FTipo := ATipo;
-  FFormato := AFormato;
+  FFormato := ACodificacao;
 end;
 
 function TACBrObjectSerializer.Gerar<T>(const Item: T): Ansistring;

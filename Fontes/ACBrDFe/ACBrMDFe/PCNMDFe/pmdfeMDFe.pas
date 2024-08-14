@@ -136,13 +136,13 @@ type
 
   TinfMDFe = class(TObject)
   private
-    FId: String;
+    FId: string;
     FVersao: Double;
-//    function GetVersaoStr: String;
+//    function GetVersaoStr: string;
   public
-    property Id: String read FId write FId;
+    property Id: string read FId write FId;
     property versao: Double read FVersao write FVersao;
-//    property VersaoStr: String read GetVersaoStr;
+//    property VersaoStr: string read GetVersaoStr;
   end;
 
   TinfMunCarregaCollection = class(TACBrObjectList)
@@ -158,10 +158,10 @@ type
   TinfMunCarregaCollectionItem = class(TObject)
   private
     FcMunCarrega: Integer;
-    FxMunCarrega: String;
+    FxMunCarrega: string;
   public
     property cMunCarrega: Integer read FcMunCarrega write FcMunCarrega;
-    property xMunCarrega: String  read FxMunCarrega write FxMunCarrega;
+    property xMunCarrega: string  read FxMunCarrega write FxMunCarrega;
   end;
 
   TinfPercursoCollection = class(TACBrObjectList)
@@ -176,9 +176,9 @@ type
 
   TinfPercursoCollectionItem = class(TObject)
   private
-    FUFPer: String;
+    FUFPer: string;
   public
-    property UFPer: String read FUFPer write FUFPer;
+    property UFPer: string read FUFPer write FUFPer;
   end;
 
   TIde = class(TObject)
@@ -187,7 +187,7 @@ type
     FtpAmb: TpcnTipoAmbiente;
     FtpEmit: TTpEmitenteMDFe;
     FtpTransp: TTransportadorMDFe;
-    Fmod: String;
+    Fmod: string;
     Fserie: Integer;
     FnMDF: Integer;
     FcMDF: Integer;
@@ -196,9 +196,9 @@ type
     FdhEmi: TDateTime;
     FtpEmis: TpcnTipoEmissao;
     FprocEmi: TpcnProcessoEmissao;
-    FverProc: String;
-    FUFIni: String;
-    FUFFim: String;
+    FverProc: string;
+    FUFIni: string;
+    FUFFim: string;
     FinfMunCarrega: TinfMunCarregaCollection;
     FinfPercurso: TinfPercursoCollection;
     FdhIniViagem: TDateTime;
@@ -214,7 +214,7 @@ type
     property tpAmb: TpcnTipoAmbiente                 read FtpAmb         write FtpAmb;
     property tpEmit: TTpEmitenteMDFe                 read FtpEmit        write FtpEmit;
     property tpTransp: TTransportadorMDFe            read FtpTransp      write FtpTransp;
-    property modelo: String                          read Fmod           write Fmod;
+    property modelo: string                          read Fmod           write Fmod;
     property serie: Integer                          read Fserie         write Fserie;
     property nMDF: Integer                           read FnMDF          write FnMDF;
     property cMDF: Integer                           read FcMDF          write FcMDF;
@@ -223,9 +223,9 @@ type
     property dhEmi: TDateTime                        read FdhEmi         write FdhEmi;
     property tpEmis: TpcnTipoEmissao                 read FtpEmis        write FtpEmis;
     property procEmi: TpcnProcessoEmissao            read FprocEmi       write FprocEmi;
-    property verProc: String                         read FverProc       write FverProc;
-    property UFIni: String                           read FUFIni         write FUFIni;
-    property UFFim: String                           read FUFFim         write FUFFim;
+    property verProc: string                         read FverProc       write FverProc;
+    property UFIni: string                           read FUFIni         write FUFIni;
+    property UFFim: string                           read FUFFim         write FUFFim;
     property infMunCarrega: TinfMunCarregaCollection read FinfMunCarrega write SetinfMunCarrega;
     property infPercurso: TinfPercursoCollection     read FinfPercurso   write SetinfPercurso;
     property dhIniViagem: TDateTime                  read FdhIniViagem   write FdhIniViagem;
@@ -235,51 +235,51 @@ type
 
   Temit = class(TObject)
   private
-    FCNPJCPF: String;
-    FIE: String;
-    FxNome: String;
-    FxFant: String;
+    FCNPJCPF: string;
+    FIE: string;
+    FxNome: string;
+    FxFant: string;
     FenderEmit: TenderEmit;
   public
     constructor Create;
     destructor Destroy; override;
-    property CNPJCPF: String       read FCNPJCPF   write FCNPJCPF;
-    property IE: String            read FIE        write FIE;
-    property xNome: String         read FxNome     write FxNome;
-    property xFant: String         read FxFant     write FxFant;
+    property CNPJCPF: string       read FCNPJCPF   write FCNPJCPF;
+    property IE: string            read FIE        write FIE;
+    property xNome: string         read FxNome     write FxNome;
+    property xFant: string         read FxFant     write FxFant;
     property enderEmit: TenderEmit read FenderEmit write FenderEmit;
   end;
 
   TenderEmit = class(TObject)
   private
-    FxLgr: String;
-    Fnro: String;
-    FxCpl: String;
-    FxBairro: String;
+    FxLgr: string;
+    Fnro: string;
+    FxCpl: string;
+    FxBairro: string;
     FcMun: Integer;
-    FxMun: String;
+    FxMun: string;
     FCEP: Integer;
-    FUF: String;
-    Ffone: String;
-    Femail: String;
+    FUF: string;
+    Ffone: string;
+    Femail: string;
   public
-    property xLgr: String    read FxLgr    write FxLgr;
-    property nro: String     read Fnro     write Fnro;
-    property xCpl: String    read FxCpl    write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
+    property xLgr: string    read FxLgr    write FxLgr;
+    property nro: string     read Fnro     write Fnro;
+    property xCpl: string    read FxCpl    write FxCpl;
+    property xBairro: string read FxBairro write FxBairro;
     property cMun: Integer   read FcMun    write FcMun;
-    property xMun: String    read FxMun    write FxMun;
+    property xMun: string    read FxMun    write FxMun;
     property CEP: Integer    read FCEP     write FCEP;
-    property UF: String      read FUF      write FUF;
-    property fone: String    read Ffone    write Ffone;
-    property email: String   read Femail   write Femail;
+    property UF: string      read FUF      write FUF;
+    property fone: string    read Ffone    write Ffone;
+    property email: string   read Femail   write Femail;
   end;
 
   TlacresCollectionItem = class(TObject)
   private
-    FnLacre: String;
+    FnLacre: string;
   public
-    property nLacre: String read FnLacre write FnLacre;
+    property nLacre: string read FnLacre write FnLacre;
   end;
 
   TlacresCollection = class(TACBrObjectList)
@@ -298,26 +298,26 @@ type
 
   TRodo = class(TObject)
   private
-    FRNTRC: String;
-    FCIOT: String;
+    FRNTRC: string;
+    FCIOT: string;
     FinfANTT: TinfANTT;
     FveicTracao: TveicTracao;
     FveicReboque: TveicReboqueCollection;
     FvalePed: TvalePed;
-    FcodAgPorto: String;
+    FcodAgPorto: string;
     FlacRodo: TlacRodoCollection;
 
     procedure SetveicReboque(const Value: TveicReboqueCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    property RNTRC: String                       read FRNTRC       write FRNTRC;
-    property CIOT: String                        read FCIOT        write FCIOT;
+    property RNTRC: string                       read FRNTRC       write FRNTRC;
+    property CIOT: string                        read FCIOT        write FCIOT;
     property infANTT: TinfANTT                   read FinfANTT     write FinfANTT;
     property veicTracao: TveicTracao             read FveicTracao  write FveicTracao;
     property veicReboque: TveicReboqueCollection read FveicReboque write SetveicReboque;
     property valePed: TvalePed                   read FvalePed     write FvalePed;
-    property codAgPorto: String                  read FcodAgPorto  write FcodAgPorto;
+    property codAgPorto: string                  read FcodAgPorto  write FcodAgPorto;
     property lacRodo: TlacRodoCollection         read FlacRodo     write FlacRodo;
   end;
 
@@ -325,11 +325,11 @@ type
   private
     FtpComp: TComp;
     FvComp: Double;
-    FxComp: String;
+    FxComp: string;
   public
     property tpComp: TComp read FtpComp write FtpComp;
     property vComp: Double read FvComp  write FvComp;
-    property xComp: String read FxComp  write FxComp;
+    property xComp: string read FxComp  write FxComp;
   end;
 
   TCompCollection = class(TACBrObjectList)
@@ -365,22 +365,22 @@ type
 
   TinfBanc = class(TObject)
   private
-    FcodBanco: String;
-    FcodAgencia: String;
-    FCNPJIPEF: String;
-    FPIX: String;
+    FcodBanco: string;
+    FcodAgencia: string;
+    FCNPJIPEF: string;
+    FPIX: string;
   public
-    property codBanco: String   read FcodBanco   write FcodBanco;
-    property codAgencia: String read FcodAgencia write FcodAgencia;
-    property CNPJIPEF: String   read FCNPJIPEF   write FCNPJIPEF;
-    property PIX: String        read FPIX        write FPIX;
+    property codBanco: string   read FcodBanco   write FcodBanco;
+    property codAgencia: string read FcodAgencia write FcodAgencia;
+    property CNPJIPEF: string   read FCNPJIPEF   write FCNPJIPEF;
+    property PIX: string        read FPIX        write FPIX;
   end;
 
   TinfPagCollectionItem = class(TObject)
   private
-    FxNome: String;
-    FCNPJCPF: String;
-    FidEstrangeiro: String;
+    FxNome: string;
+    FCNPJCPF: string;
+    FidEstrangeiro: string;
     FComp: TCompCollection;
     FvContrato: Double;
     FindAltoDesemp: TIndicador;
@@ -394,9 +394,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property xNome: String                 read FxNome         write FxNome;
-    property CNPJCPF: String               read FCNPJCPF       write FCNPJCPF;
-    property idEstrangeiro: String         read FidEstrangeiro write FidEstrangeiro;
+    property xNome: string                 read FxNome         write FxNome;
+    property CNPJCPF: string               read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: string         read FidEstrangeiro write FidEstrangeiro;
     property Comp: TCompCollection         read FComp          write FComp;
     property vContrato: Double             read FvContrato     write FvContrato;
     property indAltoDesemp: TIndicador     read FindAltoDesemp write FindAltoDesemp;
@@ -420,7 +420,7 @@ type
 
   TinfANTT    = class(TObject)
   private
-    FRNTRC: String;
+    FRNTRC: string;
     FinfCIOT: TinfCIOTCollection;
     FinfContratante: TinfContratanteCollection;
     FvalePed: TvalePed;
@@ -429,15 +429,15 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property RNTRC: String                             read FRNTRC          write FRNTRC;
+    property RNTRC: string                             read FRNTRC          write FRNTRC;
     property infCIOT: TinfCIOTCollection               read FinfCIOT        write FinfCIOT;
     property infContratante: TinfContratanteCollection read FinfContratante write FinfContratante;
     property valePed: TvalePed                         read FvalePed        write FvalePed;
     property infPag: TinfPagCollection                 read FinfPag         write FinfPag;
     (*
-    property cInt: String                  read FcInt     write FcInt;
-    property placa: String                 read Fplaca    write Fplaca;
-    property RENAVAM: String               read FRENAVAM  write FRENAVAM;
+    property cInt: string                  read FcInt     write FcInt;
+    property placa: string                 read Fplaca    write Fplaca;
+    property RENAVAM: string               read FRENAVAM  write FRENAVAM;
     property tara: Integer                 read Ftara     write Ftara;
     property capKG: Integer                read FcapKG    write FcapKG;
     property capM3: Integer                read FcapM3    write FcapM3;
@@ -445,7 +445,7 @@ type
     property condutor: TcondutorCollection read Fcondutor write Setcondutor;
     property tpRod: TpcteTipoRodado        read FtpRod    write FtpRod;
     property tpCar: TpcteTipoCarroceria    read FtpCar    write FtpCar;
-    property UF: String                    read FUF       write FUF;
+    property UF: string                    read FUF       write FUF;
     *)
   end;
 
@@ -461,11 +461,11 @@ type
 
   TinfCIOTCollectionItem = class(TObject)
   private
-    FCIOT: String;
-    FCNPJCPF: String;
+    FCIOT: string;
+    FCNPJCPF: string;
   public
-    property CIOT: String    read FCIOT    write FCIOT;
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property CIOT: string    read FCIOT    write FCIOT;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
   end;
 
   TinfContratanteCollection = class(TACBrObjectList)
@@ -480,34 +480,34 @@ type
 
   TinfContrato = class(TObject)
   private
-    FNroContrato: String;
+    FNroContrato: string;
     FvContratoGlobal: Double;
   public
-    property NroContrato: String read FNroContrato write FNroContrato;
+    property NroContrato: string read FNroContrato write FNroContrato;
     property vContratoGlobal: Double read FvContratoGlobal write FvContratoGlobal;
   end;
 
   TinfContratanteCollectionItem = class(TObject)
   private
-    FxNome: String;
-    FCNPJCPF: String;
-    FidEstrangeiro: String;
+    FxNome: string;
+    FCNPJCPF: string;
+    FidEstrangeiro: string;
     FinfContrato: TinfContrato;
   public
     constructor Create;
     destructor Destroy; override;
 
-    property xNome: String         read FxNome         write FxNome;
-    property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
-    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
+    property xNome: string         read FxNome         write FxNome;
+    property CNPJCPF: string       read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: string read FidEstrangeiro write FidEstrangeiro;
     property infContrato: TinfContrato read FinfContrato write FinfContrato;
   end;
 
   TveicTracao = class(TObject)
   private
-    FcInt: String;
-    Fplaca: String;
-    FRENAVAM: String;
+    FcInt: string;
+    Fplaca: string;
+    FRENAVAM: string;
     Ftara: Integer;
     FcapKG: Integer;
     FcapM3: Integer;
@@ -515,16 +515,16 @@ type
     Fcondutor: TcondutorCollection;
     FtpRod: TpcteTipoRodado;
     FtpCar: TpcteTipoCarroceria;
-    FUF: String;
+    FUF: string;
 
     procedure Setcondutor(const Value: TcondutorCollection);
   public
     constructor Create;
     destructor Destroy; override;
 
-    property cInt: String                  read FcInt     write FcInt;
-    property placa: String                 read Fplaca    write Fplaca;
-    property RENAVAM: String               read FRENAVAM  write FRENAVAM;
+    property cInt: string                  read FcInt     write FcInt;
+    property placa: string                 read Fplaca    write Fplaca;
+    property RENAVAM: string               read FRENAVAM  write FRENAVAM;
     property tara: Integer                 read Ftara     write Ftara;
     property capKG: Integer                read FcapKG    write FcapKG;
     property capM3: Integer                read FcapM3    write FcapM3;
@@ -532,23 +532,23 @@ type
     property condutor: TcondutorCollection read Fcondutor write Setcondutor;
     property tpRod: TpcteTipoRodado        read FtpRod    write FtpRod;
     property tpCar: TpcteTipoCarroceria    read FtpCar    write FtpCar;
-    property UF: String                    read FUF       write FUF;
+    property UF: string                    read FUF       write FUF;
   end;
 
   Tprop = class(TObject)
   private
-    FCNPJCPF: String;
-    FRNTRC: String;
-    FxNome: String;
-    FIE: String;
-    FUF: String;
+    FCNPJCPF: string;
+    FRNTRC: string;
+    FxNome: string;
+    FIE: string;
+    FUF: string;
     FtpProp: TpcteProp;
   public
-    property CNPJCPF: String   read FCNPJCPF write FCNPJCPF;
-    property RNTRC: String     read FRNTRC   write FRNTRC;
-    property xNome: String     read FxNome   write FxNome;
-    property IE: String        read FIE      write FIE;
-    property UF: String        read FUF      write FUF;
+    property CNPJCPF: string   read FCNPJCPF write FCNPJCPF;
+    property RNTRC: string     read FRNTRC   write FRNTRC;
+    property xNome: string     read FxNome   write FxNome;
+    property IE: string        read FIE      write FIE;
+    property UF: string        read FUF      write FUF;
     property tpProp: TpcteProp read FtpProp  write FtpProp;
   end;
 
@@ -564,11 +564,11 @@ type
 
   TcondutorCollectionItem = class(TObject)
   private
-    FxNome: String;
-    FCPF: String;
+    FxNome: string;
+    FCPF: string;
   public
-    property xNome: String read FxNome write FxNome;
-    property CPF: String   read FCPF   write FCPF;
+    property xNome: string read FxNome write FxNome;
+    property CPF: string   read FCPF   write FCPF;
   end;
 
   TveicReboqueCollection = class(TACBrObjectList)
@@ -583,27 +583,27 @@ type
 
   TveicReboqueCollectionItem = class(TObject)
   private
-    FcInt: String;
-    Fplaca: String;
-    FRENAVAM: String;
+    FcInt: string;
+    Fplaca: string;
+    FRENAVAM: string;
     Ftara: Integer;
     FcapKG: Integer;
     FcapM3: Integer;
     Fprop: Tprop;
     FtpCar: TpcteTipoCarroceria;
-    FUF: String;
+    FUF: string;
   public
     constructor Create;
     destructor Destroy; override;
-    property cInt: String               read FcInt    write FcInt;
-    property placa: String              read Fplaca   write Fplaca;
-    property RENAVAM: String            read FRENAVAM write FRENAVAM;
+    property cInt: string               read FcInt    write FcInt;
+    property placa: string              read Fplaca   write Fplaca;
+    property RENAVAM: string            read FRENAVAM write FRENAVAM;
     property tara: Integer              read Ftara    write Ftara;
     property capKG: Integer             read FcapKG   write FcapKG;
     property capM3: Integer             read FcapM3   write FcapM3;
     property prop: Tprop                read Fprop    write Fprop;
     property tpCar: TpcteTipoCarroceria read FtpCar   write FtpCar;
-    property UF: String                 read FUF      write FUF;
+    property UF: string                 read FUF      write FUF;
   end;
 
   TvalePed = class(TObject)
@@ -632,47 +632,47 @@ type
 
   TdispCollectionItem = class(TObject)
   private
-    FCNPJForn: String;
-    FCNPJPg: String;
-    FnCompra: String;
+    FCNPJForn: string;
+    FCNPJPg: string;
+    FnCompra: string;
     FvValePed: Double;
     FtpValePed: TtpValePed;
   public
-    property CNPJForn: String read FCNPJForn write FCNPJForn;
-    property CNPJPg: String   read FCNPJPg   write FCNPJPg;
-    property nCompra: String  read FnCompra  write FnCompra;
+    property CNPJForn: string read FCNPJForn write FCNPJForn;
+    property CNPJPg: string   read FCNPJPg   write FCNPJPg;
+    property nCompra: string  read FnCompra  write FnCompra;
     property vValePed: Double read FvValePed write FvValePed;
     property tpValePed: TtpValePed read FtpValePed write FtpValePed;
   end;
 
   Taereo = class(TObject)
   private
-    Fnac: String;
-    Fmatr: String;
-    FnVoo: String;
-    FcAerEmb: String;
-    FcAerDes: String;
+    Fnac: string;
+    Fmatr: string;
+    FnVoo: string;
+    FcAerEmb: string;
+    FcAerDes: string;
     FdVoo: TDateTime;
   public
-    property nac: String     read Fnac     write Fnac;
-    property matr: String    read Fmatr    write Fmatr;
-    property nVoo: String    read FnVoo    write FnVoo;
-    property cAerEmb: String read FcAerEmb write FcAerEmb;
-    property cAerDes: String read FcAerDes write FcAerDes;
+    property nac: string     read Fnac     write Fnac;
+    property matr: string    read Fmatr    write Fmatr;
+    property nVoo: string    read FnVoo    write FnVoo;
+    property cAerEmb: string read FcAerEmb write FcAerEmb;
+    property cAerDes: string read FcAerDes write FcAerDes;
     property dVoo: TDateTime read FdVoo    write FdVoo;
   end;
 
   Taquav = class(TObject)
   private
-    FCNPJAgeNav: String;
-    Firin : String;
-    FtpEmb: String;
-    FcEmbar: String;
-    FxEmbar: String;
-    FnViagem: String;
-    FcPrtEmb: String;
-    FcPrtDest: String;
-    FprtTrans : String;
+    FCNPJAgeNav: string;
+    Firin : string;
+    FtpEmb: string;
+    FcEmbar: string;
+    FxEmbar: string;
+    FnViagem: string;
+    FcPrtEmb: string;
+    FcPrtDest: string;
+    FprtTrans : string;
     FtpNav    : TTipoNavegacao;
     FinfTermCarreg: TinfTermCarregCollection;
     FinfTermDescarreg: TinfTermDescarregCollection;
@@ -682,15 +682,15 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property CNPJAgeNav: String                              read FCNPJAgeNav        write FCNPJAgeNav;
-    property irin: String                                    read Firin              write Firin;
-    property tpEmb: String                                   read FtpEmb             write FtpEmb;
-    property cEmbar: String                                  read FcEmbar            write FcEmbar;
-    property xEmbar: String                                  read FxEmbar            write FxEmbar;
-    property nViagem: String                                 read FnViagem           write FnViagem;
-    property cPrtEmb: String                                 read FcPrtEmb           write FcPrtEmb;
-    property cPrtDest: String                                read FcPrtDest          write FcPrtDest;
-    property prtTrans: String                                read FprtTrans          write FprtTrans;
+    property CNPJAgeNav: string                              read FCNPJAgeNav        write FCNPJAgeNav;
+    property irin: string                                    read Firin              write Firin;
+    property tpEmb: string                                   read FtpEmb             write FtpEmb;
+    property cEmbar: string                                  read FcEmbar            write FcEmbar;
+    property xEmbar: string                                  read FxEmbar            write FxEmbar;
+    property nViagem: string                                 read FnViagem           write FnViagem;
+    property cPrtEmb: string                                 read FcPrtEmb           write FcPrtEmb;
+    property cPrtDest: string                                read FcPrtDest          write FcPrtDest;
+    property prtTrans: string                                read FprtTrans          write FprtTrans;
     property tpNav: TTipoNavegacao                           read FtpNav             write FtpNav;
     property infTermCarreg: TinfTermCarregCollection         read FinfTermCarreg     write FinfTermCarreg;
     property infTermDescarreg: TinfTermDescarregCollection   read FinfTermDescarreg  write FinfTermDescarreg;
@@ -711,11 +711,11 @@ type
 
   TinfTermCarregCollectionItem = class(TObject)
   private
-    FcTermCarreg: String;
-    FxTermCarreg: String;
+    FcTermCarreg: string;
+    FxTermCarreg: string;
   public
-    property cTermCarreg: String read FcTermCarreg write FcTermCarreg;
-    property xTermCarreg: String read FxTermCarreg write FxTermCarreg;
+    property cTermCarreg: string read FcTermCarreg write FcTermCarreg;
+    property xTermCarreg: string read FxTermCarreg write FxTermCarreg;
   end;
 
   TinfTermDescarregCollection = class(TACBrObjectList)
@@ -730,11 +730,11 @@ type
 
   TinfTermDescarregCollectionItem = class(TObject)
   private
-    FcTermDescarreg: String;
-    FxTermDescarreg: String;
+    FcTermDescarreg: string;
+    FxTermDescarreg: string;
   public
-    property cTermDescarreg: String read FcTermDescarreg write FcTermDescarreg;
-    property xTermDescarreg: String read FxTermDescarreg write FxTermDescarreg;
+    property cTermDescarreg: string read FcTermDescarreg write FcTermDescarreg;
+    property xTermDescarreg: string read FxTermDescarreg write FxTermDescarreg;
   end;
 
   TinfEmbCombCollection = class(TACBrObjectList)
@@ -749,11 +749,11 @@ type
 
   TinfEmbCombCollectionItem = class(TObject)
   private
-    FcEmbComb: String;
-    FxBalsa  : String;
+    FcEmbComb: string;
+    FxBalsa  : string;
   public
-    property cEmbComb: String read FcEmbComb write FcEmbComb;
-    property xBalsa: String read FxBalsa write FxBalsa;
+    property cEmbComb: string read FcEmbComb write FcEmbComb;
+    property xBalsa: string read FxBalsa write FxBalsa;
   end;
 
   TinfUnidCargaVaziaCollection = class(TACBrObjectList)
@@ -768,10 +768,10 @@ type
 
   TinfUnidCargaVaziaCollectionItem = class(TObject)
   private
-    FidUnidCargaVazia: String;
+    FidUnidCargaVazia: string;
     FtpUnidCargaVazia: TpcnUnidCarga;
   public
-    property idUnidCargaVazia: String        read FidUnidCargaVazia write FidUnidCargaVazia;
+    property idUnidCargaVazia: string        read FidUnidCargaVazia write FidUnidCargaVazia;
     property tpUnidCargaVazia: TpcnUnidCarga read FtpUnidCargaVazia write FtpUnidCargaVazia;
   end;
 
@@ -787,19 +787,19 @@ type
 
   TinfUnidTranspVaziaCollectionItem = class(TObject)
   private
-    FidUnidTranspVazia: String;
+    FidUnidTranspVazia: string;
     FtpUnidTranspVazia: TpcnUnidTransp;
   public
-    property idUnidTranspVazia: String        read FidUnidTranspVazia write FidUnidTranspVazia;
+    property idUnidTranspVazia: string        read FidUnidTranspVazia write FidUnidTranspVazia;
     property tpUnidTranspVazia: TpcnUnidTransp read FtpUnidTranspVazia write FtpUnidTranspVazia;
   end;
 
   Tferrov = class(TObject)
   private
-    FxPref: String;
+    FxPref: string;
     FdhTrem: TDateTime;
-    FxOri: String;
-    FxDest: String;
+    FxOri: string;
+    FxDest: string;
     FqVag: Integer;
     Fvag: TvagCollection;
 
@@ -807,10 +807,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property xPref: String       read FxPref  write FxPref;
+    property xPref: string       read FxPref  write FxPref;
     property dhTrem: TDateTime   read FdhTrem write FdhTrem;
-    property xOri: String        read FxOri   write FxOri;
-    property xDest: String       read FxDest  write FxDest;
+    property xOri: string        read FxOri   write FxOri;
+    property xDest: string       read FxDest  write FxDest;
     property qVag: Integer       read FqVag   write FqVag;
     property vag: TvagCollection read Fvag    write Setvag;
   end;
@@ -829,16 +829,16 @@ type
   private
     FpesoBC: Double;
     FpesoR: Double;
-    FtpVag: String;
-    Fserie: String;
+    FtpVag: string;
+    Fserie: string;
     FnVag: Integer;
     FnSeq: Integer;
     FTU: Double;
   public
     property pesoBC: Double read FpesoBC write FpesoBC;
     property pesoR: Double  read FpesoR  write FpesoR;
-    property tpVag: String  read FtpVag  write FtpVag;
-    property serie: String  read Fserie  write Fserie;
+    property tpVag: string  read FtpVag  write FtpVag;
+    property serie: string  read Fserie  write Fserie;
     property nVag: Integer  read FnVag   write FnVag;
     property nSeq: Integer  read FnSeq   write FnSeq;
     property TU: Double     read FTU     write FTU;
@@ -846,19 +846,19 @@ type
 
   TPeriCollectionItem = class(TObject)
   private
-    FnONU        : String;
-    FxNomeAE     : String;
-    FxClaRisco   : String;
-    FgrEmb       : String;
-    FqTotProd    : String;
-    FqVolTipo    : String;
+    FnONU        : string;
+    FxNomeAE     : string;
+    FxClaRisco   : string;
+    FgrEmb       : string;
+    FqTotProd    : string;
+    FqVolTipo    : string;
   public
-    property nONU: String        read FnONU        write FnONU;
-    property xNomeAE: String     read FxNomeAE     write FxNomeAE;
-    property xClaRisco: String   read FxClaRisco   write FxClaRisco;
-    property grEmb: String       read FgrEmb       write FgrEmb;
-    property qTotProd: String    read FqTotProd    write FqTotProd;
-    property qVolTipo: String    read FqVolTipo    write FqVolTipo;
+    property nONU: string        read FnONU        write FnONU;
+    property xNomeAE: string     read FxNomeAE     write FxNomeAE;
+    property xClaRisco: string   read FxClaRisco   write FxClaRisco;
+    property grEmb: string       read FgrEmb       write FgrEmb;
+    property qTotProd: string    read FqTotProd    write FqTotProd;
+    property qVolTipo: string    read FqVolTipo    write FqVolTipo;
   end;
 
   TPeriCTeCollection = class(TACBrObjectList)
@@ -897,7 +897,7 @@ type
   TinfMunDescargaCollectionItem = class(TObject)
   private
     FcMunDescarga: Integer;
-    FxMunDescarga: String;
+    FxMunDescarga: string;
     FinfCTe: TinfCTeCollection;
     FinfCT: TinfCTCollection;
     FinfNFe: TinfNFeCollection;
@@ -912,7 +912,7 @@ type
     constructor Create;
     destructor Destroy; override;
     property cMunDescarga: Integer                   read FcMunDescarga  write FcMunDescarga;
-    property xMunDescarga: String                    read FxMunDescarga  write FxMunDescarga;
+    property xMunDescarga: string                    read FxMunDescarga  write FxMunDescarga;
     property infCTe: TinfCTeCollection               read FinfCTe        write SetinfCTe;
     property infCT: TinfCTCollection                 read FinfCT         write SetinfCT;
     property infNFe: TinfNFeCollection               read FinfNFe        write SetinfNFe;
@@ -929,6 +929,23 @@ type
     property qtdParcial: Double read FqtdParcial write FqtdParcial;
   end;
 
+  TinfNFePrestParcialCollectionItem = class(TObject)
+  private
+    FchNFe: string;
+  public
+    property chNFe: string read FchNFe write FchNFe;
+  end;
+
+  TinfNFePrestParcialCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfNFePrestParcialCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfNFePrestParcialCollectionItem);
+  public
+    function Add: TinfNFePrestParcialCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfNFePrestParcialCollectionItem;
+    property Items[Index: Integer]: TinfNFePrestParcialCollectionItem read GetItem write SetItem; default;
+  end;
+
   TinfCTeCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfCTeCollectionItem;
@@ -941,27 +958,33 @@ type
 
   TinfCTeCollectionItem = class(TObject)
   private
-    FchCTe: String;
-    FSegCodBarra: String;
-    FindReentrega: String;
+    FchCTe: string;
+    FSegCodBarra: string;
+    FindReentrega: string;
     FinfUnidTransp: TinfUnidTranspCTeCollection;
     Fperi: TPeriCTeCollection;
     FinfEntregaParcial: TinfEntregaParcial;
+    FindPrestacaoParcial: TIndicadorEx;
+    FinfNFePrestParcial: TinfNFePrestParcialCollection;
   public
     constructor Create;
     destructor Destroy; override;
-    property chCTe: String                              read FchCTe             write FchCTe;
-    property SegCodBarra: String                        read FSegCodBarra       write FSegCodBarra;
-    property indReentrega: String                       read FindReentrega      write FindReentrega;
-    property infUnidTransp: TinfUnidTranspCTeCollection read FinfUnidTransp     write FinfUnidTransp;
-    property peri: TPeriCTeCollection                   read Fperi              write Fperi;
-    property infEntregaParcial: TinfEntregaParcial      read FinfEntregaParcial write FinfEntregaParcial;
+
+    property chCTe: string                              read FchCTe               write FchCTe;
+    property SegCodBarra: string                        read FSegCodBarra         write FSegCodBarra;
+    property indReentrega: string                       read FindReentrega        write FindReentrega;
+    property infUnidTransp: TinfUnidTranspCTeCollection read FinfUnidTransp       write FinfUnidTransp;
+    property peri: TPeriCTeCollection                   read Fperi                write Fperi;
+    property infEntregaParcial: TinfEntregaParcial      read FinfEntregaParcial   write FinfEntregaParcial;
+    property indPrestacaoParcial: TIndicadorEx          read FindPrestacaoParcial write FindPrestacaoParcial default tieNenhum;
+
+    property infNFePrestParcial: TinfNFePrestParcialCollection read FinfNFePrestParcial  write FinfNFePrestParcial;
   end;
 
   TinfUnidTranspCollectionItem = class(TObject)
   private
     FtpUnidTransp: TpcnUnidTransp;
-    FidUnidTransp: String;
+    FidUnidTransp: string;
     FlacUnidTransp: TlacUnidTranspCollection;
     FinfUnidCarga: TinfUnidCargaCollection;
     FqtdRat: Double;
@@ -969,7 +992,7 @@ type
     constructor Create;
     destructor Destroy; override;
     property tpUnidTransp: TpcnUnidTransp            read FtpUnidTransp  write FtpUnidTransp;
-    property idUnidTransp: String                    read FidUnidTransp  write FidUnidTransp;
+    property idUnidTransp: string                    read FidUnidTransp  write FidUnidTransp;
     property lacUnidTransp: TlacUnidTranspCollection read FlacUnidTransp write FlacUnidTransp;
     property infUnidCarga: TinfUnidCargaCollection   read FinfUnidCarga  write FinfUnidCarga;
     property qtdRat: Double                          read FqtdRat        write FqtdRat;
@@ -1003,14 +1026,14 @@ type
   TinfUnidCargaCollectionItem = class(TObject)
   private
     FtpUnidCarga: TpcnUnidCarga;
-    FidUnidCarga: String;
+    FidUnidCarga: string;
     FlacUnidCarga: TlacUnidCargaCollection;
     FqtdRat: Double;
   public
     constructor Create;
     destructor Destroy; override;
     property tpUnidCarga: TpcnUnidCarga            read FtpUnidCarga  write FtpUnidCarga;
-    property idUnidCarga: String                   read FidUnidCarga  write FidUnidCarga;
+    property idUnidCarga: string                   read FidUnidCarga  write FidUnidCarga;
     property lacUnidCarga: TlacUnidCargaCollection read FlacUnidCarga write FlacUnidCarga;
     property qtdRat: Double                        read FqtdRat       write FqtdRat;
   end;
@@ -1027,7 +1050,7 @@ type
 
   TinfCTCollectionItem = class(TObject)
   private
-    FnCT: String;
+    FnCT: string;
     Fserie: Integer;
     Fsubser: Integer;
     FdEmi: TDateTime;
@@ -1037,7 +1060,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property nCT: String                               read FnCT           write FnCT;
+    property nCT: string                               read FnCT           write FnCT;
     property serie: Integer                            read Fserie         write Fserie;
     property subser: Integer                           read Fsubser        write Fsubser;
     property dEmi: TDateTime                           read FdEmi          write FdEmi;
@@ -1057,9 +1080,9 @@ type
 
   TinfNFeCollectionItem = class(TObject)
   private
-    FchNFe: String;
-    FSegCodBarra: String;
-    FindReentrega: String;
+    FchNFe: string;
+    FSegCodBarra: string;
+    FindReentrega: string;
     FinfUnidTransp: TinfUnidTranspNFeCollection;
     Fperi: TPeriNFeCollection;
 
@@ -1068,9 +1091,9 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property chNFe: String                              read FchNFe         write FchNFe;
-    property SegCodBarra: String                        read FSegCodBarra   write FSegCodBarra;
-    property indReentrega: String                       read FindReentrega  write FindReentrega;
+    property chNFe: string                              read FchNFe         write FchNFe;
+    property SegCodBarra: string                        read FSegCodBarra   write FSegCodBarra;
+    property indReentrega: string                       read FindReentrega  write FindReentrega;
     property infUnidTransp: TinfUnidTranspNFeCollection read FinfUnidTransp write SetinfUnidTransp;
     property peri: TPeriNFeCollection                   read Fperi          write SetPeri;
   end;
@@ -1087,8 +1110,8 @@ type
 
   TinfNFCollectionItem = class(TObject)
   private
-    FCNPJ: String;
-    FUF: String;
+    FCNPJ: string;
+    FUF: string;
     FnNF: Integer;
     Fserie: Integer;
     FdEmi: TDateTime;
@@ -1098,8 +1121,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property CNPJ: String                              read FCNPJ          write FCNPJ;
-    property UF: String                                read FUF            write FUF;
+    property CNPJ: string                              read FCNPJ          write FCNPJ;
+    property UF: string                                read FUF            write FUF;
     property nNF: Integer                              read FnNF           write FnNF;
     property serie: Integer                            read Fserie         write Fserie;
     property dEmi: TDateTime                           read FdEmi          write FdEmi;
@@ -1120,8 +1143,8 @@ type
 
   TinfMDFeTranspCollectionItem = class(TObject)
   private
-    FchMDFe: String;
-    FindReentrega: String;
+    FchMDFe: string;
+    FindReentrega: string;
     FinfUnidTransp: TinfUnidTranspMDFeCollection;
     Fperi: TPeriMDFeCollection;
 
@@ -1130,8 +1153,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property chMDFe: String                              read FchMDFe        write FchMDFe;
-    property indReentrega: String                        read FindReentrega  write FindReentrega;
+    property chMDFe: string                              read FchMDFe        write FchMDFe;
+    property indReentrega: string                        read FindReentrega  write FindReentrega;
     property infUnidTransp: TinfUnidTranspMDFeCollection read FinfUnidTransp write SetinfUnidTransp;
     property peri: TPeriMDFeCollection                   read Fperi          write SetPeri;
   end;
@@ -1149,19 +1172,19 @@ type
   TSegCollectionItem = class(TObject)
   private
     FrespSeg: TRspSegMDFe;
-    FCNPJCPF: String;
-    FxSeg: String;
-    FCNPJ: String;
-    FnApol: String;
+    FCNPJCPF: string;
+    FxSeg: string;
+    FCNPJ: string;
+    FnApol: string;
     FAver: TAverCollection;
   public
     constructor Create;
     destructor Destroy; override;
     property respSeg: TRspSegMDFe read FrespSeg write FrespSeg;
-    property CNPJCPF: String      read FCNPJCPF write FCNPJCPF;
-    property xSeg: String         read FxSeg    write FxSeg;
-    property CNPJ: String         read FCNPJ    write FCNPJ;
-    property nApol: String        read FnApol   write FnApol;
+    property CNPJCPF: string      read FCNPJCPF write FCNPJCPF;
+    property xSeg: string         read FxSeg    write FxSeg;
+    property CNPJ: string         read FCNPJ    write FCNPJ;
+    property nApol: string        read FnApol   write FnApol;
     property aver: TAverCollection read FAver   write FAver;
   end;
 
@@ -1177,9 +1200,9 @@ type
 
   TAverCollectionItem = class(TObject)
   private
-    FnAver: String;
+    FnAver: string;
   public
-    property nAver: String        read FnAver   write FnAver;
+    property nAver: string        read FnAver   write FnAver;
   end;
 
   Ttot = class(TObject)
@@ -1215,42 +1238,42 @@ type
 
   TautXMLCollectionItem = class(TObject)
   private
-    FCNPJCPF: String;
+    FCNPJCPF: string;
   public
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
   end;
 
   TinfAdic = class(TObject)
   private
-    FinfAdFisco: String;
-    FinfCpl: String;
+    FinfAdFisco: string;
+    FinfCpl: string;
   public
-    property infAdFisco: String read FinfAdFisco write FinfAdFisco;
-    property infCpl: String     read FinfCpl     write FinfCpl;
+    property infAdFisco: string read FinfAdFisco write FinfAdFisco;
+    property infCpl: string     read FinfCpl     write FinfCpl;
   end;
 
   TinfRespTec = class(TObject)
   private
-    FCNPJ: String;
-    FxContato: String;
-    Femail: String;
-    Ffone: String;
+    FCNPJ: string;
+    FxContato: string;
+    Femail: string;
+    Ffone: string;
     FidCSRT: Integer;
-    FhashCSRT: String;
+    FhashCSRT: string;
   public
-    property CNPJ: String     read FCNPJ     write FCNPJ;
-    property xContato: String read FxContato write FxContato;
-    property email: String    read Femail    write Femail;
-    property fone: String     read Ffone     write Ffone;
+    property CNPJ: string     read FCNPJ     write FCNPJ;
+    property xContato: string read FxContato write FxContato;
+    property email: string    read Femail    write Femail;
+    property fone: string     read Ffone     write Ffone;
     property idCSRT: Integer  read FidCSRT   write FidCSRT;
-    property hashCSRT: String read FhashCSRT write FhashCSRT;
+    property hashCSRT: string read FhashCSRT write FhashCSRT;
  end;
 
   TinfMDFeSupl = class(TObject)
   private
-    FqrCodMDFe: String;
+    FqrCodMDFe: string;
   public
-    property qrCodMDFe: String read FqrCodMDFe write FqrCodMDFe;
+    property qrCodMDFe: string read FqrCodMDFe write FqrCodMDFe;
   end;
 
   TinfLocal = class(TObject)
@@ -1267,9 +1290,9 @@ type
   TprodPred = class(TObject)
   private
     FtpCarga: TCarga;
-    FxProd: String;
-    FcEAN: String;
-    FNCM: String;
+    FxProd: string;
+    FcEAN: string;
+    FNCM: string;
     FinfLocalCarrega: TinfLocal;
     FinfLocalDescarrega: TinfLocal;
   public
@@ -1277,9 +1300,9 @@ type
     destructor Destroy; override;
 
     property tpCarga: TCarga read FtpCarga write FtpCarga;
-    property xProd: String   read FxProd   write FxProd;
-    property cEAN: String    read FcEAN    write FcEAN;
-    property NCM: String     read FNCM     write FNCM;
+    property xProd: string   read FxProd   write FxProd;
+    property cEAN: string    read FcEAN    write FcEAN;
+    property NCM: string     read FNCM     write FNCM;
 
     property infLocalCarrega: TinfLocal    read FinfLocalCarrega    write FinfLocalCarrega;
     property infLocalDescarrega: TinfLocal read FinfLocalDescarrega write FinfLocalDescarrega;
@@ -1832,6 +1855,9 @@ begin
   FinfUnidTransp     := TInfUnidTranspCTeCollection.Create;
   FPeri              := TPeriCTeCollection.Create;
   FinfEntregaParcial := TinfEntregaParcial.Create;
+  FinfNFePrestParcial := TinfNFePrestParcialCollection.Create;
+
+  FindPrestacaoParcial := tieNenhum;
 end;
 
 destructor TinfCTeCollectionItem.Destroy;
@@ -1839,6 +1865,7 @@ begin
   FinfUnidTransp.Free;
   FPeri.Free;
   FinfEntregaParcial.Free;
+  FinfNFePrestParcial.Free;
 
   inherited;
 end;
@@ -2300,7 +2327,7 @@ end;
 
 { TinfMDFe }
 {
-function TinfMDFe.GetVersaoStr: String;
+function TinfMDFe.GetVersaoStr: string;
 begin
   if FVersao <= 0 then
      Result := V1_00
@@ -2584,7 +2611,6 @@ begin
   inherited Create;
 
   FinfContrato := TinfContrato.Create;
-
 end;
 
 destructor TinfContratanteCollectionItem.Destroy;
@@ -2592,6 +2618,31 @@ begin
   FinfContrato.Free;
 
   inherited;
+end;
+
+{ TinfNFePrestParcialCollection }
+
+function TinfNFePrestParcialCollection.Add: TinfNFePrestParcialCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfNFePrestParcialCollection.GetItem(
+  Index: Integer): TinfNFePrestParcialCollectionItem;
+begin
+  Result := TinfNFePrestParcialCollectionItem(inherited Items[Index]);
+end;
+
+function TinfNFePrestParcialCollection.New: TinfNFePrestParcialCollectionItem;
+begin
+  Result := TinfNFePrestParcialCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfNFePrestParcialCollection.SetItem(Index: Integer;
+  Value: TinfNFePrestParcialCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

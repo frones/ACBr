@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/08/2024
+-- ACBrMDFe.XmlWriter --
+[+] Escrito a nova unit responsável pela geração do XML do MDF-e.
+-- ACBrMDFeManifestos --
+[*] Alteração visando o desenvolvedor optar por qual unit deseja usar para a 
+    geração do XML mediante a diretiva de compilação: USE_ACBr_XMLDOCUMENT.
+-- ACBrMDFe.XmlReader/pmdfeMDFe/pmdfeMDFeR/pmdfeMDFeW --
+[*] Alteração visando a leitura das novas tags para atender a NT 2024/002 que
+    trata sobre o CT-e Simplificado.
+  Por: Italo Giurizzato Junior
+
 05/08/2024
 -- ACBrMDFe.XmlReader --
 [*] Correção para ler a string do QR-Code.

@@ -42,11 +42,12 @@ uses
   StrUtils,
   ACBrMDFeConfiguracoes,
   pmdfeMDFe, 
-  pmdfeMDFeW,
   {$IfDef USE_ACBr_XMLDOCUMENT}
   ACBrMDFe.XmlReader,
+  ACBrMDFe.XmlWriter,
   {$Else}
   pmdfeMDFeR,
+  pmdfeMDFeW,
   {$EndIf}
   pcnConversao,
   pcnLeitor;
@@ -58,11 +59,12 @@ type
   TManifesto = class(TCollectionItem)
   private
     FMDFe: TMDFe;
-    FMDFeW: TMDFeW;
     {$IfDef USE_ACBr_XMLDOCUMENT}
     FMDFeR: TMDFeXmlReader;
+    FMDFeW: TMDFeXmlWriter;
     {$Else}
     FMDFeR: TMDFeR;
+    FMDFeW: TMDFeW;
     {$EndIf}
 
     FConfiguracoes: TConfiguracoesMDFe;
@@ -202,11 +204,12 @@ begin
   inherited Create(Collection2);
 
   FMDFe := TMDFe.Create;
-  FMDFeW := TMDFeW.Create(FMDFe);
   {$IfDef USE_ACBr_XMLDOCUMENT}
   FMDFeR := TMDFeXmlReader.Create(FMDFe);
+  FMDFeW := TMDFeXmlWriter.Create(FMDFe);
   {$Else}
   FMDFeR := TMDFeR.Create(FMDFe);
+  FMDFeW := TMDFeW.Create(FMDFe);
   {$EndIf}
 
   FConfiguracoes := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes;
@@ -888,6 +891,7 @@ begin
           INIRec.WriteString(sSecao, 'chCTe', infDoc.infMunDescarga[i].infCTe[j].chCTe);
           INIRec.WriteString(sSecao, 'SegCodBarra', infDoc.infMunDescarga[i].infCTe[j].SegCodBarra);
           INIRec.WriteString(sSecao, 'indReentrega', infDoc.infMunDescarga[i].infCTe[j].indReentrega);
+          INIRec.WriteString(sSecao, 'indPrestacaoParcial', TIndicadorExToStr(infDoc.infMunDescarga[i].infCTe[j].indPrestacaoParcial));
 
           for k := 0 to infDoc.infMunDescarga[i].infCTe[j].peri.Count - 1 do
           begin
@@ -900,6 +904,14 @@ begin
             INIRec.WriteString(sSecao, 'grEmb', infDoc.infMunDescarga[i].infCTe[j].peri[k].grEmb);
             INIRec.WriteString(sSecao, 'qTotProd', infDoc.infMunDescarga[i].infCTe[j].peri[k].qTotProd);
             INIRec.WriteString(sSecao, 'qVolTipo', infDoc.infMunDescarga[i].infCTe[j].peri[k].qVolTipo);
+          end;
+
+          for k := 0 to infDoc.infMunDescarga[i].infCTe[j].infNFePrestParcial.Count - 1 do
+          begin
+            sSecao := 'infNFePrestParcial' + IntToStrZero(I + 1, 3) +
+                            IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+
+            INIRec.WriteString(sSecao, 'chNFe', infDoc.infMunDescarga[i].infCTe[j].infNFePrestParcial[k].chNFe);
           end;
 
           sSecao := 'infEntregaParcial' + IntToStrZero(I + 1, 3) + IntToStrZero(j + 1, 3);
@@ -1168,12 +1180,21 @@ begin
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     IdAnterior := MDFe.infMDFe.ID;
+{$IfDef USE_ACBr_XMLDOCUMENT}
+    FMDFeW.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
+    FMDFeW.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    FMDFeW.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FMDFeW.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FMDFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
+    FMDFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
+{$Else}
     FMDFeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FMDFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FMDFeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
     FMDFeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FMDFeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
+{$EndIf}
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
     {
@@ -1188,14 +1209,23 @@ begin
 
   FMDFeW.GerarXml;
 
+{$IfDef USE_ACBr_XMLDOCUMENT}
+  XMLOriginal := FMDFeW.Document.Xml;  // SetXMLOriginal() irá converter para UTF8
+{$Else}
   XMLOriginal := FMDFeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
+{$EndIf}
+
 
   { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
     nome do arquivo, mantendo o PATH do arquivo carregado }
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FMDFe.infMDFe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
+{$IfDef USE_ACBr_XMLDOCUMENT}
+  FAlertas := FMDFeW.ListaDeAlertas.Text;
+{$Else}
   FAlertas := FMDFeW.Gerador.ListaDeAlertas.Text;
+{$EndIf}
   Result := FXMLOriginal;
 end;
 
@@ -1352,6 +1382,7 @@ var
   IteminfMunDescarga: TinfMunDescargaCollectionItem;
   ItemInfCTe: TinfCTeCollectionItem;
   ItemPeri: TPeriCollectionItem;
+  IteminfNFePrestParcial: TinfNFePrestParcialCollectionItem;
   IteminfunidTransp: TinfUnidTranspCollectionItem;
   ItemInfUnidCarga: TinfUnidCargaCollectionItem;
   ItemInfNFe: TinfNFeCollectionItem;
@@ -1908,6 +1939,7 @@ begin
           ItemInfCTe.chCTe       := sFim;
           ItemInfCTe.SegCodBarra := INIRec.ReadString(sSecao, 'SegCodBarra', '');
           ItemInfCTe.indReentrega:= INIRec.ReadString(sSecao, 'indReentrega', '');
+          ItemInfCTe.indPrestacaoParcial:= StrToTIndicadorEx(OK, INIRec.ReadString(sSecao, 'indPrestacaoParcial', ''));
 
           K := 1;
           while true do
@@ -1926,6 +1958,22 @@ begin
             ItemPeri.grEmb     := INIRec.ReadString(sSecao,'grEmb','');
             ItemPeri.qTotProd  := INIRec.ReadString(sSecao,'qTotProd','');
             ItemPeri.qVolTipo  := INIRec.ReadString(sSecao,'qVolTipo','');
+
+            inc(K);
+          end;
+
+          K := 1;
+          while true do
+          begin
+            sSecao := 'infNFePrestParcial'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+            sFim   := INIRec.ReadString(sSecao,'chNFe','FIM');
+
+            if sFim = 'FIM' then
+              break;
+
+            IteminfNFePrestParcial := ItemInfCTe.infNFePrestParcial.New;
+
+            IteminfNFePrestParcial.chNFe      := sFim;
 
             inc(K);
           end;

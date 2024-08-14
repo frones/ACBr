@@ -48,8 +48,6 @@ type
   private
     FMDFe: TMDFe;
 
-    function NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
-
     procedure Ler_ProtMDFe(const ANode: TACBrXmlNode);
     procedure Ler_InfMDFe(const ANode: TACBrXmlNode);
     procedure Ler_Ide(const ANode: TACBrXmlNode);
@@ -102,6 +100,7 @@ type
     procedure Ler_infUnidCargaCTe(const ANode: TACBrXmlNode; Item: TinfUnidTranspCollectionItem);
     procedure Ler_lacUnidCargaCTe(const ANode: TACBrXmlNode; Item: TinfUnidCargaCollectionItem);
     procedure Ler_periCTe(const ANode: TACBrXmlNode; Item: TinfCTeCollectionItem);
+    procedure Ler_infNFePrestParcial(const ANode: TACBrXmlNode; Item: TinfCTeCollectionItem);
 
     procedure Ler_infCT(const ANode: TACBrXmlNode; Item: TinfMunDescargaCollectionItem);
     procedure Ler_infUnidTranspCT(const ANode: TACBrXmlNode; Item: TinfCTCollectionItem);
@@ -168,11 +167,6 @@ begin
   inherited Create;
 
   FMDFe := AOwner;
-end;
-
-function TMDFeXmlReader.NodeNaoEncontrado(const ANode: TACBrXmlNode): Boolean;
-begin
-  Result := not Assigned(ANode);
 end;
 
 function TMDFeXmlReader.LerXml: Boolean;
@@ -365,8 +359,6 @@ begin
 end;
 
 procedure TMDFeXmlReader.Ler_Emit(const ANode: TACBrXmlNode);
-var
-  Ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -453,7 +445,6 @@ end;
 procedure TMDFeXmlReader.Ler_Rododisp(const ANode: TACBrXmlNode);
 var
   Item: TdispCollectionItem;
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -550,7 +541,6 @@ end;
 procedure TMDFeXmlReader.Ler_infContratante(const ANode: TACBrXmlNode);
 var
   Item: TinfContratanteCollectionItem;
-  ok: Boolean;
   AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) then Exit;
@@ -994,6 +984,7 @@ var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
   AuxNode: TACBrXmlNode;
+  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -1023,6 +1014,15 @@ begin
   begin
     ItemCTe.infEntregaParcial.qtdTotal := ObterConteudo(AuxNode.Childrens.Find('qtdTotal'), tcDe4);
     ItemCTe.infEntregaParcial.qtdParcial := ObterConteudo(AuxNode.Childrens.Find('qtdParcial'), tcDe4);
+  end;
+
+  ItemCTe.indPrestacaoParcial := StrToTIndicadorEx(ok, ObterConteudo(ANode.Childrens.Find('indPrestacaoParcial'), tcStr));
+
+  ANodes := ANode.Childrens.FindAll('infNFePrestParcial');
+  ItemCTe.infNFePrestParcial.Clear;
+  for i := 0 to Length(ANodes) - 1 do
+  begin
+    Ler_infNFePrestParcial(ANodes[i], ItemCTe);
   end;
 end;
 
@@ -1122,6 +1122,18 @@ begin
   itemPeri.grEmb := ObterConteudo(ANode.Childrens.Find('grEmb'), tcStr);
   itemPeri.qTotProd := ObterConteudo(ANode.Childrens.Find('qTotProd'), tcStr);
   itemPeri.qVolTipo := ObterConteudo(ANode.Childrens.Find('qVolTipo'), tcStr);
+end;
+
+procedure TMDFeXmlReader.Ler_infNFePrestParcial(const ANode: TACBrXmlNode;
+  Item: TinfCTeCollectionItem);
+var
+  iteminfNFePrestParcial: TinfNFePrestParcialCollectionItem;
+begin
+  if not Assigned(ANode) then Exit;
+
+  iteminfNFePrestParcial := Item.infNFePrestParcial.New;
+
+  iteminfNFePrestParcial.chNFe := ObterConteudo(ANode.Childrens.Find('chNFe'), tcStr);
 end;
 
 procedure TMDFeXmlReader.Ler_infCT(const ANode: TACBrXmlNode;

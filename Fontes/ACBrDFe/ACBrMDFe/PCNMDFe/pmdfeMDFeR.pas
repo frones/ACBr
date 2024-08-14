@@ -606,6 +606,16 @@ begin
             MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdTotal   := Leitor.rCampo(tcDe4, 'qtdTotal');
             MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdParcial := Leitor.rCampo(tcDe4, 'qtdParcial');
           end;
+
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].indPrestacaoParcial := StrToTIndicadorEx(ok, Leitor.rCampo(tcStr, 'indPrestacaoParcial'));
+
+          i03 := 0;
+          while Leitor.rExtrai(4, 'infNFePrestParcial', '', i03 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infNFePrestParcial.New;
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infNFePrestParcial[i03].chNFe := Leitor.rCampo(tcStr, 'chNFe');
+            inc(i03);
+          end;
         end;
 
         inc(i02);

@@ -489,6 +489,33 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 																	</xs:sequence>
 																</xs:complexType>
 															</xs:element>
+															<xs:sequence minOccurs="0">
+																<xs:element name="indPrestacaoParcial">
+																	<xs:annotation>
+																		<xs:documentation>Indicador de Prestação parcial</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="preserve"/>
+																			<xs:enumeration value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="infNFePrestParcial" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>Grupo de informações das NFe que foram entregues do CTe relacionado</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="chNFe" type="TChCTe">
+																				<xs:annotation>
+																					<xs:documentation>Nota Fiscal Eletrônica</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>

@@ -824,7 +824,7 @@ begin
 
   {$IfNDef NOREPORT}
   if DFeReport is TACBrNFeDANFeRL then
-    NFe.Apply(TACBrNFeDANFeRL(DFeReport))
+    NFe.Apply(TACBrNFeDANFeRL(DFeReport));
   {$EndIf}
 
   if DFeReport is TACBrNFeDANFCEClass then

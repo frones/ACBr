@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -62,172 +62,172 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function NFSE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function NFSE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_Finalizar(const libHandle: TLibHandle): longint;
+function NFSE_Finalizar(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function NFSE_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function NFSE_Nome(const libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function NFSE_Versao(const libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function NFSE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function NFSE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function NFSE_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function NFSE_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function NFSE_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function NFSE_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function NFSE_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 {%endregion}
 
 {%region NFSe}
-function NFSE_CarregarXML(const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
+function NFSE_CarregarXML(const libHandle: TLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_CarregarLoteXML(const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
+function NFSE_CarregarLoteXML(const libHandle: TLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PChar): longint;
+function NFSE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterXml(const libHandle: TLibHandle; AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ObterXml(const libHandle: TLibHandle; AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GravarXml(const libHandle: TLibHandle; AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function NFSE_GravarXml(const libHandle: TLibHandle; AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterIni(const libHandle: TLibHandle; AIndex: longint; const sResposta: PChar; var esTamanho: longint):longint;
+function NFSE_ObterIni(const libHandle: TLibHandle; AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GravarIni(const libHandle: TLibHandle; AIndex: longint; const eNomeArquivo, ePathArquivo: PChar):longint;
+function NFSE_GravarIni(const libHandle: TLibHandle; AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_LimparLista(const libHandle: TLibHandle): longint;
+function NFSE_LimparLista(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterCertificados(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ObterCertificados(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_Emitir(const libHandle: TLibHandle; const aLote: PChar; aModoEnvio: longint;  aImprimir: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_Emitir(const libHandle: TLibHandle; const aLote: PAnsiChar; aModoEnvio: Integer;  aImprimir: Boolean; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_Cancelar(const libHandle: TLibHandle; aInfCancelamentoNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_Cancelar(const libHandle: TLibHandle; aInfCancelamentoNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_SubstituirNFSe(const libHandle: TLibHandle; const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_SubstituirNFSe(const libHandle: TLibHandle; const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_LinkNFSe(const libHandle: TLibHandle; aNumeroNFSe: PChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_LinkNFSe(const libHandle: TLibHandle; aNumeroNFSe: PAnsiChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GerarLote(const libHandle: TLibHandle; const aLote: PChar; aQtdMaximaRps, aModoEnvio: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_GerarLote(const libHandle: TLibHandle; const aLote: PAnsiChar; aQtdMaximaRps, aModoEnvio: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_GerarToken(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_GerarToken(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarSituacao(const libHandle: TLibHandle; const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarSituacao(const libHandle: TLibHandle; const aProtocolo, aNumLote, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarLoteRps(const libHandle: TLibHandle; const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarLoteRps(const libHandle: TLibHandle; const aProtocolo, aNumLote, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSePorRps(const libHandle: TLibHandle; const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorRps(const libHandle: TLibHandle; const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSePorNumero(const libHandle: TLibHandle; const aNumero: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorNumero(const libHandle: TLibHandle; const aNumero: PAnsiChar; aPagina: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSePorPeriodo(const libHandle: TLibHandle; aDataInicial, aDataFinal: TDateTime; aPagina: integer; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorPeriodo(const libHandle: TLibHandle; aDataInicial, aDataFinal: TDateTime; aPagina: integer; aNumeroLote: PAnsiChar; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSePorFaixa(const libHandle: TLibHandle; const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorFaixa(const libHandle: TLibHandle; const aNumeroInicial, aNumeroFinal: PAnsiChar; aPagina: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeGenerico(const libHandle: TLibHandle; aInfConsultaNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeGenerico(const libHandle: TLibHandle; aInfConsultaNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarLinkNFSe(const libHandle: TLibHandle; aInfConsultaLinkNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarLinkNFSe(const libHandle: TLibHandle; aInfConsultaLinkNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_EnviarEmail(const libHandle: TLibHandle; const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
+function NFSE_EnviarEmail(const libHandle: TLibHandle; const ePara, eXmlNFSe: PAnsiChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_Imprimir(const libHandle: TLibHandle; const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
+function NFSE_Imprimir(const libHandle: TLibHandle; const cImpressora: PAnsiChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ImprimirPDF(const libHandle: TLibHandle): longint;
+function NFSE_ImprimirPDF(const libHandle: TLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_SalvarPDF(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_SalvarPDF(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoPrestadoPorNumero(const libHandle: TLibHandle; const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoPrestadoPorNumero(const libHandle: TLibHandle; const aNumero: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(const libHandle: TLibHandle; aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoPrestadoPorPeriodo(const libHandle: TLibHandle; aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoPrestadoPorTomador(const libHandle: TLibHandle; const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoPrestadoPorTomador(const libHandle: TLibHandle; const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(const libHandle: TLibHandle; const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(const libHandle: TLibHandle; const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoTomadoPorNumero(const libHandle: TLibHandle; const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint):longint;
+function NFSE_ConsultarNFSeServicoTomadoPorNumero(const libHandle: TLibHandle; const aNumero: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoTomadoPorPrestador(const libHandle: TLibHandle; const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoTomadoPorPrestador(const libHandle: TLibHandle; const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoTomadoPorTomador(const libHandle: TLibHandle; const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoTomadoPorTomador(const libHandle: TLibHandle; const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoTomadoPorPeriodo(const libHandle: TLibHandle; aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoTomadoPorPeriodo(const libHandle: TLibHandle; aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSeServicoTomadoPorIntermediario(const libHandle: TLibHandle; const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSeServicoTomadoPorIntermediario(const libHandle: TLibHandle; const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_EnviarEvento(const libHandle: TLibHandle; aInfEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_EnviarEvento(const libHandle: TLibHandle; aInfEvento: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarDPSPorChave(const libHandle: TLibHandle; const aChaveDPS: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarDPSPorChave(const libHandle: TLibHandle; const aChaveDPS: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarNFSePorChave(const libHandle: TLibHandle; const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarNFSePorChave(const libHandle: TLibHandle; const aChaveNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarEvento(const libHandle: TLibHandle; const aChave: PChar; aTipoEvento: longint; aNumSeq: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarEvento(const libHandle: TLibHandle; const aChave: PAnsiChar; aTipoEvento: Integer; aNumSeq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarDFe(const libHandle: TLibHandle; aNSU: longint; sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarDFe(const libHandle: TLibHandle; aNSU: Integer; sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterDANFSE(const libHandle: TLibHandle; const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ObterDANFSE(const libHandle: TLibHandle; const aChaveNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ConsultarParametros(const libHandle: TLibHandle; aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ConsultarParametros(const libHandle: TLibHandle; aTipoParametroMunicipio: Integer; const aCodigoServico: PAnsiChar; aCompetencia: TDateTime; aNumeroBeneficio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLIBName;
 
-function NFSE_ObterInformacoesProvedor(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function NFSE_ObterInformacoesProvedor(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFSeLibName;
 
 {%endregion}

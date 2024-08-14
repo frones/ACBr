@@ -2,7 +2,7 @@
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                           }
 {                                                                              }
@@ -47,7 +47,7 @@ type
   private
     FNFSeDM: TLibNFSeDM;
 
-    function SetRetornoNFSeRPSCarregadas(const Count: integer): integer;
+    function SetRetornoNFSeRPSCarregadas(const Count: integer): Integer;
 
   protected
     procedure Inicializar; override;
@@ -60,50 +60,50 @@ type
 
     property NFSeDM: TLibNFSeDM read FNFSeDM;
 
-    function CarregarXML(const eArquivoOuXML: PChar): longint;
-    function CarregarLoteXML(const eArquivoOuXML: PChar): longint;
-    function CarregarINI(const eArquivoOuINI: PChar): longint;
-    function ObterXml(aIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function GravarXml(aIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
-    function ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint):longint;
-    function GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar):longint;
-    function LimparLista: longint;
-    function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
-    function Emitir(const aLote:PChar; aModoEnvio: longint;  aImprimir: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
-    function Cancelar(aInfCancelamentoNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function SubstituirNFSe(const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
-    function LinkNFSe(aNumeroNFSe: PChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PChar; var esTamanho: longint): longint;
-    function GerarLote(const aLote: PChar; aQtdMaximaRps, aModoEnvio: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function GerarToken(const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarSituacao(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarLoteRps(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSePorRps(const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSePorNumero(const aNumero:PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint):longint;
-    function ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeGenerico(aInfConsultaNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarLinkNFSe(aInfConsultaLinkNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
-    function Imprimir(const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
-    function ImprimirPDF: longint;
-    function SalvarPDF (const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoPrestadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoTomadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function EnviarEvento(aInfEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarDPSPorChave(const aChaveDPS: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarNFSePorChave(const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarEvento(const aChave: PChar; aTipoEvento: longint; aNumSeq: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarDFe(aNSU: longint; sResposta: PChar; var esTamanho: longint): longint;
-    function ObterDANFSE(const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ConsultarParametros(aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
-    function ObterInformacoesProvedor(const sResposta: PChar; var esTamanho: longint): longint;
+    function CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
+    function CarregarLoteXML(const eArquivoOuXML: PAnsiChar): Integer;
+    function CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
+    function ObterXml(aIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function GravarXml(aIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
+    function ObterIni(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function GravarIni(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
+    function LimparLista: Integer;
+    function ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function Emitir(const aLote:PAnsiChar; aModoEnvio: Integer;  aImprimir: Boolean; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function Cancelar(aInfCancelamentoNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function SubstituirNFSe(const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function LinkNFSe(aNumeroNFSe: PAnsiChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function GerarLote(const aLote: PAnsiChar; aQtdMaximaRps, aModoEnvio: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function GerarToken(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarSituacao(const aProtocolo, aNumLote, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarLoteRps(const aProtocolo, aNumLote, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSePorRps(const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSePorNumero(const aNumero:PAnsiChar; aPagina: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aNumeroLote: PAnsiChar; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PAnsiChar; aPagina: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeGenerico(aInfConsultaNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarLinkNFSe(aInfConsultaLinkNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function EnviarEmail(const ePara, eXmlNFSe: PAnsiChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
+    function Imprimir(const cImpressora: PAnsiChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PAnsiChar): Integer;
+    function ImprimirPDF: Integer;
+    function SalvarPDF (const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoPrestadoPorNumero(const aNumero: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoTomadoPorNumero(const aNumero: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function EnviarEvento(aInfEvento: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarDPSPorChave(const aChaveDPS: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarNFSePorChave(const aChaveNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarEvento(const aChave: PAnsiChar; aTipoEvento: Integer; aNumSeq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarDFe(aNSU: Integer; sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ObterDANFSE(const aChaveNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ConsultarParametros(aTipoParametroMunicipio: Integer; const aCodigoServico: PAnsiChar; aCompetencia: TDateTime; aNumeroBeneficio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ObterInformacoesProvedor(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 
   end;
 
@@ -154,13 +154,13 @@ begin
   Result := SetRetorno(0, Format(SInfNFSeCarregadas, [Count]));
 end;
 
-function TACBrLibNFSe.CarregarXML(const eArquivoOuXML: PChar): longint;
+function TACBrLibNFSe.CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
 var
   EhArquivo: boolean;
   ArquivoOuXml: string;
 begin
   try
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_CarregarXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -184,20 +184,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.CarregarLoteXML(const eArquivoOuXML: PChar): longint;
+function TACBrLibNFSe.CarregarLoteXML(const eArquivoOuXML: PAnsiChar): Integer;
 var
   EhArquivo: boolean;
   ArquivoOuXml: string;
 begin
   try
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_CarregarLoteXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -214,19 +214,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.CarregarINI(const eArquivoOuINI: PChar): longint;
+function TACBrLibNFSe.CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
 var
   ArquivoOuIni: string;
 begin
   try
-    ArquivoOuIni := ConverterAnsiParaUTF8(eArquivoOuINI);
+    ArquivoOuIni := ConverterStringEntrada(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_CarregarINI(' + ArquivoOuIni + ' )', logCompleto, True)
@@ -245,14 +245,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ObterXml(aIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ObterXml(aIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resposta: Ansistring;
 begin
@@ -280,20 +280,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.GravarXml(aIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function TACBrLibNFSe.GravarXml(aIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
 var
   ANomeArquivo, APathArquivo: string;
 begin
   try
-    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
-    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
+    ANomeArquivo := ConverterStringEntrada(eNomeArquivo);
+    APathArquivo := ConverterStringEntrada(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_GravarXml(' + IntToStr(aIndex) + ',' +
@@ -316,14 +316,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ObterIni(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resposta: AnsiString;
 begin
@@ -342,7 +342,7 @@ begin
         NFSeDM.ACBrNFSeX1.NotasFiscais.Items[AIndex].GerarXML;
 
       Resposta := NFSeDM.ACBrNFSeX1.NotasFiscais.Items[AIndex].GerarNFSeIni;
-      Resposta := ConverterUTF8ParaAnsi(Resposta);
+      Resposta := Resposta;
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally
@@ -350,20 +350,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function TACBrLibNFSe.GravarIni(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
 var
   ANFSeIni, ANomeArquivo, APathArquivo: string;
 begin
   try
-    ANomeArquivo:= ConverterAnsiParaUTF8(eNomeArquivo);
-    APathArquivo:= ConverterAnsiParaUTF8(ePathArquivo);
+    ANomeArquivo:= ConverterStringEntrada(eNomeArquivo);
+    APathArquivo:= ConverterStringEntrada(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_GravarIni(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -400,14 +400,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.LimparLista: longint;
+function TACBrLibNFSe.LimparLista: Integer;
 begin
   try
     GravarLog('NFSE_LimparLista', logNormal);
@@ -421,14 +421,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resposta: Ansistring;
 begin
@@ -448,14 +448,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.Emitir(const aLote: PChar; aModoEnvio: longint; aImprimir: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.Emitir(const aLote: PAnsiChar; aModoEnvio: Integer; aImprimir: Boolean; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TEmiteResposta;
   Resposta: Ansistring;
@@ -489,14 +489,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.Cancelar(aInfCancelamentoNFSe: PChar; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibNFSe.Cancelar(aInfCancelamentoNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TCancelarNFSeResposta;
   InfCancelamentoNFSe: TInfCancelamento;
@@ -535,26 +535,26 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.SubstituirNFSe(const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibNFSe.SubstituirNFSe(const aNumeroNFSe, aSerieNFSe, aCodigoCancelamento, aMotivoCancelamento, aNumeroLote, aCodigoVerificacao, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TSubstituirNFSeResposta;
   NumeroNFSe, SerieNFSe, CodigoCancelamento, MotivoCancelamento, NumeroLote, CodigoVerificacao: String;
   Resposta: AnsiString;
 begin
   try
-    NumeroNFSe := ConverterAnsiParaUTF8(aNumeroNFSe);
-    SerieNFSe := ConverterAnsiParaUTF8(aSerieNFSe);
-    CodigoCancelamento := ConverterAnsiParaUTF8(aCodigoCancelamento);
-    MotivoCancelamento := ConverterAnsiParaUTF8(aMotivoCancelamento);
-    NumeroLote := ConverterAnsiParaUTF8(aNumeroLote);
-    CodigoVerificacao := ConverterAnsiParaUTF8(aCodigoVerificacao);
+    NumeroNFSe := ConverterStringEntrada(aNumeroNFSe);
+    SerieNFSe := ConverterStringEntrada(aSerieNFSe);
+    CodigoCancelamento := ConverterStringEntrada(aCodigoCancelamento);
+    MotivoCancelamento := ConverterStringEntrada(aMotivoCancelamento);
+    NumeroLote := ConverterStringEntrada(aNumeroLote);
+    CodigoVerificacao := ConverterStringEntrada(aCodigoVerificacao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_SubstituirNFSe(' + NumeroNFSe + ',' + SerieNFSe + ',' + CodigoCancelamento + ',' + MotivoCancelamento + ',' + NumeroLote + ',' + CodigoVerificacao + ' )', logCompleto, True)
@@ -579,24 +579,24 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.LinkNFSe(aNumeroNFSe: PChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.LinkNFSe(aNumeroNFSe: PAnsiChar; const aCodigoVerificacao, aChaveAcesso, aValorServico, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLinkNFSeResposta;
   NumeroNFSe, CodigoVerificacao, ChaveAcesso, ValorServico: String;
   Resposta: AnsiString;
 begin
   try
-    NumeroNFSe := ConverterAnsiParaUTF8(aNumeroNFSe);
-    CodigoVerificacao := ConverterAnsiParaUTF8(aCodigoVerificacao);
-    ChaveAcesso := ConverterAnsiParaUTF8(aChaveAcesso);
-    ValorServico := ConverterAnsiParaUTF8(aValorServico);
+    NumeroNFSe := ConverterStringEntrada(aNumeroNFSe);
+    CodigoVerificacao := ConverterStringEntrada(aCodigoVerificacao);
+    ChaveAcesso := ConverterStringEntrada(aChaveAcesso);
+    ValorServico := ConverterStringEntrada(aValorServico);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_LinkNFSe(' + NumeroNFSe + ',' + CodigoVerificacao + ',' + ChaveAcesso + ',' + ValorServico + ' )', logCompleto, True)
@@ -613,14 +613,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.GerarLote(const aLote: PChar; aQtdMaximaRps, aModoEnvio: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.GerarLote(const aLote: PAnsiChar; aQtdMaximaRps, aModoEnvio: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TGerarLoteResposta;
   Resposta: Ansistring;
@@ -650,14 +650,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.GerarToken(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.GerarToken(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TGerarTokenResposta;
   Resposta: Ansistring;
@@ -683,22 +683,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarSituacao(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarSituacao(const aProtocolo, aNumLote, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaSituacaoResposta;
   Protocolo, NumLote: string;
   Resposta: Ansistring;
 begin
   try
-    Protocolo := ConverterAnsiParaUTF8(aProtocolo);
-    NumLote := ConverterAnsiParaUTF8(aNumLote);
+    Protocolo := ConverterStringEntrada(aProtocolo);
+    NumLote := ConverterStringEntrada(aNumLote);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarSituacao(' + Protocolo + ',' + NumLote + ' )', logCompleto, True)
@@ -723,22 +723,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarLoteRps(const aProtocolo, aNumLote, sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarLoteRps(const aProtocolo, aNumLote, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaLoteRpsResposta;
   Protocolo, NumLote: string;
   Resposta: Ansistring;
 begin
   try
-    Protocolo := ConverterAnsiParaUTF8(aProtocolo);
-    NumLote := ConverterAnsiParaUTF8(aNumLote);
+    Protocolo := ConverterStringEntrada(aProtocolo);
+    NumLote := ConverterStringEntrada(aNumLote);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarLoteRps(' + Protocolo + ',' + NumLote + ' )', logCompleto, True)
@@ -763,24 +763,24 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSePorRps(const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSePorRps(const aNumeroRps, aSerie, aTipo, aCodigoVerificacao, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSePorRpsResposta;
   NumeroRps, Serie, Tipo, CodigoVerificacao: String;
   Resposta: AnsiString;
 begin
   try
-    NumeroRps:= ConverterAnsiParaUTF8(aNumeroRps);
-    Serie:= ConverterAnsiParaUTF8(aSerie);
-    Tipo:= ConverterAnsiParaUTF8(aTipo);
-    CodigoVerificacao:= ConverterAnsiParaUTF8(aCodigoVerificacao);
+    NumeroRps:= ConverterStringEntrada(aNumeroRps);
+    Serie:= ConverterStringEntrada(aSerie);
+    Tipo:= ConverterStringEntrada(aTipo);
+    CodigoVerificacao:= ConverterStringEntrada(aCodigoVerificacao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSePorRps(' + NumeroRps + ',' + Serie + ',' + Tipo + ',' + CodigoVerificacao + ' )', logCompleto, True)
@@ -805,21 +805,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSePorNumero(const aNumero:PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSePorNumero(const aNumero:PAnsiChar; aPagina: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   Numero: String;
   Resposta: AnsiString;
 begin
   try
-    Numero:= ConverterAnsiParaUTF8(aNumero);
+    Numero:= ConverterStringEntrada(aNumero);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSePorNumero(' + Numero + ',' + IntToStr(aPagina) + ' )', logCompleto, True)
@@ -844,14 +844,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aNumeroLote: PChar; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aNumeroLote: PAnsiChar; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   NumeroLote: String;
@@ -859,7 +859,7 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    NumeroLote:= ConverterAnsiParaUTF8(aNumeroLote);
+    NumeroLote:= ConverterStringEntrada(aNumeroLote);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSePorPeriodo(' + DateToStr(aDataInicial) +  ',' + DateToStr(aDataFinal) +  ',' + IntToStr(aPagina) +  ',' + NumeroLote +  ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -885,22 +885,22 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PChar; aPagina: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: PAnsiChar; aPagina: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   NumeroInicial, NumeroFinal: String;
   Resposta: AnsiString;
 begin
   try
-    NumeroInicial:= ConverterAnsiParaUTF8(aNumeroInicial);
-    NumeroFinal:= ConverterAnsiParaUTF8(aNumeroFinal);
+    NumeroInicial:= ConverterStringEntrada(aNumeroInicial);
+    NumeroFinal:= ConverterStringEntrada(aNumeroFinal);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSePorFaixa(' + NumeroInicial + ',' + NumeroFinal + ',' + IntToStr(aPagina) + ' )', logCompleto, True)
@@ -925,14 +925,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeGenerico(aInfConsultaNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeGenerico(aInfConsultaNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   InfConsultaNFSe: TInfConsultaNFSe;
@@ -972,14 +972,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarLinkNFSe(aInfConsultaLinkNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarLinkNFSe(aInfConsultaLinkNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultarLinkNFSeResposta;
   InfConsultaLinkNFSe: TInfConsultaLinkNFSe;
@@ -1019,14 +1019,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.EnviarEmail(const ePara, eXmlNFSe: PChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar):longint;
+function TACBrLibNFSe.EnviarEmail(const ePara, eXmlNFSe: PAnsiChar; const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
 var
   Resposta, APara, AXmlNFSe, AAssunto, ACC, AAnexos, AMensagem: String;
   slMensagemEmail, slCC, slAnexos: TStringList;
@@ -1034,12 +1034,12 @@ var
   Resp: TLibNFSeResposta;
 begin
   try
-    APara := ConverterAnsiParaUTF8(ePara);
-    AXmlNFSe := ConverterAnsiParaUTF8(eXmlNFSe);
-    AAssunto := ConverterAnsiParaUTF8(eAssunto);
-    ACC := ConverterAnsiParaUTF8(eCC);
-    AAnexos := ConverterAnsiParaUTF8(eAnexos);
-    AMensagem := ConverterAnsiParaUTF8(eMensagem);
+    APara := ConverterStringEntrada(ePara);
+    AXmlNFSe := ConverterStringEntrada(eXmlNFSe);
+    AAssunto := ConverterStringEntrada(eAssunto);
+    ACC := ConverterStringEntrada(eCC);
+    AAnexos := ConverterStringEntrada(eAnexos);
+    AMensagem := ConverterStringEntrada(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_EnviarEmail(' + APara + ',' + AXmlNFSe + ',' + BoolToStr(AEnviaPDF, 'PDF', '') + ',' + AAssunto
@@ -1105,23 +1105,23 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.Imprimir(const cImpressora: PChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PChar): longint;
+function TACBrLibNFSe.Imprimir(const cImpressora: PAnsiChar; nNumCopias: integer; const bGerarPDF, bMostrarPreview, cCancelada: PAnsiChar): Integer;
 var
   Resposta: TLibImpressaoResposta;
   Impressora, MostrarPreview, GerarPDF, Cancelada: String;
 begin
   try
-    Impressora := ConverterAnsiParaUTF8(cImpressora);
-    MostrarPreview := ConverterAnsiParaUTF8(bMostrarPreview);
-    GerarPDF:= ConverterAnsiParaUTF8(bGerarPDF);
-    Cancelada := ConverterAnsiParaUTF8(cCancelada);
+    Impressora := ConverterStringEntrada(cImpressora);
+    MostrarPreview := ConverterStringEntrada(bMostrarPreview);
+    GerarPDF:= ConverterStringEntrada(bGerarPDF);
+    Cancelada := ConverterStringEntrada(cCancelada);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias)+ ',' + GerarPDF + ',' + MostrarPreview + ',' + Cancelada + ' )', logCompleto, True)
@@ -1145,14 +1145,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ImprimirPDF: longint;
+function TACBrLibNFSe.ImprimirPDF: Integer;
 var
   Resposta: TLibImpressaoResposta;
 begin
@@ -1180,14 +1180,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.SalvarPDF(const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibNFSe.SalvarPDF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   AStream: TMemoryStream;
   Resposta: Ansistring;
@@ -1214,17 +1214,17 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorNumero(
- const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime;
- aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint
- ): longint;
+ const aNumero: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
+ aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer
+ ): Integer;
 var
   Resp: TConsultaNFSeResposta;
   Numero: String;
@@ -1232,7 +1232,7 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    Numero:= ConverterAnsiParaUTF8(aNumero);
+    Numero:= ConverterStringEntrada(aNumero);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorNumero(' + Numero + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -1258,14 +1258,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   Resposta: AnsiString;
@@ -1296,14 +1296,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
@@ -1311,8 +1311,8 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
-    InscMunicipal:= ConverterAnsiParaUTF8(aInscMun);
+    CNPJ:= ConverterStringEntrada(aCNPJ);
+    InscMunicipal:= ConverterStringEntrada(aInscMun);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorTomador(' + CNPJ + ',' + InscMunicipal + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -1338,14 +1338,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
@@ -1353,8 +1353,8 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
-    InscMunicipal:= ConverterAnsiParaUTF8(aInscMun);
+    CNPJ:= ConverterStringEntrada(aCNPJ);
+    InscMunicipal:= ConverterStringEntrada(aInscMun);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoPrestadoPorIntermediario(' + CNPJ + ',' + InscMunicipal + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )' , logCompleto, True)
@@ -1380,14 +1380,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorNumero(const aNumero: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorNumero(const aNumero: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   Numero: String;
@@ -1395,7 +1395,7 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    Numero:= ConverterAnsiParaUTF8(aNumero);
+    Numero:= ConverterStringEntrada(aNumero);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorNumero(' + Numero + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -1421,14 +1421,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
@@ -1436,8 +1436,8 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
-    InscMunicipal:= ConverterAnsiParaUTF8(aInscMun);
+    CNPJ:= ConverterStringEntrada(aCNPJ);
+    InscMunicipal:= ConverterStringEntrada(aInscMun);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorPrestador(' + CNPJ + ',' + InscMunicipal + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -1463,14 +1463,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
@@ -1478,8 +1478,8 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
-    InscMunicipal:= ConverterAnsiParaUTF8(aInscMun);
+    CNPJ:= ConverterStringEntrada(aCNPJ);
+    InscMunicipal:= ConverterStringEntrada(aInscMun);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorTomador(' + CNPJ + ',' + InscMunicipal + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -1505,14 +1505,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: longint; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint):longint;
+function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   Resposta: AnsiString;
@@ -1543,14 +1543,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: PChar; aPagina: longint; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: PAnsiChar; aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   CNPJ, InscMunicipal: String;
@@ -1558,8 +1558,8 @@ var
   TipoPeriodo: TtpPeriodo;
 begin
   try
-    CNPJ:= ConverterAnsiParaUTF8(aCNPJ);
-    InscMunicipal:= ConverterAnsiParaUTF8(aInscMun);
+    CNPJ:= ConverterStringEntrada(aCNPJ);
+    InscMunicipal:= ConverterStringEntrada(aInscMun);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSeServicoTomadoPorIntermediario(' + CNPJ + ',' + InscMunicipal + ',' + IntToStr(aPagina) + ',' + DateToStr(aDataInicial) + ',' + DateToStr(aDataFinal) + ',' + IntToStr(aTipoPeriodo) + ' )', logCompleto, True)
@@ -1585,14 +1585,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.EnviarEvento(aInfEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.EnviarEvento(aInfEvento: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TEnviarEventoResposta;
   InfEvento: TInfEvento;
@@ -1632,21 +1632,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarDPSPorChave(const aChaveDPS: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarDPSPorChave(const aChaveDPS: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSePorRpsResposta;
   ChaveDPS: String;
   Resposta: AnsiString;
 begin
   try
-    ChaveDPS := ConverterAnsiParaUTF8(aChaveDPS);
+    ChaveDPS := ConverterStringEntrada(aChaveDPS);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarDPSPorChave(' + ChaveDPS + ' )', logCompleto, True)
@@ -1671,21 +1671,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarNFSePorChave(const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarNFSePorChave(const aChaveNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   ChaveNFSe: String;
   Resposta: AnsiString;
 begin
   try
-    ChaveNFSe := ConverterAnsiParaUTF8(aChaveNFSe);
+    ChaveNFSe := ConverterStringEntrada(aChaveNFSe);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarNFSePorChave(' + ChaveNFSe + ' )', logCompleto, True)
@@ -1710,14 +1710,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarEvento(const aChave: PChar; aTipoEvento: longint; aNumSeq: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarEvento(const aChave: PAnsiChar; aTipoEvento: Integer; aNumSeq: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaEventoResposta;
   Chave: String;
@@ -1725,7 +1725,7 @@ var
   Resposta: AnsiString;
 begin
   try
-    Chave := ConverterAnsiParaUTF8(aChave);
+    Chave := ConverterStringEntrada(aChave);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarEvento(' + Chave + ',' + IntToStr(aTipoEvento) + ',' + IntToStr(aNumSeq) + ' )', logCompleto, True)
@@ -1751,14 +1751,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarDFe(aNSU: longint; sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarDFe(aNSU: Integer; sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaDFeResposta;
   Resposta: AnsiString;
@@ -1787,21 +1787,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ObterDANFSE(const aChaveNFSe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ObterDANFSE(const aChaveNFSe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaNFSeResposta;
   ChaveNFSe: String;
   Resposta: AnsiString;
 begin
   try
-    ChaveNFSe := ConverterAnsiParaUTF8(aChaveNFSe);
+    ChaveNFSe := ConverterStringEntrada(aChaveNFSe);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ObterDANFSe(' + ChaveNFSe + ' )', logCompleto, True)
@@ -1826,14 +1826,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ConsultarParametros(aTipoParametroMunicipio: longint; const aCodigoServico: PChar; aCompetencia: TDateTime; aNumeroBeneficio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ConsultarParametros(aTipoParametroMunicipio: Integer; const aCodigoServico: PAnsiChar; aCompetencia: TDateTime; aNumeroBeneficio: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TConsultaParametrosResposta;
   TipoParametro: TParamMunic;
@@ -1841,8 +1841,8 @@ var
   Resposta: AnsiString;
 begin
   try
-    CodigoServico:= ConverterAnsiParaUTF8(aCodigoServico);
-    NumeroBeneficio:= ConverterAnsiParaUTF8(aNumeroBeneficio);
+    CodigoServico:= ConverterStringEntrada(aCodigoServico);
+    NumeroBeneficio:= ConverterStringEntrada(aNumeroBeneficio);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('NFSE_ConsultarParametros(' + IntToStr(aTipoParametroMunicipio) + ',' + CodigoServico + ',' + DateToStr(aCompetencia) + ',' + NumeroBeneficio +' )', logCompleto, True)
@@ -1868,14 +1868,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibNFSe.ObterInformacoesProvedor(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibNFSe.ObterInformacoesProvedor(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TObterInformacoesProvedorResposta;
   Resposta: AnsiString;
@@ -1900,10 +1900,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-       Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-       Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

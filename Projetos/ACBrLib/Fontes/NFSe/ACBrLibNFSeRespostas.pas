@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
 { mentos de Automação Comercial utilizados no Brasil                            }
 {                                                                               }
-{ Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida                }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida                }
 {                                                                               }
 { Colaboradores nesse arquivo: Antonio Carlos Junior                            }
 {                                                                               }
@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, contnrs, ACBrLibResposta, ACBrNFSeXNotasFiscais,
   ACBrNFSeX, ACBrNFSeXWebservicesResponse, ACBrNFSeXWebserviceBase,
-  ACBrNFSeXConversao, ACBrNFSeXConfiguracoes, ACBrBase;
+  ACBrNFSeXConversao, ACBrNFSeXConfiguracoes, ACBrBase, ACBrLibConfig;
 
 type
 
@@ -679,7 +679,7 @@ begin
   begin
     for i := 0 to Response.Erros.Count -1 do
     begin
-      Item := TNFSeEventoItem.Create(CSessaoRespErro + IntToStr(i + 1), Tipo, Formato);
+      Item := TNFSeEventoItem.Create(CSessaoRespErro + IntToStr(i + 1), Tipo, Codificacao);
       Item.Processar(Response.Erros.Items[i]);
       FErros.Add(Item);
     end;
@@ -689,7 +689,7 @@ begin
   begin
     for i := 0 to Response.Alertas.Count -1 do
     begin
-      Item := TNFSeEventoItem.Create(CSessaoRespAlerta + IntToStr(i + 1), Tipo, Formato);
+      Item := TNFSeEventoItem.Create(CSessaoRespAlerta + IntToStr(i + 1), Tipo, Codificacao);
       Item.Processar(Response.Alertas.Items[i]);
       FAlertas.Add(Item);
     end;
@@ -699,7 +699,7 @@ begin
   begin
     for i := 0 to Response.Resumos.Count - 1 do
     begin
-      Arq := TNFSeArquivoItem.Create(CSessaoRespArquivo + IntToStr(i + 1), Tipo, Formato);
+      Arq := TNFSeArquivoItem.Create(CSessaoRespArquivo + IntToStr(i + 1), Tipo, Codificacao);
       Arq.Processar(Response.Resumos.Items[i]);
       InformacoesArquivo.Add(Arq);
     end;

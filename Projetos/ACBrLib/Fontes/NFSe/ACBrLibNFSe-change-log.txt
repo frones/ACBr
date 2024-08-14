@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2024
+--- ACBrLibNFSeBase, ACBrLibNFSeST, ACBrLibNFSeMT,
+    ACBrLibNFSeStaticImportST, ACBrLibNFSeStaticImportMT, ACBrLibNFSeRespostas ---
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+    Por: Antonio Carlos Junior
+
 15/07/2024
 -- ACBrLibNFSeRespostas --
 [*] Remove a Data das informações de identificação que foram adicionadas.

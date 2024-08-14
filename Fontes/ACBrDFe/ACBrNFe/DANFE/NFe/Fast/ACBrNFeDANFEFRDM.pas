@@ -2515,6 +2515,7 @@ begin
 
     if PrepareReportEvento(ANFE) then
     begin
+      DANFEClassOwner.FIndexImpressaoEventosIndividual := I;
       if (AStream <> nil) then
         frxPDFExport.Stream := AStream;
       frxPDFExport.Author        := DANFEClassOwner.Sistema;

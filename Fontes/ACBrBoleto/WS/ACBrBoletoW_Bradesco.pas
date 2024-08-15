@@ -163,8 +163,8 @@ begin
   if FPDadosMsg <> '' then
   begin
      LDataAtual       := Now;
-     LIntMiliSegundos := DateTimeToUnix(LDataAtual, False) * 1000;
-     LStrTimeStamp    := DateToISO8601(now);
+//     LIntMiliSegundos := DateTimeToUnix(LDataAtual, False) * 1000;
+//     LStrTimeStamp    := DateToISO8601(now);
      LStrConteudo := 'POST' + AnsiChar(#10) +
                      '/v1/boleto-hibrido/registrar-boleto' + AnsiChar(#10) +
                      '' + AnsiChar(#10) +

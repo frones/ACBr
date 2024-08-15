@@ -129,7 +129,6 @@ contains
   ACBrBancoVotorantim in '..\..\..\Fontes\ACBrBoleto\ACBrBancoVotorantim.pas',
   ACBrBoleto in '..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas',
   ACBrBoletoConversao in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoConversao.pas',
-  ACBrBoletoReg in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoReg.pas',
   ACBrBoletoWS in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.pas',
   ACBrBoletoWS.Rest.OAuth in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.OAuth.pas',
   ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',

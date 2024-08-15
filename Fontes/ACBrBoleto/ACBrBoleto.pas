@@ -36,7 +36,9 @@
 unit ACBrBoleto;
 
 interface
-uses Classes,
+
+uses
+      Classes,
      {$IFNDEF NOGUI}
        Graphics,
      {$ENDIF}
@@ -2050,15 +2052,17 @@ implementation
 
 Uses {$IFNDEF NOGUI}Forms,{$ENDIF}
      Math,
-     dateutils,
-     strutils,
+     DateUtils,
+     StrUtils,
      blcksock,
+
      ACBrBoletoWS,
      ACBrUtil.Base,
      ACBrUtil.Strings,
      ACBrUtil.DateTime,
      ACBrUtil.Math,
      ACBrUtil.XMLHTML,
+
      ACBrBancoBradesco,
      ACBrBancoBrasil,
      ACBrBancoAmazonia,
@@ -4064,6 +4068,7 @@ begin
         CedenteWS.KeyUser                   := IniBoletos.ReadString(CWebService,'KeyUser', CedenteWS.KeyUser);
         CedenteWS.IndicadorPix              := IniBoletos.ReadBool(CWebService,'IndicadorPix', CedenteWS.IndicadorPix);
         CedenteWS.Scope                     := IniBoletos.ReadString(CWebService,'Scope', CedenteWS.Scope);
+
         Configuracoes.WebService.Ambiente   := TpcnTipoAmbiente(IniBoletos.ReadInteger(CWebService,'Ambiente', Integer(Configuracoes.WebService.Ambiente)));
         Configuracoes.WebService.SSLHttpLib := TSSLHttpLib(IniBoletos.ReadInteger(CWebService,'SSLHttpLib', Integer(Configuracoes.WebService.SSLHttpLib)));
         Configuracoes.WebService.SSLCryptLib := TSSLCryptLib( IniBoletos.ReadInteger(CWebService,'SSLCryptLib',Integer(Configuracoes.WebService.SSLCryptLib)));

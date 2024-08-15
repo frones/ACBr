@@ -241,7 +241,9 @@ uses
   ACBrBoletoW_C6,
   ACBrBoletoRet_C6,
   ACBrBoletoW_Cresol,
-  ACBrBoletoRet_Cresol;
+  ACBrBoletoRet_Cresol,
+  ACBrBoletoW_Bradesco,
+  ACBrBoletoRet_Bradesco;
 
   { TRetornoEnvioClass }
 
@@ -437,6 +439,11 @@ begin
       begin
         FBoletoWSClass := TBoletoW_Cresol.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Cresol.Create(FBoleto);
+      end;
+    cobBradesco :
+      begin
+        FBoletoWSClass := TBoletoW_Bradesco.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Bradesco.Create(FBoleto);
       end;
     else
       FBoletoWSClass := TBoletoWSClass.Create(Self);

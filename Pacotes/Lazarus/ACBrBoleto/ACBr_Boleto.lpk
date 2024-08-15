@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="90">
+    <Files Count="99">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -383,6 +383,42 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cresol.pas"/>
         <UnitName Value="ACBrBoletoW_Cresol"/>
       </Item90>
+      <Item91>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUY3.pas"/>
+        <UnitName Value="ACBrBancoUY3"/>
+      </Item91>
+      <Item92>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bancoob_APIV3.pas"/>
+        <UnitName Value="ACBrBoletoRet_Bancoob_APIV3"/>
+      </Item92>
+      <Item93>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bradesco.pas"/>
+        <UnitName Value="ACBrBoletoRet_Bradesco"/>
+      </Item93>
+      <Item94>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_C6.pas"/>
+        <UnitName Value="ACBrBoletoRet_C6"/>
+      </Item94>
+      <Item95>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Safra.pas"/>
+        <UnitName Value="ACBrBoletoRet_Safra"/>
+      </Item95>
+      <Item96>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bancoob_APIV3.pas"/>
+        <UnitName Value="ACBrBoletoW_Bancoob_APIV3"/>
+      </Item96>
+      <Item97>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bradesco.pas"/>
+        <UnitName Value="ACBrBoletoW_Bradesco"/>
+      </Item97>
+      <Item98>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_C6.pas"/>
+        <UnitName Value="ACBrBoletoW_C6"/>
+      </Item98>
+      <Item99>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Safra.pas"/>
+        <UnitName Value="ACBrBoletoW_Safra"/>
+      </Item99>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

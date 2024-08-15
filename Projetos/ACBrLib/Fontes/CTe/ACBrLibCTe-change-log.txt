@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2024
+--- ACBrLibCTeBase, ACBrLibCTeST, ACBrLibCTeMT,
+    ACBrLibCTeStaticImportST, ACBrLibCTeStaticImportMT, ACBrLibCTeRespostas ---
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+    Por: Antonio Carlos Junior
+
 17/11/2023
 --- ACBrLibCTeBase, ACBrLibCTeST, ACBrLibCTeMT, ACBrLibCTeStaticImport, ACBrLibCTeStaticImportMT ---
 [+] Inclusão novos métodos: CTE_SalvarPDF e CTE_SalvarEventoPDF

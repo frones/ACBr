@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -59,152 +59,152 @@ const
   {$EndIf}
  {$EndIf}
 
-function CTE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function CTE_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
-function CTE_Finalizar: longint;
-    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
-
-function CTE_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function CTE_Finalizar: Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function CTE_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function NFE_OpenSSLInfo(const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function CTE_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function NFE_OpenSSLInfo(const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ConfigLer(const eArqConfig: PChar): longint;
+function CTE_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ConfigGravar(const eArqConfig: PChar): longint;
+function CTE_ConfigLer(const eArqConfig: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function CTE_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function CTE_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_CarregarXML(const eArquivoOuXML: PChar): longint;
+function CTE_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_CarregarINI(const eArquivoOuINI: PChar): longint;
+function CTE_CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ObterXml(AIndex: longint; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_GravarXml(AIndex: longint;
-  const eNomeArquivo, ePathArquivo: PChar): longint;
+function CTE_ObterXml(AIndex: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
+
+function CTE_GravarXml(AIndex: Integer;
+  const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+function CTE_CarregarEventoXML(const eArquivoOuXML: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+function CTE_CarregarEventoINI(const eArquivoOuINI: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_LimparLista: longint;
+function CTE_LimparLista: Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_LimparListaEventos: longint;
+function CTE_LimparListaEventos: Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Assinar: longint;
+function CTE_Assinar: Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Validar: longint;
+function CTE_Validar: Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ValidarRegrasdeNegocios(const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_ValidarRegrasdeNegocios(const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_VerificarAssinatura(const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_VerificarAssinatura(const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+function CTE_StatusServico(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Consultar(const eChaveOuCTe: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_Consultar(const eChaveOuCTe: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Inutilizar(const ACNPJ, AJustificativa: PChar;
+function CTE_Inutilizar(const ACNPJ, AJustificativa: PAnsiChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Enviar(ALote: integer; Imprimir: boolean; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_Enviar(ALote: integer; Imprimir: boolean; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_ConsultarRecibo(ARecibo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar;
-  ALote: integer; const sResposta: PChar; var esTamanho: longint): longint;
+function CTE_Cancelar(const eChave, eJustificativa, eCNPJ: PAnsiChar;
+  ALote: integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_EnviarEvento(idLote: integer; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function CTE_EnviarEvento(idLote: integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function CTE_ConsultaCadastro(cUF, nDocumento: PAnsiChar; nIE: boolean;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer;
-  eCNPJCPF, eultNSU: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  eCNPJCPF, eultNSU: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_DistribuicaoDFePorNSU(const AcUFAutor: integer;
-  eCNPJCPF, eNSU: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  eCNPJCPF, eNSU: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_DistribuicaoDFePorChave(const AcUFAutor: integer;
-  eCNPJCPF, echCTe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  eCNPJCPF, echCTe: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_EnviarEmail(const ePara, eChaveCTe: PChar; const AEnviaPDF: boolean;
-  const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function CTE_EnviarEmail(const ePara, eChaveCTe: PAnsiChar; const AEnviaPDF: boolean;
+  const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveCTe: PChar;
-  const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function CTE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveCTe: PAnsiChar;
+  const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_Imprimir(const cImpressora: PChar; nNumCopias: integer;
-  const cProtocolo, bMostrarPreview: PChar): longint;
+function CTE_Imprimir(const cImpressora: PAnsiChar; nNumCopias: integer;
+  const cProtocolo, bMostrarPreview: PAnsiChar): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ImprimirPDF: longint;
+function CTE_ImprimirPDF: Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+function CTE_SalvarPDF(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 function CTE_ImprimirEventoPDF(
-  const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
+  const eArquivoXmlCTe, eArquivoXmlEvento: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_SalvarEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar; sResposta: PChar; var esTamanho: longint): longint;
+function CTE_SalvarEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PAnsiChar; sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
+function CTE_ImprimirInutilizacao(const eArquivoXml: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
-function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
+function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCTeLIBName;
 
 implementation

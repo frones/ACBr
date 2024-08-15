@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -60,24 +60,24 @@ type
 
     property GNReDM: TLibGNReDM read FGNReDM;
 
-    function LimparLista: longint;
-    function CarregarXML(const eArquivoOuXML: PChar): longint;
-    function CarregarINI(const eArquivoOuINI: PChar): longint;
-    function ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
-    function LimparListaGuiaRetorno: longint;
-    function CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
-    function Assinar: longint;
-    function Validar: longint;
-    function VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
-    function ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
-    function Enviar(const sResposta: PChar; var esTamanho: longint): longint;
-    function Consultar(const eUF: PChar; const AReceita: Integer;
-                       const sResposta: PChar; var esTamanho: longint): longint;
-    function EnviarEmail(const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
-                         const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
-    function Imprimir(const eNomeImpressora, eMostrarPreview: PChar): longint;
-    function ImprimirPDF: longint;
+    function LimparLista: Integer;
+    function CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
+    function CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
+    function ObterXml(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function GravarXml(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
+    function LimparListaGuiaRetorno: Integer;
+    function CarregarGuiaRetorno(const eArquivoOuXml: PAnsiChar): Integer;
+    function Assinar: Integer;
+    function Validar: Integer;
+    function VerificarAssinatura(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function Enviar(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function Consultar(const eUF: PAnsiChar; const AReceita: Integer;
+                       const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function EnviarEmail(const ePara, eArquivoOuXml: PAnsiChar; const AEnviaPDF: Boolean;
+                         const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
+    function Imprimir(const eNomeImpressora, eMostrarPreview: PAnsiChar): Integer;
+    function ImprimirPDF: Integer;
 
   end;
 
@@ -117,7 +117,7 @@ begin
   FGNReDM.AplicarConfiguracoes;
 end;
 
-function TACBrLibGNRe.LimparLista: longint;  
+function TACBrLibGNRe.LimparLista: Integer;
 begin
   try
     GravarLog('GNRE_LimparLista', logNormal);
@@ -131,21 +131,21 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.CarregarXML(const eArquivoOuXML: PChar): longint;  
+function TACBrLibGNRe.CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
 var
   EhArquivo: boolean;
   ArquivoOuXml: Ansistring;
 begin
   try
     
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXML);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXML);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_CarregarXML(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -169,19 +169,19 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.CarregarINI(const eArquivoOuINI: PChar): longint;  
+function TACBrLibGNRe.CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
 var
   ArquivoOuINI: Ansistring;
 begin
   try
-    ArquivoOuINI := ConverterAnsiParaUTF8(eArquivoOuINI);
+    ArquivoOuINI := ConverterStringEntrada(eArquivoOuINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_CarregarINI(' + ArquivoOuINI + ' )', logCompleto, True)
@@ -200,14 +200,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;  
+function TACBrLibGNRe.ObterXml(AIndex: Integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 Var
   Resposta: Ansistring;
 begin
@@ -233,20 +233,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;    
+function TACBrLibGNRe.GravarXml(AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
 Var
   ANomeArquivo, APathArquivo: Ansistring;
 begin
   try
-    ANomeArquivo := ConverterAnsiParaUTF8(eNomeArquivo);
-    APathArquivo := ConverterAnsiParaUTF8(ePathArquivo);
+    ANomeArquivo := ConverterStringEntrada(eNomeArquivo);
+    APathArquivo := ConverterStringEntrada(ePathArquivo);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_GravarXml(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
@@ -267,14 +267,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.LimparListaGuiaRetorno: longint;
+function TACBrLibGNRe.LimparListaGuiaRetorno: Integer;
 begin
   try
     GravarLog('GNRE_LimparListaGuiaRetorno', logNormal);
@@ -288,20 +288,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.CarregarGuiaRetorno(const eArquivoOuXml: PChar): longint;
+function TACBrLibGNRe.CarregarGuiaRetorno(const eArquivoOuXml: PAnsiChar): Integer;
 var
   EhArquivo: boolean;
   ArquivoOuXml: Ansistring;
 begin
   try
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXml);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXml);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_CarregarGuiaRetorno(' + ArquivoOuXml + ' )', logCompleto, True)
@@ -324,14 +324,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.Assinar: longint;
+function TACBrLibGNRe.Assinar: Integer;
 begin
   try
     GravarLog('GNRE_Assinar', logNormal);
@@ -342,7 +342,7 @@ begin
         GNReDM.ACBrGNRe1.Guias.Assinar;
       except
         on E: EACBrGNReException do
-          Result := SetRetorno(ErrAssinarGNRe, ConverterUTF8ParaAnsi(E.Message));
+          Result := SetRetorno(ErrAssinarGNRe, ConverterStringSaida(E.Message));
       end;
       Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
     finally
@@ -350,14 +350,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.Validar: longint;
+function TACBrLibGNRe.Validar: Integer;
 begin
   try
     GravarLog('GNRE_Validar', logNormal);
@@ -369,21 +369,21 @@ begin
         Result := SetRetornoGNReCarregados(GNReDM.ACBrGNRe1.Guias.Count);
       except
         on E: EACBrGNReException do
-          Result := SetRetorno(ErrValidacaoGNRe, ConverterUTF8ParaAnsi(E.Message));
+          Result := SetRetorno(ErrValidacaoGNRe, ConverterStringSaida(E.Message));
       end;
     finally
       GNReDM.Destravar;
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibGNRe.VerificarAssinatura(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 Var
   Erros: string;
 begin
@@ -402,14 +402,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibGNRe.ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 Var
   Resposta: string;
 begin
@@ -429,17 +429,17 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
 {%endregion}
 
 {%region Servicos}
-function TACBrLibGNRe.Enviar(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibGNRe.Enviar(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibGNReEnvio;
   Resposta: String;
@@ -473,20 +473,20 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.Consultar(const eUF: PChar; const AReceita: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibGNRe.Consultar(const eUF: PAnsiChar; const AReceita: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 var
   Resp: TLibGNReConsulta;
   AUF, Resposta: Ansistring;
 begin
   try
-    AUF := ConverterAnsiParaUTF8(eUF);
+    AUF := ConverterStringEntrada(eUF);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_Consultar(' + AUF + ',' + IntToStr(AReceita) +' )', logCompleto, True)
@@ -514,27 +514,27 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.EnviarEmail(const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
-  const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function TACBrLibGNRe.EnviarEmail(const ePara, eArquivoOuXml: PAnsiChar; const AEnviaPDF: Boolean;
+  const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
 var
   APara, ArquivoOuXml, AAssunto, ACC, AAnexos, AMensagem: Ansistring;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
 begin
   try
-    APara := ConverterAnsiParaUTF8(ePara);
-    ArquivoOuXml := ConverterAnsiParaUTF8(eArquivoOuXml);
-    AAssunto := ConverterAnsiParaUTF8(eAssunto);
-    ACC := ConverterAnsiParaUTF8(eCC);
-    AAnexos := ConverterAnsiParaUTF8(eAnexos);
-    AMensagem := ConverterAnsiParaUTF8(eMensagem);
+    APara := ConverterStringEntrada(ePara);
+    ArquivoOuXml := ConverterStringEntrada(eArquivoOuXml);
+    AAssunto := ConverterStringEntrada(eAssunto);
+    ACC := ConverterStringEntrada(eCC);
+    AAnexos := ConverterStringEntrada(eAnexos);
+    AMensagem := ConverterStringEntrada(eMensagem);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('GNRE_EnviarEmail(' + APara + ',' + ArquivoOuXml + ',' +
@@ -607,14 +607,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.Imprimir(const eNomeImpressora, eMostrarPreview: PChar): longint;
+function TACBrLibGNRe.Imprimir(const eNomeImpressora, eMostrarPreview: PAnsiChar): Integer;
 Var
   NomeImpressora, MostrarPreview: string;
 begin
@@ -646,14 +646,14 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
-function TACBrLibGNRe.ImprimirPDF: longint;
+function TACBrLibGNRe.ImprimirPDF: Integer;
 begin
   try
     GravarLog('GNRE_ImprimirPDF', logNormal);
@@ -677,10 +677,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

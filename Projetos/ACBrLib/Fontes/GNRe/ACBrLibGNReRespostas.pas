@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -37,7 +37,7 @@ unit ACBrLibGNReRespostas;
 interface
 
 uses
-  SysUtils, Classes, contnrs, ACBrLibResposta, ACBrGNRE2, pgnreRetConsResLoteGNRE;
+  SysUtils, Classes, contnrs, ACBrLibResposta, ACBrLibConfig, ACBrGNRE2, pgnreRetConsResLoteGNRE;
 
 type
 
@@ -179,7 +179,7 @@ begin
 
     for I := 0 to Control.WebServices.Retorno.GNRERetorno.resGuia.Count - 1 do
     begin
-      Item := TGNReRetorno.Create('Retorno' + Trim(IntToStrZero(I +1, 3)), Tipo, Formato);
+      Item := TGNReRetorno.Create('Retorno' + Trim(IntToStrZero(I +1, 3)), Tipo, Codificacao);
       Item.Processar(Control.WebServices.Retorno.GNRERetorno.resGuia[I]);
       FItems.Add(Item);
     end;

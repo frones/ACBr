@@ -30,7 +30,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-unit ACBrLibGNReStaticImport;
+unit ACBrLibGNReStaticImportMT;
 
 {$IfDef FPC}
 {$mode objfpc}{$H+}
@@ -62,68 +62,68 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function GNRE_Inicializar(const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
+function GNRE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_Finalizar: Integer;
+function GNRE_Finalizar(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_Nome(const sNome: PAnsiChar; var esTamanho: Integer): Integer;
+function GNRE_Nome(const libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_Versao(const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
+function GNRE_Versao(const libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_UltimoRetorno(const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
+function GNRE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ConfigLer(const eArqConfig: PAnsiChar): Integer;
+function GNRE_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ConfigGravar(const eArqConfig: PAnsiChar): Integer;
+function GNRE_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ConfigLerValor(const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+function GNRE_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
   var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ConfigGravarValor(const eSessao, eChave, eValor: PAnsiChar): Integer;
+function GNRE_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
 {%endregion}
 
 {%region GNRe}
-function GNRE_LimparLista: Integer;
+function GNRE_LimparLista(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_CarregarXML(const eArquivoOuXML: PAnsiChar): Integer;
+function GNRE_CarregarXML(const libHandle: TLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_CarregarINI(const eArquivoOuINI: PAnsiChar): Integer;
+function GNRE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ObterXml(AIndex: Integer; const sResposta: PAnsiChar;
+function GNRE_ObterXml(const libHandle: TLibHandle; AIndex: Integer; const sResposta: PAnsiChar;
   var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_GravarXml(AIndex: Integer;
+function GNRE_GravarXml(const libHandle: TLibHandle; AIndex: Integer;
   const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_LimparListaGuiaRetorno: Integer;
+function GNRE_LimparListaGuiaRetorno(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_CarregarGuiaRetorno(const eArquivoOuXml: PAnsiChar): Integer;
+function GNRE_CarregarGuiaRetorno(const libHandle: TLibHandle; const eArquivoOuXml: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_Assinar: Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Assinar(const libHandle: TLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   external CACBrGNReLIBName;
-function GNRE_Validar: Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Validar(const libHandle: TLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   external CACBrGNReLIBName;
-function GNRE_VerificarAssinatura(const sResposta: PAnsiChar;
+function GNRE_VerificarAssinatura(const libHandle: TLibHandle; const sResposta: PAnsiChar;
   var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ObterCertificados(const sResposta: PAnsiChar;
+function GNRE_ObterCertificados(const libHandle: TLibHandle; const sResposta: PAnsiChar;
   var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
 {%endregion}
 
 {%region Servicos}
-function GNRE_Enviar(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+function GNRE_Enviar(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_Consultar(const eUF: PAnsiChar; const AReceita: integer;
+function GNRE_Consultar(const libHandle: TLibHandle; const eUF: PAnsiChar; const AReceita: integer;
   const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_EnviarEmail(const ePara, eArquivoOuXml: PAnsiChar;
+function GNRE_EnviarEmail(const libHandle: TLibHandle; const ePara, eArquivoOuXml: PAnsiChar;
   const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_Imprimir(const eNomeImpressora, eMostrarPreview: PAnsiChar): Integer;
+function GNRE_Imprimir(const libHandle: TLibHandle; const eNomeImpressora, eMostrarPreview: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
-function GNRE_ImprimirPDF: Integer;
+function GNRE_ImprimirPDF(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrGNReLIBName;
 {%endregion}
 

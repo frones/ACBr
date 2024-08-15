@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -42,65 +42,65 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function GNRE_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function GNRE_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Finalizar(libHandle: PLibHandle): longint;
+function GNRE_Finalizar(libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function GNRE_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function GNRE_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GNRE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GNRE_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GNRE_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function GNRE_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region GNRe}
-function GNRE_LimparLista(const libHandle: PLibHandle): longint;
+function GNRE_LimparLista(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_CarregarXML(const libHandle: PLibHandle; const eArquivoOuXML: PChar): longint;
+function GNRE_CarregarXML(const libHandle: PLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_CarregarINI(const libHandle: PLibHandle; const eArquivoOuINI: PChar): longint;
+function GNRE_CarregarINI(const libHandle: PLibHandle; const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ObterXml(const libHandle: PLibHandle; AIndex: longint; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_GravarXml(const libHandle: PLibHandle; AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function GNRE_ObterXml(const libHandle: PLibHandle; AIndex: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_GravarXml(const libHandle: PLibHandle; AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_LimparListaGuiaRetorno(const libHandle: PLibHandle): longint;
+function GNRE_LimparListaGuiaRetorno(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_CarregarGuiaRetorno(const libHandle: PLibHandle; const eArquivoOuXml: PChar): longint;
+function GNRE_CarregarGuiaRetorno(const libHandle: PLibHandle; const eArquivoOuXml: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Assinar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Validar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_VerificarAssinatura(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_Assinar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Validar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_VerificarAssinatura(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ObterCertificados(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_ObterCertificados(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
-function GNRE_Enviar(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_Enviar(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Consultar(const libHandle: PLibHandle; const eUF: PChar; const AReceita: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_Consultar(const libHandle: PLibHandle; const eUF: PAnsiChar; const AReceita: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_EnviarEmail(const libHandle: PLibHandle; const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
-  const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function GNRE_EnviarEmail(const libHandle: PLibHandle; const ePara, eArquivoOuXml: PAnsiChar; const AEnviaPDF: Boolean;
+  const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_Imprimir(const libHandle: PLibHandle; const eNomeImpressora, eMostrarPreview: PChar): longint;
+function GNRE_Imprimir(const libHandle: PLibHandle; const eNomeImpressora, eMostrarPreview: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function GNRE_ImprimirPDF(const libHandle: PLibHandle): longint;
+function GNRE_ImprimirPDF(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -114,68 +114,68 @@ uses
 {%region GNRe}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function GNRE_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function GNRE_Inicializar(var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(libHandle, TACBrLibGNRe, eArqConfig, eChaveCrypt);
 end;
 
-function GNRE_Finalizar(libHandle: PLibHandle): longint;
+function GNRE_Finalizar(libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
 end;
 
-function GNRE_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function GNRE_Nome(const libHandle: PLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function GNRE_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function GNRE_Versao(const libHandle: PLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function GNRE_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function GNRE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GNRE_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function GNRE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GNRE_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function GNRE_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GNRE_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function GNRE_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GNRE_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function GNRE_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function GNRE_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function GNRE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function GNRE_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
@@ -183,7 +183,7 @@ end;
 
 {%endregion}
 
-function GNRE_LimparLista(const libHandle: PLibHandle): longint;
+function GNRE_LimparLista(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -198,7 +198,7 @@ begin
   end;
 end;
 
-function GNRE_CarregarXML(const libHandle: PLibHandle; const eArquivoOuXML: PChar): longint;
+function GNRE_CarregarXML(const libHandle: PLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -213,7 +213,7 @@ begin
   end;
 end;
 
-function GNRE_CarregarINI(const libHandle: PLibHandle; const eArquivoOuINI: PChar): longint;
+function GNRE_CarregarINI(const libHandle: PLibHandle; const eArquivoOuINI: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -228,8 +228,8 @@ begin
   end;
 end;
 
-function GNRE_ObterXml(const libHandle: PLibHandle; AIndex: longint; const sResposta: PChar;
-  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_ObterXml(const libHandle: PLibHandle; AIndex: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -243,7 +243,7 @@ begin
   end;
 end;
 
-function GNRE_GravarXml(const libHandle: PLibHandle; AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+function GNRE_GravarXml(const libHandle: PLibHandle; AIndex: Integer; const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -258,7 +258,7 @@ begin
   end;
 end;
 
-function GNRE_LimparListaGuiaRetorno(const libHandle: PLibHandle): longint;
+function GNRE_LimparListaGuiaRetorno(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -273,7 +273,7 @@ begin
   end;
 end;
 
-function GNRE_CarregarGuiaRetorno(const libHandle: PLibHandle; const eArquivoOuXml: PChar): longint;
+function GNRE_CarregarGuiaRetorno(const libHandle: PLibHandle; const eArquivoOuXml: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -288,7 +288,7 @@ begin
   end;
 end;
 
-function GNRE_Assinar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Assinar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -302,7 +302,7 @@ begin
   end;
 end;
 
-function GNRE_Validar(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function GNRE_Validar(const libHandle: PLibHandle): Integer; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
@@ -316,7 +316,7 @@ begin
   end;
 end;
 
-function GNRE_VerificarAssinatura(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_VerificarAssinatura(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -331,7 +331,7 @@ begin
   end;
 end;
 
-function GNRE_ObterCertificados(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_ObterCertificados(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -349,7 +349,7 @@ end;
 {%endregion}
 
 {%region Servicos}
-function GNRE_Enviar(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_Enviar(const libHandle: PLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -364,8 +364,8 @@ begin
   end;
 end;
 
-function GNRE_Consultar(const libHandle: PLibHandle; const eUF: PChar; const AReceita: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function GNRE_Consultar(const libHandle: PLibHandle; const eUF: PAnsiChar; const AReceita: Integer;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -380,8 +380,8 @@ begin
   end;
 end;
 
-function GNRE_EnviarEmail(const libHandle: PLibHandle; const ePara, eArquivoOuXml: PChar; const AEnviaPDF: Boolean;
-  const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function GNRE_EnviarEmail(const libHandle: PLibHandle; const ePara, eArquivoOuXml: PAnsiChar; const AEnviaPDF: Boolean;
+  const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -396,7 +396,7 @@ begin
   end;
 end;
 
-function GNRE_Imprimir(const libHandle: PLibHandle; const eNomeImpressora, eMostrarPreview: PChar): longint;
+function GNRE_Imprimir(const libHandle: PLibHandle; const eNomeImpressora, eMostrarPreview: PAnsiChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -411,7 +411,7 @@ begin
   end;
 end;
 
-function GNRE_ImprimirPDF(const libHandle: PLibHandle): longint;
+function GNRE_ImprimirPDF(const libHandle: PLibHandle): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try

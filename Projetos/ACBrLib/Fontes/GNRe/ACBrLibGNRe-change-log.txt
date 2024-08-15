@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2024
+--- ACBrLibGNReBase, ACBrLibGNReST, ACBrLibGNReMT,
+    ACBrLibGNReStaticImportST, ACBrLibGNReStaticImportMT, ACBrLibGNReRespostas ---
+[*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
+[*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
+    Por: Antonio Carlos Junior
+
 13/03/2024
 --- ACBrLibGNReDataModule --
 [*] Adicionado uses ACBrUtil.filesIO

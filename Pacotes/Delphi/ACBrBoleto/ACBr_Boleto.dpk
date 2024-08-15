@@ -123,6 +123,7 @@ contains
   ACBrBancoQITech in '..\..\..\Fontes\ACBrBoleto\ACBrBancoQITech.pas',
   ACBrBoletoRet_Itau_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Itau_API.pas',
   ACBrBoletoW_Itau_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Itau_API.pas',
-  ACBrBancoBocomBBM in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBocomBBM.pas';
-
+  ACBrBancoBocomBBM in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBocomBBM.pas',
+  ACBrBoletoW_Cresol in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cresol.pas',
+  ACBrBoletoRet_Cresol in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cresol.pas';
 end.

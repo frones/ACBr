@@ -55,6 +55,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FXML: String;
+    FNomeArq: String;
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -72,6 +73,7 @@ type
     property cStat: Integer read FcStat write FcStat;
     property xMotivo: String read FxMotivo write FxMotivo;
     property XML: String read FXML write FXML;
+    property NomeArq: String read FNomeArq write FNomeArq;
 
   end;
 

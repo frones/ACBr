@@ -954,6 +954,7 @@ begin
     FItemRetorno.cStat := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.cStat;
     FItemRetorno.xMotivo := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.xMotivo;
     FItemRetorno.XML := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.XML_prot;
+    FItemRetorno.NomeArq := ACBrNFe.NotasFiscais.Items[0].NomeArq;
   end;
 end;
 

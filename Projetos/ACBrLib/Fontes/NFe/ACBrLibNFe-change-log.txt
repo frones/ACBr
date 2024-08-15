@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2024
+-- ACBrLibNFeRespostas --
+[*] #TK-5833: Adiciona a propriedade NomeArquivo na resposta.
+  Por: Diego Folieni
+
 10/08/2024
 -- ACBrLibNFeConsoleMT.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT

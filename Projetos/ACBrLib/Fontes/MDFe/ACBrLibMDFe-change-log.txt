@@ -43,8 +43,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/08/2024
---- ACBrLibCTeBase, ACBrLibCTeST, ACBrLibCTeMT,
-    ACBrLibCTeStaticImportST, ACBrLibCTeStaticImportMT, ACBrLibCTeRespostas ---
+--- ACBrLibMDFeBase, ACBrLibMDFeST, ACBrLibMDFeMT,
+    ACBrLibMDFeStaticImportST, ACBrLibMDFeStaticImportMT, ACBrLibMDFeRespostas ---
 [*] Ajustes para usar 'PAnsiChar' no lugar de 'PChar' e 'Integer' ao inves de 'LongInt'
 [*] Ajustes para usar 'ConverterStringEntrada' e 'ConverterStringSaida'
     Por: Antonio Carlos Junior

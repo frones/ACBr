@@ -99,7 +99,7 @@ begin
    begin
       Try
          LJSonObject := TACBrJSONObject.Create;
-         Try
+         try
             LJSonObject.Parse(RetWS);
             ARetornoWS.JSON           := LJsonObject.ToJSON;
             case HttpResultCode of
@@ -182,11 +182,11 @@ begin
                         ARetornoWS.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonObject.AsString['dtDocumento']);
                         ARetornoWS.DadosRet.TituloRet.Vencimento      := DateCresolToDateTime(LJsonObject.AsString['dtvencimento']);
                         ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca  := LJsonObject.AsString['status'];//0-EM_ABERTO|3-BAIXADO_MANUALMENTE|5-LIQUIDADO
-                        if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca).Contains('EM_ABERTO') then//ABERTO
+                        if Pos('EM_ABERTO', UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//ABERTO
                            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '1';
-                        if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca).Contains('BAIXADO_MANUALMENTE') then//BAIXADO
+                        if Pos('BAIXADO_MANUALMENTE',UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//BAIXADO
                            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '7';
-                        if UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca).Contains('LIQUIDADO') then//LÍQUIDADO
+                        if Pos('LIQUIDADO', UpperCase(ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca)) > 0 then//LÍQUIDADO
                            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca := '6';
                         ARetornoWS.DadosRet.TituloRet.ValorPago       := LJsonObject.AsFloat['valorNominal'];
                         ARetornoWS.DadosRet.TituloRet.DataMovimento   := DateCresolToDateTime(LJsonObject.AsString['dtDocumento']);
@@ -219,9 +219,9 @@ begin
          Finally
             LJsonObject.free;
          End;
-      Except
+      except
          Result := False;
-      End;
+      end;
    end;
 end;
 

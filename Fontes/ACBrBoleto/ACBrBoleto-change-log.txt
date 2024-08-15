@@ -48,7 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+15/08/2024
+-- ACBrBoleto.pas ACBrBoletoWS.pas ACBrBoletoRet_Cresol.pas ACBrBoletoW_Cresol.pas--
+[+]TK-4538 / TK-4854 ACBrBoleto - API CRESOL Cobrança Boletos 
+  por Willian Delan
+-- ACBrBoleto.pas --
+[+] Adicionado leitura a propriedades faltantes do Ini e gravação
+  por Victor H Gonzales - Pandaaa
 12/08/2024
 -- ACBrBancoBanrisul --
 [-]TK-5823-1 - Corrigido qdo CaracTitulo = descontado o envio JurosMora Seg P Posicao 118

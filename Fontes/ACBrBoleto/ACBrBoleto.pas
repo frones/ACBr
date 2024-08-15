@@ -2048,8 +2048,17 @@ const
 
 implementation
 
-Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
-     ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,ACBrUtil.XMLHTML,
+Uses {$IFNDEF NOGUI}Forms,{$ENDIF}
+     Math,
+     dateutils,
+     strutils,
+     blcksock,
+     ACBrBoletoWS,
+     ACBrUtil.Base,
+     ACBrUtil.Strings,
+     ACBrUtil.DateTime,
+     ACBrUtil.Math,
+     ACBrUtil.XMLHTML,
      ACBrBancoBradesco,
      ACBrBancoBrasil,
      ACBrBancoAmazonia,
@@ -4057,7 +4066,12 @@ begin
         CedenteWS.Scope                     := IniBoletos.ReadString(CWebService,'Scope', CedenteWS.Scope);
         Configuracoes.WebService.Ambiente   := TpcnTipoAmbiente(IniBoletos.ReadInteger(CWebService,'Ambiente', Integer(Configuracoes.WebService.Ambiente)));
         Configuracoes.WebService.SSLHttpLib := TSSLHttpLib(IniBoletos.ReadInteger(CWebService,'SSLHttpLib', Integer(Configuracoes.WebService.SSLHttpLib)));
+        Configuracoes.WebService.SSLCryptLib := TSSLCryptLib( IniBoletos.ReadInteger(CWebService,'SSLCryptLib',Integer(Configuracoes.WebService.SSLCryptLib)));
+        Configuracoes.WebService.SSLXmlSignLib:= TSSLXmlSignLib( IniBoletos.ReadInteger(CWebService,'SSLXmlSignLib',Integer(Configuracoes.WebService.SSLXmlSignLib)));
+        Configuracoes.WebService.SSLType := TSSLType( IniBoletos.ReadInteger(CWebService,'SSLType',Integer(Configuracoes.WebService.SSLType)));
 
+
+        Configuracoes.WebService.Senha := IniBoletos.ReadString(CWebService,'Senha',Configuracoes.WebService.Senha);
         if IniBoletos.ValueExists(CWebService,'ArquivoCRT') then
           Configuracoes.WebService.ArquivoCRT := IniBoletos.ReadString(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
 
@@ -4396,10 +4410,15 @@ begin
        IniRetorno.WriteString(CWebService,'Scope',Cedente.CedenteWS.Scope);
        IniRetorno.WriteInteger(CWebService,'Ambiente',Integer(Configuracoes.WebService.Ambiente));
        IniRetorno.WriteInteger(CWebService,'SSLHttpLib',Integer(Configuracoes.WebService.SSLHttpLib));
+       IniRetorno.WriteInteger(CWebService,'SSLCryptLib',Integer(Configuracoes.WebService.SSLCryptLib));
+       IniRetorno.WriteInteger(CWebService,'SSLXmlSignLib',Integer(Configuracoes.WebService.SSLXmlSignLib));
+       IniRetorno.WriteInteger(CWebService,'SSLType',Integer(Configuracoes.WebService.SSLType));
+
 
        IniRetorno.WriteString(CWebService,'ArquivoCRT', Configuracoes.WebService.ArquivoCRT);
        IniRetorno.WriteString(CWebService,'ArquivoKEY', Configuracoes.WebService.ArquivoKEY);
        IniRetorno.WriteString(CWebService,'ArquivoPFX', Configuracoes.WebService.ArquivoPFX);
+       IniRetorno.WriteString(CWebService,'Senha', Configuracoes.WebService.Senha);
 
        if not SomenteConfig then
        begin

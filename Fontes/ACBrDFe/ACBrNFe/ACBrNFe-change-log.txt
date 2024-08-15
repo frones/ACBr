@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2024
+-- ACBrNFeWebServices --
+[*] #TK-5833: Adiciona o preenchimento da propriedade que alimenta o XML na resposta da Lib.
+   Por: Diego Folieni
+
 12/08/2024
 -- ACBrNFeNotasFiscais --
 [*] Ajuste para considerar o valor do ICMS Mono Retenção no ValidarRegrasdeNegocio.

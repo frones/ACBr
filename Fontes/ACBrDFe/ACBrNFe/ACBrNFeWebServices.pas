@@ -1247,6 +1247,7 @@ begin
             NFe.procNFe.xMotivo := FNFeRetornoSincrono.protNFe.xMotivo;
             NFe.procNFe.cMsg := FNFeRetornoSincrono.protNFe.cMsg;
             NFe.procNFe.xMsg := FNFeRetornoSincrono.protNFe.xMsg;
+            NFe.procNFe.XML_prot := FNFeRetornoSincrono.XMLprotNFe;
 
             AProcNFe := TProcNFe.Create;
             try
@@ -1667,6 +1668,7 @@ begin
           NFe.procNFe.xMotivo := AInfProt.Items[I].xMotivo;
           NFe.ProcNFe.cMsg := AInfProt.Items[I].cMsg;
           Nfe.ProcNFe.xMsg := AInfProt.Items[I].xMsg;
+          Nfe.ProcNFe.XML_prot := AInfProt[I].XMLprotDFe;
         end;
 
         // Monta o XML da NF-e assinado e com o protocolo de Autorização ou Denegação

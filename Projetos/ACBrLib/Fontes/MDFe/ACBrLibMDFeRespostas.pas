@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, contnrs,
   pmdfeRetConsMDFeNaoEnc, pmdfeEventoMDFe,
-  ACBrMDFe, ACBrLibResposta, ACBrLibConsReciDFe;
+  ACBrMDFe, ACBrLibResposta, ACBrLibConfig, ACBrLibConsReciDFe;
 
 type
 
@@ -378,7 +378,7 @@ begin
 
     for i := 0 to retEvento.Count - 1 do
     begin
-      Item := TEventoItemResposta.Create(i+1, Tipo, Formato);
+      Item := TEventoItemResposta.Create(i+1, Tipo, Codificacao);
       Item.Processar(retEvento.Items[i].RetInfEvento);
       FItems.Add(Item);
     end;
@@ -427,7 +427,7 @@ begin
   begin
     Self.Xml := ACBrMDFe.Manifestos.Items[0].XMLOriginal;
 
-    FItem := TRetornoItemResposta.Create('MDFe' + Trim(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.chMDFe), Tipo, Formato);
+    FItem := TRetornoItemResposta.Create('MDFe' + Trim(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.chMDFe), Tipo, Codificacao);
     FItem.Id := 'ID'+ ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt;
     FItem.tpAmb := TpAmbToStr(ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.tpAmb);
     FItem.verAplic := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.verAplic;
@@ -490,7 +490,7 @@ begin
 
     for i := 0 to InfMDFe.Count - 1 do
     begin
-      Item := TNaoEncerradosRespostaItem.Create(i+1, Tipo, Formato);
+      Item := TNaoEncerradosRespostaItem.Create(i+1, Tipo, Codificacao);
       Item.Processar(CNPJCPF, InfMDFe.Items[i]);
       FItems.Add(Item);
     end;

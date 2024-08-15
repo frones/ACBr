@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias                                }
 {                                                                              }
@@ -63,106 +63,106 @@ const
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function MDFE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
+function MDFE_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Finalizar(const libHandle: TLibHandle): longint;
+function MDFE_Finalizar(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function MDFE_Nome(const libHandle: TLibHandle; const sNome: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function MDFE_Versao(const libHandle: TLibHandle; const sVersao: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PChar; var esTamanho: longint): longint;
+function MDFE_OpenSSLInfo(const libHandle: TLibHandle; const sOpenSSLInfo: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function MDFE_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function MDFE_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
+function MDFE_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function MDFE_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PAnsiChar; sValor: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function MDFE_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 {%endregion}
 
 {%region MDFe}
-function MDFE_CarregarXML(const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
+function MDFE_CarregarXML(const libHandle: TLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PChar): longint;
+function MDFE_CarregarINI(const libHandle: TLibHandle; const eArquivoOuINI: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ObterXml(const libHandle: TLibHandle; AIndex: longint; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function MDFE_ObterXml(const libHandle: TLibHandle; AIndex: Integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_GravarXml(const libHandle: TLibHandle; AIndex: longint;
-  const eNomeArquivo, ePathArquivo: PChar): longint;
+function MDFE_GravarXml(const libHandle: TLibHandle; AIndex: Integer;
+  const eNomeArquivo, ePathArquivo: PAnsiChar): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_CarregarEventoXML(const libHandle: TLibHandle; const eArquivoOuXML: PChar): longint;
+function MDFE_CarregarEventoXML(const libHandle: TLibHandle; const eArquivoOuXML: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_CarregarEventoINI(const libHandle: TLibHandle; const eArquivoOuINI: PChar): longint;
+function MDFE_CarregarEventoINI(const libHandle: TLibHandle; const eArquivoOuINI: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_LimparLista(const libHandle: TLibHandle): longint;
+function MDFE_LimparLista(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_LimparListaEventos(const libHandle: TLibHandle): longint;
+function MDFE_LimparListaEventos(const libHandle: TLibHandle): Integer;
       {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Assinar(const libHandle: TLibHandle): longint;
+function MDFE_Assinar(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Validar(const libHandle: TLibHandle): longint;
+function MDFE_Validar(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ValidarRegrasdeNegocios(const libHandle: TLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function MDFE_ValidarRegrasdeNegocios(const libHandle: TLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_VerificarAssinatura(const libHandle: TLibHandle; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function MDFE_VerificarAssinatura(const libHandle: TLibHandle; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 {%endregion}
 
 {%region Servicos}
-function MDFE_StatusServico(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_StatusServico(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Consultar(const libHandle: TLibHandle; const eChaveOuMDFe: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function MDFE_Consultar(const libHandle: TLibHandle; const eChaveOuMDFe: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_Enviar(const libHandle: TLibHandle; ALote: integer; Imprimir: boolean; Sincrono: boolean;
-  const sResposta: PChar; var esTamanho: longint): longint;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ConsultarRecibo(const libHandle: TLibHandle; ARecibo: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function MDFE_ConsultarRecibo(const libHandle: TLibHandle; ARecibo: PAnsiChar; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Cancelar(const libHandle: TLibHandle; const eChave, eJustificativa, eCNPJCPF: PChar;
-  ALote: integer; const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_Cancelar(const libHandle: TLibHandle; const eChave, eJustificativa, eCNPJCPF: PAnsiChar;
+  ALote: integer; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_EnviarEvento(const libHandle: TLibHandle; idLote: integer; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function MDFE_EnviarEvento(const libHandle: TLibHandle; idLote: integer; const sResposta: PAnsiChar;
+  var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_DistribuicaoDFePorUltNSU(const libHandle: TLibHandle; eCNPJCPF, eultNSU: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_DistribuicaoDFePorUltNSU(const libHandle: TLibHandle; eCNPJCPF, eultNSU: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_DistribuicaoDFePorNSU(const libHandle: TLibHandle; eCNPJCPF, eNSU: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_DistribuicaoDFePorNSU(const libHandle: TLibHandle; eCNPJCPF, eNSU: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_DistribuicaoDFePorChave(const libHandle: TLibHandle; eCNPJCPF, echMDFe: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_DistribuicaoDFePorChave(const libHandle: TLibHandle; eCNPJCPF, echMDFe: PAnsiChar;
+  const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_EnviarEmail(const libHandle: TLibHandle; const ePara, eArquivoXmlMDFe: PChar;
-  const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function MDFE_EnviarEmail(const libHandle: TLibHandle; const ePara, eArquivoXmlMDFe: PAnsiChar;
+  const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_EnviarEmailEvento(const libHandle: TLibHandle; const ePara, eArquivoXmlEvento, eArquivoXmlMDFe: PChar;
-  const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
+function MDFE_EnviarEmailEvento(const libHandle: TLibHandle; const ePara, eArquivoXmlEvento, eArquivoXmlMDFe: PAnsiChar;
+  const AEnviaPDF: boolean; const eAssunto, eCC, eAnexos, eMensagem: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_Imprimir(const libHandle: TLibHandle; const cImpressora: PChar; nNumCopias: integer;
-  const cProtocolo, bMostrarPreview: PChar): longint;
+function MDFE_Imprimir(const libHandle: TLibHandle; const cImpressora: PAnsiChar; nNumCopias: integer;
+  const cProtocolo, bMostrarPreview: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ImprimirPDF(const libHandle: TLibHandle): longint;
+function MDFE_ImprimirPDF(const libHandle: TLibHandle): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_SalvarPDF(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint):longint;
+function MDFE_SalvarPDF(const libHandle: TLibHandle; const sResposta: PAnsiChar; var esTamanho: Integer):Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_ImprimirEvento(const libHandle: TLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
+function MDFE_ImprimirEvento(const libHandle: TLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 function MDFE_ImprimirEventoPDF(const libHandle: TLibHandle;
-  const eArquivoXmlMDFe, eArquivoXmlEvento: PChar): longint;
+  const eArquivoXmlMDFe, eArquivoXmlEvento: PAnsiChar): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
-function MDFE_SalvarEventoPDF(const libHandle: TLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
+function MDFE_SalvarEventoPDF(const libHandle: TLibHandle; const eArquivoXmlMDFe, eArquivoXmlEvento, sResposta: PAnsiChar; var esTamanho: Integer): Integer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMDFeLIBName;
 {%endregion}
 

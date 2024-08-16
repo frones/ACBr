@@ -1778,7 +1778,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsSincrono>';
 
   Result := Executar('', Request,
-                     ['EnviarLoteRpsSincronoResponse', 'EnviarLoteRpsSincronoResposta'],
+                     ['EnviarLoteRpsSincronoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -1918,6 +1918,7 @@ begin
 
   Result := inherited TratarXmlRetornado(Result);
 
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderISSCampinas203 }

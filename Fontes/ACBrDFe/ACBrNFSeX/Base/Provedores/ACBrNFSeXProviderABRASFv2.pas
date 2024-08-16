@@ -147,8 +147,8 @@ type
     procedure GerarMsgDadosConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
     procedure TratarRetornoConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
 
-    function VerificarAlerta(const ACodigo, AMensagem: string): Boolean; virtual;
-    function VerificarErro(const ACodigo, AMensagem: string): Boolean; virtual;
+    function VerificarAlerta(const ACodigo, AMensagem, ACorrecao: string): Boolean; virtual;
+    function VerificarErro(const ACodigo, AMensagem, ACorrecao: string): Boolean; virtual;
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
@@ -2851,15 +2851,15 @@ begin
 end;
 
 function TACBrNFSeProviderABRASFv2.VerificarAlerta(const ACodigo,
-  AMensagem: string): Boolean;
+  AMensagem, ACorrecao: string): Boolean;
 begin
-  Result := (AMensagem <> '') and (Pos('L000', ACodigo) > 0);
+  Result := ((AMensagem <> '') or (ACorrecao <> '')) and (Pos('L000', ACodigo) > 0);
 end;
 
 function TACBrNFSeProviderABRASFv2.VerificarErro(const ACodigo,
-  AMensagem: string): Boolean;
+  AMensagem, ACorrecao: string): Boolean;
 begin
-  Result := (AMensagem <> '') and (Pos('L000', ACodigo) = 0);
+  Result := ((AMensagem <> '') or (ACorrecao <> '')) and (Pos('L000', ACodigo) = 0);
 end;
 
 procedure TACBrNFSeProviderABRASFv2.ProcessarMensagemErros(RootNode: TACBrXmlNode;
@@ -2874,20 +2874,23 @@ var
 procedure ProcessarErro(ErrorNode: TACBrXmlNode; const ACodigo, AMensagem: string);
 var
   Item: TNFSeEventoCollectionItem;
+  Correcao: string;
 begin
-  if AMensagem = '' then
+  Correcao := ObterConteudoTag(ErrorNode.Childrens.FindAnyNs('Correcao'), tcStr);
+
+  if (ACodigo = '') and (AMensagem = '') then
     Exit;
 
-  if VerificarAlerta(ACodigo, AMensagem) then
+  if VerificarAlerta(ACodigo, AMensagem, Correcao) then
     Item := Response.Alertas.New
-  else if VerificarErro(ACodigo, AMensagem) then
+  else if VerificarErro(ACodigo, AMensagem, Correcao) then
     Item := Response.Erros.New
   else
     Exit;
 
   Item.Codigo := ACodigo;
   Item.Descricao := AMensagem;
-  Item.Correcao := ObterConteudoTag(ErrorNode.Childrens.FindAnyNs('Correcao'), tcStr);
+  Item.Correcao := Correcao;
 end;
 
 procedure ProcessarErros;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/08/2024
+-- ACBrNFSeXProviderABRASFv2/ISSCampinas.Provider/ISSGoiania.Provider/ISSVitoria.Provider
+[*] #TK-5864: Possível solução para a leitura correta das mensagens de erro.
+  Por: Italo Giurizzato Junior
+
 13/08/2024
 -- NFSeBrasil.Provider, Giap.Provider, GeisWeb.Provider --
 [*] #TK-5090: Ajustes visando corrigir erro de conversão na leitura das respostas.

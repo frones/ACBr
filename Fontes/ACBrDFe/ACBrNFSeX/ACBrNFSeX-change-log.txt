@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 16/08/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5868: A cidade de Estrela/RS mudou a URL de produção o provedor continua o mesmo.
+  Por: Daniel Ostoic programador DNA
+[*] #TK-5847: A cidade de Massaranduba/SC mudou de versão e URLs o provedor continua o mesmo.
+-- IPM.GravarXml --
+[*] #TK-5847: Alteração visando aparecer o RPS no portal de homologação do provedor.
+  Por: Ramon Valentim da Silva
+
 -- ACBrNFSeXProviderABRASFv2/ISSCampinas.Provider/ISSGoiania.Provider/ISSVitoria.Provider
 [*] #TK-5864: Possível solução para a leitura correta das mensagens de erro.
   Por: Italo Giurizzato Junior

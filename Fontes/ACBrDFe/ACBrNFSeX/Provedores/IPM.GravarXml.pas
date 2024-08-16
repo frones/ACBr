@@ -134,7 +134,15 @@ begin
       NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
         'nfseh_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
+    {
+     Na versão 1.01 (que é a que estou testando), a tag <nfse_teste> deve ser
+     preenchida quando o usuário quer validar o seu XML.
+     Quando a tag está no XML e o XML está válido, no lugar de simplesmente
+     aceitar a NFS-e (vai entender), o provedor retorna o seguinte "erro":
+     NFS-e válida para emissão.
+     }
+    if  VersaoNFSe = ve100 then
+        NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
   end
   else
   begin

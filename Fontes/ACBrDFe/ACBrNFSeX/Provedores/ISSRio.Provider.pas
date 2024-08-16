@@ -319,10 +319,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
   ANota: TNotaFiscal;
   NumRps: String;
-  I: Integer;
 begin
   if Response.ModoEnvio <> meUnitario then
   begin
@@ -343,16 +341,7 @@ begin
       Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
       Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
 
-      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
-      if not Assigned(ANode) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod202;
-        AErro.Descricao := ACBrStr(Desc202);
-        Exit;
-      end;
-
-      ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+      ANode := ANode.Childrens.FindAnyNs('CompNfse');
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -361,20 +350,24 @@ begin
         Exit;
       end;
 
-      for I := Low(ANodeArray) to High(ANodeArray) do
-      begin
-        ANode := ANodeArray[I];
-        AuxNode := ANode.Childrens.FindAnyNs('Nfse');
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        NumRps := AuxNode.AsString;
+      AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+      if not Assigned(AuxNode) then Exit;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+      AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+      if not Assigned(AuxNode) then Exit;
 
-        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-        SalvarXmlNfse(ANota);
-      end;
+      AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+      if not Assigned(AuxNode) then Exit;
+
+      AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+      if not Assigned(AuxNode) then Exit;
+
+      NumRps := AuxNode.AsString;
+
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+      ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+      SalvarXmlNfse(ANota);
 
       Response.Sucesso := (Response.Erros.Count = 0);
     except

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/08/2024
+-- ISSRio.Provider
+[*] Ajustes no TratarRetornoEmitir para fazer a leitura correta do XML de retorno.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-5868: A cidade de Estrela/RS mudou a URL de produção o provedor continua o mesmo.
   Por: Daniel Ostoic programador DNA
@@ -51,7 +54,6 @@ Símbolo : Significado
 -- IPM.GravarXml --
 [*] #TK-5847: Alteração visando aparecer o RPS no portal de homologação do provedor.
   Por: Ramon Valentim da Silva
-
 -- ACBrNFSeXProviderABRASFv2/ISSCampinas.Provider/ISSGoiania.Provider/ISSVitoria.Provider
 [*] #TK-5864: Possível solução para a leitura correta das mensagens de erro.
   Por: Italo Giurizzato Junior

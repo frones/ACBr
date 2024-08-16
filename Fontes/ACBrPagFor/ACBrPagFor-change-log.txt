@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/08/2024
+-- PagFor.Itau.LerTxtRetorno --
+[*] #TK-5867: Sobreescrita a procedure que faz a leitura do Registro 1.
+  Por: Quality Automação
+
 23/07/2024
 -- CNAB240.GravarTxtRemessa --
 [-] Alteração no Segmento J53, visando gerar com 240 caracteres.

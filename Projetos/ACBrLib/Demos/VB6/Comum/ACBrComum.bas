@@ -81,6 +81,8 @@ Public Const SESSAO_Ailos                     As String = "Ailos"
 Public Const SESSAO_Matera                    As String = "Matera"
 Public Const SESSAO_Cielo                     As String = "Cielo"
 Public Const SESSAO_MercadoPago               As String = "MercadoPago"
+Public Const SESSAO_AbecsPinpad               As String = "AbecsPinpad"
+Public Const SESSAO_AbecsPinpad_Device        As String = "AbecsPinpad_Device"
 
 Public Enum NivelLog
     logNenhum = 0

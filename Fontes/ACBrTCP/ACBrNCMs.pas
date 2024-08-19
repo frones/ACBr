@@ -138,6 +138,8 @@ type
     procedure CarregarListaNCMs;
 
     function TratarCampoData(aCampo: string): string;
+  protected
+    function GetRespIsUTF8: Boolean; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -406,6 +408,11 @@ begin
   end;
 
   Result := fCacheArquivo;
+end;
+
+function TACBrNCMs.GetRespIsUTF8: Boolean;
+begin
+  Result := True;
 end;
 
 function TACBrNCMs.TratarCampoData(aCampo: string): string;

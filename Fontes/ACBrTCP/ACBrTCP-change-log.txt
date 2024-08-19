@@ -36,6 +36,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+19/08/2024
+-- ACBrSocket, ACBrNCM --
+[*] #TK-5857: Ajuste visando corrigir problema de codificação em caracteres especiais ao ObterNCMS.
+   Por: BigWings
+
 09/08/2024
 -- ACBrSocket --
 [-] Correção em TACBrHTTP.HTTPMethod, para Redirecionamentos onde Location é

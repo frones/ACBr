@@ -302,7 +302,6 @@ end;
     function GetProxyPass: String;
     function GetProxyPort: String;
     function GetProxyUser: String;
-    function GetRespIsUTF8: Boolean;
     procedure SetProxyHost(const AValue: String);
     procedure SetProxyPass(const AValue: String);
     procedure SetProxyPort(const AValue: String);
@@ -310,6 +309,7 @@ end;
   protected
     function GetHeaderValue(aHeader: String): String;
     procedure RegistrarLog(const aLinha: String);
+    function GetRespIsUTF8: Boolean; virtual;
 
     procedure OnHookSocketStatus(Sender: TObject; Reason: THookSocketReason; const Value: String);
     procedure OnHookCreateSocket(Sender: TObject);

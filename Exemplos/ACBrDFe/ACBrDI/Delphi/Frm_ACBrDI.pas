@@ -118,7 +118,7 @@ begin
     try
       //Preciso pegar conteúdo do XML para passar ao método.
       try
-        sXML.LoadFromFile(OpenDialog1.FileName, TEncoding.UTF8);
+        sXML.LoadFromFile(OpenDialog1.FileName);
       except
         on E:Exception do
         begin
@@ -132,7 +132,7 @@ begin
       end;
       Limpar;
       try
-        MemoXML.Text := sXML.Text;
+        MemoXML.Text := UTF8ToNativeString(sXML.Text);
         if(DecImportacao.LerXML(sXML.Text))then //LerXML é uma function que retorna um boolean
         begin
           DI := DecImportacao.DI;

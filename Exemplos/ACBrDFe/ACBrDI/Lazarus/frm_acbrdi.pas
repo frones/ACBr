@@ -118,7 +118,7 @@ begin
     try
       //Preciso pegar conteúdo do XML para passar ao método.
       try
-        sXML.LoadFromFile(OpenDialog1.FileName, TEncoding.UTF8);
+        sXML.LoadFromFile(OpenDialog1.FileName);
       except
         on E:Exception do
         begin

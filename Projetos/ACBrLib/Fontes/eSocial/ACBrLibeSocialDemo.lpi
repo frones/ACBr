@@ -17,7 +17,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="1"/>
+      <MajorVersionNr Value="1"/>
+      <RevisionNr Value="2"/>
       <BuildNr Value="107"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>

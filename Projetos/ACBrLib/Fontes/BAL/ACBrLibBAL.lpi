@@ -17,7 +17,9 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
+      <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="1"/>
+      <RevisionNr Value="1"/>
       <BuildNr Value="510"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrBAL - Biblioteca para leitura de balança" InternalName="ACBrLibBAL" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="BAL" ProductVersion="0.0.1.30"/>

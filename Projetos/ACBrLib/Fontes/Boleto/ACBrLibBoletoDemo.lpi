@@ -18,10 +18,11 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
+      <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
+      <RevisionNr Value="1"/>
       <BuildNr Value="286"/>
       <Language Value="0416"/>
-      <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibBoleto - Biblioteca para geração de Arquivos de Remessa e Retorno, e impressão de Boletos" InternalName="ACBrLibBoleto" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>
     </VersionInfo>
     <BuildModes Count="12">
@@ -567,6 +568,7 @@
       <Unit13>
         <Filename Value="..\Comum\ACBrLibDataModule.pas"/>
         <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
       </Unit13>
     </Units>
   </ProjectOptions>

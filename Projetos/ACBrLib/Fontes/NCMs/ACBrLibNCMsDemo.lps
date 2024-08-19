@@ -10,9 +10,11 @@
         <Filename Value="ACBrLibNCMs.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="16" Y="64"/>
+        <TopLine Value="17"/>
+        <CursorPos Y="64"/>
         <UsageCount Value="222"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Comum\ACBrLibComum.pas"/>
@@ -21,6 +23,7 @@
         <TopLine Value="65"/>
         <CursorPos X="18" Y="35"/>
         <UsageCount Value="222"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\Comum\ACBrLibConfig.pas"/>
@@ -29,6 +32,7 @@
         <TopLine Value="72"/>
         <CursorPos X="21" Y="48"/>
         <UsageCount Value="222"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Comum\ACBrLibConsts.pas"/>
@@ -37,6 +41,7 @@
         <TopLine Value="51"/>
         <CursorPos X="3" Y="66"/>
         <UsageCount Value="222"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\Comum\ACBrLibResposta.pas"/>
@@ -45,6 +50,7 @@
         <TopLine Value="57"/>
         <CursorPos X="3" Y="51"/>
         <UsageCount Value="222"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
         <Filename Value="ACBrLibNCMsConfig.pas"/>
@@ -53,6 +59,7 @@
         <TopLine Value="50"/>
         <CursorPos Y="58"/>
         <UsageCount Value="220"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="ACBrLibNCMsBase.pas"/>
@@ -61,6 +68,7 @@
         <TopLine Value="107"/>
         <CursorPos X="26" Y="234"/>
         <UsageCount Value="220"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
         <Filename Value="ACBrLibNCMsConsts.pas"/>
@@ -69,6 +77,7 @@
         <TopLine Value="18"/>
         <CursorPos X="30" Y="43"/>
         <UsageCount Value="220"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
       <Unit8>
         <Filename Value="ACBrLibNCMsDataModule.pas"/>
@@ -80,6 +89,7 @@
         <TopLine Value="35"/>
         <CursorPos Y="67"/>
         <UsageCount Value="220"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
         <Filename Value="ACBrLibNCMsST.pas"/>
@@ -88,6 +98,7 @@
         <TopLine Value="212"/>
         <CursorPos X="136" Y="227"/>
         <UsageCount Value="321"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit9>
       <Unit10>
         <Filename Value="ACBrLibNCMsMT.pas"/>
@@ -96,6 +107,7 @@
         <TopLine Value="225"/>
         <CursorPos X="84" Y="244"/>
         <UsageCount Value="243"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit10>
       <Unit11>
         <Filename Value="ACBrLibNCMsStaticImportMT.pas"/>
@@ -103,6 +115,7 @@
         <TopLine Value="48"/>
         <CursorPos X="8" Y="73"/>
         <UsageCount Value="120"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit11>
       <Unit12>
         <Filename Value="ACBrLibNCMsRespostas.pas"/>
@@ -110,6 +123,7 @@
         <TopLine Value="96"/>
         <CursorPos X="12" Y="111"/>
         <UsageCount Value="90"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit12>
       <Unit13>
         <Filename Value="..\..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas"/>
@@ -124,6 +138,7 @@
         <TopLine Value="226"/>
         <CursorPos X="18" Y="229"/>
         <UsageCount Value="81"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit14>
       <Unit15>
         <Filename Value="..\Comum\ACBrLibDemo.pas"/>
@@ -131,6 +146,7 @@
         <TopLine Value="34"/>
         <CursorPos X="18" Y="53"/>
         <UsageCount Value="89"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit15>
       <Unit16>
         <Filename Value="..\Comum\ACBrObjectSerializer.pas"/>

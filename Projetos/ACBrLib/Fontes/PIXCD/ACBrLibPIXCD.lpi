@@ -17,10 +17,10 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="1"/>
+      <MajorVersionNr Value="2"/>
+      <RevisionNr Value="1"/>
       <BuildNr Value="34"/>
       <Language Value="0416"/>
-      <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPIXCD - Biblioteca para gerar cobrança e pagamento PIX" InternalName="ACBrLibPIXCD" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="1.0.0.0"/>
     </VersionInfo>
     <BuildModes Count="13">

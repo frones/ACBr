@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2024
+-- ACBrNFSeXServicos --
+[+] #TK-5881: Incluída a cidade de Aguas Frias/SC, o provedor é Pronim versão 2.02
+  Por: Willian Delan
+[+] #TK-5880: Incluída a cidade de Ipameri/GO, o provedor é Prodata.
+  Por: João Antônio
 
 16/08/2024
 -- ISSRio.Provider

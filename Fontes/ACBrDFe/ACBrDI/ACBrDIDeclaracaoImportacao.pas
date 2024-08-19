@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  synautil, ACBrUtil.XMLHTML;
+  synautil, ACBrUtil.XMLHTML, ACBrUtil.Strings;
 
 { TDeclaracaoImportacao }
 
@@ -117,7 +117,7 @@ begin
 
   { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
     Isso é necessário, para que as propriedades fiquem com a acentuação correta }
-  XMLStr := ParseText(AnsiString(AXML), True, XmlEhUTF8(AXML));
+  XMLStr := UTF8ToNativeString(ParseText(AXML));
 
   FDIR.Leitor.Arquivo := XMLStr;
   FDIR.LerXml;

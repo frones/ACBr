@@ -290,10 +290,11 @@ function TACBrLib.GetNome: String;
 begin
   if (FNome = '') then
   begin
-{$IfDef FPC}
+    {$IfDef FPC}
     if Assigned(fpFileVerInfo) then
       FNome := fpFileVerInfo.VersionStrings.Values['InternalName'];
-{$EndIf}
+    {$EndIf}
+
     if (FNome = '') then
     begin
       FNome := Self.ClassName;
@@ -301,14 +302,12 @@ begin
         Delete(FNome, 1, 1);
     end;
 
-{$IFDEF Demo}
+    {$IFDEF Demo}
     FNome := FNome + ' Demo';
-{$ELSE}
+    {$ENDIF}
   end;
 
   Result := FNome;
-{$ENDIF}
-
 end;
 
 function TACBrLib.GetOpenSSLInfo: String;

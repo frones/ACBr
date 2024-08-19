@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2024
+-- ACBrLibComum --
+[-] Correção na função GetNome() com a diretiva "{$IFDEF Demo}"
+    por: Elias César
+
 15/08/2024
 -- ACBrLibConsReciDFe --
 [*] #TK-5833: Adiciona propriedade NomeArq

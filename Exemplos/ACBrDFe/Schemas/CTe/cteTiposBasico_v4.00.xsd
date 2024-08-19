@@ -1913,7 +1913,7 @@ Usar com série específica 920-969 para emitente pessoa física com inscrição
 1 – Contribuinte ICMS;
 2 – Contribuinte isento de inscrição;
 9 – Não Contribuinte</xs:documentation>
-											<xs:documentation>Aplica-se ao tomador que for indicado no toma3 ou toma4</xs:documentation>
+											<xs:documentation>Aplica-se ao tomador que for indicado no toma</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -4855,7 +4855,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:minLength value="2"/>
-												<xs:maxLength value="2000"/>
+												<xs:maxLength value="8000"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>

@@ -90,8 +90,6 @@ contains
   pcteConversaoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConversaoCTe.pas',
   pcteCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas',
   pcteCTeW in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas',
-  pcteLayoutTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteLayoutTXT.pas',
-  pcteModeloCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteModeloCTe.pas',
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
   pcteRetEnvCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvCTe.pas',
 
@@ -103,12 +101,6 @@ contains
 
   pcteInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteInutCTe.pas',
   pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
-
-  pcteConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsSitCTe.pas',
-  pcteRetConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsSitCTe.pas',
-  pcteEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEventoCTe.pas',
-  pcteEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEnvEventoCTe.pas',
-  pcteRetEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvEventoCTe.pas',
 
   ACBrCTe.ConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.ConsSit.pas',
   ACBrCTe.RetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.RetConsSit.pas',

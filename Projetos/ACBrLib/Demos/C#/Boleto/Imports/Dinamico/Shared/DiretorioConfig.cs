@@ -135,6 +135,14 @@ namespace ACBrLib.Boleto
             set => SetProperty(value);
         }
 
+        /// <summary>
+        /// Define se lê o campo nosso numero completo.
+        /// </summary>
+        public bool LerNossoNumeroCompleto
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
         #endregion Properties
     }
 }

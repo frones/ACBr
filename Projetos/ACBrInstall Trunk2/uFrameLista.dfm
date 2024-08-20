@@ -2,13 +2,13 @@ object framePacotes: TframePacotes
   Left = 0
   Top = 0
   Width = 727
-  Height = 1358
+  Height = 1500
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   TabOrder = 0
   object pnlBotoesMarcar: TPanel
     Left = 0
-    Top = 1317
+    Top = 1459
     Width = 727
     Height = 41
     Align = alBottom
@@ -99,16 +99,15 @@ object framePacotes: TframePacotes
     Left = 3
     Top = 3
     Width = 721
-    Height = 1311
+    Height = 1453
     HelpType = htKeyword
-    VertScrollBar.Position = 49
     Align = alClient
     BevelOuter = bvNone
     BorderStyle = bsNone
     TabOrder = 0
     object Label1: TLabel
       Left = 273
-      Top = -31
+      Top = 18
       Width = 85
       Height = 13
       Margins.Left = 5
@@ -122,7 +121,7 @@ object framePacotes: TframePacotes
     end
     object Label2: TLabel
       Left = 276
-      Top = 41
+      Top = 90
       Width = 176
       Height = 13
       Margins.Left = 5
@@ -136,7 +135,7 @@ object framePacotes: TframePacotes
     end
     object Label3: TLabel
       Left = 276
-      Top = 58
+      Top = 107
       Width = 120
       Height = 13
       Margins.Left = 5
@@ -150,7 +149,7 @@ object framePacotes: TframePacotes
     end
     object Label4: TLabel
       Left = 292
-      Top = 410
+      Top = 459
       Width = 168
       Height = 13
       Margins.Left = 5
@@ -164,7 +163,7 @@ object framePacotes: TframePacotes
     end
     object Label8: TLabel
       Left = 282
-      Top = 344
+      Top = 393
       Width = 146
       Height = 13
       Margins.Left = 5
@@ -178,7 +177,7 @@ object framePacotes: TframePacotes
     end
     object Label9: TLabel
       Left = 3
-      Top = 988
+      Top = 1037
       Width = 200
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (FastReport)'
@@ -191,7 +190,7 @@ object framePacotes: TframePacotes
     end
     object Label5: TLabel
       Left = 276
-      Top = 1002
+      Top = 1051
       Width = 83
       Height = 13
       Margins.Left = 5
@@ -205,7 +204,7 @@ object framePacotes: TframePacotes
     end
     object Label6: TLabel
       Left = 276
-      Top = 1019
+      Top = 1068
       Width = 83
       Height = 13
       Margins.Left = 5
@@ -219,7 +218,7 @@ object framePacotes: TframePacotes
     end
     object Label7: TLabel
       Left = 276
-      Top = 1036
+      Top = 1085
       Width = 292
       Height = 13
       Margins.Left = 5
@@ -233,7 +232,7 @@ object framePacotes: TframePacotes
     end
     object Label10: TLabel
       Left = 276
-      Top = 1070
+      Top = 1119
       Width = 94
       Height = 13
       Margins.Left = 5
@@ -247,7 +246,7 @@ object framePacotes: TframePacotes
     end
     object Label11: TLabel
       Left = 276
-      Top = 1087
+      Top = 1136
       Width = 91
       Height = 13
       Margins.Left = 5
@@ -261,7 +260,7 @@ object framePacotes: TframePacotes
     end
     object Label12: TLabel
       Left = 276
-      Top = 1122
+      Top = 1171
       Width = 91
       Height = 13
       Margins.Left = 5
@@ -275,7 +274,7 @@ object framePacotes: TframePacotes
     end
     object Label13: TLabel
       Left = 276
-      Top = 1177
+      Top = 1226
       Width = 93
       Height = 13
       Margins.Left = 5
@@ -289,7 +288,7 @@ object framePacotes: TframePacotes
     end
     object Label14: TLabel
       Left = 276
-      Top = 1226
+      Top = 1275
       Width = 93
       Height = 13
       Margins.Left = 5
@@ -303,7 +302,7 @@ object framePacotes: TframePacotes
     end
     object Label15: TLabel
       Left = 276
-      Top = 1192
+      Top = 1241
       Width = 302
       Height = 13
       Margins.Left = 5
@@ -317,7 +316,7 @@ object framePacotes: TframePacotes
     end
     object Label16: TLabel
       Left = 276
-      Top = 1243
+      Top = 1292
       Width = 104
       Height = 13
       Margins.Left = 5
@@ -331,7 +330,7 @@ object framePacotes: TframePacotes
     end
     object Label17: TLabel
       Left = 276
-      Top = 1260
+      Top = 1309
       Width = 101
       Height = 13
       Margins.Left = 5
@@ -345,7 +344,7 @@ object framePacotes: TframePacotes
     end
     object Label18: TLabel
       Left = 276
-      Top = 1294
+      Top = 1343
       Width = 101
       Height = 13
       Margins.Left = 5
@@ -359,7 +358,7 @@ object framePacotes: TframePacotes
     end
     object Label19: TLabel
       Left = 276
-      Top = 1277
+      Top = 1326
       Width = 93
       Height = 13
       Margins.Left = 5
@@ -373,7 +372,7 @@ object framePacotes: TframePacotes
     end
     object Label20: TLabel
       Left = 3
-      Top = 1145
+      Top = 1194
       Width = 212
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (FortesReport)'
@@ -386,7 +385,7 @@ object framePacotes: TframePacotes
     end
     object Label21: TLabel
       Left = 276
-      Top = 177
+      Top = 226
       Width = 152
       Height = 13
       Margins.Left = 5
@@ -400,7 +399,7 @@ object framePacotes: TframePacotes
     end
     object Label22: TLabel
       Left = 276
-      Top = 126
+      Top = 175
       Width = 136
       Height = 13
       Margins.Left = 5
@@ -414,7 +413,7 @@ object framePacotes: TframePacotes
     end
     object Label23: TLabel
       Left = 292
-      Top = 361
+      Top = 410
       Width = 155
       Height = 13
       Margins.Left = 5
@@ -428,7 +427,7 @@ object framePacotes: TframePacotes
     end
     object Label24: TLabel
       Left = 276
-      Top = 160
+      Top = 209
       Width = 157
       Height = 13
       Margins.Left = 5
@@ -442,7 +441,7 @@ object framePacotes: TframePacotes
     end
     object Label25: TLabel
       Left = 276
-      Top = 224
+      Top = 273
       Width = 198
       Height = 13
       Margins.Left = 5
@@ -456,7 +455,7 @@ object framePacotes: TframePacotes
     end
     object Label26: TLabel
       Left = 276
-      Top = 293
+      Top = 342
       Width = 188
       Height = 13
       Margins.Left = 5
@@ -470,7 +469,7 @@ object framePacotes: TframePacotes
     end
     object Label27: TLabel
       Left = 260
-      Top = 1158
+      Top = 1207
       Width = 109
       Height = 13
       Margins.Left = 5
@@ -484,7 +483,7 @@ object framePacotes: TframePacotes
     end
     object Label28: TLabel
       Left = 276
-      Top = 1104
+      Top = 1153
       Width = 83
       Height = 13
       Margins.Left = 5
@@ -498,7 +497,7 @@ object framePacotes: TframePacotes
     end
     object lbl1: TLabel
       Left = 292
-      Top = 478
+      Top = 527
       Width = 356
       Height = 13
       Margins.Left = 5
@@ -514,7 +513,7 @@ object framePacotes: TframePacotes
     end
     object lbl2: TLabel
       Left = 292
-      Top = 494
+      Top = 543
       Width = 269
       Height = 13
       Margins.Left = 5
@@ -528,7 +527,7 @@ object framePacotes: TframePacotes
     end
     object lbl3: TLabel
       Left = 276
-      Top = 1053
+      Top = 1102
       Width = 201
       Height = 13
       Margins.Left = 5
@@ -542,7 +541,7 @@ object framePacotes: TframePacotes
     end
     object Label29: TLabel
       Left = 276
-      Top = 1209
+      Top = 1258
       Width = 215
       Height = 13
       Margins.Left = 5
@@ -556,7 +555,7 @@ object framePacotes: TframePacotes
     end
     object lblacb: TLabel
       Left = 276
-      Top = 884
+      Top = 933
       Width = 386
       Height = 13
       Margins.Left = 5
@@ -572,7 +571,7 @@ object framePacotes: TframePacotes
     end
     object lblSubTituloFPDF: TLabel
       Left = 3
-      Top = 908
+      Top = 957
       Width = 203
       Height = 13
       Caption = 'Gerador de Relat'#243'rios (FPDF Pascal)'
@@ -585,7 +584,7 @@ object framePacotes: TframePacotes
     end
     object lblFPDF_BoletoDPK: TLabel
       Left = 276
-      Top = 921
+      Top = 970
       Width = 210
       Height = 13
       Margins.Left = 5
@@ -599,7 +598,7 @@ object framePacotes: TframePacotes
     end
     object Label30: TLabel
       Left = 292
-      Top = 393
+      Top = 442
       Width = 204
       Height = 13
       Margins.Left = 5
@@ -614,7 +613,7 @@ object framePacotes: TframePacotes
     end
     object Label31: TLabel
       Left = 276
-      Top = 937
+      Top = 986
       Width = 334
       Height = 13
       Margins.Left = 5
@@ -628,7 +627,7 @@ object framePacotes: TframePacotes
     end
     object Label32: TLabel
       Left = 276
-      Top = 954
+      Top = 1003
       Width = 247
       Height = 13
       Margins.Left = 5
@@ -642,7 +641,7 @@ object framePacotes: TframePacotes
     end
     object lblNFCom: TLabel
       Left = 292
-      Top = 510
+      Top = 559
       Width = 387
       Height = 13
       Margins.Left = 5
@@ -658,7 +657,7 @@ object framePacotes: TframePacotes
     end
     object Label33: TLabel
       Left = 276
-      Top = 971
+      Top = 1020
       Width = 266
       Height = 13
       Margins.Left = 5
@@ -670,9 +669,23 @@ object framePacotes: TframePacotes
       Font.Style = []
       ParentFont = False
     end
+    object Label34: TLabel
+      Left = 276
+      Top = 1359
+      Width = 215
+      Height = 13
+      Margins.Left = 5
+      Caption = 'FortesReport - NF3e (NOVO COMPONENTE!)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
     object ACBr_synapse_dpk: TCheckBox
       Left = 2
-      Top = -49
+      Top = 0
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -695,7 +708,7 @@ object framePacotes: TframePacotes
     object ACBr_Comum_dpk: TCheckBox
       Tag = 1
       Left = 18
-      Top = -32
+      Top = 17
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -718,7 +731,7 @@ object framePacotes: TframePacotes
     object ACBr_Diversos_dpk: TCheckBox
       Tag = 2
       Left = 34
-      Top = 3
+      Top = 52
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -741,7 +754,7 @@ object framePacotes: TframePacotes
     object ACBr_Serial_dpk: TCheckBox
       Tag = 3
       Left = 50
-      Top = 37
+      Top = 86
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -761,7 +774,7 @@ object framePacotes: TframePacotes
     object ACBr_TCP_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 276
+      Top = 325
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -781,7 +794,7 @@ object framePacotes: TframePacotes
     object ACBr_BPe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 696
+      Top = 745
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -801,7 +814,7 @@ object framePacotes: TframePacotes
     object ACBr_TEFD_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 833
+      Top = 882
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -821,7 +834,7 @@ object framePacotes: TframePacotes
     object ACBr_Boleto_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 361
+      Top = 410
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -841,7 +854,7 @@ object framePacotes: TframePacotes
     object ACBr_Sintegra_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 156
+      Top = 205
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -861,7 +874,7 @@ object framePacotes: TframePacotes
     object ACBr_SPED_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 173
+      Top = 222
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -881,7 +894,7 @@ object framePacotes: TframePacotes
     object ACBr_PAF_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 122
+      Top = 171
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -901,7 +914,7 @@ object framePacotes: TframePacotes
     object ACBr_OpenSSL_dpk: TCheckBox
       Tag = 2
       Left = 34
-      Top = -15
+      Top = 34
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -921,7 +934,7 @@ object framePacotes: TframePacotes
     object ACBr_PCNComum_dpk: TCheckBox
       Tag = 2
       Left = 50
-      Top = 20
+      Top = 69
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -941,7 +954,7 @@ object framePacotes: TframePacotes
     object ACBr_NFe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 410
+      Top = 459
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -961,7 +974,7 @@ object framePacotes: TframePacotes
     object ACBr_CTe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 461
+      Top = 510
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -981,7 +994,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSe_dpk: TCheckBox
       Tag = 4
       Left = 82
-      Top = 478
+      Top = 527
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1001,7 +1014,7 @@ object framePacotes: TframePacotes
     object ACBr_MDFe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 527
+      Top = 576
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1021,7 +1034,7 @@ object framePacotes: TframePacotes
     object ACBr_GNRE_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 544
+      Top = 593
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1041,7 +1054,7 @@ object framePacotes: TframePacotes
     object ACBr_Convenio115_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 71
+      Top = 120
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1061,7 +1074,7 @@ object framePacotes: TframePacotes
     object ACBr_SEF2_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 139
+      Top = 188
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1081,7 +1094,7 @@ object framePacotes: TframePacotes
     object ACBr_SAT_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 595
+      Top = 644
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1101,7 +1114,7 @@ object framePacotes: TframePacotes
     object ACBr_NFeDanfeESCPOS_dpk: TCheckBox
       Tag = 5
       Left = 97
-      Top = 444
+      Top = 493
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1121,7 +1134,7 @@ object framePacotes: TframePacotes
     object ACBr_SATExtratoESCPOS_dpk: TCheckBox
       Tag = 5
       Left = 97
-      Top = 629
+      Top = 678
       Width = 180
       Height = 17
       Margins.Left = 25
@@ -1141,7 +1154,7 @@ object framePacotes: TframePacotes
     object ACBr_LFD_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 88
+      Top = 137
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1161,7 +1174,7 @@ object framePacotes: TframePacotes
     object ACBr_SPEDImportar_dpk: TCheckBox
       Tag = 8
       Left = 82
-      Top = 190
+      Top = 239
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1181,7 +1194,7 @@ object framePacotes: TframePacotes
     object ACBr_DFeComum_dpk: TCheckBox
       Tag = 3
       Left = 66
-      Top = 344
+      Top = 393
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1201,7 +1214,7 @@ object framePacotes: TframePacotes
     object ACBr_NFCeECFVirtual_dpk: TCheckBox
       Tag = 5
       Left = 97
-      Top = 427
+      Top = 476
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1221,7 +1234,7 @@ object framePacotes: TframePacotes
     object ACBr_SATECFVirtual_dpk: TCheckBox
       Tag = 5
       Left = 97
-      Top = 612
+      Top = 661
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1241,7 +1254,7 @@ object framePacotes: TframePacotes
     object ACBr_TXTComum_dpk: TCheckBox
       Tag = 2
       Left = 50
-      Top = 54
+      Top = 103
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1261,7 +1274,7 @@ object framePacotes: TframePacotes
     object ACBr_NFeDanfeFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1002
+      Top = 1051
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1281,7 +1294,7 @@ object framePacotes: TframePacotes
     object ACBr_CTeDacteFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1019
+      Top = 1068
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1301,7 +1314,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSeDanfseFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1036
+      Top = 1085
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1321,7 +1334,7 @@ object framePacotes: TframePacotes
     object ACBr_BoletoFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1070
+      Top = 1119
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1341,7 +1354,7 @@ object framePacotes: TframePacotes
     object ACBr_MDFeDamdfeFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1087
+      Top = 1136
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1361,7 +1374,7 @@ object framePacotes: TframePacotes
     object ACBr_GNREGuiaFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1122
+      Top = 1171
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1381,7 +1394,7 @@ object framePacotes: TframePacotes
     object ACBr_NFeDanfeRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1177
+      Top = 1226
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1401,7 +1414,7 @@ object framePacotes: TframePacotes
     object ACBr_CTeDacteRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1226
+      Top = 1275
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1421,7 +1434,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSeDanfseRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1192
+      Top = 1241
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1441,7 +1454,7 @@ object framePacotes: TframePacotes
     object ACBr_BoletoRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1243
+      Top = 1292
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1461,7 +1474,7 @@ object framePacotes: TframePacotes
     object ACBr_MDFeDamdfeRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1260
+      Top = 1309
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1481,7 +1494,7 @@ object framePacotes: TframePacotes
     object ACBr_SATExtratoRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1277
+      Top = 1326
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1501,7 +1514,7 @@ object framePacotes: TframePacotes
     object ACBr_GNREGuiaRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1294
+      Top = 1343
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1521,7 +1534,7 @@ object framePacotes: TframePacotes
     object ACBr_BlocoX_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 663
+      Top = 712
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1541,7 +1554,7 @@ object framePacotes: TframePacotes
     object ACBr_DeSTDA_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 207
+      Top = 256
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1561,7 +1574,7 @@ object framePacotes: TframePacotes
     object ACBr_Ponto_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 224
+      Top = 273
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1581,7 +1594,7 @@ object framePacotes: TframePacotes
     object ACBr_MTER_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 293
+      Top = 342
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1601,7 +1614,7 @@ object framePacotes: TframePacotes
     object ACBr_SATWS_dpk: TCheckBox
       Tag = 4
       Left = 97
-      Top = 646
+      Top = 695
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1621,7 +1634,7 @@ object framePacotes: TframePacotes
     object ACBr_ANe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 729
+      Top = 778
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1641,7 +1654,7 @@ object framePacotes: TframePacotes
     object ACBr_Integrador_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 327
+      Top = 376
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1661,7 +1674,7 @@ object framePacotes: TframePacotes
     object ACBre_Social_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 561
+      Top = 610
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1681,7 +1694,7 @@ object framePacotes: TframePacotes
     object ACBr_Reinf_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 578
+      Top = 627
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1701,7 +1714,7 @@ object framePacotes: TframePacotes
     object ACBr_BPeDabpeESCPOS_dpk: TCheckBox
       Tag = 4
       Left = 97
-      Top = 712
+      Top = 761
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1721,7 +1734,7 @@ object framePacotes: TframePacotes
     object ACBr_DFeReportRL_dpk: TCheckBox
       Tag = 4
       Left = 34
-      Top = 1158
+      Top = 1207
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1741,7 +1754,7 @@ object framePacotes: TframePacotes
     object ACBr_CIOT_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 746
+      Top = 795
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1761,7 +1774,7 @@ object framePacotes: TframePacotes
     object ACBr_LCDPR_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 243
+      Top = 292
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1781,7 +1794,7 @@ object framePacotes: TframePacotes
     object ACBr_ONE_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 763
+      Top = 812
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1801,7 +1814,7 @@ object framePacotes: TframePacotes
     object ACBr_EDI_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 105
+      Top = 154
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1821,7 +1834,7 @@ object framePacotes: TframePacotes
     object ACBr_NF3e_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 780
+      Top = 829
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1841,7 +1854,7 @@ object framePacotes: TframePacotes
     object ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
       Tag = 4
       Left = 97
-      Top = 796
+      Top = 845
       Width = 172
       Height = 17
       Margins.Left = 25
@@ -1861,7 +1874,7 @@ object framePacotes: TframePacotes
     object ACBr_ADRCST_dpk: TCheckBox
       Tag = 4
       Left = 66
-      Top = 260
+      Top = 309
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1881,7 +1894,7 @@ object framePacotes: TframePacotes
     object ACBr_SATExtratoFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1104
+      Top = 1153
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1901,7 +1914,7 @@ object framePacotes: TframePacotes
     object ACBr_PagFor_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 378
+      Top = 427
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1921,7 +1934,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSeX_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 494
+      Top = 543
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1941,7 +1954,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSeXDanfseRL_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1209
+      Top = 1258
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1961,7 +1974,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSeXDanfseFR_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 1053
+      Top = 1102
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -1981,7 +1994,7 @@ object framePacotes: TframePacotes
     object ACBr_OFX_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 850
+      Top = 899
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2001,7 +2014,7 @@ object framePacotes: TframePacotes
     object ACBr_GTIN_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 814
+      Top = 863
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2021,7 +2034,7 @@ object framePacotes: TframePacotes
     object ACBr_OpenDelivery_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 867
+      Top = 916
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2041,7 +2054,7 @@ object framePacotes: TframePacotes
     object ACBr_PAFNFCe_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 679
+      Top = 728
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2061,7 +2074,7 @@ object framePacotes: TframePacotes
     object ACBr_PIXCD_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 310
+      Top = 359
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2081,7 +2094,7 @@ object framePacotes: TframePacotes
     object ACBr_Android_dpk: TCheckBox
       Tag = 4
       Left = 50
-      Top = 884
+      Top = 933
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2101,7 +2114,7 @@ object framePacotes: TframePacotes
     object ACBr_BoletoFPDF_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 921
+      Top = 970
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2121,7 +2134,7 @@ object framePacotes: TframePacotes
     object ACBr_DebitoAutomatico_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 393
+      Top = 442
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2141,7 +2154,7 @@ object framePacotes: TframePacotes
     object ACBr_NFeDanfeFPDF_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 937
+      Top = 986
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2161,7 +2174,7 @@ object framePacotes: TframePacotes
     object ACBr_NFSeXDanfseFPDF_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 954
+      Top = 1003
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2181,7 +2194,7 @@ object framePacotes: TframePacotes
     object ACBr_NFCom_dpk: TCheckBox
       Tag = 4
       Left = 81
-      Top = 510
+      Top = 559
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2201,7 +2214,7 @@ object framePacotes: TframePacotes
     object ACBr_SATExtratoFPDF_dpk: TCheckBox
       Tag = 9
       Left = 50
-      Top = 971
+      Top = 1020
       Width = 163
       Height = 17
       Margins.Left = 25
@@ -2216,6 +2229,26 @@ object framePacotes: TframePacotes
       Font.Style = []
       ParentFont = False
       TabOrder = 59
+      OnClick = VerificarCheckboxes
+    end
+    object CheckBox1: TCheckBox
+      Tag = 9
+      Left = 50
+      Top = 1359
+      Width = 163
+      Height = 17
+      Margins.Left = 25
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Caption = 'ACBr_NF3eDANF3eRL.dpk'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 77
       OnClick = VerificarCheckboxes
     end
   end

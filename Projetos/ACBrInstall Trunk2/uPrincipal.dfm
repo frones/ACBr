@@ -1,30 +1,28 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = wizPgFinalizar
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
-  ClientHeight = 612
-  ClientWidth = 720
+  ClientHeight = 630
+  ClientWidth = 740
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object wizPrincipal: TJvWizard
     Left = 0
     Top = 0
-    Width = 720
-    Height = 612
-    ActivePage = wizPgInicio
+    Width = 740
+    Height = 630
+    ActivePage = wizPgFinalizar
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -53,8 +51,8 @@ object frmPrincipal: TfrmPrincipal
     OnCancelButtonClick = wizPrincipalCancelButtonClick
     Color = 3418659
     DesignSize = (
-      720
-      612)
+      740
+      630)
     object wizPgInicio: TJvWizardWelcomePage
       Header.Visible = False
       Header.Height = 50
@@ -87,7 +85,7 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
       object Label20: TLabel
-        Left = 6
+        Left = 17
         Top = 351
         Width = 531
         Height = 32
@@ -103,7 +101,7 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object Label6: TLabel
-        Left = 6
+        Left = 17
         Top = 44
         Width = 492
         Height = 80
@@ -120,7 +118,7 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object lblUrlACBrSac1: TLabel
-        Left = 267
+        Left = 278
         Top = 369
         Width = 171
         Height = 14
@@ -135,7 +133,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object lblUrlForum1: TLabel
-        Left = 278
+        Left = 289
         Top = 258
         Width = 219
         Height = 14
@@ -150,7 +148,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object lblUrlACBr1: TLabel
-        Left = 303
+        Left = 314
         Top = 176
         Width = 182
         Height = 14
@@ -165,7 +163,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object Label19: TLabel
-        Left = 6
+        Left = 17
         Top = 176
         Width = 291
         Height = 14
@@ -178,7 +176,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label21: TLabel
-        Left = 6
+        Left = 17
         Top = 258
         Width = 266
         Height = 14
@@ -191,7 +189,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label7: TLabel
-        Left = 6
+        Left = 17
         Top = 315
         Width = 533
         Height = 18
@@ -208,7 +206,7 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object lblNotaDelphiAntigo: TLabel
-        Left = 6
+        Left = 17
         Top = 443
         Width = 545
         Height = 30
@@ -591,376 +589,382 @@ object frmPrincipal: TfrmPrincipal
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
-        Width = 554
-        Height = 499
+        Width = 574
+        Height = 517
         HorzScrollBar.Visible = False
         VertScrollBar.Visible = False
         Align = alClient
         TabOrder = 0
         inherited pnlBotoesMarcar: TPanel
-          Top = 458
-          Width = 554
+          Top = 476
+          Width = 574
           inherited btnPacotesDesmarcarTodos: TSpeedButton
-            Left = 504
+            Left = 524
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
-            Left = 454
+            Left = 474
           end
         end
         inherited ScrollBox1: TScrollBox
-          Width = 548
-          Height = 452
-          VertScrollBar.Position = 0
+          Width = 568
+          Height = 470
+          VertScrollBar.Position = 923
           inherited Label1: TLabel
-            Top = 18
+            Top = -905
           end
           inherited Label2: TLabel
-            Top = 90
+            Top = -833
           end
           inherited Label3: TLabel
-            Top = 107
+            Top = -816
           end
           inherited Label4: TLabel
-            Top = 460
+            Top = -464
           end
           inherited Label8: TLabel
-            Top = 394
+            Top = -530
           end
           inherited Label9: TLabel
-            Top = 1037
+            Top = 114
           end
           inherited Label5: TLabel
-            Top = 1052
+            Top = 128
           end
           inherited Label6: TLabel
-            Top = 1073
+            Top = 145
           end
           inherited Label7: TLabel
-            Top = 1089
+            Top = 162
           end
           inherited Label10: TLabel
-            Top = 1123
+            Top = 196
           end
           inherited Label11: TLabel
-            Top = 1140
+            Top = 213
           end
           inherited Label12: TLabel
-            Top = 1172
+            Top = 248
           end
           inherited Label13: TLabel
-            Top = 1228
+            Top = 303
           end
           inherited Label14: TLabel
-            Top = 1278
+            Top = 352
           end
           inherited Label15: TLabel
-            Top = 1245
+            Top = 318
           end
           inherited Label16: TLabel
-            Top = 1295
+            Top = 369
           end
           inherited Label17: TLabel
-            Top = 1312
+            Top = 386
           end
           inherited Label18: TLabel
-            Top = 1346
+            Top = 420
           end
           inherited Label19: TLabel
-            Top = 1329
+            Top = 403
           end
           inherited Label20: TLabel
-            Top = 1194
+            Top = 271
           end
           inherited Label21: TLabel
-            Top = 226
+            Top = -697
           end
           inherited Label22: TLabel
-            Top = 175
+            Top = -748
           end
           inherited Label23: TLabel
-            Top = 410
+            Top = -513
           end
           inherited Label24: TLabel
-            Top = 209
+            Top = -714
           end
           inherited Label25: TLabel
-            Top = 277
+            Top = -650
           end
           inherited Label26: TLabel
-            Top = 346
+            Top = -581
           end
           inherited Label27: TLabel
-            Top = 1211
+            Top = 284
           end
           inherited Label28: TLabel
-            Top = 1157
+            Top = 230
           end
           inherited lbl1: TLabel
-            Top = 528
+            Top = -396
           end
           inherited lbl2: TLabel
-            Top = 544
+            Top = -380
           end
           inherited lbl3: TLabel
-            Top = 1107
+            Top = 179
           end
           inherited Label29: TLabel
-            Top = 1262
+            Top = 335
           end
           inherited lblacb: TLabel
-            Top = 934
+            Top = 10
           end
           inherited lblSubTituloFPDF: TLabel
-            Top = 957
-          end
-          inherited lblFPDF_BoletoDPK: TLabel
-            Top = 971
-          end
-          inherited Label30: TLabel
-            Top = 444
-          end
-          inherited Label31: TLabel
-            Top = 987
-          end
-          inherited Label32: TLabel
-            Top = 1003
-          end
-          inherited lblNFCom: TLabel
-            Top = 560
-          end
-          inherited Label33: TLabel
-            Top = 1020
-          end
-          inherited ACBr_synapse_dpk: TCheckBox
-            Top = 0
-          end
-          inherited ACBr_Comum_dpk: TCheckBox
-            Top = 17
-          end
-          inherited ACBr_Diversos_dpk: TCheckBox
-            Top = 52
-          end
-          inherited ACBr_Serial_dpk: TCheckBox
-            Top = 86
-          end
-          inherited ACBr_TCP_dpk: TCheckBox
-            Top = 325
-          end
-          inherited ACBr_BPe_dpk: TCheckBox
-            Top = 745
-          end
-          inherited ACBr_TEFD_dpk: TCheckBox
-            Top = 882
-          end
-          inherited ACBr_Boleto_dpk: TCheckBox
-            Top = 410
-          end
-          inherited ACBr_Sintegra_dpk: TCheckBox
-            Top = 205
-          end
-          inherited ACBr_SPED_dpk: TCheckBox
-            Top = 222
-          end
-          inherited ACBr_PAF_dpk: TCheckBox
-            Top = 171
-          end
-          inherited ACBr_OpenSSL_dpk: TCheckBox
             Top = 34
           end
+          inherited lblFPDF_BoletoDPK: TLabel
+            Top = 47
+          end
+          inherited Label30: TLabel
+            Top = -481
+          end
+          inherited Label31: TLabel
+            Top = 63
+          end
+          inherited Label32: TLabel
+            Top = 80
+          end
+          inherited lblNFCom: TLabel
+            Top = -364
+          end
+          inherited Label33: TLabel
+            Top = 97
+          end
+          inherited Label34: TLabel
+            Top = 436
+          end
+          inherited ACBr_synapse_dpk: TCheckBox
+            Top = -923
+          end
+          inherited ACBr_Comum_dpk: TCheckBox
+            Top = -906
+          end
+          inherited ACBr_Diversos_dpk: TCheckBox
+            Top = -871
+          end
+          inherited ACBr_Serial_dpk: TCheckBox
+            Top = -837
+          end
+          inherited ACBr_TCP_dpk: TCheckBox
+            Top = -598
+          end
+          inherited ACBr_BPe_dpk: TCheckBox
+            Top = -178
+          end
+          inherited ACBr_TEFD_dpk: TCheckBox
+            Top = -41
+          end
+          inherited ACBr_Boleto_dpk: TCheckBox
+            Top = -513
+          end
+          inherited ACBr_Sintegra_dpk: TCheckBox
+            Top = -718
+          end
+          inherited ACBr_SPED_dpk: TCheckBox
+            Top = -701
+          end
+          inherited ACBr_PAF_dpk: TCheckBox
+            Top = -752
+          end
+          inherited ACBr_OpenSSL_dpk: TCheckBox
+            Top = -889
+          end
           inherited ACBr_PCNComum_dpk: TCheckBox
-            Top = 69
+            Top = -854
           end
           inherited ACBr_NFe_dpk: TCheckBox
-            Top = 459
+            Top = -464
           end
           inherited ACBr_CTe_dpk: TCheckBox
-            Top = 510
+            Top = -413
           end
           inherited ACBr_NFSe_dpk: TCheckBox
-            Top = 527
+            Top = -396
           end
           inherited ACBr_MDFe_dpk: TCheckBox
-            Top = 576
+            Top = -347
           end
           inherited ACBr_GNRE_dpk: TCheckBox
-            Top = 593
+            Top = -330
           end
           inherited ACBr_Convenio115_dpk: TCheckBox
-            Top = 120
+            Top = -803
           end
           inherited ACBr_SEF2_dpk: TCheckBox
-            Top = 188
+            Top = -735
           end
           inherited ACBr_SAT_dpk: TCheckBox
-            Top = 644
+            Top = -279
           end
           inherited ACBr_NFeDanfeESCPOS_dpk: TCheckBox
-            Top = 493
+            Top = -430
           end
           inherited ACBr_SATExtratoESCPOS_dpk: TCheckBox
-            Top = 678
+            Top = -245
           end
           inherited ACBr_LFD_dpk: TCheckBox
-            Top = 137
+            Top = -786
           end
           inherited ACBr_SPEDImportar_dpk: TCheckBox
-            Top = 239
+            Top = -684
           end
           inherited ACBr_DFeComum_dpk: TCheckBox
-            Top = 393
+            Top = -530
           end
           inherited ACBr_NFCeECFVirtual_dpk: TCheckBox
-            Top = 476
+            Top = -447
           end
           inherited ACBr_SATECFVirtual_dpk: TCheckBox
-            Top = 661
+            Top = -262
           end
           inherited ACBr_TXTComum_dpk: TCheckBox
-            Top = 103
+            Top = -820
           end
           inherited ACBr_NFeDanfeFR_dpk: TCheckBox
-            Top = 1051
+            Top = 128
           end
           inherited ACBr_CTeDacteFR_dpk: TCheckBox
-            Top = 1068
+            Top = 145
           end
           inherited ACBr_NFSeDanfseFR_dpk: TCheckBox
-            Top = 1085
+            Top = 162
           end
           inherited ACBr_BoletoFR_dpk: TCheckBox
-            Top = 1119
+            Top = 196
           end
           inherited ACBr_MDFeDamdfeFR_dpk: TCheckBox
-            Top = 1136
+            Top = 213
           end
           inherited ACBr_GNREGuiaFR_dpk: TCheckBox
-            Top = 1171
+            Top = 248
           end
           inherited ACBr_NFeDanfeRL_dpk: TCheckBox
-            Top = 1224
+            Top = 303
           end
           inherited ACBr_CTeDacteRL_dpk: TCheckBox
-            Top = 1275
+            Top = 352
           end
           inherited ACBr_NFSeDanfseRL_dpk: TCheckBox
-            Top = 1241
+            Top = 318
           end
           inherited ACBr_BoletoRL_dpk: TCheckBox
-            Top = 1292
+            Top = 369
           end
           inherited ACBr_MDFeDamdfeRL_dpk: TCheckBox
-            Top = 1309
+            Top = 386
           end
           inherited ACBr_SATExtratoRL_dpk: TCheckBox
-            Top = 1326
+            Top = 403
           end
           inherited ACBr_GNREGuiaRL_dpk: TCheckBox
-            Top = 1343
+            Top = 420
           end
           inherited ACBr_BlocoX_dpk: TCheckBox
-            Top = 712
+            Top = -211
           end
           inherited ACBr_DeSTDA_dpk: TCheckBox
-            Top = 256
+            Top = -667
           end
           inherited ACBr_Ponto_dpk: TCheckBox
-            Top = 273
+            Top = -650
           end
           inherited ACBr_MTER_dpk: TCheckBox
-            Top = 342
+            Top = -581
           end
           inherited ACBr_SATWS_dpk: TCheckBox
-            Top = 695
+            Top = -228
           end
           inherited ACBr_ANe_dpk: TCheckBox
-            Top = 778
+            Top = -145
           end
           inherited ACBr_Integrador_dpk: TCheckBox
-            Top = 376
+            Top = -547
           end
           inherited ACBre_Social_dpk: TCheckBox
-            Top = 610
+            Top = -313
           end
           inherited ACBr_Reinf_dpk: TCheckBox
-            Top = 627
+            Top = -296
           end
           inherited ACBr_BPeDabpeESCPOS_dpk: TCheckBox
-            Top = 761
+            Top = -162
           end
           inherited ACBr_DFeReportRL_dpk: TCheckBox
-            Top = 1207
+            Top = 284
           end
           inherited ACBr_CIOT_dpk: TCheckBox
-            Top = 795
+            Top = -128
           end
           inherited ACBr_LCDPR_dpk: TCheckBox
-            Top = 292
+            Top = -631
           end
           inherited ACBr_ONE_dpk: TCheckBox
-            Top = 812
+            Top = -111
           end
           inherited ACBr_EDI_dpk: TCheckBox
-            Top = 154
+            Top = -769
           end
           inherited ACBr_NF3e_dpk: TCheckBox
-            Top = 829
+            Top = -94
           end
           inherited ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
-            Top = 845
+            Top = -78
           end
           inherited ACBr_ADRCST_dpk: TCheckBox
-            Top = 309
+            Top = -614
           end
           inherited ACBr_SATExtratoFR_dpk: TCheckBox
-            Top = 1153
+            Top = 230
           end
           inherited ACBr_PagFor_dpk: TCheckBox
-            Top = 427
+            Top = -496
           end
           inherited ACBr_NFSeX_dpk: TCheckBox
-            Top = 543
+            Top = -380
           end
           inherited ACBr_NFSeXDanfseRL_dpk: TCheckBox
-            Top = 1258
+            Top = 335
           end
           inherited ACBr_NFSeXDanfseFR_dpk: TCheckBox
-            Top = 1102
+            Top = 179
           end
           inherited ACBr_OFX_dpk: TCheckBox
-            Top = 899
+            Top = -24
           end
           inherited ACBr_GTIN_dpk: TCheckBox
-            Top = 863
+            Top = -60
           end
           inherited ACBr_OpenDelivery_dpk: TCheckBox
-            Top = 916
+            Top = -7
           end
           inherited ACBr_PAFNFCe_dpk: TCheckBox
-            Top = 728
+            Top = -195
           end
           inherited ACBr_PIXCD_dpk: TCheckBox
-            Top = 359
+            Top = -564
           end
           inherited ACBr_Android_dpk: TCheckBox
-            Top = 933
+            Top = 10
           end
           inherited ACBr_BoletoFPDF_dpk: TCheckBox
-            Top = 970
+            Top = 47
           end
           inherited ACBr_DebitoAutomatico_dpk: TCheckBox
-            Top = 442
+            Top = -481
           end
           inherited ACBr_NFeDanfeFPDF_dpk: TCheckBox
-            Top = 986
+            Top = 63
           end
           inherited ACBr_NFSeXDanfseFPDF_dpk: TCheckBox
-            Top = 1003
+            Top = 80
           end
           inherited ACBr_NFCom_dpk: TCheckBox
-            Top = 559
+            Top = -364
           end
           inherited ACBr_SATExtratoFPDF_dpk: TCheckBox
-            Top = 1020
+            Top = 97
+          end
+          inherited CheckBox1: TCheckBox
+            Top = 436
           end
         end
       end
@@ -1082,7 +1086,7 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Fim'
       object lblSombra: TLabel
-        Left = 20
+        Left = 36
         Top = 306
         Width = 486
         Height = 46
@@ -1099,9 +1103,9 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object Label3: TLabel
-        Left = 6
+        Left = 20
         Top = 153
-        Width = 545
+        Width = 533
         Height = 24
         Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
@@ -1113,7 +1117,7 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object Label1: TLabel
-        Left = 19
+        Left = 33
         Top = 215
         Width = 291
         Height = 14
@@ -1126,7 +1130,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label4: TLabel
-        Left = 316
+        Left = 330
         Top = 215
         Width = 182
         Height = 14
@@ -1141,7 +1145,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object Label5: TLabel
-        Left = 19
+        Left = 33
         Top = 265
         Width = 266
         Height = 14
@@ -1154,7 +1158,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label11: TLabel
-        Left = 291
+        Left = 305
         Top = 265
         Width = 219
         Height = 14
@@ -1169,7 +1173,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
       object Label14: TLabel
-        Left = 21
+        Left = 35
         Top = 305
         Width = 486
         Height = 46
@@ -1187,9 +1191,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object imgOK: TImage
         Left = 216
-        Top = 42
-        Width = 105
-        Height = 105
+        Top = 24
+        Width = 127
+        Height = 123
         Center = True
         Picture.Data = {
           0954506E67496D61676589504E470D0A1A0A0000000D49484452000000600000
@@ -1427,7 +1431,7 @@ object frmPrincipal: TfrmPrincipal
           20C932064092E53F01894014330D4E40A30000000049454E44AE426082}
       end
       object Label12: TLabel
-        Left = 6
+        Left = 20
         Top = 381
         Width = 518
         Height = 38
@@ -1443,7 +1447,7 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object Label13: TLabel
-        Left = 141
+        Left = 155
         Top = 431
         Width = 253
         Height = 19
@@ -1462,7 +1466,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 0
       Top = 71
       Width = 166
-      Height = 499
+      Height = 517
       ItemHeight = 30
       AllowClickableNodes = False
       Color = 2729716
@@ -1480,7 +1484,7 @@ object frmPrincipal: TfrmPrincipal
     object pnlTopo: TPanel
       Left = 0
       Top = 0
-      Width = 720
+      Width = 740
       Height = 71
       Align = alTop
       BevelOuter = bvNone
@@ -1512,7 +1516,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

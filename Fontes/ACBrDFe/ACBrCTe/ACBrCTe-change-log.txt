@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/08/2024
+[*] Remoção das units: pcteConsSitCTe, pcteEnvEventoCTe, pcteEventoCTe,
+    pcteLayoutTXT, pcteModeloCTe, pcteRetConsSitCTe, pcteRetEnvEventoCTe.
+    Elas não são mais utilizadas, foram substituidas. 
+   Por: Italo Giurizzato Junior
+
 07/08/2024
 -- Diversos --
 [*] Alteração nos fontes para passar a utilizar as novas units: ACBrCTe.ConsSit,

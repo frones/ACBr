@@ -45,8 +45,12 @@ uses
   pcnRetConsReciDFe,
   ACBrDFeComum.RetConsCad,
   pcnConversao,
-  pcteConversaoCTe, pcteProcCte, ACBrCTe.EnvEvento, ACBrCTe.RetEnvEvento,
-  ACBrCTe.RetConsSit, pcteRetEnvCTe, pcnDistDFeInt, pcnRetDistDFeInt,
+  pcteConversaoCTe, pcteProcCte,
+  ACBrCTe.EnvEvento,
+  ACBrCTe.RetEnvEvento,
+  ACBrCTe.RetConsSit,
+  pcteRetEnvCTe,
+  pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes, pcteConsts;
 
 type
@@ -592,7 +596,8 @@ uses
   ACBrDFeComum.ConsCad,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
-  pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcnConsReciDFe;
+  ACBrCTe.ConsSit,
+  pcteInutCTe, pcteRetInutCTe, pcnConsReciDFe;
 
 { TCTeWebService }
 
@@ -2109,11 +2114,9 @@ begin
     ConsSitCTe.chCTe := FCTeChave;
     ConsSitCTe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConsSitCTe.Gerador.Opcoes );
+//    AjustarOpcoes( ConsSitCTe.Gerador.Opcoes );
 
-    ConsSitCTe.GerarXML;
-
-    FPDadosMsg := ConsSitCTe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsSitCTe.GerarXML;
   finally
     ConsSitCTe.Free;
   end;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/08/2024
+-- Giap.LerXml --
+[*] #TK-5886: Alteração visando obter a descrição do item de serviço.
+  Por: Microsys Sistemas
 -- ACBrNFSeXServicos --
 [*] #TK-5884: Alterado para versão 1.00 da cidade de Lontras/SC, o provedor é o mesmo.
   Por: Adriano Wolff

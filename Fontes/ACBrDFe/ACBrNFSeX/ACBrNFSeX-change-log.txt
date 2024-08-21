@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/08/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5884: Alterado para versão 1.00 da cidade de Lontras/SC, o provedor é o mesmo.
+  Por: Adriano Wolff
+[*] #TK-5885: Alterado para versão 2.03 da cidade de Ijui/RS, o provedor é o mesmo.
+  Por: Maiquel
+
 19/08/2024
 -- ACBrNFSeXServicos --
 [+] #TK-5881: Incluída a cidade de Aguas Frias/SC, o provedor é Pronim versão 2.02

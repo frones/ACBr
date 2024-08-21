@@ -1532,7 +1532,7 @@ type
     procedure GerarJPG;
 
     procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil);
+      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil; AReplyTo: TStrings = Nil);
 
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
@@ -2989,7 +2989,7 @@ begin
 end;
 
 procedure TACBrTitulo.EnviarEmail(const sPara, sAssunto: String;
-  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; AReplyTo: TStrings);
 begin
   if not Assigned(ACBrBoleto.ACBrBoletoFC) then
     raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) );
@@ -3002,7 +3002,7 @@ begin
 
   ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
   try
-    ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos);
+    ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos, AReplyTo);
   finally
     ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= -1;
   end;

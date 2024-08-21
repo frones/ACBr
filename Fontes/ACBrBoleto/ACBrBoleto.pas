@@ -1329,7 +1329,7 @@ type
      function GerarPDF : string; overload;
      procedure GerarPDF(AStream: TStream); overload;
      procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil);
+      EnviaPDF: Boolean; sCC: TStrings = Nil; Anexos: TStrings = Nil;AReplyTo: TStrings=nil);
 
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
@@ -3424,7 +3424,7 @@ begin
 end;
 
 procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
-  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+  sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings;AReplyTo: TStrings );
 var
   i: Integer;
   EMails: TStringList;

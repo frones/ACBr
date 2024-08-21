@@ -75,6 +75,7 @@ public class FrmMain extends javax.swing.JFrame {
         txtArqLogPSP = new javax.swing.JTextField();
         cmbNivelLogPSP = new javax.swing.JComboBox<>();
         jLabel63 = new javax.swing.JLabel();
+        btnOpenSSLInfo = new javax.swing.JButton();
         jPanel25 = new javax.swing.JPanel();
         jLabel55 = new javax.swing.JLabel();
         txtNomeRecebedor = new javax.swing.JTextField();
@@ -429,6 +430,13 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel63.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel63.setText("Nivel Log PSP");
 
+        btnOpenSSLInfo.setLabel("OpenSSLInfo");
+        btnOpenSSLInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenSSLInfoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
@@ -442,7 +450,8 @@ public class FrmMain extends javax.swing.JFrame {
                         .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel53)
                             .addComponent(jLabel63))
-                        .addGap(0, 127, Short.MAX_VALUE)))
+                        .addGap(0, 127, Short.MAX_VALUE))
+                    .addComponent(btnOpenSSLInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel24Layout.setVerticalGroup(
@@ -456,6 +465,8 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel63)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbNivelLogPSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOpenSSLInfo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3016,6 +3027,19 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConsultarCobrancasCobVActionPerformed
 
+    private void btnOpenSSLInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenSSLInfoActionPerformed
+
+        try 
+        {
+        String ret = acbrPIXCD.OpenSSLInfo();
+        rtbRespostas.append(ret);
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_btnOpenSSLInfoActionPerformed
+
     private void loadConfig() {
         try 
         {    
@@ -3342,6 +3366,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnCriarCobranca;
     private javax.swing.JButton btnCriarCobrancaImediata;
     private javax.swing.JButton btnGerarQRCodeEstatico;
+    private javax.swing.JButton btnOpenSSLInfo;
     private javax.swing.JButton btnRevisarCobranca;
     private javax.swing.JButton btnRevisarCobrancaImediata;
     private javax.swing.JButton btnSalvar;

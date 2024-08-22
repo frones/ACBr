@@ -3714,7 +3714,7 @@ begin
       Result[i].AppendChild(AddNode(tcStr, 'Z11', 'nProc', 01, 60, 1, NFe.InfAdic.procRef[i].nProc, DSC_NPROC));
       Result[i].AppendChild(AddNode(tcStr, 'Z12', 'indProc', 01, 01, 1, indProcToStr(NFe.InfAdic.procRef[i].indProc), DSC_INDPROC));
 
-      if nfe.InfAdic.procRef[i].indProc = ipSEFAZ then
+      if nfe.InfAdic.procRef[i].tpAto <> taNenhum then
         Result[i].AppendChild(AddNode(tcStr, 'Z13', 'tpAto', 02, 02, 0, tpAtoToStr(NFe.InfAdic.procRef[i].tpAto), DSC_TPATO));
     end;
   end;

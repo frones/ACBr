@@ -2945,7 +2945,7 @@ begin
       Gerador.wCampo(tcStr, 'Z11', 'nProc  ', 01, 60, 1, NFe.InfAdic.procRef[i].nProc, DSC_NPROC);
       Gerador.wCampo(tcStr, 'Z12', 'indProc', 01, 01, 1, indProcToStr(NFe.InfAdic.procRef[i].indProc), DSC_INDPROC);
 
-      if NFe.InfAdic.procRef[i].indProc = ipSEFAZ then
+      if NFe.InfAdic.procRef[i].tpAto <> taNenhum then
         Gerador.wCampo(tcStr, 'Z13', 'tpAto', 02, 02, 0, tpAtoToStr(NFe.InfAdic.procRef[i].tpAto), DSC_TPATO);
 
       Gerador.wGrupo('/procRef');

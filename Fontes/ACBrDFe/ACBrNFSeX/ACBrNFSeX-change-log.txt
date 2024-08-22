@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/08/2024
+-- IPM.LerXml --
+[*] Ajustes para a leitura correta dos campos: MunicipioPrestacaoServico e
+    MunicipioIncidencia
+  Por: Italo Giurizzato Junior
+-- SigISS.Provider --
+[*] #TK-5869: Ajustes na leitura de mensagens de erro, para identificar 
+    corretamente os alertas.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alterado para versão 2.04 bem como a URL da cidade de Marechal Floriano/ES, 
     o provedor é o mesmo.

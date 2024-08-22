@@ -225,7 +225,8 @@ begin
     aCorrecao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
     aMensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
 
-    if (aCorrecao = '') or (aCorrecao = 'Sem erros') or (Copy(aID, 1, 1) = 'A') then
+    if (aCorrecao = '') or (aCorrecao = 'Sem erros') or (Pos('sucesso', aCorrecao) > 0) or
+       (Copy(aID, 1, 1) = 'A') then
     begin
       if aMensagem <> '' then
       begin

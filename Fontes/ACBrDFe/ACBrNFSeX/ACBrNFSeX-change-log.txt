@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/08/2024
+-- ACBrNFSeXServicos --
+[*] Alterado para versão 2.04 bem como a URL da cidade de Marechal Floriano/ES, 
+    o provedor é o mesmo.
+  Por: Italo Giurizzato Junior
+
 21/08/2024
 -- Giap.LerXml --
 [*] #TK-5886: Alteração visando obter a descrição do item de serviço.

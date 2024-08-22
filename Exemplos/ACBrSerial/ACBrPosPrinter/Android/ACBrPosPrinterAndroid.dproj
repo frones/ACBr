@@ -319,6 +319,15 @@
         <JavaReference Include="..\..\..\..\Fontes\Terceiros\Gertec\payment-1.14.10.181016_classes.jar">
             <Disabled/>
         </JavaReference>
+        <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\cloudpossdk-s-1.0.2.jar">
+            <Disabled/>
+        </JavaReference>
+        <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\minipdvm8.jar">
+            <Disabled/>
+        </JavaReference>
+        <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\core-3.4.1.jar">
+            <Disabled/>
+        </JavaReference>
         <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\e1-v1.0.4-release.jar">
             <Disabled/>
         </JavaReference>

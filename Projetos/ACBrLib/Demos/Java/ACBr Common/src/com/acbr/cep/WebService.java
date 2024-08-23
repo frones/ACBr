@@ -12,8 +12,8 @@ import java.util.Map;
  *
  * @author rften
  */
-public enum  WebService {
-    wsNenhum(0), 
+public enum WebService {
+    wsNenhum(0),
     wsBuscarCep(1),
     wsCepLivre(2),
     wsRepublicaVirtual(3),
@@ -26,26 +26,28 @@ public enum  WebService {
     wsViaCep(10),
     wsCorreiosSIGEP(11),
     wsCepAberto(12),
-    wsWSCep(13);
-    
+    wsWSCep(13),
+    wsOpenCep(14),
+    wsBrasilAPI(15);
+
     private static final Map<Integer, WebService> map;
-    private final int enumValue; 
-    
+    private final int enumValue;
+
     static {
         map = new HashMap<>();
         for (WebService value : WebService.values()) {
             map.put(value.asInt(), value);
         }
     }
-    
+
     public static WebService valueOf(int value) {
         return map.get(value);
     }
-    
+
     private WebService(int id) {
         this.enumValue = id;
     }
-    
+
     public int asInt() {
         return enumValue;
     }

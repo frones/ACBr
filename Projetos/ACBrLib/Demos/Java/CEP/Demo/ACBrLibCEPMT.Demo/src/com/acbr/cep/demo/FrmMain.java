@@ -6,28 +6,20 @@
 package com.acbr.cep.demo;
 
 import com.acbr.ACBrSessao;
-import com.acbr.NivelLog;
 import com.acbr.cep.WebService;
-import com.acbr.cep.PesquisarIBGE;
 import com.acbr.cep.ACBrCEP;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFileChooser;
 
 /**
  *
  * @author rften
  */
 public class FrmMain extends javax.swing.JFrame {
-    
+
     private ACBrCEP acbrCEP;
 
     /**
@@ -35,12 +27,19 @@ public class FrmMain extends javax.swing.JFrame {
      */
     public FrmMain() {
         initComponents();
+
+        // Carregando o comboBox
+        for (WebService ws : WebService.values()) {
+            cmbWebSevice.addItem(ws.name());
+        }
+
         try {
             acbrCEP = new ACBrCEP();
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,7 +94,7 @@ public class FrmMain extends javax.swing.JFrame {
         rtbRespostas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ACBrLibSat Demo");
+        setTitle("ACBrLibCEP Demo");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -187,7 +186,6 @@ public class FrmMain extends javax.swing.JFrame {
         lblPesquisarIBGE.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblPesquisarIBGE.setText("Pesquisar IBGE");
 
-        cmbWebSevice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "wsNenhum", "wsBuscarCep", "wsCepLivre", "wsRepublicaVirtual", "wsBases4you", "wsRNSolucoes", "wsKingHost", "wsByJG", "wsCorreios", "wsDevMedia", "wsViaCep", "wsCorreiosSIGEP", "wsCepAberto", "wsWSCep" }));
         cmbWebSevice.setToolTipText("");
 
         cmbPesquisarIBGE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não", "Sim" }));
@@ -275,6 +273,8 @@ public class FrmMain extends javax.swing.JFrame {
         lblCEP.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblCEP.setText("CEP");
 
+        txtCEP.setText("18270170");
+
         btnBuscarPorCEP.setText("Buscar");
         btnBuscarPorCEP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,6 +316,8 @@ public class FrmMain extends javax.swing.JFrame {
         lblLogradouro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblLogradouro.setText("Logradouro");
 
+        txtLogradouro.setText("Coronel Aureliano de Camargo");
+
         btnBuscarPorLogradouro.setText("Buscar");
         btnBuscarPorLogradouro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,6 +333,10 @@ public class FrmMain extends javax.swing.JFrame {
 
         lblBairro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblBairro.setText("Bairro");
+
+        txtUF.setText("SP");
+
+        txtCidade.setText("Tatuí");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -462,19 +468,19 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        try {                     
+        try {
             // Altera as config de log
             Path pathLog = Paths.get(System.getProperty("user.dir"), "Log");
             if (!Files.isDirectory(pathLog)) {
                 pathLog.toFile().mkdirs();
             }
-            
+
             acbrCEP.configGravarValor(ACBrSessao.Principal, "LogNivel", 4);
             acbrCEP.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog.toString());
             acbrCEP.configGravar();
-                
+
             loadConfig();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -489,66 +495,63 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCarregarConfiguracoesActionPerformed
 
     private void btnBuscarPorCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorCEPActionPerformed
-        
-        try
-        {
+        try {
             String ret = acbrCEP.buscarPorCEP(txtCEP.getText());
-            rtbRespostas.append(ret);
+            formatacaoNaResposta(txtCEP.getText(), ret);
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarPorCEPActionPerformed
 
     private void btnBuscarPorLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorLogradouroActionPerformed
-
-        try
-        {
+        try {
             String ret = acbrCEP.buscarPorLogradouro(txtCidade.getText(), txtTipoLogradouro.getText(), txtLogradouro.getText(), txtUF.getText(), txtBairro.getText());
-            rtbRespostas.append(ret);
+            formatacaoNaResposta(txtLogradouro.getText(), ret);
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarPorLogradouroActionPerformed
 
-    private void loadConfig(){
-        try{
-            
+    private void loadConfig() {
+        try {
             acbrCEP.configLer();
             cmbWebSevice.setSelectedIndex(Integer.parseInt(acbrCEP.configLerValor(ACBrSessao.CEP, "WebService")));
             txtChaveWebService.setText(acbrCEP.configLerValor(ACBrSessao.CEP, "ChaveAcesso"));
             txtUsuarioWebService.setText(acbrCEP.configLerValor(ACBrSessao.CEP, "Usuario"));
             txtSenhaWebService.setText(acbrCEP.configLerValor(ACBrSessao.CEP, "Senha"));
             cmbPesquisarIBGE.setSelectedIndex(Integer.parseInt(acbrCEP.configLerValor(ACBrSessao.CEP, "PesquisarIBGE")));
-            
+
             txtHostProxy.setText(acbrCEP.configLerValor(ACBrSessao.Proxy, "Servidor"));
             txtPortaProxy.setText(acbrCEP.configLerValor(ACBrSessao.Proxy, "Porta"));
             txtUsuarioProxy.setText(acbrCEP.configLerValor(ACBrSessao.Proxy, "Usuario"));
             txtSenhaProxy.setText(acbrCEP.configLerValor(ACBrSessao.Proxy, "Senha"));
-            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void saveConfig(){
-        try{
-            
+
+    private void saveConfig() {
+        try {
             acbrCEP.configGravarValor(ACBrSessao.CEP, "WebService", cmbWebSevice.getSelectedIndex());
             acbrCEP.configGravarValor(ACBrSessao.CEP, "Usuario", txtUsuarioWebService.getText());
             acbrCEP.configGravarValor(ACBrSessao.CEP, "Senha", txtSenhaWebService.getText());
             acbrCEP.configGravarValor(ACBrSessao.CEP, "ChaveAcesso", txtChaveWebService.getText());
             acbrCEP.configGravarValor(ACBrSessao.CEP, "PesquisarIBGE", cmbPesquisarIBGE.getSelectedIndex());
-            
+
             acbrCEP.configGravarValor(ACBrSessao.Proxy, "Servidor", txtHostProxy.getText());
             acbrCEP.configGravarValor(ACBrSessao.Proxy, "Porta", txtPortaProxy.getText());
             acbrCEP.configGravarValor(ACBrSessao.Proxy, "Usuario", txtUsuarioProxy.getText());
             acbrCEP.configGravarValor(ACBrSessao.Proxy, "Senha", txtSenhaProxy.getText());
-            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    private void formatacaoNaResposta(String titulo, String ret) {
+        rtbRespostas.append("----- " + titulo + " -----\n");
+        rtbRespostas.append(ret + "\n");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarPorCEP;
     private javax.swing.JButton btnBuscarPorLogradouro;

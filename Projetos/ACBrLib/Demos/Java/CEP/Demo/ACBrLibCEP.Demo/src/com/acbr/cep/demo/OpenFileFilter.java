@@ -28,8 +28,9 @@ public class OpenFileFilter extends FileFilter {
 
     @Override
     public boolean accept(File f) {
-        if (f.isDirectory())
+        if (f.isDirectory()) {
             return true;
+        }
         return (f.getName().toLowerCase().endsWith(fileExt));
     }
 

@@ -27,12 +27,11 @@ public class ACBrLibCEPDemo {
             @Override
             public void run() {
                 FrmMain frmMain = new FrmMain();
-                frmMain.setIconImage(new ImageIcon(getClass().getResource( "/resources/images/acbr_icon.png" )).getImage());        
+                frmMain.setIconImage(new ImageIcon(getClass().getResource("/resources/images/acbr_icon.png")).getImage());
                 frmMain.setResizable(false);
                 frmMain.setLocationRelativeTo(null);
                 frmMain.setVisible(true);
             }
         });
     }
-    
 }

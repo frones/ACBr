@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+26/08/2024
+-- ACrutil.Math--
+[*] #TK-4828: Realiza ajuste visando correta exibição dos HTML Entities quando convertidos.
+   Por: Diego Folieni
+
 11/07/224
 ---ACBrUtil.Strings---
 [+] Função para converter TSplitResult para String

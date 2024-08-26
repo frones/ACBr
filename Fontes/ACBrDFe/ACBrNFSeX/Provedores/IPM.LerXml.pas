@@ -476,11 +476,10 @@ begin
     AuxNode := ANode;
 
   LerRps(AuxNode);
-  LerNota(AuxNode);
-  LerPrestador(AuxNode);
   LerTomador(AuxNode);
-
+  LerPrestador(AuxNode);
   LerItens(AuxNode);
+  LerNota(AuxNode);
 
   LerFormaPagamento(AuxNode);
 end;

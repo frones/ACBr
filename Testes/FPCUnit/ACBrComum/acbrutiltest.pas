@@ -279,9 +279,12 @@ type
   { HexToAsciiTest }
 
   HexToAsciiTest = class(TTestCase)
+  private
+    function DevolveHexStrParaConverter(ATexto: String): String;
   published
     procedure Simples;
     procedure Comlexo;
+    procedure CompletoCaracteresEspeciais;
   end;
 
   { AsciiToHexTest }
@@ -1505,6 +1508,21 @@ end;
 
 { HexToAsciiTest }
 
+function HexToAsciiTest.DevolveHexStrParaConverter(ATexto: String): String;
+var
+  vStr, vHex: String;
+  p1, p2: Integer;
+begin
+  p1:=Pos('&#x',aTexto);
+  for p2:=p1 to Length(aTexto) do
+    if aTexto[p2]=';' then
+       break;
+  vHex:=Copy(aTexto,p1,p2-p1+1);
+  vStr:=StringReplace(vHex,'&#x','',[rfReplaceAll]);
+  vStr:=StringReplace(vStr,';','',[rfReplaceAll]);
+  Result := vStr;
+end;
+
 procedure HexToAsciiTest.Simples;
 begin
   CheckEquals('ABCD', HexToAscii('41424344') );
@@ -1512,7 +1530,25 @@ end;
 
 procedure HexToAsciiTest.Comlexo;
 begin
-  CheckEquals('1,Mo'+chr(255), HexToAscii('312C4D6FFF') );
+  CheckEquals(ACBrStr('1,Mo'+chr(255)), HexToAscii('312C4D6FFF') );
+end;
+
+procedure HexToAsciiTest.CompletoCaracteresEspeciais;
+begin
+  CheckEquals(ACBrStr('á'), HexToAscii(DevolveHexStrParaConverter('&#xE1;')));
+  CheckEquals(ACBrStr('é'), HexToAscii(DevolveHexStrParaConverter('&#xE9;')));
+  CheckEquals(ACBrStr('í'), HexToAscii(DevolveHexStrParaConverter('&#xED;')));
+  CheckEquals(ACBrStr('ó'), HexToAscii(DevolveHexStrParaConverter('&#xF3;')));
+  CheckEquals(ACBrStr('ú'), HexToAscii(DevolveHexStrParaConverter('&#xFA;')));
+  CheckEquals(ACBrStr('ç'), HexToAscii(DevolveHexStrParaConverter('&#xE7;')));
+  CheckEquals(ACBrStr('ñ'), HexToAscii(DevolveHexStrParaConverter('&#xF1;')));
+  CheckEquals(ACBrStr('Á'), HexToAscii(DevolveHexStrParaConverter('&#xC1;')));
+  CheckEquals(ACBrStr('É'), HexToAscii(DevolveHexStrParaConverter('&#xC9;')));
+  CheckEquals(ACBrStr('Í'), HexToAscii(DevolveHexStrParaConverter('&#xCD;')));
+  CheckEquals(ACBrStr('Ó'), HexToAscii(DevolveHexStrParaConverter('&#xD3;')));
+  CheckEquals(ACBrStr('Ú'), HexToAscii(DevolveHexStrParaConverter('&#xDA;')));
+  CheckEquals(ACBrStr('Ç'), HexToAscii(DevolveHexStrParaConverter('&#xC7;')));
+  CheckEquals(ACBrStr('Ñ'), HexToAscii(DevolveHexStrParaConverter('&#xD1;')));
 end;
 
 { LEStrToIntTest }

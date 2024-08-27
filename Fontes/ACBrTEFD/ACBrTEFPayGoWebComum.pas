@@ -1126,12 +1126,7 @@ begin
   fUsouPinPad := False;
   fTempoTarefasAutomaticas := '';
   fUltimoQRCode := '';
-
-  {$IfDef DEBUG}
-   IsDebug := True;
-  {$Else}
-   IsDebug := False;
-  {$EndIf}
+  fIsDebug := False;
 
   fPathLib := '';
   fSoftwareHouse := '';

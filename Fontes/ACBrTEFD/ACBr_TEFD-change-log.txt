@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/08/2024
+-- ACBrTEFPayGoWebComum --
+[*] TACBrTEFPGWebAPI.Create modificado para sempre criar propriedade "IsDebug"
+    como Falsa, pois em algumas IDEs, o modo Debug era ativo, mesmo em Release
+    (por: DSA)
+
 09/08/2024
 -- ACBrTEFAPI --
 [*] "TACBrTEFAPIValidacaoDado", adicionado enumerado, "valdQuantidadeParcelas"

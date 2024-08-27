@@ -74,10 +74,10 @@ requires
   ACBrDFeReportRL;
 
 contains
-  ACBrNF3e.DAEventoRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DAEventoRL.pas' {frmNF3eDAEventoRL},
-  ACBrNF3e.DAEventoRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DAEventoRLRetrato.pas' {frmNF3eDAEventoRLRetrato},
-  ACBrNF3e.DANF3ERL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERL.pas' {frmDANF3eRL},
-  ACBrNF3e.DANF3ERLClass in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLClass.pas',
-  ACBrNF3e.DANF3ERLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLRetrato.pas' {frmDANF3eRLRetrato};
+  ACBrNF3e.DAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DAEventoRL.pas' {frmNF3eDAEventoRL},
+  ACBrNF3e.DAEventoRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DAEventoRLRetrato.pas' {frmNF3eDAEventoRLRetrato},
+  ACBrNF3e.DANF3ERL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERL.pas' {frmDANF3eRL},
+  ACBrNF3e.DANF3ERLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLClass.pas',
+  ACBrNF3e.DANF3ERLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLRetrato.pas' {frmDANF3eRLRetrato};
 
 end.

@@ -34,6 +34,6 @@ requires
   ACBr_NF3eDANF3eRL;
 
 contains
-  ACBrNF3e.DANF3ERLReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLReg.pas';
+  ACBrNF3e.DANF3ERLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e\Fortes\ACBrNF3e.DANF3ERLReg.pas';
 
 end.

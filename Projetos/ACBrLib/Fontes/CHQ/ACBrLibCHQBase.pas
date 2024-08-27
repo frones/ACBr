@@ -140,10 +140,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -161,10 +161,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -182,10 +182,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -194,7 +194,7 @@ var
   ALinha: AnsiString;
 begin
   try
-    ALinha := ConverterAnsiParaUTF8(eLinha);
+    ALinha := ConverterStringEntrada(eLinha);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_ImprimirLinha( ' + ALinha + ' )', logCompleto, True)
@@ -210,10 +210,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -223,7 +223,7 @@ var
   Linhas: TStringList;
 begin
   try
-    ALinha := ConverterAnsiParaUTF8(eLinhas);
+    ALinha := ConverterStringEntrada(eLinhas);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_ImprimirVerso( ' + ALinha + ' )', logCompleto, True)
@@ -242,10 +242,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -263,10 +263,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -284,10 +284,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -296,7 +296,7 @@ var
   ABanco: AnsiString;
 begin
   try
-    ABanco := ConverterAnsiParaUTF8(eBanco);
+    ABanco := ConverterStringEntrada(eBanco);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetBanco( ' + ABanco + ' )', logCompleto, True)
@@ -312,10 +312,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -336,10 +336,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -348,7 +348,7 @@ Var
   Data: TDateTime;
 begin
   try
-    Data := StrToDateTime(ConverterAnsiParaUTF8(eData));
+    Data := StrToDateTime(ConverterStringEntrada(eData));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetData( ' + DateTimeToStr(Data) + ' )', logCompleto, True)
@@ -364,10 +364,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -376,7 +376,7 @@ var
   ACidade: AnsiString;
 begin
   try
-    ACidade := ConverterAnsiParaUTF8(eCidade);
+    ACidade := ConverterStringEntrada(eCidade);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetCidade( ' + ACidade + ' )', logCompleto, True)
@@ -392,10 +392,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -404,7 +404,7 @@ var
   AFavorecido: AnsiString;
 begin
   try
-    AFavorecido := ConverterAnsiParaUTF8(eFavorecido);
+    AFavorecido := ConverterStringEntrada(eFavorecido);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetFavorecido( ' + AFavorecido + ' )', logCompleto, True)
@@ -420,10 +420,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -432,7 +432,7 @@ var
   AObservacao: AnsiString;
 begin
   try
-    AObservacao := ConverterAnsiParaUTF8(eObservacao);
+    AObservacao := ConverterStringEntrada(eObservacao);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetObservacao( ' + AObservacao + ' )', logCompleto, True)
@@ -448,10 +448,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -460,7 +460,7 @@ Var
   BomPara: TDateTime;
 begin
   try
-    BomPara := StrToDateTime(ConverterAnsiParaUTF8(eBomPara));
+    BomPara := StrToDateTime(ConverterStringEntrada(eBomPara));
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetBomPara( ' + DateTimeToStr(BomPara) + ' )', logCompleto, True)
@@ -476,10 +476,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 
@@ -488,7 +488,7 @@ Var
   ArquivoBemaFiINI: String;
 begin
   try
-    ArquivoBemaFiINI := ConverterAnsiParaUTF8(eArquivoBemaFiINI);
+    ArquivoBemaFiINI := ConverterStringEntrada(eArquivoBemaFiINI);
 
     if Config.Log.Nivel > logNormal then
       GravarLog('CHQ_SetArquivoBemaFiINI( ' + ArquivoBemaFiINI + ' )', logCompleto, True)
@@ -504,10 +504,10 @@ begin
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, ConverterUTF8ParaAnsi(E.Message));
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

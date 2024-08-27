@@ -765,7 +765,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 110
         Height = 177
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -780,7 +779,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 175
         Height = 133
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -1072,7 +1070,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 28
         Height = 177
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1088,7 +1085,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1104,7 +1100,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1120,7 +1115,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1136,7 +1130,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1152,7 +1145,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1168,7 +1160,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1184,7 +1175,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1200,7 +1190,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Height = 177
         Alignment = taRightJustify
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1562,7 +1551,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 549
         Height = 43
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -1585,7 +1573,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 720
         Height = 43
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -1664,7 +1651,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 213
         Height = 92
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -1679,7 +1665,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 232
         Height = 94
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -2136,7 +2121,6 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
         Width = 728
         Height = 43
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9

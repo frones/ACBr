@@ -258,6 +258,8 @@ end;
 
 procedure TfrmNF3eDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
+var
+  Ambiente: Integer;
 begin
   inherited;
 
@@ -270,10 +272,11 @@ begin
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
 
-    case InfEvento.tpAmb of
-      TACBrTipoAmbiente.taProducao:
+    Ambiente := Integer(InfEvento.tpAmb);
+    case Ambiente of
+      0:
         rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
-      TACBrTipoAmbiente.taHomologacao:
+      1:
         rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
 
@@ -344,12 +347,12 @@ begin
 
   Exibir := (fpEventoNF3e.InfEvento.tpEvento = teCancelamento);
 
-  PrintIt := Exibir or (fpEventoNF3e.InfEvento.tpAmb = TACBrTipoAmbiente.taHomologacao);
+  PrintIt := Exibir or (Integer(fpEventoNF3e.InfEvento.tpAmb) = Integer(taHomologacao));
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if fpEventoNF3e.InfEvento.tpAmb = TACBrTipoAmbiente.taHomologacao then
+  if Integer(fpEventoNF3e.InfEvento.tpAmb) = Integer(taHomologacao) then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;

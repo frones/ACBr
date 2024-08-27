@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/08/2024
+-- ACBrNF3e.DAEventoRLRetrato/ACBrNF3e.DANF3ERLRetrato --
+[*] Alterações visando a compilação e instalação pelo ACBrInstall.
+   Por: Italo Giurizzato Junior
+
 27/06/2024
 -- ACBrNF3eXmlWriter --
 [*] Alteração na assinatura da função: ObterNomeArquivo.

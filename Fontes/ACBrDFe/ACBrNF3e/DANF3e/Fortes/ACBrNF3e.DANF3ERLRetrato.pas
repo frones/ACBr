@@ -673,7 +673,7 @@ begin
   rlbCodigoBarras.Visible := True;
   rlbCodigoBarras.Caption := OnlyNumber(fpNF3e.gFat.codBarras);
 
-  rllHomologacao.Visible := (fpNF3e.Ide.tpAmb = TACBrTipoAmbiente.taHomologacao);
+  rllHomologacao.Visible := (Integer(fpNF3e.Ide.tpAmb) = Integer(taHomologacao));
   rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
 
   rllSistema.Visible := NaoEstaVazio(fpDANF3e.Sistema);

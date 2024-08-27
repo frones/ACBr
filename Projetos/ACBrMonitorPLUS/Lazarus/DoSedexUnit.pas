@@ -71,6 +71,9 @@ end;
 
 implementation
 
+uses
+  ACBrLibConfig;
+
 { TACBrObjetoSedex }
 
 constructor TACBrObjetoSedex.Create(AConfig: TMonitorConfig; ACBrSedex: TACBrSedex);

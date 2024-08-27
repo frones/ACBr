@@ -62,7 +62,8 @@ end;
 implementation
 
 uses
-  ACBrLibGTINRespostas, ACBrMonitorConsts, ACBrLibResposta, DoACBrUnit;
+  ACBrLibGTINRespostas, ACBrMonitorConsts, ACBrLibResposta, DoACBrUnit,
+  ACBrLibConfig;
 
 { TMetodoGTINConsultar }
 

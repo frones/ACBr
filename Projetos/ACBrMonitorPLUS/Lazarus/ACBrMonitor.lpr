@@ -7,7 +7,7 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
-  Interfaces, sysutils,IniFiles,// this includes the LCL widgetset
+  Interfaces, sysutils, IniFiles,// this includes the LCL widgetset
   {$IFDEF MSWINDOWS}
    Windows, Dialogs,
   {$ENDIF}
@@ -51,7 +51,7 @@ begin
         MessageDlg('ACBrMonitor','O programa ACBrMonitor já está em execução',
             mtError, [mbOK], 0);
         Application.Terminate;
-        exit ;
+        Exit ;
      end;
    end;
   {$ENDIF}

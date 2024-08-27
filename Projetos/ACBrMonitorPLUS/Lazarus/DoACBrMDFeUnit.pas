@@ -345,7 +345,7 @@ end;
 implementation
 
 uses IniFiles, DateUtils, Forms, strutils,
-  ACBrDFeConfiguracoes,
+  ACBrDFeConfiguracoes, ACBrLibConfig,
   ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
   pcnConversao, pmdfeConversaoMDFe,
   pcnAuxiliar, pmdfeMDFeR, DoACBrUnit, pmdfeMDFe;

@@ -90,7 +90,9 @@ end;
 
 implementation
 
-uses ACBrUtil.Base, ACBrUtil.Strings, ACBrLibResposta, ACBrLibNCMsRespostas;
+uses
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrLibResposta, ACBrLibNCMsRespostas,
+  ACBrLibConfig;
 
 { TACBrObjetoNcm }
 

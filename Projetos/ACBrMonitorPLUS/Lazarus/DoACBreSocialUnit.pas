@@ -174,7 +174,7 @@ end;
 implementation
 
 uses
-  DoACBrUnit, Forms, typinfo;
+  DoACBrUnit, Forms, typinfo, ACBrLibConfig;
 
 { TMetodoSetTipoEmpregador }
 

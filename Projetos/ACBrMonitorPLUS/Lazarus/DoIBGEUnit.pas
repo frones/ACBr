@@ -68,6 +68,9 @@ end;
 
 implementation
 
+uses
+  ACBrLibConfig;
+
 { TACBrObjetoIBGE }
 
 constructor TACBrObjetoIBGE.Create(AConfig: TMonitorConfig; ACBrIBGE: TACBrIBGE);

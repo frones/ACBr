@@ -339,6 +339,7 @@ implementation
 
 uses
   Forms, DoACBrUnit, strutils, IniFiles,
+  ACBrLibConfig,
   ACBrNFSeXWebserviceBase;
 
 { TMetodoSetAutenticacaoNFSe }

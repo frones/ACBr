@@ -70,6 +70,9 @@ end;
 
 implementation
 
+uses
+  ACBrLibConfig;
+
 { TACBrObjetoCEP }
 
 constructor TACBrObjetoCEP.Create(AConfig: TMonitorConfig; ACBrCEP: TACBrCEP);

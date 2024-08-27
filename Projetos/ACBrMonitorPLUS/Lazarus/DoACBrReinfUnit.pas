@@ -149,7 +149,7 @@ end;
 implementation
 
 uses
-  DoACBrUnit, Forms;
+  DoACBrUnit, ACBrLibConfig, Forms;
 
 { TMetodoSetTipoContribuinte }
 

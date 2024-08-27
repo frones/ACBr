@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
-  ACBrLibNFeRespostas, ACBrNFe, ACBrMonitorConfig,
+  ACBrLibConfig, ACBrLibNFeRespostas, ACBrNFe, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
   CmdUnit, ACBrNFeDANFeRLClass, ACBrPosPrinter, ACBrNFeDANFeESCPOS,
   ACBrLibConsultaCadastro;

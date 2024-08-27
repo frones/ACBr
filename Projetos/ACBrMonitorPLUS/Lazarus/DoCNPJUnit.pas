@@ -84,7 +84,7 @@ end;
 implementation
 
 uses
-  synautil, Graphics, synacode, pcnAuxiliar;
+  synautil, Graphics, synacode, pcnAuxiliar, ACBrLibConfig;
 
 { TMetodoConsultar }
 

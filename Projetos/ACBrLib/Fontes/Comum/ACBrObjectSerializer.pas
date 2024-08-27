@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, laz2_DOM, laz2_XMLWrite,
   inifiles, fpjson, jsonparser, TypInfo,
-  rttiutils, ACBrUtil.Strings, ACBrLibResposta;
+  rttiutils, ACBrUtil.Strings,  ACBrLibConfig, ACBrLibResposta;
 
 const
   CSessionFormat = '%s%.3d';
@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrRtti, ACBrLibHelpers, DateUtils;
+  ACBrRtti, ACBrLibHelpers, ACBrLibHelpersIni, DateUtils;
 
 { TACBrObjectSerializer }
 

@@ -285,7 +285,7 @@ end;
 
 implementation
 
-uses DoACBrUnit, DoEmailUnit, ACBrBoletoRelatorioRetorno, ACBrLibComum,
+uses DoACBrUnit, DoEmailUnit, ACBrBoletoRelatorioRetorno, ACBrLibComum, ACBrLibConfig,
   ACBrLibResposta, ACBrLibBoletoRespostas, ACBrObjectSerializer;
 
 { TACBrObjetoBoleto }

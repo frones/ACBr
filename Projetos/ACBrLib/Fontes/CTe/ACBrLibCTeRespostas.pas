@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, contnrs,
-  pcteRetEnvEventoCTe, ACBrCTe.EventoClass,
+  {pcteRetEnvEventoCTe,} ACBrCTe.EventoClass,
   ACBrLibConsReciDFe, ACBrLibResposta, ACBrLibConfig, ACBrCTe;
 
 type

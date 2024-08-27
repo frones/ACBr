@@ -409,7 +409,7 @@ implementation
 
 uses
   IniFiles, DateUtils, Forms, strutils,
-  ACBrDFeConfiguracoes,
+  ACBrDFeConfiguracoes, ACBrLibConfig,
   pcnConversao, pcteConversaoCTe,
   pcnAuxiliar, pcteCTeR, DoACBrUnit, pcteCTe;
 

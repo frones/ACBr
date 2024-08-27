@@ -62,7 +62,8 @@ uses
   DoECFObserver, DoECFBemafi32, DoSATUnit, DoACBreSocialUnit, DoACBrBPeUnit,
   ACBrLibResposta, DoACBrUnit, DoCNPJUnit, DoCPFUnit, ACBrBoletoConversao,
   ACBrBoletoFPDF, FormConsultaCNPJ, ACBrMonitorMenu, ACBrDFeReport, ACBrNFSeX,
-  ACBrNFSeXDANFSeRLClass, DoACBrNFSeUnit, ACBrGTIN, DoACBrGTINUnit, ACBrPIXBase;
+  ACBrNFSeXDANFSeRLClass, DoACBrNFSeUnit, ACBrGTIN, DoACBrGTINUnit, ACBrPIXBase,
+  ACBrLibConfig;
 
 const
   CEstados: array[TACBrECFEstado] of string =

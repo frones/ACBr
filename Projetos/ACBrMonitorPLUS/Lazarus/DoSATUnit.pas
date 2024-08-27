@@ -306,7 +306,9 @@ end;
 implementation
 
 uses
-  DoACBrUnit,IniFiles, forms, pcnAuxiliar, typinfo,
+  IniFiles, forms, typinfo,
+  pcnAuxiliar,
+  DoACBrUnit, ACBrLibConfig,
   ACBrSATExtratoClass, UtilUnit;
 
 { TMetodoGerarPDFExtratoCancelamento }

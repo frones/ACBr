@@ -105,6 +105,9 @@ end;
 
 implementation
 
+uses
+  ACBrLibConfig;
+
 { TMetodoGerarXML }
 
 procedure TMetodoGerarXML.Executar;

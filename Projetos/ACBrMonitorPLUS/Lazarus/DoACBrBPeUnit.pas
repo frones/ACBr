@@ -320,7 +320,7 @@ implementation
 
 uses
   IniFiles, DateUtils, Forms, strutils,
-  ACBrDFeConfiguracoes,
+  ACBrDFeConfiguracoes, ACBrLibConfig,
   pcnConversao, ACBrBPeConversao,
   pcnAuxiliar, ACBrBPeXmlReader, DoACBrUnit, ACBrBPeClass;
 

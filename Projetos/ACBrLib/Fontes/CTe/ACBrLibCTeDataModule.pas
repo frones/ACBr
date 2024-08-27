@@ -62,7 +62,7 @@ implementation
 
 uses
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, FileUtil,
-  {$IFDEF Demo}pcnConversao, ACBrCTeConhecimentos, pcteEnvEventoCTe,{$ENDIF}
+  {$IFDEF Demo}pcnConversao, ACBrCTeConhecimentos, ACBrCTe.EventoClass, ACBrCTe.EnvEvento, {$ENDIF}
   ACBrLibCTeConfig, ACBrLibCTeBase;
 
 {$R *.lfm}

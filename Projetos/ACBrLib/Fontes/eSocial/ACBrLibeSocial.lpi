@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <RevisionNr Value="2"/>
-      <BuildNr Value="112"/>
+      <BuildNr Value="113"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBreSocial - Biblioteca para envio, consulta do eSocial" InternalName="ACBrLibeSocial" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="eSocial" ProductVersion="0.0.1.30"/>
     </VersionInfo>

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/08/2024
+-- Giss.GravarXML --
+[*] Altera as ocorrências do CodigoPais do grupo serviço para que seja opcional.
+  Por: Diego Folieni
 -- ACBrNFSeXProviderABRASFv2, SmarPD.Provider --
 [*] #TK-5895: Ajustes visando correta exibição do retorno das consultas de serviço tomado e prestado
   Por: Diego Folieni

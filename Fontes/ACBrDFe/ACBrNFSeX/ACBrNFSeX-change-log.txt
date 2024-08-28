@@ -43,11 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/08/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5905: A cidade de Silva Jardim/RJ trocou de provedor, agora é Pronim versão 2.03 
+  Por: Gabriel Bobello
 -- ISSIntel.GravarXml --
-[*] Alterado a condição que determina se a Aliquota vai ser obrigatória ou
-    opcinal.
+[*] #TK-5904: Alterado a condição que determina se a Aliquota vai ser obrigatória ou
+    opcional.
 -- IPM.Provider --
-[*] Para a versão 1.00 o parâmetro UseCertificateHTTP fica condicionado aos Params
+[*] #TK-5907: Para a versão 1.00 o parâmetro UseCertificateHTTP fica condicionado aos Params
     Assinar informados no arquivo ACBrNFSeXServicos.ini
   Por: Italo Giurizzato Junior
 -- Giss.GravarXML --

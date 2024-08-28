@@ -195,8 +195,9 @@ begin
     DetalharServico := True;
     FormatoArqEnvioSoap := tfaTxt;
     ImprimirOptanteSN := False;
+    UseCertificateHTTP := (ConfigAssinar.RpsGerarNFSe) or (ConfigAssinar.CancelarNFSe);
 
-    Autenticacao.RequerCertificado := (ConfigAssinar.RpsGerarNFSe) or (ConfigAssinar.CancelarNFSe);
+    Autenticacao.RequerCertificado := UseCertificateHTTP;
     Autenticacao.RequerLogin := True;
 
     ServicosDisponibilizados.EnviarUnitario := True;

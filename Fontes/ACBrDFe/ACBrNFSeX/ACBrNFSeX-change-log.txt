@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/08/2024
+-- ISSIntel.GravarXml --
+[*] Alterado a condição que determina se a Aliquota vai ser obrigatória ou
+    opcinal.
+-- IPM.Provider --
+[*] Para a versão 1.00 o parâmetro UseCertificateHTTP fica condicionado aos Params
+    Assinar informados no arquivo ACBrNFSeXServicos.ini
+  Por: Italo Giurizzato Junior
 -- Giss.GravarXML --
 [*] Altera as ocorrências do CodigoPais do grupo serviço para que seja opcional.
   Por: Diego Folieni

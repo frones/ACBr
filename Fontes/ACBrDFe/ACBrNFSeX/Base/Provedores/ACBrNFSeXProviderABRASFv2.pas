@@ -1996,9 +1996,9 @@ begin
       ANode := ANode.Childrens.FindAnyNs('ListaNfse');
 
       if ANode = nil then
-        ANode := Document.Root;
-
-      ProcessarMensagemErros(ANode, Response);
+        ANode := Document.Root
+      else
+        ProcessarMensagemErros(ANode, Response);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2024
+-- ACBrNFSeXProviderABRASFv2, SmarPD.Provider --
+[*] #TK-5895: Ajustes visando correta exibição do retorno das consultas de serviço tomado e prestado
+  Por: Diego Folieni
+
 26/08/2024
 -- IPM.LerXml --
 [*] Ajustes para a leitura correta do Total Liquido da Nota.

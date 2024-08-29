@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2024
+--- ACBrLibBoletoConfig ---
+[*] Ajustado a linha que gera o campo OrientacaoBanco no ACBrLib.ini
+    #TK-5863 - https://www.projetoacbr.com.br/forum/topic/79205-chave-s-n%C3%A3o-existe-na-sess%C3%A3o-s-no-arquivo-de-configura%C3%A7%C3%A3o/#comment-512060
+    Por: Júlio Cavalcanti / Victor Panda / Daniel InfoCotidiano
+
 23/08/2024
 --- ACBrLibBoletoConfig ---
 [*] Descomentado a linha que gera o campo OrientacaoBanco no ACBrLib.ini

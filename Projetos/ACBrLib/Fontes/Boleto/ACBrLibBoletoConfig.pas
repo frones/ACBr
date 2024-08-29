@@ -739,7 +739,7 @@ begin
   AIni.WriteString(CSessaoBoletoBancoConfig, CChaveLocalPagamento, LocalPagamento);
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveNumero, Numero );
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveNumeroCorrespondente, NumeroCorrespondente );
-  AIni.WriteString(CSessaoBoletoBancoConfig, CChaveOrientacaoBanco, OrientacaoBanco );
+  AIni.WriteString(CSessaoBoletoBancoConfig, CChaveOrientacaoBanco, StringReplace(OrientacaoBanco,sLineBreak,'|',[rfReplaceAll]));
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveTipoCobranca, integer(TipoCobranca) );
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveCasasDecimaisMoraJuros, CasasDecimaisMoraJuros);
   //AIni.WriteString(CSessaoBoletoBancoConfig, CChaveDensidadeGravacao, DensidadeGravacao);

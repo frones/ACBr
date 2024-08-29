@@ -237,7 +237,7 @@ begin
   ACodificacao := Items[0].Codificacao;
   os := CreateObjectSerializer(ATipo, ACodificacao);
   try
-    Result := os.Gerar(Items);
+     Result := os.Gerar<T>(Items);
   finally
     os.Free;
   end;

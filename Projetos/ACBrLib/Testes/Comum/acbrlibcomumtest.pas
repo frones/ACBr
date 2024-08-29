@@ -47,7 +47,7 @@ interface
 {.$DEFINE TESTE_IBGE}
 {.$DEFINE TESTE_MAIL}
 {.$DEFINE TESTE_MDFE}
-{$DEFINE TESTE_NFE}
+{.$DEFINE TESTE_NFE}
 {.$DEFINE TESTE_NFSE}
 {.$DEFINE TESTE_PIXCD}
 {.$DEFINE TESTE_POS}
@@ -55,7 +55,7 @@ interface
 {.$DEFINE TESTE_SAT}
 
 uses
-  Classes, SysUtils, fpcunit, testregistry, Graphics, ACBrLibResposta;
+  Classes, SysUtils, fpcunit, testregistry, Graphics, ACBrLibResposta, ACBrLibConfig;
 
 type
   TTeste_Inicializar = function(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
@@ -73,7 +73,7 @@ type
   private
     FFonte: TFont;
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao);
     destructor Destroy; override;
   published
     property Fonte: TFont read FFonte write FFonte;
@@ -128,6 +128,10 @@ uses
   {$IFDEF TESTE_REINF},ACBrLibReinfStaticImportMT{$ENDIF}
   {$IFDEF TESTE_SAT},ACBrLibSATStaticImportMT{$ENDIF}
   ;
+
+const
+  ErrOK = 0;
+
 
 { TACBrLibComum_Testes }
 
@@ -220,8 +224,9 @@ end;
 { TACbrLibRespostaDescendenteSimples }
 
 constructor TACbrLibRespostaDescendenteSimples.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+  const ATipo: TACBrLibRespostaTipo; const ACodificacao: TACBrLibCodificacao);
 begin
+  inherited Create(ASessao, ATipo, ACodificacao);
   FFonte := TFont.Create;
 end;
 
@@ -238,7 +243,7 @@ var
   AIni: TMemIniFile;
   Astr: TStringStream;
 begin
-  acrds := TACbrLibRespostaDescendenteSimples.Create('Sessao', resINI);
+  acrds := TACbrLibRespostaDescendenteSimples.Create('Sessao', resINI, codUTF8);
   try
     acrds.Fonte.Name := 'Arial';
     acrds.Fonte.Pitch := fpFixed;

@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/08/2024
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] #TK-5856: Alteração no tamanho da banda rlbISSQN para evitar a impressão de
+    2 páginas.
+  Por: Natanael Sanches
 -- ACBrNFSeXServicos --
 [*] #TK-5909: Incluída a cidade de Nova Monte Verde/MT, o provedor é Agili.
   Por: C4Dev

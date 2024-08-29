@@ -2,7 +2,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Left = 709
   Top = 76
   Caption = 'frlXDANFSeRLRetrato'
-  ClientHeight = 750
+  ClientHeight = 988
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32
@@ -900,7 +900,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 535
       Width = 752
-      Height = 366
+      Height = 317
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1924,7 +1924,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 901
+      Top = 852
       Width = 752
       Height = 40
       BandType = btSummary
@@ -1967,7 +1967,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 959
+      Top = 910
       Width = 752
       Height = 73
       BandType = btSummary
@@ -2334,7 +2334,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object RLBand1: TRLBand
       Left = 23
-      Top = 941
+      Top = 892
       Width = 752
       Height = 18
       BandType = btSummary
@@ -2370,5 +2370,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 136
+    Top = 16
   end
 end

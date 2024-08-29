@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5909: Incluída a cidade de Nova Monte Verde/MT, o provedor é Agili.
+  Por: C4Dev
+[*] #TK-5908: Alterado a versão para 1.01 da cidade de Estrela/RS, o provedor é o mesmo.
+  Por: Daniel Ostoic
+[*] #TK-5910: Incluída a cidade de Aiuruoca/MG, o provedor é Futurize.
+  Por: Bill Barsch
+
 28/08/2024
 -- ACBrNFSeXServicos --
 [*] #TK-5905: A cidade de Silva Jardim/RJ trocou de provedor, agora é Pronim versão 2.03 

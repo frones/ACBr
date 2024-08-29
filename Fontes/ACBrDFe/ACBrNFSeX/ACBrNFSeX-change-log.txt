@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/08/2024
+-- Equiplano.Provider --
+[*] #TK-5889: Incluído no TratarXmlRetornado a substituição do "&" por "&amp;"
+    para que a leitura de nomes do prestadores e tomadores sejam feitas corretamente
+    quando possuirem o caracter "&" no nome. 
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] #TK-5856: Alteração no tamanho da banda rlbISSQN para evitar a impressão de
     2 páginas.

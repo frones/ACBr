@@ -85,6 +85,7 @@ type
     procedure Test_Boleto_RetornaLinhaDigitavel;
     procedure Test_Boleto_RetornaCodigoBarras;
     procedure Test_Boleto_EnviarEmail;
+    procedure Test_Boleto_ConsultaDetalheAPI;
   end;
 
 implementation
@@ -760,6 +761,22 @@ begin
   AssertEquals(ErrOK, Boleto_Finalizar(Handle));
 end;
 
+procedure TACBrLibBoletoTest.Test_Boleto_ConsultaDetalheAPI;
+var
+  Handle: THandle;
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, Boleto_Inicializar(Handle, '',''));
+
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao tentar Incluir Titulo', ErrOK, Boleto_IncluirTitulos(Handle, 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\Boleto\bin\TituloAPI.ini',''));
+  AssertEquals('Erro ao ConsultarDetalhe', ErrOk, Boleto_EnviarBoleto(Handle, 4, PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, Boleto_Finalizar(Handle));
+end;
 
 initialization
 

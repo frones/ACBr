@@ -772,7 +772,7 @@ begin
   Bufflen := 255;
   AStr := Space(Bufflen);
 
-  AssertEquals('Erro ao tentar Incluir Titulo', ErrOK, Boleto_IncluirTitulos(Handle, 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\Boleto\bin\TituloAPI.ini',''));
+  AssertEquals('Erro ao tentar Incluir Titulo', ErrOK, Boleto_IncluirTitulos(Handle, '..\TituloAPI.ini',''));
   AssertEquals('Erro ao ConsultarDetalhe', ErrOk, Boleto_EnviarBoleto(Handle, 4, PChar(AStr), Bufflen));
 
   AssertEquals(ErrOK, Boleto_Finalizar(Handle));

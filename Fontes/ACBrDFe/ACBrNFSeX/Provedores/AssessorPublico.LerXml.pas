@@ -271,7 +271,7 @@ begin
     CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('TOMCEP'), tcStr);
   end;
 
-  AuxNode := ANode.Childrens.FindAnyNs('SERVICOS');
+  AuxNode := AuxNode.Childrens.FindAnyNs('SERVICOS');
 
   if AuxNode <> nil then
   begin

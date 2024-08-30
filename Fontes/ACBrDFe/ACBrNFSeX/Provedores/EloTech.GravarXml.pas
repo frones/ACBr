@@ -171,7 +171,7 @@ begin
                                     NFSe.Servico.ItemServico[i].ValorUnitario));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorDesconto', 1, 17, 1,
-                             NFSe.Servico.ItemServico[i].DescontoCondicionado));
+                             NFSe.Servico.ItemServico[i].DescontoIncondicionado));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorLiquido', 1, 17, 1,
                                        NFSe.Servico.ItemServico[i].ValorTotal));

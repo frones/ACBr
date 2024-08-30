@@ -908,7 +908,7 @@ namespace ACBr.C6Bank
             var valorDesconto = 0.5M;
             txtValorDesconto.Text = valorDesconto.ToString();
 
-            txtCodMoraJuros.Text = "0";
+            txtCodMoraJuros.Text = "";
 
             var valorMoraJuros = 0.0M;
             txtValorMoraJuros.Text = valorMoraJuros.ToString();

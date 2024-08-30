@@ -1900,6 +1900,7 @@ Usar com série específica 920-969 para emitente pessoa física com inscrição
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
 												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="0"/>
 												<xs:enumeration value="1"/>
 												<xs:enumeration value="2"/>
 												<xs:enumeration value="3"/>
@@ -2656,7 +2657,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 					</xs:attribute>
 				</xs:complexType>
 				<xs:unique name="pk_nItem">
-					<xs:selector xpath="det"/>
+					<xs:selector xpath="./*"/>
 					<xs:field xpath="@nItem"/>
 				</xs:unique>
 			</xs:element>

@@ -692,6 +692,7 @@ type
     btnAlterarBoleto: TButton;
     cmbTipoOcorrencia: TComboBox;
     Label101: TLabel;
+    btnFecharTelaPagamento: TSpeedButton;
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL,
       AMethod: string; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
@@ -722,6 +723,7 @@ type
     procedure btnConfigPixClick(Sender: TObject);
     procedure btnConsultarBoletoAPIClick(Sender: TObject);
     procedure btnEncerraVendaClick(Sender: TObject);
+    procedure btnFecharTelaPagamentoClick(Sender: TObject);
     procedure btnGerarRemessaClick(Sender: TObject);
     procedure btnImprimeBoletoClick(Sender: TObject);
     procedure btnIncluiBoletoClick(Sender: TObject);
@@ -2065,16 +2067,15 @@ end;
 
 procedure TfrmPrincipal.edtRecebedorCEPChange(Sender: TObject);
 begin
-  if (Length(edtRecebedorCEP.Text) > 5) then
-  begin
-    edtRecebedorCEP.Text := FormatarMascaraDinamica
-      (OnlyNumber(edtRecebedorCEP.Text), '*****-***');
-    edtRecebedorCEP.SelStart := Length(edtRecebedorCEP.Text);
-  end;
+    if (Length(edtRecebedorCEP.Text) > 5) then
+    begin
+      edtRecebedorCEP.Text := FormatarMascaraDinamica
+        (OnlyNumber(edtRecebedorCEP.Text), '*****-***');
+      edtRecebedorCEP.SelStart := Length(edtRecebedorCEP.Text);
+    end;
 
-  imgErrCEP.Visible := (Length(edtRecebedorCEP.Text) < 9);
-  sbConsultaCEP.Visible := not imgErrCEP.Visible;
-
+    imgErrCEP.Visible := (Length(edtRecebedorCEP.Text) < 9);
+    sbConsultaCEP.Visible := not imgErrCEP.Visible;
 end;
 
 procedure TfrmPrincipal.EncerraVenda(LFlag: Boolean);
@@ -3479,7 +3480,13 @@ end;
 
 procedure TfrmPrincipal.btnEncerraVendaClick(Sender: TObject);
 begin
-  EncerraVenda(True);
+  if not pnlRecebimento.Visible then
+     EncerraVenda(True);
+end;
+
+procedure TfrmPrincipal.btnFecharTelaPagamentoClick(Sender: TObject);
+begin
+  EncerraVenda(false);
 end;
 
 procedure TfrmPrincipal.Button1Click(Sender: TObject);

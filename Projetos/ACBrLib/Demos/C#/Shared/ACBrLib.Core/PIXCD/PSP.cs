@@ -48,5 +48,14 @@ namespace ACBrLib.Core.PIXCD
 
         [Description("Mercado Pago")]
         pspMercadoPago = 14,
+
+        [Description("Gate2All")]
+        pspGate2All = 15,
+
+        [Description("Banrisul")]
+        pspBanrisul = 16,
+
+        [Description("C6Bank")]
+        pspC6Bank = 17,
     }
 }

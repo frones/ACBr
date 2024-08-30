@@ -2206,6 +2206,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  lacUnidTransp.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('lacUnidTransp');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2223,6 +2224,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  lacUnidCarga.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('lacUnidCarga');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2253,6 +2255,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  infUnidCarga.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('infUnidCarga');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2288,6 +2291,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  InfNFE.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('infNFe');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2422,6 +2426,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  idDocAnt.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('idDocAnt');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2441,6 +2446,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  idDocAntPap.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('idDocAntPap');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2462,6 +2468,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  idDocAntEle.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('idDocAntEle');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -2480,6 +2487,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  seg.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('seg');
   for i:=0 to Length(AuxNodeArray) -1 do
   begin
@@ -3476,6 +3484,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  infNF.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('infNF');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
@@ -3496,6 +3505,7 @@ var
 begin
   if not Assigned(ANode) then exit;
 
+  infNFe.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('infNFe');
   for i:=0 to Length(AuxNodeArray)-1 do
   begin

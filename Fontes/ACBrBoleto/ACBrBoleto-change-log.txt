@@ -48,10 +48,16 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/08/2024
+-- ACBrBoletoW_C6.pas --
+[+] Ajustes da API conforme os testes do programa coalizão 
+  por Daniel de Morais
+  
 15/08/2024
 -- ACBrBoleto.pas ACBrBoletoWS.pas ACBrBoletoRet_Cresol.pas ACBrBoletoW_Cresol.pas--
 [+]TK-4538 / TK-4854 ACBrBoleto - API CRESOL Cobrança Boletos 
   por Willian Delan
+  
 -- ACBrBoleto.pas --
 [+] Adicionado leitura a propriedades faltantes do Ini e gravação
   por Victor H Gonzales - Pandaaa

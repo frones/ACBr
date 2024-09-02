@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/09/2024
+-- AssessorPublico.GravarXml --
+[*] #TK-5914: Alterado de tcDe4 para tcDe2 ao gerar a tag QUANTIDADE.
+  Por: Verissimo
 -- ACBrNFSeXServicos --
 [*] #TK-5917: A cidade de Quilombo/SC, trocou de versão e URLs, o provedor continua o mesmo.
   Por: Maiquel

@@ -26295,6 +26295,35 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       BorderSpacing.Left = 5
                       BorderSpacing.Top = 5
                     end
+                    object Label189: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 236
+                      Width = 97
+                      Caption = 'Quebra de Linha'
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Color = clBlack
+                      Font.Height = -13
+                      Font.Name = 'Segoe UI'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
+                      ParentFont = False
+                    end
+                    object edtQuebraDeLinha: TEdit
+                      Left = 6
+                      Height = 25
+                      Top = 252
+                      Width = 170
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Color = clBlack
+                      Font.Height = -13
+                      Font.Name = 'Segoe UI'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
+                      ParentFont = False
+                      TabOrder = 7
+                      Text = '|'
+                    end
                   end
                   object gbxProxy: TGroupBox
                     Left = 403

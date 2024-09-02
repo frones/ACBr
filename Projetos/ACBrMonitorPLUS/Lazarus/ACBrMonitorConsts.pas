@@ -969,6 +969,7 @@ const
   CKeyArquivoWebServicesNFSe =        'ArquivoWebServicesNFSe';
   CKeyValidarDigest =                 'ValidarDigest';
   CKeyTimeoutWebService =             'TimeoutWebService';
+  CKeyQuebraDeLinha =                 'QuebraDeLinha';
 
   CSecGeral =                        'Geral';
   CKeyDANFE =                        'DANFE';

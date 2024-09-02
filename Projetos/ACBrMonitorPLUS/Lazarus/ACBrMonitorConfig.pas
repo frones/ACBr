@@ -463,6 +463,7 @@ type
     ESocial            : TeSocial;
     Reinf              : TReinf;
     RespTecnico        : TDFeRespTecnico;
+    QuebraDeLinha      : String;
   end;
 
   TSATExtrato = record
@@ -855,7 +856,7 @@ type
 implementation
 
 uses
-  UtilUnit;
+  UtilUnit, StrUtils;
 
 { TMonitorConfig }
 
@@ -877,6 +878,7 @@ procedure TMonitorConfig.SalvarArquivoMemoria(AStream: TStream);
 var
   Ini: TMemIniFile;
   SL: TStringList;
+  QuebraDeLinhaDefault: String;
 begin
   Ini := TMemIniFile.Create('');
   try
@@ -1080,6 +1082,8 @@ begin
       Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServicesNFSe, ArquivoWebServicesNFSe );
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest );
       Ini.WriteInteger( CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeoutWebService );
+      QuebraDeLinhaDefault := IfThen(Trim(QuebraDeLinha)<>'', QuebraDeLinha, '|');
+      Ini.WriteString( CSecACBrNFeMonitor, CKeyQuebraDeLinha, QuebraDeLinhaDefault);
     end;
 
     with DFE.Certificado do
@@ -1660,6 +1664,7 @@ procedure TMonitorConfig.CarregarArquivoMemoria(AStream: TStream);
 var
   Ini: TMemIniFile;
    SL: TStringList;
+   QuebraDeLinhaDefault: String;
 begin
   Ini := TMemIniFile.Create('');
   try
@@ -1878,6 +1883,8 @@ begin
       ArquivoWebServicesNFSe    := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesNFSe, AcertaPath( CACBrNFSeServicosIni ) );
       ValidarDigest             := Ini.ReadBool( CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest );
       TimeoutWebService         := Ini.ReadInteger( CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeoutWebService );
+      QuebraDeLinhaDefault      :=  IfThen(Trim(QuebraDeLinha)<>'', QuebraDeLinha, '|');
+      QuebraDeLinha             := Ini.ReadString( CSecACBrNFeMonitor, CKeyQuebraDeLinha, QuebraDeLinhaDefault);
     end;
 
     with DFe.Certificado do

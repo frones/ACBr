@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+02/09/2024
+-- ACBrBoletoRet_Santander_API --
+[+] Ajustes retorno da API consulta. tratar valor pago 0 settlementCreditedValue 
+	https://www.projetoacbr.com.br/forum/topic/79420-retorno-de-baixa-banco-santander/
+  por Daniel de Morais
+
 30/08/2024
 -- ACBrBoletoW_C6.pas --
 [+] Ajustes da API conforme os testes do programa coalizão 

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5917: A cidade de Quilombo/SC, trocou de versão e URLs, o provedor continua o mesmo.
+  Por: Maiquel
+[*] #TK-5916: A cidade de São Joaquim da Barra/SP, trocou as URLs, o provedor continua o mesmo.
+  Por: Andre Nobre
+[*] #TK-5918: A cidade de Queimados/RJ, trocou de versão e URLs, o provedor continua o mesmo.
+  Por: Everson Clei
+
 29/08/2024
 -- Equiplano.Provider --
 [*] #TK-5889: Incluído no TratarXmlRetornado a substituição do "&" por "&amp;"

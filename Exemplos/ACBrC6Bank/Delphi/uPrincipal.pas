@@ -48,10 +48,10 @@ uses
   ACBrPIXUtil,
   Spin,
   jpeg,
-  pngimage,
+  //pngimage,
   ACBrPIXSchemasCobV,
   DateUtils,
-  ImageList,
+//  ImageList,
   ImgList
 {$IFDEF FPC}
     ,
@@ -66,7 +66,9 @@ uses
   ACBrDelphiZXingQRCode,
   ACBrPIXBRCode,
   Grids,
+  ImageList,
   OpenSSLExt;
+
 
 
 type
@@ -95,17 +97,12 @@ type
     btnBoletoMenu: TButton;
     btnPixMenu: TButton;
     btnSairMenu: TButton;
-    Label1: TLabel;
-    Shape1: TShape;
     Shape2: TShape;
     Label2: TLabel;
-    btnConfigBoleto: TSpeedButton;
     btnConfigPix: TSpeedButton;
     TabConfigPix: TTabSheet;
     ConfigBoleto: TTabSheet;
     Label3: TLabel;
-    Shape4: TShape;
-    Label4: TLabel;
     Shape5: TShape;
     Label5: TLabel;
     btnCfgSalvaBoleto: TButton;
@@ -693,6 +690,13 @@ type
     cmbTipoOcorrencia: TComboBox;
     Label101: TLabel;
     btnFecharTelaPagamento: TSpeedButton;
+    pnpCfgBoleto: TPanel;
+    Label4: TLabel;
+    Shape4: TShape;
+    pnpBoletoPrincipal: TPanel;
+    Shape1: TShape;
+    Label1: TLabel;
+    btnConfigBoleto: TSpeedButton;
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL,
       AMethod: string; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
@@ -772,6 +776,7 @@ type
     FACBrBoletoFPDF: TACBrBoletoFPDF;
 
     procedure MostraTela(ATela: TIndicadorTela);
+
     procedure SelecionaPath(AComponent: TEdit);
     procedure CarregarTipoDocumento;
     procedure CarregarCaracTitulo;
@@ -793,7 +798,7 @@ type
       const Mascara: String): String;
     procedure TratarException(Sender: TObject; E: Exception);
 
-    function SelectFolder: string;
+//  function SelectFolder: string;
     procedure AplicarConfiguracoesAoComponente;
     procedure GravarIniComponente;
     procedure LerIniComponente(const ADialog: Boolean = False);
@@ -959,7 +964,7 @@ end;
 
 procedure TfrmPrincipal.btnPesPathLogWsClick(Sender: TObject);
 begin
-  edtPathLog.Text := SelectFolder;
+  SelecionaPath(edtPathLog);
 end;
 
 procedure TfrmPrincipal.btnPesqCRTClick(Sender: TObject);
@@ -974,7 +979,7 @@ end;
 
 procedure TfrmPrincipal.btnPesqRemessaClick(Sender: TObject);
 begin
-  edtPathRemessa.Text := SelectFolder;
+  SelecionaPath(edtPathRemessa);
 end;
 
 procedure TfrmPrincipal.btnPesqRetornoClick(Sender: TObject);
@@ -1308,9 +1313,17 @@ begin
     edC6BankChavePrivada.Text := ExtractFileName(OpenDialog1.FileName);
   if AComponent = edC6BankCertificado then
     edC6BankCertificado.Text := ExtractFileName(OpenDialog1.FileName);
-
+  if AComponent = edtPathLog then
+    edtPathLog.Text := ExtractFilePath(OpenDialog1.FileName);
+  if AComponent = edtPathRemessa then
+    edtPathRemessa.Text := ExtractFilePath(OpenDialog1.FileName);
+  if AComponent = edtPathFR3 then
+    edtPathFR3.Text := ExtractFilePath(OpenDialog1.FileName);
+  if AComponent = edtPathLogoMarca then
+    edtPathLogoMarca.Text := ExtractFilePath(OpenDialog1.FileName);
 end;
 
+(*
 function TfrmPrincipal.SelectFolder: string;
 var
   LDialog: TFileOpenDialog;
@@ -1326,6 +1339,7 @@ begin
   end;
 
 end;
+*)
 
 procedure TfrmPrincipal.AplicarConfiguracoesAoComponente;
 var
@@ -1421,12 +1435,12 @@ end;
 
 procedure TfrmPrincipal.btnPesqFR3Click(Sender: TObject);
 begin
-  edtPathFR3.Text := SelectFolder;
+  SelecionaPath(edtPathFR3);
 end;
 
 procedure TfrmPrincipal.btnPesqLogoBancoClick(Sender: TObject);
 begin
-  edtPathLogoMarca.Text := SelectFolder;
+  SelecionaPath(edtPathLogoMarca);
 end;
 
 procedure TfrmPrincipal.GerarDadosTeste;
@@ -1775,6 +1789,8 @@ begin
   Titulo.ValorDesconto := StrToCurrDef(edtValorDesconto.Text, 0);
   Titulo.TipoDesconto := TACBrTipoDesconto(cbxTipoDesconto.ItemIndex);
 
+  {
+
   Titulo.DataDesconto2 := StrToDateDef(edtDataDesconto.Text, 0) + 2;
   Titulo.ValorDesconto2 := StrToCurrDef(edtValorDesconto.Text, 0) - 2;
   Titulo.TipoDesconto2 := TACBrTipoDesconto(cbxTipoDesconto.ItemIndex);
@@ -1782,6 +1798,8 @@ begin
   Titulo.DataDesconto3 := StrToDateDef(edtDataDesconto.Text, 0) + 4;
   Titulo.ValorDesconto3 := StrToCurrDef(edtValorDesconto.Text, 0) - 3;
   Titulo.TipoDesconto3 := TACBrTipoDesconto(cbxTipoDesconto.ItemIndex);
+
+  }
 
   Titulo.DataAbatimento := StrToDateDef(edtDataAbatimento.Text, 0);
   Titulo.ValorAbatimento := StrToCurrDef(edtValorAbatimento.Text, 0);

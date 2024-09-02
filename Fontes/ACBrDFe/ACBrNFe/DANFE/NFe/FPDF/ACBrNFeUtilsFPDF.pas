@@ -112,7 +112,7 @@ end;
 function TNFeUtilsFPDF.GetTextoAdicional: string;
 begin
   Result := TACBrNFeDANFEClass(DANFEClassOwner).ManterInformacoesDadosAdicionais(NFe);
-  Result := FastStringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
+  Result := FastStringReplace(Result, DANFEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
 end;
 
 function TNFeUtilsFPDF.GetTextoFatura: string;

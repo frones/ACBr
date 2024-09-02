@@ -336,11 +336,11 @@ begin
         // Preenche os campos - "Condições de uso"
         RLLabel21.Caption := ACBrStr('CONDIÇÕES DE USO');
         rlmCondUso.Lines.Clear;
-        rlmCondUso.Lines.Add(StringReplace(InfEvento.detEvento.xCondUso, ';', slineBreak, [rfReplaceAll]));
+        rlmCondUso.Lines.Add(StringReplace(InfEvento.detEvento.xCondUso, fpDANFe.CaractereQuebraDeLinha, slineBreak, [rfReplaceAll]));
         rlmCondUso.Lines.Text := StringReplace(rlmCondUso.Lines.Text, ': I', ':'+slineBreak+'I', [rfReplaceAll]);
 
         // Prrenche os campos - "Correção"
-        rlmCorrecao.Lines.Add(StringReplace(InfEvento.detEvento.xCorrecao, ';', slineBreak, [rfReplaceAll]));
+        rlmCorrecao.Lines.Add(StringReplace(InfEvento.detEvento.xCorrecao, fpDANFe.CaractereQuebraDeLinha, slineBreak, [rfReplaceAll]));
       end;
 
       teCancelamento:

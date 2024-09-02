@@ -434,7 +434,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLBand10BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := StringReplace(Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl), ';', #13, [rfReplaceAll] ) <> '';
+  PrintIt := StringReplace(Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl), Self.FACBrNFeDANFCeFortesA4.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) <> '';
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand11BeforePrint(Sender: TObject;
@@ -806,7 +806,7 @@ begin
     Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.xProd
   else
     Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.xProd + ' - '
-			+ StringReplace( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].infAdProd, ';',#13,[rfReplaceAll]);
+			+ StringReplace( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].infAdProd, Self.FACBrNFeDANFCeFortesA4.CaractereQuebraDeLinha,#13,[rfReplaceAll]);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLMemo2BeforePrint(Sender: TObject;
@@ -820,10 +820,10 @@ begin
     begin
       for I := 0 to InfAdic.obsCont.Count - 1 do
         Text := Text + StringReplace(InfAdic.obsCont[i].xCampo + ': ' +
-                                     InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) + #13;
+                                     InfAdic.obsCont[i].xTexto, FACBrNFeDANFCeFortesA4.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) + #13;
     end;
 
-    Text := Text + StringReplace(InfAdic.infCpl, ';', #13, [rfReplaceAll] ) + #13;
+    Text := Text + StringReplace(InfAdic.infCpl, FACBrNFeDANFCeFortesA4.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) + #13;
   end;
 end;
 

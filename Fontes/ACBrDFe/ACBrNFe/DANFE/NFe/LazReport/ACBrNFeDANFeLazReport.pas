@@ -1551,7 +1551,7 @@ begin
             FDANFE.ManterCodigo(Prod.cEAN, Prod.cProd);
           FieldByName('cEAN').AsString := Prod.cEAN;
           FieldByName('XProd').AsString :=
-            StringReplace(Prod.xProd, ';', sLineBreak , [rfReplaceAll]);
+            StringReplace(Prod.xProd, FDANFE.CaractereQuebraDeLinha, sLineBreak , [rfReplaceAll]);
           FieldByName('VProd').AsString :=
             FDANFE.ManterVprod(Prod.VProd, Prod.vDesc);
           FieldByName('vTotTrib').AsString :=
@@ -2451,11 +2451,11 @@ begin
           CondicoesUso := InfEvento.detEvento.xCondUso;
           CondicoesUso := StringReplace(CondicoesUso, 'com: I',
             'com:' + sLineBreak  + ' I', [rfReplaceAll]);
-          CondicoesUso := StringReplace(CondicoesUso, ';', ';' + sLineBreak , [rfReplaceAll]);
+          CondicoesUso := StringReplace(CondicoesUso, FDANFE.CaractereQuebraDeLinha, FDANFE.CaractereQuebraDeLinha + sLineBreak , [rfReplaceAll]);
 
           Correcao := InfEvento.detEvento.xCorrecao;
           Correcao := StringReplace(InfEvento.detEvento.xCorrecao,
-            ';', sLineBreak , [rfReplaceAll]);
+            FDANFe.CaractereQuebraDeLinha, sLineBreak , [rfReplaceAll]);
 
           FieldByName('xCondUso').AsString := CondicoesUso;
           FieldByName('xCorrecao').AsString := Correcao;

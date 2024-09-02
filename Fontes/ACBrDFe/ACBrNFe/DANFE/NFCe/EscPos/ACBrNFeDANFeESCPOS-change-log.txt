@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2024
+-- ACBrNFeDANFeESCPoS --
+[*] #TK-5866: Ajuste visando padronização do caractere de quebra de linha.
+   por: Diego Folieni
+
 26/05/2023
 [+]TK-3950 Inclusão recurso para uso de BMP no NFCe.
    por: Victor H Gonzales - Pandaaa, Daniel Morais

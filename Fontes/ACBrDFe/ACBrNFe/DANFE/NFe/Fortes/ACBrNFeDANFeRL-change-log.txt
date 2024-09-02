@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+02/09/2024
+-- ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, 
+[*] #TK-5866: Ajuste visando padronização do caractere de quebra de linha.
+   por: Diego Folieni
+
 13/08/2024
 -- ACBrNFeDANFeRLSimplificado --
 [*] TK-5742 Não estava respeitando a propriedade ExibeInforAdicProduto

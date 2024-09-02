@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2024
+-- pcnNFeW --
+[*] #TK-5866: Ajuste visando padronização do caractere de quebra de linha.
+   por: Diego Folieni
+
 15/08/2024
 -- ACBrNFeWebServices --
 [*] #TK-5833: Adiciona o preenchimento da propriedade que alimenta o XML na resposta da Lib.

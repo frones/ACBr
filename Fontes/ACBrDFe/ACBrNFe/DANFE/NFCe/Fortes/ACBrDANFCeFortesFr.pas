@@ -542,12 +542,12 @@ begin
       for I := 0 to InfAdic.obsCont.Count - 1 do
       begin
         lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
-                                               InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) ) ;
+                                               InfAdic.obsCont[i].xTexto, fACBrNFeDANFCeFortes.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) ) ;
       end;
     end;
 
     if InfAdic.infCpl <> '' then
-      lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) );
+      lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, fACBrNFeDANFCeFortes.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) );
 
     lObservacoes.Visible := ( lObservacoes.Lines.Count > 0 );
   end;
@@ -1180,7 +1180,7 @@ begin
     begin
       PrintIt := True ;
 
-      lObservacoesCanc.Lines.Add( StringReplace( infCpl, ';', #13, [rfReplaceAll] ) );
+      lObservacoesCanc.Lines.Add( StringReplace( infCpl, fACBrNFeDANFCeFortes.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) );
     end;
   end;
 end;

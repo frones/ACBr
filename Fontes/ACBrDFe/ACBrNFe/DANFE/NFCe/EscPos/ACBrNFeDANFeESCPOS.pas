@@ -541,7 +541,7 @@ begin
     for i := 0 to FpNFe.InfAdic.obsCont.Count - 1 do
     begin
       TextoObservacao := StringReplace(Trim(FpNFe.InfAdic.obsCont[i].xCampo) + ': ' +
-          Trim(FpNFe.InfAdic.obsCont[i].xTexto), ';', sLineBreak, [rfReplaceAll]);
+          Trim(FpNFe.InfAdic.obsCont[i].xTexto), CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
       FPosPrinter.Buffer.Add(TagLigaCondensado + TextoObservacao);
     end;
   end;
@@ -550,7 +550,7 @@ begin
 
   if TextoObservacao <> '' then
   begin
-    TextoObservacao := StringReplace(FpNFe.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);
+    TextoObservacao := StringReplace(FpNFe.InfAdic.infCpl, CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add(TagLigaCondensado + TextoObservacao);
   end;
 end;
@@ -717,7 +717,7 @@ begin
   try
     TextoObservacao := Trim(FpNFe.InfAdic.infAdFisco);
     if TextoObservacao <> '' then
-      MensagemFiscal.Add(TagLigaCondensado + StringReplace(TextoObservacao, ';', sLineBreak, [rfReplaceAll]));
+      MensagemFiscal.Add(TagLigaCondensado + StringReplace(TextoObservacao, CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]));
 
     TextoObservacao := Trim(FpNFe.procNFe.xMsg);
     if TextoObservacao <> '' then

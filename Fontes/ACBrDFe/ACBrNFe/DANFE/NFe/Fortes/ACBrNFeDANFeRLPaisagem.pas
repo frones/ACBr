@@ -1916,7 +1916,7 @@ end;
 function TfrlDANFeRLPaisagem.ManterBandinfAdProd(const sInforAdicProduto: String): String;
 begin
   Result := Trim(sInforAdicProduto);
-  Result := StringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
+  Result := StringReplace(Result, fpDanfe.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
 
   RLBandInfAd.Visible := (Result <> '') and (fpDANFe.ExibeInforAdicProduto = infSeparadamente);
 end;

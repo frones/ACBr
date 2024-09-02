@@ -1931,7 +1931,7 @@ begin
   if FPaperWidth < 70 then
     PDF.SetFont(5, '');
 
-  texto := StringReplace(NFe.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);
+  texto := StringReplace(NFe.InfAdic.infCpl, FDANFEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
   h := PDF.GetStringHeight(texto, Args.Band.Width);
   PDF.TextBox(0, y+3, Args.Band.Width, h, texto, 'T', 'L', 0, '', false);
 end;

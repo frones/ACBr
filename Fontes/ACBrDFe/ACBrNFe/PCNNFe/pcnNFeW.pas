@@ -225,7 +225,7 @@ begin
   FNFe                                 := AOwner;
   FGerador                             := TGerador.Create;
   FGerador.FIgnorarTagNivel            := '|?xml version|NFe xmlns|infNFe versao|obsCont|obsFisco|';
-  FGerador.Opcoes.QuebraLinha          := ';';
+  FGerador.Opcoes.QuebraLinha          := '|';
   FOpcoes                              := TGeradorOpcoes.Create;
   FOpcoes.FGerarTXTSimultaneamente     := False;
   FOpcoes.FGerarTagIPIparaNaoTributado := True;

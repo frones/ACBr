@@ -303,6 +303,7 @@ type
     FFormatSettings: TFormatSettings;
     FInitialized: boolean;
     FMensagemRodape: string;
+    FCaractereQuebraDeLinha: string;
     procedure SetFontBoxHeader(PDF: IFPDF);
     procedure SetFontBoxContent(PDF: IFPDF);
     procedure SetFontBoxContentBold(PDF: IFPDF);
@@ -322,6 +323,7 @@ type
   public
     constructor Create(ANFe: TNFe; AProcEvento: TInfEventoCollectionItem); reintroduce;
     property MensagemRodape: string read FMensagemRodape write FMensagemRodape;
+    property CaractereQuebraDeLinha: string read FCaractereQuebraDeLinha write FCaractereQuebraDeLinha;
   end;
 
 
@@ -2807,6 +2809,7 @@ begin
     FIndexImpressaoIndividual := I;
 
     TNFeDANFeEventoFPDF(Report).MensagemRodape := Self.Sistema;
+    TNFeDANFeEventoFPDF(Report).CaractereQuebraDeLinha := CaractereQuebraDeLinha;
 
     try
       Engine := TFPDFEngine.Create(Report, False);
@@ -2875,7 +2878,7 @@ begin
 
   PDF.Rect(x, y, MaxW, Args.Band.Height - y);
 
-  texto := StringReplace(AConteudo, ';', sLineBreak, [rfReplaceAll]);
+  texto := StringReplace(AConteudo, FCaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
   SetFontBoxContent(PDF);
   PDF.TextBox(x + 2, y + 2, MaxW - 4, Args.Band.Height - y, texto, 'T', 'L', 0, '', false);
 end;
@@ -2927,7 +2930,7 @@ begin
 
   CondicoesUso := EvCCe.xCondUso;
   CondicoesUso := StringReplace(CondicoesUso, 'com: I', 'com:' + sLineBreak + 'I', [rfReplaceAll]);
-  CondicoesUso := StringReplace(CondicoesUso, ';', ';' + sLineBreak, [rfReplaceAll]);
+  CondicoesUso := StringReplace(CondicoesUso, FCaractereQuebraDeLinha, FCaractereQuebraDeLinha + sLineBreak, [rfReplaceAll]);
 
   BlocoTexto(Args, 'CONDIÇÕES DE USO', CondicoesUso);
 end;

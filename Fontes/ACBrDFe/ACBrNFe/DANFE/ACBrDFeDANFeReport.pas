@@ -125,6 +125,7 @@ type
     function CalcularValorLiquidoItem(const ANFE: TNFe; const ANItem: Integer):Double;overload;
     function CalcularValorDescontoItem(const ANFE: TNFe; const ANItem: Integer):Double;
     function CalcularValorDescontoTotal(const ANFE: TNFe):Double;
+    function CaractereQuebraDeLinha: String;
   public
     property Protocolo: String read FProtocoloNFe write FProtocoloNFe;
     property Cancelada: Boolean read FNFeCancelada write FNFeCancelada default False;
@@ -211,6 +212,11 @@ begin
   FExibeInforAdicProduto      := infDescricao;
   FQuebraLinhaEmDetalhamentos := True;
   FExibeICMSDesoneradoComoDesconto := False;
+end;
+
+function TACBrDFeDANFeReport.CaractereQuebraDeLinha: String;
+begin
+  Result := TACBrNFe(ACBrNFe).Configuracoes.WebServices.QuebradeLinha;
 end;
 
 procedure TACBrDFeDANFeReport.Notification(AComponent: TComponent; Operation: TOperation);
@@ -444,7 +450,7 @@ begin
   if infAdFisco > '' then
   begin
     if ANFe.InfAdic.infCpl > '' then
-      Result := infAdFisco + IfThen(Copy(infAdFisco, Length(infAdFisco), 1) = ';', '', '; ')
+      Result := infAdFisco + IfThen(Copy(infAdFisco, Length(infAdFisco), 1) = CaractereQuebraDeLinha, '', CaractereQuebraDeLinha + ' ')
     else
       Result := infAdFisco;
   end;
@@ -466,7 +472,7 @@ begin
     Result := Trim(aNFE.Det.Items[inItem].infAdProd);
 
     sQuebraLinha := SeparadorDetalhamentos;
-    Result := StringReplace(Result, ';', sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);
+    Result := StringReplace(Result, CaractereQuebraDeLinha, sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);
     if (Result <> '') then
       Result := sQuebraLinha + Result;
   end;
@@ -497,10 +503,10 @@ begin
           Result := Result +
             obsCont.Items[i].xCampo + ': ' +
             obsCont.Items[i].xTexto +
-            IfThen((i = (obsCont.Count - 1)), '', ';');
+            IfThen((i = (obsCont.Count - 1)), '', CaractereQuebraDeLinha);
         end;
 
-        Result := Result + '; ';
+        Result := Result + CaractereQuebraDeLinha + ' ';
       end;
     end;
   end;
@@ -520,10 +526,10 @@ begin
       begin
         Result := Result +
           obsFisco.Items[i].xCampo + ': ' +
-          obsFisco.Items[i].xTexto + IfThen((i = (obsFisco.Count - 1)), '', ';');
+          obsFisco.Items[i].xTexto + IfThen((i = (obsFisco.Count - 1)), '', CaractereQuebraDeLinha);
       end;
 
-      Result := Result + '; ';
+      Result := Result + CaractereQuebraDeLinha + ' ';
     end;
   end;
 end;
@@ -545,10 +551,10 @@ begin
             ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
             procRef.Items[i].nProc + ' - ORIGEM: ' +
             indProcToDescrStr(procRef.Items[i].indProc) +
-            ifthen((i = (procRef.Count - 1)), '', ';');
+            ifthen((i = (procRef.Count - 1)), '', CaractereQuebraDeLinha);
       end;
 
-      Result := Result + '; ';
+      Result := Result + CaractereQuebraDeLinha + ' ';
     end;
   end;
 end;

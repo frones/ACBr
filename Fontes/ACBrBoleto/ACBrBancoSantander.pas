@@ -952,6 +952,7 @@ begin
                     Space(239)                                                +  // 156 - 394 Reservado (uso Banco)
                     IntToStrZero( aRemessa.Count + 1 , 6 );                      // 395 - 400 Sequencial de Registro
            aRemessa.Add(UpperCase(wLinha));
+         end;
       end;
    end;
 end;

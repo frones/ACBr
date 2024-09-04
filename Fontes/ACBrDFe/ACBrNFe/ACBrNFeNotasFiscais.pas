@@ -3827,7 +3827,6 @@ begin
     FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
     FNFeW.Opcoes.ForcarGerarTagRejeicao938 := Configuracoes.Geral.ForcarGerarTagRejeicao938;
     FNFeW.Opcoes.ForcarGerarTagRejeicao906 := Configuracoes.Geral.ForcarGerarTagRejeicao906;
-    FNFeW.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
 {$EndIf}
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );

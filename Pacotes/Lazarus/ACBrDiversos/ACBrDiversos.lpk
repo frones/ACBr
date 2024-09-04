@@ -98,10 +98,13 @@
       </Item16>
     </Files>
     <CompatibilityMode Value="True"/>
-    <RequiredPkgs Count="1">
+    <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="ACBrComum"/>
+      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

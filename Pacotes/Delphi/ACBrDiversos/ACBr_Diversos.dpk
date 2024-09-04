@@ -33,7 +33,8 @@ package ACBr_Diversos;
 requires
   rtl,
   vcl,
-  ACBr_Comum;
+  ACBr_Comum,
+  ACBr_OpenSSL;
 
 contains
   ACBrExtenso in '..\..\..\Fontes\ACBrDiversos\ACBrExtenso.pas',

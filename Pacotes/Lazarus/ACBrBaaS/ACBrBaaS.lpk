@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="ACBrBaaS"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrBaaS"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Version Major="1"/>
+    <Files>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrBaaSReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrBaaSReg"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPI.pas"/>
+        <UnitName Value="ACBrExtratoAPI"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIBB.pas"/>
+        <UnitName Value="ACBrExtratoAPIBB"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIInter.pas"/>
+        <UnitName Value="ACBrExtratoAPIInter"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="ACBrTCP"/>
+      </Item>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -8,14 +8,14 @@ unit ACBrTCP;
 interface
 
 uses
-  ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, 
-  ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
-  ACBrNCMs, ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, 
-  ACBrSedex, ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, 
-  ACBrFeriado, ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
-  ACBrConsultaCNPJ.WS, ACBrConsultaCNPJ.WS.BrasilAPI, 
-  ACBrConsultaCNPJ.WS.ReceitaWS, ACBrConsultaCNPJ.WS.CNPJWS, 
-  LazarusPackageIntf;
+  ACBrTCPReg, ACBrAPIBase, ACBrSocket, ACBrCEP, ACBrIBGE, ACBrCNIEE, 
+  ACBrSuframa, ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, 
+  ACBrIBPTax, ACBrNCMs, ACBrCotacao, ACBrMail, ACBrConsultaCPF, 
+  ACBrSpedTabelas, ACBrSedex, ACBrWinReqRespClass, ACBrWinHTTPReqResp, 
+  ACBrWinINetReqResp, ACBrFeriado, ACBrFeriadoWSCalendario, 
+  ACBrFeriadoWSClass, ACBrFeriadoWSJSON, ACBrConsultaCNPJ.WS, 
+  ACBrConsultaCNPJ.WS.BrasilAPI, ACBrConsultaCNPJ.WS.ReceitaWS, 
+  ACBrConsultaCNPJ.WS.CNPJWS, LazarusPackageIntf;
 
 implementation
 

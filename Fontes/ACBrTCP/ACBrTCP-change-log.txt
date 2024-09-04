@@ -37,6 +37,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/09/2024
+-- ACBrSocket --
+[+] Inclusão de autenticação mTLS na classe ACBrHTTP
+   Por: Elias César
+
 19/08/2024
 -- ACBrSocket, ACBrNCM --
 [*] #TK-5857: Ajuste visando corrigir problema de codificação em caracteres especiais ao ObterNCMS.

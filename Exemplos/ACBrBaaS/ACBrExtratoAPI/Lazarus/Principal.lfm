@@ -1,0 +1,772 @@
+object frPrincipal: TfrPrincipal
+  Left = 2514
+  Height = 588
+  Top = 218
+  Width = 705
+  Caption = 'Aplicação de Demonstração ACBrExtratoAPI'
+  ClientHeight = 588
+  ClientWidth = 705
+  OnCreate = FormCreate
+  LCLVersion = '2.2.4.0'
+  object pgPrincipal: TPageControl
+    Left = 0
+    Height = 588
+    Top = 0
+    Width = 705
+    ActivePage = tsConsulta
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object tsConsulta: TTabSheet
+      Caption = 'Extrato'
+      ClientHeight = 560
+      ClientWidth = 697
+      object btConsultarExtrato: TButton
+        Left = 20
+        Height = 33
+        Top = 72
+        Width = 168
+        Caption = 'Consultar Extrato'
+        OnClick = btConsultarExtratoClick
+        TabOrder = 0
+      end
+      object edAgencia: TEdit
+        Left = 20
+        Height = 23
+        Top = 35
+        Width = 168
+        TabOrder = 1
+      end
+      object Label5: TLabel
+        Left = 20
+        Height = 15
+        Top = 20
+        Width = 43
+        Caption = 'Agência'
+        ParentColor = False
+      end
+      object Label6: TLabel
+        Left = 201
+        Height = 15
+        Top = 20
+        Width = 32
+        Caption = 'Conta'
+        ParentColor = False
+      end
+      object edConta: TEdit
+        Left = 201
+        Height = 23
+        Top = 35
+        Width = 160
+        TabOrder = 2
+      end
+      object gdLancamentos: TStringGrid
+        Left = 20
+        Height = 419
+        Top = 120
+        Width = 655
+        FixedCols = 0
+        RowCount = 1
+        TabOrder = 3
+        ColWidths = (
+          64
+          107
+          101
+          249
+          93
+        )
+        Cells = (
+          5
+          0
+          0
+          'ID'
+          1
+          0
+          'Data Lançamento'
+          2
+          0
+          'Data Movimento'
+          3
+          0
+          'Descrição'
+          4
+          0
+          'Valor'
+        )
+      end
+      object edInicio: TDateEdit
+        Left = 376
+        Height = 23
+        Top = 35
+        Width = 103
+        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+        DateOrder = doNone
+        ButtonWidth = 23
+        NumGlyphs = 1
+        MaxLength = 0
+        TabOrder = 4
+        Text = 'edInicio'
+      end
+      object edFim: TDateEdit
+        Left = 494
+        Height = 23
+        Top = 35
+        Width = 103
+        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+        DateOrder = doNone
+        ButtonWidth = 23
+        NumGlyphs = 1
+        MaxLength = 0
+        TabOrder = 5
+        Text = 'edFim'
+      end
+      object lbInicio: TLabel
+        Left = 376
+        Height = 15
+        Top = 20
+        Width = 29
+        Caption = 'Início'
+        ParentColor = False
+      end
+      object lbFim: TLabel
+        Left = 494
+        Height = 15
+        Top = 20
+        Width = 20
+        Caption = 'Fim'
+        ParentColor = False
+      end
+    end
+    object tsConfig: TTabSheet
+      Caption = 'Configuração'
+      ClientHeight = 560
+      ClientWidth = 697
+      object pnConfig: TPanel
+        Left = 0
+        Height = 178
+        Top = 0
+        Width = 697
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 20
+        ClientHeight = 178
+        ClientWidth = 697
+        TabOrder = 0
+        object gbConfigGeral: TGroupBox
+          Left = 20
+          Height = 138
+          Top = 20
+          Width = 208
+          Align = alLeft
+          Caption = 'Geral'
+          ClientHeight = 118
+          ClientWidth = 204
+          TabOrder = 0
+          object pnConfigGeral: TPanel
+            Left = 0
+            Height = 118
+            Top = 0
+            Width = 204
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 118
+            ClientWidth = 204
+            TabOrder = 0
+            object lbConfigGeralBanco: TLabel
+              Left = 15
+              Height = 15
+              Top = 10
+              Width = 33
+              Caption = 'Banco'
+              ParentColor = False
+            end
+            object cbConfigGeralBanco: TComboBox
+              Left = 15
+              Height = 23
+              Top = 25
+              Width = 170
+              ItemHeight = 15
+              OnChange = cbConfigGeralBancoChange
+              Style = csDropDownList
+              TabOrder = 0
+            end
+            object cbConfigGeralAmbiente: TComboBox
+              Left = 15
+              Height = 23
+              Top = 75
+              Width = 170
+              ItemHeight = 15
+              OnChange = cbConfigGeralAmbienteChange
+              Style = csDropDownList
+              TabOrder = 1
+            end
+            object lbConfigGeralAmbiente: TLabel
+              Left = 15
+              Height = 15
+              Top = 60
+              Width = 52
+              Caption = 'Ambiente'
+              ParentColor = False
+            end
+          end
+        end
+        object gbConfigProxy: TGroupBox
+          Left = 228
+          Height = 138
+          Top = 20
+          Width = 245
+          Align = alLeft
+          Caption = 'Proxy'
+          ClientHeight = 118
+          ClientWidth = 241
+          TabOrder = 1
+          object pnConfigProxy: TPanel
+            Left = 0
+            Height = 118
+            Top = 0
+            Width = 241
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 118
+            ClientWidth = 241
+            TabOrder = 0
+            object lbConfigProxyHost: TLabel
+              Left = 15
+              Height = 15
+              Top = 10
+              Width = 25
+              Caption = 'Host'
+              ParentColor = False
+            end
+            object lbConfigProxyPorta: TLabel
+              Left = 140
+              Height = 15
+              Top = 10
+              Width = 28
+              Caption = 'Porta'
+              ParentColor = False
+            end
+            object lbConfigProxyUsuario: TLabel
+              Left = 15
+              Height = 15
+              Top = 60
+              Width = 40
+              Caption = 'Usuário'
+              ParentColor = False
+            end
+            object edConfigProxyHost: TEdit
+              Left = 15
+              Height = 23
+              Top = 25
+              Width = 111
+              TabOrder = 0
+            end
+            object lbConfigProxySenha: TLabel
+              Left = 140
+              Height = 15
+              Top = 60
+              Width = 32
+              Caption = 'Senha'
+              ParentColor = False
+            end
+            object edConfigProxyUsuario: TEdit
+              Left = 15
+              Height = 23
+              Top = 75
+              Width = 111
+              TabOrder = 1
+            end
+            object edConfigProxySenha: TEdit
+              Left = 140
+              Height = 23
+              Top = 75
+              Width = 63
+              EchoMode = emPassword
+              PasswordChar = '*'
+              TabOrder = 2
+            end
+            object edConfigProxyPorta: TSpinEdit
+              Left = 140
+              Height = 23
+              Top = 25
+              Width = 85
+              MaxValue = 999999
+              TabOrder = 3
+            end
+            object btConfigProxyVerSenha: TSpeedButton
+              Left = 202
+              Height = 23
+              Top = 75
+              Width = 23
+              AllowAllUp = True
+              Anchors = [akTop, akRight]
+              GroupIndex = 1
+              ImageIndex = 7
+              OnClick = btConfigProxyVerSenhaClick
+            end
+          end
+        end
+        object gbConfigLog: TGroupBox
+          Left = 473
+          Height = 138
+          Top = 20
+          Width = 204
+          Align = alClient
+          Caption = 'Log'
+          ClientHeight = 118
+          ClientWidth = 200
+          TabOrder = 2
+          object pnConfigLog: TPanel
+            Left = 0
+            Height = 118
+            Top = 0
+            Width = 200
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 118
+            ClientWidth = 200
+            TabOrder = 0
+            object lbConfigLogArquivo: TLabel
+              Left = 15
+              Height = 15
+              Top = 10
+              Width = 42
+              Caption = 'Arquivo'
+              ParentColor = False
+            end
+            object lbConfigLogNivel: TLabel
+              Left = 15
+              Height = 15
+              Top = 60
+              Width = 27
+              Caption = 'Nível'
+              ParentColor = False
+            end
+            object edConfigLogArquivo: TEdit
+              Left = 15
+              Height = 23
+              Top = 25
+              Width = 147
+              TabOrder = 0
+            end
+            object btConfigLogArquivo: TSpeedButton
+              Left = 161
+              Height = 23
+              Hint = 'Abrir Arquivo de Log'
+              Top = 25
+              Width = 24
+              ImageIndex = 9
+              OnClick = btConfigLogArquivoClick
+              ShowHint = True
+              ParentFont = False
+              ParentShowHint = False
+            end
+            object cbConfigLogNivel: TComboBox
+              Left = 15
+              Height = 23
+              Top = 75
+              Width = 170
+              ItemHeight = 15
+              ItemIndex = 2
+              Items.Strings = (
+                'Nenhum'
+                'Baixo'
+                'Normal'
+                'Alto'
+                'Muito Alto'
+              )
+              Style = csDropDownList
+              TabOrder = 1
+              Text = 'Normal'
+            end
+          end
+        end
+      end
+      object pnConfigBancos: TPanel
+        Left = 20
+        Height = 320
+        Top = 178
+        Width = 657
+        Align = alTop
+        BorderSpacing.Left = 20
+        BorderSpacing.Right = 20
+        BevelOuter = bvNone
+        ClientHeight = 320
+        ClientWidth = 657
+        TabOrder = 1
+        object pgConfigBancos: TPageControl
+          Left = 0
+          Height = 320
+          Top = 0
+          Width = 657
+          ActivePage = tsConfigBB
+          Align = alClient
+          TabIndex = 0
+          TabOrder = 0
+          Visible = False
+          object tsConfigBB: TTabSheet
+            Caption = 'tsConfigBB'
+            ClientHeight = 292
+            ClientWidth = 649
+            object gbConfigBB: TGroupBox
+              Left = 0
+              Height = 292
+              Top = 0
+              Width = 649
+              Align = alClient
+              Caption = 'Banco do Brasil'
+              ClientHeight = 272
+              ClientWidth = 645
+              TabOrder = 0
+              Visible = False
+              object pnConfigBB: TPanel
+                Left = 0
+                Height = 272
+                Top = 0
+                Width = 645
+                Align = alClient
+                BevelOuter = bvNone
+                ClientHeight = 272
+                ClientWidth = 645
+                TabOrder = 0
+                object edBBMCITeste: TEdit
+                  Left = 330
+                  Height = 23
+                  Top = 25
+                  Width = 300
+                  TabOrder = 0
+                end
+                object lbBBMCITeste: TLabel
+                  Left = 330
+                  Height = 15
+                  Top = 10
+                  Width = 222
+                  Caption = 'x-br-com-bb-ipa-miteste (Homologação)'
+                  ParentColor = False
+                end
+                object lbBBDevAppKey: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 10
+                  Width = 139
+                  Caption = 'Developer Application Key'
+                  ParentColor = False
+                end
+                object eBBDevAppKey: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 25
+                  Width = 300
+                  TabOrder = 1
+                end
+                object lbBBClientID: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 60
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object edBBClientID: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 75
+                  Width = 615
+                  TabOrder = 2
+                end
+                object lbBBClientSecret: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 110
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object edBBClientSecret: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 125
+                  Width = 615
+                  TabOrder = 3
+                end
+                object edBBChavePrivada: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 175
+                  Width = 592
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edBBArqsChange
+                  OnExit = edBBChavePrivadaExit
+                  TabOrder = 4
+                  Text = 'BBChavePrivada.key'
+                end
+                object lbBBChavePrivada: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 160
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object lbBBErroChavePrivada: TLabel
+                  Left = 144
+                  Height = 15
+                  Top = 160
+                  Width = 89
+                  Caption = '(Não informado)'
+                  ParentColor = False
+                end
+                object btBBAcharChavePrivada: TSpeedButton
+                  Left = 606
+                  Height = 23
+                  Top = 175
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  ImageIndex = 9
+                  OnClick = btBBAcharChavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btBBAcharCertificado: TSpeedButton
+                  Left = 606
+                  Height = 23
+                  Top = 225
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  ImageIndex = 9
+                  OnClick = btBBAcharCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edBBCertificado: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 225
+                  Width = 592
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edBBArqsChange
+                  OnExit = edBBCertificadoExit
+                  TabOrder = 5
+                  Text = 'BBCertificado.pem'
+                end
+                object lbBBCertificado: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 210
+                  Width = 130
+                  Caption = 'Arquivo Certificado PEM'
+                  ParentColor = False
+                end
+                object lbBBErroCertificado: TLabel
+                  Left = 155
+                  Height = 15
+                  Top = 210
+                  Width = 89
+                  Caption = '(Não informado)'
+                  ParentColor = False
+                end
+              end
+            end
+          end
+          object tsConfigInter: TTabSheet
+            Caption = 'tsConfigInter'
+            ClientHeight = 292
+            ClientWidth = 649
+            object gbConfigInter: TGroupBox
+              Left = 0
+              Height = 292
+              Top = 0
+              Width = 649
+              Align = alClient
+              Caption = 'Banco Inter'
+              ClientHeight = 272
+              ClientWidth = 645
+              TabOrder = 0
+              Visible = False
+              object pnConfigInter: TPanel
+                Left = 0
+                Height = 272
+                Top = 0
+                Width = 645
+                Align = alClient
+                BevelOuter = bvNone
+                ClientHeight = 272
+                ClientWidth = 645
+                TabOrder = 0
+                object lbInterClientID: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 10
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object edInterClientID: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 25
+                  Width = 615
+                  TabOrder = 0
+                end
+                object lbInterClientSecret: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 60
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object edInterClientSecret: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 75
+                  Width = 615
+                  TabOrder = 1
+                end
+                object edInterChavePrivada: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 125
+                  Width = 592
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edInterArqsChange
+                  OnExit = edInterChavePrivadaExit
+                  TabOrder = 2
+                  Text = 'InterChavePrivada.key'
+                end
+                object lbInterChavePrivada: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 110
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object lbInterErroChavePrivada: TLabel
+                  Left = 144
+                  Height = 15
+                  Top = 110
+                  Width = 89
+                  Caption = '(Não informado)'
+                  ParentColor = False
+                end
+                object btInterAcharChavePrivada: TSpeedButton
+                  Left = 606
+                  Height = 23
+                  Top = 125
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  ImageIndex = 9
+                  OnClick = btInterAcharChavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object btInterAcharCertificado: TSpeedButton
+                  Left = 606
+                  Height = 23
+                  Top = 175
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  ImageIndex = 9
+                  OnClick = btInterAcharCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edInterCertificado: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 175
+                  Width = 592
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edInterArqsChange
+                  OnExit = edInterCertificadoExit
+                  TabOrder = 3
+                  Text = 'InterCertificado.pem'
+                end
+                object lbInterCertificado: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 160
+                  Width = 130
+                  Caption = 'Arquivo Certificado PEM'
+                  ParentColor = False
+                end
+                object lbInterErroCertificado: TLabel
+                  Left = 155
+                  Height = 15
+                  Top = 160
+                  Width = 89
+                  Caption = '(Não informado)'
+                  ParentColor = False
+                end
+              end
+            end
+          end
+        end
+      end
+      object pnConfigRodape: TPanel
+        Left = 0
+        Height = 49
+        Top = 511
+        Width = 697
+        Align = alBottom
+        BevelOuter = bvNone
+        ClientHeight = 49
+        ClientWidth = 697
+        TabOrder = 2
+        object btGravarConfig: TButton
+          Left = 200
+          Height = 33
+          Top = 8
+          Width = 168
+          Caption = 'Gravar Configuração'
+          OnClick = btGravarConfigClick
+          TabOrder = 0
+        end
+        object btLerConfig: TButton
+          Left = 20
+          Height = 33
+          Top = 8
+          Width = 168
+          Caption = 'Ler Configuração'
+          OnClick = btLerConfigClick
+          TabOrder = 1
+        end
+      end
+    end
+  end
+  object ACBrExtratoAPI1: TACBrExtratoAPI
+    Ambiente = eamHomologacao
+    LogNivel = 0
+    Left = 176
+    Top = 8
+  end
+  object ACBrOpenSSLUtils1: TACBrOpenSSLUtils
+    Left = 264
+    Top = 8
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 360
+    Top = 8
+  end
+end

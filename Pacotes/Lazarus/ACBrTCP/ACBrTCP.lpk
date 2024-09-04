@@ -36,120 +36,124 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="28">
+    <Files Count="29">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
-        <UnitName Value="ACBrSocket"/>
-      </Item1>
-      <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <UnitName Value="ACBrCEP"/>
-      </Item2>
-      <Item3>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrTCPReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrTCPReg"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrAPIBase.pas"/>
+        <UnitName Value="ACBrAPIBase"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <UnitName Value="ACBrSocket"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIBGE.pas"/>
-        <UnitName Value="ACBrIBGE"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
+        <UnitName Value="ACBrCEP"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
-        <UnitName Value="ACBrCNIEE"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIBGE.pas"/>
+        <UnitName Value="ACBrIBGE"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSuframa.pas"/>
-        <UnitName Value="ACBrSuframa"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
+        <UnitName Value="ACBrCNIEE"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrDownload.pas"/>
-        <UnitName Value="ACBrDownload"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSuframa.pas"/>
+        <UnitName Value="ACBrSuframa"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrDownloadClass.pas"/>
-        <UnitName Value="ACBrDownloadClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrDownload.pas"/>
+        <UnitName Value="ACBrDownload"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas"/>
-        <UnitName Value="ACBrNFPws"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrDownloadClass.pas"/>
+        <UnitName Value="ACBrDownloadClass"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.pas"/>
-        <UnitName Value="ACBrConsultaCNPJ"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas"/>
+        <UnitName Value="ACBrNFPws"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIBPTax.pas"/>
-        <UnitName Value="ACBrIBPTax"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas"/>
-        <UnitName Value="ACBrNCMs"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIBPTax.pas"/>
+        <UnitName Value="ACBrIBPTax"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
-        <UnitName Value="ACBrCotacao"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas"/>
+        <UnitName Value="ACBrNCMs"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <UnitName Value="ACBrMail"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
+        <UnitName Value="ACBrCotacao"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
-        <UnitName Value="ACBrConsultaCPF"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
+        <UnitName Value="ACBrMail"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
-        <UnitName Value="ACBrSpedTabelas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
+        <UnitName Value="ACBrConsultaCPF"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
-        <UnitName Value="ACBrSedex"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
+        <UnitName Value="ACBrSpedTabelas"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
-        <UnitName Value="ACBrWinReqRespClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
+        <UnitName Value="ACBrSedex"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
-        <UnitName Value="ACBrWinHTTPReqResp"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
+        <UnitName Value="ACBrWinReqRespClass"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
-        <UnitName Value="ACBrWinINetReqResp"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
+        <UnitName Value="ACBrWinHTTPReqResp"/>
       </Item20>
       <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
-        <UnitName Value="ACBrFeriado"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
+        <UnitName Value="ACBrWinINetReqResp"/>
       </Item21>
       <Item22>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
-        <UnitName Value="ACBrFeriadoWSCalendario"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
+        <UnitName Value="ACBrFeriado"/>
       </Item22>
       <Item23>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
-        <UnitName Value="ACBrFeriadoWSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
+        <UnitName Value="ACBrFeriadoWSCalendario"/>
       </Item23>
       <Item24>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas"/>
-        <UnitName Value="ACBrFeriadoWSJSON"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
+        <UnitName Value="ACBrFeriadoWSClass"/>
       </Item24>
       <Item25>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.pas"/>
-        <UnitName Value="ACBrConsultaCNPJ.WS"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas"/>
+        <UnitName Value="ACBrFeriadoWSJSON"/>
       </Item25>
       <Item26>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.BrasilAPI.pas"/>
-        <UnitName Value="ACBrConsultaCNPJ.WS.BrasilAPI"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS"/>
       </Item26>
       <Item27>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas"/>
-        <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.BrasilAPI.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.BrasilAPI"/>
       </Item27>
       <Item28>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.ReceitaWS.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ.WS.ReceitaWS"/>
+      </Item28>
+      <Item29>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ\ACBrConsultaCNPJ.WS.CNPJWS.pas"/>
         <UnitName Value="ACBrConsultaCNPJ.WS.CNPJWS"/>
-      </Item28>
+      </Item29>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

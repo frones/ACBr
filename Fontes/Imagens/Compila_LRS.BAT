@@ -353,6 +353,15 @@ echo "*   Arquivo   ACBrSEF2.lrs   gerado     *"
 echo "****************************************"
 echo.
 
+:BaaS
+%1\tools\lazres.exe ACBrBaaS.lrs TACBrExtratoAPI.png
+move ACBrBaaS.lrs ..\ACBrBaaS
+echo.
+echo "****************************************"
+echo "* Arquivo   ACBrBaaS.lrs   gerado   *"
+echo "****************************************"
+echo.
+
 GOTO fim
 
 :param_default

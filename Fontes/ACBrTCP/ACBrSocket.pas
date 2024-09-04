@@ -285,9 +285,15 @@ end;
   TACBrHTTP = class(TACBrComponent)
   private
     fArqLOG: String;
+    fArquivoCertificado: String;
+    fArquivoChavePrivada: String;
+    fArquivoPFX: String;
+    fCertificado: AnsiString;
+    fChavePrivada: AnsiString;
     fHTTPResultCode: Integer;
     fNivelLog: Byte;
     FIsUTF8: Boolean;
+    fPFX: AnsiString;
     FTimeOut: Integer;
     fHTTPSend: THTTPSend;
     fHTTPResponse: AnsiString;
@@ -297,18 +303,33 @@ end;
     fURLQueryParams: TACBrHTTPQueryParams;
     fOnAntesAbrirHTTP: TACBrOnAntesAbrirHTTP;
     fContenstEncodingCompress: THttpContentsEncodingCompress;
+    fSenhaPFX: String;
+    fK: String;
     fURL: String;
     function GetProxyHost: String;
     function GetProxyPass: String;
     function GetProxyPort: String;
     function GetProxyUser: String;
+    function GetSenhaPFX: AnsiString;
+    procedure SetArquivoCertificado(aValue: String);
+    procedure SetArquivoChavePrivada(aValue: String);
+    procedure SetArquivoPFX(aValue: String);
+    procedure SetCertificado(aValue: AnsiString);
+    procedure SetChavePrivada(aValue: AnsiString);
+    procedure SetPFX(aValue: AnsiString);
     procedure SetProxyHost(const AValue: String);
     procedure SetProxyPass(const AValue: String);
     procedure SetProxyPort(const AValue: String);
     procedure SetProxyUser(const AValue: String);
+    procedure SetSenhaPFX(aValue: AnsiString);
+    procedure ConfigurarAutenticacao_mTLS(const aMethod, aURL: String);
   protected
     function GetHeaderValue(aHeader: String): String;
-    procedure RegistrarLog(const aLinha: String);
+    function VerificarSeIncluiPFX(const Method, AURL: String): Boolean; virtual;
+    function VerificarSeIncluiCertificado(const Method, AURL: String): Boolean; virtual;
+    function VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean; virtual;
+
+    procedure RegistrarLog(const aLinha: String; aNivelMin: Byte = 0);
     function GetRespIsUTF8: Boolean; virtual;
 
     procedure OnHookSocketStatus(Sender: TObject; Reason: THookSocketReason; const Value: String);
@@ -346,6 +367,15 @@ end;
     property RespIsUTF8: Boolean read GetRespIsUTF8;
     property TimeOut: Integer read FTimeOut write FTimeOut default 90000;
     property ContentsEncodingCompress: THttpContentsEncodingCompress read fContenstEncodingCompress write fContenstEncodingCompress;
+
+    property ArquivoCertificado: String read fArquivoCertificado write SetArquivoCertificado;
+    property ArquivoChavePrivada: String read fArquivoChavePrivada write SetArquivoChavePrivada;
+    property ArquivoPFX: String read fArquivoPFX write SetArquivoPFX;
+
+    property Certificado: AnsiString read fCertificado write SetCertificado;
+    property ChavePrivada: AnsiString read fChavePrivada write SetChavePrivada;
+    property PFX: AnsiString read fPFX write SetPFX;
+    property SenhaPFX: AnsiString read GetSenhaPFX write SetSenhaPFX;
                 
     property ArqLOG: String read fArqLOG write fArqLOG;
     property NivelLog: Byte read fNivelLog write fNivelLog default 1;
@@ -367,6 +397,7 @@ function URLWithoutDelim(aURL: String): String;
 function GetHeaderValue(const aValue: String; aStringList: TStringList): String;
 
 function ContentIsCompressed(aHeader: TStringList): Boolean;
+function StreamToAnsiString(aStream: TStream): AnsiString;
 function DecompressStream(aStream: TStream): AnsiString;
 function ContentEncodingCompressToString(aValue: THttpContentEncodingCompress): String;
 function StringToContentEncodingCompress(aValue: String): THttpContentEncodingCompress;
@@ -376,6 +407,7 @@ implementation
 uses
   Math, StrUtils, TypInfo,
   synacode, synautil,
+  ACBrOpenSSLUtils,
   ACBrCompress,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
@@ -505,6 +537,12 @@ begin
     if Result then
       Exit;
   end;
+end;
+
+function StreamToAnsiString(aStream: TStream): AnsiString;
+begin
+  aStream.Position := 0;
+  Result := ReadStrFromStream(aStream, aStream.Size);
 end;
 
 function DecompressStream(aStream: TStream): AnsiString;
@@ -1099,6 +1137,15 @@ begin
   FIsUTF8 := False;
   FTimeOut := cHTTPTimeOutDef;
   fContenstEncodingCompress := [];
+
+  fArquivoCertificado := EmptyStr;
+  fArquivoChavePrivada := EmptyStr;
+  fChavePrivada := EmptyStr;
+  fCertificado := EmptyStr;
+  fArquivoPFX := EmptyStr;
+  fSenhaPFX := EmptyStr;
+  fPFX := EmptyStr;
+  fK := EmptyStr;
 end;
 
 destructor TACBrHTTP.Destroy;
@@ -1200,8 +1247,7 @@ begin
     // DEBUG //
     //HTTPSend.Document.SaveToFile( '_HttpSend.txt' );
     RegistrarLog('HTTPMethod( ' + Method + ', URL: ' + fURL + ' )');
-    if (NivelLog > 2) then
-      RegistrarLog(' - Req.Headers: ' + HTTPSend.Headers.Text);
+    RegistrarLog(' - Req.Headers: ' + HTTPSend.Headers.Text, 3);
 
     if (FTimeOut > 0) then
     begin
@@ -1215,13 +1261,13 @@ begin
         HTTPTunnelTimeout := FTimeOut;
       end;
     end;
-
-    if (NivelLog > 3) then
-      RegistrarLog(sLineBreak +
-        'Http.Sock.SSL.Certificate: ' + HTTPSend.Sock.SSL.Certificate + sLineBreak +
-        'Http.Sock.SSL.PrivateKey: ' + HTTPSend.Sock.SSL.PrivateKey + sLineBreak +
-        'Http.Sock.SSL.CertificateFile: ' + HTTPSend.Sock.SSL.CertificateFile + sLineBreak +
-        'Http.Sock.SSL.PrivateKeyFile: ' + HTTPSend.Sock.SSL.PrivateKeyFile + sLineBreak);
+           
+    ConfigurarAutenticacao_mTLS(Method, fURL);
+    RegistrarLog(sLineBreak +
+      'Http.Sock.SSL.Certificate: ' + HTTPSend.Sock.SSL.Certificate + sLineBreak +
+      'Http.Sock.SSL.PrivateKey: ' + HTTPSend.Sock.SSL.PrivateKey + sLineBreak +
+      'Http.Sock.SSL.CertificateFile: ' + HTTPSend.Sock.SSL.CertificateFile + sLineBreak +
+      'Http.Sock.SSL.PrivateKeyFile: ' + HTTPSend.Sock.SSL.PrivateKeyFile + sLineBreak, 4);
 
     HeadersOld := HTTPSend.Headers.Text;
     HTTPSend.HTTPMethod(Method, fURL);
@@ -1269,16 +1315,13 @@ begin
     end;
 
     fHTTPResultCode := fHttpSend.ResultCode;
-    if (NivelLog > 1) then
-      RegistrarLog('  ResultCode: ' + IntToStr(fHTTPResultCode)+' - '+ HTTPSend.ResultString);
-    if (fHttpSend.Sock.LastError > 0) and (NivelLog > 3) then
-      RegistrarLog('  Sock.LastError: ' + IntToStr(fHttpSend.Sock.LastError)+' - '+ HTTPSend.Sock.LastErrorDesc);
+    RegistrarLog('  ResultCode: ' + IntToStr(fHTTPResultCode)+' - '+ HTTPSend.ResultString, 2);
+    if (fHttpSend.Sock.LastError > 0) then
+      RegistrarLog('  Sock.LastError: ' + IntToStr(fHttpSend.Sock.LastError)+' - '+ HTTPSend.Sock.LastErrorDesc, 4);
 
     if ContentIsCompressed(fHttpSend.Headers) then
     begin
-      if (NivelLog > 2) then
-        RegistrarLog('    Decompress Content');
-
+      RegistrarLog('    Decompress Content', 3);
       fHTTPResponse := DecompressStream(fHttpSend.OutputStream);
     end
     else
@@ -1287,8 +1330,7 @@ begin
       fHTTPResponse := ReadStrFromStream(fHttpSend.OutputStream, fHttpSend.OutputStream.Size);
     end;
 
-    if (NivelLog > 2) then
-      RegistrarLog('  Resp.Body: ' + sLineBreak + fHTTPResponse);
+    RegistrarLog('  Resp.Body: ' + sLineBreak + fHTTPResponse, 3);
 
     //if (not (fHTTPResultCode in [HTTP_OK, HTTP_CREATED, HTTP_ACCEPTED])) then
     if (fHTTPResultCode < 200) or (fHTTPResultCode > 299) then
@@ -1311,8 +1353,7 @@ end;
 
 procedure TACBrHTTP.LimparHTTP;
 begin
-  if (NivelLog > 2) then
-    RegistrarLog('LimparHTTP');
+  RegistrarLog('LimparHTTP', 3);
 
   fHTTPSend.Clear;
   fURLPathParams.Clear;
@@ -1492,6 +1533,11 @@ begin
   end;
 end;
 
+function TACBrHTTP.VerificarSeIncluiPFX(const Method, AURL: String): Boolean;
+begin
+  Result := NaoEstaVazio(fPFX) or NaoEstaVazio(fArquivoPFX);
+end;
+
 function TACBrHTTP.GetProxyPass: String;
 begin
   Result := fHTTPSend.ProxyPass;
@@ -1505,6 +1551,47 @@ end;
 function TACBrHTTP.GetProxyUser: String;
 begin
   Result := fHTTPSend.ProxyUser;
+end;
+
+function TACBrHTTP.GetSenhaPFX: AnsiString;
+begin
+  Result := StrCrypt(fSenhaPFX, fK)  // Descritografa a Senha
+end;
+
+procedure TACBrHTTP.SetArquivoCertificado(aValue: String);
+begin
+  fArquivoCertificado := Trim(aValue);
+  fCertificado := EmptyStr;
+end;
+
+procedure TACBrHTTP.SetArquivoChavePrivada(aValue: String);
+begin
+  fArquivoChavePrivada := Trim(aValue);
+  fChavePrivada := EmptyStr;
+end;
+
+procedure TACBrHTTP.SetArquivoPFX(aValue: String);
+begin
+  fArquivoPFX := Trim(AValue);
+  fPFX := EmptyStr;
+end;
+
+procedure TACBrHTTP.SetCertificado(aValue: AnsiString);
+begin
+  fCertificado := aValue;
+  fArquivoCertificado := EmptyStr;
+end;
+
+procedure TACBrHTTP.SetChavePrivada(aValue: AnsiString);
+begin
+  fChavePrivada := aValue;
+  fArquivoChavePrivada := EmptyStr;
+end;
+
+procedure TACBrHTTP.SetPFX(aValue: AnsiString);
+begin
+  fPFX := aValue;
+  fArquivoPFX := EmptyStr;
 end;
 
 procedure TACBrHTTP.SetProxyHost(const AValue: String);
@@ -1527,10 +1614,80 @@ begin
   fHTTPSend.ProxyUser := AValue;
 end;
 
-procedure TACBrHTTP.RegistrarLog(const aLinha: String);
+procedure TACBrHTTP.SetSenhaPFX(aValue: AnsiString);
+begin
+  if NaoEstaVazio(fK) and (fSenhaPFX = StrCrypt(AValue, fK)) then
+    Exit;
+
+  fK := FormatDateTime('hhnnsszzz', Now);
+  fSenhaPFX := StrCrypt(AValue, fK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
+end;
+
+procedure TACBrHTTP.ConfigurarAutenticacao_mTLS(const aMethod, aURL: String);
+begin
+  // Adicionando PFX
+  if VerificarSeIncluiPFX(aMethod, aURL) then
+  begin
+    if NaoEstaVazio(PFX) then
+      HTTPSend.Sock.SSL.PFX := PFX
+    else if NaoEstaVazio(ArquivoPFX) then
+      HTTPSend.Sock.SSL.PFXfile := ArquivoPFX;
+
+    if NaoEstaVazio(SenhaPFX) then
+      HTTPSend.Sock.SSL.KeyPassword := SenhaPFX;
+  end
+  else
+  begin
+    // Adicionando o Certificado
+    if VerificarSeIncluiCertificado(aMethod, aURL) then
+    begin
+      if NaoEstaVazio(Certificado) then
+      begin
+        if StringIsPEM(Certificado) then
+          HTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(Certificado)
+        else
+          HTTPSend.Sock.SSL.Certificate := Certificado;
+      end
+      else if NaoEstaVazio(ArquivoCertificado) then
+        HTTPSend.Sock.SSL.CertificateFile := ArquivoCertificado;
+    end;
+
+    // Adicionando a Chave Privada
+    if VerificarSeIncluiChavePrivada(aMethod, aURL) then
+    begin
+      if NaoEstaVazio(ChavePrivada) then
+      begin
+        if StringIsPEM(ChavePrivada) then
+          HTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(ChavePrivada)
+        else
+          HTTPSend.Sock.SSL.PrivateKey := ChavePrivada;
+      end
+      else if NaoEstaVazio(ArquivoChavePrivada) then
+        HTTPSend.Sock.SSL.PrivateKeyFile := ArquivoChavePrivada;
+
+      if NaoEstaVazio(SenhaPFX) then
+        HTTPSend.Sock.SSL.KeyPassword := SenhaPFX;
+    end;
+  end;
+end;
+
+function TACBrHTTP.VerificarSeIncluiCertificado(const Method, AURL: String): Boolean;
+begin
+  Result := NaoEstaVazio(fCertificado) or NaoEstaVazio(fArquivoCertificado);
+end;
+
+function TACBrHTTP.VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean;
+begin
+  Result := NaoEstaVazio(fChavePrivada) or NaoEstaVazio(fArquivoChavePrivada);
+end;
+
+procedure TACBrHTTP.RegistrarLog(const aLinha: String; aNivelMin: Byte);
 var
   wTratado: Boolean;
 begin
+  if (NivelLog < aNivelMin) then
+    Exit;
+
   wTratado := False;
   if Assigned(fOnQuandoGravarLog) then
     fOnQuandoGravarLog(aLinha, wTratado);
@@ -1539,30 +1696,24 @@ begin
     WriteLog(fArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', Now) + ' - ' + aLinha);
 end;
 
-procedure TACBrHTTP.OnHookSocketStatus(Sender: TObject;
-  Reason: THookSocketReason; const Value: String);
+procedure TACBrHTTP.OnHookSocketStatus(Sender: TObject; Reason: THookSocketReason; const Value: String);
 begin
-  if NivelLog > 3 then
-    RegistrarLog('  Socket Status: '+GetEnumName(TypeInfo(THookSocketReason), integer(Reason) )+' - '+Value);
+  RegistrarLog('  Socket Status: '+GetEnumName(TypeInfo(THookSocketReason), integer(Reason) )+' - '+Value, 4);
 end;
 
 procedure TACBrHTTP.OnHookCreateSocket(Sender: TObject);
 begin
-  if NivelLog > 3 then
-    RegistrarLog('  Socket Created');
+  RegistrarLog('  Socket Created', 4);
 end;
 
 procedure TACBrHTTP.OnHookAfterConnect(Sender: TObject);
 begin
-  if NivelLog > 3 then
-    RegistrarLog('  Socket Connected');
+  RegistrarLog('  Socket Connected', 4);
 end;
 
-procedure TACBrHTTP.OnHookMonitor(Sender: TObject; Writing: Boolean;
-  const Buffer: TMemory; Len: Integer);
+procedure TACBrHTTP.OnHookMonitor(Sender: TObject; Writing: Boolean; const Buffer: TMemory; Len: Integer);
 begin
-  if NivelLog > 3 then
-    RegistrarLog('  Socket Monitor, Writing:'+IfThen(Writing,'Yes','No')+', Len:'+IntToStr(Len) );
+  RegistrarLog('  Socket Monitor, Writing:'+IfThen(Writing,'Yes','No')+', Len:'+IntToStr(Len), 4);
 end;
 
 end.

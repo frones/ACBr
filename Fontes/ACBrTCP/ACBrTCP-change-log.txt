@@ -40,6 +40,9 @@ Símbolo : Significado
 04/09/2024
 -- ACBrSocket --
 [+] Inclusão de autenticação mTLS na classe ACBrHTTP
+
+-- ACBrAPIBase --
+[+] Inclusão de unit contendo a base para classes com leitura de Json
    Por: Elias César
 
 19/08/2024

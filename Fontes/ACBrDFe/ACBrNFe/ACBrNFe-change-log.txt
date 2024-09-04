@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/09/2024
+-- ACBrNFe/ACBrNFeWebServices/ACBrNFe.RetConsSit --
+[*] Ajuste para considerar os cStat de denegação como rejeição.
+   Por: Italo Giurizzato Junior
+
+04/09/2024
 -- ACBrNFeNotasFiscais, ACBrNFeWebServices, ACBrNFeDAInutRLRetrato --
 [*] #TK-5866-3: Ajuste visando correto uso config de quebra de linha nas rotinas que substituem a quebra nativa pela config definida.
   Por: Diego Folieni 

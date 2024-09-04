@@ -1671,10 +1671,8 @@ begin
           Nfe.ProcNFe.XML_prot := AInfProt[I].XMLprotDFe;
         end;
 
-        // Monta o XML da NF-e assinado e com o protocolo de Autorização ou Denegação
-        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
-           (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) or
-           (AInfProt.Items[I].cStat = 302) or (AInfProt.Items[I].cStat = 303) then
+        // Monta o XML da NF-e assinado e com o protocolo de Autorização
+        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 150) then
         begin
           AProcNFe := TProcNFe.Create;
           try

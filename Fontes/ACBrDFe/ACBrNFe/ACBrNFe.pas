@@ -280,18 +280,18 @@ end;
 function TACBrNFe.CstatConfirmada(AValue: integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302, 303: Result := True;
-    else
-      Result := False;
+    100, 150: Result := True;
+  else
+    Result := False;
   end;
 end;
 
 function TACBrNFe.CstatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302, 303: Result := True;
-    else
-      Result := False;
+    100, 150: Result := True;
+  else
+    Result := False;
   end;
 end;
 
@@ -299,8 +299,8 @@ function TACBrNFe.CstatCancelada(AValue: integer): Boolean;
 begin
   case AValue of
     101, 135, 151, 155: Result := True;
-    else
-      Result := False;
+  else
+    Result := False;
   end;
 end;
 

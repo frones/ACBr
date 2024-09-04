@@ -3388,6 +3388,7 @@ begin
     if SchemaEventoNFe = schAtorInteressadoNFe then
       EventoNFe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
 }
+    AjustarOpcoes(EventoNFe.Opcoes);
     EventoNFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos

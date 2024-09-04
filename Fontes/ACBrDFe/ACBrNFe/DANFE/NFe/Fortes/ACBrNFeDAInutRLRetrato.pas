@@ -186,7 +186,7 @@ begin
   rllNumeracao.Caption        := IntToStr(fpInutNFe.RetInutNFe.nNFIni) + ACBrStr(' a ') + IntToStr(fpInutNFe.RetInutNFe.nNFFin);
   rllStatus.Caption           := IntToStr(fpInutNFe.RetInutNFe.cStat) + ' - ' + fpInutNFe.RetInutNFe.xMotivo;
   rllProtocolo.Caption        := fpInutNFe.RetInutNFe.nProt + ' ' + FormatDateTimeBr(fpInutNFe.RetInutNFe.dhRecbto);
-  rllJustificativa.Lines.Text := ACBrStr(fpInutNFe.RetInutNFe.xJust);
+  rllJustificativa.Lines.Text := ACBrStr(StringReplace(fpInutNFe.RetInutNFe.xJust, fpDANFe.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]));
 
   rllDataHoraImpressao.Caption := ACBrStr('DATA E HORA DA IMPRESSÃO: ') + FormatDateTimeBr(Now);
 

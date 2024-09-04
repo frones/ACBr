@@ -243,7 +243,7 @@ end;
 function TACBrNF3e.CstatConfirmada(AValue: integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302, 303: Result := True;
+    100, 150: Result := True;
   else
     Result := False;
   end;
@@ -252,7 +252,7 @@ end;
 function TACBrNF3e.CstatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302, 303: Result := True;
+    100, 150: Result := True;
   else
     Result := False;
   end;
@@ -538,9 +538,18 @@ begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NF3-e adicionada ao Lote'));
 
-  if NotasFiscais.Count > 50 then
-    GerarException(ACBrStr('ERRO: Conjunto de NF3-e transmitidas (máximo de 50 NF3-e)' +
-      ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  if Sincrono then
+  begin
+    if NotasFiscais.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de NF3-e transmitidos (máximo de 1 NF3-e)' +
+        ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  end
+  else
+  begin
+    if NotasFiscais.Count > 50 then
+      GerarException(ACBrStr('ERRO: Conjunto de NF3-e transmitidas (máximo de 50 NF3-e)' +
+        ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  end;
 
   NotasFiscais.Assinar;
   NotasFiscais.Validar;

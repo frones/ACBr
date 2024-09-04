@@ -196,7 +196,7 @@ begin
         chNF3e := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNF3e'), tcStr);
 
         case cStat of
-          100,101,104,110,150,151,155,301,302,303:
+          100, 101, 104, 150, 151, 155:
             begin
               ANodeAux := ANode.Childrens.FindAnyNs('protNF3e');
 

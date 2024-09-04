@@ -707,7 +707,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-  FSincrono := False;
 end;
 
 destructor TNF3eRecepcao.Destroy;
@@ -764,6 +763,8 @@ end;
 
 procedure TNF3eRecepcao.InicializarServico;
 begin
+  Sincrono := True;
+
   if FNotasFiscais.Count > 0 then    // Tem NF3e ? Se SIM, use as informações do XML
     FVersaoDF := DblToVersaoNF3e(FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
   else
@@ -1336,10 +1337,8 @@ begin
           NF3e.procNF3e.xMotivo := AInfProt.Items[I].xMotivo;
         end;
 
-        // Monta o XML da NF3-e assinado e com o protocolo de Autorização ou Denegação
-        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
-           (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) or
-           (AInfProt.Items[I].cStat = 302) or (AInfProt.Items[I].cStat = 303) then
+        // Monta o XML da NF3-e assinado e com o protocolo de Autorização
+        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 150) then
         begin
           AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
           try

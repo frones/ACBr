@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5922: A cidade de Sideropolis/SC, trocou de provedor, agora é Betha versão 1.00
+  Por: Diogo Loff
+[*] #TK-5923: A cidade de Corupa/SC, trocou para versão 1.01 o provedor continua o mesmo.
+  Por: Gabriel Bobello
+[+] #TK-5924: Incluída a cidade de Sao Francisco de Paula/MG, o provedor é SH3.
+  Por: João Antônio
+[*] #TK-5925: A cidade de Leopoldina/MG, trocou de provedor, agora é Fiorilli.
+  Por: Maiquel
+
 02/09/2024
 -- AssessorPublico.GravarXml --
 [*] #TK-5914: Alterado de tcDe4 para tcDe2 ao gerar a tag QUANTIDADE.

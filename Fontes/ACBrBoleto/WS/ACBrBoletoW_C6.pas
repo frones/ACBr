@@ -91,7 +91,8 @@ uses
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
-  ACBrUtil.Base;
+  ACBrUtil.Base,
+  ACBrUtil.Math;
 
 { TBoletoW_C6 }
 
@@ -205,6 +206,7 @@ var
   LDesconto : TACBrJSONObject;
   LMensagem : TACBrJSONArray;
   I: Integer;
+  LValorMoraJuros : Double;
 begin
   if Assigned(ATitulo) then
   begin
@@ -268,13 +270,19 @@ begin
 
       if (ATitulo.ValorMoraJuros > 0) then
       begin
-        if not (ATitulo.CodigoMoraJuros in [cjTaxaMensal,cjValorMensal]) then
-          raise Exception.Create('CodigoMoraJuros Inválido: permitido somente :: cjTaxaMensal,cjValorMensal !');
+        case ATitulo.CodigoMoraJuros of
+          cjValorDia    : LValorMoraJuros := ATitulo.ValorMoraJuros;
+          cjTaxaDiaria  : LValorMoraJuros := RoundABNT((ATitulo.ValorDocumento / 100 ) * ATitulo.ValorMoraJuros, 2);
+          cjValorMensal : LValorMoraJuros := RoundABNT(ATitulo.ValorMoraJuros / 30, 2);
+          cjTaxaMensal  : LValorMoraJuros := RoundABNT((ATitulo.ValorDocumento / 100 ) * (ATitulo.ValorMoraJuros / 30), 2);
+          else
+            LValorMoraJuros := ATitulo.ValorMoraJuros;
+        end;
 
         LJson.AddPair('interest',
           TACBrJSONObject.Create
-            .AddPair('type',IfThen(ATitulo.CodigoMoraJuros = cjTaxaMensal, 'P', 'V') )
-            .AddPair('value',ATitulo.ValorMoraJuros )
+            .AddPair('type',IfThen(ATitulo.CodigoMoraJuros in [cjTaxaDiaria,cjTaxaMensal], 'P', 'V') )
+            .AddPair('value',LValorMoraJuros )
             .AddPair('dead_line',IfThen(ATitulo.DataMoraJuros > 0,DaysBetween(ATitulo.Vencimento,ATitulo.DataMoraJuros), 1) )
         );
       end;

@@ -80,7 +80,11 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
+  StrUtils,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.Math;
 
 { TACBrBancoC6 }
 function TACBrBancoC6.ConverterDigitoModuloFinal(): String;
@@ -931,11 +935,14 @@ begin
   begin
     LBoleto.Cedente.Nome          := Trim(Copy(ARetorno[0], 47, 30));
     LBoleto.Cedente.CNPJCPF       := Trim(Copy(ARetorno[1], 4, 14));
-    LBoleto.Cedente.CodigoCedente := Trim(Copy(ARetorno[1], 18, 20));
+    LBoleto.Cedente.CodigoCedente := Trim(Copy(ARetorno[0], 39, 12));
+    LBoleto.Cedente.Agencia       := '0001';
+    LBoleto.Cedente.Conta         := Trim(Copy(ARetorno[1], 18, 11));
+    LBoleto.Cedente.ContaDigito   := Trim(Copy(ARetorno[1], 29, 1));
   end;
 
-  if Trim(LBoleto.Cedente.CodigoCedente) <> Trim(Copy(ARetorno[1], 18, 20)) then
-    raise Exception.create(ACBrStr(format('O Código de cedente do arquivo %s não é o mesmo do componente %s.',[Copy(ARetorno[1], 18, 20),LBoleto.Cedente.CodigoCedente])));
+  if Trim(LBoleto.Cedente.CodigoCedente) <> Trim(Copy(ARetorno[0], 39, 12)) then
+    raise Exception.create(ACBrStr(format('O Código de cedente do arquivo %s não é o mesmo do componente %s.',[Trim(Copy(ARetorno[0], 39, 12)),LBoleto.Cedente.CodigoCedente])));
 
   case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
     01: LBoleto.Cedente.TipoInscricao := pFisica;

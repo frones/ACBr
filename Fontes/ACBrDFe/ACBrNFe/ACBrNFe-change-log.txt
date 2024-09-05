@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2024
+-- ACBrNFeNotasFiscais --
+[*] #TK-5866-3: Adiciona correta config QuebraLinha no momento em que alimenta as configurações para o gerador do XML.
+   Por: Diego Folieni 
+
 04/09/2024
 -- ACBrNFe/ACBrNFeWebServices/ACBrNFe.RetConsSit --
 [*] Ajuste para considerar os cStat de denegação como rejeição.

@@ -1,0 +1,43 @@
+package ACBrBaaS;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Banking as a Service - (http://www.projectoacbr.com.br/)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  ACBr_TCP;
+
+contains
+  ACBrExtratoAPI in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPI.pas',
+  ACBrExtratoAPIBB in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIBB.pas',
+  ACBrExtratoAPIInter in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIInter.pas';  
+
+end.
+

@@ -173,10 +173,13 @@ type
     procedure ImprimirDANFE(NFE: TNFe = nil); override;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); override;
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); override;
+    procedure ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe = nil); override;
     procedure ImprimirEVENTO(NFE: TNFe = nil); override;
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
+    procedure ImprimirEVENTOPDF(AStream: TStream; ANFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(AStream: TStream; ANFe: TNFe = nil); override;
 
     property PreparedReport: TfrxReport read GetPreparedReport;
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
@@ -502,6 +505,11 @@ begin
   FdmDanfe.ImprimirDANFE(NFE);
 end;
 
+procedure TACBrNFeDANFCEFR.ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe);
+begin
+  FdmDanfe.ImprimirDANFEPDF(ANFe,AStream);
+end;
+
 procedure TACBrNFeDANFCEFR.ImprimirDANFEPDF(NFE: TNFe);
 begin
   FdmDanfe.ImprimirDANFEPDF(NFE);
@@ -518,6 +526,11 @@ begin
   FdmDanfe.ImprimirEVENTO(NFE);
 end;
 
+procedure TACBrNFeDANFCEFR.ImprimirEVENTOPDF(AStream: TStream; ANFe: TNFe);
+begin
+  FdmDanfe.ImprimirEVENTOPDF(ANFe, AStream);
+end;
+
 procedure TACBrNFeDANFCEFR.ImprimirEVENTOPDF(NFE: TNFe);
 begin
   FdmDanfe.ImprimirEVENTOPDF(NFE);
@@ -527,6 +540,11 @@ end;
 procedure TACBrNFeDANFCEFR.ImprimirINUTILIZACAO(NFE: TNFe);
 begin
   FdmDanfe.ImprimirINUTILIZACAO(NFE);
+end;
+
+procedure TACBrNFeDANFCEFR.ImprimirINUTILIZACAOPDF(AStream: TStream;ANFe: TNFe);
+begin
+  FdmDanfe.ImprimirINUTILIZACAOPDF(ANFe, AStream);
 end;
 
 procedure TACBrNFeDANFCEFR.ImprimirINUTILIZACAOPDF(NFE: TNFe);

@@ -80,7 +80,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       VisibleButtons = [bkNext, bkCancel]
       Color = clWhite
-      Caption = 'In'#237'cio'
       OnNextButtonClick = wizPgInicioNextButtonClick
       WaterMark.Visible = False
       WaterMark.Image.Alignment = iaCenter
@@ -88,7 +87,7 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Width = 80
       object Label20: TLabel
         Left = 17
-        Top = 351
+        Top = 303
         Width = 531
         Height = 32
         Caption = 
@@ -105,12 +104,12 @@ object frmPrincipal: TfrmPrincipal
       object Label6: TLabel
         Left = 17
         Top = 44
-        Width = 492
+        Width = 486
         Height = 80
         Caption = 
-          'Este assistente o guiar'#225' no processo de instala'#231#227'o do Projeto AC' +
-          'Br em seu computador.'#13#10#13#10#13#10#201' recomend'#225'vel fechar todos os outros' +
-          ' aplicativos antes de continuar.'
+          'Este assistente o guiar'#225' no processo de instala'#231#227'o dos component' +
+          'es para Delphi do Projeto ACBr em seu computador.'#13#10#13#10#13#10#201' recomen' +
+          'd'#225'vel fechar todos os outros aplicativos antes de continuar.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -121,7 +120,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object lblUrlACBrSac1: TLabel
         Left = 278
-        Top = 369
+        Top = 321
         Width = 171
         Height = 14
         Cursor = crHandPoint
@@ -192,7 +191,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label7: TLabel
         Left = 17
-        Top = 315
+        Top = 371
         Width = 533
         Height = 18
         Alignment = taCenter
@@ -1160,7 +1159,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 1
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

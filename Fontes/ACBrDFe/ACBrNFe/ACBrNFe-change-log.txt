@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2024
+-- ACBrNFe.EnvEvento --
+[*] Remove linha que modificava config de RetirarAcentos para True independente da config definida.
+  Por: Diego Folieni
+
 05/09/2024
 -- ACBrNFeNotasFiscais --
 [*] #TK-5866-3: Adiciona correta config QuebraLinha no momento em que alimenta as configurações para o gerador do XML.

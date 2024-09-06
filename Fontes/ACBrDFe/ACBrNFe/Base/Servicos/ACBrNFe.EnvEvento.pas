@@ -905,7 +905,6 @@ begin
 
   Result.AppendChild(AddNode(tcStr, 'HP16', 'verEvento', 1, 4, 1, Versao));
 
-  FOpcoes.RetirarAcentos := True;
 
   if Evento[Idx].InfEvento.tpEvento in [teAtorInteressadoNFe, teCancConcFinanceira] then
     FOpcoes.RetirarAcentos := False;  // Não funciona sem acentos

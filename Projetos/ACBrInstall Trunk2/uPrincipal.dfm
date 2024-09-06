@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgFinalizar
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -13,16 +13,18 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  PixelsPerInch = 96
   TextHeight = 13
   object wizPrincipal: TJvWizard
     Left = 0
     Top = 0
     Width = 740
     Height = 630
-    ActivePage = wizPgFinalizar
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -608,364 +610,6 @@ object frmPrincipal: TfrmPrincipal
         inherited ScrollBox1: TScrollBox
           Width = 568
           Height = 470
-          VertScrollBar.Position = 923
-          inherited Label1: TLabel
-            Top = -905
-          end
-          inherited Label2: TLabel
-            Top = -833
-          end
-          inherited Label3: TLabel
-            Top = -816
-          end
-          inherited Label4: TLabel
-            Top = -464
-          end
-          inherited Label8: TLabel
-            Top = -530
-          end
-          inherited Label9: TLabel
-            Top = 114
-          end
-          inherited Label5: TLabel
-            Top = 128
-          end
-          inherited Label6: TLabel
-            Top = 145
-          end
-          inherited Label7: TLabel
-            Top = 162
-          end
-          inherited Label10: TLabel
-            Top = 196
-          end
-          inherited Label11: TLabel
-            Top = 213
-          end
-          inherited Label12: TLabel
-            Top = 248
-          end
-          inherited Label13: TLabel
-            Top = 303
-          end
-          inherited Label14: TLabel
-            Top = 352
-          end
-          inherited Label15: TLabel
-            Top = 318
-          end
-          inherited Label16: TLabel
-            Top = 369
-          end
-          inherited Label17: TLabel
-            Top = 386
-          end
-          inherited Label18: TLabel
-            Top = 420
-          end
-          inherited Label19: TLabel
-            Top = 403
-          end
-          inherited Label20: TLabel
-            Top = 271
-          end
-          inherited Label21: TLabel
-            Top = -697
-          end
-          inherited Label22: TLabel
-            Top = -748
-          end
-          inherited Label23: TLabel
-            Top = -513
-          end
-          inherited Label24: TLabel
-            Top = -714
-          end
-          inherited Label25: TLabel
-            Top = -650
-          end
-          inherited Label26: TLabel
-            Top = -581
-          end
-          inherited Label27: TLabel
-            Top = 284
-          end
-          inherited Label28: TLabel
-            Top = 230
-          end
-          inherited lbl1: TLabel
-            Top = -396
-          end
-          inherited lbl2: TLabel
-            Top = -380
-          end
-          inherited lbl3: TLabel
-            Top = 179
-          end
-          inherited Label29: TLabel
-            Top = 335
-          end
-          inherited lblacb: TLabel
-            Top = 10
-          end
-          inherited lblSubTituloFPDF: TLabel
-            Top = 34
-          end
-          inherited lblFPDF_BoletoDPK: TLabel
-            Top = 47
-          end
-          inherited Label30: TLabel
-            Top = -481
-          end
-          inherited Label31: TLabel
-            Top = 63
-          end
-          inherited Label32: TLabel
-            Top = 80
-          end
-          inherited lblNFCom: TLabel
-            Top = -364
-          end
-          inherited Label33: TLabel
-            Top = 97
-          end
-          inherited Label34: TLabel
-            Top = 436
-          end
-          inherited ACBr_synapse_dpk: TCheckBox
-            Top = -923
-          end
-          inherited ACBr_Comum_dpk: TCheckBox
-            Top = -906
-          end
-          inherited ACBr_Diversos_dpk: TCheckBox
-            Top = -871
-          end
-          inherited ACBr_Serial_dpk: TCheckBox
-            Top = -837
-          end
-          inherited ACBr_TCP_dpk: TCheckBox
-            Top = -598
-          end
-          inherited ACBr_BPe_dpk: TCheckBox
-            Top = -178
-          end
-          inherited ACBr_TEFD_dpk: TCheckBox
-            Top = -41
-          end
-          inherited ACBr_Boleto_dpk: TCheckBox
-            Top = -513
-          end
-          inherited ACBr_Sintegra_dpk: TCheckBox
-            Top = -718
-          end
-          inherited ACBr_SPED_dpk: TCheckBox
-            Top = -701
-          end
-          inherited ACBr_PAF_dpk: TCheckBox
-            Top = -752
-          end
-          inherited ACBr_OpenSSL_dpk: TCheckBox
-            Top = -889
-          end
-          inherited ACBr_PCNComum_dpk: TCheckBox
-            Top = -854
-          end
-          inherited ACBr_NFe_dpk: TCheckBox
-            Top = -464
-          end
-          inherited ACBr_CTe_dpk: TCheckBox
-            Top = -413
-          end
-          inherited ACBr_NFSe_dpk: TCheckBox
-            Top = -396
-          end
-          inherited ACBr_MDFe_dpk: TCheckBox
-            Top = -347
-          end
-          inherited ACBr_GNRE_dpk: TCheckBox
-            Top = -330
-          end
-          inherited ACBr_Convenio115_dpk: TCheckBox
-            Top = -803
-          end
-          inherited ACBr_SEF2_dpk: TCheckBox
-            Top = -735
-          end
-          inherited ACBr_SAT_dpk: TCheckBox
-            Top = -279
-          end
-          inherited ACBr_NFeDanfeESCPOS_dpk: TCheckBox
-            Top = -430
-          end
-          inherited ACBr_SATExtratoESCPOS_dpk: TCheckBox
-            Top = -245
-          end
-          inherited ACBr_LFD_dpk: TCheckBox
-            Top = -786
-          end
-          inherited ACBr_SPEDImportar_dpk: TCheckBox
-            Top = -684
-          end
-          inherited ACBr_DFeComum_dpk: TCheckBox
-            Top = -530
-          end
-          inherited ACBr_NFCeECFVirtual_dpk: TCheckBox
-            Top = -447
-          end
-          inherited ACBr_SATECFVirtual_dpk: TCheckBox
-            Top = -262
-          end
-          inherited ACBr_TXTComum_dpk: TCheckBox
-            Top = -820
-          end
-          inherited ACBr_NFeDanfeFR_dpk: TCheckBox
-            Top = 128
-          end
-          inherited ACBr_CTeDacteFR_dpk: TCheckBox
-            Top = 145
-          end
-          inherited ACBr_NFSeDanfseFR_dpk: TCheckBox
-            Top = 162
-          end
-          inherited ACBr_BoletoFR_dpk: TCheckBox
-            Top = 196
-          end
-          inherited ACBr_MDFeDamdfeFR_dpk: TCheckBox
-            Top = 213
-          end
-          inherited ACBr_GNREGuiaFR_dpk: TCheckBox
-            Top = 248
-          end
-          inherited ACBr_NFeDanfeRL_dpk: TCheckBox
-            Top = 303
-          end
-          inherited ACBr_CTeDacteRL_dpk: TCheckBox
-            Top = 352
-          end
-          inherited ACBr_NFSeDanfseRL_dpk: TCheckBox
-            Top = 318
-          end
-          inherited ACBr_BoletoRL_dpk: TCheckBox
-            Top = 369
-          end
-          inherited ACBr_MDFeDamdfeRL_dpk: TCheckBox
-            Top = 386
-          end
-          inherited ACBr_SATExtratoRL_dpk: TCheckBox
-            Top = 403
-          end
-          inherited ACBr_GNREGuiaRL_dpk: TCheckBox
-            Top = 420
-          end
-          inherited ACBr_BlocoX_dpk: TCheckBox
-            Top = -211
-          end
-          inherited ACBr_DeSTDA_dpk: TCheckBox
-            Top = -667
-          end
-          inherited ACBr_Ponto_dpk: TCheckBox
-            Top = -650
-          end
-          inherited ACBr_MTER_dpk: TCheckBox
-            Top = -581
-          end
-          inherited ACBr_SATWS_dpk: TCheckBox
-            Top = -228
-          end
-          inherited ACBr_ANe_dpk: TCheckBox
-            Top = -145
-          end
-          inherited ACBr_Integrador_dpk: TCheckBox
-            Top = -547
-          end
-          inherited ACBre_Social_dpk: TCheckBox
-            Top = -313
-          end
-          inherited ACBr_Reinf_dpk: TCheckBox
-            Top = -296
-          end
-          inherited ACBr_BPeDabpeESCPOS_dpk: TCheckBox
-            Top = -162
-          end
-          inherited ACBr_DFeReportRL_dpk: TCheckBox
-            Top = 284
-          end
-          inherited ACBr_CIOT_dpk: TCheckBox
-            Top = -128
-          end
-          inherited ACBr_LCDPR_dpk: TCheckBox
-            Top = -631
-          end
-          inherited ACBr_ONE_dpk: TCheckBox
-            Top = -111
-          end
-          inherited ACBr_EDI_dpk: TCheckBox
-            Top = -769
-          end
-          inherited ACBr_NF3e_dpk: TCheckBox
-            Top = -94
-          end
-          inherited ACBr_NF3eDANF3eESCPOS_dpk: TCheckBox
-            Top = -78
-          end
-          inherited ACBr_ADRCST_dpk: TCheckBox
-            Top = -614
-          end
-          inherited ACBr_SATExtratoFR_dpk: TCheckBox
-            Top = 230
-          end
-          inherited ACBr_PagFor_dpk: TCheckBox
-            Top = -496
-          end
-          inherited ACBr_NFSeX_dpk: TCheckBox
-            Top = -380
-          end
-          inherited ACBr_NFSeXDanfseRL_dpk: TCheckBox
-            Top = 335
-          end
-          inherited ACBr_NFSeXDanfseFR_dpk: TCheckBox
-            Top = 179
-          end
-          inherited ACBr_OFX_dpk: TCheckBox
-            Top = -24
-          end
-          inherited ACBr_GTIN_dpk: TCheckBox
-            Top = -60
-          end
-          inherited ACBr_OpenDelivery_dpk: TCheckBox
-            Top = -7
-          end
-          inherited ACBr_PAFNFCe_dpk: TCheckBox
-            Top = -195
-          end
-          inherited ACBr_PIXCD_dpk: TCheckBox
-            Top = -564
-          end
-          inherited ACBr_Android_dpk: TCheckBox
-            Top = 10
-          end
-          inherited ACBr_BoletoFPDF_dpk: TCheckBox
-            Top = 47
-          end
-          inherited ACBr_DebitoAutomatico_dpk: TCheckBox
-            Top = -481
-          end
-          inherited ACBr_NFeDanfeFPDF_dpk: TCheckBox
-            Top = 63
-          end
-          inherited ACBr_NFSeXDanfseFPDF_dpk: TCheckBox
-            Top = 80
-          end
-          inherited ACBr_NFCom_dpk: TCheckBox
-            Top = -364
-          end
-          inherited ACBr_SATExtratoFPDF_dpk: TCheckBox
-            Top = 97
-          end
-          inherited CheckBox1: TCheckBox
-            Top = 436
-          end
         end
       end
     end
@@ -1516,7 +1160,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 2
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

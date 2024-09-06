@@ -47,7 +47,7 @@ uses
   ACBrExtratoAPI;
 
 {$IFNDEF FPC}
-//   {$R ACBrBaaS.dcr}
+   {$R ACBrBaaS.dcr}
 {$ENDIF}
 
 procedure Register;

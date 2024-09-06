@@ -692,10 +692,11 @@ begin
     if (Length(s3) < 8) then
       s3 := PadLeft(s3, 8, '0');
 
-    d := Copy(s3, 1, 2).ToInteger;
-    m := Copy(s3, 3, 2).ToInteger;
-    a := Copy(s3, 5, 4).ToInteger;
-    fdataLancamento := EncodeDate(a, m, d);
+    d := StrToIntDef(Copy(s3, 1, 2), 0);
+    m := StrToIntDef(Copy(s3, 3, 2), 0);
+    a := StrToIntDef(Copy(s3, 5, 4), 0);
+    if NaoEstaZerado(d) and NaoEstaZerado(m) and NaoEstaZerado(a) then
+      fdataLancamento := EncodeDate(a, m, d);
   end;
 
   if NaoEstaVazio(s4) and (s4 <> '0') then
@@ -703,10 +704,11 @@ begin
     if (Length(s4) < 8) then
       s4 := PadLeft(s4, 8, '0');
 
-    d := Copy(s4, 1, 2).ToInteger;
-    m := Copy(s4, 3, 2).ToInteger;
-    a := Copy(s4, 5, 4).ToInteger;
-    fdataMovimento := EncodeDate(a, m, d);
+    d := StrToIntDef(Copy(s4, 1, 2), 0);
+    m := StrToIntDef(Copy(s4, 3, 2), 0);
+    a := StrToIntDef(Copy(s4, 5, 4), 0);
+    if NaoEstaZerado(d) and NaoEstaZerado(m) and NaoEstaZerado(a) then
+      fdataMovimento := EncodeDate(a, m, d);
   end;
 end;
 

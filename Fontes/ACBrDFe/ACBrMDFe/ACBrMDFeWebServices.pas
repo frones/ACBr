@@ -846,9 +846,9 @@ begin
       vMDFe + '</enviMDFe>';
   end;
 
-  // Lote tem mais de 1024kb ? //
-  if Length(FPDadosMsg) > (1024 * 1024) then
-    GerarException(ACBrStr('Tamanho do XML de Dados superior a 1024 Kbytes. Tamanho atual: ' +
+  // Lote tem mais de 2048kb ? //
+  if Length(FPDadosMsg) > (2048 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 2048 Kbytes. Tamanho atual: ' +
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 
   FRecibo := '';

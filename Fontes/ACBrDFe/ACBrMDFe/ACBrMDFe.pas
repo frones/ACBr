@@ -729,7 +729,7 @@ begin
   if not Assigned(DAMDFE) then
      raise EACBrMDFeException.Create('Componente DAMDFE não associado.')
   else
-     DAMDFE.ImprimirEVENTOPDF(nil);
+     DAMDFE.ImprimirEVENTOPDF;
 end;
 
 function TACBrMDFe.Distribuicao(const ACNPJCPF, AultNSU, ANSU,

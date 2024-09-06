@@ -72,6 +72,9 @@ type
     RLMDFeEvento: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
     procedure FormDestroy(Sender: TObject);
+  private
+    procedure AdicionaInformacaoPDF;
+    procedure AjustarEscala;
   protected
     fpACBrMDFe: TACBrMDFe;
     fpMDFe: TMDFe;
@@ -82,7 +85,9 @@ type
     class procedure Imprimir(ADAMDFe: TACBrMDFeDAMDFeRL;
       AEventoMDFe: TInfEventoCollectionItem; AMDFe: TMDFe = nil);
     class procedure SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL;
-      AEventoMDFe: TInfEventoCollectionItem; AFile: string; AMDFe: TMDFe = nil);
+      AEventoMDFe: TInfEventoCollectionItem; AFile: string; AMDFe: TMDFe = nil); overload;
+    class procedure SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL;
+      AEventoMDFe: TInfEventoCollectionItem; AStream: TStream; AMDFe: TMDFe = nil); overload;
   end;
 
 implementation
@@ -97,8 +102,8 @@ uses
 
 {$endif}
 
-class procedure TfrmMDFeDAEventorl.Imprimir(ADAMDFe: TACBrMDFeDAMDFeRL;
-      AEventoMDFe: TInfEventoCollectionItem; AMDFe: TMDFe = nil);
+class procedure TfrmMDFeDAEventoRL.Imprimir(ADAMDFe: TACBrMDFeDAMDFeRL;
+  AEventoMDFe: TInfEventoCollectionItem; AMDFe: TMDFe);
 var
   DAMDFeReport: TfrmMDFeDAEventorl;
 begin
@@ -107,11 +112,7 @@ begin
     DAMDFeReport.fpDAMDFe := ADAMDFe;
     DAMDFeReport.fpEventoMDFe := AEventoMDFe;
 
-    if ADAMDFe.AlterarEscalaPadrao then
-    begin
-      DAMDFeReport.Scaled := False;
-      DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
-    end;
+    DAMDFeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
     TDFeReportFortes.AjustarMargem(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
@@ -128,8 +129,8 @@ begin
   end;
 end;
 
-class procedure TfrmMDFeDAEventorl.SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL;
-      AEventoMDFe: TInfEventoCollectionItem; AFile: string; AMDFe: TMDFe = nil);
+class procedure TfrmMDFeDAEventoRL.SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL;
+  AEventoMDFe: TInfEventoCollectionItem; AFile: string; AMDFe: TMDFe);
 var
   DAMDFeReport: TfrmMDFeDAEventorl;
 begin
@@ -138,11 +139,7 @@ begin
     DAMDFeReport.fpDAMDFe := ADAMDFe;
     DAMDFeReport.fpEventoMDFe := AEventoMDFe;
 
-    if ADAMDFe.AlterarEscalaPadrao then
-    begin
-      DAMDFeReport.Scaled := False;
-      DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
-    end;
+    DAMDFeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
     TDFeReportFortes.AjustarMargem(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
@@ -151,14 +148,7 @@ begin
     if (AMDFe <> nil) then
       DAMDFeReport.fpMDFe := AMDFe;
 
-    with DAMDFeReport.RLPDFFilter1.DocumentInfo do
-    begin
-        Title := ACBrStr(Format('DAMDFe EVENTO - MDFe %s', [DAMDFeReport.fpEventoMDFe.RetInfEvento.chMDFe]));
-        KeyWords := ACBrStr(Format('Número: %s; Data de emissão: %s; CNPJ: %s',
-          [FormatFloat('000,000,000', DAMDFeReport.fpEventoMDFe.RetInfEvento.nSeqEvento),
-          FormatDateTime('dd/mm/yyyy', DAMDFeReport.fpEventoMDFe.RetInfEvento.dhRegEvento),
-          DAMDFeReport.fpEventoMDFe.InfEvento.CNPJCPF]));
-    end;
+    DAMDFeReport.AdicionaInformacaoPDF;
 
     DAMDFeReport.RLMDFeEvento.Prepare;
     DAMDFeReport.RLPDFFilter1.FilterPages(DAMDFeReport.RLMDFeEvento.Pages);
@@ -167,9 +157,57 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventorl.FormDestroy(Sender: TObject);
+class procedure TfrmMDFeDAEventoRL.SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL;
+  AEventoMDFe: TInfEventoCollectionItem; AStream: TStream; AMDFe: TMDFe);
+var
+  DAMDFeReport: TfrmMDFeDAEventorl;
+begin
+  DAMDFeReport := Create(nil);
+  try;
+    DAMDFeReport.fpDAMDFe := ADAMDFe;
+    DAMDFeReport.fpEventoMDFe := AEventoMDFe;
+
+    DAMDFeReport.AjustarEscala;
+
+    TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
+    TDFeReportFortes.AjustarMargem(DAMDFeReport.RLMDFeEvento, DAMDFeReport.fpDAMDFe);
+//    TDFeReportFortes.AjustarFiltroPDF(DAMDFeReport.RLPDFFilter1, DAMDFeReport.fpDAMDFe, AFile);
+
+    if (AMDFe <> nil) then
+      DAMDFeReport.fpMDFe := AMDFe;
+    DAMDFeReport.AdicionaInformacaoPDF;
+
+    DAMDFeReport.RLMDFeEvento.Prepare;
+    DAMDFeReport.RLPDFFilter1.FilterPages(DAMDFeReport.RLMDFeEvento.Pages,AStream);
+  finally
+    DAMDFeReport.Free;
+  end;
+end;
+
+procedure TfrmMDFeDAEventoRL.FormDestroy(Sender: TObject);
 begin
   RLMDFeEvento.Free;
+end;
+
+procedure TfrmMDFeDAEventoRL.AdicionaInformacaoPDF;
+begin
+  with RLPDFFilter1.DocumentInfo do
+  begin
+      Title := ACBrStr(Format('DAMDFe EVENTO - MDFe %s', [fpEventoMDFe.RetInfEvento.chMDFe]));
+      KeyWords := ACBrStr(Format('Número: %s; Data de emissão: %s; CNPJ: %s',
+        [FormatFloat('000,000,000', fpEventoMDFe.RetInfEvento.nSeqEvento),
+        FormatDateTime('dd/mm/yyyy', fpEventoMDFe.RetInfEvento.dhRegEvento),
+        fpEventoMDFe.InfEvento.CNPJCPF]));
+  end;
+end;
+
+procedure TfrmMDFeDAEventoRL.AjustarEscala;
+begin
+  if fpDAMDFe.AlterarEscalaPadrao then
+  begin
+    Scaled := False;
+    ScaleBy(fpDAMDFe.NovaEscala, Screen.PixelsPerInch);
+  end;
 end;
 
 end.

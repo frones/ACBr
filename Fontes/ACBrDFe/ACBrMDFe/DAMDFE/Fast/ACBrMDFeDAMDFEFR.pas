@@ -142,6 +142,7 @@ type
     procedure ImprimirDAMDFePDF(AStream: TStream; AMDFe: TMDFe = nil); override;
     procedure ImprimirEVENTO(AMDFe: TMDFe = nil); override;
     procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); override;
+    procedure ImprimirEVENTOPDF(AStream: TStream; AMDFe: TMDFe = nil); override;
 
     procedure CarregaDados;
     procedure LimpaDados;
@@ -927,6 +928,33 @@ begin
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
       FPArquivoPDF := frxPDFExport.FileName;
+    end;
+  end;
+end;
+
+procedure TACBrMDFeDAMDFEFR.ImprimirEVENTOPDF(AStream: TStream; AMDFe: TMDFe);
+const
+  TITULO_PDF = 'Manifesto de Documento Eletrônico - Evento';
+var
+  OldShowDialog: Boolean;
+begin
+  if PrepareReportEvento then
+  begin
+    frxPDFExport.Author   := Sistema;
+    frxPDFExport.Creator  := Sistema;
+    frxPDFExport.Producer := Sistema;
+    frxPDFExport.Title    := TITULO_PDF;
+    frxPDFExport.Subject  := TITULO_PDF;
+    frxPDFExport.Keywords := TITULO_PDF;
+
+    frxPDFExport.Stream := AStream;
+    OldShowDialog := frxPDFExport.ShowDialog;
+
+    try
+      frxPDFExport.ShowDialog := False;
+      frxReport.Export(frxPDFExport);
+    finally
+      frxPDFExport.ShowDialog := OldShowDialog;
     end;
   end;
 end;

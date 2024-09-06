@@ -43,6 +43,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/09/2024
+-- ACBrMDFe/ACBrMDFeWebServices/ACBrMDFeDAMDFeClass/ACBrMDFeDAMDFEFR --
+-- ACBrMDFeDAEventoRL/ACBrMDFeDAMDFeRLClass --
+[+] Implementado o Imprimir Evento PDF por Stream.
+  Por: Antonio Carlos/Juliomar Marchetti/Italo Giurizzato Junior
+-- ACBrMDFe.ConsNaoEnc/ACBrMDFe.ConsSit/ACBrMDFe.EnvEvento --
+-- ACBrMDFe.EventoClass/ACBrMDFe.RetConsNaoEnc/ACBrMDFe.RetConsSit --
+-- ACBrMDFe.RetEnvEvento --
+[+] Implementado as novas units para os serviços de Consulta MDF-e não Encerrados,
+    Consulta a Situação e envio de eventos, bem como as units que fazem as leituras
+    dos retornos.
+  Por: Italo Giurizzato Junior
+
 14/08/2024
 -- ACBrMDFe.XmlWriter --
 [+] Escrito a nova unit responsável pela geração do XML do MDF-e.

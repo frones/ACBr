@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2024
+-- Diversos --
+[+] #TK-4956-3: Implementados programas de exemplo do Boleto em PHP, ST e MT.
+  Por: Renato Rubinho
+
 29/08/2024
 --- ACBrLibBoletoConfig ---
 [*] Ajustado a linha que gera o campo OrientacaoBanco no ACBrLib.ini

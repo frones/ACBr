@@ -213,8 +213,14 @@ type
     lblNFCom: TLabel;
     ACBr_SATExtratoFPDF_dpk: TCheckBox;
     Label33: TLabel;
-    CheckBox1: TCheckBox;
+    ACBr_NF3eDANF3eRL_dpk: TCheckBox;
     Label34: TLabel;
+    ACBr_DCe_dpk: TCheckBox;
+    lblACBr_DCe: TLabel;
+    ACBr_DCeDACERL_dpk: TCheckBox;
+    Label35: TLabel;
+    ACBrBaas_dpk: TCheckBox;
+    Label36: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

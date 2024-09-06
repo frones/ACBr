@@ -388,6 +388,7 @@ begin
 
     FArquivoLog := PathArquivoLog(NomeVersao+ ' ' + sPlatform);
     Cabecalho := 'Versao Instalador: ' + sVersaoInstalador + sLineBreak +
+                 'Executado em: ' + DateTimeToStr(Now) + sLineBreak +
                  'Versão do delphi: ' + NomeVersao + ' ' + sPlatform + sLineBreak +
                  'Dir. Instalação : ' + OpcoesInstall.DiretorioRaizACBr + sLineBreak +
                  'Dir. Bibliotecas: ' + sDirLibrary;

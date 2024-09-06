@@ -205,8 +205,8 @@ begin
   with TACBrDCe(TDeclaracoes(Collection).ACBrDCe) do
   begin
     FDCe.infDCe.Versao := VersaoDCeToDbl(Configuracoes.Geral.VersaoDF);
-    FDCe.Ide.tpAmb := TACBrTipoAmbiente(Integer(Configuracoes.WebServices.Ambiente));
-    FDCe.Ide.tpEmis := TACBrTipoEmissao(Integer(Configuracoes.Geral.FormaEmissao));
+    FDCe.Ide.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
+    FDCe.Ide.tpEmis := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
   end;
 end;
 
@@ -283,25 +283,25 @@ begin
     begin
       if DCe.emit.idOutros <> '' then
         DCe.infDCeSupl.qrCode := GetURLQRCode(DCe.Ide.cUF,
-          TpcnTipoAmbiente(Integer(DCe.Ide.tpAmb)),
-          TpcnTipoEmissao(Integer(DCe.ide.tpEmis)), DCe.infDCe.ID, DCe.emit.idOutros,
+          DCe.Ide.tpAmb,
+          DCe.ide.tpEmis, DCe.infDCe.ID, DCe.emit.idOutros,
           'O', DCe.infDCe.Versao)
       else
       begin
         if Length(DCe.emit.CNPJCPF) = 14 then
           DCe.infDCeSupl.qrCode := GetURLQRCode(DCe.Ide.cUF,
-            TpcnTipoAmbiente(Integer(DCe.Ide.tpAmb)),
-            TpcnTipoEmissao(Integer(DCe.ide.tpEmis)), DCe.infDCe.ID, DCe.emit.CNPJCPF,
+            DCe.Ide.tpAmb,
+            DCe.ide.tpEmis, DCe.infDCe.ID, DCe.emit.CNPJCPF,
             'J', DCe.infDCe.Versao)
         else
           DCe.infDCeSupl.qrCode := GetURLQRCode(DCe.Ide.cUF,
-            TpcnTipoAmbiente(Integer(DCe.Ide.tpAmb)),
-            TpcnTipoEmissao(Integer(DCe.ide.tpEmis)), DCe.infDCe.ID, DCe.emit.CNPJCPF,
+            DCe.Ide.tpAmb,
+            DCe.ide.tpEmis, DCe.infDCe.ID, DCe.emit.CNPJCPF,
             'F', DCe.infDCe.Versao);
       end;
 
       DCe.infDCeSupl.urlChave := GetURLConsulta(DCe.Ide.cUF,
-                   TpcnTipoAmbiente(Integer(DCe.Ide.tpAmb)), DCe.infDCe.Versao);
+                   DCe.Ide.tpAmb, DCe.infDCe.Versao);
 
       GerarXML;
     end;
@@ -1202,7 +1202,7 @@ begin
 
     FDCeW.ModeloDF := 99;
     FDCeW.VersaoDF := Configuracoes.Geral.VersaoDF;
-    FDCeW.tpAmb := TACBrTipoAmbiente(Integer(Configuracoes.WebServices.Ambiente));
+    FDCeW.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
 //    FDCeW.tpEmis := TACBrTipoEmissao(Integer(Configuracoes.Geral.FormaEmissao));
   end;
 

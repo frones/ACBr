@@ -271,10 +271,10 @@ begin
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
 
-    case InfEvento.tpAmb of
-      TACBrTipoAmbiente.taProducao:
+    case TpcnTipoAmbiente(InfEvento.tpAmb) of
+      taProducao:
         rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
-      TACBrTipoAmbiente.taHomologacao:
+      taHomologacao:
         rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
 
@@ -345,12 +345,12 @@ begin
 
   Exibir := (fpEventoDCe.InfEvento.tpEvento = teCancelamento);
 
-  PrintIt := Exibir or (fpEventoDCe.InfEvento.tpAmb = TACBrTipoAmbiente.taHomologacao);
+  PrintIt := Exibir or (TpcnTipoAmbiente(fpEventoDCe.InfEvento.tpAmb) = taHomologacao);
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if fpEventoDCe.InfEvento.tpAmb = TACBrTipoAmbiente.taHomologacao then
+  if TpcnTipoAmbiente(fpEventoDCe.InfEvento.tpAmb) = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;

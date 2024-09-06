@@ -580,7 +580,7 @@ const
 begin
   Result := FDocument.CreateElement('prod');
 
-  if (DCe.Det[i].Prod.nItem = 1) and (DCe.Ide.tpAmb = TACBrTipoAmbiente.taHomologacao) then
+  if (DCe.Det[i].Prod.nItem = 1) and (TACBrTipoAmbiente(DCe.Ide.tpAmb) = taHomologacao) then
     Result.AppendChild(AddNode(tcStr, 'I02', 'xProd', 1, 120, 1,
                                                           HOM_XPROD, DSC_XPROD))
   else

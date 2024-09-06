@@ -104,11 +104,11 @@ type
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutDCe): String; reintroduce; overload;
 
-    function GetURLConsulta(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
+    function GetURLConsulta(const CUF: integer; const TipoAmbiente: TACBrTipoAmbiente;
       const Versao: Double): String;
 
-    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
-      const TipoEmissao: TpcnTipoEmissao; const AChaveDCe: String;
+    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TACBrTipoAmbiente;
+      const TipoEmissao: TACBrTipoEmissao; const AChaveDCe: String;
       const DocEmitente: string; const TipoEmitente: string;
       const Versao: Double): String;
 
@@ -256,7 +256,7 @@ begin
 end;
 
 function TACBrDCe.GetURLConsulta(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
+  const TipoAmbiente: TACBrTipoAmbiente; const Versao: Double): String;
 //var
 //  VersaoDFe: TVersaoDCe;
 //  ok: Boolean;
@@ -265,11 +265,11 @@ begin
   // devemos descomentar as linhas e trocar o zero da função abaixo pela variável
   // VersaoDFe
 //  VersaoDFe := DblToVersaoDCe(ok, Versao);
-  Result := LerURLDeParams('DCe', CUFtoUF(CUF), TipoAmbiente, 'URL-Consulta', 0);
+  Result := LerURLDeParams('DCe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-Consulta', 0);
 end;
 
 function TACBrDCe.GetURLQRCode(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
+  const TipoAmbiente: TACBrTipoAmbiente; const TipoEmissao: TACBrTipoEmissao;
   const AChaveDCe: String; const DocEmitente: string; const TipoEmitente: string;
   const Versao: Double): String;
 var
@@ -280,7 +280,7 @@ var
 begin
 //  VersaoDFe := DblToVersaoDCe(ok, Versao);
 
-  urlUF := LerURLDeParams('DCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('DCe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-QRCode', 0);
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
@@ -288,10 +288,10 @@ begin
   idDCe := OnlyNumber(AChaveDCe);
 
   // Passo 1
-  sEntrada := 'chDCe=' + idDCe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+  sEntrada := 'chDCe=' + idDCe + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
 
   // Passo 2 calcular o SHA-1 da string idDCe se emissão em contingência
-  if TipoEmissao = teContingencia then
+  if TpcnTipoEmissao(TipoEmissao) = teContingencia then
   begin
     if TipoEmitente = 'J' then
       Passo3 := '&CNPJ=' + DocEmitente

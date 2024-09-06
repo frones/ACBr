@@ -69,6 +69,9 @@ try {
     if ($metodo == "salvarConfiguracoes") {
         $processo = $metodo . "/" . "NFE_ConfigGravarValor";
 
+        if (ConfigGravarValor($handle, $ffi, "Principal", "LogPath", $_POST['LogPath']) != 0) exit;
+        if (ConfigGravarValor($handle, $ffi, "Principal", "LogNivel", $_POST['LogNivel']) != 0) exit;
+
         if (ConfigGravarValor($handle, $ffi, "NFe", "AtualizarXMLCancelado", $_POST['atualizarXml']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "NFe", "ExibirErroSchema", $_POST['exibirErroSchema']) != 0) exit;
         if (ConfigGravarValor($handle, $ffi, "NFe", "FormatoAlerta", $_POST['formatoAlerta']) != 0) exit;
@@ -149,6 +152,9 @@ try {
     if ($metodo == "carregarConfiguracoes") {
         $processo = $metodo . "/" . "NFE_ConfigLer";
 
+        if (ConfigLerValor($handle, $ffi, "Principal", "LogPath", $LogPath) != 0) exit;
+        if (ConfigLerValor($handle, $ffi, "Principal", "LogNivel", $LogNivel) != 0) exit;
+
         if (ConfigLerValor($handle, $ffi, "NFe", "AtualizarXMLCancelado", $atualizarXml) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "NFe", "ExibirErroSchema", $exibirErroSchema) != 0) exit;
         if (ConfigLerValor($handle, $ffi, "NFe", "FormatoAlerta", $formatoAlerta) != 0) exit;
@@ -224,6 +230,9 @@ try {
         $processo = $metodo . "/" . "responseData";
         $responseData = [
             'dados' => [
+                'LogPath' => $LogPath ?? '',
+                'LogNivel' => $LogNivel ?? '',
+
                 'atualizarXml' => $atualizarXml ?? '',
                 'exibirErroSchema' => $exibirErroSchema ?? '',
                 'formatoAlerta' => $formatoAlerta ?? '',

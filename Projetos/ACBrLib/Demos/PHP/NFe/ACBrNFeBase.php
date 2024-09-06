@@ -506,6 +506,22 @@
                             <label for="PathEvento">Pasta Arquivos Evento</label>
                             <input type="text" id="PathEvento">
                         </div>
+                        <div class="form-group">
+                            <label for="LogPath">Path Log</label>
+                            <input type="text" id="LogPath">
+                        </div>
+                        <div class="grid3Col">
+                            <div class="form-group">
+                                <label for="LogNivel">Log Nível</label>
+                                <select id="LogNivel">
+                                    <option value="0">logNenhum</option>
+                                    <option value="1">logSimples</option>
+                                    <option value="2" selected>logNormal</option>
+                                    <option value="3">logCompleto</option>
+                                    <option value="4">logParanoico</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -789,6 +805,9 @@
         // Chamada do botão para salvar configurações
         $('#salvarConfiguracoes').on('click', function() {
             const infoData = {
+                LogPath: $('#LogPath').val(),
+                LogNivel: $('#LogNivel').val(),
+
                 metodo: "salvarConfiguracoes",
                 atualizarXml: $('#atualizarXml').prop('checked') ? 1 : 0,
                 exibirErroSchema: $('#exibirErroSchema').prop('checked') ? 1 : 0,
@@ -1298,6 +1317,10 @@
         function processaRetornoConfiguracoes(response) {
             if (response.dados) {
                 $('#result').val(JSON.stringify(response, null, 4));
+
+                $('#LogPath').val(response.dados.LogPath);
+                $('#LogNivel').val(response.dados.LogNivel);
+
                 $('#atualizarXml').prop('checked', response.dados.atualizarXml == 1);
                 $('#exibirErroSchema').prop('checked', response.dados.exibirErroSchema == 1);
                 $('#formatoAlerta').val(response.dados.formatoAlerta);

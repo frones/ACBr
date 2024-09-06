@@ -99,7 +99,7 @@ begin
   fpNumero                := 655;
   fpTamanhoAgencia        := 5;
   fpTamanhoConta          := 10;
-  fpTamanhoCarteira       := 1;
+  fpTamanhoCarteira       := 3;
   fpTamanhoMaximoNossoNum := 10;
   fpLayoutVersaoArquivo   := 87;
   fpLayoutVersaoLote      := 45;

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2024
+--- ACBrLibMDFeBase ---
+[*] LibMDFe PDF Evento Stream - #TK-5777
+    Realizado ajustes no método SalvarEventoPDF.
+    Por: Antonio Carlos Junior
+
 15/08/2024
 --- ACBrLibMDFeBase, ACBrLibMDFeST, ACBrLibMDFeMT,
     ACBrLibMDFeStaticImportST, ACBrLibMDFeStaticImportMT, ACBrLibMDFeRespostas ---

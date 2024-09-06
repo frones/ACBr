@@ -1984,7 +1984,7 @@ begin
         MDFeDM.ACBrMDFe1.EventoMDFe.LerXMLFromString(AArquivoXmlEvento);
 
       MDFeDM.ConfigurarImpressao('', True);
-      MDFeDM.ACBrMDFe1.DAMDFE.ImprimirDAMDFePDF(AStream);
+      MDFeDM.ACBrMDFe1.DAMDFE.ImprimirEVENTOPDF(AStream);
 
       Resposta := StreamToBase64(AStream);
 

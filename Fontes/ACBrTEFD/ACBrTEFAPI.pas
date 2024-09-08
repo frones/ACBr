@@ -46,7 +46,8 @@ type
   TACBrTEFAPITipo = ( tefApiNenhum,
                       tefApiPayGoWeb,
                       tefApiCliSiTEF,
-                      tefApiElgin );
+                      tefApiElgin,
+                      tefStoneAutoTEF);
 
   TACBrTEFAPIExibicaoQRCode = ( qrapiNaoSuportado,
                                 qrapiAuto,
@@ -235,7 +236,8 @@ uses
   TypInfo,
   ACBrTEFAPIPayGoWeb,
   ACBrTEFAPICliSiTef,
-  ACBrTEFAPIElgin;
+  ACBrTEFAPIElgin,
+  ACBrTEFAPIStoneAutoTEF;
 
 { TACBrTEFAPIClass }
 
@@ -402,7 +404,8 @@ begin
   case AValue of
     tefApiPayGoWeb : fpTEFAPIClass := TACBrTEFAPIClassPayGoWeb.Create( Self );
     tefApiCliSiTEF : fpTEFAPIClass := TACBrTEFAPIClassCliSiTef.Create( Self );
-    tefApiElgin    : fpTEFAPIClass := TACBrTEFAPIClassElgin.Create( Self )
+    tefApiElgin    : fpTEFAPIClass := TACBrTEFAPIClassElgin.Create( Self );
+    tefStoneAutoTEF: fpTEFAPIClass := TACBrTEFAPIClassStoneAutoTEF.Create( Self )
   else
     fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
   end;

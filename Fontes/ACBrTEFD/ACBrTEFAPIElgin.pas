@@ -82,7 +82,9 @@ type
       Modalidade: TACBrTEFModalidadePagamento = tefmpNaoDefinido;
       CartoesAceitos: TACBrTEFTiposCartao = [];
       Financiamento: TACBrTEFModalidadeFinanciamento = tefmfNaoDefinido;
-      Parcelas: Byte = 0; DataPreDatado: TDateTime = 0): Boolean; override;
+      Parcelas: Byte = 0; DataPreDatado: TDateTime = 0;
+      DadosAdicionais: String = ''): Boolean; override;
+
     function EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao =
       tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(const CodOperacaoAdm: String = ''): boolean;
@@ -543,7 +545,7 @@ end;
 function TACBrTEFAPIClassElgin.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
-  DataPreDatado: TDateTime): Boolean;
+  DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
   CartaoInt, vCount, i: integer;
   CACount, CartaoAceito: TACBrTEFTipoCartao;

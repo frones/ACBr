@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -101,7 +101,8 @@ type
       CartoesAceitos: TACBrTEFTiposCartao = [];
       Financiamento: TACBrTEFModalidadeFinanciamento = tefmfNaoDefinido;
       Parcelas: Byte = 0;
-      DataPreDatado: TDateTime = 0): Boolean; override;
+      DataPreDatado: TDateTime = 0;
+      DadosAdicionais: String = ''): Boolean; override;
 
     function EfetuarAdministrativa(
       OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
@@ -421,11 +422,10 @@ begin
   end;
 end;
 
-function TACBrTEFAPIClassPayGoWeb.EfetuarPagamento(
-  ValorPagto: Currency;
+function TACBrTEFAPIClassPayGoWeb.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
-  DataPreDatado: TDateTime): Boolean;
+  DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
   PA: TACBrTEFParametros;
   SomaCartoes, ModalidadeInt, FinanciamentoInt: Integer;
@@ -437,6 +437,8 @@ begin
 
   PA := TACBrTEFParametros.Create;
   try
+    PA.Text := DadosAdicionais;
+
     ValDbl := ValorPagto * 100;
     PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
     PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos

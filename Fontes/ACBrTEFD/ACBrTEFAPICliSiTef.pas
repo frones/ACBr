@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -109,7 +109,8 @@ type
       CartoesAceitos: TACBrTEFTiposCartao = [];
       Financiamento: TACBrTEFModalidadeFinanciamento = tefmfNaoDefinido;
       Parcelas: Byte = 0;
-      DataPreDatado: TDateTime = 0): Boolean; override;
+      DataPreDatado: TDateTime = 0;
+      DadosAdicionais: String = ''): Boolean; override;
 
     function EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(const CodOperacaoAdm: string = ''): Boolean; overload; override;
@@ -938,11 +939,10 @@ begin
   Result := ExecutarTransacaoSiTef(Op, 0);
 end;
 
-function TACBrTEFAPIClassCliSiTef.EfetuarPagamento(
-  ValorPagto: Currency;
+function TACBrTEFAPIClassCliSiTef.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
-  DataPreDatado: TDateTime): Boolean;
+  DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
   Op, i: Integer;
   SL: TStringList;
@@ -983,7 +983,7 @@ begin
       fParamAdicConfig.Add('{DevolveStringQRCode=1}');
   end;
 
-  Restricoes := '';
+  Restricoes := DadosAdicionais;
   if (pos('[', fParamAdicFuncao.Text) = 0) then   // Não especificou Restrições de Menu ?
   begin
     if (Op <> 1) then       // Débito
@@ -1010,7 +1010,6 @@ begin
       Restricoes := Restricoes + CSITEF_RestricoesAVista + ';';
       Restricoes := Restricoes + CSITEF_RestricoesParcelaAministradora + ';';
     end;
-
 
     SL := TStringList.Create;
     try

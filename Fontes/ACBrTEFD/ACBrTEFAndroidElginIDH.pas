@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -84,7 +84,8 @@ type
                               CartoesAceitos: TACBrTEFTiposCartao = [];
                               Financiamento: TACBrTEFModalidadeFinanciamento = TACBrTEFModalidadeFinanciamento.tefmfNaoDefinido;
                               Parcelas: Byte = 0;
-                              DataPreDatado: TDateTime = 0): Boolean; override;
+                              DataPreDatado: TDateTime = 0;
+                              DadosAdicionais: String = ''): Boolean; override;
 
     function EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(const CodOperacaoAdm: string = ''): Boolean; overload; override;
@@ -272,7 +273,8 @@ function TACBrTEFAndroidElginIDHClass.EfetuarPagamento(ValorPagto   : Currency;
                                                      CartoesAceitos: TACBrTEFTiposCartao;
                                                      Financiamento: TACBrTEFModalidadeFinanciamento;
                                                      Parcelas     : Byte;
-                                                     DataPreDatado: TDateTime): Boolean;
+                                                     DataPreDatado: TDateTime;
+                                                     DadosAdicionais: String): Boolean;
 var
   PA: TACBrTEFParametros;
   TipoCartao: TACBrTEFTipoCartao;
@@ -283,6 +285,7 @@ begin
 
   PA := TACBrTEFParametros.Create;
   try
+    PA.Text := DadosAdicionais;
     PA.ValueInfo[PWINFO_PAYMNTTYPE] := IntToStr(fOperacaoVenda);
 
     (*a modalidade (fOperacaoVenda ou 0) e considerada genérica para o Elgin\Sitef

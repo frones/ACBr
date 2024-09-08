@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -207,7 +207,8 @@ type
       CartoesAceitos: TACBrTEFTiposCartao = [];
       Financiamento: TACBrTEFModalidadeFinanciamento = tefmfNaoDefinido;
       Parcelas: Byte = 0;
-      DataPreDatado: TDateTime = 0 ): Boolean; virtual;
+      DataPreDatado: TDateTime = 0;
+      DadosAdicionais: String = ''): Boolean; virtual;
 
     function EfetuarAdministrativa(
       OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; virtual;
@@ -352,7 +353,8 @@ type
       CartoesAceitos: TACBrTEFTiposCartao = [];
       Financiamento: TACBrTEFModalidadeFinanciamento = tefmfNaoDefinido;
       Parcelas: Byte = 0;
-      DataPreDatado: TDateTime = 0): Boolean; virtual;
+      DataPreDatado: TDateTime = 0;
+      DadosAdicionais: String = ''): Boolean; virtual;
 
     function CancelarTransacao(
       const NSU, CodigoAutorizacaoTransacao: string;
@@ -679,8 +681,6 @@ begin
 end;
 
 procedure TACBrTEFAPIRespostas.LimparRespostasTEF;
-//var
-//  i: Integer;
 begin
   while (fTEFRespList.Count > 0) do
     ApagarRespostaTEF(0);
@@ -882,7 +882,7 @@ end;
 function TACBrTEFAPIComumClass.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
-  DataPreDatado: TDateTime): Boolean;
+  DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 begin
   Result := False;
 end;
@@ -1225,7 +1225,7 @@ function TACBrTEFAPIComum.EfetuarPagamento(
   const IdentificadorTransacao: String; ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
-  DataPreDatado: TDateTime): Boolean;
+  DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
   StrCartoesAceitos: String;
   i: TACBrTEFTipoCartao;
@@ -1249,6 +1249,7 @@ begin
             StrCartoesAceitos+
             IfThen(Parcelas = 0, '', ', '+IntToStr(Parcelas))+
             IfThen(DataPreDatado = 0, '', ', '+FormatDateBr(DataPreDatado))+
+            IfThen(DadosAdicionais = '', '', ', '+DadosAdicionais)+
             ' )');
 
   fRespostasTEF.IdentificadorTransacao := IdentificadorTransacao;
@@ -1257,7 +1258,8 @@ begin
   try
     Result := fpTEFAPIClass.EfetuarPagamento( ValorPagto, Modalidade,
                                               CartoesAceitos, Financiamento,
-                                              Parcelas, DataPreDatado );
+                                              Parcelas, DataPreDatado,
+                                              DadosAdicionais );
   finally
     fpTEFAPIClass.FinalizarChamadaAPI;
   end;

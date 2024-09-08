@@ -46,6 +46,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/09/2024
+-- ACBrTEFAPI, ACBrTEFAPIStoneAutoTEF --
+[+] Adicionado novo modelo de TEF "tefStoneAutoTEF"
+    https://microtefdocs.stone.com.br/reference/o-que-%C3%A9-o-autotef
+
+-- ACBrTEFAPIComum, ACBrTEFAndroidElginIDH, ACBrTEFAndroidMSitef, ACBrTEFAndroidPayGo,
+   ACBrTEFAPICliSiTef, ACBrTEFAPIElgin, ACBrTEFAPIPayGoWeb --
+[*] Método 'EfetuarPagamento' modificado, para receber como último parâmetro
+    "DadosAdicionais: String = ''"
+    Isso permite a aplicação, informar Dados Adicionais a transação de Pagamento,
+    e qua não possam ser mapeados, pelos parâmetros já existentes
+(por: DSA)
+
 27/08/2024
 -- ACBrTEFPayGoWebComum --
 [*] TACBrTEFPGWebAPI.Create modificado para sempre criar propriedade "IsDebug"

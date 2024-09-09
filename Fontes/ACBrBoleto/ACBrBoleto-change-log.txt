@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2024
+-- ACBrBoletoW_Inter_API --
+[-] Ajustes dos parametros da consulta. IndicadorPix True Utiliza V3, False Utiliza V2 que são diferentes os filtros.
+	https://www.projetoacbr.com.br/forum/topic/79146-boleto-api-banco-inter-v3/
+	https://www.projetoacbr.com.br/forum/topic/79580-consultar-boleto-banco-inter-via-ws-pela-datamovimento-n%C3%A3o-retorna-os-baixados/
+  por Daniel de Morais
+  
 02/09/2024
 -- ACBrBoletoRet_Santander_API --
 [+] Ajustes retorno da API consulta. tratar valor pago 0 settlementCreditedValue 

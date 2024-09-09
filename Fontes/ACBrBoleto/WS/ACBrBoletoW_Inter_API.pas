@@ -264,22 +264,36 @@ function TBoletoW_Inter_API.DefinirParametros: String;
 var
   LConsulta: TStringList;
   LDocumento, LSituacaoAbertos, LSituacaoBaixados, LSituacaoVencidos, LSituacaoCancelados: String;
+  LFiltroDataVencimento,LFiltroDataEmissao, LFiltroDataPagamento : string;
+  LOrdenarDataEmissao, LOrdenarDataVencimento, LOrdenarDataSituacao : string;
 begin
   if Assigned(Boleto.Configuracoes.WebService.Filtro) then
   begin
     if Boleto.Cedente.CedenteWS.IndicadorPix then
     begin
-      LSituacaoBaixados:= 'RECEBIDO';
-      LSituacaoVencidos:= 'ATRASADO';
-      LSituacaoAbertos := 'A_RECEBER';
+      LSituacaoBaixados   := 'RECEBIDO';
+      LSituacaoVencidos   := 'ATRASADO';
+      LSituacaoAbertos    := 'A_RECEBER';
       LSituacaoCancelados := 'CANCELADO';
+      LFiltroDataVencimento := 'VENCIMENTO';
+      LFiltroDataEmissao    := 'EMISSAO';
+      LFiltroDataPagamento  := 'PAGAMENTO';
+      LOrdenarDataEmissao   := 'DATA_EMISSAO';
+      LOrdenarDataVencimento:= 'DATA_VENCIMENTO';
+      LOrdenarDataSituacao  := 'DATA_VENCIMENTO';
     end
     else
     begin
-      LSituacaoBaixados:= 'PAGO,CANCELADO';
-      LSituacaoAbertos:=  'EMABERTO,VENCIDO';
-      LSituacaoVencidos:= 'VENCIDO';
+      LSituacaoBaixados   := 'PAGO,CANCELADO';
+      LSituacaoAbertos    := 'EMABERTO,VENCIDO';
+      LSituacaoVencidos   := 'VENCIDO';
       LSituacaoCancelados := 'CANCELADO';
+      LFiltroDataVencimento := 'VENCIMENTO';
+      LFiltroDataEmissao    := 'EMISSAO';
+      LFiltroDataPagamento  := 'SITUACAO';
+      LOrdenarDataEmissao   := 'DATASITUACAO';
+      LOrdenarDataVencimento:= 'DATAVENCIMENTO';
+      LOrdenarDataSituacao  := 'DATASITUACAO';
     end;
 
     LDocumento := OnlyNumber
@@ -297,25 +311,25 @@ begin
       case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
         isbBaixado:
           begin
-            LConsulta.Add('filtrarDataPor=SITUACAO' );
+            LConsulta.Add('filtrarDataPor='+LFiltroDataPagamento );
             LConsulta.Add('situacao='+LSituacaoBaixados);
             LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio));
             LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
-            LConsulta.Add( 'ordenarPor=DATASITUACAO' );
+            LConsulta.Add( 'ordenarPor='+LOrdenarDataSituacao );
           end;
         isbCancelado:
           begin
-            LConsulta.Add('filtrarDataPor=SITUACAO' );
+            LConsulta.Add('filtrarDataPor='+LFiltroDataPagamento );
             LConsulta.Add('situacao='+LSituacaoCancelados);
             LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio));
             LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
-            LConsulta.Add( 'ordenarPor=DATASITUACAO' );
+            LConsulta.Add( 'ordenarPor='+LOrdenarDataSituacao);
           end;
         isbAberto:
           begin
             if Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio > 0 then
             begin
-              LConsulta.Add('filtrarDataPor=VENCIMENTO' );
+              LConsulta.Add('filtrarDataPor='+LFiltroDataVencimento );
               case Boleto.Configuracoes.WebService.Filtro.boletoVencido of
                 ibvSim: LConsulta.Add('situacao='+LSituacaoVencidos);
               else
@@ -323,17 +337,17 @@ begin
               end;
               LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio));
               LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataFinal));
-              LConsulta.Add( 'ordenarPor=DATAVENCIMENTO' );
+              LConsulta.Add( 'ordenarPor='+LOrdenarDataVencimento );
             end;
 
             if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0
             then
             begin
-              LConsulta.Add( 'filtrarDataPor=EMISSAO' );
+              LConsulta.Add( 'filtrarDataPor='+LFiltroDataEmissao );
               LConsulta.Add('situacao='+LSituacaoAbertos);
               LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio));
               LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.DataRegistro.DataFinal));
-              LConsulta.Add( 'ordenarPor=DATASITUACAO' );
+              LConsulta.Add( 'ordenarPor='+LOrdenarDataSituacao);
             end;
           end;
       end;

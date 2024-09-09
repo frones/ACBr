@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5831: A cidade de Jundiai/SP, trocou de provedor, agora é Giss versão 2.04
+  Por: Fred Smartfull/Diogo Foliene/Italo Giurizzato Junior
+[*] #TK-5935: A cidade de Agudos/SP, mudou a URL mas o provedor continua o mesmo.
+  Por: Paulo Henrique Panico
+[+] #TK-5936: Incluída a cidade de Itapecuru Mirim/MA, o provedor é SigCorp versão 2.04
+  Por: Anderson Grolli
+
 05/09/2024
 -- ACBrNFSeXServicos --
 [*] #TK-5922: A cidade de Sideropolis/SC, trocou de provedor, agora é Betha versão 1.00

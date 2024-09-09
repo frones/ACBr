@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/09/2024
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Ajuste para imprimir o valor do ISS por inteiro quando o provedor permite 
+    uma lista de itens.
+  Por: Italo Giurizzato Junior
 -- Fiorilli.Provider --
 [*] #TK-5934: Ajuste para não gerar 2 quebras de linha por conta do retorno: "&#xd;\s\n".
   Por: Diego Reckziegel

@@ -1,6 +1,6 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 254
-  Top = 109
+  Left = 230
+  Top = 110
   Caption = 'frlXDANFSeRLRetrato'
   inherited RLNFSe: TRLReport
     Left = 32
@@ -1943,7 +1943,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Left = 460
         Height = 14
         Top = 1
-        Width = 25
+        Width = 36
+        Alignment = taRightJustify
         Caption = 'Qtde'
         Font.Color = clBlack
         Font.Height = -11
@@ -1964,11 +1965,12 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel67: TRLLabel
-        Left = 710
+        Left = 670
         Height = 14
         Top = 1
-        Width = 17
-        Caption = 'ISS'
+        Width = 76
+        Alignment = taRightJustify
+        Caption = 'Valor ISS'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -2000,11 +2002,11 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel9: TRLLabel
-        Left = 601
+        Left = 590
         Height = 14
         Top = 1
-        Width = 94
-        Caption = 'Base de Cálculo (%)'
+        Width = 76
+        Caption = 'Base Cálc. (%)'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -2030,7 +2032,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Width = 750
         BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
-          Left = 459
+          Left = 460
           Height = 14
           Top = 1
           Width = 36
@@ -2055,7 +2057,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtServicoUnitario: TRLLabel
-          Left = 383
+          Left = 384
           Height = 14
           Top = 1
           Width = 70
@@ -2071,7 +2073,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Left = 504
           Height = 14
           Top = 1
-          Width = 82
+          Width = 85
           Alignment = taRightJustify
           AutoSize = False
           Font.Color = clBlack
@@ -2081,10 +2083,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtBaseCalculo: TRLLabel
-          Left = 601
+          Left = 590
           Height = 14
           Top = 1
-          Width = 93
+          Width = 76
           Alignment = taRightJustify
           AutoSize = False
           Font.Color = clBlack
@@ -2094,10 +2096,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtISS: TRLLabel
-          Left = 709
+          Left = 670
           Height = 14
           Top = 1
-          Width = 35
+          Width = 76
           Alignment = taRightJustify
           AutoSize = False
           Font.Color = clBlack
@@ -2141,7 +2143,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 136
-    Top = 16
+    Left = 144
+    Top = 24
   end
 end

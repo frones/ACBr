@@ -2142,8 +2142,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel65: TRLLabel
         Left = 460
         Top = 1
-        Width = 25
+        Width = 36
         Height = 14
+        Alignment = taRightJustify
         Caption = 'Qtde'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -2168,11 +2169,12 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel67: TRLLabel
-        Left = 710
+        Left = 670
         Top = 1
-        Width = 17
+        Width = 76
         Height = 14
-        Caption = 'ISS'
+        Alignment = taRightJustify
+        Caption = 'Valor ISS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2210,11 +2212,11 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel9: TRLLabel
-        Left = 601
+        Left = 590
         Top = 1
-        Width = 94
+        Width = 76
         Height = 14
-        Caption = 'Base de C'#225'lculo (%)'
+        Caption = 'Base C'#225'lc. (%)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2242,7 +2244,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 16
         BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
-          Left = 459
+          Left = 460
           Top = 1
           Width = 36
           Height = 14
@@ -2271,7 +2273,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtServicoUnitario: TRLLabel
-          Left = 383
+          Left = 384
           Top = 1
           Width = 70
           Height = 14
@@ -2288,7 +2290,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         object txtServicoTotal: TRLLabel
           Left = 504
           Top = 1
-          Width = 82
+          Width = 85
           Height = 14
           Alignment = taRightJustify
           AutoSize = False
@@ -2301,9 +2303,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtBaseCalculo: TRLLabel
-          Left = 601
+          Left = 590
           Top = 1
-          Width = 93
+          Width = 76
           Height = 14
           Alignment = taRightJustify
           AutoSize = False
@@ -2316,9 +2318,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           Transparent = False
         end
         object txtISS: TRLLabel
-          Left = 709
+          Left = 670
           Top = 1
-          Width = 35
+          Width = 76
           Height = 14
           Alignment = taRightJustify
           AutoSize = False

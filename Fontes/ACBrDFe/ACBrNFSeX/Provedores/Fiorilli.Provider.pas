@@ -340,6 +340,7 @@ begin
 
   Result := inherited TratarXmlRetornado(Result);
 
+  Result := StringReplace(Result, '&#xd;\s\n', '\s\n', [rfReplaceAll]);
   Result := StringReplace(Result, '&#xd;', '\s\n', [rfReplaceAll]);
   Result := StringReplace(Result, ''#$A'', '\s\n', [rfReplaceAll]);
   Result := ParseText(Result);

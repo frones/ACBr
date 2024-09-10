@@ -242,6 +242,7 @@ type
                              ciFundacaoPrevCompServidorPublicoFerias,                            {65}    { Item válido a partir da versão simplificada }
                              ciFundoDeAposentadoriaProgramadaIndividualFAPIFerias,               {66}    { Item válido a partir da versão simplificada }
                              ciPlanoPrivadoColetivoAssistenciaSaude,                             {67}    { Item válido a partir da versão simplificada }
+                             ciDescontoSimplificadoMensal,                                       {68}
                              ciParcelaIsenta65AnosRemMensal,                                     {70}
                              ciParcelaIsenta65Anos13Salario,                                     {71}
                              ciDiaria,                                                           {72}
@@ -296,12 +297,12 @@ type
   const
   tpCodIncIRRFArrayStrings: array[tpCodIncIRRF] of string = ( '00',   '01',   '09',   '11',   '12',   '13',   '14',   '15',   '31',   '32',   '33',
                                                               '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',
-                                                              '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',
-                                                              '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',
-                                                              '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013',
-                                                              '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041', '9042',
-                                                              '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063',
-                                                               '9064', '9065', '9066', '9067', '9082', '9083'  );
+                                                              '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '68',
+                                                              '70',   '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',
+                                                              '82',   '83',   '91',   '92',   '93',   '94',   '95',   '700',  '701',  '9011', '9012',
+                                                              '9013', '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041',
+                                                              '9042', '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062',
+                                                              '9063', '9064', '9065', '9066', '9067', '9082', '9083'  );
   type
 
   tpCodIncCPRP            = (cicpNaoeBasedeCalculodeContribuicoesDevidasaoRPPSRegimeMilitar,

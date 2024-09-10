@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2024
+-- pcesConversaoeSocial --
+[*] TK-5902 - Adicionado código 68-Desconto Simplificado Mensal na Tabela 21
+Por: claudemes, Andergoncalves
+
 05/08/2024
 -- pcesGerador --
 [*] TK-5811 - Configurados valores padrão para tpPlanRP e tpContr no S2200 e corrigidas funções de conversão

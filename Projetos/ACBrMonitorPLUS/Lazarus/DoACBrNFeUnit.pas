@@ -59,7 +59,9 @@ public
   procedure RespostaImpressao(pImprimir: Boolean; pImpressora: String;
             pPreview: String; pCopias: Integer; pPDF: Boolean);
   Procedure LerIniNFe(ArqINI: String);
-  procedure ImprimirNFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
+  procedure ImprimirNFe(pImpressora: String; pPreview: String; pCopias: Integer);
+  procedure GerarPDF(pImpressora: String; pPreview: String; pCopias: Integer);
+  procedure TratarRetorno;
   procedure RespostaIntegrador;
 
   property ACBrNFe: TACBrNFe read fACBrNFe;
@@ -729,9 +731,7 @@ begin
 end;
 
 procedure TACBrObjetoNFe.ImprimirNFe(pImpressora: String; pPreview: String;
-  pCopias: Integer; pPDF: Boolean);
-var
-  ArqPDF : String;
+  pCopias: Integer);
 begin
   with fACBrNFe do
   begin
@@ -746,22 +746,12 @@ begin
          and ( NotasFiscais.Items[0].NFe.Det[0].Prod.nItem = 1) then
              NotasFiscais.Items[0].NFe.Det[0].Prod.xProd:= cHOM_MSG;
 
-      DoConfiguraDANFe(pPDF, Trim(pPreview) );
+      DoConfiguraDANFe(False, Trim(pPreview) );
       if NaoEstaVazio(pImpressora) then
         DANFe.Impressora := pImpressora;
 
       if pCopias > 0 then
         DANFE.NumCopias := pCopias;
-
-      if pPDF then
-      begin
-        NotasFiscais.Items[0].ImprimirPDF;
-        ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
-
-        if not(TpResp in [resJSON, resXML]) then
-          fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
-                'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak ;
-      end;
 
       try
         DoAntesDeImprimir(( StrToBoolDef( pPreview, False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
@@ -774,6 +764,43 @@ begin
 
   end;
 
+end;
+
+procedure TACBrObjetoNFe.GerarPDF(pImpressora: String; pPreview: String; pCopias: Integer);
+var
+  ArqPDF: String;
+begin
+  if (fACBrNFe.NotasFiscais.Items[0].Confirmada) then
+  begin
+    DoConfiguraDANFe(True, pPreview);
+
+    if NaoEstaVazio(pImpressora) then
+      fACBrNFe.DANFe.Impressora := pImpressora;
+
+    if pCopias > 0 then
+      fACBrNFe.DANFE.NumCopias := pCopias;
+
+    fACBrNFe.NotasFiscais.Items[0].ImprimirPDF;
+    ArqPDF := OnlyNumber(fACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
+
+    if not(TpResp in [resJSON, resXML]) then
+      fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+            'PDF='+ PathWithDelim(fACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak ;
+  end;
+end;
+
+procedure TACBrObjetoNFe.TratarRetorno;
+var
+  RespEnvioRetorno: TEnvioRetornoResposta;
+begin
+  RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
+  try
+    RespEnvioRetorno.Processar(fACBrNFe);
+    fpCmd.Resposta := fpCmd.Resposta + RespEnvioRetorno.Gerar;
+
+  finally
+    RespEnvioRetorno.Free;
+  end;
 end;
 
 function TACBrObjetoNFe.GerarNFeIni(XML: string): string;
@@ -1660,7 +1687,8 @@ var
   APDF: Boolean;
   //RespEnvio: TEnvioResposta;
   //RespRetorno: TRetornoResposta;
-  RespEnvioRetorno: TEnvioRetornoResposta;
+  LObjetoNFe: TACBrObjetoNFe;
+  LNFe: TACBrNFe;
 begin
 
   AIni          := fpCmd.Params(0);
@@ -1672,110 +1700,107 @@ begin
   ACopias       := StrToIntDef(fpCmd.Params(6), 0);
   APDF          := StrToBoolDef(fpCmd.Params(7), False);
 
-  with TACBrObjetoNFe(fpObjetoDono) do
+  LObjetoNFe := TACBrObjetoNFe(fpObjetoDono);
+  LNFe := LObjetoNFe.ACBrNFe;
+
+  LObjetoNFe.LerIniNFe(AIni);
+
+  Salva := LNFe.Configuracoes.Geral.Salvar;
+  if not Salva then
+  begin
+    ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
+    LNFe.Configuracoes.Arquivos.PathSalvar :=
+      PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
+  end;
+
+  LNFe.NotasFiscais.GerarNFe;
+  Alertas := LNFe.NotasFiscais.Items[0].Alertas;
+
+  LNFe.NotasFiscais.Assinar;
+  LNFe.NotasFiscais.Validar;
+
+  ArqNFe := PathWithDelim(LNFe.Configuracoes.Arquivos.PathSalvar) +
+    OnlyNumber(LNFe.NotasFiscais.Items[0].NFe.infNFe.ID) + '-nfe.xml';
+  LNFe.NotasFiscais.GravarXML(ArqNFe);
+
+  if not FileExists(ArqNFe) then
+    raise Exception.Create('Não foi possível criar o arquivo ' + ArqNFe);
+
+  Resp := ArqNFe;
+  if (Alertas <> '') then
+    Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
+
+  if LObjetoNFe.TpResp in [resINI] then
+    fpCmd.Resposta := Resp + sLineBreak;
+
+  LNFe.WebServices.Enviar.Sincrono := ASincrono;
+
+  if (ALote = 0) then
+    LNFe.WebServices.Enviar.Lote := '1'
+  else
+    LNFe.WebServices.Enviar.Lote := IntToStr(ALote);
+
+  if LNFe.NotasFiscais.Count > 0 then
+    LObjetoNFe.DoValidarIntegradorNFCe(LNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+
+  LNFe.WebServices.Enviar.Executar;
+
+  if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+  begin
+    LNFe.WebServices.Retorno.Recibo := LNFe.WebServices.Enviar.Recibo;
+    LNFe.WebServices.Retorno.Executar;
+  end;
+
+  LObjetoNFe.TratarRetorno;
+
+  if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+  begin
+    LObjetoNFe.RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
+  end else
+  begin
+    if AImprime then //Sincrono
+       LObjetoNFe.ImprimirNFe(AImpressora, APreview, ACopias);
+
+    if APDF then
+       LObjetoNFe.GerarPDF(AImpressora, APreview, ACopias);
+  end;
+
+  {RespEnvio := TEnvioResposta.Create( TpResp, codUTF8);
+  try
+     RespEnvio.Processar(ACBrNFe);
+     if TpResp in [resJSON, resXML] then
+       fpCmd.Resposta := sLineBreak + RespEnvio.Gerar
+     else
+       fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
+  finally
+     RespEnvio.Free;
+  end;}
+
+  {if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
   begin
 
-    LerIniNFe(AIni);
-
-    Salva := ACBrNFe.Configuracoes.Geral.Salvar;
-    if not Salva then
-    begin
-      ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
-      ACBrNFe.Configuracoes.Arquivos.PathSalvar :=
-        PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
-    end;
-
-    ACBrNFe.NotasFiscais.GerarNFe;
-    Alertas := ACBrNFe.NotasFiscais.Items[0].Alertas;
-
-    ACBrNFe.NotasFiscais.Assinar;
-    ACBrNFe.NotasFiscais.Validar;
-
-    ArqNFe := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.PathSalvar) +
-      OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) + '-nfe.xml';
-    ACBrNFe.NotasFiscais.GravarXML(ArqNFe);
-
-    if not FileExists(ArqNFe) then
-      raise Exception.Create('Não foi possível criar o arquivo ' + ArqNFe);
-
-    Resp := ArqNFe;
-    if (Alertas <> '') then
-      Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
-
-    if TpResp in [resINI] then
-      fpCmd.Resposta := Resp + sLineBreak;
-
-    ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
-
-    if (ALote = 0) then
-      ACBrNFe.WebServices.Enviar.Lote := '1'
-    else
-      ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALote);
-
-    if ACBrNFe.NotasFiscais.Count > 0 then
-      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
-
-    ACBrNFe.WebServices.Enviar.Executar;
-
-    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-    begin
-      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-      ACBrNFe.WebServices.Retorno.Executar;
-    end;
-
-    RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
-    try
-      RespEnvioRetorno.Processar(ACBrNFe);
-      fpCmd.Resposta := fpCmd.Resposta + RespEnvioRetorno.Gerar;
-
-    finally
-      RespEnvioRetorno.Free;
-    end;
-
-    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF)
-    else
-    if AImprime then //Sincrono
-       ImprimirNFe(AImpressora, APreview, ACopias, APDF);
-
-
-    {RespEnvio := TEnvioResposta.Create( TpResp, codUTF8);
-    try
-       RespEnvio.Processar(ACBrNFe);
+     RespRetorno := TRetornoResposta.Create('NFe', TpResp, codUTF8);
+     try
+       RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
+                             ACBrNFe.WebServices.Retorno.Recibo,
+                             ACBrNFe.WebServices.Retorno.Msg,
+                             ACBrNFe.WebServices.Retorno.Protocolo,
+                             ACBrNFe.WebServices.Retorno.ChaveNFe);
        if TpResp in [resJSON, resXML] then
-         fpCmd.Resposta := sLineBreak + RespEnvio.Gerar
+         fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Gerar
        else
-         fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
-    finally
-       RespEnvio.Free;
-    end;}
+         fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+                      + sLineBreak + RespRetorno.Gerar;
+     finally
+       RespRetorno.Free;
+     end;
+     RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
 
-    {if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-    begin
+  end
+  else
+  if AImprime then //Sincrono
+     ImprimirNFe(AImpressora, APreview, ACopias, APDF);  }
 
-       RespRetorno := TRetornoResposta.Create('NFe', TpResp, codUTF8);
-       try
-         RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
-                               ACBrNFe.WebServices.Retorno.Recibo,
-                               ACBrNFe.WebServices.Retorno.Msg,
-                               ACBrNFe.WebServices.Retorno.Protocolo,
-                               ACBrNFe.WebServices.Retorno.ChaveNFe);
-         if TpResp in [resJSON, resXML] then
-           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Gerar
-         else
-           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
-                        + sLineBreak + RespRetorno.Gerar;
-       finally
-         RespRetorno.Free;
-       end;
-       RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
-
-    end
-    else
-    if AImprime then //Sincrono
-       ImprimirNFe(AImpressora, APreview, ACopias, APDF);  }
-
-  end;
 end;
 
 { TMetodoAdicionarNFe }
@@ -1913,10 +1938,13 @@ begin
     end;
 
     if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF)
-    else
+      RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
+
     if AImprime then //Sincrono
-       ImprimirNFe(AImpressora, APreview, ACopias, APDF);
+      ImprimirNFe(AImpressora, APreview, ACopias);
+
+    if APDF then
+      GerarPDF(AImpressora, APreview, ACopias);
 
 
     {RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
@@ -1972,7 +2000,9 @@ var
   AErro: String;
   //RespEnvio: TEnvioResposta;
   //RespRetorno: TRetornoResposta;
-  RespEnvioRetorno: TEnvioRetornoResposta;
+  //RespEnvioRetorno: TEnvioRetornoResposta;
+  LObjetoNFe: TACBrObjetoNFe;
+  LNFe: TACBrNFe;
 begin
   AErro:= '';
   APathorXML := fpCmd.Params(0);
@@ -1983,93 +2013,93 @@ begin
   ASincrono := StrToBoolDef(fpCmd.Params(5), False);
   AValidaXML := StrToBoolDef(fpCmd.Params(6), False);
   AGerarXML := StrToBoolDef(fpCmd.Params(7), False);
+  LObjetoNFe := TACBrObjetoNFe(fpObjetoDono);
+  LNFe := LObjetoNFe.ACBrNFe;
 
-  with TACBrObjetoNFe(fpObjetoDono) do
-  begin
-    ACBrNFe.NotasFiscais.Clear;
-    CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, APathorXML);
-    try
-      if AGerarXML and
-         ( not (ACBrNFe.NotasFiscais.VerificarAssinatura(AErro)) )  then
-        ACBrNFe.NotasFiscais.GerarNFe;
+  LNFe.NotasFiscais.Clear;
+  CargaDFe := TACBrCarregarNFe.Create(LNFe, APathorXML);
+  try
+    if AGerarXML and
+       ( not (LNFe.NotasFiscais.VerificarAssinatura(AErro)) )  then
+      LNFe.NotasFiscais.GerarNFe;
 
-      if (AAssina) then
-        ACBrNFe.NotasFiscais.Assinar;
+    if (AAssina) then
+      LNFe.NotasFiscais.Assinar;
 
-      if (AValidaXML) then
-        ACBrNFe.NotasFiscais.Validar;
+    if (AValidaXML) then
+      LNFe.NotasFiscais.Validar;
 
-      if (ALote = 0) then
-        ACBrNFe.WebServices.Enviar.Lote := '1'
-      else
-        ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALote);
+    if (ALote = 0) then
+      LNFe.WebServices.Enviar.Lote := '1'
+    else
+      LNFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-      ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
-      if ACBrNFe.NotasFiscais.Count > 0 then
-        DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+    LNFe.WebServices.Enviar.Sincrono := ASincrono;
+    if LNFe.NotasFiscais.Count > 0 then
+      LObjetoNFe.DoValidarIntegradorNFCe(LNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
-      ACBrNFe.WebServices.Enviar.Executar;
+    LNFe.WebServices.Enviar.Executar;
 
-      if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      begin
-        ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-        ACBrNFe.WebServices.Retorno.Executar;
-      end;
-
-      RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
-      try
-        RespEnvioRetorno.Processar(ACBrNFe);
-        fpCmd.Resposta := sLineBreak + RespEnvioRetorno.Gerar;
-
-      finally
-        RespEnvioRetorno.Free;
-      end;
-
-      if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-        RespostaImpressao(AImprime, AImpressora, '', 0, False)
-      else
-      if AImprime then //Sincrono
-         ImprimirNFe(AImpressora, '', 0, False);
-
-
-      {RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
-      try
-        RespEnvio.Processar(ACBrNFe);
-        if TpResp in [resJSON, resXML] then
-          fpCmd.Resposta := sLineBreak + RespEnvio.Gerar
-        else
-          fpCmd.Resposta := RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
-      finally
-        RespEnvio.Free;
-      end;
-      if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      begin
-        ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-        ACBrNFe.WebServices.Retorno.Executar;
-        RespRetorno := TRetornoResposta.Create('NFe', TpResp, codUTF8);
-        try
-           RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
-                                 ACBrNFe.WebServices.Retorno.Recibo,
-                                 ACBrNFe.WebServices.Retorno.Msg,
-                                 ACBrNFe.WebServices.Retorno.Protocolo,
-                                 ACBrNFe.WebServices.Retorno.ChaveNFe);
-           if TpResp in [resJSON, resXML] then
-             fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Gerar
-           else
-             fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
-                          + sLineBreak + RespRetorno.Gerar;
-        finally
-           RespRetorno.Free;
-        end;
-        RespostaImpressao(AImprime, AImpressora, '' , 0, False);
-      end
-      else
-      if AImprime then //Sincrono
-        ImprimirNFe(AImpressora, '', 0, False);}
-
-    finally
-      CargaDFe.Free;
+    if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      LNFe.WebServices.Retorno.Recibo := LNFe.WebServices.Enviar.Recibo;
+      LNFe.WebServices.Retorno.Executar;
     end;
+
+    LObjetoNFe.TratarRetorno;
+    //RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
+    //try
+    //  RespEnvioRetorno.Processar(ACBrNFe);
+    //  fpCmd.Resposta := sLineBreak + RespEnvioRetorno.Gerar;
+    //
+    //finally
+    //  RespEnvioRetorno.Free;
+    //end;
+
+    if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+      LObjetoNFe.RespostaImpressao(AImprime, AImpressora, '', 0, False)
+    else
+    if AImprime then //Sincrono
+       LObjetoNFe.ImprimirNFe(AImpressora, '', 0);
+
+
+    {RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
+    try
+      RespEnvio.Processar(ACBrNFe);
+      if TpResp in [resJSON, resXML] then
+        fpCmd.Resposta := sLineBreak + RespEnvio.Gerar
+      else
+        fpCmd.Resposta := RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
+    finally
+      RespEnvio.Free;
+    end;
+    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
+      ACBrNFe.WebServices.Retorno.Executar;
+      RespRetorno := TRetornoResposta.Create('NFe', TpResp, codUTF8);
+      try
+         RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
+                               ACBrNFe.WebServices.Retorno.Recibo,
+                               ACBrNFe.WebServices.Retorno.Msg,
+                               ACBrNFe.WebServices.Retorno.Protocolo,
+                               ACBrNFe.WebServices.Retorno.ChaveNFe);
+         if TpResp in [resJSON, resXML] then
+           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Gerar
+         else
+           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+                        + sLineBreak + RespRetorno.Gerar;
+      finally
+         RespRetorno.Free;
+      end;
+      RespostaImpressao(AImprime, AImpressora, '' , 0, False);
+    end
+    else
+    if AImprime then //Sincrono
+      ImprimirNFe(AImpressora, '', 0, False);}
+
+  finally
+    CargaDFe.Free;
   end;
 end;
 
@@ -3327,7 +3357,7 @@ begin
       RespostaImpressao(AImprime, AImpressora, APreview, ACopias, False)
     else
     if AImprime then //Sincrono
-       ImprimirNFe(AImpressora, APreview, ACopias, False);
+       ImprimirNFe(AImpressora, APreview, ACopias);
 
 
     {RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);

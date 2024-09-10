@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/09/2024
+-- DoACBrNFeUnit --
+[*] #TK-5770: Refatora rotina para que a geração de PDF não seja dependente do parâmetro de impressão.
+  Por: Diego Folieni
 -- DoACBrCTeUnit, DoACBrMDFeUnit --
 [*] #TK-5794: Altera o valor default do parâmetro modo de envio nos comandos para que seja síncrono.
   Por: Diego Folieni.

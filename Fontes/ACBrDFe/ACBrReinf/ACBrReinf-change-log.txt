@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2024
+-- pcnReinfR4010 --
+[*] TK-5946 - Corrigida exigência de NrOcorrencias do cpfBenef no R4010
+Por: Renato Rubinho
+
 17/07/2024
 -- Frm_ACBrReinf --
 [*] TK-5706 - Correção na codificação do xml temporário gerado para exibição no TWebBrowser de retorno

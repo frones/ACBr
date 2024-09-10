@@ -351,6 +351,14 @@ begin
 end;
 
 procedure TEnvioResposta.Processar(const ACBrCTe: TACBrCTe);
+
+  function DevolveChaveCTe(const AChave: String): String;
+  begin
+    Result := Trim(AChave);
+    if Result = '' then
+      Result := OnlyNumber(ACBrCTe.Conhecimentos[0].Cte.infCTe.Id);
+  end;
+
 begin
   if Assigned(FItem) then FreeAndNil(FItem);
 
@@ -376,7 +384,7 @@ begin
   begin
     Self.Xml := ACBrCTe.Conhecimentos.Items[0].XMLOriginal;
 
-    FItem := TRetornoItemResposta.Create('CTe' + Trim(ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.chCTe), Tipo, Codificacao);
+    FItem := TRetornoItemResposta.Create('CTe' + DevolveChaveCTe(ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.chCTe), Tipo, Codificacao);
     FItem.Id := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.Id;
     FItem.tpAmb := TpAmbToStr(ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.tpAmb);
     FItem.verAplic := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.verAplic;
@@ -387,10 +395,11 @@ begin
     FItem.cStat := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.cStat;
     FItem.xMotivo := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.xMotivo;
     FItem.XML := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.XML_prot;
+    FItem.NomeArq := ACBrCTe.Conhecimentos.Items[0].NomeArq;
   end
   else if (ACBrCTe.Configuracoes.Geral.ModeloDF = moCTeOS) and (ACBrCTe.Conhecimentos.Count > 0) then
   begin
-    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chDFe), Tipo, Codificacao);
+    FItem := TRetornoItemResposta.Create('CTeOS' + DevolveChaveCTe(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.chDFe), Tipo, Codificacao);
     FItem.Id := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.Id;
     FItem.tpAmb := TipoAmbienteToStr(ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.tpAmb);
     FItem.verAplic := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.verAplic;
@@ -401,6 +410,7 @@ begin
     FItem.cStat := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.cStat;
     FItem.xMotivo := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.xMotivo;
     FItem.XML := ACBrCTe.WebServices.Enviar.CTeRetornoSincrono.protCTe.XML_prot;
+    FItem.NomeArq := ACBrCTe.Conhecimentos.Items[0].NomeArq;
   end;
 end;
 

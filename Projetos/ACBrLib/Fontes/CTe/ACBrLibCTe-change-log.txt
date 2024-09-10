@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2024
+--- ACBrLibCTeRespostas ---
+[*] #TK-5699: Adiciona NomeArq na resposta e também função para garantir que sempre devolva Chave do CTe 
+    no título da seção
+    Por: Diego Folieni
+
 14/08/2024
 --- ACBrLibCTeBase, ACBrLibCTeST, ACBrLibCTeMT,
     ACBrLibCTeStaticImportST, ACBrLibCTeStaticImportMT, ACBrLibCTeRespostas ---

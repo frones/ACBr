@@ -647,7 +647,6 @@ begin
     AdiItem.vDescDI     := ObterConteudo(ANodes[i].Childrens.Find('vDescDI'), tcDe2);
     AdiItem.nDraw      := ObterConteudo(ANodes[i].Childrens.Find('nDraw'), tcStr);
   end;
-
 end;
 
 procedure TNFeXmlReader.LerDetProdDetExport(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
@@ -1321,7 +1320,7 @@ begin
     NFe.pag[i].CNPJPag := ObterConteudo(ANodes[i].Childrens.Find('CNPJPag'), tcStr);
     NFe.pag[i].UFPag := ObterConteudo(ANodes[i].Childrens.Find('UFPag'), tcStr);
 
-    AuxNode := ANode.Childrens.Find('card');
+    AuxNode := ANodes[i].Childrens.Find('card');
     if (AuxNode <> nil) then
     begin
       NFe.pag[i].tpIntegra := StrTotpIntegra(ok, ObterConteudo(AuxNode.Childrens.Find('tpIntegra'), tcStr));

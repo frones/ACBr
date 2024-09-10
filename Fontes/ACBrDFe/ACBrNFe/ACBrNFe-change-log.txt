@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+10/09/2024
+-- ACBrNFe.XmlReader --
+[-] Correção na leitura do XML, não estava lendo corretamente o grupo <card>.
+  Por: Jeanny Paiva
+
 06/09/2024
 -- ACBrNFe.EnvEvento --
 [*] Remove linha que modificava config de RetirarAcentos para True independente da config definida.

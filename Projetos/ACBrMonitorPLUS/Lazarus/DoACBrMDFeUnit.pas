@@ -1913,74 +1913,75 @@ var
   ACopias: Integer;
   APDF: Boolean;
   AEncerrado: Boolean;
+  LMDFeObject: TACBrObjetoMDFe;
+  LMDFe: TACBrMDFe;
 begin
 
   AIni := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AImprime := StrToBoolDef(fpCmd.Params(2), False);
   AImpressora := fpCmd.Params(3);
-  Assincrono := StrToBoolDef( fpCmd.Params(4), True);
+  Assincrono := StrToBoolDef( fpCmd.Params(4), False);
   APreview := fpCmd.Params(5);
   ACopias := StrToIntDef(fpCmd.Params(6), 0);
   APDF := StrToBoolDef(fpCmd.Params(7), False);
   AEncerrado := StrToBoolDef(fpCmd.Params(8), False);
 
-  with TACBrObjetoMDFe(fpObjetoDono) do
+  LMDFeObject := TACBrObjetoMDFe(fpObjetoDono);
+  LMDFe := LMDFeObject.ACBrMDFe;
+
+  LMDFe.Manifestos.Clear;
+  LMDFe.Manifestos.LoadFromIni(AIni);
+
+  Salva := LMDFe.Configuracoes.Geral.Salvar;
+  if not Salva then
   begin
-    ACBrMDFe.Manifestos.Clear;
-    ACBrMDFe.Manifestos.LoadFromIni(AIni);
+    ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
+    LMDFe.Configuracoes.Arquivos.PathSalvar :=
+      PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
+  end;
 
-    Salva := ACBrMDFe.Configuracoes.Geral.Salvar;
-    if not Salva then
-    begin
-      ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
-      ACBrMDFe.Configuracoes.Arquivos.PathSalvar :=
-        PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
-    end;
+  LMDFe.Manifestos.GerarMDFe;
+  Alertas := LMDFe.Manifestos.Items[0].Alertas;
 
-    ACBrMDFe.Manifestos.GerarMDFe;
-    Alertas := ACBrMDFe.Manifestos.Items[0].Alertas;
+  LMDFe.Manifestos.Assinar;
+  LMDFe.Manifestos.Validar;
 
-    ACBrMDFe.Manifestos.Assinar;
-    ACBrMDFe.Manifestos.Validar;
+  ArqMDFe := PathWithDelim(LMDFe.Configuracoes.Arquivos.PathSalvar) +
+    OnlyNumber(LMDFe.Manifestos.Items[0].MDFe.infMDFe.ID) + '-mdfe.xml';
+  LMDFe.Manifestos.GravarXML(ArqMDFe);
 
-    ArqMDFe := PathWithDelim(ACBrMDFe.Configuracoes.Arquivos.PathSalvar) +
-      OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID) + '-mdfe.xml';
-    ACBrMDFe.Manifestos.GravarXML(ArqMDFe);
+  if not FileExists(ArqMDFe) then
+    raise Exception.Create('Não foi possível criar o arquivo ' + ArqMDFe);
 
-    if not FileExists(ArqMDFe) then
-      raise Exception.Create('Não foi possível criar o arquivo ' + ArqMDFe);
+  Resp := ArqMDFe;
+  if (Alertas <> '') then
+    Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
 
-    Resp := ArqMDFe;
-    if (Alertas <> '') then
-      Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
+  fpCmd.Resposta := Resp + sLineBreak;
 
-    fpCmd.Resposta := Resp + sLineBreak;
+  if (ALote = 0) then
+    LMDFe.WebServices.Enviar.Lote := '1'
+  else
+    LMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-    if (ALote = 0) then
-      ACBrMDFe.WebServices.Enviar.Lote := '1'
-    else
-      ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
+  LMDFe.WebServices.Enviar.Sincrono:= not(Assincrono);
 
-    ACBrMDFe.WebServices.Enviar.Sincrono:= not(Assincrono);
+  LMDFe.WebServices.Enviar.Executar;
+  LMDFeObject.RespostaEnvio;
+  if (LMDFeObject.ACBrMDFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+  begin
+    LMDFe.WebServices.Retorno.Recibo := LMDFeObject.ACBrMDFe.WebServices.Enviar.Recibo;
+    LMDFe.WebServices.Retorno.Executar;
 
-    ACBrMDFe.WebServices.Enviar.Executar;
-    RespostaEnvio;
-    if (ACBrMDFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-    begin
-      ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
-      ACBrMDFe.WebServices.Retorno.Executar;
+    LMDFeObject.RespostaRetorno;
+    LMDFeObject.RespostaManifesto(AImprime, AImpressora, APreview, ACopias, APDF, AEncerrado);
 
-      RespostaRetorno;
-      RespostaManifesto(AImprime, AImpressora, APreview, ACopias, APDF, AEncerrado);
-
-    end
-    else
-    begin
-      if AImprime then //Sincrono
-        ImprimirMDFe(AImpressora, APreview, ACopias, APDF, AEncerrado);
-    end;
-
+  end
+  else
+  begin
+    if AImprime then //Sincrono
+      LMDFeObject.ImprimirMDFe(AImpressora, APreview, ACopias, APDF, AEncerrado);
   end;
 end;
 
@@ -2125,55 +2126,57 @@ var
   APathorXML, AImpressora: String;
   ALote: Integer;
   AAssina, AImprime, Assincrono, AEncerrado : Boolean;
+  LMDFeObject: TACBrObjetoMDFe;
+  LMDFe: TACBrMDFe;
 begin
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AAssina := StrToBoolDef(fpCmd.Params(2), False);
   AImprime := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora := fpCmd.Params(4);
-  Assincrono := StrToBoolDef( fpCmd.Params(5), True);
+  Assincrono := StrToBoolDef( fpCmd.Params(5), False);
   AEncerrado := StrToBoolDef( fpCmd.Params(6), False);
 
-  with TACBrObjetoMDFe(fpObjetoDono) do
-  begin
-    ACBrMDFe.Manifestos.Clear;
-    CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, APathorXML);
-    try
-      ACBrMDFe.Manifestos.GerarMDFe;
+  LMDFeObject := TACBrObjetoMDFe(fpObjetoDono);
+  LMDFe := LMDFeOBject.ACBrMDFe;
 
-      if (AAssina) then
-        ACBrMDFe.Manifestos.Assinar;
+  LMDFe.Manifestos.Clear;
+  CargaDFe := TACBrCarregarMDFe.Create(LMDFe, APathorXML);
+  try
+    LMDFe.Manifestos.GerarMDFe;
 
-      ACBrMDFe.Manifestos.Validar;
+    if (AAssina) then
+      LMDFe.Manifestos.Assinar;
 
-      if (ALote = 0) then
-        ACBrMDFe.WebServices.Enviar.Lote := '1'
-      else
-        ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
+    LMDFe.Manifestos.Validar;
 
-      ACBrMDFe.WebServices.Enviar.Sincrono:= not(Assincrono);
+    if (ALote = 0) then
+      LMDFe.WebServices.Enviar.Lote := '1'
+    else
+      LMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-      ACBrMDFe.WebServices.Enviar.Executar;
-      RespostaEnvio;
-      if (ACBrMDFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      begin
-        ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
-        ACBrMDFe.WebServices.Retorno.Executar;
+    LMDFe.WebServices.Enviar.Sincrono:= not(Assincrono);
 
-        RespostaRetorno;
-        RespostaManifesto(AImprime, AImpressora, '' , 0, False, AEncerrado);
+    LMDFe.WebServices.Enviar.Executar;
+    LMDFeObject.RespostaEnvio;
+    if (LMDFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      LMDFe.WebServices.Retorno.Recibo := LMDFe.WebServices.Enviar.Recibo;
+      LMDFe.WebServices.Retorno.Executar;
 
-      end
-      else
-      begin
-        if AImprime then //Sincrono
-          ImprimirMDFe(AImpressora, '', 0, False, AEncerrado);
-      end;
+      LMDFeObject.RespostaRetorno;
+      LMDFeObject.RespostaManifesto(AImprime, AImpressora, '' , 0, False, AEncerrado);
 
-
-    finally
-      CargaDFe.Free;
+    end
+    else
+    begin
+      if AImprime then //Sincrono
+        LMDFeObject.ImprimirMDFe(AImpressora, '', 0, False, AEncerrado);
     end;
+
+
+  finally
+    CargaDFe.Free;
   end;
 end;
 

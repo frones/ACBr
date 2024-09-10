@@ -116,7 +116,6 @@ var
   js: TACBrJSONObject;
   qp: TACBrQueryParams;
 begin
-  raise Exception.Create('EM DESENVOLVIMENTO');
   LimparHTTP;
 
   if (ACBrPixCD.Ambiente = ambProducao) then

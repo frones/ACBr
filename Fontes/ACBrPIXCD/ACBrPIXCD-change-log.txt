@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2024
+-- ACBrPIXPSPC6Bank --
+[+] Liberado PSP para utilização.
+
 30/08/2024
 -- ACBrSchemasMatera --
 [*] Ajuste função StringToMateraAliasType - #TK-5790 (https://www.projetoacbr.com.br/forum/topic/78912-ajuste-na-convers%C3%A3o-do-tipo-do-alias-do-psp-matera/)

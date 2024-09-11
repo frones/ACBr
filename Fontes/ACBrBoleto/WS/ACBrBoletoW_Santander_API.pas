@@ -467,7 +467,7 @@ begin
       tdValorAntecipacaoDiaCorrido:
         Result := 'VALOR_DIA_CORRIDO';
       tdValorAntecipacaoDiaUtil:
-        Result := 'VALOR_DIA_UTIL ';
+        Result := 'VALOR_DIA_UTIL';
       else
         raise Exception.Create('Modalidade de desconto não permitida');
     end;
@@ -700,33 +700,16 @@ begin
 
     if ATitulo.DataDesconto > 0 then
     begin
-      case ATitulo.OcorrenciaOriginal.Tipo of
-        toRemessaCancelarDesconto,
-        toRemessaNaoConcederDesconto :
-          begin
-            LValorDesconto1:='0.00';
-            LValorDesconto2:='0.00';
-            LValorDesconto3:='0.00';
-            LTipo1 :=  'ISENTO';
-            //LTipo2 :=  'ISENTO';
-            //LTipo3 :=  'ISENTO';
-          end;
-        toRemessaConcederDesconto,
-        toRemessaAlterarDesconto :
-          begin
-           LValorDesconto1 := IfThen(ATitulo.TipoDesconto=tdNaoConcederDesconto,'0.00',
+
+      LValorDesconto1 := IfThen(ATitulo.TipoDesconto=tdNaoConcederDesconto,'0.00',
                                      StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto), ',', '.', [rfReplaceAll]));
-           LValorDesconto2 := IfThen(ATitulo.TipoDesconto2=tdNaoConcederDesconto,'0.00',
-                                     StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto2), ',', '.', [rfReplaceAll]));
-           LValorDesconto3 := IfThen(ATitulo.TipoDesconto3=tdNaoConcederDesconto,'0.00',
-                                     StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto3), ',', '.', [rfReplaceAll]));
-           LTipo1 := retornaTipoDesconto(ATitulo.TipoDesconto);
-           //LTipo2 := retornaTipoDesconto(ATitulo.TipoDesconto2);
-           //LTipo3 := retornaTipoDesconto(ATitulo.TipoDesconto3);
-          end;
-      end;
+      LValorDesconto2 := IfThen(ATitulo.TipoDesconto2=tdNaoConcederDesconto,'0.00',
+                               StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto2), ',', '.', [rfReplaceAll]));
+      LValorDesconto3 := IfThen(ATitulo.TipoDesconto3=tdNaoConcederDesconto,'0.00',
+                               StringReplace(FormatFloat('0.00', ATitulo.ValorDesconto3), ',', '.', [rfReplaceAll]));
+      LTipo1 := retornaTipoDesconto(ATitulo.TipoDesconto);
       LJsonObjectDesconto.AddPair('type',LTipo1);
-      LJsonObjectDesconto.AddPair('disconuntOne',
+      LJsonObjectDesconto.AddPair('discountOne',
                                                  TACBrJSONObject.Create
                                                                 .AddPair('value', LValorDesconto1)
                                                                 .AddPair('limitDate', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto))

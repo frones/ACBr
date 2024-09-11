@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2024
+-- DoACBrNFeUnit --
+[*] #TK-5770: Refatora as rotinas do EnviarLoteNFe e do CriarEnviarNFeSefaz eu faltavam
+  Por: Diego Folieni
+
 10/09/2024
 -- DoACBrNFeUnit --
 [*] #TK-5770: Refatora rotina para que a geração de PDF não seja dependente do parâmetro de impressão.

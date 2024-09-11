@@ -1872,7 +1872,8 @@ var
   APDF: Boolean;
   //RespEnvio: TEnvioResposta;
   //RespRetorno: TRetornoResposta;
-  RespEnvioRetorno: TEnvioRetornoResposta;
+  LObjetoNFe: TACBrObjetoNFe;
+  LNFe: TACBrNFe;
 begin
   ALoteEnvio   := Trim(fpCmd.Params(0));
   AImprime     := StrToBoolDef(fpCmd.Params(1), False);
@@ -1882,69 +1883,63 @@ begin
   ACopias      := StrToIntDef(fpCmd.Params(5), 0);
   APDF         := StrToBoolDef(fpCmd.Params(6), False);
 
-  with TACBrObjetoNFe(fpObjetoDono) do
+  LObjetoNFe := TACBrObjetoNFe(fpObjetoDono);
+  LNFe := LObjetoNFe.ACBrNFe;
+
+  if not DirectoryExists(PathWithDelim(ExtractFilePath(Application.ExeName)) +
+    'Lotes' + PathDelim + 'Lote' + ALoteEnvio) then
+      raise Exception.Create('Diretório não encontrado:' + PathWithDelim(
+        ExtractFilePath(Application.ExeName)) +
+        'Lotes' + PathDelim + 'Lote' + ALoteEnvio)
+  else
   begin
-    if not DirectoryExists(PathWithDelim(ExtractFilePath(Application.ExeName)) +
-      'Lotes' + PathDelim + 'Lote' + ALoteEnvio) then
-        raise Exception.Create('Diretório não encontrado:' + PathWithDelim(
-          ExtractFilePath(Application.ExeName)) +
-          'Lotes' + PathDelim + 'Lote' + ALoteEnvio)
-    else
+    LNFe.NotasFiscais.Clear;
+    RetFind := SysUtils.FindFirst(
+      PathWithDelim(ExtractFilePath(Application.ExeName)) +
+      'Lotes' + PathDelim + 'Lote' +
+      ALoteEnvio + PathDelim + '*-nfe.xml', faAnyFile, SearchRec);
+    if (RetFind = 0) then
     begin
-      ACBrNFe.NotasFiscais.Clear;
-      RetFind := SysUtils.FindFirst(
-        PathWithDelim(ExtractFilePath(Application.ExeName)) +
-        'Lotes' + PathDelim + 'Lote' +
-        ALoteEnvio + PathDelim + '*-nfe.xml', faAnyFile, SearchRec);
-      if (RetFind = 0) then
+      while RetFind = 0 do
       begin
-        while RetFind = 0 do
-        begin
-          ACBrNFe.NotasFiscais.LoadFromFile(PathWithDelim(ExtractFilePath(Application.ExeName)) +
-            'Lotes' + PathDelim +
-            'Lote' + ALoteEnvio + PathDelim + SearchRec.Name);
-          RetFind := FindNext(SearchRec);
-        end;
-        ACBrNFe.NotasFiscais.GerarNFe;
-        ACBrNFe.NotasFiscais.Assinar;
-        ACBrNFe.NotasFiscais.Validar;
-      end
-      else
-        raise Exception.Create('Não foi encontrada nenhuma nota para o Lote: ' +
-          ALoteEnvio);
-    end;
+        LNFe.NotasFiscais.LoadFromFile(PathWithDelim(ExtractFilePath(Application.ExeName)) +
+          'Lotes' + PathDelim +
+          'Lote' + ALoteEnvio + PathDelim + SearchRec.Name);
+        RetFind := FindNext(SearchRec);
+      end;
+      LNFe.NotasFiscais.GerarNFe;
+      LNFe.NotasFiscais.Assinar;
+      LNFe.NotasFiscais.Validar;
+    end
+    else
+      raise Exception.Create('Não foi encontrada nenhuma nota para o Lote: ' +
+        ALoteEnvio);
+  end;
 
-    ACBrNFe.WebServices.Enviar.Lote := ALoteEnvio;
-    ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
+  LNFe.WebServices.Enviar.Lote := ALoteEnvio;
+  LNFe.WebServices.Enviar.Sincrono := ASincrono;
 
-    if ACBrNFe.NotasFiscais.Count > 0 then
-      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+  if LNFe.NotasFiscais.Count > 0 then
+    LObjetoNFe.DoValidarIntegradorNFCe(LNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
-    ACBrNFe.WebServices.Enviar.Executar;
+  LNFe.WebServices.Enviar.Executar;
 
-    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-    begin
-      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-      ACBrNFe.WebServices.Retorno.Executar;
-    end;
+  if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+  begin
+    LNFe.WebServices.Retorno.Recibo := LNFe.WebServices.Enviar.Recibo;
+    LNFe.WebServices.Retorno.Executar;
+  end;
 
-    RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
-    try
-      RespEnvioRetorno.Processar(ACBrNFe);
-      fpCmd.Resposta :=  RespEnvioRetorno.Gerar;
+  LObjetoNFe.TratarRetorno;
 
-    finally
-      RespEnvioRetorno.Free;
-    end;
+  if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    LObjetoNFe.RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
 
-    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      RespostaImpressao(AImprime, AImpressora, APreview, ACopias, APDF);
+  if AImprime then //Sincrono
+    LObjetoNFe.ImprimirNFe(AImpressora, APreview, ACopias);
 
-    if AImprime then //Sincrono
-      ImprimirNFe(AImpressora, APreview, ACopias);
-
-    if APDF then
-      GerarPDF(AImpressora, APreview, ACopias);
+  if APDF then
+    LObjetoNFe.GerarPDF(AImpressora, APreview, ACopias);
 
 
     {RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
@@ -1975,8 +1970,6 @@ begin
     else
     if AImprime then //Sincrono
       ImprimirNFe(AImpressora, APreview, ACopias, APDF);  }
-
-  end;
 end;
 
 { TMetodoEnviarNFe }
@@ -2047,14 +2040,6 @@ begin
     end;
 
     LObjetoNFe.TratarRetorno;
-    //RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
-    //try
-    //  RespEnvioRetorno.Processar(ACBrNFe);
-    //  fpCmd.Resposta := sLineBreak + RespEnvioRetorno.Gerar;
-    //
-    //finally
-    //  RespEnvioRetorno.Free;
-    //end;
 
     if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
       LObjetoNFe.RespostaImpressao(AImprime, AImpressora, '', 0, False)
@@ -3266,7 +3251,8 @@ var
   ACopias : Integer;
   //RespEnvio : TEnvioResposta;
   //RespRetorno : TRetornoResposta;
-  RespEnvioRetorno: TEnvioRetornoResposta;
+  LObjetoNFe: TACBrObjetoNFe;
+  LNFe: TACBrNFe;
 begin
   ATXT := fpCmd.Params(0);
   APathTXT := (copy(ATXT, 1, 10) <> 'NOTAFISCAL') and (copy(ATXT, 1, 11) <> 'NOTA FISCAL');
@@ -3277,87 +3263,81 @@ begin
   APreview := fpCmd.Params(5);
   ACopias := StrToIntDef(fpCmd.Params(6), 0);
 
-  with TACBrObjetoNFe(fpObjetoDono) do
+  LObjetoNFe := TACBrObjetoNFe(fpObjetoDono);
+  LNFe := LObjetoNFe.ACBrNFe;
+
+  if APathTXT and not FileExists(ATXT) then
+    raise Exception.Create('Arquivo ' + ATXT + ' não encontrado.');
+
+  LNFe.NotasFiscais.Clear;
+  LNFe.NotasFiscais.Add;
+  NFeRTXT := TNFeRTXT.Create(LNFe.NotasFiscais.Items[0].NFe);
+
+  try
+    if APathTXT then
+      NFeRTXT.CarregarArquivo(ATXT)
+    else
+      NFeRTXT.ConteudoArquivo.Text := ATXT;
+
+    if not NFeRTXT.LerTxt then
+      raise Exception.Create('Arquivo inválido!');
+  finally
+    NFeRTXT.Free;
+  end;
+
+  Salva := LNFe.Configuracoes.Geral.Salvar;
+  if not Salva then
   begin
-    if APathTXT and not FileExists(ATXT) then
-      raise Exception.Create('Arquivo ' + ATXT + ' não encontrado.');
+    ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
+    LNFe.Configuracoes.Arquivos.PathSalvar :=
+      PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
+  end;
 
-    ACBrNFe.NotasFiscais.Clear;
-    ACBrNFe.NotasFiscais.Add;
-    NFeRTXT := TNFeRTXT.Create(ACBrNFe.NotasFiscais.Items[0].NFe);
+  LNFe.NotasFiscais.GerarNFe;
+  Alertas := LNFe.NotasFiscais.Items[0].Alertas;
 
-    try
-      if APathTXT then
-        NFeRTXT.CarregarArquivo(ATXT)
-      else
-        NFeRTXT.ConteudoArquivo.Text := ATXT;
+  LNFe.NotasFiscais.Assinar;
+  LNFe.NotasFiscais.Validar;
 
-      if not NFeRTXT.LerTxt then
-        raise Exception.Create('Arquivo inválido!');
-    finally
-      NFeRTXT.Free;
-    end;
+  ArqNFe := PathWithDelim(LNFe.Configuracoes.Arquivos.PathSalvar) +
+    OnlyNumber(LNFe.NotasFiscais.Items[0].NFe.infNFe.ID) + '-nfe.xml';
+  LNFe.NotasFiscais.GravarXML(ArqNFe);
 
-    Salva := ACBrNFe.Configuracoes.Geral.Salvar;
-    if not Salva then
-    begin
-      ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
-      ACBrNFe.Configuracoes.Arquivos.PathSalvar :=
-        PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs';
-    end;
+  if not FileExists(ArqNFe) then
+    raise Exception.Create('Não foi possível criar o arquivo ' + ArqNFe);
 
-    ACBrNFe.NotasFiscais.GerarNFe;
-    Alertas := ACBrNFe.NotasFiscais.Items[0].Alertas;
+  Resp := ArqNFe;
+  if (Alertas <> '') then
+    Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
 
-    ACBrNFe.NotasFiscais.Assinar;
-    ACBrNFe.NotasFiscais.Validar;
+  if LObjetoNFe.TpResp in [resINI] then
+    fpCmd.Resposta := Resp + sLineBreak;
 
-    ArqNFe := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.PathSalvar) +
-      OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) + '-nfe.xml';
-    ACBrNFe.NotasFiscais.GravarXML(ArqNFe);
+  if (ALote = 0) then
+    LNFe.WebServices.Enviar.Lote := '1'
+  else
+    LNFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-    if not FileExists(ArqNFe) then
-      raise Exception.Create('Não foi possível criar o arquivo ' + ArqNFe);
+  LNFe.WebServices.Enviar.Sincrono := ASincrono;
 
-    Resp := ArqNFe;
-    if (Alertas <> '') then
-      Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
+  if LNFe.NotasFiscais.Count > 0 then
+    LObjetoNFe.DoValidarIntegradorNFCe(LNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
-    if TpResp in [resINI] then
-      fpCmd.Resposta := Resp + sLineBreak;
+  LNFe.WebServices.Enviar.Executar;
 
-    if (ALote = 0) then
-      ACBrNFe.WebServices.Enviar.Lote := '1'
-    else
-      ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALote);
+  if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+  begin
+    LNFe.WebServices.Retorno.Recibo := LNFe.WebServices.Enviar.Recibo;
+    LNFe.WebServices.Retorno.Executar;
+  end;
 
-    ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
+  LObjetoNFe.TratarRetorno;
 
-    if ACBrNFe.NotasFiscais.Count > 0 then
-      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
-
-    ACBrNFe.WebServices.Enviar.Executar;
-
-    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-    begin
-      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-      ACBrNFe.WebServices.Retorno.Executar;
-    end;
-
-    RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
-    try
-      RespEnvioRetorno.Processar(ACBrNFe);
-      fpCmd.Resposta :=  fpCmd.Resposta + RespEnvioRetorno.Gerar;
-
-    finally
-      RespEnvioRetorno.Free;
-    end;
-
-    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
-      RespostaImpressao(AImprime, AImpressora, APreview, ACopias, False)
-    else
-    if AImprime then //Sincrono
-       ImprimirNFe(AImpressora, APreview, ACopias);
+  if (LNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    LobjetoNFe.RespostaImpressao(AImprime, AImpressora, APreview, ACopias, False)
+  else
+  if AImprime then //Sincrono
+    LObjetoNFe.ImprimirNFe(AImpressora, APreview, ACopias);
 
 
     {RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
@@ -3388,8 +3368,6 @@ begin
     else
     if AImprime then //Sincrono
       ImprimirNFe(AImpressora, APreview, ACopias, False);     }
-
-  end;
 end;
 
 { TMetodoAdicionarNFeSEFAZ }

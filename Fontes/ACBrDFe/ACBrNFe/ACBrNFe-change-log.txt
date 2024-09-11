@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2024
+-- ACBrNFeWebService --
+[*] #TK-5933: Ajuste visando corrigir a forma como a string é devolvida na propriedade.
+  Por: Diego Folieni / Italo Giurizzato Junior / Victor H Gonzales - Pandaaa 
 
 10/09/2024
 -- ACBrNFe.XmlReader --

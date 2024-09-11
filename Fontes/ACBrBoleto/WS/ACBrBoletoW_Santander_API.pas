@@ -89,19 +89,13 @@ const
   C_URL = 'https://trust-open.api.santander.com.br/collection_bill_management/v2';
   C_URL_OAUTH_PROD = 'https://trust-open.api.santander.com.br/auth/oauth/v2/token';
 
-  {Para homologacao existe 2 end points SandBox e Open-h }
+  {URL Sandbox - nao devolve todas as informações necessárias no retorno}
+  C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
+  C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
 
-  {URL SandBOX - nao devolve todas as informações necessárias no retorno}
-  //C_URL_HOM = 'https://trust-sandbox.api.santander.com.br/collection_bill_management/v2';
-  //C_URL_OAUTH_HOM = 'https://trust-sandbox.api.santander.com.br/auth/oauth/v2/token';
-
-
-  {URL Homologação open-h
-  Atenção !
-  Para habilitar este endpoint contatar o banco, pois este endpoint retorna completo as respostas e qrcode.
-  (SandBox não faz isso segundo banco.  }
-  C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
-  C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
+  {URL Homologação open-h removido no manual 2.6 do banco santander}
+  //C_URL_HOM = 'https://trust-open-h.api.santander.com.br/collection_bill_management/v2';
+  //C_URL_OAUTH_HOM = 'https://trust-open-h.api.santander.com.br/auth/oauth/v2/token';
 
 
 implementation

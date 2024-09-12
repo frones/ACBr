@@ -206,6 +206,19 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro, AAlerta: TNFSeEventoCollectionItem;
   aID, aCorrecao, aMensagem: string;
+
+  function EhAvisoNotaEmitida: Boolean;
+  begin
+    Result := ((aCorrecao = '') or
+              (aCorrecao = 'Sem erros') or
+              (Pos('sucesso', aCorrecao) > 0) or
+              (Copy(aID, 1, 1) = 'A'))
+              or
+              ((aMensagem = '') or
+              (aMensagem = 'Sem erros') or
+              (Pos('sucesso', aMensagem) > 0) or
+              (Copy(aID, 1, 1) = 'A'));
+  end;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -225,8 +238,7 @@ begin
     aCorrecao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
     aMensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
 
-    if (aCorrecao = '') or (aCorrecao = 'Sem erros') or (Pos('sucesso', aCorrecao) > 0) or
-       (Copy(aID, 1, 1) = 'A') then
+    if EhAvisoNotaEmitida then
     begin
       if aMensagem <> '' then
       begin

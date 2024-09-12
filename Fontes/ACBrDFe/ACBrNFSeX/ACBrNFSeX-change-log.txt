@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/09/2024
+-- SigISS.Provider --
+[*] #TK-5854: Ajuste para que mensagem de retorno de sucesso seja interpretada como alerta e não erro.
+  Por: Diego Folieni / Italo Giurizzato Junior 
+
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Na versão 2 do layout da ABRASF não existe uma tag especifica para o ValorIssRetido,
     logo se tem ISS Retido devemos zerar o valor do campo ValorIss.

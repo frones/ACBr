@@ -134,6 +134,6 @@ contains
   ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',
   ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas',
   ACBrUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas',
-  ACBrUniprimeNortePR in '..\..\..\Fontes\ACBrBoleto\ACBrUniprimeNortePR.pas';
+  ACBrSisprime in '..\..\..\Fontes\ACBrBoleto\ACBrSisprime.pas';
 
 end.

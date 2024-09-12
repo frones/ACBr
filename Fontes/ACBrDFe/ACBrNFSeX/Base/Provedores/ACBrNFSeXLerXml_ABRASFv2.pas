@@ -915,8 +915,14 @@ begin
 
       Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(ANodes[i].Childrens.FindAnyNs('IssRetido'), tcStr));
 
+      // Na versão 2 do layout da ABRASF o valor do ISS retido ou não é retornado
+      // na tag ValorIss, sendo assim se faz necessário checar o valor da tag IssRetido
+      // para saber quais dos dois campos vai receber a informação.
       if Valores.IssRetido = stRetencao then
-        Valores.ValorIssRetido := Valores.ValorIss
+      begin
+        Valores.ValorIssRetido := Valores.ValorIss;
+        Valores.ValorIss := 0;
+      end
       else
         Valores.ValorIssRetido := 0;
 
@@ -1015,8 +1021,14 @@ begin
       if Valores.IssRetido = stNenhum then
         Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
 
+      // Na versão 2 do layout da ABRASF o valor do ISS retido ou não é retornado
+      // na tag ValorIss, sendo assim se faz necessário checar o valor da tag IssRetido
+      // para saber quais dos dois campos vai receber a informação.
       if Valores.IssRetido = stRetencao then
-        Valores.ValorIssRetido := Valores.ValorIss
+      begin
+        Valores.ValorIssRetido := Valores.ValorIss;
+        Valores.ValorIss := 0;
+      end
       else
         Valores.ValorIssRetido := 0;
 

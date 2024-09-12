@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/09/2024
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Na versão 2 do layout da ABRASF não existe uma tag especifica para o ValorIssRetido,
+    logo se tem ISS Retido devemos zerar o valor do campo ValorIss.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-5951: A cidade de Brasilia/DF, trocou a URL de homologação, o provedor continua
     o mesmo.

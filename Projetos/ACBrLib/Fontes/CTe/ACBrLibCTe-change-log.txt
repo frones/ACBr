@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2024
+-- ACBrLibCTeConfig --
+[*] #TK-5949: Altera o nome da propriedade para o correto.
+    Por: Daniel Moraes / Diego Folieni  
+
 10/09/2024
 --- ACBrLibCTeRespostas ---
 [*] #TK-5699: Adiciona NomeArq na resposta e também função para garantir que sempre devolva Chave do CTe 

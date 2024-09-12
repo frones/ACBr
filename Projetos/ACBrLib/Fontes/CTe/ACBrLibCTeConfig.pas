@@ -172,7 +172,7 @@ begin
     ImprimeDescPorc := FImprimeDescPorc;
     ExibeResumoCanhoto := FExibeResumoCanhoto;
     PosCanhoto := FPosCanhoto;
-    CTeCancelada := FCTeCancelada;
+    Cancelada := FCTeCancelada;
     EPECEnviado := FEPECEnviado;
     ImprimirHoraSaida := FImprimirHoraSaida;
     ImprimirHoraSaida_Hora := FImprimirHoraSaida_Hora;

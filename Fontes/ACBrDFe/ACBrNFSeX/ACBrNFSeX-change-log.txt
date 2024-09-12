@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5951: A cidade de Brasilia/DF, trocou a URL de homologação, o provedor continua
+    o mesmo.
+  Por: Eduardo Flaeschen
+
 09/09/2024
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Ajuste para imprimir o valor do ISS por inteiro quando o provedor permite 

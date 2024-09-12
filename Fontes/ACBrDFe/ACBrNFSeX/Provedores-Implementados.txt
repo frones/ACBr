@@ -88,8 +88,8 @@ ISSJoinville         2.04  10/08/2022
 ISSLegal             2.03
 ISSLencois           1.00
 ISSNatal             1.00
-ISSNet               1.00  04/08/2022
-ISSNet               2.04
+ISSNet               1.00  04/08/2022 (NotaControl)
+ISSNet               2.04             (NotaControl)
 ISSPortoVelho        2.00
 ISSRecife            1.00
 ISSRio               1.00

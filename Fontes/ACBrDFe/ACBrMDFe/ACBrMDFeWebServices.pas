@@ -2425,7 +2425,6 @@ end;
 
 function TMDFeEnvEvento.TratarResposta: Boolean;
 var
-  Leitor: TLeitor;
   I, J: Integer;
   NomeArq, PathArq, VersaoEvento, Texto: String;
 begin
@@ -2447,67 +2446,59 @@ begin
   //gerar arquivo proc de evento
   if Result then
   begin
-    Leitor := TLeitor.Create;
-    try
-      for I := 0 to FEvento.Evento.Count - 1 do
+    for I := 0 to FEvento.Evento.Count - 1 do
+    begin
+      for J := 0 to EventoRetorno.retEvento.Count - 1 do
       begin
-        for J := 0 to EventoRetorno.retEvento.Count - 1 do
+        if FEvento.Evento.Items[I].InfEvento.chMDFe =
+          EventoRetorno.retEvento.Items[J].RetInfEvento.chMDFe then
         begin
-          if FEvento.Evento.Items[I].InfEvento.chMDFe =
-            EventoRetorno.retEvento.Items[J].RetInfEvento.chMDFe then
-          begin
-            FEvento.Evento.Items[I].RetInfEvento.tpAmb :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.tpAmb;
-            FEvento.Evento.Items[I].RetInfEvento.nProt :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
-            FEvento.Evento.Items[I].RetInfEvento.dhRegEvento :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.dhRegEvento;
-            FEvento.Evento.Items[I].RetInfEvento.cStat :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.cStat;
-            FEvento.Evento.Items[I].RetInfEvento.xMotivo :=
-              EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
+          FEvento.Evento.Items[I].RetInfEvento.tpAmb :=
+            EventoRetorno.retEvento.Items[J].RetInfEvento.tpAmb;
+          FEvento.Evento.Items[I].RetInfEvento.nProt :=
+            EventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
+          FEvento.Evento.Items[I].RetInfEvento.dhRegEvento :=
+            EventoRetorno.retEvento.Items[J].RetInfEvento.dhRegEvento;
+          FEvento.Evento.Items[I].RetInfEvento.cStat :=
+            EventoRetorno.retEvento.Items[J].RetInfEvento.cStat;
+          FEvento.Evento.Items[I].RetInfEvento.xMotivo :=
+            EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
 
-            VersaoEvento := TACBrMDFe(FPDFeOwner).LerVersaoDeParams(LayMDFeEvento);
+          VersaoEvento := TACBrMDFe(FPDFeOwner).LerVersaoDeParams(LayMDFeEvento);
 
-
-            Leitor.Arquivo := FPDadosMsg;
-            Texto := '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                      '<eventoMDFe versao="' + VersaoEvento + '">' +
-                       Leitor.rExtrai(1, 'infEvento', '', I + 1) +
+          Texto := '<eventoMDFe versao="' + VersaoEvento + '">' +
+                       SeparaDados(FPDadosMsg, 'infEvento', True) +
                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                        Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                        Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                        Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                       '</Signature>' +
-                      '</eventoMDFe>';
+                       SeparaDados(FPDadosMsg, 'Signature', False) +
+                       '</Signature>'+
+                   '</eventoMDFe>';
 
-            Leitor.Arquivo := FPRetWS;
-            Texto := Texto +
-                       '<retEventoMDFe versao="' + VersaoEvento + '">' +
-                        Leitor.rExtrai(1, 'infEvento', '', J + 1) +
-                       '</retEventoMDFe>' +
-                      '</procEventoMDFe>';
+          Texto := Texto +
+                     '<retEventoMDFe versao="' + VersaoEvento + '">' +
+                        SeparaDados(FPRetWS, 'infEvento', True) +
+                     '</retEventoMDFe>';
 
-            if FPConfiguracoesMDFe.Arquivos.Salvar then
-            begin
-              NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoMDFe.xml';
-              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJCPF));
+          Texto := '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                     Texto +
+                   '</procEventoMDFe>';
 
-              FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
-              FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-              FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-            end;
+          if FPConfiguracoesMDFe.Arquivos.Salvar then
+          begin
+            NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoMDFe.xml';
+            PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJCPF));
 
-            Texto := ParseText(Texto);
-            FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
-            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
-
-            break;
+            FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+            FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
+            FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
           end;
+
+          Texto := ParseText(Texto);
+          FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
+          FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
+
+          break;
         end;
       end;
-    finally
-      Leitor.Free;
     end;
   end;
 end;

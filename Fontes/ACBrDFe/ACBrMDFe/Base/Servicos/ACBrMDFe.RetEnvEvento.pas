@@ -187,44 +187,66 @@ end;
 
 procedure TRetEventoMDFe.Ler_DetEvento(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   sAux: string;
+  AuxNode: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
   if not Assigned(ANode) then Exit;
 
-  InfEvento.VersaoEvento := ObterConteudoTag(ANode.Attributes.Items['verEvento']);
-  InfEvento.DetEvento.descEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('descEvento'), tcStr);
-  InfEvento.DetEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
-  InfEvento.DetEvento.dtEnc := ObterConteudoTag(ANode.Childrens.FindAnyNs('dtEnc'), tcDat);
+  InfEvento.VersaoEvento := ObterConteudoTag(ANode.Attributes.Items['versaoEvento']);
 
-  InfEvento.detEvento.cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
-  InfEvento.detEvento.cMun := ObterConteudoTag(ANode.Childrens.FindAnyNs('cMun'), tcInt);
-  InfEvento.DetEvento.xJust := ObterConteudoTag(ANode.Childrens.FindAnyNs('xJust'), tcStr);
-  InfEvento.detEvento.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  InfEvento.detEvento.CPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+  case InfEvento.tpEvento of
+    teCancelamento: AuxNode := ANode.Childrens.FindAnyNs('evCancMDFe');
 
-  sAux := ObterConteudoTag(ANode.Childrens.FindAnyNs('indEncPorTerceiro'), tcStr);
+    teEncerramento: AuxNode := ANode.Childrens.FindAnyNs('evEncMDFe');
 
-  if sAux = '1' then
-    InfEvento.detEvento.indEncPorTerceiro := tiSim;
+    teInclusaoCondutor: AuxNode := ANode.Childrens.FindAnyNs('evIncCondutorMDFe');
 
-  InfEvento.detEvento.cMunCarrega := ObterConteudoTag(ANode.Childrens.FindAnyNs('cMunCarrega'), tcInt);
-  InfEvento.DetEvento.xMunCarrega := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMunCarrega'), tcStr);
+    teInclusaoDFe: AuxNode := ANode.Childrens.FindAnyNs('evIncDFeMDFe');
 
-  Ler_InfViagens(ANode.Childrens.FindAnyNs('infViagens'));
+    tePagamentoOperacao: AuxNode := ANode.Childrens.FindAnyNs('evPagtoOperMDFe');
 
-  ANodes := ANode.Childrens.FindAll('infDoc');
-  for i := 0 to Length(ANodes) - 1 do
-  begin
-    Ler_InfDoc(ANodes[i]);
+    teAlteracaoPagtoServMDFe: AuxNode := ANode.Childrens.FindAnyNs('evAlteracaoPagtoServMDFe');
+
+    teConfirmaServMDFe: AuxNode := ANode.Childrens.FindAnyNs('evConfirmaServMDFe');
+  else
+    AuxNode := nil;
   end;
 
-  ANodes := ANode.Childrens.FindAll('infPag');
-  for i := 0 to Length(ANodes) - 1 do
+  if AuxNode <> nil then
   begin
-    Ler_InfPag(ANodes[i]);
+    InfEvento.DetEvento.descEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('descEvento'), tcStr);
+    InfEvento.DetEvento.nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
+    InfEvento.DetEvento.dtEnc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtEnc'), tcDat);
+
+    InfEvento.detEvento.cUF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUF'), tcInt);
+    InfEvento.detEvento.cMun := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMun'), tcInt);
+    InfEvento.DetEvento.xJust := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xJust'), tcStr);
+    InfEvento.detEvento.xNome := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
+    InfEvento.detEvento.CPF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPF'), tcStr);
+
+    sAux := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('indEncPorTerceiro'), tcStr);
+
+    if sAux = '1' then
+      InfEvento.detEvento.indEncPorTerceiro := tiSim;
+
+    InfEvento.detEvento.cMunCarrega := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMunCarrega'), tcInt);
+    InfEvento.DetEvento.xMunCarrega := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMunCarrega'), tcStr);
+
+    Ler_InfViagens(AuxNode.Childrens.FindAnyNs('infViagens'));
+
+    ANodes := AuxNode.Childrens.FindAll('infDoc');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Ler_InfDoc(ANodes[i]);
+    end;
+
+    ANodes := AuxNode.Childrens.FindAll('infPag');
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      Ler_InfPag(ANodes[i]);
+    end;
   end;
 end;
 
@@ -363,8 +385,6 @@ procedure TRetEventoMDFe.Ler_InfEventos(const ANode: TACBrXmlNode);
 var
   Item: TRetInfEventoCollectionItem;
   ok: Boolean;
-  i: Integer;
-  ANodes: TACBrXmlNodeArray;
 begin
   if not Assigned(ANode) then Exit;
 

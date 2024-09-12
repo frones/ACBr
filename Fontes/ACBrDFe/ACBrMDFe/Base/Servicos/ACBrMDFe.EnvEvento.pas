@@ -199,7 +199,6 @@ end;
 function TEventoMDFe.GerarXML: Boolean;
 var
   EventoNode: TACBrXmlNode;
-  Ok: Boolean;
 begin
 //  VersaoDF := StrToVersaoCTe(Ok, Versao);
   ListaDeAlertas.Clear;
@@ -227,6 +226,13 @@ var
   sDoc: string;
   Serie: Integer;
 begin
+  Evento[Idx].InfEvento.id := 'ID' + Evento[Idx].InfEvento.TipoEvento +
+                             OnlyNumber(Evento[Idx].InfEvento.chMDFe) +
+                             Format('%.2d', [Evento[Idx].InfEvento.nSeqEvento]);
+
+  if Length(Evento[Idx].InfEvento.id) < 54 then
+    wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
+
   Result := CreateElement('infEvento');
   Result.SetAttribute('Id', Evento[Idx].InfEvento.id);
 
@@ -449,17 +455,6 @@ begin
   end;
 end;
 
-function TEventoMDFe.Gerar_Evento_ConfirmaServico(Idx: Integer): TACBrXmlNode;
-begin
-  Result := CreateElement('evConfirmaServMDFe');
-
-  Result.AppendChild(AddNode(tcStr, 'EP02', 'descEvento', 4, 60, 1,
-                                            Evento[Idx].FInfEvento.DescEvento));
-
-  Result.AppendChild(AddNode(tcStr, 'EP03', 'nProt', 15, 15, 1,
-                                       Evento[Idx].FInfEvento.detEvento.nProt));
-end;
-
 function TEventoMDFe.Gerar_InfViagens(
   const EventoItem: TInfEventoCollectionItem): TACBrXmlNode;
 begin
@@ -511,7 +506,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, 'HP09', 'indPag', 1, 1, 1,
                                      TIndPagToStr(Item[i].indPag), DSC_INDPAG));
 
-    Result[i].AppendChild(AddNode(tcDe2, 'HP08', 'vAdiant', 1, 15, 1,
+    Result[i].AppendChild(AddNode(tcDe2, 'HP08', 'vAdiant', 1, 15, 0,
                                                  Item[i].vAdiant, DSC_VADIANT));
 
     if Item[i].indAntecipaAdiant = tiSim then
@@ -643,6 +638,17 @@ begin
       Result.AppendChild(nodeArray[i]);
     end;
   end;
+end;
+
+function TEventoMDFe.Gerar_Evento_ConfirmaServico(Idx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('evConfirmaServMDFe');
+
+  Result.AppendChild(AddNode(tcStr, 'EP02', 'descEvento', 4, 60, 1,
+                                            Evento[Idx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcStr, 'EP03', 'nProt', 15, 15, 1,
+                                       Evento[Idx].FInfEvento.detEvento.nProt));
 end;
 
 function TEventoMDFe.GetOpcoes: TACBrXmlWriterOptions;

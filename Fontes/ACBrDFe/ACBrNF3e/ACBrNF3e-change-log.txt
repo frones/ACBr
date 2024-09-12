@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2024
+-- ACBrNF3eWebServices --
+[*] Ajustes na montagem do XML *-ProcEventoNF3e.xml
+   Por: Italo Giurizzato Junior
+
 04/09/2024
 --ACBrNF3e/ACBrNF3eWebServices/ACBrNF3eRetConsSit --
 [*] Alterações para atender a NT 2024/002 que trata sobre o envio síncrono.

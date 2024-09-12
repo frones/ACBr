@@ -1193,6 +1193,7 @@ begin
     Fversao := FNFeRetornoSincrono.versao;
     FTpAmb := FNFeRetornoSincrono.TpAmb;
     FverAplic := FNFeRetornoSincrono.verAplic;
+    FdhRecbto := FNFeRetornoSincrono.dhRecbto;
 
     // Consta no Retorno da NFC-e
     FRecibo := FNFeRetornoSincrono.nRec;
@@ -3489,7 +3490,6 @@ end;
 
 function TNFeEnvEvento.TratarResposta: Boolean;
 var
-  Leitor: TLeitor;
   I, J: integer;
   NomeArq, PathArq, VersaoEvento, Texto: String;
 begin

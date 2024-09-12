@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2024
+-- ACBrNFeWebService --
+[*] #TK-5953: Ajuste visando retornar a data/hora do recebimento do documento.
+  Por: Italo Giurizzato Junior
+
 11/09/2024
 -- ACBrNFeWebService --
 [*] #TK-5933: Ajuste visando corrigir a forma como a string é devolvida na propriedade.

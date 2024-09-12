@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2024
+-- pcesConversaoeSocial --
+[*] TK-5890 - Identificação do evento S-2221 e Refatoração parcial da unit pcesConversaoeSocial
+Por: MSS, Renato Rubinho
+
 10/09/2024
 -- pcesConversaoeSocial --
 [*] TK-5902 - Adicionado código 68-Desconto Simplificado Mensal na Tabela 21

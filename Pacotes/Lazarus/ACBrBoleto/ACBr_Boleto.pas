@@ -10,8 +10,8 @@ interface
 uses
   ACBrBoleto, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoItau, 
   ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoBanrisul, ACBrBancoSantander, 
-  ACBrBancoBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, 
-  ACBrBancoBic, ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, 
+  ACBrBancoSicoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, 
+  ACBrBancoBic, ACBrBancoBanestes, ACBrBancoAilos, ACBrBancoCaixa, 
   ACBrBancoCaixaSICOB, ACBrBancoBrasilSicoob, ACBrBancoCitiBank, 
   ACBrBancoPine, ACBrBancoPineBradesco, ACBrBoletoReg, ACBrBoletoWS, 
   ACBrBoletoConversao, ACBrBoletoPcnConsts, ACBrBoletoW_Caixa, 
@@ -27,19 +27,16 @@ uses
   ACBrBancoRendimento, ACBrBancoSafra, ACBrBancoSafraBradesco, 
   ACBrBancoSofisaSantander, ACBrBancoUnicredES, ACBrBancoUnicredRS, 
   ACBrBancoUnicredSC, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest, 
-  ACBrBoletoWS.SOAP, ACBrUniprime, ACBrUniprimeNortePR, 
-  ACBrBoletoRet_Credisis, ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, 
-  ACBrBoletoRet_Sicredi_APIECOMM, ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, 
-  ACBrBoletoW_Itau, ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 
+  ACBrBoletoWS.SOAP, ACBrUniprime, ACBrSisprime, ACBrBoletoRet_Credisis, 
+  ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, ACBrBoletoRet_Sicredi_APIECOMM, 
+  ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, ACBrBoletoW_Itau, 
+  ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 
   ACBrBoletoRet_Sicredi_APIV2, ACBrBoletoW_Sicredi_APIV2, 
-  ACBrBoletoRet_Bancoob, ACBrBoletoW_Bancoob, ACBrBancoPefisa, ACBrBancoFibra, 
+  ACBrBoletoRet_Sicoob, ACBrBoletoW_Sicoob, ACBrBancoPefisa, ACBrBancoFibra, 
   ACBrBancoSofisaItau, ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API, 
   ACBrBancoAthenaBradesco, ACBrBancoIndustrialBrasil, ACBrBancoQITech, 
   ACBrBoletoRet_Itau_API, ACBrBoletoW_Itau_API, ACBrBancoBocomBBM, 
-  ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, ACBrBancoUY3, 
-  ACBrBoletoRet_Bancoob_APIV3, ACBrBoletoRet_Bradesco, ACBrBoletoRet_C6, 
-  ACBrBoletoRet_Safra, ACBrBoletoW_Bancoob_APIV3, ACBrBoletoW_Bradesco, 
-  ACBrBoletoW_C6, ACBrBoletoW_Safra, LazarusPackageIntf;
+  ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, LazarusPackageIntf;
 
 implementation
 

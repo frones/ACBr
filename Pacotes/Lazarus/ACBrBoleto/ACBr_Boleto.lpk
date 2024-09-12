@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="99">
+    <Files Count="90">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -55,8 +55,8 @@
         <UnitName Value="ACBrBancoSantander"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
-        <UnitName Value="ACBrBancoBancoob"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSicoob.pas"/>
+        <UnitName Value="ACBrBancoSicoob"/>
       </Item9>
       <Item10>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoHSBC.pas"/>
@@ -79,8 +79,8 @@
         <UnitName Value="ACBrBancoBanestes"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCecred.pas"/>
-        <UnitName Value="ACBrBancoCecred"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoAilos.pas"/>
+        <UnitName Value="ACBrBancoAilos"/>
       </Item15>
       <Item16>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCaixa.pas"/>
@@ -276,8 +276,8 @@
         <UnitName Value="ACBrUniprime"/>
       </Item63>
       <Item64>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrUniprimeNortePR.pas"/>
-        <UnitName Value="ACBrUniprimeNortePR"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrSisprime.pas"/>
+        <UnitName Value="ACBrSisprime"/>
       </Item64>
       <Item65>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Credisis.pas"/>
@@ -324,12 +324,12 @@
         <UnitName Value="ACBrBoletoW_Sicredi_APIV2"/>
       </Item75>
       <Item76>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bancoob.pas"/>
-        <UnitName Value="ACBrBoletoRet_Bancoob"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Sicoob.pas"/>
+        <UnitName Value="ACBrBoletoRet_Sicoob"/>
       </Item76>
       <Item77>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bancoob.pas"/>
-        <UnitName Value="ACBrBoletoW_Bancoob"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Sicoob.pas"/>
+        <UnitName Value="ACBrBoletoW_Sicoob"/>
       </Item77>
       <Item78>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoPefisa.pas"/>
@@ -383,42 +383,6 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cresol.pas"/>
         <UnitName Value="ACBrBoletoW_Cresol"/>
       </Item90>
-      <Item91>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUY3.pas"/>
-        <UnitName Value="ACBrBancoUY3"/>
-      </Item91>
-      <Item92>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bancoob_APIV3.pas"/>
-        <UnitName Value="ACBrBoletoRet_Bancoob_APIV3"/>
-      </Item92>
-      <Item93>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Bradesco.pas"/>
-        <UnitName Value="ACBrBoletoRet_Bradesco"/>
-      </Item93>
-      <Item94>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_C6.pas"/>
-        <UnitName Value="ACBrBoletoRet_C6"/>
-      </Item94>
-      <Item95>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Safra.pas"/>
-        <UnitName Value="ACBrBoletoRet_Safra"/>
-      </Item95>
-      <Item96>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bancoob_APIV3.pas"/>
-        <UnitName Value="ACBrBoletoW_Bancoob_APIV3"/>
-      </Item96>
-      <Item97>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Bradesco.pas"/>
-        <UnitName Value="ACBrBoletoW_Bradesco"/>
-      </Item97>
-      <Item98>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_C6.pas"/>
-        <UnitName Value="ACBrBoletoW_C6"/>
-      </Item98>
-      <Item99>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Safra.pas"/>
-        <UnitName Value="ACBrBoletoW_Safra"/>
-      </Item99>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

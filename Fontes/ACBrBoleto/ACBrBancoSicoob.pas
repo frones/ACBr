@@ -1,4 +1,3 @@
-
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
@@ -33,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBancoBancoob;
+unit ACBrBancoSicoob;
 
 interface
 
@@ -42,9 +41,9 @@ uses
 
 type
 
-  { TACBrBancoob}
+  { TACBrSicoob}
 
-  TACBrBancoob = class(TACBrBancoClass)
+  TACBrSicoob = class(TACBrBancoClass)
    protected
    private
       FNumeroSequencialRegistroNoLote: Int64;
@@ -77,7 +76,7 @@ uses  StrUtils, Variants, math,
       {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
       ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
-constructor TACBrBancoob.create(AOwner: TACBrBanco);
+constructor TACBrSicoob.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fpDigito := 0;
@@ -92,7 +91,7 @@ begin
    fpValorTotalDocs := 0;
 end;
 
-function TACBrBancoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+function TACBrSicoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
 var
   Num, Res :String;
   i, base, digito : Integer;
@@ -161,7 +160,7 @@ begin
      digito = 6 }
 end;
 
-function TACBrBancoob.MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
+function TACBrSicoob.MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras, ANossoNumero,ACarteira :String;
   CampoLivre : String;
@@ -197,7 +196,7 @@ begin
     Result:= copy( CodigoBarras, 1, 4) + DigitoCodBarras + copy( CodigoBarras, 5, 44);
 end;
 
-function TACBrBancoob.MontarCampoCodigoCedente (
+function TACBrSicoob.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 
 var
@@ -209,12 +208,12 @@ begin
             copy(CodigoCedente,length(CodigoCedente),1);
 end;
 
-function TACBrBancoob.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
+function TACBrSicoob.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 begin
   Result := ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-procedure TACBrBancoob.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa:TStringList);
+procedure TACBrSicoob.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa:TStringList);
 var
   wLinha: String;
 begin
@@ -241,7 +240,7 @@ begin
    end;
 end;
 
-procedure TACBrBancoob.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
+procedure TACBrSicoob.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   DigitoNossoNumero, Ocorrencia,aEspecie, AInstrucao1, AInstrucao2 :String;
   TipoSacado, ATipoAceite,MensagemCedente, DiasProtesto :String;
@@ -412,7 +411,7 @@ begin
    end;
 end;
 
-procedure TACBrBancoob.GerarRegistroTrailler400( ARemessa: TStringList );
+procedure TACBrSicoob.GerarRegistroTrailler400( ARemessa: TStringList );
 var
   wLinha: String;
 begin
@@ -429,7 +428,7 @@ begin
 end;
 
 
-procedure TACBrBancoob.LerRetorno240(ARetorno: TStringList);
+procedure TACBrSicoob.LerRetorno240(ARetorno: TStringList);
 var
   ContLinha: Integer;
   Titulo   : TACBrTitulo;
@@ -615,7 +614,7 @@ begin
 
 end;
 
-procedure TACBrBancoob.LerRetorno400(ARetorno: TStringList);
+procedure TACBrSicoob.LerRetorno400(ARetorno: TStringList);
 var
   ContLinha: Integer;
   Titulo   : TACBrTitulo;
@@ -707,7 +706,7 @@ begin
 
 end;
 
-function TACBrBancoob.GerarRegistroHeader240(
+function TACBrSicoob.GerarRegistroHeader240(
   NumeroRemessa: Integer): String;
 var
   ATipoInscricao: string;
@@ -775,7 +774,7 @@ begin
     end;
 end;
 
-function TACBrBancoob.GerarRegistroTransacao240(
+function TACBrSicoob.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros,
     ADataDesconto,ADataDesconto2,ATipoAceite,NossoNum : string;
@@ -1176,7 +1175,7 @@ begin
   end;
 end;
 
-function TACBrBancoob.GerarRegistroTrailler240(
+function TACBrSicoob.GerarRegistroTrailler240(
   ARemessa: TStringList): String;
 begin
   {REGISTRO TRAILER DO LOTE}
@@ -1205,7 +1204,7 @@ begin
    fpValorTotalDocs := 0;
 end;
 
-function TACBrBancoob.CodMotivoRejeicaoToDescricao(
+function TACBrSicoob.CodMotivoRejeicaoToDescricao(
   const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
   case TipoOcorrencia of
@@ -1394,7 +1393,7 @@ begin
   Result := ACBrSTr(Result);
 end;
 
-function TACBrBancoob.CodOcorrenciaToTipo(
+function TACBrSicoob.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
@@ -1439,7 +1438,7 @@ begin
 
 end;
 
-function TACBrBancoob.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+function TACBrSicoob.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
     02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
@@ -1458,7 +1457,7 @@ begin
   end;
 end;
 
-function TACBrBancoob.TipoOcorrenciaToCod(
+function TACBrSicoob.TipoOcorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
   case TipoOcorrencia of
@@ -1497,7 +1496,7 @@ begin
 
 end;
 
-function TACBrBancoob.TipoOcorrenciaToDescricao(
+function TACBrSicoob.TipoOcorrenciaToDescricao(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var
    CodOcorrencia: Integer;

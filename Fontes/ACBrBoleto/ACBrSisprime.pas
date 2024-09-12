@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrUniprimeNortePR;
+unit ACBrSisprime;
 
 interface
 
@@ -41,9 +41,9 @@ uses
 
 type
 
-  { TACBrUniprimeNortePR }
+  { TACBrSisprime }
 
-  TACBrUniprimeNortePR = class(TACBrBancoClass)
+  TACBrSisprime = class(TACBrBancoClass)
   private
   protected
   public
@@ -75,7 +75,7 @@ uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
 
 { TACBrBancoBradesco }
 
-constructor TACBrUniprimeNortePR.create(AOwner: TACBrBanco);
+constructor TACBrSisprime.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fpDigito                 := 1;
@@ -87,7 +87,7 @@ begin
    fpTamanhoCarteira        := 2;
 end;
 
-function TACBrUniprimeNortePR.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+function TACBrSisprime.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
 begin
    Modulo.CalculoPadrao;
    Modulo.MultiplicadorFinal := 7;
@@ -100,7 +100,7 @@ begin
       Result:= IntToStr(Modulo.DigitoFinal);
 end;
 
-function TACBrUniprimeNortePR.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
+function TACBrSisprime.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras:String;
 begin
@@ -122,13 +122,13 @@ begin
    Result:= FormatFloat( '000', Numero ) + '9'+ DigitoCodBarras + Copy(CodigoBarras,5,39);
 end;
 
-function TACBrUniprimeNortePR.MontarCampoNossoNumero (
+function TACBrSisprime.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result:= ACBrTitulo.Carteira+'/'+ACBrTitulo.NossoNumero+'-'+CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-function TACBrUniprimeNortePR.MontarCampoCodigoCedente (
+function TACBrSisprime.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
@@ -137,7 +137,7 @@ begin
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
-procedure TACBrUniprimeNortePR.GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
+procedure TACBrSisprime.GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
 var
   wLinha: String;
 begin
@@ -160,7 +160,7 @@ begin
    end;
 end;
 
-procedure TACBrUniprimeNortePR.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
+procedure TACBrSisprime.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia :String;
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
@@ -371,7 +371,7 @@ begin
    end;
 end;
 
-procedure TACBrUniprimeNortePR.GerarRegistroTrailler400( ARemessa:TStringList );
+procedure TACBrSisprime.GerarRegistroTrailler400( ARemessa:TStringList );
 var
   wLinha: String;
 begin
@@ -381,7 +381,7 @@ begin
    ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
 end;
 
-Procedure TACBrUniprimeNortePR.LerRetorno400 ( ARetorno: TStringList );
+Procedure TACBrSisprime.LerRetorno400 ( ARetorno: TStringList );
 var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia  :Integer;
@@ -564,7 +564,7 @@ begin
    end;
 end;
 
-function TACBrUniprimeNortePR.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrSisprime.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var
   CodOcorrencia: Integer;
 begin
@@ -658,7 +658,7 @@ begin
   Result := ACBrSTr(Result);
 end;
 
-function TACBrUniprimeNortePR.CodOcorrenciaToTipo(const CodOcorrencia:
+function TACBrSisprime.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
   Result := toTipoOcorrenciaNenhum;
@@ -747,7 +747,7 @@ begin
   end;
 end;
 
-function TACBrUniprimeNortePR.TipoOcorrenciaToCod ( const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
+function TACBrSisprime.TipoOcorrenciaToCod ( const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
   Result := '';
 
@@ -835,7 +835,7 @@ begin
   end;
 end;
 
-function TACBrUniprimeNortePR.CodMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
+function TACBrSisprime.CodMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado:
@@ -1192,7 +1192,7 @@ begin
    Result := ACBrSTr(Result);
 end;
 
-function TACBrUniprimeNortePR.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
+function TACBrSisprime.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
     02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}

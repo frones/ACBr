@@ -32,8 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBancoCecred;
-//Banco passou por reestruturação de marca agora chama Ailos
+unit ACBrBancoAilos;
 
 interface
 
@@ -41,12 +40,12 @@ uses
   Classes, SysUtils, Contnrs, ACBrBoleto, ACBrBoletoConversao;
 
 const
-  CACBrBancoCecred_Versao = '0.0.1';
+  CACBrBancoAilos_Versao = '0.0.1';
 
 type
-  { TACBrBancoCecred}
+  { TACBrBancoAilos}
 
-  TACBrBancoCecred = class(TACBrBancoClass)
+  TACBrBancoAilos = class(TACBrBancoClass)
   private
     fValorTotalDocs : Double;
     fDataProtestoNegativacao : TDateTime;
@@ -96,7 +95,7 @@ uses
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
   StrUtils, Variants, ACBrValidador, ACBrUtil.Base, Math, ACBrUtil.Strings, ACBrUtil.DateTime;
 
-constructor TACBrBancoCecred.create(AOwner: TACBrBanco);
+constructor TACBrBancoAilos.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fDataProtestoNegativacao:=0;
@@ -114,7 +113,7 @@ begin
 
 end;
 
-function TACBrBancoCecred.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+function TACBrBancoAilos.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
 begin
    Result := '0';
 
@@ -130,7 +129,7 @@ begin
       Result:= IntToStr(Modulo.ModuloFinal);
 end;
 
-function TACBrBancoCecred.CalcularTamMaximoNossoNumero(
+function TACBrBancoAilos.CalcularTamMaximoNossoNumero(
   const Carteira: String; const NossoNumero : String = ''; const Convenio: String = ''): Integer;
 begin
    Result := 17;
@@ -141,7 +140,7 @@ begin
 
 end;
 
-function TACBrBancoCecred.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
+function TACBrBancoAilos.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
 var
   ANossoNumero : String;
   AConta : String;
@@ -160,7 +159,7 @@ begin
    Result := ANossoNumero;
 end;
 
-procedure TACBrBancoCecred.DefineDataProtestoNegativacao(
+procedure TACBrBancoAilos.DefineDataProtestoNegativacao(
   const ACBrTitulo: TACBrTitulo);
 var
   ACodProtesto: String;
@@ -190,12 +189,12 @@ begin
 
 end;
 
-procedure TACBrBancoCecred.EhObrigatorioContaDV;
+procedure TACBrBancoAilos.EhObrigatorioContaDV;
 begin
   //validação
 end;
 
-function TACBrBancoCecred.DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoAilos.DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String;
 begin
   with ACBrTitulo do
   begin
@@ -211,7 +210,7 @@ begin
 end;
 
 
-function TACBrBancoCecred.MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
+function TACBrBancoAilos.MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
 var
   CodigoBarras: String;
   FatorVencimento: String;
@@ -241,7 +240,7 @@ begin
    Result:= copy( CodigoBarras, 1, 4) + DigitoCodBarras + copy( CodigoBarras, 5, 44) ;
 end;
 
-function TACBrBancoCecred.MontarCampoCodigoCedente (
+function TACBrBancoAilos.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia
@@ -253,7 +252,7 @@ begin
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
-function TACBrBancoCecred.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
+function TACBrBancoAilos.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 var
   ANossoNumero: String;
 begin
@@ -262,7 +261,7 @@ begin
 
 end;
 
-function TACBrBancoCecred.GerarRegistroHeader240(
+function TACBrBancoAilos.GerarRegistroHeader240(
   NumeroRemessa: Integer): String;
 var
   ATipoInscricao, aConta, aAgencia: String;
@@ -337,7 +336,7 @@ begin
 end;
 
 
-procedure TACBrBancoCecred.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa:TStringList);
+procedure TACBrBancoAilos.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa:TStringList);
 var
   aAgencia: String;
   aConta: String;
@@ -376,7 +375,7 @@ begin
    end;
 end;
 
-function TACBrBancoCecred.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoAilos.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String;
 var
   ATipoOcorrencia, ATipoBoleto : String;
   ADataMoraJuros, ADataDesconto: String;
@@ -605,7 +604,7 @@ begin
 end;
 
 
-procedure TACBrBancoCecred.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
+procedure TACBrBancoAilos.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   ANossoNumero: String;
   ATipoOcorrencia: String;
@@ -787,12 +786,12 @@ begin
    end;
 end;
 
-function TACBrBancoCecred.GetLocalPagamento: String;
+function TACBrBancoAilos.GetLocalPagamento: String;
 begin
   Result := ACBrStr('Pagar preferencialmente nas cooperativas do Sistema Ailos.');
 end;
 
-function TACBrBancoCecred.GerarRegistroTrailler240(ARemessa: TStringList): String;
+function TACBrBancoAilos.GerarRegistroTrailler240(ARemessa: TStringList): String;
 var
   wQTDTitulos : Integer;
 begin
@@ -827,7 +826,7 @@ begin
            space(205);                                                  // 36 a 240 - Uso exclusivo FEBRABAN/CNAB
 end;
 
-procedure TACBrBancoCecred.GerarRegistroTrailler400(
+procedure TACBrBancoAilos.GerarRegistroTrailler400(
   ARemessa: TStringList);
 var
   wLinha: String;
@@ -838,7 +837,7 @@ begin
    ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
 end;
 
-function TACBrBancoCecred.TipoOcorrenciaToCod (
+function TACBrBancoAilos.TipoOcorrenciaToCod (
    const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
   Result := '';
@@ -918,7 +917,7 @@ begin
   }
 end;
 
-function TACBrBancoCecred.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrBancoAilos.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var
  CodOcorrencia: Integer;
 begin
@@ -1001,7 +1000,7 @@ begin
   Result := ACBrSTr(Result);
 end;
 
-function TACBrBancoCecred.CodOcorrenciaToTipo(const CodOcorrencia:
+function TACBrBancoAilos.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
   Result := toTipoOcorrenciaNenhum;
@@ -1067,7 +1066,7 @@ begin
 
 end;
 
-function TACBrBancoCecred.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+function TACBrBancoAilos.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
     02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
@@ -1087,7 +1086,7 @@ begin
   end;
 end;
 
-function TACBrBancoCecred.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
+function TACBrBancoAilos.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
   if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then // 16,2
      begin
@@ -1326,7 +1325,7 @@ begin
 
 end;
 
-procedure TACBrBancoCecred.LerRetorno240(ARetorno: TStringList);
+procedure TACBrBancoAilos.LerRetorno240(ARetorno: TStringList);
 var
   Titulo: TACBrTitulo;
   TempData, Linha, rCedente, rCNPJCPF, rConta: String;
@@ -1438,7 +1437,7 @@ begin
    ACBrBanco.TamanhoMaximoNossoNum := 10;
 end;
 
-procedure TACBrBancoCecred.LerRetorno400(ARetorno: TStringList);
+procedure TACBrBancoAilos.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;

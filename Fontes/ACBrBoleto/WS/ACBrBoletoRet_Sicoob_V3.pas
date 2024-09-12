@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBoletoRet_Bancoob_APIV3;
+unit ACBrBoletoRet_Sicoob_V3;
 
 interface
 
@@ -52,7 +52,7 @@ type
 
 { TRetornoEnvio_Sicoob_API }
 
- TRetornoEnvio_Bancoob_APIV3 = class(TRetornoEnvioREST)
+ TRetornoEnvio_Sicoob_V3 = class(TRetornoEnvioREST)
  private
    function DateBancoobToDateTime(Const AValue : String) : TDateTime;
  public
@@ -79,13 +79,13 @@ resourcestring
 
 { TRetornoEnvio }
 
-constructor TRetornoEnvio_Bancoob_APIV3.Create(ABoletoWS: TACBrBoleto);
+constructor TRetornoEnvio_Sicoob_V3.Create(ABoletoWS: TACBrBoleto);
 begin
   inherited Create(ABoletoWS);
 
 end;
 
-function TRetornoEnvio_Bancoob_APIV3.DateBancoobToDateTime(
+function TRetornoEnvio_Sicoob_V3.DateBancoobToDateTime(
   const AValue: String): TDateTime;
 var
  data, ano, mes, dia : String;
@@ -97,12 +97,12 @@ begin
   Result := StrToDateDef( data ,0 );
 end;
 
-destructor TRetornoEnvio_Bancoob_APIV3.Destroy;
+destructor TRetornoEnvio_Sicoob_V3.Destroy;
 begin
   inherited Destroy;
 end;
 
-function TRetornoEnvio_Bancoob_APIV3.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
+function TRetornoEnvio_Sicoob_V3.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
   LJson, LJSonObject, LJsonListaHistoricoObject, LJsonViolacao : TACBrJSONObject;
   LJsonListaHistoricoArray, LJsonViolacoesArray: TACBrJSONArray;
@@ -307,7 +307,7 @@ begin
 
 end;
 
-function TRetornoEnvio_Bancoob_APIV3.LerListaRetorno: Boolean;
+function TRetornoEnvio_Sicoob_V3.LerListaRetorno: Boolean;
 var
   ListaRetorno: TACBrBoletoRetornoWS;
   AJson, AJSonObject, AJsonViolacao: TACBrJSONObject;
@@ -424,7 +424,7 @@ begin
   end;
 end;
 
-function TRetornoEnvio_Bancoob_APIV3.RetornoEnvio(const AIndex: Integer): Boolean;
+function TRetornoEnvio_Sicoob_V3.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
   Result:=inherited RetornoEnvio(AIndex);
 end;

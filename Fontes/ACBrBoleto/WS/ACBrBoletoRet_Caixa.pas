@@ -142,12 +142,7 @@ begin
               CodRetorno := Leitor.rCampo(tcStr, 'COD_RETORNO');
               NSU        := Leitor.rCampo(tcStr, 'NSU');
 
-              if leitor.rExtrai(3, 'MENSAGENS') <> '' then
-              begin
-                Retorno := Leitor.rCampo(tcStr, 'SITUACAO');
-                TituloRet.EstadoTituloCobranca := Retorno;
-                TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(AnsiUpperCase(Retorno));
-              end;
+
             end;
           end;
 
@@ -174,6 +169,10 @@ begin
           begin
             if leitor.rExtrai(3, 'TITULO') <> ''  then
             begin
+              ControleNegocial.Retorno := Leitor.rCampo(tcStr, 'SITUACAO');
+              TituloRet.EstadoTituloCobranca := ControleNegocial.Retorno;
+              TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(AnsiUpperCase(ControleNegocial.Retorno));
+
               TituloRet.NumeroDocumento         := Leitor.rCampo(tcStr, 'NUMERO_DOCUMENTO');
               TituloRet.Vencimento              := Leitor.rCampo(tcDat, 'DATA_VENCIMENTO');
               TituloRet.ValorDocumento          := Leitor.rCampo(tcDe2, 'VALOR');

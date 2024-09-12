@@ -1570,25 +1570,17 @@ begin
       begin
         VersaoEvento := TACBrBPe(FPDFeOwner).LerVersaoDeParams(LayBPeEvento);
 
-//        Leitor.Arquivo := FPDadosMsg;
         Texto := '<eventoBPe versao="' + VersaoEvento + '">' +
-                   SeparaDados(FPDadosMsg, 'infEvento', True) +
-                   SeparaDados(FPDadosMsg, 'Signature', True) +
+                     SeparaDados(FPDadosMsg, 'infEvento', True) +
+                     '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                     SeparaDados(FPDadosMsg, 'Signature', False) +
+                     '</Signature>'+
                  '</eventoBPe>';
-                   {
-                  Leitor.rExtrai(1, 'infEvento', '', I + 1) +
-                  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                   Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                   Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                   Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                  '</Signature>'+}
 
-//        Leitor.Arquivo := FPRetWS;
         Texto := Texto +
                    '<retEventoBPe versao="' + VersaoEvento + '">' +
-                     SeparaDados(FPRetWS, 'infEvento', True) +
+                      SeparaDados(FPRetWS, 'infEvento', True) +
                    '</retEventoBPe>';
-//                    Leitor.rExtrai(1, 'infEvento', '', J + 1) +
 
         Texto := '<procEventoBPe versao="' + VersaoEvento + '" xmlns="' + ACBRBPE_NAMESPACE + '">' +
                    Texto +

@@ -43,7 +43,6 @@ uses
    ACBrBoletoConversao,
    ACBrBoleto,
    ACBrBoletoWS.Rest,
-   ACBrUtil.Strings,
    ACBrJSON;
 
 type
@@ -103,7 +102,8 @@ uses
    strutils,
    DateUtils,
    ACBrUtil.DateTime,
-   ACBrUtil.Base;
+   ACBrUtil.Base,
+   ACBrUtil.Strings;
 
 { TBoletoW_Banrisul }
 

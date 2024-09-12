@@ -71,7 +71,7 @@ type
 
 implementation
 
-uses synautil, DateUtils, ACBrJSON, ACBrUtil.Strings;
+uses synautil, synacode, DateUtils, ACBrJSON, ACBrUtil.Strings;
 
 { TACBrPSPBradesco }
 
@@ -99,7 +99,7 @@ end;
 
 procedure TACBrPSPBradesco.Autenticar;
 var
-  wURL: String;
+  wURL, BasicAutentication: String;
   qp: TACBrQueryParams;
   wResultCode: Integer;
   wRespostaHttp: AnsiString;
@@ -122,9 +122,11 @@ begin
     qp.Free;
   end;
   
-  Http.Protocol := '1.1';
+  Http.Protocol := '1.2';
   Http.UserName := ClientID;
   Http.Password := ClientSecret;
+  BasicAutentication := 'Basic '+EncodeBase64(ClientID + ':' + ClientSecret);
+  Http.Headers.Add(ChttpHeaderAuthorization+' '+BasicAutentication);
   TransmitirHttp(ChttpMethodPOST, wURL, wResultCode, wRespostaHttp);
 
   if (wResultCode = HTTP_OK) then

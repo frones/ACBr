@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/09/2024
+-- ACBrPIXPSPBradesco --
+[*] #TK-5445: Ajuste visando correta utilização com o PSP Bradesco.
+   Por: Vagner S Oliveira
 -- ACBrPIXPSPC6Bank --
 [+] Liberado PSP para utilização.
 

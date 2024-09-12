@@ -43,7 +43,7 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
-12/02/2024
+12/09/2024
 -- ACBrMDFeWebServices --
 [*] Ajustes na montagem do XML *-ProcEventoMDFe.xml
    Por: Italo Giurizzato Junior

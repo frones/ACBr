@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/09/2024
+-- ACBrNFComWebServices --
+[*] Ajustes na montagem do XML *-ProcEventoNFCom.xml
+   Por: Italo Giurizzato Junior
+
 12/07/2024
 -- ACBrNFComXmlWriter --
 [*] Possível solução para a geração correta da string do QR-Code.

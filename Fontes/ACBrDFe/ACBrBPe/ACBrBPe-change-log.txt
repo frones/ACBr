@@ -45,7 +45,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-12/02/2024
+12/09/2024
 -- ACBrBPeWebServices --
 [*] Ajustes na montagem do XML *-ProcEventoBPe.xml
    Por: Italo Giurizzato Junior

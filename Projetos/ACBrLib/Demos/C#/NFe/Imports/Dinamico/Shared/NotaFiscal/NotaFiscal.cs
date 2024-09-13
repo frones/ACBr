@@ -35,6 +35,7 @@ namespace ACBrLib.NFe
             Exporta = new ExportaNFe();
             Compra = new CompraNFe();
             Cana = new CanaNFe();
+            InfNFeSupl = new InfNFeSupl();
             InfRespTec = new InfRespTec();
 
             InfNFe.Versao = "4.00";
@@ -94,6 +95,8 @@ namespace ACBrLib.NFe
         public CompraNFe Compra { get; }
 
         public CanaNFe Cana { get; }
+
+        public InfNFeSupl InfNFeSupl { get; }
 
         public InfRespTec InfRespTec { get; }
 
@@ -268,6 +271,8 @@ namespace ACBrLib.NFe
                 for (var i = 0; i < Cana.deduc.Count; i++)
                     iniData.WriteToIni(Cana.deduc[i], $"deduc{i + 1:000}");
             }
+
+            iniData.WriteToIni(InfNFeSupl, "infNFeSupl");
 
             if (!string.IsNullOrEmpty(InfRespTec.CNPJ))
                 iniData.WriteToIni(InfRespTec, "infRespTec");
@@ -541,6 +546,8 @@ namespace ACBrLib.NFe
 
                 Cana.deduc.Add(deduc);
             } while (deduc != null);
+
+            iniData.ReadFromIni(InfNFeSupl, "infNFeSupl");
 
             iniData.ReadFromIni(InfRespTec, "infRespTec");
         }

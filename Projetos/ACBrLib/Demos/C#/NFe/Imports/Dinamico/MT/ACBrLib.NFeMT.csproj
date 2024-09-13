@@ -110,6 +110,7 @@
     <Compile Include="..\Shared\NotaFiscal\IndISS.cs" Link="NotaFiscal\IndISS.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfIntermedNFe.cs" Link="NotaFiscal\InfIntermedNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfNFe.cs" Link="NotaFiscal\InfNFe.cs" />
+	<Compile Include="..\Shared\NotaFiscal\InfNFeSupl.cs" Link="NotaFiscal\InfNFeSupl.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfoAdicionalNfe.cs" Link="NotaFiscal\InfoAdicionalNfe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IPIProdutoNFe.cs" Link="NotaFiscal\IPIProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ISSQNcSitTrib.cs" Link="NotaFiscal\ISSQNcSitTrib.cs" />

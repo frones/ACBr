@@ -39,7 +39,7 @@ Símbolo : Significado
 
 
 26/08/2024
--- ACrutil.Math--
+-- ACBrUtil.Math--
 [*] #TK-4828: Realiza ajuste visando correta exibição dos HTML Entities quando convertidos.
    Por: Diego Folieni
 

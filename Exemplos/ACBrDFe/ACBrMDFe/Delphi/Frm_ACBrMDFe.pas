@@ -227,7 +227,6 @@ type
     OpenDialog1: TOpenDialog;
     btnStatusServ: TButton;
     ACBrMDFe1: TACBrMDFe;
-    btnCriarEnviar: TButton;
     btnCriarEnviarSincrono: TButton;
     btnGerarPDFEvento: TButton;
     btnInclusaoCondutor: TButton;
@@ -286,7 +285,6 @@ type
     procedure btnImprimirEventoClick(Sender: TObject);
     procedure btnDistribuicaoDFeClick(Sender: TObject);
     procedure ACBrMDFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
-    procedure btnCriarEnviarClick(Sender: TObject);
     procedure btnCriarEnviarSincronoClick(Sender: TObject);
     procedure btnGerarPDFEventoClick(Sender: TObject);
     procedure btnConsultarNaoEncerradosClick(Sender: TObject);
@@ -927,19 +925,19 @@ begin
     memoRespWS.Lines.Text := ACBrMDFe1.WebServices.Retorno.RetornoWS;
     LoadXML(ACBrMDFe1.WebServices.Retorno.RetornoWS, WBResposta);
 
-    MemoDados.Lines.Add('-------------------------------------------');
-    MemoDados.Lines.Add('Retorno do Envio do MDFe no modo Assíncrono');
+    MemoDados.Lines.Add('-----------------------------------------');
+    MemoDados.Lines.Add('Retorno do Envio do MDFe em modo Síncrono');
     MemoDados.Lines.Add('');
-    MemoDados.Lines.Add('tpAmb    : ' + TpAmbToStr(ACBrMDFe1.WebServices.Retorno.TpAmb));
-    MemoDados.Lines.Add('verAplic : ' + ACBrMDFe1.WebServices.Retorno.verAplic);
-    MemoDados.Lines.Add('cStat    : ' + IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
-    MemoDados.Lines.Add('cUF      : ' + IntToStr(ACBrMDFe1.WebServices.Retorno.cUF));
-    MemoDados.Lines.Add('xMotivo  : ' + ACBrMDFe1.WebServices.Retorno.xMotivo);
-    MemoDados.Lines.Add('cMsg     : ' + IntToStr(ACBrMDFe1.WebServices.Retorno.cMsg));
-    MemoDados.Lines.Add('xMsg     : ' + ACBrMDFe1.WebServices.Retorno.xMsg);
-    MemoDados.Lines.Add('Recibo   : ' + ACBrMDFe1.WebServices.Retorno.Recibo);
-    MemoDados.Lines.Add('Protocolo: ' + ACBrMDFe1.WebServices.Retorno.Protocolo);
-    MemoDados.Lines.Add('-------------------------------------------');
+    MemoDados.Lines.Add('Chave    : ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chMDFe);
+    MemoDados.Lines.Add('Protocolo: ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.nProt);
+    MemoDados.Lines.Add('');
+    MemoDados.Lines.Add('tpAmb   : ' + TpAmbToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
+    MemoDados.Lines.Add('verAplic: ' + ACBrMDFe1.WebServices.Enviar.verAplic);
+    MemoDados.Lines.Add('cStat   : ' + IntToStr(ACBrMDFe1.WebServices.Enviar.cStat));
+    MemoDados.Lines.Add('xMotivo : ' + ACBrMDFe1.WebServices.Enviar.xMotivo);
+    MemoDados.Lines.Add('cUF     : ' + IntToStr(ACBrMDFe1.WebServices.Enviar.cUF));
+    MemoDados.Lines.Add('xMsg    : ' + ACBrMDFe1.WebServices.Enviar.Msg);
+    MemoDados.Lines.Add('-----------------------------------------');
   end;
 end;
 
@@ -1068,55 +1066,6 @@ begin
   MemoDados.Lines.Add('cMsg    : ' + IntToStr(ACBrMDFe1.WebServices.Recibo.cMsg));
   MemoDados.Lines.Add('Recibo  : ' + ACBrMDFe1.WebServices.Recibo.Recibo);
   MemoDados.Lines.Add('---------------------------');
-end;
-
-procedure TfrmACBrMDFe.btnCriarEnviarClick(Sender: TObject);
-var
-  vAux, vNumLote: String;
-begin
-  if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux)) then
-    exit;
-
-  if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
-    exit;
-
-  vNumLote := OnlyNumber(vNumLote);
-
-  if Trim(vNumLote) = '' then
-  begin
-    MessageDlg('Número do Lote inválido.', mtError,[mbok], 0);
-    exit;
-  end;
-
-  AlimentarComponente(vAux);
-
-  ACBrMDFe1.Enviar(StrToInt(vNumLote));
-
-  MemoResp.Lines.Text   := ACBrMDFe1.WebServices.Retorno.RetWS;
-  memoRespWS.Lines.Text := ACBrMDFe1.WebServices.Retorno.RetornoWS;
-
-  LoadXML(ACBrMDFe1.WebServices.Retorno.RetWS, WBResposta);
-
-  pgRespostas.ActivePageIndex := 1;
-
-  with MemoDados do
-  begin
-    Lines.Add('-------------------------------------------');
-    Lines.Add('Retorno do Envio do MDFe em modo Assíncrono');
-    Lines.Add('');
-    Lines.Add('Chave    : ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chMDFe);
-    Lines.Add('Protocolo: ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.nProt);
-    Lines.Add('');
-    Lines.Add('tpAmb    : ' + TpAmbToStr(ACBrMDFe1.WebServices.Retorno.tpAmb));
-    Lines.Add('verAplic : ' + ACBrMDFe1.WebServices.Retorno.verAplic);
-    Lines.Add('cStat    : ' + IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
-    Lines.Add('xMotivo  : ' + ACBrMDFe1.WebServices.Retorno.xMotivo);
-    Lines.Add('cUF      : ' + IntToStr(ACBrMDFe1.WebServices.Retorno.cUF));
-    Lines.Add('xMsg     : ' + ACBrMDFe1.WebServices.Retorno.Msg);
-    Lines.Add('Recibo   : ' + ACBrMDFe1.WebServices.Retorno.Recibo);
-    Lines.Add('Protocolo: ' + ACBrMDFe1.WebServices.Retorno.Protocolo);
-    Lines.Add('-------------------------------------------');
-  end;
 end;
 
 procedure TfrmACBrMDFe.btnCriarEnviarSincronoClick(Sender: TObject);

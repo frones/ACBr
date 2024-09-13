@@ -1390,8 +1390,8 @@ object frmACBrMDFe: TfrmACBrMDFe
           OnClick = btnAdicionarProtocoloClick
         end
         object btnCarregarXMLEnviar: TButton
-          Left = 8
-          Top = 40
+          Left = 374
+          Top = 9
           Width = 177
           Height = 25
           Caption = 'Carregar XML e Enviar'
@@ -1407,22 +1407,13 @@ object frmACBrMDFe: TfrmACBrMDFe
           TabOrder = 8
           OnClick = btnValidarAssinaturaClick
         end
-        object btnCriarEnviar: TButton
-          Left = 192
-          Top = 9
-          Width = 177
-          Height = 25
-          Caption = 'Criar e Enviar modo Ass'#237'ncrono'
-          TabOrder = 9
-          OnClick = btnCriarEnviarClick
-        end
         object btnCriarEnviarSincrono: TButton
-          Left = 375
+          Left = 191
           Top = 9
           Width = 177
           Height = 25
           Caption = 'Criar e Enviar modo S'#237'ncrono'
-          TabOrder = 10
+          TabOrder = 9
           OnClick = btnCriarEnviarSincronoClick
         end
       end

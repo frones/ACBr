@@ -183,8 +183,14 @@ begin
                   protMDFe.digVal := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('digVal'), tcStr);
                   protMDFe.cStat := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('cStat'), tcInt);
                   protMDFe.xMotivo := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('xMotivo'), tcStr);
-                  protMDFe.cMsg := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('cMsg'), tcInt);
-                  protMDFe.xMsg := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('xMsg'), tcStr);
+
+                  ANodeAux2 := ANodeAux2.Childrens.FindAnyNs('infFisco');
+
+                  if ANodeAux2 <> nil then
+                  begin
+                    protMDFe.cMsg := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('cMsg'), tcInt);
+                    protMDFe.xMsg := ObterConteudoTag(ANodeAux2.Childrens.FindAnyNs('xMsg'), tcStr);
+                  end;
                 end;
 
                 ANodeAux2 := ANodeAux.Childrens.FindAnyNs('procInfraSA');

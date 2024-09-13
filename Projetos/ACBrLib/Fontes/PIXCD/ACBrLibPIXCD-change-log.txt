@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2024
+-- ACBrLibPIXCDBase --
+[*] #TK-5927: Ajuste visando corrigir problema se receber resposta de erro ao cancelar cobrança.
+Por: Diego Folieni 
+
 23/07/2024
 -- ACBrLibPIXCDBase, ACBrLibPIXCDConsts, ACBrLibPIXCDRespostas, ACBrLibPIXCDST, ACBrLibPIXCDMT,
    ACBrLibPIXCDStaticImportST, ACBrLibPIXCDStaticImportMT --

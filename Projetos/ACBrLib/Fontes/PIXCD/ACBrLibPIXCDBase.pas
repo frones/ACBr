@@ -637,7 +637,7 @@ begin
         RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
           RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCob.Problema);
-          Resposta := Resp.Gerar;
+          Resposta := RespProb.Gerar;
         finally
           RespProb.Free;
         end;
@@ -920,7 +920,7 @@ begin
         RespProb := TLibPIXCDProblemaResposta.Create(Config.TipoResposta, Config.CodResposta);
         try
           RespProb.Processar(PIXCDDM.ACBrPixCD1.PSP.epCobV.Problema);
-          Resposta := Resp.Gerar;
+          Resposta := RespProb.Gerar;
         finally
           RespProb.Free;
         end;

@@ -216,6 +216,8 @@ type
     function GetExtratoConsultado: TACBrExtratoConsultado; override;
 
     function CalcularURL: String; override;
+    function TratarDataPath(aData: TDateTime): String;
+
     procedure Autenticar; override;
   public
     destructor Destroy; override;
@@ -412,6 +414,19 @@ begin
       [HTTPResultCode, cHTTPMethodPOST, wURL]));
 end;
 
+function TACBrExtratoAPIBB.TratarDataPath(aData: TDateTime): String;
+var
+  i: Integer;
+begin
+  Result := EmptyStr;
+
+  // Convertendo pra integer, pois não deve enviar os zeros à esquerda
+  i := StrToIntDef(FormatDateTime('ddmmyyyy', aData), 0);
+  if EstaZerado(i) then
+    Exit;
+  Result := IntToStr(i);
+end;
+
 function TACBrExtratoAPIBB.GetExtratoBBErros: TACBrExtratoBBErros;
 begin
   if (not Assigned(fExtratoBBErros)) then
@@ -460,9 +475,9 @@ begin
   if NaoEstaZerado(aRegistrosPorPag) then
     URLQueryParams.Values['quantidadeRegistroPaginaSolicitacao'] := IntToStr(aRegistrosPorPag);
   if NaoEstaZerado(aDataInicio) then
-    URLQueryParams.Values['dataInicioSolicitacao'] := FormatDateTime('ddmmyyyy', aDataInicio);
+    URLQueryParams.Values['dataInicioSolicitacao'] := TratarDataPath(aDataInicio);
   if NaoEstaZerado(aDataFim) then
-    URLQueryParams.Values['dataFimSolicitacao'] := FormatDateTime('ddmmyyyy', aDataFim);
+    URLQueryParams.Values['dataFimSolicitacao'] := TratarDataPath(aDataFim);
 
   URLPathParams.Add(cExtratoBBPathCC);
   URLPathParams.Add(cExtratoBBPathAgencia);

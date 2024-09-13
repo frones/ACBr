@@ -38,6 +38,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/09/2024
+-- ACBrExtratoAPI --
+[-] Correção para funcionar o filtro por período no extrato do Banco do Brasil
+
 04/09/2024
 -- ACBrBaaS --
 [+] Novo pacote ACBrBaaS para centralizar os componentes relativos à "Banking as a Service".

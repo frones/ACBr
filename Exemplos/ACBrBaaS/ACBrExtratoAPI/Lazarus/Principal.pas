@@ -154,7 +154,7 @@ uses
 procedure TfrPrincipal.btConsultarExtratoClick(Sender: TObject);
 begin
   AplicarConfiguracao;
-  ACBrExtratoAPI1.ConsultarExtrato(edAgencia.Text, edConta.Text{, edInicio.Date, edFim.Date});
+  ACBrExtratoAPI1.ConsultarExtrato(edAgencia.Text, edConta.Text, edInicio.Date, edFim.Date);
   PreencherLancamentos;
 end;
 

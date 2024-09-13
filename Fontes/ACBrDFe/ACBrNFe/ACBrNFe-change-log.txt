@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2024
+-- ACBrNFeNotasFiscais --
+[*] #TK-5931 - Adicionar na classe de alto nível propriedades para seção infNFeSupl
+    - Implementado a classe infNFeSupl nas funções LerArqIni e GerarNFeIni para que o mesmo funcione nas classes do C#.
+    Por: Antonio Carlos Junior / Julio Cavalcanti / Diego Folieni
+
 12/09/2024
 -- ACBrNFeWebService --
 [*] #TK-5953: Ajuste visando retornar a data/hora do recebimento do documento.

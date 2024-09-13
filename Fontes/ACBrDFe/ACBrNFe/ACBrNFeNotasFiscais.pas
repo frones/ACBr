@@ -2762,6 +2762,16 @@ begin
         Inc(I);
       end;
 
+      sSecao := 'infNFeSupl'
+      if INIRec.SectionExists(sSecao) then
+      begin
+        with infNFeSupl do
+        begin
+          qrCode := INIRec.ReadString(sSecao, 'qrCode','');
+          urlChave := INIRec.ReadString(sSecao, 'urlChave','');
+        end;
+      end;
+
       sSecao := 'infRespTec';
       if INIRec.SectionExists(sSecao) then
       begin
@@ -3700,6 +3710,9 @@ begin
           INIRec.WriteFloat(sSecao, 'vDed', vDed);
         end;
       end;
+
+      INIRec.WriteString('infNFeSupl', 'qrCode', infNFeSupl.qrCode);
+      INIRec.WriteString('infNFeSupl', 'urlChave', infNFeSupl.urlChave);
 
       INIRec.WriteString('infRespTec', 'CNPJ', infRespTec.CNPJ);
       INIRec.WriteString('infRespTec', 'xContato', infRespTec.xContato);

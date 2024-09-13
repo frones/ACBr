@@ -539,14 +539,14 @@ begin
         1:
           begin
             LJsonJuros.AddPair('codigoMora','VALORDIA');
-            LJsonJuros.AddPair('data', DateTimeToDateInter(ATitulo.DataMulta));
+            LJsonJuros.AddPair('data', DateTimeToDateInter(ATitulo.DataMoraJuros));
             LJsonJuros.AddPair('valor', ATitulo.ValorMoraJuros);
             LJsonJuros.AddPair('taxa', 0);
           end;
         2:
           begin
             LJsonJuros.AddPair('codigoMora', 'TAXAMENSAL');
-            LJsonJuros.AddPair('data', DateTimeToDateInter(ATitulo.DataMulta));
+            LJsonJuros.AddPair('data', DateTimeToDateInter(ATitulo.DataMoraJuros));
             LJsonJuros.AddPair('taxa', ATitulo.ValorMoraJuros);
             LJsonJuros.AddPair('valor', 0);
           end;
@@ -650,7 +650,7 @@ begin
             if Boleto.Cedente.CedenteWS.IndicadorPix then
               begin
                 LJsonDesconto.AddPair('codigo','VALORFIXODATAINFORMADA');
-                LJsonDesconto.AddPair('taxa',ATitulo.ValorDesconto);
+                LJsonDesconto.AddPair('valor',ATitulo.ValorDesconto);
                 LJsonDesconto.AddPair('quantidadeDias',(ATitulo.Vencimento - ATitulo.DataDesconto));
               end
             else

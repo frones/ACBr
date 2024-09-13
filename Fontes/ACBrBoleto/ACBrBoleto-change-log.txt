@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2024
+-- ACBrBoletoW_Inter_API --
+[-] Ajustes dos parametros gerarJuros e valorfixodatainformada
+	https://www.projetoacbr.com.br/forum/topic/79677-problema-no-envio-boleto-inter-api-v3/#comment-515314
+   por jefferson01 / Conf. Daniel Morais InfoCotidiano
+
 09/09/2024
 -- ACBrBoletoW_Inter_API --
 [-] Ajustes dos parametros da consulta. IndicadorPix True Utiliza V3, False Utiliza V2 que são diferentes os filtros.

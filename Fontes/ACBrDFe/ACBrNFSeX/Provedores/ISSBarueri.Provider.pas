@@ -355,6 +355,7 @@ begin
 
   with ConfigGeral do
   begin
+    QuebradeLinha := '|';
     Identificador := '';
     UseCertificateHTTP := True;
     ModoEnvio := meLoteAssincrono;

@@ -87,7 +87,7 @@ end;
 procedure TNFSeW_ISSBarueri.GerarRegistroTipo2;
 var
   Quantidade: Integer;
-  SituacaoRPS, CodCancelamento, MotCancelamento: String;
+  SituacaoRPS, CodCancelamento, MotCancelamento, Discriminacao: String;
   ValorTotalRetencoes: Double;
 begin
   SituacaoRPS := 'E';
@@ -102,6 +102,8 @@ begin
     CodCancelamento := NFSe.CodigoCancelamento;
     MotCancelamento := NFSe.MotivoCancelamento;
   end;
+
+  Discriminacao := StringReplace(NFSe.Servico.Discriminacao, ';', Opcoes.QuebraLinha, [rfReplaceAll, rfIgnoreCase]);
 
   if (Assigned(NFSe.Servico.ItemServico)) and
      (Pred(NFSe.Servico.ItemServico.Count) > 0) then
@@ -163,7 +165,7 @@ begin
     PadRight('', 6, ' ')+ // Fatura N Numérico 6 935 940 Número da Fatura
     PadLeft('', 15, ' ')+ // Valor Fatura S* Numérico 15 941 955
     PadRight('', 15, ' ')+ // Forma de Pagamento S* Texto 15 956 970
-    PadRight(NFSe.Servico.Discriminacao, 1000, ' ') // Discriminação do Serviço S Texto 1000 971 1970
+    PadRight(Discriminacao, 1000, ' ') // Discriminação do Serviço S Texto 1000 971 1970
   );
 end;
 

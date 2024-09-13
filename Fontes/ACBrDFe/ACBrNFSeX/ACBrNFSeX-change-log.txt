@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2024
+-- ISSBarueri.Provider, ISSBarueri.GravarXml --
+[*] #TK-5959: Ajustes visando correto uso da propriedade QuebradeLinha.
+  Por: Diego Folieni 
+
 12/09/2024
 -- SigISS.Provider --
 [*] #TK-5854: Ajuste para que mensagem de retorno de sucesso seja interpretada como alerta e não erro.

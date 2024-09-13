@@ -2762,7 +2762,7 @@ begin
         Inc(I);
       end;
 
-      sSecao := 'infNFeSupl'
+      sSecao := 'infNFeSupl';
       if INIRec.SectionExists(sSecao) then
       begin
         with infNFeSupl do

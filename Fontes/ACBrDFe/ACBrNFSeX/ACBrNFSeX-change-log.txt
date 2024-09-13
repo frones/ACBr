@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5954: A cidade de Saquarema/RJ, trocou a URL de produção, o provedor continua
+    o mesmo.
+  Por: Andre Muriae
 -- ISSBarueri.Provider, ISSBarueri.GravarXml --
 [*] #TK-5959: Ajustes visando correto uso da propriedade QuebradeLinha.
   Por: Diego Folieni 
@@ -51,7 +55,6 @@ Símbolo : Significado
 -- SigISS.Provider --
 [*] #TK-5854: Ajuste para que mensagem de retorno de sucesso seja interpretada como alerta e não erro.
   Por: Diego Folieni / Italo Giurizzato Junior 
-
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Na versão 2 do layout da ABRASF não existe uma tag especifica para o ValorIssRetido,
     logo se tem ISS Retido devemos zerar o valor do campo ValorIss.

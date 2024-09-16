@@ -297,10 +297,12 @@ begin
     Result := 'Delphi 10.3 Rio'
   else if AVersionStr = 'd27' then
     Result := 'Delphi 10.4 Sydney'
-    else if AVersionStr = 'd28' then
+  else if AVersionStr = 'd28' then
     Result := 'Delphi 11 Alexandria'
+  else if AVersionStr = 'd29' then
+    Result := 'Delphi 12 Athens'
   else
-    Result := '';
+    Result := ' - ';
 end;
 
 end.

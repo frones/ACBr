@@ -27,7 +27,7 @@ uses
   ACBrBancoRendimento, ACBrBancoSafra, ACBrBancoSafraBradesco, 
   ACBrBancoSofisaSantander, ACBrBancoUnicredES, ACBrBancoUnicredRS, 
   ACBrBancoUnicredSC, ACBrBoletoWS.Rest.OAuth, ACBrBoletoWS.Rest, 
-  ACBrBoletoWS.SOAP, ACBrUniprime, ACBrSisprime, ACBrBoletoRet_Credisis, 
+  ACBrBoletoWS.SOAP, ACBrBancoUniprime, ACBrBancoSisprime, ACBrBoletoRet_Credisis, 
   ACBrBoletoRet_Inter_API, ACBrBoletoRet_Itau, ACBrBoletoRet_Sicredi_APIECOMM, 
   ACBrBoletoW_Credisis, ACBrBoletoW_Inter_API, ACBrBoletoW_Itau, 
   ACBrBoletoW_Sicredi_APIECOMM, ACBrBancoVotorantim, 

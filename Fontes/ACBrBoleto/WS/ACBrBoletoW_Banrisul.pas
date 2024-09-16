@@ -53,6 +53,7 @@ type
       function CodigoTipoTitulo(AEspecieDoc: String): Integer;
    protected
       procedure DefinirURL; override;
+      procedure DefinirParamOAuth; override;
       procedure DefinirContentType; override;
       procedure GerarHeader; override;
       procedure GerarDados; override;
@@ -95,6 +96,10 @@ const
    C_ACCEPT = 'application/json';
    C_AUTHORIZATION = 'Authorization';
 
+   C_ACCEPT_ENCODING = 'gzip, deflate, br';
+   C_CHARSET         = 'utf-8';
+   C_ACCEPT_CHARSET  = 'utf-8';
+
 implementation
 
 uses
@@ -103,7 +108,8 @@ uses
    DateUtils,
    ACBrUtil.DateTime,
    ACBrUtil.Base,
-   ACBrUtil.Strings;
+   ACBrUtil.Strings,
+   blcksock;
 
 { TBoletoW_Banrisul }
 
@@ -181,7 +187,8 @@ end;
 
 function TBoletoW_Banrisul.GerarTokenAutenticacao: string;
 begin
-   Result := inherited GerarTokenAutenticacao;
+  OAuth.Payload := True;
+  Result := inherited GerarTokenAutenticacao;
 end;
 
 procedure TBoletoW_Banrisul.DefinirKeyUser;
@@ -200,6 +207,11 @@ begin
 
 end;
 
+procedure TBoletoW_Banrisul.DefinirParamOAuth;
+begin
+  FParamsOAuth := 'grant_type=client_credentials';
+end;
+
 procedure TBoletoW_Banrisul.DefinirAutenticacao;
 begin
    FPAuthorization := C_ACCESS_TOKEN + ': ' + GerarTokenAutenticacao;
@@ -207,10 +219,7 @@ end;
 
 function TBoletoW_Banrisul.ValidaAmbiente: String;
 begin
-   if Boleto.Configuracoes.WebService.VersaoDF = 'T' then
-      Result := 'T'
-   else
-      Result := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, 'P', 'T');
+  Result := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, 'P', 'T');
 end;
 
 procedure TBoletoW_Banrisul.RequisicaoJson;
@@ -627,6 +636,7 @@ begin
       OAuth.URL := IfThen(OAuth.Ambiente = taHomologacao, C_URL_OAUTH_HOM, C_URL_OAUTH_PROD);
 
       OAuth.Payload := True;
+
    end;
 end;
 

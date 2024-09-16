@@ -2084,7 +2084,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF}
      ACBrBancoSafraBradesco,
      ACBrBancoAilos,
      ACBrBancoBrasilSicoob,
-     ACBrUniprime,
+     ACBrBancoUniprime,
      ACBrBancoUnicredRS,
      ACBrBancoBanese,
      ACBrBancoCredisis,
@@ -2093,7 +2093,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF}
      ACBrBancoCitiBank,
      ACBrBancoABCBrasil,
      ACBrBancoDaycoval,
-     ACBrSisprime,
+     ACBrBancoSisprime,
      ACBrBancoPine,
      ACBrBancoPineBradesco,
      ACBrBancoUnicredSC,
@@ -4711,7 +4711,7 @@ begin
      cobBancoCECRED,
      cobBancoAilos           : fBancoClass := TACBrBancoAilos.Create(Self);          {085}
      cobCrediSIS             : fBancoClass := TACBrBancoCrediSIS.Create(Self);       {097}
-     cobUniprime             : fBancoClass := TACBrUniprime.create(Self);            {099}
+     cobUniprime             : fBancoClass := TACBrBancoUniprime.create(Self);       {099}
      cobCaixaEconomica       : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
      cobCaixaSicob           : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
      cobBancoBocomBBM        : fBancoClass := TACBrBancoBocomBBM.create(Self);       {107}
@@ -4721,7 +4721,7 @@ begin
      cobBancoMercantil       : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
      cobSicred               : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
      cobBancoob,
-     cobBancoSicoob          : fBancoClass := TACBrSicoob.create(Self);             {756}
+     cobBancoSicoob          : fBancoClass := TACBrBancoSicoob.create(Self);         {756}
      cobHSBC                 : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
      cobBicBanco             : fBancoClass := TACBrBancoBic.create(Self);            {237}
      cobBradescoSICOOB       : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
@@ -4733,7 +4733,7 @@ begin
      cobBancoABCBrasil       : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
      cobDaycoval             : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
      cobUniprimeNortePR,
-     cobBancoSisprime        : fBancoClass := TACBrSisprime.Create(Self);            {084}
+     cobBancoSisprime        : fBancoClass := TACBrBancoSisprime.Create(Self);       {084}
      cobBancoPine            : fBancoClass := TACBrBancoPine.create(Self);
      cobBancoPineBradesco    : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
      cobUnicredSC            : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}

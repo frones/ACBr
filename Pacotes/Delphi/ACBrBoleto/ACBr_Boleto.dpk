@@ -133,7 +133,7 @@ contains
   ACBrBoletoWS.Rest.OAuth in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.OAuth.pas',
   ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',
   ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas',
-  ACBrUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas',
-  ACBrSisprime in '..\..\..\Fontes\ACBrBoleto\ACBrSisprime.pas';
+  ACBrBancoUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUniprime.pas',
+  ACBrBancoSisprime in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSisprime.pas';
 
 end.

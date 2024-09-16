@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/09/2024
+-- ACBrNFSeXClass --
+[*] Correção na variável private da propriedade TipoDeducao.
+  Por: Italo Giurizzato Junior
 -- NFSeBrasil.GravarXml/NFSeBrasil.LerXml --
 [*] #TK-5963: Ajustes para gerar e ler a tag Observacoes.
     Para gerar a referida tag devemos alimentar o campo: OutrasInformacoes

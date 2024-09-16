@@ -459,14 +459,14 @@ type
 
   TDadosDeducao = class(TObject)
   private
-    FvTotTribFed: TTipoDeducao;
+    FTipoDeducao: TTipoDeducao;
     FCpfCnpj: string;
     FNumeroNotaFiscalReferencia: string;
     FValorTotalNotaFiscal: Double;
     FPercentualADeduzir: Double;
     FValorADeduzir: Double;
   public
-    property TipoDeducao: TTipoDeducao read FvTotTribFed write FvTotTribFed;
+    property TipoDeducao: TTipoDeducao read FTipoDeducao write FTipoDeducao;
     property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
     property NumeroNotaFiscalReferencia: string read FNumeroNotaFiscalReferencia write FNumeroNotaFiscalReferencia;
     property ValorTotalNotaFiscal: Double read FValorTotalNotaFiscal write FValorTotalNotaFiscal;

@@ -103,6 +103,12 @@ begin
     ServicosDisponibilizados.SubstituirNfse := False;
   end;
 
+  with ConfigWebServices do
+  begin
+    VersaoDados := '1.01';
+    VersaoAtrib := '1.01';
+  end;
+
   with ConfigAssinar do
   begin
     Rps := True;
@@ -368,6 +374,13 @@ end;
 function TACBrNFSeXWebserviceSigep200.TratarXmlRetornado(
   const aXML: string): string;
 begin
+  {
+    O retorno do provedor esta em UTF-8 mas as vogais acentuadas e cedilha vem da
+    seguinte forma:
+    As informa&#xfffd;&#xfffd;es das credenciais s&#xfffd;o inv&#xfffd;lida
+    Note que a sequencia: &#xfffd; é utilizada para o cedilha e para qualquer
+    vogal acentuada.
+  }
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := StrToXml(Result);

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2024
+-- Sigep.Provider --
+[*] #TK-5961: Ajustes visando gerar o atributo versao com o valor 1.01
+  Por: C4Dev/Italo Giurizzato Junior
+
 13/09/2024
 -- ACBrNFSeXServicos --
 [*] #TK-5954: A cidade de Saquarema/RJ, trocou a URL de produção, o provedor continua

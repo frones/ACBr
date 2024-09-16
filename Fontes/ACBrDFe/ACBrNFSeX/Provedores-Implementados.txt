@@ -105,7 +105,7 @@ MetropolisWeb        1.00
 Mitra                2.00
 ModernizacaoPublica  2.02
 NEAInformatica       2.00
-NFSeBrasil           1.00
+NFSeBrasil           1.00             (Memory)
 NotaInteligente      2.00
 PadraoNacional       1.00
 Prescon              1.00  14/03/2023

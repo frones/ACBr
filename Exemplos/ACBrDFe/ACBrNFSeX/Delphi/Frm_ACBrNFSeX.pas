@@ -1366,6 +1366,13 @@ begin
 
           // Provedor EloTech
           Tributavel := snNao;
+          // Informações referente a Dedução do Provedor EloTech
+          DadosDeducao.TipoDeducao := tdNenhum;
+          DadosDeducao.CpfCnpj := '';
+          DadosDeducao.NumeroNotaFiscalReferencia := '';
+          DadosDeducao.ValorTotalNotaFiscal := 0;
+          DadosDeducao.PercentualADeduzir := 0;
+          DadosDeducao.ValorADeduzir := 0;
 
           CodigoCnae := '6203100';
         end;

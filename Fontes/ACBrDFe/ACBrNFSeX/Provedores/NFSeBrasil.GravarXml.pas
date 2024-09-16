@@ -145,9 +145,6 @@ begin
 
   Result.AppendChild(GerarValores);
 
-//  Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, 0,
-//                                 NFSe.Servico.ItemListaServico, DSC_CLISTSERV));
-
   Result.AppendChild(AddNode(tcStr, '#30', 'CodigoTributacaoMunicipio', 1, 20, 0,
                      NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
 
@@ -156,8 +153,11 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
     StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                       [rfReplaceAll, rfIgnoreCase]), DSC_DISCR,
-                (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
+                                                   [rfReplaceAll]), DSC_DISCR));
+
+  Result.AppendChild(AddNode(tcStr, '#33', 'Observacoes', 1, 2000, 0,
+    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
+                                                   [rfReplaceAll]), DSC_DISCR));
 
   Result.AppendChild(GerarServicoCodigoMunicipio);
 end;

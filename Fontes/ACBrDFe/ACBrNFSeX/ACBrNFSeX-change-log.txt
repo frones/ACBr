@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/09/2024
+-- NFSeBrasil.GravarXml/NFSeBrasil.LerXml --
+[*] #TK-5963: Ajustes para gerar e ler a tag Observacoes.
+    Para gerar a referida tag devemos alimentar o campo: OutrasInformacoes
+  Por: Italo Giurizzato Junior
 -- Sigep.Provider --
 [*] #TK-5961: Ajustes visando gerar o atributo versao com o valor 1.01
   Por: C4Dev/Italo Giurizzato Junior

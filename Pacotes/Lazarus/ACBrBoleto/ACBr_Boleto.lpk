@@ -272,12 +272,12 @@
         <UnitName Value="ACBrBoletoWS.SOAP"/>
       </Item62>
       <Item63>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas"/>
-        <UnitName Value="ACBrUniprime"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoUniprime.pas"/>
+        <UnitName Value="ACBrBancoUniprime"/>
       </Item63>
       <Item64>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrSisprime.pas"/>
-        <UnitName Value="ACBrSisprime"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSisprime.pas"/>
+        <UnitName Value="ACBrBancoSisprime"/>
       </Item64>
       <Item65>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Credisis.pas"/>

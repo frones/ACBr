@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2024
+-- ACBrNFeServicos --
+[*] #TK-5967 - Atualização das URLs de Produção do SVAN/SVC-AN
+    Por: Italo Giurizzato Junior
+
 13/09/2024
 -- ACBrNFeNotasFiscais --
 [*] #TK-5931 - Adicionar na classe de alto nível propriedades para seção infNFeSupl

@@ -1,74 +1,81 @@
-unit uPrincipal;
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Daniel CasaGrande InfoCotidiano                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
 
-interface
+{$I ACBr.inc}
 
 // descomentar o motor de relatório que desejar utilizar! removendo o ponto
 {$DEFINE GERADOR_FORTES_REPORT}
 { .$DEFINE GERADOR_FAST_REPORT }
 
+unit uPrincipal;
+
+interface
+
 uses
-  Windows,
-  Messages,
-  SysUtils,
-  Variants,
-  Graphics,
-  Controls,
-  Forms,
-  Dialogs,
-  ComCtrls,
-  ExtCtrls,
-  StdCtrls,
-  Buttons,
-  FileCtrl,
-  ACBrBoletoConversao,
-  ACBrBase,
-  ACBrBoleto,
-  TypInfo
-{$IFDEF GERADOR_FORTES_REPORT},
-  ACBrBoletoFCFortesFr {$ENDIF}
-{$IFDEF GERADOR_FAST_REPORT},
-  ACBrBoletoFCFR{$ENDIF}
-    ,
-  ACBrUtil.FilesIO,
-  ACBrUtil,
-  ACBrDFeSSL,
-  IniFiles,
-  Mask,
-  ACBrBoletoFPDF,
+
+  {$IFDEF DELPHI15_UP}
+    ImageList, ImgList,
+    {$MESSAGE 'CASO O DELPHI REDECLARAR REMOVA A LINHA ACIMA'}
+  {$ELSE}
+    ImgList,
+  {$ENDIF}
+  {$IFDEF GERADOR_FORTES_REPORT}
+    ACBrBoletoFCFortesFr,
+  {$ENDIF}
+  {$IFDEF GERADOR_FAST_REPORT}
+    ACBrBoletoFCFR,
+  {$ENDIF}
+  Windows,Graphics, Controls, Dialogs, ComCtrls,
+  ExtCtrls, StdCtrls, Buttons, SysUtils, Forms,
+  TypInfo, IniFiles, Mask,Spin,
   StrUtils,
-  ACBrBoletoRetorno,
-  ACBrPIXPSPBancoDoBrasil,
+  synacode,
+  Grids,
+  jpeg,
+  Classes,
   ACBrPIXCD,
   ACBrPIXPSPC6Bank,
   ACBrOpenSSLUtils,
   ACBrSocket,
   ACBrCEP,
-  synacode,
+  ACBrBase,
+  ACBrBoletoConversao,
   ACBrPIXBase,
-  ACBrPIXUtil,
-  Spin,
-  jpeg,
-  //pngimage,
-  ACBrPIXSchemasCobV,
-  DateUtils,
-//  ImageList,
-  ImgList
-{$IFDEF FPC}
-    ,
-  DateTimePicker
-{$ENDIF},
-  Classes,
-  ACBrJSON,
+  ACBrBoleto,
+  ACBrBoletoFPDF,
+  ACBrPIXBRCode,
   ACBrPIXSchemasPix,
   ACBrPIXSchemasDevolucao,
-  ACBrPIXSchemasCob,
-  ACBrImage,
-  ACBrDelphiZXingQRCode,
-  ACBrPIXBRCode,
-  Grids,
-  ImageList,
-  OpenSSLExt;
-
+  ACBrPIXSchemasCob;
 
 
 type
@@ -97,12 +104,8 @@ type
     btnBoletoMenu: TButton;
     btnPixMenu: TButton;
     btnSairMenu: TButton;
-    Shape2: TShape;
-    Label2: TLabel;
-    btnConfigPix: TSpeedButton;
     TabConfigPix: TTabSheet;
     ConfigBoleto: TTabSheet;
-    Label3: TLabel;
     Shape5: TShape;
     Label5: TLabel;
     btnCfgSalvaBoleto: TButton;
@@ -301,7 +304,6 @@ type
     btnRegistrarBoletoAPI: TButton;
     btnConsultarBoletoAPI: TButton;
     btnLimparListaTitulo: TButton;
-    Image1: TImage;
     TestePIX: TTabSheet;
     pgConfPixPSP: TPageControl;
     tsPIX: TTabSheet;
@@ -643,10 +645,28 @@ type
     imgErrPSP: TImage;
     cbxPSPAtual: TComboBox;
     Label49: TLabel;
+    btnLerParametrosPIX: TBitBtn;
+    edtNossoNumeroCorrespondente: TEdit;
+    Label96: TLabel;
+    btnBoletoBaixa: TButton;
+    btnAlterarBoleto: TButton;
+    cmbTipoOcorrencia: TComboBox;
+    Label101: TLabel;
+    pnpCfgBoleto: TPanel;
+    Label4: TLabel;
+    Shape4: TShape;
+    pnpBoletoPrincipal: TPanel;
+    Shape1: TShape;
+    Label1: TLabel;
+    btnConfigBoleto: TSpeedButton;
+    npFundoprincipalWhite: TPanel;
+    Image1: TImage;
+    Label3: TLabel;
     pnFluxoBackground: TPanel;
     pnFluxoPagto: TPanel;
     gbFluxoCliente: TGroupBox;
     pnFluxoCliente: TPanel;
+    lbFluxoClienteNome: TLabel;
     lbFluxoClienteDoc: TLabel;
     edFluxoClienteNome: TEdit;
     edFluxoClienteDoc: TEdit;
@@ -663,40 +683,32 @@ type
     gdFluxoItens: TStringGrid;
     gbFluxoStatus: TGroupBox;
     pnFluxoStatus: TPanel;
+    pnFluxoRodape: TPanel;
+    pnFluxoQRCode: TPanel;
+    imFluxoQRCode: TImage;
+    pnFluxoBotoes: TPanel;
+    pnFluxoBotoesErroConsultar: TPanel;
+    btFluxoTentarNovamente: TBitBtn;
+    btFluxoCancelarConsulta: TBitBtn;
+    btFluxoFecharVenda: TBitBtn;
+    pnFluxoBotoesRight: TPanel;
+    pnFluxoBotoesPrincipais: TPanel;
+    btFluxoPagar: TBitBtn;
+    btFluxoEstornarPagto: TBitBtn;
+    btFluxoNovaVenda: TBitBtn;
+    btFluxoCancelarCobranca: TBitBtn;
+    pnFluxoTotal: TPanel;
+    gbFluxoTotal: TGroupBox;
+    pnFluxoTotalStr: TPanel;
+    pnFluxoDiv7: TPanel;
+    pnFluxoCopiaECola: TPanel;
+    lbFluxoCopiaECola: TLabel;
+    btFluxoCopiaECola: TSpeedButton;
+    edFluxoCopiaECola: TEdit;
     pnFluxoDiv1: TPanel;
     pnFluxoDiv2: TPanel;
     pnFluxoDiv3: TPanel;
-    btnLerParametrosPIX: TBitBtn;
-    pnlRecebimento: TPanel;
-    imFluxoQRCode: TImage;
-    btFluxoPagar: TBitBtn;
-    btFluxoCancelarCobranca: TBitBtn;
-    btFluxoEstornarPagto: TBitBtn;
-    lbFluxoCopiaECola: TLabel;
-    edFluxoCopiaECola: TEdit;
-    Panel7: TPanel;
-    pnpSombra: TPanel;
-    btFluxoCopiaECola: TSpeedButton;
-    lblTotalVendaPix: TLabel;
-    Label100: TLabel;
-    gbFluxoTotal: TGroupBox;
-    pnFluxoTotalStr: TPanel;
-    btnEncerraVenda: TButton;
-    btFluxoNovaVenda: TBitBtn;
-    edtNossoNumeroCorrespondente: TEdit;
-    Label96: TLabel;
-    btnBoletoBaixa: TButton;
-    btnAlterarBoleto: TButton;
-    cmbTipoOcorrencia: TComboBox;
-    Label101: TLabel;
-    btnFecharTelaPagamento: TSpeedButton;
-    pnpCfgBoleto: TPanel;
-    Label4: TLabel;
-    Shape4: TShape;
-    pnpBoletoPrincipal: TPanel;
-    Shape1: TShape;
-    Label1: TLabel;
-    btnConfigBoleto: TSpeedButton;
+    SpeedButton1: TSpeedButton;
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL,
       AMethod: string; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
@@ -715,6 +727,7 @@ type
     procedure btCriarCobVClick(Sender: TObject);
     procedure btFluxoCancelarCobrancaClick(Sender: TObject);
     procedure btFluxoEstornarPagtoClick(Sender: TObject);
+    procedure btFluxoItemIncluirClick(Sender: TObject);
     procedure btFluxoNovaVendaClick(Sender: TObject);
     procedure btFluxoPagarClick(Sender: TObject);
     procedure btnAlterarBoletoClick(Sender: TObject);
@@ -726,7 +739,6 @@ type
     procedure btnConfigBoletoClick(Sender: TObject);
     procedure btnConfigPixClick(Sender: TObject);
     procedure btnConsultarBoletoAPIClick(Sender: TObject);
-    procedure btnEncerraVendaClick(Sender: TObject);
     procedure btnFecharTelaPagamentoClick(Sender: TObject);
     procedure btnGerarRemessaClick(Sender: TObject);
     procedure btnImprimeBoletoClick(Sender: TObject);
@@ -764,6 +776,7 @@ type
     procedure tmConsultarDevolucaoTimer(Sender: TObject);
     procedure tmConsultarPagtoTimer(Sender: TObject);
     procedure EnviaBoleto(ATipoEnvio: TOperacao);
+    procedure Panel13Click(Sender: TObject);
   private
     { Private declarations }
 {$IFDEF GERADOR_FORTES_REPORT}
@@ -876,8 +889,21 @@ CONST
 
 implementation
 
-uses pcnConversao,
-  uresposta;
+uses
+  pcnConversao,
+  uresposta,
+  OpenSSLExt,
+  ACBrJSON,
+  ACBrPIXSchemasCobV,
+  ACBrImage,
+  ACBrDelphiZXingQRCode,
+  ACBrUtil.FilesIO,
+  ACBrUtil,
+  ACBrDFeSSL,
+  ACBrPIXUtil,
+  ACBrBoletoRetorno,
+  ACBrPIXPSPBancoDoBrasil,
+  DateUtils;
 
 {$R *.dfm}
 
@@ -1125,8 +1151,10 @@ begin
   { escondendo tabs }
   for I := 0 to pagPrincipal.PageCount - 1 do
     pagPrincipal.Pages[I].TabVisible := False;
-
   MostraTela(itNenhuma);
+  {tamanho da tela}
+  Height:= 650;
+  Width := 1090;
   { carregamento Combos }
   // CarregarTipoDistribuicao;
   CarregarTipoDocumento;
@@ -1155,7 +1183,6 @@ begin
   ReiniciarFluxo;
   AdicionarLinhaLog(GetInfoOpenSSL);
   EncerraVenda(False);
-
 end;
 
 procedure TfrmPrincipal.MostrarCobrancaEmLinhas(const NomeCobranca: String;
@@ -1310,9 +1337,9 @@ begin
   if AComponent = edtArquivoLog then
     edtArquivoLog.Text := ExtractFileName(OpenDialog1.FileName);
   if AComponent = edC6BankChavePrivada then
-    edC6BankChavePrivada.Text := ExtractFileName(OpenDialog1.FileName);
+    edC6BankChavePrivada.Text := OpenDialog1.FileName;
   if AComponent = edC6BankCertificado then
-    edC6BankCertificado.Text := ExtractFileName(OpenDialog1.FileName);
+    edC6BankCertificado.Text := OpenDialog1.FileName;
   if AComponent = edtPathLog then
     edtPathLog.Text := ExtractFilePath(OpenDialog1.FileName);
   if AComponent = edtPathRemessa then
@@ -2070,10 +2097,8 @@ end;
 
 procedure TfrmPrincipal.cbC6BankTipoChaveChange(Sender: TObject);
 begin
-  cbC6BankTipoChave.ItemIndex :=
-    Integer(DetectarTipoChave(edC6BankChavePIX.Text));
-  imC6BankErroChavePix.Visible := NaoEstaVazio(edC6BankChavePIX.Text) and
-    (cbC6BankTipoChave.ItemIndex = 0);
+  cbC6BankTipoChave.ItemIndex :=  Integer(DetectarTipoChave(edC6BankChavePIX.Text));
+  imC6BankErroChavePix.Visible := NaoEstaVazio(edC6BankChavePIX.Text) and  (cbC6BankTipoChave.ItemIndex = 0);
 end;
 
 procedure TfrmPrincipal.cbxAmbienteChange(Sender: TObject);
@@ -2098,10 +2123,7 @@ end;
 
 procedure TfrmPrincipal.EncerraVenda(LFlag: Boolean);
 begin
-  lblTotalVendaPix.Caption := pnFluxoTotalStr.Caption;
-  pnpSombra.Visible := LFlag;
-  pnlRecebimento.Visible := LFlag;
-  zoomin(LFlag)
+
 end;
 
 procedure TfrmPrincipal.EnviaBoleto(ATipoEnvio: TOperacao);
@@ -2238,30 +2260,8 @@ begin
 end;
 
 procedure TfrmPrincipal.zoomin(LFlag: Boolean);
-var
-  LTempo, I: Integer;
 begin
-  LTempo := 100;
-  if LFlag then
-  begin
-    if pnpSombra.Top = 600 then
-    begin
-      for I := 600 DownTo 131 do
-        pnpSombra.Top := I;
-      Sleep(100);
-      pnlRecebimento.Top := 114;
-    end;
-  end
-  else
-  begin
-    if pnpSombra.Top = 131 then
-    begin
-      for I := 131 To 600 do
-        pnpSombra.Top := I;
-      Sleep(100);
-      pnlRecebimento.Top := 600;
-    end;
-  end;
+
 end;
 
 procedure TfrmPrincipal.EstornarPagamento;
@@ -2318,10 +2318,15 @@ begin
   cbxPSPAtual.Items.Clear;
   for I := 0 to pgConfPixPSP.PageCount - 1 do
     cbxPSPAtual.Items.Add(pgConfPixPSP.Pages[I].Caption);
+  cbxPSPAtual.ItemIndex := 1;
 
   cbxRecebedorUF.Items.Clear;
   for I := Low(DFeUF) to High(DFeUF) do
     cbxRecebedorUF.Items.Add(DFeUF[I]);
+
+  cbC6BankTipoChave.Items.Clear;
+  for k := Low(TACBrPIXTipoChave) to High(TACBrPIXTipoChave) do
+     cbC6BankTipoChave.Items.Add( GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(k) ));
 
   cbxAmbiente.Items.Clear;
   for j := Low(TACBrPixCDAmbiente) to High(TACBrPixCDAmbiente) do
@@ -3418,6 +3423,36 @@ begin
   EstornarPagamento;
 end;
 
+procedure TfrmPrincipal.btFluxoItemIncluirClick(Sender: TObject);
+var
+  wValor: Double;
+begin
+  wValor := StrToFloatDef(edFluxoItemValor.Text, 1);
+
+  if EstaVazio(edFluxoItemDescricao.Text) then
+  begin
+    ShowMessage('Informe a Descrição do Item');
+    edFluxoItemDescricao.SetFocus;
+  end
+  else if EstaVazio(edFluxoItemEAN.Text) then
+  begin
+    ShowMessage('Informe o Código EAN do Item');
+    edFluxoItemEAN.SetFocus;
+  end
+  else
+  begin
+    AdicionarItemGridFluxo(
+      Trim(edFluxoItemEAN.Text),
+      Trim(edFluxoItemDescricao.Text),
+      wValor);
+
+    AtualizarTotal;
+  end;
+
+  AvaliarInterfaceFluxoItem;
+
+end;
+
 procedure TfrmPrincipal.btFluxoNovaVendaClick(Sender: TObject);
 begin
   ReiniciarFluxo;
@@ -3426,7 +3461,7 @@ end;
 procedure TfrmPrincipal.btFluxoPagarClick(Sender: TObject);
 var
   wNome, wDoc: String;
-  SL: TStringList;
+  sl: TStringList;
   I: Integer;
 begin
   VerificarConfiguracao;
@@ -3439,7 +3474,7 @@ begin
       chave := ACBrPixCD1.PSP.ChavePIX;
       calendario.expiracao := seCobrancaExpiracao.Value;
 
-      wNome := trim(edFluxoClienteNome.Text);
+      wNome := Trim(edFluxoClienteNome.Text);
       if (wNome <> EmptyStr) then
       begin
         devedor.nome := wNome;
@@ -3456,17 +3491,16 @@ begin
           devedor.cpf := wDoc;
       end;
 
-      Valor.original := fFluxoDados.Total;
+      valor.original := fFluxoDados.Total;
     end;
 
     if ACBrPixCD1.PSP.epCob.CriarCobrancaImediata then
     begin
-      fFluxoDados.TxID := ACBrPixCD1.PSP.epCob.CobGerada.TxID;
-      fFluxoDados.QRCode := trim(ACBrPixCD1.PSP.epCob.CobGerada.pixCopiaECola);
+      fFluxoDados.TxID := ACBrPixCD1.PSP.epCob.CobGerada.txId;
+      fFluxoDados.QRCode := Trim(ACBrPixCD1.PSP.epCob.CobGerada.pixCopiaECola);
 
       if (fFluxoDados.QRCode = EmptyStr) then
-        fFluxoDados.QRCode := ACBrPixCD1.GerarQRCodeDinamico
-          (ACBrPixCD1.PSP.epCob.CobGerada.location);
+        fFluxoDados.QRCode := ACBrPixCD1.GerarQRCodeDinamico(ACBrPixCD1.PSP.epCob.CobGerada.location);
 
       edFluxoCopiaECola.Text := fFluxoDados.QRCode;
       PintarQRCode(fFluxoDados.QRCode, imFluxoQRCode.Picture.Bitmap, qrUTF8BOM);
@@ -3496,11 +3530,7 @@ begin
   EnviaBoleto(tpBaixa);
 end;
 
-procedure TfrmPrincipal.btnEncerraVendaClick(Sender: TObject);
-begin
-  if not pnlRecebimento.Visible then
-     EncerraVenda(True);
-end;
+
 
 procedure TfrmPrincipal.btnFecharTelaPagamentoClick(Sender: TObject);
 begin
@@ -3509,20 +3539,20 @@ end;
 
 procedure TfrmPrincipal.Button1Click(Sender: TObject);
 var
-  lInicio, lFim: TDateTime;
+  LInicio, LFim: TDateTime;
   I: Integer;
 begin
-  lInicio := now;
+  LInicio := now;
   for I := 0 to 99 do
   begin
-    edtSeuNumero.Text := (StrToIntDef(edtSeuNumero.Text, 0) + 1).ToString;
+    edtSeuNumero.Text := IntToStr(StrToIntDef(edtSeuNumero.Text, 0) + 1);
     btnIncluiBoleto.Click;
   end;
 
   btnRegistrarBoletoAPI.Click;
-  lFim := now;
+  LFim := now;
 
-  ShowMessage(lInicio.ToString + '    ' + lFim.ToString);
+  ShowMessage(DateTimeToStr(LInicio) + '    ' + DateTimeToStr(LFim));
 end;
 
 procedure TfrmPrincipal.HabilitarInterface(aLiberada: Boolean);
@@ -3616,6 +3646,10 @@ begin
       (fFluxoDados.QtdConsultas <= CMaxConsultas) then
       tmConsultarPagto.Enabled := True;
   end;
+end;
+
+procedure TfrmPrincipal.Panel13Click(Sender: TObject);
+begin
 end;
 
 end.

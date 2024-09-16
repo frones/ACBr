@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/09/2024
+-- ACBrMDFe.XmlWriter --
+[-] Correção visando não gerar o grupo <valePed> quando este não for informado
+    na versão 1.00 do MDF-e.
+  Por: SEI-INFO/Italo Giurizzato Junior
+
 13/09/2024
 -- ACBrMDFe.RetConsSit --
 [-] Correção para que a leitura do retorno ocorra com sucesso.

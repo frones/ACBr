@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/09/2024
+-- EL.Provider --
+[*] #TK-5966: Melhoria visando geração do arquivo XML quando retorno vier sem a tag <nfeRpsNotaFiscal>
+  Por: Diego Folieni / Italo Giurizzato Junior 
 -- fintelISS.GravarXml --
 [*] #TK-5972: Correção na geração do XML.
   Por: Italo Giurizzato Junior

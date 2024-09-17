@@ -1080,12 +1080,33 @@ begin
                 AResumo.Data := Response.Data;
                 AResumo.Situacao :=  Response.Situacao;
                 AResumo.NumeroRps := Response.NumeroRps;
+
+                aXmlRetorno := AuxNode.OuterXml;
+
+                if AResumo.NumeroNota <> '' then
+                  ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(AResumo.NumeroNota);
+
+                if not Assigned(ANota) then
+                  ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(AResumo.NumeroRps);
+
+                if Assigned(ANota) then
+                begin
+                  if ANota.XmlRps = '' then
+                    aXmlNota := GerarXmlNota(ANota.XmlNfse, aXmlRetorno)
+                  else
+                    aXmlNota := GerarXmlNota(ANota.XmlRps, aXmlRetorno);
+
+                  ANota.XmlNfse := aXmlNota;
+
+                  SalvarXmlNfse(ANota);
+                end;
+
               end
               else
               begin
-              AErro := Response.Erros.New;
-              AErro.Codigo := Cod203;
-              AErro.Descricao := ACBrStr(Desc203);
+                AErro := Response.Erros.New;
+                AErro.Codigo := Cod203;
+                AErro.Descricao := ACBrStr(Desc203);
               end;
               Exit;
             end;

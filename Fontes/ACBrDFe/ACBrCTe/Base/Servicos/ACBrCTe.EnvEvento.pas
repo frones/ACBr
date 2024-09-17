@@ -139,8 +139,11 @@ type
     property idLote: Int64                read FidLote   write FidLote;
     property Evento: TInfEventoCollection read FEvento   write SetEvento;
     property Versao: string               read FVersao   write FVersao;
-    property XmlEnvio: string             read FXmlEnvio write FXmlEnvio;
     property VersaoDF: TVersaoCTe         read FVersaoDF write FVersaoDF;
+
+    property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
+
+    property XmlEnvio: string             read FXmlEnvio write FXmlEnvio;
   end;
 
 implementation

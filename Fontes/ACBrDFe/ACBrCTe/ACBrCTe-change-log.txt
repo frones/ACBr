@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2024
+-- Diversos --
+[*] #TK-5326 - Implementação do CT-e Simplificado.
+   Por: Italo Giurizzato Junior
+
 20/08/2024
 [*] Remoção das units: pcteConsSitCTe, pcteEnvEventoCTe, pcteEventoCTe,
     pcteLayoutTXT, pcteModeloCTe, pcteRetConsSitCTe, pcteRetEnvEventoCTe.

@@ -407,6 +407,32 @@ type
     procedure LerInfDoc(const ANode: TACBrXmlNode; const InfDoc: TInfDoc);
   end;
 
+  TInfNFeTranspParcialHandler = class
+  private
+  public
+    procedure LerInfNFeTranspParcial(const ANode: TACBrXmlNode; const InfNFeTranspParcial: TInfNFeTranspParcialCollection);
+  end;
+
+  TinfDocAntHandler = class
+  private
+    FInfNFeTranspParcialHandler: TInfNFeTranspParcialHandler;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure LerInfDocAnt(const ANode: TACBrXmlNode; const infDocAnt: TInfDocAntCollection);
+  end;
+
+  TDetHandler = class
+  private
+    FCompHandler: TCompHandler;
+    FInfNFeHandler: TInfNFeHandler;
+    FInfDocAntHandler: TinfDocAntHandler;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure LerDet(const ANode: TACBrXmlNode; const Det: TdetCollection);
+  end;
+
   TIdDocAntPapHandler = class
   public
     procedure LerIdDocAntPap(const ANode: TACBrXmlNode; const IdDocAntPap: TIdDocAntPapCollection);
@@ -436,7 +462,7 @@ type
     procedure LerEmiDocAnt(const ANode: TACBrXmlNode; const emiDocAnt: TEmiDocAntCollection);
   end;
 
-  TInfDocAntHandler = class
+  TDocAntHandler = class
   private
     FEmiDocAntHandler: TEmiDocAntHandler;
   public
@@ -563,6 +589,7 @@ type
   private
     FTarifaHandler: TTarifaHandler;
     FNatCargaHandler: TNatCargaHandler;
+    FPeriHandler: TPeriHandler;
   public
     constructor Create;
     destructor Destroy; override;
@@ -751,7 +778,7 @@ type
     FInfDocRefHandler: TInfDocRefHandler;
     FInfCargaHandler: TInfCargaHandler;
     FInfDocHandler: TInfDocHandler;
-    FInfDocAntHandler: TInfDocAntHandler;
+    FDocAntHandler: TDocAntHandler;
     FSegHandler: TSegHandler;
     FRodoHandler: TRodoHandler;
     FRodoOSHandler: TRodoOSHandler;
@@ -814,6 +841,16 @@ type
     FInfCteAnuHandler: TInfCTeAnuHandler;
     FAutXMLHandler: TAutXMLHandler;
     FInfRespTecHandler: TinfRespTecHandler;
+    // Usado pelo CTe Simplificado
+    FInfCargaHandler: TInfCargaHandler;
+    FRodoHandler: TRodoHandler;
+    FAereoHandler: TAereoHandler;
+    FAquavHandler: TAquavHandler;
+    FFerrovHandler: TFerrovHandler;
+    FDutoHandler: TDutoHandler;
+    FCobrHandler: TCobrHandler;
+    FInfCTeSubHandler: TInfCTeSubHandler;
+    FDetHandler: TDetHandler;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1879,7 +1916,7 @@ begin
   FInfDocRefHandler := TInfDocRefHandler.Create;
   FInfCargaHandler := TInfCargaHandler.Create;
   FInfDocHandler := TInfDocHandler.Create;
-  FInfDocAntHandler := TInfDocAntHandler.Create;
+  FDocAntHandler := TDocAntHandler.Create;
   FSegHandler := TSegHandler.Create;
   FRodoHandler := TRodoHandler.Create;
   FRodoOSHandler := TRodoOSHandler.Create;
@@ -1903,7 +1940,7 @@ begin
   FInfDocRefHandler.Free;
   FInfCargaHandler.Free;
   FInfDocHandler.Free;
-  FInfDocAntHandler.Free;
+  FDocAntHandler.Free;
   FSegHandler.Free;
   FRodoHandler.Free;
   FRodoOSHandler.Free;
@@ -1935,7 +1972,7 @@ begin
   FInfDocRefHandler.LerInfDocRef(ANode, InfCteNorm.infDocRef);
   FInfCargaHandler.LerInfCarga(ANode.Childrens.FindAnyNs('infCarga'), infCTeNorm.infCarga);
   FInfDocHandler.LerInfDoc(ANode.Childrens.FindAnyNs('infDoc'), infCteNorm.InfDoc);
-  FInfDocAntHandler.LerDocAnt(ANode.Childrens.FindAnyNs('docAnt'), infCteNorm.docAnt);
+  FDocAntHandler.LerDocAnt(ANode.Childrens.FindAnyNs('docAnt'), infCteNorm.docAnt);
   FSegHandler.LerSeg(ANode, infCTeNorm.seg);
 
   AuxNode := ANode.Childrens.FindAnyNs('infModal');
@@ -1947,10 +1984,7 @@ begin
   if not JaLiOhModal then
     JaLiOhModal := FRodoOSHandler.LerRodoOS(AuxNode.Childrens.FindAnyNs('rodoOS'), infCTeNorm.rodoOS);
   if not JaLiOhModal then
-  begin
     JaLiOhModal := FAereoHandler.LerAereo(AuxNode.Childrens.FindAnyNs('aereo'), infCTeNorm.aereo);
-    FPeriHandler.LerPeri(AuxNode.Childrens.FindAnyNs('aereo'), infCtenorm.peri);
-  end;
   if not JaLiOhModal then
     JaLiOhModal := FAquavHandler.LerAquav(AuxNode.Childrens.FindAnyNs('aquav'), infCTeNorm.aquav);
   if not JaLiOhModal then
@@ -1959,6 +1993,9 @@ begin
     FDutoHandler.LerDuto(AuxNode.Childrens.FindAnyNs('duto'), infCTeNorm.duto);
   if not JaLiOhModal then
     FMultiModalHandler.LerMultiModal(AuxNode.Childrens.FindAnyNs('multimodal'), infCTeNorm.multimodal);
+
+  // A linha abaixo é para compatibilizar com a versão 2.00
+  FPeriHandler.LerPeri(AuxNode.Childrens.FindAnyNs('peri'), infCteNorm.peri);
 
   FVeicNovosHandler.LerVeicNovos(ANode, infCTeNorm.veicNovos);
   FCobrHandler.LerCobr(ANode.Childrens.FindAnyNs('cobr'), infCTeNorm.cobr);
@@ -2346,19 +2383,19 @@ end;
 
 { TDocAntHandler }
 
-constructor TInfDocAntHandler.Create;
+constructor TDocAntHandler.Create;
 begin
   inherited;
   FEmiDocAntHandler := TEmiDocAntHandler.Create;
 end;
 
-destructor TInfDocAntHandler.Destroy;
+destructor TDocAntHandler.Destroy;
 begin
   FEmiDocAntHandler.Free;
   inherited;
 end;
 
-procedure TInfDocAntHandler.LerDocAnt(const ANode: TACBrXmlNode; const DocAnt: TDocAnt);
+procedure TDocAntHandler.LerDocAnt(const ANode: TACBrXmlNode; const DocAnt: TDocAnt);
 var
   AuxNodeArray: TACBrXmlNodeArray;
 begin
@@ -3072,6 +3109,16 @@ begin
   FInfCTeAnuHandler := TInfCTeAnuHandler.Create;
   FAutXMLHandler := TAutXMLHandler.Create;
   FInfRespTecHandler := TinfRespTecHandler.Create;
+  // Usado pelo CT-e Simplificado
+  FInfCargaHandler := TInfCargaHandler.Create;
+  FRodoHandler := TRodoHandler.Create;
+  FAereoHandler := TAereoHandler.Create;
+  FAquavHandler := TAquavHandler.Create;
+  FFerrovHandler := TFerrovHandler.Create;
+  FDutoHandler := TDutoHandler.Create;
+  FCobrHandler := TCobrHandler.Create;
+  FInfCTeSubHandler := TInfCTeSubHandler.Create;
+  FDetHandler := TDetHandler.Create;
 end;
 
 destructor TInfCTeHandler.Destroy;
@@ -3094,15 +3141,30 @@ begin
   FInfCTeAnuHandler.Free;
   FAutXMLHandler.Free;
   FInfRespTecHandler.Free;
+  // Usado pelo CT-e Simplificado
+  FInfCargaHandler.Free;
+  FRodoHandler.Free;
+  FAereoHandler.Free;
+  FAquavHandler.Free;
+  FFerrovHandler.Free;
+  FDutoHandler.Free;
+  FCobrHandler.Free;
+  FInfCTeSubHandler.Free;
+  FDetHandler.Free;
+
   inherited;
 end;
 
 procedure TInfCTeHandler.LerInfCTe(const ANode: TACBrXmlNode; const CTe: TCTe);
+var
+  AuxNode: TACBrXmlNode;
+  JaLiOhModal: Boolean;
 begin
-  FIdeHandler.LerIde(ANode.Childrens.FindAnyNs('ide'),  CTe.ide);
+  FIdeHandler.LerIde(ANode.Childrens.FindAnyNs('ide'), CTe.ide);
   FComplHandler.LerCompl(ANode.Childrens.FindAnyNs('compl'), CTe.compl);
   FEmitHandler.LerEmit(ANode.Childrens.FindAnyNs('emit'), CTe.emit);
   FTomaHandler.LerToma(ANode.Childrens.FindAnyNs('toma'), CTe.toma);
+
   FRemHandler.LerRem(ANode.Childrens.FindAnyNs('rem'), CTe.rem);
   FExpedHandler.LerExped(ANode.Childrens.FindAnyNs('exped'), CTe.exped);
   FRecebHandler.LerReceb(ANode.Childrens.FindAnyNs('receb'), CTe.receb);
@@ -3111,10 +3173,33 @@ begin
   FOrigemHandler.LerEnder(ANode.Childrens.FindAnyNs('origem'), CTe.origem);
   FDestinoHandler.LerEnder(ANode.Childrens.FindAnyNs('destino'), CTe.destino);
 
+  if CTe.ide.tpCTe in [tcCTeSimp, tcSubstCTeSimpl] then
+  begin
+    FInfCargaHandler.LerInfCarga(ANode.Childrens.FindAnyNs('infCarga'), CTe.infCarga);
+    FDetHandler.LerDet(ANode, CTe.det);
+
+    AuxNode := ANode.Childrens.FindAnyNs('infModal');
+
+    if not Assigned(AuxNode) then exit;
+
+    JaLiOhModal := False;
+    JaLiOhModal := FRodoHandler.LerRodo(AuxNode.Childrens.FindAnyNs('rodo'), CTe.infModal.rodo);
+
+    if not JaLiOhModal then
+      JaLiOhModal := FAereoHandler.LerAereo(AuxNode.Childrens.FindAnyNs('aereo'), CTe.infModal.aereo);
+
+    if not JaLiOhModal then
+      JaLiOhModal := FAquavHandler.LerAquav(AuxNode.Childrens.FindAnyNs('aquav'), CTe.infModal.aquav);
+
+    FCobrHandler.LerCobr(ANode.Childrens.FindAnyNs('cobr'), CTe.cobr);
+    FInfCTeSubHandler.LerInfCTeSub(ANode.Childrens.FindAnyNs('infCteSub'), CTe.infCteSub);
+  end;
+
   FDetGTVHandler.LerDetGTVe(ANode.Childrens.FindAnyNs('detGTV'), CTe.detGTV);
   FVPrestHandler.LerVPrest(ANode.Childrens.FindAnyNs('vPrest'), CTe.vPrest);
   FImpHandler.LerImp(ANode.Childrens.FindAnyNs('imp'), CTe.imp);
   FInfCTeNormHandler.LerinfCTeNorm(ANode.Childrens.FindAnyNs('infCTeNorm'), CTe.infCTeNorm);
+
   if CTe.infCTe.versao <= 3 then
     FInfCteCompHandler.LerInfCteComp(ANode.Childrens.FindAnyNs('infCteComp'), CTe.infCteComp)
   else
@@ -3252,12 +3337,14 @@ begin
   inherited;
   FTarifaHandler := TTarifaHandler.Create;
   FNatCargaHandler := TNatCargaHandler.Create;
+  FPeriHandler := TPeriHandler.Create;
 end;
 
 destructor TAereoHandler.Destroy;
 begin
   FTarifaHandler.Free;
   FNatCargaHandler.Free;
+  FPeriHandler.Free;
   inherited;
 end;
 
@@ -3274,6 +3361,7 @@ begin
 
   FTarifaHandler.LerTarifa(ANode.Childrens.FindAnyNs('tarifa'), aereo.tarifa);
   FNatCargaHandler.LerNatCarga(ANode.Childrens.FindAnyNs('natCarga'), aereo.natCarga);
+  FPeriHandler.LerPeri(ANode.Childrens.FindAnyNs('peri'), aereo.peri);
   Result := True;
 end;
 
@@ -3672,6 +3760,106 @@ begin
   multimodal.xSeg          := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xSeg'), tcStr);
   multimodal.CNPJ          := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
   Result := True;
+end;
+
+{ TDetHandler }
+
+constructor TDetHandler.Create;
+begin
+  inherited;
+  FCompHandler := TCompHandler.Create;
+  FInfNFeHandler := TInfNFeHandler.Create;
+  FInfDocAntHandler := TinfDocAntHandler.Create;
+end;
+
+destructor TDetHandler.Destroy;
+begin
+  FCompHandler.Free;
+  FInfNFeHandler.Free;
+  FInfDocAntHandler.Free;
+  inherited;
+end;
+
+procedure TDetHandler.LerDet(const ANode: TACBrXmlNode;
+  const Det: TdetCollection);
+var
+  AuxNodeArray: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  if not Assigned(ANode) then exit;
+
+  AuxNodeArray := ANode.Childrens.FindAllAnyNs('det');
+  det.Clear;
+  for i:= 0 to Length(AuxNodeArray)-1 do
+  begin
+    det.New;
+    det[i].cMunIni := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('cMunIni'), tcInt);
+    det[i].xMunIni := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('xMunIni'), tcStr);
+    det[i].cMunFim := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('cMunFim'), tcInt);
+    det[i].xMunFim := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('xMunFim'), tcStr);
+    det[i].vPrest := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('vPrest'), tcDe2);
+    det[i].vRec := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('vRec'), tcDe2);
+
+    FCompHandler.LerComp(AuxNodeArray[i], det[i].Comp);
+    FInfNFeHandler.LerinfNFe(AuxNodeArray[i], det[i].infNFe);
+    FInfDocAntHandler.LerinfDocAnt(AuxNodeArray[i], det[i].infdocAnt);
+  end;
+end;
+
+{ TinfDocAntHandler }
+
+constructor TinfDocAntHandler.Create;
+begin
+  inherited;
+  FInfNFeTranspParcialHandler := TInfNFeTranspParcialHandler.Create;
+
+end;
+
+destructor TinfDocAntHandler.Destroy;
+begin
+  FInfNFeTranspParcialHandler.Free;
+  inherited;
+end;
+
+procedure TinfDocAntHandler.LerInfDocAnt(const ANode: TACBrXmlNode;
+  const infDocAnt: TInfDocAntCollection);
+var
+  AuxNodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  Ok: Boolean;
+begin
+  if not Assigned(ANode) then exit;
+
+  AuxNodeArray := ANode.Childrens.FindAllAnyNs('infDocAnt');
+  infDocAnt.Clear;
+  for i:= 0 to Length(AuxNodeArray)-1 do
+  begin
+    infDocAnt.New;
+    infDocAnt[i].chCTe := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('chCTe'), tcStr);
+    infDocAnt[i].tpPrest := StrTotpPrest(ok, ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('tpPrest'), tcStr));
+
+    FInfNFeTranspParcialHandler.LerInfNFeTranspParcial(AuxNodeArray[i], infDocAnt[i].infNFeTranspParcial);
+  end;
+end;
+
+{ TInfNFeTranspParcialHandler }
+
+procedure TInfNFeTranspParcialHandler.LerInfNFeTranspParcial(
+  const ANode: TACBrXmlNode;
+  const InfNFeTranspParcial: TInfNFeTranspParcialCollection);
+var
+  AuxNodeArray: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  if not Assigned(ANode) then exit;
+
+  AuxNodeArray := ANode.Childrens.FindAllAnyNs('infNFeTranspParcial');
+  infNFeTranspParcial.Clear;
+  for i:= 0 to Length(AuxNodeArray)-1 do
+  begin
+    infNFeTranspParcial.New;
+    infNFeTranspParcial[i].chNFe := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('chNFe'), tcStr);
+  end;
 end;
 
 end.

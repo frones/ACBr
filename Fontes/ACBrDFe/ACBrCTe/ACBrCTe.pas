@@ -367,17 +367,17 @@ function TACBrCTe.cStatConfirmado(AValue: Integer): Boolean;
 begin
   case AValue of
     100, 150: Result := True;
-    else
-      Result := False;
+  else
+    Result := False;
   end;
 end;
 
 function TACBrCTe.cStatProcessado(AValue: Integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302: Result := True;
-    else
-      Result := False;
+    100, 150: Result := True;
+  else
+    Result := False;
   end;
 end;
 
@@ -385,8 +385,8 @@ function TACBrCTe.cStatCancelado(AValue: integer): Boolean;
 begin
   case AValue of
     101, 151, 155: Result := True;
-    else
-      Result := False;
+  else
+    Result := False;
   end;
 end;
 
@@ -432,6 +432,7 @@ begin
   case Configuracoes.Geral.ModeloDF of
     moCTeOS: Result := schCTeOS;
     moGTVe: Result := schGTVe;
+    moCTeSimp: Result := schCTeSimp;
   else
     Result := schCTe;
   end;

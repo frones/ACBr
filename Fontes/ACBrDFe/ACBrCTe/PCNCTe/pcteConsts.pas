@@ -255,6 +255,7 @@ const
 
   DSC_VICMSDESON = 'Valor de ICMS de Desoneração';
   DSC_CBENEF = 'Código do Benefício Fiscal';
+  DSC_TPPREST = 'Tipo de Prestação';
 
 implementation
 

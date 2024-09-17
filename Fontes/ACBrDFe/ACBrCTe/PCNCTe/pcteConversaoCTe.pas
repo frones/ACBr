@@ -65,7 +65,7 @@ const
 
 type
   TSchemaCTe = ( schErro, schCTe, schCTeOS, schGTVe, schcancCTe, schInutCTe,
-                 schEventoCTe,
+                 schEventoCTe, schCTeSimp,
                  schconsReciCTe, schconsSitCTe, schconsStatServCTe, schconsCad,
                  schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
@@ -76,7 +76,7 @@ type
 
 const
   TSchemaCTeArrayStrings: array[TSchemaCTe] of string = ('', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '', 'evEPECCTe', 'evCancCTe',
+    '', '', '', '', '', '', '', '', '', '', '', '', 'evEPECCTe', 'evCancCTe',
     'evRegMultimodal', 'evCCeCTe', 'distDFeInt', 'cteModalRodoviarioOS',
     'evPrestDesacordo', 'evGTV', 'evCECTe', 'evCancCECTe',
     'evCancPrestDesacordo', 'evIECTe', 'evCancIECTe');
@@ -86,19 +86,25 @@ type
                 LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
                 LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
                 LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc,
-                LayCTeRecepcaoGTVe, LayCTeURLQRCode, LayURLConsultaCTe);
+                LayCTeRecepcaoGTVe, LayCTeURLQRCode, LayURLConsultaCTe,
+                LayCTeRecepcaoSimp);
 const
   TLayOutCTeArrayStrings: array[TLayOutCTe] of string = ('CTeRecepcao',
     'CTeRetRecepcao', 'CTeCancelamento', 'CTeInutilizacao',
     'CTeConsultaProtocolo', 'CTeStatusServico', 'CTeConsultaCadastro',
     'RecepcaoEvento', 'RecepcaoEventoAN', 'CTeDistribuicaoDFe', 'CTeRecepcaoOS',
-    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe', 'URL-QRCode', 'URL-ConsultaCTe');
+    'CTeRecepcaoSinc', 'CTeRecepcaoGTVe', 'URL-QRCode', 'URL-ConsultaCTe',
+    'CTeRecepcaoSimp');
 
 type
-  TModeloCTe = (moCTe, moGTVe, moCTeOS);
+  TModeloCTe = (moCTe, moGTVe, moCTeOS, moCTeSimp);
 
+{
+ O código correto do modelo CTe Simplificado é 57, mas foi alterado para 58
+ para que o componente interprete corretamente o modelo de CTe
+}
 const
-  TModeloCTeArrayStrings: array[TModeloCTe] of string = ('57', '64', '67');
+  TModeloCTeArrayStrings: array[TModeloCTe] of string = ('57', '64', '67', '57');
 
 type
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
@@ -110,13 +116,15 @@ const
      of string = ('PAGO', 'A PAGAR', 'OUTROS');
 
 type
-  TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe);
+  TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe,
+                  tcCTeSimp, tcSubstCTeSimpl);
 
 const
   TTipoCTeArrayStrings: array[TpcteTipoCTe] of string = ('0', '1', '2', '3',
-    '4');
+    '4', '5', '6');
   TTipoCTeDescArrayStrings: array[TpcteTipoCTe] of string = ('NORMAL',
-    'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO', 'GTVe');
+    'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO', 'GTVe', 'CTeSimp',
+    'SubstCTeSimpl');
 
 type
   TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario,
@@ -303,6 +311,13 @@ type
 const
   TtpMotivoArrayStrings: array[TtpMotivo] of string = ('1', '2', '3', '4');
 
+
+type
+  TtpPrest = (tpTotal, tpParcial);
+
+const
+  TtpPrestArrayStrings: array[TtpPrest] of string = ('1', '2');
+
 {
   Declaração das funções de conversão
 }
@@ -420,6 +435,9 @@ function tpMotivoToStr(const t: TtpMotivo): string;
 function StrTotpMotivo(out ok: boolean; const s: string): TtpMotivo;
 function tpMotivoToDesc(const t: TtpMotivo): string;
 
+function tpPrestToStr(const t: TtpPrest): string;
+function StrTotpPrest(out ok: boolean; const s: string): TtpPrest;
+
 implementation
 
 uses
@@ -477,12 +495,12 @@ begin
      'CTeInutilizacao', 'CTeConsultaProtocolo', 'CTeStatusServico',
      'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoAN',
      'CTeDistribuicaoDFe', 'CTeRecepcaoOS', 'CTeRecepcaoSinc',
-      'CTeRecepcaoGTVe'],
+      'CTeRecepcaoGTVe', 'CTeRecepcaoSimp'],
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
       LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
       LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc,
-      LayCTeRecepcaoGTVe ]);
+      LayCTeRecepcaoGTVe, LayCTeRecepcaoSimp]);
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -492,12 +510,12 @@ begin
      'CTeInutilizacao', 'CTeConsultaProtocolo', 'CTeStatusServico',
      'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoAN',
      'CTeDistribuicaoDFe', 'CTeRecepcaoOS', 'CTeRecepcaoSinc',
-     'CTeRecepcaoGTVe'],
+     'CTeRecepcaoGTVe', 'CTeRecepcaoSimp'],
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
       LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
       LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc,
-      LayCTeRecepcaoGTVe ]);
+      LayCTeRecepcaoGTVe, LayCTeRecepcaoSimp]);
 end;
 
 function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;
@@ -508,6 +526,7 @@ begin
     LayCTeRecepcaoOS:    Result := schCTeOS;
 
     LayCTeRecepcaoGTVe:  Result := schGTVe;
+    LayCTeRecepcaoSimp:  Result := schCTeSimp;
 
     LayCTeRetRecepcao:   Result := schconsReciCTe;
     LayCTeCancelamento:  Result := schcancCTe;
@@ -591,15 +610,17 @@ end;
 
 function tpCTToStr(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4'],
-                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe,
+                    tcCTeSimp, tcSubstCTeSimpl]);
 end;
 
 function tpCTToStrText(const t: TpcteTipoCTe): string;
 begin
   result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO',
-                               'GTVe'],
-                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
+                               'GTVe', 'CTeSimp', 'SubstCTeSimpl'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe,
+                    tcCTeSimp, tcSubstCTeSimpl]);
 end;
 
 function tpforPagToStr(const t: TpcteFormaPagamento): string;
@@ -622,14 +643,16 @@ end;
 
 function tpCTePagToStr(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['0','1', '2', '3', '4'],
-                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe,
+                    tcCTeSimp, tcSubstCTeSimpl]);
 end;
 
 function StrTotpCTe(out ok: boolean; const s: string): TpcteTipoCTe;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
-                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6'],
+                   [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe,
+                    tcCTeSimp, tcSubstCTeSimpl]);
 end;
 
 function TpServPagToStr(const t: TpcteTipoServico): string;
@@ -857,47 +880,53 @@ begin
   result := '';
 
   case AVersaoDF of
-    ve200: begin
-             case AModal of
-               mdRodoviario:  result := '2.00';
-               mdAereo:       result := '2.00';
-               mdAquaviario:  result := '2.00';
-               mdFerroviario: result := '2.00';
-               mdDutoviario:  result := '2.00';
-               mdMultimodal:  result := '2.00';
-             end;
-           end;
-    ve300: begin
-             case AModal of
-               mdRodoviario:  result := '3.00';
-               mdAereo:       result := '3.00';
-               mdAquaviario:  result := '3.00';
-               mdFerroviario: result := '3.00';
-               mdDutoviario:  result := '3.00';
-               mdMultimodal:  result := '3.00';
-             end;
-           end;
-    ve400: begin
-             case AModal of
-               mdRodoviario:  result := '4.00';
-               mdAereo:       result := '4.00';
-               mdAquaviario:  result := '4.00';
-               mdFerroviario: result := '4.00';
-               mdDutoviario:  result := '4.00';
-               mdMultimodal:  result := '4.00';
-             end;
-           end;
+    ve300:
+      begin
+        case AModal of
+          mdRodoviario:  result := '3.00';
+          mdAereo:       result := '3.00';
+          mdAquaviario:  result := '3.00';
+          mdFerroviario: result := '3.00';
+          mdDutoviario:  result := '3.00';
+          mdMultimodal:  result := '3.00';
+        end;
+      end;
+
+    ve400:
+      begin
+        case AModal of
+          mdRodoviario:  result := '4.00';
+          mdAereo:       result := '4.00';
+          mdAquaviario:  result := '4.00';
+          mdFerroviario: result := '4.00';
+          mdDutoviario:  result := '4.00';
+          mdMultimodal:  result := '4.00';
+        end;
+      end;
+  else
+    begin
+      case AModal of
+        mdRodoviario:  result := '2.00';
+        mdAereo:       result := '2.00';
+        mdAquaviario:  result := '2.00';
+        mdFerroviario: result := '2.00';
+        mdDutoviario:  result := '2.00';
+        mdMultimodal:  result := '2.00';
+      end;
+    end;
   end;
 end;
 
 function ModeloCTeToStr(const t: TModeloCTe): String;
 begin
-  Result := EnumeradoToStr(t, ['57', '64', '67'], [moCTe, moGTVe, moCTeOS]);
+  Result := EnumeradoToStr(t, ['57', '64', '67', '57'],
+                              [moCTe, moGTVe, moCTeOS, moCTeSimp]);
 end;
 
 function StrToModeloCTe(out ok: Boolean; const s: String): TModeloCTe;
 begin
-  Result := StrToEnumerado(ok, s, ['57', '64', '67'], [moCTe, moGTVe, moCTeOS]);
+  Result := StrToEnumerado(ok, s, ['57', '64', '67', '58'],
+                                  [moCTe, moGTVe, moCTeOS, moCTeSimp]);
 end;
 
 function ModeloCTeToPrefixo(const t: TModeloCTe): String;
@@ -905,6 +934,7 @@ begin
   Case t of
     moCTeOS: Result := 'CTeOS';
     moGTVe: Result := 'GTVe';
+    moCTeSimp: Result := 'CTeSimp';
   else
     Result := 'CTe';
   end;
@@ -1052,6 +1082,18 @@ function tpMotivoToDesc(const t: TtpMotivo): string;
 begin
   result := EnumeradoToStr(t, ['Não Encontrado', 'Recusa', 'Inexistente', 'Outro'],
     [tmNaoEncontrado, tmRecusa, tmInexistente, tmOutro]);
+end;
+
+function tpPrestToStr(const t: TtpPrest): string;
+begin
+  result := EnumeradoToStr(t, ['1', '2'],
+    [tpTotal, tpParcial]);
+end;
+
+function StrTotpPrest(out ok: boolean; const s: string): TtpPrest;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2'],
+    [tpTotal, tpParcial]);
 end;
 
 initialization

@@ -47,13 +47,67 @@ type
     FLeitor: TLeitor;
     FCTe: TCTe;
     FVersaoDF: TVersaoCTe;
+
+    function Ler_InfPercurso: Boolean;
+    function Ler_Toma03: Boolean;
+    function Ler_Toma4: Boolean;
+    function Ler_Identificacao: Boolean;
+    function Ler_Complemento: Boolean;
+    function Ler_Emitente: Boolean;
+    function Ler_Tomador: Boolean;
+    function Ler_Remetente: Boolean;
+    function Ler_Expedidor: Boolean;
+    function Ler_Recebedor: Boolean;
+    function Ler_Destinatario: Boolean;
+    function Ler_Origem: Boolean;
+    function Ler_Destino: Boolean;
+    function Ler_DetGTV: Boolean;
+    function Ler_Comp(comp: TCompCollection):Boolean;
+    function Ler_vPrest: Boolean;
+    function Ler_Imp: Boolean;
+
+    function Ler_infNF(Nivel: Integer; infNF: TInfNFCollection):Boolean;
+    function Ler_infNFe(Nivel: Integer; infNFe: TInfNFeCollection):Boolean;
+    function Ler_infOutros(Nivel: Integer; infOutros: TInfOutrosCollection):Boolean;
+
+    function Ler_Rodo(rodo: TRodo): Boolean;
+    function Ler_RodoOS(rodoOS: TRodoOS): Boolean;
+    function Ler_Aereo(aereo: TAereo): Boolean;
+    function Ler_Aquav(aquav: TAquav): Boolean;
+    function Ler_Ferrov(ferrov: TFerrov): Boolean;
+    function Ler_Duto(duto: TDuto): Boolean;
+    function Ler_MultiModal(multimodal: TMultimodal): Boolean;
+
+    function Ler_InfCTeNorm: Boolean;
+    function Ler_InfCTeComp: Boolean;
+    function Ler_InfCTeAnu: Boolean;
+    function Ler_AutXML: Boolean;
+    function Ler_InfRespTec: Boolean;
+    function Ler_InfCTeSupl: Boolean;
+    function Ler_ProtCTe: Boolean;
+    function Ler_Signature: Boolean;
+
+    function Ler_InfCarga(Nivel: Integer; infCarga: TInfCarga): Boolean;
+    function Ler_InfDocAnt(infDocAnt: TinfDocAntCollection): Boolean;
+    function Ler_Det: Boolean;
+
+    function Ler_InfModal: Boolean;
+    function Ler_Cobr(Nivel: Integer; cobr: TCobr): Boolean;
+    function Ler_InfCTeSub(Nivel: Integer; infCTeSub: TInfCteSub): Boolean;
+    function Ler_Total: Boolean;
+
+    function Ler_CTe: Boolean;
+    function Ler_CTeOS: Boolean;
+    function Ler_CTeSimplificado: Boolean;
+    function Ler_GTVe: Boolean;
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
-    function LerXml: boolean;
+
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property CTe: TCTe       read FCTe    write FCTe;
+    property Leitor: TLeitor      read FLeitor   write FLeitor;
+    property CTe: TCTe            read FCTe      write FCTe;
     property VersaoDF: TVersaoCTe read FVersaoDF write FVersaoDF;
   end;
 
@@ -68,6 +122,7 @@ uses
 constructor TCTeR.Create(AOwner: TCTe);
 begin
   inherited Create;
+
   FLeitor := TLeitor.Create;
   FCTe := AOwner;
 end;
@@ -75,19 +130,14 @@ end;
 destructor TCTeR.Destroy;
 begin
   FLeitor.Free;
+
   inherited Destroy;
 end;
 
 function TCTeR.LerXml: Boolean;
 var
   ok: Boolean;
-  i01, i02, i03, i04: Integer;
-  sCST, Aspas: String;
-  // as variáveis abaixo são utilizadas para identificar as várias ocorrências
-  // da tag qtdRat.
-  sAux: String;
-  pos1, pos2, pos3, len: Integer;
-  qtdRat_UnidTransp: Currency;
+  Aspas: String;
 begin
   Leitor.Grupo := Leitor.Arquivo;
 
@@ -108,33 +158,106 @@ begin
 
   VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
 
-  (* Grupo da TAG <ide> *******************************************************)
+  Ler_Identificacao;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_InfPercurso: Boolean;
+var
+  i: Integer;
+begin
+  i := 0;
+  CTe.Ide.infPercurso.Clear;
+
+  while Leitor.rExtrai(2, 'infPercurso', '', i + 1) <> '' do
+  begin
+    CTe.Ide.infPercurso.New;
+    CTe.Ide.infPercurso[i].UFPer := Leitor.rCampo(tcStr, 'UFPer');
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Toma03: Boolean;
+var
+  ok: Boolean;
+begin
+  if (Leitor.rExtrai(2, 'toma03') <> '') or (Leitor.rExtrai(2, 'toma3') <> '') or
+     (Leitor.rExtrai(2, 'toma') <> '') then
+  begin
+    CTe.Ide.Toma03.Toma := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Toma4: Boolean;
+var
+  ok: Boolean;
+begin
+  if (Leitor.rExtrai(2, 'toma4') <> '') or (Leitor.rExtrai(2, 'tomaTerceiro') <> '') then
+  begin
+    CTe.Ide.Toma4.toma    := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));
+    CTe.Ide.Toma03.Toma   := CTe.Ide.Toma4.toma;
+    CTe.Ide.Toma4.CNPJCPF := Leitor.rCampoCNPJCPF;
+    CTe.Ide.Toma4.IE      := Leitor.rCampo(tcStr, 'IE');
+    CTe.Ide.Toma4.xNome   := Leitor.rCampo(tcStr, 'xNome');
+    CTe.Ide.Toma4.xFant   := Leitor.rCampo(tcStr, 'xFant');
+    CTe.Ide.Toma4.fone    := Leitor.rCampo(tcStr, 'fone');
+    CTe.Ide.Toma4.email   := Leitor.rCampo(tcStr, 'email');
+
+     if Leitor.rExtrai(3, 'enderToma') <> '' then
+     begin
+       CTe.Ide.Toma4.EnderToma.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
+       CTe.Ide.Toma4.EnderToma.nro     := Leitor.rCampo(tcStr, 'nro');
+       CTe.Ide.Toma4.EnderToma.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
+       CTe.Ide.Toma4.EnderToma.xBairro := Leitor.rCampo(tcStr, 'xBairro');
+       CTe.Ide.Toma4.EnderToma.cMun    := Leitor.rCampo(tcInt, 'cMun');
+       CTe.Ide.Toma4.EnderToma.xMun    := Leitor.rCampo(tcStr, 'xMun');
+       CTe.Ide.Toma4.EnderToma.CEP     := Leitor.rCampo(tcInt, 'CEP');
+       CTe.Ide.Toma4.EnderToma.UF      := Leitor.rCampo(tcStr, 'UF');
+       CTe.Ide.Toma4.EnderToma.cPais   := Leitor.rCampo(tcInt, 'cPais');
+       CTe.Ide.Toma4.EnderToma.xPais   := Leitor.rCampo(tcStr, 'xPais');
+     end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Identificacao: Boolean;
+var
+  sAux: string;
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin
-    (*B02*)CTe.Ide.cUF      := Leitor.rCampo(tcInt, 'cUF');
-    (*B03*)CTe.Ide.cCT      := Leitor.rCampo(tcStr, 'cCT');
-    (*B04*)CTe.Ide.CFOP     := Leitor.rCampo(tcStr, 'CFOP');
-    (*B05*)CTe.Ide.natOp    := Leitor.rCampo(tcStr, 'natOp');
+    CTe.Ide.cUF   := Leitor.rCampo(tcInt, 'cUF');
+    CTe.Ide.cCT   := Leitor.rCampo(tcStr, 'cCT');
+    CTe.Ide.CFOP  := Leitor.rCampo(tcStr, 'CFOP');
+    CTe.Ide.natOp := Leitor.rCampo(tcStr, 'natOp');
 
     if VersaoDF < ve300 then
     begin
       sAux := Leitor.rCampo(tcStr, 'forPag');
 
       if sAux <> '' then
-        (*B06*)CTe.Ide.forPag := StrTotpforPag(ok, sAux);
+        CTe.Ide.forPag := StrTotpforPag(ok, sAux);
     end;
 
-    (*B07*)CTe.Ide.modelo   := Leitor.rCampo(tcStr, 'mod');
-    (*B08*)CTe.Ide.serie    := Leitor.rCampo(tcInt, 'serie');
-    (*B09*)CTe.Ide.nCT      := Leitor.rCampo(tcInt, 'nCT');
-    (*B10*)CTe.Ide.dhEmi    := Leitor.rCampo(tcDatHor, 'dhEmi');
-    (*B11*)CTe.Ide.tpImp    := StrToTpImp(ok, Leitor.rCampo(tcStr, 'tpImp'));
-    (*B12*)CTe.Ide.tpEmis   := StrToTpEmis(ok, Leitor.rCampo(tcStr, 'tpEmis'));
-    (*B13*)CTe.Ide.cDV      := Leitor.rCampo(tcInt, 'cDV');
-    (*B14*)CTe.Ide.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-    (*B15*)CTe.Ide.tpCTe    := StrTotpCTe(ok, Leitor.rCampo(tcStr, 'tpCTe'));
-    (*B15a*)CTe.Ide.procEmi := StrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
-    (*B15b*)CTe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
+    CTe.Ide.modelo  := Leitor.rCampo(tcInt, 'mod');
+    CTe.Ide.serie   := Leitor.rCampo(tcInt, 'serie');
+    CTe.Ide.nCT     := Leitor.rCampo(tcInt, 'nCT');
+    CTe.Ide.dhEmi   := Leitor.rCampo(tcDatHor, 'dhEmi');
+    CTe.Ide.tpImp   := StrToTpImp(ok, Leitor.rCampo(tcStr, 'tpImp'));
+    CTe.Ide.tpEmis  := StrToTpEmis(ok, Leitor.rCampo(tcStr, 'tpEmis'));
+    CTe.Ide.cDV     := Leitor.rCampo(tcInt, 'cDV');
+    CTe.Ide.tpAmb   := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+    CTe.Ide.tpCTe   := StrTotpCTe(ok, Leitor.rCampo(tcStr, 'tpCTe'));
+    CTe.Ide.procEmi := StrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
+    CTe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
 
     if VersaoDF >= ve300 then
     begin
@@ -144,27 +267,28 @@ begin
         CTe.ide.indGlobalizado := tiNao;
     end;
 
-    (*B15c*)CTe.Ide.refCTE  := Leitor.rCampo(tcStr, 'refCTE');
-    (*B16*)CTe.Ide.cMunEnv  := Leitor.rCampo(tcInt, 'cMunEnv');
-    (*B17*)CTe.Ide.xMunEnv  := Leitor.rCampo(tcStr, 'xMunEnv');
-    (*B18*)CTe.Ide.UFEnv    := Leitor.rCampo(tcStr, 'UFEnv');
-    (*B19*)CTe.Ide.modal    := StrToTpModal(ok, Leitor.rCampo(tcStr, 'modal'));
-    (*B20*)CTe.Ide.tpServ   := StrToTpServ(ok, Leitor.rCampo(tcStr, 'tpServ'));
-    (*B21*)CTe.Ide.cMunIni  := Leitor.rCampo(tcInt, 'cMunIni');
-    (*B22*)CTe.Ide.xMunIni  := Leitor.rCampo(tcStr, 'xMunIni');
-    (*B23*)CTe.Ide.UFIni    := Leitor.rCampo(tcStr, 'UFIni');
-    (*B24*)CTe.Ide.cMunFim  := Leitor.rCampo(tcInt, 'cMunFim');
-    (*B25*)CTe.Ide.xMunFim  := Leitor.rCampo(tcStr, 'xMunFim');
-    (*B26*)CTe.Ide.UFFim    := Leitor.rCampo(tcStr, 'UFFim');
+    CTe.Ide.refCTE  := Leitor.rCampo(tcStr, 'refCTE');
+    CTe.Ide.cMunEnv := Leitor.rCampo(tcInt, 'cMunEnv');
+    CTe.Ide.xMunEnv := Leitor.rCampo(tcStr, 'xMunEnv');
+    CTe.Ide.UFEnv   := Leitor.rCampo(tcStr, 'UFEnv');
+    CTe.Ide.modal   := StrToTpModal(ok, Leitor.rCampo(tcStr, 'modal'));
+    CTe.Ide.tpServ  := StrToTpServ(ok, Leitor.rCampo(tcStr, 'tpServ'));
+    CTe.Ide.cMunIni := Leitor.rCampo(tcInt, 'cMunIni');
+    CTe.Ide.xMunIni := Leitor.rCampo(tcStr, 'xMunIni');
+    CTe.Ide.UFIni   := Leitor.rCampo(tcStr, 'UFIni');
+    CTe.Ide.cMunFim := Leitor.rCampo(tcInt, 'cMunFim');
+    CTe.Ide.xMunFim := Leitor.rCampo(tcStr, 'xMunFim');
+    CTe.Ide.UFFim   := Leitor.rCampo(tcStr, 'UFFim');
 
     sAux := Leitor.rCampo(tcStr, 'retira');
 
     if sAux <> '' then
-      (*B27*)CTe.Ide.retira := StrToTpRetira(ok, sAux);
+      CTe.Ide.retira := StrToTpRetira(ok, sAux);
 
-    (*B27a*)CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
-    (*#57*)CTe.Ide.dhCont   := Leitor.rCampo(tcDatHor, 'dhCont');
-    (*#58*)CTe.Ide.xJust    := Leitor.rCampo(tcStr, 'xJust');
+    CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
+
+    CTe.Ide.dhCont := Leitor.rCampo(tcDatHor, 'dhCont');
+    CTe.Ide.xJust  := Leitor.rCampo(tcStr, 'xJust');
 
     if VersaoDF >= ve300 then
       CTe.ide.indIEToma := StrToindIEDest(Ok, Leitor.rCampo(tcStr, 'indIEToma'));
@@ -172,57 +296,31 @@ begin
     CTe.Ide.dhSaidaOrig   := Leitor.rCampo(tcDatHor, 'dhSaidaOrig');
     CTe.Ide.dhChegadaDest := Leitor.rCampo(tcDatHor, 'dhChegadaDest');
 
-    i01 := 0;
-    CTe.Ide.infPercurso.Clear;
-    while Leitor.rExtrai(2, 'infPercurso', '', i01 + 1) <> '' do
-    begin
-      CTe.Ide.infPercurso.New;
-      CTe.Ide.infPercurso[i01].UFPer := Leitor.rCampo(tcStr, 'UFPer');
-      inc(i01);
-    end;
+    Ler_InfPercurso;
+    Ler_Toma03;
+    Ler_Toma4;
   end;
 
-  (* Grupo da TAG <ide><toma03> ***********************************************)
-  if Leitor.rExtrai(1, 'ide') <> '' then
-  begin
-    if (Leitor.rExtrai(2, 'toma03') <> '') or (Leitor.rExtrai(2, 'toma3') <> '') or
-       (Leitor.rExtrai(2, 'toma') <> '') then
-    begin
-      (*B29*)CTe.Ide.Toma03.Toma := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));
-    end;
+  case CTe.ide.tpCTe of
+    tcGTVe: Ler_GTVe;
+
+    tcCTeSimp,
+    tcSubstCTeSimpl: Ler_CTeSimplificado;
+  else
+    if CTe.ide.modelo = 57 then
+      Ler_CTe
+    else
+      Ler_CTeOS;
   end;
 
-  (* Grupo da TAG <ide><toma4> ************************************************)
-  if Leitor.rExtrai(1, 'ide') <> '' then
-  begin
-    if (Leitor.rExtrai(2, 'toma4') <> '') or (Leitor.rExtrai(2, 'tomaTerceiro') <> '') then
-    begin
-      (*B29*)CTe.Ide.Toma4.toma    := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));
-             CTe.Ide.Toma03.Toma   := CTe.Ide.Toma4.toma;
-      (*B31*)CTe.Ide.Toma4.CNPJCPF := Leitor.rCampoCNPJCPF;
-      (*B33*)CTe.Ide.Toma4.IE      := Leitor.rCampo(tcStr, 'IE');
-      (*B34*)CTe.Ide.Toma4.xNome   := Leitor.rCampo(tcStr, 'xNome');
-      (*B35*)CTe.Ide.Toma4.xFant   := Leitor.rCampo(tcStr, 'xFant');
-      (*#44*)CTe.Ide.Toma4.fone    := Leitor.rCampo(tcStr, 'fone');
-      (*#56*)CTe.Ide.Toma4.email   := Leitor.rCampo(tcStr, 'email');
+  Result := True;
+end;
 
-       if Leitor.rExtrai(3, 'enderToma') <> '' then
-       begin
-         (*B37*)CTe.Ide.Toma4.EnderToma.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-         (*B37*)CTe.Ide.Toma4.EnderToma.nro     := Leitor.rCampo(tcStr, 'nro');
-         (*B37*)CTe.Ide.Toma4.EnderToma.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
-         (*B37*)CTe.Ide.Toma4.EnderToma.xBairro := Leitor.rCampo(tcStr, 'xBairro');
-         (*B37*)CTe.Ide.Toma4.EnderToma.cMun    := Leitor.rCampo(tcInt, 'cMun');
-         (*B37*)CTe.Ide.Toma4.EnderToma.xMun    := Leitor.rCampo(tcStr, 'xMun');
-         (*B37*)CTe.Ide.Toma4.EnderToma.CEP     := Leitor.rCampo(tcInt, 'CEP');
-         (*B37*)CTe.Ide.Toma4.EnderToma.UF      := Leitor.rCampo(tcStr, 'UF');
-         (*B37*)CTe.Ide.Toma4.EnderToma.cPais   := Leitor.rCampo(tcInt, 'cPais');
-         (*B37*)CTe.Ide.Toma4.EnderToma.xPais   := Leitor.rCampo(tcStr, 'xPais');
-       end;
-    end;
-  end;
-
-  (* Grupo da TAG <compl> *****************************************************)
+function TCTeR.Ler_Complemento: Boolean;
+var
+  i: Integer;
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'compl') <> '' then
   begin
     CTe.Compl.xCaracAd  := Leitor.rCampo(tcstr,'xCaracAd');
@@ -238,19 +336,21 @@ begin
       CTe.Compl.fluxo.xDest := Leitor.rCampo(tcstr,'xDest');
       CTe.Compl.fluxo.xRota := Leitor.rCampo(tcstr,'xRota');
 
-      i01 := 0;
+      i := 0;
       CTe.Compl.fluxo.pass.Clear;
-      while Leitor.rExtrai(3, 'pass', '', i01 + 1) <> '' do
+
+      while Leitor.rExtrai(3, 'pass', '', i + 1) <> '' do
       begin
         CTe.Compl.fluxo.pass.New;
-        CTe.Compl.fluxo.pass[i01].xPass := Leitor.rCampo(tcStr, 'xPass');
-        inc(i01);
+        CTe.Compl.fluxo.pass[i].xPass := Leitor.rCampo(tcStr, 'xPass');
+
+        inc(i);
       end;
     end;
 
     CTe.Compl.Entrega.TipoData := tdNaoInformado;
     CTe.Compl.Entrega.TipoHora := thNaoInformado;
-    
+
     if Leitor.rExtrai(2, 'Entrega') <> '' then
     begin
       if Leitor.rExtrai(3, 'semData') <> '' then
@@ -268,7 +368,7 @@ begin
 
       if Leitor.rExtrai(3, 'noPeriodo') <> '' then
       begin
-        CTe.Compl.Entrega.TipoData        := tdNoPeriodo; 
+        CTe.Compl.Entrega.TipoData        := tdNoPeriodo;
         CTe.Compl.Entrega.noPeriodo.tpPer := StrToTpDataPeriodo(ok, Leitor.rCampo(tcStr, 'tpPer'));
         CTe.Compl.Entrega.noPeriodo.dIni  := Leitor.rCampo(tcDat, 'dIni');
         CTe.Compl.Entrega.noPeriodo.dFim  := Leitor.rCampo(tcDat, 'dFim');
@@ -289,35 +389,46 @@ begin
 
       if Leitor.rExtrai(3, 'noInter') <> '' then
       begin
-        CTe.Compl.Entrega.TipoHora      := thNoIntervalo; 
+        CTe.Compl.Entrega.TipoHora      := thNoIntervalo;
         CTe.Compl.Entrega.noInter.tpHor := StrToTpHorarioIntervalo(ok, Leitor.rCampo(tcStr, 'tpHor'));
         CTe.Compl.Entrega.noInter.hIni  := StrToTime(Leitor.rCampo(tcStr, 'hIni'));
         CTe.Compl.Entrega.noInter.hFim  := StrToTime(Leitor.rCampo(tcStr, 'hFim'));
       end;
     end;
 
-    i01 := 0;
+    i := 0;
     CTe.Compl.ObsCont.Clear;
-    while Leitor.rExtrai(2, 'ObsCont', '', i01 + 1) <> '' do
+
+    while Leitor.rExtrai(2, 'ObsCont', '', i + 1) <> '' do
     begin
       CTe.Compl.obsCont.New;
-      CTe.Compl.obsCont[i01].xCampo := Leitor.rAtributo('xCampo');
-      CTe.Compl.obsCont[i01].xTexto := Leitor.rCampo(tcStr, 'xTexto');
-      inc(i01);
+      CTe.Compl.obsCont[i].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.obsCont[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+
+      inc(i);
     end;
 
-    i01 := 0;
+    i := 0;
     CTe.Compl.ObsFisco.Clear;
-    while Leitor.rExtrai(2, 'ObsFisco', '', i01 + 1) <> '' do
+
+    while Leitor.rExtrai(2, 'ObsFisco', '', i + 1) <> '' do
     begin
       CTe.Compl.ObsFisco.New;
-      CTe.Compl.ObsFisco[i01].xCampo := Leitor.rAtributo('xCampo');
-      CTe.Compl.ObsFisco[i01].xTexto := Leitor.rCampo(tcStr, 'xTexto');
-      inc(i01);
+      CTe.Compl.ObsFisco[i].xCampo := Leitor.rAtributo('xCampo');
+      CTe.Compl.ObsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+
+      inc(i);
     end;
   end;
 
-  (* Grupo da TAG <emit> ******************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Emitente: Boolean;
+var
+  sAux: string;
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'emit') <> '' then
   begin
     CTe.emit.CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
@@ -325,7 +436,9 @@ begin
     CTe.emit.IEST  := Leitor.rCampo(tcStr, 'IEST');
     CTe.emit.xNome := Leitor.rCampo(tcStr, 'xNome');
     CTe.emit.xFant := Leitor.rCampo(tcStr, 'xFant');
+
     sAux := Leitor.rCampo(tcStr, 'CRT');
+
     if sAux <> '' then
       CTe.emit.CRT   := StrToCRTCTe(ok, sAux);
 
@@ -343,6 +456,11 @@ begin
     end;
   end;
 
+  Result := True;
+end;
+
+function TCTeR.Ler_Tomador: Boolean;
+begin
   if VersaoDF >= ve300 then
   begin
     if Leitor.rExtrai(1, 'toma') <> '' then
@@ -370,7 +488,14 @@ begin
     end;
   end;
 
-  (* Grupo da TAG <rem> *******************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Remetente: Boolean;
+var
+  i: Integer;
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'rem') <> '' then
   begin
     CTe.Rem.CNPJCPF := Leitor.rCampoCNPJCPF('locColeta');
@@ -394,69 +519,80 @@ begin
       CTe.Rem.enderReme.xPais   := Leitor.rCampo(tcStr, 'xPais');
     end;
 
-    if Leitor.rExtrai(2, 'locColeta') <> '' then
-    begin
-      CTe.Rem.locColeta.CNPJCPF := Leitor.rCampoCNPJCPF;
-      CTe.Rem.locColeta.xNome   := Leitor.rCampo(tcStr, 'xNome');
-      CTe.Rem.locColeta.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-      CTe.Rem.locColeta.Nro     := Leitor.rCampo(tcStr, 'nro');
-      CTe.Rem.locColeta.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
-      CTe.Rem.locColeta.xBairro := Leitor.rCampo(tcStr, 'xBairro');
-      CTe.Rem.locColeta.cMun    := Leitor.rCampo(tcInt, 'cMun');
-      CTe.Rem.locColeta.xMun    := Leitor.rCampo(tcStr, 'xMun');
-      CTe.Rem.locColeta.UF      := Leitor.rCampo(tcStr, 'UF');
-    end;
-
-    i01 := 0;
-    CTe.infCTeNorm.infDoc.InfNFE.Clear;
-
     if VersaoDF < ve200 then
     begin
-      while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
+      if Leitor.rExtrai(2, 'locColeta') <> '' then
+      begin
+        CTe.Rem.locColeta.CNPJCPF := Leitor.rCampoCNPJCPF;
+        CTe.Rem.locColeta.xNome   := Leitor.rCampo(tcStr, 'xNome');
+        CTe.Rem.locColeta.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
+        CTe.Rem.locColeta.Nro     := Leitor.rCampo(tcStr, 'nro');
+        CTe.Rem.locColeta.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
+        CTe.Rem.locColeta.xBairro := Leitor.rCampo(tcStr, 'xBairro');
+        CTe.Rem.locColeta.cMun    := Leitor.rCampo(tcInt, 'cMun');
+        CTe.Rem.locColeta.xMun    := Leitor.rCampo(tcStr, 'xMun');
+        CTe.Rem.locColeta.UF      := Leitor.rCampo(tcStr, 'UF');
+      end;
+
+      i := 0;
+      CTe.infCTeNorm.infDoc.InfNFE.Clear;
+
+      while Leitor.rExtrai(2, 'infNFe', '', i + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfNFE.New;
-        CTe.infCTeNorm.infDoc.InfNFE[i01].chave := Leitor.rCampo(tcStr, 'chave');
-        CTe.infCTeNorm.infDoc.InfNFE[i01].PIN   := Leitor.rCampo(tcStr, 'PIN');
-        inc(i01);
+        CTe.infCTeNorm.infDoc.InfNFE[i].chave := Leitor.rCampo(tcStr, 'chave');
+        CTe.infCTeNorm.infDoc.InfNFE[i].PIN   := Leitor.rCampo(tcStr, 'PIN');
+
+        inc(i);
       end;
 
+      i := 0;
       CTe.infCTeNorm.infDoc.infNF.Clear;
-      while Leitor.rExtrai(2, 'infNF', '', i01 + 1) <> '' do
+
+      while Leitor.rExtrai(2, 'infNF', '', i + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.infNF.New;
-        CTe.infCTeNorm.infDoc.InfNF[i01].nRoma  := Leitor.rCampo(tcStr, 'nRoma');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nPed   := Leitor.rCampo(tcStr, 'nPed');
-        CTe.infCTeNorm.infDoc.InfNF[i01].Modelo := StrToModeloNF(Ok, Leitor.rCampo(tcStr, 'mod'));
-        CTe.infCTeNorm.infDoc.InfNF[i01].serie  := Leitor.rCampo(tcStr, 'serie');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nDoc   := Leitor.rCampo(tcEsp, 'nDoc');
-        CTe.infCTeNorm.infDoc.InfNF[i01].dEmi   := Leitor.rCampo(tcDat, 'dEmi');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vBC    := Leitor.rCampo(tcDe2, 'vBC');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vICMS  := Leitor.rCampo(tcDe2, 'vICMS');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vBCST  := Leitor.rCampo(tcDe2, 'vBCST');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vST    := Leitor.rCampo(tcDe2, 'vST');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vProd  := Leitor.rCampo(tcDe2, 'vProd');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vNF    := Leitor.rCampo(tcDe2, 'vNF');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nCFOP  := Leitor.rCampo(tcInt, 'nCFOP');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nPeso  := Leitor.rCampo(tcDe3, 'nPeso');
-        CTe.infCTeNorm.infDoc.InfNF[i01].PIN    := Leitor.rCampo(tcStr, 'PIN');
-        inc(i01);
+        CTe.infCTeNorm.infDoc.InfNF[i].nRoma  := Leitor.rCampo(tcStr, 'nRoma');
+        CTe.infCTeNorm.infDoc.InfNF[i].nPed   := Leitor.rCampo(tcStr, 'nPed');
+        CTe.infCTeNorm.infDoc.InfNF[i].Modelo := StrToModeloNF(Ok, Leitor.rCampo(tcStr, 'mod'));
+        CTe.infCTeNorm.infDoc.InfNF[i].serie  := Leitor.rCampo(tcStr, 'serie');
+        CTe.infCTeNorm.infDoc.InfNF[i].nDoc   := Leitor.rCampo(tcEsp, 'nDoc');
+        CTe.infCTeNorm.infDoc.InfNF[i].dEmi   := Leitor.rCampo(tcDat, 'dEmi');
+        CTe.infCTeNorm.infDoc.InfNF[i].vBC    := Leitor.rCampo(tcDe2, 'vBC');
+        CTe.infCTeNorm.infDoc.InfNF[i].vICMS  := Leitor.rCampo(tcDe2, 'vICMS');
+        CTe.infCTeNorm.infDoc.InfNF[i].vBCST  := Leitor.rCampo(tcDe2, 'vBCST');
+        CTe.infCTeNorm.infDoc.InfNF[i].vST    := Leitor.rCampo(tcDe2, 'vST');
+        CTe.infCTeNorm.infDoc.InfNF[i].vProd  := Leitor.rCampo(tcDe2, 'vProd');
+        CTe.infCTeNorm.infDoc.InfNF[i].vNF    := Leitor.rCampo(tcDe2, 'vNF');
+        CTe.infCTeNorm.infDoc.InfNF[i].nCFOP  := Leitor.rCampo(tcInt, 'nCFOP');
+        CTe.infCTeNorm.infDoc.InfNF[i].nPeso  := Leitor.rCampo(tcDe3, 'nPeso');
+        CTe.infCTeNorm.infDoc.InfNF[i].PIN    := Leitor.rCampo(tcStr, 'PIN');
+
+        inc(i);
       end;
 
+      i := 0;
       CTe.infCTeNorm.infDoc.InfOutros.Clear;
-      while Leitor.rExtrai(2, 'infOutros', '', i01 + 1) <> '' do
+
+      while Leitor.rExtrai(2, 'infOutros', '', i + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfOutros.New;
-        CTe.infCTeNorm.infDoc.InfOutros[i01].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
-        CTe.infCTeNorm.infDoc.InfOutros[i01].descOutros := Leitor.rCampo(tcStr, 'descOutros');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].nDoc       := Leitor.rCampo(tcStr, 'nDoc');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].dEmi       := Leitor.rCampo(tcDat, 'dEmi');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].vDocFisc   := Leitor.rCampo(tcDe2, 'vDocFisc');
-        inc(i01);
+        CTe.infCTeNorm.infDoc.InfOutros[i].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
+        CTe.infCTeNorm.infDoc.InfOutros[i].descOutros := Leitor.rCampo(tcStr, 'descOutros');
+        CTe.infCTeNorm.infDoc.InfOutros[i].nDoc       := Leitor.rCampo(tcStr, 'nDoc');
+        CTe.infCTeNorm.infDoc.InfOutros[i].dEmi       := Leitor.rCampo(tcDat, 'dEmi');
+        CTe.infCTeNorm.infDoc.InfOutros[i].vDocFisc   := Leitor.rCampo(tcDe2, 'vDocFisc');
+
+        inc(i);
       end;
     end;
   end;
 
-  (* Grupo da TAG <exped> *****************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Expedidor: Boolean;
+begin
   if Leitor.rExtrai(1, 'exped') <> '' then
   begin
     CTe.Exped.CNPJCPF := Leitor.rCampoCNPJCPF;
@@ -480,7 +616,11 @@ begin
     end;
   end;
 
-  (* Grupo da TAG <receb> *****************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Recebedor: Boolean;
+begin
   if Leitor.rExtrai(1, 'receb') <> '' then
   begin
     CTe.receb.CNPJCPF := Leitor.rCampoCNPJCPF;
@@ -504,7 +644,11 @@ begin
     end;
   end;
 
-  (* Grupo da TAG <dest> ******************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Destinatario: Boolean;
+begin
   if Leitor.rExtrai(1, 'dest') <> '' then
   begin
     CTe.Dest.CNPJCPF := Leitor.rCampoCNPJCPF('locEnt');
@@ -542,6 +686,11 @@ begin
     end;
   end;
 
+  Result := True;
+end;
+
+function TCTeR.Ler_Origem: Boolean;
+begin
   if Leitor.rExtrai(1, 'origem') <> '' then
   begin
     CTe.origem.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
@@ -554,6 +703,11 @@ begin
     CTe.origem.UF      := Leitor.rCampo(tcStr, 'UF');
   end;
 
+  Result := True;
+end;
+
+function TCTeR.Ler_Destino: Boolean;
+begin
   if Leitor.rExtrai(1, 'destino') <> '' then
   begin
     CTe.destino.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
@@ -566,54 +720,84 @@ begin
     CTe.destino.UF      := Leitor.rCampo(tcStr, 'UF');
   end;
 
+  Result := True;
+end;
+
+function TCTeR.Ler_DetGTV: Boolean;
+var
+  i: Integer;
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'detGTV') <> '' then
   begin
     CTe.detGTV.qCarga := Leitor.rCampo(tcDe4, 'qCarga');
 
-    i01 := 0;
+    i := 0;
     CTe.detGTV.infEspecie.Clear;
-    while Leitor.rExtrai(2, 'infEspecie', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'infEspecie', '', i + 1) <> '' do
     begin
       CTe.detGTV.infEspecie.New;
-      CTe.detGTV.infEspecie[i01].tpEspecie   := StrToTEspecie(ok, Leitor.rCampo(tcStr, 'tpEspecie'));
-      CTe.detGTV.infEspecie[i01].vEspecie    := Leitor.rCampo(tcDe2, 'vEspecie');
-      CTe.detGTV.infEspecie[i01].tpNumerario := StrTotpNumerario(ok, Leitor.rCampo(tcStr, 'tpNumerario'));
-      CTe.detGTV.infEspecie[i01].xMoedaEstr  := Leitor.rCampo(tcStr, 'xMoedaEstr');
+      CTe.detGTV.infEspecie[i].tpEspecie   := StrToTEspecie(ok, Leitor.rCampo(tcStr, 'tpEspecie'));
+      CTe.detGTV.infEspecie[i].vEspecie    := Leitor.rCampo(tcDe2, 'vEspecie');
+      CTe.detGTV.infEspecie[i].tpNumerario := StrTotpNumerario(ok, Leitor.rCampo(tcStr, 'tpNumerario'));
+      CTe.detGTV.infEspecie[i].xMoedaEstr  := Leitor.rCampo(tcStr, 'xMoedaEstr');
 
-      inc(i01);
+      inc(i);
     end;
 
-    i01 := 0;
+    i := 0;
     CTe.detGTV.infVeiculo.Clear;
-    while Leitor.rExtrai(2, 'infVeiculo', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'infVeiculo', '', i + 1) <> '' do
     begin
       CTe.detGTV.infVeiculo.New;
-      CTe.detGTV.infVeiculo[i01].placa := Leitor.rCampo(tcStr, 'placa');
-      CTe.detGTV.infVeiculo[i01].UF    := Leitor.rCampo(tcStr, 'UF');
-      CTe.detGTV.infVeiculo[i01].RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
+      CTe.detGTV.infVeiculo[i].placa := Leitor.rCampo(tcStr, 'placa');
+      CTe.detGTV.infVeiculo[i].UF    := Leitor.rCampo(tcStr, 'UF');
+      CTe.detGTV.infVeiculo[i].RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
 
-      inc(i01);
+      inc(i);
     end;
   end;
 
-  (* Grupo da TAG <vPrest> ****************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Comp(comp: TCompCollection): Boolean;
+var
+  i: Integer;
+begin
+  i := 0;
+  Comp.Clear;
+
+  while Leitor.rExtrai(2, 'Comp', '', i + 1) <> '' do
+  begin
+    Comp.New;
+    Comp[i].xNome := Leitor.rCampo(tcStr, 'xNome');
+    Comp[i].vComp := Leitor.rCampo(tcDe2, 'vComp');
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_vPrest: Boolean;
+begin
   if Leitor.rExtrai(1, 'vPrest') <> '' then
   begin
     CTe.vPrest.vTPrest := Leitor.rCampo(tcDe2,'vTPrest');
     CTe.vPrest.vRec    := Leitor.rCampo(tcDe2,'vRec');
 
-    i01 := 0;
-    CTe.vPrest.Comp.Clear;
-    while Leitor.rExtrai(2, 'Comp', '', i01 + 1) <> '' do
-    begin
-      CTe.vPrest.Comp.New;
-      CTe.vPrest.Comp[i01].xNome := Leitor.rCampo(tcStr, 'xNome');
-      CTe.vPrest.Comp[i01].vComp := Leitor.rCampo(tcDe2, 'vComp');
-      inc(i01);
-    end;
+    Ler_Comp(CTe.vPrest.Comp);
   end;
 
-  (* Grupo da TAG <imp> *******************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Imp: Boolean;
+var
+  ok: Boolean;
+  sCST: string;
+begin
   if Leitor.rExtrai(1, 'imp') <> '' then
   begin
     CTe.Imp.vTotTrib   := Leitor.rCampo(tcDe2,'vTotTrib');
@@ -623,8 +807,8 @@ begin
     begin
       if Leitor.rExtrai(3, 'ICMS00') <> '' then
       begin
-        if Leitor.rCampo(tcStr,'CST')='00'
-        then begin
+        if Leitor.rCampo(tcStr,'CST') = '00' then
+        begin
           CTe.Imp.ICMS.SituTrib     := cst00;
           CTe.Imp.ICMS.ICMS00.CST   := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
           CTe.Imp.ICMS.ICMS00.vBC   := Leitor.rCampo(tcDe2,'vBC');
@@ -635,8 +819,8 @@ begin
 
       if Leitor.rExtrai(3, 'ICMS20') <> '' then
       begin
-        if Leitor.rCampo(tcStr,'CST')='20'
-        then begin
+        if Leitor.rCampo(tcStr,'CST') = '20' then
+        begin
           CTe.Imp.ICMS.SituTrib      := cst20;
           CTe.Imp.ICMS.ICMS20.CST    := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
           CTe.Imp.ICMS.ICMS20.pRedBC := Leitor.rCampo(tcDe2,'pRedBC');
@@ -651,12 +835,14 @@ begin
 
       if Leitor.rExtrai(3, 'ICMS45') <> '' then
       begin
-        sCST:=Leitor.rCampo(tcStr,'CST');
-        if (sCST='40') or (sCST='41') or (sCST='51')
-        then begin
+        sCST := Leitor.rCampo(tcStr,'CST');
+
+        if (sCST = '40') or (sCST = '41') or (sCST = '51') then
+        begin
           if sCST='40' then CTe.Imp.ICMS.SituTrib  := cst40;
           if sCST='41' then CTe.Imp.ICMS.SituTrib  := cst41;
           if sCST='51' then CTe.Imp.ICMS.SituTrib  := cst51;
+
           CTe.Imp.ICMS.ICMS45.CST := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
 
           CTe.Imp.ICMS.ICMS45.vICMSDeson := Leitor.rCampo(tcDe2,'vICMSDeson');
@@ -666,8 +852,8 @@ begin
 
       if Leitor.rExtrai(3, 'ICMS60') <> '' then
       begin
-        if Leitor.rCampo(tcStr,'CST')='60'
-        then begin
+        if Leitor.rCampo(tcStr,'CST') = '60' then
+        begin
           CTe.Imp.ICMS.SituTrib          := cst60;
           CTe.Imp.ICMS.ICMS60.CST        := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
           CTe.Imp.ICMS.ICMS60.vBCSTRet   := Leitor.rCampo(tcDe2,'vBCSTRet');
@@ -682,8 +868,8 @@ begin
 
       if Leitor.rExtrai(3, 'ICMS90') <> '' then
       begin
-        if Leitor.rCampo(tcStr,'CST')='90'
-        then begin
+        if Leitor.rCampo(tcStr,'CST') = '90' then
+        begin
           CTe.Imp.ICMS.SituTrib      := cst90;
           CTe.Imp.ICMS.ICMS90.CST    := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
           CTe.Imp.ICMS.ICMS90.pRedBC := Leitor.rCampo(tcDe2,'pRedBC');
@@ -697,11 +883,11 @@ begin
         end;
       end;
 
+      // ICMS devido à UF de origem da prestação, quando diferente da UF do emitente
       if Leitor.rExtrai(3, 'ICMSOutraUF') <> '' then
       begin
-        if Leitor.rCampo(tcStr,'CST')='90'
-        then begin
-          // ICMS devido à UF de origem da prestação, quando diferente da UF do emitente
+        if Leitor.rCampo(tcStr,'CST') = '90' then
+        begin
           CTe.Imp.ICMS.SituTrib                  := cstICMSOutraUF;
           CTe.Imp.ICMS.ICMSOutraUF.CST           := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
           CTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF := Leitor.rCampo(tcDe2,'pRedBCOutraUF');
@@ -714,17 +900,16 @@ begin
         end;
       end;
 
+      // ICMS Simples Nacional
       if Leitor.rExtrai(3, 'ICMSSN') <> '' then
       begin
-       // ICMS Simples Nacional
-       CTe.Imp.ICMS.SituTrib := cstICMSSN;
+        CTe.Imp.ICMS.SituTrib := cstICMSSN;
 
-       if VersaoDF >= ve300 then
-         CTe.Imp.ICMS.ICMSSN.CST := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
+        if VersaoDF >= ve300 then
+          CTe.Imp.ICMS.ICMSSN.CST := StrToCSTICMS(ok, Leitor.rCampo(tcStr,'CST'));
 
-       CTe.Imp.ICMS.ICMSSN.indSN := Leitor.rCampo(tcInt,'indSN');
+        CTe.Imp.ICMS.ICMSSN.indSN := Leitor.rCampo(tcInt,'indSN');
       end;
-
     end;
 
     if Leitor.rExtrai(2, 'ICMSUFFim') <> '' then
@@ -749,7 +934,823 @@ begin
     end;
   end;
 
-  (* Grupo da TAG <infCTeNorm> ************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_infNF(Nivel: Integer; infNF: TInfNFCollection): Boolean;
+var
+  i, j, k, l, pos1, pos2, pos3, len: Integer;
+  ok: Boolean;
+  sAux: string;
+  qtdRat_UnidTransp: Double;
+begin
+  i := 0;
+  infNF.Clear;
+
+  while Leitor.rExtrai(Nivel, 'infNF', '', i + 1) <> '' do
+  begin
+    infNF.New;
+    InfNF[i].nRoma := Leitor.rCampo(tcStr, 'nRoma');
+    InfNF[i].nPed  := Leitor.rCampo(tcStr, 'nPed');
+    InfNF[i].Modelo := StrToModeloNF(Ok, Leitor.rCampo(tcStr, 'mod'));
+    InfNF[i].serie := Leitor.rCampo(tcStr, 'serie');
+    InfNF[i].nDoc  := Leitor.rCampo(tcEsp, 'nDoc');
+    InfNF[i].dEmi  := Leitor.rCampo(tcDat, 'dEmi');
+    InfNF[i].vBC   := Leitor.rCampo(tcDe2, 'vBC');
+    InfNF[i].vICMS := Leitor.rCampo(tcDe2, 'vICMS');
+    InfNF[i].vBCST := Leitor.rCampo(tcDe2, 'vBCST');
+    InfNF[i].vST   := Leitor.rCampo(tcDe2, 'vST');
+    InfNF[i].vProd := Leitor.rCampo(tcDe2, 'vProd');
+    InfNF[i].vNF   := Leitor.rCampo(tcDe2, 'vNF');
+    InfNF[i].nCFOP := Leitor.rCampo(tcInt, 'nCFOP');
+    InfNF[i].nPeso := Leitor.rCampo(tcDe3, 'nPeso');
+    InfNF[i].PIN   := Leitor.rCampo(tcStr, 'PIN');
+    InfNF[i].dPrev := Leitor.rCampo(tcDat, 'dPrev');
+
+    j := 0;
+    infNF[i].infUnidTransp.Clear;
+    while Leitor.rExtrai(Nivel + 1, 'infUnidTransp', '', j + 1) <> '' do
+    begin
+      infNF[i].infUnidTransp.New;
+      infNF[i].infUnidTransp[j].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+      infNF[i].infUnidTransp[j].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+
+      // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+      // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+      // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+      // precisamos saber se existe uma ocorrência ou duas dessa tag para
+      // efetuar a leitura correta das informações.
+
+      sAux := Leitor.Grupo;
+      pos1 := PosLast('</infUnidCarga>', sAux);
+      pos2 := PosLast('<qtdRat>', sAux);
+      pos3 := PosLast('</qtdRat>', sAux);
+      len  := pos3 - pos2;
+
+      if (pos1 < pos3) then
+        qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
+      else
+        qtdRat_UnidTransp := 0.0;
+
+      infNF[i].infUnidTransp[j].qtdRat := qtdRat_UnidTransp;
+
+      k := 0;
+      infNF[i].infUnidTransp[j].lacUnidTransp.Clear;
+      while Leitor.rExtrai(Nivel + 2, 'lacUnidTransp', '', k + 1) <> '' do
+      begin
+        infNF[i].infUnidTransp[j].lacUnidTransp.New;
+        infNF[i].infUnidTransp[j].lacUnidTransp[k].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+        inc(k);
+      end;
+
+      k := 0;
+      infNF[i].infUnidTransp[j].infUnidCarga.Clear;
+      while Leitor.rExtrai(Nivel + 2, 'infUnidCarga', '', k + 1) <> '' do
+      begin
+        infNF[i].infUnidTransp[j].infUnidCarga.New;
+        infNF[i].infUnidTransp[j].infUnidCarga[k].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+        infNF[i].infUnidTransp[j].infUnidCarga[k].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+        infNF[i].infUnidTransp[j].infUnidCarga[k].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+        l := 0;
+        infNF[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.Clear;
+        while Leitor.rExtrai(Nivel + 3, 'lacUnidCarga', '', l + 1) <> '' do
+        begin
+          infNF[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.New;
+          infNF[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+          inc(l);
+        end;
+
+        inc(k);
+      end;
+
+      inc(j);
+    end;
+
+    if j = 0 then
+    begin
+      infNF[i].infUnidCarga.Clear;
+
+      while Leitor.rExtrai(Nivel + 1, 'infUnidCarga', '', j + 1) <> '' do
+      begin
+        infNF[i].infUnidCarga.New;
+        infNF[i].infUnidCarga[j].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+        infNF[i].infUnidCarga[j].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+        infNF[i].infUnidCarga[j].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+        k := 0;
+        infNF[i].infUnidCarga[j].lacUnidCarga.Clear;
+
+        while Leitor.rExtrai(Nivel + 2, 'lacUnidCarga', '', k + 1) <> '' do
+        begin
+          infNF[i].infUnidCarga[j].lacUnidCarga.New;
+          infNF[i].infUnidCarga[j].lacUnidCarga[k].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+          inc(k);
+        end;
+
+        inc(j);
+      end;
+    end;
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_infNFe(Nivel: Integer; infNFe: TInfNFeCollection): Boolean;
+var
+  i, j, k, l, pos1, pos2, pos3, len: Integer;
+  ok: Boolean;
+  sAux: string;
+  qtdRat_UnidTransp: Double;
+begin
+  i := 0;
+  InfNFE.Clear;
+  while Leitor.rExtrai(Nivel, 'infNFe', '', i + 1) <> '' do
+  begin
+    InfNFE.New;
+
+    InfNFE[i].chave := Leitor.rCampo(tcStr, 'chave');
+
+    if infNFe[i].chave = '' then
+      InfNFE[i].chave := Leitor.rCampo(tcStr, 'chNFe');
+
+    InfNFE[i].PIN   := Leitor.rCampo(tcStr, 'PIN');
+    InfNFE[i].dPrev := Leitor.rCampo(tcDat, 'dPrev');
+
+    j := 0;
+    InfNFE[i].infUnidTransp.Clear;
+
+    while Leitor.rExtrai(Nivel + 1, 'infUnidTransp', '', j + 1) <> '' do
+    begin
+      InfNFE[i].infUnidTransp.New;
+      InfNFE[i].infUnidTransp[j].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+      InfNFE[i].infUnidTransp[j].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+
+      // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+      // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+      // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+      // precisamos saber se existe uma ocorrência ou duas dessa tag para
+      // efetuar a leitura correta das informações.
+
+      sAux := Leitor.Grupo;
+      pos1 := PosLast('</infUnidCarga>', sAux);
+      pos2 := PosLast('<qtdRat>', sAux);
+      pos3 := PosLast('</qtdRat>', sAux);
+      len := pos3 - pos2;
+
+      if (pos1 < pos3) then
+        qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
+      else
+        qtdRat_UnidTransp := 0.0;
+
+      infNFE[i].infUnidTransp[j].qtdRat := qtdRat_UnidTransp;
+
+      k := 0;
+      InfNFE[i].infUnidTransp[j].lacUnidTransp.Clear;
+
+      while Leitor.rExtrai(Nivel + 2, 'lacUnidTransp', '', k + 1) <> '' do
+      begin
+        InfNFE[i].infUnidTransp[j].lacUnidTransp.New;
+        InfNFE[i].infUnidTransp[j].lacUnidTransp[k].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+        inc(k);
+      end;
+
+      k := 0;
+      InfNFE[i].infUnidTransp[j].infUnidCarga.Clear;
+
+      while Leitor.rExtrai(Nivel + 2, 'infUnidCarga', '', k + 1) <> '' do
+      begin
+        InfNFE[i].infUnidTransp[j].infUnidCarga.New;
+        InfNFE[i].infUnidTransp[j].infUnidCarga[k].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+        InfNFE[i].infUnidTransp[j].infUnidCarga[k].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+        InfNFE[i].infUnidTransp[j].infUnidCarga[k].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+        l := 0;
+        InfNFE[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.Clear;
+        while Leitor.rExtrai(Nivel + 3, 'lacUnidCarga', '', l + 1) <> '' do
+        begin
+          InfNFE[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.New;
+          InfNFE[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+          inc(l);
+        end;
+
+        inc(k);
+      end;
+
+      inc(j);
+    end;
+
+    if j = 0 then
+    begin
+      infNFE[i].infUnidCarga.Clear;
+
+      while Leitor.rExtrai(Nivel + 1, 'infUnidCarga', '', j + 1) <> '' do
+      begin
+        infNFE[i].infUnidCarga.New;
+        infNFE[i].infUnidCarga[j].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+        infNFE[i].infUnidCarga[j].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+        infNFE[i].infUnidCarga[j].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+        k := 0;
+        infNFE[i].infUnidCarga[j].lacUnidCarga.Clear;
+
+        while Leitor.rExtrai(Nivel + 2, 'lacUnidCarga', '', k + 1) <> '' do
+        begin
+          infNFE[i].infUnidCarga[j].lacUnidCarga.New;
+          infNFE[i].infUnidCarga[j].lacUnidCarga[k].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+          inc(k);
+        end;
+
+        inc(j);
+      end;
+    end;
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_infOutros(Nivel: Integer;
+  infOutros: TInfOutrosCollection): Boolean;
+var
+  i, j, k, l, pos1, pos2, pos3, len: Integer;
+  ok: Boolean;
+  sAux: string;
+  qtdRat_UnidTransp: Double;
+begin
+  i := 0;
+  InfOutros.Clear;
+
+  while Leitor.rExtrai(Nivel, 'infOutros', '', i + 1) <> '' do
+  begin
+    InfOutros.New;
+    InfOutros[i].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
+    InfOutros[i].descOutros := Leitor.rCampo(tcStr, 'descOutros');
+    InfOutros[i].nDoc       := Leitor.rCampo(tcStr, 'nDoc');
+    InfOutros[i].dEmi       := Leitor.rCampo(tcDat, 'dEmi');
+    InfOutros[i].vDocFisc   := Leitor.rCampo(tcDe2, 'vDocFisc');
+    InfOutros[i].dPrev      := Leitor.rCampo(tcDat, 'dPrev');
+
+    j := 0;
+    InfOutros[i].infUnidTransp.Clear;
+
+    while Leitor.rExtrai(Nivel + 1, 'infUnidTransp', '', j + 1) <> '' do
+    begin
+      InfOutros[i].infUnidTransp.New;
+      InfOutros[i].infUnidTransp[j].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+      InfOutros[i].infUnidTransp[j].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+
+      // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+      // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+      // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+      // precisamos saber se existe uma ocorrência ou duas dessa tag para
+      // efetuar a leitura correta das informações.
+
+      sAux := Leitor.Grupo;
+      pos1 := PosLast('</infUnidCarga>', sAux);
+      pos2 := PosLast('<qtdRat>', sAux);
+      pos3 := PosLast('</qtdRat>', sAux);
+      len  := pos3 - pos2;
+
+      if (pos1 < pos3) then
+        qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
+      else
+        qtdRat_UnidTransp := 0.0;
+
+      infOutros[i].infUnidTransp[j].qtdRat := qtdRat_UnidTransp;
+
+      k := 0;
+      InfOutros[i].infUnidTransp[j].lacUnidTransp.Clear;
+
+      while Leitor.rExtrai(Nivel + 2, 'lacUnidTransp', '', k + 1) <> '' do
+      begin
+        InfOutros[i].infUnidTransp[j].lacUnidTransp.New;
+        InfOutros[i].infUnidTransp[j].lacUnidTransp[k].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+        inc(k);
+      end;
+
+      k := 0;
+      InfOutros[i].infUnidTransp[j].infUnidCarga.Clear;
+
+      while Leitor.rExtrai(Nivel + 2, 'infUnidCarga', '', k + 1) <> '' do
+      begin
+        InfOutros[i].infUnidTransp[j].infUnidCarga.New;
+        InfOutros[i].infUnidTransp[j].infUnidCarga[k].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+        InfOutros[i].infUnidTransp[j].infUnidCarga[k].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+        InfOutros[i].infUnidTransp[j].infUnidCarga[k].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+        l := 0;
+        InfOutros[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.Clear;
+
+        while Leitor.rExtrai(Nivel + 3, 'lacUnidCarga', '', l + 1) <> '' do
+        begin
+          InfOutros[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.New;
+          InfOutros[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+          inc(l);
+        end;
+
+        inc(k);
+      end;
+
+      inc(j);
+    end;
+
+    if j = 0 then
+    begin
+      InfOutros[i].infUnidCarga.Clear;
+
+      while Leitor.rExtrai(Nivel + 1, 'infUnidCarga', '', j + 1) <> '' do
+      begin
+        InfOutros[i].infUnidCarga.New;
+        InfOutros[i].infUnidCarga[j].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+        InfOutros[i].infUnidCarga[j].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+        InfOutros[i].infUnidCarga[j].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+        k := 0;
+        InfOutros[i].infUnidCarga[j].lacUnidCarga.Clear;
+
+        while Leitor.rExtrai(Nivel + 2, 'lacUnidCarga', '', k + 1) <> '' do
+        begin
+          InfOutros[i].infUnidCarga[j].lacUnidCarga.New;
+          InfOutros[i].infUnidCarga[j].lacUnidCarga[k].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+          inc(k);
+        end;
+
+        inc(j);
+      end;
+    end;
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Rodo(rodo: TRodo): Boolean;
+var
+  sAux: string;
+  i: Integer;
+  ok: Boolean;
+begin
+  if Leitor.rExtrai(2, 'rodo') <> '' then
+  begin
+    rodo.RNTRC := Leitor.rCampo(tcStr,'RNTRC');
+    rodo.dPrev := Leitor.rCampo(tcDat,'dPrev');
+
+    sAux := Leitor.rCampo(tcStr, 'lota');
+
+    if sAux <> '' then
+      rodo.lota := StrToTpLotacao(ok, sAux);
+
+    rodo.CIOT := Leitor.rCampo(tcStr, 'CIOT');
+
+    if VersaoDF < ve200 then
+    begin
+      for i := 0 to CTe.infCTeNorm.infDoc.InfNFE.count-1 do
+      begin
+        CTe.infCTeNorm.infDoc.InfNFE[i].dPrev := rodo.dPrev;
+      end;
+      for i := 0 to CTe.infCTeNorm.infDoc.InfNF.count-1 do
+      begin
+        CTe.infCTeNorm.infDoc.InfNF[i].dPrev := rodo.dPrev;
+      end;
+      for i := 0 to CTe.infCTeNorm.infDoc.InfOutros.count-1 do
+      begin
+        CTe.infCTeNorm.infDoc.InfOutros[i].dPrev := rodo.dPrev;
+      end;
+    end;
+
+    i := 0;
+    rodo.occ.Clear;
+
+    while Leitor.rExtrai(3, 'occ', '', i + 1) <> '' do
+    begin
+      rodo.occ.New;
+      rodo.occ[i].serie := Leitor.rCampo(tcStr, 'serie');
+      rodo.occ[i].nOcc  := Leitor.rCampo(tcInt, 'nOcc');
+      rodo.occ[i].dEmi  := Leitor.rCampo(tcDat, 'dEmi');
+
+      if Leitor.rExtrai(4, 'emiOcc') <> '' then
+      begin
+        rodo.occ[i].emiOcc.CNPJ := Leitor.rCampo(tcStr, 'CNPJ');
+        rodo.occ[i].emiOcc.cInt := Leitor.rCampo(tcStr, 'cInt');
+        rodo.occ[i].emiOcc.IE   := Leitor.rCampo(tcStr, 'IE');
+        rodo.occ[i].emiOcc.UF   := Leitor.rCampo(tcStr, 'UF');
+        rodo.occ[i].emiOcc.fone := Leitor.rCampo(tcStr, 'fone');
+      end;
+
+      inc(i);
+    end;
+
+    i := 0;
+    rodo.valePed.Clear;
+
+    while Leitor.rExtrai(3, 'valePed', '', i + 1) <> '' do
+    begin
+      rodo.valePed.New;
+      rodo.valePed[i].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
+      rodo.valePed[i].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
+      rodo.valePed[i].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+      rodo.valePed[i].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
+
+      inc(i);
+    end;
+
+    i := 0;
+    rodo.veic.Clear;
+
+    while Leitor.rExtrai(3, 'veic', '', i + 1) <> '' do
+    begin
+      rodo.veic.New;
+      rodo.veic[i].cInt    := Leitor.rCampo(tcStr, 'cInt');
+      rodo.veic[i].RENAVAM := Leitor.rCampo(tcStr, 'RENAVAM');
+      rodo.veic[i].placa   := Leitor.rCampo(tcStr, 'placa');
+      rodo.veic[i].tara    := Leitor.rCampo(tcInt, 'tara');
+      rodo.veic[i].capKG   := Leitor.rCampo(tcInt, 'capKG');
+      rodo.veic[i].capM3   := Leitor.rCampo(tcInt, 'capM3');
+      rodo.veic[i].tpProp  := StrToTpPropriedade(ok, Leitor.rCampo(tcStr, 'tpProp'));
+      rodo.veic[i].tpVeic  := StrToTpVeiculo(ok, Leitor.rCampo(tcStr, 'tpVeic'));
+      rodo.veic[i].tpRod   := StrToTpRodado(ok, Leitor.rCampo(tcStr, 'tpRod'));
+      rodo.veic[i].tpCar   := StrToTpCarroceria(ok, Leitor.rCampo(tcStr, 'tpCar'));
+      rodo.veic[i].UF      := Leitor.rCampo(tcStr, 'UF');
+
+      if Leitor.rExtrai(4, 'prop') <> '' then
+      begin
+        rodo.veic[i].prop.CNPJCPF := Leitor.rCampoCNPJCPF;
+        rodo.veic[i].prop.RNTRC   := Leitor.rCampo(tcStr, 'RNTRC');
+        rodo.veic[i].prop.xNome   := Leitor.rCampo(tcStr, 'xNome');
+        rodo.veic[i].prop.IE      := Leitor.rCampo(tcStr, 'IE');
+        rodo.veic[i].prop.UF      := Leitor.rCampo(tcStr, 'UF');
+        rodo.veic[i].prop.tpProp  := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
+      end;
+
+      inc(i);
+    end;
+
+    i := 0;
+    rodo.lacRodo.Clear;
+
+    while Leitor.rExtrai(3, 'lacRodo', '', i + 1) <> '' do
+    begin
+      rodo.lacRodo.New;
+      rodo.lacRodo[i].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+      inc(i);
+    end;
+
+    i := 0;
+    Rodo.moto.Clear;
+
+    while Leitor.rExtrai(3, 'moto', '', i + 1) <> '' do
+    begin
+      Rodo.moto.New;
+      Rodo.moto[i].xNome := Leitor.rCampo(tcStr, 'xNome');
+      Rodo.moto[i].CPF   := Leitor.rCampo(tcStr, 'CPF');
+
+      inc(i);
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_RodoOS(rodoOS: TRodoOS): Boolean;
+var
+  ok: Boolean;
+begin
+  if Leitor.rExtrai(2, 'rodoOS') <> '' then
+  begin
+    rodoOS.TAF            := Leitor.rCampo(tcStr, 'TAF');
+    rodoOS.NroRegEstadual := Leitor.rCampo(tcStr, 'NroRegEstadual');
+
+    if Leitor.rExtrai(3, 'veic') <> '' then
+    begin
+      rodoOS.veic.placa   := Leitor.rCampo(tcStr, 'placa');
+      rodoOS.veic.RENAVAM := Leitor.rCampo(tcStr, 'RENAVAM');
+      rodoOS.veic.UF      := Leitor.rCampo(tcStr, 'UF');
+
+      if Leitor.rExtrai(4, 'prop') <> '' then
+      begin
+        rodoOS.veic.prop.CNPJCPF        := Leitor.rCampoCNPJCPF;
+        rodoOS.veic.prop.TAF            := Leitor.rCampo(tcStr, 'TAF');
+        rodoOS.veic.prop.NroRegEstadual := Leitor.rCampo(tcStr, 'NroRegEstadual');
+        rodoOS.veic.prop.xNome          := Leitor.rCampo(tcStr, 'xNome');
+        rodoOS.veic.prop.IE             := Leitor.rCampo(tcStr, 'IE');
+        rodoOS.veic.prop.UF             := Leitor.rCampo(tcStr, 'UF');
+        rodoOS.veic.prop.tpProp         := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
+      end;
+    end;
+
+    if Leitor.rExtrai(3, 'infFretamento') <> '' then
+    begin
+      rodoOS.infFretamento.tpFretamento := StrToTpFretamento(ok, Leitor.rCampo(tcStr, 'tpFretamento'));
+      rodoOS.infFretamento.dhViagem     := Leitor.rCampo(tcDatHor,'dhViagem');
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Aereo(aereo: TAereo): Boolean;
+var
+  i: Integer;
+  ok: Boolean;
+begin
+  if Leitor.rExtrai(2, 'aereo') <> '' then
+  begin
+    aereo.nMinu      := Leitor.rCampo(tcInt,'nMinu');
+    aereo.nOCA       := Leitor.rCampo(tcStr,'nOCA');
+    aereo.dPrevAereo := Leitor.rCampo(tcDat,'dPrevAereo');
+    aereo.xLAgEmi    := Leitor.rCampo(tcStr,'xLAgEmi');
+    aereo.IdT        := Leitor.rCampo(tcStr,'IdT');
+
+    if Leitor.rExtrai(3, 'tarifa') <> '' then
+    begin
+      aereo.tarifa.CL   := Leitor.rCampo(tcStr,'CL');
+      aereo.tarifa.cTar := Leitor.rCampo(tcStr,'cTar');
+      aereo.tarifa.vTar := Leitor.rCampo(tcDe2,'vTar');
+    end;
+
+    if Leitor.rExtrai(3, 'natCarga') <> '' then
+    begin
+      aereo.natCarga.xDime := Leitor.rCampo(tcStr,'xDime');
+      aereo.natCarga.cIMP  := Leitor.rCampo(tcStr,'cIMP');
+
+      i := 0;
+      aereo.natCarga.cinfManu.Clear;
+
+      while Leitor.rExtrai(4, 'cInfManu', '', i + 1) <> '' do
+      begin
+        aereo.natCarga.cinfManu.New;
+
+        if VersaoDF >= ve300 then
+          aereo.natCarga.cinfManu[i].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'))
+        else
+          aereo.natCarga.cinfManu[i].nInfManu := StrToTpInfManuV2(ok, Leitor.rCampo(tcStr,'cInfManu'));
+
+        inc(i);
+      end;
+    end;
+
+    i := 0;
+    aereo.peri.Clear;
+    while Leitor.rExtrai(2, 'peri', '', i + 1) <> '' do
+    begin
+      aereo.peri.New;
+      aereo.peri[i].nONU        := Leitor.rCampo(tcStr, 'nONU');
+      aereo.peri[i].xNomeAE     := Leitor.rCampo(tcStr, 'xNomeAE');
+      aereo.peri[i].xClaRisco   := Leitor.rCampo(tcStr, 'xClaRisco');
+      aereo.peri[i].grEmb       := Leitor.rCampo(tcStr, 'grEmb');
+      aereo.peri[i].qTotProd    := Leitor.rCampo(tcStr, 'qTotProd');
+      aereo.peri[i].qVolTipo    := Leitor.rCampo(tcStr, 'qVolTipo');
+      aereo.peri[i].pontoFulgor := Leitor.rCampo(tcStr, 'pontoFulgor');
+      aereo.peri[i].qTotEmb     := Leitor.rCampo(tcStr, 'qTotEmb');
+      aereo.peri[i].uniAP       := StrToUniMed(ok, Leitor.rCampo(tcStr, 'uniAP'));
+
+      inc(i);
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Aquav(aquav: TAquav): Boolean;
+var
+  ok: Boolean;
+  i, j: Integer;
+begin
+  if Leitor.rExtrai(2, 'aquav') <> '' then
+  begin
+    aquav.vPrest   := Leitor.rCampo(tcDe2,'vPrest');
+    aquav.vAFRMM   := Leitor.rCampo(tcDe2,'vAFRMM');
+    aquav.nBooking := Leitor.rCampo(tcStr,'nBooking');
+    aquav.nCtrl    := Leitor.rCampo(tcStr,'nCtrl');
+    aquav.xNavio   := Leitor.rCampo(tcStr,'xNavio');
+    aquav.nViag    := Leitor.rCampo(tcStr,'nViag');
+    aquav.direc    := StrToTpDirecao(ok, Leitor.rCampo(tcStr, 'direc'));
+    aquav.prtEmb   := Leitor.rCampo(tcStr,'prtEmb');
+    aquav.prtTrans := Leitor.rCampo(tcStr,'prtTrans');
+    aquav.prtDest  := Leitor.rCampo(tcStr,'prtDest');
+    aquav.tpNav    := StrToTpNavegacao(ok, Leitor.rCampo(tcStr, 'tpNav'));
+    aquav.irin     := Leitor.rCampo(tcStr,'irin');
+
+    i := 0;
+    aquav.balsa.Clear;
+
+    while Leitor.rExtrai(3, 'balsa', '', i + 1) <> '' do
+    begin
+      aquav.balsa.New;
+      aquav.balsa[i].xBalsa := Leitor.rCampo(tcStr, 'xBalsa');
+
+      inc(i);
+    end;
+
+    i := 0;
+    aquav.detCont.Clear;
+
+    while Leitor.rExtrai(3, 'detCont', '', i + 1) <> '' do
+    begin
+      aquav.detCont.New;
+      aquav.detCont[i].nCont := Leitor.rCampo(tcStr, 'nCont');
+
+      j := 0;
+      aquav.detCont[i].Lacre.Clear;
+
+      while Leitor.rExtrai(4, 'lacre', '', j + 1) <> '' do
+      begin
+        aquav.detCont[i].Lacre.New;
+        aquav.detCont[i].Lacre[j].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+
+        inc(j);
+      end;
+
+      if Leitor.rExtrai(4, 'infDoc') <> '' then
+      begin
+        j := 0;
+        aquav.detCont[i].infDoc.infNF.Clear;
+
+        while Leitor.rExtrai(5, 'infNF', '', j + 1) <> '' do
+        begin
+          aquav.detCont[i].infDoc.infNF.New;
+          aquav.detCont[i].infDoc.infNF[j].serie   := Leitor.rCampo(tcStr, 'Serie');
+          aquav.detCont[i].infDoc.infNF[j].nDoc    := Leitor.rCampo(tcStr, 'nDoc');
+          aquav.detCont[i].infDoc.infNF[j].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
+
+          inc(j);
+        end;
+
+        j := 0;
+        aquav.detCont[i].infDoc.infNFe.Clear;
+
+        while Leitor.rExtrai(5, 'infNFe', '', j + 1) <> '' do
+        begin
+          aquav.detCont[i].infDoc.infNFe.New;
+          aquav.detCont[i].infDoc.infNFe[j].chave   := Leitor.rCampo(tcStr, 'chave');
+          aquav.detCont[i].infDoc.infNFe[j].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
+
+          inc(j);
+        end;
+      end;
+
+      inc(i);
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Ferrov(ferrov: TFerrov): Boolean;
+var
+  ok: Boolean;
+  i: Integer;
+begin
+  if Leitor.rExtrai(2, 'ferrov') <> '' then
+  begin
+    ferrov.tpTraf := StrToTpTrafego(ok, Leitor.rCampo(tcStr, 'tpTraf'));
+    ferrov.fluxo  := Leitor.rCampo(tcStr,'fluxo');
+    ferrov.idTrem := Leitor.rCampo(tcStr,'idTrem');
+
+    if VersaoDF >= ve300 then
+    begin
+      if Leitor.rExtrai(3, 'trafMut') <> '' then
+      begin
+        ferrov.trafMut.respFat := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'respFat'));
+        ferrov.trafMut.ferrEmi := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'ferrEmi'));
+        ferrov.vFrete          := Leitor.rCampo(tcDe2,'vFrete');
+
+        ferrov.trafMut.chCTeFerroOrigem := Leitor.rCampo(tcStr,'chCTeFerroOrigem');
+
+        i := 0;
+        ferrov.ferroEnv.Clear;
+
+        while Leitor.rExtrai(4, 'ferroEnv', '', i + 1) <> '' do
+        begin
+          ferrov.ferroEnv.New;
+          ferrov.ferroEnv[i].CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
+          ferrov.ferroEnv[i].cInt  := Leitor.rCampo(tcStr,'cInt');
+          ferrov.ferroEnv[i].IE    := Leitor.rCampo(tcStr,'IE');
+          ferrov.ferroEnv[i].xNome := Leitor.rCampo(tcStr,'xNome');
+
+          if Leitor.rExtrai(5, 'enderFerro') <> '' then
+          begin
+            ferrov.ferroEnv[i].EnderFerro.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
+            ferrov.ferroEnv[i].EnderFerro.nro     := Leitor.rCampo(tcStr, 'nro');
+            ferrov.ferroEnv[i].EnderFerro.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
+            ferrov.ferroEnv[i].EnderFerro.xBairro := Leitor.rCampo(tcStr, 'xBairro');
+            ferrov.ferroEnv[i].EnderFerro.cMun    := Leitor.rCampo(tcInt, 'cMun');
+            ferrov.ferroEnv[i].EnderFerro.xMun    := Leitor.rCampo(tcStr, 'xMun');
+            ferrov.ferroEnv[i].EnderFerro.CEP     := Leitor.rCampo(tcInt, 'CEP');
+            ferrov.ferroEnv[i].EnderFerro.UF      := Leitor.rCampo(tcStr, 'UF');
+          end;
+
+          inc(i);
+        end;
+      end;
+    end
+    else
+    begin
+      ferrov.vFrete := Leitor.rCampo(tcDe2,'vFrete');
+
+      if Leitor.rExtrai(3, 'trafMut') <> '' then
+      begin
+        ferrov.trafMut.respFat := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'respFat'));
+        ferrov.trafMut.ferrEmi := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'ferrEmi'));
+      end;
+
+      i := 0;
+      ferrov.ferroEnv.Clear;
+
+      while Leitor.rExtrai(3, 'ferroEnv', '', i + 1) <> '' do
+      begin
+        ferrov.ferroEnv.New;
+        ferrov.ferroEnv[i].CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
+        ferrov.ferroEnv[i].cInt  := Leitor.rCampo(tcStr,'cInt');
+        ferrov.ferroEnv[i].IE    := Leitor.rCampo(tcStr,'IE');
+        ferrov.ferroEnv[i].xNome := Leitor.rCampo(tcStr,'xNome');
+
+        if Leitor.rExtrai(4, 'enderFerro') <> '' then
+        begin
+          ferrov.ferroEnv[i].EnderFerro.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
+          ferrov.ferroEnv[i].EnderFerro.nro     := Leitor.rCampo(tcStr, 'nro');
+          ferrov.ferroEnv[i].EnderFerro.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
+          ferrov.ferroEnv[i].EnderFerro.xBairro := Leitor.rCampo(tcStr, 'xBairro');
+          ferrov.ferroEnv[i].EnderFerro.cMun    := Leitor.rCampo(tcInt, 'cMun');
+          ferrov.ferroEnv[i].EnderFerro.xMun    := Leitor.rCampo(tcStr, 'xMun');
+          ferrov.ferroEnv[i].EnderFerro.CEP     := Leitor.rCampo(tcInt, 'CEP');
+          ferrov.ferroEnv[i].EnderFerro.UF      := Leitor.rCampo(tcStr, 'UF');
+        end;
+
+        inc(i);
+      end;
+
+      i := 0;
+      ferrov.detVag.Clear;
+
+      while Leitor.rExtrai(3, 'detVag', '', i + 1) <> '' do
+      begin
+        ferrov.detVag.New;
+        ferrov.detVag[i].nVag   := Leitor.rCampo(tcInt, 'nVag');
+        ferrov.detVag[i].cap    := Leitor.rCampo(tcDe2, 'cap');
+        ferrov.detVag[i].tpVag  := Leitor.rCampo(tcStr, 'tpVag');
+        ferrov.detVag[i].pesoR  := Leitor.rCampo(tcDe2, 'pesoR');
+        ferrov.detVag[i].pesoBC := Leitor.rCampo(tcDe2, 'pesoBC');
+
+        inc(i);
+      end;
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Duto(duto: TDuto): Boolean;
+begin
+  if Leitor.rExtrai(2, 'duto') <> '' then
+  begin
+    duto.vTar := Leitor.rCampo(tcDe6, 'vTar');
+    duto.dIni := Leitor.rCampo(tcDat, 'dIni');
+    duto.dFim := Leitor.rCampo(tcDat, 'dFim');
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_MultiModal(multimodal: TMultimodal): Boolean;
+var
+  ok: Boolean;
+begin
+  if Leitor.rExtrai(2, 'multimodal') <> '' then
+  begin
+    multimodal.COTM          := Leitor.rCampo(tcStr, 'COTM');
+    multimodal.indNegociavel := StrToindNegociavel(ok, Leitor.rCampo(tcStr, 'indNegociavel'));
+
+    // dados sobre o seguro informados somente na versão 3.00
+    multimodal.xSeg  := Leitor.rCampo(tcStr, 'xSeg');
+    multimodal.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
+    multimodal.nApol := Leitor.rCampo(tcStr, 'nApol');
+    multimodal.nAver := Leitor.rCampo(tcStr, 'nAver');
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_InfCTeNorm: Boolean;
+var
+  i, j, k: Integer;
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'infCTeNorm') <> '' then
   begin
     CTe.infCTeNorm.refCTeCanc := Leitor.rCampo(tcStr,'refCTeCanc');
@@ -760,901 +1761,409 @@ begin
       CTe.infCTeNorm.infServico.qCarga    := Leitor.rCampo(tcDe4,'qCarga');
     end;
 
-    i01 := 0;
+    i := 0;
     CTe.infCTeNorm.infDocRef.Clear;
-    while Leitor.rExtrai(2, 'infDocRef', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'infDocRef', '', i + 1) <> '' do
     begin
       CTe.infCTeNorm.infDocRef.New;
-      CTe.infCTeNorm.infDocRef[i01].nDoc     := Leitor.rCampo(tcEsp, 'nDoc');
-      CTe.infCTeNorm.infDocRef[i01].serie    := Leitor.rCampo(tcStr, 'serie');
-      CTe.infCTeNorm.infDocRef[i01].subserie := Leitor.rCampo(tcStr, 'subserie');
-      CTe.infCTeNorm.infDocRef[i01].dEmi     := Leitor.rCampo(tcDat, 'dEmi');
-      CTe.infCTeNorm.infDocRef[i01].vDoc     := Leitor.rCampo(tcDe2, 'vDoc');
+      CTe.infCTeNorm.infDocRef[i].nDoc     := Leitor.rCampo(tcEsp, 'nDoc');
+      CTe.infCTeNorm.infDocRef[i].serie    := Leitor.rCampo(tcStr, 'serie');
+      CTe.infCTeNorm.infDocRef[i].subserie := Leitor.rCampo(tcStr, 'subserie');
+      CTe.infCTeNorm.infDocRef[i].dEmi     := Leitor.rCampo(tcDat, 'dEmi');
+      CTe.infCTeNorm.infDocRef[i].vDoc     := Leitor.rCampo(tcDe2, 'vDoc');
 
-      CTe.infCTeNorm.infDocRef[i01].chBPe := Leitor.rCampo(tcStr, 'chBPe');
+      CTe.infCTeNorm.infDocRef[i].chBPe := Leitor.rCampo(tcStr, 'chBPe');
 
-      inc(i01);
+      inc(i);
     end;
 
-    if Leitor.rExtrai(2, 'infCarga') <> ''
-    then begin
-      CTe.infCTeNorm.infCarga.vCarga      := Leitor.rCampo(tcDe2,'vCarga');
-      CTe.infCTeNorm.InfCarga.proPred     := Leitor.rCampo(tcStr,'proPred');
-      CTe.infCTeNorm.InfCarga.xOutCat     := Leitor.rCampo(tcStr,'xOutCat');
-      CTe.infCTeNorm.infCarga.vCargaAverb := Leitor.rCampo(tcDe2,'vCargaAverb');
+    Ler_InfCarga(2, CTe.infCTeNorm.infCarga);
 
-      i01 := 0;
-      CTe.infCTeNorm.InfCarga.infQ.Clear;
-      while Leitor.rExtrai(3, 'infQ', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.InfCarga.infQ.New;
-        CTe.infCTeNorm.InfCarga.infQ[i01].cUnid  := Leitor.rCampo(tcStr, 'cUnid');
-        CTe.infCTeNorm.InfCarga.infQ[i01].tpMed  := Leitor.rCampo(tcStr, 'tpMed');
-        CTe.infCTeNorm.InfCarga.infQ[i01].qCarga := Leitor.rCampo(tcDe4, 'qCarga');
-        inc(i01);
-      end;
+    if Leitor.rExtrai(2, 'infDoc') <> '' then
+    begin
+      Ler_infNF(3, CTe.infCTeNorm.infDoc.InfNF);
+      Ler_infNFe(3, CTe.infCTeNorm.infDoc.InfNFE);
+      Ler_infOutros(3, CTe.infCTeNorm.infDoc.infOutros);
     end;
 
-    if Leitor.rExtrai(2, 'infDoc') <> ''
-    then begin
-      i01 := 0;
-      CTe.infCTeNorm.infDoc.infNF.Clear;
-      while Leitor.rExtrai(3, 'infNF', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.infDoc.infNF.New;
-        CTe.infCTeNorm.infDoc.InfNF[i01].nRoma := Leitor.rCampo(tcStr, 'nRoma');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nPed  := Leitor.rCampo(tcStr, 'nPed');
-        CTe.infCTeNorm.infDoc.InfNF[i01].Modelo := StrToModeloNF(Ok, Leitor.rCampo(tcStr, 'mod'));
-        CTe.infCTeNorm.infDoc.InfNF[i01].serie := Leitor.rCampo(tcStr, 'serie');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nDoc  := Leitor.rCampo(tcEsp, 'nDoc');
-        CTe.infCTeNorm.infDoc.InfNF[i01].dEmi  := Leitor.rCampo(tcDat, 'dEmi');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vBC   := Leitor.rCampo(tcDe2, 'vBC');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vICMS := Leitor.rCampo(tcDe2, 'vICMS');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vBCST := Leitor.rCampo(tcDe2, 'vBCST');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vST   := Leitor.rCampo(tcDe2, 'vST');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vProd := Leitor.rCampo(tcDe2, 'vProd');
-        CTe.infCTeNorm.infDoc.InfNF[i01].vNF   := Leitor.rCampo(tcDe2, 'vNF');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nCFOP := Leitor.rCampo(tcInt, 'nCFOP');
-        CTe.infCTeNorm.infDoc.InfNF[i01].nPeso := Leitor.rCampo(tcDe3, 'nPeso');
-        CTe.infCTeNorm.infDoc.InfNF[i01].PIN   := Leitor.rCampo(tcStr, 'PIN');
-        CTe.infCTeNorm.infDoc.InfNF[i01].dPrev := Leitor.rCampo(tcDat, 'dPrev');
-
-        i02 := 0;
-        while Leitor.rExtrai(4, 'infUnidTransp', '', i02 + 1) <> '' do
-        begin
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp.New;
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-
-          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
-          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
-          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
-          // precisamos saber se existe uma ocorrência ou duas dessa tag para
-          // efetuar a leitura correta das informações.
-
-          sAux := Leitor.Grupo;
-          pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
-          pos3 := PosLast('</qtdRat>', sAux);
-          len  := pos3 - pos2;
-
-//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
-//            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 < pos3) then
-            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
-          else
-            qtdRat_UnidTransp := 0.0;
-
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].lacUnidTransp.New;
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].lacUnidTransp[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-            inc(i03);
-          end;
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'infUnidCarga', '', i03 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga.New;
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-            i04 := 0;
-            while Leitor.rExtrai(6, 'lacUnidCarga', '', i04 + 1) <> '' do
-            begin
-              CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.New;
-              CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-              inc(i04);
-            end;
-
-            inc(i03);
-          end;
-
-          inc(i02);
-        end;
-
-        if i02 = 0 then
-        begin
-          while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga.New;
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-            i03 := 0;
-            while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
-            begin
-              CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga.New;
-              CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-              inc(i03);
-            end;
-
-            inc(i02);
-          end;
-        end;
-        
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.infDoc.InfNFE.Clear;
-      while Leitor.rExtrai(3, 'infNFe', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.infDoc.InfNFE.New;
-        CTe.infCTeNorm.infDoc.InfNFE[i01].chave := Leitor.rCampo(tcStr, 'chave');
-        CTe.infCTeNorm.infDoc.InfNFE[i01].PIN   := Leitor.rCampo(tcStr, 'PIN');
-        CTe.infCTeNorm.infDoc.InfNFE[i01].dPrev := Leitor.rCampo(tcDat, 'dPrev');
-
-        i02 := 0;
-        while Leitor.rExtrai(4, 'infUnidTransp', '', i02 + 1) <> '' do
-        begin
-          CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp.New;
-          CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
-          CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-
-          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
-          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
-          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
-          // precisamos saber se existe uma ocorrência ou duas dessa tag para
-          // efetuar a leitura correta das informações.
-
-          sAux := Leitor.Grupo;
-          pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
-          pos3 := PosLast('</qtdRat>', sAux);
-          len := pos3 - pos2;
-
-//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
-//            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 < pos3) then
-            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
-          else
-            qtdRat_UnidTransp := 0.0;
-
-          CTe.infCTeNorm.infDoc.infNFE[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].lacUnidTransp.New;
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].lacUnidTransp[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-            inc(i03);
-          end;
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'infUnidCarga', '', i03 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga.New;
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-            i04 := 0;
-            while Leitor.rExtrai(6, 'lacUnidCarga', '', i04 + 1) <> '' do
-            begin
-              CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.New;
-              CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-              inc(i04);
-            end;
-
-            inc(i03);
-          end;
-
-          inc(i02);
-        end;
-
-        if i02 = 0 then
-        begin
-          while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga.New;
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-            i03 := 0;
-            while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
-            begin
-              CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga.New;
-              CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-              inc(i03);
-            end;
-
-            inc(i02);
-          end;
-        end;
-
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.infDoc.InfOutros.Clear;
-      while Leitor.rExtrai(3, 'infOutros', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.infDoc.InfOutros.New;
-        CTe.infCTeNorm.infDoc.InfOutros[i01].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
-        CTe.infCTeNorm.infDoc.InfOutros[i01].descOutros := Leitor.rCampo(tcStr, 'descOutros');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].nDoc       := Leitor.rCampo(tcStr, 'nDoc');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].dEmi       := Leitor.rCampo(tcDat, 'dEmi');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].vDocFisc   := Leitor.rCampo(tcDe2, 'vDocFisc');
-        CTe.infCTeNorm.infDoc.InfOutros[i01].dPrev      := Leitor.rCampo(tcDat, 'dPrev');
-
-        i02 := 0;
-        while Leitor.rExtrai(4, 'infUnidTransp', '', i02 + 1) <> '' do
-        begin
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp.New;
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-
-          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
-          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
-          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
-          // precisamos saber se existe uma ocorrência ou duas dessa tag para
-          // efetuar a leitura correta das informações.
-
-          sAux := Leitor.Grupo;
-          pos1 := PosLast('</infUnidCarga>', sAux);
-          pos2 := PosLast('<qtdRat>', sAux);
-          pos3 := PosLast('</qtdRat>', sAux);
-          len  := pos3 - pos2;
-
-//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
-//            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 < pos3) then
-            qtdRat_UnidTransp := StringToFloatDef(Copy(sAux, pos2 + 8, len -8), 0)
-          else
-            qtdRat_UnidTransp := 0.0;
-
-          CTe.infCTeNorm.infDoc.infOutros[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].lacUnidTransp.New;
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].lacUnidTransp[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-            inc(i03);
-          end;
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'infUnidCarga', '', i03 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga.New;
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-            i04 := 0;
-            while Leitor.rExtrai(6, 'lacUnidCarga', '', i04 + 1) <> '' do
-            begin
-              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.New;
-              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-              inc(i04);
-            end;
-
-            inc(i03);
-          end;
-
-          inc(i02);
-        end;
-
-        if i02 = 0 then
-        begin
-          while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga.New;
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-            i03 := 0;
-            while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
-            begin
-              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga.New;
-              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-              inc(i03);
-            end;
-
-            inc(i02);
-          end;
-        end;
-
-        inc(i01);
-      end;
-    end;
-
-    if Leitor.rExtrai(2, 'docAnt') <> ''
-    then begin
-      i01 := 0;
+    if Leitor.rExtrai(2, 'docAnt') <> '' then
+    begin
+      i := 0;
       CTe.infCTeNorm.docAnt.emiDocAnt.Clear;
-      while Leitor.rExtrai(3, 'emiDocAnt', '', i01 + 1) <> '' do
+      while Leitor.rExtrai(3, 'emiDocAnt', '', i + 1) <> '' do
       begin
         CTe.infCTeNorm.docAnt.emiDocAnt.New;
-        CTe.infCTeNorm.docAnt.emiDocAnt[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
-        CTe.infCTeNorm.docAnt.emiDocAnt[i01].IE      := Leitor.rCampo(tcStr, 'IE');
-        CTe.infCTeNorm.docAnt.emiDocAnt[i01].UF      := Leitor.rCampo(tcStr, 'UF');
-        CTe.infCTeNorm.docAnt.emiDocAnt[i01].xNome   := Leitor.rCampo(tcStr, 'xNome');
+        CTe.infCTeNorm.docAnt.emiDocAnt[i].CNPJCPF := Leitor.rCampoCNPJCPF;
+        CTe.infCTeNorm.docAnt.emiDocAnt[i].IE      := Leitor.rCampo(tcStr, 'IE');
+        CTe.infCTeNorm.docAnt.emiDocAnt[i].UF      := Leitor.rCampo(tcStr, 'UF');
+        CTe.infCTeNorm.docAnt.emiDocAnt[i].xNome   := Leitor.rCampo(tcStr, 'xNome');
 
-        i02 := 0;
-        while Leitor.rExtrai(4, 'idDocAnt', '', i02 + 1) <> '' do
+        j := 0;
+        while Leitor.rExtrai(4, 'idDocAnt', '', j + 1) <> '' do
         begin
-          CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt.New;
+          CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt.New;
 
-          i03 := 0;
-          while Leitor.rExtrai(5, 'idDocAntPap', '', i03 + 1) <> '' do
+          k := 0;
+          while Leitor.rExtrai(5, 'idDocAntPap', '', k + 1) <> '' do
           begin
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap.New;
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].tpDoc  := StrToTpDocumentoAnterior(ok, Leitor.rCampo(tcStr, 'tpDoc'));
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].serie  := Leitor.rCampo(tcStr, 'serie');
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].subser := Leitor.rCampo(tcStr, 'subser');
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].nDoc   := Leitor.rCampo(tcStr, 'nDoc');
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].dEmi   := Leitor.rCampo(tcDat, 'dEmi');
-            inc(i03);
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap.New;
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].tpDoc  := StrToTpDocumentoAnterior(ok, Leitor.rCampo(tcStr, 'tpDoc'));
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].serie  := Leitor.rCampo(tcStr, 'serie');
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].subser := Leitor.rCampo(tcStr, 'subser');
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].nDoc   := Leitor.rCampo(tcStr, 'nDoc');
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntPap[k].dEmi   := Leitor.rCampo(tcDat, 'dEmi');
+            inc(k);
           end;
 
-          i03 := 0;
-          while Leitor.rExtrai(5, 'idDocAntEle', '', i03 + 1) <> '' do
+          k := 0;
+          while Leitor.rExtrai(5, 'idDocAntEle', '', k + 1) <> '' do
           begin
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle.New;
+            CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntEle.New;
 
             if (VersaoDF >= ve300) then
-              CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chCTe := Leitor.rCampo(tcStr, 'chCTe')
+              CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntEle[k].chCTe := Leitor.rCampo(tcStr, 'chCTe')
             else
-              CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chave := Leitor.rCampo(tcStr, 'chave');
+              CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[j].idDocAntEle[k].chave := Leitor.rCampo(tcStr, 'chave');
 
-            inc(i03);
+            inc(k);
           end;
-          inc(i02);
+          inc(j);
         end;
-        inc(i01);
+        inc(i);
       end;
     end;
 
-    i01 := 0;
+    i := 0;
     CTe.infCTeNorm.seg.Clear;
-    while Leitor.rExtrai(2, 'seg', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'seg', '', i + 1) <> '' do
     begin
       CTe.infCTeNorm.seg.New;
-      CTe.infCTeNorm.seg[i01].respSeg := StrToTpRspSeguro(ok, Leitor.rCampo(tcStr, 'respSeg'));
-      CTe.infCTeNorm.seg[i01].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
-      CTe.infCTeNorm.seg[i01].nApol   := Leitor.rCampo(tcStr, 'nApol');
-      CTe.infCTeNorm.seg[i01].nAver   := Leitor.rCampo(tcStr, 'nAver');
-      CTe.infCTeNorm.seg[i01].vCarga  := Leitor.rCampo(tcDe2, 'vCarga');
-      inc(i01);
+      CTe.infCTeNorm.seg[i].respSeg := StrToTpRspSeguro(ok, Leitor.rCampo(tcStr, 'respSeg'));
+      CTe.infCTeNorm.seg[i].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
+      CTe.infCTeNorm.seg[i].nApol   := Leitor.rCampo(tcStr, 'nApol');
+      CTe.infCTeNorm.seg[i].nAver   := Leitor.rCampo(tcStr, 'nAver');
+      CTe.infCTeNorm.seg[i].vCarga  := Leitor.rCampo(tcDe2, 'vCarga');
+      inc(i);
     end;
 
-    if Leitor.rExtrai(2, 'rodo') <> '' then
-    begin
-      CTe.infCTeNorm.rodo.RNTRC := Leitor.rCampo(tcStr,'RNTRC');
-      CTe.infCTeNorm.rodo.dPrev := Leitor.rCampo(tcDat,'dPrev');
+    Ler_Rodo(CTe.infCTeNorm.rodo);
+    Ler_RodoOS(CTe.infCTeNorm.rodoOS);
+    Ler_Aereo(CTe.infCTeNorm.aereo);
+    Ler_Aquav(CTe.infCTeNorm.aquav);
+    Ler_Ferrov(CTe.infCTeNorm.ferrov);
+    Ler_Duto(CTe.infCTeNorm.duto);
+    Ler_MultiModal(CTe.infCTeNorm.multimodal);
 
-      sAux := Leitor.rCampo(tcStr, 'lota');
-
-      if sAux <> '' then
-        CTe.infCTeNorm.rodo.lota := StrToTpLotacao(ok, sAux);
-
-      CTe.infCTeNorm.rodo.CIOT := Leitor.rCampo(tcStr, 'CIOT');
-
-      if VersaoDF < ve200 then
-      begin
-        for i01 := 0 to CTe.infCTeNorm.infDoc.InfNFE.count-1 do
-        begin
-          CTe.infCTeNorm.infDoc.InfNFE[i01].dPrev := CTe.infCTeNorm.rodo.dPrev;
-        end;
-        for i01 := 0 to CTe.infCTeNorm.infDoc.InfNF.count-1 do
-        begin
-          CTe.infCTeNorm.infDoc.InfNF[i01].dPrev := CTe.infCTeNorm.rodo.dPrev;
-        end;
-        for i01 := 0 to CTe.infCTeNorm.infDoc.InfOutros.count-1 do
-        begin
-          CTe.infCTeNorm.infDoc.InfOutros[i01].dPrev := CTe.infCTeNorm.rodo.dPrev;
-        end;
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.rodo.occ.Clear;
-      while Leitor.rExtrai(3, 'occ', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.rodo.occ.New;
-        CTe.infCTeNorm.rodo.occ[i01].serie := Leitor.rCampo(tcStr, 'serie');
-        CTe.infCTeNorm.rodo.occ[i01].nOcc  := Leitor.rCampo(tcInt, 'nOcc');
-        CTe.infCTeNorm.rodo.occ[i01].dEmi  := Leitor.rCampo(tcDat, 'dEmi');
-
-        if Leitor.rExtrai(4, 'emiOcc') <> '' then
-        begin
-          CTe.infCTeNorm.rodo.occ[i01].emiOcc.CNPJ := Leitor.rCampo(tcStr, 'CNPJ');
-          CTe.infCTeNorm.rodo.occ[i01].emiOcc.cInt := Leitor.rCampo(tcStr, 'cInt');
-          CTe.infCTeNorm.rodo.occ[i01].emiOcc.IE   := Leitor.rCampo(tcStr, 'IE');
-          CTe.infCTeNorm.rodo.occ[i01].emiOcc.UF   := Leitor.rCampo(tcStr, 'UF');
-          CTe.infCTeNorm.rodo.occ[i01].emiOcc.fone := Leitor.rCampo(tcStr, 'fone');
-        end;
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.rodo.valePed.Clear;
-      while Leitor.rExtrai(3, 'valePed', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.rodo.valePed.New;
-        CTe.infCTeNorm.rodo.valePed[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
-        CTe.infCTeNorm.rodo.valePed[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
-        CTe.infCTeNorm.rodo.valePed[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
-        CTe.infCTeNorm.rodo.valePed[i01].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.rodo.veic.Clear;
-      while Leitor.rExtrai(3, 'veic', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.rodo.veic.New;
-        CTe.infCTeNorm.rodo.veic[i01].cInt    := Leitor.rCampo(tcStr, 'cInt');
-        CTe.infCTeNorm.rodo.veic[i01].RENAVAM := Leitor.rCampo(tcStr, 'RENAVAM');
-        CTe.infCTeNorm.rodo.veic[i01].placa   := Leitor.rCampo(tcStr, 'placa');
-        CTe.infCTeNorm.rodo.veic[i01].tara    := Leitor.rCampo(tcInt, 'tara');
-        CTe.infCTeNorm.rodo.veic[i01].capKG   := Leitor.rCampo(tcInt, 'capKG');
-        CTe.infCTeNorm.rodo.veic[i01].capM3   := Leitor.rCampo(tcInt, 'capM3');
-        CTe.infCTeNorm.rodo.veic[i01].tpProp  := StrToTpPropriedade(ok, Leitor.rCampo(tcStr, 'tpProp'));
-        CTe.infCTeNorm.rodo.veic[i01].tpVeic  := StrToTpVeiculo(ok, Leitor.rCampo(tcStr, 'tpVeic'));
-        CTe.infCTeNorm.rodo.veic[i01].tpRod   := StrToTpRodado(ok, Leitor.rCampo(tcStr, 'tpRod'));
-        CTe.infCTeNorm.rodo.veic[i01].tpCar   := StrToTpCarroceria(ok, Leitor.rCampo(tcStr, 'tpCar'));
-        CTe.infCTeNorm.rodo.veic[i01].UF      := Leitor.rCampo(tcStr, 'UF');
-
-        if Leitor.rExtrai(4, 'prop') <> '' then
-        begin
-          CTe.infCTeNorm.rodo.veic[i01].prop.CNPJCPF := Leitor.rCampoCNPJCPF;
-          CTe.infCTeNorm.rodo.veic[i01].prop.RNTRC   := Leitor.rCampo(tcStr, 'RNTRC');
-          CTe.infCTeNorm.rodo.veic[i01].prop.xNome   := Leitor.rCampo(tcStr, 'xNome');
-          CTe.infCTeNorm.rodo.veic[i01].prop.IE      := Leitor.rCampo(tcStr, 'IE');
-          CTe.infCTeNorm.rodo.veic[i01].prop.UF      := Leitor.rCampo(tcStr, 'UF');
-          CTe.infCTeNorm.rodo.veic[i01].prop.tpProp  := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
-        end;
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.rodo.lacRodo.Clear;
-      while Leitor.rExtrai(3, 'lacRodo', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.rodo.lacRodo.New;
-        CTe.infCTeNorm.rodo.lacRodo[i01].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.Rodo.moto.Clear;
-      while Leitor.rExtrai(3, 'moto', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.Rodo.moto.New;
-        CTe.infCTeNorm.Rodo.moto[i01].xNome := Leitor.rCampo(tcStr, 'xNome');
-        CTe.infCTeNorm.Rodo.moto[i01].CPF   := Leitor.rCampo(tcStr, 'CPF');
-        inc(i01);
-      end;
-
-    end; // fim das informações do modal Rodoviário
-
-    if Leitor.rExtrai(2, 'rodoOS') <> '' then
-    begin
-      CTe.infCTeNorm.rodoOS.TAF            := Leitor.rCampo(tcStr, 'TAF');
-      CTe.infCTeNorm.rodoOS.NroRegEstadual := Leitor.rCampo(tcStr, 'NroRegEstadual');
-
-      if Leitor.rExtrai(3, 'veic') <> '' then
-      begin
-        CTe.infCTeNorm.rodoOS.veic.placa   := Leitor.rCampo(tcStr, 'placa');
-        CTe.infCTeNorm.rodoOS.veic.RENAVAM := Leitor.rCampo(tcStr, 'RENAVAM');
-        CTe.infCTeNorm.rodoOS.veic.UF      := Leitor.rCampo(tcStr, 'UF');
-
-        if Leitor.rExtrai(4, 'prop') <> '' then
-        begin
-          CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF        := Leitor.rCampoCNPJCPF;
-          CTe.infCTeNorm.rodoOS.veic.prop.TAF            := Leitor.rCampo(tcStr, 'TAF');
-          CTe.infCTeNorm.rodoOS.veic.prop.NroRegEstadual := Leitor.rCampo(tcStr, 'NroRegEstadual');
-          CTe.infCTeNorm.rodoOS.veic.prop.xNome          := Leitor.rCampo(tcStr, 'xNome');
-          CTe.infCTeNorm.rodoOS.veic.prop.IE             := Leitor.rCampo(tcStr, 'IE');
-          CTe.infCTeNorm.rodoOS.veic.prop.UF             := Leitor.rCampo(tcStr, 'UF');
-          CTe.infCTeNorm.rodoOS.veic.prop.tpProp         := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
-        end;
-      end;
-
-      if Leitor.rExtrai(3, 'infFretamento') <> '' then
-      begin
-        CTe.infCTeNorm.rodoOS.infFretamento.tpFretamento := StrToTpFretamento(ok, Leitor.rCampo(tcStr, 'tpFretamento'));
-        CTe.infCTeNorm.rodoOS.infFretamento.dhViagem     := Leitor.rCampo(tcDatHor,'dhViagem');
-      end;
-    end;
-
-    if Leitor.rExtrai(2, 'aereo') <> '' then
-    begin
-      CTe.infCTeNorm.aereo.nMinu      := Leitor.rCampo(tcInt,'nMinu');
-      CTe.infCTeNorm.aereo.nOCA       := Leitor.rCampo(tcStr,'nOCA');
-      CTe.infCTeNorm.aereo.dPrevAereo := Leitor.rCampo(tcDat,'dPrevAereo');
-      CTe.infCTeNorm.aereo.xLAgEmi    := Leitor.rCampo(tcStr,'xLAgEmi');
-      CTe.infCTeNorm.aereo.IdT        := Leitor.rCampo(tcStr,'IdT');
-
-      if Leitor.rExtrai(3, 'tarifa') <> '' then
-      begin
-        CTe.infCTeNorm.aereo.tarifa.CL     := Leitor.rCampo(tcStr,'CL');
-        CTe.infCTeNorm.aereo.tarifa.cTar   := Leitor.rCampo(tcStr,'cTar');
-        CTe.infCTeNorm.aereo.tarifa.vTar   := Leitor.rCampo(tcDe2,'vTar');
-      end;
-
-      if Leitor.rExtrai(3, 'natCarga') <> '' then
-       begin
-         CTe.infCTeNorm.aereo.natCarga.xDime     := Leitor.rCampo(tcStr,'xDime');
-         CTe.infCTeNorm.aereo.natCarga.cIMP      := Leitor.rCampo(tcStr,'cIMP');
-
-         i01 := 0;
-         CTe.infCTeNorm.aereo.natCarga.cinfManu.Clear;
-         while Leitor.rExtrai(4, 'cInfManu', '', i01 + 1) <> '' do
-         begin
-           CTe.infCTeNorm.aereo.natCarga.cinfManu.New;
-
-           if VersaoDF >= ve300 then
-             CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'))
-           else
-             CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManuV2(ok, Leitor.rCampo(tcStr,'cInfManu'));
-
-           inc(i01);
-         end;
-       end;
-    end; // fim das informações do modal Aéreo
-
-    if Leitor.rExtrai(2, 'aquav') <> '' then
-    begin
-      CTe.infCTeNorm.aquav.vPrest   := Leitor.rCampo(tcDe2,'vPrest');
-      CTe.infCTeNorm.aquav.vAFRMM   := Leitor.rCampo(tcDe2,'vAFRMM');
-      CTe.infCTeNorm.aquav.nBooking := Leitor.rCampo(tcStr,'nBooking');
-      CTe.infCTeNorm.aquav.nCtrl    := Leitor.rCampo(tcStr,'nCtrl');
-      CTe.infCTeNorm.aquav.xNavio   := Leitor.rCampo(tcStr,'xNavio');
-      CTe.infCTeNorm.aquav.nViag    := Leitor.rCampo(tcStr,'nViag');
-      CTe.infCTeNorm.aquav.direc    := StrToTpDirecao(ok, Leitor.rCampo(tcStr, 'direc'));
-      CTe.infCTeNorm.aquav.prtEmb   := Leitor.rCampo(tcStr,'prtEmb');
-      CTe.infCTeNorm.aquav.prtTrans := Leitor.rCampo(tcStr,'prtTrans');
-      CTe.infCTeNorm.aquav.prtDest  := Leitor.rCampo(tcStr,'prtDest');
-      CTe.infCTeNorm.aquav.tpNav    := StrToTpNavegacao(ok, Leitor.rCampo(tcStr, 'tpNav'));
-      CTe.infCTeNorm.aquav.irin     := Leitor.rCampo(tcStr,'irin');
-
-      i01 := 0;
-      CTe.infCTeNorm.aquav.balsa.Clear;
-      while Leitor.rExtrai(3, 'balsa', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.aquav.balsa.New;
-        CTe.infCTeNorm.aquav.balsa[i01].xBalsa := Leitor.rCampo(tcStr, 'xBalsa');
-        inc(i01);
-      end;
-
-      i01 := 0;
-      CTe.infCTeNorm.aquav.detCont.Clear;
-      while Leitor.rExtrai(3, 'detCont', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.aquav.detCont.New;
-        CTe.infCTeNorm.aquav.detCont[i01].nCont := Leitor.rCampo(tcStr, 'nCont');
-
-        i02 := 0;
-        while Leitor.rExtrai(4, 'lacre', '', i02 + 1) <> '' do
-        begin
-          CTe.infCTeNorm.aquav.detCont[i01].Lacre.New;
-          CTe.infCTeNorm.aquav.detCont[i01].Lacre[i02].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-          inc(i02);
-        end;
-
-        if Leitor.rExtrai(4, 'infDoc') <> ''
-        then begin
-          i02 := 0;
-          while Leitor.rExtrai(5, 'infNF', '', i02 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF.New;
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].serie   := Leitor.rCampo(tcStr, 'Serie');
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].nDoc    := Leitor.rCampo(tcStr, 'nDoc');
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
-            inc(i02);
-          end;
-          i02 := 0;
-          while Leitor.rExtrai(5, 'infNFe', '', i02 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe.New;
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe[i02].chave   := Leitor.rCampo(tcStr, 'chave');
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe[i02].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
-            inc(i02);
-          end;
-        end;
-        inc(i01);
-      end;
-    end; // fim das informações do modal Aquaviário
-
-    if Leitor.rExtrai(2, 'ferrov') <> '' then
-    begin
-      CTe.infCTeNorm.ferrov.tpTraf := StrToTpTrafego(ok, Leitor.rCampo(tcStr, 'tpTraf'));
-      CTe.infCTeNorm.ferrov.fluxo  := Leitor.rCampo(tcStr,'fluxo');
-      CTe.infCTeNorm.ferrov.idTrem := Leitor.rCampo(tcStr,'idTrem');
-
-      if VersaoDF >= ve300 then
-      begin
-        if Leitor.rExtrai(3, 'trafMut') <> '' then
-        begin
-          CTe.infCTeNorm.ferrov.trafMut.respFat := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'respFat'));
-          CTe.infCTeNorm.ferrov.trafMut.ferrEmi := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'ferrEmi'));
-          CTe.infCTeNorm.ferrov.vFrete          := Leitor.rCampo(tcDe2,'vFrete');
-
-          CTe.infCTeNorm.ferrov.trafMut.chCTeFerroOrigem := Leitor.rCampo(tcStr,'chCTeFerroOrigem');
-
-          i01 := 0;
-          CTe.infCTeNorm.ferrov.ferroEnv.Clear;
-          while Leitor.rExtrai(4, 'ferroEnv', '', i01 + 1) <> '' do
-          begin
-            CTe.infCTeNorm.ferrov.ferroEnv.New;
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].cInt  := Leitor.rCampo(tcStr,'cInt');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].IE    := Leitor.rCampo(tcStr,'IE');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].xNome := Leitor.rCampo(tcStr,'xNome');
-
-            if Leitor.rExtrai(5, 'enderFerro') <> '' then
-            begin
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.nro     := Leitor.rCampo(tcStr, 'nro');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xBairro := Leitor.rCampo(tcStr, 'xBairro');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.cMun    := Leitor.rCampo(tcInt, 'cMun');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xMun    := Leitor.rCampo(tcStr, 'xMun');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.CEP     := Leitor.rCampo(tcInt, 'CEP');
-              CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.UF      := Leitor.rCampo(tcStr, 'UF');
-            end;
-            inc(i01);
-          end;
-        end;
-      end
-      else
-      begin
-        CTe.infCTeNorm.ferrov.vFrete := Leitor.rCampo(tcDe2,'vFrete');
-
-        if Leitor.rExtrai(3, 'trafMut') <> '' then
-        begin
-          CTe.infCTeNorm.ferrov.trafMut.respFat := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'respFat'));
-          CTe.infCTeNorm.ferrov.trafMut.ferrEmi := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'ferrEmi'));
-        end;
-
-        i01 := 0;
-        CTe.infCTeNorm.ferrov.ferroEnv.Clear;
-        while Leitor.rExtrai(3, 'ferroEnv', '', i01 + 1) <> '' do
-        begin
-          CTe.infCTeNorm.ferrov.ferroEnv.New;
-          CTe.infCTeNorm.ferrov.ferroEnv[i01].CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
-          CTe.infCTeNorm.ferrov.ferroEnv[i01].cInt  := Leitor.rCampo(tcStr,'cInt');
-          CTe.infCTeNorm.ferrov.ferroEnv[i01].IE    := Leitor.rCampo(tcStr,'IE');
-          CTe.infCTeNorm.ferrov.ferroEnv[i01].xNome := Leitor.rCampo(tcStr,'xNome');
-
-          if Leitor.rExtrai(4, 'enderFerro') <> '' then
-          begin
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.nro     := Leitor.rCampo(tcStr, 'nro');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xBairro := Leitor.rCampo(tcStr, 'xBairro');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.cMun    := Leitor.rCampo(tcInt, 'cMun');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.xMun    := Leitor.rCampo(tcStr, 'xMun');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.CEP     := Leitor.rCampo(tcInt, 'CEP');
-            CTe.infCTeNorm.ferrov.ferroEnv[i01].EnderFerro.UF      := Leitor.rCampo(tcStr, 'UF');
-          end;
-          inc(i01);
-        end;
-
-        i01 := 0;
-        CTe.infCTeNorm.ferrov.detVag.Clear;
-        while Leitor.rExtrai(3, 'detVag', '', i01 + 1) <> '' do
-        begin
-          CTe.infCTeNorm.ferrov.detVag.New;
-          CTe.infCTeNorm.ferrov.detVag[i01].nVag   := Leitor.rCampo(tcInt, 'nVag');
-          CTe.infCTeNorm.ferrov.detVag[i01].cap    := Leitor.rCampo(tcDe2, 'cap');
-          CTe.infCTeNorm.ferrov.detVag[i01].tpVag  := Leitor.rCampo(tcStr, 'tpVag');
-          CTe.infCTeNorm.ferrov.detVag[i01].pesoR  := Leitor.rCampo(tcDe2, 'pesoR');
-          CTe.infCTeNorm.ferrov.detVag[i01].pesoBC := Leitor.rCampo(tcDe2, 'pesoBC');
-          inc(i01);
-        end;
-      end;
-
-    end; // fim das informações do modal Ferroviário
-
-    if Leitor.rExtrai(2, 'duto') <> '' then
-    begin
-      CTe.infCTeNorm.duto.vTar := Leitor.rCampo(tcDe6, 'vTar');
-      CTe.infCTeNorm.duto.dIni := Leitor.rCampo(tcDat, 'dIni');
-      CTe.infCTeNorm.duto.dFim := Leitor.rCampo(tcDat, 'dFim');
-    end; // fim das informações do modal Dutoviário
-
-    if Leitor.rExtrai(2, 'multimodal') <> '' then
-    begin
-      CTe.infCTeNorm.multimodal.COTM          := Leitor.rCampo(tcStr, 'COTM');
-      CTe.infCTeNorm.multimodal.indNegociavel := StrToindNegociavel(ok, Leitor.rCampo(tcStr, 'indNegociavel'));
-      // dados sobre o seguro informados somente na versão 3.00
-      CTe.infCTeNorm.multimodal.xSeg          := Leitor.rCampo(tcStr, 'xSeg');
-      CTe.infCTeNorm.multimodal.CNPJ          := Leitor.rCampo(tcStr, 'CNPJ');
-      CTe.infCTeNorm.multimodal.nApol         := Leitor.rCampo(tcStr, 'nApol');
-      CTe.infCTeNorm.multimodal.nAver         := Leitor.rCampo(tcStr, 'nAver');
-    end; // fim das informações do Multimodal
-
-    i01 := 0;
+    i := 0;
     CTe.infCTeNorm.peri.Clear;
-    while Leitor.rExtrai(2, 'peri', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'peri', '', i + 1) <> '' do
     begin
       CTe.infCTeNorm.peri.New;
-      CTe.infCTeNorm.peri[i01].nONU        := Leitor.rCampo(tcStr, 'nONU');
-      CTe.infCTeNorm.peri[i01].xNomeAE     := Leitor.rCampo(tcStr, 'xNomeAE');
-      CTe.infCTeNorm.peri[i01].xClaRisco   := Leitor.rCampo(tcStr, 'xClaRisco');
-      CTe.infCTeNorm.peri[i01].grEmb       := Leitor.rCampo(tcStr, 'grEmb');
-      CTe.infCTeNorm.peri[i01].qTotProd    := Leitor.rCampo(tcStr, 'qTotProd');
-      CTe.infCTeNorm.peri[i01].qVolTipo    := Leitor.rCampo(tcStr, 'qVolTipo');
-      CTe.infCTeNorm.peri[i01].pontoFulgor := Leitor.rCampo(tcStr, 'pontoFulgor');
-      CTe.infCTeNorm.peri[i01].qTotEmb     := Leitor.rCampo(tcStr, 'qTotEmb');
-      CTe.infCTeNorm.peri[i01].uniAP       := StrToUniMed(ok, Leitor.rCampo(tcStr, 'uniAP'));
-      inc(i01);
+      CTe.infCTeNorm.peri[i].nONU        := Leitor.rCampo(tcStr, 'nONU');
+      CTe.infCTeNorm.peri[i].xNomeAE     := Leitor.rCampo(tcStr, 'xNomeAE');
+      CTe.infCTeNorm.peri[i].xClaRisco   := Leitor.rCampo(tcStr, 'xClaRisco');
+      CTe.infCTeNorm.peri[i].grEmb       := Leitor.rCampo(tcStr, 'grEmb');
+      CTe.infCTeNorm.peri[i].qTotProd    := Leitor.rCampo(tcStr, 'qTotProd');
+      CTe.infCTeNorm.peri[i].qVolTipo    := Leitor.rCampo(tcStr, 'qVolTipo');
+      CTe.infCTeNorm.peri[i].pontoFulgor := Leitor.rCampo(tcStr, 'pontoFulgor');
+      CTe.infCTeNorm.peri[i].qTotEmb     := Leitor.rCampo(tcStr, 'qTotEmb');
+      CTe.infCTeNorm.peri[i].uniAP       := StrToUniMed(ok, Leitor.rCampo(tcStr, 'uniAP'));
+      inc(i);
     end;
 
-    i01 := 0;
+    i := 0;
     CTe.infCTeNorm.veicNovos.Clear;
-    while Leitor.rExtrai(2, 'veicNovos', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'veicNovos', '', i + 1) <> '' do
     begin
       CTe.infCTeNorm.veicNovos.New;
-      CTe.infCTeNorm.veicNovos[i01].chassi := Leitor.rCampo(tcStr, 'chassi');
-      CTe.infCTeNorm.veicNovos[i01].cCor   := Leitor.rCampo(tcStr, 'cCor');
-      CTe.infCTeNorm.veicNovos[i01].xCor   := Leitor.rCampo(tcStr, 'xCor');
-      CTe.infCTeNorm.veicNovos[i01].cMod   := Leitor.rCampo(tcStr, 'cMod');
-      CTe.infCTeNorm.veicNovos[i01].vUnit  := Leitor.rCampo(tcDe2, 'vUnit');
-      CTe.infCTeNorm.veicNovos[i01].vFrete := Leitor.rCampo(tcDe2, 'vFrete');
-      inc(i01);
+      CTe.infCTeNorm.veicNovos[i].chassi := Leitor.rCampo(tcStr, 'chassi');
+      CTe.infCTeNorm.veicNovos[i].cCor   := Leitor.rCampo(tcStr, 'cCor');
+      CTe.infCTeNorm.veicNovos[i].xCor   := Leitor.rCampo(tcStr, 'xCor');
+      CTe.infCTeNorm.veicNovos[i].cMod   := Leitor.rCampo(tcStr, 'cMod');
+      CTe.infCTeNorm.veicNovos[i].vUnit  := Leitor.rCampo(tcDe2, 'vUnit');
+      CTe.infCTeNorm.veicNovos[i].vFrete := Leitor.rCampo(tcDe2, 'vFrete');
+      inc(i);
     end;
 
-    if Leitor.rExtrai(2, 'cobr') <> '' then
-    begin
-      CTe.infCTeNorm.cobr.fat.nFat  := Leitor.rCampo(tcStr, 'nFat');
-      CTe.infCTeNorm.cobr.fat.vOrig := Leitor.rCampo(tcDe2, 'vOrig');
-      CTe.infCTeNorm.cobr.fat.vDesc := Leitor.rCampo(tcDe2, 'vDesc');
-      CTe.infCTeNorm.cobr.fat.vLiq  := Leitor.rCampo(tcDe2, 'vLiq');
+    Ler_Cobr(2, CTe.infCTeNorm.cobr);
 
-      i01 := 0;
-      CTe.infCTeNorm.cobr.dup.Clear;
-      while Leitor.rExtrai(3, 'dup', '', i01 + 1) <> '' do
-      begin
-        CTe.infCTeNorm.cobr.dup.New;
-        CTe.infCTeNorm.cobr.dup[i01].nDup  := Leitor.rCampo(tcStr, 'nDup');
-        CTe.infCTeNorm.cobr.dup[i01].dVenc := Leitor.rCampo(tcDat, 'dVenc');
-        CTe.infCTeNorm.cobr.dup[i01].vDup  := Leitor.rCampo(tcDe2, 'vDup');
-        inc(i01);
-      end;
-    end;
-
-    i01 := 0;
+    i := 0;
     CTe.infCTeNorm.infGTVe.Clear;
-    while Leitor.rExtrai(2, 'infGTVe', '', i01 + 1) <> '' do
+    while Leitor.rExtrai(2, 'infGTVe', '', i + 1) <> '' do
     begin
       CTe.infCTeNorm.infGTVe.New;
-      CTe.infCTeNorm.infGTVe[i01].chCTe  := Leitor.rCampo(tcStr, 'chCTe');
+      CTe.infCTeNorm.infGTVe[i].chCTe  := Leitor.rCampo(tcStr, 'chCTe');
 
-      i02 := 0;
-      while Leitor.rExtrai(3, 'Comp', '', i02 + 1) <> '' do
+      j := 0;
+      while Leitor.rExtrai(3, 'Comp', '', j + 1) <> '' do
       begin
-        CTe.infCTeNorm.infGTVe[i01].Comp.New;
-        CTe.infCTeNorm.infGTVe[i01].Comp[i02].tpComp := StrTotpComp(Ok, Leitor.rCampo(tcStr, 'tpComp'));
-        CTe.infCTeNorm.infGTVe[i01].Comp[i02].vComp  := Leitor.rCampo(tcDe2, 'vComp');
-        CTe.infCTeNorm.infGTVe[i01].Comp[i02].xComp  := Leitor.rCampo(tcStr, 'xComp');
-        inc(i02);
+        CTe.infCTeNorm.infGTVe[i].Comp.New;
+        CTe.infCTeNorm.infGTVe[i].Comp[j].tpComp := StrTotpComp(Ok, Leitor.rCampo(tcStr, 'tpComp'));
+        CTe.infCTeNorm.infGTVe[i].Comp[j].vComp  := Leitor.rCampo(tcDe2, 'vComp');
+        CTe.infCTeNorm.infGTVe[i].Comp[j].xComp  := Leitor.rCampo(tcStr, 'xComp');
+        inc(j);
       end;
 
-      inc(i01);
+      inc(i);
     end;
 
-    if Leitor.rExtrai(2, 'infCteSub') <> '' then
-    begin
-      CTe.infCTeNorm.infCTeSub.chCte := Leitor.rCampo(tcStr, 'chCte');
-
-      if VersaoDF >= ve300 then
-        CTe.infCTeNorm.infCTeSub.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
-
-      if Leitor.rCampo(tcStr, 'indAlteraToma') <> '' then
-        CTe.infCTeNorm.infCTeSub.indAlteraToma := StrToTIndicador(Ok, Leitor.rCampo(tcStr, 'indAlteraToma'));
-
-      if Leitor.rExtrai(3, 'tomaICMS') <> '' then
-      begin
-        CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe := Leitor.rCampo(tcStr, 'refNFe');
-        CTe.infCTeNorm.infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
-        if Leitor.rExtrai(4, 'refNF') <> '' then
-        begin
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF  := Leitor.rCampoCNPJCPF;
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo   := Leitor.rCampo(tcStr, 'mod');
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie    := Leitor.rCampo(tcInt, 'serie');
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie := Leitor.rCampo(tcInt, 'subserie');
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.nro      := Leitor.rCampo(tcInt, 'nro');
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.valor    := Leitor.rCampo(tcDe2, 'valor');
-          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.dEmi     := Leitor.rCampo(tcDat, 'dEmi');
-        end;
-      end;
-
-      if Leitor.rExtrai(3, 'tomaNaoICMS') <> '' then
-        CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
-    end;
+    Ler_InfCTeSub(2, CTe.infCTeNorm.infCTeSub);
 
     if Leitor.rExtrai(2, 'infGlobalizado') <> '' then
       CTe.infCTeNorm.infGlobalizado.xObs := Leitor.rCampo(tcStr, 'xObs');
 
     if Leitor.rExtrai(2, 'infServVinc') <> '' then
     begin
-      i01 := 0;
+      i := 0;
       CTe.infCTeNorm.infServVinc.infCTeMultimodal.Clear;
-      while Leitor.rExtrai(3, 'infCTeMultimodal', '', i01 + 1) <> '' do
+      while Leitor.rExtrai(3, 'infCTeMultimodal', '', i + 1) <> '' do
       begin
         CTe.infCTeNorm.infServVinc.infCTeMultimodal.New;
-        CTe.infCTeNorm.infServVinc.infCTeMultimodal[i01].chCTeMultimodal := Leitor.rCampo(tcStr, 'chCTeMultimodal');
-        inc(i01);
+        CTe.infCTeNorm.infServVinc.infCTeMultimodal[i].chCTeMultimodal := Leitor.rCampo(tcStr, 'chCTeMultimodal');
+        inc(i);
       end;
     end;
-  end; // fim do infCTeNorm
+  end;
 
-  (* Grupo da TAG <infCteComp> ************************************************)
+  Result := True;
+end;
 
+function TCTeR.Ler_InfCTeComp: Boolean;
+var
+  i: Integer;
+begin
   if VersaoDF <= ve300 then
   begin
     if Leitor.rExtrai(1, 'infCteComp') <> ''
-    then begin
+    then
+    begin
       if (VersaoDF >= ve300) then
          CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chCTe')
       else
         CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chave');
-    end; // fim de infCteComp
+    end;
   end
   else
   begin
-    i01 := 0;
+    i := 0;
     CTe.InfCTeComp10.Clear;
-    while Leitor.rExtrai(1, 'infCteComp', '', i01 + 1) <> '' do
+
+    while Leitor.rExtrai(1, 'infCteComp', '', i + 1) <> '' do
     begin
       CTe.InfCTeComp10.New;
-      CTe.InfCTeComp10[i01].chCTe := Leitor.rCampo(tcStr, 'chCTe');
-      inc(i01);
+      CTe.InfCTeComp10[i].chCTe := Leitor.rCampo(tcStr, 'chCTe');
+      inc(i);
     end;
   end;
 
-  (* Grupo da TAG <infCteAnu> ************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_InfCarga(Nivel: Integer; infCarga: TInfCarga): Boolean;
+var
+  i: Integer;
+begin
+  if Leitor.rExtrai(Nivel, 'infCarga') <> ''
+  then begin
+    infCarga.vCarga      := Leitor.rCampo(tcDe2,'vCarga');
+    InfCarga.proPred     := Leitor.rCampo(tcStr,'proPred');
+    InfCarga.xOutCat     := Leitor.rCampo(tcStr,'xOutCat');
+    infCarga.vCargaAverb := Leitor.rCampo(tcDe2,'vCargaAverb');
+
+    i := 0;
+    InfCarga.infQ.Clear;
+
+    while Leitor.rExtrai(Nivel + 1, 'infQ', '', i + 1) <> '' do
+    begin
+      InfCarga.infQ.New;
+      InfCarga.infQ[i].cUnid  := Leitor.rCampo(tcStr, 'cUnid');
+      InfCarga.infQ[i].tpMed  := Leitor.rCampo(tcStr, 'tpMed');
+      InfCarga.infQ[i].qCarga := Leitor.rCampo(tcDe4, 'qCarga');
+
+      inc(i);
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_InfDocAnt(infDocAnt: TinfDocAntCollection): Boolean;
+var
+  i, j: Integer;
+  ok: Boolean;
+begin
+  i := 0;
+  infDocAnt.Clear;
+
+  while Leitor.rExtrai(2, 'infDocAnt', '', i + 1) <> '' do
+  begin
+    infDocAnt.New;
+    infDocAnt[i].chCTe := Leitor.rCampo(tcStr, 'chCTe');
+    infDocAnt[i].tpPrest := StrTotpPrest(ok, Leitor.rCampo(tcStr, 'tpPrest'));
+
+    j := 0;
+    infDocAnt[i].infNFeTranspParcial.Clear;
+
+    while Leitor.rExtrai(3, 'infNFeTranspParcial', '', j + 1) <> '' do
+    begin
+      infDocAnt[i].infNFeTranspParcial.New;
+      infDocAnt[i].infNFeTranspParcial[j].chNFe := Leitor.rCampo(tcStr, 'chNFe');
+
+      inc(j);
+    end;
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Det: Boolean;
+var
+  i: Integer;
+begin
+  i := 0;
+  CTe.det.Clear;
+
+  while Leitor.rExtrai(1, 'det', '', i + 1) <> '' do
+  begin
+    CTe.det.New;
+    CTe.det[i].cMunIni := Leitor.rCampo(tcInt, 'cMunIni');
+    CTe.det[i].xMunIni := Leitor.rCampo(tcStr, 'xMunIni');
+    CTe.det[i].cMunFim := Leitor.rCampo(tcInt, 'cMunFim');
+    CTe.det[i].xMunFim := Leitor.rCampo(tcStr, 'xMunFim');
+    CTe.det[i].vPrest := Leitor.rCampo(tcDe2, 'vPrest');
+    CTe.det[i].vRec := Leitor.rCampo(tcDe2, 'vRec');
+
+    Ler_Comp(CTe.det[i].Comp);
+    Ler_InfNFe(2, CTe.det[i].infNFe);
+    Ler_InfDocAnt(CTe.det[i].infdocAnt);
+
+    inc(i);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_InfModal: Boolean;
+begin
+  if Leitor.rExtrai(1, 'infModal') <> '' then
+  begin
+    Ler_Rodo(CTe.infModal.rodo);
+    Ler_Aereo(CTe.infModal.aereo);
+    Ler_Aquav(CTe.infModal.aquav);
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Cobr(Nivel: Integer; cobr: TCobr): Boolean;
+var
+  i: Integer;
+begin
+  if Leitor.rExtrai(Nivel, 'cobr') <> '' then
+  begin
+    cobr.fat.nFat  := Leitor.rCampo(tcStr, 'nFat');
+    cobr.fat.vOrig := Leitor.rCampo(tcDe2, 'vOrig');
+    cobr.fat.vDesc := Leitor.rCampo(tcDe2, 'vDesc');
+    cobr.fat.vLiq  := Leitor.rCampo(tcDe2, 'vLiq');
+
+    i := 0;
+    cobr.dup.Clear;
+
+    while Leitor.rExtrai(Nivel + 1, 'dup', '', i + 1) <> '' do
+    begin
+      cobr.dup.New;
+      cobr.dup[i].nDup  := Leitor.rCampo(tcStr, 'nDup');
+      cobr.dup[i].dVenc := Leitor.rCampo(tcDat, 'dVenc');
+      cobr.dup[i].vDup  := Leitor.rCampo(tcDe2, 'vDup');
+
+      inc(i);
+    end;
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_InfCTeSub(Nivel: Integer; infCTeSub: TInfCteSub): Boolean;
+var
+  ok: Boolean;
+begin
+  if Leitor.rExtrai(Nivel, 'infCteSub') <> '' then
+  begin
+    infCTeSub.chCte := Leitor.rCampo(tcStr, 'chCte');
+
+    if VersaoDF >= ve300 then
+      infCTeSub.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
+
+    if Leitor.rCampo(tcStr, 'indAlteraToma') <> '' then
+      infCTeSub.indAlteraToma := StrToTIndicador(Ok, Leitor.rCampo(tcStr, 'indAlteraToma'));
+
+    if Leitor.rExtrai(Nivel + 1, 'tomaICMS') <> '' then
+    begin
+      infCTeSub.tomaICMS.refNFe := Leitor.rCampo(tcStr, 'refNFe');
+      infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
+
+      if Leitor.rExtrai(Nivel + 2, 'refNF') <> '' then
+      begin
+        infCTeSub.tomaICMS.refNF.CNPJCPF  := Leitor.rCampoCNPJCPF;
+        infCTeSub.tomaICMS.refNF.modelo   := Leitor.rCampo(tcStr, 'mod');
+        infCTeSub.tomaICMS.refNF.serie    := Leitor.rCampo(tcInt, 'serie');
+        infCTeSub.tomaICMS.refNF.subserie := Leitor.rCampo(tcInt, 'subserie');
+        infCTeSub.tomaICMS.refNF.nro      := Leitor.rCampo(tcInt, 'nro');
+        infCTeSub.tomaICMS.refNF.valor    := Leitor.rCampo(tcDe2, 'valor');
+        infCTeSub.tomaICMS.refNF.dEmi     := Leitor.rCampo(tcDat, 'dEmi');
+      end;
+    end;
+
+    if Leitor.rExtrai(Nivel + 1, 'tomaNaoICMS') <> '' then
+      infCTeSub.tomaNaoICMS.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_Total: Boolean;
+begin
+  if Leitor.rExtrai(1, 'total') <> '' then
+  begin
+    CTe.total.vTPrest := Leitor.rCampo(tcDe2,'vTPrest');
+    CTe.total.vTRec   := Leitor.rCampo(tcDe2,'vTRec');
+  end;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_InfCTeAnu: Boolean;
+begin
   if Leitor.rExtrai(1, 'infCteAnu') <> '' then
   begin
     CTe.InfCTeAnu.chCTe := Leitor.rCampo(tcStr,'chCte');
     CTe.InfCTeAnu.dEmi  := Leitor.rCampo(tcDat,'dEmi');
   end;
 
-  (* Grupo da TAG <autXML> ****************************************************)
-  i01 := 0;
+  Result := True;
+end;
+
+function TCTeR.Ler_AutXML: Boolean;
+var
+  i: Integer;
+begin
+  i := 0;
   CTe.autXML.Clear;
-  while Leitor.rExtrai(1, 'autXML', '', i01 + 1) <> '' do
+
+  while Leitor.rExtrai(1, 'autXML', '', i + 1) <> '' do
   begin
     CTe.autXML.New;
-    CTe.autXML[i01].CNPJCPF := Leitor.rCampoCNPJCPF;;
-    inc(i01);
+    CTe.autXML[i].CNPJCPF := Leitor.rCampoCNPJCPF;;
+    inc(i);
   end;
 
+  Result := True;
+end;
+
+function TCTeR.Ler_InfRespTec: Boolean;
+begin
   if Leitor.rExtrai(1, 'infRespTec') <> '' then
   begin
     CTe.infRespTec.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
@@ -1665,15 +2174,11 @@ begin
     CTe.infRespTec.hashCSRT := Leitor.rCampo(tcStr, 'hashCSRT');
   end;
 
-  (* Grupo da TAG <signature> *************************************************)
-  Leitor.Grupo := Leitor.Arquivo;
+  Result := True;
+end;
 
-  CTe.signature.URI             := Leitor.rAtributo('URI=', 'Reference');
-  CTe.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
-  CTe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
-  CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-
-  (* Grupo da TAG <infCTeSupl> ************************************************)
+function TCTeR.Ler_InfCTeSupl: Boolean;
+begin
   if Leitor.rExtrai(1, 'infCTeSupl') <> '' then
   begin
     CTe.infCTeSupl.qrCodCTe := Leitor.rCampo(tcStr, 'qrCodCTe');
@@ -1681,7 +2186,25 @@ begin
     CTe.infCTeSupl.qrCodCTe := StringReplace(CTe.infCTeSupl.qrCodCTe, ']]>', '', []);
   end;
 
-  (* Grupo da TAG <protCTe> ****************************************************)
+  Result := True;
+end;
+
+function TCTeR.Ler_Signature: Boolean;
+begin
+  Leitor.Grupo := Leitor.Arquivo;
+
+  CTe.signature.URI             := Leitor.rAtributo('URI=', 'Reference');
+  CTe.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
+  CTe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
+  CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+
+  Result := True;
+end;
+
+function TCTeR.Ler_ProtCTe: Boolean;
+var
+  ok: Boolean;
+begin
   if Leitor.rExtrai(1, 'protCTe') <> '' then
   begin
     CTe.procCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
@@ -1696,7 +2219,84 @@ begin
     CTe.procCTe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
   end;
 
-  Result := true;
+  Result := True;
+end;
+
+function TCTeR.Ler_CTe: Boolean;
+begin
+  Ler_Complemento;
+  Ler_Emitente;
+  Ler_Remetente;
+  Ler_Expedidor;
+  Ler_Recebedor;
+  Ler_Destinatario;
+  Ler_vPrest;
+  Ler_Imp;
+  Ler_InfCTeNorm;
+  Ler_InfCTeComp;
+  Ler_InfCTeAnu;
+  Ler_AutXML;
+  Ler_InfRespTec;
+  Ler_InfCTeSupl;
+  Ler_Signature;
+  Ler_ProtCTe;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_CTeOS: Boolean;
+begin
+  Ler_Complemento;
+  Ler_Emitente;
+  Ler_Tomador;
+  Ler_vPrest;
+  Ler_Imp;
+  Ler_AutXML;
+  Ler_InfRespTec;
+  Ler_InfCTeSupl;
+  Ler_Signature;
+  Ler_ProtCTe;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_CTeSimplificado: Boolean;
+begin
+  Ler_Complemento;
+  Ler_Emitente;
+  Ler_Tomador;
+  Ler_InfCarga(1, CTe.infCarga);
+  Ler_Det;
+  Ler_InfModal;
+  Ler_Cobr(1, CTe.cobr);
+  Ler_InfCTeSub(1, CTe.infCteSub);
+  Ler_Imp;
+  Ler_Total;
+  Ler_AutXML;
+  Ler_InfRespTec;
+  Ler_InfCTeSupl;
+  Ler_ProtCTe;
+  Ler_Signature;
+
+  Result := True;
+end;
+
+function TCTeR.Ler_GTVe: Boolean;
+begin
+  Ler_Complemento;
+  Ler_Emitente;
+  Ler_Remetente;
+  Ler_Destinatario;
+  Ler_Origem;
+  Ler_Destino;
+  Ler_DetGTV;
+  Ler_AutXML;
+  Ler_InfRespTec;
+  Ler_InfCTeSupl;
+  Ler_Signature;
+  Ler_ProtCTe;
+
+  Result := True;
 end;
 
 end.

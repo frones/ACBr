@@ -247,6 +247,8 @@ type
     btnDistrDFePorChave: TButton;
     btnInsucessoEntrega: TButton;
     btnCancInsuc: TButton;
+    btnGerarArqINI: TButton;
+    btnLerArqINI: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathCTeClick(Sender: TObject);
@@ -313,15 +315,20 @@ type
     procedure btnDistrDFePorChaveClick(Sender: TObject);
     procedure btnInsucessoEntregaClick(Sender: TObject);
     procedure btnCancInsucClick(Sender: TObject);
+    procedure btnGerarArqINIClick(Sender: TObject);
+    procedure btnLerArqINIClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
     procedure ConfigurarEmail;
+
     procedure AlimentarCTe(NumDFe: String);
     procedure AlimentarCTeOS(NumDFe: String);
     procedure AlimentarGTVe(NumDFe: String);
+    procedure AlimentarCTeSimp(NumDFe: String);
+
     Procedure AlimentarComponente(NumDFe: String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
     procedure AtualizarSSLLibsCombo;
@@ -490,6 +497,7 @@ begin
   case ACBrCTe1.Configuracoes.Geral.ModeloDF of
     moCTeOS: AlimentarCTeOS(NumDFe);
     moGTVe: AlimentarGTVe(NumDFe);
+    moCTeSimp: AlimentarCTeSimp(NumDFe);
   else
     AlimentarCTe(NumDFe);
   end;
@@ -734,6 +742,380 @@ begin
     //autXML.Add.CNPJCPF := '';
 
     {Informações do Responsável Técnico pela emissão do DF-e}
+    infRespTec.xContato := '';
+    infRespTec.email    := '';
+    infRespTec.fone     := '';
+  end;
+end;
+
+procedure TfrmACBrCTe.AlimentarCTeSimp(NumDFe: String);
+begin
+  // CT-e Simplificado
+  with ACBrCTe1.Conhecimentos.Add.CTe do
+  begin
+    case cbVersaoDF.ItemIndex of
+      0: infCTe.versao := 2.0;
+      1: infCTe.versao := 3.0;
+      2: infCTe.versao := 4.0;
+    end;
+
+    Ide.cUF    := UFtoCUF(edtEmitUF.Text);
+    Ide.CFOP   := 5353;
+    Ide.natOp  := 'PRESTACAO SERVICO';
+    Ide.modelo := 57;
+    Ide.serie  := 1;
+    Ide.nCT    := StrToInt(NumDFe);
+    // Atenção o valor de cCT tem que ser um numero aleatório conforme recomendação
+    // da SEFAZ, mas neste exemplo vamos atribuir o mesmo numero do CT-e.
+    Ide.cCT    := GerarCodigoDFe(Ide.nCT);
+    Ide.dhEmi  := Now;
+    Ide.tpImp  := tiRetrato;
+
+    Ide.tpEmis := teNormal;
+
+    if rgTipoAmb.ItemIndex = 0 then
+      Ide.tpAmb := taProducao
+    else
+      Ide.tpAmb := taHomologacao;
+
+    Ide.tpCTe      := tcCTeSimp; // tcCTeSimp, tcSubstCTeSimpl
+    Ide.procEmi    := peAplicativoContribuinte;
+    Ide.verProc    := '4.0';
+    Ide.cMunEnv    := StrToInt(edtEmitCodCidade.Text);
+    Ide.xMunEnv    := Trim(edtEmitCidade.Text);
+    Ide.UFEnv      := Trim(edtEmitUF.Text);
+    Ide.modal      := mdRodoviario;
+    Ide.tpServ     := tsNormal; // tsNormal, tsSubcontratacao, tsRedespacho
+    Ide.UFIni      := 'MG';
+    Ide.UFFim      := 'BA';
+    Ide.retira     := rtSim; // rtSim, rtNao
+    Ide.xdetretira := '';
+
+    {Dados da Contingência}
+    (*
+    ide.dhCont := Now;
+    ide.xJust := 'Justificativa por entrar em contingencia';
+    *)
+
+    {Informações Complementares do CTe}
+    compl.xCaracAd  := 'Carac Adic';
+    compl.xCaracSer := 'Carac Adicionais do Serviço';
+
+    // Descricao da Origiem do Fluxo
+    compl.fluxo.xOrig := '';
+
+    (*
+    with compl.fluxo.pass.New do
+    begin
+      xPass := 'Sigla ou código interno da Filial/Porto/Estação/Aeroporto de Passagem ';
+    end;
+
+    compl.fluxo.xDest := 'Destino';
+    compl.fluxo.xRota := 'Rota';
+    *)
+
+    compl.xObs     := 'Observação livre';
+
+    // Obs Estruturada do Contribuinte - Incluir se necessário
+    with compl.ObsCont.New do
+    begin
+      xCampo := 'Nome do Campo';
+      xTexto := 'Valor do Campo';
+    end;
+
+    // Obs Estruturada para o Fisco - Incluir se necessário
+    with compl.ObsFisco.New do
+    begin
+      xCampo := 'Nome do Campo';
+      xTexto := 'Valor do Campo';
+    end;
+
+    {Dados do Emitente}
+    // crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
+    // crtSimplesNacionalMEI
+    Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
+    Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
+    Emit.IE                := Trim(edtEmitIE.Text);
+    Emit.IEST              := '';
+    Emit.xNome             := Trim(edtEmitRazao.Text);
+    Emit.xFant             := Trim(edtEmitFantasia.Text);
+    Emit.enderEmit.xLgr    := Trim(edtEmitLogradouro.Text);
+    Emit.enderEmit.nro     := Trim(edtEmitNumero.Text);
+    Emit.enderEmit.xCpl    := Trim(edtEmitComp.Text);
+    Emit.enderEmit.xBairro := Trim(edtEmitBairro.Text);
+    Emit.enderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.enderEmit.xMun    := Trim(edtEmitCidade.Text);
+    Emit.enderEmit.CEP     := StrToInt(edtEmitCEP.Text);
+    Emit.enderEmit.UF      := Trim(edtEmitUF.Text);
+    Emit.enderEmit.fone    := Trim(edtEmitFone.Text);
+
+    {Dados do Tomador}
+    // tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros
+    toma.toma              := tmRemetente;
+    // inContribuinte, inIsento, inNaoContribuinte
+    toma.indIEToma         := inContribuinte;
+    toma.CNPJCPF           := '10242141000174';
+    toma.IE                := '0010834420031';
+    toma.xNome             := 'ACOUGUE E SUPERMERCADO SOUZA LTDA';
+    toma.ISUF              := '';
+    toma.fone              := '';
+    toma.email             := '';
+    toma.enderToma.xLgr    := 'RUA BELO HORIZONTE';
+    toma.enderToma.nro     := '614';
+    toma.enderToma.xCpl    := 'N D';
+    toma.enderToma.xBairro := 'CALADINA';
+    toma.enderToma.cMun    := 3119401;
+    toma.enderToma.xMun    := 'CORONEL FABRICIANO';
+    toma.enderToma.CEP     := 35171167;
+    toma.enderToma.UF      := 'MG';
+    toma.enderToma.cPais   := 1058;
+    toma.enderToma.xPais   := 'BRASIL';
+
+    {Informações da Carga}
+    infCarga.vCarga      := 5000;
+    infCarga.proPred     := 'Produto Predominante';
+    // Outras Caracteristicas da Carga
+    infCarga.xOutCat     := 'Pacotes';
+    infCarga.vCargaAverb := 5000;
+
+    // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
+    // tpMed usar os valores abaixo
+    {
+      00-Cubagem da NF-e
+      01-Cubagem Aferida pelo Transportador
+      02-Peso Bruto da NF-e
+      03-Peso Bruto Aferido pelo Transportador
+      04-Peso Cubado
+      05-Peso Base do Cálculo do Frete
+      06-Peso para uso Operacional
+      07-Caixas
+      08-Paletes
+      09-Sacas
+      10-Containers
+      11-Rolos
+      12-Bombonas
+      13-Latas
+      14-Litragem
+      15-Milhão de BTU (British Thermal Units)
+      99-Outros
+    }
+    with infCarga.InfQ.New do
+    begin
+      cUnid  := uKg;
+      tpMed  := '02';
+      qCarga := 10;
+    end;
+
+    with infCarga.InfQ.New do
+    begin
+      cUnid  := uUnidade;
+      tpMed  := '07';
+      qCarga := 5;
+    end;
+
+    {Informações do Detalhamento das Entregas}
+    with det.New do
+    begin
+      cMunIni := 3119401;
+      xMunIni := 'CORONEL FABRICIANO';
+      cMunFim := 2900207;
+      xMunFim := 'ABARE';
+      vPrest := 100;
+      vRec := 0;
+
+      {Carrega componentes do valor da prestacao}
+      with comp.New do
+      begin
+        xNome := 'DFRNER KRTJ';
+        vComp := 100.00;
+      end;
+
+      {Informações dos Documentos}
+      with infNFe.New do
+      begin
+        // chave da NFe emitida pelo remente da carga
+        chave := '43240700308055000163650020000364421844569291';
+        PIN := '';
+        dPrev := Date + 5;
+      end;
+
+      {
+       O bloco de código abaixo devemos utilizar para informar documentos
+       anteriores emitidos por outras transportadoras que chamamos de
+       Expedidores
+       Devemos informar o Expedidor quando se tratar de Redespacho ou
+       Redespacho Intermediário.
+      }
+      // o grupo <emiDocAnt> é uma lista que pode ter de 1-n ocorrências
+      (*
+      with infDocAnt.New do
+      begin
+        chCTe := 'chave do CT-e emitido pelo Expedidor';
+        // tpTotal, tpParcial
+        tpPrest := tpTotal;
+
+        {
+         Informando o tpPrest com “2 – Parcial” deve-se informar as chaves de
+         acesso das NF-e que acobertam a carga transportada.
+        }
+        with infNFeTranspParcial.New do
+          chNFe := 'chave da NF-e';
+      end;
+      *)
+    end;
+
+    {Informacoes do Modal}
+    with infModal do
+    begin
+      {Rodoviario}
+      rodo.RNTRC := '12345678';
+
+      {Ordens de Coleta associados}
+      (*
+      with rodo.occ.New do
+      begin
+        serie := '001';
+        nOcc  := 1;
+        dEmi  := Date;
+
+        emiOcc.CNPJ := '12345678000123';
+        emiOcc.cInt := '501';
+        emiOcc.IE   := '1234567';
+        emiOcc.UF   := 'SP';
+        emiOcc.fone := '22334455';
+      end;
+      *)
+    end;
+
+    {Informações de Cobrança}
+    with cobr do
+    begin
+      fat.nFat  := '123';
+      fat.vOrig := 100;
+      fat.vDesc := 0;
+      fat.vLiq  := 100;
+
+      with dup.New do
+      begin
+        nDup  := '123';
+        dVenc := Date + 30;
+        vDup  := 100;
+      end;
+    end;
+
+    {Carrega dados da CTe substituta 0-1}
+    {
+    with infCTeSub do
+    begin
+      // Chave do CT-e Original
+      chCte := '';
+
+      // Se tomador não é Contribuinte informar a Chave do CT-e de Anulação
+      refCteAnu := '';
+
+      // Se tomador for Contribuinte, verificar o tipo de documento emitido
+      // pelo tomador (NF-e, CT-e ou NF (comum de papel)
+
+      // Tipo do Documento que o Tomador Emitiu para anulação de valor do
+      // CT-e Anterior
+      case TipoDoc of
+        0: tomaICMS.refNFe := ''; // NF-e de Anulação de Valores
+        1: tomaICMS.refCte := ''; // CT-e de Anulação emitido por outra Transportadora
+        2: // NF (comum de papel)
+        begin
+          tomaICMS.refNF.CNPJCPF  := '';
+          tomaICMS.refNF.modelo   := '';
+          tomaICMS.refNF.serie    := 0;
+          tomaICMS.refNF.subserie := 0;
+          tomaICMS.refNF.nro      := 0;
+          tomaICMS.refNF.valor    := 0;
+          tomaICMS.refNF.dEmi     := Date;
+        end;
+      end;
+    end;
+    }
+
+    {Informações sobre os Impostos}
+    //00 - Tributação Normal ICMS
+    Imp.ICMS.SituTrib    := cst00;
+    Imp.ICMS.ICMS00.CST  := cst00;
+    Imp.ICMS.ICMS00.vBC  := 100;
+    Imp.ICMS.ICMS00.pICMS:= 7;
+    Imp.ICMS.ICMS00.vICMS:= 7;
+    {
+    //20 - Prestação sujeito à tributação com redução de BC do ICMS
+    Imp.ICMS.SituTrib      := cst20;
+    Imp.ICMS.ICMS20.CST    := cst20;
+    Imp.ICMS.ICMS20.pRedBC := Impostos.pRedbc;
+    Imp.ICMS.ICMS20.vBC    := Impostos.Vbc;
+    Imp.ICMS.ICMS20.pICMS  := Impostos.Picms;
+    Imp.ICMS.ICMS20.vICMS  := Impostos.Vicms;
+    Imp.ICMS.ICMS20.vICMSDeson := Impostos.Vicms;
+    Imp.ICMS.ICMS20.cBenef := '';
+
+    //40 - ICMS Isento
+    Imp.ICMS.SituTrib  := cst40;
+    Imp.ICMS.ICMS45.CST:= cst40;
+
+    //41 - ICMS não Tributada
+    Imp.ICMS.SituTrib  := cst41;
+    Imp.ICMS.ICMS45.CST:= cst41;
+
+    //51 - ICMS diferido
+    Imp.ICMS.SituTrib  := cst51;
+    Imp.ICMS.ICMS45.CST:= cst51;
+
+    //60 - ICMS cobrado por substituição tributária
+    Imp.ICMS.SituTrib          := cst60;
+    Imp.ICMS.ICMS60.CST        := cst60;
+    Imp.ICMS.ICMS60.vBCSTRet   := 0;
+    Imp.ICMS.ICMS60.vICMSSTRet := 0;
+    Imp.ICMS.ICMS60.pICMSSTRet := 0;
+    Imp.ICMS.ICMS60.vCred      := 0;
+    Imp.ICMS.ICMS60.vICMSDeson := 0;
+    Imp.ICMS.ICMS60.cBenef     := '';
+
+    //90 - ICMS Outros
+    Imp.ICMS.SituTrib     := cst90;
+    Imp.ICMS.ICMS90.CST   := cst90;
+    Imp.ICMS.ICMS90.pRedBC:= 10.00;
+    Imp.ICMS.ICMS90.vBC   := 100.00;
+    Imp.ICMS.ICMS90.pICMS := 7.00;
+    Imp.ICMS.ICMS90.vICMS := 6.30;
+    Imp.ICMS.ICMS90.vCred := 0.00;
+
+    // ICMS devido à UF de origem da prestação, quando  diferente da UF do emitente
+    Imp.ICMS.SituTrib                  := cstICMSOutraUF;
+    Imp.ICMS.ICMSOutraUF.CST           := cstICMSOutraUF; // ICMS Outros
+    Imp.ICMS.ICMSOutraUF.pRedBCOutraUF := 0;
+    Imp.ICMS.ICMSOutraUF.vBCOutraUF    := 100.00;
+    Imp.ICMS.ICMSOutraUF.pICMSOutraUF  := 7.00;
+    Imp.ICMS.ICMSOutraUF.vICMSOutraUF  := 7.00;
+
+    //SN - Simples Nacional
+    Imp.ICMS.SituTrib     := cstICMSSN;
+    Imp.ICMS.ICMSSN.indSN := 1;
+    }
+    imp.vTotTrib   := 17.00;
+    Imp.infAdFisco := 'Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT';
+
+    imp.ICMSUFFim.vBCUFFim := 0;
+
+    {Informações sobre Total}
+    total.vTPrest := 100;
+    total.vTRec := 0;
+
+    {Lista de até 10 CNPJ/CPF de pessoas Autorizadas a baixar o xml}
+    {
+    with autXML.New do
+      CNPJCPF := 'CNPJ/CPF da pessoa 1';
+
+    with autXML.New do
+      CNPJCPF := 'CNPJ/CPF da pessoa 2';
+    }
+
+    {Informações do Responsável Técnico pela emissão do CT-e Simplificado}
+    infRespTec.CNPJ := '';
     infRespTec.xContato := '';
     infRespTec.email    := '';
     infRespTec.fone     := '';
@@ -1458,7 +1840,7 @@ begin
     if pos(UpperCase('-CTe.xml'), UpperCase(NomeArq)) > 0 then
        NomeArq := StringReplace(NomeArq, '-CTe.xml', '-procCTe.xml', [rfIgnoreCase]);
 
-    ACBrCTe1.Conhecimentos.Items[0].GravarXML(NomeArq);
+    ACBrCTe1.Conhecimentos[0].GravarXML(NomeArq);
     ShowMessage('Arquivo gravado em: ' + NomeArq);
     memoLog.Lines.Add('Arquivo gravado em: ' + NomeArq);
   end;
@@ -1507,9 +1889,9 @@ begin
   ACBrCTe1.WebServices.EnvEvento.EventoRetorno.verAplic
   ACBrCTe1.WebServices.EnvEvento.EventoRetorno.cStat
   ACBrCTe1.WebServices.EnvEvento.EventoRetorno.xMotivo
-  ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.chCTe
-  ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento
-  ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt
+  ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.chCTe
+  ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.dhRegEvento
+  ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt
   *)
 end;
 
@@ -1553,7 +1935,7 @@ begin
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
     ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -1581,12 +1963,12 @@ begin
     begin
       // Para o Evento de Cancelamento de Comprovante de Entrega: nSeqEvento sempre = 1
       infEvento.nSeqEvento      := 1;
-      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ            := edtEmitCNPJ.Text;
       infEvento.dhEvento        := now;
       infEvento.tpEvento        := teCancComprEntrega;
 
-      infEvento.detEvento.nProt   := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProt   := ACBrCTe1.Conhecimentos[0].CTe.procCTe.nProt;
       infEvento.detEvento.nProtCE := vProt;
     end;
 
@@ -1598,8 +1980,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -1628,12 +2010,12 @@ begin
       // Para o Evento de Cancelamento de Insucesso de Entrega:
       // nSeqEvento sempre = 1
       infEvento.nSeqEvento := 1;
-      infEvento.chCTe      := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe      := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ       := edtEmitCNPJ.Text;
       infEvento.dhEvento   := now;
       infEvento.tpEvento   := teCancInsucessoEntregaCTe;
 
-      infEvento.detEvento.nProt   := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProt   := ACBrCTe1.Conhecimentos[0].CTe.procCTe.nProt;
       infEvento.detEvento.nProtIE := vProt;
     end;
 
@@ -1645,8 +2027,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -1663,7 +2045,7 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
-    with ACBrCTe1.Conhecimentos.Items[0].CTe do
+    with ACBrCTe1.Conhecimentos[0].CTe do
     begin
       Emit.CNPJ              := edtEmitCNPJ.Text;
       Emit.IE                := edtEmitIE.Text;
@@ -1741,16 +2123,16 @@ begin
     begin
       // Para o Evento de CCe: nSeqEvento varia de 1 até 20 por CT-e
       infEvento.nSeqEvento      := 1;
-      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ            := edtEmitCNPJ.Text;
       infEvento.dhEvento        := now;
       infEvento.tpEvento        := teCCe;
 
       infEvento.detEvento.xCondUso := '';
 
-      ACBrCTe1.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.Clear;
+      ACBrCTe1.EventoCTe.Evento[0].InfEvento.detEvento.infCorrecao.Clear;
 
-      with ACBrCTe1.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.New do
+      with ACBrCTe1.EventoCTe.Evento[0].InfEvento.detEvento.infCorrecao.New do
       begin
         grupoAlterado   := vGrupo;
         campoAlterado   := vCampo;
@@ -1767,8 +2149,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -1824,12 +2206,12 @@ begin
     begin
       // Para o Evento de Cancelamento: nSeqEvento sempre = 1
       infEvento.nSeqEvento      := 1;
-      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ            := edtEmitCNPJ.Text;
       infEvento.dhEvento        := now;
       infEvento.tpEvento        := teComprEntrega;
 
-      infEvento.detEvento.nProt         := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProt         := ACBrCTe1.Conhecimentos[0].CTe.procCTe.nProt;
       infEvento.detEvento.dhEntrega     := StrToDateTime(vData + ' ' + vHora);
       infEvento.detEvento.nDoc          := vDoc;
       infEvento.detEvento.xNome         := vNome;
@@ -1852,8 +2234,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -2237,34 +2619,34 @@ begin
     begin
       // Para o Evento de EPEC: nSeqEvento sempre = 1
       infEvento.nSeqEvento      := 1;
-      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ            := edtEmitCNPJ.Text;
       infEvento.dhEvento        := now;
       infEvento.tpEvento        := teEPEC;
 
-      infEvento.detEvento.xJust   := vAux; //ACBrCTe1.Conhecimentos.Items[0].CTe.ide.xJust;
+      infEvento.detEvento.xJust   := vAux; //ACBrCTe1.Conhecimentos[0].CTe.ide.xJust;
 
       // Exemplo com CST = 00 (vICMS, vICMSRet ou vICMSOutraUF)
-      infEvento.detEvento.vICMS   := ACBrCTe1.Conhecimentos.Items[0].CTe.imp.ICMS.ICMS00.vICMS;
+      infEvento.detEvento.vICMS   := ACBrCTe1.Conhecimentos[0].CTe.imp.ICMS.ICMS00.vICMS;
 
       // Exemplo com CST = 60 o campo abaixo é opcional
-      infEvento.detEvento.vICMSST := ACBrCTe1.Conhecimentos.Items[0].CTe.imp.ICMS.ICMS60.vICMSSTRet;
+      infEvento.detEvento.vICMSST := ACBrCTe1.Conhecimentos[0].CTe.imp.ICMS.ICMS60.vICMSSTRet;
 
-      infEvento.detEvento.vTPrest := ACBrCTe1.Conhecimentos.Items[0].CTe.vPrest.vTPrest;
-      infEvento.detEvento.vCarga  := ACBrCTe1.Conhecimentos.Items[0].CTe.infCTeNorm.infCarga.vCarga;
+      infEvento.detEvento.vTPrest := ACBrCTe1.Conhecimentos[0].CTe.vPrest.vTPrest;
+      infEvento.detEvento.vCarga  := ACBrCTe1.Conhecimentos[0].CTe.infCTeNorm.infCarga.vCarga;
 
-      InfEvento.detEvento.toma    := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.toma03.Toma;
+      InfEvento.detEvento.toma    := ACBrCTe1.Conhecimentos[0].CTe.ide.toma03.Toma;
 
       // Exemplo quando o tomador é o remetente da carga
-      InfEvento.detEvento.UF      := ACBrCTe1.Conhecimentos.Items[0].CTe.rem.enderReme.UF;
-      InfEvento.detEvento.CNPJCPF := ACBrCTe1.Conhecimentos.Items[0].CTe.rem.CNPJCPF;
-      InfEvento.detEvento.IE      := ACBrCTe1.Conhecimentos.Items[0].CTe.rem.IE;
+      InfEvento.detEvento.UF      := ACBrCTe1.Conhecimentos[0].CTe.rem.enderReme.UF;
+      InfEvento.detEvento.CNPJCPF := ACBrCTe1.Conhecimentos[0].CTe.rem.CNPJCPF;
+      InfEvento.detEvento.IE      := ACBrCTe1.Conhecimentos[0].CTe.rem.IE;
 
-      InfEvento.detEvento.modal   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.modal;
-      InfEvento.detEvento.UFIni   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.UFIni;
-      InfEvento.detEvento.UFFim   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.UFFim;
+      InfEvento.detEvento.modal   := ACBrCTe1.Conhecimentos[0].CTe.ide.modal;
+      InfEvento.detEvento.UFIni   := ACBrCTe1.Conhecimentos[0].CTe.ide.UFIni;
+      InfEvento.detEvento.UFFim   := ACBrCTe1.Conhecimentos[0].CTe.ide.UFFim;
       InfEvento.detEvento.tpCTe   := tcNormal;
-      InfEvento.detEvento.dhEmi   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.dhEmi;
+      InfEvento.detEvento.dhEmi   := ACBrCTe1.Conhecimentos[0].CTe.ide.dhEmi;
     end;
 
     iLote := 1; // Numero do Lote do Evento
@@ -2275,8 +2657,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -2305,7 +2687,7 @@ begin
     //CC.Add('email_1@provedor.com'); // especifique um email valido
     //CC.Add('email_2@provedor.com.br');    // especifique um email valido
     ConfigurarEmail;
-    ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(Para
+    ACBrCTe1.Conhecimentos[0].EnviarEmail(Para
       , edtEmailAssunto.Text
       , mmEmailMsg.Lines
       , True  // Enviar PDF junto
@@ -2447,15 +2829,30 @@ begin
   AlimentarComponente(vAux);
 
   ACBrCTe1.Conhecimentos.Assinar;
+  ACBrCTe1.Conhecimentos.GravarXML();
 
-  ACBrCTe1.Conhecimentos.Items[0].GravarXML();
+  memoLog.Lines.Add('Arquivo gerado em: ' + ACBrCTe1.Conhecimentos[0].NomeArq);
 
-  ShowMessage('Arquivo gerado em: ' + ACBrCTe1.Conhecimentos.Items[0].NomeArq);
-  MemoDados.Lines.Add('Arquivo gerado em: ' + ACBrCTe1.Conhecimentos.Items[0].NomeArq);
-
-  MemoResp.Lines.LoadFromFile(ACBrCTe1.Conhecimentos.Items[0].NomeArq);
+  MemoResp.Lines.LoadFromFile(ACBrCTe1.Conhecimentos[0].NomeArq);
 
   LoadXML(MemoResp.Text, WBResposta);
+
+  try
+    ACBrCTe1.Conhecimentos.Validar;
+
+    if ACBrCTe1.Conhecimentos[0].Alertas <> '' then
+      MemoDados.Lines.Add('Alertas: '+ACBrCTe1.Conhecimentos[0].Alertas);
+
+    ShowMessage('Conhecimento de Transporte Eletrônico Valido');
+  except
+    on E: Exception do
+    begin
+      pgRespostas.ActivePage := Dados;
+      MemoDados.Lines.Add('Exception: ' + E.Message);
+      MemoDados.Lines.Add('Erro: ' + ACBrCTe1.Conhecimentos[0].ErroValidacao);
+      MemoDados.Lines.Add('Erro Completo: ' + ACBrCTe1.Conhecimentos[0].ErroValidacaoCompleto);
+    end;
+  end;
 
   pgRespostas.ActivePageIndex := 1;
 end;
@@ -2578,12 +2975,12 @@ begin
     begin
       // Para o Evento de Cancelamento: nSeqEvento sempre = 1
       infEvento.nSeqEvento := 1;
-      infEvento.chCTe := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ := edtEmitCNPJ.Text;
       infEvento.dhEvento := now;
       infEvento.tpEvento := teInsucessoEntregaCTe;
 
-      infEvento.detEvento.nProt := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProt := ACBrCTe1.Conhecimentos[0].CTe.procCTe.nProt;
       infEvento.detEvento.dhTentativaEntrega := StrToDateTime(vData + ' ' + vHora);
       infEvento.detEvento.nTentativa := StrToIntDef(vNumTentativa, 1);
 
@@ -2609,8 +3006,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -2703,6 +3100,44 @@ begin
   end;
 end;
 
+procedure TfrmACBrCTe.btnLerArqINIClick(Sender: TObject);
+var
+  vNumLote: string;
+begin
+  OpenDialog1.Title := 'Selecione o Arquivo INI';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromIni(OpenDialog1.FileName);
+    ACBrCTe1.Conhecimentos.Assinar;
+    ACBrCTe1.Conhecimentos.GravarXML();
+
+    memoLog.Lines.Add('Arquivo gerado em: ' + ACBrCTe1.Conhecimentos[0].NomeArq);
+
+    try
+      ACBrCTe1.Conhecimentos.Validar;
+
+      if ACBrCTe1.Conhecimentos[0].Alertas <> '' then
+        MemoDados.Lines.Add('Alertas: '+ACBrCTe1.Conhecimentos[0].Alertas);
+
+      ShowMessage('Conhecimento de Transporte Eletrônico Valido');
+    except
+      on E: Exception do
+      begin
+        pgRespostas.ActivePage := Dados;
+        MemoDados.Lines.Add('Exception: ' + E.Message);
+        MemoDados.Lines.Add('Erro: ' + ACBrCTe1.Conhecimentos[0].ErroValidacao);
+        MemoDados.Lines.Add('Erro Completo: ' + ACBrCTe1.Conhecimentos[0].ErroValidacaoCompleto);
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmACBrCTe.btnNumSerieClick(Sender: TObject);
 begin
   ShowMessage(ACBrCTe1.SSL.CertNumeroSerie);
@@ -2750,7 +3185,7 @@ begin
       infEvento.nSeqEvento := 1;
       // Devemos informar a UF do Emitente do CT-e
       InfEvento.cOrgao     := UFtoCUF(xUF);
-      infEvento.chCTe      := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.chCTe      := Copy(ACBrCTe1.Conhecimentos[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ       := edtEmitCNPJ.Text;
       infEvento.dhEvento   := now;
       infEvento.tpEvento   := tePrestDesacordo;
@@ -2769,8 +3204,8 @@ begin
 
     LoadXML(ACBrCTe1.WebServices.EnvEvento.RetWS, WBResposta);
 
-    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
-    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -2901,8 +3336,8 @@ begin
     try
       ACBrCTe1.Conhecimentos.Validar;
 
-      if ACBrCTe1.Conhecimentos.Items[0].Alertas <> '' then
-        MemoDados.Lines.Add('Alertas: '+ACBrCTe1.Conhecimentos.Items[0].Alertas);
+      if ACBrCTe1.Conhecimentos[0].Alertas <> '' then
+        MemoDados.Lines.Add('Alertas: '+ACBrCTe1.Conhecimentos[0].Alertas);
 
       ShowMessage('Conhecimento de Transporte Eletrônico Valido');
     except
@@ -2910,10 +3345,43 @@ begin
       begin
         pgRespostas.ActivePage := Dados;
         MemoDados.Lines.Add('Exception: ' + E.Message);
-        MemoDados.Lines.Add('Erro: ' + ACBrCTe1.Conhecimentos.Items[0].ErroValidacao);
-        MemoDados.Lines.Add('Erro Completo: ' + ACBrCTe1.Conhecimentos.Items[0].ErroValidacaoCompleto);
+        MemoDados.Lines.Add('Erro: ' + ACBrCTe1.Conhecimentos[0].ErroValidacao);
+        MemoDados.Lines.Add('Erro Completo: ' + ACBrCTe1.Conhecimentos[0].ErroValidacaoCompleto);
       end;
     end;
+  end;
+end;
+
+procedure TfrmACBrCTe.btnGerarArqINIClick(Sender: TObject);
+var
+  vAux: string;
+  SaveDlg: TSaveDialog;
+  ArqINI: TStringList;
+begin
+  vAux := '1';
+  if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux)) then
+    exit;
+
+  ACBrCTe1.Conhecimentos.Clear;
+  AlimentarComponente(vAux);
+  ACBrCTe1.Conhecimentos.GerarCTe;
+
+  ArqINI := TStringList.Create;
+  SaveDlg := TSaveDialog.Create(nil);
+  try
+    ArqINI.Text := ACBrCTe1.Conhecimentos.GerarIni;
+
+    SaveDlg.Title := 'Escolha o local onde gerar o INI';
+    SaveDlg.DefaultExt := '*.INI';
+    SaveDlg.Filter := 'Arquivo INI(*.INI)|*.INI|Arquivo ini(*.ini)|*.ini|Todos os arquivos(*.*)|*.*';
+
+    if SaveDlg.Execute then
+      ArqINI.SaveToFile(SaveDlg.FileName);
+
+    memoLog.Lines.Add('Arquivo Salvo: ' + SaveDlg.FileName);
+  finally
+    SaveDlg.Free;
+    ArqINI.Free;
   end;
 end;
 
@@ -3362,7 +3830,7 @@ begin
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 
   if ACBrCTe1.Conhecimentos.Count > 0then
-    MemoResp.Lines.Add('Empresa: ' + ACBrCTe1.Conhecimentos.Items[0].CTe.Emit.xNome);
+    MemoResp.Lines.Add('Empresa: ' + ACBrCTe1.Conhecimentos[0].CTe.Emit.xNome);
 end;
 
 procedure TfrmACBrCTe.PathClick(Sender: TObject);

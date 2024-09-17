@@ -323,8 +323,12 @@ type
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
     procedure ConfigurarEmail;
+
     procedure AlimentarCTe(NumDFe: String);
     procedure AlimentarCTeOS(NumDFe: String);
+    procedure AlimentarGTVe(NumDFe: String);
+    procedure AlimentarCTeSimp(NumDFe: String);
+
     Procedure AlimentarComponente(NumDFe: String);
     procedure LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
@@ -486,10 +490,13 @@ procedure TfrmACBrCTe.AlimentarComponente(NumDFe: String);
 begin
   ACBrCTe1.Conhecimentos.Clear;
 
-  if ACBrCTe1.Configuracoes.Geral.ModeloDF = moCTe then
-    AlimentarCTe(NumDFe)
+  case ACBrCTe1.Configuracoes.Geral.ModeloDF of
+    moCTeOS: AlimentarCTeOS(NumDFe);
+    moGTVe: AlimentarGTVe(NumDFe);
+    moCTeSimp: AlimentarCTeSimp(NumDFe);
   else
-    AlimentarCTeOS(NumDFe);
+    AlimentarCTe(NumDFe);
+  end;
 end;
 
 procedure TfrmACBrCTe.AlimentarCTeOS(NumDFe: String);
@@ -715,6 +722,380 @@ begin
 
     {Seleciona o dados dos Autorizados a baixar o xml}
       //autXML.Add.CNPJCPF := '';
+  end;
+end;
+
+procedure TfrmACBrCTe.AlimentarCTeSimp(NumDFe: String);
+begin
+  // CT-e Simplificado
+  with ACBrCTe1.Conhecimentos.Add.CTe do
+  begin
+    case cbVersaoDF.ItemIndex of
+      0: infCTe.versao := 2.0;
+      1: infCTe.versao := 3.0;
+      2: infCTe.versao := 4.0;
+    end;
+
+    Ide.cUF    := UFtoCUF(edtEmitUF.Text);
+    Ide.CFOP   := 5353;
+    Ide.natOp  := 'PRESTACAO SERVICO';
+    Ide.modelo := 57;
+    Ide.serie  := 1;
+    Ide.nCT    := StrToInt(NumDFe);
+    // Atenção o valor de cCT tem que ser um numero aleatório conforme recomendação
+    // da SEFAZ, mas neste exemplo vamos atribuir o mesmo numero do CT-e.
+    Ide.cCT    := GerarCodigoDFe(Ide.nCT);
+    Ide.dhEmi  := Now;
+    Ide.tpImp  := tiRetrato;
+
+    Ide.tpEmis := teNormal;
+
+    if rgTipoAmb.ItemIndex = 0 then
+      Ide.tpAmb := taProducao
+    else
+      Ide.tpAmb := taHomologacao;
+
+    Ide.tpCTe      := tcCTeSimp; // tcCTeSimp, tcSubstCTeSimpl
+    Ide.procEmi    := peAplicativoContribuinte;
+    Ide.verProc    := '4.0';
+    Ide.cMunEnv    := StrToInt(edtEmitCodCidade.Text);
+    Ide.xMunEnv    := Trim(edtEmitCidade.Text);
+    Ide.UFEnv      := Trim(edtEmitUF.Text);
+    Ide.modal      := mdRodoviario;
+    Ide.tpServ     := tsNormal; // tsNormal, tsSubcontratacao, tsRedespacho
+    Ide.UFIni      := 'MG';
+    Ide.UFFim      := 'BA';
+    Ide.retira     := rtSim; // rtSim, rtNao
+    Ide.xdetretira := '';
+
+    {Dados da Contingência}
+    (*
+    ide.dhCont := Now;
+    ide.xJust := 'Justificativa por entrar em contingencia';
+    *)
+
+    {Informações Complementares do CTe}
+    compl.xCaracAd  := 'Carac Adic';
+    compl.xCaracSer := 'Carac Adicionais do Serviço';
+
+    // Descricao da Origiem do Fluxo
+    compl.fluxo.xOrig := '';
+
+    (*
+    with compl.fluxo.pass.New do
+    begin
+      xPass := 'Sigla ou código interno da Filial/Porto/Estação/Aeroporto de Passagem ';
+    end;
+
+    compl.fluxo.xDest := 'Destino';
+    compl.fluxo.xRota := 'Rota';
+    *)
+
+    compl.xObs     := 'Observação livre';
+
+    // Obs Estruturada do Contribuinte - Incluir se necessário
+    with compl.ObsCont.New do
+    begin
+      xCampo := 'Nome do Campo';
+      xTexto := 'Valor do Campo';
+    end;
+
+    // Obs Estruturada para o Fisco - Incluir se necessário
+    with compl.ObsFisco.New do
+    begin
+      xCampo := 'Nome do Campo';
+      xTexto := 'Valor do Campo';
+    end;
+
+    {Dados do Emitente}
+    // crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal,
+    // crtSimplesNacionalMEI
+    Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
+    Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
+    Emit.IE                := Trim(edtEmitIE.Text);
+    Emit.IEST              := '';
+    Emit.xNome             := Trim(edtEmitRazao.Text);
+    Emit.xFant             := Trim(edtEmitFantasia.Text);
+    Emit.enderEmit.xLgr    := Trim(edtEmitLogradouro.Text);
+    Emit.enderEmit.nro     := Trim(edtEmitNumero.Text);
+    Emit.enderEmit.xCpl    := Trim(edtEmitComp.Text);
+    Emit.enderEmit.xBairro := Trim(edtEmitBairro.Text);
+    Emit.enderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.enderEmit.xMun    := Trim(edtEmitCidade.Text);
+    Emit.enderEmit.CEP     := StrToInt(edtEmitCEP.Text);
+    Emit.enderEmit.UF      := Trim(edtEmitUF.Text);
+    Emit.enderEmit.fone    := Trim(edtEmitFone.Text);
+
+    {Dados do Tomador}
+    // tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros
+    toma.toma              := tmRemetente;
+    // inContribuinte, inIsento, inNaoContribuinte
+    toma.indIEToma         := inContribuinte;
+    toma.CNPJCPF           := '10242141000174';
+    toma.IE                := '0010834420031';
+    toma.xNome             := 'ACOUGUE E SUPERMERCADO SOUZA LTDA';
+    toma.ISUF              := '';
+    toma.fone              := '';
+    toma.email             := '';
+    toma.enderToma.xLgr    := 'RUA BELO HORIZONTE';
+    toma.enderToma.nro     := '614';
+    toma.enderToma.xCpl    := 'N D';
+    toma.enderToma.xBairro := 'CALADINA';
+    toma.enderToma.cMun    := 3119401;
+    toma.enderToma.xMun    := 'CORONEL FABRICIANO';
+    toma.enderToma.CEP     := 35171167;
+    toma.enderToma.UF      := 'MG';
+    toma.enderToma.cPais   := 1058;
+    toma.enderToma.xPais   := 'BRASIL';
+
+    {Informações da Carga}
+    infCarga.vCarga      := 5000;
+    infCarga.proPred     := 'Produto Predominante';
+    // Outras Caracteristicas da Carga
+    infCarga.xOutCat     := 'Pacotes';
+    infCarga.vCargaAverb := 5000;
+
+    // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
+    // tpMed usar os valores abaixo
+    {
+      00-Cubagem da NF-e
+      01-Cubagem Aferida pelo Transportador
+      02-Peso Bruto da NF-e
+      03-Peso Bruto Aferido pelo Transportador
+      04-Peso Cubado
+      05-Peso Base do Cálculo do Frete
+      06-Peso para uso Operacional
+      07-Caixas
+      08-Paletes
+      09-Sacas
+      10-Containers
+      11-Rolos
+      12-Bombonas
+      13-Latas
+      14-Litragem
+      15-Milhão de BTU (British Thermal Units)
+      99-Outros
+    }
+    with infCarga.InfQ.New do
+    begin
+      cUnid  := uKg;
+      tpMed  := '02';
+      qCarga := 10;
+    end;
+
+    with infCarga.InfQ.New do
+    begin
+      cUnid  := uUnidade;
+      tpMed  := '07';
+      qCarga := 5;
+    end;
+
+    {Informações do Detalhamento das Entregas}
+    with det.New do
+    begin
+      cMunIni := 3119401;
+      xMunIni := 'CORONEL FABRICIANO';
+      cMunFim := 2900207;
+      xMunFim := 'ABARE';
+      vPrest := 100;
+      vRec := 0;
+
+      {Carrega componentes do valor da prestacao}
+      with comp.New do
+      begin
+        xNome := 'DFRNER KRTJ';
+        vComp := 100.00;
+      end;
+
+      {Informações dos Documentos}
+      with infNFe.New do
+      begin
+        // chave da NFe emitida pelo remente da carga
+        chave := '43240700308055000163650020000364421844569291';
+        PIN := '';
+        dPrev := Date + 5;
+      end;
+
+      {
+       O bloco de código abaixo devemos utilizar para informar documentos
+       anteriores emitidos por outras transportadoras que chamamos de
+       Expedidores
+       Devemos informar o Expedidor quando se tratar de Redespacho ou
+       Redespacho Intermediário.
+      }
+      // o grupo <emiDocAnt> é uma lista que pode ter de 1-n ocorrências
+      (*
+      with infDocAnt.New do
+      begin
+        chCTe := 'chave do CT-e emitido pelo Expedidor';
+        // tpTotal, tpParcial
+        tpPrest := tpTotal;
+
+        {
+         Informando o tpPrest com “2 – Parcial” deve-se informar as chaves de
+         acesso das NF-e que acobertam a carga transportada.
+        }
+        with infNFeTranspParcial.New do
+          chNFe := 'chave da NF-e';
+      end;
+      *)
+    end;
+
+    {Informacoes do Modal}
+    with infModal do
+    begin
+      {Rodoviario}
+      rodo.RNTRC := '12345678';
+
+      {Ordens de Coleta associados}
+      (*
+      with rodo.occ.New do
+      begin
+        serie := '001';
+        nOcc  := 1;
+        dEmi  := Date;
+
+        emiOcc.CNPJ := '12345678000123';
+        emiOcc.cInt := '501';
+        emiOcc.IE   := '1234567';
+        emiOcc.UF   := 'SP';
+        emiOcc.fone := '22334455';
+      end;
+      *)
+    end;
+
+    {Informações de Cobrança}
+    with cobr do
+    begin
+      fat.nFat  := '123';
+      fat.vOrig := 100;
+      fat.vDesc := 0;
+      fat.vLiq  := 100;
+
+      with dup.New do
+      begin
+        nDup  := '123';
+        dVenc := Date + 30;
+        vDup  := 100;
+      end;
+    end;
+
+    {Carrega dados da CTe substituta 0-1}
+    {
+    with infCTeSub do
+    begin
+      // Chave do CT-e Original
+      chCte := '';
+
+      // Se tomador não é Contribuinte informar a Chave do CT-e de Anulação
+      refCteAnu := '';
+
+      // Se tomador for Contribuinte, verificar o tipo de documento emitido
+      // pelo tomador (NF-e, CT-e ou NF (comum de papel)
+
+      // Tipo do Documento que o Tomador Emitiu para anulação de valor do
+      // CT-e Anterior
+      case TipoDoc of
+        0: tomaICMS.refNFe := ''; // NF-e de Anulação de Valores
+        1: tomaICMS.refCte := ''; // CT-e de Anulação emitido por outra Transportadora
+        2: // NF (comum de papel)
+        begin
+          tomaICMS.refNF.CNPJCPF  := '';
+          tomaICMS.refNF.modelo   := '';
+          tomaICMS.refNF.serie    := 0;
+          tomaICMS.refNF.subserie := 0;
+          tomaICMS.refNF.nro      := 0;
+          tomaICMS.refNF.valor    := 0;
+          tomaICMS.refNF.dEmi     := Date;
+        end;
+      end;
+    end;
+    }
+
+    {Informações sobre os Impostos}
+    //00 - Tributação Normal ICMS
+    Imp.ICMS.SituTrib    := cst00;
+    Imp.ICMS.ICMS00.CST  := cst00;
+    Imp.ICMS.ICMS00.vBC  := 100;
+    Imp.ICMS.ICMS00.pICMS:= 7;
+    Imp.ICMS.ICMS00.vICMS:= 7;
+    {
+    //20 - Prestação sujeito à tributação com redução de BC do ICMS
+    Imp.ICMS.SituTrib      := cst20;
+    Imp.ICMS.ICMS20.CST    := cst20;
+    Imp.ICMS.ICMS20.pRedBC := Impostos.pRedbc;
+    Imp.ICMS.ICMS20.vBC    := Impostos.Vbc;
+    Imp.ICMS.ICMS20.pICMS  := Impostos.Picms;
+    Imp.ICMS.ICMS20.vICMS  := Impostos.Vicms;
+    Imp.ICMS.ICMS20.vICMSDeson := Impostos.Vicms;
+    Imp.ICMS.ICMS20.cBenef := '';
+
+    //40 - ICMS Isento
+    Imp.ICMS.SituTrib  := cst40;
+    Imp.ICMS.ICMS45.CST:= cst40;
+
+    //41 - ICMS não Tributada
+    Imp.ICMS.SituTrib  := cst41;
+    Imp.ICMS.ICMS45.CST:= cst41;
+
+    //51 - ICMS diferido
+    Imp.ICMS.SituTrib  := cst51;
+    Imp.ICMS.ICMS45.CST:= cst51;
+
+    //60 - ICMS cobrado por substituição tributária
+    Imp.ICMS.SituTrib          := cst60;
+    Imp.ICMS.ICMS60.CST        := cst60;
+    Imp.ICMS.ICMS60.vBCSTRet   := 0;
+    Imp.ICMS.ICMS60.vICMSSTRet := 0;
+    Imp.ICMS.ICMS60.pICMSSTRet := 0;
+    Imp.ICMS.ICMS60.vCred      := 0;
+    Imp.ICMS.ICMS60.vICMSDeson := 0;
+    Imp.ICMS.ICMS60.cBenef     := '';
+
+    //90 - ICMS Outros
+    Imp.ICMS.SituTrib     := cst90;
+    Imp.ICMS.ICMS90.CST   := cst90;
+    Imp.ICMS.ICMS90.pRedBC:= 10.00;
+    Imp.ICMS.ICMS90.vBC   := 100.00;
+    Imp.ICMS.ICMS90.pICMS := 7.00;
+    Imp.ICMS.ICMS90.vICMS := 6.30;
+    Imp.ICMS.ICMS90.vCred := 0.00;
+
+    // ICMS devido à UF de origem da prestação, quando  diferente da UF do emitente
+    Imp.ICMS.SituTrib                  := cstICMSOutraUF;
+    Imp.ICMS.ICMSOutraUF.CST           := cstICMSOutraUF; // ICMS Outros
+    Imp.ICMS.ICMSOutraUF.pRedBCOutraUF := 0;
+    Imp.ICMS.ICMSOutraUF.vBCOutraUF    := 100.00;
+    Imp.ICMS.ICMSOutraUF.pICMSOutraUF  := 7.00;
+    Imp.ICMS.ICMSOutraUF.vICMSOutraUF  := 7.00;
+
+    //SN - Simples Nacional
+    Imp.ICMS.SituTrib     := cstICMSSN;
+    Imp.ICMS.ICMSSN.indSN := 1;
+    }
+    imp.vTotTrib   := 17.00;
+    Imp.infAdFisco := 'Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT';
+
+    imp.ICMSUFFim.vBCUFFim := 0;
+
+    {Informações sobre Total}
+    total.vTPrest := 100;
+    total.vTRec := 0;
+
+    {Lista de até 10 CNPJ/CPF de pessoas Autorizadas a baixar o xml}
+    {
+    with autXML.New do
+      CNPJCPF := 'CNPJ/CPF da pessoa 1';
+
+    with autXML.New do
+      CNPJCPF := 'CNPJ/CPF da pessoa 2';
+    }
+
+    {Informações do Responsável Técnico pela emissão do CT-e Simplificado}
+    infRespTec.CNPJ := '';
+    infRespTec.xContato := '';
+    infRespTec.email    := '';
+    infRespTec.fone     := '';
   end;
 end;
 
@@ -1097,6 +1478,181 @@ begin
 
     {Seleciona o dados dos Autorizados a baixar o xml}
       //autXML.Add.CNPJCPF := '';
+  end;
+end;
+
+procedure TfrmACBrCTe.AlimentarGTVe(NumDFe: String);
+begin
+  //GTVe
+  with ACBrCTe1.Conhecimentos.Add.CTe do
+  begin
+    {
+    case cbVersaoDF.ItemIndex of
+      0: infCTe.versao := 2.0;
+      1: infCTe.versao := 3.0;
+      2: infCTe.versao := 4.0;
+    end;
+    }
+    Ide.cUF    := UFtoCUF(edtEmitUF.Text);
+    Ide.CFOP   := 5353;
+    Ide.natOp  := 'PRESTACAO SERVICO';
+    ide.forPag := fpAPagar; // fpAPagar ou fpPago
+//    Ide.modelo := 64;
+    Ide.serie  := 1;
+    Ide.nCT    := StrToInt(NumDFe);
+    // Atenção o valor de cCT tem que ser um numero aleatório conforme recomendação
+    // da SEFAZ, mas neste exemplo vamos atribuir o mesmo numero do CT-e.
+    Ide.cCT    := GerarCodigoDFe(Ide.nCT);
+    Ide.dhEmi  := Now;
+    Ide.tpImp  := tiRetrato;
+    {
+    Ide.tpEmis := teNormal;
+
+    if rgTipoAmb.ItemIndex = 0 then
+      Ide.tpAmb := taProducao
+    else
+      Ide.tpAmb := taHomologacao;
+    }
+    Ide.tpCTe      := tcGTVe;
+    Ide.verProc    := '3.0';
+    Ide.cMunEnv    := StrToInt(edtEmitCodCidade.Text);
+    Ide.xMunEnv    := Trim(edtEmitCidade.Text);
+    Ide.UFEnv      := Trim(edtEmitUF.Text);
+    Ide.modal      := mdRodoviario;
+    Ide.tpServ     := tsGTV;
+    ide.indIEToma  := inContribuinte;
+
+    Ide.dhSaidaOrig   := Now;
+    Ide.dhChegadaDest := Now + 1;
+
+//    Ide.cMunIni    := 3119401;
+//    Ide.xMunIni    := 'CORONEL FABRICIANO';
+//    Ide.UFIni      := 'MG';
+//    Ide.cMunFim    := 2900207;
+//    Ide.xMunFim    := 'ABARE';
+//    Ide.UFFim      := 'BA';
+//    Ide.retira     := rtSim; // rtSim, rtNao
+//    Ide.xdetretira := '';
+
+    {Informações Complementares do CTe}
+    compl.xCaracAd  := 'Carac. Adic. Tr'; // no máximo 15 caracteres
+    compl.xCaracSer := 'Carac. Adic. do Serviço';  // no máximo 30 caracteres
+    compl.xEmi      := 'Nome do Emitente';
+    compl.xObs     := 'Observação livre';
+
+    // Obs Estruturada do Contribuinte - Incluir se necessário
+    with compl.ObsCont.New do
+    begin
+      xCampo := 'Nome do Campo';
+      xTexto := 'Valor do Campo';
+    end;
+
+    // Obs Estruturada para o Fisco - Incluir se necessário
+    with compl.ObsFisco.New do
+    begin
+      xCampo := 'Nome do Campo';
+      xTexto := 'Valor do Campo';
+    end;
+
+    {Dados do Emitente}
+    Emit.CRT               := crtRegimeNormal; {Obrigatório na versão 4.00}
+    Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
+    Emit.IE                := Trim(edtEmitIE.Text);
+    Emit.xNome             := Trim(edtEmitRazao.Text);
+    Emit.xFant             := Trim(edtEmitFantasia.Text);
+    Emit.enderEmit.xLgr    := Trim(edtEmitLogradouro.Text);
+    Emit.enderEmit.nro     := Trim(edtEmitNumero.Text);
+    Emit.enderEmit.xCpl    := Trim(edtEmitComp.Text);
+    Emit.enderEmit.xBairro := Trim(edtEmitBairro.Text);
+    Emit.enderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.enderEmit.xMun    := Trim(edtEmitCidade.Text);
+    Emit.enderEmit.CEP     := StrToInt(edtEmitCEP.Text);
+    Emit.enderEmit.UF      := Trim(edtEmitUF.Text);
+    Emit.enderEmit.fone    := Trim(edtEmitFone.Text);
+
+    {Dados do Remetente}
+    Rem.CNPJCPF := '05481336000137';
+    Rem.IE      := '12345678';
+    Rem.xNome   := 'Nome do Remetente';
+    Rem.xFant   := 'Nome Fantasia';
+    Rem.fone    := '33445566';
+
+    Rem.EnderReme.xLgr    := 'Rua 1';
+    Rem.EnderReme.nro     := '200';
+    Rem.EnderReme.xCpl    := '';
+    Rem.EnderReme.xBairro := 'Centro';
+    Rem.EnderReme.cMun    := 3554003;
+    Rem.EnderReme.xMun    := 'Nome do Municipio';
+    Rem.EnderReme.CEP     := 14123456;
+    Rem.EnderReme.UF      := 'SP';
+    Rem.EnderReme.cPais   := 1058;
+    Rem.EnderReme.xPais   := 'BRASIL';
+
+    {Dados do Destinatário}
+    Dest.CNPJCPF := '05481336000137';
+    Dest.IE      := '12345678';
+    Dest.xNome   := 'Nome do Destinatário';
+    Dest.fone    := '33445566';
+
+    Dest.EnderDest.xLgr    := 'Rua 1';
+    Dest.EnderDest.nro     := '200';
+    Dest.EnderDest.xCpl    := '';
+    Dest.EnderDest.xBairro := 'Centro';
+    Dest.EnderDest.cMun    := 3554003;
+    Dest.EnderDest.xMun    := 'Nome do Municipio';
+    Dest.EnderDest.CEP     := 14123456;
+    Dest.EnderDest.UF      := 'SP';
+    Dest.EnderDest.cPais   := 1058;
+    Dest.EnderDest.xPais   := 'BRASIL';
+
+    {Informações do endereço da origem do serviço}
+    origem.xLgr    := '';
+    origem.nro     := '';
+    origem.xCpl    := '';
+    origem.xBairro := '';
+    origem.cMun    := 0;
+    origem.xMun    := '';
+    origem.CEP     := 0;
+    origem.UF      := '';
+    origem.fone    := '';
+
+    {Informações do endereço do destino do serviço}
+    destino.xLgr    := '';
+    destino.nro     := '';
+    destino.xCpl    := '';
+    destino.xBairro := '';
+    destino.cMun    := 0;
+    destino.xMun    := '';
+    destino.CEP     := 0;
+    destino.UF      := '';
+    destino.fone    := '';
+
+    {Detalhamento do GTV}
+    with detGTV.infEspecie.New do
+    begin
+      tpEspecie   := teNumerario; // Numerario = Cedulas
+      vEspecie    := 5000;
+      tpNumerario := tnNacional;
+      xMoedaEstr  := 'Nacional';
+    end;
+
+    // Quantidade de volumes/malotes
+    detGTV.qCarga := 1;
+
+    with detGTV.infVeiculo.New do
+    begin
+      placa := 'XYZ1234';
+      UF    := 'SP';
+      RNTRC := '';
+    end;
+
+    {Lista de até 10 CNPJ/CPF de pessoas Autorizadas a baixar o xml}
+    //autXML.Add.CNPJCPF := '';
+
+    {Informações do Responsável Técnico pela emissão do DF-e}
+    infRespTec.xContato := '';
+    infRespTec.email    := '';
+    infRespTec.fone     := '';
   end;
 end;
 

@@ -1465,6 +1465,24 @@ object frmACBrCTe: TfrmACBrCTe
           TabOrder = 9
           OnClick = btnCriarEnviarSincronoClick
         end
+        object btnGerarArqINI: TButton
+          Left = 9
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'Gerar Arquivo INI'
+          TabOrder = 10
+          OnClick = btnGerarArqINIClick
+        end
+        object btnLerArqINI: TButton
+          Left = 192
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'Ler Arquivo INI/Gerar XML'
+          TabOrder = 11
+          OnClick = btnLerArqINIClick
+        end
       end
       object tsConsultas: TTabSheet
         Caption = 'Consultas'

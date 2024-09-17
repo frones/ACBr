@@ -58,7 +58,7 @@ type
 
     procedure DefinirIDRps; override;
     function GerarListaServicos: TACBrXmlNode; override;
-    function GerarServicos: TACBrXmlNodeArray; override;
+    function GerarItemServicos: TACBrXmlNodeArray;
     function GerarItemValores(i: Integer): TACBrXmlNodeArray; override;
     function GerarServico: TACBrXmlNode; override;
     function GerarValoresServico: TACBrXmlNode; override;
@@ -120,7 +120,7 @@ begin
 
   if (NFSe.Servico.ItemServico.Count > 0) then
   begin
-    nodeArray := GerarServicos;
+    nodeArray := GerarItemServicos;
     if nodeArray <> nil then
     begin
       for i := 0 to Length(nodeArray) - 1 do
@@ -136,7 +136,7 @@ begin
   Result := nil
 end;
 
-function TNFSeW_fintelISS202.GerarServicos: TACBrXmlNodeArray;
+function TNFSeW_fintelISS202.GerarItemServicos: TACBrXmlNodeArray;
 var
   nodeArray: TACBrXmlNodeArray;
   i: integer;

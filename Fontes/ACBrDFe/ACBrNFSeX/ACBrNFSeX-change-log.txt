@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+17/09/2024
+-- fintelISS.GravarXml --
+[*] #TK-5972: Correção na geração do XML.
+  Por: Italo Giurizzato Junior
+
 16/09/2024
 -- ACBrNFSeXServicos --
 [+] #TK-5965: Incluída a cidade de Sao Jose do Inhacora/RS, o provedor é ABase versão 2.01

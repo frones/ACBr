@@ -88,8 +88,6 @@ type
 
   published
     property APIVersion;
-    property ClientID;
-    property ClientSecret;
 
     //Token fornecido pelo Sicoob na área de SandBox
     property TokenSandbox: String read fTokenSandbox write fTokenSandbox;

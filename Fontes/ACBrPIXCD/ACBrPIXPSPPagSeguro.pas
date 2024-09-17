@@ -81,8 +81,6 @@ type
 
     function SimularPagamentoPIX(const aTxID: String): Boolean;
   published
-    property ClientID;
-    property ClientSecret;
     property TokenPay: String read fTokenPay write fTokenPay;
   end;
 

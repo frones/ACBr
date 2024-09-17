@@ -67,21 +67,21 @@ type
       var AResultCode: Integer; var RespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
+    procedure ConfigurarHeaders(const Method, AURL: String); override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Clear; override;
     procedure Autenticar; override;
-
   published
-    property ClientID;
-    property ClientSecret;
     property RootCrt: String read fRootCrt write fRootCrt;
   end;
 
 implementation
 
 uses
-  synautil, DateUtils, ACBrJSON, ACBrUtil.Strings;
+  synautil, DateUtils, ACBrJSON,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TACBrPSPAilos }
 
@@ -154,6 +154,14 @@ begin
     Result := cAilosURLProducao
   else
     Result := cAilosURLSandbox;
+end;
+
+procedure TACBrPSPAilos.ConfigurarHeaders(const Method, AURL: String);
+begin
+  inherited ConfigurarHeaders(Method, AURL);
+
+  if NaoEstaVazio(fRootCrt) then
+    Http.Sock.SSL.CertCAFile := fRootCrt;
 end;
 
 procedure TACBrPSPAilos.QuandoReceberRespostaEndPoint(const AEndPoint, AURL,

@@ -64,9 +64,6 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     procedure Autenticar; override;
-  published
-    property ClientID;
-    property ClientSecret;
   end;
 
 implementation

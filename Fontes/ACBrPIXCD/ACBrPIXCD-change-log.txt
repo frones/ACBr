@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2024
+-- ACBrPSP --
+[+] Publicadas as propriedades ClientID e ClientSecret diretamente na classe pai TACBrPSPCertificate
+[*] Alteradas as classes dos bancos que não irão precisar mais publicar essas propriedades
+    por: Elias César
+
+-- ACBrPIXPSPAilos --
+[+] Alteração para incluir o RootCrt em "Http.Sock.SSL.CertCAFile"
+    https://www.projetoacbr.com.br/forum/topic/79682-problema-ao-integrar-psp-ailos-pixcd
+
 12/09/2024
 -- ACBrPIXPSPBradesco --
 [*] #TK-5445: Ajuste visando correta utilização com o PSP Bradesco.

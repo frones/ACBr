@@ -450,6 +450,9 @@ type
     function VerificarSeIncluiPFX(const Method, AURL: String): Boolean;  virtual;
     function VerificarSeIncluiCertificado(const Method, AURL: String): Boolean; virtual;
     function VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean;  virtual;
+  published
+    property ClientID;
+    property ClientSecret;
   public
     constructor Create(AOwner: TComponent); override;
 

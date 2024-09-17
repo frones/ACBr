@@ -103,9 +103,6 @@ type
       var Code: Integer; var Texto: String);
   published
     property APIVersion;
-    property ClientID;
-    property ClientSecret;
-
     property BBAPIVersao: TACBrBBAPIVersao read fBBAPIVersao write fBBAPIVersao default apiVersao1;
     property DeveloperApplicationKey: String read fDeveloperApplicationKey write fDeveloperApplicationKey;
   end;

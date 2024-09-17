@@ -68,10 +68,6 @@ type
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
   public
     procedure Autenticar; override;
-
-  published
-    property ClientID;
-    property ClientSecret;
   end;
 
 implementation

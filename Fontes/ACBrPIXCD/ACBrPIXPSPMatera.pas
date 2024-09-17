@@ -204,8 +204,6 @@ type
 
     property ErroResposta: TMateraError read GetErroResposta;
   published
-    property ClientID;
-    property ClientSecret;
     property SecretKey: String read fSecretKey write fSecretKey;
     property AccountId: String read fAccountId write fAccountId;
     property MediatorFee: Currency read fMediatorFee write SetMediatorFee;

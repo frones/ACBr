@@ -90,8 +90,6 @@ type
     function GerarCertificadoCSR: String;
   published
     property APIVersion;
-    property ClientID;
-    property ClientSecret;
 
     property QuandoNecessitarCredenciais: TACBrQuandoNecessitarCredencial
       read fQuandoNecessitarCredenciais write fQuandoNecessitarCredenciais;

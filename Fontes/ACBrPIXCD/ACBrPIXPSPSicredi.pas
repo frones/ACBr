@@ -82,11 +82,8 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure Clear; override;
     procedure Autenticar; override;
-
   published
     property APIVersion;
-    property ClientID;
-    property ClientSecret;
 
     property SandboxStatusCode: String read fSandboxStatusCode write fSandboxStatusCode;
 

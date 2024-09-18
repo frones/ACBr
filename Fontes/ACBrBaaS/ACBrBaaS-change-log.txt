@@ -38,6 +38,23 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/09/2024
+-- ACBrExtratoAPI --
+[-] Correção de MemoryLeak
+
+-- ACBrExtratoAPIBB --
+[-] Correções de MemoryLeaks nas listas
+[*] Correção no momento de converter a lista específica BB para lista de lançamentos genérica
+
+-- ACBrExtratoAPIInter --
+[*] Correção no momento de converter a lista específica Inter para lista de lançamentos genérica
+    por: Elias César
+
+18/09/2024
+-- ACBrExtratoAPIBB, ACBrExtratoAPIInter --
+[-] Alteração para limpar a lista de Lançamentos ao realizar uma nova consulta
+    por: Elias César
+
 13/09/2024
 -- ACBrExtratoAPI --
 [-] Correção para funcionar o filtro por período no extrato do Banco do Brasil

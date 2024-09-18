@@ -1651,16 +1651,21 @@ begin
   fpRegistrosPaginaAtual := fnumeroDeElementos;
 
   if Assigned(ftransacoes) then
-  for i := 0 to ftransacoes.Count - 1 do
-    with Lancamentos.New do
+  begin
+    Lancamentos.Clear;
+    for i := 0 to ftransacoes.Count - 1 do
     begin
-      DataLancamento := ftransacoes[i].dataInclusao;
-      DataMovimento := ftransacoes[i].dataTransacao;
-      Valor := ftransacoes[i].valor;
-      TipoOperacao := ftransacoes[i].tipoOperacao;
-      Descricao := ftransacoes[i].descricao;
-      InfoComplementar := ftransacoes[i].titulo;
+      with Lancamentos.New do
+      begin
+        DataLancamento := ftransacoes[i].dataInclusao;
+        DataMovimento := ftransacoes[i].dataTransacao;
+        Valor := ftransacoes[i].valor;
+        TipoOperacao := ftransacoes[i].tipoOperacao;
+        Descricao := ftransacoes[i].descricao;
+        InfoComplementar := ftransacoes[i].titulo;
+      end;
     end;
+  end;
 end;
 
 destructor TACBrExtratoInterResult.Destroy;
@@ -1672,6 +1677,7 @@ end;
 
 procedure TACBrExtratoInterResult.Clear;
 begin
+  inherited Clear;
   fnumeroDeElementos := 0;
   ftamanhoPagina := 0;
   ftotalElementos := 0;

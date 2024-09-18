@@ -147,13 +147,14 @@ type
     fquantidadeRegistroPaginaAtual: Integer;
     fquantidadeTotalPagina: Integer;
     fquantidadeTotalRegistro: Integer;
+    function GetlistaLancamento: TACBrExtratoBBListaLancamento;
   protected
     procedure AssignSchema(aSource: TACBrAPISchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
     procedure ConverterParaExtratoConsultado;
   public
-    constructor Create(const ObjectName: String = ''); override;
+    destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TACBrExtratoBBResult);
@@ -164,7 +165,7 @@ type
     property numeroPaginaProximo: Integer read fnumeroPaginaProximo write fnumeroPaginaProximo;
     property quantidadeTotalPagina: Integer read fquantidadeTotalPagina write fquantidadeTotalPagina;
     property quantidadeTotalRegistro: Integer read fquantidadeTotalRegistro write fquantidadeTotalRegistro;
-    property listaLancamento: TACBrExtratoBBListaLancamento read flistaLancamento write flistaLancamento;
+    property listaLancamento: TACBrExtratoBBListaLancamento read GetlistaLancamento write flistaLancamento;
   end;
 
   { TACBrExtratoBBErro } 
@@ -210,8 +211,8 @@ type
     fDeveloperApplicationKey: String;
     fExtratoBBErros: TACBrExtratoBBErros;
     fxMCITeste: String;
-    function GetExtratoBBErros: TACBrExtratoBBErros;
   protected
+    function GetExtratoBBErros: TACBrExtratoBBErros;
     function GetRespostaErro: TACBrExtratoErro; override;
     function GetExtratoConsultado: TACBrExtratoConsultado; override;
 
@@ -505,6 +506,13 @@ end;
 
 { TACBrExtratoBBResult }
 
+function TACBrExtratoBBResult.GetlistaLancamento: TACBrExtratoBBListaLancamento;
+begin
+  if (not Assigned(flistaLancamento)) then
+    flistaLancamento := TACBrExtratoBBListaLancamento.Create('listaLancamento');
+  Result := flistaLancamento;
+end;
+
 procedure TACBrExtratoBBResult.AssignSchema(aSource: TACBrAPISchema);
 begin
   if (aSource is TACBrExtratoBBResult) then
@@ -535,9 +543,7 @@ begin
     .Value('quantidadeTotalPagina', fquantidadeTotalPagina)
     .Value('quantidadeTotalRegistro', fquantidadeTotalRegistro);
 
-  if Assigned(flistaLancamento) then
-    flistaLancamento.ReadFromJSon(aJSon);
-
+  listaLancamento.ReadFromJSon(aJSon);
   ConverterParaExtratoConsultado;
 end;
 
@@ -550,22 +556,28 @@ begin
   fpRegistrosPaginaAtual := fquantidadeRegistroPaginaAtual;
 
   if Assigned(flistaLancamento) then
-  for i := 0 to flistaLancamento.Count - 1 do
-    with Lancamentos.New do
+  begin
+    Lancamentos.Clear;
+    for i := 0 to flistaLancamento.Count - 1 do
     begin
-      DataLancamento := flistaLancamento[i].dataLancamento;
-      DataMovimento := flistaLancamento[i].dataMovimento;
-      Valor := flistaLancamento[i].valorLancamento;
-      TipoOperacao := flistaLancamento[i].indicadorSinalLancamento;
-      Descricao := flistaLancamento[i].textoDescricaoHistorico;
-      InfoComplementar := flistaLancamento[i].textoInformacaoComplementar;
+      with Lancamentos.New do
+      begin
+        DataLancamento := flistaLancamento[i].dataLancamento;
+        DataMovimento := flistaLancamento[i].dataMovimento;
+        Valor := flistaLancamento[i].valorLancamento;
+        TipoOperacao := flistaLancamento[i].indicadorSinalLancamento;
+        Descricao := flistaLancamento[i].textoDescricaoHistorico;
+        InfoComplementar := flistaLancamento[i].textoInformacaoComplementar;
+      end;
     end;
+  end;
 end;
 
-constructor TACBrExtratoBBResult.Create(const ObjectName: String);
+destructor TACBrExtratoBBResult.Destroy;
 begin
-  inherited Create(ObjectName);
-  flistaLancamento := TACBrExtratoBBListaLancamento.Create('listaLancamento');
+  if Assigned(flistaLancamento) then
+    flistaLancamento.Free;
+  inherited Destroy;
 end;
 
 procedure TACBrExtratoBBResult.Clear;
@@ -589,8 +601,10 @@ begin
     EstaZerado(fnumeroPaginaProximo) and
     EstaZerado(fquantidadeRegistroPaginaAtual) and
     EstaZerado(fquantidadeTotalPagina) and
-    EstaZerado(fquantidadeTotalRegistro) and
-    flistaLancamento.IsEmpty;
+    EstaZerado(fquantidadeTotalRegistro);
+
+  if Assigned(flistaLancamento) then
+    Result := Result and flistaLancamento.IsEmpty;
 end;
 
 procedure TACBrExtratoBBResult.Assign(aSource: TACBrExtratoBBResult);

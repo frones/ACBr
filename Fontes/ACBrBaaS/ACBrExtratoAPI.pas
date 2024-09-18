@@ -106,7 +106,9 @@ type
     fpTotalPaginas: Integer;
     fpTotalRegistros: Integer;
   public
+    destructor Destroy; override;
     procedure Clear; override;
+
     property TotalPaginas: Integer read fpTotalPaginas;
     property TotalRegistros: Integer read fpTotalRegistros;
     property RegistrosPaginaAtual: Integer read fpRegistrosPaginaAtual;
@@ -263,9 +265,17 @@ begin
   Result := fpLancamentos;
 end;
 
+destructor TACBrExtratoConsultado.Destroy;
+begin
+  if Assigned(fpLancamentos) then
+    fpLancamentos.Free;
+  inherited Destroy;
+end;
+
 procedure TACBrExtratoConsultado.Clear;
 begin
-  fpLancamentos.Clear;
+  if Assigned(fpLancamentos) then
+    fpLancamentos.Clear;
   fpTotalPaginas := 0;
   fpTotalRegistros := 0;
   fpRegistrosPaginaAtual := 0;

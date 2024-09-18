@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/09/2024
+-- Giap.GravarXml --
+[*] #TK-5978: Possível solução para gerar a tag Aliquota com 4 casas decimais em função da cidade.
+  Por: Italo Giurizzato Junior 
+
 17/09/2024
 -- EL.Provider --
 [*] #TK-5966: Melhoria visando geração do arquivo XML quando retorno vier sem a tag <nfeRpsNotaFiscal>

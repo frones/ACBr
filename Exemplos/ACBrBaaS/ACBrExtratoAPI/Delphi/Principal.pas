@@ -155,7 +155,7 @@ uses
 procedure TfrPrincipal.btConsultarExtratoClick(Sender: TObject);
 begin
   AplicarConfiguracao;
-  ACBrExtratoAPI1.ConsultarExtrato(edAgencia.Text, edConta.Text{, edInicio.Date, edFim.Date});
+  ACBrExtratoAPI1.ConsultarExtrato(edAgencia.Text, edConta.Text, edInicio.Date, edFim.Date);
   PreencherLancamentos;
 end;
 
@@ -461,6 +461,7 @@ begin
   if EstaZerado(ACBrExtratoAPI1.ExtratoConsultado.Lancamentos.Count) then
     Exit;
 
+  gdLancamentos.RowCount := 1;
   with ACBrExtratoAPI1.ExtratoConsultado do
   begin
     gdLancamentos.RowCount := Lancamentos.Count + 1;

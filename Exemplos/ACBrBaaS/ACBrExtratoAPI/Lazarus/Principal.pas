@@ -460,15 +460,16 @@ begin
   if EstaZerado(ACBrExtratoAPI1.ExtratoConsultado.Lancamentos.Count) then
     Exit;
 
+  gdLancamentos.RowCount := 1;
   with ACBrExtratoAPI1.ExtratoConsultado do
   begin
     gdLancamentos.RowCount := Lancamentos.Count + 1;
     for i := 0 to Lancamentos.Count - 1 do
     begin
-      gdLancamentos.Cells[0, i+1] := (i+1).ToString;
+      gdLancamentos.Cells[0, i+1] := IntToStr(i+1);
       gdLancamentos.Cells[1, i+1] := FormatDateBr(Lancamentos[i].dataLancamento);
       gdLancamentos.Cells[3, i+1] := Lancamentos[i].Descricao;
-      gdLancamentos.Cells[4, i+1] := Lancamentos[i].Valor.ToString;
+      gdLancamentos.Cells[4, i+1] := FloatToString(Lancamentos[i].Valor);
 
       if (Lancamentos[i].dataMovimento > 0) then
         gdLancamentos.Cells[2, i+1] := FormatDateBr(Lancamentos[i].dataMovimento);

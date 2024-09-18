@@ -48,7 +48,7 @@ uses
   ACBrBase, ACBrXmlBase,
   ACBrDFeComum.Proc,
   ACBrMDFe.RetEnvEvento,
-  pmdfeProcInfraSA;
+  ACBrMDFe.ProcInfraSA;
 
 type
 
@@ -119,6 +119,7 @@ begin
   inherited Create;
 
   FprotMDFe := TProcDFe.Create(Versao, NAME_SPACE_MDFE, 'MDFe');
+  FprocInfraSA := TProcInfraSA.Create;
 end;
 
 destructor TRetConsSitMDFe.Destroy;
@@ -127,6 +128,9 @@ begin
 
   if Assigned(procEventoMDFe) then
     procEventoMDFe.Free;
+
+  if Assigned(procInfraSA) then
+    procInfraSA.Free;
 
   inherited;
 end;

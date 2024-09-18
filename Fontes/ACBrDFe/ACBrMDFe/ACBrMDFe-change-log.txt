@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/09/2024
+-- ACBrMDFe.ProcInfraSA --
+[+] Nova unit que contem a classe InfraSA que consta no retorno da consulta.
+  Por: Italo Giurizzato Junior
+-- ACBrMDFe.RetConsSit --
+[-] Correção para evitar AV ao ler o retorno da consulta.
+  Por: Italo Giurizzato Junior
+
 16/09/2024
 -- ACBrMDFe.XmlWriter --
 [-] Correção visando não gerar o grupo <valePed> quando este não for informado

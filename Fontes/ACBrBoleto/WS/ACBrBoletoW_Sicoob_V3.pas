@@ -871,6 +871,8 @@ end;
 
 function TBoletoW_Sicoob_V3.Enviar: boolean;
 begin
+  FQuantidadeMaximoEnvioIntervalo := 2;
+  FIntervaloEnvio                 := 1000; // 1segundo
   DefinirCertificado;
   result := inherited Enviar;
 end;

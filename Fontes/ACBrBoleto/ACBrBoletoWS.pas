@@ -75,12 +75,13 @@ type
     FBoletoWS    : TBoletoWS;
     FRetornoBanco: TRetornoEnvioClass;
     FOAuth       : TOAuth;
-
   protected
 
     FRetornoWS   : String;
     FPDadosMsg   : String;
     FTipoRegistro: String;
+    FQuantidadeMaximoEnvioIntervalo : Cardinal;
+    FIntervaloEnvio                 : Cardinal;
 
     function GerarRemessa: String; virtual;
     function Enviar: Boolean; virtual;
@@ -113,7 +114,6 @@ type
     FRetornoBanco : TRetornoEnvioClass;
     FRetornoWS    : String;
     FArqLOG       : String;
-
     procedure SetBanco(ABanco: TACBrTipoCobranca);
     procedure GravaLog(const AString: AnsiString);
 
@@ -301,7 +301,8 @@ begin
     FDFeSSL := TDFeSSL(ABoletoWS.FBoleto.Configuracoes.WebService);
 
   FOAuth := TOAuth.Create(FHTTPSend, ABoletoWS.FBoleto);
-
+  FIntervaloEnvio := 0;
+  FQuantidadeMaximoEnvioIntervalo := 0;
 end;
 
 destructor TBoletoWSClass.Destroy;
@@ -532,6 +533,7 @@ function TBoletoWS.Enviar: Boolean;
 var
   indice    : Integer;
   LJsonEnvio: String;
+  LUltimoEnvio: TDateTime;
 begin
   Banco  := FBoleto.Banco.TipoCobranca;
   Result := False;
@@ -546,9 +548,17 @@ begin
         Result                 := FBoletoWSClass.Enviar;
         FRetornoWS             := FBoletoWSClass.FRetornoWS;
 
+
         RetornoBanco.RetWS  := FRetornoWS;
         RetornoBanco.FEnvWS := LJsonEnvio;
         RetornoBanco.RetornoEnvio(indice);
+        if FBoletoWSClass.FQuantidadeMaximoEnvioIntervalo > 0 then
+        begin
+          if (MilliSecondsBetween(Now, LUltimoEnvio) >= 1000) then
+            LUltimoEnvio := Now;
+          if (indice > 0) and ((indice mod FBoletoWSClass.FQuantidadeMaximoEnvioIntervalo)=0) and (FBoletoWSClass.FIntervaloEnvio > 0) then
+            Sleep(FBoletoWSClass.FIntervaloEnvio);
+        end;
       end;
     end
     else

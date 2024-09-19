@@ -209,7 +209,7 @@ end;
 
 procedure TBoletoW_Banrisul.DefinirParamOAuth;
 begin
-  FParamsOAuth := 'grant_type=client_credentials';
+  FParamsOAuth := 'grant_type=client_credentials&scope=boletos';
 end;
 
 procedure TBoletoW_Banrisul.DefinirAutenticacao;

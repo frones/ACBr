@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/09/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a URL de homologação do provedor Giss (GissOnline)
+  Por: Paula Zamboni de Campos da
+
 18/09/2024
 -- Giap.GravarXml --
 [*] #TK-5978: Possível solução para gerar a tag Aliquota com 4 casas decimais em função da cidade.

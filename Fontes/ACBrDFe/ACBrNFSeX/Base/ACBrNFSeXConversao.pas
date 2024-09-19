@@ -6619,7 +6619,7 @@ function CodTOMToCodIBGE(const ACodigo: string): string;
 var
   CodTOM, CodIBGE: integer;
 begin
-  CodTOM := strtoint64(ACodigo);
+  CodTOM := StrToInt64Def(ACodigo, 0);
 
   case CodTOM of
     0033: CodIBGE := 1100015; // Alta Floresta D Oeste/RO

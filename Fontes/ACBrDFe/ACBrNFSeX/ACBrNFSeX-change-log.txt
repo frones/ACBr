@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/09/2024
+-- ACBrNFSeXConversao --
+[*] Ajuste visando corrigir evitar erro de conversão quando Cidade vier vazia.
+  Por: Diego Folieni
 -- ACBrNFSeXServicos --
 [+] Incluída a URL de homologação do provedor Giss (GissOnline)
   Por: Paula Zamboni de Campos da

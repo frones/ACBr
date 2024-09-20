@@ -44,11 +44,6 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-20/09/2024
--- ACBrNFe.EnvEvento
-[*] Ajusta na rotina LerFromIni o campo idLote para o tipo correto.
-   Por: Diego Folieni
-
 16/09/2024
 -- ACBrNFeServicos --
 [*] #TK-5967 - Atualização das URLs de Produção do SVAN/SVC-AN

@@ -1129,7 +1129,7 @@ end;
 function TEventoNFe.LerFromIni(const AIniString: string; CCe: Boolean): Boolean;
 var
   I, J: Integer;
-  sSecao, sFim: string;
+  sSecao, sFim, idLoteStr: string;
   INIRec: TMemIniFile;
   ok: Boolean;
   Item: TitemPedidoCollectionItem;
@@ -1143,8 +1143,10 @@ begin
   INIRec := TMemIniFile.Create('');
   try
     LerIniArquivoOuString(AIniString, INIRec);
-    idLote := INIRec.ReadInteger( 'EVENTO', 'idLote',
-                                        INIRec.ReadInteger('CCE', 'idLote', 0));
+    idLoteStr := INIRec.ReadString( 'EVENTO', 'idLote',
+                                        INIRec.ReadString('CCE', 'idLote', '0'));
+
+    idLote := StrToInt64Def(idLoteStr, 0);
 
     I := 1;
     while true do

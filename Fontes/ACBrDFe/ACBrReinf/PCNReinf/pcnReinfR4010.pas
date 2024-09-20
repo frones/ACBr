@@ -796,7 +796,9 @@ var
   NrOcorrNmBenef: integer;
 begin
   if Self.ideEstab.ideBenef.cpfBenef = '' then
-    NrOcorrNmBenef := 1;
+    NrOcorrNmBenef := 1
+  else
+    NrOcorrNmBenef := 0;
 
   NrOcorrCpfBenef := Abs(NrOcorrNmBenef-1);
 

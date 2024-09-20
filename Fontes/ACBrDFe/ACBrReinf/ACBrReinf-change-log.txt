@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2024
+-- pcnReinfR4010 --
+[*] TK-5980 - Corrigido preenchimento do NrOcorrNmBenef quando cpfBenef possuir valor
+Por: Jeihcio Francis
+
 10/09/2024
 -- pcnReinfR4010 --
 [*] TK-5946 - Corrigida exigência de NrOcorrencias do cpfBenef no R4010

@@ -73,6 +73,7 @@ uses
   ISSRio.Provider,
   ISSSalvador.Provider,
   ISSSJP.Provider,
+  Kalana.Provider,
   Lexsom.Provider,
   MetropolisWeb.Provider,
   NFSeBrasil.Provider,
@@ -460,6 +461,7 @@ begin
       proISSSaoPaulo: Result := TACBrNFSeProviderISSSaoPaulo.Create(ACBrNFSe);
       proISSSJP:      Result := TACBrNFSeProviderISSSJP.Create(ACBrNFSe);
       proISSVitoria:  Result := TACBrNFSeProviderISSVitoria200.Create(ACBrNFSe);
+      proKalana:      Result := TACBrNFSeProviderKalana.Create(ACBrNFSe);
       proLexsom:      Result := TACBrNFSeProviderLexsom.Create(ACBrNFSe);
       proLibre:       Result := TACBrNFSeProviderLibre204.Create(ACBrNFSe);
       proLink3:       Result := TACBrNFSeProviderLink3200.Create(ACBrNFSe);

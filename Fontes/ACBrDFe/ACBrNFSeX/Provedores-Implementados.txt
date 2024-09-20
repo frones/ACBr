@@ -56,7 +56,7 @@ geNFe                1.00
 GestaoISS            2.02  31/03/2023
 Giap                 1.00  02/08/2022
 Ginfes               1.00  19/09/2022
-Giss                 2.04
+Giss                 2.04             (GissOnline)
 GovBr                1.00
 GovDigital           2.00
 GovDigital           2.01
@@ -97,6 +97,7 @@ ISSSalvador          1.00
 ISSSaoPaulo          1.00
 ISSSJP               1.00
 ISSVitoria           2.00
+Kalana               1.00
 Lexsom               1.00
 Libre                2.04
 Link3                2.00

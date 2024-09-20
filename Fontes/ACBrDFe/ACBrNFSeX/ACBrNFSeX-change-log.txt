@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-5982 - A cidade de Rio Largo/AL trocou de provedor, agora é Kalana.
+  Por: Vanderlei Soares
+-- Diversos --
+[*] #TK-5982 - Implementado o provedor Kalana (versão 1 do layout da ABRASF).
+  Por: Italo Giurizzato Junior
+[+] #TK-5986 - Incluida a cidade de Candido Sales/BA, o provedor é Saatri.
+  Por: João Antônio
+[*] #TK-5979 - A cidade de Sidrolandia/MS trocou de provedor, agora é Fiorilli.
+  Por: Raf Mattos
+
 19/09/2024
 -- ACBrNFSeXConversao --
 [*] Ajuste visando corrigir evitar erro de conversão quando Cidade vier vazia.

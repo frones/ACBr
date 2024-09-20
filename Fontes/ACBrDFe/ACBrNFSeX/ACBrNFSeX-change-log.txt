@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/09/2024
+-- Equiplano.LerXml --
+[*] #TK-5984: Ajustes para a leitura do XML da NFSe
+  Por: Ray Hildebrant
 -- ACBrNFSeXServicos --
 [*] #TK-5982 - A cidade de Rio Largo/AL trocou de provedor, agora é Kalana.
   Por: Vanderlei Soares

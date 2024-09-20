@@ -225,6 +225,8 @@ begin
   if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('listaServicos');
+  if AuxNode = nil then
+  	AuxNode := ANode.Childrens.FindAnyNs('servicos');
 
   if AuxNode <> nil then
   begin
@@ -358,7 +360,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if (Pos('nfse', Arquivo) > 0) then
+  if (Pos('nfs', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;
@@ -385,11 +387,12 @@ begin
 
   if not Assigned(ANode) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('nfse');
+  //AuxNode := ANode.Childrens.FindAnyNs('nfse');
+  AuxNode := ANode; //ja esta no node 'nfs'
 
   if AuxNode <> nil then
   begin
-    NFSe.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
+    NFSe.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrNfs'), tcStr);
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
     NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
 
@@ -424,6 +427,8 @@ begin
     Servico.Valores.ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('vlLiquidoRps'), tcDe2);
 
     AuxNode := ANode.Childrens.FindAnyNs('tomador');
+    if AuxNode = nil then
+        AuxNode := ANode.Childrens.FindAnyNs('tomadorServico');
 
     if AuxNode <> nil then
     begin
@@ -449,12 +454,41 @@ begin
         Tomador.Endereco.UF := xUF;
 
       AuxNodeDoc := AuxNode.Childrens.FindAnyNs('documento');
+      if AuxNodeDoc = nil then
+          AuxNodeDoc := AuxNode;
 
       if AuxNodeDoc <> nil then
       begin
         Tomador.IdentificacaoTomador.CpfCnpj := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('nrDocumento'), tcStr);
         Tomador.IdentificacaoTomador.DocEstrangeiro := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
       end;
+    end;
+
+    AuxNode := ANode.Childrens.FindAnyNs('prestador');
+    if AuxNode = nil then
+        AuxNode := ANode.Childrens.FindAnyNs('prestadorServico');
+
+    if AuxNode <> nil then
+    begin
+      Prestador.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPrestador'), tcStr);
+      Prestador.IdentificacaoPrestador.CpfCnpj := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('nrDocumento'), tcStr);
+      Prestador.IdentificacaoPrestador.DocEstrangeiro := ObterConteudo(AuxNodeDoc.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
+
+      Prestador.IdentificacaoPrestador.InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoEstadual'), tcStr);
+      Prestador.IdentificacaoPrestador.InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoMunicipal'), tcStr);
+
+      Prestador.Endereco.Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
+      Prestador.Endereco.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
+      Prestador.Endereco.Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsComplemento'), tcStr);
+      Prestador.Endereco.Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
+      Prestador.Endereco.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbge'), tcStr);
+      Prestador.Endereco.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
+      Prestador.Endereco.xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
+      Prestador.Endereco.CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
+      Prestador.Endereco.xMunicipio := ObterNomeMunicipioUF(StrToIntDef(Prestador.Endereco.CodigoMunicipio, 0), xUF);
+
+      if Prestador.Endereco.UF = '' then
+        Prestador.Endereco.UF := xUF;
     end;
 
     LerListaServico(ANode);

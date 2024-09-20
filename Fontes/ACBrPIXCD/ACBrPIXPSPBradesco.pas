@@ -119,7 +119,7 @@ begin
     qp.Free;
   end;
   
-  Http.Protocol := '1.2';
+  Http.Protocol := '1.1';
   Http.UserName := ClientID;
   Http.Password := ClientSecret;
   BasicAutentication := 'Basic '+EncodeBase64(ClientID + ':' + ClientSecret);

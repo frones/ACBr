@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="426">
+    <Files Count="429">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1719,6 +1719,18 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSCampinas.Provider.pas"/>
         <UnitName Value="ISSCampinas.Provider"/>
       </Item426>
+      <Item427>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Kalana.GravarXml.pas"/>
+        <UnitName Value="Kalana.GravarXml"/>
+      </Item427>
+      <Item428>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Kalana.LerXml.pas"/>
+        <UnitName Value="Kalana.LerXml"/>
+      </Item428>
+      <Item429>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Kalana.Provider.pas"/>
+        <UnitName Value="Kalana.Provider"/>
+      </Item429>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

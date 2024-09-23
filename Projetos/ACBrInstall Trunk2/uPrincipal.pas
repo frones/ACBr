@@ -116,6 +116,8 @@ type
     Label12: TLabel;
     Label13: TLabel;
     lblSombra: TLabel;
+    ckbNaoUtilizarMsXML: TCheckBox;
+    ckbUsarACBrXmlDocument: TCheckBox;
     procedure btnDesmarcarTodasClick(Sender: TObject);
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -514,10 +516,12 @@ begin
   OpcoesCompilacao.DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
   OpcoesCompilacao.DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
   OpcoesCompilacao.DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
+  OpcoesCompilacao.DeveInstalarMsXML         := not ckbNaoUtilizarMsXML.Checked;
   OpcoesCompilacao.UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
   OpcoesCompilacao.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
-  OpcoesCompilacao.UsarExportadorFRSVG    := chkExportadorFastSVG.Checked;
-  OpcoesCompilacao.UsarExportadorFRPNG    := chkExportadorFastPNG.Checked;
+  OpcoesCompilacao.UsarExportadorFRSVG       := chkExportadorFastSVG.Checked;
+  OpcoesCompilacao.UsarExportadorFRPNG       := chkExportadorFastPNG.Checked;
+  OpcoesCompilacao.UsarACBrXmlDocument       := ckbUsarACBrXmlDocument.Checked;
 end;
 
 procedure TfrmPrincipal.AjustaTelaConformeConfiguracoes(OpcoesInstall: TACBrInstallOpcoes; OpcoesCompilacao: TACBrCompilerOpcoes);
@@ -538,10 +542,12 @@ begin
   ckbRemoveCapicom.Checked          := not OpcoesCompilacao.DeveInstalarCapicom;
   ckbRemoveOpenSSL.Checked          := not OpcoesCompilacao.DeveInstalarOpenSSL;
   ckbRemoveXMLSec.Checked           := not OpcoesCompilacao.DeveInstalarXMLSec;
+  ckbNaoUtilizarMsXML.Checked       := not OpcoesCompilacao.DeveInstalarMsXML;
   ckbCargaDllTardia.Checked         := OpcoesCompilacao.UsarCargaTardiaDLL;
   ckbRemoverCastWarnings.Checked    := OpcoesCompilacao.RemoverStringCastWarnings;
   chkExportadorFastSVG.Checked      := OpcoesCompilacao.UsarExportadorFRSVG;
   chkExportadorFastPNG.Checked      := OpcoesCompilacao.UsarExportadorFRPNG;
+  ckbUsarACBrXmlDocument.Checked    := OpcoesCompilacao.UsarACBrXmlDocument;
 end;
 
 procedure TfrmPrincipal.btnDesmarcarTodasClick(Sender: TObject);

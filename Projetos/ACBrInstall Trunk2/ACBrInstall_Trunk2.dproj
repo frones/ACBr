@@ -88,11 +88,11 @@
         <Manifest_File>ACBrInstall_Trunk2.manifest</Manifest_File>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=2.20.0.30;InternalName=ACBrInstall;LegalCopyright=;LegalTrademarks=;OriginalFilename=ACBrInstall;ProductVersion=2.19;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Projeto ACBr;FileVersion=2.21.0.31;InternalName=ACBrInstall;LegalCopyright=;LegalTrademarks=;OriginalFilename=ACBrInstall;ProductVersion=2.19;Comments=Instalador do componentes do Projeto ACBr para Delphi;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
-        <VerInfo_MinorVer>20</VerInfo_MinorVer>
-        <VerInfo_Build>30</VerInfo_Build>
+        <VerInfo_MinorVer>21</VerInfo_MinorVer>
+        <VerInfo_Build>31</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">

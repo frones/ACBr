@@ -349,7 +349,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 6
         Top = 49
         Width = 545
-        Height = 88
+        Height = 128
         Caption = 'Op'#231#245'es de Compila'#231#227'o do ACBr'
         TabOrder = 1
         object ckbRemoveOpenSSL: TCheckBox
@@ -371,7 +371,7 @@ object frmPrincipal: TfrmPrincipal
           Hint = 
             '*Recomendado Desabilita o uso da DLL da Capicom (DLL Depreciada ' +
             '2015)'
-          Caption = 'N'#227'o utilizar Capicom'
+          Caption = 'N'#227'o utilizar Capicom (Recomendado)'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
@@ -417,10 +417,31 @@ object frmPrincipal: TfrmPrincipal
           ShowHint = True
           TabOrder = 4
         end
+        object ckbNaoUtilizarMsXML: TCheckBox
+          Left = 6
+          Top = 81
+          Width = 227
+          Height = 17
+          Hint = '*Recomendado'
+          Caption = 'N'#227'o utilizar MsXML (Recomendado)'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 5
+        end
+        object ckbUsarACBrXmlDocument: TCheckBox
+          Left = 302
+          Top = 81
+          Width = 227
+          Height = 17
+          Caption = 'Usar ACBrXmlDocument (Em Teste)'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 6
+        end
       end
       object grpInstalacao: TGroupBox
         Left = 6
-        Top = 141
+        Top = 189
         Width = 545
         Height = 241
         Caption = 'Op'#231#245'es de Instala'#231#227'o'
@@ -531,7 +552,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object GroupBox1: TGroupBox
         Left = 6
-        Top = 388
+        Top = 436
         Width = 545
         Height = 63
         Caption = 'Op'#231#245'es de Exportador de Relat'#243'rio'
@@ -1159,7 +1180,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 1
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

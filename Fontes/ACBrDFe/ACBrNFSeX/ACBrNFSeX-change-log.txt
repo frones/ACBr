@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/09/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Formosa do Sul/SC, o provedor é Betha - TK-5970.
+   Por: C4Dev, Júlio Cavalcanti
+
 20/09/2024
 -- Equiplano.LerXml --
 [*] #TK-5984: Ajustes para a leitura do XML da NFSe

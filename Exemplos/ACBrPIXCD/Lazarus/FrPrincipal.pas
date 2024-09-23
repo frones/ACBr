@@ -2393,7 +2393,7 @@ begin
                    mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
       Exit;
 
-  ACBrOpenSSLUtils.GenerateKeyPair(aPrivateKey, aPublicKey);
+  ACBrOpenSSLUtils.GenerateKeyPair(aPrivateKey, aPublicKey, EmptyStr, bit2048);
   mItauChavePrivadaPEM.Lines.Text := ChangeLineBreak(aPrivateKey, sLineBreak);
   mItauChavePrivadaPEM.Lines.SaveToFile(edtItauArqChavePrivada2.Text);
 end;

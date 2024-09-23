@@ -725,7 +725,7 @@ begin
   Data := Response.Data;
   Protocolo := Response.Protocolo;
   MaxRps := Response.MaxRps;
-  ModoEnvio := ModoEnvioToStr(Response.ModoEnvio);
+  ModoEnvio := ACBrStr(ModoEnvioToStr(Response.ModoEnvio));
   Sucesso := Response.Sucesso;
   NumeroNota := Response.NumeroNota;
   CodigoVerificacao := Response.CodigoVerificacao;

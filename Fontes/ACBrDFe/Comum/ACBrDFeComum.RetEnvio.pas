@@ -136,9 +136,9 @@ begin
 
         if AuxNode <> nil then
         begin
-          infRec.nRec := ObterConteudoTag(Anode.Childrens.FindAnyNs('nRec'), tcStr);
-          infRec.dhRecbto := ObterConteudoTag(Anode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
-          infRec.tMed := ObterConteudoTag(ANode.Childrens.FindAnyNs('tMed'), tcInt);
+          infRec.nRec := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nRec'), tcStr);
+          infRec.dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+          infRec.tMed := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tMed'), tcInt);
         end;
       end;
 

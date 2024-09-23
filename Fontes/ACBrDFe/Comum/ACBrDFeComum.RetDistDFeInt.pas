@@ -654,11 +654,11 @@ begin
 
   if AuxNode <> nil then
   begin
-    docZip[Indice].procEvento.detEvento.CTe.chCTe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chCTe'), tcStr);
-    docZip[Indice].procEvento.detEvento.CTe.modal := StrToTpModal(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('modal'), tcStr));
-    docZip[Indice].procEvento.detEvento.CTe.dhEmi := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
-    docZip[Indice].procEvento.detEvento.CTe.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
-    docZip[Indice].procEvento.detEvento.CTe.dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+    docZip[Indice].procEvento.detEvento.CTe.chCTe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chCTe'), tcStr);
+    docZip[Indice].procEvento.detEvento.CTe.modal := StrToTpModal(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('modal'), tcStr));
+    docZip[Indice].procEvento.detEvento.CTe.dhEmi := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
+    docZip[Indice].procEvento.detEvento.CTe.nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
+    docZip[Indice].procEvento.detEvento.CTe.dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
   end;
 end;
 
@@ -673,9 +673,9 @@ begin
 
   if AuxNode <> nil then
   begin
-    docZip[Indice].procEvento.detEvento.emit.CNPJ := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-    docZip[Indice].procEvento.detEvento.emit.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-    docZip[Indice].procEvento.detEvento.emit.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+    docZip[Indice].procEvento.detEvento.emit.CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+    docZip[Indice].procEvento.detEvento.emit.IE := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
+    docZip[Indice].procEvento.detEvento.emit.xNome := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
   end;
 end;
 

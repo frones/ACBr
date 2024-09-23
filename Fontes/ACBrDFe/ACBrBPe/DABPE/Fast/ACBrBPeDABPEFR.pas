@@ -40,7 +40,7 @@ interface
 
 uses
   ACBrBPeDABPEClass, 
-  pcnBPe, 
+  ACBrBPeClass, 
   frxClass, 
   Classes, 
   frxExportPDF, 

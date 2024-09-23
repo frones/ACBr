@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+23/09/2024
+-- ACBrBPeDABPEFR --
+[-] Correção no nome da unit para que ocorra a compilação da unit.
+   Por: Evertof
+
 12/09/2024
 -- ACBrBPeWebServices --
 [*] Ajustes na montagem do XML *-ProcEventoBPe.xml

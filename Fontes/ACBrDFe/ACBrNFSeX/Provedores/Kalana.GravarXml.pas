@@ -45,14 +45,27 @@ type
 
   TNFSeW_Kalana = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
 
   end;
 
 implementation
 
+uses
+  ACBrNFSeXConversao;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Kalana
 //==============================================================================
+
+{ TNFSeW_Kalana }
+
+procedure TNFSeW_Kalana.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsSemFormatacao;
+end;
 
 end.

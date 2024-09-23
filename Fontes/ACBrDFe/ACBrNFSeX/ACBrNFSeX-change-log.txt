@@ -45,6 +45,15 @@ Símbolo : Significado
 
 23/09/2024
 -- ACBrNFSeXServicos --
+[+] #TK-6002 - Incluída a cidade de Pejucara/RS, o provedor é Pronim versão 2.03
+   Por: CG Suporte
+[+] #TK-5999 - Incluída a cidade de Salinas/MG, o provedor é NFSeBrasil.
+   Por: João Antônio
+[+] #TK-5998 - Incluída a cidade de Benevides/PA, o provedor é Desenvolve.
+   Por: Anderson Grolli
+[*] #TK-5989 - As URLs disponibilizadas do provedor Kalana na verdade são do 
+    ambiente de produção.
+  Por: Vanderlei Soares
 [+] Incluída a cidade de Formosa do Sul/SC, o provedor é Betha - TK-5970.
    Por: C4Dev, Júlio Cavalcanti
 

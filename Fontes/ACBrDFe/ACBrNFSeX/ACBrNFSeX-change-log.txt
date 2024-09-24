@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/09/2024
+-- Equiplano.LerXml --
+[*] #TK-5984: Mais ajustes para a leitura do XML da NFSe
+  Por: Ray Hildebrant
+
 23/09/2024
 -- ACBrNFSeXServicos --
 [+] #TK-6002 - Incluída a cidade de Pejucara/RS, o provedor é Pronim versão 2.03

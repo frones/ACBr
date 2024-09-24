@@ -46,6 +46,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/09/2024
+-- ACBrBPeDABPEFR --
+[-] Mais algumas correção para a impressão correta do DABPE.
+   Por: Evertof
+
 23/09/2024
 -- ACBrBPeDABPEFR --
 [-] Correção no nome da unit para que ocorra a compilação da unit.

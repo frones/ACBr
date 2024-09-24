@@ -140,7 +140,7 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrDelphiZXingQRCode, ACBrImage;
+  ACBrDFeUtil, ACBrDelphiZXingQRCode, ACBrImage, ACBrXmlBase, ACBrUtil.Base;
 
 { TACBrBPeDABPEFR }
 
@@ -277,7 +277,7 @@ begin
             FieldByName('serie').AsInteger := serie;
             FieldByName('DataEmi').AsString := FormatDateTime('dd/mm/yyyy', dhEmi);
             FieldByName('HoraEmi').AsString := FormatDateTime('hh:nn:ss', dhEmi);
-            FieldByName('tpAmb').AsString := TpAmbToStr(tpAmb);
+            FieldByName('tpAmb').AsString := ACBrXmlBase.TipoAmbienteToStr(tpAmb);
             FieldByName('UFIni').AsString := UFIni;
             FieldByName('UFFim').AsString := UFFim;
         end;

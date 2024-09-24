@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/09/2024
+-- DSF.Provider --
+[*] #TK-6008: Ajustes na função TratarXmlRetornado.
+  Por: Leandro Coelho
 -- ACBrNFSeXServicos --
 [*] #TK-6005 - A cidade de Tres Rios/RJ trocou de provedor, agora é Primax.
    Por: Guilherme Vaz

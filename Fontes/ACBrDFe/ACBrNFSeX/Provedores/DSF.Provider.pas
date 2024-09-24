@@ -441,13 +441,15 @@ function TACBrNFSeXWebserviceDSF200.TratarXmlRetornado(
 var
   Xml: string;
 begin
-  Xml := ConverteANSIparaUTF8(aXML);
-  Xml := RemoverDeclaracaoXML(Xml);
+  //Xml := ConverteANSIparaUTF8(aXML);
+  //Xml := RemoverDeclaracaoXML(Xml);
 
-  Result := inherited TratarXmlRetornado(Xml);
+  Result := inherited TratarXmlRetornado(aXml);
 
   Result := ParseText(Result);
   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderDSF200 }

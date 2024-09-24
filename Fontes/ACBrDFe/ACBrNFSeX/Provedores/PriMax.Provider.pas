@@ -63,7 +63,7 @@ type
 implementation
 
 uses
-  ACBrXmlBase, ACBrDFeException,
+  ACBrXmlBase, ACBrDFeException, ACBrNFSeX,
   PriMax.GravarXml, PriMax.LerXml;
 
 { TACBrNFSeProviderPriMax }
@@ -104,7 +104,13 @@ end;
 
 function TACBrNFSeXWebservicePriMax.GetSoapActionURL: string;
 begin
-  Result := 'https://www.primaxonline.com.br/issqn/wservice/';
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.SoapAction
+  else
+    Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.SoapAction;
+
+  if Result = '' then
+    Result := 'https://www.primaxonline.com.br/issqn/wservice/';
 end;
 
 end.

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 24/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6005 - A cidade de Tres Rios/RJ trocou de provedor, agora é Primax.
+   Por: Guilherme Vaz
+[*] #TK-6006 - A cidade de Crissiumal/RS trocou de provedor, agora é Betha 2.02
+   Por: Farol TI
 -- Equiplano.LerXml --
 [*] #TK-5984: Mais ajustes para a leitura do XML da NFSe
   Por: Ray Hildebrant

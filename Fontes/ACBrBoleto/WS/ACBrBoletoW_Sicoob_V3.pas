@@ -85,6 +85,7 @@ type
     procedure AtribuirMulta(AJson: TACBrJSONObject);
     procedure AlterarSeuNumero(AJson: TACBrJSONObject);
     procedure BaixarBoleto(AJson: TACBrJSONObject);
+    procedure RequisicaoSolicitacaoConsultaMovimentacoes;
 
 
   public
@@ -131,6 +132,7 @@ uses
 procedure TBoletoW_Sicoob_V3.DefinirURL;
 var
   LNossoNumero, LContrato: string;
+  LCodigoSolicitacao, LIdArquivo: integer;
 begin
 
   if( aTitulo <> nil ) then
@@ -138,6 +140,13 @@ begin
     LNossoNumero := ACBrUtil.Strings.RemoveZerosEsquerda(OnlyNumber(aTitulo.NossoNumero)+aTitulo.ACBrBoleto.Banco.CalcularDigitoVerificador(aTitulo));
     LContrato    := OnlyNumber(aTitulo.ACBrBoleto.Cedente.CodigoCedente);
   end;
+
+  if Boleto.Configuracoes.WebService.Operacao in [tpConsulta] then
+  begin
+    LCodigoSolicitacao := Boleto.Configuracoes.WebService.Filtro.NumeroProtocolo;
+    LIdArquivo         := Boleto.Configuracoes.WebService.Filtro.Identificador;
+  end;
+
   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL,C_URL_HOM);
 
   case Boleto.Configuracoes.WebService.Operacao of
@@ -157,6 +166,22 @@ begin
     end;
     tpConsultaDetalhe:  FPURL := FPURL + '/boletos?numeroCliente='+LContrato+'&codigoModalidade=1&nossoNumero='+LNossoNumero;
     tpBaixa:  FPURL := FPURL + '/boletos/'+LNossoNumero+'/baixar';
+    tpConsulta:
+    begin
+      if ((LIdArquivo > 0) and (LCodigoSolicitacao > 0)) then    {Download do(s) arquivo(s) de movimentação.}
+         FPURL := FPURL + '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)+'&idArquivo='+inttostr(LIdArquivo)
+      else if ((LIdArquivo=0) and (LCodigoSolicitacao > 0)) then  {Consultar a situação da solicitação da movimentação}
+         FPURL := FPURL + '/boletos/movimentacoes?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)
+      else if ((LIdArquivo=0) and (LCodigoSolicitacao=0)) then     {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
+         FPURL := FPURL + '/boletos/movimentacoes'
+      else
+        raise EACBrBoletoWSException.Create
+          ('Para sicoob seguir a ordem para o processo de consulta em lista')
+    end;
+//    tpFazSolicitacaoConsultaMovimentacao           : FPURL := FPURL + '/boletos/movimentacoes';
+//    tpConsultaListaArquivosSolicitacaoMovimentacao : FPURL := FPURL + '/boletos/movimentacoes?numeroCliente='+LContrato+'&codigoSolicitacao='+LCodigoSolicitacao;
+//    tpConsultaArquivoSolicitacaoMovimentacao       : FPURL := FPURL + '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+LCodigoSolicitacao+'&idArquivo='+LIdArquivo;
+
   end;
 
 end;
@@ -178,6 +203,8 @@ begin
 end;
 
 procedure TBoletoW_Sicoob_V3.GerarDados;
+Var
+  LCodigoSolicitacao, LIdArquivo: Integer;
 begin
   if Assigned(Boleto) then
 
@@ -204,11 +231,91 @@ begin
         FMetodoHTTP := htGET; // Define Método GET Consulta Detalhe
         RequisicaoConsultaDetalhe;
       end;
-
+    tpConsulta:
+      begin
+        LCodigoSolicitacao := Boleto.Configuracoes.WebService.Filtro.NumeroProtocolo;
+        LIdArquivo         := Boleto.Configuracoes.WebService.Filtro.Identificador;
+        if ((LIdArquivo>0) and (LCodigoSolicitacao>0)) then {Download do(s) arquivo(s) de movimentação.}
+        begin
+          FMetodoHTTP := htGET; // Define Método POST Consulta Requisição
+          FPDadosMsg := '';
+        end
+        else if ((LIdArquivo=0) and (LCodigoSolicitacao>0)) then {Consultar a situação da solicitação da movimentação}
+        begin
+          FMetodoHTTP := htGET; // Define Método POST Consulta Requisição
+          FPDadosMsg := '';
+        end
+        else if ((LIdArquivo=0) and (LCodigoSolicitacao=0)) then   {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
+        begin
+          FMetodoHTTP := htPOST; // Define Método POST Consulta Requisição
+          RequisicaoSolicitacaoConsultaMovimentacoes;
+        end;
+      end;
+    (*
+    tpFazSolicitacaoConsultaMovimentacao:
+    begin
+      FMetodoHTTP := htPOST; // Define Método POST Consulta Requisição
+      RequisicaoSolicitacaoConsultaMovimentacoes;
+    end;
+    tpConsultaListaArquivosSolicitacaoMovimentacao:
+    begin
+      FMetodoHTTP := htGET; // Define Método POST Consulta Requisição
+      FPDadosMsg := '';
+    end;
+    tpConsultaArquivoSolicitacaoMovimentacao:
+    begin
+      FMetodoHTTP := htGET; // Define Método POST Consulta Requisição
+      FPDadosMsg := '';
+    end;
+    *)
   else
     raise EACBrBoletoWSException.Create
       (ClassName + Format(S_OPERACAO_NAO_IMPLEMENTADO,
       [TipoOperacaoToStr(Boleto.Configuracoes.WebService.Operacao)]));
+  end;
+
+end;
+
+procedure TBoletoW_Sicoob_V3.RequisicaoSolicitacaoConsultaMovimentacoes;
+var
+  LJson: TACBrJSONObject;
+begin
+  LJson := TACBrJSONObject.Create;
+  try
+    LJson.AddPair('numeroCliente',StrToIntDef(Boleto.Cedente.CodigoCedente, 0));
+    (*     As consultas estão limitadas em um período máximo de 2 dias.
+      1 - Entrada
+      2 - Prorrogação
+      3 - A Vencer
+      4 - Vencido
+      5 - Liquidação
+      6 - Baixa
+    *)
+    case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
+      isbAberto: begin
+        case Boleto.Configuracoes.WebService.Filtro.boletoVencido of
+          ibvNenhum:
+            LJson.AddPair('tipoMovimento',1); // Entrada
+          ibvNao:
+            LJson.AddPair('tipoMovimento',3); // A Vencer
+          ibvSim:
+            LJson.AddPair('tipoMovimento',4); // Vencido
+          else
+            LJson.AddPair('tipoMovimento',1); // Entrada
+        end;
+      end;
+      isbBaixado:
+        LJson.AddPair('tipoMovimento',5); // Liquidado
+      isbCancelado:
+        LJson.AddPair('tipoMovimento',6); // Baixado
+
+    end;
+    LJson.AddPair('dataInicial',DateTimeToDateBancoob(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio));
+    LJson.AddPair('dataFinal',DateTimeToDateBancoob(Boleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal));
+
+    FPDadosMsg := LJson.ToJSON;
+  finally
+    LJson.Free;
   end;
 end;
 

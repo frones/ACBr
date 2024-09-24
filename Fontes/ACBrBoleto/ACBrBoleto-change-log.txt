@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+24/09/2024
+-- ACBrBoleto, ACBrBoletoW_Sicoob_V3, ACBrBoletoRet_Sicoob_V3 --
+[*] Nova Consulta de Movimento sicoob
+	https://www.projetoacbr.com.br/forum/topic/77825-integra%C3%A7%C3%A3o-com-a-api-da-sicoob-consulta/
+   por Rafaelbudag e Daniel Morais InfoCotidiano
 
 13/09/2024
 -- ACBrBoletoW_Inter_API --

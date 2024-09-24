@@ -957,6 +957,8 @@ type
     FModalidadeCobrancao        : Integer;
     FCarteira                   : Integer;
     FCarteiraVariacao           : Integer;
+    FNumeroProtocolo            : Integer;
+    FIdentificador              : Integer;
     procedure SetContaCaucao(const Value: Integer);
     procedure SetCnpjCpfPagador(const Value: string);
     procedure SetDataVencimento(const Value: TACBrDataPeriodo);
@@ -984,6 +986,8 @@ type
     property modalidadeCobranca         : integer                      read FModalidadeCobrancao        write SetModalidadeCobranca;
     property carteira                   : Integer                      read FCarteira                   write SetCarteira;
     property carteiraVariacao           : Integer                      read FCarteiraVariacao           write FCarteiraVariacao;
+    property NumeroProtocolo            : Integer                      read FNumeroProtocolo            write FNumeroProtocolo;
+    property Identificador              : Integer                      read FIdentificador              write FIdentificador;
   end;
 
   { TACBrWebService }
@@ -2203,6 +2207,8 @@ begin
   FIndiceContinuidade := 0;
   FModalidadeCobrancao:= 0;
   FCarteira:= 0;
+  FNumeroProtocolo := 0;
+  FIdentificador := 0;
 end;
 
 destructor TACBrBoletoWSFiltroConsulta.Destroy;
@@ -4307,6 +4313,9 @@ begin
       Configuracoes.WebService.Filtro.carteira := IniBoletos.ReadInteger(Sessao,'Carteira', 0 );
       Configuracoes.WebService.Filtro.carteiraVariacao := IniBoletos.ReadInteger(Sessao,'CarteiraVariacao', 0 );
       Configuracoes.WebService.Filtro.indiceContinuidade := IniBoletos.ReadInteger(Sessao,'IndiceContinuidade', 0 );
+      Configuracoes.WebService.Filtro.NumeroProtocolo := IniBoletos.ReadInteger(Sessao,'NumeroProtocolo', 0 );
+      Configuracoes.WebService.Filtro.Identificador   := IniBoletos.ReadInteger(Sessao,'Identificador', 0 );
+
 
       Result := True;
     end;

@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 24/09/2024
+-- ACBrBoletoW_Itau_API, ACBrBoletoRet_Itau_API --
+[-] Filtro de consulta, alterado para specific orientado pelo suporte itau para devolver informacoes do pagamento.
+   https://www.projetoacbr.com.br/forum/topic/79316-informa%C3%A7%C3%B5es-de-retorno-de-recebimento-de-boleto-ita%C3%BA-por-api/#comment-512758
+   por Sérgio Rocha - Splendor e Daniel Morais InfoCotidiano
+
+24/09/2024
 -- ACBrBoleto, ACBrBoletoW_Sicoob_V3, ACBrBoletoRet_Sicoob_V3 --
 [*] Nova Consulta de Movimento sicoob
 	https://www.projetoacbr.com.br/forum/topic/77825-integra%C3%A7%C3%A3o-com-a-api-da-sicoob-consulta/

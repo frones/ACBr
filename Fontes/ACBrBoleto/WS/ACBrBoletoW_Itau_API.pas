@@ -323,8 +323,9 @@ begin
 
             if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
               LConsulta.Add('page=' + IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
-            
-            LConsulta.Add('view=full');
+
+            {filtro full nao esta devolvendo informacoes pgto, suporte sugeriu utilizar specific}
+            LConsulta.Add('view=specific');
           end;
         tpConsultaDetalhe :
           begin
@@ -336,7 +337,8 @@ begin
             if LNossoNumero <> EmptyStr then
                LConsulta.Add('nosso_numero=' + LNossoNumero);
 
-            LConsulta.Add('view=full');
+            {filtro full nao esta devolvendo informacoes pgto, suporte sugeriu utilizar specific}
+            LConsulta.Add('view=specific');
           end;
         tpAltera :
           begin

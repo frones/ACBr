@@ -250,9 +250,7 @@ function TACBrCTeDACTEClass.CaractereQuebraDeLinha: String;
 begin
   Result := '|';
   if Assigned(FACBrCTE) and (FACBrCTe is TACBrCTe) then
-  begin
     Result := TACBrCTe(FACBrCTe).Configuracoes.WebServices.QuebradeLinha;
-  end;
 end;
 
 end.

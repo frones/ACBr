@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/09/2024
+-- ACBrBoletoW_Sicredi_APIV2 --
+[-] TK-6009 Corrigido nome da propriedade conforme manual valorOuPercentual
+	https://www.projetoacbr.com.br/forum/topic/79827-corre%C3%A7%C3%A3o-na-unit-acbrboletow_sicredi_apiv2/
+	por LeoDoreto 
+
+25/09/2024
 -- ACBrBoletoRet_Itau_API --
 [*] Mapeamento das propriedades juros, multa, desconto e abatimento na consulta detalhe
    por Daniel Morais InfoCotidiano

@@ -507,8 +507,7 @@ begin
   begin
     LJsonObject := TACBrJSONObject.Create;
     try
-      LJsonObject.AddPair('valorouPercentual', ATitulo.ValorMoraJuros);
-
+      LJsonObject.AddPair('valorOuPercentual', ATitulo.ValorMoraJuros);
       FPDadosMsg := LJsonObject.ToJSON;
     finally
       LJsonObject.Free;

@@ -96,7 +96,7 @@ Símbolo : Significado
   Por: Diego Folieni 
 
 02/09/2024
--- pcnNFeW --
+-- Diversos --
 [*] #TK-5866: Ajuste visando padronização do caractere de quebra de linha.
    por: Diego Folieni
 

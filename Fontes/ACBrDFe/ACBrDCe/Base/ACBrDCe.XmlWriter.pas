@@ -466,6 +466,8 @@ begin
 end;
 
 function TDCeXmlWriter.Gerar_Dest: TACBrXmlNode;
+const
+  HOM_NOME_DEST = 'DCE EMITIDA EM AMBIENTE DE HOMOLOGACAO';
 begin
   Result := FDocument.CreateElement('dest');
 
@@ -475,8 +477,12 @@ begin
     Result.AppendChild(AddNode(tcStr, 'E03a', 'idOutros', 2, 60, 1,
                                                  DCe.dest.idOutros, DSC_XNOME));
 
-  Result.AppendChild(AddNode(tcStr, 'E04', 'xNome', 2, 60, 1,
-                                                    DCe.dest.xNome, DSC_XNOME));
+  if DCe.Ide.tpAmb = taProducao then
+    Result.AppendChild(AddNode(tcStr, 'E04', 'xNome', 2, 60, 1,
+                                                     DCe.dest.xNome, DSC_XNOME))
+  else
+    Result.AppendChild(AddNode(tcStr, 'E04', 'xNome', 2, 60, 1,
+                                                     HOM_NOME_DEST, DSC_XNOME));
 
   Result.AppendChild(Gerar_EnderDest);
 end;
@@ -587,7 +593,7 @@ begin
     Result.AppendChild(AddNode(tcStr, 'I02', 'xProd', 1, 120, 1,
                                              DCe.Det[i].Prod.xProd, DSC_XPROD));
 
-  Result.AppendChild(AddNode(tcStr, 'I03', 'NCM', 2, 8, 0,
+  Result.AppendChild(AddNode(tcStr, 'I03', 'NCM', 2, 8, 1,
                                                  DCe.Det[i].Prod.NCM, DSC_NCM));
 
   Result.AppendChild(AddNode(tcDe4, 'I04', 'qCom', 0, 15, 1,

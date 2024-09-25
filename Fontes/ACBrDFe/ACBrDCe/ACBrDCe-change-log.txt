@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+25/09/2024
+-- ACBrDCeServicos/ACBrDCe.XmlWriter --
+[-] Correções para gerar corretamente o XML do DC-e e ser autorizado pela SEFAZ.
+  Por: Italo Giurizzato Junior
+
 06/09/2024
 -- Diversos --
 [-] Algumas correções referente a incompatibilidade de tipos.

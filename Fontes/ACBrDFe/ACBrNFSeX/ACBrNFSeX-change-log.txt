@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/09/2024
+-- Actcon.GravarXml/Adm.GravarXml/AEG.GravarXml/Asten.GravarXml --
+-- ISSCampinas.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
+
 24/09/2024
 -- DSF.Provider --
 [*] #TK-6008: Ajustes na função TratarXmlRetornado.

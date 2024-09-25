@@ -38,8 +38,10 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, synacode,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_ISSCampinas }
@@ -60,6 +62,7 @@ type
 
   TNFSeW_ISSCampinas203 = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   public
 
@@ -459,6 +462,15 @@ begin
   NFSeNode.AppendChild(xmlNode);
 
   Result := True;
+end;
+
+{ TNFSeW_ISSCampinas203 }
+
+procedure TNFSeW_ISSCampinas203.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoAliq := tcDe2;
 end;
 
 end.

@@ -38,8 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_Adm201 }
@@ -56,7 +55,7 @@ implementation
 //     Adm
 //==============================================================================
 
-{ TNFSeW_Adm }
+{ TNFSeW_Adm201 }
 
 procedure TNFSeW_Adm201.Configuracao;
 begin

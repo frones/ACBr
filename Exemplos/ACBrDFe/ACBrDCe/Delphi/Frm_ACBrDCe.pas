@@ -411,7 +411,7 @@ begin
     // TACBrTipoEmissao = (teNormal, teOffLine);
     Ide.tpEmis := teNormal;
     // TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);
-    Ide.tpEmit := teTransportadora;
+    Ide.tpEmit := teEmissorProprio;
     Ide.nSiteAutoriz := 0;
     Ide.verProc := 'ACBrDCe-v1.00';
 
@@ -451,7 +451,7 @@ begin
       teEmissorProprio:
         begin
           EmpEmisProp.CNPJ := edtEmitCNPJ.Text;
-          EmpEmisProp.xNome := 'Transportadora Leva e Traz';
+          EmpEmisProp.xNome := 'Nome do Emissor Proprio';
         end;
       teTransportadora:
         begin
@@ -463,7 +463,7 @@ begin
     //
     // Dados do Destinatário
     //
-    Dest.CNPJCPF := '06760213874';
+    Dest.CNPJCPF := '11111111111';
     Dest.idOutros := '';
     Dest.xNome := 'Joao';
 
@@ -475,17 +475,20 @@ begin
     Dest.enderDest.xMun := 'Sao Paulo';
     Dest.enderDest.UF := 'SP';
     Dest.enderDest.CEP := 14800;
+    Dest.enderDest.cPais := 1058;
+    Dest.enderDest.xPais := 'Brasil';
     Dest.enderDest.fone := '33445566';
     Dest.enderDest.email := '';
 
     //
     // Dados do Autorizado a obter o XML (máximo 10)
     //
+{
     with autXML.New do
     begin
-      CNPJCPF := '06760213874';
+      CNPJCPF := '';
     end;
-
+}
     //
     // Dados do Detalhamento de itens (máximo 999)
     //
@@ -493,7 +496,7 @@ begin
     begin
       Prod.nItem := 1;
       Prod.xProd := 'Produto 1';
-      Prod.NCM := '12345678';
+      Prod.NCM := '00';
       Prod.qCom := 1;
       Prod.vUnCom := 10;
       Prod.vProd := 10;

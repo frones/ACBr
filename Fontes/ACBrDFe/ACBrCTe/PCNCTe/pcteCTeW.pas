@@ -225,7 +225,7 @@ begin
   FGerador := TGerador.Create;
 
   FGerador.FIgnorarTagNivel   := '|?xml version|CTe xmlns|infCte versao|ObsCont|ObsFisco|';
-  FGerador.Opcoes.QuebraLinha := ';';
+  FGerador.Opcoes.QuebraLinha := '|';
 
   FOpcoes := TGeradorOpcoes.Create;
 

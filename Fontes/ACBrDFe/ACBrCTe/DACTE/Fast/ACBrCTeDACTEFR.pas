@@ -2496,11 +2496,7 @@ end;
 
 procedure TACBrCTeDACTEFR.CarregaInformacoesAdicionais;
 var
-  vTemp        : TStringList;
-  IndexCampo   : Integer;
-  Campos       : TSplitResult;
   BufferObs    : string;
-  TmpStr       : string;
   wContingencia: string;
   wObs         : string;
   i            : Integer;
@@ -2521,28 +2517,14 @@ begin
       if wContingencia <> '' then
       begin
         if Length(wObs) > 0 then
-          wObs := wObs + ';';
+          wObs := wObs + FDACTEClassOwner.CaractereQuebraDeLinha;
         wObs   := wObs + wContingencia;
       end;
 
-      vTemp := TStringList.Create;
-      try
-        if Trim(wObs) <> '' then
-        begin
-          Campos         := nil;
-          Campos         := Split(';', wObs);
-          for IndexCampo := 0 to Length(Campos) - 1 do
-            vTemp.Add(Campos[IndexCampo]);
-
-          TmpStr    := vTemp.Text;
-          BufferObs := TmpStr;
-        end
-        else
-          BufferObs := '';
-
-      finally
-        vTemp.Free;
-      end;
+      if Trim(wObs) <> '' then
+        BufferObs := StringReplace(wObs, FDACTEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll, rfIgnoreCase])
+      else
+        BufferObs := '';
 
       FieldByName('Fluxo_xOrig').AsString := fluxo.xOrig;
       FieldByName('Fluxo_xDest').AsString := fluxo.xDest;
@@ -2583,24 +2565,10 @@ begin
     if Trim(FCTe.Imp.infAdFisco) <> '' then
     begin
       wObs  := FCTe.Imp.infAdFisco;
-      vTemp := TStringList.Create;
-      try
-        if Trim(wObs) <> '' then
-        begin
-          Campos         := nil;
-          Campos         := Split(';', wObs);
-          for IndexCampo := 0 to Length(Campos) - 1 do
-            vTemp.Add(Campos[IndexCampo]);
-
-          TmpStr    := vTemp.Text;
-          BufferObs := TmpStr;
-        end
-        else
-          BufferObs := '';
-
-      finally
-        vTemp.Free;
-      end;
+      if Trim(wObs) <> '' then
+        BufferObs := StringReplace(wObs, FDACTEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll, rfIgnoreCase])
+      else
+        BufferObs := '';
     end;
     FieldByName('infAdFisco').AsString := BufferObs;
 
@@ -2609,27 +2577,12 @@ begin
     begin
       wObs   := '';
       for i  := 0 to FCTe.compl.ObsCont.Count - 1 do
-        wObs := wObs + FCTe.compl.ObsCont[i].xCampo + ' : ' + FCTe.compl.ObsCont[i].xTexto + ';';
+        wObs := wObs + FCTe.compl.ObsCont[i].xCampo + ' : ' + FCTe.compl.ObsCont[i].xTexto + FDACTEClassOwner.CaractereQuebraDeLinha;
 
-      vTemp := TStringList.Create;
-      try
-        if Trim(wObs) <> '' then
-        begin
-          Campos         := nil;
-          Campos := Split(';', wObs);
-          for IndexCampo := 0 to Length(Campos) - 1 do
-            vTemp.Add(Campos[IndexCampo]);
-
-          TmpStr    := vTemp.Text;
-          BufferObs := TmpStr;
-        end
-        else
-          BufferObs := '';
-
-      finally
-        vTemp.Free;
-      end;
-
+      if Trim(wObs) <> '' then
+        BufferObs := StringReplace(wObs, FDACTEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll, rfIgnoreCase])
+      else
+        BufferObs := '';
     end;
     FieldByName('ObsCont').AsString := BufferObs;
     Post;

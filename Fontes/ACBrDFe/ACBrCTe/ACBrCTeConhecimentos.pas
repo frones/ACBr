@@ -1720,6 +1720,7 @@ begin
     FCTeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FCTeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FCTeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+    FCTeW.Gerador.Opcoes.QuebraLinha    := Configuracoes.WebServices.QuebradeLinha;
     FCTeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FCTeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
 

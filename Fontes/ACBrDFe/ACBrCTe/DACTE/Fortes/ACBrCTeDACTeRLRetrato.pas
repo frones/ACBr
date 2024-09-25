@@ -1780,7 +1780,7 @@ begin
   if (fpCTe.Ide.tpEmis = teDPEC) and (fpDACTe.EPECEnviado) then
     rlmObs.Lines.Add('EPEC regularmente recebida pela Receita Federal do Brasil');
 
-  rlmObs.Lines.Text := StringReplace(rlmObs.Lines.Text, ';', #13, [rfReplaceAll]);
+  rlmObs.Lines.Text := StringReplace(rlmObs.Lines.Text, fpDACTe.CaractereQuebraDeLinha, #13, [rfReplaceAll]);
   rlmObs.Lines.EndUpdate;
 
   // Mensagem para modo Homologacao.
@@ -2537,7 +2537,7 @@ begin
     end;
 
   rlmObsExcEmitente.Lines.Text :=
-    StringReplace(rlmObsExcEmitente.Lines.Text, ';', #13, [rfReplaceAll]);
+    StringReplace(rlmObsExcEmitente.Lines.Text, fpDACTe.CaractereQuebraDeLinha, #13, [rfReplaceAll]);
   rlmObsExcEmitente.Lines.EndUpdate;
 
   if Length(Trim(fpCTe.Imp.infAdFisco)) > 0 then
@@ -2552,7 +2552,7 @@ begin
         '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
     end;
 
-  rlmObsFisco.Lines.Text := StringReplace(rlmObsFisco.Lines.Text, ';',
+  rlmObsFisco.Lines.Text := StringReplace(rlmObsFisco.Lines.Text, fpDACTe.CaractereQuebraDeLinha,
     #13, [rfReplaceAll]);
   rlmObsFisco.Lines.EndUpdate;
 

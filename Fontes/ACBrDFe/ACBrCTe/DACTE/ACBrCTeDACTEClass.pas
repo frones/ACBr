@@ -85,6 +85,8 @@ type
 
     procedure ImprimirINUTILIZACAO(ACTE: TCTe = nil); virtual;
     procedure ImprimirINUTILIZACAOPDF(ACTE: TCTe = nil); virtual;
+
+    function CaractereQuebraDeLinha: String;
   published
     property ACBrCTE: TComponent read FACBrCTE write SetACBrCTE;
     property ImprimirHoraSaida: boolean read FImprimirHoraSaida write FImprimirHoraSaida;
@@ -241,6 +243,15 @@ begin
       Result := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(Result,
         DescricaoModelo, ACTe.Emit.CNPJ, ACTe.Emit.IE, dhEmissao, DescricaoModelo);
     end;
+  end;
+end;
+
+function TACBrCTeDACTEClass.CaractereQuebraDeLinha: String;
+begin
+  Result := '|';
+  if Assigned(FACBrCTE) and (FACBrCTe is TACBrCTe) then
+  begin
+    Result := TACBrCTe(FACBrCTe).Configuracoes.WebServices.QuebradeLinha;
   end;
 end;
 

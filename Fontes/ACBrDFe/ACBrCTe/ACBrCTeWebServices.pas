@@ -3271,6 +3271,7 @@ begin
 //    AjustarOpcoes( EventoCTe.Gerador.Opcoes );
 //    EventoCTe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
 
+    AjustarOpcoes(EventoCTe.Opcoes);
     EventoCTe.GerarXML;
 
     Eventos := NativeStringToUTF8( EventoCTe.XmlEnvio );

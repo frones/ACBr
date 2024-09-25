@@ -1337,7 +1337,7 @@ begin
     rlmObs.Lines.Add(ACBrStr(
       'DACTE em Contingência - DPEC regularmente recebida pela Receita Federal do Brasil'));
 
-  rlmObs.Lines.Text := StringReplace(rlmObs.Lines.Text, ';', #13, [rfReplaceAll]);
+  rlmObs.Lines.Text := StringReplace(rlmObs.Lines.Text, fpDACTe.CaractereQuebraDeLinha, #13, [rfReplaceAll]);
   rlmObs.Lines.EndUpdate;
 
   rlmObsFisco.Lines.BeginUpdate;
@@ -1352,7 +1352,7 @@ begin
     end;
 
   rlmObsFisco.Lines.Text := StringReplace(rlmObsFisco.Lines.Text,
-    ';', #13, [rfReplaceAll]);
+    fpDACTe.CaractereQuebraDeLinha, #13, [rfReplaceAll]);
   rlmObsFisco.Lines.EndUpdate;
 
   rllMsgTeste.Visible := False;

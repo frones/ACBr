@@ -1,9 +1,9 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   targetNamespace="http://www.geisweb.com.br/xsd/envio_lote_rps_async.xsd"        
-    xmlns="http://www.geisweb.com.br/xsd/envio_lote_rps.xsd"  
+   targetNamespace="http://www.gerenciadecidades.com.br/xsd/envio_lote_rps_async.xsd"        
+    xmlns="http://www.gerenciadecidades.com.br/xsd/envio_lote_rps.xsd"  
    xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
    elementFormDefault="qualified">
-<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.geisweb.com.br/xsd/xmldsig-core-schema.xsd"/>
+<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.gerenciadecidades.com.br/xsd/xmldsig-core-schema.xsd"/>
   <xsd:element name="EnviaLoteRpsAsync">
     <xsd:complexType>
       <xsd:sequence>

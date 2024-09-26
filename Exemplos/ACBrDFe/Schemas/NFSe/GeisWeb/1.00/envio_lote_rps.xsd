@@ -1,6 +1,6 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-   targetNamespace="http://www.geisweb.net.br/xsd/envio_lote_rps.xsd"        
-    xmlns="http://www.geisweb.net.br/xsd/envio_lote_rps.xsd"  
+   targetNamespace="http://www.gerenciadecidades.com.br/xsd/envio_lote_rps.xsd"        
+    xmlns="http://www.gerenciadecidades.com.br/xsd/envio_lote_rps.xsd"  
    xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
    elementFormDefault="qualified">
     <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>

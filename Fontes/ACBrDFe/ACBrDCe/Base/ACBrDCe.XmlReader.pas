@@ -334,20 +334,25 @@ end;
 
 procedure TDCeXmlReader.Ler_ProtDCe(const ANode: TACBrXmlNode);
 var
+  AuxNode: TACBrXmlNode;
   ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
-  DCe.procDCe.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
-  DCe.procDCe.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
-  DCe.procDCe.chDFe    := ObterConteudo(ANode.Childrens.Find('chDCe'), tcStr);
-  DCe.procDCe.dhRecbto := ObterConteudo(ANode.Childrens.Find('dhRecbto'), tcDatHor);
-  DCe.procDCe.nProt    := ObterConteudo(ANode.Childrens.Find('nProt'), tcStr);
-  DCe.procDCe.digVal   := ObterConteudo(ANode.Childrens.Find('digVal'), tcStr);
-  DCe.procDCe.cStat    := ObterConteudo(ANode.Childrens.Find('cStat'), tcInt);
-  DCe.procDCe.xMotivo  := ObterConteudo(ANode.Childrens.Find('xMotivo'), tcStr);
-  DCe.procDCe.cMsg     := ObterConteudo(ANode.Childrens.Find('cMsg'), tcInt);
-  DCe.procDCe.xMsg     := ObterConteudo(ANode.Childrens.Find('xMsg'), tcStr);
+  AuxNode := ANode.Childrens.Find('infProt');
+
+  if not Assigned(AuxNode) then Exit;
+
+  DCe.procDCe.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(AuxNode.Childrens.Find('tpAmb'), tcStr));
+  DCe.procDCe.verAplic := ObterConteudo(AuxNode.Childrens.Find('verAplic'), tcStr);
+  DCe.procDCe.chDFe    := ObterConteudo(AuxNode.Childrens.Find('chDCe'), tcStr);
+  DCe.procDCe.dhRecbto := ObterConteudo(AuxNode.Childrens.Find('dhRecbto'), tcDatHor);
+  DCe.procDCe.nProt    := ObterConteudo(AuxNode.Childrens.Find('nProt'), tcStr);
+  DCe.procDCe.digVal   := ObterConteudo(AuxNode.Childrens.Find('digVal'), tcStr);
+  DCe.procDCe.cStat    := ObterConteudo(AuxNode.Childrens.Find('cStat'), tcInt);
+  DCe.procDCe.xMotivo  := ObterConteudo(AuxNode.Childrens.Find('xMotivo'), tcStr);
+  DCe.procDCe.cMsg     := ObterConteudo(AuxNode.Childrens.Find('cMsg'), tcInt);
+  DCe.procDCe.xMsg     := ObterConteudo(AuxNode.Childrens.Find('xMsg'), tcStr);
 end;
 
 procedure TDCeXmlReader.Ler_Total(const ANode: TACBrXmlNode);
@@ -390,7 +395,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 
-  if Document.Root.Name = 'DCeProc' then
+  if Document.Root.Name = 'dceProc' then
   begin
     Ler_ProtDCe(Document.Root.Childrens.Find('protDCe'));
     DCeNode := Document.Root.Childrens.Find('DCe');

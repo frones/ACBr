@@ -528,7 +528,7 @@ begin
     try
       EnviarEvento(ALote);
     except
-      raise Exception.Create(WebServices.EnvEvento.EventoRetorno.retInfEvento.xMotivo);
+      raise Exception.Create(WebServices.EnvEvento.EventoRetorno.retInfEvento[0].retInfEvento.xMotivo);
     end;
   end;
 

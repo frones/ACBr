@@ -2578,7 +2578,7 @@ begin
   N := PosDCe;
   while N > 0 do
   begin
-    P := pos('</DCeProc>', XMLStr);
+    P := pos('</dceProc>', XMLStr);
 
     if P <= 0 then
       P := pos('</procDCe>', XMLStr);  // DCe obtido pelo Portal da Receita

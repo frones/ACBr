@@ -383,6 +383,7 @@ begin
 
     // Configuração inicial
     rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
+    rllDadosVariaveis3.Caption := fpDCe.procDCe.nProt;
   end;
 
   if rlbCodigoBarras.Visible then

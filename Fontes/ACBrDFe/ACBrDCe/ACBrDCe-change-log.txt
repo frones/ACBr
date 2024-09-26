@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/09/2024
+-- Diversos --
+[-] Diversas correções para impressão do DACE, ler o retorno do evento e impressão
+    do DAEvento.
+  Por: Italo Giurizzato Junior
+
 25/09/2024
 -- ACBrDCeServicos/ACBrDCe.XmlWriter --
 [-] Correções para gerar corretamente o XML do DC-e e ser autorizado pela SEFAZ.

@@ -1441,23 +1441,23 @@ begin
   EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
-  FcStat := EventoRetorno.retInfEvento.cStat;
-  FxMotivo := EventoRetorno.retInfEvento.xMotivo;
-  FPMsg := EventoRetorno.retInfEvento.xMotivo;
-  FTpAmb := EventoRetorno.retInfEvento.tpAmb;
+  FcStat := EventoRetorno.cStat;
+  FxMotivo := EventoRetorno.xMotivo;
+  FPMsg := EventoRetorno.xMotivo;
+  FTpAmb := EventoRetorno.tpAmb;
 
   Result := (FcStat in [135, 136]);
 
   //gerar arquivo proc de evento
   if Result then
   begin
-    if FEvento.Evento[0].InfEvento.chDCe = EventoRetorno.RetInfEvento.chDCe then
+    if FEvento.Evento[0].InfEvento.chDCe = EventoRetorno.retInfEvento[0].RetInfEvento.chDCe then
     begin
-      FEvento.Evento[0].RetInfEvento.tpAmb := EventoRetorno.RetInfEvento.tpAmb;
-      FEvento.Evento[0].RetInfEvento.nProt := EventoRetorno.RetInfEvento.nProt;
-      FEvento.Evento[0].RetInfEvento.dhRegEvento := EventoRetorno.RetInfEvento.dhRegEvento;
-      FEvento.Evento[0].RetInfEvento.cStat := EventoRetorno.RetInfEvento.cStat;
-      FEvento.Evento[0].RetInfEvento.xMotivo := EventoRetorno.RetInfEvento.xMotivo;
+      FEvento.Evento[0].RetInfEvento.tpAmb := EventoRetorno.retInfEvento[0].RetInfEvento.tpAmb;
+      FEvento.Evento[0].RetInfEvento.nProt := EventoRetorno.retInfEvento[0].RetInfEvento.nProt;
+      FEvento.Evento[0].RetInfEvento.dhRegEvento := EventoRetorno.retInfEvento[0].RetInfEvento.dhRegEvento;
+      FEvento.Evento[0].RetInfEvento.cStat := EventoRetorno.retInfEvento[0].RetInfEvento.cStat;
+      FEvento.Evento[0].RetInfEvento.xMotivo := EventoRetorno.retInfEvento[0].RetInfEvento.xMotivo;
 
       VersaoEvento := TACBrDCe(FPDFeOwner).LerVersaoDeParams(LayDCeEvento);
 
@@ -1479,12 +1479,12 @@ begin
         PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento[0].InfEvento.CNPJCPF));
 
         FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
-        FEventoRetorno.RetInfEvento.NomeArquivo := PathArq + NomeArq;
+        FEventoRetorno.retInfEvento[0].RetInfEvento.NomeArquivo := PathArq + NomeArq;
         FEvento.Evento[0].RetInfEvento.NomeArquivo := PathArq + NomeArq;
       end;
 
       Texto := ParseText(Texto);
-      FEventoRetorno.RetInfEvento.XML := Texto;
+      FEventoRetorno.retInfEvento[0].RetInfEvento.XML := Texto;
       FEvento.Evento[0].RetInfEvento.XML := Texto;
     end;
   end;
@@ -1498,15 +1498,15 @@ begin
                          'Ambiente: %s ' + LineBreak +
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
-                         'Status Descrição: %s ' + LineBreak +
-                         'Recebimento: %s ' + LineBreak),
-                 [FEventoRetorno.versao,
-                  TipoAmbienteToStr(FEventoRetorno.RetInfEvento.tpAmb),
-                  FEventoRetorno.RetInfEvento.verAplic,
-                  IntToStr(FEventoRetorno.RetInfEvento.cStat),
-                  FEventoRetorno.RetInfEvento.xMotivo,
-                  IfThen(FEventoRetorno.RetInfEvento.dhRegEvento = 0, '',
-                   FormatDateTimeBr(FEventoRetorno.RetInfEvento.dhRegEvento))]);
+                         'Status Descrição: %s ' + LineBreak),
+                 [FEventoRetorno.versao, TipoAmbienteToStr(FEventoRetorno.tpAmb),
+                  FEventoRetorno.verAplic, IntToStr(FEventoRetorno.cStat),
+                  FEventoRetorno.xMotivo]);
+
+  if FEventoRetorno.retInfEvento.Count > 0 then
+    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
+       [IfThen(FEventoRetorno.retInfEvento[0].RetInfEvento.dhRegEvento = 0, '',
+               FormatDateTimeBr(FEventoRetorno.retInfEvento[0].RetInfEvento.dhRegEvento))]);
 
   Result := aMsg;
 end;

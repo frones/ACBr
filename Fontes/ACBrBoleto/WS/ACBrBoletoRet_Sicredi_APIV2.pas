@@ -347,6 +347,7 @@ begin
             LListaRetorno.DadosRet.TituloRet.DataBaixa                  := DateSicreditoDateTime(LItemObject.AsString['dataPagamento']);
             LListaRetorno.DadosRet.TituloRet.HoraBaixa                  := TimeSicreditoDateTime(LItemObject.AsString['dataPagamento']);
             LListaRetorno.DadosRet.TituloRet.SeuNumero                  := LItemObject.AsString['seuNumero'];
+            LListaRetorno.DadosRet.TituloRet.valorAtual                 := LItemObject.AsFloat['valor'];
             LListaRetorno.DadosRet.TituloRet.ValorDocumento             := LItemObject.AsFloat['valor'];
             LListaRetorno.DadosRet.TituloRet.ValorRecebido              := LItemObject.AsFloat['valorLiquidado'];
             LListaRetorno.DadosRet.TituloRet.ValorPago                  := LItemObject.AsFloat['valorLiquidado'];
@@ -356,6 +357,8 @@ begin
             LListaRetorno.DadosRet.TituloRet.ValorOutrosCreditos        := LItemObject.AsFloat['multaLiquida'];
             LListaRetorno.DadosRet.TituloRet.ValorAbatimento            := LItemObject.AsFloat['abatimentoLiquido'];
             LListaRetorno.DadosRet.TituloRet.Mensagem.Text              := LItemObject.AsString['tipoLiquidacao'];
+
+            LListaRetorno.DadosRet.TituloRet.DataCredito                := DateSicreditoDateTime(LItemObject.AsString['dataPagamento']);
           end;
         end;
       finally

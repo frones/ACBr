@@ -169,6 +169,7 @@ begin
                 ARetornoWS.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
                 ARetornoWS.DadosRet.TituloRet.ValorAtual                 := AJSonObject.Values['valor'].AsNumber;
                 ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca       := AJSonObject.Values['situacao'].AsString;
+                ARetornoWS.DadosRet.TituloRet.SeuNumero                  := AJSonObject.Values['seuNumero'].AsString;
 
                 if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                    ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
@@ -225,6 +226,8 @@ begin
       try
         AJSon.Parse(RetWS);
 
+        ListaRetorno.JSON:= RetWS;
+
         case HTTPResultCode of
           400, 404 : begin
             if ( AJson.StructType = jsObject ) then
@@ -266,7 +269,7 @@ begin
 
               ListaRetorno.DadosRet.TituloRet.DataRegistro               := DateSicrediToDateTime(AJSonObject.Values['dataemissao'].AsString);
               ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca       := AJSonObject.Values['situacao'].AsString;
-
+              ListaRetorno.DadosRet.TituloRet.SeuNumero                  := AJSonObject.Values['seuNumero'].AsString;
 
               if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                  ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then

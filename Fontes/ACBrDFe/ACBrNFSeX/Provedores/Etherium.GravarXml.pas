@@ -60,7 +60,8 @@ type
 implementation
 
 uses
-  ACBrNFSeXConversao, ACBrXmlBase;
+  ACBrNFSeXConversao,
+  ACBrXmlBase;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

@@ -38,9 +38,12 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2,
-  ACBrNFSeXConversao, ACBrNFSeXConsts;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXGravarXml_ABRASFv2,
+  ACBrNFSeXConversao,
+  ACBrNFSeXConsts;
 
 type
   { TNFSeW_EL }

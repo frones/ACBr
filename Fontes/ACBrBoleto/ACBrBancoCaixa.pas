@@ -584,7 +584,7 @@ var
       end;
 
       // Acertar a quantidade de caracteres
-      Result := PadRight(Result, 200);
+      Result := PadRight(AnsiUpperCase(Result), 200);
 
     end;
   end;
@@ -830,29 +830,29 @@ begin
     Inc(fQtRegLote);
 
     {SEGMENTO S}
-    if (Mensagem.Count > 0) then
-    begin
-      Result := Result + #13#10 +
-                IntToStrZero(ACBrBanco.Numero, 3)                                           + //   1 a 3   - Código do banco
-                '0001'                                                                      + // 004 - 007 / Numero do lote remessa
-                '3'                                                                         + // 008 - 008 / Tipo de registro
-                IntToStrZero(fQtRegLote + 1,5)                                              + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
-                'S'                                                                         + // 014 - 014 / Cód. Segmento do registro detalhe
-                Space(1)                                                                    + // 015 - 015 / Reservado (uso Banco)
-                ATipoOcorrencia                                                             + // 016 - 017 / Código de movimento remessa
-                ifthen( (Mensagem.Count <= 2), '2', '3' )                                   + // 018 - 018 / Identificação da impressão
-                ifthen( (Mensagem.Count <= 2), '00', '' )                                   + // 019 - 020 / Reservado (uso Banco) para tipo de impressão 1 e 2
-                MontarInstrucoes2                                                           + // 019 - 058 / Mensagem 5
-                                                                                              // 059 - 098 / Mensagem 6
-                                                                                              // 099 - 138 / Mensagem 7
-                                                                                              // 139 - 178 / Mensagem 8
-                                                                                              // 179 - 218 / Mensagem 9
-                ifthen( (Mensagem.Count <= 2), '00' + Space(78) ,Space(22));                  // 219 - 240 / Reservado (uso Banco) para tipo de impressão 3
+      if (Mensagem.Count > 0) then
+      begin
+        Result := Result + #13#10 +
+                  IntToStrZero(ACBrBanco.Numero, 3)                                           + //   1 a 3   - Código do banco
+                  '0001'                                                                      + // 004 - 007 / Numero do lote remessa
+                  '3'                                                                         + // 008 - 008 / Tipo de registro
+                  IntToStrZero(fQtRegLote + 1,5)                                              + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+                  'S'                                                                         + // 014 - 014 / Cód. Segmento do registro detalhe
+                  Space(1)                                                                    + // 015 - 015 / Reservado (uso Banco)
+                  ATipoOcorrencia                                                             + // 016 - 017 / Código de movimento remessa
+                  ifthen( (Mensagem.Count <= 2), '2', '3' )                                   + // 018 - 018 / Identificação da impressão
+                  ifthen( (Mensagem.Count <= 2), '00', '' )                                   + // 019 - 020 / Reservado (uso Banco) para tipo de impressão 1 e 2
+                  MontarInstrucoes2                                                           + // 019 - 058 / Mensagem 5
+                                                                                                // 059 - 098 / Mensagem 6
+                                                                                                // 099 - 138 / Mensagem 7
+                                                                                                // 139 - 178 / Mensagem 8
+                                                                                                // 179 - 218 / Mensagem 9
+                  ifthen( (Mensagem.Count <= 2), '00' + Space(78) ,Space(22));                  // 219 - 240 / Reservado (uso Banco) para tipo de impressão 3
 
-      Inc(fQtRegLote);
-    end;                                                                                       // 161 - 240 / Reservado (uso Banco) para tipo de impressão 1 e 2
-    {SEGMENTO S - FIM}
-      end;
+        Inc(fQtRegLote);
+      end;                                                                                       // 161 - 240 / Reservado (uso Banco) para tipo de impressão 1 e 2
+      {SEGMENTO S - FIM}
+   end;
 end;
 
 procedure TACBrCaixaEconomica.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);

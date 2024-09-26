@@ -2278,14 +2278,18 @@ begin
       CodOcorrencia   := StrToIntDef(copy(Linha,109,2),0);
       OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
 
-      if ((CodOcorrencia >= 5) and (CodOcorrencia <= 8)) or
-          (CodOcorrencia = 15) or (CodOcorrencia = 46) then
+
+//      if ((CodOcorrencia >= 5) and (CodOcorrencia <= 8)) or
+//          (CodOcorrencia = 15) or (CodOcorrencia = 46) then
+
+      if( CodOcorrencia in [5..8,15,46] ) then
       begin
         CodigoLiquidacao := copy(Linha,109,2);
         CodigoLiquidacaoDescricao := TipoOcorrenciaToDescricao(OcorrenciaOriginal.Tipo);
       end;
 
-      if(CodOcorrencia >= 2) and ((CodOcorrencia <= 10)) then
+      //if(CodOcorrencia >= 2) and (CodOcorrencia <= 10) then
+      if( CodOcorrencia in [2..10,85,86] ) then
       begin
 
         CodMotivo:= StrToIntDef(Copy(Linha,87,2),0);

@@ -70,10 +70,12 @@ type
     fpDataMovimento: TDateTime;
     fpDescricao: String;
     fpInfoComplementar: String;
+    fpNumeroDocumento: String;
     fpTipoOperacao: TACBrExtratoAPITipoOperacao;
     fpValor: Double;
   public
     procedure Clear;
+    property NumeroDocumento: String read fpNumeroDocumento write fpNumeroDocumento;
     property DataLancamento: TDateTime read fpDataLancamento write fpDataLancamento;
     property DataMovimento: TDateTime read fpDataMovimento write fpDataMovimento;
     property TipoOperacao: TACBrExtratoAPITipoOperacao read fpTipoOperacao write fpTipoOperacao;
@@ -252,6 +254,7 @@ begin
   fpDataMovimento := 0;
   fpDescricao := EmptyStr;
   fpInfoComplementar := EmptyStr;
+  fpNumeroDocumento := EmptyStr;
   fpTipoOperacao := etoNenhum;
   fpValor := 0;
 end;

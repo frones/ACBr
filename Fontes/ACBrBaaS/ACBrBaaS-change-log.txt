@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/09/2024
+-- ACBrExtratoAPI --
+[+] Inclusão da propriedade NumeroDocumento na classe TACBrExtratoLancamento
+    por: Elias César
 
 18/09/2024
 -- ACBrExtratoAPI --

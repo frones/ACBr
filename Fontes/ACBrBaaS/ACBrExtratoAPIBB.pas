@@ -562,6 +562,8 @@ begin
     begin
       with Lancamentos.New do
       begin
+        if NaoEstaZerado(flistaLancamento[i].numeroDocumento) then
+          NumeroDocumento := IntToStr(flistaLancamento[i].numeroDocumento);
         DataLancamento := flistaLancamento[i].dataLancamento;
         DataMovimento := flistaLancamento[i].dataMovimento;
         Valor := flistaLancamento[i].valorLancamento;

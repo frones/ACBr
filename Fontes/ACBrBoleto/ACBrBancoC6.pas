@@ -68,7 +68,7 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
 
     procedure LerRetorno400(ARetorno: TStringList); override;
     procedure LerRetorno240(ARetorno: TStringList); override;
@@ -591,12 +591,13 @@ begin
   end;
 end;
 
-function TACBrBancoC6.CodMotivoRejeicaoToDescricao(
-  const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
+function TACBrBancoC6.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
+  var LCodMotivo : Integer;
 begin
+   LCodMotivo := StrToIntDef(CodMotivo,0);
    case TipoOcorrencia of
       toRetornoRegistroRecusado: //03
-      case CodMotivo  of
+      case LCodMotivo  of
          9000: Result := '9000-Data vencimento menor que o prazo de aceitação do título';
          9001: Result := '9001-Sacado bloqueado por atraso';
          9002: Result := '9002-Registro opcional inválido';
@@ -664,10 +665,10 @@ begin
          9267: Result := '9267-Não é permitido ter juros, multa, abatimento, desconto ou protesto tipo de título fatura de cartão de crédito';
          9999: Result := '9999-Cep do sacado inválido';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoLiquidado: //06
-      case CodMotivo of
+      case LCodMotivo of
          9105: Result := '9105-Crédito retido';
          9210: Result := '9210-Liquidação em cheque';
          9216: Result := '9216-Liquidação no guichê de caixa em dinheiro';
@@ -676,29 +677,29 @@ begin
          9219: Result := '9219-Liquidação por conta';
          9223: Result := '9223-Liquidação por STR';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoLiquidadoEmCartorio: //08
-      case CodMotivo of
+      case LCodMotivo of
          9201: Result:= '9201-Liquidação em cartório';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoBaixaSimples: //09
-      case CodMotivo of
+      case LCodMotivo of
          9202: Result:= '9202-Baixa decurso prazo - banco';
          9237: Result:= '9237-Baixa por outros motivos';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoBaixadoViaArquivo: //10
-      case CodMotivo of
+      case LCodMotivo of
          0000: Result:= '0000-Baixa comandada cliente arquivo';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoAlteracaoDadosRejeitados: //17
-      case CodMotivo of
+      case LCodMotivo of
          9104: Result:= '9104-Impedido pela legislação vigente';
          9113: Result:= '9113-Não permitimos troca de carteira no evento de Alteração de Outros Dados';
          9114: Result:= '9114-Não permitimos troca de tipo titulo no evento de alteração de outros dados';
@@ -721,41 +722,41 @@ begin
          9266: Result:= '9266-Valor não permitido para tipo de título fatura de cartão de crédito';
          9267: Result:= '9267-Não é permitido ter juros, multa, abatimento, desconto ou protesto tipo de título fatura de cartão de crédito';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoBaixaPorProtesto: //32
-      case CodMotivo of
+      case LCodMotivo of
          9203: Result:= '9203-Baixa protestado';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoAlegacaoDoSacado: //35
-      case CodMotivo of
+      case LCodMotivo of
          9238: Result:= '9238-Pagador Rejeita Boleto';
          9239: Result:= '9239-Pagador Aceita Boleto';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoCustasEdital: //36
-      case CodMotivo of
+      case LCodMotivo of
          9207: Result:= '9207-Custas de edital';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoCustasSustacaoJudicial: //37
-      case CodMotivo of
+      case LCodMotivo of
          9208 : Result:= '9208-Custas de sustação de protesto';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoTituloSustadoJudicialmente: //38
-      case CodMotivo of
+      case LCodMotivo of
          0000 : Result:= '0000-Título sustado judicialmente';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoLiquidadoParcialmente: //75
-      case CodMotivo of
+      case LCodMotivo of
          9105: Result:= '9105-Crédito retido';
          9216: Result:= '9216-Liquidação no guichê de caixa em dinheiro';
          9217: Result:= '9217-Liquidação em banco correspondente';
@@ -763,47 +764,47 @@ begin
          9219: Result:= '9219-Liquidação por conta';
          9223: Result:= '9223-Liquidação por STR';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente: //90
-      case CodMotivo of
+      case LCodMotivo of
          9108: Result:= '9108-Título pertence a uma espécie que não pode ser protestada';
          9109: Result:= '9109-Protesto não permitido para título com moeda diferente de real';
          9110: Result:= '9110-Cep do sacado não atendido pelos cartórios cadastrados';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoTarifaExtratoPosicao: //96
-      case CodMotivo of
+      case LCodMotivo of
          9213: Result:= '9213-Tarifa de manutenção de título vencido';
          9222: Result:= '9222-Emissão extrato mov. carteira';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoDespesasSustacaoProtesto: //97
-      case CodMotivo of
+      case LCodMotivo of
          9204: Result:= '9204-Tarifa de sustacao de protesto';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoDespesasProtesto: //98
-      case CodMotivo of
+      case LCodMotivo of
          9205: Result:= '9205-Tarifa de protesto';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
       toRetornoCustasProtesto: //99
-      case CodMotivo of
+      case LCodMotivo of
          9206: Result:= '9206-Custas de protesto';
       else
-         Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+         Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
       end;
    else
-      Result:= '0000'; //IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+      Result:= '0000'; //IntToStrZero(LCodMotivo,2) +' - Outros Motivos';
    end;
 
    if (Result = '0000') then begin
-      case CodMotivo of
+      case LCodMotivo of
          9024: Result:= '9024-Identificação do título inválida';
          9025: Result:= '9025-Ocorrência não permitida pois o título esta baixado';
          9026: Result:= '9026-Ocorrência não permitida pois o título esta liquidado';
@@ -856,7 +857,7 @@ begin
          9107: Result:= '9107-Tamanho máximo do nosso número para cobrança direta é 10 posições + digito(layout padrao matera/bradesco)';
          9224: Result:= '9224-Carteira do Tipo G não pode inserir titulos';
       else
-         Result:= IntToStrZero(CodMotivo, 4) +' - Outros Motivos';
+         Result:= IntToStrZero(LCodMotivo, 4) +' - Outros Motivos';
       end;
    end;
 end;
@@ -970,14 +971,14 @@ begin
       toRetornoBaixaRejeitada, toRetornoInstrucaoRejeitada] then
     begin
       LColunaMotivoRejeicao := 378; // posição da primeira rejeicao
-      for LQtdeMotivosRejeicao := 1 to 3 do
+      for LQtdeMotivosRejeicao := 1 to 4 do
       begin
-        if Copy(LLinha, LColunaMotivoRejeicao, 2)<>'00' then
+        if Copy(LLinha, LColunaMotivoRejeicao, 4)<>'0000' then
         begin
-          LTitulo.MotivoRejeicaoComando.Add(Copy(LLinha, LColunaMotivoRejeicao, 2));
-          LTitulo.DescricaoMotivoRejeicaoComando.add(CodMotivoRejeicaoToDescricao(LTitulo.OcorrenciaOriginal.Tipo,copy(LLinha, LColunaMotivoRejeicao, 2)));
+          LTitulo.MotivoRejeicaoComando.Add(Copy(LLinha, LColunaMotivoRejeicao, 4));
+          LTitulo.DescricaoMotivoRejeicaoComando.add(CodMotivoRejeicaoToDescricao(LTitulo.OcorrenciaOriginal.Tipo,copy(LLinha, LColunaMotivoRejeicao, 4)));
         end;
-        LColunaMotivoRejeicao := LColunaMotivoRejeicao + 2; // incrementa 2 posicoes para próxima rejeicao
+        LColunaMotivoRejeicao := LColunaMotivoRejeicao + 4; // incrementa 4 posicoes para próxima rejeicao
       end;
     end;
 

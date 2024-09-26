@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/09/2024
+-- ACBrDCe.XmlWriter --
+[-] Não estava populando os campos xObs1 e xObs2 ao gerar o XML.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [-] Diversas correções para impressão do DACE, ler o retorno do evento e impressão
     do DAEvento.

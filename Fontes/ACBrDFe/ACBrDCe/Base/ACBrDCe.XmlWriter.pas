@@ -724,6 +724,9 @@ begin
            'legislação. Sob pena de reclusão de 2 (dois) e 5 (cinco) anos, e ' +
            'multa (Lei 8.137/90, Art 1a, V)';
 
+  DCe.infDec.xObs1 := xObs1;
+  DCe.infDec.xObs2 := xObs2;
+
   Result := FDocument.CreateElement('infDec');
 
   Result.AppendChild(AddNode(tcStr, 'ZA02', 'xObs1', 1, 2000, 1, xObs1, ''));

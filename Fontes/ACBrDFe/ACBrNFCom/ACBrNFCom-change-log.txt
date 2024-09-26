@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/09/2024
+-- ACBrNFComWebServices --
+[*] Correção nos códigos dos status na leitura dos retornos da recepção e Eventos.
+   Por: Cleverton Martins
+
 12/09/2024
 -- ACBrNFComWebServices --
 [*] Ajustes na montagem do XML *-ProcEventoNFCom.xml

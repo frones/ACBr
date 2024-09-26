@@ -783,7 +783,7 @@ begin
   end;
 
   // Verificar se a NFCom-e foi autorizada com sucesso
-  Result := (FNFComRetornoSincrono.cStat = 104) and
+  Result := (FNFComRetornoSincrono.cStat = 100) and
     (TACBrNFCom(FPDFeOwner).CstatProcessado(FNFComRetornoSincrono.protNFCom.cStat));
 
   if Result then
@@ -1978,7 +1978,7 @@ begin
   FPMsg := EventoRetorno.retInfEvento.xMotivo;
   FTpAmb := EventoRetorno.retInfEvento.tpAmb;
 
-  Result := (FcStat = 128);
+  Result := (FcStat = 135);
 
   //gerar arquivo proc de evento
 

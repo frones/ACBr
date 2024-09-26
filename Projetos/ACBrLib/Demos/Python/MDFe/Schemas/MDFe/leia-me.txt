@@ -1,0 +1,1 @@
+nesta pasta vai conter os schemas da MDFe

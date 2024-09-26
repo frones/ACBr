@@ -83,7 +83,8 @@ def exibir_menu():
     print("1. Consulta SAT")
     print("2. Criar e Enviar XML")
     print("3. Imprimir Cupom")
-    print("4. Sair")
+    print("4. Consultar Ultima Sessao")
+    print("5. Sair")
     
         
 def opcao1():
@@ -127,6 +128,23 @@ def opcao3():
             print('Erro ao imprimir ',verificar_status_sat())
     else:
         print("O arquivo não existe.",)
+        
+def opcao4():
+    define_bufferResposta(32768)
+    resultado = acbr_lib.SAT_ConsultarUltimaSessaoFiscal(sResposta, ctypes.byref(esTamanho))
+    if resultado == 0:
+        json_string = sResposta.value.decode("utf-8")
+        dados_json = json.loads(json_string)
+        if dados_json['RespostaSat']["CodigoDeRetorno"] == 6000:
+            print("Resultado Ultima Sessão" )
+            print("SAT Emitido com sucesso:",dados_json['RespostaSat']["CodigoDeRetorno"] )
+            print("Número Sessão:",dados_json['RespostaSat']["NumeroSessao"] )
+        else:
+            print("Erro ao Emitir SAT: ",dados_json['RespostaSat']["CodigoDeRetorno"] )
+            print("Número Sessão:",dados_json['RespostaSat']["NumeroSessao"] )
+    else:
+        print('Erro ao consultar ultima sessão fiscal',resultado)
+        
 
 def aguardar_tecla():
     input("Pressione Enter para continuar...")
@@ -144,6 +162,9 @@ while True:
     elif escolha == "3":
         opcao3()
     elif escolha == "4":
+        opcao4()
+        aguardar_tecla()
+    elif escolha == "5":
         print("Saindo...")
         acbr_lib.SAT_Finalizar()
 

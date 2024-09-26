@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 26/09/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6024 - Incluída a cidade de Arceburgo/MG, o provedor é SimplISS.
+[+] #TK-6024 - Incluída a cidade de Monte Santo de Minas/MG, o provedor é EL versão 2.04
+[+] #TK-6024 - Incluída a cidade de Munzambinho/MG, o provedor é eReceita versão 2.02
+[+] #TK-6024 - Incluída a cidade de Cajuru/SP, o provedor é Conam.
+[*] #TK-6024 - A cidade de São José do Rio Pardo/SP, trocou de provedor, agora é GovDigital.
+   Por: Henrique de Souza
 -- ACBrNFSeXGravarXml_ABRASFv2/EloTech.GravarXml/EloTech.LerXml --
 [*] Alterado para gerar as tags Quantidade e ValorUnitario com 5 casas decimais.
   Por: Jaido Mini

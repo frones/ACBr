@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/09/2024
+-- ACBrNFSeXGravarXml_ABRASFv2/EloTech.GravarXml/EloTech.LerXml --
+[*] Alterado para gerar as tags Quantidade e ValorUnitario com 5 casas decimais.
+  Por: Jaido Mini
 -- DeISS.GravarXml/Desenvolve.GravarXml/Digifred.GravarXml --
 -- eGoverneISS.GravarXml/eISS.GravarJson/EL.GravarXml --
 -- Equiplano.GravarXml/eReceita.GravarXml/Etherium.GravarXml --

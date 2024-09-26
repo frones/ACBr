@@ -38,9 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrUtil.Strings,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_Elotech203 }
@@ -57,6 +57,7 @@ type
 implementation
 
 uses
+  ACBrUtil.Strings,
   ACBrNFSeXConsts,
   ACBrNFSeXConversao;
 
@@ -71,6 +72,8 @@ uses
 procedure TNFSeW_Elotech203.Configuracao;
 begin
   inherited Configuracao;
+
+  FormatoAliq := tcDe4;
 
   NrOcorrCodigoMunic_2 := 1;
   NrOcorrOptanteSimplesNacional := -1;
@@ -164,10 +167,10 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#', 'Tributavel', 1, 1, 0,
                  FpAOwner.SimNaoToStr(NFSe.Servico.ItemServico[i].Tributavel)));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'Quantidade', 1, 17, 1,
+    Result[i].AppendChild(AddNode(tcDe5, '#', 'Quantidade', 1, 17, 1,
                                        NFSe.Servico.ItemServico[i].Quantidade));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorUnitario', 1, 17, 1,
+    Result[i].AppendChild(AddNode(tcDe5, '#', 'ValorUnitario', 1, 17, 1,
                                     NFSe.Servico.ItemServico[i].ValorUnitario));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorDesconto', 1, 17, 1,

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/09/2024
+-- GeisWeb.Provider --
+[*] #TK-6016 - Alterações visando a mudança das URLs do provedor GeisWeb.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6016 - Alterado as URLs de todas as cidades atendidas pelo provedor
     GeisWeb.

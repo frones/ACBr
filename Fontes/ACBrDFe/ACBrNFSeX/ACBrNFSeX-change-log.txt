@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 26/09/2024
+-- Bauhaus.GravarJson/Betha.GravarXml/BHISS.GravarXml/Centi.GravarXml --
+-- CIGA.GravarXml/Conam.GravarXml/Coplan.GravarXml/CTA.GravarXml --
+-- CTAConsult.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
 -- GeisWeb.Provider --
 [*] #TK-6016 - Alterações visando a mudança das URLs do provedor GeisWeb.
    Por: Italo Giurizzato Junior

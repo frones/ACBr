@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6016 - Alterado as URLs de todas as cidades atendidas pelo provedor
+    GeisWeb.
+   Por: ES System
+[+] #TK-6015 - Incluída a cidade de Corrego Fundo/MG, o provedor é NFSeBrasil.
+   Por: João Antônio
+
 25/09/2024
 -- Actcon.GravarXml/Adm.GravarXml/AEG.GravarXml/Asten.GravarXml --
 -- ISSCampinas.GravarXml --

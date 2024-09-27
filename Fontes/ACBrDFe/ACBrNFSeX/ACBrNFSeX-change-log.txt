@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/09/2024
+-- Fiorilli.GravarXML --
+[*] #TK-6033: Altera o número de ocorrências do código país tomador para tornar opcional
+   Por: Matheus Faria
 -- ACBrNFSeXServicos --
 [+] #TK-6026 - Incluída a cidade de Guarani/MG, o provedor é Futurize.
    Por: Everson Clei

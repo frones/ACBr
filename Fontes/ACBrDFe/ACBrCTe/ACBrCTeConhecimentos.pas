@@ -3933,7 +3933,7 @@ begin
 
       moCTeSimp:
         begin
-          P := pos('</cteSimpProc>', XMLStr);
+          P := pos('</cteProcSimp>', XMLStr);
 
           if P <= 0 then
             P := pos('</procCTeSimp>', XMLStr);  // CTe obtido pelo Portal da Receita

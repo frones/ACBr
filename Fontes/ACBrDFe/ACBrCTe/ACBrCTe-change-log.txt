@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+26/09/2024
+-- ACBrCTeConhecimentos/pcteProcCTe --
+[-] Correção para ocorrer a união entre o XML do CT-e Simplificado com o
+    retorno que contem o protocolo de autorização.
+   Por: Italo Giurizzato Junior
+
 26/09/2024
 -- ACBrCTeServicos --
 [+] #TK-6020: Incluída as URLs de produção e homologação de recepção do 

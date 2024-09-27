@@ -134,12 +134,10 @@ var
   XMLCTe: TStringList;
   XMLinfProt: TStringList;
   XMLinfProt2: TStringList;
-  wCstat: String;
-  xProtCTe: String;
-  xId: String;
+  wCstat,xProtCTe,xId, aXML: string;
   LocLeitor: TLeitor;
   i: Integer;
-  ProtLido: Boolean; // Protocolo lido do Arquivo
+  ProtLido, bCTeSimp: Boolean; // Protocolo lido do Arquivo
   Modelo: Integer;
 begin
   XMLCTe      := TStringList.Create;
@@ -302,10 +300,29 @@ begin
           end;
       else  // CTe
         begin
-          Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
-          Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>') + '</CTe>');
-          Gerador.wTexto(FXML_prot);
-          Gerador.wGrupo('/cteProc');
+          aXML := RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>');
+          bCTeSimp := False;
+
+          if aXML = '' then
+          begin
+            aXML := RetornarConteudoEntre(FXML_CTe, '<CTeSimp xmlns', '</CTeSimp>');
+            bCTeSimp := True;
+          end;
+
+          if bCTeSimp then
+          begin
+            Gerador.wGrupo('cteProcSimp versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+            Gerador.wTexto('<CTeSimp xmlns' + aXML + '</CTeSimp>');
+            Gerador.wTexto(FXML_prot);
+            Gerador.wGrupo('/cteProcSimp');
+          end
+          else
+          begin
+            Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+            Gerador.wTexto('<CTe xmlns' + aXML + '</CTe>');
+            Gerador.wTexto(FXML_prot);
+            Gerador.wGrupo('/cteProc');
+          end;
         end;
       end;
     end;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/09/2024
+-- pmdfeMDFeR --
+[-] Corrigido a posição da linha que faz a leitura da tag indPrestacaoParcial.
+  Por: Silvania
+
 18/09/2024
 -- ACBrMDFe.ProcInfraSA --
 [+] Nova unit que contem a classe InfraSA que consta no retorno da consulta.

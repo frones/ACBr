@@ -266,13 +266,8 @@ end;
 
 procedure TBoletoW_Itau_API.DefinirKeyUser;
 begin
-  if Boleto.Cedente.CedenteWS.IndicadorPix and Assigned(ATitulo) then
-      FPKeyUser := 'x-itau-correlationID: ' + Boleto.Cedente.CedenteWS.ClientID
-  else
-  begin
-    FPHeaders.Add('x-itau-apikey: ' + Boleto.Cedente.CedenteWS.ClientID);
-    FPHeaders.Add('x-itau-correlationID: ' + Boleto.Cedente.CedenteWS.ClientID);
-  end;
+  FPHeaders.Add('x-itau-apikey: ' + Boleto.Cedente.CedenteWS.ClientID);
+  FPHeaders.Add('x-itau-correlationID: ' + Boleto.Cedente.CedenteWS.ClientID);
 end;
 
 function TBoletoW_Itau_API.DefinirParametros: String;

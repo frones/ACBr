@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/09/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6026 - Incluída a cidade de Guarani/MG, o provedor é Futurize.
+   Por: Everson Clei
+[+] #TK-6031 - Incluída a cidade de Turvo/PR, o provedor é Equiplano.
+   Por: Anderson Grolli
+[*] #TK-6032 - A cidade de Ituporanga/SC mudou a URL, o provedor continua o mesmo.
+   Por: Prime Software
+[*] #TK-6030 - A cidade de Xangri-Lá/RS mudou a URL, o provedor continua o mesmo.
+   Por: Igor AcertSoft
+
 26/09/2024
 -- ACBrNFSeXServicos --
 [+] #TK-6024 - Incluída a cidade de Arceburgo/MG, o provedor é SimplISS.

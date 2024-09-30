@@ -1031,13 +1031,14 @@ begin
         begin
           SLRetorno := TStringList.Create;
           try
+            i := 0;
             SLRetorno.Add('Cod_Retorno='+ Retorno[i].CodRetorno + sLineBreak +
                                'Msg_Retorno='+ Retorno[i].MsgRetorno + sLineBreak +
                                'Ori_Retorno='+ Retorno[i].OriRetorno + sLineBreak +
                                'HTTP_Result='+ IntToStr(Retorno[i].HTTPResultCode) + sLineBreak +
                                'JSON='+ Retorno[i].JSON);
-            SLRetorno.Add('indicadorContinuidade=' + BoolToStr(Retorno[0].indicadorContinuidade));
-            SLRetorno.Add('proximoIndice=' + IntToStr(Retorno[0].proximoIndice));
+            SLRetorno.Add('indicadorContinuidade=' + BoolToStr(Retorno[i].indicadorContinuidade));
+            SLRetorno.Add('proximoIndice=' + IntToStr(Retorno[i].proximoIndice));
             SLRetorno.Add(' ');
             SLRetorno.Add(' ');
             for I := 0 to Pred(Retorno.Count) do
@@ -1072,6 +1073,7 @@ begin
       begin
         if Boleto.TotalListaRetornoWeb > 0 then
         begin
+          i := 0;
           RetornoDetalhe := Boleto.ListaRetornoWeb[i];
           SLRetorno := TStringList.Create;
           try

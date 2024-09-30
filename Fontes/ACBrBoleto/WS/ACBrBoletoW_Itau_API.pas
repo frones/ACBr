@@ -853,9 +853,12 @@ begin
         case ATitulo.CodigoMoraJuros of
           cjValorDia:
             ATitulo.CodigoMora := '93';
+          cjValorMensal:
+            raise EACBrBoletoWSException.Create
+              (ACBrStr('Não é permitido cjValorMensal na propriedade ValorMoraJuros para este Banco'));
           cjTaxaDiaria:
             ATitulo.CodigoMora := '91';
-          cjValorMensal:
+          cjTaxaMensal:
             ATitulo.CodigoMora := '90';
           cjIsento:
             ATitulo.CodigoMora := '05';

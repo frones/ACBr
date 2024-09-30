@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2024
+-- ACBrBoletoW_Itau_API --
+[*] TK-5969 Verificado enumerado jurosMora
+	por Victor Gonzales Pandaaaa 
+
 25/09/2024
 -- ACBrBoletoW_Sicredi_APIV2 --
 [-] TK-6009 Corrigido nome da propriedade conforme manual valorOuPercentual

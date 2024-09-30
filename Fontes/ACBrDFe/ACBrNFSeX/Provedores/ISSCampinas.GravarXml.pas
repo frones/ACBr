@@ -71,8 +71,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings, ACBrUtil.Math,
-  ACBrDFeUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
   ACBrNFSeXConsts,
   ACBrNFSeXConversao;
 

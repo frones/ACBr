@@ -39,7 +39,8 @@ interface
 uses
   SysUtils, Classes, StrUtils,
   ACBrXmlBase,
-  ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv2,
+  ACBrNFSeXConversao;
 
 type
   { TNFSeW_ISSJoinville204 }

@@ -38,9 +38,12 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2,
-  ACBrNFSeXConversao, ACBrNFSeXConsts;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXGravarXml_ABRASFv2,
+  ACBrNFSeXConversao,
+  ACBrNFSeXConsts;
 
 type
   { TNFSeW_IPM }
@@ -91,8 +94,7 @@ implementation
 
 uses
   ACBrUtil.Strings,
-  ACBrUtil.DateTime,
-  ACBrNFSeX;
+  ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

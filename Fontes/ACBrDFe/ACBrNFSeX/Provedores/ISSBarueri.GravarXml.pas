@@ -38,9 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, MaskUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXInterface, ACBrNFSeXWebserviceBase,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao, ACBrNFSeXConsts;
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXConversao;
 
 type
   { Provedor com layout próprio }

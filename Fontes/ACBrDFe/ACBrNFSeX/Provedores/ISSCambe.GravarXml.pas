@@ -38,8 +38,10 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXConversao, ACBrNFSeXConsts, ACBrNFSeXGravarXml;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml;
 
 type
   { TNFSeW_ISSCambe }

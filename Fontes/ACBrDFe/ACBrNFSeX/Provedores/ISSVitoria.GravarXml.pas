@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_ISSVitoria200 }

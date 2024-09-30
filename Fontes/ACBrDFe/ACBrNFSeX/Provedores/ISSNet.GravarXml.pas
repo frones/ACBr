@@ -38,9 +38,10 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros,
-  ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml_ABRASFv1,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_ISSNet }

@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 30/09/2024
+-- iiBrasil.GravarXml/Infisc.GravarXml/IPM.GravarXml/ISSBarueri.GravarXml --
+-- ISSCambe.GravarXml/ISSCampinas.GravarXml/ISSCuritiba.GravarXml/ISSDigital.GravarXml --
+-- ISSDSF.GravarXml/ISSe.GravarXml/ISSGoiania.GravarXml/ISSJoinville.GravarXml --
+-- ISSLencois.GravarXml/ISSNet.GravarXml/ISSPortoVelho.GravarXml/ISSRecife.GravarXml --
+-- ISSRio.GravarXml/ISSSalvador.GravarXml/ISSSaoPaulo.GravarXml --
+-- ISSSJP.GravarXml/ISSVitoria.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6027 - A cidade de Itu/SP vai mudar para o provedor Giss.
     A data prevista é 31/10/2024, já se enconta no arquivo INI a nova URL comentada.

@@ -38,8 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, synacode,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml;
 
 type
   { TNFSeW_ISSDSF }
@@ -61,8 +62,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings, ACBrUtil.Math,
-  ACBrDFeUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
   ACBrNFSeXConsts,
   ACBrNFSeXConversao;
 

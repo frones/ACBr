@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv1,
+  ACBrNFSeXConversao;
 
 type
   { TNFSeW_ISSSalvador }

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2024
+-- ACBrDANFCeFortesFrA4 --
+[*] #TK-6029: Ajuste para compatibilizar com os demais impressos a lógica para vTotTrib, vTribFed, vTribEst e vTribMun.
+   Por: Diego Folieni
+
 20/09/2024
 -- ACBrNFe.EnvEvento --
 [*] Ajuste na forma como é lido a informação idLote em LerFromIni visando compatibilização com o tipo da propriedade.

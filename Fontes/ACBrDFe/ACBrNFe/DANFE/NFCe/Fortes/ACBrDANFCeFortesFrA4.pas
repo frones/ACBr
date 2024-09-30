@@ -962,9 +962,16 @@ begin
   sTemp := '';
   with FACBrNFeDANFCeFortesA4 do
   begin
-    if ( FpNFe.Total.ICMSTot.vTotTrib > 0 ) then
+    if (ImprimeTributos = trbSeparadamente) and ((vTribFed+vTribEst+vTribMun) > 0) then
+    begin
       sTemp := ACBrStr('Informação dos Tributos Totais (Lei Federal 12.741/2012 ) ')+
-                FormatFloatBr( FpNFe.Total.ICMSTot.vTotTrib, 'R$ ,0.00');
+               FormatFloatBr(vTribFed+vTribEst+vTribMun, 'R$ ,0.00');
+    end else
+    begin
+      if ( FpNFe.Total.ICMSTot.vTotTrib > 0 ) then
+        sTemp := ACBrStr('Informação dos Tributos Totais (Lei Federal 12.741/2012 ) ')+
+                  FormatFloatBr( FpNFe.Total.ICMSTot.vTotTrib, 'R$ ,0.00');
+    end;
     if Trim(FonteTributos) <> '' then
       sTemp := sTemp + 'Fonte : ' + FonteTributos+'  '+ ChaveTributos+' ';
   end;

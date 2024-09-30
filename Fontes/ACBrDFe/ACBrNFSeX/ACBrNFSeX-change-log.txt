@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/09/2024
+-- fintelISS.GravarXml/Fiorilli.GravarXml/Fisco.GravarXml/Futurize.GravarXml --
+-- GeisWeb.GravarXml/GestaoISS.GravarXml/Giap.GravarXml/Ginfes.GravarXml --
+-- Giss.GravarXml/GovDigital.GravarXml/Governa.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
+
 27/09/2024
 -- Fiorilli.GravarXML --
 [*] #TK-6033: Altera o número de ocorrências do código país tomador para tornar opcional

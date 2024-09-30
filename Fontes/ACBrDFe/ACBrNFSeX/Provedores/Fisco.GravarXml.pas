@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_Fisco203 }

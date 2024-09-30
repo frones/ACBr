@@ -37,8 +37,8 @@ unit GestaoISS.GravarXml;
 interface
 
 uses
-  SysUtils, Classes, StrUtils, ACBrXmlBase,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2,
+  SysUtils, Classes, StrUtils,
+  ACBrNFSeXGravarXml_ABRASFv2,
   ACBrNFSeXConversao;
 
 type

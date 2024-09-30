@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_Futurize202 }

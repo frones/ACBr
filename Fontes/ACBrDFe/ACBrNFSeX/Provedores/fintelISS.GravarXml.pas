@@ -38,8 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_fintelISS200 }
@@ -68,7 +69,6 @@ implementation
 
 uses
   ACBrUtil.Strings,
-  ACBrNFSeXConversao,
   ACBrNFSeXConsts;
 
 //==============================================================================

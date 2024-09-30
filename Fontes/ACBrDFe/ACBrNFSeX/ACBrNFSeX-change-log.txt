@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 30/09/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6027 - A cidade de Itu/SP vai mudar para o provedor Giss.
+    A data prevista é 31/10/2024, já se enconta no arquivo INI a nova URL comentada.
+   Por: Carlos Júnior
+[+] #TK-6034 - Incluída a cidade de Carnaubal/CE, o provedor é SpeedGov.
+   Por: Luiz Vaz
 -- fintelISS.GravarXml/Fiorilli.GravarXml/Fisco.GravarXml/Futurize.GravarXml --
 -- GeisWeb.GravarXml/GestaoISS.GravarXml/Giap.GravarXml/Ginfes.GravarXml --
 -- Giss.GravarXml/GovDigital.GravarXml/Governa.GravarXml --

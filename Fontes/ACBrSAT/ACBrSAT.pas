@@ -1649,7 +1649,7 @@ begin
       INIRec.WriteInteger('Identificacao', 'mod', ide.modelo);
       INIRec.WriteInteger('Identificacao', 'nserieSAT', ide.nserieSAT);
       INIRec.WriteInteger('Identificacao', 'nCFe', ide.nCFe);
-      INIRec.WriteDate('Identificacao', 'dhEmi', ide.dEmi);
+      INIRec.WriteDateTime('Identificacao', 'dhEmi', ide.dEmi + ide.hEmi);
       INIRec.WriteInteger('Identificacao', 'cDV', ide.cDV);
       INIRec.WriteString('Identificacao', 'tpAmb', TpAmbToStr(ide.tpAmb));
 

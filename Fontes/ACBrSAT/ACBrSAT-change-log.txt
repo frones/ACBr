@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/09/2024
+[*] #TK-6037 - AcbrLibSat - falha função ObterCFe em devolver hora emissão Sat
+   Ajuste na função GerarCFeIni para obter data e hora do CFe.
+   Por: Antonio Carlos Junior
+
 24/06/2024
 [+]TK-4935 Adiciona método gera um arquivo INI com as informações da classe do CFe
   Por: Antônio Carlos / Diego Folieni

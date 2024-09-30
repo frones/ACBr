@@ -54,6 +54,7 @@ unit ACBr_fpdf;
 
 {$IfDef POSIX}
   {$IfDef LINUX}
+    {$Define CONVERT_TO_ANSI}
     {$Define USE_UTF8}
   {$EndIf}
   {$Define FMX}
@@ -301,6 +302,7 @@ type
     function _isascii(const AString: String): Boolean;
     function _EncodeText(const AString: String): String;
     function _UTF8encode(const AString: String): String;
+    function _ANSIencode(const AText: String): AnsiString;
     function _UTF8toUTF16(const AString: String): WideString;
 
     function _escape(const sText: AnsiString): AnsiString;
@@ -2434,6 +2436,27 @@ begin
   end;
 end;
 
+function TFPDF._ANSIencode(const AText: String): AnsiString;
+{$IFNDEF FPC}
+ {$IFDEF UNICODE}
+  var
+    RBS: RawByteString;
+ {$ENDIF}
+{$ENDIF}
+begin
+ {$IFNDEF FPC}
+   {$IFDEF UNICODE}
+     RBS := UTF8Encode(AText);
+     SetCodePage(RBS, 1252, True);
+     Result := AnsiString(RBS);
+   {$ELSE}
+     Result := Utf8ToAnsi(AText)
+   {$ENDIF}
+ {$ELSE}
+   Result := Utf8ToAnsi(AText)
+ {$ENDIF}
+end;
+
 function TFPDF._UTF8toUTF16(const AString: String): WideString;
 begin
   Result := WideString(AString);
@@ -2788,10 +2811,18 @@ begin
 end;
 
 procedure TFPDF._out(const AData: AnsiString);
+var
+  s: AnsiString;
 begin
+  {$IfDef CONVERT_TO_ANSI}
+   s := _ANSIencode(String(AData));
+  {$Else}
+   s := AData;
+  {$EndIf}
+
   // Add a line to the current page
   case Self.state of
-    2: Self.pages[Self.page-1] := Self.pages[Self.page-1] + AData + LF;
+    2: Self.pages[Self.page-1] := Self.pages[Self.page-1] + s + LF;
     0: Error('No page has been added yet');
     1: Error('Invalid call');
     3: Error('The document is closed');
@@ -3434,9 +3465,27 @@ end;
 {%region Utility Functions}
 
 function TFPDF.ConvertTextToAnsi(const AText: String): String;
+{$IFNDEF FPC}
+ {$IFDEF UNICODE}
+  var
+    RBS: RawByteString;
+ {$ENDIF}
+{$ENDIF}
 begin
   if Self.UseUTF8 then
-    Result := Utf8ToAnsi(AText)
+  begin
+   {$IFNDEF FPC}
+     {$IFDEF UNICODE}
+       RBS := UTF8Encode(AText);
+       SetCodePage(RBS, 1252, True);
+       Result := RBS;
+     {$ELSE}
+       Result := Utf8ToAnsi(AText)
+     {$ENDIF}
+   {$ELSE}
+     Result := Utf8ToAnsi(AText)
+   {$ENDIF}
+  end
   else
     Result := AText;
 end;

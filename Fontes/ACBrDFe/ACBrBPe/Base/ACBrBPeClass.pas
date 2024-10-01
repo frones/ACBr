@@ -845,7 +845,7 @@ begin
   Ftotal       := Ttotal.Create;
 
   FSignature   := TSignature.create;
-  FProcBPe    := TProcDFe.Create('1.00', NAME_SPACE_BPe, 'BPe');
+  FProcBPe    := TProcDFe.Create('1.00', NAME_SPACE_BPe, 'bpeProc', 'BPe');
 
 //  FinfBPe.Versao := 0;
 end;

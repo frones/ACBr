@@ -762,7 +762,7 @@ begin
           BPe.procBPe.digVal   := FBPeRetorno.protBPe.digVal;
           BPe.procBPe.xMotivo  := FBPeRetorno.protBPe.xMotivo;
 
-          AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'BPe');
+          AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'bpeProc', 'BPe');
           try
             // Processando em UTF8, para poder gravar arquivo corretamente //
             AProcBPe.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
@@ -869,7 +869,7 @@ begin
   if Assigned(FprocEventoBPe) then
     FprocEventoBPe.Free;
 
-  FprotBPe       := TProcDFe.Create('1.00', NAME_SPACE_BPE, 'BPe');
+  FprotBPe       := TProcDFe.Create('1.00', NAME_SPACE_BPE, 'bpeProc', 'BPe');
   FprocEventoBPe := TRetEventoBPeCollection.Create;
 end;
 
@@ -1187,7 +1187,7 @@ begin
                 BPe.procBPe.xMotivo := BPeRetorno.xMotivo;
 
                 // O código abaixo é bem mais rápido que "GerarXML" (acima)...
-                AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'BPe');
+                AProcBPe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_BPE, 'bpeProc', 'BPe');
                 try
                   AProcBPe.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                   AProcBPe.XML_Prot := NativeStringToUTF8(BPeRetorno.XMLprotBPe);

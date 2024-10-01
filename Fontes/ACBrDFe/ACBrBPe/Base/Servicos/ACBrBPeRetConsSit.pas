@@ -152,7 +152,7 @@ constructor TRetConsSitBPe.Create;
 begin
   inherited Create;
 
-  FprotBPe := TProcDFe.Create(Versao, NAME_SPACE_BPe, 'BPe');
+  FprotBPe := TProcDFe.Create(Versao, NAME_SPACE_BPe, 'bpeProc', 'BPe');
 end;
 
 destructor TRetConsSitBPe.Destroy;

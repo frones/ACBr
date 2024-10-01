@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2024
+-- ACBrNFe.RetConsSit --
+[*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc
+   Por: Italo Giurizzato Junior
+
 30/09/2024
 -- ACBrDANFCeFortesFrA4 --
 [*] #TK-6029: Ajuste para compatibilizar com os demais impressos a lógica para vTotTrib, vTribFed, vTribEst e vTribMun.

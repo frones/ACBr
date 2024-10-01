@@ -47,6 +47,7 @@ type
     FpVersao: string;
     FpNameSpace: string;
     FptagGrupo: string;
+    FptagDFe: string;
 
     FPathDFe: string;
     FPathRetConsReciDFe: string;
@@ -68,7 +69,7 @@ type
     FXML_DFe: string;
     FXML_prot: string;
   public
-    constructor Create(const AVersao, ANameSpace, AtagGrupo: string);
+    constructor Create(const AVersao, ANameSpace, AtagGrupo, AtagDFe: string);
     destructor Destroy; override;
 
     procedure Assign(Source: TProcDFe);
@@ -106,13 +107,14 @@ uses
 
 { TProcDFe }
 
-constructor TProcDFe.Create(const AVersao, ANameSpace, AtagGrupo: string);
+constructor TProcDFe.Create(const AVersao, ANameSpace, AtagGrupo, AtagDFe: string);
 begin
   inherited Create;
 
   FpVersao := AVersao;
   FpNameSpace := ANameSpace;
   FptagGrupo := AtagGrupo;
+  FptagDFe := AtagDFe;
 
   FnProt   := '';
 end;
@@ -161,7 +163,7 @@ begin
       else
         XMLDFe.LoadFromFile(PathDFe);
 
-      chDFe := RetornarConteudoEntre(XMLDFe.Text, 'Id="' + FptagGrupo, '"');
+      chDFe := RetornarConteudoEntre(XMLDFe.Text, 'Id="' + FptagDFe, '"');
 
       if trim(chDFe) = '' then
         raise Exception.Create('Numero da chave da DFe:' + ERR_MSG_VAZIO);
@@ -192,11 +194,11 @@ begin
 
             if ANode <> nil then
             begin
-              ANodes := ANode.Childrens.FindAllAnyNs('prot' + FptagGrupo);
+              ANodes := ANode.Childrens.FindAllAnyNs('prot' + FptagDFe);
 
               for i := 0 to Length(ANodes) - 1 do
               begin
-                if ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('ch' + FptagGrupo), tcStr) = chDFe then
+                if ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('ch' + FptagDFe), tcStr) = chDFe then
                   nProt := ObterConteudoTag(ANodes[i].Childrens.FindAnyNs('nProt'), tcStr);
 
                 if Trim(nProt) = '' then
@@ -237,11 +239,11 @@ begin
 
           nProtLoc := RetornarConteudoEntre(XMLinfProt2.text, '<nProt>', '</nProt>');
 
-          xProtDFe := '<prot' + FptagGrupo + ' versao="' + FpVersao + '">' +
+          xProtDFe := '<prot' + FptagDFe + ' versao="' + FpVersao + '">' +
                        '<infProt Id="ID'+ nProtLoc +'">'+
                         PreencherTAG('tpAmb', XMLinfProt.text) +
                         PreencherTAG('verAplic', XMLinfProt.text) +
-                        PreencherTAG('ch' + FptagGrupo, XMLinfProt.text) +
+                        PreencherTAG('ch' + FptagDFe, XMLinfProt.text) +
                         PreencherTAG('dhRecbto', XMLinfProt2.text) +
                         PreencherTAG('nProt', XMLinfProt2.text) +
                         PreencherTAG('digVal', XMLinfProt.text) +
@@ -250,7 +252,7 @@ begin
                         PreencherTAG('cMsg', XMLinfProt.text) +
                         PreencherTAG('xMsg', XMLinfProt.text) +
                        '</infProt>' +
-                      '</prot' + FptagGrupo + '>';
+                      '</prot' + FptagDFe + '>';
         end;
       end;
 
@@ -261,11 +263,11 @@ begin
         else
           xUF := Copy(verAplic, 1, 2);
 
-        xProtDFe := '<prot' + FptagGrupo + ' versao="' + FPVersao + '">' +
+        xProtDFe := '<prot' + FptagDFe + ' versao="' + FPVersao + '">' +
                       '<infProt Id="' + 'ID' + nProt + '">' +
                         '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
                         '<verAplic>' + verAplic + '</verAplic>' +
-                        '<ch' + FptagGrupo + '>' + chDFe + '</ch' + FptagGrupo + '>' +
+                        '<ch' + FptagDFe + '>' + chDFe + '</ch' + FptagDFe + '>' +
                         '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', dhRecbto) +
                                        GetUTC(xUF, dhRecbto) +
                         '</dhRecbto>'+
@@ -276,7 +278,7 @@ begin
                         '<cMsg>' + IntToStr(cMsg) + '</cMsg>' +
                         '<xMsg>' + xMsg + '</xMsg>' +
                       '</infProt>' +
-                    '</prot' + FptagGrupo + '>';
+                    '</prot' + FptagDFe + '>';
       end;
 
       XML_DFe := XMLDFe.Text;
@@ -285,13 +287,13 @@ begin
 
     // Gerar arquivo
     if (XML_DFe <> '') and (XML_prot <> '') then
-      Result := '<' + LowerCase(FptagGrupo) + 'Proc ' + FpNameSpace + ' versao="' + FpVersao + '">' +
-                  '<' + FptagGrupo + ' xmlns' +
-                    RetornarConteudoEntre(FXML_DFe, '<' + FptagGrupo + ' xmlns',
-                                                    '</' + FptagGrupo + '>') +
-                  '</' + FptagGrupo + '>' +
+      Result := '<' + FptagGrupo + ' ' + FpNameSpace + ' versao="' + FpVersao + '">' +
+                  '<' + FptagDFe + ' xmlns' +
+                    RetornarConteudoEntre(FXML_DFe, '<' + FptagDFe + ' xmlns',
+                                                    '</' + FptagDFe + '>') +
+                  '</' + FptagDFe + '>' +
                   XML_prot +
-                '</' + LowerCase(FptagGrupo) + 'Proc>'
+                '</' + FptagGrupo + '>'
     else
       Result := '';
   finally

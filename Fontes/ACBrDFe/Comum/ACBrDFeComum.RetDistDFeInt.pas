@@ -855,6 +855,8 @@ begin
 
   try
     try
+      Result := False;
+
       if XmlRetorno = '' then Exit;
 
       XML := XmlRetorno;

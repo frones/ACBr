@@ -44,7 +44,8 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  ACbrNFComProc, ACBrNFComRetEnvEvento;
+  ACBrDFeComum.Proc,
+  ACBrNFComRetEnvEvento;
 
 type
 
@@ -76,7 +77,7 @@ type
     FcUF: Integer;
     FdhRecbto: TDateTime;
     FchNFCom: string;
-    FprotNFCom: TProcNFCom;
+    FprotNFCom: TProcDFe;
     FprocEventoNFCom: TRetEventoNFComCollection;
     FnRec: string;
     FXMLprotNFCom: string;
@@ -96,7 +97,7 @@ type
     property cUF: Integer read FcUF write FcUF;
     property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property chNFCom: string read FchNFCom write FchNFCom;
-    property protNFCom: TProcNFCom read FprotNFCom write FprotNFCom;
+    property protNFCom: TProcDFe read FprotNFCom write FprotNFCom;
     property procEventoNFCom: TRetEventoNFComCollection read FprocEventoNFCom write FprocEventoNFCom;
     property nRec: string read FnRec write FnRec;
     property XMLprotNFCom: string read FXMLprotNFCom write FXMLprotNFCom;
@@ -151,7 +152,7 @@ constructor TRetConsSitNFCom.Create;
 begin
   inherited Create;
 
-  FprotNFCom := TProcNFCom.create;
+  FprotNFCom := TProcDFe.Create('', '', '', '');
 end;
 
 destructor TRetConsSitNFCom.Destroy;
@@ -215,7 +216,7 @@ begin
                   protNFCom.Id := ObterConteudoTag(ANodeAux.Attributes.Items['Id']);
                   protNFCom.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
                   protNFCom.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
-                  protNFCom.chNFCom := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
+                  protNFCom.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFCom'), tcStr);
                   protNFCom.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
                   protNFCom.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
                   protNFCom.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);

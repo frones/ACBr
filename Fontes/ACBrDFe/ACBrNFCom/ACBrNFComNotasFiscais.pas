@@ -1133,7 +1133,7 @@ begin
       sSecao := 'procNFCom';
       INIRec.WriteString(sSecao, 'tpAmb', TipoAmbienteToStr(procNFCom.tpAmb));
       INIRec.WriteString(sSecao, 'verAplic', procNFCom.verAplic);
-      INIRec.WriteString(sSecao, 'chNFCom', procNFCom.chNFCom);
+      INIRec.WriteString(sSecao, 'chNFCom', procNFCom.chDFe);
       INIRec.WriteString(sSecao, 'dhRecbto', DateTimeToStr(procNFCom.dhRecbto));
       INIRec.WriteString(sSecao, 'nProt', procNFCom.nProt);
       INIRec.WriteString(sSecao, 'digVal', procNFCom.digVal);

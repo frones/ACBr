@@ -764,7 +764,7 @@ begin
   // Consta no Retorno da NFC-e
   FRecibo := FNFComRetornoSincrono.nRec;
   FcUF := FNFComRetornoSincrono.cUF;
-  chNFCom := FNFComRetornoSincrono.ProtNFCom.chNFCom;
+  chNFCom := FNFComRetornoSincrono.ProtNFCom.chDFe;
 
   if (FNFComRetornoSincrono.protNFCom.cStat > 0) then
     FcStat := FNFComRetornoSincrono.protNFCom.cStat
@@ -804,13 +804,13 @@ begin
           NFCom.procNFCom.cStat := FNFComRetornoSincrono.protNFCom.cStat;
           NFCom.procNFCom.tpAmb := FNFComRetornoSincrono.tpAmb;
           NFCom.procNFCom.verAplic := FNFComRetornoSincrono.verAplic;
-          NFCom.procNFCom.chNFCom := FNFComRetornoSincrono.ProtNFCom.chNFCom;
+          NFCom.procNFCom.chDFe := FNFComRetornoSincrono.ProtNFCom.chDFe;
           NFCom.procNFCom.dhRecbto := FNFComRetornoSincrono.protNFCom.dhRecbto;
           NFCom.procNFCom.nProt := FNFComRetornoSincrono.ProtNFCom.nProt;
           NFCom.procNFCom.digVal := FNFComRetornoSincrono.protNFCom.digVal;
           NFCom.procNFCom.xMotivo := FNFComRetornoSincrono.protNFCom.xMotivo;
 
-          AProcNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');
+          AProcNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFComProc', 'NFCom');
           try
             // Processando em UTF8, para poder gravar arquivo corretamente //
             AProcNFCom.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
@@ -1308,7 +1308,7 @@ begin
   if Assigned(FprocEventoNFCom) then
     FprocEventoNFCom.Free;
 
-  FprotNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');
+  FprotNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFComProc', 'NFCom');
   FprocEventoNFCom := TRetEventoNFComCollection.Create;
 end;
 
@@ -1471,12 +1471,12 @@ begin
 
     // <protNFCom> - Retorno dos dados do ENVIO da NFCom-e
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotNFCom.PathDFe := NFComRetorno.protNFCom.PathNFCom;
-    FprotNFCom.PathRetConsReciDFe := NFComRetorno.protNFCom.PathRetConsReciNFCom;
-    FprotNFCom.PathRetConsSitDFe := NFComRetorno.protNFCom.PathRetConsSitNFCom;
+    FprotNFCom.PathDFe := NFComRetorno.protNFCom.PathDFe;
+    FprotNFCom.PathRetConsReciDFe := NFComRetorno.protNFCom.PathRetConsReciDFe;
+    FprotNFCom.PathRetConsSitDFe := NFComRetorno.protNFCom.PathRetConsSitDFe;
     FprotNFCom.tpAmb := NFComRetorno.protNFCom.tpAmb;
     FprotNFCom.verAplic := NFComRetorno.protNFCom.verAplic;
-    FprotNFCom.chDFe := NFComRetorno.protNFCom.chNFCom;
+    FprotNFCom.chDFe := NFComRetorno.protNFCom.chDFe;
     FprotNFCom.dhRecbto := NFComRetorno.protNFCom.dhRecbto;
     FprotNFCom.nProt := NFComRetorno.protNFCom.nProt;
     FprotNFCom.digVal := NFComRetorno.protNFCom.digVal;
@@ -1637,7 +1637,7 @@ begin
                   NFCom.procNFCom.digVal := NFComRetorno.protNFCom.digVal;
                   NFCom.procNFCom.cStat := NFComRetorno.cStat;
                   NFCom.procNFCom.xMotivo := NFComRetorno.xMotivo;
-                  NFCom.procNFCom.Versao := NFComRetorno.protNFCom.Versao;
+//                  NFCom.procNFCom.Versao := NFComRetorno.protNFCom.Versao;
 
                   GerarXML;
                 end
@@ -1645,16 +1645,16 @@ begin
                 begin
                   NFCom.procNFCom.tpAmb := NFComRetorno.protNFCom.tpAmb;
                   NFCom.procNFCom.verAplic := NFComRetorno.protNFCom.verAplic;
-                  NFCom.procNFCom.chNFCom := NFComRetorno.protNFCom.chNFCom;
+                  NFCom.procNFCom.chDFe := NFComRetorno.protNFCom.chDFe;
                   NFCom.procNFCom.dhRecbto := NFComRetorno.protNFCom.dhRecbto;
                   NFCom.procNFCom.nProt := NFComRetorno.protNFCom.nProt;
                   NFCom.procNFCom.digVal := NFComRetorno.protNFCom.digVal;
                   NFCom.procNFCom.cStat := NFComRetorno.protNFCom.cStat;
                   NFCom.procNFCom.xMotivo := NFComRetorno.protNFCom.xMotivo;
-                  NFCom.procNFCom.Versao := NFComRetorno.protNFCom.Versao;
+//                  NFCom.procNFCom.Versao := NFComRetorno.protNFCom.Versao;
 
                   // O código abaixo é bem mais rápido que "GerarXML" (acima)...
-                  AProcNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');;
+                  AProcNFCom := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFComProc', 'NFCom');;
                   try
                     AProcNFCom.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                     AProcNFCom.XML_Prot := NFComRetorno.XMLprotNFCom;

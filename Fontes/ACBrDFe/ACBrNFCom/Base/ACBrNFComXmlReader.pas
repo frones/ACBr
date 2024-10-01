@@ -163,7 +163,7 @@ begin
 
   NFCom.procNFCom.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
   NFCom.procNFCom.verAplic := ObterConteudo(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-  NFCom.procNFCom.chNFCom := ObterConteudo(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
+  NFCom.procNFCom.chDFe := ObterConteudo(ANode.Childrens.FindAnyNs('chNFCom'), tcStr);
   NFCom.procNFCom.dhRecbto := ObterConteudo(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
   NFCom.procNFCom.nProt := ObterConteudo(ANode.Childrens.FindAnyNs('nProt'), tcStr);
   NFCom.procNFCom.digVal := ObterConteudo(ANode.Childrens.FindAnyNs('digVal'), tcStr);

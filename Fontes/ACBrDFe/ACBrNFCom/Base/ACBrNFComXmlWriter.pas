@@ -1520,7 +1520,7 @@ begin
 
   xmlNode.AddChild('verAplic').Content := NFCom.procNFCom.verAplic;
 
-  xmlNode.AddChild('chNFCom').Content := NFCom.procNFCom.chNFCom;
+  xmlNode.AddChild('chNFCom').Content := NFCom.procNFCom.chDFe;
 
   xmlNode.AddChild('dhRecbto').Content :=
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', NFCom.procNFCom.dhRecbto) +

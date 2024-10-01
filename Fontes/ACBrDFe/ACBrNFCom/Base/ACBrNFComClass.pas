@@ -47,9 +47,9 @@ uses
   ACBrXmlBase,
 //  ACBrDFeConversao,
 //  ACBrDFeComum.SignatureClass,
+  ACBrDFeComum.Proc,
   pcnSignature,
-  ACBrNFComConversao,
-  ACBrNFComProc;
+  ACBrNFComConversao;
 
 type
   { TinfNFCom }
@@ -852,7 +852,7 @@ type
     FinfRespTec: TinfRespTec;
     FinfNFComSupl: TinfNFComSupl;
     FSignature: TSignature;
-    FprocNFCom: TProcNFCom;
+    FprocNFCom: TProcDFe;
 
     procedure SetautXML(const Value: TautXMLCollection);
     procedure SetDet(const Value: TDetCollection);
@@ -879,7 +879,7 @@ type
     property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
     property infNFComSupl: TinfNFComSupl read FinfNFComSupl write FinfNFComSupl;
     property Signature: TSignature read FSignature write FSignature;
-    property procNFCom: TProcNFCom read FprocNFCom write FprocNFCom;
+    property procNFCom: TProcDFe read FprocNFCom write FprocNFCom;
   end;
 
 implementation
@@ -1314,7 +1314,7 @@ begin
   FinfRespTec := TinfRespTec.Create;
   FinfNFComSupl := TinfNFComSupl.Create;
   FSignature := TSignature.Create;
-  FprocNFCom := TProcNFCom.Create;
+  FprocNFCom := TProcDFe.Create('', '', '', '');
 
 //  FinfNFCom.Versao := 0;
   FIde.nSiteAutoriz := sa0;

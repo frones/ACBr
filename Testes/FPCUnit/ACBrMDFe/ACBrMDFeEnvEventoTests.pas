@@ -6,7 +6,6 @@ interface
 
 uses
   Classes, SysUtils, ACBrTests.Util,
-  pmdfeEnvEventoMDFe,
   ACBrMDFe.EnvEvento, // Unit nova
   pcnConversao;
 
@@ -16,11 +15,9 @@ type
 
   ACBrMDFeEnvEventoTest = class(TTestCase)
   private
-    FEnvEvento_Old: pmdfeEnvEventoMDFe.TEventoMDFe;
-    FEnvEvento_New: ACBrMDFe.EnvEvento.TEventoMDFe;
+    FEnvEvento_New: TEventoMDFe;
+    Item_new: TInfEventoCollectionItem;
 
-    Item_old: pmdfeEnvEventoMDFe.TInfEventoCollectionItem;
-    Item_new: ACBrMDFe.EnvEvento.TInfEventoCollectionItem;
     sxml_old: string;
     sxml_new: string;
 
@@ -47,7 +44,6 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrMDFeConstantesTests,
-  pmdfeEventoMDFe,
   ACBrMDFe.EventoClass,
   pmdfeConversaoMDFe,
   pmdfeMDFe;
@@ -58,13 +54,11 @@ procedure ACBrMDFeEnvEventoTest.SetUp;
 begin
   inherited SetUp;
 
-  FEnvEvento_Old := pmdfeEnvEventoMDFe.TEventoMDFe.Create;
-  FEnvEvento_New := ACBrMDFe.EnvEvento.TEventoMDFe.Create;
+  FEnvEvento_New := TEventoMDFe.Create;
 end;
 
 procedure ACBrMDFeEnvEventoTest.TearDown;
 begin
-  FEnvEvento_Old.Free;
   FEnvEvento_New.Free;
 
   inherited TearDown;
@@ -72,21 +66,6 @@ end;
 
 procedure ACBrMDFeEnvEventoTest.Gerar_InfEvento(ATipoEvento: TpcnTpEvento; codOrgao: Integer);
 begin
-  // Gerar o XML usando a unit antiga
-  FEnvEvento_Old.Versao := '4.00';
-  FEnvEvento_Old.idLote := 1;
-
-  Item_old := FEnvEvento_Old.Evento.New;
-
-  Item_old.InfEvento.TpAmb := taHomologacao;
-  Item_old.InfEvento.CNPJCPF := '12345678000123';
-  Item_old.InfEvento.cOrgao := codOrgao;
-  Item_old.InfEvento.chMDFe := '12345678901234567890123456789012345678901234';
-  Item_old.InfEvento.dhEvento := StrToDateTime('09/04/2024 18:14:00');
-  Item_old.InfEvento.tpEvento := ATipoEvento;
-  Item_old.InfEvento.nSeqEvento := 1;
-  Item_old.InfEvento.versaoEvento := '4.00';
-
   // Gerar o XML usando a unit nova
   FEnvEvento_New.Versao := '4.00';
   FEnvEvento_New.idLote := 1;

@@ -962,7 +962,7 @@ begin
             NF3e.procNF3e.digVal := FNF3eRetornoSincrono.protNF3e.digVal;
             NF3e.procNF3e.xMotivo := FNF3eRetornoSincrono.protNF3e.xMotivo;
 
-            AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
+            AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'nf3eProc', 'NF3e');
             try
               // Processando em UTF8, para poder gravar arquivo corretamente //
               AProcNF3e.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
@@ -1340,7 +1340,7 @@ begin
         // Monta o XML da NF3-e assinado e com o protocolo de Autorização
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 150) then
         begin
-          AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
+          AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'nf3eProc', 'NF3e');
           try
             AProcNF3e.XML_DFe := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
             AProcNF3e.XML_Prot := AInfProt.Items[I].XMLprotDFe;
@@ -1671,7 +1671,7 @@ begin
   if Assigned(FprocEventoNF3e) then
     FprocEventoNF3e.Free;
 
-  FprotNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
+  FprotNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'nf3eProc', 'NF3e');
   FprocEventoNF3e := TRetEventoNF3eCollection.Create;
 end;
 
@@ -2013,7 +2013,7 @@ begin
                   NF3e.procNF3e.xMotivo := NF3eRetorno.protNF3e.xMotivo;
 
                   // O código abaixo é bem mais rápido que "GerarXML" (acima)...
-                  AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e');
+                  AProcNF3e := TProcDFe.Create(FPVersaoServico, NAME_SPACE_NF3e, 'nf3eProc', 'NF3e');
                   try
                     AProcNF3e.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                     AProcNF3e.XML_Prot := NF3eRetorno.XMLprotNF3e;

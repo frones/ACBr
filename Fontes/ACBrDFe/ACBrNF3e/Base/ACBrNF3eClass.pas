@@ -2389,7 +2389,7 @@ begin
   FinfRespTec  := TinfRespTec.Create;
   FinfNF3eSupl := TinfNF3eSupl.Create;
   FSignature   := TSignature.Create;
-  FprocNF3e    := TProcDFe.Create('1.00', NAME_SPACE_NF3e, 'NF3e');
+  FprocNF3e    := TProcDFe.Create('1.00', NAME_SPACE_NF3e, 'nf3eProc', 'NF3e');
 
 //  FinfNF3e.Versao := 0;
   FIde.nSiteAutoriz := sa0;

@@ -152,7 +152,7 @@ constructor TRetConsSitNF3e.Create;
 begin
   inherited Create;
 
-  FprotNF3e := TProcDFe.Create(Versao, NAME_SPACE_NF3e, 'NF3e');
+  FprotNF3e := TProcDFe.Create(Versao, NAME_SPACE_NF3e, 'nf3eProc', 'NF3e');
 end;
 
 destructor TRetConsSitNF3e.Destroy;

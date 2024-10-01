@@ -2,6 +2,7 @@ import ctypes
 import json
 import sys
 import os
+import base64
 from ctypes import CDLL, POINTER, byref, c_bool, c_char_p, c_int, create_string_buffer, c_ulong, c_char
 
 #DLL ACBrLibMDFe utilizada neste projeto é 64 ST (Single Thread)
@@ -15,6 +16,15 @@ if os.name == 'nt':
     PATH_ACBR_DLL = os.path.join(PATH_DLLS, 'ACBrMDFe64.dll')
 else:
     PATH_ACBR_DLL = os.path.join(PATH_DLLS, 'libacbrmdfe64.so')
+
+#Ler o certificado para armazenar no INI    
+def ler_certificado_pfx(caminho_arquivo):
+    # Lê o arquivo PFX em modo binário
+    with open(caminho_arquivo, "rb") as arquivo_pfx:
+        conteudo_pfx = arquivo_pfx.read()
+    # Converte o conteúdo do arquivo para Base64
+    certificado_base64 = base64.b64encode(conteudo_pfx).decode('utf-8')
+    return certificado_base64    
 
 # Ajustar os paths onde está o certificado .pfx (nt = Windows ou Linux)
 if os.name == 'nt':  
@@ -100,7 +110,13 @@ acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "SSLCryptLib".encode("ut
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "SSLHttpLib".encode("utf-8"), str(3).encode("utf-8"))
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "SSLXmlSignLib".encode("utf-8"), str(4).encode("utf-8"))
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "UF".encode("utf-8"), 'SP'.encode("utf-8"))
-acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "ArquivoPFX".encode("utf-8"), ARQ_PFX.encode("utf-8"))
+#Utilizar arquivo PFX
+acbr_lib.MDFE_ConfigGravarValor(ponteiro, "DFe".encode("utf-8"), "ArquivoPFX".encode("utf-8"), ARQ_PFX.encode("utf-8"))
+
+#Utilizar DadosPFX
+#LDadosPFX = ler_certificado_pfx(ARQ_PFX)
+#acbr_lib.MDFE_ConfigGravarValor(ponteiro, "DFe".encode("utf-8"), "DadosPFX".encode("utf-8"), LDadosPFX.encode("utf-8"))
+
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "Senha".encode("utf-8"), SENHA_PFX.encode("utf-8"))
 acbr_lib.MDFE_ConfigGravarValor( "MDFe".encode("utf-8"), "Ambiente".encode("utf-8"), str(1).encode("utf-8"))
 acbr_lib.MDFE_ConfigGravarValor( "MDFe".encode("utf-8"), "SSLType".encode("utf-8"), str(5).encode("utf-8"))

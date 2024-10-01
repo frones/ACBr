@@ -152,7 +152,7 @@ constructor TRetConsSitDCe.Create;
 begin
   inherited Create;
 
-  FprotDCe := TProcDFe.Create('', '', '');
+  FprotDCe := TProcDFe.Create('', '', '', '');
 end;
 
 destructor TRetConsSitDCe.Destroy;

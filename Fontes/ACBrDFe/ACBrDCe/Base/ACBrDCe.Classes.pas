@@ -429,7 +429,7 @@ begin
   FinfDCeSupl := TinfDCeSupl.Create;
   FobsCont := TobsContCollection.Create;
   FobsMarketplace := TobsMarketplaceCollection.Create;
-  FProcDCe := TProcDFe.Create('', '', '');
+  FProcDCe := TProcDFe.Create('', '', '', '');
   Fsignature := Tsignature.create;
 end;
 

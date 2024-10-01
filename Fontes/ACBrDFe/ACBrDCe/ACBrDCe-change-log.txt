@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/10/2024
+-- Diversos --
+[*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc
+   Por: Italo Giurizzato Junior
+
 26/09/2024
 -- ACBrDCe.XmlWriter --
 [-] Não estava populando os campos xObs1 e xObs2 ao gerar o XML.

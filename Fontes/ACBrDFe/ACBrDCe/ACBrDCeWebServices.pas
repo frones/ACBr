@@ -708,7 +708,7 @@ begin
           DCe.procDCe.digVal := FDCeRetornoSincrono.protDCe.digVal;
           DCe.procDCe.xMotivo := FDCeRetornoSincrono.protDCe.xMotivo;
 
-          AProcDCe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe');
+          AProcDCe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'dceProc', 'DCe');
           try
             // Processando em UTF8, para poder gravar arquivo corretamente //
             AProcDCe.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
@@ -821,7 +821,7 @@ begin
   if Assigned(FprocEventoDCe) then
     FprocEventoDCe.Free;
 
-  FprotDCe       := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe');
+  FprotDCe       := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'dceProc', 'DCe');
   FprocEventoDCe := TRetEventoDCeCollection.Create;
 end;
 
@@ -1131,7 +1131,7 @@ begin
                 DCe.procDCe.cStat := FDCeRetorno.cStat;
                 DCe.procDCe.xMotivo := FDCeRetorno.xMotivo;
 
-                AProcDCe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'DCe');
+                AProcDCe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_DCE, 'dceProc', 'DCe');
                 try
                   AProcDCe.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                   AProcDCe.XML_Prot := FDCeRetorno.XMLprotDCe;

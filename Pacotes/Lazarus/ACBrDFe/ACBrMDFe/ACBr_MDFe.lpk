@@ -9,13 +9,13 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base;..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="23">
+    <Files Count="25">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas"/>
         <UnitName Value="ACBrMDFe"/>
@@ -109,6 +109,14 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlWriter.pas"/>
         <UnitName Value="ACBrMDFe.XmlWriter"/>
       </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsNaoEnc.pas"/>
+        <UnitName Value="ACBrMDFe.ConsNaoEnc"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetConsNaoEnc.pas"/>
+        <UnitName Value="ACBrMDFe.RetConsNaoEnc"/>
+      </Item25>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

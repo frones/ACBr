@@ -77,7 +77,6 @@ contains
   ACBrNFComClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComClass.pas',
   ACBrNFComConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComConsts.pas',
   ACBrNFComConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComConversao.pas',
-  ACBrNFComProc in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComProc.pas',
   ACBrNFComXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlReader.pas',
   ACBrNFComXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlWriter.pas',
   ACBrNFComConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsSit.pas',

@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal de Serviço de Comunicação/Telecomunicações - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="17">
+    <Files Count="16">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFCom.pas"/>
         <UnitName Value="ACBrNFCom"/>
@@ -59,37 +59,33 @@
         <UnitName Value="ACBrNFComConversao"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComProc.pas"/>
-        <UnitName Value="ACBrNFComProc"/>
-      </Item10>
-      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlReader.pas"/>
         <UnitName Value="ACBrNFComXmlReader"/>
-      </Item11>
-      <Item12>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlWriter.pas"/>
         <UnitName Value="ACBrNFComXmlWriter"/>
-      </Item12>
-      <Item13>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsSit.pas"/>
         <UnitName Value="ACBrNFComConsSit"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEnvEvento.pas"/>
         <UnitName Value="ACBrNFComEnvEvento"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEventoClass.pas"/>
         <UnitName Value="ACBrNFComEventoClass"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsSit.pas"/>
         <UnitName Value="ACBrNFComRetConsSit"/>
-      </Item16>
-      <Item17>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetEnvEvento.pas"/>
         <UnitName Value="ACBrNFComRetEnvEvento"/>
-      </Item17>
+      </Item16>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

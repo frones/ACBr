@@ -10,7 +10,7 @@ interface
 uses
   ACBrNFCom, ACBrNFComReg, ACBrNFComNotasFiscais, ACBrNFComConfiguracoes, 
   ACBrNFComWebServices, ACBrNFComDANFComClass, ACBrNFComClass, 
-  ACBrNFComConsts, ACBrNFComConversao, ACBrNFComProc, ACBrNFComXmlReader, 
+  ACBrNFComConsts, ACBrNFComConversao, ACBrNFComXmlReader, 
   ACBrNFComXmlWriter, ACBrNFComConsSit, ACBrNFComEnvEvento, 
   ACBrNFComEventoClass, ACBrNFComRetConsSit, ACBrNFComRetEnvEvento, 
   LazarusPackageIntf;

@@ -147,7 +147,7 @@ constructor TRetConsSitCTe.Create(const Versao: string);
 begin
   inherited Create;
 
-  FprotCTe    := TProcDFe.Create(Versao, NAME_SPACE_CTE, 'CTe');
+  FprotCTe    := TProcDFe.Create(Versao, NAME_SPACE_CTE, 'cteProc', 'CTe');
   FretCancCTe := TRetCancCTe.Create;
 end;
 

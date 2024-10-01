@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/10/2024
+-- ACBrMDFe.RetConsSit --
+[*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc
+-- ACBrMDFeWebServices --
+[*] Migração para as novas units: ACBrMDFe.ConsNaoEnc e ACBrMDFe.RetConsNaoEnc.
+   Por: Italo Giurizzato Junior
+
 27/09/2024
 -- pmdfeMDFeR --
 [-] Corrigido a posição da linha que faz a leitura da tag indPrestacaoParcial.

@@ -43,7 +43,9 @@ uses
   pcnRetConsReciDFe,
   pcnConversao, pmdfeConversaoMDFe,
   pmdfeProcMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
-  pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
+  pmdfeRetConsSitMDFe,
+  ACBrMDFe.RetConsNaoEnc,
+  pmdfeRetEnvMDFe,
   pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes, pmdfeProcInfraSA;
 
@@ -509,7 +511,8 @@ uses
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
   pmdfeEventoMDFe,
-  pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc;
+  pmdfeConsSitMDFe, pcnConsReciDFe,
+  ACBrMDFe.ConsNaoEnc;
 
 { TMDFeWebService }
 
@@ -2595,12 +2598,7 @@ begin
     ConsMDFeNaoEnc.CNPJCPF := OnlyNumber( FCNPJCPF );
     ConsMDFeNaoEnc.Versao  := FPVersaoServico;
 
-    AjustarOpcoes( ConsMDFeNaoEnc.Gerador.Opcoes );
-    ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
-
-    ConsMDFeNaoEnc.GerarXML;
-
-    FPDadosMsg := ConsMDFeNaoEnc.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsMDFeNaoEnc.GerarXML;
   finally
     ConsMDFeNaoEnc.Free;
   end;
@@ -2616,8 +2614,7 @@ begin
   FRetConsMDFeNaoEnc.Free;
   FRetConsMDFeNaoEnc := TRetConsMDFeNaoEnc.Create;
 
-  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-  FRetConsMDFeNaoEnc.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  FRetConsMDFeNaoEnc.XmlRetorno := ParseText(FPRetWS);
   FRetConsMDFeNaoEnc.LerXml;
 
   Fversao    := FRetConsMDFeNaoEnc.versao;

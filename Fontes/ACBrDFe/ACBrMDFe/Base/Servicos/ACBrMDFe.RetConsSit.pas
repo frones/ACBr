@@ -118,7 +118,7 @@ constructor TRetConsSitMDFe.Create(const Versao: string);
 begin
   inherited Create;
 
-  FprotMDFe := TProcDFe.Create(Versao, NAME_SPACE_MDFE, 'MDFe');
+  FprotMDFe := TProcDFe.Create(Versao, NAME_SPACE_MDFE, 'mdfeProc', 'MDFe');
   FprocInfraSA := TProcInfraSA.Create;
 end;
 

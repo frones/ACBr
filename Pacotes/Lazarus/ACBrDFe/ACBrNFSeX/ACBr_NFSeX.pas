@@ -74,8 +74,7 @@ uses
   ISSRio.Provider, ISSSalvador.GravarXml, ISSSalvador.LerXml, 
   ISSSalvador.Provider, ISSSaoPaulo.GravarXml, ISSSaoPaulo.LerXml, 
   ISSSaoPaulo.Provider, ISSSJP.GravarXml, ISSSJP.LerXml, ISSSJP.Provider, 
-  ISSVitoria.GravarXml, ISSVitoria.LerXml, ISSVitoria.Provider,
-  Kalana.GravarXml, Kalana.LerXml, Kalana.Provider,
+  ISSVitoria.GravarXml, ISSVitoria.LerXml, ISSVitoria.Provider, 
   Lexsom.GravarXml, Lexsom.LerXml, Lexsom.Provider, Libre.GravarXml, 
   Libre.LerXml, Libre.Provider, Link3.GravarXml, Link3.LerXml, Link3.Provider, 
   MegaSoft.GravarXml, MegaSoft.LerXml, MegaSoft.Provider, 
@@ -124,7 +123,8 @@ uses
   Isaneto.LerXml, Isaneto.Provider, Elmar.GravarXml, Elmar.LerXml, 
   Elmar.Provider, Sam.GravarXml, Sam.LerXml, Sam.Provider, 
   ISSCampinas.GravarXml, ISSCampinas.LerXml, ISSCampinas.Provider, 
-  LazarusPackageIntf;
+  Kalana.GravarXml, Kalana.LerXml, Kalana.Provider, NFEletronica.GravarXml, 
+  NFEletronica.LerXml, NFEletronica.Provider, LazarusPackageIntf;
 
 implementation
 

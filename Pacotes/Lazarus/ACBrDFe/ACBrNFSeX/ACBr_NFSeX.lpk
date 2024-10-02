@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="429">
+    <Files Count="432">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1731,6 +1731,18 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Kalana.Provider.pas"/>
         <UnitName Value="Kalana.Provider"/>
       </Item429>
+      <Item430>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFEletronica.GravarXml.pas"/>
+        <UnitName Value="NFEletronica.GravarXml"/>
+      </Item430>
+      <Item431>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFEletronica.LerXml.pas"/>
+        <UnitName Value="NFEletronica.LerXml"/>
+      </Item431>
+      <Item432>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFEletronica.Provider.pas"/>
+        <UnitName Value="NFEletronica.Provider"/>
+      </Item432>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

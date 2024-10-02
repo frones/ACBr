@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2024
+-- ACBrBancoBradescoMoneyPlus --
+[*] TK-6011 Novas especies de documento layout Investimentos
+	https://www.projetoacbr.com.br/forum/topic/79863-erro-na-esp%C3%A9cie-doc-no-money-plus
+	por Daniel de Morais
+
 30/09/2024
 -- ACBrBoletoW_Itau_API --
 [*] TK-5969 Verificado enumerado jurosMora

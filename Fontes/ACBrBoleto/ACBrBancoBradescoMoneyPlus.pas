@@ -50,6 +50,7 @@ type
   protected
     function ConverterDigitoModuloFinal(): String; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
+    function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String; override;
 
   public
     Constructor create(AOwner: TACBrBanco);
@@ -92,6 +93,192 @@ begin
                       ACBrTitulo.NossoNumero +
                       PadLeft(RightStr(Cedente.Conta,7),7,'0') + '0';
   end;
+end;
+
+function TACBrBancoBradescoMoneyPlus.DefineEspecieDoc(
+  const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    if ACBrBanco.ACBrBoleto.LayoutRemessa = c240 then
+    begin
+      if AnsiSameText(EspecieDoc, 'CH') then
+        Result := '01'
+      else
+      if AnsiSameText(EspecieDoc, 'DM') then
+        Result := '02'
+      else
+      if AnsiSameText(EspecieDoc, 'DMI') then
+        Result := '03'
+      else
+      if AnsiSameText(EspecieDoc, 'DS') then
+        Result := '04'
+      else
+      if AnsiSameText(EspecieDoc, 'DSI') then
+        Result := '05'
+      else
+      if AnsiSameText(EspecieDoc, 'DR') then
+        Result := '06'
+      else
+      if AnsiSameText(EspecieDoc, 'LC') then
+        Result := '07'
+      else
+      if AnsiSameText(EspecieDoc, 'NCC') then
+        Result := '08'
+      else
+      if AnsiSameText(EspecieDoc, 'NCE') then
+        Result := '09'
+      else
+      if AnsiSameText(EspecieDoc, 'NCI') then
+        Result := '10'
+      else
+      if AnsiSameText(EspecieDoc, 'NCR') then
+        Result := '11'
+      else
+      if AnsiSameText(EspecieDoc, 'NP') then
+        Result := '12'
+      else
+      if AnsiSameText(EspecieDoc, 'NPR') then
+        Result := '13'
+      else
+      if AnsiSameText(EspecieDoc, 'TM') then
+        Result := '14'
+      else
+      if AnsiSameText(EspecieDoc, 'TS') then
+        Result := '15'
+      else
+      if AnsiSameText(EspecieDoc, 'NS') then
+        Result := '16'
+      else
+      if AnsiSameText(EspecieDoc, 'RC') then
+        Result := '17'
+      else
+      if AnsiSameText(EspecieDoc, 'FAT') then
+        Result := '18'
+      else
+      if AnsiSameText(EspecieDoc, 'ND') then
+        Result := '19'
+      else
+      if AnsiSameText(EspecieDoc, 'AP') then
+        Result := '20'
+      else
+      if AnsiSameText(EspecieDoc, 'ME') then
+        Result := '21'
+      else
+      if AnsiSameText(EspecieDoc, 'PC') then
+        Result := '22'
+      else
+      if AnsiSameText(EspecieDoc, 'NF') then
+        Result := '23'
+      else
+      if AnsiSameText(EspecieDoc, 'DD') then
+        Result := '24'
+      else
+      if AnsiSameText(EspecieDoc, 'CPR') then
+        Result := '25'
+      else
+        Result := '99';
+    end
+    else
+    begin
+      if LayoutVersaoArquivo <> 002 then
+      begin
+        {Layout_CNAB_400_V9_2-2.pdf}
+        if AnsiSameText(EspecieDoc,'CH') then
+           Result:= '01'
+        else if AnsiSameText(EspecieDoc, 'DM') then
+           Result:= '02'
+        else if AnsiSameText(EspecieDoc, 'DMI') then
+           Result:= '03'
+        else if AnsiSameText(EspecieDoc, 'DS') then
+           Result:= '04'
+        else if AnsiSameText(EspecieDoc, 'DSI') then
+           Result:= '05'
+        else if AnsiSameText(EspecieDoc, 'DR') then
+           Result:= '06'
+        else if AnsiSameText(EspecieDoc, 'LC') then
+           Result:= '07'
+        else if AnsiSameText(EspecieDoc, 'NCC') then
+           Result:= '08'
+        else if AnsiSameText(EspecieDoc, 'NCE') then
+           Result:= '09'
+        else if AnsiSameText(EspecieDoc, 'NCI') then
+           Result:= '10'
+        else if AnsiSameText(EspecieDoc, 'NCR') then
+           Result:= '11'
+        else if AnsiSameText(EspecieDoc, 'NP') then
+           Result:= '12'
+        else if AnsiSameText(EspecieDoc, 'NPR') then
+           Result:= '13'
+        else if AnsiSameText(EspecieDoc, 'TM') then
+           Result:= '14'
+        else if AnsiSameText(EspecieDoc, 'TS') then
+           Result:= '15'
+        else if AnsiSameText(EspecieDoc, 'NS') then
+           Result:= '16'
+        else if AnsiSameText(EspecieDoc, 'RC') then
+           Result:= '17'
+        else if AnsiSameText(EspecieDoc, 'FAT') then
+           Result:= '18'
+        else if AnsiSameText(EspecieDoc, 'ND') then
+           Result:= '19'
+        else if AnsiSameText(EspecieDoc, 'AP') then
+           Result:= '20'
+        else if AnsiSameText(EspecieDoc, 'ME') then
+           Result:= '21'
+        else if AnsiSameText(EspecieDoc, 'PC') then
+           Result:= '22'
+        else if AnsiSameText(EspecieDoc, 'PF') then
+           Result:= '23'
+        else if AnsiSameText(EspecieDoc, 'DD') then
+           Result:= '24'
+        else if AnsiSameText(EspecieDoc, 'CPR') then
+           Result:= '25'
+        else if AnsiSameText(EspecieDoc, 'WT') then
+           Result:= '26'
+        else if AnsiSameText(EspecieDoc, 'DAE') then
+           Result:= '27'
+        else if AnsiSameText(EspecieDoc, 'DAM') then
+           Result:= '28'
+        else if AnsiSameText(EspecieDoc, 'DAU') then
+           Result:= '29'
+        else if AnsiSameText(EspecieDoc, 'EC') then
+           Result:= '30'
+        else if AnsiSameText(EspecieDoc, 'CC') then
+           Result:= '31'
+        else if AnsiSameText(EspecieDoc, 'BP') then
+           Result:= '32'
+        else if AnsiSameText(EspecieDoc, 'OU') then
+           Result:= '99'
+      end
+      else
+      begin
+        if AnsiSameText(EspecieDoc,'DM') then
+           Result:= '01'
+        else if AnsiSameText(EspecieDoc, 'NP') then
+           Result:= '02'
+        else if AnsiSameText(EspecieDoc, 'NS') then
+           Result:= '03'
+        else if AnsiSameText(EspecieDoc, 'CS') then
+           Result:= '04'
+        else if AnsiSameText(EspecieDoc, 'REC') then
+           Result:= '05'
+        else if AnsiSameText(EspecieDoc, 'LC') then
+           Result:= '10'
+        else if AnsiSameText(EspecieDoc, 'ND') then
+           Result:= '11'
+        else if AnsiSameText(EspecieDoc, 'DS') then
+           Result:= '12'
+        else if AnsiSameText(EspecieDoc, 'BDP') then
+           Result:= '32'
+        else if AnsiSameText(EspecieDoc, 'OU') then
+           Result:= '99'
+        else
+           Result := EspecieDoc;
+      end;
+    end;
+  end;
+
 end;
 
 function TACBrBancoBradescoMoneyPlus.ConverterMultaPercentual(
@@ -378,7 +565,7 @@ begin
         LMensagemCedente    := PadRight( MensagemCedente, 60 );
       end
       else
-      begin
+      begin     // ultimo
         LTipoEmissaoBoleto  := sTipoBoleto;
         LAvisoDebitoAuto    := '2';
         LDebitoAutomatico   := 'N';
@@ -455,7 +642,7 @@ begin
        if not(wLinha = EmptyStr) then
          aRemessa.Add(UpperCase(wLinha));
 
-       if (Sacado.SacadoAvalista.NomeAvalista <> '') and (LayoutVersaoArquivo = 002) then
+       if (Sacado.SacadoAvalista.NomeAvalista <> '') and (LayoutVersaoArquivo = 002) then  // Grafeno
         begin
           wLinha := '7'                                                     + // 001 a 001 - Identificação do registro detalhe (7)
           PadRight(Sacado.SacadoAvalista.Logradouro, 45, ' ')               + // 002 a 046 - Endereço Sacador/Avalista

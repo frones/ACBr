@@ -38,8 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_NotaInteligente200 }

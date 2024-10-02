@@ -38,7 +38,6 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros,
   ACBrNFSeXGravarXml_ABRASFv1;
 
 type

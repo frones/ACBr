@@ -38,8 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml_ABRASFv1;
 
 type
   { TNFSeW_NFSeBrasil }
@@ -61,7 +62,6 @@ implementation
 
 uses
   ACBrNFSeXConsts,
-  ACBrNFSeXConversao,
   ACBrUtil.Strings;
 
 //==============================================================================

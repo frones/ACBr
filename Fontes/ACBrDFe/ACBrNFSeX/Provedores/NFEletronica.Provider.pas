@@ -54,6 +54,7 @@ type
     function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
+    function ConsultarLinkNFSe(const ACabecalho, AMSG: String): string; override;
     function Cancelar(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
@@ -70,6 +71,35 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
+    {
+    procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
+    procedure GerarMsgDadosConsultaSituacao(Response: TNFSeConsultaSituacaoResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
+
+    procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+    procedure GerarMsgDadosConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure GerarMsgDadosConsultaporRps(Response: TNFSeConsultaNFSeporRpsResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+
+    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure GerarMsgDadosConsultaNFSe(Response: TNFSeConsultaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+
+    procedure PrepararConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+    procedure GerarMsgDadosConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
+    }
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
+//    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
 implementation
@@ -108,53 +138,26 @@ begin
     CancPreencherMotivo := False;
     CancPreencherSerieNfse := False;
     CancPreencherCodVerificacao := False;
+
+    Autenticacao.RequerChaveAcesso := True;
+    Autenticacao.RequerChaveAutorizacao := True;
+
+    ServicosDisponibilizados.ConsultarLinkNfse := True;
   end;
 
   SetXmlNameSpace('http://www.nf-eletronica.com.br/nfse');
-(*
-  // Inicializa os parâmetros de configuração: Mensagem de Dados
-  with ConfigMsgDados do
+
+  SetNomeXSD('***');
+
+  with ConfigSchemas do
   begin
-    // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
-    Prefixo := '';
+    Recepcionar := 'nfse.xsd';
+    ConsultarLote := 'nfse.xsd';
+    CancelarNFSe := 'nfse.xsd';
+    ConsultarLinkNFSe := 'nfse.xsd';
 
-    UsarNumLoteConsLote := False;
-
-    XmlRps.xmlns := '';
-    XmlRps.InfElemento := 'InfRps';
-    XmlRps.DocElemento := 'Rps';
-
-    // Usado para geração do Envio do Lote em modo assíncrono
-    LoteRps.xmlns := '';
-    LoteRps.InfElemento := 'LoteRps';
-    LoteRps.DocElemento := 'EnviarLoteRpsEnvio';
-
-    // Usado para geração da Consulta a Situação do Lote
-    ConsultarSituacao.xmlns := '';
-    ConsultarSituacao.InfElemento := '';
-    ConsultarSituacao.DocElemento := 'ConsultarSituacaoLoteRpsEnvio';
-
-    // Usado para geração da Consulta do Lote
-    ConsultarLote.xmlns := '';
-    ConsultarLote.InfElemento := '';
-    ConsultarLote.DocElemento := 'ConsultarLoteRpsEnvio';
-
-    // Usado para geração da Consulta da NFSe por RPS
-    ConsultarNFSeRps.xmlns := '';
-    ConsultarNFSeRps.InfElemento := '';
-    ConsultarNFSeRps.DocElemento := 'ConsultarNfseRpsEnvio';
-
-    // Usado para geração da Consulta da NFSe
-    ConsultarNFSe.xmlns := '';
-    ConsultarNFSe.InfElemento := '';
-    ConsultarNFSe.DocElemento := 'ConsultarNfseEnvio';
-
-    // Usado para geração do Cancelamento
-    CancelarNFSe.xmlns := '';
-    CancelarNFSe.InfElemento := 'InfPedidoCancelamento';
-    CancelarNFSe.DocElemento := 'Pedido';
+    Validar := False;
   end;
-*)
 end;
 
 function TACBrNFSeProviderNFEletronica.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
@@ -243,6 +246,24 @@ begin
     end;
   finally
     FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderNFEletronica.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  InfoCanc: TInfCancelamento;
+begin
+  InfoCanc := Response.InfCancelamento;
+
+  with Params do
+  begin
+    Response.ArquivoEnvio := '<ws:nNF>' +
+                                InfoCanc.NumeroNFSe +
+                             '</ws:nNF>' +
+                             '<ws:motivo>' +
+                                InfoCanc.MotCancelamento +
+                             '</ws:motivo>';
   end;
 end;
 
@@ -335,20 +356,26 @@ begin
                      []);
 end;
 
+function TACBrNFSeXWebserviceNFEletronica.ConsultarLinkNFSe(const ACabecalho,
+  AMSG: String): string;
+begin
+  // Implementar
+end;
+
 function TACBrNFSeXWebserviceNFEletronica.Cancelar(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<wsn:CancelarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</wsn:CancelarNfseRequest>';
+  Request := '<ws:Cancela_NFe>';
+  Request := Request + AMSG;
+  Request := Request + Token;
+  Request := Request + '</ws:Cancela_NFe>';
 
-  Result := Executar('', Request,
-                     ['outputXML', 'CancelarNfseResposta'],
-                     []);
+  Result := Executar('http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx/Cancela_NFe',
+                     Request, [],
+                     ['xmlns:ws="http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx"']);
 end;
 
 function TACBrNFSeXWebserviceNFEletronica.TratarXmlRetornado(

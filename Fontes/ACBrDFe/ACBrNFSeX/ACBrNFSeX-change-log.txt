@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 02/10/2024
+-- Lexsom.GravarXml/Link3.GravarXml/MegaSoft.GravarXml/Mitra.GravarXml --
+-- ModernizacaoPublica.GravarXml/NFEletronica.Provider/NFSeBrasil.GravarXml --
+-- NotaInteligente.GravarXml/PadraoNacional.GravarXml/Prescon.GravarJson --
+-- Prodata.GravarXml/Pronim.GravarXml/Publica.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
 -- Diversos --
 [*] #TK-6045 - Alteração visando a possibilidade de não imprimir a data/hora de impressão
     no DANFSE com base se o usuário foi informado ou não.

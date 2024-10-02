@@ -37,10 +37,9 @@ unit Prescon.GravarJson;
 interface
 
 uses
-  SysUtils, Classes, Variants, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument, ACBrJSON,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml,
-  ACBrNFSeXConversao, ACBrNFSeXConsts;
+  SysUtils, Classes, StrUtils,
+  ACBrJSON,
+  ACBrNFSeXGravarXml;
 
 type
   { TNFSeW_Prescon }
@@ -57,9 +56,8 @@ type
 implementation
 
 uses
-  ACBrNFSeX,
-  ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrConsts;
+  ACBrConsts,
+  ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o Json do RPS do provedor:

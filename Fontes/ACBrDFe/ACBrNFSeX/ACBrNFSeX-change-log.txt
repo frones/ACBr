@@ -45,6 +45,11 @@ Símbolo : Significado
 
 02/10/2024
 -- ACBrNFSeXServicos --
+[*] Incluído o novo provedor e a nova URL de produção para a cidade de Umuarama/PR,
+    mas essa alteração só deve ser efetivada a partir do dia 31/10/2024.
+   Por: Italo Giurizzato Junior
+[+] Incluída a cidade de Recreio/MG, o provedor é ISSLegal.
+   Por: AltC Sistemas
 [+] Incluída a cidade de Franco da Rocha/SP, o provedor é SigCorp.
 -- SigCorp.Provider --
 [*] Alterações visando atender a cidade de Franco da Rocha, pois esta usa 

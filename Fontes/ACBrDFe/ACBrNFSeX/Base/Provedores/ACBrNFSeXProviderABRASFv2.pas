@@ -2276,6 +2276,8 @@ begin
         Exit;
       end;
 
+      ProcessarMensagemErros(ANode, Response);
+
       ANode := ANode.Childrens.FindAnyNs('NfseCancelamento');
 
       if not Assigned(ANode) then

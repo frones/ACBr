@@ -76,6 +76,7 @@ uses
   Kalana.Provider,
   Lexsom.Provider,
   MetropolisWeb.Provider,
+  NFEletronica.Provider,
   NFSeBrasil.Provider,
   Publica.Provider,
   SpeedGov.Provider,
@@ -478,7 +479,8 @@ begin
       proNEAInformatica:
         Result := TACBrNFSeProviderNEAInformatica200.Create(ACBrNFSe);
 
-      proNFSeBrasil: Result := TACBrNFSeProviderNFSeBrasil.Create(ACBrNFSe);
+      proNFEletronica: Result := TACBrNFSeProviderNFEletronica.Create(ACBrNFSe);
+      proNFSeBrasil:   Result := TACBrNFSeProviderNFSeBrasil.Create(ACBrNFSe);
 
       proNotaInteligente:
         Result := TACBrNFSeProviderNotaInteligente200.Create(ACBrNFSe);

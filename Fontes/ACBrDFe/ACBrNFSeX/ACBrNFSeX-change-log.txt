@@ -43,6 +43,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/10/2024
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Franco da Rocha/SP, o provedor é SigCorp.
+-- SigCorp.Provider --
+[*] Alterações visando atender a cidade de Franco da Rocha, pois esta usa 
+    uma variação do webservice.
+   Por: Italo Giurizzato Junior
+[+] #TK-6039 - Incluída a cidade de Santana de Parnaiba/SP, o provedor é NFEletronica.
+   Por: Rodrigo Alvim
+-- Diversos --
+[+] Implementado o provedor NFEletronica que segue a versão 1 do layout da ABRASF.
+  Por: Italo Giurizzato Junior
+
 30/09/2024
 -- iiBrasil.GravarXml/Infisc.GravarXml/IPM.GravarXml/ISSBarueri.GravarXml --
 -- ISSCambe.GravarXml/ISSCampinas.GravarXml/ISSCuritiba.GravarXml/ISSDigital.GravarXml --

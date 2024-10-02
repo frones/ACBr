@@ -105,6 +105,9 @@ type
 
   end;
 
+var
+  SubVersao: Integer;
+
 implementation
 
 uses
@@ -481,6 +484,8 @@ procedure TACBrNFSeProviderSigCorp204.Configuracao;
 begin
   inherited Configuracao;
 
+  SubVersao := StrToIntDef(ConfigGeral.Params.ValorParametro('SubVersao'), 0);
+
   with ConfigGeral do
   begin
     QuebradeLinha := '|';
@@ -576,13 +581,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:RecepcionarLoteRps>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:RecepcionarLoteRps>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:RecepcionarLoteRpsRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:RecepcionarLoteRpsRequest>';
 
-  Result := Executar(SoapAction + 'RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'RecepcionarLoteRps', Request,
+                       ['RecepcionarLoteRpsResponse', 'outputXML', 'EnviarLoteRpsResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:RecepcionarLoteRps>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:RecepcionarLoteRps>';
+
+    Result := Executar(SoapAction + 'RecepcionarLoteRps', Request,
+                       ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.RecepcionarSincrono(const ACabecalho,
@@ -592,13 +611,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:RecepcionarLoteRpsSincrono>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:RecepcionarLoteRpsSincrono>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:RecepcionarLoteRpsSincronoRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:RecepcionarLoteRpsSincronoRequest>';
 
-  Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono', Request,
-                     ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono', Request,
+                       ['RecepcionarLoteRpsSincronoResponse', 'outputXML', 'EnviarLoteRpsSincronoResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:RecepcionarLoteRpsSincrono>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:RecepcionarLoteRpsSincrono>';
+
+    Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono', Request,
+                       ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.GerarNFSe(const ACabecalho,
@@ -608,13 +641,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:GerarNfse>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:GerarNfse>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:GerarNfseRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:GerarNfseRequest>';
 
-  Result := Executar(SoapAction + 'GerarNfse', Request,
-                     ['GerarNfseResult', 'GerarNfseResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'GerarNfse', Request,
+                       ['GerarNfseResponse', 'outputXML', 'GerarNfseResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:GerarNfse>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:GerarNfse>';
+
+    Result := Executar(SoapAction + 'GerarNfse', Request,
+                       ['GerarNfseResult', 'GerarNfseResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.ConsultarLote(const ACabecalho,
@@ -624,13 +671,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:ConsultarLoteRps>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:ConsultarLoteRps>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:ConsultarLoteRpsRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:ConsultarLoteRpsRequest>';
 
-  Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
-                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
+                       ['ConsultarLoteRpsResponse', 'outputXML', 'ConsultarLoteRpsResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:ConsultarLoteRps>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:ConsultarLoteRps>';
+
+    Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
+                       ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.ConsultarNFSePorRps(const ACabecalho,
@@ -640,13 +701,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:ConsultarNfsePorRps>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:ConsultarNfsePorRps>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:ConsultarNfsePorRpsRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:ConsultarNfsePorRpsRequest>';
 
-  Result := Executar(SoapAction + 'ConsultarNfsePorRps', Request,
-                     ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'ConsultarNfsePorRps', Request,
+                       ['ConsultarNfsePorRpsResponse', 'outputXML', 'ConsultarNfseRpsResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:ConsultarNfsePorRps>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:ConsultarNfsePorRps>';
+
+    Result := Executar(SoapAction + 'ConsultarNfsePorRps', Request,
+                       ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.ConsultarNFSePorFaixa(const ACabecalho,
@@ -656,13 +731,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:ConsultarNfseFaixa>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:ConsultarNfseFaixa>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:ConsultarNfseFaixaRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:ConsultarNfseFaixaRequest>';
 
-  Result := Executar(SoapAction + 'ConsultarNfseFaixa', Request,
-                     ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'ConsultarNfseFaixa', Request,
+                       ['ConsultarNfseFaixaResponse', 'outputXML', 'ConsultarNfseFaixaResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:ConsultarNfseFaixa>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:ConsultarNfseFaixa>';
+
+    Result := Executar(SoapAction + 'ConsultarNfseFaixa', Request,
+                       ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.ConsultarNFSeServicoPrestado(const ACabecalho,
@@ -672,13 +761,28 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:ConsultarNfseServicoPrestado>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:ConsultarNfseServicoPrestado>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:ConsultarNfseServicoPrestadoRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:ConsultarNfseServicoPrestadoRequest>';
 
-  Result := Executar(SoapAction + 'ConsultarNfseServicoPrestado', Request,
-                     ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'ConsultarNfseServicoPrestado', Request,
+                       ['ConsultarNfseServicoPrestadoResponse', 'outputXML',
+                        'ConsultarNfseServicoPrestadoResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:ConsultarNfseServicoPrestado>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:ConsultarNfseServicoPrestado>';
+
+    Result := Executar(SoapAction + 'ConsultarNfseServicoPrestado', Request,
+                       ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.ConsultarNFSeServicoTomado(const ACabecalho,
@@ -688,13 +792,28 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:ConsultarNfseServicoTomado>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:ConsultarNfseServicoTomado>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:ConsultarNfseServicoTomadoRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:ConsultarNfseServicoTomadoRequest>';
 
-  Result := Executar(SoapAction + 'ConsultarNfseServicoTomado', Request,
-                     ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'ConsultarNfseServicoTomado', Request,
+                       ['ConsultarNfseServicoTomadoResponse', 'outputXML',
+                        'ConsultarNfseServicoTomadoResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:ConsultarNfseServicoTomado>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:ConsultarNfseServicoTomado>';
+
+    Result := Executar(SoapAction + 'ConsultarNfseServicoTomado', Request,
+                       ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.Cancelar(const ACabecalho,
@@ -704,13 +823,28 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:CancelarNfse>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:CancelarNfse>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:CancelarNfseRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:CancelarNfseRequest>';
 
-  Result := Executar(SoapAction + 'CancelarNfse', Request,
-                     ['CancelarNfseResult', 'CancelarNfseResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'CancelarNfse', Request,
+                       ['CancelarNfseResponse', 'outputXML',
+                        'CancelarNfseResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:CancelarNfse>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:CancelarNfse>';
+
+    Result := Executar(SoapAction + 'CancelarNfse', Request,
+                       ['CancelarNfseResult', 'CancelarNfseResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.SubstituirNFSe(const ACabecalho,
@@ -720,13 +854,28 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ws:SubstituirNfse>';
-  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
-  Request := Request + '</ws:SubstituirNfse>';
+  if SubVersao = 1 then
+  begin
+    Request := '<ws:SubstituirNfseRequest>';
+    Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+    Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+    Request := Request + '</ws:SubstituirNfseRequest>';
 
-  Result := Executar(SoapAction + 'SubstituirNfse', Request,
-                     ['SubstituirNfseResult', 'SubstituirNfseResposta'],
-                     [NameSpace]);
+    Result := Executar(SoapAction + 'SubstituirNfse', Request,
+                       ['SubstituirNfseResponse', 'outputXML',
+                        'SubstituirNfseResposta'],
+                       [NameSpace]);
+  end
+  else
+  begin
+    Request := '<ws:SubstituirNfse>';
+    Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
+    Request := Request + '</ws:SubstituirNfse>';
+
+    Result := Executar(SoapAction + 'SubstituirNfse', Request,
+                       ['SubstituirNfseResult', 'SubstituirNfseResposta'],
+                       [NameSpace]);
+  end;
 end;
 
 function TACBrNFSeXWebserviceSigCorp204.TratarXmlRetornado(

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 02/10/2024
+-- Diversos --
+[*] #TK-6045 - Alteração visando a possibilidade de não imprimir a data/hora de impressão
+    no DANFSE com base se o usuário foi informado ou não.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluído o novo provedor e a nova URL de produção para a cidade de Umuarama/PR,
     mas essa alteração só deve ser efetivada a partir do dia 31/10/2024.

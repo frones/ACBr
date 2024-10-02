@@ -280,7 +280,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrDFeUtil,
   ACBrNFSeXClass,
   ACBrValidador, ACBrDFeReportFortes;
@@ -346,16 +346,13 @@ begin
     rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   rlmDadosAdicionais.Lines.EndUpdate;
-  rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s'), [FormatDateTime('dd/mm/yyyy hh:nn', Now)]);
 
-  if fpDANFSe.Usuario <> '' then
-    rllDataHoraImpressao.Caption := Format(ACBrStr('%s   USUÁRIO: %s'), [rllDataHoraImpressao.Caption, fpDANFSe.Usuario]);
+  rllDataHoraImpressao.Visible := NaoEstaVazio(fpDANFSe.Usuario);
+  rllDataHoraImpressao.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') +
+                               FormatDateTimeBr(Now) + ' - ' + fpDANFSe.Usuario;
 
-  // imprime sistema
-  if fpDANFSe.Sistema <> '' then
-    rllSistema.Caption := Format('Desenvolvido por %s', [fpDANFSe.Sistema])
-  else
-    rllSistema.Caption := '';
+  rllSistema.Visible := NaoEstaVazio(fpDANFSe.Sistema);
+  rllSistema.Caption := Format('Desenvolvido por %s', [fpDANFSe.Sistema]);
 
   // Exibe canhoto
   rlbCanhoto.Visible := fpDANFSe.ImprimeCanhoto;

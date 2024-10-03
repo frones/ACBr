@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/10/2024
+-- ACBrCTeServicos --
+[+] Incluída as URLs de produção e homologação de recepção do 
+    CT-e Simplificado das UF: MG, MS e SP.
+   Por: Italo Giurizzato Junior
+
 01/10/2024
 -- ACBrCTe.RetConsSit.pas --
 [*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc

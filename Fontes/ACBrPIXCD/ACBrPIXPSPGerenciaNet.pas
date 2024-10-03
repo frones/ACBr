@@ -42,12 +42,13 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cGerenciaNetURLSandbox      = 'https://api-pix-h.gerencianet.com.br';
-  cGerenciaNetURLProducao     = 'https://api-pix.gerencianet.com.br';
+  cGerenciaNetURLSandbox      = 'https://pix-h.api.efipay.com.br';
+  cGerenciaNetURLProducao     = 'https://pix.api.efipay.com.br';
   cGerenciaNetPathAuthToken   = '/oauth/token';
   cGerenciaNetPathAPIPix      = '/v2';
   cGerenciaNetURLAuthTeste    = cGerenciaNetURLSandbox+cGerenciaNetPathAuthToken;
   cGerenciaNetURLAuthProducao = cGerenciaNetURLProducao+cGerenciaNetPathAuthToken;
+  cGerenciaNetPartinerToken = 'x-partner-token: ';
 
 type
 
@@ -57,10 +58,19 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrPSPGerenciaNet = class(TACBrPSPCertificate)
+  private
+    fPartinerToken: String;
   protected
     function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
+    procedure ConfigurarHeaders(const Method, AURL: String); override;
   public
     procedure Autenticar; override;
+
+  published
+    property ClientID;
+    property ClientSecret;
+
+    property PartinerToken: String read fPartinerToken write fPartinerToken;
   end;
 
 implementation
@@ -70,6 +80,13 @@ uses
   ACBrJSON, ACBrUtil.Strings;
 
 { TACBrPSPGerenciaNet }
+
+procedure TACBrPSPGerenciaNet.ConfigurarHeaders(const Method, AURL: String);
+begin
+  inherited ConfigurarHeaders(Method, AURL);
+
+  Http.Headers.Add(cGerenciaNetPartinerToken + PartinerToken);
+end;
 
 function TACBrPSPGerenciaNet.ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String;
 begin

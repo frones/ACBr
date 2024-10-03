@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2024
+-- ACBrLibNFeConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+   Por: Antonio Carlos Junior
+
 06/09/2024
 -- ACBrNFeBase.php, ACBrNFeServicosMT.php, ACBrNFeServicosST.php --
 [+] #TK-4956-1: Adicionados campos no programa de exemplo em PHP para configuração do LogPath e LogNivel 

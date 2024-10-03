@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/10/2024
+-- ACBrNFSeXServicos --
+[*] Incluído o novo provedor e a nova URL de produção para a cidade de Muriaé/MG,
+    mas essa alteração só deve ser efetivada a partir do dia 31/10/2024.
+   Por: Paulo R G Oliveira
+
 02/10/2024
 -- Lexsom.GravarXml/Link3.GravarXml/MegaSoft.GravarXml/Mitra.GravarXml --
 -- ModernizacaoPublica.GravarXml/NFEletronica.Provider/NFSeBrasil.GravarXml --

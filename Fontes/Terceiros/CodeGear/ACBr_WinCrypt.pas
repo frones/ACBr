@@ -1559,11 +1559,11 @@ function CryptAcquireContextW(var phProv: HCRYPTPROV; szContainer: LPCWSTR;
   szProvider: LPCWSTR; dwProvType: DWORD; dwFlags: DWORD): BOOL; stdcall;
 {$EXTERNALSYM CryptAcquireContext}
 {$ifdef UNICODE}
-  function CryptAcquireContext(var phProv: HCRYPTPROV; szContainer: LPCSTR;
-    szProvider: LPCSTR; dwProvType: DWORD; dwFlags: DWORD): BOOL; stdcall;
-{$else}
   function CryptAcquireContext(var phProv: HCRYPTPROV; szContainer: LPCWSTR;
     szProvider: LPCWSTR; dwProvType: DWORD; dwFlags: DWORD): BOOL; stdcall;
+{$else}
+  function CryptAcquireContext(var phProv: HCRYPTPROV; szContainer: LPCSTR;
+    szProvider: LPCSTR; dwProvType: DWORD; dwFlags: DWORD): BOOL; stdcall;
 {$endif}
 
 {$EXTERNALSYM CryptReleaseContext}

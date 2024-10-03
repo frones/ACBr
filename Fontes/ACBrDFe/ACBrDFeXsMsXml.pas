@@ -105,7 +105,8 @@ var
   xmldsig: IXMLDigitalSignature;
   dsigKey: IXMLDSigKey;
   ProviderType: DWORD;
-  ProviderName, ContainerName, Erro: String;
+  ProviderName, ContainerName: {$IfDef UNICODE}WideString{$Else}String{$EndIf};
+  Erro: String;
   { // Nova implementação usando IXMLDigitalSignatureEx. porem, falha em algumas raras situações
   xmldsigEx: IXMLDigitalSignatureEx;
   dsigKeyEx: IXMLDSigKeyEx;}

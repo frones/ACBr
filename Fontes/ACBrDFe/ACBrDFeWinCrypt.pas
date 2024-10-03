@@ -6,6 +6,7 @@
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:  André Ferreira de Moraes                       }
+{                               Arimateia Jr (https://nuvemfiscal.com.br       }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -110,8 +111,9 @@ function GetCNGProviderParamString(ACryptHandle: NCRYPT_HANDLE; dwParam: LPCWSTR
 function GetCNGProviderParamDWord(ACryptHandle: NCRYPT_HANDLE; dwParam: LPCWSTR): DWORD;
 function GetCNGProviderIsHardware(ACryptHandle: NCRYPT_HANDLE): Boolean;
 
-procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT;
-   out ProviderType: DWORD; out ProviderName, ContainerName: String);
+function GetProviderInfo(ACertContext: PCCERT_CONTEXT;
+   out ProviderType: DWORD; out ProviderName, ContainerName: {$IfDef UNICODE}WideString{$Else}String{$EndIf};
+   RaiseExceptions: Boolean = True): Boolean;
 
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; const ExtensionName: String): PCERT_EXTENSION;
 function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; const ExtensionName: String): PCERT_ALT_NAME_INFO;
@@ -419,35 +421,44 @@ begin
   end;
 end;
 
-procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT; out
-  ProviderType: DWORD; out ProviderName, ContainerName: String);
+function GetProviderInfo(ACertContext: PCCERT_CONTEXT; out
+  ProviderType: DWORD; out ProviderName, ContainerName: {$IfDef UNICODE}WideString{$Else}String{$EndIf};
+  RaiseExceptions: Boolean): Boolean;
 var
   CryptKeyProvInfo: CRYPT_KEY_PROV_INFO;
   pcbData: DWORD;
   pvData: Pointer;
 begin
+  Result := False;
   ZeroMemory(@CryptKeyProvInfo, SizeOf(CryptKeyProvInfo));
 
-  if not CertGetCertificateContextProperty( ACertContext,
-                                            CERT_KEY_PROV_INFO_PROP_ID,
-                                            Nil,
-                                            pcbData) then
-    raise EACBrDFeException.Create( 'GetProviderInfo: Erro obtendo BufferSize de "CERT_KEY_PROV_INFO_PROP_ID"');
-
-  pvData := AllocMem(pcbData);
   try
     if not CertGetCertificateContextProperty( ACertContext,
                                               CERT_KEY_PROV_INFO_PROP_ID,
-                                              pvData,
+                                              Nil,
                                               pcbData) then
-      raise EACBrDFeException.Create( 'GetProviderInfo: Erro obtendo CERT_KEY_PROV_INFO_PROP_ID');
+      raise EACBrDFeException.Create( 'GetProviderInfo: Erro obtendo BufferSize de "CERT_KEY_PROV_INFO_PROP_ID"');
 
-    CryptKeyProvInfo := CRYPT_KEY_PROV_INFO( pvData^ );
-    ProviderType  := CryptKeyProvInfo.dwProvType;
-    ProviderName  := String(CryptKeyProvInfo.pwszProvName);
-    ContainerName := String(CryptKeyProvInfo.pwszContainerName);
-  finally
-    Freemem(pvData);
+    pvData := AllocMem(pcbData);
+    try
+      if not CertGetCertificateContextProperty( ACertContext,
+                                                CERT_KEY_PROV_INFO_PROP_ID,
+                                                pvData,
+                                                pcbData) then
+        raise EACBrDFeException.Create( 'GetProviderInfo: Erro obtendo CERT_KEY_PROV_INFO_PROP_ID');
+
+      CryptKeyProvInfo := CRYPT_KEY_PROV_INFO( pvData^ );
+      ProviderType  := CryptKeyProvInfo.dwProvType;
+      ProviderName  := {$IfDef UNICODE}WideString{$Else}String{$EndIf}(CryptKeyProvInfo.pwszProvName);
+      ContainerName := {$IfDef UNICODE}WideString{$Else}String{$EndIf}(CryptKeyProvInfo.pwszContainerName);
+
+      Result := True;
+    finally
+      Freemem(pvData);
+    end;
+  except
+    if RaiseExceptions then
+      Raise;
   end;
 end;
 
@@ -604,6 +615,7 @@ begin
 
   AStore := PFXImportCertStore( PFXBlob, LPCWSTR(wsPass),
                                 CRYPT_EXPORTABLE {or
+                                PKCS12_ALLOW_OVERWRITE_KEY or
                                 PKCS12_PREFER_CNG_KSP or
                                 PKCS12_INCLUDE_EXTENDED_PROPERTIES});
   if AStore = nil then
@@ -1065,9 +1077,13 @@ begin
 end;
 
 procedure TDFeWinCrypt.DescarregarCertificado;
+var
+  CryptProv: HCRYPTPROV;
+  ProviderType: Cardinal;
+  ProviderName, ContainerName: {$IfDef UNICODE}WideString{$Else}String{$EndIf};
+  Ok: BOOL;
 begin
-  if (FpDadosCertificado.NumeroSerie <> '') and
-     (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
+  if (FpDadosCertificado.NumeroSerie <> '') and (Pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
   begin
     try
       SetCertContextPassword( FpCertContext, '' );
@@ -1079,7 +1095,24 @@ begin
 
   // Limpando objetos da MS CryptoAPI //
   if Assigned(FpCertContext) then
+  begin
+    if (FpDadosCertificado.Tipo = tpcA1) and GetProviderInfo(FpCertContext, ProviderType, ProviderName, ContainerName, False) then
+    begin
+      // Autor: Arimateia Jr
+      // Data: 23/09/2024
+      // Descrição: If the PKCS12_NO_PERSIST_KEY flag is *not* set, keys are
+      //            persisted on disk. If you do not want to persist the keys
+      //            beyond their usage, you must delete them by calling the
+      //            CryptAcquireContext function with the CRYPT_DELETEKEYSET
+      //            flag set in the dwFlags parameter.
+      Ok := CryptAcquireContext( CryptProv,
+                                 {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(ContainerName),
+                                 {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(ProviderName),
+                                 ProviderType, CRYPT_DELETEKEYSET);
+    end;
+
     CertFreeCertificateContext(FpCertContext);
+  end;
 
   if Assigned(FpStore) then
     CertCloseStore(FpStore, CERT_CLOSE_STORE_CHECK_FLAG);

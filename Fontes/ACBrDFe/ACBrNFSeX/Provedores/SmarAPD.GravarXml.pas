@@ -38,8 +38,10 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml,
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_SmarAPD }
@@ -74,7 +76,6 @@ type
 implementation
 
 uses
-  ACBrNFSeX,
   ACBrNFSeXConversao,
   ACBrNFSeXConsts,
   ACBrUtil.Strings,

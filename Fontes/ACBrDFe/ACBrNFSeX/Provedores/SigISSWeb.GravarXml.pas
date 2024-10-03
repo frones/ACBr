@@ -38,8 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml;
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml;
 
 type
   { Provedor com layout próprio }
@@ -55,7 +56,6 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
   ACBrNFSeXConversao;
 
 //==============================================================================

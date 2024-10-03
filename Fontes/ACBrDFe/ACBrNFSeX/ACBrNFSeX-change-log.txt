@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 03/10/2024
+-- RLZ.GravarXml/Saatri.GravarXml/SafeWeb.GravarXml/SH3.GravarXml --
+-- Siam.GravarXml/SiapNet.GravarXml/Siappa.GravarXml/SiapSistemas.GravarXml --
+-- SigCorp.GravarXml/Sigep.GravarXml/SigISS.GravarXml/SigISSWeb.GravarXml --
+-- SilTecnologia.GravarXml/SimplISS.GravarXml/SisPMJP.GravarXml --
+-- Sistemas4R.GravarXml/SmarAPD.GravarXml/SoftPlan.GravarXml --
+-- SpeedGov.GravarXml/Sudoeste.GravarXml/SystemPro.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Sao Francisco do Sul/SC mudou a versão e as URL, o provedor continua
     o mesmo.

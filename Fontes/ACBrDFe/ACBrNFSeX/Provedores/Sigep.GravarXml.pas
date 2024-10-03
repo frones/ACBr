@@ -38,9 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao,
-  ACBrNFSeXConsts;
+  ACBrXmlBase,
+  ACBrNFSeXGravarXml_ABRASFv2,
+  ACBrNFSeXConversao;
 
 type
   { TNFSeW_Sigep200 }

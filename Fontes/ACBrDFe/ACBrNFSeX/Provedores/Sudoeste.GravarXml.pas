@@ -38,7 +38,6 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase,
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
@@ -54,6 +53,7 @@ type
 implementation
 
 uses
+  ACBrXmlBase,
   ACBrUtil.Strings;
 
 //==============================================================================

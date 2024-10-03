@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
+  ACBrXmlBase,
+  ACBrXmlDocument,
   ACBrNFSeXGravarXml;
 
 type
@@ -54,10 +55,7 @@ type
 implementation
 
 uses
-  ACBrNFSeXConversao,
-  ACBrNFSeXConsts,
-  ACBrUtil.Strings,
-  ACBrNFSeXClass;
+  ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

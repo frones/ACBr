@@ -45,6 +45,9 @@ Símbolo : Significado
 
 03/10/2024
 -- ACBrNFSeXServicos --
+[*] A cidade de Sao Francisco do Sul/SC mudou a versão e as URL, o provedor continua
+    o mesmo.
+   Por: Alex Leiva
 [*] Incluído o novo provedor e a nova URL de produção para a cidade de Muriaé/MG,
     mas essa alteração só deve ser efetivada a partir do dia 31/10/2024.
    Por: Paulo R G Oliveira

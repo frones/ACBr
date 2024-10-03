@@ -50,8 +50,8 @@ type
     function GetToken: string;
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
-    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
+//    function ConsultarLote(const ACabecalho, AMSG: String): string; override;
+//    function ConsultarSituacao(const ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(const ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(const ACabecalho, AMSG: String): string; override;
     function ConsultarLinkNFSe(const ACabecalho, AMSG: String): string; override;
@@ -72,22 +72,19 @@ type
 
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
     {
-    procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
     procedure GerarMsgDadosConsultaSituacao(Response: TNFSeConsultaSituacaoResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
 
-    procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure GerarMsgDadosConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+    }
 
-    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure GerarMsgDadosConsultaporRps(Response: TNFSeConsultaNFSeporRpsResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
-    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure GerarMsgDadosConsultaNFSe(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
@@ -96,15 +93,17 @@ type
     procedure GerarMsgDadosConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaLinkNFSe(Response: TNFSeConsultaLinkNFSeResponse); override;
-    }
+
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
-//    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
 implementation
 
 uses
+  StrUtils,
+  ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
@@ -122,7 +121,8 @@ begin
 
   with ConfigGeral do
   begin
-    UseCertificateHTTP := True;
+    UseCertificateHTTP := False;
+    {
     UseAuthorizationHeader := False;
     NumMaxRpsGerar  := 1;
     NumMaxRpsEnviar := 50;
@@ -130,18 +130,17 @@ begin
     TabServicosExt := False;
     Identificador := 'Id';
     QuebradeLinha := ';';
+    }
+    ConsultaSitLote := False;
+    ConsultaLote := False;
+    ConsultaNFSe := False;
 
-    ConsultaSitLote := True;
-    ConsultaLote := True;
-    ConsultaNFSe := True;
-    ConsultaPorFaixa := False;
-    CancPreencherMotivo := False;
-    CancPreencherSerieNfse := False;
-    CancPreencherCodVerificacao := False;
-
+    Autenticacao.RequerCertificado := False;
     Autenticacao.RequerChaveAcesso := True;
     Autenticacao.RequerChaveAutorizacao := True;
 
+    ServicosDisponibilizados.ConsultarSituacao := False;
+    ServicosDisponibilizados.ConsultarLote := False;
     ServicosDisponibilizados.ConsultarLinkNfse := True;
   end;
 
@@ -152,9 +151,10 @@ begin
   with ConfigSchemas do
   begin
     Recepcionar := 'nfse.xsd';
-    ConsultarLote := 'nfse.xsd';
-    CancelarNFSe := 'nfse.xsd';
+    ConsultarNFSeRps := 'nfse.xsd';
+    ConsultarNFSe := 'nfse.xsd';
     ConsultarLinkNFSe := 'nfse.xsd';
+    CancelarNFSe := 'nfse.xsd';
 
     Validar := False;
   end;
@@ -249,6 +249,234 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderNFEletronica.GerarMsgDadosConsultaporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse; Params: TNFSeParamsResponse);
+begin
+  Response.ArquivoEnvio := '<ws:referencia>' +
+                              Response.NumeroRps +
+                           '</ws:referencia>';
+end;
+
+procedure TACBrNFSeProviderNFEletronica.TratarRetornoConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+  strRetorno: string;
+begin
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('Consulta_Ref_DetalheResult'), tcStr);
+
+      if not StringIsXML(strRetorno) then
+      begin
+        Response.ArquivoRetorno := '<Consulta_Ref_DetalheResult>' +
+                                     '<ListaMensagemRetorno>' +
+                                       '<MensagemRetorno>' +
+                                         '<Codigo>' + '</Codigo>' +
+                                         '<Mensagem>' + strRetorno + '</Mensagem>' +
+                                         '<Correcao>' + '</Correcao>' +
+                                       '</MensagemRetorno>' +
+                                     '</ListaMensagemRetorno>' +
+                                   '</Consulta_Ref_DetalheResult>';
+
+        Document.Clear;
+        Document.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := Document.Root;
+      end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderNFEletronica.GerarMsgDadosConsultaNFSe(
+  Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  InfConsulta: TInfConsultaNFSe;
+begin
+  InfConsulta := Response.InfConsultaNFSe;
+
+  Response.ArquivoEnvio := '<ws:numNota>' +
+                              OnlyNumber(InfConsulta.NumeroIniNFSe) +
+                           '</ws:numNota>';
+end;
+
+procedure TACBrNFSeProviderNFEletronica.TratarRetornoConsultaNFSe(
+  Response: TNFSeConsultaNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+  strRetorno: string;
+begin
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('ConsultaXmlNotaResult'), tcStr);
+
+      if not StringIsXML(strRetorno) then
+      begin
+        Response.ArquivoRetorno := '<ConsultaXmlNotaResult>' +
+                                     '<ListaMensagemRetorno>' +
+                                       '<MensagemRetorno>' +
+                                         '<Codigo>' + '</Codigo>' +
+                                         '<Mensagem>' + strRetorno + '</Mensagem>' +
+                                         '<Correcao>' + '</Correcao>' +
+                                       '</MensagemRetorno>' +
+                                     '</ListaMensagemRetorno>' +
+                                   '</ConsultaXmlNotaResult>';
+
+        Document.Clear;
+        Document.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := Document.Root;
+      end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderNFEletronica.PrepararConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
+var
+  aParams: TNFSeParamsResponse;
+begin
+  aParams := TNFSeParamsResponse.Create;
+  try
+    aParams.Clear;
+
+    GerarMsgDadosConsultaLinkNFSe(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderNFEletronica.GerarMsgDadosConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse; Params: TNFSeParamsResponse);
+begin
+  Response.ArquivoEnvio := IfThen(Response.InfConsultaLinkNFSe.NumeroRps <> 0,
+                             '<ws:referencia>' +
+                                IntToStr(Response.InfConsultaLinkNFSe.NumeroRps) +
+                             '</ws:referencia>', '') +
+                           IfThen(not EstaVazio(Response.InfConsultaLinkNFSe.NumeroNFSe),
+                             '<ws:num_NF>' +
+                                Response.InfConsultaLinkNFSe.NumeroNFSe +
+                             '</ws:num_NF>', '');
+end;
+
+procedure TACBrNFSeProviderNFEletronica.TratarRetornoConsultaLinkNFSe(
+  Response: TNFSeConsultaLinkNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+  strRetorno: string;
+begin
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('Consulta_LinkResult'), tcStr);
+
+      if not StringIsXML(strRetorno) then
+      begin
+        Response.ArquivoRetorno := '<Consulta_LinkResult>' +
+                                     '<ListaMensagemRetorno>' +
+                                       '<MensagemRetorno>' +
+                                         '<Codigo>' + '</Codigo>' +
+                                         '<Mensagem>' + strRetorno + '</Mensagem>' +
+                                         '<Correcao>' + '</Correcao>' +
+                                       '</MensagemRetorno>' +
+                                     '</ListaMensagemRetorno>' +
+                                   '</Consulta_LinkResult>';
+
+        Document.Clear;
+        Document.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := Document.Root;
+      end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
 procedure TACBrNFSeProviderNFEletronica.GerarMsgDadosCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
 var
@@ -256,14 +484,71 @@ var
 begin
   InfoCanc := Response.InfCancelamento;
 
-  with Params do
-  begin
-    Response.ArquivoEnvio := '<ws:nNF>' +
-                                InfoCanc.NumeroNFSe +
-                             '</ws:nNF>' +
-                             '<ws:motivo>' +
-                                InfoCanc.MotCancelamento +
-                             '</ws:motivo>';
+  Response.ArquivoEnvio := '<ws:nNF>' +
+                              InfoCanc.NumeroNFSe +
+                           '</ws:nNF>' +
+                           '<ws:motivo>' +
+                              InfoCanc.MotCancelamento +
+                           '</ws:motivo>';
+end;
+
+procedure TACBrNFSeProviderNFEletronica.TratarRetornoCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
+  strRetorno: string;
+begin
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := ACBrStr(Desc201);
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('Cancela_NFeResult'), tcStr);
+
+      if not StringIsXML(strRetorno) then
+      begin
+        Response.ArquivoRetorno := '<Cancela_NFeResult>' +
+                                     '<ListaMensagemRetorno>' +
+                                       '<MensagemRetorno>' +
+                                         '<Codigo>' + '</Codigo>' +
+                                         '<Mensagem>' + strRetorno + '</Mensagem>' +
+                                         '<Correcao>' + '</Correcao>' +
+                                       '</MensagemRetorno>' +
+                                     '</ListaMensagemRetorno>' +
+                                   '</Cancela_NFeResult>';
+
+        Document.Clear;
+        Document.LoadFromXml(Response.ArquivoRetorno);
+
+        ANode := Document.Root;
+      end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 
@@ -291,7 +576,7 @@ begin
                      Request, [],
                      ['xmlns:ws="http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx"']);
 end;
-
+{
 function TACBrNFSeXWebserviceNFEletronica.ConsultarLote(const ACabecalho, AMSG: String): string;
 var
   Request: string;
@@ -323,21 +608,21 @@ begin
                      ['outputXML', 'ConsultarSituacaoLoteRpsResposta'],
                      []);
 end;
-
+}
 function TACBrNFSeXWebserviceNFEletronica.ConsultarNFSePorRps(const ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<wsn:ConsultarNfsePorRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</wsn:ConsultarNfsePorRpsRequest>';
+  Request := '<ws:Consulta_Ref_Detalhe>';
+  Request := Request + AMSG;
+  Request := Request + Token;
+  Request := Request + '</ws:Consulta_Ref_Detalhe>';
 
-  Result := Executar('', Request,
-                     ['outputXML', 'ConsultarNfseRpsResposta'],
-                     []);
+  Result := Executar('http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx/Consulta_Ref_Detalhe',
+                     Request, [],
+                     ['xmlns:ws="http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx"']);
 end;
 
 function TACBrNFSeXWebserviceNFEletronica.ConsultarNFSe(const ACabecalho, AMSG: String): string;
@@ -346,20 +631,31 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<wsn:ConsultarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</wsn:ConsultarNfseRequest>';
+  Request := '<ws:ConsultaXmlNota>';
+  Request := Request + Token;
+  Request := Request + AMSG;
+  Request := Request + '</ws:ConsultaXmlNota>';
 
-  Result := Executar('', Request,
-                     ['outputXML', 'ConsultarNfseResposta'],
-                     []);
+  Result := Executar('http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx/ConsultaXmlNota',
+                     Request, [],
+                     ['xmlns:ws="http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx"']);
 end;
 
 function TACBrNFSeXWebserviceNFEletronica.ConsultarLinkNFSe(const ACabecalho,
   AMSG: String): string;
+var
+  Request: string;
 begin
-  // Implementar
+  FPMsgOrig := AMSG;
+
+  Request := '<ws:Consulta_Link>';
+  Request := Request + AMSG;
+  Request := Request + Token;
+  Request := Request + '</ws:Consulta_Link>';
+
+  Result := Executar('http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx/Consulta_Link',
+                     Request, [],
+                     ['xmlns:ws="http://www.nf-eletronica.com.br/ws_nf/WS_NF_Serv.asmx"']);
 end;
 
 function TACBrNFSeXWebserviceNFEletronica.Cancelar(const ACabecalho, AMSG: String): string;

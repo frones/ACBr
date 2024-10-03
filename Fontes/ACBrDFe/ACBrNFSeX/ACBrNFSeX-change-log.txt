@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 03/10/2024
+-- NFEletronica.Provider --
+[+] Implementado os métodos de Consultas e Cancelamento, fica faltando agora
+    as rotinas que tratam dos retornos dos métodos.
+  Por: Italo Giurizzato Junior
 -- RLZ.GravarXml/Saatri.GravarXml/SafeWeb.GravarXml/SH3.GravarXml --
 -- Siam.GravarXml/SiapNet.GravarXml/Siappa.GravarXml/SiapSistemas.GravarXml --
 -- SigCorp.GravarXml/Sigep.GravarXml/SigISS.GravarXml/SigISSWeb.GravarXml --

@@ -45,6 +45,9 @@ Símbolo : Significado
 
 04/10/2024
 -- ACBrNFSeXServicos --
+[*] #TK-6053 - A cidade de Belford Roxo/RJ mudou a porta da URL de produção, 
+    o provedor continua o mesmo.
+   Por: Anderson Grolli
 [*] A cidade de Laranjal Paulista/SP mudou as URL, o provedor continua o mesmo.
    Por: Junior NBJ
 

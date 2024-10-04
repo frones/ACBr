@@ -438,8 +438,8 @@ end;
 
 function TACBrNFSeXWebserviceDSF200.TratarXmlRetornado(
   const aXML: string): string;
-var
-  Xml: string;
+//var
+//  Xml: string;
 begin
   //Xml := ConverteANSIparaUTF8(aXML);
   //Xml := RemoverDeclaracaoXML(Xml);

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 04/10/2024
+-- TcheInfo.GravarXml/Tecnos.GravarXml/Thema.GravarXml/Tinus.GravarXml --
+-- Tiplan.GravarXml/Tributus.GravarXml/VersaTecnologia.GravarXml --
+-- Virtual.GravarXml/WebFisco.GravarXml/WebISS.GravarXml --
+[*] Remoção de units declaradas em uses e não utilizadas.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6053 - A cidade de Belford Roxo/RJ mudou a porta da URL de produção, 
     o provedor continua o mesmo.

@@ -38,8 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv1,
+  ACBrNFSeXConversao;
 
 type
   { TNFSeW_Tinus }

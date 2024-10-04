@@ -38,8 +38,9 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXConsts, ACBrNFSeXParametros, ACBrNFSeXConversao,
+  ACBrXmlBase,
+  ACBrXmlDocument,
+  ACBrNFSeXConsts,
   ACBrNFSeXGravarXml_ABRASFv1;
 
 type

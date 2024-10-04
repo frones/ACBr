@@ -38,8 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrNFSeXGravarXml_ABRASFv2;
 
 type
   { TNFSeW_Virtual202 }

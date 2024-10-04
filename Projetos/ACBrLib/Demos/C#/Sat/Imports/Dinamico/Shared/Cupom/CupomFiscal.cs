@@ -8,6 +8,9 @@ namespace ACBrLib.Sat
 {
     public sealed class CupomFiscal
     {
+        CSTPIS[] onlyCSTPISValues = { CSTPIS.pis04, CSTPIS.pis06, CSTPIS.pis07, CSTPIS.pis08, CSTPIS.pis09, CSTPIS.pis49 };
+        CSTCofins[] onlyCSTCOFINsValues = { CSTCofins.cof04, CSTCofins.cof06, CSTCofins.cof07, CSTCofins.cof08, CSTCofins.cof09, CSTCofins.cof49 };
+
         #region Constructor
 
         public CupomFiscal()
@@ -65,9 +68,6 @@ namespace ACBrLib.Sat
             iniData.WriteToIni(Destinatario, "Destinatario");
             if (!string.IsNullOrEmpty(Entrega.xCpl))
                 iniData.WriteToIni(Entrega, "Entrega");
-
-            CSTPIS[] onlyCSTPISValues = {CSTPIS.pis04, CSTPIS.pis06, CSTPIS.pis07, CSTPIS.pis08, CSTPIS.pis09, CSTPIS.pis49};
-            CSTCofins[] onlyCSTCOFINsValues = { CSTCofins.cof04, CSTCofins.cof06, CSTCofins.cof07, CSTCofins.cof08, CSTCofins.cof09, CSTCofins.cof49 };
 
             for (var i = 0; i < Produtos.Count; i++)
             {

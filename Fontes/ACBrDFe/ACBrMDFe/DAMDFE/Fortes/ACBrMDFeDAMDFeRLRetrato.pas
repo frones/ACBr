@@ -517,7 +517,7 @@ begin
   rlmObservacao.Lines.BeginUpdate;
   rlmObservacao.Lines.Clear;
   rlmObservacao.Lines.Add(StringReplace(fpMDFe.infAdic.infCpl, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
-  rlmObservacao.Lines.Text := StringReplace(rlmObservacao.Lines.Text, ';', #13, [rfReplaceAll]);
+  rlmObservacao.Lines.Text := StringReplace(rlmObservacao.Lines.Text, fpDAMDFe.CaractereQuebraDeLinha, #13, [rfReplaceAll]);
   rlmObservacao.Lines.EndUpdate;
 
   // Mensagem para modo Homologacao.

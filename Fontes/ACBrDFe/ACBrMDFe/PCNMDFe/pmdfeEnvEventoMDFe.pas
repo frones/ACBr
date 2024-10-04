@@ -451,7 +451,7 @@ begin
   RetEventoMDFe := TRetEventoMDFe.Create;
 
   try
-    RetEventoMDFe.Leitor.Arquivo := AXML;
+    RetEventoMDFe.Leitor.Arquivo := UTF8ToNativeString(AXML);
     Result := RetEventoMDFe.LerXml;
 
     with FEvento.New do

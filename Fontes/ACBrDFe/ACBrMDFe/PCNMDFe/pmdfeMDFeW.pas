@@ -145,7 +145,7 @@ begin
   FGerador := TGerador.Create;
 
   FGerador.FIgnorarTagNivel   := '|?xml version|MDFe xmlns|infMDFe versao|';
-  FGerador.Opcoes.QuebraLinha := ';';
+  FGerador.Opcoes.QuebraLinha := '|';
 
   FOpcoes := TGeradorOpcoes.Create;
 

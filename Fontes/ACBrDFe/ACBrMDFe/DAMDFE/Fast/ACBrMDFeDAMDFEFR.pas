@@ -1256,11 +1256,7 @@ end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaIdentificacao;
 var
-  vTemp:TStringList;
   wObs:String;
-  Campos:TSplitResult;
-  IndexCampo:Integer;
-  TmpStr:String;
   BufferObs:String;
   I:integer;
 begin
@@ -1321,22 +1317,12 @@ begin
 
     // Incluido por Paulo Hostert em 18/11/2014.
     wObs := FMDFe.infAdic.infCpl;
-    vTemp := TStringList.Create;
-    try
-      if Trim(wObs) <> '' then
-      begin
-        Campos := Split(';', wObs);
-        for IndexCampo := 0 to Length(Campos) - 1 do
-          vTemp.Add(Trim(Campos[IndexCampo]));
 
-        TmpStr := vTemp.Text;
-        BufferObs := TmpStr;
-      end
-      else
-        BufferObs := '';
-    finally
-      vTemp.Free;
-    end;
+    if Trim(wObs) <> '' then
+      BufferObs := StringReplace(wObs, FDAMDFEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll, rfIgnoreCase])
+    else
+      BufferObs := '';
+
     FieldByName('OBS').AsString := BufferObs;
     FieldByName('dhIniViagem').AsDateTime := FMDFe.Ide.dhIniViagem;
 

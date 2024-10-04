@@ -83,6 +83,7 @@ type
     procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); overload; virtual;
     procedure ImprimirEVENTOPDF(AStream: TStream; AMDFe: TMDFe = nil); overload; virtual;
 
+    function CaractereQuebraDeLinha: String;
   published
     property ACBrMDFe: TComponent           read FACBrMDFe               write SetACBrMDFe;
     property ImprimeHoraSaida: Boolean      read FImprimirHoraSaida      write FImprimirHoraSaida;
@@ -224,6 +225,13 @@ begin
                          DescricaoModelo);
      end;
   end;
+end;
+
+function TACBrMDFeDAMDFeClass.CaractereQuebraDeLinha: String;
+begin
+  Result := '|';
+  if Assigned(FACBrMDFe) and (FACBrMDFe is TACBrMDFe) then
+    Result := TACBrMDFe(FACBrMDFe).Configuracoes.WebServices.QuebradeLinha;
 end;
 
 end.

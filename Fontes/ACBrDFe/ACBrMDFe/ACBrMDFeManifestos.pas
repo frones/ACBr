@@ -1185,6 +1185,7 @@ begin
     FMDFeW.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FMDFeW.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FMDFeW.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FMDFeW.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
     FMDFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FMDFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
 {$Else}
@@ -1192,6 +1193,7 @@ begin
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FMDFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FMDFeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+    FMDFeW.Gerador.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
     FMDFeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FMDFeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
 {$EndIf}

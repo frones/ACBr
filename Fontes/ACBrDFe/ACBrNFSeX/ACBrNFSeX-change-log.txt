@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/10/2024
+-- ACBrNFSeXServicos --
+[*] A cidade de Laranjal Paulista/SP mudou as URL, o provedor continua o mesmo.
+   Por: Junior NBJ
+
 03/10/2024
 -- NFEletronica.Provider --
 [+] Implementado os métodos de Consultas e Cancelamento, fica faltando agora

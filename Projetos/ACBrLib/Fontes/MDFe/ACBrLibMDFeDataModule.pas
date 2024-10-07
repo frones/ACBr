@@ -49,7 +49,6 @@ type
     ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
   private
-    fpLib: TACBrLib;
     DAMDFe: TACBrMDFeDAMDFeRL;
 
   public

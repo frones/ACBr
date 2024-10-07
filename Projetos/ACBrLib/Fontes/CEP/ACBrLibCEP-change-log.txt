@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/10/2024
+-- ACBrLibCEPConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+   Por: Antonio Carlos Junior
+
 10/08/2024
 -- ACBrLibCEP.dpr --
 [+] Adicionado Projeto para compilação em Delphi

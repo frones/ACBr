@@ -389,6 +389,7 @@ type
 
 function InitLibXml2Interface: Boolean;
 function DestroyLibXml2Interface: Boolean;
+function LibXml2InterfaceInicializada: Boolean;
 
 procedure xmlInitCharEncodingHandlers();
 procedure xmlInitGlobals();
@@ -703,6 +704,16 @@ begin
   finally
     LibXML2CS.Leave;
   end;
+end;
+
+function LibXml2InterfaceInicializada: Boolean;
+begin
+//  LibXML2CS.Enter;
+//  try
+    Result := LibXml2Loaded;
+//  finally
+//    LibXML2CS.Leave;
+//  end;
 end;
 
 procedure ClearLibXml2EntryPoints;

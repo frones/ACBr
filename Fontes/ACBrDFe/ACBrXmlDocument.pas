@@ -307,6 +307,7 @@ type
     function GetSaveOptions: integer;
 
     procedure SetRootElement(ARootNode: TACBrXmlNode);
+    procedure RaizeExceptionTratandoNaoCarregamentoDLL;
 
   public
     constructor Create(AName: string = ''; ANamespace: string = ''; APrefix: string = '');
@@ -1337,7 +1338,7 @@ begin
       raise EACBrXmlException.Create(xmlGetLastError()^.message);
   end
   else
-    raise EACBrXmlException.Create(xmlGetLastError()^.message);
+    RaizeExceptionTratandoNaoCarregamentoDLL;
 end;
 
 procedure TACBrXmlDocument.LoadFromXml(AXmlDocument: string);
@@ -1364,7 +1365,15 @@ begin
       raise EACBrXmlException.Create(xmlGetLastError()^.message);
   end
   else
-    raise EACBrXmlException.Create(xmlGetLastError()^.message);
+    RaizeExceptionTratandoNaoCarregamentoDLL;
+end;
+
+procedure TACBrXmlDocument.RaizeExceptionTratandoNaoCarregamentoDLL;
+begin
+  if LibXml2InterfaceInicializada then
+    raise EACBrXmlException.Create(xmlGetLastError()^.message)
+  else
+    raise EACBrXmlException.Create('Não foi possível carregar a biblioteca LibXml2.');
 end;
 
 procedure TACBrXmlDocument.LoadFromStream(AStream: TStream);

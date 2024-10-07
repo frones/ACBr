@@ -1620,14 +1620,14 @@ begin
           begin
             // de 1 até 8
             sSecao := 'ideADC' + IntToStrZero(I, 3) + IntToStrZero(J, 1);
-            sFim   := INIRec.ReadString(sSecao, 'dtAcConv', 'FIM');
+            sFim   := INIRec.ReadString(sSecao, 'tpAcConv', 'FIM');
 
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
             with infoPerAnt.ideADC.New do
             begin
-              dtAcConv   := StringToDateTime(sFim);
+              dtAcConv   := StringToDateTime(INIRec.ReadString(sSecao, 'dtAcConv', '0'));
               tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
               compAcConv := INIRec.ReadString(sSecao, 'compAcConv', '');
               dtEfAcConv := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfAcConv', '0'));

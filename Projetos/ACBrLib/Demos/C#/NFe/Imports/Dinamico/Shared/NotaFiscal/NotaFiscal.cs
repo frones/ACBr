@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 
@@ -8,6 +9,9 @@ namespace ACBrLib.NFe
 {
     public sealed class NotaFiscal
     {
+        CSTPIS[] CSTPISValues = { CSTPIS.pis04, CSTPIS.pis05, CSTPIS.pis06, CSTPIS.pis07, CSTPIS.pis08, CSTPIS.pis09 };
+        CSTCofins[] CSTCofinsValues = { CSTCofins.cof04, CSTCofins.cof05, CSTCofins.cof06, CSTCofins.cof07, CSTCofins.cof08, CSTCofins.cof09 };
+
         #region Constructor
 
         public NotaFiscal()
@@ -198,15 +202,15 @@ namespace ACBrLib.NFe
                 if (produto.II.vBC.HasValue)
                     iniData.WriteToIni(produto.II, $"II{i + 1:000}");
 
-                if (produto.PIS.vBC.HasValue)
+                if (produto.PIS.vBC.HasValue || CSTPISValues.Contains(produto.PIS.CST))
                     iniData.WriteToIni(produto.PIS, $"PIS{i + 1:000}");
 
                 if (produto.PISST.vBC.HasValue)
                     iniData.WriteToIni(produto.PISST, $"PISST{i + 1:000}");
 
-                if (produto.COFINS.vBC.HasValue)
+                if (produto.COFINS.vBC.HasValue || CSTCofinsValues.Contains(produto.COFINS.CST))
                     iniData.WriteToIni(produto.COFINS, $"COFINS{i + 1:000}");
-
+                
                 if (produto.COFINSST.vBC.HasValue)
                     iniData.WriteToIni(produto.COFINSST, $"COFINSST{i + 1:000}");
 

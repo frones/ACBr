@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ComandosDistribuicaoNFeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Por Chave" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="UF:" />
+
+        <EditText
+            android:id="@+id/txtUFDFePorChave"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="CNPJ:" />
+
+        <EditText
+            android:id="@+id/txtCNPJDFePorChave"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Chave:" />
+
+        <EditText
+            android:id="@+id/txtChaveDFePorChave"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnDFePorChave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Por Chave" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Por NSU" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="UF:" />
+
+        <EditText
+            android:id="@+id/txtUFDFePorNSU"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="CNPJ:" />
+
+        <EditText
+            android:id="@+id/txtCNPJDFePorNSU"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="NSU:" />
+
+        <EditText
+            android:id="@+id/txtNSUDFePorNSU"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnDFePorNSU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Por NSU" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Por Ult. NSU" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="UF:" />
+
+        <EditText
+            android:id="@+id/txtUFDFePorUltNSU"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="CNPJ:" />
+
+        <EditText
+            android:id="@+id/txtCNPJDFePorUltNSU"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ult. NSU:" />
+
+        <EditText
+            android:id="@+id/txtUltNSUDFePorUltNSU"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnDFePorUltNSU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Por Ult. NSU" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Resposta:" />
+
+        <EditText
+            android:id="@+id/txtRespostaDistribuicaoDFe"
+            android:layout_width="349dp"
+            android:layout_height="353dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnLimparRespostaDistribuicaoDFe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Limpar Resposta" />
+
+    </LinearLayout>
+
+</ScrollView>

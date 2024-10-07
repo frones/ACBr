@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ComandosConsultaNFeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnStatusServico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Status Serviço" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Número Recibo:" />
+
+        <EditText
+            android:id="@+id/txtNumeroRecibo"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnConsultarRecibo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Consultar Recibo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="XML NFe:" />
+
+        <EditText
+            android:id="@+id/txtXMLNFe"
+            android:layout_width="349dp"
+            android:layout_height="276dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnConsultaXml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Consultar com XML" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Consultar Cadastro" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="UF:" />
+
+        <EditText
+            android:id="@+id/txtUFConsultarCadastro"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Documento:" />
+
+        <EditText
+            android:id="@+id/txtDocumentoConsultarCadastro"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnConsultarCadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Consultar Cadastro" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Consultar com Chave" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Chave:" />
+
+        <EditText
+            android:id="@+id/txtConsultarChave"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnConsultaChave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Consultar com Chave" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Resposta:" />
+
+        <EditText
+            android:id="@+id/txtRespostaConsulta"
+            android:layout_width="349dp"
+            android:layout_height="276dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnLimparRespostaConsulta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Limpar Resposta" />
+
+    </LinearLayout>
+
+</ScrollView>

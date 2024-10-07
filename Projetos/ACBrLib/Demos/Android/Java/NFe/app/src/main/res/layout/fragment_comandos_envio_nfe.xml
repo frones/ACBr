@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ComandosEnvioNFeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnLimparLista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Limpar Lista NFe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="NFe INI:" />
+
+        <EditText
+            android:id="@+id/txtNFeINI"
+            android:layout_width="346dp"
+            android:layout_height="224dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnEnviarNFe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Enviar NFe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="NFe XML:" />
+
+        <EditText
+            android:id="@+id/txtNFeXML"
+            android:layout_width="346dp"
+            android:layout_height="224dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Destinatário:" />
+
+        <EditText
+            android:id="@+id/txtDestinatario"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnEnviarEmailNFCe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Enviar DANFCe por E-mail" />
+
+        <Button
+            android:id="@+id/btnImprimirNFCe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Imprimir DANFCe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Resposta:" />
+
+        <EditText
+            android:id="@+id/txtRespostaEnvio"
+            android:layout_width="344dp"
+            android:layout_height="215dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnLimparRespostaEnvio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Limpar Resposta" />
+
+    </LinearLayout>
+
+</ScrollView>

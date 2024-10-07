@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ComandosInutilizacaoNFeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="CNPJ:" />
+
+        <EditText
+            android:id="@+id/txtCNPJInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Justificativa:" />
+
+        <EditText
+            android:id="@+id/txtJustificativaInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ano:" />
+
+        <EditText
+            android:id="@+id/txtAnoInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Modelo:" />
+
+        <EditText
+            android:id="@+id/txtModeloInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Série:" />
+
+        <EditText
+            android:id="@+id/txtSerieInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Número Inicial:" />
+
+        <EditText
+            android:id="@+id/txtNumeroInicialInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Número Final:" />
+
+        <EditText
+            android:id="@+id/txtNumeroFinalInutilizarNumeracao"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnInutilizarNumeracao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Inutilizar Numeração" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Resposta:" />
+
+        <EditText
+            android:id="@+id/txtRespostaInutilizacao"
+            android:layout_width="347dp"
+            android:layout_height="444dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/btnLimparRespostaInutilizacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Limpar Resposta" />
+
+    </LinearLayout>
+
+</ScrollView>

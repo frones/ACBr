@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ConfiguracoesArquivosFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/ckbSalvarArqs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Salvar Arquivos em Pastas Separadas" />
+
+        <CheckBox
+            android:id="@+id/ckbPastaMensal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Criar Pastas Mensalmente" />
+
+        <CheckBox
+            android:id="@+id/ckbAdicionaLiteral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Adicionar Literal no nome das pastas" />
+
+        <CheckBox
+            android:id="@+id/ckbEmissaoPathNFe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Salvar Documento pelo campo Data de Emissão" />
+
+        <CheckBox
+            android:id="@+id/ckbSalvaPathEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Salvar Arquivos de Eventos" />
+
+        <CheckBox
+            android:id="@+id/ckbSepararPorCNPJ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Separar Arqs pelo CNPJ do Certificado" />
+
+        <CheckBox
+            android:id="@+id/ckbSepararPorModelo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Separar Arqs pelo Modelo do Documento" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pasta Arquivos NFe" />
+
+        <EditText
+            android:id="@+id/txtArqNFe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pasta Arquivos Inutilização" />
+
+        <EditText
+            android:id="@+id/txtArqInu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pasta Arquivos Evento" />
+
+        <EditText
+            android:id="@+id/txtArqEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnSalvarConfiguracoesArquivos"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="Salvar Configurações" />
+
+            <Button
+                android:id="@+id/btnCarregarConfiguracoesArquivos"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="Carregar Configurações" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 08/10/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6064 - Incluída a cidade de Sao Goncalo do Sapucai/MG, o provedor é IPM.
+   Por: Marcos Giordani
+[*] #TK-6065 - A cidade de São Francisco do Sul/SC mudou as URLs, o provedor continua o mesmo.
+   Por: Gabriel Bobello
 -- Diversos --
 [*] Realizado alguns ajustes para atender o provedor NFEletronica.
   Por: Italo Giurizzato Junior

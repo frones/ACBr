@@ -1096,7 +1096,8 @@ begin
   // Limpando objetos da MS CryptoAPI //
   if Assigned(FpCertContext) then
   begin
-    if (FpDadosCertificado.Tipo = tpcA1) and GetProviderInfo(FpCertContext, ProviderType, ProviderName, ContainerName, False) then
+    if (FpDadosCertificado.Tipo = tpcA1) and
+       (FpDFeSSL.NumeroSerie = '') and (FpDFeSSL.DadosPFX <> '') then
     begin
       // Autor: Arimateia Jr
       // Data: 23/09/2024
@@ -1105,10 +1106,12 @@ begin
       //            beyond their usage, you must delete them by calling the
       //            CryptAcquireContext function with the CRYPT_DELETEKEYSET
       //            flag set in the dwFlags parameter.
-      Ok := CryptAcquireContext( CryptProv,
-                                 {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(ContainerName),
-                                 {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(ProviderName),
-                                 ProviderType, CRYPT_DELETEKEYSET);
+      OK := GetProviderInfo(FpCertContext, ProviderType, ProviderName, ContainerName, False);
+      if OK then
+        Ok := CryptAcquireContext( CryptProv,
+                                   {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(ContainerName),
+                                   {$IfDef UNICODE}LPWSTR{$Else}LPSTR{$EndIf}(ProviderName),
+                                   ProviderType, CRYPT_DELETEKEYSET);
     end;
 
     CertFreeCertificateContext(FpCertContext);

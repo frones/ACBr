@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/10/2024
+-- WebFisco.GravarXml --
+[*] Alteração visando não ter mais CNPJ de Prefeitura e Prestador fixos para o 
+    ambiente de produção.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6064 - Incluída a cidade de Sao Goncalo do Sapucai/MG, o provedor é IPM.
    Por: Marcos Giordani

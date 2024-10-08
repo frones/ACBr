@@ -92,6 +92,12 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'pass', 1, 6, 1,
                                                       Senha, '', True, xAtrib));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#', 'prf', 1, 18, 1,
+                                             CNPJPrefeitura, '', True, xAtrib));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#', 'usr', 1, 18, 1,
+              NFSe.Prestador.IdentificacaoPrestador.CpfCnpj, '', True, xAtrib));
+(*
   // as Tags abaixo só devem ser geradas em ambinte de produção
   if Ambiente = taProducao then
   begin
@@ -121,7 +127,7 @@ begin
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'usr', 1, 18, 1,
                                        '57.657.017/0001-33', '', True, xAtrib));
   end;
-
+*)
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ctr', 1, 8, 1,
                                NFSe.IdentificacaoRps.Numero, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'cnpj', 1, 18, 1,

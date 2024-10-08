@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/10/2024
+-- ACBrNFComServicos --
+[+] Incluído as URLs de homologação da SEFAZ-MG
+   Por: Italo Giurizzato Junior
+
 01/10/2024
 -- Diversos --
 [*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc

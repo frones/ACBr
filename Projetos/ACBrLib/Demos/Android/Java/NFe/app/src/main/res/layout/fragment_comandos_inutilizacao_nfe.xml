@@ -20,7 +20,7 @@
 
         <EditText
             android:id="@+id/txtCNPJInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -33,7 +33,7 @@
 
         <EditText
             android:id="@+id/txtJustificativaInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -46,7 +46,7 @@
 
         <EditText
             android:id="@+id/txtAnoInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/txtModeloInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -72,7 +72,7 @@
 
         <EditText
             android:id="@+id/txtSerieInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -85,7 +85,7 @@
 
         <EditText
             android:id="@+id/txtNumeroInicialInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -98,7 +98,7 @@
 
         <EditText
             android:id="@+id/txtNumeroFinalInutilizarNumeracao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -119,7 +119,7 @@
 
         <EditText
             android:id="@+id/txtRespostaInutilizacao"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="444dp"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />

@@ -26,7 +26,7 @@
 
         <EditText
             android:id="@+id/txtUFDFePorChave"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -39,7 +39,7 @@
 
         <EditText
             android:id="@+id/txtCNPJDFePorChave"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -52,7 +52,7 @@
 
         <EditText
             android:id="@+id/txtChaveDFePorChave"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -79,7 +79,7 @@
 
         <EditText
             android:id="@+id/txtUFDFePorNSU"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -92,7 +92,7 @@
 
         <EditText
             android:id="@+id/txtCNPJDFePorNSU"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -105,7 +105,7 @@
 
         <EditText
             android:id="@+id/txtNSUDFePorNSU"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -132,7 +132,7 @@
 
         <EditText
             android:id="@+id/txtUFDFePorUltNSU"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -145,7 +145,7 @@
 
         <EditText
             android:id="@+id/txtCNPJDFePorUltNSU"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -158,7 +158,7 @@
 
         <EditText
             android:id="@+id/txtUltNSUDFePorUltNSU"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -179,7 +179,7 @@
 
         <EditText
             android:id="@+id/txtRespostaDistribuicaoDFe"
-            android:layout_width="349dp"
+            android:layout_width="match_parent"
             android:layout_height="353dp"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />

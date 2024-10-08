@@ -46,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnConfiguracoes = findViewById(R.id.btnConfiguracoes);
         Button btnComandosNFe = findViewById(R.id.btnComandosNFe);
-
-        // Verificar e solicitar permissões Bluetooth
-
-
+        
         application = ((NfeApplication) getApplicationContext());
         ACBrNFe = application.getAcBrLibNFe();
         configurarACBrNFe();

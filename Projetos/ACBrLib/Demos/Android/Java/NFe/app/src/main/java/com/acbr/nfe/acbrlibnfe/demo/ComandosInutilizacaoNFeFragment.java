@@ -1,10 +1,6 @@
 package com.acbr.nfe.acbrlibnfe.demo;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,33 +8,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
+
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 
 public class ComandosInutilizacaoNFeFragment extends Fragment {
 
     private ACBrLibNFe ACBrNFe;
 
-    private EditText txtRespostaInutilizacao, txtCNPJInutilizarNumeracao, txtJustificativaInutilizarNumeracao, txtAnoInutilizarNumeracao,
-            txtModeloInutilizarNumeracao, txtSerieInutilizarNumeracao, txtNumeroInicialInutilizarNumeracao, txtNumeroFinalInutilizarNumeracao;
-
-    private Button btnInutilizarNumeracao, btnLimparRespostaInutilizacao;
-
-    @SuppressLint("MissingInflatedId")
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-        // Instância da biblioteca
-        ACBrNFe = ACBrLibHelper.getInstance("");
-    }
+    private EditText txtRespostaInutilizacao;
+    private EditText txtCNPJInutilizarNumeracao;
+    private EditText txtJustificativaInutilizarNumeracao;
+    private EditText txtAnoInutilizarNumeracao;
+    private EditText txtModeloInutilizarNumeracao;
+    private EditText txtSerieInutilizarNumeracao;
+    private EditText txtNumeroInicialInutilizarNumeracao;
+    private EditText txtNumeroFinalInutilizarNumeracao;
+    private Button btnInutilizarNumeracao;
+    private Button btnLimparRespostaInutilizacao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comandos_inutilizacao_nfe, container, false);
 
-        // Inicialização das views após a inflagem do layout
+        ACBrNFe = ACBrLibHelper.getInstance("");
+
         txtRespostaInutilizacao = view.findViewById(R.id.txtRespostaInutilizacao);
         txtCNPJInutilizarNumeracao = view.findViewById(R.id.txtCNPJInutilizarNumeracao);
         txtJustificativaInutilizarNumeracao = view.findViewById(R.id.txtJustificativaInutilizarNumeracao);
@@ -47,7 +42,6 @@ public class ComandosInutilizacaoNFeFragment extends Fragment {
         txtSerieInutilizarNumeracao = view.findViewById(R.id.txtSerieInutilizarNumeracao);
         txtNumeroInicialInutilizarNumeracao = view.findViewById(R.id.txtNumeroInicialInutilizarNumeracao);
         txtNumeroFinalInutilizarNumeracao = view.findViewById(R.id.txtNumeroFinalInutilizarNumeracao);
-
         btnInutilizarNumeracao = view.findViewById(R.id.btnInutilizarNumeracao);
         btnLimparRespostaInutilizacao = view.findViewById(R.id.btnLimparRespostaInutilizacao);
 
@@ -60,7 +54,7 @@ public class ComandosInutilizacaoNFeFragment extends Fragment {
 
         btnLimparRespostaInutilizacao.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 LimparRespostaInutilizacao();
             }
         });
@@ -68,7 +62,7 @@ public class ComandosInutilizacaoNFeFragment extends Fragment {
         return view;
     }
 
-    public void inutilizarNumeracao(){
+    public void inutilizarNumeracao() {
         txtRespostaInutilizacao.setText("");
         String result = "";
         String cnpj = txtCNPJInutilizarNumeracao.getText().toString();
@@ -79,22 +73,17 @@ public class ComandosInutilizacaoNFeFragment extends Fragment {
         Integer numeroInicial = Integer.parseInt(txtNumeroInicialInutilizarNumeracao.getText().toString());
         Integer numeroFinal = Integer.parseInt(txtNumeroFinalInutilizarNumeracao.getText().toString());
 
-        try
-        {
+        try {
             result = ACBrNFe.Inutilizar(cnpj, justificativa, ano, modelo, serie, numeroInicial, numeroFinal);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.e("Erro ao Enviar NFe", ex.getMessage());
             result = ex.getMessage();
-        }
-        finally
-        {
+        } finally {
             txtRespostaInutilizacao.setText(result);
         }
     }
 
-    public void LimparRespostaInutilizacao(){
+    public void LimparRespostaInutilizacao() {
         txtRespostaInutilizacao.setText("");
     }
 }

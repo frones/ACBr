@@ -1,13 +1,8 @@
 package com.acbr.nfe.acbrlibnfe.demo;
 
-import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,46 +10,44 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 
 public class ComandosEnvioNFeFragment extends Fragment {
 
     private ACBrLibNFe ACBrNFe;
 
-    private EditText txtNFeINI, txtNFeXML, txtRespostaEnvio, txtDestinatario;
-
-    private Button btnLimparLista, btnEnviarNFe, btnImprimirNFCe, btnLimparRespostaEnvio, btnEnviarEmailNFCe;
-
-    @SuppressLint("MissingInflatedId")
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Instância da biblioteca
-        ACBrNFe = ACBrLibHelper.getInstance("ACBrLib.ini");
-
-        checkAndRequestBluetoothPermission();
-    }
+    private EditText txtNFeINI;
+    private EditText txtNFeXML;
+    private EditText txtRespostaEnvio;
+    private EditText txtDestinatario;
+    private Button btnLimparLista;
+    private Button btnEnviarNFe;
+    private Button btnImprimirNFCe;
+    private Button btnLimparRespostaEnvio;
+    private Button btnEnviarEmailNFCe;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comandos_envio_nfe, container, false);
 
-        // Inicialização das views após a inflagem do layout
+        ACBrNFe = ACBrLibHelper.getInstance("ACBrLib.ini");
+
+        checkAndRequestBluetoothPermission();
+
         txtNFeINI = view.findViewById(R.id.txtNFeINI);
         txtNFeXML = view.findViewById(R.id.txtNFeXML);
         txtDestinatario = view.findViewById(R.id.txtDestinatario);
         txtRespostaEnvio = view.findViewById(R.id.txtRespostaEnvio);
-
         btnLimparLista = view.findViewById(R.id.btnLimparLista);
         btnEnviarNFe = view.findViewById(R.id.btnEnviarNFe);
         btnEnviarEmailNFCe = view.findViewById(R.id.btnEnviarEmailNFCe);
         btnImprimirNFCe = view.findViewById(R.id.btnImprimirNFCe);
         btnLimparRespostaEnvio = view.findViewById(R.id.btnLimparRespostaEnvio);
 
-        // Configuração dos eventos de clique
         btnLimparLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +62,7 @@ public class ComandosEnvioNFeFragment extends Fragment {
             }
         });
 
-        btnEnviarEmailNFCe.setOnClickListener(new View.OnClickListener(){
+        btnEnviarEmailNFCe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enviarEmailNFCe();
@@ -153,7 +146,7 @@ public class ComandosEnvioNFeFragment extends Fragment {
         }
     }
 
-    public void enviarEmailNFCe(){
+    public void enviarEmailNFCe() {
         txtRespostaEnvio.setText("");
         String NFeXml = txtNFeXML.getText().toString();
         String destinatario = txtDestinatario.getText().toString();

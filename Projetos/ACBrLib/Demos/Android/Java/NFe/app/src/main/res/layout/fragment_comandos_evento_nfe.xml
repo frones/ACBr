@@ -20,7 +20,7 @@
 
         <EditText
             android:id="@+id/txtJustificativaCancelarNFe"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -33,7 +33,7 @@
 
         <EditText
             android:id="@+id/txtChaveCancelarNFe"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -46,7 +46,7 @@
 
         <EditText
             android:id="@+id/txtCNPJCancelarNFe"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -67,7 +67,7 @@
 
         <EditText
             android:id="@+id/txtEventoNFeINI"
-            android:layout_width="349dp"
+            android:layout_width="match_parent"
             android:layout_height="276dp"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />
@@ -104,7 +104,7 @@
 
         <EditText
             android:id="@+id/txtRespostaEvento"
-            android:layout_width="349dp"
+            android:layout_width="match_parent"
             android:layout_height="355dp"
             android:layout_marginTop="10dp"
             android:textSize="12dp" />

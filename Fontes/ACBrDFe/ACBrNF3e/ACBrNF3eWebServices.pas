@@ -131,7 +131,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: integer;
-    FSincrono: Boolean;
+//    FSincrono: Boolean;
     FVersaoDF: TVersaoNF3e;
 
     FNF3eRetornoSincrono: TRetConsSitNF3e;
@@ -165,7 +165,7 @@ type
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: integer read FTMed;
     property Lote: String read GetLote write FLote;
-    property Sincrono: Boolean read FSincrono write FSincrono;
+//    property Sincrono: Boolean read FSincrono write FSincrono;
     property MsgUnZip: String read FMsgUnZip write FMsgUnZip;
 
     property NF3eRetornoSincrono: TRetConsSitNF3e read FNF3eRetornoSincrono;
@@ -549,10 +549,10 @@ end;
 
 procedure TNF3eWebService.EnviarDados;
 var
-  UsaIntegrador: Boolean;
+//  UsaIntegrador: Boolean;
   Integrador: TACBrIntegrador;
 begin
-  UsaIntegrador := Assigned(FPDFeOwner.Integrador);
+//  UsaIntegrador := Assigned(FPDFeOwner.Integrador);
 
   Integrador := Nil;
 
@@ -763,7 +763,7 @@ end;
 
 procedure TNF3eRecepcao.InicializarServico;
 begin
-  Sincrono := True;
+//  Sincrono := True;
 
   if FNotasFiscais.Count > 0 then    // Tem NF3e ? Se SIM, use as informações do XML
     FVersaoDF := DblToVersaoNF3e(FNotasFiscais.Items[0].NF3e.infNF3e.Versao)
@@ -798,11 +798,13 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  FPLayout := LayNF3eRecepcaoSinc;
+{
   if FSincrono then
     FPLayout := LayNF3eRecepcaoSinc
   else
     FPLayout := LayNF3eRecepcao;
-
+}
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesNF3e.Geral.FormaEmissao of
     teSVCAN: xUF := 'SVC-AN';
@@ -826,6 +828,11 @@ end;
 
 procedure TNF3eRecepcao.DefinirServicoEAction;
 begin
+  if EstaVazio(FPServico) then
+    FPServico := GetUrlWsd + 'NF3eRecepcaoSinc';
+  if EstaVazio(FPSoapAction) then
+    FPSoapAction := FPServico + '/nf3eRecepcao';
+  {
   if FSincrono then
   begin
     if EstaVazio(FPServico) then
@@ -838,13 +845,24 @@ begin
     FPServico := GetUrlWsd + 'NF3eRecepcao';
     FPSoapAction := FPServico + '/nf3eRecepcaoLote';
   end;
+  }
 end;
 
 procedure TNF3eRecepcao.DefinirDadosMsg;
-var
-  I: integer;
-  vNotas: String;
+//var
+//  I: integer;
+//  vNotas: String;
 begin
+  // No envio só podemos ter apena UM NF3-e, pois o seu processamento é síncrono
+  if FNotasFiscais.Count > 1 then
+    GerarException(ACBrStr('ERRO: Conjunto de NF3-e transmitidos (máximo de 1 NF3-e)' +
+           ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+
+  if FNotasFiscais.Count > 0 then
+    FPDadosMsg := '<NF3e' +
+      RetornarConteudoEntre(FNotasFiscais.Items[0].XMLAssinado, '<NF3e', '</NF3e>') +
+      '</NF3e>';
+  {
   if Sincrono then
   begin
     // No envio só podemos ter apena UM NF3-e, pois o seu processamento é síncrono
@@ -869,7 +887,7 @@ begin
       FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
       vNotas + '</enviNF3e>';
   end;
-
+  }
   FMsgUnZip := FPDadosMsg;
 
   FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
@@ -895,8 +913,8 @@ begin
 
   RemoverNameSpace;
 
-  if FSincrono then
-  begin
+//  if FSincrono then
+//  begin
     if pos('retNF3e', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retNF3e', 'retConsSitNF3e',
                                      [rfReplaceAll, rfIgnoreCase])
@@ -995,6 +1013,7 @@ begin
         end;
       end;
     end;
+  {
   end
   else
   begin
@@ -1014,11 +1033,28 @@ begin
 
     Result := (FNF3eRetorno.CStat = 103);
   end;
+  }
 end;
 
 function TNF3eRecepcao.GerarMsgLog: String;
 begin
-  {(*}
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak +
+                         'Versão Aplicativo: %s ' + LineBreak +
+                         'Status Código: %s ' + LineBreak +
+                         'Status Descrição: %s ' + LineBreak +
+                         'UF: %s ' + sLineBreak +
+                         'dhRecbto: %s ' + sLineBreak +
+                         'chNF3e: %s ' + LineBreak),
+                   [FNF3eRetornoSincrono.versao,
+                    TipoAmbienteToStr(FNF3eRetornoSincrono.TpAmb),
+                    FNF3eRetornoSincrono.verAplic,
+                    IntToStr(FNF3eRetornoSincrono.protNF3e.cStat),
+                    FNF3eRetornoSincrono.protNF3e.xMotivo,
+                    CodigoUFparaUF(FNF3eRetornoSincrono.cUF),
+                    FormatDateTimeBr(FNF3eRetornoSincrono.dhRecbto),
+                    FNF3eRetornoSincrono.chNF3e]);
+  {
   if FSincrono then
     Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +
@@ -1056,11 +1092,22 @@ begin
                       IfThen(FNF3eRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FNF3eRetorno.InfRec.dhRecbto)),
                       IntToStr(FNF3eRetorno.InfRec.TMed)]);
-  {*)}
+  }
 end;
 
 function TNF3eRecepcao.GerarPrefixoArquivo: String;
 begin
+  if FRecibo <> '' then
+  begin
+    Result := Recibo;
+    FPArqResp := 'pro-rec';
+  end
+  else
+  begin
+    Result := Lote;
+    FPArqResp := 'pro-lot';
+  end;
+  {
   if FSincrono then  // Esta procesando nome do Retorno Sincrono ?
   begin
     if FRecibo <> '' then
@@ -1076,6 +1123,7 @@ begin
   end
   else
     Result := Lote;
+  }
 end;
 
 { TNF3eRetRecepcao }
@@ -2776,18 +2824,10 @@ begin
   FRetorno.Clear;
 
   FEnviar.Lote := ALote;
-  FEnviar.Sincrono := ASincrono;
+//  FEnviar.Sincrono := ASincrono;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );
-
-  if not ASincrono or ((FEnviar.Recibo <> '') and (FEnviar.cStat = 103)) then
-  begin
-    FRetorno.Recibo := FEnviar.Recibo;
-
-    if not FRetorno.Executar then
-      FRetorno.GerarException( FRetorno.Msg );
-  end;
 
   Result := True;
 end;

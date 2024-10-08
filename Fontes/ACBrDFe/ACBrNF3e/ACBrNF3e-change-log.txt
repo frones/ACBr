@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2024
+-- ACBrNF3e/ACBrNF3eWebServices --
+[*] Ajustes para que o envio ocorra somente no modo Síncrono.
+   Por: Italo Giurizzato Junior
+
 01/10/2024
 -- Diversos --
 [*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc

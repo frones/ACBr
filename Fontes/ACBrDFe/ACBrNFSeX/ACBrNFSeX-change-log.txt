@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6055 - A cidade de Petrópolis/RJ mudou de provedor, agora é Bauhaus.
+   Por: Mauro Augusto Souza Lima
+
 04/10/2024
 -- TcheInfo.GravarXml/Tecnos.GravarXml/Thema.GravarXml/Tinus.GravarXml --
 -- Tiplan.GravarXml/Tributus.GravarXml/VersaTecnologia.GravarXml --

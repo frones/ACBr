@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/10/2024
+-- ACBrCTe.XmlHandler --
+[-] Correção para identificar corretamente um CT-e Simplificado que foi processado
+    com sucesso, ou seja, autorizado.
+   Por: Italo Giurizzato Junior
+
 03/10/2024
 -- ACBrCTeServicos --
 [+] Incluída as URLs de produção e homologação de recepção do 

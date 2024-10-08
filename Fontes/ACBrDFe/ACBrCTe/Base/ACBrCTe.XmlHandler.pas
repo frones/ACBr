@@ -941,9 +941,16 @@ begin
   begin
     FprotCTeHandler.LerProtCTe(Document.Root.Childrens.FindAnyNs('protCTe'), FCTe.procCTe);
     CTeNode := Document.Root.Childrens.FindAnyNs('CTe');
-  end else
+  end
+  else
   begin
-    CTeNode := Document.Root;
+    if Document.Root.Name = 'cteProcSimp' then
+    begin
+      FprotCTeHandler.LerProtCTe(Document.Root.Childrens.FindAnyNs('protCTe'), FCTe.procCTe);
+      CTeNode := Document.Root.Childrens.FindAnyNs('CTeSimp');
+    end
+    else
+      CTeNode := Document.Root;
   end;
 
   if Assigned(CTeNode) then

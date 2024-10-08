@@ -1299,14 +1299,29 @@ begin
           proSimplISS] then
       begin
         // Provedor Elotech
+        Servico.Valores.AliquotaPis := 0;
         Servico.Valores.RetidoPis := snNao;
+        Servico.Valores.ValorPis := 0;
+
+        Servico.Valores.AliquotaCofins := 0;
         Servico.Valores.RetidoCofins := snNao;
+        Servico.Valores.ValorCofins := 0;
+
         Servico.Valores.AliquotaInss := 0;
         Servico.Valores.RetidoInss := snNao;
+        Servico.Valores.ValorInss := 0;
+
         Servico.Valores.AliquotaIr := 0;
         Servico.Valores.RetidoIr := snNao;
+        Servico.Valores.ValorIr := 0;
+
         Servico.Valores.AliquotaCsll := 0;
         Servico.Valores.RetidoCsll := snNao;
+        Servico.Valores.ValorCsll := 0;
+
+        Servico.Valores.AliquotaCpp := 0;
+        Servico.Valores.RetidoCpp := snNao;
+        Servico.Valores.ValorCpp := 0;
 
         with Servico.ItemServico.New do
         begin
@@ -1528,8 +1543,17 @@ begin
       Tomador.TomadorExterior := snNao;
 
       Tomador.IdentificacaoTomador.CpfCnpj := '12345678901';
-      Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
-      Tomador.IdentificacaoTomador.InscricaoEstadual := '';
+
+      if ACBrNFSeX1.Configuracoes.Geral.Provedor = proNFEletronica then
+      begin
+        Tomador.IdentificacaoTomador.InscricaoMunicipal := '123';
+        Tomador.IdentificacaoTomador.InscricaoEstadual := '123';
+      end
+      else
+      begin
+        Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
+        Tomador.IdentificacaoTomador.InscricaoEstadual := '';
+      end;
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE E TESTE';
 
@@ -1568,11 +1592,16 @@ begin
         versão 1 do Layout da ABRASF)
       =========================================================================}
 
-      if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proBetha, proPublica] then
+      if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proBetha, proPublica,
+          proNFEletronica] then
       begin
         // Condicao = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito, cpCartaoDebito)
         CondicaoPagamento.Condicao   := cpAVista;
         CondicaoPagamento.QtdParcela := 1;
+        // Provedor NFEletronica
+        CondicaoPagamento.DataVencimento := Now;
+        CondicaoPagamento.InstrucaoPagamento := 'Pagamento a vista';
+        CondicaoPagamento.CodigoVencimento := 1;
 
         for i := 1 to CondicaoPagamento.QtdParcela do
         begin
@@ -1753,7 +1782,8 @@ begin
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
       proISSDSF, proISSLencois, proModernizacaoPublica, proPrescon, proPriMax, proPublica,
       proSiat, proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
-      proWebFisco, proCenti, proCTA, proBauhaus, proSigISSWeb, proISSCampinas] then
+      proWebFisco, proCenti, proCTA, proBauhaus, proSigISSWeb, proISSCampinas,
+      proNFEletronica] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then

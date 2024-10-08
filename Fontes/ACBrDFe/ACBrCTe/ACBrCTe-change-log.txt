@@ -46,6 +46,9 @@ Símbolo : Significado
 
 
 08/10/2024
+-- ACBrCTe.XmlHandler --
+[-] Correção para a leitura correta da chave da NF-e quando se tratar de CT-e Simplificado.
+   Por: Italo Giurizzato Junior
 -- pcteCTeW --
 [-] Correção para gerar a tag xNome do Tomador com um texto fixo quando se tratar
     de ambiente de homologação.

@@ -1068,6 +1068,11 @@ type
     FCondicao: TnfseCondicaoPagamento;
     FQtdParcela: Integer;
     FParcelas: TParcelasCollection;
+    // Provedor NFEletronica
+    FDataVencimento: TDateTime;
+    FInstrucaoPagamento: string;
+    FCodigoVencimento: Integer;
+
     procedure SetParcelas(const Value: TParcelasCollection);
   public
     constructor Create;
@@ -1076,6 +1081,10 @@ type
     property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
     property QtdParcela: Integer read FQtdParcela write FQtdParcela;
     property Parcelas: TParcelasCollection read FParcelas write SetParcelas;
+    // Provedor NFEletronica
+    property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
+    property InstrucaoPagamento: string read FInstrucaoPagamento write FInstrucaoPagamento;
+    property CodigoVencimento: Integer read FCodigoVencimento write FCodigoVencimento;
  end;
 
   TemailCollectionItem = class(TObject)

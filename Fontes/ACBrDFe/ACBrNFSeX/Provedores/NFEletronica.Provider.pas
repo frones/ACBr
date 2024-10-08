@@ -70,6 +70,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function DefinirIDLote(const ID: string): string; override;
+
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
     {
     procedure GerarMsgDadosConsultaSituacao(Response: TNFSeConsultaSituacaoResponse;
@@ -187,6 +189,11 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderNFEletronica.DefinirIDLote(const ID: string): string;
+begin
+  Result := ' ' + ConfigGeral.Identificador + '="' + ID + '"'
 end;
 
 procedure TACBrNFSeProviderNFEletronica.TratarRetornoEmitir(

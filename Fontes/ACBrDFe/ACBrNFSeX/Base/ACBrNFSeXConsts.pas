@@ -107,6 +107,8 @@ resourcestring
   DSC_TPAG = 'Forma de Pagamento';
   DSC_DVENC = 'Data de vencimento';
   DSC_INFADICIONAL = 'Informação Adicional';
+  DSC_INSTPAG = 'Instrução de Pagamento';
+  DSC_CODVENV = 'Código de Vencimento';
 
   // Descrição de Documentos - Futuramente vai para ACBrDFeConst
   DSC_CNPJ = 'CNPJ(MF)';

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/10/2024
+-- Diversos --
+[*] Realizado alguns ajustes para atender o provedor NFEletronica.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6055 - A cidade de Petrópolis/RJ mudou de provedor, agora é Bauhaus.
    Por: Mauro Augusto Souza Lima

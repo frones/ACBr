@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2024
+-- ACBrPIXPSPMatera, ACBrSchemasMatera --
+[*] Inclusão de novos campos no retorno das consultas
+[*] Ajuste no envio de contrato social na abertura de conta
+    Por: christian@adminfo.com.br / Rev.: Alexandre de Paula
+
 03/10/2024
 -- ACBrPixCDGerenciaNET --
 [*] Atualização de endereços e inclusão de PartnerToken.

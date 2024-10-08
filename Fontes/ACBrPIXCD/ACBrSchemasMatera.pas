@@ -11391,7 +11391,9 @@ end;
 constructor TMateraAccountTransactionRequestBasic.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  fdocuments := TMateraDocumentArray.Create('');
+  
+  fdocuments := TMateraDocumentArray.Create('documents');
+    
   fmobilePhone := TMateraMobilePhone.Create('mobilePhone');
   fbillingAddress := TMateraEndereco.Create('billingAddress');
   fadditionalDetailsCorporate := TMateraAdditionalDetailsCorporate.Create('additionalDetailsCorporate');

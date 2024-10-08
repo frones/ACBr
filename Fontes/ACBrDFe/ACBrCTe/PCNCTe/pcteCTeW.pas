@@ -965,7 +965,11 @@ begin
 
     GeraIE;
 
-    Gerador.wCampo(tcStr, '#068', 'xNome', 02, 60, 1, CTe.toma.xNome, DSC_XNOME);
+    if (CTe.ide.tpCTe in [tcCTeSimp, tcSubstCTeSimpl]) and (CTe.Ide.tpAmb = taHomologacao) then
+      Gerador.wCampo(tcStr, '#068', 'xNome', 02, 60, 1, xRazao4, DSC_XNOME)
+    else
+      Gerador.wCampo(tcStr, '#068', 'xNome', 02, 60, 1, CTe.toma.xNome, DSC_XNOME);
+
     Gerador.wCampo(tcStr, '#069', 'xFant', 02, 60, 0, CTe.toma.xFant, DSC_XFANT);
     Gerador.wCampo(tcStr, '#070', 'fone ', 07, 12, 0, OnlyNumber(CTe.toma.fone), DSC_FONE);
 

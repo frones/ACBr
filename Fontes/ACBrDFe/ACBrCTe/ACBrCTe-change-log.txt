@@ -46,6 +46,10 @@ Símbolo : Significado
 
 
 08/10/2024
+-- pcteCTeW --
+[-] Correção para gerar a tag xNome do Tomador com um texto fixo quando se tratar
+    de ambiente de homologação.
+   Por: Alisson Orsolin
 -- ACBrCTe.XmlHandler --
 [-] Correção para identificar corretamente um CT-e Simplificado que foi processado
     com sucesso, ou seja, autorizado.

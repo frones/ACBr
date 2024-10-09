@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/10/2024
+-- ACBrCTe --
+[*] #TK-6050: Ajuste visando a correta geração do URL-QRCode quando emitido em contingência.
+   Por: Italo Giurizzato Junior / Diego Folieni
+
 08/10/2024
 -- ACBrCTe.XmlHandler --
 [-] Correção para a leitura correta da chave da NF-e quando se tratar de CT-e Simplificado.

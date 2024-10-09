@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -37,459 +37,322 @@ unit ACBrANeDocumentos;
 interface
 
 uses
-  Classes, 
-  SysUtils, 
-  ACBrANeConfiguracoes, 
-  ACBrDFeUtil,
-  pcaANe, 
-  pcaANeR, 
-  pcaANeW, 
-  pcnConversao, 
-  pcnLeitor;
+  Classes, SysUtils,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$Else}
+   Contnrs,
+  {$IfEnd}
+  ACBrBase, ACBrDFe, ACBrANeConfiguracoes, ACBrANe.Classes, ACBrANe.Conversao;
 
 type
 
-  { Documento }
+  { TDocumento }
 
-  Documento = class(TCollectionItem)
+  TDocumento = class(TCollectionItem)
   private
     FANe: TANe;
-    FANeW: TANeW;
-    FANeR: TANeR;
+    FACBrANe: TACBrDFe;
 
-    FXMLAssinado: String;
-    FXMLOriginal: String;
-    FAlertas: String;
-    FNomeArq: String;
+    FAlertas: string;
+    FNomeArq: string;
+    FConfirmada: Boolean;
+    FXml: string;
 
-    function GetConfirmado: Boolean;
-    function GetProcessado: Boolean;
-
-    function GetMsg: String;
-    function GetNumID: String;
-    function GetXMLAssinado: String;
-    procedure SetXML(const AValue: String);
-    procedure SetXMLOriginal(const AValue: String);
-    function CalcularNomeArquivo: String;
-    function CalcularPathArquivo: String;
-    function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
-      PathArquivo: String = ''): String;
+    function CalcularNomeArquivo: string;
+    function CalcularPathArquivo: string;
+    procedure SetXmlANe(const Value: string);
+    function GetXmlANe: string;
   public
-    constructor Create(Collection2: TCollection); override;
+    constructor Create(AOwner: TACBrDFe);
     destructor Destroy; override;
 
-    procedure Assinar;
+    function LerXML(const AXML: string): Boolean;
 
-    function LerXML(const AXML: AnsiString): Boolean;
-//    function LerArqIni(const AIniString: String): Boolean;
+    function GerarXML: string;
+    function GravarXML(const NomeArquivo: string = '';
+      const PathArquivo: string = ''): Boolean;
 
-    function GerarXML: String;
-    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: string; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
-      sReplyTo: TStrings = nil);
+      sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True);
 
-    property NomeArq: String read FNomeArq write FNomeArq;
+    property NomeArq: string    read FNomeArq    write FNomeArq;
+
+    function CalcularNomeArquivoCompleto(NomeArquivo: string = '';
+      PathArquivo: string = ''): string;
+
     property ANe: TANe read FANe;
 
-    // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
-    property XML: String         read FXMLOriginal   write SetXML;
-    // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
-    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
-    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
-    property Confirmado: Boolean read GetConfirmado;
-    property Processado: Boolean read GetProcessado;
-    property Msg: String read GetMsg;
-    property NumID: String read GetNumID;
+    property Xml: string read FXml write FXml;
 
-    property Alertas: String read FAlertas;
+    property Confirmada: Boolean read FConfirmada write FConfirmada;
+    property Alertas: string     read FAlertas;
+
   end;
 
   { TDocumentos }
 
-  TDocumentos = class(TOwnedCollection)
+  TDocumentos = class(TACBrObjectList)
   private
-    FACBrANe: TComponent;
+    FTransacao: Boolean;
+    FNumeroLote: string;
+    FACBrANe: TACBrDFe;
     FConfiguracoes: TConfiguracoesANe;
+    FXMLLoteOriginal: string;
+    FXMLLoteAssinado: string;
+    FAlertas: string;
 
-    function GetItem(Index: integer): Documento;
-    procedure SetItem(Index: integer; const Value: Documento);
+    function GetItem(Index: integer): TDocumento;
+    procedure SetItem(Index: integer; const Value: TDocumento);
 
   public
-    constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
+    constructor Create(AOwner: TACBrDFe);
 
     procedure GerarANe;
-    procedure Assinar;
 
-    function Add: Documento;
-    function Insert(Index: integer): Documento;
+    function New: TDocumento; reintroduce;
+    function Add(ANota: TDocumento): Integer; reintroduce;
+    Procedure Insert(Index: Integer; ANota: TDocumento); reintroduce;
 
-    property Items[Index: integer]: Documento read GetItem write SetItem; default;
+    property Items[Index: integer]: TDocumento read GetItem write SetItem; default;
 
-    function GetNamePath: String; override;
-    // Incluido o Parametro AGerarANe que determina se após carregar os dados do ANe
-    // para o componente, será gerado ou não novamente o XML do ANe.
-    function LoadFromFile(const CaminhoArquivo: String; AGerarANe: Boolean = True): Boolean;
+    function GetNamePath: string;
+
+    // Incluido o Parametro AGerarANe que determina se após carregar os dados da ANe
+    // para o componente, será gerado ou não novamente o XML da ANe.
+    function LoadFromFile(const CaminhoArquivo: string; AGerarANe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarANe: Boolean = True): Boolean;
-    function LoadFromString(AXMLString: String; AGerarANe: Boolean = True): Boolean;
-//    function LoadFromIni(const AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: string; AGerarANe: Boolean = True): Boolean;
 
-    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: string = ''): Boolean;
 
-    property ACBrANe: TComponent read FACBrANe;
+    property XMLLoteOriginal: string read FXMLLoteOriginal write FXMLLoteOriginal;
+    property XMLLoteAssinado: string read FXMLLoteAssinado write FXMLLoteAssinado;
+    property NumeroLote: string      read FNumeroLote      write FNumeroLote;
+    property Transacao: Boolean      read FTransacao       write FTransacao;
+    property Alertas: string         read FAlertas;
+
+    property ACBrANe: TACBrDFe read FACBrANe;
   end;
 
 implementation
 
 uses
-  ACBrANe,
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.FilesIO,
-  ACBrUtil.DateTime,
-  pcaConversao, synautil;
+  synautil, IniFiles, StrUtilsEx,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML,
+  ACBrDFeUtil,
+  ACBrANe, ACBrANeInterface;
 
-{ Documento }
+{ TDocumento }
 
-constructor Documento.Create(Collection2: TCollection);
+constructor TDocumento.Create(AOwner: TACBrDFe);
 begin
-  inherited Create(Collection2);
-  FANe := TANe.Create;
-  FANeW := TANeW.Create(FANe);
-  FANeR := TANeR.Create(FANe);
+  if not (AOwner is TACBrANe) then
+    raise EACBrANeException.Create('AOwner deve ser do tipo TACBrANe');
 
-  with TACBrANe(TDocumentos(Collection).ACBrANe) do
-  begin
-    FANe.usuario := Configuracoes.Geral.Usuario;
-    FANe.senha   := Configuracoes.Geral.Senha;
-    FANe.codatm  := Configuracoes.Geral.CodATM;
-    FANe.CNPJ    := Configuracoes.Geral.CNPJEmitente;
-  end;
+  FACBrANe := TACBrANe(AOwner);
+  FANe := TANe.Create;
 end;
 
-destructor Documento.Destroy;
+destructor TDocumento.Destroy;
 begin
-  FANeW.Free;
-  FANeR.Free;
   FANe.Free;
 
   inherited Destroy;
 end;
 
-procedure Documento.Assinar;
+function TDocumento.LerXML(const AXML: string): Boolean;
 var
-  XMLStr: String;
-  XMLUTF8: AnsiString;
-
-function RemoverGrupoInfSuplementares(const XML, Grupo: string): string;
-var
-  IniGrupo, FimGrupo: Integer;
+  FProvider: IACBrANeProvider;
+  XmlTratado: string;
 begin
-  IniGrupo := Pos('<' + Grupo + '>', XML);
-  if IniGrupo > 0 then
-  begin
-    FimGrupo := Pos('</' + Grupo + '>', XML) + Length(Grupo) + 3;
+  FProvider := TACBrANe(FACBrANe).Provider;
 
-    Result := Copy(XML, 1, IniGrupo -1) + Copy(XML, FimGrupo, Length(XML));
+  if not Assigned(FProvider) then
+    raise EACBrANeException.Create(ERR_SEM_Seguradora);
+
+  Result := FProvider.LerXML(AXML, FANe, XmlTratado);
+
+  FXml := XmlTratado
+end;
+
+procedure TDocumento.SetXmlANe(const Value: string);
+begin
+  LerXML(Value);
+  FXml := Value;
+end;
+
+function TDocumento.GravarXML(const NomeArquivo: string;
+  const PathArquivo: string): Boolean;
+var
+  ConteudoEhXml: Boolean;
+begin
+  if EstaVazio(FXml) then
+    GerarXML;
+
+  {
+    Tem provedor que é gerando um JSON em vez de XML e o método Gravar acaba
+    incluindo na primeira linha do arquivo o encoding do XML.
+    Para contornar isso a variável ConteudoEhXml recebe o valor false quando é
+    um JSON e o método Gravar não inclui o encoding.
+  }
+  ConteudoEhXml := StringIsXML(FXml);
+ {
+  if aTipo = txmlANe then
+  begin
+    if EstaVazio(NomeArquivo) then
+      FNomeArq := TACBrANe(FACBrANe).GetNumID(ANe) + '-ANe.xml'
+    else
+    begin
+      FNomeArq := NomeArquivo;
+
+      if ExtractFileExt(FNomeArq) = '' then
+        FNomeArq := FNomeArq + '.xml';
+    end;
+
+    Result := TACBrANe(FACBrANe).Gravar(FNomeArq, FXmlANe, PathArquivo, ConteudoEhXml);
   end
   else
-    Result := XML;
-end;
-
-begin
-  // Gera novamente, para processar propriedades que podem ter sido modificadas
-  XMLStr := GerarXML;
-
-  // XML já deve estar em UTF8, para poder ser assinado //
-  XMLUTF8 := ConverteXMLtoUTF8(XMLStr);
-
-  with TACBrANe(TDocumentos(Collection).ACBrANe) do
   begin
-    FXMLAssinado := String(XMLUTF8); // SSL.Assinar(String(XMLUTF8), 'ANe', 'infANe');
-    // SSL.Assinar() sempre responde em UTF8...
-    FXMLOriginal := RemoverDeclaracaoXML(FXMLAssinado);
-
-    case Configuracoes.Geral.Seguradora of
-      tsELT: FXMLOriginal := '<ANe xmlns:tem="http://tempuri.org/">' +
-                               FXMLOriginal + '</ANe>';
-    else
-      begin
-        case Configuracoes.Geral.TipoDoc of
-          tdCTe: FXMLOriginal := '<ANe>' +
-                   RemoverGrupoInfSuplementares(FXMLOriginal, 'infCTeSupl') + '</ANe>';
-
-          tdNFe: FXMLOriginal := '<ANe>' + FXMLOriginal + '</ANe>';
-
-          tdMDFe: FXMLOriginal := '<ANe>' +
-                    RemoverGrupoInfSuplementares(FXMLOriginal, 'infMDFeSupl') + '</ANe>';
-
-          tdAddBackMail: FXMLOriginal := '<AddBackMail>' + FXMLOriginal + '</AddBackMail>';
-        end;
-      end;
-    end;
-
-    if Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(NomeArq) then
-        Gravar(NomeArq, FXMLOriginal)
-      else
-        Gravar(CalcularNomeArquivoCompleto(), FXMLOriginal);
-    end;
+    FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
+    Result := TACBrANe(FACBrANe).Gravar(FNomeArqRps, FXmlRps, '', ConteudoEhXml);
   end;
-end;
-{
-function Documento.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec: TMemIniFile;
-  sSecao: String;
-begin
-  Result := True;
-
-  INIRec := TMemIniFile.Create('');
-  try
-    LerIniArquivoOuString(AIniString, INIRec);
-
-    with FANe do
-    begin
-      sSecao := 'Ide';
-      Usuario := INIRec.ReadString(sSecao, 'Usuario', '');
-      Senha   := INIRec.ReadString(sSecao, 'Senha', '');
-      codatm  := INIRec.ReadString(sSecao, 'codatm', '');
-
-      sSecao := 'xmlDFe';
-      xmlDFe := INIRec.ReadString(sSecao, 'Xml', '');
-    end;
-
-    GerarXML;
-  finally
-    INIRec.Free;
-  end;
-end;
-}
-function Documento.LerXML(const AXML: AnsiString): Boolean;
-var
-  XMLStr: String;
-begin
-  XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
-
-  { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
-    Isso é necessário, para que as propriedades fiquem com a acentuação correta }
-  XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
-
-  FANeR.Leitor.Arquivo := XMLStr;
-  FANeR.LerXml;
-
-  Result := True;
+  }
 end;
 
-function Documento.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
+function TDocumento.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FXMLOriginal) then
-    GerarXML;
-
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-
-  Result := TACBrANe(TDocumentos(Collection).ACBrANe).Gravar(FNomeArq, FXMLOriginal);
-end;
-
-function Documento.GravarStream(AStream: TStream): Boolean;
-begin
-  if EstaVazio(FXMLOriginal) then
+  if EstaVazio(FXml) then
     GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FXMLOriginal));
+  WriteStrToStream(AStream, AnsiString(FXml));
   Result := True;
 end;
 
-procedure Documento.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
+procedure TDocumento.EnviarEmail(const sPara, sAssunto: string; sMensagem: TStrings;
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
+  ManterPDFSalvo: Boolean);
 var
-//  NomeArq : String;
+  NomeArqTemp: string;
   AnexosEmail:TStrings;
-  StreamANe : TMemoryStream;
+  StreamANe: TMemoryStream;
 begin
-  if not Assigned(TACBrANe(TDocumentos(Collection).ACBrANe).MAIL) then
+  if not Assigned(TACBrANe(FACBrANe).MAIL) then
     raise EACBrANeException.Create('Componente ACBrMail não associado');
 
   AnexosEmail := TStringList.Create;
-  StreamANe := TMemoryStream.Create;
+  StreamANe  := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
+
     if Assigned(Anexos) then
       AnexosEmail.Assign(Anexos);
 
-    with TACBrANe(TDocumentos(Collection).ACBrANe) do
+    with TACBrANe(FACBrANe) do
     begin
       GravarStream(StreamANe);
-      (*
-      if (EnviaPDF) then
-      begin
-        if Assigned(DAANe) then
-        begin
-          DAANe.ImprimirDAANePDF(FANe);
-          NomeArq := PathWithDelim(DAANe.PathPDF) + NumID + '-ANe.pdf';
-          AnexosEmail.Add(NomeArq);
-        end;
-      end;
-      *)
-      EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamANe,
-                   NumID + '-ANe.xml', sReplyTo);
+
+//      EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamANe,
+//                   NumID[FANe] +'-ANe.xml', sReplyTo);
     end;
   finally
+    if not ManterPDFSalvo then
+      DeleteFile(NomeArqTemp);
+
     AnexosEmail.Free;
     StreamANe.Free;
   end;
 end;
 
-function Documento.GerarXML: String;
+function TDocumento.GerarXML: string;
+var
+  FProvider: IACBrANeProvider;
 begin
-  with TACBrANe(TDocumentos(Collection).ACBrANe) do
-  begin
-    FANeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
-    FANeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-    FANeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FANeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+  FProvider := TACBrANe(FACBrANe).Provider;
 
-    FANeW.TipoDoc    := Configuracoes.Geral.TipoDoc;
-    FANeW.Seguradora := Configuracoes.Geral.Seguradora;
+  if not Assigned(FProvider) then
+    raise EACBrANeException.Create(ERR_SEM_Seguradora);
 
-    TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
-  end;
-
-  FANeW.GerarXml;
-  XMLOriginal := FANeW.Gerador.ArquivoFormatoXML;
-
-  if NaoEstaVazio(FNomeArq) then
-    FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
-
-  FAlertas := ACBrStr( FANeW.Gerador.ListaDeAlertas.Text );
-  Result := FXMLOriginal;
+  FProvider.GerarXml(ANe, FXml, FAlertas);
+  Result := FXml;
 end;
 
-function Documento.CalcularNomeArquivo: String;
-var
-  xID: String;
+function TDocumento.GetXmlANe: string;
 begin
-  xID := Self.NumID;
+  if XmlEhUTF8(FXml) then
+    Result := FXml
+  else
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + FXml;
+end;
+
+function TDocumento.CalcularNomeArquivo: string;
+var
+  xID: string;
+begin
+//  xID := TACBrANe(FACBrANe).NumID[ANe];
 
   if EstaVazio(xID) then
     raise EACBrANeException.Create('ID Inválido. Impossível Salvar XML');
 
-  Result := xID + '-ANe.xml';
+  Result := xID + '-rps.xml';
 end;
 
-function Documento.CalcularPathArquivo: String;
+function TDocumento.CalcularPathArquivo: string;
+var
+  Data: TDateTime;
 begin
-  with TACBrANe(TDocumentos(Collection).ACBrANe) do
+  with TACBrANe(FACBrANe) do
   begin
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathANe(Now, Configuracoes.Geral.CNPJEmitente));
+    Data := Now;
+
+//    Result := PathWithDelim(Configuracoes.Arquivos.GetPathRPS(Data,
+//      FANe.Prestador.IdentificacaoPrestador.CpfCnpj,
+//      FANe.Prestador.IdentificacaoPrestador.InscricaoEstadual));
   end;
 end;
 
-function Documento.CalcularNomeArquivoCompleto(NomeArquivo: String;
-  PathArquivo: String): String;
-var
-  PathNoArquivo: String;
+function TDocumento.CalcularNomeArquivoCompleto(NomeArquivo: string;
+  PathArquivo: string): string;
 begin
   if EstaVazio(NomeArquivo) then
     NomeArquivo := CalcularNomeArquivo;
 
-  PathNoArquivo := ExtractFilePath(NomeArquivo);
-  if EstaVazio(PathNoArquivo) then
-  begin
-    if EstaVazio(PathArquivo) then
-      PathArquivo := CalcularPathArquivo
-    else
-      PathArquivo := PathWithDelim(PathArquivo);
-  end
+  if EstaVazio(PathArquivo) then
+    PathArquivo := CalcularPathArquivo
   else
-    PathArquivo := '';
+    PathArquivo := PathWithDelim(PathArquivo);
 
   Result := PathArquivo + NomeArquivo;
 end;
 
-function Documento.GetConfirmado: Boolean;
-begin
-//  Result := TACBrANe(TDocumentos(Collection).ACBrANe).cStatConfirmado(
-//    FANe.procANe.cStat);
-  Result := True;
-end;
-
-function Documento.GetProcessado: Boolean;
-begin
-//  Result := TACBrANe(TDocumentos(Collection).ACBrANe).cStatProcessado(
-//    FANe.procANe.cStat);
-  Result := True;
-end;
-
-function Documento.GetMsg: String;
-begin
-//  Result := FANe.procANe.xMotivo;
-  Result := '';
-end;
-
-function Documento.GetNumID: String;
-begin
-  Result := FormatDateTime('yyyymmddhhnnss', Now);
-end;
-
-function Documento.GetXMLAssinado: String;
-begin
-  if EstaVazio(FXMLAssinado) then
-    Assinar;
-
-  Result := FXMLAssinado;
-end;
-
-procedure Documento.SetXML(const AValue: String);
-begin
-  LerXML(AValue);
-end;
-
-procedure Documento.SetXMLOriginal(const AValue: String);
-var
-  XMLUTF8: String;
-begin
-  { Garante que o XML informado está em UTF8, se ele realmente estiver, nada
-    será modificado por "ConverteXMLtoUTF8"  (mantendo-o "original") }
-  XMLUTF8 := ConverteXMLtoUTF8(AValue);
-
-  FXMLOriginal := XMLUTF8;
-
-  if XmlEstaAssinado(FXMLOriginal) then
-    FXMLAssinado := FXMLOriginal
-  else
-    FXMLAssinado := '';
-end;
-
 { TDocumentos }
 
-constructor TDocumentos.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
+constructor TDocumentos.Create(AOwner: TACBrDFe);
 begin
   if not (AOwner is TACBrANe) then
     raise EACBrANeException.Create('AOwner deve ser do tipo TACBrANe');
 
-  inherited Create(AOwner, ItemClass);
+  inherited Create();
 
   FACBrANe := TACBrANe(AOwner);
   FConfiguracoes := TACBrANe(FACBrANe).Configuracoes;
 end;
 
-function TDocumentos.Add: Documento;
+function TDocumentos.New: TDocumento;
 begin
-  Result := Documento(inherited Add);
+  Result := TDocumento.Create(FACBrANe);
+  Add(Result);
 end;
 
-procedure TDocumentos.Assinar;
-var
-  i: integer;
+function TDocumentos.Add(ANota: TDocumento): Integer;
 begin
-  for i := 0 to Self.Count - 1 do
-    Self.Items[i].Assinar;
+  Result := inherited Add(ANota);
 end;
 
 procedure TDocumentos.GerarANe;
@@ -500,60 +363,56 @@ begin
     Self.Items[i].GerarXML;
 end;
 
-function TDocumentos.GetItem(Index: integer): Documento;
+function TDocumentos.GetItem(Index: integer): TDocumento;
 begin
-  Result := Documento(inherited Items[Index]);
+  Result := TDocumento(inherited Items[Index]);
 end;
 
-function TDocumentos.GetNamePath: String;
+function TDocumentos.GetNamePath: string;
 begin
   Result := 'Documento';
 end;
 
-function TDocumentos.Insert(Index: integer): Documento;
+procedure TDocumentos.Insert(Index: Integer; ANota: TDocumento);
 begin
-  Result := Documento(inherited Insert(Index));
+  inherited Insert(Index, ANota);
 end;
 
-procedure TDocumentos.SetItem(Index: integer; const Value: Documento);
+procedure TDocumentos.SetItem(Index: integer; const Value: TDocumento);
 begin
-  Items[Index].Assign(Value);
+  inherited Items[Index] := Value;
 end;
 
-function TDocumentos.LoadFromFile(const CaminhoArquivo: String;
+function TDocumentos.LoadFromFile(const CaminhoArquivo: string;
   AGerarANe: Boolean = True): Boolean;
 var
-  XMLUTF8: AnsiString;
+  XmlUTF8: AnsiString;
   i, l: integer;
   MS: TMemoryStream;
 begin
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(CaminhoArquivo);
-    XMLUTF8 := ReadStrFromStream(MS, MS.Size);
+
+    XmlUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
     MS.Free;
   end;
 
   l := Self.Count; // Indice da última nota já existente
-  Result := LoadFromString(String(XMLUTF8), AGerarANe);
+
+  Result := LoadFromString(XmlUTF8, AGerarANe);
 
   if Result then
   begin
     // Atribui Nome do arquivo a novas notas inseridas //
     for i := l to Self.Count - 1 do
+    begin
       Self.Items[i].NomeArq := CaminhoArquivo;
+    end;
   end;
 end;
-{
-function TDocumentos.LoadFromIni(const AIniString: String): Boolean;
-begin
-  with Self.Add do
-    LerArqIni(AIniString);
 
-  Result := Self.Count > 0;
-end;
-}
 function TDocumentos.LoadFromStream(AStream: TStringStream;
   AGerarANe: Boolean = True): Boolean;
 var
@@ -565,45 +424,28 @@ begin
   Result := Self.LoadFromString(String(AXML), AGerarANe);
 end;
 
-function TDocumentos.LoadFromString(AXMLString: String;
+function TDocumentos.LoadFromString(const AXMLString: string;
   AGerarANe: Boolean = True): Boolean;
-var
-  AXML: AnsiString;
-  N: integer;
-
-  function PosANe: integer;
-  begin
-    Result := pos('</ANe>', AXMLString);
-  end;
-
 begin
-  N := PosANe;
-  while N > 0 do
+  with Self.New do
   begin
-    AXML := copy(AXMLString, 1, N + 5);
-    AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+    LerXML(AXMLString);
 
-    with Self.Add do
-    begin
-      LerXML(AXML);
-
-      if AGerarANe then // Recalcula o XML
-        GerarXML;
-    end;
-
-    N := PosANe;
+    if AGerarANe then
+      GerarXML;
   end;
 
   Result := Self.Count > 0;
 end;
 
-function TDocumentos.GravarXML(const PathNomeArquivo: String): Boolean;
+function TDocumentos.GravarXML(const PathNomeArquivo: string): Boolean;
 var
   i: integer;
-  NomeArq, PathArq : String;
+  NomeArq, PathArq : string;
 begin
   Result := True;
   i := 0;
+
   while Result and (i < Self.Count) do
   begin
     PathArq := ExtractFilePath(PathNomeArquivo);

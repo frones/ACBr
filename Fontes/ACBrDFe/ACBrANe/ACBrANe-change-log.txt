@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2024
+-- Diversos --
+[*] Refactoring no componente.
+  Por: Italo Giurizzato Junior
+
 21/03/2024
 -- ACBrANeWebServices --
 [*] Adiciona chamada a UTF8ToNativeString quando usa ParseText para corrigir problemas de conversão de acentuação

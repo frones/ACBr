@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, pcaConversao;
+  ACBrDFeConfiguracoes, ACBrANe.Conversao;
 
 type
 
@@ -46,29 +46,35 @@ type
 
   TGeralConfANe = class(TGeralConf)
   private
-    FVersaoDF: TVersaoANe;
     FTipoDoc: TTipoDoc;
-    FUsuario: String;
-    FSenha: String;
-    FCodATM: String;
-    FCNPJEmitente: String;
+    FVersaoDF: TVersaoANe;
     FSeguradora: TSeguradora;
+    FxSeguradora: string;
+    FUsuario: string;
+    FSenha: string;
+    FCodATM: string;
+    FCNPJEmitente: string;
 
     procedure SetVersaoDF(const Value: TVersaoANe);
+    procedure SetSeguradora(const Value: TSeguradora);
   public
     constructor Create(AOwner: TConfiguracoes); override;
+
     procedure Assign(DeGeralConfANe: TGeralConfANe); reintroduce;
+
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
+    procedure LerParametros;
 
   published
     property TipoDoc: TTipoDoc read FTipoDoc write FTipoDoc;
     property VersaoDF: TVersaoANe read FVersaoDF write SetVersaoDF default ve200;
-    property Usuario: String read FUsuario write FUsuario;
-    property Senha: String read FSenha write FSenha;
-    property CodATM: String read FCodATM write FCodATM;
-    property CNPJEmitente: String read FCNPJEmitente write FCNPJEmitente;
-    property Seguradora: TSeguradora read FSeguradora write FSeguradora default tsATM;
+    property Seguradora: TSeguradora read FSeguradora write SetSeguradora;
+    property xSeguradora: string read FxSeguradora;
+    property Usuario: string read FUsuario write FUsuario;
+    property Senha: string read FSenha write FSenha;
+    property CodATM: string read FCodATM write FCodATM;
+    property CNPJEmitente: string read FCNPJEmitente write FCNPJEmitente;
   end;
 
   { TArquivosConfANe }
@@ -76,19 +82,20 @@ type
   TArquivosConfANe = class(TArquivosConf)
   private
     FEmissaoPathANe: boolean;
-    FPathANe: String;
+    FPathANe: string;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    destructor Destroy; override;
     procedure Assign(DeArquivosConfANe: TArquivosConfANe); reintroduce;
+
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
+    function GetPathANe(Data: TDateTime = 0; const CNPJ: string = '';
+      const IE: string = ''): string;
   published
     property EmissaoPathANe: boolean read FEmissaoPathANe
       write FEmissaoPathANe default False;
-    property PathANe: String read FPathANe write FPathANe;
+    property PathANe: string read FPathANe write FPathANe;
   end;
 
   { TConfiguracoesANe }
@@ -115,7 +122,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, DateUtils;
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrANe, ACBrDFeException;
 
 { TConfiguracoesANe }
 
@@ -123,7 +131,16 @@ constructor TConfiguracoesANe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'ANe';
   WebServices.ResourceName := 'ACBrANeServicos';
+end;
+
+procedure TConfiguracoesANe.Assign(DeConfiguracoesANe: TConfiguracoesANe);
+begin
+  Geral.Assign(DeConfiguracoesANe.Geral);
+  WebServices.Assign(DeConfiguracoesANe.WebServices);
+  Certificados.Assign(DeConfiguracoesANe.Certificados);
+  Arquivos.Assign(DeConfiguracoesANe.Arquivos);
 end;
 
 function TConfiguracoesANe.GetArquivos: TArquivosConfANe;
@@ -146,22 +163,7 @@ begin
   FPArquivos := TArquivosConfANe.Create(self);
 end;
 
-procedure TConfiguracoesANe.Assign(DeConfiguracoesANe: TConfiguracoesANe);
-begin
-  Geral.Assign(DeConfiguracoesANe.Geral);
-  WebServices.Assign(DeConfiguracoesANe.WebServices);
-  Certificados.Assign(DeConfiguracoesANe.Certificados);
-  Arquivos.Assign(DeConfiguracoesANe.Arquivos);
-end;
-
 { TGeralConfANe }
-
-procedure TGeralConfANe.Assign(DeGeralConfANe: TGeralConfANe);
-begin
-  inherited Assign(DeGeralConfANe);
-
-  FVersaoDF := DeGeralConfANe.VersaoDF;
-end;
 
 constructor TGeralConfANe.Create(AOwner: TConfiguracoes);
 begin
@@ -173,7 +175,7 @@ begin
   FSenha := '';
   FCodATM := '';
   FCNPJEmitente := '';
-  FSeguradora := tsATM;
+  FSeguradora := segATM;
 end;
 
 procedure TGeralConfANe.GravarIni(const AIni: TCustomIniFile);
@@ -202,20 +204,54 @@ begin
   Seguradora := TSeguradora(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Seguradora', Integer(Seguradora)));
 end;
 
+procedure TGeralConfANe.LerParametros;
+var
+  ACBrANeLocal: TACBrANe;
+begin
+  if not Assigned(fpConfiguracoes.Owner) then
+    Exit;
+
+  // Carrega automaticamente o arquivo ACBrANeServicos se necessário.
+  ACBrANeLocal := TACBrANe(fpConfiguracoes.Owner);
+  if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+    ACBrANeLocal.LerSeguradoras;
+
+  if FSeguradora = segNenhum then
+    raise EACBrDFeException.Create('Seguradora não selecionada');
+
+  FxSeguradora := SeguradoraToStr(FSeguradora);
+
+  ACBrANeLocal.SetProvider;
+end;
+
+procedure TGeralConfANe.Assign(DeGeralConfANe: TGeralConfANe);
+begin
+  inherited Assign(DeGeralConfANe);
+
+  FxSeguradora := DeGeralConfANe.xSeguradora;
+  FUsuario := DeGeralConfANe.Usuario;
+  FSenha := DeGeralConfANe.Senha;
+  FCodATM := DeGeralConfANe.CodATM;
+  FCNPJEmitente := DeGeralConfANe.CNPJEmitente;
+  FVersaoDF := DeGeralConfANe.VersaoDF;
+
+  Seguradora := DeGeralConfANe.Seguradora;
+end;
+
+procedure TGeralConfANe.SetSeguradora(const Value: TSeguradora);
+begin
+  FSeguradora := Value;
+
+  if FSeguradora <> segNenhum then
+    LerParametros;
+end;
+
 procedure TGeralConfANe.SetVersaoDF(const Value: TVersaoANe);
 begin
   FVersaoDF := Value;
 end;
 
 { TArquivosConfANe }
-
-procedure TArquivosConfANe.Assign(DeArquivosConfANe: TArquivosConfANe);
-begin
-  inherited Assign(DeArquivosConfANe);
-
-  FEmissaoPathANe := DeArquivosConfANe.EmissaoPathANe;
-  FPathANe        := DeArquivosConfANe.PathANe;
-end;
 
 constructor TArquivosConfANe.Create(AOwner: TConfiguracoes);
 begin
@@ -225,15 +261,12 @@ begin
   FPathANe := '';
 end;
 
-destructor TArquivosConfANe.Destroy;
+procedure TArquivosConfANe.Assign(DeArquivosConfANe: TArquivosConfANe);
 begin
+  inherited Assign(DeArquivosConfANe);
 
-  inherited;
-end;
-
-function TArquivosConfANe.GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
-begin
-  Result := GetPath(FPathANe, 'ANe', CNPJ, '', Data);
+  EmissaoPathANe := DeArquivosConfANe.EmissaoPathANe;
+  PathANe := DeArquivosConfANe.PathANe;
 end;
 
 procedure TArquivosConfANe.GravarIni(const AIni: TCustomIniFile);
@@ -250,6 +283,12 @@ begin
 
   EmissaoPathANe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathANe', EmissaoPathANe);
   PathANe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathANe', PathANe);
+end;
+
+function TArquivosConfANe.GetPathANe(Data: TDateTime = 0;
+  const CNPJ: string = ''; const IE: string = ''): string;
+begin
+  Result := GetPath(FPathANe, 'ANe', CNPJ, IE, Data);
 end;
 
 end.

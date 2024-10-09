@@ -32,73 +32,50 @@
 
 {$I ACBr.inc}
 
-unit ACBrANeReg;
+unit ACBrANe.ProviderManager;
 
 interface
 
 uses
   SysUtils, Classes,
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors,
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf,
-     {$ELSE}
-        DesignIntf,
-        DesignEditors,
-     {$ENDIF}
-  {$ENDIF}
-  ACBrANe;
+  ACBrDFe,
+  ACBrANeInterface;
 
-procedure Register;
+type
+
+  TACBrANeProviderManager = class
+  public
+    class function GetProvider(ACBrANe: TACBrDFe): IACBrANeProvider;
+  end;
 
 implementation
 
 uses
-  ACBrReg, ACBrDFeConfiguracoes, ACBrANeConfiguracoes;
+  ACBrANe, ACBrANe.Conversao,
 
-{$IFNDEF FPC}
-   {$R ACBrANe.dcr}
-{$ENDIF}
+  ATM.Provider,
+  ELT.Provider,
+  PortoSeguro.Provider;
 
-procedure Register;
+  { TACBrANeProviderManager }
+
+class function TACBrANeProviderManager.GetProvider(ACBrANe: TACBrDFe): IACBrANeProvider;
 begin
-  RegisterComponents('ACBrANe', [TACBrANe]);
+  with TACBrANe(ACBrANe).Configuracoes.Geral do
+  begin
+    case Seguradora of
+      segATM:
+        Result := TACBrANeProviderATM.Create(ACBrANe);
 
-  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
-    TClassProperty);
+      segELT:
+        Result := TACBrANeProviderELT.Create(ACBrANe);
 
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrANe, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConfANe), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConfANe, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConfANe), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfANe, 'PathANe',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfANe, 'PathCan',
-     TACBrDirProperty);
-
-  {$IFDEF FPC}
-    RegisterPropertyEditor(TypeInfo(String), TWebServicesConf, 'QuebradeLinha', THiddenPropertyEditor);
-  {$ELSE}
-    UnlistPublishedProperty(TWebServicesConf, 'QuebradeLinha');
-  {$ENDIF}
+      segPortoSeguro:
+        Result := TACBrANeProviderPortoSeguro.Create(ACBrANe);
+    else
+      Result := nil;
+    end;
+  end;
 end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrANe.lrs}
-{$endif}
 
 end.

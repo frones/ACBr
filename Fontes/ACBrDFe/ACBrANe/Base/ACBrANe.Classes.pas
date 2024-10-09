@@ -32,73 +32,73 @@
 
 {$I ACBr.inc}
 
-unit ACBrANeReg;
+unit ACBrANe.Classes;
 
 interface
 
 uses
   SysUtils, Classes,
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors,
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf,
-     {$ELSE}
-        DesignIntf,
-        DesignEditors,
-     {$ENDIF}
+  {$IFNDEF VER130}
+    Variants,
   {$ENDIF}
-  ACBrANe;
+  {$IF DEFINED(NEXTGEN)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IFEND}
+  ACBrBase,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  ACBrANe.Conversao;
 
-procedure Register;
+type
+
+  TANe = class(TObject)
+  private
+    /////// ATM
+    Fusuario: string;
+    Fsenha: string;
+    Fcodatm: string;
+
+    /////// ELT
+    FNomeArq: string;
+    FCNPJ: string;
+
+    /////// ATM e ELT
+    FxmlDFe: string;
+
+    Faplicacao: string;
+    Fassunto: string;
+    Fremetentes: string;
+    Fdestinatarios: string;
+    Fcorpo: string;
+    Fchave: string;
+    Fchaveresp: string;
+
+  public
+    /////// ATM
+    property usuario: string  read Fusuario  write Fusuario;
+    property senha: string    read Fsenha    write Fsenha;
+    property codatm: string   read Fcodatm   write Fcodatm;
+
+    /////// ELT
+    property NomeArq: string  read FNomeArq write FNomeArq;
+    property CNPJ: string     read FCNPJ    write FCNPJ;
+
+    /////// ATM e ELT
+    // A propriedade abaixo é utilizada pelos serviços: AverbaNFe, AverbaCTe e DeclaraMDFe
+    property xmlDFe: string   read FxmlDFe   write FxmlDFe;
+
+    // As propriedades abaixo são utilizadas para o serviço AddBackMail
+    property aplicacao: string     read Faplicacao     write Faplicacao;
+    property assunto: string       read Fassunto       write Fassunto;
+    property remetentes: string    read Fremetentes    write Fremetentes;
+    property destinatarios: string read Fdestinatarios write Fdestinatarios;
+    property corpo: string         read Fcorpo         write Fcorpo;
+    property chave: string         read Fchave         write Fchave;
+    property chaveresp: string     read Fchaveresp     write Fchaveresp;
+  end;
 
 implementation
-
-uses
-  ACBrReg, ACBrDFeConfiguracoes, ACBrANeConfiguracoes;
-
-{$IFNDEF FPC}
-   {$R ACBrANe.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrANe', [TACBrANe]);
-
-  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrANe, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConfANe), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConfANe, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConfANe), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfANe, 'PathANe',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfANe, 'PathCan',
-     TACBrDirProperty);
-
-  {$IFDEF FPC}
-    RegisterPropertyEditor(TypeInfo(String), TWebServicesConf, 'QuebradeLinha', THiddenPropertyEditor);
-  {$ELSE}
-    UnlistPublishedProperty(TWebServicesConf, 'QuebradeLinha');
-  {$ENDIF}
-end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrANe.lrs}
-{$endif}
 
 end.

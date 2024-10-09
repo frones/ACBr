@@ -32,73 +32,36 @@
 
 {$I ACBr.inc}
 
-unit ACBrANeReg;
+unit ACBrANeInterface;
 
 interface
 
 uses
-  SysUtils, Classes,
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors,
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf,
-     {$ELSE}
-        DesignIntf,
-        DesignEditors,
-     {$ENDIF}
-  {$ENDIF}
-  ACBrANe;
+  ACBrANe.Classes, ACBrANeParametros, ACBrANe.Conversao;
 
-procedure Register;
+type
+  IACBrANeProvider = interface ['{A1E58624-F7C7-4112-8291-8D0CA39001E3}']
+    function GerarXml(const AANe: TANe; var AXml, AAlerts: string): Boolean;
+    function LerXml(const AXML: string; var AANe: TANe;
+      var aXmlTratado: string): Boolean;
+
+    procedure Enviar;
+    procedure Consultar;
+
+    function GetConfigGeral: TConfigGeral;
+    function GetConfigWebServices: TConfigWebServices;
+    function GetConfigMsgDados: TConfigMsgDados;
+    function GetConfigAssinar: TConfigAssinar;
+    function GetConfigSchemas: TConfigSchemas;
+    function GetSchemaPath: string;
+
+    property ConfigGeral: TConfigGeral read GetConfigGeral;
+    property ConfigWebServices: TConfigWebServices read GetConfigWebServices;
+    property ConfigMsgDados: TConfigMsgDados read GetConfigMsgDados;
+    property ConfigAssinar: TConfigAssinar read GetConfigAssinar;
+    property ConfigSchemas: TConfigSchemas read GetConfigSchemas;
+  end;
 
 implementation
-
-uses
-  ACBrReg, ACBrDFeConfiguracoes, ACBrANeConfiguracoes;
-
-{$IFNDEF FPC}
-   {$R ACBrANe.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrANe', [TACBrANe]);
-
-  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrANe, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConfANe), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConfANe, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConfANe), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfANe, 'PathANe',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfANe, 'PathCan',
-     TACBrDirProperty);
-
-  {$IFDEF FPC}
-    RegisterPropertyEditor(TypeInfo(String), TWebServicesConf, 'QuebradeLinha', THiddenPropertyEditor);
-  {$ELSE}
-    UnlistPublishedProperty(TWebServicesConf, 'QuebradeLinha');
-  {$ENDIF}
-end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrANe.lrs}
-{$endif}
 
 end.

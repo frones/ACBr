@@ -69,10 +69,28 @@ requires
   ACBr_DFeComum;
 
 contains
-  ACBrANeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas',
   ACBrANe in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANe.pas',
   ACBrANeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeConfiguracoes.pas',
   ACBrANeDocumentos in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeDocumentos.pas',
+  ACBrANeInterface in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeInterface.pas',
+  ACBrANeParametros in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeParametros.pas',
+  ACBrANeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas',
+
+  ACBrANe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\ACBrANe.Classes.pas',
+  ACBrANe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\ACBrANe.Consts.pas',
+  ACBrANe.Conversao in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\ACBrANe.Conversao.pas',
+
+  ACBrANe.ProviderBase in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras\ACBrANe.ProviderBase.pas',
+  ACBrANe.ProviderManager in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras\ACBrANe.ProviderManager.pas',
+  ACBrANe.ProviderProprio in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras\ACBrANe.ProviderProprio.pas',
+
+  ACBrANe.WebServicesBase in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesBase.pas',
+  ACBrANe.WebServicesResponse in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesResponse.pas',
+
+  ATM.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras\ATM.Provider.pas',
+  ELT.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras\ELT.Provider.pas',
+  PortoSeguro.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras\PortoSeguro.Provider.pas',
+
   pcaRetEnvANe in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaRetEnvANe.pas',
   pcaANe in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANe.pas',
   pcaANeR in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANeR.pas',

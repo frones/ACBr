@@ -9,13 +9,13 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe;..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe;..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe;..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base;..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras;..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices;..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrANe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Averbação Eletrônica Nacional - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="10">
+    <Files Count="23">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas"/>
         <Type Value="Include"/>
@@ -57,6 +57,58 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaConversao.pas"/>
         <UnitName Value="pcaConversao"/>
       </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeInterface.pas"/>
+        <UnitName Value="ACBrANeInterface"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeParametros.pas"/>
+        <UnitName Value="ACBrANeParametros"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\ACBrANe.Classes.pas"/>
+        <UnitName Value="ACBrANe.Classes"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\ACBrANe.Consts.pas"/>
+        <UnitName Value="ACBrANe.Consts"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\ACBrANe.Conversao.pas"/>
+        <UnitName Value="ACBrANe.Conversao"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras\ACBrANe.ProviderBase.pas"/>
+        <UnitName Value="ACBrANe.ProviderBase"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras\ACBrANe.ProviderManager.pas"/>
+        <UnitName Value="ACBrANe.ProviderManager"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\Seguradoras\ACBrANe.ProviderProprio.pas"/>
+        <UnitName Value="ACBrANe.ProviderProprio"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesBase.pas"/>
+        <UnitName Value="ACBrANe.WebServicesBase"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesResponse.pas"/>
+        <UnitName Value="ACBrANe.WebServicesResponse"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras\ATM.Provider.pas"/>
+        <UnitName Value="ATM.Provider"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras\ELT.Provider.pas"/>
+        <UnitName Value="ELT.Provider"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Seguradoras\PortoSeguro.Provider.pas"/>
+        <UnitName Value="PortoSeguro.Provider"/>
+      </Item23>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

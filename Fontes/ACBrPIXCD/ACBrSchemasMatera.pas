@@ -9314,7 +9314,7 @@ end;
 constructor TMateraInstantPaymentQRCodeResponse.Create(const aObjectName: String);
 begin
   inherited Create(aObjectName);
-  fGeneratedImage := TMateraGeneratedImage.Create('GeneratedImage');
+  fGeneratedImage := TMateraGeneratedImage.Create('generateImage');
   Clear;
 end;
 

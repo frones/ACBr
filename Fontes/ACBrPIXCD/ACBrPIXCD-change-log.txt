@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2024
+-- ACBrSchemasMatera --
+[-] Corrige problema ao ler campos do objeto 'generateImage' no json de resposta.
+    por: Elias César
+
 08/10/2024
 -- ACBrPIXPSPMatera, ACBrSchemasMatera --
 [*] Inclusão de novos campos no retorno das consultas

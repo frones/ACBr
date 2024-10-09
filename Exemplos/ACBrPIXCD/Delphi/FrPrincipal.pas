@@ -45,7 +45,7 @@ uses
   ImgList, ACBrPIXPSPSicoob, ACBrPIXPSPPagSeguro, ACBrPIXPSPGerenciaNet,
   ACBrPIXPSPBradesco, ACBrPIXPSPPixPDV, ACBrPIXPSPInter, ACBrPIXPSPAilos,
   ACBrPIXPSPMatera, ACBrPIXPSPCielo, ACBrPIXPSPMercadoPago, ACBrPIXPSPGate2All,
-  ACBrPIXPSPBanrisul, ACBrPIXPSPC6Bank
+  ACBrPIXPSPBanrisul, ACBrPIXPSPC6Bank, System.ImageList
   {$IfDef FPC}
   , DateTimePicker
   {$EndIf};
@@ -1053,6 +1053,8 @@ type
     procedure tmConsultarPagtoTimer(Sender: TObject);
     procedure tsSicrediGerarChaveCSRShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure edMercadoPagoChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     fFluxoDados: TFluxoPagtoDados;
 
@@ -1193,6 +1195,11 @@ begin
   VerificarConfiguracao;
   ReiniciarFluxo;
   AdicionarLinhaLog(GetInfoOpenSSL);
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  AvaliarInterfaceFluxo;
 end;
 
 procedure TForm1.imgInfoMCCClick(Sender: TObject);
@@ -3010,6 +3017,12 @@ begin
   ValidarChavePSPMatera;
 end;
 
+procedure TForm1.edMercadoPagoChange(Sender: TObject);
+begin
+  cbMercadoPagoTipoChave.ItemIndex := Integer(DetectarTipoChave(edMercadoPago.Text));
+  imMercadoPagoErroChavePix.Visible := NaoEstaVazio(edMercadoPago.Text) and (cbMercadoPagoTipoChave.ItemIndex = 0);
+end;
+
 procedure TForm1.edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
 begin
   if not CharInSet( Key, [#8,#13,'0'..'9'] ) then
@@ -4050,6 +4063,8 @@ begin
     edCieloClientID.Text := Ini.ReadString('Cielo', 'ClientID', '');
     edCieloClientSecret.Text := Ini.ReadString('Cielo', 'ClientSecret', '');
 
+    edMercadoPago.Text := Ini.ReadString('MercadoPago', 'ChavePix', '');
+    cbMercadoPagoTipoChave.ItemIndex := Ini.ReadInteger('MercadoPago', 'TipoChave', 0);
     edMercadoPagoAccessToken.Text := Ini.ReadString('MercadoPago', 'AccessToken', '');
 
     edGate2AllAuthenticationApi.Text := Ini.ReadString('Gate2All', 'AuthenticationApi', '');
@@ -4195,6 +4210,8 @@ begin
     Ini.WriteString('Cielo', 'ClientID', edCieloClientID.Text);
     Ini.WriteString('Cielo', 'ClientSecret', edCieloClientSecret.Text);
 
+    Ini.WriteString('MercadoPago', 'ChavePix', edMercadoPago.Text);
+    Ini.WriteInteger('MercadoPago', 'TipoChave', cbMercadoPagoTipoChave.ItemIndex);
     Ini.WriteString('MercadoPago', 'AccessToken', edMercadoPagoAccessToken.Text);
 
     Ini.WriteString('Gate2All', 'AuthenticationApi', edGate2AllAuthenticationApi.Text);
@@ -4416,6 +4433,7 @@ begin
   cbCieloTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbBanrisulTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbC6BankTipoChave.Items.Assign(cbxBBTipoChave.Items);
+  cbMercadoPagoTipoChave.Items.Assign(cbxBBTipoChave.Items);
 
   cbxSolicitarDevolucaoPix_Natureza.Items.Clear;
   for l := 0 to Integer(High(TACBrPIXNaturezaDevolucao)) do
@@ -4623,6 +4641,8 @@ begin
   ACBrPSPCielo1.ClientID := edCieloClientID.Text;
   ACBrPSPCielo1.ClientSecret := edCieloClientSecret.Text;
 
+  ACBrPSPMercadoPago1.ChavePIX := edMercadoPago.Text;
+  ACBrPSPMercadoPago1.TipoChave := TACBrPIXTipoChave( cbMercadoPagoTipoChave.ItemIndex );
   ACBrPSPMercadoPago1.AccessToken := edMercadoPagoAccessToken.Text;
 
   ACBrPSPGate2All1.AuthenticationApi := edGate2AllAuthenticationApi.Text;

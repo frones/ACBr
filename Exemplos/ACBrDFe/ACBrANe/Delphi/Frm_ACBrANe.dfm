@@ -10,10 +10,8 @@ object frmACBrANe: TfrmACBrANe
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -301,57 +299,13 @@ object frmACBrANe: TfrmACBrANe
               TabOrder = 5
               OnClick = btnIssuerNameClick
             end
-            object GroupBox1: TGroupBox
-              Left = 2
-              Top = 328
-              Width = 263
-              Height = 69
-              Caption = 'Calculo de Hash e assinatura'
-              TabOrder = 6
-              object Edit1: TEdit
-                Left = 3
-                Top = 14
-                Width = 249
-                Height = 21
-                TabOrder = 0
-                Text = '0548133600013704583493000190'
-              end
-              object btnSha256: TButton
-                Left = 8
-                Top = 41
-                Width = 99
-                Height = 25
-                Caption = 'SHA256+RSA'
-                TabOrder = 1
-                OnClick = btnSha256Click
-              end
-              object cbAssinar: TCheckBox
-                Left = 144
-                Top = 41
-                Width = 54
-                Height = 19
-                Caption = 'Assinar'
-                Checked = True
-                State = cbChecked
-                TabOrder = 2
-              end
-            end
-            object btnHTTPS: TButton
-              Left = 8
-              Top = 403
-              Width = 128
-              Height = 25
-              Caption = 'HTTPS sem Certificado'
-              TabOrder = 7
-              OnClick = btnHTTPSClick
-            end
             object btnLeituraX509: TButton
-              Left = 144
-              Top = 403
+              Left = 8
+              Top = 326
               Width = 115
               Height = 25
               Caption = 'Leitura de X509'
-              TabOrder = 8
+              TabOrder = 6
               OnClick = btnLeituraX509Click
             end
             object cbSSLLib: TComboBox
@@ -360,7 +314,7 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 9
+              TabOrder = 7
               OnChange = cbSSLLibChange
             end
             object cbCryptLib: TComboBox
@@ -369,7 +323,7 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 10
+              TabOrder = 8
               OnChange = cbCryptLibChange
             end
             object cbHttpLib: TComboBox
@@ -378,7 +332,7 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 11
+              TabOrder = 9
               OnChange = cbHttpLibChange
             end
             object cbXmlSignLib: TComboBox
@@ -387,7 +341,7 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 12
+              TabOrder = 10
               OnChange = cbXmlSignLibChange
             end
           end
@@ -1322,32 +1276,32 @@ object frmACBrANe: TfrmACBrANe
       object tsEnvios: TTabSheet
         Caption = 'Envios'
         ImageIndex = 2
-        object btnGerarANe: TButton
-          Left = 8
-          Top = 8
+        object btnEnviar: TButton
+          Left = 3
+          Top = 3
           Width = 177
           Height = 25
-          Caption = 'Gerar ANe'
+          Caption = 'Enviar'
           TabOrder = 0
-          OnClick = btnGerarANeClick
-        end
-        object btnCriarEnviar: TButton
-          Left = 192
-          Top = 8
-          Width = 177
-          Height = 25
-          Caption = 'Criar e Enviar'
-          TabOrder = 1
-          OnClick = btnCriarEnviarClick
+          OnClick = btnEnviarClick
         end
         object btnEnviarANeEmail: TButton
-          Left = 376
-          Top = 7
+          Left = 186
+          Top = 3
           Width = 177
           Height = 25
           Caption = 'Enviar ANe Email'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = btnEnviarANeEmailClick
+        end
+        object btnConsultar: TButton
+          Left = 369
+          Top = 3
+          Width = 177
+          Height = 25
+          Caption = 'Consultar'
+          TabOrder = 2
+          OnClick = btnConsultarClick
         end
       end
     end
@@ -1356,12 +1310,13 @@ object frmACBrANe: TfrmACBrANe
       Top = 73
       Width = 567
       Height = 538
-      ActivePage = TabSheet5
+      ActivePage = TabSheet8
       Align = alClient
       TabOrder = 1
-      object TabSheet5: TTabSheet
-        Caption = 'Respostas'
-        object MemoResp: TMemo
+      object TabSheet8: TTabSheet
+        Caption = 'Log'
+        ImageIndex = 2
+        object memoLog: TMemo
           Left = 0
           Top = 0
           Width = 559
@@ -1371,10 +1326,9 @@ object frmACBrANe: TfrmACBrANe
           TabOrder = 0
         end
       end
-      object TabSheet6: TTabSheet
-        Caption = 'XML Resposta'
-        ImageIndex = 1
-        object WBResposta: TWebBrowser
+      object TabSheet5: TTabSheet
+        Caption = 'XML de Envio'
+        object WBXmlEnvio: TWebBrowser
           Left = 0
           Top = 0
           Width = 559
@@ -1389,59 +1343,22 @@ object frmACBrANe: TfrmACBrANe
             00000000000000000100000000000000000000000000000000000000}
         end
       end
-      object TabSheet8: TTabSheet
-        Caption = 'Log'
-        ImageIndex = 2
-        object memoLog: TMemo
+      object TabSheet6: TTabSheet
+        Caption = 'XML de Retorno'
+        ImageIndex = 1
+        object WBXmlRetorno: TWebBrowser
           Left = 0
           Top = 0
           Width = 559
           Height = 510
           Align = alClient
-          ScrollBars = ssVertical
           TabOrder = 0
-        end
-      end
-      object TabSheet9: TTabSheet
-        Caption = 'Documento'
-        ImageIndex = 3
-        object trvwDocumento: TTreeView
-          Left = 0
-          Top = 0
-          Width = 559
-          Height = 510
-          Align = alClient
-          Indent = 19
-          TabOrder = 0
-        end
-      end
-      object TabSheet10: TTabSheet
-        Caption = 'Retorno Completo WS'
-        ImageIndex = 4
-        object memoRespWS: TMemo
-          Left = 0
-          Top = 0
-          Width = 559
-          Height = 510
-          Align = alClient
-          ScrollBars = ssVertical
-          TabOrder = 0
-        end
-      end
-      object Dados: TTabSheet
-        Caption = 'Dados'
-        ImageIndex = 5
-        object MemoDados: TMemo
-          Left = 0
-          Top = 0
-          Width = 559
-          Height = 510
-          Align = alClient
-          Lines.Strings = (
-            '')
-          ScrollBars = ssVertical
-          TabOrder = 0
-          WordWrap = False
+          ControlData = {
+            4C000000C6390000B63400000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
     end
@@ -1454,8 +1371,8 @@ object frmACBrANe: TfrmACBrANe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 336
-    Top = 288
+    Left = 440
+    Top = 128
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1463,13 +1380,10 @@ object frmACBrANe: TfrmACBrANe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 400
-    Top = 288
+    Left = 352
+    Top = 200
   end
   object ACBrANe1: TACBrANe
-    MAIL = ACBrMail1
-    OnStatusChange = ACBrANe1StatusChange
-    OnGerarLog = ACBrANe1GerarLog
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -1480,7 +1394,7 @@ object frmACBrANe: TfrmACBrANe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Left = 336
-    Top = 240
+    Left = 350
+    Top = 129
   end
 end

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2024
+-- ACBrCIOTConversao --
+[+] Incluido o enumerado: DepositoAgendado em TpTipoPagamento.
+  Por: Italo Giurizzato Junior
+
 26/03/2024
 -- pcnretEnvCIOT --
 [*] Alteração na leitura da tag EstadoCiot para não levantar erro quando a tag

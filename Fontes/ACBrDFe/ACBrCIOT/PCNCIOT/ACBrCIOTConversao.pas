@@ -160,11 +160,13 @@ const
     of string = ('QuantidadeDesembarque', 'QuantidadeMenor');
 
 type
-  TpTipoPagamento = (TransferenciaBancaria, eFRETE, Parceiro, Outros);
+  TpTipoPagamento = (TransferenciaBancaria, eFRETE, Parceiro, Outros,
+                     DepositoAgendado);
 
 const
   TpTipoPagamentoArrayStrings: array[TpTipoPagamento]
-    of string = ('TransferenciaBancaria', 'eFRETE', 'Parceiro', 'Outros');
+    of string = ('TransferenciaBancaria', 'eFRETE', 'Parceiro', 'Outros',
+                 'DepositoAgendado');
 
 type
   TpTipoCategoriaPagamento = (tcpAdiantamento, tcpEstadia, tcpQuitacao,

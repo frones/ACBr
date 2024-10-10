@@ -84,7 +84,7 @@ end;
 function TRetornoEnvio_Itau_API.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
   LJsonObject, LJsonBoletoObject : TACBrJSONObject;
-  LJsonArray, LJsonBoletoIndividualArray : TACBrJSONArray;
+  LJsonArray, LJsonBoletoIndividualArray, LJsonPagamentoCobranca : TACBrJSONArray;
   LListaRejeicao: TACBrBoletoRejeicao;
   I, J: Integer;
   TipoOperacao : TOperacao;
@@ -276,15 +276,16 @@ begin
 
               if LJsonBoletoObject.AsJSONObject['dado_boleto'].IsJSONArray('pagamentos_cobranca') then
               begin
-                for j := 0 to Pred(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].Count) do
+                LJsonPagamentoCobranca := LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'];
+                for j := 0 to Pred(LJsonPagamentoCobranca.Count) do
                 begin
-                  ARetornoWS.DadosRet.TituloRet.DataProcessamento    := StringToDateTimeDef(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['data_inclusao_pagamento'], 0, 'yyyy-mm-dd');
-                  ARetornoWS.DadosRet.TituloRet.DataCredito          := StringToDateTimeDef(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['data_inclusao_pagamento'], 0, 'yyyy-mm-dd');
-                  ARetornoWS.DadosRet.TituloRet.ValorPago            := StrToFloatDef( StringReplace(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['valor_pago_total_cobranca'],'.',',',[rfReplaceAll]), 0);
-                  ARetornoWS.DadosRet.TituloRet.ValorMulta           := StrToFloatDef( StringReplace(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['valor_pago_multa_cobranca'],'.',',',[rfReplaceAll]), 0);
-                  ARetornoWS.DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef( StringReplace(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['valor_pago_juro_cobranca'],'.',',',[rfReplaceAll]), 0);
-                  ARetornoWS.DadosRet.TituloRet.ValorDesconto        := StrToFloatDef( StringReplace(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['valor_pago_desconto_cobranca'],'.',',',[rfReplaceAll]), 0);
-                  ARetornoWS.DadosRet.TituloRet.ValorAbatimento      := StrToFloatDef( StringReplace(LJsonBoletoObject.AsJSONObject['dado_boleto'].AsJSONArray['pagamentos_cobranca'].ItemAsJSONObject[J].AsString['valor_pago_abatimento_cobranca'],'.',',',[rfReplaceAll]), 0);
+                  ARetornoWS.DadosRet.TituloRet.DataProcessamento    := Iso8601ToDateTime(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['data_inclusao_pagamento']);
+                  ARetornoWS.DadosRet.TituloRet.DataCredito          := Iso8601ToDateTime(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['data_inclusao_pagamento']);
+                  ARetornoWS.DadosRet.TituloRet.ValorPago            := StrToFloatDef( StringReplace(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['valor_pago_total_cobranca'],'.',',',[rfReplaceAll]), 0);
+                  ARetornoWS.DadosRet.TituloRet.ValorMulta           := StrToFloatDef( StringReplace(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['valor_pago_multa_cobranca'],'.',',',[rfReplaceAll]), 0);
+                  ARetornoWS.DadosRet.TituloRet.ValorMoraJuros       := StrToFloatDef( StringReplace(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['valor_pago_juro_cobranca'],'.',',',[rfReplaceAll]), 0);
+                  ARetornoWS.DadosRet.TituloRet.ValorDesconto        := StrToFloatDef( StringReplace(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['valor_pago_desconto_cobranca'],'.',',',[rfReplaceAll]), 0);
+                  ARetornoWS.DadosRet.TituloRet.ValorAbatimento      := StrToFloatDef( StringReplace(LJsonPagamentoCobranca.ItemAsJSONObject[J].AsString['valor_pago_abatimento_cobranca'],'.',',',[rfReplaceAll]), 0);
                   if ARetornoWS.DadosRet.TituloRet.ValorPago > ARetornoWS.DadosRet.TituloRet.ValorDocumento then
                      ARetornoWS.DadosRet.TituloRet.ValorOutrasDespesas := (ARetornoWS.DadosRet.TituloRet.ValorPago - ARetornoWS.DadosRet.TituloRet.ValorDocumento)
                 end;

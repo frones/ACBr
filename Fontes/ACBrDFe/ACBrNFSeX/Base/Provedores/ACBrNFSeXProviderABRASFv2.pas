@@ -2221,11 +2221,12 @@ begin
                                  '</' + Prefixo2 + 'Numero>' +
                                  Serie +
                                  '<' + Prefixo2 + 'CpfCnpj>' +
-                                   GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                                    GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
                                  '</' + Prefixo2 + 'CpfCnpj>' +
                                  GetInscMunic(Emitente.InscMun, Prefixo2) +
                                  '<' + Prefixo2 + 'CodigoMunicipio>' +
-                                    IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                                    IntToStr(InfoCanc.CodMunicipio) +
+//                                    IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                                  '</' + Prefixo2 + 'CodigoMunicipio>' +
                                  CodigoVerificacao +
                                '</' + Prefixo2 + 'IdentificacaoNfse>' +

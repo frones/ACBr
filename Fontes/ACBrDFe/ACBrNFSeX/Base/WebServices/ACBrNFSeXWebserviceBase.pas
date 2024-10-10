@@ -341,6 +341,7 @@ type
     FNumeroNFSeSubst: string;
     FSerieNFSeSubst: string;
     FCodServ: string;
+    FCodMunicipio: Integer;
 
   public
     constructor Create;
@@ -362,6 +363,7 @@ type
     property NumeroNFSeSubst: string read FNumeroNFSeSubst write FNumeroNFSeSubst;
     property SerieNFSeSubst: string  read FSerieNFSeSubst  write FSerieNFSeSubst;
     property CodServ: string         read FCodServ         write FCodServ;
+    property CodMunicipio: Integer   read FCodMunicipio    write FCodMunicipio;
   end;
 
    TpedRegEvento = class
@@ -1655,6 +1657,7 @@ begin
   FNumeroNFSeSubst := '';
   FSerieNFSeSubst := '';
   FCodServ := '';
+  FCodMunicipio := 0;
 end;
 
 function TInfCancelamento.LerFromIni(const AIniStr: string): Boolean;
@@ -1687,6 +1690,7 @@ begin
     NumeroNFSeSubst := INIRec.ReadString(sSecao, 'NumeroNFSeSubst', '');
     SerieNFSeSubst  := INIRec.ReadString(sSecao, 'SerieNFSeSubst', '');
     CodServ         := INIRec.ReadString(sSecao, 'CodServ', '');
+    CodMunicipio    := INIRec.ReadInteger(sSecao, 'CodMunicipio', 0);
 
     Result := True;
   finally

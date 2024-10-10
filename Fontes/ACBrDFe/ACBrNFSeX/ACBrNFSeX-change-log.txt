@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 10/10/2024
+-- ACBrNFSeX/ACBrNFSeXProviderABRASFv2/ACBrNFSeXWebserviceBase --
+[+] Incluído o campo CodMunicipio na classe de Informações de cancelamento, para
+    que possamos informar corretamente o código IBGE do município, pois alguns 
+    provedores exigem que o código deseja do município de incidencia e não do 
+    prestador.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6072 - Incluída a cidade de Vera Cruz/SP, o provedor é Fiorilli.
    Por: Fabio Tellini

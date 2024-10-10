@@ -1061,6 +1061,11 @@ begin
     SerieNFSeSubst := aInfCancelamento.SerieNFSeSubst;
     CodServ := aInfCancelamento.CodServ;
 
+    if aInfCancelamento.CodMunicipio = 0 then
+      aInfCancelamento.CodMunicipio := Configuracoes.Geral.CodigoMunicipio;
+
+    CodMunicipio := aInfCancelamento.CodMunicipio;
+
     if (ChaveNFSe <> '') and (NumeroNFSe = '') then
       NumeroNFSe := Copy(ChaveNFSe, 22, 9);
   end;

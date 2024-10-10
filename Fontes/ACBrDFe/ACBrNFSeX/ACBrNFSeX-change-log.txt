@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/10/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6072 - Incluída a cidade de Vera Cruz/SP, o provedor é Fiorilli.
+   Por: Fabio Tellini
+
 08/10/2024
 -- WebFisco.GravarXml --
 [*] Alteração visando não ter mais CNPJ de Prefeitura e Prestador fixos para o 

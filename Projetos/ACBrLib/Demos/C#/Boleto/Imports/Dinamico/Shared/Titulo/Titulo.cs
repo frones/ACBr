@@ -72,6 +72,8 @@ namespace ACBrLib.Boleto
 
         public string NossoNumero { get; set; }
 
+        public string NossoNumeroCorrespondente { get; set; }
+
         public decimal ValorDocumento { get; set; }
 
         public string EspecieMod { get; set; }

@@ -158,6 +158,7 @@ type
     function GerarforDia: TACBrXmlNodeArray;
     function GerarDeduc: TACBrXmlNodeArray;
     function GerarinfRespTec: TACBrXmlNode;
+    function GerarAgropecuario: TACBrXmlNode;
     function GerarProtNFe: TACBrXmlNode;
 
     function GetOpcoes: TNFeXmlWriterOptions;
@@ -416,6 +417,8 @@ begin
 
   if NFe.infNFe.Versao >= 4 then
     Result.AppendChild(GerarinfRespTec);
+
+  Result.AppendChild(GerarAgropecuario);
 end;
 
 function TNFeXmlWriter.GerarIde: TACBrXmlNode;
@@ -969,6 +972,43 @@ begin
       NFe.Entrega.Email, DSC_EMAIL));
     Result.AppendChild(AddNode(tcStr, 'G15', 'IE', 02, 14, 0,
       OnlyNumber(NFe.Entrega.IE), DSC_IE));
+  end;
+end;
+
+function TNFeXmlWriter.GerarAgropecuario: TACBrXmlNode;
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if Trim(NFe.agropecuario.defensivo.nReceituario) <> '' then
+  begin
+    Result := FDocument.CreateElement('agropecuario');
+    Result.AddChild('defensivo');
+    AuxNode := Result.Childrens.FindAnyNs('defensivo');
+
+    AuxNode.AppendChild(AddNode(tcStr, 'ZF03', 'nReceituario', 01, 20, 1,
+                                NFe.agropecuario.defensivo.nReceituario));
+
+    AuxNode.AppendChild(AddNode(tcStr, 'ZF03a', 'CPFRespTec', 01, 11, 1,
+                                NFe.agropecuario.defensivo.CPFRespTec));
+  end else
+  if NFe.agropecuario.guiaTransito.tpGuia <> tpgNenhum then
+  begin
+    Result := FDocument.CreateElement('agropecuario');
+    Result.AddChild('guiaTransito');
+    AuxNode := Result.Childrens.FindAnyNs('guiaTransito');
+
+    AuxNode.AppendChild(AddNode(tcStr, 'ZF06', 'tpGuia', 00, 01, 1,
+                                TtpGuiaToStr(NFe.agropecuario.guiaTransito.tpGuia)));
+
+    AuxNode.AppendChild(AddNode(tcStr, 'ZF05', 'UFGuia', 00, 02, 0,
+                                NFe.agropecuario.guiaTransito.UFGuia));
+
+    AuxNode.AppendChild(AddNode(tcStr, 'ZF07', 'serieGuia', 01, 09, 0,
+                                NFe.agropecuario.guiaTransito.serieGuia));
+
+    AuxNode.AppendChild(AddNode(tcInt, 'ZF08', 'nGuia', 01, 09, 1,
+                                NFe.agropecuario.guiaTransito.nGuia));
+
   end;
 end;
 

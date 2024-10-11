@@ -160,6 +160,7 @@ type
     procedure GerarforDia;
     procedure GerarDeduc;
     procedure GerarinfRespTec;
+    procedure GerarAgropecuario;
 
     procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer;
       cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
@@ -415,6 +416,8 @@ begin
 
   if NFe.infNFe.Versao >= 4 then
     GerarinfRespTec;
+
+  GerarAgropecuario;
 end;
 
 procedure TNFeW.GerarIde;
@@ -843,6 +846,30 @@ begin
       Gerador.wCampo(tcStr, 'G15', 'IE', 02, 14, 0, OnlyNumber(NFe.Entrega.IE), DSC_IE);
 
     Gerador.wGrupo('/entrega');
+  end;
+end;
+
+procedure TNFeW.GerarAgropecuario;
+begin
+  if Trim(NFe.agropecuario.defensivo.nReceituario) <> '' then
+  begin
+    Gerador.wGrupo('agropecuario', 'ZF01');
+    Gerador.wGrupo('defensivo', 'ZF02');
+    Gerador.wCampo(tcStr, 'ZF03', 'nReceituario', 01, 20, 1, NFe.agropecuario.defensivo.nReceituario, DSC_NRECEITUARIO);
+    Gerador.wCampo(tcStr, 'ZF03a', 'CPFRespTec', 01, 11, 1, NFe.agropecuario.defensivo.CPFRespTec, DSC_CPFRESPTEC);
+    Gerador.wGrupo('/defensivo');
+    Gerador.wGrupo('/agropecuario');
+  end else
+  if NFe.agropecuario.guiaTransito.tpGuia <> tpgNenhum then
+  begin
+    Gerador.wGrupo('agropecuario', 'ZF01');
+    Gerador.wGrupo('guiaTransito', 'ZF04');
+    Gerador.wCampo(tcStr, 'ZF06', 'tpGuia', 00, 01, 1, TtpGuiaToStr(NFe.agropecuario.guiaTransito.tpGuia), DSC_TPGUIA);
+    Gerador.wCampo(tcStr, 'ZF05', 'UFGuia', 00, 02, 0, NFe.agropecuario.guiaTransito.UFGuia, DSC_UFGUIA);
+    Gerador.wCampo(tcStr, 'ZF07', 'serieGuia', 01, 09, 0, NFe.agropecuario.guiaTransito.serieGuia, DSC_SERIEGUIA);
+    Gerador.wCampo(tcStr, 'ZF08', 'nGuia', 01, 09, 1, NFe.agropecuario.guiaTransito.nGuia, DSC_NGUIA);
+    Gerador.wGrupo('/guiaTransito');
+    Gerador.wGrupo('/agropecuario');
   end;
 end;
 

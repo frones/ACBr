@@ -78,6 +78,7 @@ type
     procedure LerCana(const ANode: TACBrXmlNode);
     procedure LerInfRespTec(const ANode: TACBrXmlNode);
     procedure LerInfNFeSupl(const ANode: TACBrXmlNode);
+    procedure LerAgropecuario(const ANode: TACBrXmlNode);
 
   public
     constructor Create(AOwner: TNFe); reintroduce;
@@ -214,6 +215,7 @@ begin
   LerCompra(ANode.Childrens.Find('compra'));
   LerCana(ANode.Childrens.Find('cana'));
   LerInfRespTec(ANode.Childrens.Find('infRespTec'));
+  LerAgropecuario(ANode.Childrens.Find('agropecuario'));
 end;
 
 procedure TNFeXmlReader.LerIde(const ANode: TACBrXmlNode);
@@ -364,6 +366,31 @@ begin
     NFe.Emit.enderEmit.xPais := 'BRASIL';
 
   NFe.Emit.enderEmit.fone := ObterConteudo(ANode.Childrens.Find('fone'), tcStr);
+end;
+
+procedure TNFeXmlReader.LerAgropecuario(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('defensivo');
+
+  if Assigned(AuxNode) then
+  begin
+    NFe.agropecuario.defensivo.nReceituario := ObterConteudo(AuxNode.Childrens.FindAnyNs('nReceituario'), tcStr);
+    NFe.agropecuario.defensivo.CPFRespTec := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPFRespTec'), tcStr);
+  end;
+
+  AuxNode := ANode.Childrens.FindAnyNs('guiaTransito');
+
+  if Assigned(AuxNode) then
+  begin
+    NFe.agropecuario.guiaTransito.UFGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('UFGuia'), tcStr);
+    NFe.agropecuario.guiaTransito.tpGuia := StrToTtpGuia(ObterConteudo(AuxNode.Childrens.FindAnyNs('tpGuia'), tcStr));
+    NFe.agropecuario.guiaTransito.serieGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('serieGuia'), tcStr);
+    NFe.agropecuario.guiaTransito.nGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('nGuia'), tcInt);
+  end;
 end;
 
 procedure TNFeXmlReader.LerAvulsa(const ANode: TACBrXmlNode);

@@ -46,6 +46,8 @@ Símbolo : Significado
 
 11/10/2024
 -- Diversos --
+[+] #TK-5975: Adequa o componente ACBrNFe as modificações propostas pela NT2024/003
+   Por: Diego Folieni 
 [+] Implementado a propriedade de configuração: ExibeCampoDuplicata com o valor
     padrão True que permite definir se o quadro referente as duplicatas vai ser
     impresso ou não. 

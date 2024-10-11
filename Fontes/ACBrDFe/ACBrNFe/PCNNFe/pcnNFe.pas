@@ -159,6 +159,11 @@ type
 
   TinfRespTec = class;
 
+  Tagropecuario = class;
+  Tdefensivo = class;
+  TguiaTransito = class;
+
+
   { TNFe }
 
   TNFe = class(TObject)
@@ -185,6 +190,7 @@ type
     FautXML: TautXMLCollection;
     FinfNFeSupl: TinfNFeSupl;
     FinfRespTec: TinfRespTec;
+    Fagropecuario: Tagropecuario;
 
     procedure SetDet(Value: TDetCollection);
     procedure Setpag(Value: TpagCollection);
@@ -217,6 +223,7 @@ type
     property signature: Tsignature read Fsignature write Fsignature;
     property procNFe: TProcNFe read FProcNFe write FProcNFe;
     property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
+    property agropecuario: Tagropecuario read Fagropecuario write Fagropecuario;
   end;
 
   TinfNFeSupl = class(TObject)
@@ -2146,6 +2153,41 @@ type
     property hashCSRT: String read FhashCSRT write FhashCSRT;
   end;
 
+  Tdefensivo = class(TObject)
+  private
+    FnReceituario: String;
+    FCPFRespTec: String;
+  public
+    property nReceituario: String read FnReceituario write FnReceituario;
+    property CPFRespTec: String read FCPFRespTec write FCPFRespTec;
+  end;
+
+  TguiaTransito = class(TObject)
+  private
+    FUFGuia: String;
+    FtpGuia: TtpGuia;
+    FserieGuia: String;
+    FnGuia: String;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property UFGuia: String read FUFGuia write FUFGuia;
+    property tpGuia: TtpGuia read FtpGuia write FtpGuia;
+    property serieGuia: String read FserieGuia write FserieGuia;
+    property nGuia: String read FnGuia write FnGuia;
+  end;
+
+  Tagropecuario = class(TObject)
+  private
+    Fdefensivo: Tdefensivo;
+    FguiaTransito: TguiaTransito;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property defensivo: Tdefensivo read Fdefensivo write Fdefensivo;
+    property guiaTransito: TguiaTransito read FguiaTransito write FguiaTransito;
+  end;
+
 const
   CMUN_EXTERIOR = 9999999;
   XMUN_EXTERIOR = 'EXTERIOR';
@@ -2222,6 +2264,7 @@ begin
   Fsignature := Tsignature.create;
   FProcNFe := TProcNFe.create;
   FinfRespTec := TinfRespTec.create;
+  Fagropecuario := Tagropecuario.Create;
 
   FinfNFe.Versao := 0;
 
@@ -2256,6 +2299,7 @@ begin
   Fsignature.Free;
   FProcNFe.Free;
   FinfRespTec.Free;
+  FAgropecuario.Free;
 
   inherited Destroy;
 end;
@@ -4245,6 +4289,36 @@ procedure TCredPresumidoCollection.SetItem(Index: Integer;
   Value: TCredPresumidoCollectionItem);
 begin
   inherited Items[Index] := Value;
+end;
+
+
+{ TguiaTransito }
+
+constructor TguiaTransito.Create;
+begin
+  inherited Create;
+  FtpGuia := tpgNenhum;
+end;
+
+destructor TguiaTransito.Destroy;
+begin
+  inherited;
+end;
+
+{ Tagropecuario }
+
+constructor Tagropecuario.Create;
+begin
+  inherited Create;
+  Fdefensivo := Tdefensivo.Create;
+  FguiaTransito := TguiaTransito.Create;
+end;
+
+destructor Tagropecuario.Destroy;
+begin
+  Fdefensivo.Free;
+  FguiaTransito.Free;
+  inherited;
 end;
 
 end.

@@ -2783,6 +2783,22 @@ begin
           fone     := INIRec.ReadString(sSecao, 'fone', '');
         end;
       end;
+
+      sSecao := 'defensivo';
+      if INIRec.SectionExists(sSecao) then
+      begin
+        agropecuario.defensivo.nReceituario := INIRec.ReadString(sSecao, 'nReceituario', '');
+        agropecuario.defensivo.CPFRespTec := INIRec.ReadString(sSecao, 'CPFRespTec', '');
+      end;
+
+      sSecao := 'guiaTransito';
+      if INIRec.SectionExists(sSecao) then
+      begin
+        agropecuario.guiaTransito.UFGuia := INIRec.ReadString(sSecao, 'UFGuia', '');
+        agropecuario.guiaTransito.tpGuia := StrToTtpGuia(INIRec.ReadString(sSecao, 'tpGuia', ''));
+        agropecuario.guiaTransito.serieGuia := INIRec.ReadString(sSecao, 'serieGuia', '');
+        agropecuario.guiaTransito.nGuia := INIRec.ReadString(sSecao, 'nGuia', '0');
+      end;
     end;
 
     GerarXML;
@@ -3718,6 +3734,20 @@ begin
       INIRec.WriteString('infRespTec', 'xContato', infRespTec.xContato);
       INIRec.WriteString('infRespTec', 'email', infRespTec.email);
       INIRec.WriteString('infRespTec', 'fone', infRespTec.fone);
+
+      if Trim(agropecuario.defensivo.nReceituario) <> '' then
+      begin
+        INIRec.WriteString('defensivo', 'nReceituario', agropecuario.defensivo.nReceituario);
+        INIRec.WriteString('defensivo', 'CPFRespTec', agropecuario.defensivo.CPFRespTec);
+      end;
+
+      if agropecuario.guiaTransito.tpGuia <> tpgNenhum then
+      begin
+        INIRec.WriteString('guiaTransito', 'UFGuia', agropecuario.guiaTransito.UFGuia);
+        INIRec.WriteString('guiaTransito', 'tpGuia', TtpGuiaToStr(agropecuario.guiaTransito.tpGuia));
+        INIRec.WriteString('guiaTransito', 'serieGuia', agropecuario.guiaTransito.serieGuia);
+        INIRec.WriteString('guiaTransito', 'nGuia', agropecuario.guiaTransito.nGuia);
+      end;
 
       INIRec.WriteString('procNFe', 'tpAmb', TpAmbToStr(procNFe.tpAmb));
       INIRec.WriteString('procNFe', 'verAplic', procNFe.verAplic);

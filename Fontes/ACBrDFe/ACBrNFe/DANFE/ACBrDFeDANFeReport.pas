@@ -443,14 +443,16 @@ function TACBrDFeDANFeReport.ManterInfAdFisco(ANFe: TNFe): String;
   // Informações de interesse do fisco
 var
   infAdFisco: string;
+  obsSequencia: Boolean;
 begin
   Result := '';
-  infAdFisco := ANFe.InfAdic.infAdFisco;
+  infAdFisco := RemoverQuebraLinhaFinal(ANFe.InfAdic.infAdFisco);
+  obsSequencia := (ANFe.InfAdic.infCpl > '') or (ANFe.InfAdic.obsFisco.Count > 0) or (ANFe.InfAdic.procRef.Count > 0) or (ANFe.InfAdic.obsCont.Count > 0);
 
   if infAdFisco > '' then
   begin
-    if ANFe.InfAdic.infCpl > '' then
-      Result := infAdFisco + IfThen(Copy(infAdFisco, Length(infAdFisco), 1) = CaractereQuebraDeLinha, '', CaractereQuebraDeLinha + ' ')
+    if obsSequencia then
+      Result := infAdFisco + IfThen(Copy(infAdFisco, Length(infAdFisco), 1) = CaractereQuebraDeLinha, '', CaractereQuebraDeLinha)
     else
       Result := infAdFisco;
   end;

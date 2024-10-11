@@ -1438,8 +1438,6 @@ end;
 procedure TACBrNFeFRClass.CarregaInformacoesAdicionais;
 var
   vTemp         : TStringList;
-  IndexCampo    : Integer;
-  Campos        : TSplitResult;
   BufferInfCpl  : string;
   wObs          : string;
   wLinhasObs    : integer;
@@ -1489,9 +1487,7 @@ begin
 
     if Trim(wObs) <> '' then
     begin
-      Campos := Split(';', wObs);
-      for IndexCampo := 0 to Length(Campos) - 1 do
-        vTemp.Add(Campos[IndexCampo]);
+      vTemp.Text := StringReplace(wObs, FDANFEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
 
       wLinhasObs    := 1; //TotalObS(vTemp.Text);
       BufferInfCpl  := vTemp.Text;

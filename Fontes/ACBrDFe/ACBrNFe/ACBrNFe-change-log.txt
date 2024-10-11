@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/10/2024
+-- ACBrDFeDANFeReport, ACBrDFeDANFeFRDM --
+[*] #TK-6038: Ajustes visando a correta quebra de linhas nas observações quando for criada pelo componente.
+   Por: Diogo Loff 
 -- pcnNFeConsts --
 [+] #TK-5795: Adiciona as constantes que haviam sido criadas previamente em ACBrDFeConsts
    Por: Diego Folieni

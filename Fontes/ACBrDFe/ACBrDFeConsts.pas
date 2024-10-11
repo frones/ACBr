@@ -146,14 +146,6 @@ resourcestring
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
   DSC_NSU = 'NSU específico';
 
-  // Descrição do grupo Agropecuario
-  DSC_NRECEITUARIO = 'Número da Receita ou Receituário de Aplicação do defensivo';
-  DSC_CPFRESPTEC = 'CPF do Responsável Técnico, emitente do receituário';
-  DSC_UFGUIA = ' UF de emissão da guia';
-  DSC_TPGUIA = 'Tipo da Guia';
-  DSC_SERIEGUIA = 'Série da Guia';
-  DSC_NGUIA = 'Número da Guia';
-
 
 implementation
 

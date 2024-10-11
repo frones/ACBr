@@ -41,6 +41,8 @@ Símbolo : Significado
 
 11/10/2024
 -- ACBrDFeConsts --
+[*] #TK-5978: Move as constantes adicionadas para pcnNFeConsts por ser local mais adequado.
+  Por: Diego Folieni
 [*] #TK-5975: Adiciona novas constantes para os novos campos adicionados pela NT2024/003
   Por: Diego Folieni
 

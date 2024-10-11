@@ -95,8 +95,7 @@ begin
   end;
 end;
 
-function TACBrBancoBradescoMoneyPlus.DefineEspecieDoc(
-  const ACBrTitulo: TACBrTitulo): String;
+function TACBrBancoBradescoMoneyPlus.DefineEspecieDoc( const ACBrTitulo: TACBrTitulo ): String;
 begin
   with ACBrTitulo do
   begin
@@ -526,6 +525,8 @@ var
   LBanco, LTipoEmissaoBoleto, LAvisoDebitoAuto, LQtdePagamento, LInstrucoesProtesto,
   LMensagemCedente, LDebitoAutomatico, LTipoAvalista : String;
   LChaveNFE : String;
+  I: TACBrTitulo;
+  J:Integer;
 begin
    with ACBrTitulo do
    begin
@@ -565,7 +566,7 @@ begin
         LMensagemCedente    := PadRight( MensagemCedente, 60 );
       end
       else
-      begin     // ultimo
+      begin
         LTipoEmissaoBoleto  := sTipoBoleto;
         LAvisoDebitoAuto    := '2';
         LDebitoAutomatico   := 'N';
@@ -642,8 +643,35 @@ begin
        if not(wLinha = EmptyStr) then
          aRemessa.Add(UpperCase(wLinha));
 
-       if (Sacado.SacadoAvalista.NomeAvalista <> '') and (LayoutVersaoArquivo = 002) then  // Grafeno
-        begin
+
+       if (Sacado.SacadoAvalista.NomeAvalista <> '') and (LayoutVersaoArquivo = 003) then
+       begin
+         wLinha := '2';                                                         // 001 a 001 - Tipo do Registro
+            for J := 0 to 3 do
+            begin
+                                                                                // 002 a 081 Mensagem 1 080
+                                                                                // 082 a 161 Mensagem 2 080
+                                                                                // 162 a 241 Mensagem 3 080
+                                                                                // 242 a 321 Mensagem 4 080
+              if (ACBrTitulo.Mensagem.Count > J) then
+                wLinha := wLinha + PadRight(ACBrTitulo.Mensagem[J], 80)
+              else
+                wLinha := wLinha + Space(80);
+            end;
+         wLinha := wLinha
+            + PadRight(Sacado.Numero,6)                                         // 322 a 327 Número Pagador 006
+            + PadRight(Sacado.Bairro, 20)                                       // 328 a 347 Bairro Pagador 020
+            + PadRight(Sacado.UF, 2)                                            // 348 a 349 UF Pagador 002
+            + PadRight(Sacado.Cidade, 30)                                       // 350 a 379 Cidade Pagador 030
+            + Space(15)                                                         // 380 a 394 Branco 015
+            + IntToStrZero(aRemessa.Count + 1, 6);                              // 395 a 400 Nº Sequencial de Registro 006
+
+         if not(wLinha = EmptyStr) then
+           aRemessa.Add(UpperCase(wLinha));
+       end;
+
+       if (Sacado.SacadoAvalista.NomeAvalista <> '') and (LayoutVersaoArquivo = 002) then
+       begin
           wLinha := '7'                                                     + // 001 a 001 - Identificação do registro detalhe (7)
           PadRight(Sacado.SacadoAvalista.Logradouro, 45, ' ')               + // 002 a 046 - Endereço Sacador/Avalista
           PadRight( OnlyNumber(Sacado.SacadoAvalista.CEP), 8 )              + // 047 a 054 - CEP + Sufixo do CEP
@@ -659,7 +687,7 @@ begin
           IntToStrZero( ARemessa.Count + 1, 6);                               // 395 a 400 - Número sequencial do registro
 
           ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
-        end;
+       end;
      end;
    end;
 

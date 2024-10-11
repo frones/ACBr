@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2024
+-- ACBrDFeConsts --
+[*] #TK-5975: Adiciona novas constantes para os novos campos adicionados pela NT2024/003
+  Por: Diego Folieni
+
 04/09/2024
 -- ACBrDFeWebServices --
 [*] #TK-5866-3: Adiciona rotina para definir configurações do gerador do XML quando usando classe baseada em ACBrXMLDocument

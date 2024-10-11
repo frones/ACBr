@@ -377,6 +377,14 @@ const
   DSC_CNPJIF = 'CNPJ da instituição financeira, de pagamento, adquirente ou subadquirente.';
   DSC_UFRECEB = 'UF do CNPJ do estabelecimento beneficiário do pagamento.';
 
+  // Descrição do grupo Agropecuario
+  DSC_NRECEITUARIO = 'Número da Receita ou Receituário de Aplicação do defensivo';
+  DSC_CPFRESPTEC = 'CPF do Responsável Técnico, emitente do receituário';
+  DSC_UFGUIA = ' UF de emissão da guia';
+  DSC_TPGUIA = 'Tipo da Guia';
+  DSC_SERIEGUIA = 'Série da Guia';
+  DSC_NGUIA = 'Número da Guia';
+
 implementation
 
 end.

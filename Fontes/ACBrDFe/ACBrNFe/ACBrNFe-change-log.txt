@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/10/2024
+-- pcnNFeConsts --
+[+] #TK-5795: Adiciona as constantes que haviam sido criadas previamente em ACBrDFeConsts
+   Por: Diego Folieni
 -- Diversos --
 [+] #TK-5975: Adequa o componente ACBrNFe as modificações propostas pela NT2024/003
    Por: Diego Folieni 

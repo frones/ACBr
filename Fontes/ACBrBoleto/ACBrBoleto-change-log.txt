@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2024
+-- ACBrBoletoRet_Itau_API --
+[-] TK-6077 Alterado o tratamento da data retorno para funcionar com D7 Iso8601ToDateTime Ajustado Data Baixa 
+	https://www.projetoacbr.com.br/forum/topic/79807-boleto-itau-consulta-via-ws-n%C3%A3o-retorna-data-de-pagamento/#comment-518124
+	por Daniel de Morais
+
 10/10/2024
 -- ACBrBancoCaixa --
 [*] TK-6043 Ajustado para gerar msg no segmento R e S CNAB 240

@@ -99,6 +99,8 @@ begin
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
 
+  NFSe.tpXML := tpXml;
+
   Result := LerXmlNfse(XmlNode);
 
   FreeAndNil(FDocument);

@@ -82,6 +82,8 @@ begin
     Result := LerJsonNfse(TiraAcentos(Arquivo))
   else
     Result := LerJsonRps(TiraAcentos(Arquivo));
+
+  NFSe.tpXML := tpXml;
 end;
 
 function TNFSeR_Bauhaus.LerJsonNfse(const ArquivoRetorno: String): Boolean;

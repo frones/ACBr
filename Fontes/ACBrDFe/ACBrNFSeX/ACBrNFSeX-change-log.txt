@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 11/10/2024
+-- Diversos --
+[+] Incluído o campo tpXML na classe NFSe cujo valor diz se o XML lido é de um 
+    RPS ou NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6083 - Incluída a cidade de Taiobeiras/MG, o provedor é EL versão 2.04.
    Por: Grabriel Bobello

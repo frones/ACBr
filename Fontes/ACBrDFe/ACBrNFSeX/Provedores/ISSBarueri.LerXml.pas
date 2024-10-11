@@ -520,6 +520,8 @@ begin
 
     tpXML := TipodeXMLLeitura(Arquivo);
 
+    NFSe.tpXML := tpXml;
+
     if (not IsXML(Arquivo)) then
     begin
       DadosTxt.Text := Arquivo;

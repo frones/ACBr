@@ -1422,6 +1422,7 @@ type
     FDescricaoCodigoTributacaoMunicipio: string;
     FEqptoRecibo: string;
     FVencimento: TDateTime;
+    FtpXML: TtpXML;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
@@ -1545,6 +1546,9 @@ type
     // Provedor RLZ
     property Vencimento: TDateTime read FVencimento write FVencimento;
 
+    // Utilizado para detectar se os dados que se encontram nas classes foram
+    // lidos de um XML RPS ou NFS-e
+    property tpXML: TtpXML read FtpXML write FtpXML;
   end;
 
   TSubstituicaoNfse = class(TObject)

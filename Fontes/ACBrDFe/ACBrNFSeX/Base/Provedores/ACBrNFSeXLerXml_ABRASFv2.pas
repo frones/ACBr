@@ -1268,6 +1268,7 @@ begin
     raise Exception.Create('Arquivo xml vazio.');
 
   NFSe.Clear;
+  NFSe.tpXML := tpXml;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

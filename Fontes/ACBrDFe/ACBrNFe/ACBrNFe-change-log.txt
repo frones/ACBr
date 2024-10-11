@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2024
+-- Diversos --
+[+] Implementado a propriedade de configuração: ExibeCampoDuplicata com o valor
+    padrão True que permite definir se o quadro referente as duplicatas vai ser
+    impresso ou não. 
+   Por: Italo Giurizzato Junior
+
 01/10/2024
 -- ACBrNFe.RetConsSit --
 [*] Ajustes necessários para utilizar a unit: ACBrDFeComum.Proc

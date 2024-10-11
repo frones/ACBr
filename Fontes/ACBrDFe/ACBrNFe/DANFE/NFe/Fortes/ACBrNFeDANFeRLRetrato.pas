@@ -2261,7 +2261,7 @@ var
   iAltBand: Integer;
 begin
 
-  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0);
+  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0) and fpDANFe.ExibeCampoDuplicata;
 
   if ( rlbFatura.Visible ) then
   begin

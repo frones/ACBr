@@ -413,7 +413,8 @@ procedure TfrlDANFeRLSimplificado.AdicionarFatura;
 var
   x, iQuantDup: Integer;
 begin
-  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0) and not fpDANFe.Etiqueta;
+  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0) and not fpDANFe.Etiqueta
+                       and fpDANFe.ExibeCampoDuplicata;;
 
   if (fpNFe.Cobr.Dup.Count > 0) then
   begin

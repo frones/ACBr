@@ -97,6 +97,7 @@ type
     FExibeCampoDePagamento: TpcnInformacoesDePagamento;
     FEtiqueta: Boolean;
     FFormatarNumeroDocumento : Boolean;
+    FExibeCampoDuplicata: Boolean;
 
     procedure SetTributosPercentual(const AValue: TpcnPercentualTributos);
     procedure SetTributosPercentualPersonalizado(const AValue: Double);
@@ -145,6 +146,7 @@ type
     property FormularioContinuo;
     property Etiqueta: Boolean read FEtiqueta write FEtiqueta default False;
     property FormatarNumeroDocumento: Boolean read FFormatarNumeroDocumento write FFormatarNumeroDocumento default True;
+    property ExibeCampoDuplicata: Boolean read FExibeCampoDuplicata write FExibeCampoDuplicata default True;
   end;
 
 
@@ -229,6 +231,7 @@ begin
   FExibeCampoDePagamento           := eipNunca;   	
   FEtiqueta                        := False;
   FFormatarNumeroDocumento         := True;
+  FExibeCampoDuplicata             := True;
 end;
 
 procedure TACBrNFeDANFEClass.SetTributosPercentual(const AValue: TpcnPercentualTributos);

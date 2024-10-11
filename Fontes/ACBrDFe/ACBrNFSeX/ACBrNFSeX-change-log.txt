@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/10/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6083 - Incluída a cidade de Taiobeiras/MG, o provedor é EL versão 2.04.
+   Por: Grabriel Bobello
+[*] #TK-6079 - A cidade de Cabo Frio/RJ mudou de provedor, agora é ISSIntel
+   Por: João Antônio
+
 10/10/2024
 -- ACBrNFSeX/ACBrNFSeXProviderABRASFv2/ACBrNFSeXWebserviceBase --
 [+] Incluído o campo CodMunicipio na classe de Informações de cancelamento, para

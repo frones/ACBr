@@ -243,6 +243,9 @@ begin
                             '.' +
                             PadLeft(ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServicoSubItem'), tcStr), 2, '0');
 
+        if (ItemListaServico = '00.00') and (ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServico'), tcStr) <> '') then
+          ItemListaServico := PadLeft(ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServico'), tcStr), 5, '0');
+
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlServico'), tcDe2);
         Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlAliquota'), tcDe2);
 
@@ -365,10 +368,15 @@ begin
   else
     tpXML := txmlRPS;
 
-  XmlNode := Document.Root;
+  if (Pos('listaNfs', Arquivo) > 0) then
+    XmlNode := Document.Root.Childrens.FindAnyNs('nfs')
+  Else
+    XmlNode := Document.Root;
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
+
+  NFSe.tpXML := tpXml;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

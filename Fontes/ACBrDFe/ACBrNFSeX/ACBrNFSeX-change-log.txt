@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 11/10/2024
+-- Equiplano.LerXml --
+[*] #TK-6078 - Ajustes para a leitura correta do XML da nota, problemas na leitura
+    do código do item da lista de serviços .
+   Por: PC Bonetti
 -- Diversos --
 [+] Incluído o campo tpXML na classe NFSe cujo valor diz se o XML lido é de um 
     RPS ou NFS-e.

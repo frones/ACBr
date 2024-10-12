@@ -1,4 +1,4 @@
-#Exemplo Basico de API sem Threads (na API) , apenas respondendo requisicoes em fila utilizando ponteiros para threads da LIB MT
+#Exemplo Basico de API ACBrLibMDFe MT
 
 import ctypes
 import json
@@ -11,6 +11,7 @@ from ctypes import CDLL, POINTER, byref, c_bool, c_char_p, c_int, create_string_
 
 # Inicializa a aplicação Flask
 app = Flask(__name__)
+Lnumero_requisicao = 0
 #DLL ACBrLibMDFe utilizada neste projeto é 64 MT (Multi Thread)
 #Constantes de Configuração Emitente, SoftHouse e MDFe
 PATH_APP = os.path.dirname(os.path.abspath(__file__))
@@ -90,7 +91,7 @@ def define_bufferResposta(novo_tamanho):
     sResposta = ctypes.create_string_buffer(tamanho_inicial)
     return tamanho_inicial, esTamanho, sResposta 
   
-def opcao1():
+def opcao1(numero_requisicao):
     print('--[INICIO REQUISICAO]-----------------------------------------------------')
     #Data e hora requisicao
     DataHora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -103,32 +104,44 @@ def opcao1():
     if LRetorno != 0:
         exibeReposta('Inicializa',LRetorno)
         return {'Versao ACBrLibMDFe ': 'Erro Inicializar', 'handle/Ponteiro ': str(ponteiro), 'Data e Hora ': DataHora }
+        sys.exit(0) # encerra aAPI
     else:
         exibeReposta('Inicializa',LRetorno)
-  
-    define_bufferResposta(96)
-    #Versao
+        
+    #Limpa Buffer
+    define_bufferResposta(0)
+    #Solicita Versao
     LRetornoVERSAO = acbr_lib.MDFE_Versao(ponteiro, sResposta, ctypes.byref(esTamanho))
-    resposta_completa = sResposta.value.decode("utf-8")
-    exibeReposta('MDFE_Versao',LRetornoVERSAO)
-    #Finalizando a lib
+    if LRetornoVERSAO == 0: #Se versao OK
+        print("Tamanho Buffer da Versao:",esTamanho.value)
+        #define o tamanho do buffer recebido em esTamanho
+        define_bufferResposta(esTamanho.value)
+        #Executa Ultimo Retorno 
+        LUltimoRetorno = acbr_lib.MDFE_UltimoRetorno(ponteiro, sResposta, ctypes.byref(esTamanho))
+        exibeReposta("MDFE_UltimoRetorno",LUltimoRetorno)
+        if LUltimoRetorno == 0:
+            resposta_completa = sResposta.value.decode("utf-8")
+            print(resposta_completa)
+            return {'Versao ACBrLibMDFe ': resposta_completa, 'handle/Ponteiro ': str(ponteiro), 'Data e Hora ': DataHora }
+            #liberar ponteiro
+            ctypes.cast(ponteiro, ctypes.POINTER(ctypes.c_void_p)).contents = None
+        else:
+            resposta_completa = "Erro Ultimo Retorno".decode("utf-8")
+            return {'Versao ACBrLibMDFe ': resposta_completa, 'handle/Ponteiro ': str(ponteiro), 'Data e Hora ': DataHora }
+            
+    else: #Se versao ERRO
+        print("Erro, nao foi possivel ler numero da versao, codigo:",LRetornoVERSAO)
+        #FinalizaLib
     LRetornoFIM = acbr_lib.MDFE_Finalizar(ponteiro)
-    exibeReposta('MDFE_Finalizar',LRetornoFIM)
-    if LRetorno == 0:
-        resposta_completa = sResposta.value.decode("utf-8")
-        print('Resposta ',resposta_completa)
-    else:    
-        resposta_completa = 'Erro ao obter versao'
-    return {'Versao ACBrLibMDFe ': resposta_completa, 'handle/Ponteiro ': str(ponteiro), 'Data e Hora ': DataHora }
-    # Liberar o ponteiro
-    ctypes.cast(ponteiro, ctypes.POINTER(ctypes.c_void_p)).contents = None        
+    exibeReposta('MDFE_Finalizar',LRetornoFIM)    
     
 # Define o endpoint /versao
 @app.route('/versao', methods=['GET'])
 def versao():
-    resultado = opcao1()
-    return jsonify(resultado)
-
+    global Lnumero_requisicao
+    Lnumero_requisicao += 1
+    resultado = opcao1(Lnumero_requisicao)
+    return jsonify(resultado),200
 # Executa a aplicação Flask
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

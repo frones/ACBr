@@ -153,20 +153,30 @@ def verificar_status_nfe():
     global arquivo_NFE
     return arquivo_NFE    
 
-def opcao1():
+def consultaStatusSefaz():
+    #Define buffer resposta como zero 
+    define_bufferResposta(0)
     #consulta status servico MDFe
-    define_bufferResposta(9096)
     resultado = acbr_lib.MDFE_StatusServico(ponteiro, sResposta, ctypes.byref(esTamanho))
     resposta_completa = sResposta.value.decode("utf-8")
     exibeReposta('MDFE_StatusServico',resultado)
     if resultado == 0:
-        print('-[Resposta]--')
-        print(resposta_completa)
+        #Ajusta tamanho do buffer recebido em esTamanho
+        define_bufferResposta(esTamanho.value) 
+        #Executa Ultimo Retorno 
+        LUltimoRetorno = acbr_lib.MDFE_UltimoRetorno(ponteiro, sResposta, ctypes.byref(esTamanho))
+        exibeReposta("MDFE_UltimoRetorno",LUltimoRetorno)    
+        if LUltimoRetorno == 0:
+            resposta_completa = sResposta.value.decode("utf-8")
+            print('-[Resposta]--')
+            print(resposta_completa)
+        else:
+            print("Erro ao executar ultimo retorno, código:",LUltimoRetorno)    
 
-def opcao2():
+
+def criarEnviarMDFeSefaz():
     #Carregar INI
-    define_bufferResposta(9096)
-    resultado = acbr_lib.MDFE_CarregarINI(ponteiro,"ArquivoMDFe.ini".encode("utf-8"));
+    resultado = acbr_lib.MDFE_CarregarINI(ponteiro, "ArquivoMDFe.ini".encode("utf-8"));
     exibeReposta("MDFE_CarregarINI",resultado)
     #Assinar 
     resultado = acbr_lib.MDFE_Assinar(ponteiro);
@@ -175,12 +185,23 @@ def opcao2():
     resultado = acbr_lib.MDFE_Validar(ponteiro);
     exibeReposta("MDFE_Validar",resultado)    
     #Enviar 
-    resultado = acbr_lib.MDFE_Enviar(ponteiro,1, True, True, sResposta, ctypes.byref(esTamanho))
+    define_bufferResposta(0)
+    resultado = acbr_lib.MDFE_Enviar(ponteiro, 1, True, True, sResposta, ctypes.byref(esTamanho))
     exibeReposta("MDFE_Enviar",resultado)    
-    resposta_completa = sResposta.value.decode("utf-8")
     if resultado == 0:
-        print('-[Resposta]--')
-        print(resposta_completa)
+        #Ajusta tamanho do buffer recebido em esTamanho
+        define_bufferResposta(esTamanho.value) 
+        #Executa Ultimo Retorno 
+        LUltimoRetorno = acbr_lib.MDFE_UltimoRetorno(ponteiro, sResposta, ctypes.byref(esTamanho))
+        exibeReposta("MDFE_UltimoRetorno",LUltimoRetorno)    
+        if LUltimoRetorno == 0:
+            resposta_completa = sResposta.value.decode("utf-8")
+            print('-[Resposta]--')
+            print(resposta_completa)
+        else:
+            print("Erro ao executar ultimo retorno, código:",LUltimoRetorno)    
+    else:
+        print("Erro ao enviar MDFe, código:",resultado)  
 
 def exibir_menu():
     #Menu opcoes 
@@ -194,10 +215,10 @@ while True:
     exibir_menu()
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
-        opcao1()       
+        consultaStatusSefaz()       
         aguardar_tecla()
     if escolha == "2":
-        opcao2()       
+        criarEnviarMDFeSefaz()       
         aguardar_tecla()
     elif escolha == "3":
         print("Saindo...")

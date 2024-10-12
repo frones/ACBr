@@ -111,11 +111,11 @@ acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "SSLHttpLib".encode("utf
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "SSLXmlSignLib".encode("utf-8"), str(4).encode("utf-8"))
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "UF".encode("utf-8"), 'SP'.encode("utf-8"))
 #Utilizar arquivo PFX
-acbr_lib.MDFE_ConfigGravarValor(ponteiro, "DFe".encode("utf-8"), "ArquivoPFX".encode("utf-8"), ARQ_PFX.encode("utf-8"))
+acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "ArquivoPFX".encode("utf-8"), ARQ_PFX.encode("utf-8"))
 
 #Utilizar DadosPFX
 #LDadosPFX = ler_certificado_pfx(ARQ_PFX)
-#acbr_lib.MDFE_ConfigGravarValor(ponteiro, "DFe".encode("utf-8"), "DadosPFX".encode("utf-8"), LDadosPFX.encode("utf-8"))
+#acbr_lib.MDFE_ConfigGravarValor("DFe".encode("utf-8"), "DadosPFX".encode("utf-8"), LDadosPFX.encode("utf-8"))
 
 acbr_lib.MDFE_ConfigGravarValor( "DFe".encode("utf-8"), "Senha".encode("utf-8"), SENHA_PFX.encode("utf-8"))
 acbr_lib.MDFE_ConfigGravarValor( "MDFe".encode("utf-8"), "Ambiente".encode("utf-8"), str(1).encode("utf-8"))
@@ -149,19 +149,29 @@ def verificar_status_nfe():
     global arquivo_NFE
     return arquivo_NFE    
 
-def opcao1():
+def consultaStatusSefaz():
+    #Define buffer resposta como zero 
+    define_bufferResposta(0)
     #consulta status servico MDFe
-    define_bufferResposta(9096)
     resultado = acbr_lib.MDFE_StatusServico( sResposta, ctypes.byref(esTamanho))
     resposta_completa = sResposta.value.decode("utf-8")
     exibeReposta('MDFE_StatusServico',resultado)
     if resultado == 0:
-        print('-[Resposta]--')
-        print(resposta_completa)
+        #Ajusta tamanho do buffer recebido em esTamanho
+        define_bufferResposta(esTamanho.value) 
+        #Executa Ultimo Retorno 
+        LUltimoRetorno = acbr_lib.MDFE_UltimoRetorno(sResposta, ctypes.byref(esTamanho))
+        exibeReposta("MDFE_UltimoRetorno",LUltimoRetorno)    
+        if LUltimoRetorno == 0:
+            resposta_completa = sResposta.value.decode("utf-8")
+            print('-[Resposta]--')
+            print(resposta_completa)
+        else:
+            print("Erro ao executar ultimo retorno, código:",LUltimoRetorno)    
 
-def opcao2():
+
+def criarEnviarMDFeSefaz():
     #Carregar INI
-    define_bufferResposta(9096)
     resultado = acbr_lib.MDFE_CarregarINI("ArquivoMDFe.ini".encode("utf-8"));
     exibeReposta("MDFE_CarregarINI",resultado)
     #Assinar 
@@ -171,12 +181,25 @@ def opcao2():
     resultado = acbr_lib.MDFE_Validar();
     exibeReposta("MDFE_Validar",resultado)    
     #Enviar 
+    define_bufferResposta(0)
     resultado = acbr_lib.MDFE_Enviar(1, True, True, sResposta, ctypes.byref(esTamanho))
     exibeReposta("MDFE_Enviar",resultado)    
-    resposta_completa = sResposta.value.decode("utf-8")
     if resultado == 0:
-        print('-[Resposta]--')
-        print(resposta_completa)
+        #Ajusta tamanho do buffer recebido em esTamanho
+        define_bufferResposta(esTamanho.value) 
+        #Executa Ultimo Retorno 
+        LUltimoRetorno = acbr_lib.MDFE_UltimoRetorno(sResposta, ctypes.byref(esTamanho))
+        exibeReposta("MDFE_UltimoRetorno",LUltimoRetorno)    
+        if LUltimoRetorno == 0:
+            resposta_completa = sResposta.value.decode("utf-8")
+            print('-[Resposta]--')
+            print(resposta_completa)
+        else:
+            print("Erro ao executar ultimo retorno, código:",LUltimoRetorno)    
+    else:
+        print("Erro ao enviar MDFe, código:",resultado)    
+        
+
 
 def exibir_menu():
     #Menu opcoes 
@@ -190,10 +213,10 @@ while True:
     exibir_menu()
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
-        opcao1()       
+        consultaStatusSefaz()       
         aguardar_tecla()
     if escolha == "2":
-        opcao2()       
+        criarEnviarMDFeSefaz()       
         aguardar_tecla()
     elif escolha == "3":
         print("Saindo...")

@@ -26,12 +26,10 @@ PATH_LOG                = os.path.join(PATH_APP,'')
 PATH_PDF                = os.path.join(PATH_APP,'PDF','')
 PATH_ARQ                = os.path.join(PATH_APP,'ARQUIVOS','')
 PATH_SCHEMAS            = os.path.join(PATH_APP,'Schemas','NFe')
-
-#Informe o nome do certificado e senha
-ARQ_PFX                 = os.path.join(PATH_CERTIFICADO, 'NomeArquivo.pfx')
-SENHA_PFX               = 'SenhaCertificao'
-#Seu arquivo de vendas
-ARQ_VENDA_INI           = os.path.join(PATH_APP, 'nfe.ini')
+ARQ_PFX                 = os.path.join(PATH_CERTIFICADO, 'SeuCertificado.pfx')
+SENHA_PFX               = '1234'
+ARQ_VENDA_INI           = os.path.join(PATH_APP, 'NFe_Teste_Emissao.ini')
+LARQUIVO_XML             = "";
 
 # Definindo a variável global
 arquivo_NFE = ""
@@ -48,7 +46,8 @@ def exibeReposta(LMetodo, LNovaResposta):
     if LNovaResposta == 0:
         print('O metodo ',LMetodo,' foi executado com sucesso ! Codigo: ',LNovaResposta)
     else:    
-        print('Ocorreu um erro ao executar o metodo ',LMetodo,'! Codigo: ',LNovaResposta)        
+        print('Ocorreu um erro ao executar o metodo ',LMetodo,'! Codigo: ',LNovaResposta)  
+        sys.exit(0)      
 
 #Tamanho da resposta q pode variar entao utilize a funcao define_bufferResposta() para as suas necessidades
 tamanho_inicial = 9096
@@ -125,39 +124,53 @@ def define_bufferResposta(novo_tamanho):
     sResposta = ctypes.create_string_buffer(tamanho_inicial)
     return tamanho_inicial, esTamanho, sResposta 
 
-def retorna_bufferResposta():    
-    global tamanho_inicial, esTamanho, sResposta
-    return tamanho_inicial, esTamanho, sResposta    
-
-def atualizar_status_nfe(novo_status):
-    global arquivo_NFE
-    arquivo_NFE = rf"{novo_status}".encode('utf-8')
-    
-def verificar_status_nfe():
-    global arquivo_NFE
-    return arquivo_NFE    
-       
-def opcao1():
-    define_bufferResposta(9096)
+def statusServicoSefaz():
+    #zera o tamanho do buffer
+    define_bufferResposta(0)
+    #consulta status sefaz
     resultado = acbr_lib.NFE_StatusServico( sResposta, ctypes.byref(esTamanho))
     print('resultado ',resultado)
+    #Define ultimo retorno baseado no buffer de resposta
+    define_bufferResposta(esTamanho.value)
+    #Executa Ultimo Retorno 
+    LUltimoRetorno = acbr_lib.NFE_UltimoRetorno( sResposta, ctypes.byref(esTamanho)) 
+    exibeReposta('NFE_UltimoRetorno',LUltimoRetorno) 
     resposta_completa = sResposta.value.decode("utf-8")
     if resultado == 0:
         print('-[RESPOSTA STATUS SERVICO]---------------------------------------')
         print(resposta_completa)
     else:
         print('Erro ao consultar SEFAZ',resultado)
-        print(resposta_completa)
-        aguardar_tecla()
+    aguardar_tecla()
 
-def opcao2():
+def imprimirPDFNFe(PathXMLCompleto):
+    define_bufferResposta(0)
+    #limpar lista de NFe carregadas
+    resposta = acbr_lib.NFE_LimparLista();
+    exibeReposta('NFE_LimparLista',resposta) 
+    #Carregar XML
+    resposta = acbr_lib.NFE_CarregarXML( PathXMLCompleto.encode('utf-8') )    
+    exibeReposta('NFE_CarregarXML',resposta) 
+    #Alterar para teste o nome do PDF
+    resposta = acbr_lib.NFE_ConfigGravarValor( 'DANFE'.encode('utf-8'), 'PathPDF'.encode('utf-8'), os.path.join(PATH_APP.encode('utf-8'),'teste'.encode('utf-8')))
+    resposta = acbr_lib.NFE_ConfigGravarValor( 'DANFE'.encode('utf-8'), 'NomeDocumento'.encode('utf-8'), 'pdfteste'.encode('utf-8'))
+    exibeReposta('NFE_ConfigGravarValor',resposta) 
+    #persistindo no INI
+    resposta = acbr_lib.NFE_ConfigGravar( PATH_ACBRLIB_INI.encode("utf-8"));
+    exibeReposta('NFE_ConfigGravar',resposta) 
+    #imprimir
+    resposta = acbr_lib.NFE_ImprimirPDF( );
+    exibeReposta('NFE_ImprimirPDF',resposta) 
+
+
+def emitirImprimirNFe():
     '''
     ATENÇÃO !
     O arquivo de venda esta em INI, para obter um ini válido, segue o link:
     https://acbr.sourceforge.io/ACBrLib/ModeloNFeINI.html
     '''
     #Definir tamanho da resposta
-    define_bufferResposta(30600)
+    define_bufferResposta(0)
     #Limpar a lista de NFe's carregadas
     acbr_lib.NFE_LimparLista();
     #Carregar Arquivo de venda INI
@@ -168,33 +181,32 @@ def opcao2():
     exibeReposta('NFE_CarregarINI',LResposta)
     #Obter XML da NFE
     resultado = acbr_lib.NFE_Assinar( 0, sResposta, ctypes.byref(esTamanho))
-    resposta_completa = sResposta.value.decode("utf-8")
     exibeReposta('NFE_Assinar',resultado)
-    atualizar_status_nfe(resposta_completa)
     #gravar XML
     resultado = acbr_lib.NFE_GravarXml(0,'','');
     exibeReposta('NFE_GravarXml',resultado)
-    aguardar_tecla()
     #Enviar a NFe a SEFAZ
-    resultado = acbr_lib.NFE_Enviar( 1,False   ,True      ,False   ,sResposta, ctypes.byref(esTamanho))
+    resultado = acbr_lib.NFE_Enviar( 1, False   ,True      ,False   ,sResposta, ctypes.byref(esTamanho))
     exibeReposta('NFE_Enviar',resultado)
-    aguardar_tecla()
+    #Define ultimo retorno baseado no buffer de resposta
+    define_bufferResposta(esTamanho.value)
+    #Executa Ultimo Retorno 
+    LUltimoRetorno = acbr_lib.NFE_UltimoRetorno( sResposta, ctypes.byref(esTamanho)) 
+    exibeReposta('NFE_UltimoRetorno',LUltimoRetorno)      
+    #exibe resposta completa
     resposta_completa = sResposta.value.decode("utf-8")
-    print('Resposta',resposta_completa)
-
-def opcao3():
-    define_bufferResposta(30600)
-    #limpar lista de NFe carregadas
-    acbr_lib.NFE_LimparLista();
-    #Carregar INI
-    acbr_lib.NFE_CarregarINI( ARQ_VENDA_INI.encode('utf-8'));
-    #Assinar
-    acbr_lib.NFE_Assinar()
-    #imprimir
-    resultado = acbr_lib.NFE_ImprimirPDF( );
+    print('Resposta: ',resposta_completa)
+    json_data = json.loads(resposta_completa)
+    #A funcao abaixo, so para pegar do retorno o numero da nfe, vc pode informar manualmente qual o numero p ler oXML NFe35 por exemplo
+    nNFe_key = next(key for key in json_data["Envio"] if key.startswith("NFe"))
+    #Alimentando a Variavel Global LARQUIVO_xml com path
+    LARQUIVO_XML = json_data["Envio"][nNFe_key]["NomeArq"]
+    #Colocar inserir barras duplas par aser utilizado no windows em testes
+    LARQUIVO_XML = LARQUIVO_XML.replace("\\", "\\\\")
+    print('ArquivoXML :'+LARQUIVO_XML)
     
-def opcao4():
-    define_bufferResposta(1024)
+def getPathCertificado():
+    define_bufferResposta(0)
     resposta = acbr_lib.NFE_GetPath( 0,sResposta, ctypes.byref(esTamanho),'','digiteAquiNumeroCNPJ'.encode('utf-8'),'',0)
     resposta_completa = sResposta.value.decode("utf-8")
     print('Resposta = ',resposta)
@@ -202,7 +214,7 @@ def opcao4():
     aguardar_tecla()
 
 def exibir_menu():
-    print("--[Menu]-------------------------------------------------------------")
+    print("--[Menu]----------------------------------------------")
     print("1. Consulta Status SEFAZ")
     print("2. Criar XML e Enviar SEFAZ")
     print("3. Imprimir NFE")
@@ -214,15 +226,15 @@ while True:
     exibir_menu()
     escolha = input("Escolha uma opção: ")
     if escolha == "1":
-        opcao1()       
+        statusServicoSefaz()       
         aguardar_tecla()
     elif escolha == "2":
-        opcao2()
+        emitirImprimirNFe()
         aguardar_tecla()
     elif escolha == "3":
-        opcao3()
+        imprimirPDFNFe("C:\\ACBr\\Projetos\\ACBrLib\\Demos\\Python\\NFe\\ARQUIVOS\\11777555000100\\35240911777555000100550030000000501432115908-nfe.xml")
     elif escolha == "4":
-        opcao4()
+        getPathCertificado()
     elif escolha == "5":
         print("Saindo...")
         acbr_lib.NFE_Finalizar()

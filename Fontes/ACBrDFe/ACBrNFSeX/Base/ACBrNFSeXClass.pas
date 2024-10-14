@@ -1687,6 +1687,8 @@ begin
   FIdentificacaoTomador := TIdentificacao.Create;
   FEndereco := TEndereco.Create;
   FContato := TContato.Create;
+
+  FTomadorExterior := snNao;
 end;
 
 destructor TDadosTomador.Destroy;

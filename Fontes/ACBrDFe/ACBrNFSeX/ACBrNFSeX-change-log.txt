@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 14/10/2024
+-- ACBrNFSeXNotasFiscais --
+[*] Alteração nos métodos que geram e faz a leitura do arquivo INI visando identificar se os dados
+    no arquivo INI é do RPS ou da NFS-e.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXClass --
+[*] Definido um valor padrão para o campo TomadorExterior como sendo snNao.
+   Por: Italo Giurizzato Junior
+-- Simple.GravarXml --
+[*] Alteração visando gerar a tag sTipoTomador se o campo TomadorExterior for snSim.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6097 - A cidade de Camacari/BA, mudou a URL de produção, o provedor continua o mesmo.
    Por: João Antônio

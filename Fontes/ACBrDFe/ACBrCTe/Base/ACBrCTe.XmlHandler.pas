@@ -311,6 +311,11 @@ type
     procedure LerImp(const ANode: TACBrXMLNode; const Imp: TImp);
   end;
 
+  TTotalHandler = class
+  public
+    procedure LerTotal(const ANode: TACBrXmlNode; const total: Ttotal);
+  end;
+
   TInfServicoHandler = class
   public
     procedure LerInfServico(const ANode: TACBrXmlNode; const infServico: TinfServico);
@@ -836,6 +841,7 @@ type
     FDetGTVHandler: TDetGTVeHandler;
     FVPrestHandler: TVPrestHandler;
     FImpHandler: TImpHandler;
+    FTotalHandler: TTotalHandler;
     FInfCTeNormHandler: TInfCTeNormHandler;
     FInfCteCompHandler: TInfCTeCompHandler;
     FInfCteAnuHandler: TInfCTeAnuHandler;
@@ -945,7 +951,7 @@ begin
   end
   else
   begin
-    if Document.Root.Name = 'cteProcSimp' then
+    if Document.Root.Name = 'cteSimpProc' then
     begin
       FprotCTeHandler.LerProtCTe(Document.Root.Childrens.FindAnyNs('protCTe'), FCTe.procCTe);
       CTeNode := Document.Root.Childrens.FindAnyNs('CTeSimp');
@@ -1354,6 +1360,8 @@ begin
 end;
 
 procedure TTomaHandler.LerToma(const ANode: TACBrXMLNode; const Toma: TToma);
+var
+  Ok: Boolean;
 begin
   if not Assigned(ANode) then exit;
 
@@ -1366,6 +1374,7 @@ begin
   toma.xFant   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xFant'), tcStr);
   toma.fone    := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
   toma.email   := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+  toma.indIEToma := StrToindIEDest(OK, ObterConteudoTag(ANode.Childrens.FindAnyNs('indIEToma'), tcStr));
 
   FEnderHandler.LerEnder(ANode.Childrens.FindAnyNs('enderToma'), toma.enderToma);
 end;
@@ -3125,6 +3134,7 @@ begin
   FCobrHandler := TCobrHandler.Create;
   FInfCTeSubHandler := TInfCTeSubHandler.Create;
   FDetHandler := TDetHandler.Create;
+  FTotalHandler := TTotalHandler.Create;
 end;
 
 destructor TInfCTeHandler.Destroy;
@@ -3157,6 +3167,7 @@ begin
   FCobrHandler.Free;
   FInfCTeSubHandler.Free;
   FDetHandler.Free;
+  FTotalHandler.Free;
 
   inherited;
 end;
@@ -3205,6 +3216,7 @@ begin
   FDetGTVHandler.LerDetGTVe(ANode.Childrens.FindAnyNs('detGTV'), CTe.detGTV);
   FVPrestHandler.LerVPrest(ANode.Childrens.FindAnyNs('vPrest'), CTe.vPrest);
   FImpHandler.LerImp(ANode.Childrens.FindAnyNs('imp'), CTe.imp);
+  FTotalHandler.LerTotal(ANode.Childrens.FindAnyNs('total'), CTe.total);
   FInfCTeNormHandler.LerinfCTeNorm(ANode.Childrens.FindAnyNs('infCTeNorm'), CTe.infCTeNorm);
 
   if CTe.infCTe.versao <= 3 then
@@ -3867,6 +3879,17 @@ begin
     infNFeTranspParcial.New;
     infNFeTranspParcial[i].chNFe := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('chNFe'), tcStr);
   end;
+end;
+
+{ TTotalHandler }
+
+procedure TTotalHandler.LerTotal(const ANode: TACBrXmlNode;
+  const total: Ttotal);
+begin
+  if not Assigned(ANode) then exit;
+
+  total.vTPrest := ObterConteudoTag(ANode.Childrens.FindAnyNs('vTPrest'), tcDe2);
+  total.vTRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('vTRec'), tcDe2);
 end;
 
 end.

@@ -311,10 +311,10 @@ begin
 
           if bCTeSimp then
           begin
-            Gerador.wGrupo('cteProcSimp versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+            Gerador.wGrupo('cteSimpProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
             Gerador.wTexto('<CTeSimp xmlns' + aXML + '</CTeSimp>');
             Gerador.wTexto(FXML_prot);
-            Gerador.wGrupo('/cteProcSimp');
+            Gerador.wGrupo('/cteSimpProc');
           end
           else
           begin

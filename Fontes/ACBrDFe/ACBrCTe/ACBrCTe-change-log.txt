@@ -45,6 +45,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/10/2024
+-- ACBrCTe.XmlHandler --
+[-] #TK-6088: Correção, não estava lendo a tag indIEToma.
+-- pcteCTeW --
+[*] #TK-6088: Acrescentado a condição para checar o conteúdo de xObs antes de gerar
+    ou não o grupo: compl
+   Por: dev Fortes
+[+] Incluído a leitura do grupo <total> e suas tags.
+   Por: Italo Giurizzato Junior
+
 09/10/2024
 -- ACBrCTe --
 [*] #TK-6050: Ajuste visando a correta geração do URL-QRCode quando emitido em contingência.

@@ -156,7 +156,8 @@ type
 implementation
 
 uses
-  synautil, Math, DateUtils, TypInfo,
+  Math, DateUtils, TypInfo,
+  synautil, synacode,
   ACBrUtil.Strings;
 
 { TACBrTEFRespAditum }
@@ -361,7 +362,7 @@ begin
   begin
     Transmitir := False;
     LimparRespostaHTTP;
-    url := fpACBrTEFAPI.DadosTerminal.EnderecoServidor + AEndpoint;
+    url := EncodeURL( fpACBrTEFAPI.DadosTerminal.EnderecoServidor + AEndpoint );
     GravarLog('TransmitirHttp( '+AMethod+', '+url+', '+ABody+' )');
 
     FHTTP.Headers.Add('Authorization: '+fpACBrTEFAPI.DadosTerminal.CodEmpresa);
@@ -565,7 +566,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      if not js.AsBoolean['sucess'] then
+      if (LowerCase(js.AsString['sucess']) = 'true') then
         TratarRetornoComErro;
 
       jsmerchantInfo := js.AsJSONObject['merchantInfo'];
@@ -576,7 +577,7 @@ begin
           DoException(ACBrStr(Format(sACBrAditumCNPJEstabelecimentoDiferente,
                                [fpACBrTEFAPI.DadosEstabelecimento.CNPJ, cnpjTEF]) ));
 
-        if not jsmerchantInfo.AsBoolean['isActive'] then
+        if (LowerCase(jsmerchantInfo.AsString['isActive']) <> 'true') then
           DoException(ACBrStr( Format(sACBrAditumErroEstabelecimentoNaoAtivo, [cnpjTEF])));
       end;
 
@@ -797,13 +798,13 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      Ok := js.AsBoolean['success'];
+      Ok := (LowerCase(js.AsString['success']) = 'true');
       if Ok then
       begin
         if Confirmar then
-          Ok := js.AsBoolean['confirmed']
+          Ok := (LowerCase(js.AsString['confirmed']) = 'true')
         else
-          Ok := js.AsBoolean['canceled'];
+          Ok := (LowerCase(js.AsString['canceled']) = 'true');
       end;
     finally
       js.Free;
@@ -824,7 +825,7 @@ procedure TACBrTEFAPIClassAditum.AbortarTransacaoEmAndamento;
 var
   Ok: Boolean;
 begin
-  TransmitirHttp(cHTTPMethodGET, '/abort');
+  TransmitirHttp(cHTTPMethodGET, 'abort');
   Ok := (FHTTPResultCode = HTTP_OK);
   if not Ok then
     TratarRetornoComErro;
@@ -844,7 +845,7 @@ begin
   s := AjustaLinhas(s, CPINPAD_COL, CPINPAD_LIN, True);
   s := StringReplace(s, #10, '', [rfReplaceAll]);
 
-  TransmitirHttp(cHTTPMethodGET, '/pinpad/display?message='+s);
+  TransmitirHttp(cHTTPMethodGET, 'pinpad/display?message='+s);
   Ok := (FHTTPResultCode = HTTP_OK);
   if not Ok then
     TratarRetornoComErro;
@@ -886,7 +887,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      if js.AsBoolean['success'] then
+      if (LowerCase(js.AsString['success']) = 'true') then
         Result := js.AsString['output'];
     finally
       js.Free;
@@ -925,7 +926,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      if js.AsBoolean['success'] then
+      if (LowerCase(js.AsString['success']) = 'true') then
       begin
         s := js.AsString['selected'];
         Result := StrToIntDef(s, -1);
@@ -949,7 +950,7 @@ begin
     jsTerminalInfo := js.AsJSONObject['terminalInfo'];
     if Assigned(jsTerminalInfo) then
     begin
-      if (jsTerminalInfo.AsBoolean['connected']) then
+      if (LowerCase(js.AsString['connected']) = 'true') then
         Result := 99;   // TEF Aditum não retorna a Porta do PinPad, retornando algo diferente de 0
     end;
   finally

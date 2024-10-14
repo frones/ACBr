@@ -208,6 +208,7 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad;
       TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String;
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer;
     function VerificarPresencaPinPad: Byte;
 
     property TEF: TACBrTEFAPIClass read GetTEFAPIClass;
@@ -389,6 +390,14 @@ begin
             IntToStr(TimeOut)+', '+IntToStr(MinLen)+', '+IntToStr(MaxLen)+' )');
   Result := TEF.ObterDadoPinPad(TipoDado, TimeOut, MinLen, MaxLen);
   GravarLog('   '+Result);
+end;
+
+function TACBrTEFAPI.MenuPinPad(const Titulo: String; Opcoes: TStrings;
+  TimeOut: Integer): Integer;
+begin
+  GravarLog('MenuPinPad( '+Titulo + sLineBreak + Opcoes.Text+' )');
+  Result := TEF.MenuPinPad(Titulo, Opcoes, TimeOut);
+  GravarLog('   '+IntToStr(Result));
 end;
 
 function TACBrTEFAPI.VerificarPresencaPinPad: Byte;

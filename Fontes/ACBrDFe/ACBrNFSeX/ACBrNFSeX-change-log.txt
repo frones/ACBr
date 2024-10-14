@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/10/2024
+-- SmarAPD.GravarXml --
+[*] #TK-6094 - Alterado a função NumeroNFSeInformado para suportar numero de NFS-e com o ano no inicio
+    (exemplo: 202400000000034).
+   Por: Quality Automação
+
 11/10/2024
 -- Equiplano.LerXml --
 [*] #TK-6078 - Ajustes para a leitura correta do XML da nota, problemas na leitura

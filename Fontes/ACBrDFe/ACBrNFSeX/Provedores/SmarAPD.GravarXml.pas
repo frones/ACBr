@@ -95,7 +95,7 @@ var
 
   function NumeroNFSeInformado: boolean;
   begin
-    Result := (StrToIntDef(NFSe.Numero, 0) > 0);
+    Result := (StrToInt64Def(NFSe.Numero, 0) > 0);
   end;
 
 begin

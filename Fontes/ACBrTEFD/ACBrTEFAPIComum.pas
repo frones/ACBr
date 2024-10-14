@@ -152,6 +152,7 @@ type
     fCodTerminal: String;
     fEnderecoServidor: String;
     fOperador: String;
+    fParamComunicacao: String;
     fPortaPinPad: String;
   public
     constructor Create;
@@ -165,11 +166,13 @@ type
     property CodTerminal: String read fCodTerminal write fCodTerminal;
     property Operador: String read fOperador write fOperador;
     property PortaPinPad: String read fPortaPinPad write fPortaPinPad;
+    property ParamComunicacao: String read fParamComunicacao write fParamComunicacao;
   end;
 
   TACBrTEFAPIMetodo = (tefmtdNenhuma, tefmtdPagamento, tefmtdCancelamento, tefmtdAdministrativa);
 
   TACBrTEFAPIComum = class;
+  TACBrTEFAPIRespostas = class;
 
   { TACBrTEFAPIComumClass }
 
@@ -188,6 +191,7 @@ type
     procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); virtual;
     procedure FinalizarChamadaAPI; virtual;
     procedure InterpretarRespostaAPI; virtual;
+    procedure CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas); virtual;
 
     procedure ProcessarRespostaOperacaoTEF; virtual;
 
@@ -378,6 +382,7 @@ type
 
     procedure LimparRespostasTEF;
     procedure CarregarRespostasDoDiretorioTrabalho;
+    procedure CarregarRespostasPendentes; virtual;
 
     procedure VerificarTransacoesPendentes;
     procedure ConfirmarTransacoesPendentes;
@@ -550,6 +555,7 @@ begin
   fOperador := '';
   fPortaPinPad := '';
   fEnderecoServidor := '';
+  fParamComunicacao := '';
 end;
 
 procedure TACBrTEFAPIDadosTerminal.Assign(Source: TPersistent);
@@ -566,6 +572,7 @@ begin
     fOperador := DadosTerminal.Operador;
     fPortaPinPad := DadosTerminal.PortaPinPad;
     fEnderecoServidor := DadosTerminal.EnderecoServidor;
+    fParamComunicacao := DadosTerminal.ParamComunicacao;
   end;
 end;
 
@@ -947,6 +954,12 @@ begin
   end;
 end;
 
+procedure TACBrTEFAPIComumClass.CarregarRespostasPendentes(
+  const AListaRespostasTEF: TACBrTEFAPIRespostas);
+begin
+  AListaRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
+end;
+
 //function TACBrTEFAPIComumClass.VerificarTEF: Boolean;
 //begin
 //  Result := fpInicializado;
@@ -1086,8 +1099,7 @@ begin
       CancelarOuEstornarTransacoesDiretorioTrabalho
     else
     begin
-      fRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
-
+      fpTEFAPIClass.CarregarRespostasPendentes( fRespostasTEF );
       if (TratamentoTransacaoInicializacao = tefopiProcessarPendentes) then
         VerificarTransacoesPendentes;
     end;
@@ -1388,6 +1400,12 @@ begin
   RespostasTEF.CarregarRespostasDoDiretorioTrabalho;
 end;
 
+procedure TACBrTEFAPIComum.CarregarRespostasPendentes;
+begin
+  GravarLog('CarregarRespostasPendentes');
+  fpTEFAPIClass.CarregarRespostasPendentes( fRespostasTEF );
+end;
+
 procedure TACBrTEFAPIComum.VerificarTransacoesPendentes;
 var
   i: Integer;
@@ -1445,7 +1463,7 @@ var
 begin
   GravarLog('CancelarOuEstornarTransacoesDiretorioTrabalho( '+fDiretorioTrabalho+' )');
 
-  fRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
+  fpTEFAPIClass.CarregarRespostasPendentes( fRespostasTEF );
 
   // Cria uma nova Lista com as respostas da Pasta de Trabalho, pois a operação
   // de Cancelamento, pode gerar novas entradas na lista padrão (fRespostasTEF)
@@ -1453,7 +1471,7 @@ begin
                                                      fDiretorioTrabalho,
                                                      False, False);
   try
-    RespostasTEFAtuais.CarregarRespostasDoDiretorioTrabalho;
+    fpTEFAPIClass.CarregarRespostasPendentes( RespostasTEFAtuais );
 
     p := 0;  // No Passo 0, vamos processar primeiro os CNCs e ADMs, e as Não Confirmadas, depois Todas
     i := 0;

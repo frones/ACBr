@@ -616,7 +616,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      Result := (LowerCase(js.AsBoolean['status']) = 'ok');
+      Result := (LowerCase(js.AsString['status']) = 'ok');
     finally
       js.Free;
     end;

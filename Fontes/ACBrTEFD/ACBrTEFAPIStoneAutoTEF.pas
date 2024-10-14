@@ -32,6 +32,8 @@
 
 {$I ACBr.inc}
 
+// https://microtefdocs.stone.com.br/reference/o-que-%C3%A9-o-autotef
+
 unit ACBrTEFAPIStoneAutoTEF;
 
 interface
@@ -134,7 +136,8 @@ type
       MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
     function VerificarPresencaPinPad: Byte; override;
 
-    function MenuPinPad(const Titulo: String; Opcoes: TStrings): Integer;
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000
+      ): Integer; override;
 
     property Started: TDateTime read FStarted;
     property HTTPResultCode: Integer read FHTTPResultCode;
@@ -366,7 +369,8 @@ procedure TACBrTEFAPIClassStoneAutoTEF.TratarRetornoComErro;
 var
   js, jserrors: TACBrJSONObject;
   sMessage, s: String;
-  iStatusCode, i, j: Integer;
+  iStatusCode: Integer;
+  //i, j: Integer;
   //jserro: TACBrJSONValue;
 begin
   iStatusCode := 0;
@@ -461,7 +465,7 @@ begin
     js.AddPair('StoneCode', fpACBrTEFAPI.DadosTerminal.CodTerminal);
     js.AddPair('ConnectionName', fpACBrTEFAPI.DadosTerminal.PortaPinPad);
     js.AddPair('PartnerName', PartnerName());
-    sBody := js.ToJSON+'}';
+    sBody := js.ToJSON;
   finally
     js.free;
   end;
@@ -691,11 +695,10 @@ begin
 end;
 
 function TACBrTEFAPIClassStoneAutoTEF.MenuPinPad(const Titulo: String;
-  Opcoes: TStrings): Integer;
+  Opcoes: TStrings; TimeOut: Integer): Integer;
 var
   js: TACBrJSONObject;
   s, sBody: String;
-  Ok: Boolean;
   jsoptions: TACBrJSONArray;
   i: Integer;
 begin
@@ -713,8 +716,7 @@ begin
   end;
 
   TransmitirHttp(cHTTPMethodPOST, 'api/Pinpad/selection', sBody);
-  Ok := (FHTTPResultCode = HTTP_OK);
-  if Ok then
+  if (FHTTPResultCode = HTTP_OK) then
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
@@ -723,7 +725,9 @@ begin
     finally
       js.Free;
     end;
-  end;
+  end
+  else
+    TratarRetornoComErro;
 end;
 
 end.

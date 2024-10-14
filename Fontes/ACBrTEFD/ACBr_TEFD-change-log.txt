@@ -46,6 +46,41 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2024
+-- ACBrTEFAPI, ACBrTEFAPIAditum --
+[+] Inicio do desenvolvimento de novo modelo de TEF "tefAditumAPI"
+    https://aditum.com.br/
+[+] Adicionado novo método em "TACBrTEFAPIClass"
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer;
+
+-- TACBrTEFAPIComum --
+[+] Adicionada nova propriedade "TACBrTEFAPIDadosTerminal.ParamComunicacao: String"
+    permite definir Configurações para conexão do TEF (usada no SiTEF)
+[+] Adicionado método em "TACBrTEFAPIComumClass" e "TACBrTEFAPIComum"
+    procedure CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas); virtual;
+    - Permite que as classes de TEF, criem métodos próprios para recuperar as
+      Transações Pendentes, independentes do Arq.Backup
+
+-- ACBrTEFAPIStoneAutoTEF --
+[*] Ajuste no método "MenuPinPad" para compatibilizar com método Virtual de
+    "TACBrTEFAPIClass"
+
+-- ACBrTEFCliSiTefComum --
+[*] Ajuste em "TACBrTEFRespCliSiTef.GravaInformacao", para sequencializar as
+    informações de transações pendentes
+
+-- ACBrTEFAPICliSiTef --
+[*] Implementada sobrecarga do método "CarregarRespostasPendentes"
+    Ajuste para nova homologação do SiTEF, que deve ler transações pendentes
+    usando o comando "130" e não arquivos de Backup
+[*] método "TACBrTEFAPIClassCliSiTef.Inicializar" modificado, para considerar a
+    informação no Parâmetro "DadosTerminal.ParamComunicacao" e informa-lo na
+    inicialização (se não for vazio)
+[*] Método privado "TACBrTEFAPIClassCliSiTef.FinalizarTransacaoSiTef" modificado
+    para receber o parâmetro "DataHora: TDateTime" e detectar se a transação
+    a ser Finalizada, tem como origem arquivos de Backup ou o comando "130"
+  (por: DSA)
+
 07/09/2024
 -- ACBrTEFAPI, ACBrTEFAPIStoneAutoTEF --
 [+] Adicionado novo modelo de TEF "tefStoneAutoTEF"

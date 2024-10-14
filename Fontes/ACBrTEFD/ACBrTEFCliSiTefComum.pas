@@ -471,8 +471,9 @@ begin
   { Os Tipos abaixo, devem ter a Sequencia incrementada, se já foram salvos antes,
     pois o SiTef retorna o mesmo Tipo, para várias ocorrências do campo }
   case Identificacao of
-    141, 142,            // 141 - Data Parcela, 142 - Valor Parcela
-    600..607, 611..624:  // Dados do Corresp. Bancário
+    141, 142,             // 141 - Data Parcela, 142 - Valor Parcela
+    160..164, 211, 1319,  // Dados de Transações Pendentes
+    600..607, 611..624:   // Dados do Corresp. Bancário
     begin
       Sequencia := 1;
       while (Trim(LeInformacao(Identificacao, Sequencia).AsString) <> '') do

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6097 - A cidade de Camacari/BA, mudou a URL de produção, o provedor continua o mesmo.
+   Por: João Antônio
 -- SmarAPD.GravarXml --
 [*] #TK-6094 - Alterado a função NumeroNFSeInformado para suportar numero de NFS-e com o ano no inicio
     (exemplo: 202400000000034).

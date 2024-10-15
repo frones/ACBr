@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2024
+-- ACBrBoletoW_Itau_API --
+[-] TK-6101 Executado um clear no header para resolver o problema.
+	https://www.projetoacbr.com.br/forum/topic/80113-ita%C3%BA-api-retorno-header-fields-too-large/
+	por Daniel de Morais
+
 11/10/2024
 -- ACBrBoletoRet_Itau_API --
 [-] TK-6077 Alterado o tratamento da data retorno para funcionar com D7 Iso8601ToDateTime Ajustado Data Baixa 

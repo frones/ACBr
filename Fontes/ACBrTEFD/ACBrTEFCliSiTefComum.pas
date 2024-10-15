@@ -400,6 +400,7 @@ begin
           ValorTotal := ValorTotal - Desconto;
         end;
         4153: CodigoPSP := LinStr;
+        4249: EndToEndID := LinStr;
       else
         ProcessarTipoInterno(Linha);
       end;

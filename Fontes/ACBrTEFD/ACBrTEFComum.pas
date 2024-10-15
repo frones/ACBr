@@ -374,7 +374,7 @@ type
     fpNomeCarteiraDigital : String; // Nome da carteira digital
     fpCodigoPSP : String; // Código do PSP - PIX
     fpNSU_TEF : String; // NSU interno, do Gerenciador TEF
-
+    fpEndToEndID : string; //Campo 4249 - Codigo EndToEndID da transação PIX SITEF
     fpSucesso: Boolean;       // Se True a Transação ocorreu com sucesso
 
     procedure SetCNFEnviado(const AValue: Boolean);
@@ -479,6 +479,7 @@ type
     property NomeCarteiraDigital: String read fpNomeCarteiraDigital write fpNomeCarteiraDigital;
     property CodigoPSP: String read fpCodigoPSP write fpCodigoPSP;
     property NSU_TEF: String read fpNSU_TEF write fpNSU_TEF;
+    property EndToEndID: string read fpEndToEndID write fpEndToEndID;  
 
     property NFCeSAT: TACBrTEFRespNFCeSAT read fpNFCeSAT;
 

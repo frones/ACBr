@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 16/10/2024
+-- ACBrNFSeXNotasFiscais/WebFisco.GravarXml --
+[*] Alteração visando formatar as tags que contem CNPJ/CPF tanto do Prestador quanto do Tomador,
+    o provedor exige que seja feito dessa forma.
+[*] Alteração nos métodos que geram e fazem a leitura do arquivo INI para contemplar campos
+    especificos do provedor WebFisco.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6108 - A cidade de Nova Friburgo/RJ, mudou a URL de produção, o provedor continua o mesmo.
    Por: João Augusto Bueno Araujo

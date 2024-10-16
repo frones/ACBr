@@ -56,6 +56,9 @@ type
 
 implementation
 
+uses
+  ACBrValidador;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     WebFisco
@@ -86,17 +89,20 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#', 'usuario', 1, 6, 1,
+  if Ambiente = taProducao then
+  begin
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'usuario', 1, 6, 1,
                                                     Usuario, '', True, xAtrib));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#', 'pass', 1, 6, 1,
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'pass', 1, 6, 1,
                                                       Senha, '', True, xAtrib));
+  end;
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'prf', 1, 18, 1,
-                                             CNPJPrefeitura, '', True, xAtrib));
+                               FormatarCNPJ(CNPJPrefeitura), '', True, xAtrib));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'usr', 1, 18, 1,
-              NFSe.Prestador.IdentificacaoPrestador.CpfCnpj, '', True, xAtrib));
+    FormatarCNPJouCPF(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), '', True, xAtrib));
 (*
   // as Tags abaixo só devem ser geradas em ambinte de produção
   if Ambiente = taProducao then
@@ -131,7 +137,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ctr', 1, 8, 1,
                                NFSe.IdentificacaoRps.Numero, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'cnpj', 1, 18, 1,
-                  NFSe.Tomador.IdentificacaoTomador.CpfCnpj, '', True, xAtrib));
+    FormatarCNPJouCPF(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'cnpjn', 1, 60, 1,
                                    NFSe.Tomador.RazaoSocial, '', True, xAtrib));
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ie', 1, 20, 1,

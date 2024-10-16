@@ -438,6 +438,10 @@ begin
 
       Prestador.Contato.Telefone := AINIRec.ReadString(sSecao, 'Telefone', '');
       Prestador.Contato.Email := AINIRec.ReadString(sSecao, 'Email', '');
+
+      // Para o provedor WebFisco
+      Prestador.Anexo := AINIRec.ReadString(sSecao, 'Anexo', '');
+      Prestador.ValorReceitaBruta := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorReceitaBruta', ''), 0);
     end;
 
     sSecao := 'Tomador';
@@ -976,6 +980,7 @@ begin
       INIRec.WriteString(sSecao, 'Numero', IdentificacaoRps.Numero);
       INIRec.WriteString(sSecao, 'Serie', IdentificacaoRps.Serie);
       INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoRPSToStr(IdentificacaoRps.Tipo));
+
       if DataEmissao > 0 then
         INIRec.WriteDate(sSecao, 'DataEmissao', DataEmissao)
       else
@@ -1038,6 +1043,13 @@ begin
       INIRec.WriteString(sSecao, 'CEP', Prestador.Endereco.CEP);
       INIRec.WriteString(sSecao, 'Telefone', Prestador.Contato.Telefone);
       INIRec.WriteString(sSecao, 'Email', Prestador.Contato.Email);
+
+      // Para o provedor WebFisco
+      if Prestador.Anexo <> '' then
+        INIRec.WriteString(sSecao, 'Anexo', Prestador.Anexo);
+
+      if Prestador.ValorReceitaBruta > 0 then
+        INIRec.WriteFloat(sSecao, 'ValorReceitaBruta', Prestador.ValorReceitaBruta);
 
       sSecao:= 'Tomador';
       INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoPessoaToStr(Tomador.IdentificacaoTomador.Tipo));

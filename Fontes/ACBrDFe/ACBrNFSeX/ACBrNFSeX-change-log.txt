@@ -44,8 +44,11 @@ Símbolo : Significado
 
 
 16/10/2024
+-- Giss.GravarXml --
+[*] Incluída a propriedade de configuração para que a aliquota seja dividida por 100.
+   Por: Paula Zamboni de Campos da
 -- NFEletronica.GravarXml/NFEletronica.Provider --
-[*] Alteração visando gerar o XML do RPS conforme as exigencias do provedor e ajustes no 
+[*] Alteração visando gerar o XML do RPS conforme as exigências do provedor e ajustes no 
     TratarRetornorEmitir visando obter o numero da NFS-e retornado pela API.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais/WebFisco.GravarXml --

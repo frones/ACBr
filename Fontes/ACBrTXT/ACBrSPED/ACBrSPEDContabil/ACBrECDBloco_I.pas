@@ -958,7 +958,7 @@ end;
 destructor TRegistroI155.Destroy;
 begin
    FRegistroI157.Free;
-   inherited Destoy;
+   inherited Destroy;
 end;
 
 destructor TRegistroI150.Destroy;

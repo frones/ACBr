@@ -189,7 +189,7 @@ begin
 
   // Ajuste no Json de Resposta alterando 'brcode' para 'pixCopiaECola'
   if (((UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCobV)) or
-      ((UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob))) and (AResultCode = HTTP_CREATED) then
+     (((UpperCase(AMethod) = ChttpMethodPUT) or (UpperCase(AMethod) = ChttpMethodPOST)) and (AEndPoint = cEndPointCob))) and (AResultCode = HTTP_CREATED) then
     RespostaHttp := StringReplace(RespostaHttp, 'brcode', 'pixCopiaECola', [rfReplaceAll]);
 end;
 

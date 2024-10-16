@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2024
+-- ACBrPIXPSPSicoob --
+[-] Corrige problema na resposta ao criar uma cobrança enviando o txID para o PSP Sicoob
+    por: Elias César
+
 09/10/2024
 -- ACBrSchemasMatera --
 [-] Corrige problema ao ler campos do objeto 'generateImage' no json de resposta.

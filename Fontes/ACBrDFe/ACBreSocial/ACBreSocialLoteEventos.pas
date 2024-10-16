@@ -81,6 +81,7 @@ type
     function GetIDEvento: string;
   public
     constructor Create(AOwner: TComponent); reintroduce; //overload;
+    destructor Destroy; override;
 
     property IDEvento: string read GetIDEvento;
     property XML : AnsiString read FXML write SetXML;
@@ -471,6 +472,13 @@ begin
   FACBreSocial := AOwner;
   FLeitor      := TLeitor.Create;
   FXML         := '';
+end;
+
+destructor TItemLoteEventos.Destroy;
+begin
+  FLeitor.Free;
+
+  inherited;
 end;
 
 function TItemLoteEventos.GetIDEvento: string;

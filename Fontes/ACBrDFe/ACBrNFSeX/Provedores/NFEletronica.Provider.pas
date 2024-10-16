@@ -203,6 +203,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   strRetorno: string;
+  NumeroNota: Integer;
 begin
   Document := TACBrXmlDocument.Create;
   try
@@ -220,8 +221,9 @@ begin
       ANode := Document.Root;
 
       strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('UploadArquivoResult'), tcStr);
+      NumeroNota := StrToIntDef(strRetorno, 0);
 
-      if not StringIsXML(strRetorno) then
+      if (not StringIsXML(strRetorno)) and (NumeroNota <= 0) then
       begin
         Response.ArquivoRetorno := '<UploadArquivoResult>' +
                                      '<ListaMensagemRetorno>' +
@@ -241,8 +243,7 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
-      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+      Response.NumeroNota := IntToStr(NumeroNota);
     except
       on E:Exception do
       begin

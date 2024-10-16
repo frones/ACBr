@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 16/10/2024
+-- NFEletronica.GravarXml/NFEletronica.Provider --
+[*] Alteração visando gerar o XML do RPS conforme as exigencias do provedor e ajustes no 
+    TratarRetornorEmitir visando obter o numero da NFS-e retornado pela API.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais/WebFisco.GravarXml --
 [*] Alteração visando formatar as tags que contem CNPJ/CPF tanto do Prestador quanto do Tomador,
     o provedor exige que seja feito dessa forma.

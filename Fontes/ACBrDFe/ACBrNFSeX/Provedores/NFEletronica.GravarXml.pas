@@ -62,6 +62,7 @@ implementation
 uses
   ACBrXmlBase,
   ACBrUtil.Strings,
+  ACBrNFSeXConversao,
   ACBrNFSeXConsts;
 
 //==============================================================================
@@ -84,11 +85,6 @@ begin
   FormatoAliq := tcDe4;
   }
 
-  // elas requerem que seja declarado em uses a unit: ACBrNFSeXConversao
-  {
-  // filsComFormatacao, filsSemFormatacao, filsComFormatacaoSemZeroEsquerda
-  FormatoItemListaServico := filsComFormatacao;
-  }
 (*
   NrMinExigISS := 1;
   NrMaxExigISS := 1;
@@ -139,6 +135,8 @@ begin
   DivAliq100  := True;
 
   FormatoEmissao := tcDat;
+
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
 
   NrOcorrOutrasInformacoes := 1;
   NrOcorrInscMunTomador := 1;

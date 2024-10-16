@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2024
+-- ACBrLibNFSeBase --
+[*] #TK-4956-2: Codificado em base64 o retorno do método ObterDANFSE do padrão nacional
+   Por: Renato Rubinho 
+
 23/09/2024
 -- ACBrLibNFSeRespostas --
 [*] #TK-4228: Adiciona chamada ao ACBrStr para mostrar corretamente o modo envio na resposta.

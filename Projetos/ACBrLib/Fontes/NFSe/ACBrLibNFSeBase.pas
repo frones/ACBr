@@ -110,6 +110,7 @@ type
 implementation
 
 uses
+  synacode,
   StrUtils, ACBrLibResposta, ACBrLibHelpers,
   ACBrLibConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrLibCertUtils,
   ACBrLibNFSeConsts, ACBrLibConfig, ACBrLibNFSeConfig, ACBrNFSeXConversao,
@@ -1815,6 +1816,7 @@ begin
       try
         Resp.Processar(NFSeDM.ACBrNFSeX1.WebService.ConsultaNFSe);
 
+        Resp.XmlRetorno := EncodeBase64(Resp.XmlRetorno);
         Resposta:= Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);

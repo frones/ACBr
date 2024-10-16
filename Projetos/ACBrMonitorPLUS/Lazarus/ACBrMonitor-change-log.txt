@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2024
+-- DoACBrNFSeUnit --
+[*] #TK-4956-2: Codificado em base64 o retorno do método ObterDANFSE do padrão nacional
+   Por: Renato Rubinho 
+
 11/09/2024
 -- DoACBrNFeUnit --
 [*] #TK-5770: Refatora as rotinas do EnviarLoteNFe e do CriarEnviarNFeSefaz eu faltavam

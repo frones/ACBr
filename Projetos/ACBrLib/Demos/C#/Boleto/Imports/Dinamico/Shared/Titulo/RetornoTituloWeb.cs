@@ -40,6 +40,8 @@ namespace ACBrLib.Boleto
 
         public string NossoNumero { get; set; }
 
+        public string NossoNumeroCorrespondente { get; set; }
+
         public string UsoBanco { get; set; }
 
         public string Carteira { get; set; }

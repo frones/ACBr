@@ -61,21 +61,24 @@ function CarregaDll($dir, $nomeLib)
 
     $biblioteca = $prefixo . $arquitetura . $extensao;
 
-    $dllPath = $dir . DIRECTORY_SEPARATOR . $biblioteca;
+    $dllPath = $dir . DIRECTORY_SEPARATOR;
 
-    if (file_exists($dllPath))
-        return $dllPath;
+    if (!file_exists($dllPath . $biblioteca))
+    {
+        $dllPath = $dir . DIRECTORY_SEPARATOR . "ACBrLib\\x" . $arquitetura . DIRECTORY_SEPARATOR;
 
-    $dllPath = $dir . DIRECTORY_SEPARATOR . "ACBrLib\\x" . $arquitetura . DIRECTORY_SEPARATOR . $biblioteca;
-
-    if (file_exists($dllPath))
-        return $dllPath;
-    else {
-        echo json_encode(["mensagem" => "DLL não encontrada no caminho especificado: $dllPath"]);
-        return -10;
+        if (!file_exists($dllPath . $biblioteca)){
+            echo json_encode(["mensagem" => "DLL não encontrada no caminho especificado: $dllPath . $biblioteca"]);
+            return -10;
+        }
     }
 
-    return $dllPath;
+    $pathAtual = getenv('PATH');
+    if (strpos($pathAtual, $dllPath) === false) {
+        putenv("PATH=$dllPath;" . $pathAtual);
+    }    
+    
+    return $dllPath . $biblioteca;
 }
 
 function CarregaImports($dir, $nomeLib, $modo)
@@ -103,6 +106,60 @@ function CarregaContents($importsPath, $dllPath)
     );
 
     return $ffi;
+}
+
+function VerificaXmlOuIni($conteudo)
+{
+    // 0=Ini
+    if (preg_match('/^\[[^\]]+\]/', $conteudo)) {
+        return 0;
+    }
+
+    // 1=Xml
+    if (preg_match('/^<\?xml|<\w+>/', $conteudo)) {
+        return 1;
+    }
+
+    // -1=Nenhum
+    return -1;
+}
+
+function formataDataAMD($dateString){
+    if (preg_match('/^\d{2}[\/-]\d{2}[\/-]\d{4}$/', $dateString)) {
+        $dateString = str_replace('-', '/', $dateString);
+        
+        $date = DateTime::createFromFormat('d/m/Y', $dateString);
+        return $date->format('Y/m/d');
+    } else {
+        return str_replace('-', '/', $dateString);
+    }
+}
+
+function strDateToDoubleDate($dateString) {
+    $baseDate = new DateTime('1899/12/30');
+    $inputDate = new DateTime(formataDataAMD($dateString));
+
+    // Diferença de dias entre a base e a data fornecida
+    $daysDiff = $inputDate->diff($baseDate)->days;
+
+    // Retorna o valor em formato double
+    return $daysDiff;
+}
+
+function strDateTimeToDoubleDateTime($dateString) {
+    $baseDate = new DateTime('1899/12/30');
+    $inputDate = new DateTime(formataDataAMD($dateString));
+
+    // Diferença de dias entre a base e a data fornecida
+    $daysDiff = $inputDate->diff($baseDate)->days;
+
+    // Fração de um dia (horas, minutos, segundos)
+    $fraction = ($inputDate->format('H') / 24) +
+                ($inputDate->format('i') / 1440) +
+                ($inputDate->format('s') / 86400);
+
+    // Retorna o valor em formato double
+    return $daysDiff + $fraction;
 }
 
 function parseIniToStr($ini)

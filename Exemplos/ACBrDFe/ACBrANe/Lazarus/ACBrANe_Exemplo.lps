@@ -2,15 +2,14 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="10">
+    <Units Count="12">
       <Unit0>
         <Filename Value="ACBrANe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
         <Filename Value="Frm_ACBrANe.pas"/>
@@ -18,21 +17,19 @@
         <ComponentName Value="frmACBrANe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="229"/>
-        <CursorPos X="25" Y="242"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="415"/>
+        <CursorPos X="25" Y="426"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
         <Filename Value="Frm_SelecionarCertificado.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
@@ -43,7 +40,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="21" Y="8"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -88,59 +85,142 @@
         <CursorPos X="51" Y="48"/>
         <UsageCount Value="10"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesResponse.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="229"/>
+        <CursorPos X="81" Y="49"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesBase.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit11>
     </Units>
-    <JumpHistory Count="12" HistoryIndex="11">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="239" Column="43" TopLine="208"/>
+        <Caret Line="941" Column="8" TopLine="929"/>
       </Position1>
       <Position2>
         <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="57" Column="16" TopLine="49"/>
       </Position2>
       <Position3>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="227" Column="76" TopLine="218"/>
+        <Caret Line="1000" Column="18" TopLine="988"/>
       </Position3>
       <Position4>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="783" TopLine="761"/>
+        <Caret Line="1131" Column="24" TopLine="1120"/>
       </Position4>
       <Position5>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="10" Column="3"/>
+        <Caret Line="1158" Column="72" TopLine="1150"/>
       </Position5>
       <Position6>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="242" Column="25" TopLine="228"/>
+        <Caret Line="1128" Column="41" TopLine="1114"/>
       </Position6>
       <Position7>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="905" Column="19" TopLine="893"/>
+        <Caret Line="1135" Column="38" TopLine="1132"/>
       </Position7>
       <Position8>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="936" Column="19" TopLine="924"/>
+        <Caret Line="1180" Column="3" TopLine="1174"/>
       </Position8>
       <Position9>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="893" Column="14" TopLine="880"/>
+        <Caret Line="1145" Column="3" TopLine="1140"/>
       </Position9>
       <Position10>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="1025" Column="10" TopLine="1011"/>
+        <Caret Line="1173" Column="31" TopLine="1151"/>
       </Position10>
       <Position11>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="10" Column="31"/>
+        <Caret Line="1198" Column="62" TopLine="1189"/>
       </Position11>
       <Position12>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="240" Column="49" TopLine="227"/>
       </Position12>
+      <Position13>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="63" Column="17" TopLine="43"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="1190" Column="3" TopLine="1188"/>
+      </Position14>
+      <Position15>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="1219" Column="63" TopLine="1208"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="410" Column="87" TopLine="400"/>
+      </Position16>
+      <Position17>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="865" Column="48" TopLine="860"/>
+      </Position17>
+      <Position18>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="274" Column="15" TopLine="264"/>
+      </Position18>
+      <Position19>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="759" Column="7" TopLine="737"/>
+      </Position19>
+      <Position20>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="276" Column="29" TopLine="263"/>
+      </Position20>
+      <Position21>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="951" Column="79" TopLine="1022"/>
+      </Position21>
+      <Position22>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="1174" Column="10" TopLine="1163"/>
+      </Position22>
+      <Position23>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="282" Column="15" TopLine="281"/>
+      </Position23>
+      <Position24>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="439" Column="68" TopLine="424"/>
+      </Position24>
+      <Position25>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="8" Column="57"/>
+      </Position25>
+      <Position26>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="426" Column="25" TopLine="415"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesResponse.pas"/>
+        <Caret Line="196" Column="14" TopLine="187"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesResponse.pas"/>
+        <Caret Line="108" Column="3" TopLine="95"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\Base\WebServices\ACBrANe.WebServicesResponse.pas"/>
+        <Caret Line="73" Column="3" TopLine="52"/>
+      </Position29>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode=""/>
+      <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
 </CONFIG>

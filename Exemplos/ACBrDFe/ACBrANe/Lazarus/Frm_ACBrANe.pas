@@ -2,28 +2,28 @@
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
-{                                                                              }
+
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
+
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-{                                                                              }
+
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
+
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
+
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
@@ -35,11 +35,32 @@ unit Frm_ACBrANe;
 interface
 
 uses
-  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
-  Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
-  SynEdit, SynHighlighterXML,
-  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL,
-  ACBrANe;
+  IniFiles,
+  LCLIntf,
+  LCLType,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  ComCtrls,
+  StdCtrls,
+  Spin,
+  Buttons,
+  ExtCtrls,
+  SynEdit,
+  SynHighlighterXML,
+  ACBrUtil.Datetime,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrBase,
+  ACBrMail,
+  ACBrDFe,
+  ACBrDFeSSL,
+  ACBrANe,
+  ACBrANe.Conversao;
 
 type
 
@@ -210,9 +231,9 @@ type
     edtCodATM: TEdit;
     Label34: TLabel;
     cbSeguradora: TComboBox;
-    btnGerarANe: TButton;
-    btnCriarEnviar: TButton;
+    btnEnviar: TButton;
     btnEnviarANeEmail: TButton;
+    btnConsultar: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathANeClick(Sender: TObject);
@@ -241,23 +262,24 @@ type
     procedure lblDoar2Click(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
-    procedure btnGerarANeClick(Sender: TObject);
-    procedure btnCriarEnviarClick(Sender: TObject);
+    procedure btnEnviarClick(Sender: TObject);
     procedure btnEnviarANeEmailClick(Sender: TObject);
-    procedure ACBrANe1GerarLog(const ALogLine: String;
-      var Tratado: Boolean);
+    procedure btnConsultarClick(Sender: TObject);
+    procedure ACBrANe1GerarLog(const ALogLine: string; var Tratado: boolean);
     procedure ACBrANe1StatusChange(Sender: TObject);
   private
     { Private declarations }
-    DocNFeCTe: String;
+    DocNFeCTe: string;
 
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
     procedure ConfigurarEmail;
-    Procedure AlimentarComponente(ANomeArq: String);
-    procedure LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
+    procedure AlimentarComponente(ANomeArq: string);
+    procedure LoadXML(MyMemo: String; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
+
+    procedure ChecarResposta(aMetodo: TMetodo);
   public
     { Public declarations }
   end;
@@ -268,36 +290,45 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, blcksock, Grids,
+  strutils,
+  Math,
+  TypInfo,
+  DateUtils,
+  blcksock,
+  Grids,
   Printers,
-  ACBrDFeConfiguracoes, ACBrDFeUtil,
-  pcnAuxiliar, pcnConversao, pcaConversao,
-  Frm_Status, Frm_SelecionarCertificado;
+  ACBrOpenSSLUtils,
+  OpenSSLExt,
+  ACBrDFeUtil,
+  pcnConversao,
+  ACBrANe.WebServicesResponse,
+  Frm_Status,
+  Frm_SelecionarCertificado;
 
 const
   SELDIRHELP = 1000;
 
-{$R *.lfm}
+  {$R *.lfm}
 
-{ TfrmACBrMDFe }
+  { TfrmACBrMDFe }
 
-procedure TfrmACBrANe.AlimentarComponente(ANomeArq: String);
+procedure TfrmACBrANe.AlimentarComponente(ANomeArq: string);
 begin
   ACBrANe1.Documentos.Clear;
 
-  with ACBrANe1.Documentos.Add.ANe do
+  with ACBrANe1.Documentos.New.ANe do
   begin
     // ATM
     Usuario := ACBrANe1.Configuracoes.Geral.Usuario;
-    Senha   := ACBrANe1.Configuracoes.Geral.Senha;
-    codatm  := ACBrANe1.Configuracoes.Geral.CodATM;
+    Senha := ACBrANe1.Configuracoes.Geral.Senha;
+    codatm := ACBrANe1.Configuracoes.Geral.CodATM;
 
     // ELT
     NomeArq := ExtractFileName(ANomeArq);
-    CNPJ    := ACBrANe1.Configuracoes.Geral.CNPJEmitente;
+    CNPJ := ACBrANe1.Configuracoes.Geral.CNPJEmitente;
 
     // ATM e ELT
-    xmlDFe  := DocNFeCTe;
+    xmlDFe := DocNFeCTe;
   end;
 end;
 
@@ -308,7 +339,143 @@ begin
   cbHttpLib.ItemIndex    := Integer(ACBrANe1.Configuracoes.Geral.SSLHttpLib);
   cbXmlSignLib.ItemIndex := Integer(ACBrANe1.Configuracoes.Geral.SSLXmlSignLib);
 
-  cbSSLType.Enabled := (ACBrANe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+  cbSSLType.Enabled := (ACBrANe1.Configuracoes.Geral.SSLHttpLib in [ httpWinHttp, httpOpenSSL ]);
+end;
+
+procedure TfrmACBrANe.ChecarResposta(aMetodo: TMetodo);
+  procedure ListaDeErros(aErros: TANeEventoCollection);
+  var
+    I: Integer;
+  begin
+    if aErros.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Erro(s):');
+      for I := 0 to aErros.Count - 1 do
+      begin
+        memoLog.Lines.Add('Código  : ' + aErros[ I ].Codigo);
+        memoLog.Lines.Add('Mensagem: ' + aErros[ I ].Descricao);
+        memoLog.Lines.Add('Correção: ' + aErros[ I ].Correcao);
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
+
+  procedure ListaDeAlertas(aAlertas: TANeEventoCollection);
+  var
+    I: Integer;
+  begin
+    if aAlertas.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Alerta(s):');
+      for I := 0 to aAlertas.Count - 1 do
+      begin
+        memoLog.Lines.Add('Código  : ' + aAlertas[ I ].Codigo);
+        memoLog.Lines.Add('Mensagem: ' + aAlertas[ I ].Descricao);
+        memoLog.Lines.Add('Correção: ' + aAlertas[ I ].Correcao);
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
+
+  procedure ListaDeResumos(aResumos: TANeResumoCollection; aMetodo: TMetodo);
+  var
+    I: Integer;
+  begin
+    if aResumos.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Resumo(s):');
+      for I := 0 to aResumos.Count - 1 do
+      begin
+        memoLog.Lines.Add('Numero da Nota    : ' + aResumos[ I ].NumeroNota);
+        memoLog.Lines.Add('Código Verificação: ' + aResumos[ I ].CodigoVerificacao);
+        memoLog.Lines.Add('Numero do Rps     : ' + aResumos[ I ].NumeroRps);
+        memoLog.Lines.Add('Série do Rps      : ' + aResumos[ I ].SerieRps);
+
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
+
+begin
+  memoLog.Clear;
+  memoLog.Lines.Clear;
+  memoLog.Update;
+
+  memoLog.Lines.Add('------------------------------');
+  memoLog.Lines.Add('Versão OpenSSL');
+  memoLog.Lines.Add(OpenSSLExt.OpenSSLVersion(0));
+  memoLog.Lines.Add(OpenSSLExt.OpenSSLFullVersion);
+  memoLog.Lines.Add(OpenSSLExt.SSLUtilFile);
+  memoLog.Lines.Add(OpenSSLExt.SSLLibFile);
+  memoLog.Lines.Add('------------------------------');
+
+  memoLog.Lines.Add('Requisição');
+  memoLog.Lines.Add('Ambiente  : ' + TpAmbToStr(ACBrANe1.Configuracoes.WebServices.Ambiente));
+  memoLog.Lines.Add('Seguradora: ' + ACBrANe1.Configuracoes.Geral.xSeguradora);
+  memoLog.Lines.Add('Data/Hora: ' + DateTimeToStr(Now));
+  memoLog.Lines.Add(' ');
+
+  with ACBrANe1.WebService do
+  begin
+    case aMetodo of
+      tmEnviar:
+        begin
+          with Enviar.Resumos.New. do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmEnviar));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Xml a ser averbado');
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Numero          : ' + Numero);
+            memoLog.Lines.Add('Serie           : ' + Serie);
+            memoLog.Lines.Add('Filial          : ' + Filial);
+            memoLog.Lines.Add('CNPJ Cliente    : ' + CNPJCliente);
+            memoLog.Lines.Add('Tipo Documento  : ' + tpDoc);
+            memoLog.Lines.Add('Data/Hora       : ' + DateTimeToStr(DataHora));
+            memoLog.Lines.Add('Numero do Prot  : ' + Protocolo);
+            memoLog.Lines.Add('Numero Averbação: ' + NumeroAverbacao);
+            memoLog.Lines.Add('Sucesso         : ' + BoolToStr(Sucesso, True));
+
+            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlRetorno, WBResposta);
+
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
+          end;
+        end;
+
+      tmConsultar:
+        begin
+          with Consultar do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultar));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+              {
+               memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
+               memoLog.Lines.Add('Numero do Lote: ' + NumeroLote);
+               memoLog.Lines.Add(' ');
+               memoLog.Lines.Add('Parâmetros de Retorno');
+               memoLog.Lines.Add('Situação Lote : ' + Situacao);
+               memoLog.Lines.Add('Descrição Sit : ' + DescSituacao);
+               memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+              }
+            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlRetorno, WBResposta);
+
+            ListaDeErros(Erros);
+            ListaDeAlertas(Alertas);
+          end;
+        end;
+    end;
+  end;
+
+  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrANe.btnCNPJClick(Sender: TObject);
@@ -323,25 +490,23 @@ end;
 
 procedure TfrmACBrANe.btnHTTPSClick(Sender: TObject);
 var
-  Acao: String;
-  OldUseCert: Boolean;
+  Acao: string;
+  OldUseCert: boolean;
 begin
   Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
-     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
-     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> ' +
-     ' <soapenv:Header/>' +
-     ' <soapenv:Body>' +
-     ' <cli:consultaCEP>' +
-     ' <cep>18270-170</cep>' +
-     ' </cli:consultaCEP>' +
-     ' </soapenv:Body>' +
-     ' </soapenv:Envelope>';
+    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> ' +
+    ' <soapenv:Header/>' + ' <soapenv:Body>' + ' <cli:consultaCEP>' +
+    ' <cep>18270-170</cep>' + ' </cli:consultaCEP>' + ' </soapenv:Body>' +
+    ' </soapenv:Envelope>';
 
   OldUseCert := ACBrANe1.SSL.UseCertificateHTTP;
   ACBrANe1.SSL.UseCertificateHTTP := False;
 
   try
-    MemoResp.Lines.Text := ACBrANe1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+    MemoResp.Lines.Text := ACBrANe1.SSL.Enviar(Acao,
+      'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl',
+      '');
   finally
     ACBrANe1.SSL.UseCertificateHTTP := OldUseCert;
   end;
@@ -351,8 +516,8 @@ end;
 
 procedure TfrmACBrANe.btnIssuerNameClick(Sender: TObject);
 begin
- ShowMessage(ACBrANe1.SSL.CertIssuerName + sLineBreak + sLineBreak +
-             'Certificadora: ' + ACBrANe1.SSL.CertCertificadora);
+  ShowMessage(ACBrANe1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+    'Certificadora: ' + ACBrANe1.SSL.CertCertificadora);
 end;
 
 procedure TfrmACBrANe.btnLeituraX509Click(Sender: TObject);
@@ -361,12 +526,12 @@ procedure TfrmACBrANe.btnLeituraX509Click(Sender: TObject);
 begin
   with ACBrANe1.SSL do
   begin
-     CarregarCertificadoPublico(MemoDados.Lines.Text);
-     MemoResp.Lines.Add(CertIssuerName);
-     MemoResp.Lines.Add(CertRazaoSocial);
-     MemoResp.Lines.Add(CertCNPJ);
-     MemoResp.Lines.Add(CertSubjectName);
-     MemoResp.Lines.Add(CertNumeroSerie);
+    CarregarCertificadoPublico(MemoDados.Lines.Text);
+    MemoResp.Lines.Add(CertIssuerName);
+    MemoResp.Lines.Add(CertRazaoSocial);
+    MemoResp.Lines.Add(CertCNPJ);
+    MemoResp.Lines.Add(CertSubjectName);
+    MemoResp.Lines.Add(CertNumeroSerie);
 
     //MemoDados.Lines.LoadFromFile('c:\temp\teste2.xml');
     //MemoResp.Lines.Text := Assinar(MemoDados.Lines.Text, 'Entrada', 'Parametros');
@@ -392,17 +557,17 @@ end;
 
 procedure TfrmACBrANe.btnSha256Click(Sender: TObject);
 var
-  Ahash: AnsiString;
+  Ahash: ansistring;
 begin
   Ahash := ACBrANe1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
-  MemoResp.Lines.Add( Ahash );
+  MemoResp.Lines.Add(Ahash);
   pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrANe.btnSubNameClick(Sender: TObject);
 begin
   ShowMessage(ACBrANe1.SSL.CertSubjectName + sLineBreak + sLineBreak +
-              'Razão Social: ' + ACBrANe1.SSL.CertRazaoSocial);
+    'Razão Social: ' + ACBrANe1.SSL.CertRazaoSocial);
 end;
 
 procedure TfrmACBrANe.cbCryptLibChange(Sender: TObject);
@@ -438,14 +603,15 @@ end;
 procedure TfrmACBrANe.cbSSLTypeChange(Sender: TObject);
 begin
   if cbSSLType.ItemIndex <> -1 then
-     ACBrANe1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+    ACBrANe1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
 end;
 
 procedure TfrmACBrANe.cbXmlSignLibChange(Sender: TObject);
 begin
   try
     if cbXmlSignLib.ItemIndex <> -1 then
-      ACBrANe1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      ACBrANe1.Configuracoes.Geral.SSLXmlSignLib :=
+        TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
   finally
     AtualizarSSLLibsCombo;
   end;
@@ -463,37 +629,37 @@ var
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
-    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
+    cbSSLLib.Items.Add(GetEnumName(TypeInfo(TSSLLib), integer(T)));
   cbSSLLib.ItemIndex := 0;
 
   cbCryptLib.Items.Clear;
   for U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
-    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) );
+    cbCryptLib.Items.Add(GetEnumName(TypeInfo(TSSLCryptLib), integer(U)));
   cbCryptLib.ItemIndex := 0;
 
   cbHttpLib.Items.Clear;
   for V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
-    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) );
+    cbHttpLib.Items.Add(GetEnumName(TypeInfo(TSSLHttpLib), integer(V)));
   cbHttpLib.ItemIndex := 0;
 
   cbXmlSignLib.Items.Clear;
   for X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
-    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) );
+    cbXmlSignLib.Items.Add(GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X)));
   cbXmlSignLib.ItemIndex := 0;
 
   cbSSLType.Items.Clear;
   for Y := Low(TSSLType) to High(TSSLType) do
-    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) );
+    cbSSLType.Items.Add(GetEnumName(TypeInfo(TSSLType), integer(Y)));
   cbSSLType.ItemIndex := 0;
 
   cbFormaEmissao.Items.Clear;
   for I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) );
+    cbFormaEmissao.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I)));
   cbFormaEmissao.ItemIndex := 0;
 
   cbVersaoDF.Items.Clear;
   for K := Low(TVersaoANe) to High(TVersaoANe) do
-     cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TVersaoANe), integer(K) ) );
+    cbVersaoDF.Items.Add(GetEnumName(TypeInfo(TVersaoANe), integer(K)));
   cbVersaoDF.ItemIndex := 0;
 
   LerConfiguracao;
@@ -610,7 +776,7 @@ end;
 
 procedure TfrmACBrANe.lblMouseEnter(Sender: TObject);
 begin
-  TLabel(Sender).Font.Style := [fsBold,fsUnderline];
+  TLabel(Sender).Font.Style := [fsBold, fsUnderline];
 end;
 
 procedure TfrmACBrANe.lblMouseLeave(Sender: TObject);
@@ -719,6 +885,7 @@ end;
 procedure TfrmACBrANe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrANe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrANe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -796,9 +963,10 @@ begin
     EmissaoPathANe   := cbxEmissaoPathANe.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathANe          := edtPathANe.Text;
+    PathMensal       := GetPathANe(0);
+    PathSalvar       := PathMensal;
   end;
 end;
 
@@ -816,21 +984,21 @@ begin
   ACBrMail1.FromName := 'Projeto ACBr - ACBrANe';
 end;
 
-procedure TfrmACBrANe.LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
+procedure TfrmACBrANe.LoadXML(MyMemo: String; SynEdit: TSynEdit);
 var
-  vText: String;
+  LText: string;
 begin
-  vText := MyMemo.Text;
+  LText := MyMemo;
 
   // formata resposta
-  vText := StringReplace(vText, '>', '>' + LineEnding + '    ', [rfReplaceAll]);
-  vText := StringReplace(vText, '<', LineEnding + '  <', [rfReplaceAll]);
-  vText := StringReplace(vText, '>' + LineEnding + '    ' + LineEnding +
-           '  <', '>' + LineEnding + '  <', [rfReplaceAll]);
-  vText := StringReplace(vText, '  </ret', '</ret', []);
+  LText := StringReplace(LText, '>', '>' + LineEnding + '    ', [rfReplaceAll]);
+  LText := StringReplace(LText, '<', LineEnding + '  <', [rfReplaceAll]);
+  LText := StringReplace(LText, '>' + LineEnding + '    ' + LineEnding +
+    '  <', '>' + LineEnding + '  <', [rfReplaceAll]);
+  LText := StringReplace(LText, '  </ret', '</ret', []);
 
   // exibe resposta
-  SynEdit.Text := Trim(vText);
+  SynEdit.Text := Trim(LText);
 end;
 
 procedure TfrmACBrANe.PathClick(Sender: TObject);
@@ -838,11 +1006,11 @@ var
   Dir: string;
 begin
   if Length(TEdit(Sender).Text) <= 0 then
-     Dir := ExtractFileDir(application.ExeName)
+    Dir := ExtractFileDir(application.ExeName)
   else
-     Dir := TEdit(Sender).Text;
+    Dir := TEdit(Sender).Text;
 
-  if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP) then
+  if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt], SELDIRHELP) then
     TEdit(Sender).Text := Dir;
 end;
 
@@ -870,9 +1038,9 @@ end;
 
 procedure TfrmACBrANe.sbtnNumSerieClick(Sender: TObject);
 var
-  I: Integer;
-//  ASerie: String;
-  AddRow: Boolean;
+  I: integer;
+  //  ASerie: String;
+  AddRow: boolean;
 begin
   ACBrANe1.SSL.LerCertificadosStore;
   AddRow := False;
@@ -892,11 +1060,11 @@ begin
     Cells[4, 0] := 'Certificadora';
   end;
 
-  for I := 0 to ACBrANe1.SSL.ListaCertificados.Count-1 do
+  for I := 0 to ACBrANe1.SSL.ListaCertificados.Count - 1 do
   begin
     with ACBrANe1.SSL.ListaCertificados[I] do
     begin
-//      ASerie := NumeroSerie;
+      //      ASerie := NumeroSerie;
 
       if (CNPJ <> '') then
       begin
@@ -905,11 +1073,11 @@ begin
           if Addrow then
             RowCount := RowCount + 1;
 
-          Cells[0, RowCount-1] := NumeroSerie;
-          Cells[1, RowCount-1] := RazaoSocial;
-          Cells[2, RowCount-1] := CNPJ;
-          Cells[3, RowCount-1] := FormatDateBr(DataVenc);
-          Cells[4, RowCount-1] := Certificadora;
+          Cells[0, RowCount - 1] := NumeroSerie;
+          Cells[1, RowCount - 1] := RazaoSocial;
+          Cells[2, RowCount - 1] := CNPJ;
+          Cells[3, RowCount - 1] := FormatDateBr(DataVenc);
+          Cells[4, RowCount - 1] := Certificadora;
 
           AddRow := True;
         end;
@@ -919,8 +1087,9 @@ begin
 
   frmSelecionarCertificado.ShowModal;
 
-  if frmSelecionarCertificado.ModalResult = mrOK then
-    edtNumSerie.Text := frmSelecionarCertificado.StringGrid1.Cells[0, frmSelecionarCertificado.StringGrid1.Row];
+  if frmSelecionarCertificado.ModalResult = mrOk then
+    edtNumSerie.Text := frmSelecionarCertificado.StringGrid1.Cells[0,
+      frmSelecionarCertificado.StringGrid1.Row];
 end;
 
 procedure TfrmACBrANe.sbtnPathSalvarClick(Sender: TObject);
@@ -933,32 +1102,9 @@ begin
   PathClick(edtPathSchemas);
 end;
 
-procedure TfrmACBrANe.btnGerarANeClick(Sender: TObject);
-var
-  vAux : String;
-begin
-  vAux := '';
-  if not (InputQuery('WebServices Enviar', 'Numero da Averbação', vAux)) then
-    exit;
-
-  ACBrANe1.Documentos.Clear;
-  AlimentarComponente('');
-
-  ACBrANe1.Documentos.GerarANe;
-  ACBrANe1.Documentos.Items[0].GravarXML('', '');
-
-  ShowMessage('Arquivo gerado em: '+ACBrANe1.Documentos.Items[0].NomeArq);
-  MemoDados.Lines.Add('Arquivo gerado em: '+ACBrANe1.Documentos.Items[0].NomeArq);
-  MemoResp.Lines.LoadFromFile(ACBrANe1.Documentos.Items[0].NomeArq);
-  LoadXML(MemoResp, WBResposta);
-
-  pgRespostas.ActivePageIndex := 1;
-end;
-
-procedure TfrmACBrANe.btnCriarEnviarClick(Sender: TObject);
+procedure TfrmACBrANe.btnEnviarClick(Sender: TObject);
 var
   Documento: TStringList;
-  i: Integer;
 begin
   OpenDialog1.Title := 'Selecione o NFe/CTe';
   OpenDialog1.DefaultExt := '*-CTe.xml';
@@ -979,88 +1125,7 @@ begin
   AlimentarComponente(OpenDialog1.FileName);
   ACBrANe1.Enviar;
 
-  MemoResp.Lines.Text   := UTF8Encode(ACBrANe1.WebServices.ANeAverbar.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrANe1.WebServices.ANeAverbar.RetWS);
-  LoadXML(MemoResp, WBResposta);
-
-  pgRespostas.ActivePageIndex := 5;
-
-  case ACBrANe1.Configuracoes.Geral.Seguradora of
-    tsELT:
-      begin
-        MemoDados.Lines.Add('');
-        MemoDados.Lines.Add('Retorno da solicitação de Averbação');
-        MemoDados.Lines.Add('CNPJ     : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.CNPJ);
-        MemoDados.Lines.Add('CTE      : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.CTE);
-        MemoDados.Lines.Add('Data/Hora: '+ DateTimeToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.DataHora));
-        MemoDados.Lines.Add('Arquivo  : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.fname);
-        MemoDados.Lines.Add('Doc      : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Doc);
-        MemoDados.Lines.Add('Codigo   : '+ IntToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Codigo));
-        MemoDados.Lines.Add('Resultado: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Resultado);
-        MemoDados.Lines.Add('Protocolo: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Protocolo);
-        MemoDados.Lines.Add('Status   : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.status);
-      end
-  else
-    begin
-      MemoDados.Lines.Add('');
-      MemoDados.Lines.Add('Retorno da solicitação de Averbação');
-      MemoDados.Lines.Add('Numero   : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Numero);
-      MemoDados.Lines.Add('Serie    : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Serie);
-      MemoDados.Lines.Add('Filial   : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Filial);
-      MemoDados.Lines.Add('CNPJ     : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.CNPJCli);
-      MemoDados.Lines.Add('Tipo Doc : '+ IntToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.TpDoc));
-      MemoDados.Lines.Add('Inf Adic : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.InfAdic);
-      if ACBrANe1.Configuracoes.Geral.TipoDoc = tdMDFe then
-      begin
-        MemoDados.Lines.Add('Chancel. : '+ DateTimeToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Declarado.dhChancela));
-        MemoDados.Lines.Add('Protocolo: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Declarado.Protocolo);
-      end
-      else
-      begin
-        MemoDados.Lines.Add('Averbado : '+ DateTimeToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.dhAverbacao));
-        MemoDados.Lines.Add('Protocolo: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.Protocolo);
-      end;
-      MemoDados.Lines.Add(' ');
-      MemoDados.Lines.Add('Dados do Seguro');
-      MemoDados.Lines.Add(' ');
-
-      for i := 0 to ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro.Count -1 do
-      begin
-        MemoDados.Lines.Add('Numero Averbação: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].NumeroAverbacao);
-        MemoDados.Lines.Add('CNPJ Seguradora : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].CNPJSeguradora);
-        MemoDados.Lines.Add('Nome Seguradora : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].NomeSeguradora);
-        MemoDados.Lines.Add('Numero Apolice  : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].NumApolice);
-        MemoDados.Lines.Add('Tipo Mov        : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].TpMov);
-        MemoDados.Lines.Add('Tipo DDR        : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].TpDDR);
-        MemoDados.Lines.Add('Valor Averbado  : '+ FloatToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].ValorAverbado));
-        MemoDados.Lines.Add('Ramo Averbado   : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.DadosSeguro[i].RamoAverbado);
-      end;
-
-      MemoDados.Lines.Add(' ');
-      MemoDados.Lines.Add('Informações');
-      MemoDados.Lines.Add(' ');
-
-      for i := 0 to ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Infos.Info.Count -1 do
-      begin
-        MemoDados.Lines.Add('Codigo   : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Infos.Info[i].Codigo);
-        MemoDados.Lines.Add('Descrição: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Infos.Info[i].Descricao);
-      end;
-
-      MemoDados.Lines.Add(' ');
-      MemoDados.Lines.Add('Erros');
-      MemoDados.Lines.Add(' ');
-
-      for i := 0 to ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Erros.Erro.Count -1 do
-      begin
-        MemoDados.Lines.Add('Codigo         : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Erros.Erro[i].Codigo);
-        MemoDados.Lines.Add('Descrição      : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Erros.Erro[i].Descricao);
-        MemoDados.Lines.Add('Valor Esperado : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Erros.Erro[i].ValorEsperado);
-        MemoDados.Lines.Add('Valor Informado: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Erros.Erro[i].ValorInformado);
-      end;
-    end;
-  end;
-
-  ACBrANe1.Documentos.Clear;
+  ChecarResposta(tmEnviar);
 end;
 
 procedure TfrmACBrANe.btnEnviarANeEmailClick(Sender: TObject);
@@ -1068,8 +1133,7 @@ var
   Para : String;
   CC   : Tstrings;
 begin
-  Para := '';
-  if not (InputQuery('Enviar Email', 'Email de destino', Para)) then
+  if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
   OpenDialog1.Title := 'Selecione o ANe';
@@ -1091,7 +1155,7 @@ begin
       , edtEmailAssunto.Text
       , mmEmailMsg.Lines
       , False // Enviar PDF junto
-      , CC    // Lista com emails que serão enviado cópias - TStrings
+      , CC   // Lista com emails que serão enviado cópias - TStrings
       , nil   // Lista de anexos - TStrings
       );
   finally
@@ -1099,8 +1163,20 @@ begin
   end;
 end;
 
-procedure TfrmACBrANe.ACBrANe1GerarLog(const ALogLine: String;
-  var Tratado: Boolean);
+procedure TfrmACBrANe.btnConsultarClick(Sender: TObject);
+var
+  Chave: string;
+begin
+  Chave := '';
+  if not(InputQuery('Consultar', 'Chave do DF-e', Chave)) then
+    exit;
+
+  ACBrANe1.Consultar(Chave);
+
+  ChecarResposta(tmConsultar);
+end;
+
+procedure TfrmACBrANe.ACBrANe1GerarLog(const ALogLine: string; var Tratado: boolean);
 begin
   memoLog.Lines.Add(ALogLine);
   Tratado := True;
@@ -1108,34 +1184,41 @@ end;
 
 procedure TfrmACBrANe.ACBrANe1StatusChange(Sender: TObject);
 begin
- case ACBrANe1.Status of
-  stANeIdle : begin
-                if ( frmStatus <> nil ) then frmStatus.Hide;
-              end;
-  stANeAverbacao : begin
-                     if ( frmStatus = nil ) then
-                       frmStatus := TfrmStatus.Create(Application);
-                     frmStatus.lblStatus.Caption := 'Enviando dados do ANe...';
-                     frmStatus.Show;
-                     frmStatus.BringToFront;
-                   end;
-  stANeRetAverbacao : begin
-                        if ( frmStatus = nil ) then
-                          frmStatus := TfrmStatus.Create(Application);
-                        frmStatus.lblStatus.Caption := 'Recebendo dados do ANe...';
-                        frmStatus.Show;
-                        frmStatus.BringToFront;
-                      end;
-  stANeEmail : begin
-                 if ( frmStatus = nil ) then
-                   frmStatus := TfrmStatus.Create(Application);
-                 frmStatus.lblStatus.Caption := 'Enviando ANe por e-mail...';
-                 frmStatus.Show;
-                 frmStatus.BringToFront;
-               end;
- end;
+  case ACBrANe1.Status of
+     stANeIdle:
+       begin
+         if ( frmStatus <> nil ) then frmStatus.Hide;
+       end;
 
- Application.ProcessMessages;
+     stANeEnviar:
+       begin
+         if ( frmStatus = nil ) then
+           frmStatus := TfrmStatus.Create(Application);
+         frmStatus.lblStatus.Caption := 'Enviando dados do ANe...';
+         frmStatus.Show;
+         frmStatus.BringToFront;
+       end;
+
+     stANeConsultar:
+       begin
+         if ( frmStatus = nil ) then
+           frmStatus := TfrmStatus.Create(Application);
+         frmStatus.lblStatus.Caption := 'Consultando dados do ANe...';
+         frmStatus.Show;
+         frmStatus.BringToFront;
+       end;
+
+     stANeEmail:
+       begin
+         if ( frmStatus = nil ) then
+           frmStatus := TfrmStatus.Create(Application);
+         frmStatus.lblStatus.Caption := 'Enviando ANe por e-mail...';
+         frmStatus.Show;
+         frmStatus.BringToFront;
+       end;
+   end;
+
+   Application.ProcessMessages;
 end;
 
 end.

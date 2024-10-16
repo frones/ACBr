@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2024
+-- pcesS2206 --
+[-] TK-6087 - Correção de memory leak
+Por: Alisson Souza Pereira
+
 07/10/2024
 -- pcesS1200 --
 [*] TK-6054 - Corrigida leitura do ini S-1200, considerando o campo obrigatório tpAcConv para geração do grupo ideADC

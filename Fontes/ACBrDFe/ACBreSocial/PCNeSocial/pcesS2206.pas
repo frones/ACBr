@@ -265,6 +265,7 @@ destructor TEvtAltContratual.destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
+  FIdeVinculo.Free;
   FAltContratual.Free;
 
   inherited;

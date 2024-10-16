@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/10/2024
+-- ISSBarueri.LerXML --
+[*] #TK-6110: Altera ordem de leitura dos grupos para preencher corretamente o ValorTotalNotaFiscal.
+   Por: Diego Folieni
+
 14/10/2024
 -- ACBrNFSeXNotasFiscais --
 [*] Alteração nos métodos que geram e faz a leitura do arquivo INI visando identificar se os dados

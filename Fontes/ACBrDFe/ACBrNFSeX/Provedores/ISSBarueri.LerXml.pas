@@ -590,9 +590,9 @@ begin
   NFSe.CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
   NFSe.DataEmissao := Iso8601ToDateTime(ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr));
 
-  LerValoresNfe(ANode);
   LerPrestadorServico(ANode);
   LerDeclaracaoServicoPrestado(ANode);
+  LerValoresNfe(ANode);
   LerCartaCorrecao(ANode);
   LerCancelamentoNFe(ANode);
 

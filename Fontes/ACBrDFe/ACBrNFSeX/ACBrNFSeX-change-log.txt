@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/10/2024
+-- EL.GravarXML --
+[*] #TK-6111: Adiciona leitura do parâmetro NaoDividir100 na config de geração do XML
+   Por: Diego Folieni
 -- Giss.GravarXml --
 [*] Incluída a propriedade de configuração para que a aliquota seja dividida por 100.
    Por: Paula Zamboni de Campos da
@@ -58,6 +61,8 @@ Símbolo : Significado
     especificos do provedor WebFisco.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] #TK-6111: Adiciona Params:NaoDividir100 para o município de Manhuacu/MG
+   Por: tryideas sistemas
 [*] #TK-6108 - A cidade de Nova Friburgo/RJ, mudou a URL de produção, o provedor continua o mesmo.
    Por: João Augusto Bueno Araujo
 -- ISSBarueri.LerXML --

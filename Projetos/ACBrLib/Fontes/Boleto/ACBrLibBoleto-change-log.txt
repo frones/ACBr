@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2024
+--- ACBrLibBoletoRespostas ---
+[*] Ajuste da validação no retorno do emv
+    #TK-6080 - https://www.projetoacbr.com.br/forum/topic/80044-acbrlibboleto-c-classe-t%C3%ADtulo-falta-campo-nossonumerocorrespondente/
+    Por: Júlio Cavalcanti / Antonio Carlos
+
 06/09/2024
 -- Diversos --
 [+] #TK-4956-3: Implementados programas de exemplo do Boleto em PHP, ST e MT.

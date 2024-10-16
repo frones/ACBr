@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, contnrs,
   ACBrLibResposta, ACBrLibConfig,
-  ACBrBoleto, ACBrBoletoRetorno, ACBrBoletoConversao;
+  ACBrBoleto, ACBrBoletoRetorno, ACBrBoletoConversao, ACBrUtil.Base;
 
 type
 
@@ -732,7 +732,7 @@ begin
     CodigoEstadoTituloCobranca:=DadosRet.TituloRet.CodigoEstadoTituloCobranca;
 
 
-    if ( DadosRet.TituloRet.EMV  <> EmptyStr) then
+    if (NaoEstaVazio(DadosRet.TituloRet.EMV)) then
     begin
       emv:= DadosRet.TituloRet.EMV;
       url_Pix:= DadosRet.TituloRet.UrlPix;

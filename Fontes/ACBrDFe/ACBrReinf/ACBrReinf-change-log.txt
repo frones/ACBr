@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2024
+-- pcnReinfR4010, pcnReinfR4020 --
+[*] #TK-6070 Ajustes para o leiaute 2.1.2.a
+  Por: Renato Rubinho
+
 20/09/2024
 -- pcnReinfR4010 --
 [*] TK-5980 - Corrigido preenchimento do NrOcorrNmBenef quando cpfBenef possuir valor

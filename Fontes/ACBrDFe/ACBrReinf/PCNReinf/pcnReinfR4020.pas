@@ -570,7 +570,7 @@ begin
 
     Gerador.wGrupo('infoPgto');
     Gerador.wCampo(tcDat, '', 'dtFG',          10,  10,  1, item.dtFG);
-    Gerador.wCampo(tcDe2, '', 'vlrBruto',       1,  14,  1, item.vlrBruto);
+    Gerador.wCampo(tcDe2, '', 'vlrBruto',       1,  14,  0, item.vlrBruto);
     Gerador.wCampo(tcStr, '', 'indFciScp',      1,   1,  0, item.indFciScp);
     Gerador.wCampo(tcStr, '', 'nrInscFciScp',  14,  14,  0, item.nrInscFciScp);
     Gerador.wCampo(tcDe1, '', 'percSCP',        1,   4,  0, item.percSCP);

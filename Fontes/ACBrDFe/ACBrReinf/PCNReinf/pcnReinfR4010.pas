@@ -885,7 +885,7 @@ begin
         Gerador.wCampo(tcStr, '', 'compFP', 7,  7, 0, FormatDateTime('yyyy-mm',item.compFP));
     end;
     Gerador.wCampo(tcStr, '', 'indDecTerc',     1,   1,  0, item.indDecTerc);
-    Gerador.wCampo(tcDe2, '', 'vlrRendBruto',   1,  14,  1, item.vlrRendBruto);
+    Gerador.wCampo(tcDe2, '', 'vlrRendBruto',   1,  14,  0, item.vlrRendBruto);
     Gerador.wCampo(tcDe2, '', 'vlrRendTrib',    1,  14,  0, item.vlrRendTrib);
     Gerador.wCampo(tcDe2, '', 'vlrIR',          1,  14,  0, item.vlrIR);
     Gerador.wCampo(tcStr, '', 'indRRA',         1,   1,  0, item.indRRA);

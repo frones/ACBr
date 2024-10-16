@@ -428,6 +428,7 @@ type
     FRegistroI157: TRegistroI157List;  /// BLOCO I - Lista de RegistroI157 (FILHO)
   public
     constructor Create; virtual; /// Create
+    destructor Destroy; override;
 
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
@@ -952,6 +953,12 @@ end;
 constructor TRegistroI155.Create;
 begin
    FRegistroI157 := TRegistroI157List.Create;
+end;
+
+destructor TRegistroI155.Destroy;
+begin
+   FRegistroI157.Free;
+   inherited Destoy;
 end;
 
 destructor TRegistroI150.Destroy;

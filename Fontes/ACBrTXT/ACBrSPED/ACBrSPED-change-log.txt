@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2024
+-- ACBrECDBloco_I --
+[*] Correção do problema de MemoryLeak no Registro I157 
+    #TK-6086 https://www.projetoacbr.com.br/forum/topic/80117-problema-de-memoryleak-no-registro-i157-do-acbrecdbloco_i/
+    Por: Juliomar Marchetti / Júlio Cavalcanti
+
 17/10/2023
 -- ACBrECDBloco_C --
 [*] Correção da geração do registro de encerramento C990.

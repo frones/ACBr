@@ -833,6 +833,9 @@ namespace ACBrLibBoleto.Demo
             }
         }
 
-        
+        private void btnLimparResposta_Click(object sender, EventArgs e)
+        {
+            rtbRespostas.Clear(); 
+        }
     }
 }

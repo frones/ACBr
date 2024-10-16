@@ -190,6 +190,7 @@
             this.btnArray = new System.Windows.Forms.Button();
             this.btnGerarRemessaStream = new System.Windows.Forms.Button();
             this.btnLerRetornoStream = new System.Windows.Forms.Button();
+            this.btnLimparResposta = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -667,9 +668,6 @@
             // cmbImpressora
             // 
             this.cmbImpressora.FormattingEnabled = true;
-            this.cmbImpressora.Items.AddRange(new object[] {
-            "pFisica",
-            "pJuridica"});
             this.cmbImpressora.Location = new System.Drawing.Point(6, 26);
             this.cmbImpressora.Name = "cmbImpressora";
             this.cmbImpressora.Size = new System.Drawing.Size(171, 21);
@@ -1907,11 +1905,22 @@
             this.btnLerRetornoStream.UseVisualStyleBackColor = true;
             this.btnLerRetornoStream.Click += new System.EventHandler(this.btnLerRetornoStream_Click);
             // 
+            // btnLimparResposta
+            // 
+            this.btnLimparResposta.Location = new System.Drawing.Point(277, 709);
+            this.btnLimparResposta.Name = "btnLimparResposta";
+            this.btnLimparResposta.Size = new System.Drawing.Size(119, 23);
+            this.btnLimparResposta.TabIndex = 35;
+            this.btnLimparResposta.Text = "Limpar Respostas";
+            this.btnLimparResposta.UseVisualStyleBackColor = true;
+            this.btnLimparResposta.Click += new System.EventHandler(this.btnLimparResposta_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 747);
+            this.Controls.Add(this.btnLimparResposta);
             this.Controls.Add(this.btnLerRetornoStream);
             this.Controls.Add(this.btnGerarRemessaStream);
             this.Controls.Add(this.btnArray);
@@ -2142,6 +2151,7 @@
         private System.Windows.Forms.TextBox txtNomeArquivoLog;
         private System.Windows.Forms.Button btnGerarRemessaStream;
         private System.Windows.Forms.Button btnLerRetornoStream;
+        private System.Windows.Forms.Button btnLimparResposta;
     }
 }
 

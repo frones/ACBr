@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2024
+-- Diversos --
+[*] Correções e inclusão de novos campos para apresentar as informações retornadas.
+  Por: Italo Giurizzato Junior
+
 09/10/2024
 -- Diversos --
 [*] Refactoring no componente.

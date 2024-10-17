@@ -146,6 +146,39 @@ type
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
   end;
 
+  TDadosSeguroCollectionItem = class
+  private
+    FNumeroAverbacao: string;
+    FCNPJSeguradora: string;
+    FNomeSeguradora: string;
+    FNumApolice: string;
+    FTpMov: string;
+    FTpDDR: string;
+    FValorAverbado: Double;
+    FRamoAverbado: string;
+  public
+    property NumeroAverbacao: string read FNumeroAverbacao write FNumeroAverbacao;
+    property CNPJSeguradora: string read FCNPJSeguradora write FCNPJSeguradora;
+    property NomeSeguradora: string read FNomeSeguradora write FNomeSeguradora;
+    property NumApolice: string read FNumApolice write FNumApolice;
+    property TpMov: string read FTpMov write FTpMov;
+    property TpDDR: string read FTpDDR write FTpDDR;
+    property ValorAverbado: Double read FValorAverbado write FValorAverbado;
+    property RamoAverbado: string read FRamoAverbado write FRamoAverbado;
+  end;
+
+  TDadosSeguroCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDadosSeguroCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDadosSeguroCollectionItem);
+  public
+    function New: TDadosSeguroCollectionItem;
+    function Add(ANota: TDadosSeguroCollectionItem): Integer; reintroduce;
+    Procedure Insert(Index: Integer; ANota: TDadosSeguroCollectionItem); reintroduce;
+
+    property Items[Index: Integer]: TDadosSeguroCollectionItem read GetItem write SetItem; default;
+  end;
+
   TANeWebserviceResponse = class
   private
     FSucesso: Boolean;
@@ -154,10 +187,10 @@ type
     FSerie: string;
     FFilial: string;
     FCNPJCliente: string;
+    FCTe: string;
     FtpDoc: string;
     FDataHora: TDateTime;
     FProtocolo: string;
-    FNumeroAverbacao: string;
     FStatus: string;
 
     FAlertas: TANeEventoCollection;
@@ -168,11 +201,13 @@ type
     FEnvelopeRetorno: string;
     FArquivoEnvio: string;
     FArquivoRetorno: string;
+    FDadosSeguro: TDadosSeguroCollection;
 
     function GetXmlEnvio: string;
     procedure SetXmlEnvio(const Value: string);
     function GetXmlRetorno: string;
     procedure SetXmlRetorno(const Value: string);
+    procedure SetDadosSeguro(const Value: TDadosSeguroCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -185,11 +220,12 @@ type
     property Serie: string read FSerie write FSerie;
     property Filial: string read FFilial write FFilial;
     property CNPJCliente: string read FCNPJCliente write FCNPJCliente;
+    property CTe: string read FCTe write FCTe;
     property tpDoc: string read FtpDoc write FtpDoc;
     property DataHora: TDateTime read FDataHora write FDataHora;
     property Protocolo: string read FProtocolo write FProtocolo;
-    property NumeroAverbacao: string read FNumeroAverbacao write FNumeroAverbacao;
     property Status: string read FStatus write FStatus;
+    property DadosSeguro: TDadosSeguroCollection read FDadosSeguro write SetDadosSeguro;
 
     property Alertas: TANeEventoCollection read FAlertas;
     property Erros: TANeEventoCollection read FErros;
@@ -278,11 +314,17 @@ begin
   Serie := '';
   Filial := '';
   CNPJCliente := '';
+  CTe := '';
   tpDoc := '';
   DataHora := 0;
   Protocolo := '';
-  NumeroAverbacao := '';
   Status := '';
+
+  if Assigned(FDadosSeguro) then
+  begin
+    for i := FDadosSeguro.Count - 1 downto 0 do
+      FDadosSeguro.Delete(i);
+  end;
 
   if Assigned(FErros) then
   begin
@@ -315,6 +357,8 @@ begin
   inherited Create;
 
   FSucesso := False;
+  FDadosSeguro := TDadosSeguroCollection.Create;
+
   FAlertas := TANeEventoCollection.Create;
   FErros := TANeEventoCollection.Create;
   FResumos := TANeResumoCollection.Create;
@@ -322,6 +366,8 @@ end;
 
 destructor TANeWebserviceResponse.Destroy;
 begin
+  FDadosSeguro.Free;
+
   FAlertas.Free;
   FErros.Free;
   FResumos.Free;
@@ -337,6 +383,12 @@ end;
 function TANeWebserviceResponse.GetXmlRetorno: string;
 begin
   Result := ArquivoRetorno;
+end;
+
+procedure TANeWebserviceResponse.SetDadosSeguro(
+  const Value: TDadosSeguroCollection);
+begin
+  FDadosSeguro := Value;
 end;
 
 procedure TANeWebserviceResponse.SetXmlEnvio(const Value: string);
@@ -438,6 +490,36 @@ end;
 
 procedure TANeResumoCollection.SetItem(Index: Integer;
   Value: TANeResumoCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TDadosSeguroCollection }
+
+function TDadosSeguroCollection.Add(ANota: TDadosSeguroCollectionItem): Integer;
+begin
+  Result := inherited Add(ANota);
+end;
+
+function TDadosSeguroCollection.GetItem(
+  Index: Integer): TDadosSeguroCollectionItem;
+begin
+  Result := TDadosSeguroCollectionItem(inherited Items[Index]);
+end;
+
+procedure TDadosSeguroCollection.Insert(Index: Integer;
+  ANota: TDadosSeguroCollectionItem);
+begin
+  inherited Insert(Index, ANota);
+end;
+
+function TDadosSeguroCollection.New: TDadosSeguroCollectionItem;
+begin
+
+end;
+
+procedure TDadosSeguroCollection.SetItem(Index: Integer;
+  Value: TDadosSeguroCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;

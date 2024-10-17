@@ -199,7 +199,7 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       Response.CNPJCliente := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-      Response.NumeroAverbacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CTE'), tcStr);
+      Response.CTe := ObterConteudoTag(ANode.Childrens.FindAnyNs('CTE'), tcStr);
       Response.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
       Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
       Response.Status := ObterConteudoTag(ANode.Childrens.FindAnyNs('status'), tcStr);

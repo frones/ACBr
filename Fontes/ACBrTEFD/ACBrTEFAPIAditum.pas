@@ -208,7 +208,7 @@ begin
       isApproved := (LowerCase(jsCharge.AsString['isApproved']) = 'true');
       isCanceled := (LowerCase(jsCharge.AsString['isCanceled']) = 'true');
       Sucesso := isApproved or isCanceled;
-      Confirmar := isApproved and (not isCanceled);
+      Confirmar := (fpHeader = 'CRT') and isApproved and (not isCanceled);
 
       s := LowerCase(jsCharge.AsString['installmentType']);
       if (s = 'merchant') then
@@ -528,7 +528,7 @@ end;
 function TACBrTEFAPIClassAditum.GetErrorCode(AJSonObject: TACBrJSONObject): Integer;
 begin
   Result := AJSonObject.AsInteger['errorCode'];
-  if (Result = 0) then;
+  if (Result = 0) then
     Result := AJSonObject.AsInteger['code'];
 end;
 
@@ -929,7 +929,13 @@ end;
 procedure TACBrTEFAPIClassAditum.ResolverTransacaoPendente(
   AStatus: TACBrTEFStatusTransacao);
 begin
-  //D { não há o conceito de transações pendentes }
+  if fpACBrTEFAPI.UltimaRespostaTEF.Confirmar then
+  begin
+    FinalizarTransacao( fpACBrTEFAPI.UltimaRespostaTEF.Rede,
+                        fpACBrTEFAPI.UltimaRespostaTEF.NSU,
+                        fpACBrTEFAPI.UltimaRespostaTEF.Finalizacao,
+                        AStatus );
+  end;
 end;
 
 procedure TACBrTEFAPIClassAditum.AbortarTransacaoEmAndamento;

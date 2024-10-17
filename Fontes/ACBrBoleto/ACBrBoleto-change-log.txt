@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2024
+-- ACBrBoletoW_C6.pas --
+[*] Ajustes no C6 tpAltera
+	por Victor Gonzales Pandaaaa / Daniel de Morais
+
 15/10/2024
 -- ACBrBoletoW_Itau_API --
 [-] TK-6101 Executado um clear no header para resolver o problema.

@@ -322,66 +322,49 @@ end;
 procedure TBoletoW_C6.RequisicaoAltera;
 var LJson : TACBrJSONObject;
 begin
-  // Sem Payload
+  LJson := TACBrJSONObject.Create;
+  try
   case Atitulo.OcorrenciaOriginal.Tipo of
     toRemessaAlterarVencimento :
       begin
-        try
-          LJson := TACBrJSONObject.Create
-            .AddPair('due_date',DateTimeToDate(ATitulo.Vencimento));
-          FPDadosMsg := LJson.ToJSON;
-        finally
-          LJson.Free;
-        end;
+        LJson.AddPair('due_date',DateTimeToDate(ATitulo.Vencimento));
       end;
     toRemessaAlterarValorTitulo :
       begin
-        try
-          LJson := TACBrJSONObject.Create
-            .AddPair('amount',ATitulo.ValorDocumento);
-          FPDadosMsg := LJson.ToJSON;
-        finally
-          LJson.Free;
-        end;
+        LJson.AddPair('amount',ATitulo.ValorDocumento);
       end;
     toRemessaAlterarDesconto :
       begin
-        try
-          LJson := TACBrJSONObject.Create;
-          if (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto > 0) then
-          begin
-            LJson.AddPair('discount',
-              TACBrJSONObject.Create
-                .AddPair('discount_type',IfThen(ATitulo.CodigoDesconto = cdValorFixo, 'V', 'P'))
-              );
-              if (ATitulo.ValorDesconto > 0) then
-              begin
-                LJson.AddPair('first',
-                    TACBrJSONObject.Create
-                    .AddPair('value',ATitulo.ValorDesconto)
-                    .AddPair('dead_line',DaysBetween(ATitulo.Vencimento,ATitulo.DataDesconto))
-                  );
-              end;
-              if (ATitulo.ValorDesconto2 > 0) then
-              begin
-                LJson.AddPair('second',
-                    TACBrJSONObject.Create
-                    .AddPair('value',ATitulo.ValorDesconto2)
-                    .AddPair('dead_line',DaysBetween(ATitulo.Vencimento,ATitulo.DataDesconto2))
-                  );
-              end;
-              if (ATitulo.ValorDesconto3 > 0) then
-              begin
-                LJson.AddPair('third',
-                    TACBrJSONObject.Create
-                    .AddPair('value',ATitulo.ValorDesconto3)
-                    .AddPair('dead_line',DaysBetween(ATitulo.Vencimento,ATitulo.DataDesconto3))
-                  );
-              end
+        if (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto > 0) or (ATitulo.ValorDesconto > 0) then
+        begin
+          LJson.AddPair('discount',
+            TACBrJSONObject.Create
+              .AddPair('discount_type',IfThen(ATitulo.CodigoDesconto = cdValorFixo, 'V', 'P'))
+            );
+            if (ATitulo.ValorDesconto > 0) then
+            begin
+              LJson.AddPair('first',
+                 TACBrJSONObject.Create
+                   .AddPair('value',ATitulo.ValorDesconto)
+                   .AddPair('dead_line',DaysBetween(ATitulo.Vencimento,ATitulo.DataDesconto))
+                 );
             end;
-          FPDadosMsg := LJson.ToJSON;
-        finally
-          LJson.Free;
+            if (ATitulo.ValorDesconto2 > 0) then
+            begin
+              LJson.AddPair('second',
+                TACBrJSONObject.Create
+                  .AddPair('value',ATitulo.ValorDesconto2)
+                  .AddPair('dead_line',DaysBetween(ATitulo.Vencimento,ATitulo.DataDesconto2))
+                );
+            end;
+            if (ATitulo.ValorDesconto3 > 0) then
+            begin
+              LJson.AddPair('third',
+                TACBrJSONObject.Create
+                  .AddPair('value',ATitulo.ValorDesconto3)
+                  .AddPair('dead_line',DaysBetween(ATitulo.Vencimento,ATitulo.DataDesconto3))
+                );
+            end
         end;
       end;
     toRemessaAlterarJurosMora :
@@ -403,15 +386,19 @@ begin
       begin
         if (ATitulo.PercentualMulta > 0) then
         begin
-          LJson.AddPair('fine',
-            TACBrJSONObject.Create
-              .AddPair('type',IfThen(ATitulo.MultaValorFixo, 'V', 'P') )
-              .AddPair('value',ATitulo.PercentualMulta )
-              .AddPair('dead_line',IfThen(ATitulo.DataMulta > 0, DaysBetween(ATitulo.Vencimento,ATitulo.DataMulta), 1) )
-          );
+            LJson.AddPair('fine',
+              TACBrJSONObject.Create
+                .AddPair('type',IfThen(ATitulo.MultaValorFixo, 'V', 'P') )
+                .AddPair('value',ATitulo.PercentualMulta )
+                .AddPair('dead_line',IfThen(ATitulo.DataMulta > 0, DaysBetween(ATitulo.Vencimento,ATitulo.DataMulta), 1) )
+            );  
         end;
       end;
   end;
+    FPDadosMsg := LJson.ToJSON;    
+  finally
+    LJson.Free;
+  end;      
 end;
 
 constructor TBoletoW_C6.Create(ABoletoWS: TBoletoWS);

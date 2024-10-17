@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/10/2024
+-- ACBrNFSeXNotasFiscais --
+[*] Alteração nos métodos que geram e fazem a leitura do arquivo INI para contemplar o campo
+    DataInicioAtividade.
+   Por: Italo Giurizzato Junior
+
 16/10/2024
 -- EL.GravarXML --
 [*] #TK-6111: Adiciona leitura do parâmetro NaoDividir100 na config de geração do XML

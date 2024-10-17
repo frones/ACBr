@@ -309,7 +309,7 @@ end;
 function TNotaFiscal.LerRpsIni(AINIRec: TMemIniFile): Boolean;
 var
   FProvider: IACBrNFSeXProvider;
-  sSecao, sFim: string;
+  sSecao, sFim, sData: string;
   Ok: Boolean;
   i: Integer;
   Item: TItemServicoCollectionItem;
@@ -360,18 +360,18 @@ begin
       IdentificacaoRps.Serie := AINIRec.ReadString(sSecao, 'Serie', '0');
       IdentificacaoRps.Tipo := FProvider.StrToTipoRPS(Ok, AINIRec.ReadString(sSecao, 'Tipo', '1'));
 
-      sFim := AINIRec.ReadString(sSecao, 'DataEmissao', '');
-      if sFim <> '' then
-        DataEmissao := StringToDateTimeDef(sFim, 0);
+      sData := AINIRec.ReadString(sSecao, 'DataEmissao', '');
+      if sData <> '' then
+        DataEmissao := StringToDateTimeDef(sData, 0);
 
-      sFim := AINIRec.ReadString(sSecao, 'Competencia', '');
-      if sFim <> '' then
-        Competencia := StringToDateTimeDef(sFim, 0);
+      sData := AINIRec.ReadString(sSecao, 'Competencia', '');
+      if sData <> '' then
+        Competencia := StringToDateTimeDef(sData, 0);
       DataEmissaoRPS := DataEmissao;
 
-      sFim := AINIRec.ReadString(sSecao, 'Vencimento', '');
-      if sFim <> '' then
-        Vencimento := StringToDateTimeDef(sFim, 0);
+      sData := AINIRec.ReadString(sSecao, 'Vencimento', '');
+      if sData <> '' then
+        Vencimento := StringToDateTimeDef(sData, 0);
       NaturezaOperacao := StrToNaturezaOperacao(Ok, AINIRec.ReadString(sSecao, 'NaturezaOperacao', '0'));
 
       // Provedor Tecnos
@@ -442,6 +442,7 @@ begin
       // Para o provedor WebFisco
       Prestador.Anexo := AINIRec.ReadString(sSecao, 'Anexo', '');
       Prestador.ValorReceitaBruta := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorReceitaBruta', ''), 0);
+      Prestador.DataInicioAtividade := StringToDateTimeDef(AINIRec.ReadString(sSecao, 'DataInicioAtividade', ''), 0);
     end;
 
     sSecao := 'Tomador';
@@ -1050,6 +1051,9 @@ begin
 
       if Prestador.ValorReceitaBruta > 0 then
         INIRec.WriteFloat(sSecao, 'ValorReceitaBruta', Prestador.ValorReceitaBruta);
+
+      if Prestador.DataInicioAtividade > 0 then
+        INIRec.WriteDate(sSecao, 'DataInicioAtividade', Prestador.DataInicioAtividade);
 
       sSecao:= 'Tomador';
       INIRec.WriteString(sSecao, 'Tipo', FProvider.TipoPessoaToStr(Tomador.IdentificacaoTomador.Tipo));

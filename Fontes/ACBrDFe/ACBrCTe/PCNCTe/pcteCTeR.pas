@@ -2251,6 +2251,8 @@ begin
   Ler_Tomador;
   Ler_vPrest;
   Ler_Imp;
+  Ler_InfCTeNorm;
+  Ler_InfCTeComp;
   Ler_AutXML;
   Ler_InfRespTec;
   Ler_InfCTeSupl;

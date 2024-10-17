@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="93"/>
+      <BuildNr Value="94"/>
       <Language Value="0416"/>
       <StringTable Comments="Projeto ACBr" CompanyName="ACBrGTIN - Biblioteca para consulta GTIN" FileDescription="ACBrLibGTIN" InternalName="ACBrLibGTIN" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="GTIN" ProductVersion="0.0.0.4"/>
     </VersionInfo>

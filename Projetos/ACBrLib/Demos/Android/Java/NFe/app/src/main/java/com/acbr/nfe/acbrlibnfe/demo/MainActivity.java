@@ -1,36 +1,22 @@
 package com.acbr.nfe.acbrlibnfe.demo;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.UUID;
+import com.acbr.nfe.acbrlibnfe.demo.comandos.ComandosNFeActivity;
+import com.acbr.nfe.acbrlibnfe.demo.configuracoes.ConfiguracoesActivity;
+import com.acbr.nfe.acbrlibnfe.demo.utils.NfeApplication;
 
 import br.com.acbr.lib.comum.dfe.SSLCryptLib;
 import br.com.acbr.lib.comum.dfe.SSLHttpLib;
 import br.com.acbr.lib.comum.dfe.SSLXmlSignLib;
 import br.com.acbr.lib.nfe.ACBrLibNFe;
-import br.com.acbr.lib.nfe.SSLType;
+
+
 
 public class MainActivity extends AppCompatActivity {
 

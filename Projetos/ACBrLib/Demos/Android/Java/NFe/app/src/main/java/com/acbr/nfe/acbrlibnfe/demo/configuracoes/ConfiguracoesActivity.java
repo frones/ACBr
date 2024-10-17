@@ -1,4 +1,4 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.configuracoes;
 
 
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.acbr.nfe.acbrlibnfe.demo.utils.NfeApplication;
+import com.acbr.nfe.acbrlibnfe.demo.R;
 
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 

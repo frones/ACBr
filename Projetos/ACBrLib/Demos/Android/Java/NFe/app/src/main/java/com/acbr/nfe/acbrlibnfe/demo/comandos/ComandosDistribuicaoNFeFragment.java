@@ -1,4 +1,4 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.comandos;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.acbr.nfe.acbrlibnfe.demo.utils.ACBrLibHelper;
+import com.acbr.nfe.acbrlibnfe.demo.R;
 
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 

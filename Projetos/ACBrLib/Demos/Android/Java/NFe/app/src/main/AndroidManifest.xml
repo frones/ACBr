@@ -21,7 +21,7 @@
 
     <application
         android:requestLegacyExternalStorage="true"
-        android:name=".NfeApplication"
+        android:name=".utils.NfeApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -32,13 +32,13 @@
         android:theme="@style/Theme.ACBrLibNFeDemo"
         tools:targetApi="31">
         <activity
-            android:name=".ConfiguracoesNFeActivity"
+            android:name=".configuracoes.ConfiguracoesNFeActivity"
             android:exported="false" />
         <activity
-            android:name=".ComandosNFeActivity"
+            android:name=".comandos.ComandosNFeActivity"
             android:exported="false" />
         <activity
-            android:name=".ConfiguracoesActivity"
+            android:name=".configuracoes.ConfiguracoesActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,10 +1,13 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.comandos;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.acbr.nfe.acbrlibnfe.demo.utils.ACBrLibHelper;
+import com.acbr.nfe.acbrlibnfe.demo.R;
+import com.acbr.nfe.acbrlibnfe.demo.utils.ViewPagerAdapter;
 import com.acbr.nfe.acbrlibnfe.demo.databinding.ActivityComandosNfeBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 

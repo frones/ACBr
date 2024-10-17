@@ -1,18 +1,20 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.configuracoes;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.acbr.nfe.acbrlibnfe.demo.utils.ACBrLibHelper;
+import com.acbr.nfe.acbrlibnfe.demo.R;
+import com.acbr.nfe.acbrlibnfe.demo.utils.SpinnerUtils;
 
 import java.util.Arrays;
 

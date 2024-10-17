@@ -1,4 +1,4 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.utils;
 
 import br.com.acbr.lib.nfe.ACBrLibNFe;
 

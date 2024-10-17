@@ -1,4 +1,4 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.utils;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

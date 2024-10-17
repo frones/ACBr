@@ -1,15 +1,12 @@
-package com.acbr.nfe.acbrlibnfe.demo;
+package com.acbr.nfe.acbrlibnfe.demo.utils;
 
 import android.app.Application;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.os.Build;
 import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
 
-import com.acbr.nfe.acbrlibnfe.demo.ACBrLibHelper;
 import br.com.acbr.lib.comum.helper.AssetsCopyHelper;
 import br.com.acbr.lib.comum.helper.FileUtils;
 

@@ -1,10 +1,10 @@
 object FormPrincipal: TFormPrincipal
-  Left = 405
-  Height = 500
-  Top = 210
+  Left = 448
+  Height = 634
+  Top = 112
   Width = 1110
   Caption = 'ACBrTEFAPI - Demo'
-  ClientHeight = 500
+  ClientHeight = 634
   ClientWidth = 1110
   Constraints.MinHeight = 500
   Constraints.MinWidth = 1110
@@ -14,10 +14,10 @@ object FormPrincipal: TFormPrincipal
   OnKeyDown = FormKeyDown
   ParentFont = True
   Position = poScreenCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '3.4.0.0'
   object Splitter2: TSplitter
     Left = 775
-    Height = 500
+    Height = 634
     Top = 0
     Width = 5
     Align = alRight
@@ -25,17 +25,17 @@ object FormPrincipal: TFormPrincipal
   end
   object pPrincipal: TPanel
     Left = 0
-    Height = 500
+    Height = 634
     Top = 0
     Width = 775
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 500
+    ClientHeight = 634
     ClientWidth = 775
     TabOrder = 1
     object pgPrincipal: TPageControl
       Left = 0
-      Height = 375
+      Height = 406
       Top = 0
       Width = 775
       ActivePage = tsOperacao
@@ -46,269 +46,486 @@ object FormPrincipal: TFormPrincipal
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'
-        ClientHeight = 347
+        ClientHeight = 378
         ClientWidth = 767
         ImageIndex = 0
-        object pConfiguracao: TPanel
+        object pgConfiguracao: TPageControl
           Left = 0
-          Height = 347
+          Height = 378
           Top = 0
           Width = 767
+          ActivePage = tsConfTEF
           Align = alClient
-          BevelOuter = bvNone
-          ClientHeight = 347
-          ClientWidth = 767
+          TabIndex = 0
           TabOrder = 0
-          object gbConfigTEF: TGroupBox
-            Left = 10
-            Height = 327
-            Top = 10
-            Width = 316
-            Align = alLeft
-            BorderSpacing.Around = 10
-            Caption = 'TEF'
-            ClientHeight = 307
-            ClientWidth = 312
-            TabOrder = 0
-            object cbSuportaDesconto: TCheckBox
-              Left = 195
-              Height = 19
-              Top = 148
-              Width = 114
-              Caption = 'Suporta Desconto'
-              TabOrder = 9
-            end
-            object cbSuportaSaque: TCheckBox
-              Left = 195
-              Height = 19
-              Top = 173
-              Width = 96
-              Caption = 'Suporta Saque'
-              TabOrder = 10
-            end
-            object cbImprimirViaReduzida: TCheckBox
-              Left = 9
-              Height = 19
-              Top = 171
-              Width = 136
-              Caption = 'Imprimir Via Reduzida'
-              TabOrder = 7
-            end
-            object Label11: TLabel
-              Left = 9
-              Height = 15
-              Top = 50
-              Width = 45
-              Alignment = taRightJustify
-              Caption = 'Arq.Log:'
-              ParentColor = False
-            end
-            object edLog: TEdit
-              Cursor = crIBeam
-              Left = 9
-              Height = 23
-              Top = 66
-              Width = 117
-              TabOrder = 2
-            end
-            object SbArqLog: TSpeedButton
-              Left = 126
-              Height = 22
-              Top = 67
-              Width = 24
-              Caption = '...'
-              OnClick = SbArqLogClick
-              ParentFont = False
-            end
-            object btTestarTEF: TBitBtn
-              Left = 110
-              Height = 36
-              Top = 218
-              Width = 117
-              Anchors = [akLeft, akBottom]
-              Caption = 'Testar TEF'
-              Images = ImageList1
-              ImageIndex = 5
-              OnClick = btTestarTEFClick
-              TabOrder = 11
-            end
-            object cbxQRCode: TComboBox
-              Left = 168
-              Height = 23
-              Top = 20
-              Width = 135
-              ItemHeight = 15
-              ItemIndex = 1
-              Items.Strings = (
-                'Não Suportado'
-                'Auto'
-                'Exibir no PinPad'
-                'Exibir na Tela'
-                'Imprimir'
-              )
-              Style = csDropDownList
-              TabOrder = 1
-              Text = 'Auto'
-            end
-            object Label9: TLabel
-              Left = 168
-              Height = 15
-              Top = 4
-              Width = 44
-              Caption = 'QRCode'
-              ParentColor = False
-            end
-            object cbConfirmarAutomaticamente: TCheckBox
-              Left = 9
-              Height = 19
-              Top = 196
-              Width = 229
-              Caption = 'Confirmar Transação Automaticamente'
-              TabOrder = 8
-            end
-            object Label1: TLabel
-              Left = 9
-              Height = 15
-              Top = 4
-              Width = 85
-              Caption = 'Gerenciador TEF'
-              ParentColor = False
-            end
-            object cbxGP: TComboBox
-              Left = 9
-              Height = 23
-              Top = 20
-              Width = 141
-              ItemHeight = 15
-              Style = csDropDownList
+          object tsConfTEF: TTabSheet
+            Caption = 'Configuração TEF'
+            ClientHeight = 350
+            ClientWidth = 759
+            object pConfiguracao: TPanel
+              Left = 0
+              Height = 350
+              Top = 0
+              Width = 759
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 350
+              ClientWidth = 759
               TabOrder = 0
-            end
-            object cbAutoAtendimento: TCheckBox
-              Left = 10
-              Height = 19
-              Top = 146
-              Width = 182
-              Caption = 'Terminal de Auto atendimento'
-              TabOrder = 6
-            end
-            object btSalvarParametros: TBitBtn
-              Left = 14
-              Height = 28
-              Top = 263
-              Width = 136
-              Anchors = [akLeft, akBottom]
-              Caption = 'Salvar Parâmetros'
-              Images = ImageList1
-              ImageIndex = 2
-              OnClick = btSalvarParametrosClick
-              TabOrder = 12
-            end
-            object btLerParametros: TBitBtn
-              Left = 161
-              Height = 28
-              Top = 263
-              Width = 136
-              Anchors = [akLeft, akBottom]
-              Caption = 'Ler Parâmetros'
-              Images = ImageList1
-              ImageIndex = 3
-              OnClick = btLerParametrosClick
-              TabOrder = 13
-            end
-            object Label10: TLabel
-              Left = 168
-              Height = 15
-              Top = 50
-              Width = 105
-              Caption = 'Imprimir Via Cliente'
-              ParentColor = False
-            end
-            object cbxImpressaoViaCliente: TComboBox
-              Left = 168
-              Height = 23
-              Top = 66
-              Width = 135
-              ItemHeight = 15
-              ItemIndex = 0
-              Items.Strings = (
-                'Imprimir'
-                'Perguntar'
-                'Não Imprimir'
-              )
-              Style = csDropDownList
-              TabOrder = 3
-              Text = 'Imprimir'
-            end
-            object Label12: TLabel
-              Left = 9
-              Height = 15
-              Top = 96
-              Width = 105
-              Caption = 'Transação Pendente'
-              ParentColor = False
-            end
-            object cbxTransacaoPendente: TComboBox
-              Left = 9
-              Height = 23
-              Top = 112
-              Width = 141
-              ItemHeight = 15
-              ItemIndex = 0
-              Items.Strings = (
-                'Confirmar'
-                'Estornar'
-                'Perguntar'
-              )
-              Style = csDropDownList
-              TabOrder = 4
-              Text = 'Confirmar'
-            end
-            object Label18: TLabel
-              Left = 168
-              Height = 15
-              Top = 96
-              Width = 138
-              Caption = 'Pendencia na Inicialização'
-              ParentColor = False
-            end
-            object cbxTransacaoPendenteInicializacao: TComboBox
-              Left = 168
-              Height = 23
-              Top = 112
-              Width = 135
-              ItemHeight = 15
-              ItemIndex = 1
-              Items.Strings = (
-                'Não Fazer nada'
-                'Processar Pendentes'
-                'Cancelar/Estornar'
-              )
-              Style = csDropDownList
-              TabOrder = 5
-              Text = 'Processar Pendentes'
+              object gbConfigTEF: TGroupBox
+                Left = 10
+                Height = 330
+                Top = 10
+                Width = 316
+                Align = alLeft
+                BorderSpacing.Around = 10
+                Caption = 'TEF'
+                ClientHeight = 310
+                ClientWidth = 312
+                TabOrder = 0
+                object cbSuportaDesconto: TCheckBox
+                  Left = 195
+                  Height = 19
+                  Top = 148
+                  Width = 112
+                  Caption = 'Suporta Desconto'
+                  TabOrder = 9
+                end
+                object cbSuportaSaque: TCheckBox
+                  Left = 195
+                  Height = 19
+                  Top = 173
+                  Width = 94
+                  Caption = 'Suporta Saque'
+                  TabOrder = 10
+                end
+                object cbImprimirViaReduzida: TCheckBox
+                  Left = 9
+                  Height = 19
+                  Top = 171
+                  Width = 134
+                  Caption = 'Imprimir Via Reduzida'
+                  TabOrder = 7
+                end
+                object Label11: TLabel
+                  Left = 9
+                  Height = 15
+                  Top = 50
+                  Width = 45
+                  Alignment = taRightJustify
+                  Caption = 'Arq.Log:'
+                  ParentColor = False
+                end
+                object edLog: TEdit
+                  Cursor = crIBeam
+                  Left = 9
+                  Height = 23
+                  Top = 66
+                  Width = 117
+                  TabOrder = 2
+                end
+                object SbArqLog: TSpeedButton
+                  Left = 126
+                  Height = 22
+                  Top = 67
+                  Width = 24
+                  Caption = '...'
+                  OnClick = SbArqLogClick
+                  ParentFont = False
+                end
+                object btTestarTEF: TBitBtn
+                  Left = 110
+                  Height = 36
+                  Top = 221
+                  Width = 117
+                  Anchors = [akLeft, akBottom]
+                  Caption = 'Testar TEF'
+                  Images = ImageList1
+                  ImageIndex = 5
+                  OnClick = btTestarTEFClick
+                  TabOrder = 11
+                end
+                object cbxQRCode: TComboBox
+                  Left = 168
+                  Height = 23
+                  Top = 20
+                  Width = 135
+                  ItemHeight = 15
+                  ItemIndex = 1
+                  Items.Strings = (
+                    'Não Suportado'
+                    'Auto'
+                    'Exibir no PinPad'
+                    'Exibir na Tela'
+                    'Imprimir'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 1
+                  Text = 'Auto'
+                end
+                object Label9: TLabel
+                  Left = 168
+                  Height = 15
+                  Top = 4
+                  Width = 44
+                  Caption = 'QRCode'
+                  ParentColor = False
+                end
+                object cbConfirmarAutomaticamente: TCheckBox
+                  Left = 9
+                  Height = 19
+                  Top = 196
+                  Width = 227
+                  Caption = 'Confirmar Transação Automaticamente'
+                  TabOrder = 8
+                end
+                object Label1: TLabel
+                  Left = 9
+                  Height = 15
+                  Top = 4
+                  Width = 85
+                  Caption = 'Gerenciador TEF'
+                  ParentColor = False
+                end
+                object cbxGP: TComboBox
+                  Left = 9
+                  Height = 23
+                  Top = 20
+                  Width = 141
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 0
+                end
+                object cbAutoAtendimento: TCheckBox
+                  Left = 10
+                  Height = 19
+                  Top = 146
+                  Width = 180
+                  Caption = 'Terminal de Auto atendimento'
+                  TabOrder = 6
+                end
+                object btSalvarParametros: TBitBtn
+                  Left = 14
+                  Height = 28
+                  Top = 266
+                  Width = 136
+                  Anchors = [akLeft, akBottom]
+                  Caption = 'Salvar Parâmetros'
+                  Images = ImageList1
+                  ImageIndex = 2
+                  OnClick = btSalvarParametrosClick
+                  TabOrder = 12
+                end
+                object btLerParametros: TBitBtn
+                  Left = 161
+                  Height = 28
+                  Top = 266
+                  Width = 136
+                  Anchors = [akLeft, akBottom]
+                  Caption = 'Ler Parâmetros'
+                  Images = ImageList1
+                  ImageIndex = 3
+                  OnClick = btLerParametrosClick
+                  TabOrder = 13
+                end
+                object Label10: TLabel
+                  Left = 168
+                  Height = 15
+                  Top = 50
+                  Width = 105
+                  Caption = 'Imprimir Via Cliente'
+                  ParentColor = False
+                end
+                object cbxImpressaoViaCliente: TComboBox
+                  Left = 168
+                  Height = 23
+                  Top = 66
+                  Width = 135
+                  ItemHeight = 15
+                  ItemIndex = 0
+                  Items.Strings = (
+                    'Imprimir'
+                    'Perguntar'
+                    'Não Imprimir'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 3
+                  Text = 'Imprimir'
+                end
+                object Label12: TLabel
+                  Left = 9
+                  Height = 15
+                  Top = 96
+                  Width = 105
+                  Caption = 'Transação Pendente'
+                  ParentColor = False
+                end
+                object cbxTransacaoPendente: TComboBox
+                  Left = 9
+                  Height = 23
+                  Top = 112
+                  Width = 141
+                  ItemHeight = 15
+                  ItemIndex = 0
+                  Items.Strings = (
+                    'Confirmar'
+                    'Estornar'
+                    'Perguntar'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 4
+                  Text = 'Confirmar'
+                end
+                object Label18: TLabel
+                  Left = 168
+                  Height = 15
+                  Top = 96
+                  Width = 138
+                  Caption = 'Pendencia na Inicialização'
+                  ParentColor = False
+                end
+                object cbxTransacaoPendenteInicializacao: TComboBox
+                  Left = 168
+                  Height = 23
+                  Top = 112
+                  Width = 135
+                  ItemHeight = 15
+                  ItemIndex = 1
+                  Items.Strings = (
+                    'Não Fazer nada'
+                    'Processar Pendentes'
+                    'Cancelar/Estornar'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 5
+                  Text = 'Processar Pendentes'
+                end
+              end
+              object pConfigImpSwHouseEstab: TPanel
+                Left = 336
+                Height = 330
+                Top = 10
+                Width = 413
+                Align = alClient
+                BorderSpacing.Around = 10
+                BevelOuter = bvNone
+                ClientHeight = 330
+                ClientWidth = 413
+                TabOrder = 1
+                object gbDadosSwHouseAplicacao: TGroupBox
+                  Left = 0
+                  Height = 113
+                  Top = 0
+                  Width = 413
+                  Align = alTop
+                  Caption = 'Software House e Aplicação'
+                  ClientHeight = 93
+                  ClientWidth = 409
+                  TabOrder = 0
+                  object Label14: TLabel
+                    Left = 24
+                    Height = 15
+                    Top = -2
+                    Width = 33
+                    Caption = 'Nome'
+                    ParentColor = False
+                  end
+                  object edRazaoSocialSwHouse: TEdit
+                    Left = 24
+                    Height = 23
+                    Top = 14
+                    Width = 208
+                    Anchors = [akTop, akLeft, akRight]
+                    TabOrder = 0
+                    Text = 'PROJETO ACBR'
+                  end
+                  object Label16: TLabel
+                    Left = 24
+                    Height = 15
+                    Top = 46
+                    Width = 88
+                    Caption = 'Nome Aplicação'
+                    ParentColor = False
+                  end
+                  object edNomeAplicacao: TEdit
+                    Left = 24
+                    Height = 23
+                    Top = 62
+                    Width = 208
+                    Anchors = [akTop, akLeft, akRight]
+                    TabOrder = 2
+                    Text = 'TEFAPIDemo'
+                  end
+                  object Label19: TLabel
+                    Left = 256
+                    Height = 15
+                    Top = 46
+                    Width = 34
+                    Anchors = [akTop, akRight]
+                    Caption = 'Versão'
+                    ParentColor = False
+                  end
+                  object edVersaoAplicacao: TEdit
+                    Left = 256
+                    Height = 23
+                    Top = 62
+                    Width = 141
+                    Anchors = [akTop, akRight]
+                    TabOrder = 3
+                    Text = '1.0'
+                  end
+                  object Label15: TLabel
+                    Left = 256
+                    Height = 15
+                    Top = -2
+                    Width = 27
+                    Anchors = [akTop, akRight]
+                    Caption = 'CNPJ'
+                    ParentColor = False
+                  end
+                  object edCNPJSwHouse: TEdit
+                    Left = 256
+                    Height = 23
+                    Top = 14
+                    Width = 141
+                    Anchors = [akTop, akRight]
+                    TabOrder = 1
+                  end
+                end
+                object gbDadosTerminal: TGroupBox
+                  Left = 0
+                  Height = 117
+                  Top = 178
+                  Width = 413
+                  Align = alTop
+                  Caption = 'Dados Terminal'
+                  ClientHeight = 97
+                  ClientWidth = 409
+                  TabOrder = 1
+                  object Label17: TLabel
+                    Left = 24
+                    Height = 15
+                    Top = -1
+                    Width = 70
+                    Caption = 'Cod.Terminal'
+                    ParentColor = False
+                  end
+                  object edCodTerminal: TEdit
+                    Left = 24
+                    Height = 23
+                    Top = 15
+                    Width = 174
+                    TabOrder = 0
+                  end
+                  object Label21: TLabel
+                    Left = 228
+                    Height = 15
+                    Top = 45
+                    Width = 68
+                    Caption = 'Porta PinPad'
+                    ParentColor = False
+                  end
+                  object edPortaPinPad: TEdit
+                    Left = 228
+                    Height = 23
+                    Top = 61
+                    Width = 83
+                    TabOrder = 3
+                  end
+                  object Label23: TLabel
+                    Left = 228
+                    Height = 15
+                    Top = -1
+                    Width = 95
+                    Caption = 'Endereço Servidor'
+                    ParentColor = False
+                  end
+                  object edEnderecoServidor: TEdit
+                    Left = 228
+                    Height = 23
+                    Top = 14
+                    Width = 169
+                    Anchors = [akTop, akLeft, akRight]
+                    TabOrder = 2
+                  end
+                  object Label24: TLabel
+                    Left = 24
+                    Height = 15
+                    Top = 45
+                    Width = 70
+                    Caption = 'Cod.Empresa'
+                    ParentColor = False
+                  end
+                  object edCodEmpresa: TEdit
+                    Left = 24
+                    Height = 23
+                    Top = 61
+                    Width = 174
+                    TabOrder = 1
+                  end
+                end
+                object gbDadosEstabComercial: TGroupBox
+                  Left = 0
+                  Height = 65
+                  Top = 113
+                  Width = 413
+                  Align = alTop
+                  Caption = 'Estabelecimento Comercial'
+                  ClientHeight = 45
+                  ClientWidth = 409
+                  TabOrder = 2
+                  object Label20: TLabel
+                    Left = 24
+                    Height = 15
+                    Top = -1
+                    Width = 65
+                    Caption = 'Razão Social'
+                    ParentColor = False
+                  end
+                  object edRazaoSocialEstabelecimento: TEdit
+                    Left = 24
+                    Height = 23
+                    Top = 15
+                    Width = 208
+                    Anchors = [akTop, akLeft, akRight]
+                    TabOrder = 0
+                    Text = 'PROJETO ACBR'
+                  end
+                  object Label22: TLabel
+                    Left = 256
+                    Height = 15
+                    Top = -1
+                    Width = 27
+                    Anchors = [akTop, akRight]
+                    Caption = 'CNPJ'
+                    ParentColor = False
+                  end
+                  object edCNPJEstabelecimento: TEdit
+                    Left = 256
+                    Height = 23
+                    Top = 14
+                    Width = 141
+                    Anchors = [akTop, akRight]
+                    TabOrder = 1
+                  end
+                end
+              end
             end
           end
-          object pConfigImpSwHouseEstab: TPanel
-            Left = 336
-            Height = 327
-            Top = 10
-            Width = 421
-            Align = alClient
-            BorderSpacing.Around = 10
-            BevelOuter = bvNone
-            ClientHeight = 327
-            ClientWidth = 421
-            TabOrder = 1
+          object tsConfImpressora: TTabSheet
+            Caption = 'Impressora'
+            ClientHeight = 350
+            ClientWidth = 759
             object gbConfigImpressora: TGroupBox
               Left = 0
-              Height = 124
-              Top = 203
-              Width = 421
+              Height = 118
+              Top = 0
+              Width = 759
               Align = alTop
               Caption = 'Impressora'
-              ClientHeight = 104
-              ClientWidth = 417
-              TabOrder = 2
+              ClientHeight = 98
+              ClientWidth = 755
+              TabOrder = 0
               object Label25: TLabel
                 AnchorSideBottom.Side = asrCenter
                 Left = 168
@@ -372,7 +589,6 @@ object FormPrincipal: TFormPrincipal
                 Top = 0
                 Width = 41
                 Caption = 'Modelo'
-                Color = clDefault
                 ParentColor = False
                 Transparent = False
               end
@@ -386,7 +602,7 @@ object FormPrincipal: TFormPrincipal
                 TabOrder = 0
               end
               object Label7: TLabel
-                Left = 176
+                Left = 168
                 Height = 15
                 Top = 0
                 Width = 28
@@ -397,7 +613,7 @@ object FormPrincipal: TFormPrincipal
                 Left = 168
                 Height = 23
                 Top = 17
-                Width = 121
+                Width = 459
                 Anchors = [akTop, akLeft, akRight]
                 ItemHeight = 15
                 TabOrder = 1
@@ -410,7 +626,6 @@ object FormPrincipal: TFormPrincipal
                 Width = 79
                 BorderSpacing.Bottom = 2
                 Caption = 'Pág. de código'
-                Color = clDefault
                 ParentColor = False
                 Transparent = False
               end
@@ -427,7 +642,7 @@ object FormPrincipal: TFormPrincipal
               object btSerial: TSpeedButton
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideBottom.Side = asrBottom
-                Left = 288
+                Left = 626
                 Height = 26
                 Top = 15
                 Width = 25
@@ -437,7 +652,7 @@ object FormPrincipal: TFormPrincipal
                 OnClick = btSerialClick
               end
               object btTestarPosPrinter: TBitBtn
-                Left = 350
+                Left = 688
                 Height = 74
                 Top = 17
                 Width = 57
@@ -452,7 +667,7 @@ object FormPrincipal: TFormPrincipal
               object btProcuraImpressoras: TSpeedButton
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideBottom.Side = asrBottom
-                Left = 312
+                Left = 650
                 Height = 26
                 Top = 15
                 Width = 25
@@ -462,147 +677,22 @@ object FormPrincipal: TFormPrincipal
                 OnClick = btProcuraImpressorasClick
               end
             end
-            object GroupBox1: TGroupBox
-              Left = 0
-              Height = 124
-              Top = 0
-              Width = 421
-              Align = alTop
-              Caption = 'Software House e Aplicação'
-              ClientHeight = 104
-              ClientWidth = 417
-              TabOrder = 0
-              object Label14: TLabel
-                Left = 24
-                Height = 15
-                Top = 3
-                Width = 33
-                Caption = 'Nome'
-                ParentColor = False
-              end
-              object edRazaoSocialSwHouse: TEdit
-                Left = 24
-                Height = 23
-                Top = 19
-                Width = 216
-                Anchors = [akTop, akLeft, akRight]
-                TabOrder = 0
-                Text = 'PROJETO ACBR'
-              end
-              object Label16: TLabel
-                Left = 24
-                Height = 15
-                Top = 51
-                Width = 88
-                Caption = 'Nome Aplicação'
-                ParentColor = False
-              end
-              object edNomeAplicacao: TEdit
-                Left = 24
-                Height = 23
-                Top = 67
-                Width = 216
-                Anchors = [akTop, akLeft, akRight]
-                TabOrder = 2
-                Text = 'TEFAPIDemo'
-              end
-              object Label19: TLabel
-                Left = 264
-                Height = 15
-                Top = 51
-                Width = 34
-                Anchors = [akTop, akRight]
-                Caption = 'Versão'
-                ParentColor = False
-              end
-              object edVersaoAplicacao: TEdit
-                Left = 264
-                Height = 23
-                Top = 67
-                Width = 141
-                Anchors = [akTop, akRight]
-                TabOrder = 3
-                Text = '1.0'
-              end
-              object Label15: TLabel
-                Left = 264
-                Height = 15
-                Top = 3
-                Width = 27
-                Anchors = [akTop, akRight]
-                Caption = 'CNPJ'
-                ParentColor = False
-              end
-              object edCNPJSwHouse: TEdit
-                Left = 264
-                Height = 23
-                Top = 19
-                Width = 141
-                Anchors = [akTop, akRight]
-                TabOrder = 1
-              end
-            end
-            object GroupBox2: TGroupBox
-              Left = 0
-              Height = 79
-              Top = 124
-              Width = 421
-              Align = alTop
-              Caption = 'Estabelecimento Comercial'
-              ClientHeight = 59
-              ClientWidth = 417
-              TabOrder = 1
-              object Label17: TLabel
-                Left = 24
-                Height = 15
-                Top = 4
-                Width = 65
-                Caption = 'Razão Social'
-                ParentColor = False
-              end
-              object edRazaoSocialEstabelecimento: TEdit
-                Left = 24
-                Height = 23
-                Top = 20
-                Width = 216
-                Anchors = [akTop, akLeft, akRight]
-                TabOrder = 0
-                Text = 'PROJETO ACBR'
-              end
-              object Label21: TLabel
-                Left = 264
-                Height = 15
-                Top = 4
-                Width = 27
-                Anchors = [akTop, akRight]
-                Caption = 'CNPJ'
-                ParentColor = False
-              end
-              object edCNPJEstabelecimento: TEdit
-                Left = 264
-                Height = 23
-                Top = 19
-                Width = 141
-                Anchors = [akTop, akRight]
-                TabOrder = 1
-              end
-            end
           end
         end
       end
       object tsOperacao: TTabSheet
         Caption = 'Operação'
-        ClientHeight = 347
+        ClientHeight = 378
         ClientWidth = 767
         ImageIndex = 1
         object pOperacao: TPanel
           Left = 0
-          Height = 347
+          Height = 378
           Top = 0
           Width = 762
           Align = alClient
           BevelOuter = bvNone
-          ClientHeight = 347
+          ClientHeight = 378
           ClientWidth = 762
           Constraints.MinWidth = 460
           TabOrder = 0
@@ -746,11 +836,10 @@ object FormPrincipal: TFormPrincipal
             object btEfetuarPagamentos: TBitBtn
               Left = 630
               Height = 28
-              Top = 78
+              Top = 64
               Width = 113
               Anchors = [akTop, akRight]
               Caption = 'Pagamentos'
-              Default = True
               Enabled = False
               Images = ImageList1
               ImageIndex = 1
@@ -776,45 +865,69 @@ object FormPrincipal: TFormPrincipal
               Left = 360
               Height = 19
               Top = 86
-              Width = 151
+              Width = 149
               Caption = 'Simular Erro Docto Fiscal'
               TabOrder = 6
             end
             object btObterCPF: TButton
-              Left = 630
-              Height = 25
-              Top = 28
+              Left = 509
+              Height = 28
+              Top = 0
               Width = 113
               Anchors = [akTop, akRight]
               Caption = 'Solicita CPF'
-              OnClick = btObterCPFClick
               TabOrder = 8
+              OnClick = btObterCPFClick
             end
             object btMsgPinPad: TButton
-              Left = 630
-              Height = 25
-              Top = 53
+              Left = 509
+              Height = 28
+              Top = 32
               Width = 113
               Anchors = [akTop, akRight]
               Caption = 'Msg PinPad'
-              OnClick = btMsgPinPadClick
               TabOrder = 9
+              OnClick = btMsgPinPadClick
+            end
+            object btCancelarUltima: TBitBtn
+              Left = 630
+              Height = 28
+              Top = 32
+              Width = 113
+              Anchors = [akTop, akRight]
+              Caption = 'Cancelar Ultima'
+              Enabled = False
+              Images = ImageList1
+              ImageIndex = 11
+              OnClick = btCancelarUltimaClick
+              ParentFont = False
+              TabOrder = 11
+            end
+            object btMenuPinPad: TButton
+              Left = 509
+              Height = 28
+              Top = 64
+              Width = 113
+              Anchors = [akTop, akRight]
+              Caption = 'Menu PinPad'
+              TabOrder = 12
+              OnClick = btMenuPinPadClick
             end
           end
           object gbPagamentos: TGroupBox
             Left = 3
-            Height = 149
+            Height = 180
             Top = 195
             Width = 756
             Align = alClient
             BorderSpacing.Around = 3
             Caption = 'Pagamentos'
-            ClientHeight = 129
+            ClientHeight = 160
             ClientWidth = 752
             TabOrder = 1
             object sgPagamentos: TStringGrid
               Left = 0
-              Height = 129
+              Height = 160
               Top = 0
               Width = 646
               Align = alClient
@@ -822,31 +935,45 @@ object FormPrincipal: TFormPrincipal
               ColCount = 7
               Columns = <              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Caption = 'Item'
                   Width = 35
                 end              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Caption = 'Forma de Pagamento'
                   Width = 150
                 end              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Alignment = taRightJustify
                   Title.Caption = 'Valor'
                   Width = 100
                 end              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Caption = 'NSU'
                   Width = 110
                 end              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Caption = 'Rede'
                   Width = 110
                 end              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Caption = 'Status'
                   Width = 100
                 end              
                 item
+                  MinSize = 10
+                  MaxSize = 200
                   Title.Caption = 'CNPJ Credenciadora'
                   Width = 140
                 end>
@@ -859,12 +986,12 @@ object FormPrincipal: TFormPrincipal
             end
             object pBotoesPagamentos: TPanel
               Left = 646
-              Height = 129
+              Height = 160
               Top = 0
               Width = 106
               Align = alRight
               BevelOuter = bvNone
-              ClientHeight = 129
+              ClientHeight = 160
               ClientWidth = 106
               TabOrder = 1
               object btIncluirPagamentos: TBitBtn
@@ -916,7 +1043,6 @@ object FormPrincipal: TFormPrincipal
               Height = 28
               Top = 11
               Width = 120
-              Cancel = True
               Caption = 'Cancelar Operação'
               Images = ImageList1
               OnClick = btOperacaoClick
@@ -940,7 +1066,7 @@ object FormPrincipal: TFormPrincipal
         end
         object Splitter1: TSplitter
           Left = 762
-          Height = 347
+          Height = 378
           Top = 0
           Width = 5
           Align = alRight
@@ -950,16 +1076,16 @@ object FormPrincipal: TFormPrincipal
     end
     object pLogs: TPanel
       Left = 0
-      Height = 120
-      Top = 380
+      Height = 223
+      Top = 411
       Width = 775
       Align = alClient
-      ClientHeight = 120
+      ClientHeight = 223
       ClientWidth = 775
       TabOrder = 1
       object mLog: TMemo
         Left = 4
-        Height = 112
+        Height = 215
         Top = 4
         Width = 744
         Align = alClient
@@ -971,7 +1097,7 @@ object FormPrincipal: TFormPrincipal
       end
       object sbLimparLog: TSpeedButton
         Left = 751
-        Height = 118
+        Height = 221
         Top = 1
         Width = 23
         Align = alRight
@@ -984,7 +1110,7 @@ object FormPrincipal: TFormPrincipal
       Cursor = crVSplit
       Left = 0
       Height = 5
-      Top = 375
+      Top = 406
       Width = 775
       Align = alTop
       ResizeAnchor = akTop
@@ -992,18 +1118,18 @@ object FormPrincipal: TFormPrincipal
   end
   object pImpressao: TPanel
     Left = 780
-    Height = 500
+    Height = 634
     Top = 0
     Width = 330
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 500
+    ClientHeight = 634
     ClientWidth = 330
     Constraints.MinWidth = 300
     TabOrder = 2
     object mImpressao: TMemo
       Left = 0
-      Height = 57
+      Height = 191
       Top = 255
       Width = 330
       Align = alClient
@@ -1035,14 +1161,14 @@ object FormPrincipal: TFormPrincipal
     object pSimulador: TPanel
       Left = 0
       Height = 68
-      Top = 432
+      Top = 566
       Width = 330
       Align = alBottom
       ClientHeight = 68
       ClientWidth = 330
       TabOrder = 1
       object btMudaPagina: TBitBtn
-        Left = 113
+        Left = 137
         Height = 52
         Top = 8
         Width = 112
@@ -1146,7 +1272,7 @@ object FormPrincipal: TFormPrincipal
     object pImpressoraBotes: TPanel
       Left = 0
       Height = 34
-      Top = 398
+      Top = 532
       Width = 330
       Align = alBottom
       ClientHeight = 34
@@ -1180,12 +1306,12 @@ object FormPrincipal: TFormPrincipal
         Left = 8
         Height = 19
         Top = 8
-        Width = 113
+        Width = 111
         Caption = 'Enviar Impressora'
         Checked = True
-        OnChange = cbEnviarImpressoraChange
         State = cbChecked
         TabOrder = 2
+        OnChange = cbEnviarImpressoraChange
       end
     end
     object lURLTEF: TLabel
@@ -1210,7 +1336,7 @@ object FormPrincipal: TFormPrincipal
     object pQRCode: TPanel
       Left = 0
       Height = 86
-      Top = 312
+      Top = 446
       Width = 330
       Align = alBottom
       ClientHeight = 86
@@ -1245,423 +1371,56 @@ object FormPrincipal: TFormPrincipal
     Left = 960
     Top = 200
     Bitmap = {
-      4C690D0000001000000010000000000000000000000000000000000000110000
-      00330000002E0000001100000000000000000000000000000000000000000000
-      00000000000000000000000000000000000000000000000000000000006E0000
-      00FD000000FF000000DD0000006B000000030000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000030000
-      0087000000FD000000FF000000FC0000006B0000000000000000000000000000
-      00000000000000000000000000000000001D0000006100000001000000000000
-      000600000087000000FD000000FF000000E50000001700000000000000000000
-      000000000000000000000000000000000057000000FA00000071000000030000
-      00050000007C000000FC000000FF000000FC0000004900000000000000000000
-      000000000000000000000000000000000056000000FF000000F9000000720000
-      007C000000FB000000FF000000FF000000FD0000004D00000000000000000000
-      000000000000000000000000000000000025000000F4000000FF000000FA0000
-      00FC000000FF000000FF000000FF000000F60000003B00000000000000000000
-      00000000000000000000000000000000000300000090000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000C90000001C000000000000
-      000000000000000000000000000000000000000000090000008E000000EE0000
-      00FF000000FE000000F9000000FF000000FF000000FF000000CF0000001F0000
-      0000000000000000000000000000000000000000000000000000000000270000
-      0059000000560000004D000000DE000000FF000000FF000000FF000000CF0000
-      001C000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000031000000E5000000FF000000FF000000FF0000
-      00C90000001F0000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000034000000E5000000FF000000FF0000
-      00FF000000C90000001C00000000000000000000000000000000000000000000
-      00000000000000000000000000000000000000000031000000DE000000FF0000
-      00FF000000FF000000CF00000014000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000034000000DE0000
-      00FF000000FF000000E900000023000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000310000
-      00E5000000EA0000004800000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00220000002B0000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000A00000045000000550000
-      0055000000550000005500000055000000550000005500000055000000550000
-      00550000003C00000005000000000000000000000074000000FA000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000F7000000740000000000000000000000AA000000AA000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000AA0000000000000000000000AA000000E3000000AA0000
-      00AA000000AA000000AA000000AA000000AA000000AA000000AA000000AA0000
-      00AA000000E3000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000AA000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000AA000000000000000000000087000000FB000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FC0000006E00000000000000000000000A00000046000000550000
-      0055000000550000005500000055000000550000005500000055000000550000
-      00550000004A0000000B00000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000004000000190000
-      001C0000001C0000001C0000001C0000001C0000001C0000001C0000000B0000
-      000000000000000000000000000000000000000000020000008D000000E00000
-      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000B60000
-      00100000000000000000000000000000000000000019000000E00000008D0000
-      00550000005500000055000000550000005500000068000000EC000000FF0000
-      00B8000000100000000000000000000000000000001C000000E3000000550000
-      0000000000000000000000000000000000000000001C000000E3000000FF0000
-      00FF000000B60000000B00000000000000000000001C000000E3000000680000
-      001C0000001C0000001C0000001C0000001C00000035000000E6000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000EC0000
-      00E3000000E3000000E3000000E3000000E3000000E6000000FC000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000F9000000CC000000CF000000FA000000FF000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
-      00FF000000FD00000075000000030000000400000080000000FE000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
-      00FF000000E900000022000000000000000000000029000000F0000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
-      00FF000000F60000003B000000000000000000000045000000FA000000FF0000
-      00FF000000E30000001C00000000000000000000001B000000E2000000FF0000
-      00FF000000FF000000DE0000006C00000071000000E4000000FF000000FF0000
-      00FF000000DE0000001800000000000000000000000600000095000000E00000
-      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
-      00E20000008B0000000100000000000000000000000000000003000000190000
-      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
-      001B000000050000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000001000000000000000000000000000000000000000000000
-      00100000004A000000840000009B000000920000005E0000001E000000000000
-      00000000003F0000008F00000000000000000000000000000000000000480000
-      00D0000000FC000000FE000000F6000000FB000000FF000000E4000000780000
-      0042000000E4000000AA0000000000000000000000000000005F000000F20000
-      00EE0000007F0000002E000000190000002100000064000000D9000000FD0000
-      00F4000000FF000000AA00000000000000000000003A000000F1000000D90000
-      0021000000000000000000000000000000000000000000000053000000F80000
-      00FF000000FF000000AA0000000000000005000000B1000000F2000000380000
-      00000000000000000000000000000000000000000048000000EA000000FF0000
-      00FF000000FF000000AA0000000000000003000000510000006F000000030000
-      00000000000000000000000000000000001400000094000000AA000000AA0000
-      00AA000000AA0000007100000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00AA000000AA000000AA000000AA000000AA000000AA000000AA000000AA0000
-      0000000000000000000000000000000000000000000A00000067000000A40000
-      00AA000000AA000000AA000000AA000000AA000000AA000000AA000000AA0000
-      00A3000000610000000800000000000000000000006E000000FC000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00CC000000F1000000610000000000000000000000A8000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      002F000000CC000000A30000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF0000008E000000550000005500000055000000550000008E000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000550000000000000000000000000000000000000055000000FF0000
-      00FF000000FF000000AA00000000000000000000003800000055000000550000
-      00FF000000550000000000000000000000000000000000000055000000FF0000
-      0055000000550000003800000000000000000000000000000000000000000000
-      00FF0000008E000000550000005500000055000000550000008E000000FF0000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
-      0000000000000000000000000000000000000000000000000000000000000000
-      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0003000000300000007000000095000000940000006D0000002C000000020000
-      0000000000000000000000000000000000000000000000000000000000120000
-      00A0000000F2000000FF000000FF000000FF000000FF000000F0000000980000
-      000E000000000000000000000000000000000000000000000014000000C60000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00BD0000000E00000000000000000000000000000003000000A4000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FD000000B20000
-      00EF0000009800000002000000000000000000000036000000F4000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FD0000009B0000000C0000
-      00A2000000F00000002C00000000000000000000007B000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FD0000009B0000000E000000780000
-      00FC000000FF0000006D0000000000000000000000A2000000FF000000CB0000
-      006F000000FA000000FF000000FF0000009E0000000C00000078000000F90000
-      00FF000000FF000000940000000000000000000000A3000000FF000000C20000
-      001100000062000000F20000009E000000070000007C000000FC000000FF0000
-      00FF000000FF0000009600000000000000000000007F000000FF000000FF0000
-      00B9000000170000003E0000000C0000007C000000FB000000FF000000FF0000
-      00FF000000FF00000070000000000000000000000039000000F6000000FF0000
-      00FF000000B70000001800000078000000FC000000FF000000FF000000FF0000
-      00FF000000F200000030000000000000000000000005000000AC000000FF0000
-      00FF000000FF000000DD000000F9000000FF000000FF000000FF000000FF0000
-      00FF000000A00000000300000000000000000000000000000018000000CE0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00C6000000120000000000000000000000000000000000000000000000180000
-      00AC000000F6000000FF000000FF000000FF000000FF000000F4000000A40000
-      0014000000000000000000000000000000000000000000000000000000000000
-      0005000000390000007F000000A3000000A20000007B00000036000000030000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      004E000000A4000000AA000000AA000000AA000000AA0000009F000000410000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00E8000000C7000000AA000000AA000000AA000000AA000000C7000000E70000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00FF000000550000003800000038000000380000003800000055000000FF0000
-      0000000000000000000000000000000000000000000000000000000000380000
-      00FF0000008E0000008E0000008D0000008D0000008E0000008E000000FF0000
-      0038000000000000000000000000000000000000000000000000000000AA0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00AA000000000000000000000000000000000000000000000000000000AA0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00AA000000000000000000000000000000000000000000000000000000AA0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00AA000000000000000000000000000000000000000000000000000000A30000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00A0000000000000000000000000000000000000000000000000000000470000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FE0000
-      0040000000000000000000000000000000000000000000000000000000020000
-      00C5000000FF000000FF000000FF000000FF000000FF000000FF000000BF0000
-      0001000000000000000000000000000000000000000000000000000000000000
-      004A000000FE000000FF000000FF000000FF000000FF000000FD000000440000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0008000000C3000000FF000000FF000000FF000000FF000000BF000000070000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000FF000000FF000000FF000000FF000000AA000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000071000000AA000000AA000000AA000000AA00000071000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000100000
-      0055000000550000004500000004000000000000000000000000000000000000
-      00000000000000000000000000000000000000000071000000AA000000CE0000
-      00FF000000FF000000FA000000B6000000AA0000003800000000000000000000
-      00000000000000000000000000000000000000000071000000AA000000AA0000
-      00AA000000AA000000AA000000AA000000AA0000003800000000000000000000
-      0000000000000000000000000000000000000000001200000097000000AA0000
-      00AA000000AA000000AA000000AA000000710000001200000097000000AA0000
-      00AA000000AA0000007100000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000AA0000001200000097000000AA0000
-      00AA000000AA0000007100000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000AA0000000000000000000000000000
-      0000000000000000000000000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000AA0000001C000000E3000000FF0000
-      00FF000000E30000001C00000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000AA000000090000004B000000550000
-      00550000004B0000000900000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000AA000000090000004B000000550000
-      0038000000000000000000000000000000000000001C000000E3000000FF0000
-      00FF000000FF000000FF000000FF000000AA0000001C000000E3000000FF0000
-      00AA000000000000000000000000000000000000000F000000C8000000FE0000
-      00FF000000FF000000FF000000FD0000006D0000000000000000000000000000
-      000000000000000000000000000000000000000000000000001B000000510000
-      005500000055000000550000004D000000070000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0003000000300000007000000095000000940000006D0000002C000000020000
-      0000000000000000000000000000000000000000000000000000000000120000
-      00A0000000F2000000FF000000FF000000FF000000FF000000F0000000980000
-      000E000000000000000000000000000000000000000000000014000000C60000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00BD0000000E00000000000000000000000000000003000000A4000000FF0000
-      00FF000000FF000000FF000000C6000000C6000000FF000000FF000000FF0000
-      00FF0000009800000002000000000000000000000036000000F4000000FF0000
-      00FF000000FF000000FF0000005500000055000000FF000000FF000000FF0000
-      00FF000000F00000002C00000000000000000000007B000000FF000000FF0000
-      00FF000000FF000000FF0000005500000055000000FF000000FF000000FF0000
-      00FF000000FF0000006D0000000000000000000000A2000000FF000000FF0000
-      00C600000055000000550000001C0000001C0000005500000055000000C60000
-      00FF000000FF000000940000000000000000000000A3000000FF000000FF0000
-      00C600000055000000550000001C0000001C0000005500000055000000C60000
-      00FF000000FF0000009600000000000000000000007F000000FF000000FF0000
-      00FF000000FF000000FF0000005500000055000000FF000000FF000000FF0000
-      00FF000000FF00000070000000000000000000000039000000F6000000FF0000
-      00FF000000FF000000FF0000005500000055000000FF000000FF000000FF0000
-      00FF000000F200000030000000000000000000000005000000AC000000FF0000
-      00FF000000FF000000FF000000C6000000C6000000FF000000FF000000FF0000
-      00FF000000A00000000300000000000000000000000000000018000000CE0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00C6000000120000000000000000000000000000000000000000000000180000
-      00AC000000F6000000FF000000FF000000FF000000FF000000F4000000A40000
-      0014000000000000000000000000000000000000000000000000000000000000
-      0005000000390000007F000000A3000000A20000007B00000036000000030000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0003000000300000007000000095000000940000006D0000002C000000020000
-      0000000000000000000000000000000000000000000000000000000000120000
-      00A0000000F2000000FF000000FF000000FF000000FF000000F0000000980000
-      000E000000000000000000000000000000000000000000000014000000C60000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00BD0000000E00000000000000000000000000000003000000A4000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF0000009800000002000000000000000000000036000000F4000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000F00000002C00000000000000000000007B000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF0000006D0000000000000000000000A2000000FF000000FF0000
-      00C6000000550000005500000055000000550000005500000055000000C60000
-      00FF000000FF000000940000000000000000000000A3000000FF000000FF0000
-      00C6000000550000005500000055000000550000005500000055000000C60000
-      00FF000000FF0000009600000000000000000000007F000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF00000070000000000000000000000039000000F6000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000F200000030000000000000000000000005000000AC000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000A00000000300000000000000000000000000000018000000CE0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00C6000000120000000000000000000000000000000000000000000000180000
-      00AC000000F6000000FF000000FF000000FF000000FF000000F4000000A40000
-      0014000000000000000000000000000000000000000000000000000000000000
-      0005000000390000007F000000A3000000A20000007B00000036000000030000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00000000002500000096000000AA000000AA000000890000001F000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000093000000E3000000AA000000AA000000E300000093000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000AA000000AA0000000000000000000000AA000000AA000000000000
-      0000000000000000000000000000000000000000004C000000EA000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000DF000000480000000000000000000000A4000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000A30000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000AA000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000AA0000000000000000000000A8000000FF000000FF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00FF000000FF000000A100000000000000000000005A000000D8000000E30000
-      00E3000000E3000000E3000000E3000000E3000000E3000000E3000000E30000
-      00E3000000DB00000048000000000000000000000000000000130000001C0000
-      001C0000001C0000001C0000001C0000001C0000001C0000001C0000001C0000
-      001C000000160000000100000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0003000000300000007100000095000000940000006E0000002C000000020000
-      0000000000000000000000000000000000000000000000000000000000130000
-      00A0000000F2000000FF000000FF000000FF000000FF000000F0000000990000
-      000F000000000000000000000000000000000000000000000014000000C70000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00BE0000000F00000000000000000000000000000004000000A5000000FF0000
-      00FE000000E2000000FD000000FF000000FF000000FC000000E3000000FE0000
-      00FF0000009900000002000000000000000000000036000000F4000000FF0000
-      00DB0000002000000099000000FD000000FC0000008E00000024000000E30000
-      00FF000000F00000002C00000000000000000000007C000000FF000000FF0000
-      00FB00000083000000100000009A0000008E000000100000008E000000FC0000
-      00FF000000FF0000006E0000000000000000000000A2000000FF000000FF0000
-      00FF000000FB000000820000000B0000000B0000008E000000FC000000FF0000
-      00FF000000FF000000940000000000000000000000A3000000FF000000FF0000
-      00FF000000FC0000008E0000000B0000000B0000009A000000FD000000FF0000
-      00FF000000FF0000009600000000000000000000007F000000FF000000FF0000
-      00FC0000008E000000100000008E000000820000001000000099000000FD0000
-      00FF000000FF00000071000000000000000000000039000000F6000000FF0000
-      00DA0000001C0000008E000000FC000000FB0000008300000020000000E20000
-      00FF000000F200000030000000000000000000000005000000AC000000FF0000
-      00FE000000DA000000FC000000FF000000FF000000FB000000DB000000FE0000
-      00FF000000A00000000300000000000000000000000000000019000000CF0000
-      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-      00C6000000130000000000000000000000000000000000000000000000190000
-      00AC000000F6000000FF000000FF000000FF000000FF000000F4000000A50000
-      0014000000000000000000000000000000000000000000000000000000000000
-      0005000000390000007F000000A3000000A20000007C00000036000000040000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00000000000B0000001300000005000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000160000
-      008D000000D1000000DA000000C30000005A0000000400000000000000000000
-      0000000000000000000000000000000000000000000000000017000000CB0000
-      00EA0000008900000068000000A1000000F70000008300000002000000000000
-      0000000000000000000000000000000000000000000000000094000000E20000
-      001900000000000000000000000000000067000000F30000003B000000000000
-      00000000000000000000000000000000000000000011000000D8000000760000
-      00000000000000000000000000000000000D000000D400000085000000000000
-      0000000000000000000000000000000000000000001A000000E20000005D0000
-      000000000000000000000000000000000004000000B80000009A000000000000
-      0000000000000000000000000000000000000000000A000000CF000000950000
-      000000000000000000000000000000000012000000DE00000077000000000000
-      000000000000000000000000000000000000000000000000006D000000F90000
-      004C000000070000000200000013000000A1000000E500000022000000000000
-      0000000000000000000000000000000000000000000000000008000000980000
-      00F4000000C0000000B1000000DD000000E9000000CF00000066000000030000
-      0000000000000000000000000000000000000000000000000000000000050000
-      004B00000096000000A8000000810000002600000076000000F3000000710000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000600000088000000F70000
-      006B000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000001000000830000
-      00F6000000540000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000010000
-      0065000000140000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000
+      4C7A0D0000001000000010000000240600000000000078DAED5B69685C55147E
+      5D62B5D19A1A691B1BEDA255C4E2825AC605378CD62E82E8280A2A1597404DEC
+      884BC040B42A55245134AD4D058D490B25F8477FD4FAC3058BA962B10AFE504B
+      553A5A4D292E6D68354E329E43BF4B4FAE779D699834CE818F4EDE7BDF7D7739
+      F79EEF9E779B24C36C2AE142C2B9F81D6B8D8441429EB093B09C302182CFCFAE
+      1265E45086CB4E252C238CC3DFC76865FC4C98EEE0DF46182064F0FE0A4233DE
+      ADEA7083837F2B9EFB9BF030B8FFE05A1EF558EAE0CF23F4E3D901F15E850384
+      CB3C7DF692C6D1F119A1D651C6718436C26F787E08ED91656C27CCF28CC55984
+      DBD127DCE6EF0D65D446F8C305183FBD2DB322CAB8C852466C3D4C6D3939B21E
+      B28C3EC2E991F34BF5C71EC2C2A4309B4B3827195D369950474807E272CC5365
+      8F60EEE40371101C653D40A8E9CFF3EFACB8EE43D6C0CF47E248F38B6DFFD1CC
+      5FA5ADD93EE410EBA4FF5E17E1BF8B0895C9D8B289841AACAB36D8DA3C9ED04A
+      F81173C3864D842A03BF06DC564B7FD713F662EC361BCAA845F9694BFDD47D35
+      FE9BB4B6A8FBF596765F4CD82DF8592DFE28FE5E4BBB776BBAC0C60FF5DF103E
+      C7FF6D887303917CD63C8F429BB05F3C094D11CAEF439C527636E18F08BEAE99
+      EAB436E8FC99845D5A1B39563F085DF893E1DE0CC167CDB93AC07FB378CF0B42
+      AF4A1DE79B3FB5A86B4552B6525B95E33AAFEFCF105E23BC4CB88B709A78E64A
+      C28B062E6BBA2F31D787E0C72A2EB10F3611AEC16F3DDEDD4DD8070DDF823D1C
+      FBD31CC2BD846F312FFB0DF1FF52C29F78668EA55D3713FE32E807F6C5B7F1EE
+      9485BB109AD5A43FD8EF6F223C64D92BB2C66E3768A84CD90547A5F9D62F9FF9
+      D64F9FF9625FA836B4C1B67F7980B03E80DF8D7CC5B15ADE241718BBB761AE2E
+      13FC8D11B1FF3C94D13D82FB8F3683066B8BE09B7458DAC14F89F7F8F8EAB994
+      C37F5CF51F69FF2D76FE94DA780D3F9FB0029A88D7EE06C27CE87C979D44E844
+      2CD1FD8DF5DF5AC2140B97E3446F80DFBE6F286302E6AE8BC7B1F31DC2EFA887
+      6CCB0211576D5CD602C713BAD096F982FF4400770AE2BF5A271A04BF0BD73E47
+      1C955AF775BCB749CBE9B50B7E37AE7D8CBCEF3D1803E64ED2F2A10A6B04BF45
+      5C7F0FF9D62BF0DE66CBDE7A85E05F02ADA3EEBD0B7DDD645917F7C1C712A141
+      DED29ED969C8612A741AB406BFEF8B00FFE9859F9A6C06EA71C0C0EB878FF972
+      8615E88F168C4B17FC6341642EBD5476A3250EBE41B83A80FF2B61AB81CFD77E
+      098CFF6A7D974807ACDF29B1FEB7219FD02AFECE3BE246681CED19C5FCEE007E
+      A7837FBD87CB7B9AAB1C7C5E533F71F03F34EC9B755BA4E51AE43A7A6D80FFB0
+      2EDB6279F7A488FC624CBFEB96F99FEE77AA84DEAA43EE28A6BFE4FA3D803C5D
+      8F67CEDAFA5BC2C7E778F0AA859BB1DCCF04E6EF7A8E003F4473BAF8FAFD98FC
+      23F3F9FBE26231B68B71AD107EAAC8FA9BFAE344C2A786756350D3592E9B893C
+      86DC332C8D5833C68A8D25FDDF6B293354FFA70DFBD67C84FEB7F16DFA5FD559
+      F1D49E51FDDDEBD1FF317C9BFE0FADBF4BFFFBF821FADF357E65FD5F9EFFB1FB
+      FF42E6BF0D31FBFF7C11F35F47ECFC77F143E6BF0B21F3DF86D0F99F2FEFFF4B
+      62F3E01F4AAB3E9FC49DD97A25197E9E268B6BA1167B3E6489E1FB940B3F24C3
+      CF5FAD2FC0FF4732FF5EE6C7F13716C07F53F0EF207C1390FB57D891FCF7FC5E
+      7540EE5F615A401EA4D4F13F23E27F6360FCAFF6C4FF0EECD56CF17F6BC0B87D
+      602883F30C1B448E6A5772F8FCB03AEF9515FBC30E47FCE7B19D8D6706C1E5DC
+      E119620FAAC7FF66F12ECE953F8D5CC83A70ABF0AFCC85375AE2BF2A636572E8
+      8C52A581EB8AFF795167C55FA7F5872BFEE7B43AAFC4EF0EAD8C8C25FE7F071F
+      577556FD313B397C46C715FF8750464EEB8F1D62FC4CF19FCF4A6C0F8CFFD516
+      1FACF1C4FF0D05C6FF66F8D8C4E4E8B04AF451EC39A569C8B77F8531DC82B535
+      A4DDD3F1FD6B0FF4463DD6E883F01FDFDAD30EFFAAD1AEF377FDFD89FB0CFE54
+      ACFF8F19EE9D40F89AF0AC837F0ADE7DA7E11EB77D33E6A0CD26C377575BF654
+      7C5EED714FFB1BF0BD6C097256E33186DC877CE67C6E40DE7C2DFCFCA3E4D099
+      20FE06D787BADD1FA05F2B90E75B8398FC14E14CF4EBFE2272E07C3EEF39F8C2
+      F202CB18073FE2B97D4B1165DC97C4FDBF8111B57F012614E5BC
     }
   end
   object ACBrTEFAPI1: TACBrTEFAPI

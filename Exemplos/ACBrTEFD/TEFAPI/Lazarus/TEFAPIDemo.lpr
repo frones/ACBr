@@ -8,8 +8,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   sysutils,
-  Forms, frPrincipal, uVendaClass, frIncluirPagamento, frExibeMensagem
-  { you can add units after this };
+  Forms, frPrincipal, uVendaClass, frIncluirPagamento, frExibeMensagem;
 
 {$R *.res}
 

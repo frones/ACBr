@@ -50,6 +50,7 @@ type
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrTEFAPI1: TACBrTEFAPI;
     btAdministrativo: TBitBtn;
+    btCancelarUltima: TBitBtn;
     btImprimir: TBitBtn;
     btIncluirPagamentos: TBitBtn;
     btExcluirPagamento: TBitBtn;
@@ -57,41 +58,47 @@ type
     btLimparImpressora: TBitBtn;
     btMudaPagina: TBitBtn;
     btMsgPinPad: TButton;
+    btMenuPinPad: TButton;
     btOperacao: TBitBtn;
     btEfetuarPagamentos: TBitBtn;
+    btObterCPF: TButton;
     btProcuraImpressoras: TSpeedButton;
     btSalvarParametros: TBitBtn;
     btSerial: TSpeedButton;
     btTestarPosPrinter: TBitBtn;
     btTestarTEF: TBitBtn;
-    btObterCPF: TButton;
-    cbConfirmarAutomaticamente: TCheckBox;
     cbAutoAtendimento: TCheckBox;
+    cbConfirmarAutomaticamente: TCheckBox;
     cbImprimirViaReduzida: TCheckBox;
     cbSimularErroNoDoctoFiscal: TCheckBox;
+    cbEnviarImpressora: TCheckBox;
     cbSuportaDesconto: TCheckBox;
     cbSuportaSaque: TCheckBox;
     cbxGP: TComboBox;
-    cbxTransacaoPendente: TComboBox;
+    cbxImpressaoViaCliente: TComboBox;
     cbxModeloPosPrinter: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
     cbxQRCode: TComboBox;
-    cbEnviarImpressora: TCheckBox;
-    cbxImpressaoViaCliente: TComboBox;
+    cbxTransacaoPendente: TComboBox;
     cbxTransacaoPendenteInicializacao: TComboBox;
     edCNPJEstabelecimento: TEdit;
     edCNPJSwHouse: TEdit;
+    edCodTerminal: TEdit;
+    edCodEmpresa: TEdit;
+    edEnderecoServidor: TEdit;
     edLog: TEdit;
     edNomeAplicacao: TEdit;
+    edPortaPinPad: TEdit;
     edRazaoSocialEstabelecimento: TEdit;
     edRazaoSocialSwHouse: TEdit;
     edVersaoAplicacao: TEdit;
     gbConfigImpressora: TGroupBox;
     gbConfigTEF: TGroupBox;
+    gbDadosEstabComercial: TGroupBox;
+    gbDadosSwHouseAplicacao: TGroupBox;
+    gbDadosTerminal: TGroupBox;
     gbPagamentos: TGroupBox;
-    GroupBox1: TGroupBox;
-    GroupBox2: TGroupBox;
     imgQRCode: TImage;
     Label1: TLabel;
     Label10: TLabel;
@@ -103,7 +110,11 @@ type
     Label17: TLabel;
     Label18: TLabel;
     Label19: TLabel;
+    Label20: TLabel;
     Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
@@ -120,7 +131,9 @@ type
     lURLTEF: TLabel;
     mImpressao: TMemo;
     mLog: TMemo;
+    pgConfiguracao: TPageControl;
     pConfigImpSwHouseEstab: TPanel;
+    pConfiguracao: TPanel;
     pQRCode: TPanel;
     pImpressoraBotes: TPanel;
     pImpressao: TPanel;
@@ -128,7 +141,6 @@ type
     pMensagemCliente: TPanel;
     pMensagemOperador: TPanel;
     pPrincipal: TPanel;
-    pConfiguracao: TPanel;
     pLogs: TPanel;
     pBotoesPagamentos: TPanel;
     pSimulador: TPanel;
@@ -158,6 +170,8 @@ type
     sgPagamentos: TStringGrid;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
+    tsConfTEF: TTabSheet;
+    tsConfImpressora: TTabSheet;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
     procedure ACBrTEFAPI1QuandoDetectarTransacaoPendente(
@@ -178,9 +192,11 @@ type
     procedure ACBrTEFAPI1QuandoPerguntarMenu(const Titulo: String;
       Opcoes: TStringList; var ItemSelecionado: Integer);
     procedure btAdministrativoClick(Sender: TObject);
+    procedure btCancelarUltimaClick(Sender: TObject);
     procedure btEfetuarPagamentosClick(Sender: TObject);
     procedure btExcluirPagamentoClick(Sender: TObject);
     procedure btIncluirPagamentosClick(Sender: TObject);
+    procedure btMenuPinPadClick(Sender: TObject);
     procedure btMsgPinPadClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
@@ -273,7 +289,7 @@ uses
   frIncluirPagamento, frMenuTEF, frObtemCampo, frExibeMensagem,
   configuraserial,
   ACBrUtil, ACBrDelphiZXingQRCode,
-  ACBrTEFPayGoComum, ACBrTEFAPIPayGoWeb;
+  ACBrTEFPayGoComum, ACBrTEFAPIPayGoWeb, ACBrTEFAPIStoneAutoTEF;
 
 {$R *.lfm}
 
@@ -302,6 +318,7 @@ begin
 
   pgPrincipal.ShowTabs := False;
   pgPrincipal.ActivePageIndex := 0;
+  pgConfiguracao.ActivePageIndex := 0;
 
   LerConfiguracao;
   LimparMensagensTEF;
@@ -451,6 +468,7 @@ var
   FormIncluirPagamento: TFormIncluirPagamento;
 begin
   FormIncluirPagamento := TFormIncluirPagamento.Create(Self);
+  pBotoesPagamentos.Enabled := False;
   try
     FormIncluirPagamento.cbFormaPagamento.ItemIndex := 2;
     FormIncluirPagamento.seValorPago.Value := -Venda.Troco;
@@ -461,6 +479,25 @@ begin
     end;
   finally
     FormIncluirPagamento.Free;
+    pBotoesPagamentos.Enabled := True;
+  end;
+end;
+
+procedure TFormPrincipal.btMenuPinPadClick(Sender: TObject);
+var
+  sl: TStringList;
+  i: Integer;
+begin
+  sl := TStringList.Create;
+  try
+    sl.Add('Item1');
+    sl.Add('Item2');
+    sl.Add('Item3');
+    i := ACBrTEFAPI1.MenuPinPad('Select', sl);
+
+    ShowMessage('Selecionada opção: '+IntToStr(i));
+  finally
+    sl.Free;
   end;
 end;
 
@@ -478,7 +515,24 @@ begin
   IniciarOperacao;
   StatusVenda := stsOperacaoTEF;
   try
-    ACBrTEFAPI1.EfetuarAdministrativa(tefopAdministrativo);
+    ACBrTEFAPI1.EfetuarAdministrativa(tefopReimpressao);
+  finally
+    StatusVenda := stsFinalizada;
+  end;
+end;
+
+procedure TFormPrincipal.btCancelarUltimaClick(Sender: TObject);
+begin
+  AdicionarLinhaLog('- btCancelarUltimaClick');
+  IniciarOperacao;
+  StatusVenda := stsOperacaoTEF;
+  try
+    with ACBrTEFAPI1.UltimaRespostaTEF do
+    begin
+      ACBrTEFAPI1.CancelarTransacao( NSU, CodigoAutorizacaoTransacao,
+                                     DataHoraTransacaoHost, ValorTotal,
+                                     Finalizacao, Rede );
+    end;
   finally
     StatusVenda := stsFinalizada;
   end;
@@ -975,6 +1029,11 @@ begin
     edRazaoSocialEstabelecimento.Text := INI.ReadString('Estabelecimento', 'RazaoSocial', edRazaoSocialEstabelecimento.Text);
     edCNPJEstabelecimento.Text := INI.ReadString('Estabelecimento', 'CNPJ', edCNPJEstabelecimento.Text);
 
+    edCodTerminal.Text := INI.ReadString('Terminal', 'CodTerminal', edCodTerminal.Text);
+    edCodEmpresa.Text := INI.ReadString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
+    edPortaPinPad.Text := INI.ReadString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
+    edEnderecoServidor.Text := INI.ReadString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
+
     cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', 1);
     cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
     cbxPagCodigo.ItemIndex := INI.ReadInteger('PosPrinter','PaginaDeCodigo', 2);
@@ -1014,6 +1073,11 @@ begin
 
     INI.WriteString('Estabelecimento', 'RazaoSocial', edRazaoSocialEstabelecimento.Text);
     INI.WriteString('Estabelecimento', 'CNPJ', edCNPJEstabelecimento.Text);
+
+    INI.WriteString('Terminal', 'CodTerminal', edCodTerminal.Text);
+    INI.WriteString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
+    INI.WriteString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
+    INI.WriteString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
 
     INI.WriteInteger('PosPrinter', 'Modelo', cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta', cbxPorta.Text);
@@ -1095,6 +1159,9 @@ begin
   gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
+  btCancelarUltima.Enabled := (AValue = stsLivre);
+  btMsgPinPad.Enabled := (AValue = stsLivre);
+  btMenuPinPad.Enabled := (AValue = stsLivre);
   btObterCPF.Enabled := btAdministrativo.Enabled;
   pImpressao.Enabled := (AValue in [stsLivre, stsFinalizada, stsCancelada]);
   btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
@@ -1336,7 +1403,7 @@ begin
     Modalidade := tefmpNaoDefinido;
     CartoesAceitos := [];
 
-    TemTEF := (IndicePagto >= 2) and (IndicePagto <= 5);
+    TemTEF := (IndicePagto >= 2) and (IndicePagto <= 6);
     case IndicePagto of
       2:
         Modalidade := tefmpCheque;
@@ -1362,11 +1429,15 @@ begin
     if TemTEF then
     begin
       // -- Exemplo, usando TypeCast, para inserir Propriedades direto na Classe de TEF -- //
+
       (*
       if ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb then
       begin
         with TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF) do
         begin
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_POSID] := '99999';   // PDC
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_DESTTCPIP] := 'esba-hom01.tpgweb.io:17500'  // Homologação
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_DESTTCPIP] := 'pl03.pgweb.io:17500'  // Produção
           TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST] := 'REDE';   // Autorizador
           TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE] := '2';       // 01: à vista, 2: parcelado
           TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_INSTALLMENTS] := '3';  // Parcelas
@@ -1800,6 +1871,11 @@ begin
   ACBrTEFAPI1.DadosEstabelecimento.RazaoSocial := edRazaoSocialEstabelecimento.Text;
   ACBrTEFAPI1.DadosEstabelecimento.CNPJ := edCNPJEstabelecimento.Text;
 
+  ACBrTEFAPI1.DadosTerminal.CodTerminal := edCodTerminal.Text;
+  ACBrTEFAPI1.DadosTerminal.CodEmpresa := edCodEmpresa.Text;
+  ACBrTEFAPI1.DadosTerminal.PortaPinPad := edPortaPinPad.Text;
+  ACBrTEFAPI1.DadosTerminal.EnderecoServidor := edEnderecoServidor.Text;
+
   case cbxQRCode.ItemIndex of
     0: ACBrTEFAPI1.ExibicaoQRCode := qrapiNaoSuportado;
     2: ACBrTEFAPI1.ExibicaoQRCode := qrapiExibirPinPad;
@@ -1809,10 +1885,21 @@ begin
   end;
 
   // -- Exemplo de como ajustar o diretório de Trabalho, da PayGoWeb -- //
-  (*
+
   if (ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb) then
-    TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF).DiretorioTrabalho := 'C:\PAYGOWEB';
-  *)
+  begin
+    with TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF) do
+    begin
+      //DiretorioTrabalho := 'C:\PAYGOWEB\PROD';
+      //DiretorioTrabalho := 'C:\PAYGOWEB\INGENICO';
+      DiretorioTrabalho := 'C:\PAYGOWEB';
+      //TEFPayGoAPI.PathLib := 'C:\temp\64bits\PGWebLib.dll';
+      {$IFDEF DEBUG}
+       TEFPayGoAPI.IsDebug := True;
+      {$EndIf}
+    end;
+  end;
+
 end;
 
 procedure TFormPrincipal.AtivarTEF;

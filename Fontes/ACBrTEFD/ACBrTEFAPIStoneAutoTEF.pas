@@ -236,7 +236,6 @@ begin
       NFCeSAT.CodCredenciadora := '999';  // ??
       NFCeSAT.CNPJCredenciadora := '16.501.555/0001-57';  // Stone
       NFCeSAT.Autorizacao := NSU;
-      NFCeSAT.Bandeira := Instituicao;
       NFCeSAT.UltimosQuatroDigitos := BIN;
       NFCeSAT.Bandeira := CodigoBandeiraPadrao;
     end;

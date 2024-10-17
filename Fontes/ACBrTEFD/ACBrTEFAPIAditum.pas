@@ -68,6 +68,7 @@ resourcestring
   sACBrAditumCNPJEstabelecimentoDiferente = 'CNPJ informado em "DadosEstabelecimento.CNPJ": %s'+sLineBreak+'é diferente do retornado pelo '+CAditumTEF+': %s';
   sACBrAditumErroDadoNaoEJSon = 'Dado informado em %s não é um JSON válido';
   sACBrAditumErroEstabelecimentoNaoAtivo = 'Estabelecimento %s não está Ativo';
+  sACBrAditumSemNSU = 'NSU não informado';
 
 type
 
@@ -76,8 +77,6 @@ type
   TACBrTEFRespAditum = class( TACBrTEFResp )
   public
     procedure ConteudoToProperty; override;
-    procedure ProcessarTipoInterno(ALinha: TACBrTEFLinha); override;
-
   end;
 
   { TACBrTEFAPIClassAditum }
@@ -93,10 +92,12 @@ type
     procedure DoException(const AErrorMsg: String);
     procedure LimparRespostaHTTP;
     procedure TransmitirHttp(const AMethod, AEndpoint: String; const ABody: AnsiString = '');
+    procedure TransmitirHttpComEspera(const AMethod, AEndpoint: String; const ABody: AnsiString = '');
     procedure TratarRetornoComErro;
 
     function TransactionStatusDescription(const ATransactionStatus: String): String;
     function DadoPinPadToMessageType(TipoDado: TACBrTEFAPIDadoPinPad): String;
+    function GetErrorCode(AJSonObject: TACBrJSONObject): Integer;
 
   protected
     procedure InterpretarRespostaAPI; override;
@@ -105,6 +106,7 @@ type
     constructor Create(AACBrTEFAPI: TACBrTEFAPIComum);
     destructor Destroy; override;
 
+    procedure Inicializar; override;
     procedure DesInicializar; override;
     procedure Autenticar; override;
 
@@ -128,6 +130,7 @@ type
       Valor: Double;
       const CodigoFinalizacao: string = '';
       const Rede: string = ''): Boolean; override;
+    procedure RecuperarTransacao(const NSU: String);
 
     procedure FinalizarTransacao(
       const Rede, NSU, CodigoFinalizacao: String;
@@ -164,144 +167,85 @@ uses
 
 procedure TACBrTEFRespAditum.ConteudoToProperty;
 var
-  js, jsreceipt, jscard: TACBrJSONObject;
+  js, jsCharge: TACBrJSONObject;
   i: Integer;
   s: String;
+  jsReceipt: TACBrJSONArray;
+  isApproved, isCanceled: Boolean;
 begin
   fpCNFEnviado := (UpperCase(Conteudo.LeInformacao(899,1).AsString) = 'S');
   fpHeader := Conteudo.LeInformacao(899,100).AsString;
   s := Conteudo.LeInformacao(899,200).AsString;
   js := TACBrJSONObject.Parse(s);
   try
-    Rede := 'STONE';
-    Confirmar := False;
-    jsreceipt := js.AsJSONObject['receipt'];
-    if Assigned(jsreceipt) then
+    jsCharge := js.AsJSONObject['charge'];
+    if Assigned(jsCharge) then
     begin
-      NSU := jsreceipt.AsString['acquirerTransactionKey'];
-      //Finalizacao := jsreceipt.AsString['aid'];
-      ValorTotal := jsreceipt.AsCurrency['amount'];
-      Trailer := jsreceipt.AsString['arqc'];                         // estranho ?
-      ValorEntradaCDC := jsreceipt.AsCurrency['availableBalance'];   // estranho ?
-      Instituicao := jsreceipt.AsString['brandName'];
-      NFCeSAT.DonoCartao := Trim(jsreceipt.AsString['cardholderName']);
-      NSU_TEF := jsreceipt.AsString['initiatorTransactionKey'];
-      TipoParcelamento := jsreceipt.AsInteger['installmentType'];
-      case TipoParcelamento of
-        2: ParceladoPor := parcLoja;
-        3: ParceladoPor := parcADM;
+      Rede := jsCharge.AsString['acquirerName'];
+      CodigoRedeAutorizada := jsCharge.AsString['aid'];
+      ValorTotal := jsCharge.AsFloat['amount']/100;
+      CodigoAutorizacaoTransacao := jsCharge.AsString['authorizationCode'];
+      NSU_TEF := jsCharge.AsString['authorizationResponseCode'];
+      ValorOriginal := jsCharge.AsFloat['balance']/100;
+      NomeAdministradora := jsCharge.AsString['brand'];
+      DataHoraTransacaoCancelada := jsCharge.AsISODateTime['cancelationDateTime'];
+      DataHoraTransacaoHost := jsCharge.AsISODateTime['captureDateTime'];
+      DataHoraTransacaoLocal := jsCharge.AsISODateTime['creationDateTime'];
+      NFCeSAT.DonoCartao := jsCharge.AsString['cardHolderName'];
+      BIN := jsCharge.AsString['cardNumber'];
+
+      jsReceipt := jsCharge.AsJSONArray['cardholderReceipt'];
+      ImagemComprovante1aVia.Clear;
+      for i := 0 to jsReceipt.Count-1 do
+        ImagemComprovante1aVia.Add(jsReceipt.Items[i]);
+
+      jsReceipt := jsCharge.AsJSONArray['merchantReceipt'];
+      ImagemComprovante2aVia.Clear;
+      for i := 0 to jsReceipt.Count-1 do
+        ImagemComprovante2aVia.Add(jsReceipt.Items[i]);
+
+      QtdParcelas := jsCharge.AsInteger['installmentNumber'];
+      isApproved := (LowerCase(jsCharge.AsString['isApproved']) = 'true');
+      isCanceled := (LowerCase(jsCharge.AsString['isCanceled']) = 'true');
+      Sucesso := isApproved or isCanceled;
+      Confirmar := isApproved and (not isCanceled);
+
+      s := LowerCase(jsCharge.AsString['installmentType']);
+      if (s = 'merchant') then
+        ParceladoPor := parcLoja
+      else if (s = 'issuer') then
+        ParceladoPor := parcADM
       else
         ParceladoPor := parcNenhum;
-      end;
 
-      QtdParcelas := jsreceipt.AsInteger['totalNumberOfPayments'];
-      BIN := Trim(jsreceipt.AsString['maskedPrimaryAccountNumber']);
-      //SerialPOS := jsreceipt.AsString['systemSpecifications'];    // estranho ?
-      DataHoraTransacaoHost := jsreceipt.AsISODateTime['transactionDateTime'];
-      i := jsreceipt.AsInteger['transactionType'];
-      Debito := (i = 1);
-      Credito := (i = 2);
-
-      s := jsreceipt.AsString['clientVia'];
-      //D ImagemComprovante1aVia.Text := FormatarTextoCupom(s);
-      s := jsreceipt.AsString['merchantVia'];
-      //D ImagemComprovante2aVia.Text := FormatarTextoCupom(s);
-      QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
-
-      ModalidadePagto := jsreceipt.AsString['cardReadingType'];
-      Digitado := jsreceipt.AsBoolean['cardNeedsPassword'];       // estranho ?
-      CodigoAutorizacaoTransacao := jsreceipt.AsString['authorisationCode'];
-      TextoEspecialOperador := jsreceipt.AsString['messageDisplay'];
-      Voucher := jsreceipt.AsBoolean['isVoucher'];
-      Debito := Debito and (not Voucher);
-
-      Estabelecimento := jsreceipt.AsString['merchantDocument'];
-      Estabelecimento := Estabelecimento + ', ' + jsreceipt.AsString['merchantName'];
-      Estabelecimento := Estabelecimento + ', ' + jsreceipt.AsString['merchantAddress'];
-      Estabelecimento := Estabelecimento + ', ' + jsreceipt.AsString['merchantCity'];
-      Estabelecimento := Estabelecimento + ', ' + jsreceipt.AsString['merchantZipCode'];
-
-      ValorOriginal := jsreceipt.AsCurrency['totalAmountReversal'];
-      s := Trim(jsreceipt.AsString['cne']);
-      if (s <> '') then
-        NFCeSAT.DonoCartao := s;
-
-      Autenticacao := jsreceipt.AsString['retrievalReferenceNumber'];
-      CodigoBandeiraPadrao := Trim(jsreceipt.AsString['productBrandCard']);
-      CodigoPSP := jsreceipt.AsString['stoneCode'];
+      Debito := False; Credito := False; Voucher := False;
+      s := LowerCase(jsCharge.AsString['paymentType']);
+      if (s = 'debit') then
+        Debito := True
+      else if (s = 'credit') then
+        Credito := True
+      else if (s = 'voucher') then
+        Voucher := True;
 
       if Credito and (QtdParcelas > 1) then
         TipoOperacao := opParcelado
       else
         TipoOperacao := opAvista;
 
-      NFCeSAT.CodCredenciadora := '999';  // ??
-      NFCeSAT.CNPJCredenciadora := '16.501.555/0001-57';  // Stone
+      Digitado := (LowerCase(jsCharge.AsString['isCaptured']) <> 'true');
+      DocumentoVinculado := jsCharge.AsString['merchantChargeId'];
+      NSU_TEF := jsCharge.AsString['merchantTransactionId'];
+      NSU := jsCharge.AsString['nsu'];
+      SerialPOS := jsCharge.AsString['origin'];
+
       NFCeSAT.Autorizacao := NSU;
-      NFCeSAT.Bandeira := Instituicao;
-      NFCeSAT.UltimosQuatroDigitos := BIN;
-      NFCeSAT.Bandeira := CodigoBandeiraPadrao;
-    end;
-
-    jscard := js.AsJSONObject['card'];
-    if Assigned(jscard) then
-    begin
-      ModalidadePagto := jscard.AsString['brandId'];
-      ModalidadePagtoDescrita := jscard.AsString['brandName'];
-      if (NFCeSAT.DonoCartao = '') then
-        NFCeSAT.DonoCartao := Trim(jscard.AsString['cardholderName']);
-      s := jscard.AsString['expirationDate'];
-      NFCeSAT.DataExpiracao := copy(s,6,2) + copy(s,3,2);  //MMAA
-      s := Trim(jscard.AsString['maskedPrimaryAccountNumber']);
-      if (s <> '') then
-        BIN := s;
-      TipoTransacao := jscard.AsInteger['type'];
-    end;
-
-    Sucesso := (NSU <> '');
-    if not Sucesso then
-    begin
-      StatusTransacao := js.AsString['code'];
-      if (StatusTransacao = '') then
-        StatusTransacao := js.AsString['reason'];
-      if (StatusTransacao = '') then
-        StatusTransacao := js.AsString['responseCode'];
-      if (StatusTransacao = '') then
-        StatusTransacao := js.AsString['ResponseCode'];
-
-      if (TextoEspecialOperador = '') then
-        TextoEspecialOperador := Trim(js.AsString['displayMessage']);
-      if (TextoEspecialOperador = '') then
-        TextoEspecialOperador := Trim(js.AsString['messageDisplay']);
-      if (TextoEspecialOperador = '') then
-        TextoEspecialOperador := Trim(js.AsString['responseReason']);
-      if (TextoEspecialOperador = '') then
-        TextoEspecialOperador := Trim(js.AsString['ResponseReason']);
-    end
-    else
-    begin
-      if (fpHeader = CHEADER_PAGAMENTO) then
-      begin
-        // Mapeia campos, necessários, para o efetuar Cancelamento
-        Finalizacao := BIN;
-        if Credito then
-          Rede := CPaymentType_CREDIT
-        else if Debito then
-          Rede := CPaymentType_DEBIT
-        else
-          Rede := '';
-      end;
+      NFCeSAT.Bandeira := NomeAdministradora;
+      NFCeSAT.UltimosQuatroDigitos := copy(BIN, Length(BIN)-3, 4);
     end;
   finally
     js.Free;
   end;
 end;
-
-procedure TACBrTEFRespAditum.ProcessarTipoInterno(ALinha: TACBrTEFLinha);
-begin
-  {}
-end;
-
 
 { TACBrTEFAPIClassAditum }
 
@@ -319,6 +263,29 @@ begin
   FHTTP.Free;
   FavailableBrands.Free;
   inherited Destroy;
+end;
+
+procedure TACBrTEFAPIClassAditum.Inicializar;
+begin
+  if (fpACBrTEFAPI.DadosTerminal.CodTerminal = '') then
+    DoException(ACBrStr(sACBrAditumSemActivationCode));
+
+  if (fpACBrTEFAPI.DadosTerminal.CodEmpresa = '') then
+    DoException(ACBrStr(sACBrAditumSemPartnerToken));
+
+  if (fpACBrTEFAPI.DadosAutomacao.NomeAplicacao = '') then
+    DoException(ACBrStr(sACBrAditumSemNomeAplicacao));
+
+  if (fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao = '') then
+    DoException(ACBrStr(sACBrAditumSemVersaoAplicacao));
+
+  if (fpACBrTEFAPI.DadosTerminal.EnderecoServidor = '') then
+    fpACBrTEFAPI.DadosTerminal.EnderecoServidor := CAditumAPIURL
+  else
+    fpACBrTEFAPI.DadosTerminal.EnderecoServidor := URLWithDelim(fpACBrTEFAPI.DadosTerminal.EnderecoServidor);
+
+  AbortarTransacaoEmAndamento;
+  inherited Inicializar;
 end;
 
 procedure TACBrTEFAPIClassAditum.DesInicializar;
@@ -353,7 +320,7 @@ procedure TACBrTEFAPIClassAditum.TransmitirHttp(const AMethod,
 var
   url: String;
   Transmitir: Boolean;
-  js, jserro: TACBrJSONObject;
+  js: TACBrJSONObject;
   jserrors: TACBrJSONArray;
   i: Integer;
 begin
@@ -390,8 +357,7 @@ begin
         begin
           for i := 0 to jserrors.Count-1 do
           begin
-            jserro := jserrors.ItemAsJSONObject[i];
-            if (jserro.AsInteger['errorCode'] = -1000) then
+            if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = -1000) then
             begin
               Transmitir := True;
               Autenticar;
@@ -405,6 +371,50 @@ begin
     except
     end;
   end;
+end;
+
+procedure TACBrTEFAPIClassAditum.TransmitirHttpComEspera(const AMethod,
+  AEndpoint: String; const ABody: AnsiString);
+var
+  Fim: Boolean;
+  js, jsCharge: TACBrJSONObject;
+  jsErrors: TACBrJSONArray;
+  sMsg: String;
+  TefAPI: TACBrTEFAPI;
+begin
+  TefAPI := TACBrTEFAPI(fpACBrTEFAPI);
+  Fim := False;
+  sMsg := '';
+  while not Fim do
+  begin
+    TransmitirHttp(AMethod, AEndpoint, ABody);
+    if (FHTTPResultCode <> HTTP_OK) then
+      TratarRetornoComErro;
+
+    js := TACBrJSONObject.Parse(FHTTPResponse);
+    try
+      jsCharge := js.AsJSONObject['charge'];
+      jsErrors := js.AsJSONArray['errors'];
+      Fim := Assigned(jsCharge) or (Assigned(jsErrors) and (jsErrors.Count > 0));
+
+      sMsg := UTF8ToNativeString(js.AsString['operatorMessage']);
+      if (not Fim) and (sMsg = '') then
+        sMsg := ACBrStr(TransactionStatusDescription(js.AsString['status']));
+
+      if (sMsg <> '') then
+        if Assigned(TefAPI.QuandoExibirMensagem) then
+          TefAPI.QuandoExibirMensagem( sMsg, telaOperador, -1 );
+    finally
+      js.Free;
+    end;
+
+    if not Fim then
+      Sleep(CPoolSleep);
+  end;
+
+  if (sMsg <> '') then
+    if Assigned(TefAPI.QuandoExibirMensagem) then
+      TefAPI.QuandoExibirMensagem( '', telaOperador, -1 );  // Remove Msg
 end;
 
 procedure TACBrTEFAPIClassAditum.TratarRetornoComErro;
@@ -425,8 +435,8 @@ begin
         for i := 0 to jserrors.Count-1 do
         begin
           jserro := jserrors.ItemAsJSONObject[i];
+          eCode := GetErrorCode(jserrors.ItemAsJSONObject[i]);
           eDescription := jserro.AsString['description'];
-          eCode := jserro.AsInteger['errorCode'];
           eMessage := jserro.AsString['message'];
 
           sMessage := sMessage + Format('%d - %s',[eCode, eDescription]);
@@ -515,6 +525,13 @@ begin
   end;
 end;
 
+function TACBrTEFAPIClassAditum.GetErrorCode(AJSonObject: TACBrJSONObject): Integer;
+begin
+  Result := AJSonObject.AsInteger['errorCode'];
+  if (Result = 0) then;
+    Result := AJSonObject.AsInteger['code'];
+end;
+
 procedure TACBrTEFAPIClassAditum.Autenticar;
 var
   js, jspinpadMessages, jsmerchantInfo: TACBrJSONObject;
@@ -524,23 +541,6 @@ var
 begin
   GravarLog('Autenticar');
   LimparRespostaHTTP;
-  if (fpACBrTEFAPI.DadosTerminal.CodTerminal = '') then
-    DoException(ACBrStr(sACBrAditumSemActivationCode));
-
-  if (fpACBrTEFAPI.DadosTerminal.CodEmpresa = '') then
-    DoException(ACBrStr(sACBrAditumSemPartnerToken));
-
-  if (fpACBrTEFAPI.DadosAutomacao.NomeAplicacao = '') then
-    DoException(ACBrStr(sACBrAditumSemNomeAplicacao));
-
-  if (fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao = '') then
-    DoException(ACBrStr(sACBrAditumSemVersaoAplicacao));
-
-  if (fpACBrTEFAPI.DadosTerminal.EnderecoServidor = '') then
-    fpACBrTEFAPI.DadosTerminal.EnderecoServidor := CAditumAPIURL
-  else
-    fpACBrTEFAPI.DadosTerminal.EnderecoServidor := URLWithDelim(fpACBrTEFAPI.DadosTerminal.EnderecoServidor);
-
   try
     jspinpadMessages := TACBrJSONObject.Parse(fpACBrTEFAPI.DadosTerminal.ParamComunicacao);
   except
@@ -617,7 +617,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      Result := (LowerCase(js.AsString['status']) = 'ok');
+      Result := (LowerCase(js.AsString['status']) = 'initialized');
     finally
       js.Free;
     end;
@@ -633,17 +633,8 @@ begin
     Clear;
     Conteudo.GravaInformacao(899,200,FHTTPResponse);
     DocumentoVinculado := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
-    if OperacaoEmAndamento in [tefmtdPagamento, tefmtdCancelamento] then
-      CNFEnviado := True;
     AtualizarHeader;
-
     ConteudoToProperty;
-
-    if (FHTTPResultCode <> HTTP_OK) then
-    begin
-      if (TextoEspecialOperador = '') then
-        TratarRetornoComErro;
-    end;
   end;
 end;
 
@@ -652,10 +643,11 @@ function TACBrTEFAPIClassAditum.EfetuarPagamento(ValorPagto: Currency;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  js: TACBrJSONObject;
-  sBody, sPaymentType, sInstallmentType, sStatus: String;
+  js, jsCharge: TACBrJSONObject;
+  jsErrors: TACBrJSONArray;
+  sBody, sPaymentType, sInstallmentType, sMerchantChargeId: String;
+  i: Integer;
   Fim: Boolean;
-  TefAPI: TACBrTEFAPI;
 begin
   if not (Modalidade in [tefmpCartao]) then
     DoException(ACBrStr(Format(sACBrAditumErroModalidadeNaoSuportada,
@@ -699,34 +691,70 @@ begin
      js.AddPair('installmentType', sinstallmentType);
     if (Parcelas > 0) then
       js.AddPair('installmentNumber', Parcelas);
+
+    if js.ValueExists('merchantChargeId') then
+      sMerchantChargeId := js.AsString['merchantChargeId']
+    else
+    begin
+      sMerchantChargeId := FormatDateTime('yymmddhhnnss', Now);
+      js.AddPair('merchantChargeId', sMerchantChargeId);
+    end;
+
+    if not js.ValueExists('origin') then
+      js.AddPair('origin', 'ACBr');
+
     sBody := js.ToJSON;
   finally
     js.free;
   end;
 
-  TefAPI := TACBrTEFAPI(fpACBrTEFAPI);
   Fim := False;
   while not Fim do
   begin
-    TransmitirHttp(cHTTPMethodPOST, 'charge/authorization', sBody);
-    if (FHTTPResultCode <> HTTP_OK) then
-      TratarRetornoComErro;
+    TransmitirHttpComEspera(cHTTPMethodPOST, 'charge/authorization', sBody);
 
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      Fim := js.ValueExists('charge') or js.ValueExists('errors');
-      if not Fim then
+      jsCharge := js.AsJSONObject['charge'];
+      jsErrors := js.AsJSONArray['errors'];
+      Fim := Assigned(jsCharge) or (Assigned(jsErrors) and (jsErrors.Count > 0));
+
+      if Fim then
       begin
-        sStatus := js.AsString['status'];
-        if Assigned(TefAPI.QuandoExibirMensagem) then
-          TefAPI.QuandoExibirMensagem( TransactionStatusDescription(sStatus), telaOperador, -1 );
+        for i := 0 to jsErrors.Count-1 do
+        begin
+          if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = 13) then  // OPERAÇÃO (anterior) CANCELADA
+          begin
+            Fim := False;
+            Break;
+          end;
+        end;
+      end;
+
+      if Fim then
+      begin
+        if Assigned(jsCharge) then
+          if (sMerchantChargeId <> Trim(jsCharge.AsString['merchantChargeId'])) then  // Resposta de Transação não é mesma que foi a enviada, ignore...
+            Fim := False;
       end;
     finally
       js.Free;
     end;
-
-    Sleep(CPoolSleep);
   end;
+
+  Result := (FHTTPResultCode = HTTP_OK);
+  if Result then
+  begin
+    js := TACBrJSONObject.Parse(FHTTPResponse);
+    try
+      Result := (LowerCase(js.AsString['success']) = 'true');
+    finally
+      js.Free;
+    end;
+  end;
+
+  if not Result then
+    TratarRetornoComErro;
 end;
 
 function TACBrTEFAPIClassAditum.EfetuarAdministrativa(
@@ -738,20 +766,26 @@ begin
   begin
     VerificarPresencaPinPad;
     Result := True;
-    Exit;
+  end
+
+  else if (OperacaoAdm = tefopReimpressao) then
+  begin
+    if (fpACBrTEFAPI.UltimaRespostaTEF.NSU = '') then
+      DoException(ACBrStr(sACBrAditumSemNSU))
+    else
+      RecuperarTransacao(fpACBrTEFAPI.UltimaRespostaTEF.NSU);
+    Result := True;
   end;
 
-  //DoException(ACBrStr(Format(sACBrStoneAutoTEFErroModalidadeNaoSuportada,
-  //D  ['EfetuarAdministrativa( '+GetEnumName(TypeInfo(TACBrTEFOperacao), integer(OperacaoAdm) )+' )'])));
+  if not Result then
+    DoException(ACBrStr(Format(sACBrAditumErroModalidadeNaoSuportada,
+      ['EfetuarAdministrativa( '+GetEnumName(TypeInfo(TACBrTEFOperacao), integer(OperacaoAdm) )+' )'])));
 end;
 
 function TACBrTEFAPIClassAditum.EfetuarAdministrativa(
   const CodOperacaoAdm: string): Boolean;
 begin
-  LimparRespostaHTTP;
-  Result := False;
-  //DoException(ACBrStr(Format(sACBrStoneAutoTEFErroModalidadeNaoSuportada,
-  //D  ['EfetuarAdministrativa( '+CodOperacaoAdm+' )'])));
+  Result := EfetuarAdministrativa( TACBrTEFOperacao(StrToIntDef(CodOperacaoAdm, 0)) );
 end;
 
 function TACBrTEFAPIClassAditum.CancelarTransacao(const NSU,
@@ -759,22 +793,80 @@ function TACBrTEFAPIClassAditum.CancelarTransacao(const NSU,
   Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
 var
   js: TACBrJSONObject;
-  sBody: String;
+  sBody, sURL: String;
+  jsErrors: TACBrJSONArray;
+  i: Integer;
 begin
   LimparRespostaHTTP;
+  if (Trim(NSU) = '') then
+    DoException(ACBrStr(sACBrAditumSemNSU));
+
   js := TACBrJSONObject.Create;
   try
-    js.AddPair('acquirerTransactionKey', NSU);
-    js.AddPair('amount', Valor);
-    js.AddPair('transactionType', Rede);
-    js.AddPair('panMask', CodigoFinalizacao);
+    js.AddPair('requireCard', True);
     sBody := js.ToJSON;
   finally
     js.free;
   end;
 
-  TransmitirHttp(cHTTPMethodPOST, 'api/cancel', sBody);
+  sURL := 'charge/cancelation/by-nsu/'+Trim(NSU);
+  TransmitirHttpComEspera(cHTTPMethodGET, sURL, sBody);
   Result := (FHTTPResultCode = HTTP_OK);
+  if Result then
+  begin
+    js := TACBrJSONObject.Parse(FHTTPResponse);
+    try
+      Result := (LowerCase(js.AsString['canceled']) = 'true');
+      if not Result then
+      begin
+        jsErrors := js.AsJSONArray['errors'];
+        if Assigned(jsErrors) then
+        begin
+          for i := 0 to jsErrors.Count-1 do
+          begin
+            if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = -1950) then  // Transação já cancelada
+            begin
+              Result := True;
+              Break;
+            end;
+          end;
+        end;
+      end;
+    finally
+      js.Free;
+    end;
+  end;
+
+  if not Result then
+    TratarRetornoComErro;
+end;
+
+procedure TACBrTEFAPIClassAditum.RecuperarTransacao(const NSU: String);
+var
+  sURL: String;
+  js: TACBrJSONObject;
+  Ok: Boolean;
+begin
+  LimparRespostaHTTP;
+  sURL := 'charge/by-nsu/' + Trim(NSU);
+  TransmitirHttp(cHTTPMethodGET, sURL );
+  OK := (FHTTPResultCode = HTTP_OK);
+  if OK then
+  begin
+    js := TACBrJSONObject.Parse(FHTTPResponse);
+    try
+      Ok := (LowerCase(js.AsString['success']) = 'true');
+      if Ok then
+        FinalizarChamadaAPI
+      else
+        TratarRetornoComErro;
+    finally
+      js.Free;
+    end;
+  end;
+
+  if not Ok then
+    TratarRetornoComErro;
 end;
 
 procedure TACBrTEFAPIClassAditum.FinalizarTransacao(const Rede, NSU,
@@ -783,6 +875,8 @@ var
   sURL: String;
   js: TACBrJSONObject;
   Confirmar, Ok: Boolean;
+  jsErrors: TACBrJSONArray;
+  i: Integer;
 begin
   LimparRespostaHTTP;
   Confirmar := (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]);
@@ -792,19 +886,36 @@ begin
     sURL := 'charge/reversal/by-nsu/';
 
   sURL := sURL + Trim(NSU);
-  TransmitirHttp(cHTTPMethodGET, sURL);
+  if Confirmar then
+    TransmitirHttp(cHTTPMethodGET, sURL)
+  else
+    TransmitirHttpComEspera(cHTTPMethodGET, sURL);
+
   OK := (FHTTPResultCode = HTTP_OK);
   if OK then
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      Ok := (LowerCase(js.AsString['success']) = 'true');
-      if Ok then
+      if Confirmar then
+        Ok := (LowerCase(js.AsString['confirmed']) = 'true') and (LowerCase(js.AsString['success']) = 'true')
+      else
       begin
-        if Confirmar then
-          Ok := (LowerCase(js.AsString['confirmed']) = 'true')
-        else
-          Ok := (LowerCase(js.AsString['canceled']) = 'true');
+        Ok := (LowerCase(js.AsString['canceled']) = 'true');
+        if not Ok then
+        begin
+          jsErrors := js.AsJSONArray['errors'];
+          if Assigned(jsErrors) then
+          begin
+            for i := 0 to jsErrors.Count-1 do
+            begin
+              if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = -1950) then  // Transação já cancelada
+              begin
+                Ok := True;
+                Break;
+              end;
+            end;
+          end;
+        end;
       end;
     finally
       js.Free;
@@ -818,7 +929,7 @@ end;
 procedure TACBrTEFAPIClassAditum.ResolverTransacaoPendente(
   AStatus: TACBrTEFStatusTransacao);
 begin
-  { não há o conceito de transações pendentes }
+  //D { não há o conceito de transações pendentes }
 end;
 
 procedure TACBrTEFAPIClassAditum.AbortarTransacaoEmAndamento;

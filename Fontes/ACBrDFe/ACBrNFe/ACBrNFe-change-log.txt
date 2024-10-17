@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2024
+-- ACBrNFe.XmlReader --
+[-] Realizado correções na leitura dos impostos: ICMS, PIS e COFINS.
+   Por: Italo Giurizzato Junior
+
 11/10/2024
 -- ACBrDFeDANFeReport, ACBrDFeDANFeFRDM --
 [*] #TK-6038: Ajustes visando a correta quebra de linhas nas observações quando for criada pelo componente.

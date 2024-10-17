@@ -856,8 +856,97 @@ end;
 procedure TNFeXmlReader.LerDetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
 var
   ok: Boolean;
-  AuxNode, AxNode: TACBrXmlNode;
+  AuxNode, AxNode, AxNodePIS, AxNodeCOFINS: TACBrXmlNode;
   sAux: string;
+
+  procedure LerICMS(sIcms: String; ANodeImposto: TImposto);
+  var
+    ANodeICMS: TACBrXmlNode;
+  begin
+    if not Assigned(AuxNode) then Exit;
+
+    ANodeICMS := AuxNode.Childrens.Find(sIcms);
+
+    if not Assigned(ANodeICMS) then Exit;
+
+    ANodeImposto.ICMS.orig := StrToOrig(ok, ObterConteudo(ANodeICMS.Childrens.Find('orig'), tcStr));
+    ANodeImposto.ICMS.CST := StrToCSTICMS(ok, ObterConteudo(ANodeICMS.Childrens.Find('CST'), tcStr));
+    ANodeImposto.ICMS.CSOSN := StrToCSOSNIcms( ok,ObterConteudo(ANodeICMS.Childrens.Find('CSOSN'), tcInt));
+    ANodeImposto.ICMS.modBC := StrToModBC(ok, ObterConteudo(ANodeICMS.Childrens.Find('modBC'), tcStr));
+    ANodeImposto.ICMS.pRedBC := ObterConteudo(ANodeICMS.Childrens.Find('pRedBC'), tcDe2);
+    ANodeImposto.ICMS.vBC := ObterConteudo(ANodeICMS.Childrens.Find('vBC'), tcDe2);
+    ANodeImposto.ICMS.pICMS := ObterConteudo(ANodeICMS.Childrens.Find('pICMS'), tcDe2);
+    ANodeImposto.ICMS.vICMSOp := ObterConteudo(ANodeICMS.Childrens.Find('vICMSOp'), tcDe2);
+    ANodeImposto.ICMS.pDif := ObterConteudo(ANodeICMS.Childrens.Find('pDif'), tcDe4);
+    ANodeImposto.ICMS.vICMSDif := ObterConteudo(ANodeICMS.Childrens.Find('vICMSDif'), tcDe2);
+    ANodeImposto.ICMS.vICMS := ObterConteudo(ANodeICMS.Childrens.Find('vICMS'), tcDe2);
+    ANodeImposto.ICMS.vBCFCP := ObterConteudo(ANodeICMS.Childrens.Find('vBCFCP'), tcDe2);
+    ANodeImposto.ICMS.pFCP := ObterConteudo(ANodeICMS.Childrens.Find('pFCP'), tcDe2);
+    ANodeImposto.ICMS.vFCP := ObterConteudo(ANodeICMS.Childrens.Find('vFCP'), tcDe2);
+    ANodeImposto.ICMS.modBCST := StrToModBCST(ok, ObterConteudo(ANodeICMS.Childrens.Find('modBCST'), tcStr));
+    ANodeImposto.ICMS.pMVAST := ObterConteudo(ANodeICMS.Childrens.Find('pMVAST'), tcDe2);
+    ANodeImposto.ICMS.pRedBCST := ObterConteudo(ANodeICMS.Childrens.Find('pRedBCST'), tcDe2);
+    ANodeImposto.ICMS.vBCST := ObterConteudo(ANodeICMS.Childrens.Find('vBCST'), tcDe2);
+    ANodeImposto.ICMS.pICMSST := ObterConteudo(ANodeICMS.Childrens.Find('pICMSST'), tcDe2);
+    ANodeImposto.ICMS.vICMSST := ObterConteudo(ANodeICMS.Childrens.Find('vICMSST'), tcDe2);
+    ANodeImposto.ICMS.vBCFCPST := ObterConteudo(ANodeICMS.Childrens.Find('vBCFCPST'), tcDe2);
+    ANodeImposto.ICMS.pFCPST := ObterConteudo(ANodeICMS.Childrens.Find('pFCPST'), tcDe2);
+    ANodeImposto.ICMS.vFCPST := ObterConteudo(ANodeICMS.Childrens.Find('vFCPST'), tcDe2);
+    ANodeImposto.ICMS.UFST := ObterConteudo(ANodeICMS.Childrens.Find('UFST'), tcStr);
+    ANodeImposto.ICMS.pBCOp := ObterConteudo(ANodeICMS.Childrens.Find('pBCOp'), tcDe2);
+    ANodeImposto.ICMS.vBCSTRET := ObterConteudo(ANodeICMS.Childrens.Find('vBCSTRET'), tcDe2);
+    ANodeImposto.ICMS.vICMSSTRET := ObterConteudo(ANodeICMS.Childrens.Find('vICMSSTRET'), tcDe2);
+    ANodeImposto.ICMS.vICMSDeson := ObterConteudo(ANodeICMS.Childrens.Find('vICMSDeson'), tcDe2);
+    ANodeImposto.ICMS.vBCFCPSTRet := ObterConteudo(ANodeICMS.Childrens.Find('vBCFCPSTRet'), tcDe2);
+    ANodeImposto.ICMS.pFCPSTRet := ObterConteudo(ANodeICMS.Childrens.Find('pFCPSTRet'), tcDe2);
+    ANodeImposto.ICMS.vFCPSTRet := ObterConteudo(ANodeICMS.Childrens.Find('vFCPSTRet'), tcDe2);
+    ANodeImposto.ICMS.pST := ObterConteudo(ANodeICMS.Childrens.Find('pST'), tcDe4);
+    ANodeImposto.ICMS.motDesICMS := StrTomotDesICMS(ok, ObterConteudo(ANodeICMS.Childrens.Find('motDesICMS'), tcStr));
+    ANodeImposto.ICMS.pCredSN := ObterConteudo(ANodeICMS.Childrens.Find('pCredSN'), tcDe2);
+    ANodeImposto.ICMS.vCredICMSSN := ObterConteudo(ANodeICMS.Childrens.Find('vCredICMSSN'), tcDe2);
+    ANodeImposto.ICMS.vBCSTDest := ObterConteudo(ANodeICMS.Childrens.Find('vBCSTDest'), tcDe2);
+    ANodeImposto.ICMS.vICMSSTDest := ObterConteudo(ANodeICMS.Childrens.Find('vICMSSTDest'), tcDe2);
+    ANodeImposto.ICMS.pRedBCEfet := ObterConteudo(ANodeICMS.Childrens.Find('pRedBCEfet'), tcDe2);
+    ANodeImposto.ICMS.vBCEfet := ObterConteudo(ANodeICMS.Childrens.Find('vBCEfet'), tcDe2);
+    ANodeImposto.ICMS.pICMSEfet := ObterConteudo(ANodeICMS.Childrens.Find('pICMSEfet'), tcDe2);
+    ANodeImposto.ICMS.vICMSEfet := ObterConteudo(ANodeICMS.Childrens.Find('vICMSEfet'), tcDe2);
+    ANodeImposto.ICMS.vICMSSubstituto := ObterConteudo(ANodeICMS.Childrens.Find('vICMSSubstituto'), tcDe2);
+    ANodeImposto.ICMS.vICMSSTDeson := ObterConteudo(ANodeICMS.Childrens.Find('vICMSSTDeson'), tcDe2);
+    ANodeImposto.ICMS.motDesICMSST := StrTomotDesICMS(ok, ObterConteudo(ANodeICMS.Childrens.Find('motDesICMSST'), tcStr));
+    ANodeImposto.ICMS.pFCPDif := ObterConteudo(ANodeICMS.Childrens.Find('pFCPDif'), tcDe4);
+    ANodeImposto.ICMS.vFCPDif := ObterConteudo(ANodeICMS.Childrens.Find('vFCPDif'), tcDe2);
+    ANodeImposto.ICMS.vFCPEfet := ObterConteudo(ANodeICMS.Childrens.Find('vFCPEfet'), tcDe2);
+
+    ANodeImposto.ICMS.adRemICMS := ObterConteudo(ANodeICMS.Childrens.Find('adRemICMS'), tcDe4);
+    ANodeImposto.ICMS.vICMSMono := ObterConteudo(ANodeICMS.Childrens.Find('vICMSMono'), tcDe2);
+    ANodeImposto.ICMS.adRemICMSReten := ObterConteudo(ANodeICMS.Childrens.Find('adRemICMSReten'), tcDe4);
+    ANodeImposto.ICMS.vICMSMonoReten := ObterConteudo(ANodeICMS.Childrens.Find('vICMSMonoReten'), tcDe2);
+    ANodeImposto.ICMS.vICMSMonoDif := ObterConteudo(ANodeICMS.Childrens.Find('vICMSMonoDif'), tcDe2);
+    ANodeImposto.ICMS.adRemICMSRet := ObterConteudo(ANodeICMS.Childrens.Find('adRemICMSRet'), tcDe4);
+    ANodeImposto.ICMS.vICMSMonoRet := ObterConteudo(ANodeICMS.Childrens.Find('vICMSMonoRet'), tcDe2);
+
+    ANodeImposto.ICMS.qBCMono := ObterConteudo(ANodeICMS.Childrens.Find('qBCMono'), tcDe2);
+    ANodeImposto.ICMS.qBCMonoReten := ObterConteudo(ANodeICMS.Childrens.Find('qBCMonoReten'), tcDe2);
+    ANodeImposto.ICMS.pRedAdRem := ObterConteudo(ANodeICMS.Childrens.Find('pRedAdRem'), tcDe2);
+
+    if ANodeImposto.ICMS.pRedAdRem <> 0 then
+      ANodeImposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, ObterConteudo(ANodeICMS.Childrens.Find('motRedAdRem'), tcStr));
+
+    ANodeImposto.ICMS.qBCMonoRet := ObterConteudo(ANodeICMS.Childrens.Find('qBCMonoRet'), tcDe2);
+    ANodeImposto.ICMS.vICMSMonoOp := ObterConteudo(ANodeICMS.Childrens.Find('vICMSMonoOp'), tcDe2);
+
+    sAux := ObterConteudo(ANodeICMS.Childrens.Find('indDeduzDeson'), tcStr);
+    ANodeImposto.ICMS.indDeduzDeson := tieNenhum;
+
+    if sAux = '1' then
+      ANodeImposto.ICMS.indDeduzDeson := tieSim;
+
+    if sAux = '0' then
+      ANodeImposto.ICMS.indDeduzDeson := tieNao;
+
+    ANodeImposto.ICMS.cBenefRBC := ObterConteudo(ANodeICMS.Childrens.Find('cBenefRBC'), tcStr);
+  end;
+
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
@@ -865,85 +954,33 @@ begin
   Item.Imposto.vTotTrib := ObterConteudo(ANode.Childrens.Find('vTotTrib'), tcDe2);
 
   AuxNode := ANode.Childrens.Find('ICMS');
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
+
+  //  if (AuxNode <> nil) then
+//    AuxNode := AuxNode.Childrens.Items[0];
+
+  LerICMS('ICMS00', Item.Imposto);
+  LerICMS('ICMS02', Item.Imposto);
+  LerICMS('ICMS10', Item.Imposto);
+  LerICMS('ICMS15', Item.Imposto);
+  LerICMS('ICMS20', Item.Imposto);
+  LerICMS('ICMS30', Item.Imposto);
+  LerICMS('ICMS40', Item.Imposto);
+  LerICMS('ICMS51', Item.Imposto);
+  LerICMS('ICMS53', Item.Imposto);
+  LerICMS('ICMS60', Item.Imposto);
+  LerICMS('ICMS61', Item.Imposto);
+  LerICMS('ICMS70', Item.Imposto);
+  LerICMS('ICMS90', Item.Imposto);
+
+  LerICMS('ICMSSN101', Item.Imposto);
+  LerICMS('ICMSSN102', Item.Imposto);
+  LerICMS('ICMSSN201', Item.Imposto);
+  LerICMS('ICMSSN202', Item.Imposto);
+  LerICMS('ICMSSN500', Item.Imposto);
+  LerICMS('ICMSSN900', Item.Imposto);
+
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.ICMS.orig        := StrToOrig(ok, ObterConteudo(AuxNode.Childrens.Find('orig'), tcStr));
-    Item.Imposto.ICMS.CST         := StrToCSTICMS(ok, ObterConteudo(AuxNode.Childrens.Find('CST'), tcStr));
-    Item.Imposto.ICMS.CSOSN      := StrToCSOSNIcms( ok,ObterConteudo(AuxNode.Childrens.Find('CSOSN'), tcInt));
-    Item.Imposto.ICMS.modBC       := StrToModBC(ok, ObterConteudo(AuxNode.Childrens.Find('modBC'), tcStr));
-    Item.Imposto.ICMS.pRedBC      := ObterConteudo(AuxNode.Childrens.Find('pRedBC'), tcDe2);
-    Item.Imposto.ICMS.vBC         := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.ICMS.pICMS       := ObterConteudo(AuxNode.Childrens.Find('pICMS'), tcDe2);
-    Item.Imposto.ICMS.vICMSOp    := ObterConteudo(AuxNode.Childrens.Find('vICMSOp'), tcDe2);
-    Item.Imposto.ICMS.pDif       := ObterConteudo(AuxNode.Childrens.Find('pDif'), tcDe4);
-    Item.Imposto.ICMS.vICMSDif   := ObterConteudo(AuxNode.Childrens.Find('vICMSDif'), tcDe2);
-    Item.Imposto.ICMS.vICMS       := ObterConteudo(AuxNode.Childrens.Find('vICMS'), tcDe2);
-    Item.Imposto.ICMS.vBCFCP     := ObterConteudo(AuxNode.Childrens.Find('vBCFCP'), tcDe2);
-    Item.Imposto.ICMS.pFCP       := ObterConteudo(AuxNode.Childrens.Find('pFCP'), tcDe4);
-    Item.Imposto.ICMS.vFCP       := ObterConteudo(AuxNode.Childrens.Find('vFCP'), tcDe2);
-    Item.Imposto.ICMS.modBCST     := StrToModBCST(ok, ObterConteudo(AuxNode.Childrens.Find('modBCST'), tcStr));
-    Item.Imposto.ICMS.pMVAST      := ObterConteudo(AuxNode.Childrens.Find('pMVAST'), tcDe2);
-    Item.Imposto.ICMS.pRedBCST    := ObterConteudo(AuxNode.Childrens.Find('pRedBCST'), tcDe2);
-    Item.Imposto.ICMS.vBCST       := ObterConteudo(AuxNode.Childrens.Find('vBCST'), tcDe2);
-    Item.Imposto.ICMS.pICMSST     := ObterConteudo(AuxNode.Childrens.Find('pICMSST'), tcDe2);
-    Item.Imposto.ICMS.vICMSST     := ObterConteudo(AuxNode.Childrens.Find('vICMSST'), tcDe2);
-    Item.Imposto.ICMS.vBCFCPST   := ObterConteudo(AuxNode.Childrens.Find('vBCFCPST'), tcDe2);
-    Item.Imposto.ICMS.pFCPST     := ObterConteudo(AuxNode.Childrens.Find('pFCPST'), tcDe4);
-    Item.Imposto.ICMS.vFCPST     := ObterConteudo(AuxNode.Childrens.Find('vFCPST'), tcDe2);
-    Item.Imposto.ICMS.UFST        := ObterConteudo(AuxNode.Childrens.Find('UFST'), tcStr);
-    Item.Imposto.ICMS.pBCOp       := ObterConteudo(AuxNode.Childrens.Find('pBCOp'), tcDe2);
-    Item.Imposto.ICMS.vBCSTRet    := ObterConteudo(AuxNode.Childrens.Find('vBCSTRet'), tcDe2);
-    Item.Imposto.ICMS.vICMSSTRet  := ObterConteudo(AuxNode.Childrens.Find('vICMSSTRet'), tcDe2);
-    Item.Imposto.ICMS.vICMSDeson := ObterConteudo(AuxNode.Childrens.Find('vICMSDeson'), tcDe2);
-    Item.Imposto.ICMS.vBCFCPSTRet:= ObterConteudo(AuxNode.Childrens.Find('vBCFCPSTRet'), tcDe2);
-    Item.Imposto.ICMS.pFCPSTRet  := ObterConteudo(AuxNode.Childrens.Find('pFCPSTRet'), tcDe4);
-    Item.Imposto.ICMS.vFCPSTRet  := ObterConteudo(AuxNode.Childrens.Find('vFCPSTRet'), tcDe2);
-    Item.Imposto.ICMS.pST        := ObterConteudo(AuxNode.Childrens.Find('pST'), tcDe4);
-    Item.Imposto.ICMS.motDesICMS  := StrTomotDesICMS(ok, ObterConteudo(AuxNode.Childrens.Find('motDesICMS'), tcStr));
-    Item.Imposto.ICMS.pCredSN     := ObterConteudo(AuxNode.Childrens.Find('pCredSN'), tcDe2);
-    Item.Imposto.ICMS.vCredICMSSN := ObterConteudo(AuxNode.Childrens.Find('vCredICMSSN'), tcDe2);
-    Item.Imposto.ICMS.vBCSTDest   := ObterConteudo(AuxNode.Childrens.Find('vBCSTDest'), tcDe2);
-    Item.Imposto.ICMS.vICMSSTDest := ObterConteudo(AuxNode.Childrens.Find('vICMSSTDest'), tcDe2);
-    Item.Imposto.ICMS.pRedBCEfet  := ObterConteudo(AuxNode.Childrens.Find('pRedBCEfet'), tcDe4);
-    Item.Imposto.ICMS.vBCEfet     := ObterConteudo(AuxNode.Childrens.Find('vBCEfet'), tcDe2);
-    Item.Imposto.ICMS.pICMSEfet   := ObterConteudo(AuxNode.Childrens.Find('pICMSEfet'), tcDe4);
-    Item.Imposto.ICMS.vICMSEfet   := ObterConteudo(AuxNode.Childrens.Find('vICMSEfet'), tcDe2);
-    Item.Imposto.ICMS.vICMSSubstituto := ObterConteudo(AuxNode.Childrens.Find('vICMSSubstituto'), tcDe2);
-    Item.Imposto.ICMS.vICMSSTDeson := ObterConteudo(AuxNode.Childrens.Find('vICMSSTDeson'), tcDe2);
-    Item.Imposto.ICMS.motDesICMSST := StrTomotDesICMS(ok, ObterConteudo(AuxNode.Childrens.Find('motDesICMSST'), tcStr));
-    Item.Imposto.ICMS.pFCPDif     := ObterConteudo(AuxNode.Childrens.Find('pFCPDif'), tcDe4);
-    Item.Imposto.ICMS.vFCPDif     := ObterConteudo(AuxNode.Childrens.Find('vFCPDif'), tcDe2);
-    Item.Imposto.ICMS.vFCPEfet    := ObterConteudo(AuxNode.Childrens.Find('vFCPEfet'), tcDe2);
-
-    Item.Imposto.ICMS.adRemICMS := ObterConteudo(AuxNode.Childrens.Find('adRemICMS'), tcDe4);
-    Item.Imposto.ICMS.vICMSMono := ObterConteudo(AuxNode.Childrens.Find('vICMSMono'), tcDe2);
-    Item.Imposto.ICMS.adRemICMSReten := ObterConteudo(AuxNode.Childrens.Find('adRemICMSReten'), tcDe4);
-    Item.Imposto.ICMS.vICMSMonoReten := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoReten'), tcDe2);
-    Item.Imposto.ICMS.vICMSMonoDif := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoDif'), tcDe2);
-    Item.Imposto.ICMS.adRemICMSRet := ObterConteudo(AuxNode.Childrens.Find('adRemICMSRet'), tcDe4);
-    Item.Imposto.ICMS.vICMSMonoRet := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoRet'), tcDe2);
-
-    Item.Imposto.ICMS.qBCMono := ObterConteudo(AuxNode.Childrens.Find('qBCMono'), tcDe2);
-    Item.Imposto.ICMS.qBCMonoReten := ObterConteudo(AuxNode.Childrens.Find('qBCMonoReten'), tcDe2);
-    Item.Imposto.ICMS.pRedAdRem := ObterConteudo(AuxNode.Childrens.Find('pRedAdRem'), tcDe2);
-
-    if Item.Imposto.ICMS.pRedAdRem <> 0 then
-      Item.Imposto.ICMS.motRedAdRem := StrTomotRedAdRem(ok, ObterConteudo(AuxNode.Childrens.Find('motRedAdRem'), tcStr));
-
-    Item.Imposto.ICMS.qBCMonoRet := ObterConteudo(AuxNode.Childrens.Find('qBCMonoRet'), tcDe2);
-    Item.Imposto.ICMS.vICMSMonoOp := ObterConteudo(AuxNode.Childrens.Find('vICMSMonoOp'), tcDe2);
-
-    sAux := ObterConteudo(AuxNode.Childrens.Find('indDeduzDeson'), tcStr);
-    Item.Imposto.ICMS.indDeduzDeson := tieNenhum;
-    if sAux = '1' then
-      Item.Imposto.ICMS.indDeduzDeson := tieSim;
-    if sAux = '0' then
-      Item.Imposto.ICMS.indDeduzDeson := tieNao;
-
-    Item.Imposto.ICMS.cBenefRBC := ObterConteudo(AuxNode.Childrens.Find('cBenefRBC'), tcStr);
-
     if (AuxNode.Name = 'ICMSPart') then
     begin
       case Item.Imposto.ICMS.CST of
@@ -963,42 +1000,43 @@ begin
   AuxNode := ANode.Childrens.Find('ICMSUFDest');
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.ICMSUFDest.vBCUFDest      := ObterConteudo(AuxNode.Childrens.Find('vBCUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.vBCFCPUFDest   := ObterConteudo(AuxNode.Childrens.Find('vBCFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.pFCPUFDest     := ObterConteudo(AuxNode.Childrens.Find('pFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.pICMSUFDest    := ObterConteudo(AuxNode.Childrens.Find('pICMSUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.pICMSInter     := ObterConteudo(AuxNode.Childrens.Find('pICMSInter'), tcDe2);
+    Item.Imposto.ICMSUFDest.vBCUFDest := ObterConteudo(AuxNode.Childrens.Find('vBCUFDest'), tcDe2);
+    Item.Imposto.ICMSUFDest.vBCFCPUFDest := ObterConteudo(AuxNode.Childrens.Find('vBCFCPUFDest'), tcDe2);
+    Item.Imposto.ICMSUFDest.pFCPUFDest := ObterConteudo(AuxNode.Childrens.Find('pFCPUFDest'), tcDe2);
+    Item.Imposto.ICMSUFDest.pICMSUFDest := ObterConteudo(AuxNode.Childrens.Find('pICMSUFDest'), tcDe2);
+    Item.Imposto.ICMSUFDest.pICMSInter := ObterConteudo(AuxNode.Childrens.Find('pICMSInter'), tcDe2);
     Item.Imposto.ICMSUFDest.pICMSInterPart := ObterConteudo(AuxNode.Childrens.Find('pICMSInterPart'), tcDe2);
-    Item.Imposto.ICMSUFDest.vFCPUFDest     := ObterConteudo(AuxNode.Childrens.Find('vFCPUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.vICMSUFDest    := ObterConteudo(AuxNode.Childrens.Find('vICMSUFDest'), tcDe2);
-    Item.Imposto.ICMSUFDest.vICMSUFRemet   := ObterConteudo(AuxNode.Childrens.Find('vICMSUFRemet'), tcDe2);
+    Item.Imposto.ICMSUFDest.vFCPUFDest := ObterConteudo(AuxNode.Childrens.Find('vFCPUFDest'), tcDe2);
+    Item.Imposto.ICMSUFDest.vICMSUFDest := ObterConteudo(AuxNode.Childrens.Find('vICMSUFDest'), tcDe2);
+    Item.Imposto.ICMSUFDest.vICMSUFRemet := ObterConteudo(AuxNode.Childrens.Find('vICMSUFRemet'), tcDe2);
   end;
 
   AuxNode := ANode.Childrens.Find('IPI');
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.IPI.clEnq    := ObterConteudo(AuxNode.Childrens.Find('clEnq'), tcStr);
+    Item.Imposto.IPI.clEnq := ObterConteudo(AuxNode.Childrens.Find('clEnq'), tcStr);
     Item.Imposto.IPI.CNPJProd := ObterConteudo(AuxNode.Childrens.Find('CNPJProd'), tcStr);
-    Item.Imposto.IPI.cSelo    := ObterConteudo(AuxNode.Childrens.Find('cSelo'), tcStr);
-    Item.Imposto.IPI.qSelo    := ObterConteudo(AuxNode.Childrens.Find('qSelo'), tcInt);
-    Item.Imposto.IPI.cEnq     := ObterConteudo(AuxNode.Childrens.Find('cEnq'), tcStr);
+    Item.Imposto.IPI.cSelo := ObterConteudo(AuxNode.Childrens.Find('cSelo'), tcStr);
+    Item.Imposto.IPI.qSelo := ObterConteudo(AuxNode.Childrens.Find('qSelo'), tcInt);
+    Item.Imposto.IPI.cEnq := ObterConteudo(AuxNode.Childrens.Find('cEnq'), tcStr);
 
     // Inicializa CST com sendo Não tributada e conforme o TIPO entrada ou saida
     // Caso a Tag não seja informada sera gravada com sendo não tributada
     if NFe.ide.tpNF = tnEntrada then
       Item.Imposto.IPI.CST := ipi53;
+
     if NFe.ide.tpNF = tnSaida then
       Item.Imposto.IPI.CST := ipi03;
 
     AxNode := AuxNode.Childrens.Find('IPITrib');
     if (AxNode <> nil) then
     begin
-      Item.Imposto.IPI.CST   := StrToCSTIPI(ok, ObterConteudo(AxNode.Childrens.Find('CST'), tcStr));
-      Item.Imposto.IPI.vBC   := ObterConteudo(AxNode.Childrens.Find('vBC'), tcDe2);
+      Item.Imposto.IPI.CST := StrToCSTIPI(ok, ObterConteudo(AxNode.Childrens.Find('CST'), tcStr));
+      Item.Imposto.IPI.vBC := ObterConteudo(AxNode.Childrens.Find('vBC'), tcDe2);
       Item.Imposto.IPI.qUnid := ObterConteudo(AxNode.Childrens.Find('qUnid'), tcDe4);
       Item.Imposto.IPI.vUnid := ObterConteudo(AxNode.Childrens.Find('vUnid'), tcDe4);
-      Item.Imposto.IPI.pIPI  := ObterConteudo(AxNode.Childrens.Find('pIPI'), tcDe2);
-      Item.Imposto.IPI.vIPI  := ObterConteudo(AxNode.Childrens.Find('vIPI'), tcDe2);
+      Item.Imposto.IPI.pIPI := ObterConteudo(AxNode.Childrens.Find('pIPI'), tcDe2);
+      Item.Imposto.IPI.vIPI := ObterConteudo(AxNode.Childrens.Find('vIPI'), tcDe2);
     end;
 
     AxNode := AuxNode.Childrens.Find('IPINT');
@@ -1011,79 +1049,144 @@ begin
   AuxNode := ANode.Childrens.Find('II');
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.II.vBc      := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
+    Item.Imposto.II.vBC := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
     Item.Imposto.II.vDespAdu := ObterConteudo(AuxNode.Childrens.Find('vDespAdu'), tcDe2);
-    Item.Imposto.II.vII      := ObterConteudo(AuxNode.Childrens.Find('vII'), tcDe2);
-    Item.Imposto.II.vIOF     := ObterConteudo(AuxNode.Childrens.Find('vIOF'), tcDe2);
+    Item.Imposto.II.vII := ObterConteudo(AuxNode.Childrens.Find('vII'), tcDe2);
+    Item.Imposto.II.vIOF := ObterConteudo(AuxNode.Childrens.Find('vIOF'), tcDe2);
   end;
 
   AuxNode := ANode.Childrens.Find('PIS');
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
+//  if (AuxNode <> nil) then
+//    AuxNode := AuxNode.Childrens.Items[0];
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.PIS.CST       := StrToCSTPIS(ok, ObterConteudo(AuxNode.Childrens.Find('CST'), tcStr));
-    Item.Imposto.PIS.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.PIS.pPIS      := ObterConteudo(AuxNode.Childrens.Find('pPIS'), tcDe2);
-    Item.Imposto.PIS.vPIS      := ObterConteudo(AuxNode.Childrens.Find('vPIS'), tcDe2);
-    Item.Imposto.PIS.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
-    Item.Imposto.PIS.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
+    AxNodePIS := AuxNode.Childrens.Find('PISAliq');
+
+    if AxNodePIS <> nil then
+    begin
+      Item.Imposto.PIS.CST := StrToCSTPIS(ok, ObterConteudo(AxNodePIS.Childrens.Find('CST'), tcStr));
+      Item.Imposto.PIS.vBC := ObterConteudo(AxNodePIS.Childrens.Find('vBC'), tcDe2);
+      Item.Imposto.PIS.pPIS := ObterConteudo(AxNodePIS.Childrens.Find('pPIS'), tcDe2);
+      Item.Imposto.PIS.vPIS := ObterConteudo(AxNodePIS.Childrens.Find('vPIS'), tcDe2);
+    end;
+
+    AxNodePIS := AuxNode.Childrens.Find('PISQtde');
+
+    if AxNodePIS <> nil then
+    begin
+      Item.Imposto.PIS.CST := StrToCSTPIS(ok, ObterConteudo(AxNodePIS.Childrens.Find('CST'), tcStr));
+      Item.Imposto.PIS.qBCProd := ObterConteudo(AxNodePIS.Childrens.Find('qBCProd'), tcDe4);
+      Item.Imposto.PIS.vAliqProd := ObterConteudo(AxNodePIS.Childrens.Find('vAliqProd'), tcDe4);
+      Item.Imposto.PIS.vPIS := ObterConteudo(AxNodePIS.Childrens.Find('vPIS'), tcDe2);
+    end;
+
+    AxNodePIS := AuxNode.Childrens.Find('PISNT');
+
+    if AxNodePIS <> nil then
+    begin
+      Item.Imposto.PIS.CST := StrToCSTPIS(ok, ObterConteudo(AxNodePIS.Childrens.Find('CST'), tcStr));
+    end;
+
+    AxNodePIS := AuxNode.Childrens.Find('PISOutr');
+
+    if AxNodePIS <> nil then
+    begin
+      Item.Imposto.PIS.CST := StrToCSTPIS(ok, ObterConteudo(AxNodePIS.Childrens.Find('CST'), tcStr));
+      Item.Imposto.PIS.vBC := ObterConteudo(AxNodePIS.Childrens.Find('vBC'), tcDe2);
+      Item.Imposto.PIS.pPIS := ObterConteudo(AxNodePIS.Childrens.Find('pPIS'), tcDe2);
+      Item.Imposto.PIS.qBCProd := ObterConteudo(AxNodePIS.Childrens.Find('qBCProd'), tcDe4);
+      Item.Imposto.PIS.vAliqProd := ObterConteudo(AxNodePIS.Childrens.Find('vAliqProd'), tcDe4);
+      Item.Imposto.PIS.vPIS := ObterConteudo(AxNodePIS.Childrens.Find('vPIS'), tcDe2);
+    end;
   end;
 
   AuxNode := ANode.Childrens.Find('PISST');
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.PISST.vBc       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.PISST.pPis      := ObterConteudo(AuxNode.Childrens.Find('pPIS'), tcDe2);
-    Item.Imposto.PISST.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
+    Item.Imposto.PISST.vBc := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
+    Item.Imposto.PISST.pPis := ObterConteudo(AuxNode.Childrens.Find('pPIS'), tcDe2);
+    Item.Imposto.PISST.qBCProd := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
     Item.Imposto.PISST.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-    Item.Imposto.PISST.vPIS      := ObterConteudo(AuxNode.Childrens.Find('vPIS'), tcDe2);
+    Item.Imposto.PISST.vPIS := ObterConteudo(AuxNode.Childrens.Find('vPIS'), tcDe2);
     Item.Imposto.PISST.indSomaPISST := StrToindSomaPISST(ok, ObterConteudo(AuxNode.Childrens.Find('indSomaPISST'), tcStr));
   end;
 
   AuxNode := ANode.Childrens.Find('COFINS');
-  if (AuxNode <> nil) then
-    AuxNode := AuxNode.Childrens.Items[0];
+//  if (AuxNode <> nil) then
+//    AuxNode := AuxNode.Childrens.Items[0];
+
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.COFINS.CST       := StrToCSTCOFINS(ok, ObterConteudo(AuxNode.Childrens.Find('CST'), tcStr));
-    Item.Imposto.COFINS.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.COFINS.pCOFINS   := ObterConteudo(AuxNode.Childrens.Find('pCOFINS'), tcDe2);
-    Item.Imposto.COFINS.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
-    Item.Imposto.COFINS.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-    Item.Imposto.COFINS.vCOFINS   := ObterConteudo(AuxNode.Childrens.Find('vCOFINS'), tcDe2);
+    AxNodeCOFINS := AuxNode.Childrens.Find('COFINSAliq');
+
+    if AxNodeCOFINS <> nil then
+    begin
+      Item.Imposto.COFINS.CST := StrToCSTCOFINS(ok, ObterConteudo(AxNodeCOFINS.Childrens.Find('CST'), tcStr));
+      Item.Imposto.COFINS.vBC := ObterConteudo(AxNodeCOFINS.Childrens.Find('vBC'), tcDe2);
+      Item.Imposto.COFINS.pCOFINS := ObterConteudo(AxNodeCOFINS.Childrens.Find('pCOFINS'), tcDe2);
+      Item.Imposto.COFINS.vCOFINS := ObterConteudo(AxNodeCOFINS.Childrens.Find('vCOFINS'), tcDe2);
+    end;
+
+    AxNodeCOFINS := AuxNode.Childrens.Find('COFINSQtde');
+
+    if AxNodeCOFINS <> nil then
+    begin
+      Item.Imposto.COFINS.CST := StrToCSTCOFINS(ok, ObterConteudo(AxNodeCOFINS.Childrens.Find('CST'), tcStr));
+      Item.Imposto.COFINS.qBCProd := ObterConteudo(AxNodeCOFINS.Childrens.Find('qBCProd'), tcDe4);
+      Item.Imposto.COFINS.vAliqProd := ObterConteudo(AxNodeCOFINS.Childrens.Find('vAliqProd'), tcDe4);
+      Item.Imposto.COFINS.vCOFINS := ObterConteudo(AxNodeCOFINS.Childrens.Find('vCOFINS'), tcDe2);
+    end;
+
+    AxNodeCOFINS := AuxNode.Childrens.Find('COFINSNT');
+
+    if AxNodeCOFINS <> nil then
+    begin
+      Item.Imposto.COFINS.CST := StrToCSTCOFINS(ok, ObterConteudo(AxNodeCOFINS.Childrens.Find('CST'), tcStr));
+    end;
+
+    AxNodeCOFINS := AuxNode.Childrens.Find('COFINSOutr');
+
+    if AxNodeCOFINS <> nil then
+    begin
+      Item.Imposto.COFINS.CST := StrToCSTCOFINS(ok, ObterConteudo(AxNodeCOFINS.Childrens.Find('CST'), tcStr));
+      Item.Imposto.COFINS.vBC := ObterConteudo(AxNodeCOFINS.Childrens.Find('vBC'), tcDe2);
+      Item.Imposto.COFINS.pCOFINS := ObterConteudo(AxNodeCOFINS.Childrens.Find('pCOFINS'), tcDe2);
+      Item.Imposto.COFINS.qBCProd := ObterConteudo(AxNodeCOFINS.Childrens.Find('qBCProd'), tcDe4);
+      Item.Imposto.COFINS.vAliqProd := ObterConteudo(AxNodeCOFINS.Childrens.Find('vAliqProd'), tcDe4);
+      Item.Imposto.COFINS.vCOFINS := ObterConteudo(AxNodeCOFINS.Childrens.Find('vCOFINS'), tcDe2);
+    end;
   end;
 
   AuxNode := ANode.Childrens.Find('COFINSST');
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.COFINSST.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.COFINSST.pCOFINS   := ObterConteudo(AuxNode.Childrens.Find('pCOFINS'), tcDe2);
-    Item.Imposto.COFINSST.qBCProd   := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
+    Item.Imposto.COFINSST.vBC := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
+    Item.Imposto.COFINSST.pCOFINS := ObterConteudo(AuxNode.Childrens.Find('pCOFINS'), tcDe2);
+    Item.Imposto.COFINSST.qBCProd := ObterConteudo(AuxNode.Childrens.Find('qBCProd'), tcDe4);
     Item.Imposto.COFINSST.vAliqProd := ObterConteudo(AuxNode.Childrens.Find('vAliqProd'), tcDe4);
-    Item.Imposto.COFINSST.vCOFINS   := ObterConteudo(AuxNode.Childrens.Find('vCOFINS'), tcDe2);
+    Item.Imposto.COFINSST.vCOFINS := ObterConteudo(AuxNode.Childrens.Find('vCOFINS'), tcDe2);
     Item.Imposto.COFINSST.indSomaCOFINSST := StrToindSomaCOFINSST(Ok, ObterConteudo(AuxNode.Childrens.Find('indSomaCOFINSST'), tcStr));
   end;
 
   AuxNode := ANode.Childrens.Find('ISSQN');
   if (AuxNode <> nil) then
   begin
-    Item.Imposto.ISSQN.vBC       := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
-    Item.Imposto.ISSQN.vAliq     := ObterConteudo(AuxNode.Childrens.Find('vAliq'), tcDe2);
-    Item.Imposto.ISSQN.vISSQN    := ObterConteudo(AuxNode.Childrens.Find('vISSQN'), tcDe2);
-    Item.Imposto.ISSQN.cMunFG    := ObterConteudo(AuxNode.Childrens.Find('cMunFG'), tcInt);
+    Item.Imposto.ISSQN.vBC := ObterConteudo(AuxNode.Childrens.Find('vBC'), tcDe2);
+    Item.Imposto.ISSQN.vAliq := ObterConteudo(AuxNode.Childrens.Find('vAliq'), tcDe2);
+    Item.Imposto.ISSQN.vISSQN := ObterConteudo(AuxNode.Childrens.Find('vISSQN'), tcDe2);
+    Item.Imposto.ISSQN.cMunFG := ObterConteudo(AuxNode.Childrens.Find('cMunFG'), tcInt);
     Item.Imposto.ISSQN.cListServ := ObterConteudo(AuxNode.Childrens.Find('cListServ'), tcStr);
-    Item.Imposto.ISSQN.cSitTrib  := StrToISSQNcSitTrib( ok,  ObterConteudo(AuxNode.Childrens.Find('cSitTrib'), tcStr) ) ;
-    Item.Imposto.ISSQN.vDeducao     := ObterConteudo(AuxNode.Childrens.Find('vDeducao'), tcDe2);
-    Item.Imposto.ISSQN.vOutro       := ObterConteudo(AuxNode.Childrens.Find('vOutro'), tcDe2);
-    Item.Imposto.ISSQN.vDescIncond  := ObterConteudo(AuxNode.Childrens.Find('vDescIncond'), tcDe2);
-    Item.Imposto.ISSQN.vDescCond    := ObterConteudo(AuxNode.Childrens.Find('vDescCond'), tcDe2);
-    Item.Imposto.ISSQN.vISSRet      := ObterConteudo(AuxNode.Childrens.Find('vISSRet'), tcDe2);
-    Item.Imposto.ISSQN.indISS       := StrToindISS(Ok, ObterConteudo(AuxNode.Childrens.Find('indISS'), tcStr));
-    Item.Imposto.ISSQN.cServico     := ObterConteudo(AuxNode.Childrens.Find('cServico'), tcStr);
-    Item.Imposto.ISSQN.cMun         := ObterConteudo(AuxNode.Childrens.Find('cMun'), tcInt);
-    Item.Imposto.ISSQN.cPais        := ObterConteudo(AuxNode.Childrens.Find('cPais'), tcInt);
-    Item.Imposto.ISSQN.nProcesso    := ObterConteudo(AuxNode.Childrens.Find('nProcesso'), tcStr);
+    Item.Imposto.ISSQN.cSitTrib := StrToISSQNcSitTrib( ok,  ObterConteudo(AuxNode.Childrens.Find('cSitTrib'), tcStr) ) ;
+    Item.Imposto.ISSQN.vDeducao := ObterConteudo(AuxNode.Childrens.Find('vDeducao'), tcDe2);
+    Item.Imposto.ISSQN.vOutro := ObterConteudo(AuxNode.Childrens.Find('vOutro'), tcDe2);
+    Item.Imposto.ISSQN.vDescIncond := ObterConteudo(AuxNode.Childrens.Find('vDescIncond'), tcDe2);
+    Item.Imposto.ISSQN.vDescCond := ObterConteudo(AuxNode.Childrens.Find('vDescCond'), tcDe2);
+    Item.Imposto.ISSQN.vISSRet := ObterConteudo(AuxNode.Childrens.Find('vISSRet'), tcDe2);
+    Item.Imposto.ISSQN.indISS := StrToindISS(Ok, ObterConteudo(AuxNode.Childrens.Find('indISS'), tcStr));
+    Item.Imposto.ISSQN.cServico := ObterConteudo(AuxNode.Childrens.Find('cServico'), tcStr);
+    Item.Imposto.ISSQN.cMun := ObterConteudo(AuxNode.Childrens.Find('cMun'), tcInt);
+    Item.Imposto.ISSQN.cPais := ObterConteudo(AuxNode.Childrens.Find('cPais'), tcInt);
+    Item.Imposto.ISSQN.nProcesso := ObterConteudo(AuxNode.Childrens.Find('nProcesso'), tcStr);
     Item.Imposto.ISSQN.indIncentivo := StrToindIncentivo(Ok, ObterConteudo(AuxNode.Childrens.Find('indIncentivo'), tcStr));
   end;
 end;

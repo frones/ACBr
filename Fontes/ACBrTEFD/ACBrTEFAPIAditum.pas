@@ -101,6 +101,7 @@ type
 
   protected
     procedure InterpretarRespostaAPI; override;
+    procedure CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas); override;
 
   public
     constructor Create(AACBrTEFAPI: TACBrTEFAPIComum);
@@ -636,6 +637,55 @@ begin
     AtualizarHeader;
     ConteudoToProperty;
   end;
+end;
+
+procedure TACBrTEFAPIClassAditum.CarregarRespostasPendentes(
+  const AListaRespostasTEF: TACBrTEFAPIRespostas);
+var
+  js, jscharge: TACBrJSONObject;
+  i: Integer;
+  jsCharges: TACBrJSONArray;
+  RespTEFPendente: TACBrTEFResp;
+begin
+  AListaRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
+  i := 0;
+  while i < AListaRespostasTEF.Count do
+  begin
+    RespTEFPendente := AListaRespostasTEF[i];
+    if not RespTEFPendente.CNFEnviado then   // Transações não confirmadas, serão carregadas abaixo, pelo "charge/pending"
+      AListaRespostasTEF.ApagarRespostaTEF(i)
+    else
+      Inc(i);
+  end;
+
+  TransmitirHttp(cHTTPMethodGET, 'charge/pending?currentPage=1&pageSize=100');
+  if (FHTTPResultCode = HTTP_OK) then
+  begin
+    js := TACBrJSONObject.Parse(FHTTPResponse);
+    try
+      jsCharges := js.AsJSONArray['charges'];
+      if Assigned(jsCharges) then
+      begin
+        for i := 0 to jsCharges.Count-1 do
+        begin
+          RespTEFPendente := TACBrTEFRespAditum.Create;
+          try
+            jscharge := jsCharges.ItemAsJSONObject[i];
+            RespTEFPendente.Conteudo.GravaInformacao(899,100,'CRT');
+            RespTEFPendente.Conteudo.GravaInformacao(899,200, '{"charge": '+jscharge.ToJSON+'}');
+            RespTEFPendente.ConteudoToProperty;
+            AListaRespostasTEF.AdicionarRespostaTEF(RespTEFPendente); // Cria Clone interno
+          finally
+            RespTEFPendente.Free;
+          end;
+        end;
+      end;
+    finally
+      js.Free;
+    end;
+  end
+  else
+    TratarRetornoComErro;
 end;
 
 function TACBrTEFAPIClassAditum.EfetuarPagamento(ValorPagto: Currency;

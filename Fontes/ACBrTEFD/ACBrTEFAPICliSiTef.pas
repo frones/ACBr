@@ -908,7 +908,7 @@ begin
       HoraFiscal := Trim(LeInformacao(164, i).AsString);
       ValorTransacao := LeInformacao(1319, i).AsFloat;
 
-      RespTEFPendente := TACBrTEFResp.Create;
+      RespTEFPendente :=  TACBrTEFRespCliSiTef.Create;
       InfValor := TACBrInformacao.Create;
       try
         RespTEFPendente.Conteudo.GravaInformacao(899,100,'CRT');

@@ -54,6 +54,8 @@ Símbolo : Significado
 [*] #TK-6120: A cidade Tres Cachoeiras/RS trocou a URL de produção, mas o provedor continua o
     mesmo.
    Por: Mario Inacio
+[*] #TK-6126: A cidade Inhumas/Go trocou de provedor, agora é Sigep.
+   Por: Polidata_2024
 
 17/10/2024
 -- ACBrNFSeXNotasFiscais --

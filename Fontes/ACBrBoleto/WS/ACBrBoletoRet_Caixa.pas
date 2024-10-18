@@ -141,8 +141,10 @@ begin
               OriRetorno := Leitor.rCampo(tcStr, 'ORIGEM_RETORNO');
               CodRetorno := Leitor.rCampo(tcStr, 'COD_RETORNO');
               NSU        := Leitor.rCampo(tcStr, 'NSU');
-
-
+              if leitor.rExtrai(3, 'MENSAGENS') <> '' then
+              begin
+                  Retorno := Leitor.rCampo(tcStr, 'RETORNO');
+              end;
             end;
           end;
 

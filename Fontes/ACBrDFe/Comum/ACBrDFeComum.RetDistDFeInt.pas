@@ -326,6 +326,7 @@ type
     procedure LerGrupo_ide(const ANode: TACBrXmlNode; Indice: Integer);
     procedure LerGrupo_emit(const ANode: TACBrXmlNode; Indice: Integer);
     procedure LerGrupo_total(const ANode: TACBrXmlNode; Indice: Integer);
+    procedure LerGrupo_vPrest(const ANode: TACBrXmlNode; Indice: Integer);
     procedure LerGrupo_infProt(const ANode: TACBrXmlNode; Indice: Integer);
 
     procedure LerGrupo_detEvento(const ANode: TACBrXmlNode; Indice: Integer);
@@ -341,7 +342,8 @@ type
     procedure LerLoteDistDFeInt(const ANode: TACBrXmlNode);
 
     function LerXml: boolean;
-    function LerXMLFromFile(Const CaminhoArquivo: string): Boolean;
+    function LerXMLFromFile(Const CaminhoArquivo: string;
+      const AtpDFe: string = 'NFe'): Boolean;
     function GerarPathDistribuicao(AItem :TdocZipCollectionItem): string;
     function GerarNomeArquivo(AItem :TdocZipCollectionItem): string;
 
@@ -495,7 +497,7 @@ procedure TRetDistDFeInt.LerResumo(const ANode: TACBrXmlNode; Indice: Integer);
 var
   Ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].XML := InserirDeclaracaoXMLSeNecessario(ANode.OuterXml);
   docZip[Indice].resDFe.chDFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('ch' + FptpDFe), tcStr);
@@ -507,19 +509,19 @@ begin
   docZip[Indice].resDFe.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
   docZip[Indice].resDFe.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
   docZip[Indice].resDFe.dhEmi := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
-  docZip[Indice].resDFe.tpNF := StrToTpNF(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpNF'), tcStr));
+  docZip[Indice].resDFe.tpNF := StrToTpNF(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpNF'), tcStr));
   docZip[Indice].resDFe.vNF := ObterConteudoTag(ANode.Childrens.FindAnyNs('vNF'), tcDe2);
   docZip[Indice].resDFe.digVal := ObterConteudoTag(ANode.Childrens.FindAnyNs('digVal'), tcStr);
   docZip[Indice].resDFe.dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
   docZip[Indice].resDFe.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
-  docZip[Indice].resDFe.cSitDFe := StrToSituacaoDFe(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('cSitNFe'), tcStr));
+  docZip[Indice].resDFe.cSitDFe := StrToSituacaoDFe(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('cSitNFe'), tcStr));
 end;
 
 procedure TRetDistDFeInt.LerResumoEvento(const ANode: TACBrXmlNode; Indice: Integer);
 var
   Ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].XML := InserirDeclaracaoXMLSeNecessario(ANode.OuterXml);
   docZip[Indice].resEvento.chDFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('ch' + FptpDFe), tcStr);
@@ -531,7 +533,7 @@ begin
   docZip[Indice].resEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
   docZip[Indice].resEvento.dhEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
   // É preciso identificar o DF-e para usar a função de conversão correta.
-  docZip[Indice].resEvento.tpEvento := StrToTpEventoDFe(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr), FptpDFe);
+  docZip[Indice].resEvento.tpEvento := StrToTpEventoDFe(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr), FptpDFe);
   docZip[Indice].resEvento.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
   docZip[Indice].resEvento.xEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('xEvento'), tcStr);
   docZip[Indice].resEvento.dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
@@ -543,21 +545,21 @@ procedure TRetDistDFeInt.LerGrupo_ide(const ANode: TACBrXmlNode;
 var
   Ok: Boolean;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].resDFe.dhEmi := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
 
   // Se for Versão 2.00 a data de emissão está em dEmi
   if docZip[Indice].resDFe.dhEmi  = 0 then
-    docZip[Indice].resDFe.dhEmi  := ObterConteudoTag(ANode.Childrens.FindAnyNs('dEmi'), tcDat);
+    docZip[Indice].resDFe.dhEmi := ObterConteudoTag(ANode.Childrens.FindAnyNs('dEmi'), tcDat);
 
-  docZip[Indice].resDFe.tpNF := StrToTpNF(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpNF'), tcStr));
+  docZip[Indice].resDFe.tpNF := StrToTpNF(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpNF'), tcStr));
 end;
 
 procedure TRetDistDFeInt.LerGrupo_emit(const ANode: TACBrXmlNode;
   Indice: Integer);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].resDFe.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
 
@@ -570,22 +572,20 @@ end;
 
 procedure TRetDistDFeInt.LerGrupo_total(const ANode: TACBrXmlNode;
   Indice: Integer);
-var
-  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   // Leitura do valor da nota fiscal - NF-e
   docZip[Indice].resDFe.vNF := ObterConteudoTag(ANode.Childrens.FindAnyNs('vNF'), tcDe2);
+end;
+
+procedure TRetDistDFeInt.LerGrupo_vPrest(const ANode: TACBrXmlNode;
+  Indice: Integer);
+begin
+  if not Assigned(ANode) then Exit;
 
   // Leitura do valor total da prestação - CT-e
-  if docZip[Indice].resDFe.vNF = 0 then
-  begin
-    AuxNode := ANode.Childrens.FindAnyNs('vPrest');
-
-    if AuxNode <> nil then
-      docZip[Indice].resDFe.vNF := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('vTPrest'), tcDe2);
-  end;
+  docZip[Indice].resDFe.vNF := ObterConteudoTag(ANode.Childrens.FindAnyNs('vTPrest'), tcDe2);
 end;
 
 procedure TRetDistDFeInt.LerGrupo_infProt(const ANode: TACBrXmlNode;
@@ -593,7 +593,7 @@ procedure TRetDistDFeInt.LerGrupo_infProt(const ANode: TACBrXmlNode;
 var
   Status: Integer;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].resDFe.digVal := ObterConteudoTag(ANode.Childrens.FindAnyNs('digVal'), tcStr);
   docZip[Indice].resDFe.dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
@@ -612,13 +612,13 @@ procedure TRetDistDFeInt.LerDocumento(const ANode: TACBrXmlNode; Indice: Integer
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].XML := InserirDeclaracaoXMLSeNecessario(ANode.OuterXml);
 
   AuxNode := ANode.Childrens.FindAnyNs(FptpDFe);
 
-  if AuxNode <> nil then
+  if Assigned(AuxNode) then
   begin
     // no caso do cte não é CTe e sim Cte.
     if FptpDFe = 'CTe' then
@@ -626,36 +626,37 @@ begin
     else
       AuxNode := AuxNode.Childrens.FindAnyNs('inf' + FptpDFe);
 
-    if AuxNode <> nil then
+    if Assigned(AuxNode) then
     begin
       docZip[Indice].resDFe.chDFe := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
 
       LerGrupo_ide(AuxNode.Childrens.FindAnyNs('ide'), Indice);
       LerGrupo_emit(AuxNode.Childrens.FindAnyNs('emit'), Indice);
       LerGrupo_total(AuxNode.Childrens.FindAnyNs('total'), Indice);
+      LerGrupo_vPrest(AuxNode.Childrens.FindAnyNs('vPrest'), Indice);
     end;
   end;
 
-  AuxNode := ANode.Childrens.FindAnyNs('prot' +FptpDFe);
+  AuxNode := ANode.Childrens.FindAnyNs('prot' + FptpDFe);
 
-  if AuxNode <> nil then
+  if Assigned(AuxNode) then
     LerGrupo_infProt(AuxNode.Childrens.FindAnyNs('infProt'), Indice);
 end;
 
 procedure TRetDistDFeInt.LerGrupo_detEvento_CTe(const ANode: TACBrXmlNode;
   Indice: Integer);
 var
-  AuxNode: TACBrXmlNode;
   Ok: Boolean;
+  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('CTe');
 
-  if AuxNode <> nil then
+  if Assigned(AuxNode) then
   begin
     docZip[Indice].procEvento.detEvento.CTe.chCTe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chCTe'), tcStr);
-    docZip[Indice].procEvento.detEvento.CTe.modal := StrToTpModal(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('modal'), tcStr));
+    docZip[Indice].procEvento.detEvento.CTe.modal := StrToTpModal(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('modal'), tcStr));
     docZip[Indice].procEvento.detEvento.CTe.dhEmi := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
     docZip[Indice].procEvento.detEvento.CTe.nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
     docZip[Indice].procEvento.detEvento.CTe.dhRecbto := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
@@ -667,11 +668,11 @@ procedure TRetDistDFeInt.LerGrupo_detEvento_emit(const ANode: TACBrXmlNode;
 var
   AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('emit');
 
-  if AuxNode <> nil then
+  if Assigned(AuxNode) then
   begin
     docZip[Indice].procEvento.detEvento.emit.CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
     docZip[Indice].procEvento.detEvento.emit.IE := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('IE'), tcStr);
@@ -684,7 +685,7 @@ procedure TRetDistDFeInt.LerGrupo_detEvento_itensAverbados(
 var
   i: Integer;
 begin
-  if not Assigned(ANodes) or (ANodes = nil) then Exit;
+  if not Assigned(ANodes) then Exit;
 
   docZip.Items[Indice].procEvento.detEvento.itensAverbados.Clear;
 
@@ -705,7 +706,7 @@ end;
 procedure TRetDistDFeInt.LerGrupo_detEvento(const ANode: TACBrXmlNode;
   Indice: Integer);
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].procEvento.detEvento.versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
   docZip[Indice].procEvento.detEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
@@ -723,58 +724,65 @@ end;
 procedure TRetDistDFeInt.LerGrupo_retEvento(const ANode: TACBrXmlNode;
   Indice: Integer);
 var
- Ok: Boolean;
+  Ok: Boolean;
+  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
-  docZip[Indice].procEvento.RetinfEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
-  docZip[Indice].procEvento.RetinfEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
-  docZip[Indice].procEvento.RetinfEvento.verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-  docZip[Indice].procEvento.RetinfEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
-  docZip[Indice].procEvento.RetinfEvento.cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-  docZip[Indice].procEvento.RetinfEvento.xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
-  docZip[Indice].procEvento.RetinfEvento.chDFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('ch' + FptpDFe), tcStr);
-  // É preciso identificar o DF-e para usar a função de conversão correta.
-  docZip[Indice].procEvento.RetinfEvento.tpEvento := StrToTpEventoDFe(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr), FptpDFe);
-  docZip[Indice].procEvento.RetinfEvento.xEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('xEvento'), tcStr);
-  docZip[Indice].procEvento.RetinfEvento.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
-  docZip[Indice].procEvento.RetinfEvento.CNPJDest := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJDest'), tcStr);
-  docZip[Indice].procEvento.RetinfEvento.dhRegEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
-  docZip[Indice].procEvento.RetinfEvento.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
+  AuxNode := ANode.Childrens.FindAnyNs('infEvento');
+
+  if Assigned(AuxNode) then
+  begin
+    docZip[Indice].procEvento.RetinfEvento.Id := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+    docZip[Indice].procEvento.RetinfEvento.tpAmb := StrToTpAmb(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
+    docZip[Indice].procEvento.RetinfEvento.verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
+    docZip[Indice].procEvento.RetinfEvento.cOrgao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cOrgao'), tcInt);
+    docZip[Indice].procEvento.RetinfEvento.cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
+    docZip[Indice].procEvento.RetinfEvento.xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);
+    docZip[Indice].procEvento.RetinfEvento.chDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ch' + FptpDFe), tcStr);
+    // É preciso identificar o DF-e para usar a função de conversão correta.
+    docZip[Indice].procEvento.RetinfEvento.tpEvento := StrToTpEventoDFe(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpEvento'), tcStr), FptpDFe);
+    docZip[Indice].procEvento.RetinfEvento.xEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xEvento'), tcStr);
+    docZip[Indice].procEvento.RetinfEvento.nSeqEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+    docZip[Indice].procEvento.RetinfEvento.CNPJDest := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJDest'), tcStr);
+    docZip[Indice].procEvento.RetinfEvento.dhRegEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhRegEvento'), tcDatHor);
+    docZip[Indice].procEvento.RetinfEvento.nProt := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nProt'), tcStr);
+  end;
 end;
 
 procedure TRetDistDFeInt.LerEvento(const ANode: TACBrXmlNode; Indice: Integer);
 var
   Ok: Boolean;
+  AuxNode: TACBrXmlNode;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   docZip[Indice].XML := InserirDeclaracaoXMLSeNecessario(ANode.OuterXml);
 
-  docZip[Indice].procEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
-  docZip[Indice].procEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
-  docZip[Indice].procEvento.CNPJ := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  AuxNode := ANode.Childrens.FindAnyNs('infEvento');
 
-  if docZip[Indice].procEvento.CNPJ = '' then
-    docZip[Indice].procEvento.CNPJ := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+  if Assigned(AuxNode) then
+  begin
+    docZip[Indice].procEvento.Id := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+    docZip[Indice].procEvento.tpAmb := StrToTpAmb(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
+    docZip[Indice].procEvento.CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
 
-  docZip[Indice].procEvento.chDFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('ch' + FptpDFe), tcStr);
-  docZip[Indice].procEvento.dhEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
-  // É preciso identificar o DF-e para usar a função de conversão correta.
-  docZip[Indice].procEvento.tpEvento := StrToTpEventoDFe(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpEvento'), tcStr), FptpDFe);
-  docZip[Indice].procEvento.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
-  docZip[Indice].procEvento.verEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('verEvento'), tcStr);
+    if docZip[Indice].procEvento.CNPJ = '' then
+      docZip[Indice].procEvento.CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPF'), tcStr);
 
-  LerGrupo_detEvento(ANode.Childrens.FindAnyNs('detEvento'), Indice);
-  LerGrupo_retEvento(ANode.Childrens.FindAnyNs('retEvento'), Indice);
-  LerGrupo_retEvento(ANode.Childrens.FindAnyNs('retEvento' + FptpDFe), Indice);
+    docZip[Indice].procEvento.chDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ch' + FptpDFe), tcStr);
+    docZip[Indice].procEvento.dhEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
+    // É preciso identificar o DF-e para usar a função de conversão correta.
+    docZip[Indice].procEvento.tpEvento := StrToTpEventoDFe(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpEvento'), tcStr), FptpDFe);
+    docZip[Indice].procEvento.nSeqEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+    docZip[Indice].procEvento.verEvento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verEvento'), tcStr);
+  end;
 end;
 
 procedure TRetDistDFeInt.LerDocumentoDecodificado(const DocDecod: AnsiString; Indice: Integer);
 var
   Document: TACBrXmlDocument;
   ANode: TACBrXmlNode;
-  AuxNode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -784,22 +792,32 @@ begin
 
     ANode := Document.Root;
 
-    if ANode <> nil then
+    if Assigned(ANode) then
     begin
-      AuxNode := ANode.Childrens.FindAnyNs('res' + FptpDFe);
-      LerResumo(AuxNode, Indice);
+      if ANode.Name = 'res' + FptpDFe then
+        LerResumo(ANode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs('resEvento');
-      LerResumoEvento(AuxNode, Indice);
+      if ANode.Name = 'resEvento' then
+        LerResumoEvento(ANode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'Proc');
-      LerDocumento(AuxNode, Indice);
+      if ANode.Name = LowerCase(FptpDFe) + 'Proc' then
+        LerDocumento(ANode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs(LowerCase(FptpDFe) + 'OSProc');
-      LerDocumento(AuxNode, Indice);
+      if ANode.Name = LowerCase(FptpDFe) + 'OSProc' then
+        LerDocumento(ANode, Indice);
 
-      AuxNode := ANode.Childrens.FindAnyNs('procEvento' + FptpDFe);
-      LerEvento(AuxNode, Indice);
+      if ANode.Name = 'GTVeProc' then
+        LerDocumento(ANode, Indice);
+
+      if ANode.Name = 'procEvento' + FptpDFe then
+      begin
+        LerEvento(ANode.Childrens.FindAnyNs('evento'), Indice);
+        LerEvento(ANode.Childrens.FindAnyNs('evento' + FptpDFe), Indice);
+
+        LerGrupo_detEvento(ANode.Childrens.FindAnyNs('detEvento'), Indice);
+        LerGrupo_retEvento(ANode.Childrens.FindAnyNs('retEvento'), Indice);
+        LerGrupo_retEvento(ANode.Childrens.FindAnyNs('retEvento' + FptpDFe), Indice);
+      end;
     end;
   finally
     FreeAndNil(Document);
@@ -814,11 +832,11 @@ var
   StrAux, StrDecod: AnsiString;
   xPath, xNomeArq: string;
 begin
-  if not Assigned(ANode) or (ANode = nil) then Exit;
+  if not Assigned(ANode) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('loteDistDFeInt');
 
-  if AuxNode <> nil then
+  if Assigned(AuxNode) then
   begin
     ANodes := AuxNode.Childrens.FindAllAnyNs('docZip');
 
@@ -847,7 +865,7 @@ end;
 
 function TRetDistDFeInt.LerXml: boolean;
 var
-  ok: boolean;
+  Ok: boolean;
   Document: TACBrXmlDocument;
   ANode: TACBrXmlNode;
 begin
@@ -864,10 +882,10 @@ begin
 
       ANode := Document.Root;
 
-      if ANode <> nil then
+      if Assigned(ANode) then
       begin
         versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-        tpAmb := StrToTpAmb(ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        tpAmb := StrToTpAmb(Ok, ObterConteudoTag(Anode.Childrens.FindAnyNs('tpAmb'), tcStr));
         verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
         xMotivo := ACBrStr(ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr));
@@ -887,12 +905,16 @@ begin
   end;
 end;
 
-function TRetDistDFeInt.LerXMLFromFile(Const CaminhoArquivo: string): Boolean;
+function TRetDistDFeInt.LerXMLFromFile(Const CaminhoArquivo: string;
+  const AtpDFe: string): Boolean;
 var
   ArqDist: TStringList;
+  xml: string;
 begin
   ArqDist := TStringList.Create;
   try
+    FptpDFe := AtpDFe;
+
     ArqDist.LoadFromFile(CaminhoArquivo);
 
     XmlRetorno := ArqDist.Text;
@@ -914,7 +936,9 @@ begin
                                                       AItem.resDFe.IE,
                                                       AItem.resEvento.dhEvento);
 
-    schprocEventoNFe:
+    schprocEventoNFe,
+    schprocEventoCTe,
+    schprocEventoMDFe:
       Result := FOwner.Configuracoes.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
                                                      AItem.resDFe.xNome,
                                                      AItem.procEvento.CNPJ,
@@ -922,7 +946,11 @@ begin
                                                      AItem.procEvento.dhEvento);
 
     schresNFe,
-    schprocNFe:
+    schprocNFe,
+    schprocCTe,
+    schprocCTeOS,
+    schprocGTVe,
+    schprocMDFe:
       Result := FOwner.Configuracoes.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                            AItem.resDFe.CNPJCPF,
                                                            AItem.resDFe.IE,
@@ -947,6 +975,20 @@ begin
 
     schprocEventoNFe:
       Result := OnlyNumber(AItem.procEvento.Id) + '-procEventoNFe.xml';
+
+    schprocCTe,
+    schprocCTeOS,
+    schprocGTVe:
+      Result := AItem.resDFe.chDFe + '-cte.xml';
+
+    schprocEventoCTe:
+      Result := OnlyNumber(AItem.procEvento.Id) + '-procEventoCTe.xml';
+
+    schprocMDFe:
+      Result := AItem.resDFe.chDFe + '-mdfe.xml';
+
+    schprocEventoMDFe:
+      Result := OnlyNumber(AItem.procEvento.Id) + '-procEventoMDFe.xml';
   end;
 end;
 

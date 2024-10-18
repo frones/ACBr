@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2024
+-- ACBrDFeComum.RetDistDFeInt --
+[-] Correções visando a leitura correta do XML de retorno quando este contem
+    documentos no retorno.
+   Por: Italo Giurizzato Junior
+
 01/10/2024
 -- ACBrDFeComum.Proc/ACBrDFeComum.RetDistDFeInt--
 [*] Melhoras para atender todos os DFe.

@@ -38,6 +38,7 @@ unit ACBrBoletoW_Sicredi_APIV2;
 interface
 
 uses
+  ACBrBase,
   ACBrJSON,
   ACBrBoleto,
   ACBrBoletoWS,
@@ -327,7 +328,9 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirPosto;
 begin
-  FPHeaders.Add( Format('posto: %s', [OnlyNumber(Boleto.Cedente.AgenciaDigito)]) );
+  if Length(Boleto.Cedente.AgenciaDigito) <> 2 then
+     raise EACBrException.Create('Agência necessidade de dois digitos!');
+  FPHeaders.Add( Format('posto: %s', [Boleto.Cedente.AgenciaDigito]) );
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirAutenticacao;

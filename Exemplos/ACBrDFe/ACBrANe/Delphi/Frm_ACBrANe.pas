@@ -255,6 +255,9 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.Base,
   ACBrOpenSSLUtils, OpenSSLExt,
   ACBrDFeSSL,
   pcnConversao, ACBrANe.WebServicesResponse,
@@ -755,6 +758,24 @@ procedure TfrmACBrANe.ChecarResposta(aMetodo: TMetodo);
       end;
     end;
   end;
+
+  procedure ListaInfo(aInfo: TInfoCollection);
+  var
+    i: Integer;
+  begin
+    if aInfo.Count > 0 then
+    begin
+      memoLog.Lines.Add(' ');
+      memoLog.Lines.Add('Informações:');
+      for i := 0 to aInfo.Count -1 do
+      begin
+        memoLog.Lines.Add('Numero Averbação: ' + aInfo[i].Codigo);
+        memoLog.Lines.Add('CNPJ Seguradora : ' + aInfo[i].Descricao);
+
+        memoLog.Lines.Add('---------');
+      end;
+    end;
+  end;
 begin
   memoLog.Clear;
   memoLog.Lines.Clear;
@@ -798,6 +819,7 @@ begin
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
             ListaDadosSeguro(DadosSeguro);
+            ListaInfo(Info);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');

@@ -526,10 +526,7 @@ Sequencia XML</xs:documentation>
 																<xs:documentation>Campo poderá ser exigido a critério da UF – campo 36 do arquivo MESTRE DE DOCUMENTO FISCAL (Anexo Único, item 5 do Conv. 115/03)</xs:documentation>
 															</xs:annotation>
 															<xs:simpleType>
-																<xs:restriction base="xs:base64Binary">
-																	<xs:minLength value="32"/>
-																	<xs:maxLength value="32"/>
-																</xs:restriction>
+																<xs:restriction base="xs:base64Binary"/>
 															</xs:simpleType>
 														</xs:element>
 													</xs:sequence>
@@ -606,10 +603,7 @@ Sequencia XML</xs:documentation>
 																<xs:documentation>Campo poderá ser exigido a critério da UF – campo 36 do arquivo MESTRE DE DOCUMENTO FISCAL (Anexo Único, item 5 do Conv. 115/03)</xs:documentation>
 															</xs:annotation>
 															<xs:simpleType>
-																<xs:restriction base="xs:base64Binary">
-																	<xs:minLength value="32"/>
-																	<xs:maxLength value="32"/>
-																</xs:restriction>
+																<xs:restriction base="xs:base64Binary"/>
 															</xs:simpleType>
 														</xs:element>
 													</xs:sequence>

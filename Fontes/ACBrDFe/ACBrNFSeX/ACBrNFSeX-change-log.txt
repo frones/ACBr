@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/10/2024
+-- ACBrNFSeXGravarXml --
+[*] #TK-6121: Na função GerarTabulado trocado o FloatToStr por FloatToString para considerar o
+    DecimalChar configurado.
+   Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] #TK-6119: Incluída a cidade Espigão D'Oeste/RO, o provedor é Fiorilli.
    Por: Artur Alencar

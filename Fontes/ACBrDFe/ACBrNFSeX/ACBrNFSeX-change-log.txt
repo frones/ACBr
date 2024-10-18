@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6119: Incluída a cidade Espigão D'Oeste/RO, o provedor é Fiorilli.
+   Por: Artur Alencar
+[*] #TK-6120: A cidade Tres Cachoeiras/RS trocou a URL de produção, mas o provedor continua o
+    mesmo.
+   Por: Mario Inacio
+
 17/10/2024
 -- ACBrNFSeXNotasFiscais --
 [*] Alteração nos métodos que geram e fazem a leitura do arquivo INI para contemplar o campo

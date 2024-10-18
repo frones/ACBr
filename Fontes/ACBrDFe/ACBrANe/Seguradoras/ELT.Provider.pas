@@ -176,7 +176,7 @@ procedure TACBrANeProviderELT.TratarRetornoEnviar(Response: TANeEnviarResponse);
 var
   Document: TACBrXmlDocument;
   AErro: TANeEventoCollectionItem;
-  ANode, ANodeAux: TACBrXmlNode;
+  ANode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 

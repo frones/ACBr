@@ -179,6 +179,27 @@ type
     property Items[Index: Integer]: TDadosSeguroCollectionItem read GetItem write SetItem; default;
   end;
 
+  TInfoCollectionItem = class
+  private
+    FCodigo: string;
+    FDescricao: string;
+  public
+    property Codigo: string    read FCodigo    write FCodigo;
+    property Descricao: string read FDescricao write FDescricao;
+  end;
+
+  TInfoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TInfoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoCollectionItem);
+  public
+    function New: TInfoCollectionItem;
+    function Add(ANota: TInfoCollectionItem): Integer; reintroduce;
+    Procedure Insert(Index: Integer; ANota: TInfoCollectionItem); reintroduce;
+
+    property Items[Index: Integer]: TInfoCollectionItem read GetItem write SetItem; default;
+  end;
+
   TANeWebserviceResponse = class
   private
     FSucesso: Boolean;
@@ -202,12 +223,14 @@ type
     FArquivoEnvio: string;
     FArquivoRetorno: string;
     FDadosSeguro: TDadosSeguroCollection;
+    FInfo: TInfoCollection;
 
     function GetXmlEnvio: string;
     procedure SetXmlEnvio(const Value: string);
     function GetXmlRetorno: string;
     procedure SetXmlRetorno(const Value: string);
     procedure SetDadosSeguro(const Value: TDadosSeguroCollection);
+    procedure SetInfo(const Value: TInfoCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -226,6 +249,7 @@ type
     property Protocolo: string read FProtocolo write FProtocolo;
     property Status: string read FStatus write FStatus;
     property DadosSeguro: TDadosSeguroCollection read FDadosSeguro write SetDadosSeguro;
+    property Info: TInfoCollection read FInfo write SetInfo;
 
     property Alertas: TANeEventoCollection read FAlertas;
     property Erros: TANeEventoCollection read FErros;
@@ -326,6 +350,12 @@ begin
       FDadosSeguro.Delete(i);
   end;
 
+  if Assigned(FInfo) then
+  begin
+    for i := FInfo.Count - 1 downto 0 do
+      FInfo.Delete(i);
+  end;
+
   if Assigned(FErros) then
   begin
     for i := FErros.Count - 1 downto 0 do
@@ -358,6 +388,7 @@ begin
 
   FSucesso := False;
   FDadosSeguro := TDadosSeguroCollection.Create;
+  FInfo := TInfoCollection.Create;
 
   FAlertas := TANeEventoCollection.Create;
   FErros := TANeEventoCollection.Create;
@@ -367,6 +398,7 @@ end;
 destructor TANeWebserviceResponse.Destroy;
 begin
   FDadosSeguro.Free;
+  FInfo.Free;
 
   FAlertas.Free;
   FErros.Free;
@@ -389,6 +421,11 @@ procedure TANeWebserviceResponse.SetDadosSeguro(
   const Value: TDadosSeguroCollection);
 begin
   FDadosSeguro := Value;
+end;
+
+procedure TANeWebserviceResponse.SetInfo(const Value: TInfoCollection);
+begin
+  FInfo := Value;
 end;
 
 procedure TANeWebserviceResponse.SetXmlEnvio(const Value: string);
@@ -515,11 +552,40 @@ end;
 
 function TDadosSeguroCollection.New: TDadosSeguroCollectionItem;
 begin
-
+  Result := TDadosSeguroCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TDadosSeguroCollection.SetItem(Index: Integer;
   Value: TDadosSeguroCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TInfoCollection }
+
+function TInfoCollection.Add(ANota: TInfoCollectionItem): Integer;
+begin
+  Result := inherited Add(ANota);
+end;
+
+function TInfoCollection.GetItem(Index: Integer): TInfoCollectionItem;
+begin
+  Result := TInfoCollectionItem(inherited Items[Index]);
+end;
+
+procedure TInfoCollection.Insert(Index: Integer; ANota: TInfoCollectionItem);
+begin
+  inherited Insert(Index, ANota);
+end;
+
+function TInfoCollection.New: TInfoCollectionItem;
+begin
+  Result := TInfoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TInfoCollection.SetItem(Index: Integer; Value: TInfoCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;

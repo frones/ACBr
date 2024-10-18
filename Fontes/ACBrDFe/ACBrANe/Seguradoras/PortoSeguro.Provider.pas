@@ -215,7 +215,7 @@ procedure TACBrANeProviderPortoSeguro.TratarRetornoEnviar(Response: TANeEnviarRe
 var
   Document: TACBrXmlDocument;
   AErro: TANeEventoCollectionItem;
-  ANode, ANodeAux: TACBrXmlNode;
+  ANode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 

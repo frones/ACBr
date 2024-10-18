@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2024
+-- Diversos --
+[*] Correções e inclusão de novos campos (Informações) que constam no retorno (grupo Infos).
+  Por: Italo Giurizzato Junior
+
 17/10/2024
 -- Diversos --
 [*] Correções e inclusão de novos campos para apresentar as informações retornadas.

@@ -819,8 +819,8 @@ begin
   fPSP.PrepararHTTP;
   with fPSP.URLQueryParams do
   begin
-    Values['inicio'] := DateTimeToIso8601(aInicio, BiasToTimeZone(TimeZoneBias*(-1)));
-    Values['fim'] := DateTimeToIso8601(aFim, BiasToTimeZone(TimeZoneBias*(-1)));
+    Values['inicio'] := DateTimeToIso8601(aInicio);
+    Values['fim'] := DateTimeToIso8601(aFim);
 
     s := OnlyNumber(aCpfCnpj);
     if NaoEstaVazio(s) then
@@ -1101,8 +1101,8 @@ begin
 
   with fPSP.URLQueryParams do
   begin
-    Values['inicio'] := DateTimeToIso8601(Inicio, BiasToTimeZone(TimeZoneBias*(-1)));
-    Values['fim'] := DateTimeToIso8601(Fim, BiasToTimeZone(TimeZoneBias*(-1)));
+    Values['inicio'] := DateTimeToIso8601(Inicio);
+    Values['fim'] := DateTimeToIso8601(Fim);
 
     s := Trim(TxId);
     if (s <> '') then
@@ -1364,8 +1364,8 @@ begin
 
   with fPSP.URLQueryParams do
   begin
-    Values['inicio'] := DateTimeToIso8601(Inicio, BiasToTimeZone(TimeZoneBias*(-1)));
-    Values['fim'] := DateTimeToIso8601(Fim, BiasToTimeZone(TimeZoneBias*(-1)));
+    Values['inicio'] := DateTimeToIso8601(Inicio);
+    Values['fim'] := DateTimeToIso8601(Fim);
 
     s := OnlyNumber(CpfCnpj);
     if (s <> '') then

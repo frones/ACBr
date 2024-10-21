@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2024
+-- ACBrPIXCD, ACBrPIXPSPBancoDoBrasil --
+[-] Corrige envio de datas na consulta PIX para o BB, volta o original do ACBrPIXCD --
+    por: Alexandre de Paula
+
 16/10/2024
 -- ACBrPIXPSPSicoob --
 [-] Corrige problema na resposta ao criar uma cobrança enviando o txID para o PSP Sicoob

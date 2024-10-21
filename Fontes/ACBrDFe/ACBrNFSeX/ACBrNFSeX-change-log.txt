@@ -43,6 +43,23 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6135: Incluída a cidade de Iraceminha/SC, o provedor é Betha versão 1.00
+   Por: Willian Delan
+[*] #TK-6133: Incluída a cidade de Mirandopolis/SP, o provedor é Fiorilli.
+[*] #TK-6133: A cidade de Guararapes/SP, mudou a URL de produção o provedor continua o mesmo.
+   Por: Moreira
+[*] #TK-6130: Incluída a cidade de Candoi/PR, o provedor é Equiplano.
+[*] #TK-6130: Incluída a cidade de Honorio Serpa/PR, o provedor é IPM versão 2.04
+[*] #TK-6130: Incluída a cidade de Porto Barreiro/PR, o provedor é Equiplano.
+[*] #TK-6130: A cidade de Clevelandia/PR, mudou de provedor agora é IPM versão 2.04
+[*] #TK-6130: A cidade de Mariopolis/PR, mudou a URL de produção o provedor continua o mesmo.
+   Por: Limber Software
+[*] #TK-6129: A cidade de Castelo/ES, mudou a versão e a URL de produção, o provedor continua o
+    mesmo.
+   Por: christian@adminfo.com.br
+
 18/10/2024
 -- ACBrNFSeXGravarXml --
 [*] #TK-6121: Na função GerarTabulado trocado o FloatToStr por FloatToString para considerar o

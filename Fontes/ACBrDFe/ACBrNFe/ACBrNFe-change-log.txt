@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2024
+-- ACBrDFeDANFeReport --
+[*] Adiciona validação que verifica se propriedade tem valor diferente de nil antes de utilizar.
+   Por: Waldir Paim 
+
 17/10/2024
 -- ACBrNFe.XmlReader --
 [-] Realizado correções na leitura dos impostos: ICMS, PIS e COFINS.

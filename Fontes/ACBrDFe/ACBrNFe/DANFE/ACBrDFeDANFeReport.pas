@@ -216,7 +216,9 @@ end;
 
 function TACBrDFeDANFeReport.CaractereQuebraDeLinha: String;
 begin
-  Result := TACBrNFe(ACBrNFe).Configuracoes.WebServices.QuebradeLinha;
+  Result := '|';
+  if Assigned(ACBrNFe) and (ACBrNFe is TACBrNFe) then
+    Result := TACBrNFe(ACBrNFe).Configuracoes.WebServices.QuebradeLinha;
 end;
 
 procedure TACBrDFeDANFeReport.Notification(AComponent: TComponent; Operation: TOperation);

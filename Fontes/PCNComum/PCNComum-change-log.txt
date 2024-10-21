@@ -39,6 +39,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2024
+-- pcnConversao --
+[+] acrescentado o enumerador: teRegistroPassagemMDFe.
+   Por: Italo Giurizzato Junior
 -- pcnRetDistDFeInt --
 [*] #TK-6131: Adiciona chamada a função de conversão para string nativa nos locais em que há o ParseText
    Por: Diego Folieni

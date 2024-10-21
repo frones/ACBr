@@ -522,7 +522,7 @@ begin
             if FdocZip.Items[i].FresDFe.FCNPJCPF = '' then
               FdocZip.Items[i].FresDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
 
-            FdocZip.Items[i].FresDFe.FxNome    := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
+            FdocZip.Items[i].FresDFe.FxNome    := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome')));
             FdocZip.Items[i].FresDFe.FIE       := oLeitorInfZip.rCampo(tcStr, 'IE');
             FdocZip.Items[i].FresDFe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
             FdocZip.Items[i].FresDFe.FtpNF     := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
@@ -549,7 +549,7 @@ begin
             // É preciso identificar o DF-e para usar a função de conversão correta.
             FdocZip.Items[i].FresEvento.FtpEvento   := StrToTpEventoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'), FtpDFe);
             FdocZip.Items[i].FresEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
-            FdocZip.Items[i].FresEvento.FxEvento    := ParseText(oLeitorInfZip.rCampo(tcStr, 'xEvento'));
+            FdocZip.Items[i].FresEvento.FxEvento    := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xEvento')));
             FdocZip.Items[i].FresEvento.FdhRecbto   := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
             FdocZip.Items[i].FresEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
           end;
@@ -574,7 +574,7 @@ begin
             if FdocZip.Items[i].FresDFe.FCNPJCPF = '' then
               FdocZip.Items[i].FresDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
 
-            FdocZip.Items[i].FresDFe.FxNome := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
+            FdocZip.Items[i].FresDFe.FxNome := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome')));
             FdocZip.Items[i].FresDFe.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
 
             oLeitorInfZip.rExtrai(1, 'ide');
@@ -629,9 +629,9 @@ begin
             begin
               FdocZip.Items[i].FprocEvento.detEvento.FVersao     := oLeitorInfZip.rAtributo('versao');
               FdocZip.Items[i].FprocEvento.detEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
-              FdocZip.Items[i].FprocEvento.detEvento.FxJust      := ParseText(oLeitorInfZip.rCampo(tcStr, 'xJust'));
-              FdocZip.Items[i].FprocEvento.detEvento.FxCorrecao  := ParseText(oLeitorInfZip.rCampo(tcStr, 'xCorrecao'));
-              FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := ParseText(oLeitorInfZip.rCampo(tcStr, 'descEvento'));
+              FdocZip.Items[i].FprocEvento.detEvento.FxJust      := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xJust')));
+              FdocZip.Items[i].FprocEvento.detEvento.FxCorrecao  := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xCorrecao')));
+              FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'descEvento')));
               FdocZip.Items[i].FprocEvento.detEvento.FtpAutor    := oLeitorInfZip.rCampo(tcInt, 'tpAutor');
               FdocZip.Items[i].FprocEvento.detEvento.FverAplic   := oLeitorInfZip.rCampo(tcStr, 'verAplic');
 
@@ -648,7 +648,7 @@ begin
               begin
                 FdocZip.Items[i].FprocEvento.detEvento.Femit.FCNPJ  := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
                 FdocZip.Items[i].FprocEvento.detEvento.Femit.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
-                FdocZip.Items[i].FprocEvento.detEvento.Femit.FxNome := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
+                FdocZip.Items[i].FprocEvento.detEvento.Femit.FxNome := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome')));
               end;
 
               j := 0;
@@ -676,11 +676,11 @@ begin
               FdocZip.Items[i].FprocEvento.RetinfEvento.FverAplic    := oLeitorInfZip.rCampo(tcStr, 'verAplic');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcOrgao      := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcStat       := oLeitorInfZip.rCampo(tcInt, 'cStat');
-              FdocZip.Items[i].FprocEvento.RetinfEvento.FxMotivo     := ParseText(oLeitorInfZip.rCampo(tcStr, 'xMotivo'));
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FxMotivo     := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xMotivo')));
               FdocZip.Items[i].FprocEvento.RetinfEvento.FchDFe       := oLeitorInfZip.rCampo(tcStr, 'ch' + FtpDFe);
               // É preciso identificar o DF-e para usar a função de conversão correta.
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpEvento    := StrToTpEventoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'), FtpDFe);
-              FdocZip.Items[i].FprocEvento.RetinfEvento.FxEvento     := ParseText(oLeitorInfZip.rCampo(tcStr, 'xEvento'));
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FxEvento     := UTF8ToNativeString(ParseText(oLeitorInfZip.rCampo(tcStr, 'xEvento')));
               FdocZip.Items[i].FprocEvento.RetinfEvento.FnSeqEvento  := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FCNPJDest    := oLeitorInfZip.rCampo(tcStr, 'CNPJDest');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FdhRegEvento := oLeitorInfZip.rCampo(tcDatHor, 'dhRegEvento');

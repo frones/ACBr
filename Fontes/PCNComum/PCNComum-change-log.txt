@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2024
+-- pcnRetDistDFeInt --
+[*] #TK-6131: Adiciona chamada a função de conversão para string nativa nos locais em que há o ParseText
+   Por: Diego Folieni
+
 20/06/2024
 -- pcnConversao --
 [+] acrescentado os enumeradores: teConcFinanceira, teCancConcFinanceira.

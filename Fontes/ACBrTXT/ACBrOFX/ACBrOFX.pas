@@ -187,10 +187,15 @@ var
         LInicio := Pos('[',LLine);
         LFim    := Pos(':',LLine);
         LFuso   := StrToFloat(Copy(LLine, LInicio + 1, LFim - LInicio - 1));
+		if Length(Copy(LLine, 0, LInicio - 1)) > 12 then
+        begin
         LTime   := Copy(LLine, 7, LInicio-7);
         // Quando for mais que 6 dígitos, indica ser um horário e não um fator.
         // Assim, os dígitos 7 e 8 são o dia como em um datetime padrão.
         Result  := (Length(LTime) <= 6);
+		end
+        else
+          Result := False;
       end else
        LFuso := 0;
     end;

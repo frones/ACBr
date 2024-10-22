@@ -416,7 +416,7 @@ end;
 function FormatarCNPJ(const AValue: String): String;
 Var S : String ;
 begin
-  S := PadLeft( OnlyNumber(AValue), 14, '0') ;
+  S := PadLeft( OnlyAlphaNum(AValue), 14, '0') ;
   Result := copy(S,1,2) + '.' + copy(S,3,3) + '.' +
             copy(S,6,3) + '/' + copy(S,9,4) + '-' + copy(S,13,2) ;
 end;
@@ -433,7 +433,7 @@ function FormatarCNPJouCPF(const AValue: String): String;
 var
   S: String;
 begin
-  S := OnlyNumber(AValue);
+  S := OnlyAlphaNum(AValue);
   if Length(S) = 0 then
      Result := S
   else
@@ -850,7 +850,7 @@ begin
   if fsAjustarTamanho then
      fsDocto := PadLeft( fsDocto, 14, '0') ;
 
-  if (Length( fsDocto ) <> 14) or ( not StrIsNumber( fsDocto ) ) then
+  if (Length( fsDocto ) <> 14) or ( not StrIsAlphaNum( fsDocto ) ) then
   begin
      fsMsgErro := 'CNPJ deve ter 14 dígitos. (Apenas números)' ;
      exit
@@ -2147,7 +2147,7 @@ begin
   { Calculando a Soma dos digitos de traz para diante, multiplicadas por BASE }
   For A := 1 to Tamanho do
   begin
-     N := StrToIntDef( fsDocto[ Tamanho - A + 1 ], 0 ) ;
+     N := Ord( fsDocto[ Tamanho - A + 1 ] ) - 48; //Ord( '0' );
      ValorCalc := (N * Base);
 
      if (fsFormulaDigito = frModulo10) and ( ValorCalc > 9) then

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2024
+-- ACBrValidador --
+[*] Ajuste na validação do CNPJ, para suportar Letras
+    https://www.projetoacbr.com.br/forum/topic/79708-cnpj-alfanum%C3%A9rico/
+    (por: lemuel)
+
 26/01/2023
 [*] TK-3522 ACBrValidador - IE para o estado de GO agora pode começar com 20
   Por : Victor H Gonzales - Pandaaa / Cleiver

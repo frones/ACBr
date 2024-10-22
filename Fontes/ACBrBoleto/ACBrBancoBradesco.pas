@@ -54,6 +54,7 @@ type
               const ACBrTitulo: TACBrTitulo); override;
     function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; override;
     function GerarLinhaRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList): String;
+    procedure LerRetorno400(ARetorno:TStringList); override;
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
@@ -153,7 +154,7 @@ begin
    fpDigito                 := 2;
    fpNome                   := 'BRADESCO';
    fpNumero                 := 237;
-   fpTamanhoMaximoNossoNum  := 11;   
+   fpTamanhoMaximoNossoNum  := 11;
    fpTamanhoAgencia         := 4;
    fpTamanhoConta           := 7;
    fpTamanhoCarteira        := 2;
@@ -556,6 +557,19 @@ begin
     IntToStrZero( ARemessa.Count + 1, 6);                                          // 395 a 400 - Número sequencial do registro
 
     ARemessa.Add(UpperCase(LLinha));
+  end;
+end;
+
+procedure TACBrBancoBradesco.LerRetorno400(ARetorno: TStringList);
+var LTamanhoMaximoNossoNum : Integer;
+begin
+  LTamanhoMaximoNossoNum := TamanhoMaximoNossoNum;
+  try
+    if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+      fpTamanhoMaximoNossoNum := LTamanhoMaximoNossoNum+1;
+    inherited;
+  finally
+    fpTamanhoMaximoNossoNum := LTamanhoMaximoNossoNum;
   end;
 end;
 

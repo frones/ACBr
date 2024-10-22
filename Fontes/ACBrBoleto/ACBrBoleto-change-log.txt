@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2024
+-- ACBrBancoBradesco.pas --
+[*] TK-6136 Ajustes no Bradesco LerNossoNumeroCompleto
+https://www.projetoacbr.com.br/forum/topic/80255-arquivo-cnab-retorno-bradesco-237-carteira-09-nossonumero-n%C3%A3o-esta-retornando-o-d%C3%ADgito-completo
+	por Daniel de Morais / Victor Gonzales Pandaaaa
+
 17/10/2024
 -- ACBrBoletoW_C6.pas --
 [*] Ajustes no C6 tpAltera

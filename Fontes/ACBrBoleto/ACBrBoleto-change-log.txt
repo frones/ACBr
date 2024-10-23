@@ -50,9 +50,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/10/2024
+-- ACBrBancoCaixa.pas --
+[*] TK-6149 - Add no 240, codigo ocorrencia toRemessaAlterarPrazoDevolucao (31) Conf. NOta C004 Alteracao de outrosdados.
+	https://www.projetoacbr.com.br/forum/topic/80290-acbrlibboleto-c-gerar-remessa-de-altera%C3%A7%C3%A3o-de-t%C3%ADtulo-cef-cnab240-n%C3%A3o-est%C3%A1-gerando-com-c%C3%B3digo-de-movimento-remessa-correto/
+	por Daniel de Morais 
+
+23/10/2024
 -- ACBrBancoBradesco.pas --
 [*] TK-6136 Ajustes no Bradesco LerNossoNumeroCompleto
-https://www.projetoacbr.com.br/forum/topic/80255-arquivo-cnab-retorno-bradesco-237-carteira-09-nossonumero-n%C3%A3o-esta-retornando-o-d%C3%ADgito-completo
+	https://www.projetoacbr.com.br/forum/topic/80255-arquivo-cnab-retorno-bradesco-237-carteira-09-nossonumero-n%C3%A3o-esta-retornando-o-d%C3%ADgito-completo
 	por Daniel de Morais / Victor Gonzales Pandaaaa
 
 17/10/2024

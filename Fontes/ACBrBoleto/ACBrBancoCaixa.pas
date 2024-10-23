@@ -1544,6 +1544,7 @@ begin
     toRemessaNaoConcederDesconto                  : Result := '17';// Não conceder Desconto
     toRemessaAlterarValorAbatimento               : Result := '18';// Alteração do Valor de Abatimento
     toRemessaAlterarNomeEnderecoSacado            : Result := '31';
+    toRemessaAlterarPrazoDevolucao                : Result := '31'; //Alteração de Outros Dados
     toRemessaAlterarDadosRateioCredito            : Result := '33';// Alteração dos Dados do Rateio de Crédito
     toRemessaPedidoCancelamentoDadosRateioCredito : Result := '34';// Pedido de Cancelamento dos Dados do Rateio de Crédito
 //    toRemessa                                     : Result := '36';// Inclusão no Banco de Pagadores

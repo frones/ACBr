@@ -50,6 +50,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/10/2024
+-- ACBrBoletoW_Itau_API.pas --
+[*] TK-6154 - TpConsulta nao permite view=specific tem q ser full. a para consultar specific deve se informar NossoNumero e nao retorna lista. TpConsultaDetalhe
+	https://www.projetoacbr.com.br/forum/topic/80129-consulta-de-boletos-api-ita%C3%BA/?do=findComment&comment=519841&_rid=1706
+	por Daniel de Morais 
+
+
+23/10/2024
 -- ACBrBancoCaixa.pas --
 [*] TK-6149 - Add no 240, codigo ocorrencia toRemessaAlterarPrazoDevolucao (31) Conf. NOta C004 Alteracao de outrosdados.
 	https://www.projetoacbr.com.br/forum/topic/80290-acbrlibboleto-c-gerar-remessa-de-altera%C3%A7%C3%A3o-de-t%C3%ADtulo-cef-cnab240-n%C3%A3o-est%C3%A1-gerando-com-c%C3%B3digo-de-movimento-remessa-correto/

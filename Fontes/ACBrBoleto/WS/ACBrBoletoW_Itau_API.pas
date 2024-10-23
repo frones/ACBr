@@ -321,7 +321,7 @@ begin
               LConsulta.Add('page=' + IntToStr(Trunc(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade)));
 
             {filtro full nao esta devolvendo informacoes pgto, suporte sugeriu utilizar specific}
-            LConsulta.Add('view=specific');
+            LConsulta.Add('view=full');
           end;
         tpConsultaDetalhe :
           begin

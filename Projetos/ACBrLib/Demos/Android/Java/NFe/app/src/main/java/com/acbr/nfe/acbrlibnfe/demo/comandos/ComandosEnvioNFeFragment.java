@@ -29,6 +29,7 @@ public class ComandosEnvioNFeFragment extends Fragment {
     private Button btnLimparLista;
     private Button btnEnviarNFe;
     private Button btnImprimirNFCe;
+    private Button btnImprimirPDFNFCe;
     private Button btnLimparRespostaEnvio;
     private Button btnEnviarEmailNFCe;
 
@@ -49,6 +50,7 @@ public class ComandosEnvioNFeFragment extends Fragment {
         btnEnviarNFe = view.findViewById(R.id.btnEnviarNFe);
         btnEnviarEmailNFCe = view.findViewById(R.id.btnEnviarEmailNFCe);
         btnImprimirNFCe = view.findViewById(R.id.btnImprimirNFCe);
+        btnImprimirPDFNFCe = view.findViewById(R.id.btnImprimirPDFNFCe);
         btnLimparRespostaEnvio = view.findViewById(R.id.btnLimparRespostaEnvio);
 
         btnLimparLista.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +80,14 @@ public class ComandosEnvioNFeFragment extends Fragment {
                 imprimirNFCe();
             }
         });
+
+        btnImprimirPDFNFCe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imprimirPDFNFCe();
+            }
+        });
+
 
         btnLimparRespostaEnvio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +203,29 @@ public class ComandosEnvioNFeFragment extends Fragment {
             Log.d("Print", "Preparando para imprimir.");
             ACBrNFe.Imprimir("", 1, "False", "False", "False", "False", "False");
             Log.d("Print", "Impressão realizada com sucesso.");
+        } catch (Exception ex) {
+            Log.e("Erro ao Imprimir NFCe", ex.getMessage());
+            ex.printStackTrace();  // Para ver a pilha de erros
+            txtRespostaEnvio.setText(ex.getMessage());
+        }
+    }
+
+    public void imprimirPDFNFCe(){
+        try {
+            Log.d("Print", "Limpando lista antes da impressão.");
+            ACBrNFe.LimparLista();
+
+            String xmlContent = txtNFeXML.getText().toString();
+            if (xmlContent.isEmpty()) {
+                Log.d("Print", "XML está vazio. Não pode carregar.");
+                return;
+            }
+
+            Log.d("Print", "Carregando XML: " + xmlContent);
+            ACBrNFe.CarregarXML(xmlContent);
+            Log.d("Print", "Preparando para imprimir.");
+            ACBrNFe.ImprimirPDF();
+            Log.d("Print", "Impressão PDF realizada com sucesso.");
         } catch (Exception ex) {
             Log.e("Erro ao Imprimir NFCe", ex.getMessage());
             ex.printStackTrace();  // Para ver a pilha de erros

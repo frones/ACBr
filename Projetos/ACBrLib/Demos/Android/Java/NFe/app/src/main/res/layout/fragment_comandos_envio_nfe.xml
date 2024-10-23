@@ -76,6 +76,14 @@
             android:text="Enviar DANFCe por E-mail" />
 
         <Button
+            android:id="@+id/btnImprimirPDFNFCe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Imprimir PDF DANFCe" />
+
+        <Button
             android:id="@+id/btnImprimirNFCe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

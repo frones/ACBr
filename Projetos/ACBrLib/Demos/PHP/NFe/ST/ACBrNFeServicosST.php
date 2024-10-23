@@ -323,6 +323,14 @@ try {
         }
     }
 
+    if ($metodo == "ObterCertificados") {
+        $processo = "NFE_ObterCertificados";
+
+        if (ObterCertificados($ffi, $resultado) != 0) {
+            exit;
+        }
+    }
+
     if ($metodo == "CarregarXmlNfe") {
         $processo = "NFE_CarregarXml";
 

@@ -462,6 +462,10 @@
                             <div class="grid3Col">
                                 <input type="button" id="OpenSSLInfo" value="OpenSSLInfo">
                             </div>
+                            <br>
+                            <div class="grid3Col">
+                                <input type="button" id="ObterCertificados" value="ObterCertificados">
+                            </div>
                         </div>
                     </div>
                     <div id="arquivos" class="panelAba panelConfiguracoes-container">
@@ -895,6 +899,12 @@
         $('#OpenSSLInfo').on('click', function() {
             chamaAjaxEnviar({
                 metodo: "OpenSSLInfo"
+            });
+        });
+
+        $('#ObterCertificados').on('click', function() {
+            chamaAjaxEnviar({
+                metodo: "ObterCertificados"
             });
         });
 

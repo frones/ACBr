@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2024
+-- ACBrNFeBase.php, ACBrNFeMT.php, ACBrNFeServicosMT.php, ACBrNFeServicosST.php --
+[+] Sem TK: Adicionado método ObterCertificados nos programas de exemplo ST e MT em php
+  Por: Renato Rubinho
+
 03/10/2024
 -- ACBrLibNFeConsoleMTDemo.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.

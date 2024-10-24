@@ -714,6 +714,7 @@ begin
   FNumeroCorrespondente:= 0;
   FOrientacaoBanco:= '';
   FTipoCobranca:= cobNenhum;
+  FCasasDecimaisMoraJuros := 2;
 end;
 
 procedure TBoletoBancoConfig.LerIni(const AIni: TCustomIniFile);

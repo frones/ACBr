@@ -453,9 +453,8 @@ var
   ItemgProc: TgProcCollectionItem;
   ItemICMSUFDest: TICMSUFDestCollectionItem;
 begin
-  Result := False;
-
   INIRec := TMemIniFile.Create('');
+
   try
     LerIniArquivoOuString(AIniString, INIRec);
 
@@ -1469,7 +1468,7 @@ end;
 procedure TNotasFiscais.ImprimirPDF;
 begin
   VerificarDANFCom;
-  TACBrNFCom(FACBrNFCom).DANFCom.ImprimirDANFComPDF(nil);
+  TACBrNFCom(FACBrNFCom).DANFCom.ImprimirDANFComPDF;
 end;
 
 procedure TNotasFiscais.ImprimirResumidoPDF;

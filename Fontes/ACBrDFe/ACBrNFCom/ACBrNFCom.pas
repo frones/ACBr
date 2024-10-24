@@ -630,7 +630,7 @@ begin
   if not Assigned(DANFCom) then
     GerarException('Componente DANFCom não associado.')
   else
-    DANFCom.ImprimirEVENTOPDF(nil);
+    DANFCom.ImprimirEVENTOPDF;
 end;
 
 procedure TACBrNFCom.EnviarEmailEvento(const sPara, sAssunto: string;

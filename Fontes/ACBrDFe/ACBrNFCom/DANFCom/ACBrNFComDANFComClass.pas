@@ -72,10 +72,13 @@ type
     procedure ImprimirDANFCom(NFCom: TNFCom = nil); virtual;
     procedure ImprimirDANFComCancelado(NFCom: TNFCom = nil); virtual;
     procedure ImprimirDANFComResumido(NFCom: TNFCom = nil); virtual;
-    procedure ImprimirDANFComPDF(NFCom: TNFCom = nil); virtual;
+    procedure ImprimirDANFComPDF(NFCom: TNFCom = nil); overload; virtual;
+    procedure ImprimirDANFComPDF(AStream: TStream; NFCom: TNFCom = nil); overload; virtual;
+
     procedure ImprimirDANFComResumidoPDF(NFCom: TNFCom = nil); virtual;
     procedure ImprimirEVENTO(NFCom: TNFCom = nil); virtual;
-    procedure ImprimirEVENTOPDF(NFCom: TNFCom = nil); virtual;
+    procedure ImprimirEVENTOPDF(NFCom: TNFCom = nil); overload; virtual;
+    procedure ImprimirEVENTOPDF(AStream: TStream; NFCom: TNFCom = nil); overload; virtual;
 
   published
     property ACBrNFCom: TComponent read FACBrNFCom write SetNFCom;
@@ -131,6 +134,12 @@ begin
   ErroAbstract('ImprimirDANFComPDF');
 end;
 
+procedure TACBrNFComDANFComClass.ImprimirDANFComPDF(AStream: TStream;
+  NFCom: TNFCom);
+begin
+  ErroAbstract('ImprimirDANFComPDF');
+end;
+
 procedure TACBrNFComDANFComClass.ImprimirDANFComResumidoPDF(NFCom: TNFCom);
 begin
   ErroAbstract('ImprimirDANFComResumidoPDF');
@@ -142,6 +151,12 @@ begin
 end;
 
 procedure TACBrNFComDANFComClass.ImprimirEVENTOPDF(NFCom: TNFCom);
+begin
+  ErroAbstract('ImprimirEVENTOPDF');
+end;
+
+procedure TACBrNFComDANFComClass.ImprimirEVENTOPDF(AStream: TStream;
+  NFCom: TNFCom);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;

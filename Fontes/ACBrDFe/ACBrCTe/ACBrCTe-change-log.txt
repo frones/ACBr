@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/10/2024
+-- ACBrCTe.RetEnvEvento --
+[-] #TK-6159: Correção para a leitura do grupo Signature ao ler o XML completo do
+    Evento (*-procEventoCTe.xml)
+   Por: Italo Giurizzato Junior
+
 14/10/2024
 -- ACBrCTe.XmlHandler --
 [-] #TK-6088: Correção, não estava lendo a tag indIEToma.

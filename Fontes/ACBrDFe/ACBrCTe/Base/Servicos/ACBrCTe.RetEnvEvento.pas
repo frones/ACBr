@@ -456,6 +456,7 @@ begin
           if AuxNode = nil then
             AuxNode := ANode.Childrens.FindAnyNs('evento');
 
+          LerSignature(AuxNode.Childrens.FindAnyNs('Signature'), signature);
           Ler_InfEvento(AuxNode.Childrens.FindAnyNs('infEvento'));
 
           AuxNode := ANode.Childrens.FindAnyNs('retEventoCTe');
@@ -463,6 +464,7 @@ begin
           if AuxNode <> nil then
           begin
             ANodes := AuxNode.Childrens.FindAllAnyNs('infEvento');
+
             for i := 0 to Length(ANodes) - 1 do
             begin
               Ler_InfEventos(ANodes[i]);
@@ -473,6 +475,7 @@ begin
         if ANode.LocalName = 'retEventoCTe' then
         begin
           ANodes := ANode.Childrens.FindAllAnyNs('infEvento');
+
           for i := 0 to Length(ANodes) - 1 do
           begin
             Ler_InfEventos(ANodes[i]);
@@ -480,9 +483,10 @@ begin
         end;
 
         if (ANode.LocalName = 'eventoCTe') or (ANode.LocalName = 'evento') then
+        begin
           Ler_InfEvento(ANode.Childrens.FindAnyNs('infEvento'));
-
-        LerSignature(ANode.Childrens.FindAnyNs('Signature'), signature);
+          LerSignature(ANode.Childrens.FindAnyNs('Signature'), signature);
+        end;
       end;
 
       Result := True;

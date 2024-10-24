@@ -2792,7 +2792,7 @@ end;
 
 procedure TCTeW.GerarInfCTeSub(infCTeSub: TInfCteSub);
 begin
-  if CTe.Ide.tpCTe = tcSubstituto then
+  if CTe.Ide.tpCTe in [tcSubstituto, tcSubstCTeSimpl] then
   begin
     Gerador.wGrupo('infCteSub', '#394');
     Gerador.wCampo(tcEsp, '#395', 'chCte', 44, 44, 1, OnlyNumber(infCTeSub.chCte), DSC_CHAVE);

@@ -46,6 +46,9 @@ Símbolo : Significado
 
 
 24/10/2024
+-- pcteCTeW --
+[*] #TK-6144: Alteração visando gerar o grupo infCteSub quando for o CT-e Simplificado.
+   Por: C4Dev
 -- ACBrCTe.RetEnvEvento --
 [-] #TK-6159: Correção para a leitura do grupo Signature ao ler o XML completo do
     Evento (*-procEventoCTe.xml)

@@ -52,10 +52,14 @@ type
     FCodigo: string;
     FDescricao: string;
     FCorrecao: string;
+    FValorEsperado: String;
+    FValorInformado: String;
   public
     property Codigo: string read FCodigo write FCodigo;
     property Descricao: string read FDescricao write FDescricao;
     property Correcao: string read FCorrecao write FCorrecao;
+    property ValorEsperado: String  read FValorEsperado  write FValorEsperado;
+    property ValorInformado: String read FValorInformado write FValorInformado;
   end;
 
   TANeEventoCollection = class(TACBrObjectList)

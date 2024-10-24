@@ -137,6 +137,8 @@ begin
     AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
     AErro.Descricao := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr));
     AErro.Correcao := '';
+    AErro.ValorEsperado := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ValorEsperado'), tcStr));
+    AErro.ValorInformado := ACBrStr(ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ValorInformado'), tcStr));
   end;
 end;
 

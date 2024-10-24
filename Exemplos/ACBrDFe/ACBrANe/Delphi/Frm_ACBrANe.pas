@@ -692,6 +692,8 @@ procedure TfrmACBrANe.ChecarResposta(aMetodo: TMetodo);
         memoLog.Lines.Add('Código  : ' + aErros[i].Codigo);
         memoLog.Lines.Add('Mensagem: ' + aErros[i].Descricao);
         memoLog.Lines.Add('Correção: ' + aErros[i].Correcao);
+        memoLog.Lines.Add('Valor Esperado: ' + aErros[i].ValorEsperado);
+        memoLog.Lines.Add('Valor Informado: ' + aErros[i].ValorInformado);
         memoLog.Lines.Add('---------');
       end;
     end;

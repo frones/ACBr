@@ -984,7 +984,7 @@ Public Function ConsultarEvento(ByVal aChave As String, ByVal aTipoEvento As Lon
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = NFSE_ConsultarEvento(aChave, buffer, bufferLen)
+    retorno = NFSE_ConsultarEvento(aChave, aTipoEvento, aNumSeq, buffer, bufferLen)
     CheckResult retorno
     
     ConsultarEvento = processResult(buffer, bufferLen)

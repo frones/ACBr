@@ -1,5 +1,5 @@
 {******************************************************************************}
-{ Projeto: Componentes ACBr - ACBrNFCom                                        }
+{ Projeto: Componentes ACBr - ACBrNFComDANFComRL                               }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
@@ -30,16 +30,14 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-{$I ACBr.inc}
-
-package ACBr_NFCom;
+package ACBr_NFComDANFComRL;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -49,7 +47,7 @@ package ACBr_NFCom;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS ON}
 {$RANGECHECKS ON}
-{$DEFINITIONINFO ON}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -59,34 +57,21 @@ package ACBr_NFCom;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr - Nota Fiscal de Serviço de Comunicação/Telecomunicações - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - DANFCom em FortesReport - (http://www.projetoacbr.com.br/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
-  vcl,
-  ACBr_DFeComum,
-  ACBr_PCNComum;
+  dsnap,
+  ACBr_NFCom,
+  ACBrDFeReportRL;
 
 contains
-  ACBrNFCom in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFCom.pas',
-  ACBrNFComConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComConfiguracoes.pas',
-  ACBrNFComNotasFiscais in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComNotasFiscais.pas',
-  ACBrNFComWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\ACBrNFComWebServices.pas',
-  
-  ACBrNFComClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComClass.pas',
-  ACBrNFComConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComConsts.pas',
-  ACBrNFComConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComConversao.pas',
-  ACBrNFComXmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlReader.pas',
-  ACBrNFComXmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\ACBrNFComXmlWriter.pas',
-  
-  ACBrNFComConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComConsSit.pas',
-  ACBrNFComRetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetConsSit.pas',
-  ACBrNFComEventoClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEventoClass.pas',
-  ACBrNFComEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComEnvEvento.pas',
-  ACBrNFComRetEnvEvento in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\Base\Servicos\ACBrNFComRetEnvEvento.pas',
-  
-  ACBrNFComDANFComClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\ACBrNFComDANFComClass.pas';
+  ACBrNFCom.DANFComRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRLClass.pas',
+  ACBrNFCom.DANFComRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRL.pas' {frmDANFComRL},
+  ACBrNFCom.DANFComRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRLRetrato.pas' {frmDANFComRLRetrato},
+  ACBrNFCom.DAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DAEventoRL.pas' {frmNFComDAEventoRL},
+  ACBrNFCom.DAEventoRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DAEventoRLRetrato.pas' {frmNFComDAEventoRLRetrato};
 
 end.

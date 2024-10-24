@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFCom_DANFComRL"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFCom\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - DANFCom em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRL.pas"/>
+        <UnitName Value="ACBrNFCom.DANFComRL"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRLClass.pas"/>
+        <UnitName Value="ACBrNFCom.DANFComRLClass"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFCom.DANFComRLReg"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DANFComRLRetrato.pas"/>
+        <UnitName Value="ACBrNFCom.DANFComRLRetrato"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DAEventoRL.pas"/>
+        <UnitName Value="ACBrNFCom.DAEventoRL"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFCom\DANFCom\Fortes\ACBrNFCom.DAEventoRLRetrato.pas"/>
+        <UnitName Value="ACBrNFCom.DAEventoRLRetrato"/>
+      </Item6>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrDFeReportRL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBr_NFCom"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

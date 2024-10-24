@@ -86,7 +86,7 @@ uses
   ACBrPIXSchemasPix,
   ACBrPIXSchemasDevolucao,
   ACBrPIXSchemasCob,
-  System.ImageList;
+  ImageList;
 
 type
 

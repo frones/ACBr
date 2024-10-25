@@ -1997,7 +1997,7 @@ begin
     InfConsultaLinkNFSe.Competencia := StrToDateDef(xCompetencia, 0);
     InfConsultaLinkNFSe.NumeroNFSe := xNumeroNFSe;
     InfConsultaLinkNFSe.SerieNFSe := xSerieNFSe;
-    InfConsultaLinkNFSe.NumeroRps := StrToIntDef(xNumeroRps, 1);
+    InfConsultaLinkNFSe.NumeroRps := StrToIntDef(xNumeroRps, 0);
     InfConsultaLinkNFSe.SerieRps := xSerieRps;
     InfConsultaLinkNFSe.CnpjCpfToma := xTomador;
 
@@ -4764,7 +4764,7 @@ begin
             memoLog.Lines.Add('Competencia   : ' + DateToStr(InfConsultaLinkNFSe.Competencia));
             memoLog.Lines.Add('Numero da NFSe: ' + InfConsultaLinkNFSe.NumeroNFSe);
             memoLog.Lines.Add('Série da NFSe : ' + InfConsultaLinkNFSe.SerieNFSe);
-            memoLog.Lines.Add('Numero da NFSe: ' + IntToStr(InfConsultaLinkNFSe.NumeroRps));
+            memoLog.Lines.Add('Numero do RPS : ' + IntToStr(InfConsultaLinkNFSe.NumeroRps));
             memoLog.Lines.Add('Série da NFSe : ' + InfConsultaLinkNFSe.SerieRps);
 
             memoLog.Lines.Add(' ');

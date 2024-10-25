@@ -3825,7 +3825,7 @@ begin
     InfConsultaLinkNFSe.Competencia := StrToDateDef(xCompetencia, 0);
     InfConsultaLinkNFSe.NumeroNFSe := xNumeroNFSe;
     InfConsultaLinkNFSe.SerieNFSe := xSerieNFSe;
-    InfConsultaLinkNFSe.NumeroRps := StrToIntDef(xNumeroRps, 1);
+    InfConsultaLinkNFSe.NumeroRps := StrToIntDef(xNumeroRps, 0);
     InfConsultaLinkNFSe.SerieRps := xSerieRps;
 
     ACBrNFSeX1.ConsultarLinkNFSe(InfConsultaLinkNFSe);

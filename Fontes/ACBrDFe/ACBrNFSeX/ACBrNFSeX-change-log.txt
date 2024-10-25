@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/10/2024
+-- NFEletronica.Provider --
+[*] Alteração visando obter o retorno da consulta a NFSe por Rps.
+   Por: Italo Giurizzato Junior
+
 21/10/2024
 -- ACBrNFSeXServicos --
 [*] #TK-6135: Incluída a cidade de Iraceminha/SC, o provedor é Betha versão 1.00

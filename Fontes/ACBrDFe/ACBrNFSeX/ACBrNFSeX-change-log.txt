@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/10/2024
+-- GeisWeb.GravarXml --
+[*] #TK-6157: Alteração visando gerar as tags do grupo OrgaoGerado com os dados do prestador.
+   Por: Anderson Grolli
 -- ACBrNFSeXServicos --
 [*] #TK-6160: A cidade de Atibaia/SP trocou de provedor, agora é Betha versão 2.02.
    Por: Luis AGSI

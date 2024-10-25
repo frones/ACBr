@@ -44,20 +44,31 @@ Símbolo : Significado
 
 
 25/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6160: A cidade de Atibaia/SP trocou de provedor, agora é Betha versão 2.02.
+   Por: Luis AGSI
+[*] #TK-6150: A cidade de Santa Luzia/MG trocou de provedor, agora é ISSIntel.
+   Por: PrimeSoftware
+[*] #TK-6153: A cidade de Presidente Venceslau/SP mudou a porta, o provedor continua o mesmo.
+   Por: Elrond
+[+] #TK-6164: Incluída a cidade de Ipanema/MG, o provedor é NFSeBrasil.
+[*] #TK-6156: A cidade de Iuna/ES, mudou a versão para 2.04, o provedor continua o mesmo.
+[+] #TK-6158: Incluída a cidade de Lajinha/MG, o provedor é EL versão 2.04
+   Por: Gabriel Bobello
 -- NFEletronica.Provider --
 [*] Alteração visando obter o retorno da consulta a NFSe por Rps.
    Por: Italo Giurizzato Junior
 
 21/10/2024
 -- ACBrNFSeXServicos --
-[*] #TK-6135: Incluída a cidade de Iraceminha/SC, o provedor é Betha versão 1.00
+[+] #TK-6135: Incluída a cidade de Iraceminha/SC, o provedor é Betha versão 1.00
    Por: Willian Delan
-[*] #TK-6133: Incluída a cidade de Mirandopolis/SP, o provedor é Fiorilli.
+[+] #TK-6133: Incluída a cidade de Mirandopolis/SP, o provedor é Fiorilli.
 [*] #TK-6133: A cidade de Guararapes/SP, mudou a URL de produção o provedor continua o mesmo.
    Por: Moreira
-[*] #TK-6130: Incluída a cidade de Candoi/PR, o provedor é Equiplano.
-[*] #TK-6130: Incluída a cidade de Honorio Serpa/PR, o provedor é IPM versão 2.04
-[*] #TK-6130: Incluída a cidade de Porto Barreiro/PR, o provedor é Equiplano.
+[+] #TK-6130: Incluída a cidade de Candoi/PR, o provedor é Equiplano.
+[+] #TK-6130: Incluída a cidade de Honorio Serpa/PR, o provedor é IPM versão 2.04
+[+] #TK-6130: Incluída a cidade de Porto Barreiro/PR, o provedor é Equiplano.
 [*] #TK-6130: A cidade de Clevelandia/PR, mudou de provedor agora é IPM versão 2.04
 [*] #TK-6130: A cidade de Mariopolis/PR, mudou a URL de produção o provedor continua o mesmo.
    Por: Limber Software

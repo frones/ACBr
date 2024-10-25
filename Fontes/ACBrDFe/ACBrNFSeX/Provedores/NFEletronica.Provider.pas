@@ -111,7 +111,9 @@ uses
   ACBrUtil.Strings,
   ACBrDFeException,
   ACBrXmlDocument,
+  ACBrNFSeX,
   ACBrNFSeXConfiguracoes,
+  ACBrNFSeXNotasFiscais,
   ACBrNFSeXConsts,
   NFEletronica.GravarXml, NFEletronica.LerXml;
 
@@ -345,9 +347,14 @@ procedure TACBrNFSeProviderNFEletronica.TratarRetornoConsultaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
   strRetorno: string;
+  ANodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  NumNFSe: String;
+  ANota: TNotaFiscal;
 begin
+  strRetorno := '';
   Document := TACBrXmlDocument.Create;
   try
     try
@@ -363,9 +370,12 @@ begin
 
       ANode := Document.Root;
 
-      strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('ConsultaXmlNotaResult'), tcStr);
+      AuxNode := ANode.Childrens.FindAnyNs('ConsultaXmlNotaResult');
 
-      if not StringIsXML(strRetorno) then
+      if AuxNode = nil then
+        strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('ConsultaXmlNotaResult'), tcStr);
+
+      if not StringIsXML(strRetorno) and (strRetorno <> '') then
       begin
         Response.ArquivoRetorno := '<ConsultaXmlNotaResult>' +
                                      '<ListaMensagemRetorno>' +
@@ -385,8 +395,41 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
-      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+      if AuxNode <> nil then
+      begin
+        ANode := AuxNode.Childrens.FindAnyNs('XML');
+
+        if not Assigned(ANode) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit;
+        end;
+
+        ANodeArray := ANode.Childrens.FindAllAnyNs('NFSE');
+
+        if not Assigned(ANodeArray) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit;
+        end;
+
+        for i := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[i];
+
+          AuxNode := ANode.Childrens.FindAnyNs('NF');
+          NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+          ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+          SalvarXmlNfse(ANota);
+        end;
+      end;
     except
       on E:Exception do
       begin

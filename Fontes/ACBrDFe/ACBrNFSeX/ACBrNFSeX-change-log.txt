@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/10/2024
+-- NFEletronica.Provider/ACBrNFSeXProviderBase --
+[*] Ajustes para extrai o XML da NFS-e do retorno do ConsultarNFSe.
+   Por: Italo Giurizzato Junior
 -- GeisWeb.GravarXml --
 [*] #TK-6157: Alteração visando gerar as tags do grupo OrgaoGerado com os dados do prestador.
    Por: Anderson Grolli

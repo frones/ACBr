@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2024
+-- ACBrANeServicos --
+[*] Alterado a URL de homologação da AT&M.
+   Por: Paulo Alexandre Hostert
+
 24/10/2024
 -- Diversos --
 [*] Correções e inclusão de novos campos (ValorEsperado e ValorInformado) 

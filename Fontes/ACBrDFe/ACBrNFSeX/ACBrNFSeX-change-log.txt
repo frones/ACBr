@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/10/2024
+-- ACBrNFSeXClass/NFEletronica.GravarXml/NFEletronica.LerXml --
+[*] Criado o campo DataCriacao, nas classes para ser utilizado na leitura do XML da NFS-e.
+    Apesar do provedor usar a versão 1 do layout da ABRASF ao enviar o RPS o retorno da 
+    NFS-e esta em um layout próprio, implementado a leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
+
 25/10/2024
 -- NFEletronica.Provider/ACBrNFSeXProviderBase --
 [*] Ajustes para extrai o XML da NFS-e do retorno do ConsultarNFSe.

@@ -1069,6 +1069,7 @@ type
     FQtdParcela: Integer;
     FParcelas: TParcelasCollection;
     // Provedor NFEletronica
+    FDataCriacao: TDateTime;
     FDataVencimento: TDateTime;
     FInstrucaoPagamento: string;
     FCodigoVencimento: Integer;
@@ -1082,6 +1083,7 @@ type
     property QtdParcela: Integer read FQtdParcela write FQtdParcela;
     property Parcelas: TParcelasCollection read FParcelas write SetParcelas;
     // Provedor NFEletronica
+    property DataCriacao: TDateTime read FDataCriacao write FDataCriacao;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property InstrucaoPagamento: string read FInstrucaoPagamento write FInstrucaoPagamento;
     property CodigoVencimento: Integer read FCodigoVencimento write FCodigoVencimento;

@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/10/2024
+-- ACBrCTeDACTeRLRetrato/pcteConversaoCTe --
+[+] #TK-6143: Implementado em Fortes Report o DACTE para o CT-e Simplificado.
+   Por: Italo Giurizzato Junior
+
 24/10/2024
 -- pcteCTeW --
 [*] #TK-6144: Alteração visando gerar o grupo infCteSub quando for o CT-e Simplificado.

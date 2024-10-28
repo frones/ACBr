@@ -618,7 +618,8 @@ end;
 function tpCTToStrText(const t: TpcteTipoCTe): string;
 begin
   result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO',
-                               'GTVe', 'CTeSimp', 'SubstCTeSimpl'],
+                               'GTVe', 'CTe Simplificado',
+                               'CTe Simplificado Substituto'],
                    [tcNormal, tcComplemento, tcAnulacao, tcSubstituto, tcGTVe,
                     tcCTeSimp, tcSubstCTeSimpl]);
 end;

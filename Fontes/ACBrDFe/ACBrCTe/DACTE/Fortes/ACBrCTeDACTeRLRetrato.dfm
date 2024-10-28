@@ -9,7 +9,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Font.Style = [fsBold]
   TextHeight = 10
   inherited RLCTe: TRLReport
-    Left = 8
+    Left = 0
     Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000

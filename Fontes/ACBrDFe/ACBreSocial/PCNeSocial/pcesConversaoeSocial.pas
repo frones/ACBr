@@ -580,11 +580,11 @@ type
 
   tpCaepf                 = (tcVazio, tcContrIndividual, tcProdRural, tcSegEspecial);//layout 2.1
 
-  tpPlanRP                = (prpNenhum = -1,
-                             prpSemSegregacaoDaMassa,
+  tpPlanRP                = (prpSemSegregacaoDaMassa,
                              prpFundoEmCapitalizacao,
                              prpFundoEmReparticao,
-                             prpMantidoPeloTesouro);
+                             prpMantidoPeloTesouro,
+                             prpNenhum);
 
   tpMtvAlt                = (maPromocao, maReadaptacao, maAproveitamento, maOutros);
 
@@ -1523,12 +1523,12 @@ end;
 
 function eStpPlanRPToStr(const t: tpPlanRP): string;
 begin
-  result := EnumeradoToStr2(t, [ '-1', '0', '1', '2', '3' ] );
+  result := EnumeradoToStr2(t, [ '0', '1', '2', '3', '' ] );
 end;
 
 function eSStrTotpPlanRP(var ok: Boolean; const s: string): tpPlanRP;
 begin
-  result := tpPlanRP( StrToEnumerado2(ok, s, [ '-1', '0', '1', '2', '3' ]) );
+  result := tpPlanRP( StrToEnumerado2(ok, s, [ '0', '1', '2', '3', '' ]) );
 end;
 
 function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;

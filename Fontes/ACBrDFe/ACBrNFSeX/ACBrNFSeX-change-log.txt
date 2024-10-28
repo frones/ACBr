@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/10/2024
+-- ACBrNFSeXProviderBase --
+[*] Correção, estava definindo o XmlNfse como uma string vazia.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXClass/NFEletronica.GravarXml/NFEletronica.LerXml --
 [*] Criado o campo DataCriacao, nas classes para ser utilizado na leitura do XML da NFS-e.
     Apesar do provedor usar a versão 1 do layout da ABRASF ao enviar o RPS o retorno da 

@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="..\..\..\Fontes\ACBrPagFor"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrPagFor;..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\Fontes\ACBrPagFor\Base;..\..\..\Fontes\ACBrPagFor\Base\Provider;..\..\..\Fontes\ACBrPagFor\Modelos"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrPagFor;..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\Fontes\ACBrPagFor\Base;..\..\..\Fontes\ACBrPagFor\Base\Provider"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrPagFor\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -22,7 +22,7 @@
     <Description Value="ACBr - PagFor - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="1"/>
-    <Files Count="51">
+    <Files Count="57">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -182,16 +182,16 @@
         <UnitName Value="CNAB240.Provider"/>
       </Item39>
       <Item40>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Modelos\PagFor.Modelo.GravarTxtRemessa.pas"/>
-        <UnitName Value="PagFor.Modelo.GravarTxtRemessa"/>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Caixa.GravarTxtRemessa.pas"/>
+        <UnitName Value="PagFor.Caixa.GravarTxtRemessa"/>
       </Item40>
       <Item41>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Modelos\PagFor.Modelo.LerTxtRetorno.pas"/>
-        <UnitName Value="PagFor.Modelo.LerTxtRetorno"/>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Caixa.LerTxtRetorno.pas"/>
+        <UnitName Value="PagFor.Caixa.LerTxtRetorno"/>
       </Item41>
       <Item42>
-        <Filename Value="..\..\..\Fontes\ACBrPagFor\Modelos\PagFor.Modelo.Provider.pas"/>
-        <UnitName Value="PagFor.Modelo.Provider"/>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Caixa.Provider.pas"/>
+        <UnitName Value="PagFor.Caixa.Provider"/>
       </Item42>
       <Item43>
         <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Banrisul.GravarTxtRemessa.pas"/>
@@ -229,6 +229,30 @@
         <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Inter.Provider.pas"/>
         <UnitName Value="PagFor.Inter.Provider"/>
       </Item51>
+      <Item52>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Cresol.GravarTxtRemessa.pas"/>
+        <UnitName Value="PagFor.Cresol.GravarTxtRemessa"/>
+      </Item52>
+      <Item53>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Cresol.LerTxtRetorno.pas"/>
+        <UnitName Value="PagFor.Cresol.LerTxtRetorno"/>
+      </Item53>
+      <Item54>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Cresol.Provider.pas"/>
+        <UnitName Value="PagFor.Cresol.Provider"/>
+      </Item54>
+      <Item55>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicoob.GravarTxtRemessa.pas"/>
+        <UnitName Value="PagFor.Sicoob.GravarTxtRemessa"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicoob.LerTxtRetorno.pas"/>
+        <UnitName Value="PagFor.Sicoob.LerTxtRetorno"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicoob.Provider.pas"/>
+        <UnitName Value="PagFor.Sicoob.Provider"/>
+      </Item57>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">

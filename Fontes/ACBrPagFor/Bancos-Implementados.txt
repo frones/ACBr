@@ -5,6 +5,7 @@ BancoCECRED
 Banrisul
 Bradesco
 Caixa
+Cresol             29/10/2024
 HSBC
 Inter              23/01/2024
 Itau

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2024
+--- Diversos ---
+[+] Implementação do Banco Cresol.
+   Por: Limber Software
+
 16/08/2024
 -- PagFor.Itau.LerTxtRetorno --
 [*] #TK-5867: Sobreescrita a procedure que faz a leitura do Registro 1.

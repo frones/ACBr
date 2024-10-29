@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/10/2024
+-- ACBrCTe.XmlHandler --
+[-] #TK-6152: Correção, para a leitura de CT-e OS e também a tag Hora (previsão de entrega).
+   Por: Jeanny Paiva Lopes
+
 28/10/2024
 -- ACBrCTeDACTeRLRetrato/pcteConversaoCTe --
 [+] #TK-6143: Implementado em Fortes Report o DACTE para o CT-e Simplificado.

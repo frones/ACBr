@@ -951,13 +951,21 @@ begin
   end
   else
   begin
-    if Document.Root.Name = 'cteSimpProc' then
+    if Document.Root.Name = 'cteOSProc' then
     begin
       FprotCTeHandler.LerProtCTe(Document.Root.Childrens.FindAnyNs('protCTe'), FCTe.procCTe);
-      CTeNode := Document.Root.Childrens.FindAnyNs('CTeSimp');
+      CTeNode := Document.Root.Childrens.FindAnyNs('CTeOS');
     end
     else
-      CTeNode := Document.Root;
+    begin
+      if Document.Root.Name = 'cteSimpProc' then
+      begin
+        FprotCTeHandler.LerProtCTe(Document.Root.Childrens.FindAnyNs('protCTe'), FCTe.procCTe);
+        CTeNode := Document.Root.Childrens.FindAnyNs('CTeSimp');
+      end
+      else
+        CTeNode := Document.Root;
+    end;
   end;
 
   if Assigned(CTeNode) then
@@ -1240,34 +1248,40 @@ begin
     AuxNode := ANode.Childrens.FindAnyNs('semData');
     Entrega.TipoData := tdSemData;
     Entrega.semData.tpPer := StrTotpDataPeriodo(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNS('tpPer'), tcStr));
-  end else if Assigned(ANode.Childrens.FindAnyNs('comData'))  then
+  end
+  else if Assigned(ANode.Childrens.FindAnyNs('comData'))  then
   begin
     AuxNode := ANode.Childrens.FindAnyNs('comData');
     Entrega.TipoDAta := tdNaData;
     Entrega.comData.tpPer := StrToTpDataPeriodo(Ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpPer'), tcStr));
     Entrega.comData.dProg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dProg'), tcDat);
-  end else if Assigned(ANode.Childrens.FindAnyNs('noPeriodo')) then
+  end
+  else if Assigned(ANode.Childrens.FindAnyNs('noPeriodo')) then
   begin
     AuxNode := ANode.Childrens.FindAnyNs('noPeriodo');
-    Entrega.TipoData        := tdNoPeriodo;
+    Entrega.TipoData := tdNoPeriodo;
     Entrega.noPeriodo.tpPer := StrToTpDataPeriodo(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpPer'), tcStr));
     Entrega.noPeriodo.dIni  := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dIni'), tcDat);
     Entrega.noPeriodo.dFim  := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dFim'), tcDat);
-  end else if Assigned(ANode.Childrens.FindAnyNs('semHora')) then
+  end;
+
+  if Assigned(ANode.Childrens.FindAnyNs('semHora')) then
   begin
     AuxNode := ANode.Childrens.FindAnyNs('semHora');
-    Entrega.TipoHora      := thSemHorario;
+    Entrega.TipoHora := thSemHorario;
     Entrega.semHora.tpHor := StrToTpHorarioIntervalo(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpHor'), tcStr));
-  end else if Assigned(ANode.Childrens.FindAnyNs('comHora')) then
+  end
+  else if Assigned(ANode.Childrens.FindAnyNs('comHora')) then
   begin
     AuxNode := ANode.Childrens.FindAnyNs('comHora');
-    Entrega.TipoHora      := thNoHorario;
+    Entrega.TipoHora := thNoHorario;
     Entrega.comHora.tpHor := StrToTpHorarioIntervalo(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpHor'), tcStr));
     Entrega.comHora.hProg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('hProg'), tcHor);
-  end else if Assigned(ANode.Childrens.FindAnyNs('noInter')) then
+  end
+  else if Assigned(ANode.Childrens.FindAnyNs('noInter')) then
   begin
     AuxNode := ANode.Childrens.FindAnyNs('noInter');
-    Entrega.TipoHora      := thNoIntervalo;
+    Entrega.TipoHora := thNoIntervalo;
     Entrega.noInter.tpHor := StrToTpHorarioIntervalo(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpHor'), tcStr));
     Entrega.noInter.hIni  := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('hIni'), tcHor);
     Entrega.noInter.hFim  := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('hFim'), tcHor);
@@ -3767,17 +3781,26 @@ begin
   Result := False;
   if not Assigned(ANode) then exit;
 
-  multimodal.COTM          := ObterConteudoTag(ANode.Childrens.FindAnyNs('COTM'), tcStr);
+  multimodal.COTM := ObterConteudoTag(ANode.Childrens.FindAnyNs('COTM'), tcStr);
   multimodal.indNegociavel := StrToindNegociavel(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('indNegociavel'), tcStr));
 
   // dados sobre o seguro informados somente na versão 3.00
   AuxNode := ANode.Childrens.FindAnyNs('seg');
-  multimodal.nApol         := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nApol'), tcStr);
-  multimodal.nAver         := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nAver'), tcStr);
 
-  AuxNode := AuxNode.Childrens.FindAnyNs('infSeg');
-  multimodal.xSeg          := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xSeg'), tcStr);
-  multimodal.CNPJ          := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  if Assigned(AuxNode) then
+  begin
+    multimodal.nApol := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nApol'), tcStr);
+    multimodal.nAver := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nAver'), tcStr);
+
+    AuxNode := AuxNode.Childrens.FindAnyNs('infSeg');
+
+    if Assigned(AuxNode) then
+    begin
+      multimodal.xSeg := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xSeg'), tcStr);
+      multimodal.CNPJ := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+    end;
+  end;
+
   Result := True;
 end;
 

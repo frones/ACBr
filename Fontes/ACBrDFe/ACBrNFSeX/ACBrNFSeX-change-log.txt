@@ -43,6 +43,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6176: A cidade de São Carlos/SC trocou de versão e URLs, o provedor 
+    continua o mesmo.
+   Por: VEXCOM Sistemas - Valtair
+[*] #TK-6167: A cidade de Sapucaia do Sul/RS trocou de versão e URLs, o provedor 
+    continua o mesmo.
+[*] #TK-6166: A cidade de Alegrete/RS trocou de provedor, agora é Pronim versão 2.03
+   Por: Augelias
+[*] #TK-6177: A cidade de Oliveira/MG trocou de versão e URLs, o provedor 
+    continua o mesmo.
+   Por: João Antônio
+
 28/10/2024
 -- ACBrNFSeXProviderBase --
 [*] Correção, estava definindo o XmlNfse como uma string vazia.

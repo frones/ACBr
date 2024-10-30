@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 rel. 2 (http://www.altova.com) by private (private) -->
+<!-- edited with XMLSpy v2024 (http://www.altova.com) by sefa (REPR - RECEITA ESTADUAL DO PARANA) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="http://www.portalfiscal.inf.br/dce" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/dce" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralDCe_v1.00.xsd"/>
@@ -13,7 +13,7 @@
 					<xs:sequence>
 						<xs:element name="cOrgao" type="TCOrgaoIBGE">
 							<xs:annotation>
-								<xs:documentation>Código do órgão de recepção do Evento.</xs:documentation>
+								<xs:documentation>Código do órgão de recepção do Evento</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="tpAmb" type="TAmb">
@@ -23,15 +23,47 @@
 2 - Homologação</xs:documentation>
 							</xs:annotation>
 						</xs:element>
+						<xs:element name="tpEmit">
+							<xs:annotation>
+								<xs:documentation>Tipo do Emitente da DCe</xs:documentation>
+								<xs:documentation>0=App Fisco / 1=Marketplace / 2=Emissor próprio / 3=Transportadora ou ECT</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:minLength value="1"/>
+									<xs:maxLength value="1"/>
+									<xs:pattern value="[0-3]{1}"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="CNPJAutor" type="TCnpj">
+							<xs:annotation>
+								<xs:documentation>CNPJ da empresa, Fisco, Marketplace ou Transportadora emitente do evento deve ser o mesmo CNPJ informado do Grupo D. Identificação da Empresa, Fisco, Marketplace ou Transportador emitente da DCe</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 						<xs:choice>
-							<xs:element name="CNPJ" type="TCnpj">
+							<xs:element name="CNPJUsEmit" type="TCnpj">
 								<xs:annotation>
-									<xs:documentation>CNPJ do emissor do evento</xs:documentation>
+									<xs:documentation>CNPJ do Usuário Emitente da DCe que o evento estará
+vinculado
+Deve ser o mesmo informado no campo C02 da DCe
+</xs:documentation>
 								</xs:annotation>
 							</xs:element>
-							<xs:element name="CPF" type="TCpf">
+							<xs:element name="CPFUsEmit" type="TCpf">
 								<xs:annotation>
-									<xs:documentation>CPF do autor do evento</xs:documentation>
+									<xs:documentation>CPF do Usuário Emitente da DCe que o evento estará
+vinculado
+Deve ser o mesmo informao no campo C02a da DCe</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="IdOutrosUsEmit" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Identificação do usuário emitente não obrigado a CPF
+ou CNPJ que o evento estará vinculado
+Deve ser o mesmo informado no campo C02b da DCe
+</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 						</xs:choice>
@@ -58,7 +90,7 @@
 						</xs:element>
 						<xs:element name="nSeqEvento">
 							<xs:annotation>
-								<xs:documentation>Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento o autor do evento deve numerar de forma seqüencial.</xs:documentation>
+								<xs:documentation>Seqüencial do evento para o mesmo tipo de evento. Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento o autor do evento deve numerar de forma seqüencial</xs:documentation>
 							</xs:annotation>
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
@@ -76,7 +108,7 @@
 									<xs:any processContents="skip">
 										<xs:annotation>
 											<xs:documentation>XML do evento
-Insira neste local o XML específico do tipo de evento (cancelamento, encerramento, registro de passagem).  </xs:documentation>
+Insira neste local o XML específico do tipo de evento (cancelamento)</xs:documentation>
 										</xs:annotation>
 									</xs:any>
 								</xs:sequence>
@@ -94,7 +126,7 @@ Insira neste local o XML específico do tipo de evento (cancelamento, encerramen
 					<xs:attribute name="Id" use="required">
 						<xs:annotation>
 							<xs:documentation>Identificador da TAG a ser assinada, a regra de formação do Id é:
-“ID” + tpEvento[6] +  ChaveAcesso do DCe[44] + nSeqEvento[3] (preencher com zeros a esquerda para compor 3 digitos)</xs:documentation>
+“ID” + tpEvento[6] +  ChaveAcesso da DCe[44] + nSeqEvento[3] (preencher com zeros a esquerda para compor 3 digitos)</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:ID">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 rel. 2 (http://www.altova.com) by private (private) -->
+<!-- edited with XMLSpy v2024 (x64) (http://www.altova.com) by sefa (REPR - RECEITA ESTADUAL DO PARANA) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/dce" targetNamespace="http://www.portalfiscal.inf.br/dce" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralDCe_v1.00.xsd"/>
@@ -24,13 +24,13 @@
 										<xs:annotation>
 											<xs:documentation>Código da UF de emissão e autorização da DCe</xs:documentation>
 											<xs:documentation>Código da UF de emissão e autorização do Documento Fiscal. Utilizar a
-Tabela do IBGE de código de unidades da federação.</xs:documentation>
+Tabela do IBGE de código de unidades da federação</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="cDC">
 										<xs:annotation>
-											<xs:documentation>Código numérico que compõe a Chave de Acesso. </xs:documentation>
-											<xs:documentation>Código aleatório gerado pelo emitente, com o objetivo de evitar acessos indevidos ao documento.</xs:documentation>
+											<xs:documentation>Código numérico que compõe a Chave de Acesso.</xs:documentation>
+											<xs:documentation>Código aleatório gerado pelo emitente, com o objetivo de evitar acessos indevidos ao documento</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -48,43 +48,43 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 									<xs:element name="serie" type="TSerie">
 										<xs:annotation>
 											<xs:documentation>Série do documento fiscal</xs:documentation>
-											<xs:documentation>Informar a série do documento fiscal (informar zero para série única).</xs:documentation>
+											<xs:documentation>Informar a série do documento fiscal (informar zero para série única)</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="nDC" type="TNF">
 										<xs:annotation>
 											<xs:documentation>Número do documento fiscal</xs:documentation>
-											<xs:documentation>Número que identifica o documento fiscal 1 a 999999999.</xs:documentation>
+											<xs:documentation>Número que identifica o documento fiscal 1 a 999999999</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="dhEmi" type="TDateTimeUTC">
 										<xs:annotation>
 											<xs:documentation>Data e hora de emissão do documento fiscal</xs:documentation>
-											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
+											<xs:documentation>Formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpEmis" type="TtpEmis">
 										<xs:annotation>
-											<xs:documentation>Forma de emissão do Documento Fiscal </xs:documentation>
-											<xs:documentation>1 - Normal (não contingência) ; 9 - Contingência off-line da DCe</xs:documentation>
+											<xs:documentation>Forma de emissão do Documento Fiscal</xs:documentation>
+											<xs:documentation>1 - Normal (não contingência); 9 - Contingência off-line da DCe</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpEmit">
 										<xs:annotation>
 											<xs:documentation>Tipo do Emitente da DCe</xs:documentation>
-											<xs:documentation>
-0 - App Fisco
+											<xs:documentation>0 - App Fisco
 1 - Marketplace
 2 - Emissor próprio
 3 - Transportadora
+4 - ECT
 </xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
-												<xs:whiteSpace value="preserve" />
-												<xs:minLength value="1" />
-												<xs:maxLength value="1" />
-												<xs:pattern value="[0-3]{1}" />
+												<xs:whiteSpace value="preserve"/>
+												<xs:minLength value="1"/>
+												<xs:maxLength value="1"/>
+												<xs:pattern value="[0-4]{1}"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -105,7 +105,7 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 									<xs:element name="cDV">
 										<xs:annotation>
 											<xs:documentation>Digito verificador da chave de acesso</xs:documentation>
-											<xs:documentation>Informar o dígito  de controle da chave de acesso documento fiscal, que deve ser calculado com a aplicação do algoritmo módulo 11 (base 2,9) da chave de acesso. </xs:documentation>
+											<xs:documentation>Informar o dígito de controle da chave de acesso documento fiscal, que deve ser calculado com a aplicação do algoritmo módulo 11 (base 2,9) da chave de acesso</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -124,7 +124,7 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 									<xs:element name="verProc">
 										<xs:annotation>
 											<xs:documentation>Versão do processo de emissão</xs:documentation>
-											<xs:documentation>Informar a versão do aplicativo emissor de DCe.</xs:documentation>
+											<xs:documentation>Informar a versão do aplicativo emissor de DCe</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
@@ -151,13 +151,13 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 										<xs:element name="CPF" type="TCpf">
 											<xs:annotation>
 												<xs:documentation>Número do CPF do emitente</xs:documentation>
-												<xs:documentation>Informar os zeros não significativos.</xs:documentation>
+												<xs:documentation>Informar os zeros não significativos</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="idOutros">
 											<xs:annotation>
 												<xs:documentation>Identificação do destinatário outros</xs:documentation>
-												<xs:documentation>Identificação do emitente não obrigado a inscrição do CPF ou CNPJ tais como estrangeiro, indígena e quilombola. Observação: Campo aceita algarismos, letras (maiúsculas e minúsculas) e os caracteres do conjunto que segue: [:.+-/()] </xs:documentation>
+												<xs:documentation>Identificação do emitente não obrigado a inscrição do CPF ou CNPJ tais como estrangeiro, indígena e quilombola. Observação: Campo aceita algarismos, letras (maiúsculas e minúsculas) e os caracteres do conjunto que segue: [:.+-/()]</xs:documentation>
 											</xs:annotation>
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
@@ -280,20 +280,20 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="EmpEmisProp">
+							<xs:element name="ECT">
 								<xs:annotation>
-									<xs:documentation>Identificação da Empresa com emissão própria</xs:documentation>
+									<xs:documentation>Identificação dos correios</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="CNPJ" type="TCnpjOpc">
 											<xs:annotation>
-												<xs:documentation>Número do CNPJ da Empresa nos casos de emissão própria</xs:documentation>
+												<xs:documentation>Número do CNPJ dos correios</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="xNome">
 											<xs:annotation>
-												<xs:documentation>Razão Social ou Nome da Empresa</xs:documentation>
+												<xs:documentation>Razão Social ou Nome dos correios</xs:documentation>
 											</xs:annotation>
 											<xs:simpleType>
 												<xs:restriction base="TString">
@@ -317,13 +317,13 @@ Observação: o ambiente autorizador que trabalhar com mais de um Site deverá d
 											<xs:annotation>
 												<xs:documentation>Número do CNPJ</xs:documentation>
 												<xs:documentation>Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.
-							Informar os zeros não significativos.</xs:documentation>
+							Informar os zeros não significativos</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="CPF" type="TCpf">
 											<xs:annotation>
 												<xs:documentation>Número do CPF</xs:documentation>
-												<xs:documentation>Informar os zeros não significativos.</xs:documentation>
+												<xs:documentation>Informar os zeros não significativos</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="idOutros">
@@ -364,7 +364,7 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 						<xs:element name="autXML" minOccurs="0" maxOccurs="10">
 							<xs:annotation>
 								<xs:documentation>Autorizados para acessar o XML da DCe</xs:documentation>
-								<xs:documentation>Informar CNPJ ou CPF. Preencher os zeros não significativos.</xs:documentation>
+								<xs:documentation>Informar CNPJ ou CPF. Preencher os zeros não significativos</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
@@ -537,7 +537,7 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 									</xs:element>
 									<xs:element name="infCpl" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Informações complementares de interesse do Contribuinte</xs:documentation>
+											<xs:documentation>Informações complementares de interesse do Emitente</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
@@ -546,7 +546,7 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="infAdMarketPlace" minOccurs="0">
+									<xs:element name="infAdMarketplace" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informações Adicionais do MarketPlace</xs:documentation>
 										</xs:annotation>
@@ -557,75 +557,116 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="obsCont" minOccurs="0" maxOccurs="10">
-							<xs:annotation>
-								<xs:documentation>Grupo Campo de uso livre do Fisco</xs:documentation>
-								<xs:documentation>Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:annotation>
-										<xs:documentation>Sequencia XML</xs:documentation>
-									</xs:annotation>
-									<xs:element name="xCampo" minOccurs="0">
+									<xs:element name="infAdECT" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Identificação do campo</xs:documentation>
+											<xs:documentation>Informações Adicionais do Correio</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
-												<xs:maxLength value="20"/>
 												<xs:minLength value="1"/>
+												<xs:maxLength value="5000"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="xTexto" minOccurs="0">
+									<xs:element name="obsEmit" minOccurs="0" maxOccurs="10">
 										<xs:annotation>
-											<xs:documentation>Conteúdo do Campo</xs:documentation>
+											<xs:documentation>Grupo Campo de uso livre do Emitente</xs:documentation>
+											<xs:documentation>Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto</xs:documentation>
 										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
-												<xs:maxLength value="60"/>
-											</xs:restriction>
-										</xs:simpleType>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:annotation>
+													<xs:documentation>Sequencia XML</xs:documentation>
+												</xs:annotation>
+												<xs:element name="xTexto">
+													<xs:annotation>
+														<xs:documentation>Conteúdo do Campo</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="60"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="xCampo"/>
+										</xs:complexType>
 									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="obsMarketplace" minOccurs="0" maxOccurs="10">
-							<xs:annotation>
-								<xs:documentation>Grupo Campo de uso livre do MarketPlace</xs:documentation>
-								<xs:documentation>Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:annotation>
-										<xs:documentation>Sequencia XML</xs:documentation>
-									</xs:annotation>
-									<xs:element name="xCampo" minOccurs="0">
+									<xs:element name="obsFisco" minOccurs="0" maxOccurs="10">
 										<xs:annotation>
-											<xs:documentation>Identificação do campo</xs:documentation>
+											<xs:documentation>Grupo Campo de uso livre do Fisco</xs:documentation>
+											<xs:documentation>Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto</xs:documentation>
 										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:maxLength value="20"/>
-												<xs:minLength value="1"/>
-											</xs:restriction>
-										</xs:simpleType>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:annotation>
+													<xs:documentation>Sequencia XML</xs:documentation>
+												</xs:annotation>
+												<xs:element name="xTexto">
+													<xs:annotation>
+														<xs:documentation>Conteúdo do Campo</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="60"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="xCampo"/>
+										</xs:complexType>
 									</xs:element>
-									<xs:element name="xTexto" minOccurs="0">
+									<xs:element name="obsMarketplace" minOccurs="0" maxOccurs="10">
 										<xs:annotation>
-											<xs:documentation>Conteúdo do Campo</xs:documentation>
+											<xs:documentation>Grupo Campo de uso livre do MarketPlace</xs:documentation>
+											<xs:documentation>Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto</xs:documentation>
 										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
-												<xs:maxLength value="60"/>
-											</xs:restriction>
-										</xs:simpleType>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:annotation>
+													<xs:documentation>Sequencia XML</xs:documentation>
+												</xs:annotation>
+												<xs:element name="xTexto">
+													<xs:annotation>
+														<xs:documentation>Conteúdo do Campo</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="60"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="xCampo"/>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="obsECT" minOccurs="0" maxOccurs="10">
+										<xs:annotation>
+											<xs:documentation>Grupo Campo de uso livre dos Correios</xs:documentation>
+											<xs:documentation>Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:annotation>
+													<xs:documentation>Sequencia XML</xs:documentation>
+												</xs:annotation>
+												<xs:element name="xTexto">
+													<xs:annotation>
+														<xs:documentation>Conteúdo do Campo</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="60"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="xCampo"/>
+										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -642,7 +683,7 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 									<xs:element name="xObs1">
 										<xs:annotation>
 											<xs:documentation>Observação 1 ao usuário emitente</xs:documentation>
-											<xs:documentation>Deverá conter o texto fixo “É contribuinte de ICMS qualquer pessoa  física ou jurídica, que realize, com habitualidade ou em volume que caracterize intuito comercial, operações de circulação de mercadoria ou prestações de serviços de transportes interestadual e intermunicipal e de comunicação, ainda que as operações e prestações de iniciem no exterior (Lei Complementar nº 87/96, Art. 4º)”</xs:documentation>
+											<xs:documentation>Deverá conter o texto fixo “É contribuinte de ICMS qualquer pessoa física ou jurídica, que realize, com habitualidade ou em volume que caracterize intuito comercial, operações de circulação de mercadoria ou prestações de serviços de transportes interestadual e intermunicipal e de comunicação, ainda que as operações e prestações de iniciem no exterior (Lei Complementar nº 87/96, Art. 4º)”</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
@@ -675,11 +716,11 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 					<xs:attribute name="Id" use="required">
 						<xs:annotation>
 							<xs:documentation>Identificador da tag a ser assinada</xs:documentation>
-							<xs:documentation>Informar a chave de acesso  precedida do literal DCe"</xs:documentation>
+							<xs:documentation>Informar a chave de acesso precedida do literal "DCe"</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:ID">
-								<xs:pattern value="DCe[0-9]{44}"/>
+								<xs:pattern value="DCe(1[1-7]{1}|2[1-9]{1}|3[1-3]{1}|3[5]{1}|4[1-3]{1}|5[0-3]{1})[0-9]{42}"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>
@@ -688,6 +729,27 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 					<xs:selector xpath="./*"/>
 					<xs:field xpath="@nItem"/>
 				</xs:unique>
+			</xs:element>
+			<xs:element name="infSolicDCe" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Informações de solicitação da DCe pelo Fisco</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="xSolic">
+							<xs:annotation>
+								<xs:documentation>Solicitação do pedido de emissão da DCe </xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:minLength value="0"/>
+									<xs:maxLength value="2000"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="infDCeSupl">
 				<xs:annotation>
@@ -704,7 +766,7 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 									<xs:whiteSpace value="preserve"/>
 									<xs:minLength value="94"/>
 									<xs:maxLength value="600"/>
-									<xs:pattern value="((HTTPS?|https?)://.*\?chDCe=[0-9]{44}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
+									<xs:pattern value="((HTTPS?|https?)://.*\?chDCe=(1[1-7]{1}|2[1-9]{1}|3[1-3]{1}|3[5]{1}|4[1-3]{1}|5[0-3]{1})[0-9]{42}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
@@ -814,21 +876,19 @@ Em caso de não contar CPF do assinante, informar o RG</xs:documentation>
 					<xs:documentation>1058=Brasil</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve"/>
-						<xs:pattern value="[0-9]{4}"/>
+					<xs:restriction base="TString">
+						<xs:enumeration value="1058"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="xPais">
 				<xs:annotation>
-					<xs:documentation>Nome do País
-exemplo: Brasil ou BRASIL</xs:documentation>
+					<xs:documentation>Nome do País exemplo: Brasil ou BRASIL</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="TString">
-						<xs:maxLength value="60"/>
-						<xs:minLength value="2"/>
+						<xs:enumeration value="Brasil"/>
+						<xs:enumeration value="BRASIL"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -927,7 +987,7 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="cPais" minOccurs="0">
+			<xs:element name="cPais">
 				<xs:annotation>
 					<xs:documentation>Código do país</xs:documentation>
 					<xs:documentation>Utilizar a tabela do BACEN</xs:documentation>
@@ -939,7 +999,7 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="xPais" minOccurs="0">
+			<xs:element name="xPais">
 				<xs:annotation>
 					<xs:documentation>Nome do país</xs:documentation>
 				</xs:annotation>
@@ -1019,12 +1079,12 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 			</xs:element>
 			<xs:element name="cMun" type="TCodMunIBGE">
 				<xs:annotation>
-					<xs:documentation>Código do município (utilizar a tabela do IBGE), informar 9999999 para operações com o exterior.</xs:documentation>
+					<xs:documentation>Código do município (utilizar a tabela do IBGE), informar 9999999 para operações com o exterior</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="xMun">
 				<xs:annotation>
-					<xs:documentation>Nome do município, informar EXTERIOR para operações com o exterior.</xs:documentation>
+					<xs:documentation>Nome do município, informar EXTERIOR para operações com o exterior</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="TString">
@@ -1047,7 +1107,7 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 			</xs:element>
 			<xs:element name="UF" type="TUf">
 				<xs:annotation>
-					<xs:documentation>Sigla da UF, informar EX para operações com o exterior.</xs:documentation>
+					<xs:documentation>Sigla da UF, informar EX para operações com o exterior</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="cPais" minOccurs="0">
@@ -1121,22 +1181,22 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 						</xs:element>
 						<xs:element name="dhRecbto" type="TDateTimeUTC">
 							<xs:annotation>
-								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS TZD.</xs:documentation>
+								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS TZD</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="nProt" type="TProt" minOccurs="0">
 							<xs:annotation>
-								<xs:documentation>Número do Protocolo de Status da DCe.</xs:documentation>
+								<xs:documentation>Número do Protocolo de Status da DCe</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="digVal" type="ds:DigestValueType" minOccurs="0">
 							<xs:annotation>
-								<xs:documentation>Digest Value da DCe processado. Utilizado para conferir a integridade da DCe original.</xs:documentation>
+								<xs:documentation>Digest Value da DCe processado. Utilizado para conferir a integridade da DCe original</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="cStat">
 							<xs:annotation>
-								<xs:documentation>Código do status da DCe.</xs:documentation>
+								<xs:documentation>Código do status da DCe</xs:documentation>
 							</xs:annotation>
 							<xs:simpleType>
 								<xs:restriction base="TStat"/>
@@ -1144,7 +1204,7 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 						</xs:element>
 						<xs:element name="xMotivo" type="TMotivo">
 							<xs:annotation>
-								<xs:documentation>Descrição literal do status da DCe.</xs:documentation>
+								<xs:documentation>Descrição literal do status da DCe</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
@@ -1201,7 +1261,7 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 			</xs:element>
 			<xs:element name="xMotivo" type="TMotivo">
 				<xs:annotation>
-					<xs:documentation>Descrição literal do status do do retorno da consulta.</xs:documentation>
+					<xs:documentation>Descrição literal do status do do retorno da consulta</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="cUF" type="TCodUfIBGE">
@@ -1212,7 +1272,7 @@ exemplo: Brasil ou BRASIL</xs:documentation>
 			<xs:element name="dhRecbto" type="TDateTimeUTC">
 				<xs:annotation>
 					<xs:documentation>Preenchido com a data e hora do processamento (informado também no caso de rejeição).
-Formato: “AAAA-MM-DDThh:mm:ssTZD” (UTC –  Universal Coordinated Time).</xs:documentation>
+Formato: “AAAA-MM-DDThh:mm:ssTZD” (UTC – Universal Coordinated Time)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="protDCe" type="TProtDCe" minOccurs="0">
@@ -1240,7 +1300,7 @@ Formato: “AAAA-MM-DDThh:mm:ssTZD” (UTC –  Universal Coordinated Time).</xs
 	</xs:simpleType>
 	<xs:simpleType name="TVerDCe">
 		<xs:annotation>
-			<xs:documentation> Tipo Versão da DCe</xs:documentation>
+			<xs:documentation>Tipo Versão da DCe</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -1249,7 +1309,7 @@ Formato: “AAAA-MM-DDThh:mm:ssTZD” (UTC –  Universal Coordinated Time).</xs
 	</xs:simpleType>
 	<xs:simpleType name="TTime">
 		<xs:annotation>
-			<xs:documentation> Tipo hora</xs:documentation>
+			<xs:documentation>Tipo hora</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -1321,7 +1381,7 @@ Formato: “AAAA-MM-DDThh:mm:ssTZD” (UTC –  Universal Coordinated Time).</xs
 	</xs:simpleType>
 	<xs:simpleType name="TUtilizacao">
 		<xs:annotation>
-			<xs:documentation>Tipo utilizacao</xs:documentation>
+			<xs:documentation>Tipo utilização</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:minLength value="1"/>

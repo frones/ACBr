@@ -136,7 +136,7 @@
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:maxLength value="44"/>
-			<xs:pattern value="[0-9]{44}"/>
+			<xs:pattern value="(1[1-7]{1}|2[1-9]{1}|3[1-3]{1}|3[5]{1}|4[1-3]{1}|5[0-3]{1})[0-9]{42}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProt">
@@ -240,7 +240,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TDec_0303Opc">
 		<xs:annotation>
-			<xs:documentation>Tipo Decimal com 6 dígitos, sendo 3 inteiros e 3 decimais usado em tags opcionais </xs:documentation>
+			<xs:documentation>Tipo Decimal com 6 dígitos, sendo 3 inteiros e 3 decimais usado em tags opcionais</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -267,7 +267,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TDec_0302a04Opc">
 		<xs:annotation>
-			<xs:documentation>Tipo Decimal com até 3 dígitos inteiros e 2 até 4 decimais. Utilizados em TAGs opcionais, não aceita valor zero.</xs:documentation>
+			<xs:documentation>Tipo Decimal com até 3 dígitos inteiros e 2 até 4 decimais. Utilizados em TAGs opcionais, não aceita valor zero</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -285,7 +285,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TDec_0402_0408">
 		<xs:annotation>
-			<xs:documentation>Tipo Decimal com  4 dígitos inteiros e 2 a 8 casas decimais</xs:documentation>
+			<xs:documentation>Tipo Decimal com 4 dígitos inteiros e 2 a 8 casas decimais</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -393,7 +393,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TDec_1100_1104">
 		<xs:annotation>
-			<xs:documentation>Tipo Decimal com  11 dígitos inteiros e 0 a 4 casas decimais</xs:documentation>
+			<xs:documentation>Tipo Decimal com 11 dígitos inteiros e 0 a 4 casas decimais</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -456,7 +456,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TDec_1302_1306">
 		<xs:annotation>
-			<xs:documentation>Tipo Decimal com  13 dígitos inteiros e 2 a 6 casas decimais</xs:documentation>
+			<xs:documentation>Tipo Decimal com 13 dígitos inteiros e 2 a 6 casas decimais</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -474,7 +474,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TDec_1302_1304">
 		<xs:annotation>
-			<xs:documentation>Tipo Decimal com  13 dígitos inteiros e 2 a 4 casas decimais</xs:documentation>
+			<xs:documentation>Tipo Decimal com 13 dígitos inteiros e 2 a 4 casas decimais</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -519,7 +519,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TSerie">
 		<xs:annotation>
-			<xs:documentation>Tipo Série do Documento Fiscal </xs:documentation>
+			<xs:documentation>Tipo Série do Documento Fiscal</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -642,7 +642,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Tano">
 		<xs:annotation>
-			<xs:documentation> Tipo ano</xs:documentation>
+			<xs:documentation>Tipo ano</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -651,7 +651,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TMed">
 		<xs:annotation>
-			<xs:documentation> Tipo temp médio em segundos</xs:documentation>
+			<xs:documentation>Tipo temp médio em segundos</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -660,7 +660,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TString">
 		<xs:annotation>
-			<xs:documentation> Tipo string genérico</xs:documentation>
+			<xs:documentation>Tipo string genérico</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -669,7 +669,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TData">
 		<xs:annotation>
-			<xs:documentation> Tipo data AAAA-MM-DD</xs:documentation>
+			<xs:documentation>Tipo data AAAA-MM-DD</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -694,7 +694,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="TNSU">
 		<xs:annotation>
-			<xs:documentation> Tipo número sequencial único do AN</xs:documentation>
+			<xs:documentation>Tipo número sequencial único do AN</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9]{15}"/>

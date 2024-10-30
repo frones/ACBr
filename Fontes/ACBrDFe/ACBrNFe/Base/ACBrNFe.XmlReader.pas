@@ -1497,7 +1497,7 @@ begin
   ANodes := ANode.Childrens.FindAll('procRef');
   for i := 0 to Length(ANodes) - 1 do
   begin
-    NFe.InfAdic.obsCont.New;
+    NFe.InfAdic.procRef.New;
     NFe.InfAdic.procRef[i].nProc := ObterConteudo(ANodes[i].Childrens.Find('nProc'),tcStr);
     NFe.InfAdic.procRef[i].indProc := StrToIndProc(ok, ObterConteudo(ANodes[i].Childrens.Find('indProc'), tcStr));
     NFe.InfAdic.procRef[i].tpAto := StrTotpAto(ok, ObterConteudo(ANodes[i].Childrens.Find('tpAto'), tcStr));

@@ -786,7 +786,7 @@ begin
        docEmail         : ValidarEmail ;
        docCNH           : ValidarCNH ;
        docPrefixoGTIN   : ValidarPrefixoGTIN ;
-       docPlacaMercosul         : ValidarPlaca ;
+       docPlacaMercosul : ValidarPlaca ;
        docCNS           : ValidarCNS;
      else
       raise Exception.Create('Tipo de documento informado inválido!');
@@ -1305,7 +1305,7 @@ begin
   begin
      Tamanho  := 9 ;
      vDigitos := VarArrayOf(
-        [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'5','1','','','','',''] ) ;
+        [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'5','1,7','','','','',''] ) ;
   end ;
 
   if fsComplemento = 'PB' then

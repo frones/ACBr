@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2024
+-- ACBrECDBloco_K --
+[-] Correção do problema de MemoryLeak no Registro K210, K310, K315 
+    #TK-6161 https://www.projetoacbr.com.br/forum/topic/80329-problemas-de-memoryleak-no-acbrecdbloco_k/
+    Por: Júlio Cavalcanti
+
 16/10/2024
 -- ACBrECDBloco_I --
 [*] Correção do problema de MemoryLeak no Registro I157 

@@ -118,7 +118,8 @@ type
     property Items[Index: Integer]: TRegistroK100 read GetItem write SetItem;
   end;
 
-  /// Registro K110 - Relação dos Eventos Societários
+  { TRegistroK110 - Relação dos Eventos Societários }
+
   TRegistroK110 = class
   private
     fEVENTO: String;         /// Evento societário ocorrido no período: 1 – Aquisição 2 – Alienação 3 – Fusão 4 – Cisão Parcial 5 – Cisão Total 6 – Incorporação 7 – Extinção 8 – Constituição
@@ -127,6 +128,7 @@ type
     FRegistroK115: TRegistroK115List;  /// BLOCO K - Lista de RegistroK115(FILHO)
   public
     constructor Create; virtual; /// Create
+    destructor Destroy; override;
 
     property EVENTO: String read fEVENTO write fEVENTO;
     property DT_EVENTO: TDateTime read fDT_EVENTO write fDT_EVENTO;
@@ -169,7 +171,7 @@ type
     property Items[Index: Integer]: TRegistroK115 read GetItem write SetItem;
   end;
 
-  /// Registro K200 – PLANO DE CONTAS CONSOLIDADO
+  { TRegistroK200 – PLANO DE CONTAS CONSOLIDADO }
 
   TRegistroK200 = class
   private
@@ -183,6 +185,7 @@ type
     FRegistroK210: TRegistroK210List;  /// BLOCO K - Lista de RegistroK210 (FILHO)
   public
     constructor Create; virtual; /// Create
+    destructor Destroy; override;
 
     property COD_NAT: String read fCOD_NAT write fCOD_NAT;
     property IND_CTA: String read fIND_CTA write fIND_CTA;
@@ -227,7 +230,7 @@ type
     property Items[Index: Integer]: TRegistroK210 read GetItem write SetItem;
   end;
 
-  /// Registro K300 - SALDOS DAS CONTAS CONSOLIDADAS
+  { TRegistroK300 - SALDOS DAS CONTAS CONSOLIDADAS }
 
   TRegistroK300 = class
   private
@@ -242,6 +245,7 @@ type
     FRegistroK310: TRegistroK310List;  /// BLOCO K - Lista de RegistroK310 (FILHO)
   public
     constructor Create; virtual; /// Create
+    destructor Destroy; override;
 
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
     property VAL_AG: Currency read fVAL_AG write fVAL_AG;
@@ -265,7 +269,7 @@ type
     property Items[Index: Integer]: TRegistroK300 read GetItem write SetItem;
   end;
 
-  /// Registro K310 -  EMPRESAS DETENTORAS DAS PARCELAS DO VALOR ELIMINADO TOTAL
+  { TRegistroK310 -  EMPRESAS DETENTORAS DAS PARCELAS DO VALOR ELIMINADO TOTAL }
 
   TRegistroK310 = class
   private
@@ -276,6 +280,7 @@ type
     FRegistroK315: TRegistroK315List;  /// BLOCO K - Lista de RegistroK315 (FILHO)
   public
     constructor Create; virtual; /// Create
+    destructor Destroy; override;
 
     property EMP_COD_PARTE: String read fEMP_COD_PARTE write fEMP_COD_PARTE;
     property VALOR: Currency read fVALOR write fVALOR;
@@ -402,6 +407,12 @@ begin
   FRegistroK115 := TRegistroK115List.Create;
 end;
 
+destructor TRegistroK110.Destroy;
+begin
+  FRegistroK115.Free;
+  inherited Destroy;
+end;
+
 { TRegistroK110List }
 
 function TRegistroK110List.GetItem(Index: Integer): TRegistroK110;
@@ -443,6 +454,12 @@ end;
 constructor TRegistroK200.Create;
 begin
   FRegistroK210 := TRegistroK210List.Create;
+end;
+
+destructor TRegistroK200.Destroy;
+begin
+  FRegistroK210.Free;
+  inherited Destroy;
 end;
 
 { TRegistroK200List }
@@ -488,6 +505,12 @@ begin
   FRegistroK310 := TRegistroK310List.Create;
 end;
 
+destructor TRegistroK300.Destroy;
+begin
+  FRegistroK310.Free;
+  inherited Destroy;
+end;
+
 { TRegistroK300List }
 
 function TRegistroK300List.GetItem(Index: Integer): TRegistroK300;
@@ -511,6 +534,12 @@ end;
 constructor TRegistroK310.Create;
 begin
   FRegistroK315 := TRegistroK315List.Create;
+end;
+
+destructor TRegistroK310.Destroy;
+begin
+  FRegistroK315.Free;
+  inherited Destroy;
 end;
 
 { TRegistroK310List }

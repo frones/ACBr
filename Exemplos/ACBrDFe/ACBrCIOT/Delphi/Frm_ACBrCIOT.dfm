@@ -1315,8 +1315,8 @@ object frmACBrCIOT: TfrmACBrCIOT
       Left = 1
       Top = 1
       Width = 567
-      Height = 248
-      ActivePage = tsEnvios
+      Height = 266
+      ActivePage = tsOperacao
       Align = alTop
       TabOrder = 0
       object tsOperacao: TTabSheet
@@ -1326,7 +1326,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 3
           Top = 3
           Width = 545
-          Height = 208
+          Height = 233
           Caption = ' Opera'#231#245'es do e-Frete '
           Columns = 2
           ItemIndex = 0
@@ -1346,7 +1346,9 @@ object frmACBrCIOT: TfrmACBrCIOT
             'Encerrar uma Opera'#231#227'o de Transporte'
             'Logout (Necess'#225'rio se usado sem Cert.)'
             'Consultar Tipos de Carga'
-            'Alterar Data de Libera'#231#227'o de Pagamento')
+            'Alterar Data de Libera'#231#227'o de Pagamento'
+            'Registrar Qtde da Mercadoria no Desembarque'
+            'Registrar Pagamento Quita'#231#227'o')
           TabOrder = 0
         end
       end
@@ -1402,9 +1404,9 @@ object frmACBrCIOT: TfrmACBrCIOT
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 249
+      Top = 267
       Width = 567
-      Height = 362
+      Height = 344
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -1414,7 +1416,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 0
           Top = 0
           Width = 559
-          Height = 334
+          Height = 316
           Align = alClient
           ScrollBars = ssBoth
           TabOrder = 0
@@ -1427,11 +1429,11 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 0
           Top = 0
           Width = 559
-          Height = 334
+          Height = 316
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000C6390000852200000000000000000000000000000000000000000000
+            4C000000C6390000A92000000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1445,7 +1447,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 0
           Top = 0
           Width = 559
-          Height = 334
+          Height = 316
           Align = alClient
           ScrollBars = ssBoth
           TabOrder = 0
@@ -1458,7 +1460,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 0
           Top = 0
           Width = 559
-          Height = 334
+          Height = 316
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1471,7 +1473,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 0
           Top = 0
           Width = 559
-          Height = 334
+          Height = 316
           Align = alClient
           ScrollBars = ssBoth
           TabOrder = 0
@@ -1484,7 +1486,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Left = 0
           Top = 0
           Width = 559
-          Height = 334
+          Height = 316
           Align = alClient
           Lines.Strings = (
             '')

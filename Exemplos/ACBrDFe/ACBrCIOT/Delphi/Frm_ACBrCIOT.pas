@@ -1054,6 +1054,38 @@ begin
              Motivo := 'Acordo entre as partes';
            end;
          end;
+
+     16: begin
+           Integradora.Operacao := opRegistrarQtdeMercadoriaDesembarque;
+
+           with RegistrarQuantidadeDaMercadoriaNoDesembarque do
+           begin
+             CodigoIdentificacaoOperacao := '123';
+
+             with NotasFiscais.New do
+             begin
+               Numero := '12345';
+               Serie := '1';
+               QuantidadeDaMercadoriaNoEmbarque := 1;
+             end;
+           end;
+         end;
+
+     17: begin
+           Integradora.Operacao := opRegistrarPagamentoQuitacao;
+
+           with RegistrarPagamentoQuitacao do
+           begin
+             TokenCompra := '123';
+
+             with NotasFiscais.New do
+             begin
+               Numero := '12345';
+               Serie := '1';
+               QuantidadeDaMercadoriaNoEmbarque := 1;
+             end;
+           end;
+         end;
     end;
   end;
 end;

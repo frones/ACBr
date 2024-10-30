@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/10/2024
+-- ISSNet.GravarXml --
+[*] Na versão 2.04 a tag CodigoPais só deve ser gerada se o CodigoMunicipio do Tomador for 
+    9999999 ou UF do Tomador for EX e o valor do campo ExigibilidadeISS for exiExportacao.
+   Por: Ronaldo Tadeu de Lima
+
 29/10/2024
 -- ACBrNFSeXServicos --
 [*] #TK-6176: A cidade de São Carlos/SC trocou de versão e URLs, o provedor 

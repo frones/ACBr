@@ -909,6 +909,34 @@ type
     property IdOperacaoCliente: string read FIdOperacaoCliente write FIdOperacaoCliente;
   end;
 
+  TRegistrarQuantidadeDaMercadoriaNoDesembarque = class(TObject)
+  private
+    FCodigoIdentificacaoOperacao: string;
+    FNotasFiscais: TNotaFiscalCollection;
+
+    procedure SetNotasFiscais(const Value: TNotaFiscalCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
+    property NotasFiscais: TNotaFiscalCollection read FNotasFiscais write SetNotasFiscais;
+  end;
+
+  TRegistrarPagamentoQuitacao = class(TObject)
+  private
+    FTokenCompra: string;
+    FNotasFiscais: TNotaFiscalCollection;
+
+    procedure SetNotasFiscais(const Value: TNotaFiscalCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property TokenCompra: string read FTokenCompra write FTokenCompra;
+    property NotasFiscais: TNotaFiscalCollection read FNotasFiscais write SetNotasFiscais;
+  end;
+
   TCIOT = class(TObject)
   private
     FIntegradora: TIntegradora;
@@ -927,6 +955,8 @@ type
     FEncerrarOperacao: TEncerrarOperacao;
     FObterCodigoOperacaoTransporte: TObterCodigoOperacaoTransporte;
     FAlterarDataLiberacaoPagamento: TAlterarDataLiberacaoPagamento;
+    FRegistrarQuantidadeDaMercadoriaNoDesembarque: TRegistrarQuantidadeDaMercadoriaNoDesembarque;
+    FRegistrarPagamentoQuitacao: TRegistrarPagamentoQuitacao;
   public
     constructor Create;
     destructor Destroy; override;
@@ -947,6 +977,8 @@ type
     property EncerrarOperacao: TEncerrarOperacao read FEncerrarOperacao write FEncerrarOperacao;
     property ObterCodigoOperacaoTransporte: TObterCodigoOperacaoTransporte read FObterCodigoOperacaoTransporte write FObterCodigoOperacaoTransporte;
     property AlterarDataLiberacaoPagamento: TAlterarDataLiberacaoPagamento read FAlterarDataLiberacaoPagamento write FAlterarDataLiberacaoPagamento;
+    property RegistrarQuantidadeDaMercadoriaNoDesembarque: TRegistrarQuantidadeDaMercadoriaNoDesembarque read FRegistrarQuantidadeDaMercadoriaNoDesembarque write FRegistrarQuantidadeDaMercadoriaNoDesembarque;
+    property RegistrarPagamentoQuitacao: TRegistrarPagamentoQuitacao read FRegistrarPagamentoQuitacao write FRegistrarPagamentoQuitacao;
   end;
 
   TConsultaTipoCargaCollectionItem = class(TObject)
@@ -1063,6 +1095,8 @@ begin
   FCancelarPagamento             := TCancelarPagamento.Create;
   FEncerrarOperacao              := TEncerrarOperacao.Create;
   FAlterarDataLiberacaoPagamento := TAlterarDataLiberacaoPagamento.Create;
+  FRegistrarQuantidadeDaMercadoriaNoDesembarque := TRegistrarQuantidadeDaMercadoriaNoDesembarque.Create;
+  FRegistrarPagamentoQuitacao := TRegistrarPagamentoQuitacao.Create;
 end;
 
 destructor TCIOT.Destroy;
@@ -1083,6 +1117,8 @@ begin
   FCancelarPagamento.Free;
   FEncerrarOperacao.Free;
   FAlterarDataLiberacaoPagamento.Free;
+  FRegistrarQuantidadeDaMercadoriaNoDesembarque.Free;
+  FRegistrarPagamentoQuitacao.Free;
 
   inherited Destroy;
 end;
@@ -1806,13 +1842,57 @@ end;
 function TConsultaTipoCargaCollection.New: TConsultaTipoCargaCollectionItem;
 begin
   Result := TConsultaTipoCargaCollectionItem.Create;
-  Self.Add(Result);               
+  Self.Add(Result);
 end;
 
 procedure TConsultaTipoCargaCollection.SetItem(Index: Integer;
   Value: TConsultaTipoCargaCollectionItem);
 begin
   inherited Items[Index] := Value;
+end;
+
+{ TRegistrarQuantidadeDaMercadoriaNoDesembarque }
+
+constructor TRegistrarQuantidadeDaMercadoriaNoDesembarque.Create;
+begin
+  inherited Create;
+
+  FNotasFiscais := TNotaFiscalCollection.Create;
+end;
+
+destructor TRegistrarQuantidadeDaMercadoriaNoDesembarque.Destroy;
+begin
+  FNotasFiscais.Free;
+
+  inherited Destroy;
+end;
+
+procedure TRegistrarQuantidadeDaMercadoriaNoDesembarque.SetNotasFiscais(
+  const Value: TNotaFiscalCollection);
+begin
+  FNotasFiscais := Value;
+end;
+
+{ TRegistrarPagamentoQuitacao }
+
+constructor TRegistrarPagamentoQuitacao.Create;
+begin
+  inherited Create;
+
+  FNotasFiscais := TNotaFiscalCollection.Create;
+end;
+
+destructor TRegistrarPagamentoQuitacao.Destroy;
+begin
+  FNotasFiscais.Free;
+
+  inherited Destroy;
+end;
+
+procedure TRegistrarPagamentoQuitacao.SetNotasFiscais(
+  const Value: TNotaFiscalCollection);
+begin
+  FNotasFiscais := Value;
 end;
 
 end.

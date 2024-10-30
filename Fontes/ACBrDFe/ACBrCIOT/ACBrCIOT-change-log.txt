@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2024
+-- Diversos --
+[+] Implementado as Operações: Registrar Qtde da Mercadoria no Desembarque e 
+    Registrar Pagamento Quitação.
+  Por: Italo Giurizzato Junior
+
 10/10/2024
 -- ACBrCIOTConversao --
 [+] Incluido o enumerado: DepositoAgendado em TpTipoPagamento.

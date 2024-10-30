@@ -78,14 +78,17 @@ type
                 opAdicionar, opAdicionarViagem, opAdicionarPagamento,
                 opObterCodigoIOT , opObterPdf, opRetificar, opCancelar,
                 opCancelarPagamento, opEncerrar, opConsultarTipoCarga,
-                opAlterarDataLiberacaoPagamento);
+                opAlterarDataLiberacaoPagamento,
+                opRegistrarQtdeMercadoriaDesembarque,
+                opRegistrarPagamentoQuitacao);
 
 const
   TpOperacaoArrayStrings: array[TpOperacao] of string = ('Login', 'Logout',
     'Gravar Proprietario', 'Gravar Veículo', 'Gravar Motorista', 'Adicionar',
     'Adicionar Viagem', 'Adicionar Pagamento', 'Obter Codigo CIOT', 'Obter Pdf',
     'Retificar', 'Cancelar', 'Cancelar Pagamento', 'Encerrar',
-    'ConsultarTipoCarga', 'AlterarDataLiberacaoPagamento');
+    'ConsultarTipoCarga', 'AlterarDataLiberacaoPagamento',
+    'RegistrarQtdeMercadoriaDesembarque', 'RegistrarPagamentoQuitacao');
 
 type
   tpTipoConta = (tcIndefinido, tcContaCorrente, tcContaPoupanca, tcContaPagamentos);

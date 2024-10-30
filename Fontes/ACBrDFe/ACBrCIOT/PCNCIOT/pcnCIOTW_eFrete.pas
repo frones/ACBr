@@ -1513,6 +1513,7 @@ end;
 function TCIOTW_eFrete.GerarXml: Boolean;
 var
   i: Integer;
+  Item : TNotaFiscalCollectionItem;
 begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
@@ -1974,6 +1975,100 @@ begin
         Gerador.Prefixo := 'pef:';
         Gerador.wGrupo('/AlterarDataLiberacaoPagamento');
       end;
+
+    opRegistrarQtdeMercadoriaDesembarque:
+      begin
+        Gerador.wGrupo('RegistrarQuantidadeDaMercadoriaNoDesembarque');
+        Gerador.Prefixo := 'obj:';
+
+        Gerador.wGrupo('RegistrarQuantidadeDaMercadoriaNoDesembarqueRequest');
+
+        GerarIdentificacao(1);
+
+        with CIOT.RegistrarQuantidadeDaMercadoriaNoDesembarque do
+        begin
+          Gerador.wCampo(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 0, CodigoIdentificacaoOperacao);
+
+          if NotasFiscais.Count > 0 then
+          begin
+            Gerador.Prefixo := 'enc:';
+            Gerador.wGrupo('NotasFiscais', 'AP37');
+
+            for i := 0 to NotasFiscais.Count -1 do
+            begin
+              Item := NotasFiscais[i];
+
+              Gerador.wGrupo('NotaFiscal', 'AP38');
+              Gerador.wCampo(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Item.Numero);
+              Gerador.wCampo(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Item.Serie);
+              Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, Item.QuantidadeDaMercadoriaNoDesembarque);
+
+              Gerador.wGrupo('/NotaFiscal');
+            end;
+            Gerador.wGrupo('/NotasFiscais');
+          end;
+        end;
+
+        Gerador.wGrupo('/RegistrarQuantidadeDaMercadoriaNoDesembarqueRequest');
+
+        Gerador.Prefixo := 'pef:';
+        Gerador.wGrupo('/RegistrarQuantidadeDaMercadoriaNoDesembarque');
+      end;
+
+    opRegistrarPagamentoQuitacao:
+      begin
+        Gerador.wGrupo('RegistrarPagamentoQuitacao');
+        Gerador.Prefixo := 'obj:';
+
+        Gerador.wGrupo('RegistrarPagamentoQuitacaoRequest');
+
+        GerarIdentificacao(1);
+
+        with CIOT.RegistrarPagamentoQuitacao do
+        begin
+          Gerador.wCampo(tcStr, 'KP02', 'TokenCompra', 01, 06, 1, TokenCompra);
+
+          if NotasFiscais.Count > 0 then
+          begin
+            Gerador.Prefixo := 'enc:';
+            Gerador.wGrupo('NotasFiscais', 'AP37');
+
+            for i := 0 to NotasFiscais.Count -1 do
+            begin
+              Item := NotasFiscais[i];
+
+              Gerador.wGrupo('NotaFiscal', 'AP38');
+              Gerador.wCampo(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Item.Numero);
+              Gerador.wCampo(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Item.Serie);
+              Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, Item.QuantidadeDaMercadoriaNoDesembarque);
+
+              Gerador.wGrupo('/NotaFiscal');
+            end;
+            Gerador.wGrupo('/NotasFiscais');
+          end;
+        end;
+
+        Gerador.wGrupo('/RegistrarPagamentoQuitacaoRequest');
+
+        Gerador.Prefixo := 'pef:';
+        Gerador.wGrupo('/RegistrarPagamentoQuitacao');
+      end;
+
+    // Implementação futura se houver necessidade.
+
+    // manual versão 4.4
+    // Incluir: Abonar Quebra - página 33
+    // Incluir: Obter Transações - página 39
+    // Incluir: Obter Vinculo para Transporte - página 41
+    // Incluir: Consultar Download Documento - página 42
+    // Incluir: Download Documento - página 43
+    // Incluir: Alterar Entrega Documentacao - página 46
+    // Incluir: Registrar pagamento - página 47
+    // Incluir: ObterFaturasPorIntervalodeDatas - página 49
+    // Incluir: ObterFaturasCredenciadoPorIntervalodeDatas - página 51
+
+    // manual versão 7.1
+    // Incluir: ConsultarSituacaoTransportador - página 53
   end;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

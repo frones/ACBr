@@ -410,9 +410,10 @@ begin
     Ide.dhEmi := Now;
     // TACBrTipoEmissao = (teNormal, teOffLine);
     Ide.tpEmis := teNormal;
-    // TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);
+    // TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio,
+    //                 teTransportadora, teECT);
     Ide.tpEmit := teEmissorProprio;
-    Ide.nSiteAutoriz := 0;
+    Ide.nSiteAutoriz := sa0;
     Ide.verProc := 'ACBrDCe-v1.00';
 
     //
@@ -433,7 +434,7 @@ begin
     Emit.EnderEmit.fone := edtEmitFone.Text;
 
     //
-    // Dados do Fisco ou Marketplace ou Emissor Próprio ou Transportadora
+    // Dados do Fisco ou Marketplace ou Transportadora ou ECT
     //
     case Ide.tpEmit of
       teFisco:
@@ -442,21 +443,24 @@ begin
           Fisco.xOrgao := '';
           Fisco.UF := '';
         end;
+
       teMarketplace:
         begin
           Marketplace.CNPJ := '';
           Marketplace.xNome := '';
           Marketplace.Site := '';
         end;
-      teEmissorProprio:
-        begin
-          EmpEmisProp.CNPJ := edtEmitCNPJ.Text;
-          EmpEmisProp.xNome := 'Nome do Emissor Proprio';
-        end;
+
       teTransportadora:
         begin
           Transportadora.CNPJ := edtEmitCNPJ.Text;
           Transportadora.xNome := 'Transportadora Leva e Traz';
+        end;
+
+      teECT:
+        begin
+          ECT.CNPJ := edtEmitCNPJ.Text;
+          ECT.xNome := 'ECT';
         end;
     end;
 
@@ -504,6 +508,18 @@ begin
       infAdProd := '';
     end;
 
+    with det.New do
+    begin
+      Prod.nItem := 2;
+      Prod.xProd := 'Produto 2';
+      Prod.NCM := '00';
+      Prod.qCom := 3;
+      Prod.vUnCom := 8;
+      Prod.vProd := 24;
+
+      infAdProd := '';
+    end;
+
     //
     // Dados do Total
     //
@@ -519,7 +535,7 @@ begin
     //
     // TModTrans = (mtCorreios, mtPropria, mtTransportadora);
     transp.modTrans := mtTransportadora;
-    transp.CNPJTrans := edtEmitCNPJ.Text;
+    transp.CNPJTransp := edtEmitCNPJ.Text;
 
     //
     // Dados de informações adicionais
@@ -527,11 +543,22 @@ begin
     infAdic.infAdFisco := '';
     infAdic.infCpl := '';
     infAdic.infAdMarketplace := '';
+    infAdic.infAdTransp := '';
+    infAdic.infAdECT := '';
     {
     //
-    // Dados de Observação do Contribuinte (máximo 10)
+    // Dados de Observação do Emitente (máximo 10)
     //
-    with obscont.New do
+    with obsEmit.New do
+    begin
+      xCampo := '';
+      xTexto := '';
+    end;
+
+    //
+    // Dados de Observação do Fisco (máximo 10)
+    //
+    with obsFisco.New do
     begin
       xCampo := '';
       xTexto := '';
@@ -541,6 +568,15 @@ begin
     // Dados de Observação do Marketplace (máximo 10)
     //
     with obsMarketplace.New do
+    begin
+      xCampo := '';
+      xTexto := '';
+    end;
+
+    //
+    // Dados de Observação do ECT (máximo 10)
+    //
+    with obsECT.New do
     begin
       xCampo := '';
       xTexto := '';

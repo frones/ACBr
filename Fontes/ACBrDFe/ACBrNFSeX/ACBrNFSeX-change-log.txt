@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/10/2024
+-- ACBrNFSeXGravarXml --
+[*] Correção, para gerar o Json correto dentro da tag Discriminacao.
+   Por: Italo Giurizzato Junior
 -- ISSNet.GravarXml --
 [*] Na versão 2.04 a tag CodigoPais só deve ser gerada se o CodigoMunicipio do Tomador for 
     9999999 ou UF do Tomador for EX e o valor do campo ExigibilidadeISS for exiExportacao.

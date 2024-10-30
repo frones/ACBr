@@ -338,7 +338,7 @@ begin
         NFSe.Servico.Discriminacao := '{' + xDiscriminacao + '}';
 
       fdJson:
-        NFSe.Servico.Discriminacao := '{[' + xDiscriminacao + ']}';
+        NFSe.Servico.Discriminacao := '[' + xDiscriminacao + ']';
     else
       NFSe.Servico.Discriminacao := xDiscriminacao;
     end;

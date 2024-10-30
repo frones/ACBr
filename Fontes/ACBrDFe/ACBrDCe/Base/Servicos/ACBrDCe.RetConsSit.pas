@@ -260,8 +260,6 @@ begin
           Result := True;
         end;
       end;
-
-      Result := True;
     except
       Result := False;
     end;

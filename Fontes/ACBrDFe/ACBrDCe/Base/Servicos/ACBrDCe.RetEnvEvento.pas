@@ -181,10 +181,7 @@ end;
 
 procedure TRetEventoDCe.Ler_DetEvento(const ANode: TACBrXmlNode);
 var
-  sAux: string;
   AuxNode: TACBrXmlNode;
-  ANodes: TACBrXmlNodeArray;
-  i: Integer;
 begin
   if not Assigned(ANode) then Exit;
 

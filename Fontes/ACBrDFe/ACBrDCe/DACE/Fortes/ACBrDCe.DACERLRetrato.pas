@@ -241,8 +241,8 @@ begin
 
     teEmissorProprio:
       begin
-        rllCNPJFisco.Caption := FormatarCNPJouCPF(fpDCe.EmpEmisProp.CNPJ);
-        rllNomeFisco.Caption := fpDCe.EmpEmisProp.xNome;
+        rllCNPJFisco.Caption := FormatarCNPJouCPF(fpDCe.ECT.CNPJ);
+        rllNomeFisco.Caption := fpDCe.ECT.xNome;
       end;
 
     teTransportadora:
@@ -271,9 +271,6 @@ begin
 end;
 
 procedure TfrmDADCeRLRetrato.InicializarDados;
-var
-  h, iAlturaCanhoto, vWidthAux, vLeftAux, iAlturaMinLinha: Integer;
-  CarregouLogo: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLDCe, fpDADCe);
   rlbCanceladaDenegada.Visible := False;

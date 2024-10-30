@@ -1402,7 +1402,7 @@ begin
     end;
 
     AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;
-{
+
     with TACBrDCe(FPDFeOwner) do
     begin
       EventoEhValido := SSL.Validar(FPDadosMsg,
@@ -1422,7 +1422,7 @@ begin
 
       raise EACBrDCeException.CreateDef(FErroValidacao);
     end;
-}
+
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoDCe.Evento[I].InfEvento.id;
   finally

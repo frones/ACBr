@@ -74,7 +74,7 @@ type
     FdhEmi: TDateTime;
     FtpEmis: TACBrTipoEmissao;
     FtpEmit: TEmitenteDCe;
-    FnSiteAutoriz: Integer;
+    FnSiteAutoriz: TSiteAutorizador;
     FcDV: Integer;
     FtpAmb: TACBrTipoAmbiente;
     FverProc: string;
@@ -90,7 +90,7 @@ type
     property dhEmi: TDateTime read FdhEmi write FdhEmi;
     property tpEmis: TACBrTipoEmissao read FtpEmis write FtpEmis;
     property tpEmit: TEmitenteDCe read FtpEmit write FtpEmit;
-    property nSiteAutoriz: Integer read FnSiteAutoriz write FnSiteAutoriz;
+    property nSiteAutoriz: TSiteAutorizador read FnSiteAutoriz write FnSiteAutoriz;
     property cDV: Integer read FcDV write FcDV;
     property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
     property verProc: string read FverProc write FverProc;
@@ -172,7 +172,7 @@ type
     property xNome: string read FxNome write FxNome;
   end;
 
-  TEmpEmisProp = class(TObject)
+  TECT = class(TObject)
   private
     FCNPJ: string;
     FxNome: string;
@@ -263,13 +263,13 @@ type
   Ttransp = class(TObject)
   private
     FmodTrans: TModTrans;
-    FCNPJTrans: string;
+    FCNPJTransp: string;
   public
     property modTrans: TModTrans read FmodTrans write FmodTrans;
-    property CNPJTrans: string read FCNPJTrans write FCNPJTrans;
+    property CNPJTransp: string read FCNPJTransp write FCNPJTransp;
   end;
 
-  TobsContCollectionItem = class(TObject)
+  TobservacoesCollectionItem = class(TObject)
   private
     FxCampo: string;
     FxTexto: string;
@@ -278,33 +278,44 @@ type
     property xTexto: string read FxTexto write FxTexto;
   end;
 
-  TobsContCollection = class(TACBrObjectList)
+  TobsEmitCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TobsContCollectionItem;
-    procedure SetItem(Index: Integer; Value: TobsContCollectionItem);
+    function GetItem(Index: Integer): TobservacoesCollectionItem;
+    procedure SetItem(Index: Integer; Value: TobservacoesCollectionItem);
   public
-    function Add: TobsContCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TobsContCollectionItem;
-    property Items[Index: Integer]: TobsContCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TobsMarketplaceCollectionItem = class(TObject)
-  private
-    FxCampo: string;
-    FxTexto: string;
-  public
-    property xCampo: string read FxCampo write FxCampo;
-    property xTexto: string read FxTexto write FxTexto;
+    function Add: TobservacoesCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobservacoesCollectionItem;
+    property Items[Index: Integer]: TobservacoesCollectionItem read GetItem write SetItem; default;
   end;
 
   TobsMarketplaceCollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TobsMarketplaceCollectionItem;
-    procedure SetItem(Index: Integer; Value: TobsMarketplaceCollectionItem);
+    function GetItem(Index: Integer): TobservacoesCollectionItem;
+    procedure SetItem(Index: Integer; Value: TobservacoesCollectionItem);
   public
-    function Add: TobsMarketplaceCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TobsMarketplaceCollectionItem;
-    property Items[Index: Integer]: TobsMarketplaceCollectionItem read GetItem write SetItem; default;
+    function Add: TobservacoesCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobservacoesCollectionItem;
+    property Items[Index: Integer]: TobservacoesCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TobsFiscoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TobservacoesCollectionItem;
+    procedure SetItem(Index: Integer; Value: TobservacoesCollectionItem);
+  public
+    function Add: TobservacoesCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobservacoesCollectionItem;
+    property Items[Index: Integer]: TobservacoesCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TobsECTCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TobservacoesCollectionItem;
+    procedure SetItem(Index: Integer; Value: TobservacoesCollectionItem);
+  public
+    function Add: TobservacoesCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobservacoesCollectionItem;
+    property Items[Index: Integer]: TobservacoesCollectionItem read GetItem write SetItem; default;
   end;
 
   TinfAdic = class(TObject)
@@ -313,11 +324,13 @@ type
     FinfCpl: string;
     FinfAdMarketplace: string;
     FinfAdTransp: string;
+    FinfAdECT: string;
   public
     property infAdFisco: string read FinfAdFisco write FinfAdFisco;
     property infCpl: string read FinfCpl write FinfCpl;
     property infAdMarketplace: string read FinfAdMarketplace write FinfAdMarketplace;
     property infAdTransp: string read FinfAdTransp write FinfAdTransp;
+    property infAdECT: string read FinfAdECT write FinfAdECT;
   end;
 
   TinfDec = class(TObject)
@@ -353,14 +366,14 @@ type
     FFisco: TFisco;
     FMarketplace: TMarketplace;
     FTransportadora: TTransportadora;
-    FEmpEmisProp: TEmpEmisProp;
+    FECT: TECT;
     Fdest: Tdest;
     FautXML: TautXMLCollection;
     Fdet: TDetCollection;
     Ftotal: Ttotal;
     Ftransp: Ttransp;
     FinfAdic: TinfAdic;
-    FobsCont: TobsContCollection;
+    FobsEmit: TobsEmitCollection;
     FobsMarketplace: TobsMarketplaceCollection;
     FinfDec: TinfDec;
     FinfSolicDCe: TinfSolicDCe;
@@ -368,11 +381,15 @@ type
 
     FProcDCe: TProcDFe;
     FSignature: TSignature;
+    FobsFisco: TobsFiscoCollection;
+    FobsECT: TobsECTCollection;
 
     procedure SetautXML(const Value: TautXMLCollection);
     procedure Setdet(Value: TDetCollection);
-    procedure SetobsCont(Value: TobsContCollection);
+    procedure SetobsEmit(Value: TobsEmitCollection);
     procedure SetobsMarketplace(Value: TobsMarketplaceCollection);
+    procedure SetobsFisco(const Value: TobsFiscoCollection);
+    procedure SetobsECT(const Value: TobsECTCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -383,15 +400,17 @@ type
     property Fisco: TFisco read FFisco write FFisco;
     property Marketplace: TMarketplace read FMarketplace write FMarketplace;
     property Transportadora: TTransportadora read FTransportadora write FTransportadora;
-    property EmpEmisProp: TEmpEmisProp read FEmpEmisProp write FEmpEmisProp;
+    property ECT: TECT read FECT write FECT;
     property dest: TDest read Fdest write Fdest;
     property autXML: TautXMLCollection read FautXML write SetautXML;
     property det: TDetCollection read Fdet write Setdet;
     property total: Ttotal read Ftotal write Ftotal;
     property transp: Ttransp read Ftransp write Ftransp;
     property infAdic: TinfAdic read FinfAdic write FinfAdic;
-    property obsCont: TobsContCollection read FobsCont write SetobsCont;
+    property obsEmit: TobsEmitCollection read FobsEmit write SetobsEmit;
     property obsMarketplace: TobsMarketplaceCollection read FobsMarketplace write SetobsMarketplace;
+    property obsFisco: TobsFiscoCollection read FobsFisco write SetobsFisco;
+    property obsECT: TobsECTCollection read FobsECT write SetobsECT;
     property infDec: TinfDec read FinfDec write FinfDec;
     property infSolicDCe: TinfSolicDCe read FinfSolicDCe write FinfSolicDCe;
     property infDCeSupl: TinfDCeSupl read FinfDCeSupl write FinfDCeSupl;
@@ -416,7 +435,7 @@ begin
 
   FFisco := TFisco.Create;
   FMarketplace := TMarketplace.Create;
-  FEmpEmisProp := TEmpEmisProp.Create;
+  FECT := TECT.Create;
   FTransportadora := TTransportadora.Create;
   Fdest := Tdest.Create;
   FautXML := TautXMLCollection.Create;
@@ -427,8 +446,10 @@ begin
   FinfDec := TinfDec.Create;
   FinfSolicDCe := TinfSolicDCe.Create;
   FinfDCeSupl := TinfDCeSupl.Create;
-  FobsCont := TobsContCollection.Create;
+  FobsEmit := TobsEmitCollection.Create;
   FobsMarketplace := TobsMarketplaceCollection.Create;
+  FobsFisco := TobsFiscoCollection.Create;
+  FobsECT := TobsECTCollection.Create;
   FProcDCe := TProcDFe.Create('', '', '', '');
   Fsignature := Tsignature.create;
 end;
@@ -441,7 +462,7 @@ begin
   FFisco.Free;
   FMarketplace.Free;
   FTransportadora.Free;
-  FEmpEmisProp.Free;
+  FECT.Free;
   Fdest.Free;
   FautXML.Free;
   FDet.Free;
@@ -451,8 +472,10 @@ begin
   FinfDec.Free;
   FinfSolicDCe.Free;
   FinfDCeSupl.Free;
-  FobsCont.Free;
+  FobsEmit.Free;
   FobsMarketplace.Free;
+  FobsFisco.Free;
+  FobsECT.Free;
   FProcDCe.Free;
   Fsignature.Free;
 
@@ -469,9 +492,19 @@ begin
   Fdet.Assign(Value);
 end;
 
-procedure TDCe.SetobsCont(Value: TobsContCollection);
+procedure TDCe.SetobsECT(const Value: TobsECTCollection);
 begin
-  FobsCont.Assign(Value);
+  FobsECT := Value;
+end;
+
+procedure TDCe.SetobsEmit(Value: TobsEmitCollection);
+begin
+  FobsEmit.Assign(Value);
+end;
+
+procedure TDCe.SetobsFisco(const Value: TobsFiscoCollection);
+begin
+  FobsFisco := Value;
 end;
 
 procedure TDCe.SetobsMarketplace(Value: TobsMarketplaceCollection);
@@ -590,48 +623,97 @@ end;
 
 { TobsContCollection }
 
-function TobsContCollection.Add: TobsContCollectionItem;
+function TobsEmitCollection.Add: TobservacoesCollectionItem;
 begin
   Result := Self.New;
 end;
 
-function TobsContCollection.GetItem(Index: Integer): TobsContCollectionItem;
+function TobsEmitCollection.GetItem(Index: Integer): TobservacoesCollectionItem;
 begin
-  Result := TobsContCollectionItem(inherited Items[Index]);
+  Result := TobservacoesCollectionItem(inherited Items[Index]);
 end;
 
-procedure TobsContCollection.SetItem(Index: Integer; Value: TobsContCollectionItem);
+procedure TobsEmitCollection.SetItem(Index: Integer; Value: TobservacoesCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-function TobsContCollection.New: TobsContCollectionItem;
+function TobsEmitCollection.New: TobservacoesCollectionItem;
 begin
-  Result := TobsContCollectionItem.Create;
+  Result := TobservacoesCollectionItem.Create;
   Self.Add(Result);
 end;
 
 { TobsContCollection }
 
-function TobsMarketplaceCollection.Add: TobsMarketplaceCollectionItem;
+function TobsMarketplaceCollection.Add: TobservacoesCollectionItem;
 begin
   Result := Self.New;
 end;
 
-function TobsMarketplaceCollection.GetItem(Index: Integer): TobsMarketplaceCollectionItem;
+function TobsMarketplaceCollection.GetItem(Index: Integer): TobservacoesCollectionItem;
 begin
-  Result := TobsMarketplaceCollectionItem(inherited Items[Index]);
+  Result := TobservacoesCollectionItem(inherited Items[Index]);
 end;
 
-procedure TobsMarketplaceCollection.SetItem(Index: Integer; Value: TobsMarketplaceCollectionItem);
+procedure TobsMarketplaceCollection.SetItem(Index: Integer; Value: TobservacoesCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-function TobsMarketplaceCollection.New: TobsMarketplaceCollectionItem;
+function TobsMarketplaceCollection.New: TobservacoesCollectionItem;
 begin
-  Result := TobsMarketplaceCollectionItem.Create;
+  Result := TobservacoesCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TobsFiscoCollection }
+
+function TobsFiscoCollection.Add: TobservacoesCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TobsFiscoCollection.GetItem(
+  Index: Integer): TobservacoesCollectionItem;
+begin
+  Result := TobservacoesCollectionItem(inherited Items[Index]);
+end;
+
+function TobsFiscoCollection.New: TobservacoesCollectionItem;
+begin
+  Result := TobservacoesCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TobsFiscoCollection.SetItem(Index: Integer;
+  Value: TobservacoesCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+{ TobsECTCollection }
+
+function TobsECTCollection.Add: TobservacoesCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TobsECTCollection.GetItem(Index: Integer): TobservacoesCollectionItem;
+begin
+  Result := TobservacoesCollectionItem(inherited Items[Index]);
+end;
+
+function TobsECTCollection.New: TobservacoesCollectionItem;
+begin
+  Result := TobservacoesCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TobsECTCollection.SetItem(Index: Integer;
+  Value: TobservacoesCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

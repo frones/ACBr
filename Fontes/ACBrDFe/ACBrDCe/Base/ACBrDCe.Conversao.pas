@@ -67,10 +67,12 @@ const
     'Consulta', 'StatusServico', 'RecepcaoEvento', 'URL-QRCode', 'URL-Consulta');
 
 type
-  TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora);
+  TEmitenteDCe = (teFisco, teMarketplace, teEmissorProprio, teTransportadora,
+                  teECT);
 
 const
-  TEmitenteDCeArrayStrings: array[TEmitenteDCe] of string = ('0', '1', '2', '3');
+  TEmitenteDCeArrayStrings: array[TEmitenteDCe] of string = ('0', '1', '2', '3',
+    '4');
 
 type
   TModTrans = (mtCorreios, mtPropria, mtTransportadora);
@@ -79,6 +81,13 @@ const
   TModTransArrayStrings: array[TModTrans] of string = ('0', '1', '2');
   TModTransArrayStringsDesc: array[TModTrans] of string = ('0=Transporte pelos correios',
     '1=Transporte por contra própria', '2=Transporte por empresa transportadora');
+
+type
+  TSiteAutorizador = (sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9);
+
+const
+  TSiteAutorizadorArrayStrings: array[TSiteAutorizador] of string = ('0','1', '2',
+    '3', '4', '5', '6', '7', '8', '9');
 
 {
   Declaração das funções de conversão
@@ -105,6 +114,9 @@ function StrToEmitenteDCe(const s: String): TEmitenteDCe;
 function ModTransToStr(const t: TModTrans): String;
 function StrToModTrans(const s: String): TModTrans;
 function ModTransToDesc(const t: TModTrans): String;
+
+function SiteAutorizadorToStr(const t: TSiteAutorizador): string;
+function StrToSiteAutorizator(const s: string): TSiteAutorizador;
 
 implementation
 
@@ -273,6 +285,27 @@ end;
 function ModTransToDesc(const t: TModTrans): String;
 begin
   result := TModTransArrayStringsDesc[t];
+end;
+
+function SiteAutorizadorToStr(const t: TSiteAutorizador): string;
+begin
+  result := TSiteAutorizadorArrayStrings[t];
+end;
+
+function StrToSiteAutorizator(const s: string): TSiteAutorizador;
+var
+  idx: TSiteAutorizador;
+begin
+  for idx := Low(TSiteAutorizadorArrayStrings) to High(TSiteAutorizadorArrayStrings) do
+  begin
+    if (TSiteAutorizadorArrayStrings[idx] = s) then
+    begin
+      result := idx;
+      exit;
+    end;
+  end;
+
+  raise EACBrException.CreateFmt('Valor string inválido para TSiteAutorizador: %s', [s]);
 end;
 
 initialization

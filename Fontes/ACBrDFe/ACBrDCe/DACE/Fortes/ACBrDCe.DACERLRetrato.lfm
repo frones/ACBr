@@ -858,12 +858,12 @@ inherited frmDADCeRLRetrato: TfrmDADCeRLRetrato
       end
       object RLLabel14: TRLLabel
         Tag = 10
-        Left = 146
+        Left = 108
         Top = 6
-        Width = 424
+        Width = 500
         Height = 16
         Alignment = taCenter
-        Caption = 'IDENTIFICA'#199#195'O DO FISCO, MARKETPLACE OU TRANSPORTADORA'
+        Caption = 'IDENTIFICA'#199#195'O DO CORREIOS, FISCO, MARKETPLACE OU TRANSPORTADORA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13

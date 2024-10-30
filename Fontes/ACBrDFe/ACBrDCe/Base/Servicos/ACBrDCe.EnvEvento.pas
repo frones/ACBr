@@ -229,39 +229,6 @@ begin
   Result.AppendChild(AddNode(tcStr, 'P06', 'tpAmb', 1, 1, 1,
                     TipoAmbienteToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
 
-(*
-  { Segundo o Schema}
-  sDoc := OnlyNumber(Evento[Idx].InfEvento.CNPJCPF);
-
-  if EstaVazio(sDoc) then
-    sDoc := ExtrairCNPJCPFChaveAcesso(Evento[Idx].InfEvento.chDCe);
-
-  // Verifica a Série do Documento, caso esteja no intervalo de 910-969
-  // o emitente é pessoa fisica, logo na chave temos um CPF.
-  Serie := ExtrairSerieChaveAcesso(Evento[Idx].InfEvento.chDCe);
-
-  if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) then
-  begin
-    sDoc := Copy(sDoc, 4, 11);
-  end;
-
-  if Length(sDoc) = 14 then
-  begin
-    Result.AppendChild(AddNode(tcStr, 'HP10', 'CNPJ', 14, 14, 1,
-                                                              sDoc , DSC_CNPJ));
-
-    if not ValidarCNPJ(sDoc) then
-      wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-  end
-  else
-  begin
-    Result.AppendChild(AddNode(tcStr, 'HP11', 'CPF', 11, 11, 1,
-                                                               sDoc , DSC_CPF));
-
-    if not ValidarCPF(sDoc) then
-      wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-  end;
-*)
   Result.AppendChild(AddNode(tcStr, 'P06a', 'tpEmit', 1, 1, 1,
                     EmitenteDCeToStr(Evento[Idx].InfEvento.tpEmit), DSC_TPEMIT));
 
@@ -320,8 +287,6 @@ begin
 
   Result.AppendChild(AddNode(tcInt, 'HP15', 'nSeqEvento', 1, 3, 1,
                                             Evento[Idx].FInfEvento.nSeqEvento));
-
-//  Result.AppendChild(AddNode(tcStr, 'HP16', 'verEvento', 1, 4, 1, Versao));
 
   Result.AppendChild(Gerar_DetEvento(Idx));
 end;

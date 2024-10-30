@@ -229,6 +229,7 @@ type
       fstatus: TACBrPIXStatusCobranca;
       ftxId: String;
       fvalor: TLibPixCDValorVInfo;
+      fpixCopiaECola: String;
       fPix: TACBrObjectList;
 
     public
@@ -247,6 +248,7 @@ type
       property revisao: Integer read frevisao;
       property status: TACBrPIXStatusCobranca read fstatus;
       property txId: String read fTxId;
+      property pixCopiaECola: String read fpixCopiaECola write fpixCopiaECola;
       property valor: TLibPixCDValorVInfo read fvalor;
   end;
 
@@ -782,6 +784,7 @@ begin
   fstatus := stcNENHUM;
   ftxId := EmptyStr;
   fvalor.Clear;
+  fpixCopiaECola := EmptyStr;
 end;
 
 procedure TLibPIXCDCobVResposta.ProcessarCobVGerada(const CobVGerada: TACBrPIXCobVGerada);
@@ -794,6 +797,7 @@ begin
   fstatus := CobVGerada.status;
   ftxId := CobVGerada.txId;
   fvalor.Processar(CobVGerada.valor);
+  fpixCopiaECola := CobVGerada.pixCopiaECola;
 end;
 
 procedure TLibPIXCDCobVResposta.ProcessarCobVCompleta(const CobVCompleta: TACBrPIXCobVCompleta);

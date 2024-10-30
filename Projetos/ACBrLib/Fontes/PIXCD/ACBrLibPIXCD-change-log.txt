@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2024
+--- ACBrLibPIXCDRespostas ---
+[*] Ajustes respostas do método PIXCD_CriarCobranca e PIXCD_ConsultarCobranca
+    #TK-6184 - ACBrLibPIXCD Itaú não retornando o texto do QRCode
+    Por: Antonio Carlos Junior
+
 13/09/2024
 -- ACBrLibPIXCDBase --
 [*] #TK-5927: Ajuste visando corrigir problema se receber resposta de erro ao cancelar cobrança.

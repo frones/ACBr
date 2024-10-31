@@ -84,6 +84,14 @@
             android:text="Imprimir PDF DANFCe" />
 
         <Button
+            android:id="@+id/btnConverterDANFCePDFemBMP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="Converter DANFCe PDF em BMP" />
+
+        <Button
             android:id="@+id/btnImprimirNFCe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -20,6 +20,7 @@ public class NfeApplication extends Application {
     public final String SCHEMAS_PADRAO = "Schemas";
     public final String PATH_SALVAR_PADRAO = "xmls";
     public final String PDF_PATH_PADRAO = "pdf";
+    public final String BMP_PATH_PADRAO = "bmp";
     public final String LOG_PATH_PADRAO = "logs";
     public final String PFX_PADRAO = "cert.pfx";
     private String arqConfigPath;
@@ -31,12 +32,14 @@ public class NfeApplication extends Application {
     private String[] treeDirectory = {
             PATH_SALVAR_PADRAO,
             PDF_PATH_PADRAO,
+            BMP_PATH_PADRAO,
             LOG_PATH_PADRAO
     };
 
     private String pathSalvar;
     private String logPath;
     private String pdfPath;
+    private String bmpPath;
 
     @Override
     public void onCreate() {
@@ -49,6 +52,7 @@ public class NfeApplication extends Application {
         schemasZip = appDir.getAbsolutePath() + "/schemas.zip";
         pathSalvar = appDir.getAbsolutePath() + "/" + PATH_SALVAR_PADRAO;
         pdfPath = appDir.getAbsolutePath() + "/" + PDF_PATH_PADRAO;
+        bmpPath = appDir.getAbsolutePath() + "/" + BMP_PATH_PADRAO;
         logPath = appDir.getAbsolutePath() + "/" + LOG_PATH_PADRAO;
         assetManager = getAssets();
         ACBrNFe = ACBrLibHelper.getInstance(arqConfigPath);
@@ -102,6 +106,10 @@ public class NfeApplication extends Application {
 
     public String getPdfPath() {
         return pdfPath;
+    }
+
+    public String getBmpPath() {
+        return bmpPath;
     }
 
     public String getLogPath() {

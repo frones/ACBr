@@ -215,7 +215,8 @@ def ImprimeEtqSimplesZPLEPL():
         acbr_lib.ETQ_ImprimirTextoStr( 0, 'G'.encode('utf-8'), 30,  70, 110, 150, "20,59".encode('utf-8'))
         acbr_lib.ETQ_ImprimirTextoStr( 0, 'C'.encode('utf-8'), 1,   1,  210, 190, "Projeto ACBr - ACBrLibETQ".encode('utf-8'), 0, 1)
         acbr_lib.ETQ_ImprimirBarras(0, 0, 3,   3,  260, 180, "7898097130051".encode('utf-8'), 90, 1)
-        acbr_lib.ETQ_ImprimirCaixa( 190, 10, 760,   60,  2,  2)
+        acbr_lib.ETQ_ImprimirCaixa( 190, 10, 730,   60,  2,  2)
+        acbr_lib.ETQ_ImprimirQRCode(30,750, "www.projetoacbr.com.br".encode('utf-8'), 4,0,3)
         LNumeroCopias = 1
         LAvancoEtiqueta = 600
         LResposta = acbr_lib.ETQ_Imprimir(LNumeroCopias,LAvancoEtiqueta)

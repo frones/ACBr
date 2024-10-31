@@ -1391,6 +1391,75 @@ begin
 
           CodigoCnae := '6203100';
         end;
+
+        with Servico.ItemServico.New do
+        begin
+          Descricao := 'Desc. do Serv. 2';
+          ItemListaServico := '09.01';
+
+          ValorDeducoes := 0;
+          xJustDeducao := '';
+
+          AliqReducao := 0;
+          ValorReducao := 0;
+
+          DescontoIncondicionado := 0;
+          DescontoCondicionado := 0;
+
+          // TUnidade = (tuHora, tuQtde);
+          TipoUnidade := tuQtde;
+          Unidade := 'UN';
+          Quantidade := 1;
+          ValorUnitario := 5;
+
+          QtdeDiaria := 0;
+          ValorTaxaTurismo := 0;
+
+          ValorTotal := Quantidade * ValorUnitario;
+
+          BaseCalculo := ValorTotal - ValorDeducoes - DescontoIncondicionado;
+
+          Aliquota := 2;
+
+          ValorISS := BaseCalculo * Aliquota / 100;
+
+          ValorISSRetido := 0;
+
+          AliqISSST := 0;
+          ValorISSST := 0;
+
+          ValorBCCSLL := 0;
+          AliqRetCSLL := 0;
+          ValorCSLL := 0;
+
+          ValorBCPIS := 0;
+          AliqRetPIS := 0;
+          ValorPIS := 0;
+
+          ValorBCCOFINS := 0;
+          AliqRetCOFINS := 0;
+          ValorCOFINS := 0;
+
+          ValorBCINSS := 0;
+          AliqRetINSS := 0;
+          ValorINSS := 0;
+
+          ValorBCRetIRRF := 0;
+          AliqRetIRRF := 0;
+          ValorIRRF := 0;
+
+          // Provedor EloTech
+          Tributavel := snNao;
+          // Informações referente a Dedução do Provedor EloTech
+          DadosDeducao.TipoDeducao := tdNenhum;
+          DadosDeducao.CpfCnpj := '';
+          DadosDeducao.NumeroNotaFiscalReferencia := '';
+          DadosDeducao.ValorTotalNotaFiscal := 0;
+          DadosDeducao.PercentualADeduzir := 0;
+          DadosDeducao.ValorADeduzir := 0;
+
+          CodigoCnae := '6203100';
+        end;
       end
       else
       begin
@@ -1977,6 +2046,13 @@ begin
       exit;
   end;
 
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proNFEletronica then
+  begin
+    xNumeroRps := '';
+    if not(InputQuery(xTitulo, 'Numero do RPS (referencia):', xNumeroRps)) then
+      exit;
+  end;
+
   xNumeroNFSe := '';
   if not(InputQuery(xTitulo, 'Numero da NFS-e:', xNumeroNFSe)) then
     exit;
@@ -2065,7 +2141,8 @@ procedure TfrmACBrNFSe.btnConsultarNFSeGenericoClick(Sender: TObject);
 var
   xTitulo, NumIniNFSe, NumFinNFSe, SerNFSe, DataIni, DataFin,
   CPFCNPJ_Prestador, IM_Prestador, CPFCNPJ_Tomador, IM_Tomador,
-  CPFCNPJ_Inter, IM_Inter, NumLote, CadEcon, NumPagina: String;
+  CPFCNPJ_Inter, IM_Inter, NumLote, CadEcon, NumPagina, xTipoConsulta: String;
+  TipoConsulta: Integer;
   InfConsultaNFSe: TInfConsultaNFSe;
 begin
   xTitulo := 'Consultar NFSe Genérico';
@@ -2129,6 +2206,14 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  xTipoConsulta := '1';
+  if not(InputQuery(xTitulo, 'Tipo Consulta: 1=PorNumero, 2=PorFaixa, 3=PorPeriodo, ' +
+                             '4=ServicoPrestado, 5=ServicoTomado, 6=PorCodigoVerificacao, ' +
+                             '7=PorChave', xTipoConsulta)) then
+    exit;
+
+  TipoConsulta := StrToIntDef(xTipoConsulta, 1);
+
   InfConsultaNFSe := TInfConsultaNFSe.Create;
 
   try
@@ -2136,7 +2221,16 @@ begin
     begin
       // Valores aceito para o Tipo de Consulta:
       // tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado, tcServicoTomado
-      tpConsulta := tcPorNumero;
+      case TipoConsulta of
+        1: tpConsulta := tcPorNumero;
+        2: tpConsulta := tcPorFaixa;
+        3: tpConsulta := tcPorPeriodo;
+        4: tpConsulta := tcServicoPrestado;
+        5: tpConsulta := tcServicoTomado;
+        6: tpConsulta := tcPorCodigoVerificacao;
+      else
+        tpConsulta := tcPorChave;
+      end;
 
       // Necessário para a consulta por numero e por faixa
       NumeroIniNFSe := NumIniNFSe;

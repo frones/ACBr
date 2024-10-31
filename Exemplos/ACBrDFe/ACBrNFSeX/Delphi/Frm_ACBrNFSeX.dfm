@@ -2444,6 +2444,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.Provedor = proNenhum
     Configuracoes.Geral.Versao = ve100
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
+    Configuracoes.Geral.FormatoDiscriminacao = fdJson
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

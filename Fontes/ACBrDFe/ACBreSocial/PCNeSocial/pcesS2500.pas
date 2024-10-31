@@ -177,9 +177,13 @@ type
   private
     FtpInsc: tpTpInsc;
     FnrInsc: string;
+    FdtAdmRespDir: TDateTime;
+    FmatRespDir: string;
   public
     property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
     property nrInsc: string read FNrInsc write FNrInsc;
+    property dtAdmRespDir: TDateTime read FdtAdmRespDir write FdtAdmRespDir;
+    property matRespDir: string read FmatRespDir write FmatRespDir;
   end;
 
   TInfoProcesso = class(TObject)
@@ -576,20 +580,24 @@ type
     FbaseCalculo: TBaseCalculo;
     FinfoFGTS: TInfoFGTS;
     FbaseMudCateg: TBaseMudCateg;
+    FinfoInterm: TinfoIntermCollection;
 
     function getInfoFGTS(): TInfoFGTS;
     function getBaseMudCateg(): TBaseMudCateg;
+    function getInfoInterm: TinfoIntermCollection;
   public
     constructor Create;
     destructor  Destroy; override;
 
     function instInfoFGTS(): boolean;
     function instBaseMudCateg(): boolean;
+    function infoIntermInst(): boolean;
 
     property perRef: string read FperRef write FperRef;
     property baseCalculo: TBaseCalculo read FbaseCalculo write FbaseCalculo;
     property infoFGTS: TInfoFgts read getInfoFGTS write FInfoFGTS;
     property baseMudCateg: TBaseMudCateg read getBaseMudCateg write FbaseMudCateg;
+    property infoInterm: TinfoIntermCollection read getInfoInterm write FinfoInterm;
   end;
 
   TBaseCalculo = class(TObject)
@@ -1175,6 +1183,7 @@ begin
   FbaseCalculo := TBaseCalculo.Create;
   FInfoFGTS := nil;
   FBaseMudCateg := nil;
+  FinfoInterm  := nil;
 end;
 
 destructor TIdePeriodoCollectionItem.Destroy;
@@ -1185,6 +1194,7 @@ begin
     FreeAndNil(FInfoFGTS);
   if instBaseMudCateg() then
     FreeAndNil(FBaseMudCateg);
+  FreeAndNil(FinfoInterm);
 
   inherited;
 end;
@@ -1211,6 +1221,18 @@ end;
 function TIdePeriodoCollectionItem.instBaseMudCateg(): boolean;
 begin
   Result := Assigned(FBaseMudCateg);
+end;
+
+function TIdePeriodoCollectionItem.getInfoInterm: TinfoIntermCollection;
+begin
+  if not(Assigned(FinfoInterm)) then
+    FinfoInterm := TinfoIntermCollection.Create;
+  Result := FinfoInterm;
+end;
+
+function TIdePeriodoCollectionItem.infoIntermInst: boolean;
+begin
+  Result := Assigned(FinfoInterm);
 end;
 
 { TInfoVlr }
@@ -1317,6 +1339,8 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpInsc',  1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
     Gerador.wCampo(tcStr, '', 'nrInsc', 14, 14, 1, obj.nrInsc);
+    Gerador.wCampo(tcDat, '', 'dtAdmRespDir', 10, 10, 0, obj.dtAdmRespDir);
+    Gerador.wCampo(tcStr, '', 'matRespDir', 1, 30, 0, obj.matRespDir);
 
     Gerador.wGrupo('/ideResp');
   end;
@@ -1778,6 +1802,9 @@ begin
     if obj.Items[i].instBaseMudCateg() then
       GerarBaseMudCateg(obj.Items[i].baseMudCateg);
 
+    if (VersaoDF > veS01_02_00) and (obj.Items[i].infoIntermInst()) then
+      GerarInfoInterm(obj.Items[i].infoInterm);
+
     Gerador.wGrupo('/idePeriodo');
   end;
 
@@ -1839,7 +1866,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I, J: Integer;
+  I, J, K: Integer;
 begin
   Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
 
@@ -1868,6 +1895,8 @@ begin
       sSecao := 'ideResp';
       ideEmpregador.ideResp.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
       ideEmpregador.ideResp.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+      ideEmpregador.ideResp.dtAdmRespDir := INIRec.ReadDate(sSecao, 'dtAdmRespDir', 0);
+      ideEmpregador.ideResp.matRespDir := INIRec.ReadString(sSecao, 'matRespDir', '');
 
       sSecao := 'infoProcesso';
       infoProcesso.origem      := eSStrToTpOrigemProc(Ok, INIRec.ReadString(sSecao, 'origem', '0'));
@@ -2133,6 +2162,23 @@ begin
               sSecao := 'baseMudCateg' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
               baseMudCateg.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
               baseMudCateg.vrBcCPrev := StringToFloat(INIRec.ReadString(sSecao, 'vrBcCPrev', '0'));
+
+              K := 1;
+              while (true) do
+              begin
+                sSecao := 'infoInterm' + IntToStrZero(I, 2) + IntToStrZero(J, 3) + IntToStrZero(K, 2);
+
+                if not INIRec.SectionExists(sSecao) then
+                  break;
+
+                with infoInterm.New do
+                begin
+                  dia := INIRec.ReadInteger(sSecao, 'dia', 0);
+                  hrsTrab := INIRec.ReadString(sSecao, 'hrsTrab', '');
+                end;
+
+                Inc(K);
+              end;
 
             end;
 

@@ -74,8 +74,6 @@ type
   TInfoPerRefCollectionItem = class;
   TDetInfoPerRefCollection = class;
   TDetInfoPerRefCollectionItem = class;
-  TInfoIntermCollection = class;
-  TInfoIntermCollectionItem = class;
   TEvtBasesTrab = class;
   TInfoCompl = class;
   TSucessaoVinc = class;
@@ -84,6 +82,13 @@ type
   TIdeTrabalhador4 = class;
   TIdeADCCollection = class;
   TIdeADCCollectionItem = class;
+  TinfoPisPasep = class;
+  TideEstabCollection = class;
+  TideEstabCollectionItem = class;
+  TinfoCategPisPasepCollection = class;
+  TinfoCategPisPasepCollectionItem = class;
+  TinfoBasePisPasepCollection = class;
+  TinfoBasePisPasepCollectionItem = class;
   
   TS5001 = class(TInterfacedObject, IEventoeSocial)
   private
@@ -165,8 +170,6 @@ type
     FNrInsc: string;
     FCodLotacao: string;
     FInfoCategIncid: TInfoCategIncidCollection;
-
-    procedure SetInfoCategIncid(const Value: TInfoCategIncidCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -174,7 +177,7 @@ type
     property tpInsc: TpTpInsc read FTpInsc;
     property nrInsc: string read FNrInsc;
     property codLotacao: string read FCodLotacao;
-    property InfoCategIncid: TInfoCategIncidCollection read FInfoCategIncid write SetInfoCategIncid;
+    property InfoCategIncid: TInfoCategIncidCollection read FInfoCategIncid;
   end;
 
   TInfoCategIncidCollection = class(TACBrObjectList)
@@ -305,49 +308,38 @@ type
     property vrPerRef: Double read FvrPerRef;
   end;
 
-  TInfoIntermCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TInfoIntermCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfoIntermCollectionItem);
-  public
-    function Add: TInfoIntermCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TInfoIntermCollectionItem;
-    property Items[Index: Integer]: TInfoIntermCollectionItem read GetItem write SetItem; default;
-  end;
-  
-  TInfoIntermCollectionItem = class(TObject)
-  private
-    FDia: Integer;
-  public
-    property dia: Integer read FDia write FDia;
-  end;
-
   TEvtBasesTrab = class(TObject)
   private
-    FLeitor: TLeitor;
-    FId: String;
-    FXML: String;
+    FLeitor         : TLeitor;
+    FId             : String;
+    FXML            : String;
+    FIdeEvento      : TIdeEvento5;
+    FIdeEmpregador  : TIdeEmpregador;
+    FIdeTrabalhador : TIdeTrabalhador4;
+    FInfoCpCalc     : TInfoCpCalcCollection;
+    FInfoCp         : TInfoCp;
+    FVersaoDF       : TVersaoeSocial;
+    FinfoPisPasep   : TinfoPisPasep;
 
-    FIdeEvento: TIdeEvento5;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeTrabalhador: TIdeTrabalhador4;
-    FInfoCpCalc: TInfoCpCalcCollection;
-    FInfoCp: TInfoCp;
+    function getInfoPisPasep: TinfoPisPasep;
   public
     constructor Create;
     destructor  Destroy; override;
 
-    function LerXML        : boolean;
-    function SalvarINI     : boolean;
-    
-    property IdeEvento     : TIdeEvento5 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeTrabalhador: TIdeTrabalhador4 read FIdeTrabalhador write FIdeTrabalhador;
-    property InfoCpCalc    : TInfoCpCalcCollection read FInfoCpCalc write FInfoCpCalc;
-    property InfoCp        : TInfoCp read FInfoCp write FInfoCp;
-    property Leitor        : TLeitor read FLeitor write FLeitor;
-    property Id            : String read FId;
-    property XML           : String read FXML;
+    function infoPisPasepInst: boolean;
+    function LerXML          : boolean;
+    function SalvarINI       : boolean;
+
+    property IdeEvento       : TIdeEvento5 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador   : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTrabalhador  : TIdeTrabalhador4 read FIdeTrabalhador write FIdeTrabalhador;
+    property InfoCpCalc      : TInfoCpCalcCollection read FInfoCpCalc write FInfoCpCalc;
+    property InfoCp          : TInfoCp read FInfoCp write FInfoCp;
+    property Leitor          : TLeitor read FLeitor write FLeitor;
+    property Id              : String read FId;
+    property XML             : String read FXML;
+    property VersaoDF        : TVersaoeSocial read FVersaoDF write FVersaoDF;
+    property infoPisPasep    : TinfoPisPasep read getInfoPisPasep write FinfoPisPasep;
   end;
 
   TSucessaoVinc = class
@@ -392,7 +384,7 @@ type
   public
     function Add: TInfoComplContCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TInfoComplContCollectionItem;
-    property Items[Index: Integer]: TInfoComplContCollectionItem read GetItem write SetItem;
+    property Items[Index: Integer]: TInfoComplContCollectionItem read GetItem write SetItem; default;
   end;
   
   TInfoComplContCollectionItem = class(TObject)
@@ -428,12 +420,92 @@ type
     property dsc     : String read FDsc write FDsc;
     property remunSuc: tpSimNaoFacultativo read FremunSuc write FremunSuc;
   end;
+
+  TinfoPisPasep = class(TObject)
+  private
+    FideEstab: TideEstabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property ideEstab: TideEstabCollection read FideEstab;
+  end;
+
+  TideEstabCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TideEstabCollectionItem;
+    procedure SetItem(Index: Integer; Value: TideEstabCollectionItem);
+  public
+    function New: TideEstabCollectionItem;
+    property Items[Index: Integer]: TideEstabCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TideEstabCollectionItem = class(TObject)
+  private
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+    FinfoCategPisPasep: TinfoCategPisPasepCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc: string read FnrInsc write FnrInsc;
+    property infoCategPisPasep: TinfoCategPisPasepCollection read FinfoCategPisPasep;
+  end;
+
+  TinfoCategPisPasepCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoCategPisPasepCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoCategPisPasepCollectionItem);
+  public
+    function New: TinfoCategPisPasepCollectionItem;
+    property Items[Index: Integer]: TinfoCategPisPasepCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoCategPisPasepCollectionItem = class(TObject)
+  private
+    Fmatricula: string;
+    FcodCateg: integer;
+    FinfoBasePisPasep: TinfoBasePisPasepCollection;
+
+    function getinfoBasePisPasep(): TinfoBasePisPasepCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoBasePisPasepInst(): Boolean;
+
+    property matricula: string read Fmatricula write Fmatricula;
+    property codCateg: integer read FcodCateg write FcodCateg;
+    property infoBasePisPasep: TinfoBasePisPasepCollection read getInfoBasePisPasep write FinfoBasePisPasep;
+  end;
+
+  TinfoBasePisPasepCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoBasePisPasepCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoBasePisPasepCollectionItem);
+  public
+    function New: TinfoBasePisPasepCollectionItem;
+    property Items[Index: Integer]: TinfoBasePisPasepCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoBasePisPasepCollectionItem = class(TObject)
+  private
+    Find13: integer;
+    FtpValorPisPasep: TtpValorPisPasep;
+    FvalorPisPasep: Double;
+  public
+    property ind13: integer read Find13;
+    property tpValorPisPasep: TtpValorPisPasep read FtpValorPisPasep;
+    property valorPisPasep: Double read FvalorPisPasep;
+  end;
   
 implementation
 
 uses
   IniFiles,
-  ACBrUtil.Base;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime;
 
 { TS5001 }
 
@@ -505,6 +577,7 @@ begin
   FIdeTrabalhador := TIdeTrabalhador4.Create;
   FInfoCpCalc     := TInfoCpCalcCollection.Create;
   FInfoCp         := TInfoCp.Create;
+  FinfoPisPasep   := nil;
 end;
 
 destructor TEvtBasesTrab.Destroy;
@@ -517,9 +590,123 @@ begin
   FInfoCpCalc.Free;
   FInfoCp.Free;
 
+  if infoPisPasepInst() then
+    FreeAndNil(FinfoPisPasep);
+
   inherited;
 end;
 
+function TEvtBasesTrab.getInfoPisPasep(): TinfoPisPasep;
+begin
+  if not(infoPisPasepInst()) then
+    FinfoPisPasep := TinfoPisPasep.Create;
+  Result := FinfoPisPasep;
+end;
+
+function TEvtBasesTrab.infoPisPasepInst(): boolean;
+begin
+  Result := Assigned(FinfoPisPaseP);
+end;
+
+{ TideEstabCollection }
+
+function TideEstabCollection.GetItem(
+  Index: Integer): TideEstabCollectionItem;
+begin
+  Result := TideEstabCollectionItem(inherited Items[Index]);
+end;
+
+procedure TideEstabCollection.SetItem(Index: Integer;
+  Value: TideEstabCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TideEstabCollection.New: TideEstabCollectionItem;
+begin
+  Result := TideEstabCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TideEstabCollectionItem }
+
+constructor TideEstabCollectionItem.Create;
+begin
+  inherited Create;
+  FinfoCategPisPasep := TinfoCategPisPasepCollection.Create;
+end;
+
+destructor TideEstabCollectionItem.Destroy;
+begin
+  FinfoCategPisPasep.Free;
+  inherited;
+end;
+
+{ TinfoCategPisPasepCollection }
+
+function TinfoCategPisPasepCollection.GetItem(Index: Integer): TinfoCategPisPasepCollectionItem;
+begin
+  Result := TinfoCategPisPasepCollectionItem(inherited Items[Index]);
+end;
+
+procedure TinfoCategPisPasepCollection.SetItem(Index: Integer;
+  Value: TinfoCategPisPasepCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TinfoCategPisPasepCollection.New: TinfoCategPisPasepCollectionItem;
+begin
+  Result := TinfoCategPisPasepCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TinfoCategPisPasepCollectionItem }
+
+constructor TinfoCategPisPasepCollectionItem.Create;
+begin
+  inherited Create;
+
+  FinfoBasePisPasep := nil;
+end;
+
+destructor TinfoCategPisPasepCollectionItem.Destroy;
+begin
+  if infoBasePisPasepInst() then
+    FreeAndNil(FinfoBasePisPasep);
+
+  inherited;
+end;
+
+function TinfoCategPisPasepCollectionItem.GetinfoBasePisPasep: TinfoBasePisPasepCollection;
+begin
+  if not Assigned(FinfoBasePisPasep) then
+    FinfoBasePisPasep := TinfoBasePisPasepCollection.Create;
+   Result := FinfoBasePisPasep;
+end;
+
+function TinfoCategPisPasepCollectionItem.infoBasePisPasepInst(): Boolean;
+begin
+  Result := Assigned(FinfoBasePisPasep);
+end;
+
+{ TinfoBasePisPasepCollection }
+
+function TinfoBasePisPasepCollection.GetItem(Index: Integer): TinfoBasePisPasepCollectionItem;
+begin
+  Result := TinfoBasePisPasepCollectionItem(inherited Items[Index]);
+end;
+
+procedure TinfoBasePisPasepCollection.SetItem(Index: Integer; Value: TinfoBasePisPasepCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TinfoBasePisPasepCollection.New: TinfoBasePisPasepCollectionItem;
+begin
+  Result := TinfoBasePisPasepCollectionItem.Create;
+  Self.Add(Result);
+end;
 
 { TInfoCpCalcCollection }
 
@@ -604,12 +791,6 @@ begin
   FInfoCategIncid.Free;
 
   inherited;
-end;
-
-procedure TIdeEstabLotCollectionItem.SetInfoCategIncid(
-  const Value: TInfoCategIncidCollection);
-begin
-  FInfoCategIncid := Value;
 end;
 
 { TInfoCategIncidCollection }
@@ -817,29 +998,6 @@ begin
   Self.Add(Result);
 end;
 
-{ TInfoIntermCollection }
-
-function TInfoIntermCollection.Add: TInfoIntermCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TInfoIntermCollection.GetItem(Index: Integer): TInfoIntermCollectionItem;
-begin
-  Result := TInfoIntermCollectionItem(inherited Items[Index]);
-end;
-
-procedure TInfoIntermCollection.SetItem(Index: Integer; Value: TInfoIntermCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-
-function TInfoIntermCollection.New: TInfoIntermCollectionItem;
-begin
-  Result := TInfoIntermCollectionItem.Create;
-  Self.Add(Result);
-end;
-
 { TInfoCompl }
 constructor TInfoCompl.Create;
 begin
@@ -944,16 +1102,37 @@ begin
   Self.Add(Result);
 end;
 
+{ TinfoPisPasep }
+
+constructor TinfoPisPasep.Create;
+begin
+  inherited Create;
+
+  FideEstab := TIdeEstabCollection.Create;
+end;
+
+destructor TinfoPisPasep.Destroy;
+begin
+  FideEstab.Free;
+  inherited;
+end;
+
 { TEvtBasesTrab }
 
 function TEvtBasesTrab.LerXML: boolean;
 var
   ok: Boolean;
   i, j, k, l: Integer;
+  s: String;
 begin
   Result := False;
   try
     FXML := Leitor.Arquivo;
+
+    // Capturar a versão do evento
+    s := Copy(FXML, Pos('/evt/evtBasesTrab/', FXML)+18, 16);
+    s := Copy(s, 1, Pos('"', s)-1);
+    Self.VersaoDF := StrToVersaoeSocialSchemas(s);
 
     if leitor.rExtrai(1, 'evtBasesTrab') <> '' then
     begin
@@ -964,17 +1143,56 @@ begin
         IdeEvento.nrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
         IdeEvento.IndApuracao  := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
         IdeEvento.perApur      := leitor.rCampo(tcStr, 'perApur');
-      end;
+      end; { ideEvento }
 
       if leitor.rExtrai(2, 'ideEmpregador') <> '' then
       begin
         IdeEmpregador.TpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
         IdeEmpregador.NrInsc := leitor.rCampo(tcStr, 'nrInsc');
-      end;
+      end; { ideEmpregador }
 
       if leitor.rExtrai(2, 'ideTrabalhador') <> '' then
       begin
         IdeTrabalhador.cpfTrab := leitor.rCampo(tcStr, 'cpfTrab');
+
+        if VersaoDF > ve02_05_00 then
+        begin
+          if leitor.rExtrai(3, 'infoCompl') <> '' then
+          begin
+
+            if leitor.rExtrai(4, 'sucessaoVinc') <> '' then
+            begin
+              IdeTrabalhador.infoCompl.sucessaoVinc.tpInsc    := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+              IdeTrabalhador.infoCompl.sucessaoVinc.nrInsc    := leitor.rCampo(tcStr, 'nrInsc');
+              IdeTrabalhador.infoCompl.sucessaoVinc.matricAnt := leitor.rCampo(tcStr, 'matricAnt');
+              IdeTrabalhador.infoCompl.sucessaoVinc.dtAdm     := StringToDateTime(Leitor.rCampo(tcDat, 'dtAdm'));
+            end; { sucessaoVinc }
+
+            i := 0;
+            while Leitor.rExtrai(4, 'infoInterm', '', i + 1) <> '' do
+            begin
+              IdeTrabalhador.infoCompl.infoInterm.New;
+              IdeTrabalhador.infoCompl.infoInterm.Items[i].dia := leitor.rCampo(tcInt, 'dia');
+
+              if VersaoDF > veS01_02_00 then
+                IdeTrabalhador.infoCompl.infoInterm.Items[i].hrsTrab := leitor.rCampo(tcStr, 'hrsTrab');
+              inc(i);
+            end; { infoInterm }
+
+            if VersaoDF >= veS01_00_00 then
+            begin
+              i := 0;
+              while Leitor.rExtrai(4, 'infoComplCont', '', i + 1) <> '' do
+              begin
+                IdeTrabalhador.infoCompl.infoComplCont.New;
+                IdeTrabalhador.infoCompl.infoComplCont.Items[i].codCBO       := leitor.rCampo(tcStr, 'codCBO');
+                IdeTrabalhador.infoCompl.infoComplCont.Items[i].natAtividade := eSStrToNatAtividade(ok, leitor.rCampo(tcStr, 'natAtividade'));
+                IdeTrabalhador.infoCompl.infoComplCont.Items[i].qtdDiasTrab  := leitor.rCampo(tcInt, 'qtdDiasTrab');
+                inc(i);
+              end; { infoComplCont }
+            end;
+          end; { infoCompl }
+        end;
 
         i := 0;
         while Leitor.rExtrai(3, 'procJudTrab', '', i + 1) <> '' do
@@ -983,8 +1201,8 @@ begin
           IdeTrabalhador.procJudTrab.Items[i].nrProcJud := leitor.rCampo(tcStr, 'nrProcJud');
           IdeTrabalhador.procJudTrab.Items[i].codSusp   := leitor.rCampo(tcStr, 'codSusp');
           inc(i);
-        end;
-      end;
+        end; { procJudTrab }
+      end; { ideTrabalhador }
 
       i := 0;
       while Leitor.rExtrai(2, 'infoCpCalc', '', i + 1) <> '' do
@@ -994,7 +1212,7 @@ begin
         infoCpCalc.Items[i].FvrCpSeg   := leitor.rCampo(tcDe2, 'vrCpSeg');
         infoCpCalc.Items[i].FvrDescSeg := leitor.rCampo(tcDe2, 'vrDescSeg');
         inc(i);
-      end;
+      end; { infoCpCalc }
 
       if leitor.rExtrai(2, 'infoCp') <> '' then
       begin
@@ -1024,7 +1242,7 @@ begin
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].FtpValor := leitor.rCampo(tcInt, 'tpValor');
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].Fvalor   := leitor.rCampo(tcDe2, 'valor');
               inc(k);
-            end;
+            end; { infoBaseCS }
 
             k := 0;
             while Leitor.rExtrai(5, 'calcTerc', '', k + 1) <> '' do
@@ -1034,13 +1252,24 @@ begin
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FvrCsSegTerc := leitor.rCampo(tcDe2, 'vrCsSegTerc');
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FvrDescTerc  := leitor.rCampo(tcDe2, 'vrDescTerc');
               inc(k);
-            end;
+            end; { calcTerc }
 
             k := 0;
             while Leitor.rExtrai(5, 'infoPerRef', '', k + 1) <> '' do
             begin
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.New;
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].FperRef := leitor.rCampo(tcStr, 'perRef');
+
+              l := 0;
+              while Leitor.rExtrai(6, 'ideADC', '', l + 1) <> '' do
+              begin
+                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].ideADC.New;
+                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].ideADC.Items[l].FdtAcConv := leitor.rCampo(tcDat, 'dtAcConv');
+                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].ideADC.Items[l].FtpAcConv := eSStrToTpAcConv(ok, leitor.rCampo(tcStr, 'tpAcConv'));
+                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].ideADC.Items[l].Fdsc      := leitor.rCampo(tcStr, 'dsc');
+                infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].ideADC.Items[l].FremunSuc := eSStrToSimNaoFacultativo(ok, leitor.rCampo(tcStr, 'remunSuc'));
+                inc(l);
+              end; { ideADC }
 
               l := 0;
               while Leitor.rExtrai(6, 'detInfoPerRef', '', l + 1) <> '' do
@@ -1050,21 +1279,59 @@ begin
                 infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.Items[l].FtpVrPerRef := leitor.rCampo(tcInt, 'tpVrPerRef');
                 infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoPerRef.Items[k].DetInfoPerRef.Items[l].FvrPerRef   := leitor.rCampo(tcDe2, 'vrPerRef');
                 inc(l);
-              end;
+              end; { detInfoPerRef }
 
               inc(k);
-            end;
+            end; { infoPerRef }
 
             inc(j);
-          end;
+          end; { infoCategIncid }
 
           inc(i);
-        end;
+        end; { ideEstabLot }
 
+      end; { infoCp }
+
+      if VersaoDF > veS01_02_00 then
+      begin
+        if leitor.rExtrai(2, 'infoPisPasep') <> '' then
+        begin
+          i := 0;
+
+          while Leitor.rExtrai(3, 'ideEstab', '', i + 1) <> '' do
+          begin
+            infoPisPasep.ideEstab.New;
+            infoPisPasep.ideEstab.Items[i].tpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+            infoPisPasep.ideEstab.Items[i].nrInsc := leitor.rCampo(tcStr, 'nrInsc');
+
+            j := 0;
+            while Leitor.rExtrai(4, 'infoCategPisPasep', '', j + 1) <> '' do
+            begin
+              infoPisPasep.ideEstab.Items[i].infoCategPisPasep.New;
+              infoPisPasep.ideEstab.Items[i].infoCategPisPasep.Items[j].matricula := leitor.rCampo(tcStr, 'matricula');
+              infoPisPasep.ideEstab.Items[i].infoCategPisPasep.Items[j].codCateg  := leitor.rCampo(tcInt, 'codCateg');
+
+              k := 0;
+              while Leitor.rExtrai(5, 'infoBasePisPasep', '', k + 1) <> '' do
+              begin
+                infoPisPasep.ideEstab.Items[i].infoCategPisPasep.Items[j].infoBasePisPasep.New;
+                infoPisPasep.ideEstab.Items[i].infoCategPisPasep.Items[j].infoBasePisPasep.Items[k].Find13           := leitor.rCampo(tcInt, 'ind13');
+                infoPisPasep.ideEstab.Items[i].infoCategPisPasep.Items[j].infoBasePisPasep.Items[k].FtpValorPisPasep := eSStrToTtpValorPisPasep(leitor.rCampo(tcStr, 'tpValorPisPasep'));
+                infoPisPasep.ideEstab.Items[i].infoCategPisPasep.Items[j].infoBasePisPasep.Items[k].FvalorPisPasep   := leitor.rCampo(tcDe2, 'valorPisPasep');
+
+                inc(k);
+              end; { infoBasePisPasep }
+
+              inc(j);
+            end; { infoCategPisPasep }
+
+            inc(i);
+          end; { ideEstab }
+        end; { infoPisPasep }
       end;
 
       Result := True;
-    end;
+    end; { evtBasesTrab }
   except
     Result := False;
   end;

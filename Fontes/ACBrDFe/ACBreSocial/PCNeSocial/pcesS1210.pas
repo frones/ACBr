@@ -81,7 +81,8 @@ type
   TDetPgtoAntItem = class;
   TInfoPgtoAntCollection = class;
   TInfoPgtoAntItem = class;
-  TinfoIRComplem = class;
+  TinfoIRComplemCollection = class;
+  TinfoIRComplemCollectionItem = class;
   TinfoDepCollection = class;
   TinfoDepCollectionItem = class;
   TinfoIRCRCollection = class;
@@ -142,7 +143,7 @@ type
 
     {Geradores da classe}
     procedure GerarIdeBenef(objIdeBenef: TIdeBenef);
-    procedure GerarInfoIRComplem(obj: TInfoIRComplem);
+    procedure GerarInfoIRComplem(obj: TInfoIRComplemCollection);
     procedure GerarInfoDep(obj: TinfoDepCollection);
     procedure GerarInfoIRCR(obj: TinfoIRCRCollection);
     procedure GerarDedDepen(obj: TdedDepenCollection);
@@ -186,22 +187,20 @@ type
     FCpfBenef : String;
     FDeps: TDeps;
     FInfoPgto : TInfoPgtoCollection;
-    FinfoIRComplem: TInfoIRComplem;
+    FinfoIRComplem: TInfoIRComplemCollection;
 
     function getDeps: TDeps;
     function getInfoPgto : TInfoPgtoCollection;
-    function getInfoIRComplem : TInfoIRComplem;
   public
     constructor Create;
     destructor  Destroy; override;
 
     function depsInst: boolean;
-    function infoIRComplemInst: boolean;
 
     property CpfBenef : String read FCpfBenef write FCpfBenef;
     property deps: TDeps read getDeps write FDeps;
     property InfoPgto : TInfoPgtoCollection read getInfoPgto write FInfoPgto;
-    property infoIRComplem: TinfoIRComplem read getInfoIRComplem write FInfoIRComplem;
+    property infoIRComplem: TinfoIRComplemCollection read FinfoIRComplem write FinfoIRComplem;
   end;
 
   TDeps = class(TObject)
@@ -459,18 +458,30 @@ type
     property vrBcIRRF: Double read FVrBcIRRF write FVrBcIRRF;
   end;
 
-  TinfoIRComplem = class(TObject)
+  TinfoIRComplemCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TinfoIRComplemCollectionItem;
+    procedure SetItem(Index: Integer;
+      const Value: TinfoIRComplemCollectionItem);
+  public
+    function New: TinfoIRComplemCollectionItem;
+    property Items[Index: Integer]: TinfoIRComplemCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoIRComplemCollectionItem = class(TObject)
   private
     FdtLaudo: TDateTime;
     FinfoDep: TinfoDepCollection;
     FinfoIRCR: TinfoIRCRCollection;
     FplanSaude: TplanSaudeCollection;
     FinfoReembMed: TinfoReembMedCollection;
+    FperAnt: TperAnt;
 
     function getInfoDep: TinfoDepCollection;
     function getInfoIRCR: TinfoIRCRCollection;
     function getPlanSaude: TplanSaudeCollection;
     function getInfoReembMed: TinfoReembMedCollection;
+    function getPerAnt: TperAnt;
   public
     constructor Create;
     destructor Destroy; override;
@@ -479,12 +490,14 @@ type
     function infoIRCRInst: boolean;
     function planSaudeInst: boolean;
     function infoReembMedInst: boolean;
+    function perAntInst: boolean;
 
     property dtLaudo: TDateTime read FdtLaudo write FdtLaudo;
     property infoDep: TinfoDepCollection read getInfoDep write FinfoDep;
     property infoIRCR: TinfoIRCRCollection read getInfoIRCR write FinfoIRCR;
     property planSaude: TplanSaudeCollection read getPlanSaude write FplanSaude;
     property infoReembMed: TinfoReembMedCollection read getInfoReembMed write FinfoReembMed;
+    property perAnt: TperAnt read getPerAnt write FperAnt;
   end;
 
   TinfoDepCollection = class(TACBrObjectList)
@@ -605,11 +618,15 @@ type
     FcnpjEntidPC: string;
     FvlrDedPC: double;
     FvlrPatrocFunp: double;
+    FvlrDedPC13: double;
+    FvlrPatrocFunp13: double;
   public
     property tpPrev: tpTpPrev read FtpPrev write FtpPrev;
     property cnpjEntidPC: string read FcnpjEntidPC write FcnpjEntidPC;
     property vlrDedPC: double read FvlrDedPC write FvlrDedPC;
+    property vlrDedPC13: double read FvlrDedPC13 write FvlrDedPC13;
     property vlrPatrocFunp: double read FvlrPatrocFunp write FvlrPatrocFunp;
+    property vlrPatrocFunp13: double read FvlrPatrocFunp13 write FvlrPatrocFunp13;
   end;
 
   TinfoProcRetCollection = class(TACBrObjectList)
@@ -930,7 +947,7 @@ begin
 
   FDeps := nil;
   FInfoPgto := TInfoPgtoCollection.Create;
-  FinfoIRComplem := nil;
+  FinfoIRComplem := TInfoIRComplemCollection.Create;
 end;
 
 destructor TIdeBenef.destroy;
@@ -939,9 +956,7 @@ begin
     FreeAndNil(FDeps);
 
   FInfoPgto.Free;
-
-  if infoIRComplemInst() then
-    FreeAndNil(FinfoIRComplem);
+  FInfoIRComplem.Free;
 
   inherited;
 end;
@@ -963,18 +978,6 @@ begin
   if (not Assigned(FInfoPgto)) then
     FInfoPgto := TInfoPgtoCollection.Create;
   Result := FInfoPgto;
-end;
-
-function TIdeBenef.getInfoIRComplem: TinfoIRComplem;
-begin
-  if not Assigned(FinfoIRComplem) then
-    FinfoIRComplem := TinfoIRComplem.Create;
-  Result := FinfoIRComplem;
-end;
-
-function TIdeBenef.InfoIRComplemInst: boolean;
-begin
-  result := Assigned(FinfoIRComplem);
 end;
 
 { TInfoPgtoAntCollection }
@@ -1472,38 +1475,43 @@ begin
   GerarInfoPgto(objIdeBenef.InfoPgto);
 
   if VersaoDF >= veS01_02_00 then
-    if objIdeBenef.infoIRComplemInst() then
-      GerarInfoIRComplem(objIdeBenef.infoIRComplem);
+    GerarInfoIRComplem(objIdeBenef.infoIRComplem);
 
   Gerador.wGrupo('/ideBenef');
 end;
 
-procedure TEvtPgtos.GerarInfoIRComplem(obj: TinfoIRComplem);
+procedure TEvtPgtos.GerarInfoIRComplem(obj: TinfoIRComplemCollection);
+var
+  i: Integer;
 begin
-  if not obj.infoDepInst() and 
-     not obj.infoIRCRInst() and
-     not obj.planSaudeInst() and 
-     not obj.infoReembMedInst() then
-    exit;
+  for i := 0 to Pred(obj.Count) do
+  begin
+    Gerador.wGrupo('infoIRComplem');
 
-  Gerador.wGrupo('infoIRComplem');
-  
-  if obj.dtLaudo > 0 then
-    Gerador.wCampo(tcDat, '', 'dtLaudo', 10, 10, 1, obj.dtLaudo);
+    if obj[i].dtLaudo > 0 then
+      Gerador.wCampo(tcDat, '', 'dtLaudo', 10, 10, 1, obj[i].dtLaudo);
 
-  if obj.infoDepInst() then
-    GerarInfoDep(obj.infoDep);
+    if VersaoDF > veS01_02_00 then
+      if obj[i].perAntInst() then
+        GerarPerAnt(obj[i].perAnt);
 
-  if obj.infoIRCRInst() then
-    GerarInfoIRCR(obj.infoIRCR);
+    if obj[i].infoDepInst() then
+      GerarInfoDep(obj[i].infoDep);
 
-  if obj.planSaudeInst() then
-    GerarPlanSaude(obj.planSaude);
+    if obj[i].infoIRCRInst() then
+      GerarInfoIRCR(obj[i].infoIRCR);
 
-  if obj.infoReembMedInst() then
-    GerarInfoReembMed(obj.infoReembMed);
+    if obj[i].planSaudeInst() then
+      GerarPlanSaude(obj[i].planSaude);
 
-  Gerador.wGrupo('/infoIRComplem');
+    if obj[i].infoReembMedInst() then
+      GerarInfoReembMed(obj[i].infoReembMed);
+
+    Gerador.wGrupo('/infoIRComplem');
+  end;
+
+  if obj.Count > 13 then
+    Gerador.wAlerta('', 'infoIRComplem', 'Lista de infoIRComplem', ERR_MSG_MAIOR_MAXIMO + '13');
 end;
 
 procedure TEvtPgtos.GerarInfoDep(obj: TinfoDepCollection);
@@ -1614,7 +1622,14 @@ begin
     Gerador.wCampo(tcStr, '', 'tpPrev',        1,  1, 1, eStpTpPrevToStr(obj[i].tpPrev));
     Gerador.wCampo(tcStr, '', 'cnpjEntidPC',  11, 11, 1, obj[i].cnpjEntidPC);
     Gerador.wCampo(tcDe2, '', 'vlrDedPC',      1, 14, 1, obj[i].vlrDedPC);
+
+    if VersaoDF > veS01_02_00 then
+      Gerador.wCampo(tcDe2, '', 'vlrDedPC13',      1, 14, 1, obj[i].vlrDedPC13);
+
     Gerador.wCampo(tcDe2, '', 'vlrPatrocFunp', 0, 14, 0, obj[i].vlrPatrocFunp);
+
+    if VersaoDF > veS01_02_00 then
+      Gerador.wCampo(tcDe2, '', 'vlrPatrocFunp13', 0, 14, 0, obj[i].vlrPatrocFunp13);
 
     Gerador.wGrupo('/previdCompl');
   end;
@@ -2433,7 +2448,13 @@ begin
               sFim   := INIRec.ReadString(sSecao, 'indOrgReemb', 'FIM');
 
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                break;
+              begin
+                sSecao := 'perAnt' + IntToStrZero(I, 2);
+                sFim := INIRec.ReadString(sSecao, 'perRefAjuste', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+              end;
             end;
           end;
         end;
@@ -2441,9 +2462,16 @@ begin
         // de 0 até 1
         sSecao := 'infoIRComplem' + IntToStrZero(I, 2);
 
-        with ideBenef.infoIRComplem do
+        with ideBenef.infoIRComplem.New do
         begin
           dtLaudo := StringToDateTime(INIRec.ReadString(sSecao, 'dtLaudo', '0'));
+
+          sSecao := 'perAnt' + IntToStrZero(I, 2);
+          if INIRec.SectionExists(sSecao) then
+          begin
+            perAnt.perRefAjuste := INIRec.ReadString(sSecao, 'perRefAjuste', '');
+            perAnt.nrRec1210Orig := INIRec.ReadString(sSecao, 'nrRec1210Orig', '');
+          end;
 
           J := 1;
           while true do
@@ -2540,7 +2568,9 @@ begin
                   tpPrev := eSStrTotpTpPrev(Ok, sFim);
                   cnpjEntidPC := INIRec.ReadString(sSecao, 'cnpjEntidPC', '');
                   vlrDedPC := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDedPC', ''), 0);
+                  vlrDedPC13 := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDedPC13', ''), 0);
                   vlrPatrocFunp := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPatrocFunp', ''), 0);
+                  vlrPatrocFunp13 := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPatrocFunp13', ''), 0);
                 end;
 
                 Inc(K);
@@ -2795,9 +2825,9 @@ begin
   inherited;
 end;
 
-{ TinfoIRComplem }
+{ TinfoIRComplemCollectionItem }
 
-constructor TinfoIRComplem.Create;
+constructor TinfoIRComplemCollectionItem.Create;
 begin
   inherited Create;
 
@@ -2805,9 +2835,10 @@ begin
   FinfoIRCR := nil;
   FplanSaude := nil;
   FinfoReembMed := nil;
+  FperAnt := nil;
 end;
 
-destructor TinfoIRComplem.Destroy;
+destructor TinfoIRComplemCollectionItem.Destroy;
 begin
   if infoDepInst() then
     FreeAndNil(FinfoDep);
@@ -2821,55 +2852,70 @@ begin
   if infoReembMedInst() then
     FreeAndNil(FinfoReembMed);
 
+  if perAntInst() then
+    FreeAndNil(FperAnt);
+
   inherited;
 end;
 
-function TinfoIRComplem.getInfoDep: TinfoDepCollection;
+function TinfoIRComplemCollectionItem.getInfoDep: TinfoDepCollection;
 begin
   if not Assigned(FinfoDep) then
     FinfoDep := TinfoDepCollection.Create;
   Result := FinfoDep;
 end;
 
-function TinfoIRComplem.getInfoIRCR: TinfoIRCRCollection;
+function TinfoIRComplemCollectionItem.getInfoIRCR: TinfoIRCRCollection;
 begin
   if not Assigned(FinfoIRCR) then
     FinfoIRCR := TinfoIRCRCollection.Create;
   Result := FinfoIRCR;
 end;
 
-function TinfoIRComplem.getPlanSaude: TplanSaudeCollection;
+function TinfoIRComplemCollectionItem.getPlanSaude: TplanSaudeCollection;
 begin
   if not Assigned(FPlanSaude) then
     FPlanSaude := TPlanSaudeCollection.Create;
   Result := FPlanSaude;
 end;
 
-function TinfoIRComplem.getInfoReembMed: TinfoReembMedCollection;
+function TinfoIRComplemCollectionItem.getInfoReembMed: TinfoReembMedCollection;
 begin
   if not Assigned(FinfoReembMed) then
     FinfoReembMed := TinfoReembMedCollection.Create;
   Result := FinfoReembMed;
 end;
 
-function TinfoIRComplem.infoDepInst: boolean;
+function TinfoIRComplemCollectionItem.getPerAnt: TperAnt;
+begin
+  if not Assigned(FperAnt) then
+    FperAnt := TperAnt.Create;
+  Result := FperAnt;
+end;
+
+function TinfoIRComplemCollectionItem.infoDepInst: boolean;
 begin
   Result := Assigned(FinfoDep);
 end;
 
-function TinfoIRComplem.infoIRCRInst: boolean;
+function TinfoIRComplemCollectionItem.infoIRCRInst: boolean;
 begin
   Result := Assigned(FinfoIRCR);
 end;
 
-function TinfoIRComplem.planSaudeInst: boolean;
+function TinfoIRComplemCollectionItem.planSaudeInst: boolean;
 begin
   Result := Assigned(FplanSaude);
 end;
 
-function TinfoIRComplem.infoReembMedInst: boolean;
+function TinfoIRComplemCollectionItem.infoReembMedInst: boolean;
 begin
   Result := Assigned(FinfoReembMed);
+end;
+
+function TinfoIRComplemCollectionItem.perAntInst: boolean;
+begin
+  Result := Assigned(FperAnt);
 end;
 
 { TinfoDepCollection }
@@ -3407,6 +3453,25 @@ function TdetReembDepCollection.New: TdetReembDepCollectionItem;
 begin
   Result := TdetReembDepCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TinfoIRComplemCollection }
+
+function TinfoIRComplemCollection.GetItem(Index: Integer): TinfoIRComplemCollectionItem;
+begin
+  Result := TinfoIRComplemCollectionItem(inherited Items[Index]);
+end;
+
+function TinfoIRComplemCollection.New: TinfoIRComplemCollectionItem;
+begin
+  Result := TinfoIRComplemCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfoIRComplemCollection.SetItem(Index: Integer;
+  const Value: TinfoIRComplemCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

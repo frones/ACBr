@@ -398,6 +398,7 @@ end;
   TInfoFGTS = class(TObject)
   private
     FdtVenc     : TDateTime;
+    FclassTrib  : TpClassTrib;
     FIdeEstabLot: TIdeEstabLot2Collection;
     FinfoDpsFGTS: TInfoDpsFGTS;
     FIdeEstab   : TIdeEstabCollection;
@@ -414,6 +415,7 @@ end;
     function IdeEstabInst(): Boolean;
         
     property dtVenc      : TDateTime read FdtVenc write FdtVenc;
+    property classTrib   : TpClassTrib read FclassTrib write FclassTrib;
     property IdeEstabLot : TIdeEstabLot2Collection read getIdeEstabLot write FIdeEstabLot;
     property infoDpsFGTS : TInfoDpsFGTS read getInfoDpsFGTS write FInfoDpsFGTS;
     property IdeEstab    : TIdeEstabCollection read getIdeEstab write FIdeEstab;
@@ -674,6 +676,10 @@ begin
       begin
         infoFGTS.dtVenc := leitor.rCampo(tcDat, 'dtVenc');
 
+        if VersaoDF >= veS01_00_00 then
+          infoFGTS.classTrib := StrTotpClassTrib(Ok, Leitor.rCampo(tcStr, 'classTrib'));
+
+
         if VersaoDF <= ve02_05_00 then
         begin
           i := 0;
@@ -755,7 +761,7 @@ begin
               infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
               infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao  := leitor.rCampo(tcStr, 'tpLotacao');
 
-              if (leitor.rCampo(tcStr, 'tpLotacao') <> EmptyStr) then
+              if (infoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao <> EmptyStr) then
               begin
                  if (StrToInt(InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao) in [2, 3, 4, 5, 6, 7, 8, 9]) then
                  begin

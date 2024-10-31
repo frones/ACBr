@@ -74,7 +74,10 @@ type
   TbasesComercCollectionItem = class;
   TinfoCREstabCollection = class;
   TinfoCREstabCollectionItem = class;
-
+  TInfoEstabRef = class;
+  TideEstabCollection = class;
+  TideEstabCollectionItem = class;
+  TbasesPisPasep = class;
   TEvtCS = class;
 
   TS5011 = class(TInterfacedObject, IEventoeSocial)
@@ -121,6 +124,7 @@ type
     FindSubstPatr: Integer;
     FpercRedContrib: Double;
     FpercTransf: tpPercTransf;
+    FindTribFolhaPisPasep: tpSimNaoFacultativo;
     FinfoAtConc: TinfoAtConc;
   public
     constructor Create;
@@ -132,6 +136,7 @@ type
     property percRedContrib: Double read FpercRedContrib;
     property infoAtConc: TinfoAtConc read FinfoAtConc write FinfoAtConc;
     property percTransf: tpPercTransf read FPercTransf write FPercTransf;
+    property indTribFolhaPisPasep: tpSimNaoFacultativo read FindTribFolhaPisPasep write FindTribFolhaPisPasep;
   end;
 
   TInfoContrib = class(TObject)
@@ -161,6 +166,7 @@ type
     FcnpjResp: String;
     FAliqRat: tpAliqRat;
     FinfoComplObra: TInfoComplObra;
+    FinfoEstabRef: TInfoEstabRef;
   public
     constructor Create;
     destructor Destroy; override;
@@ -171,6 +177,18 @@ type
     property fap: Double read FFap;
     property aliqRatAjust: Double read FAliqRatAjust;
     property infoComplObra: TInfoComplObra read FinfoComplObra write FinfoComplObra;
+    property infoEstabRef: TInfoEstabRef read FinfoEstabRef;
+  end;
+
+  TInfoEstabRef = class(TObject)
+  protected
+    FaliqRat: tpAliqRat;
+    Ffap: Double;
+    FaliqRatAjust: Double;
+  public
+    property aliqRat: tpAliqRat read FaliqRat;
+    property fap: Double read Ffap;
+    property aliqRatAjust: Double read FaliqRatAjust;
   end;
 
   TinfoTercSuspCollection = class(TACBrObjectList)
@@ -269,6 +287,27 @@ type
     property vrBcCpSM: Double read FvrBcCpSM;
   end;
 
+  TbasesCp13 = class(TObject)
+  private
+    FvrBcCp00: Double;
+    FvrBcCp15: Double;
+    FvrBcCp20: Double;
+    FvrBcCp25: Double;
+    FvrSuspBcCp00: Double;
+    FvrSuspBcCp15: Double;
+    FvrSuspBcCp20: Double;
+    FvrSuspBcCp25: Double;
+  public
+    property vrBcCp00: Double read FvrBcCp00 write FvrBcCp00;
+    property vrBcCp15: Double read FvrBcCp15 write FvrBcCp15;
+    property vrBcCp20: Double read FvrBcCp20 write FvrBcCp20;
+    property vrBcCp25: Double read FvrBcCp25 write FvrBcCp25;
+    property vrSuspBcCp00: Double read FvrSuspBcCp00 write FvrSuspBcCp00;
+    property vrSuspBcCp15: Double read FvrSuspBcCp15 write FvrSuspBcCp15;
+    property vrSuspBcCp20: Double read FvrSuspBcCp20 write FvrSuspBcCp20;
+    property vrSuspBcCp25: Double read FvrSuspBcCp25 write FvrSuspBcCp25;
+  end;
+
   TbasesRemunCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TbasesRemunCollectionItem;
@@ -276,7 +315,7 @@ type
   public
     function Add: TbasesRemunCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TbasesRemunCollectionItem;
-    property Items[Index: Integer]: TbasesRemunCollectionItem read GetItem write SetItem;
+    property Items[Index: Integer]: TbasesRemunCollectionItem read GetItem write SetItem;default;
   end;
 
   TbasesRemunCollectionItem = class(TObject)
@@ -284,6 +323,7 @@ type
     FindIncid: Integer;
     FcodCateg: Integer;
     FbasesCp: TbasesCp;
+    FbasesCp13: TbasesCp13;
   public
     constructor Create;
     destructor Destroy; override;
@@ -291,6 +331,7 @@ type
     property indIncid: Integer read FindIncid;
     property codCateg: Integer read FcodCateg;
     property basesCp: TbasesCp read FbasesCp write FbasesCp;
+    property basesCp13: TbasesCp13 read FbasesCp13 write FbasesCp13;
   end;
 
   TbasesAvNport = class(TObject)
@@ -366,7 +407,7 @@ type
   public
     function Add: TideLotacaoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TideLotacaoCollectionItem;
-    property Items[Index: Integer]: TideLotacaoCollectionItem read GetItem write SetItem;
+    property Items[Index: Integer]: TideLotacaoCollectionItem read GetItem write SetItem; default;
   end;
 
   TbasesAquisCollection = class(TACBrObjectList)
@@ -452,6 +493,16 @@ type
     property vrSuspCR: Double read FvrSuspCR;
   end;
 
+  TideEstabCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TideEstabCollectionItem;
+    procedure SetItem(Index: Integer; Value: TideEstabCollectionItem);
+  public
+    function Add: TideEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TideEstabCollectionItem;
+    property Items[Index: Integer]: TideEstabCollectionItem read GetItem write SetItem; default;
+  end;
+
   TideEstabCollectionItem = class(TObject)
   private
     FNrInsc: string;
@@ -461,6 +512,7 @@ type
     FbasesAquis: TbasesAquisCollection;
     FbasesComerc: TbasesComercCollection;
     FinfoCREstab: TinfoCREstabCollection;
+    FbasesPisPasep: TbasesPisPasep;
 
   public
     constructor Create;
@@ -473,16 +525,16 @@ type
     property basesAquis: TbasesAquisCollection read FbasesAquis write FbasesAquis;
     property basesComerc: TbasesComercCollection read FbasesComerc write FbasesComerc;
     property infoCREstab: TinfoCREstabCollection read FinfoCREstab write FinfoCREstab;
+    property basesPisPasep: TbasesPisPasep read FbasesPisPasep;
   end;
 
-  TideEstabCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TideEstabCollectionItem;
-    procedure SetItem(Index: Integer; Value: TideEstabCollectionItem);
+  TbasesPisPasep = class(TObject)
+  protected
+    FvrBcPisPasep: Double;
+    FvrBcPisPasepSusp: Double;
   public
-    function Add: TideEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TideEstabCollectionItem;
-    property Items[Index: Integer]: TideEstabCollectionItem read GetItem write SetItem;
+    property vrBcPisPasep: Double read FvrBcPisPasep;
+    property vrBcPisPasepSusp: Double read FvrBcPisPasepSusp;
   end;
 
   TInfoCRContribCollection = class(TACBrObjectList)
@@ -678,6 +730,9 @@ begin
             infoCS.InfoContrib.infoPJ.FpercRedContrib := leitor.rCampo(tcDe2, 'percRedContrib');
             infoCS.InfoContrib.infoPJ.FPercTransf     := eSStrToTpPercTransf(ok, leitor.rCampo(tcStr, 'percTransf'));
 
+            if VersaoDF > veS01_02_00 then
+              infoCS.InfoContrib.infoPJ.FindTribFolhaPisPasep := eSStrToSimNaoFacultativo(Ok, leitor.rCampo(tcStr, 'indTribFolhaPisPasep'));
+
             if leitor.rExtrai(5, 'infoAtConc') <> '' then
             begin
               infoCS.InfoContrib.infoPJ.infoAtConc.FfatorMes := leitor.rCampo(tcDe4, 'fatorMes');
@@ -700,6 +755,13 @@ begin
             infoCS.ideEstab.Items[i].infoEstab.FAliqRat      := eSStrToAliqRat(ok, leitor.rCampo(tcStr, 'AliqRat'));
             infoCS.ideEstab.Items[i].infoEstab.Ffap          := leitor.rCampo(tcDe4, 'fap');
             infoCS.ideEstab.Items[i].infoEstab.FaliqRatAjust := leitor.rCampo(tcDe4, 'aliqRatAjust');
+
+            if leitor.rExtrai(5, 'infoEstabRef') <> '' then
+            begin
+              infoCS.ideEstab.Items[i].infoEstab.infoEstabRef.Ffap := leitor.rCampo(tcDe4, 'fap');
+              infoCS.ideEstab.Items[i].infoEstab.infoEstabRef.FaliqRat := eSStrToAliqRat(ok, leitor.rCampo(tcStr, 'aliqRat'));
+              infoCS.ideEstab.Items[i].infoEstab.infoEstabRef.FaliqRatAjust := leitor.rCampo(tcDe4, 'aliqRatAjust');
+            end;
 
             if leitor.rExtrai(5, 'infoComplObra') <> '' then
               infoCS.ideEstab.Items[i].infoEstab.infoComplObra.FindSubstPatrObra := leitor.rCampo(tcInt, 'indSubstPatrObra');
@@ -783,7 +845,21 @@ begin
 
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalFam := leitor.rCampo(tcDe2, 'vrSalFam');
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalMat := leitor.rCampo(tcDe2, 'vrSalMat');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCpSM := leitor.rCampo(tcDe2, 'vrBcCpSM');
+
+                if VersaoDF < veS01_00_00 then
+                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCpSM := leitor.rCampo(tcDe2, 'vrBcCpSM');
+              end;
+
+              if leitor.rExtrai(6, 'basesCp13') <> '' then
+              begin
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrBcCp00 := leitor.rCampo(tcDe2, 'vrBcCp00');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrBcCp15 := leitor.rCampo(tcDe2, 'vrBcCp15');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrBcCp20 := leitor.rCampo(tcDe2, 'vrBcCp20');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrSuspBcCp00 := leitor.rCampo(tcDe2, 'vrSuspBcCp00');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrSuspBcCp15 := leitor.rCampo(tcDe2, 'vrSuspBcCp15');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrSuspBcCp20 := leitor.rCampo(tcDe2, 'vrSuspBcCp20');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesremun.Items[k].basesCp13.vrSuspBcCp25 := leitor.rCampo(tcDe2, 'vrSuspBcCp25');
               end;
 
               inc(k);
@@ -796,12 +872,10 @@ begin
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp20 := leitor.rCampo(tcDe2, 'vrBcCp20');
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp13 := leitor.rCampo(tcDe2, 'vrBcCp13');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrDescCP := leitor.rCampo(tcDe2, 'vrDescCP');
 
               if VersaoDF <= ve02_05_00 then
-              begin
                 infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcFgts := leitor.rCampo(tcDe2, 'vrBcFgts');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrDescCP := leitor.rCampo(tcDe2, 'vrDescCP');
-              end;
             end;
 
             k := 0;
@@ -855,8 +929,16 @@ begin
             inc(j);
           end;
 
+          if VersaoDF > veS01_02_00 then
+          begin
+            if Leitor.rExtrai(4, 'basesPisPasep') <> '' then
+            begin
+              infoCS.ideEstab.Items[i].basesPisPasep.FvrBcPisPasep := leitor.rCampo(tcDe2, 'vrBcPisPasep');
+              infoCS.ideEstab.Items[i].basesPisPasep.FvrBcPisPasepSusp := leitor.rCampo(tcDe2, 'vrBcPisPasepSusp');
+            end;
+          end;
           inc(i);
-        end;
+        end; { ideEstab }
 
         i := 0;
         while Leitor.rExtrai(3, 'infoCRContrib', '', i + 1) <> '' do
@@ -1258,11 +1340,12 @@ constructor TideEstabCollectionItem.Create;
 begin
   inherited Create;
 
-  FInfoEstab   := TInfoEstab.Create;
-  FideLotacao  := TideLotacaoCollection.Create;
-  FbasesAquis  := TbasesAquiscollection.Create;
-  FbasesComerc := TbasesComercCollection.Create;
-  FinfoCREstab := TinfoCREstabCollection.Create;
+  FInfoEstab     := TInfoEstab.Create;
+  FideLotacao    := TideLotacaoCollection.Create;
+  FbasesAquis    := TbasesAquiscollection.Create;
+  FbasesComerc   := TbasesComercCollection.Create;
+  FinfoCREstab   := TinfoCREstabCollection.Create;
+  FbasesPisPasep := TbasesPisPasep.Create;
 end;
 
 destructor TideEstabCollectionItem.Destroy;
@@ -1272,6 +1355,7 @@ begin
   FbasesAquis.Free;
   FbasesComerc.Free;
   FinfoCREstab.Free;
+  FbasesPisPasep.Free;
 
   inherited;
 end;
@@ -1357,11 +1441,13 @@ constructor TbasesRemunCollectionItem.Create;
 begin
   inherited Create;
   FbasesCp := TbasesCp.Create;
+  FbasesCp13 := TbasesCp13.Create;
 end;
 
 destructor TbasesRemunCollectionItem.Destroy;
 begin
   FbasesCp.Free;
+  FbasesCp13.Free;
 
   inherited;
 end;
@@ -1423,11 +1509,13 @@ constructor TInfoEstab.Create;
 begin
   inherited Create;
   FinfoComplObra := TinfoComplObra.Create;
+  FinfoEstabRef := TinfoEstabRef.Create;
 end;
 
 destructor TInfoEstab.Destroy;
 begin
   FinfoComplObra.Free;
+  FinfoEstabRef.Free;
 
   inherited;
 end;

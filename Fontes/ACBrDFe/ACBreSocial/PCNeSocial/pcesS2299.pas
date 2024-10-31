@@ -79,8 +79,6 @@ type
   TInfoTrabIntermCollection = class;
   TInfoTrabIntermItem = class;
   TProcCS = class;
-  TinfoIntermCollection = class;
-  TinfoIntermCollectionItem = class;
   TRemunAposDeslig = class;
 
   TS2299Collection = class(TeSocialCollection)
@@ -123,7 +121,6 @@ type
     procedure GerarconsigFGTS(obj: TConsigFGTSCollection);
     procedure GerarTransfTit(obj: TtransfTit);
     procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
-    procedure GerarinfoInterm(obj: TinfoIntermCollection);
     procedure GerarRemunAposDeslig(obj: TRemunAposDeslig);
   public
     constructor Create(AACBreSocial: TObject); override;
@@ -272,23 +269,6 @@ type
     destructor Destroy; override;
 
     property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
-  end;
-
-  TinfoIntermCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoIntermCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfoIntermCollectionItem);
-  public
-    function Add: TinfoIntermCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfoIntermCollectionItem;
-    property Items[Index: Integer]: TinfoIntermCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoIntermCollectionItem = class(TObject)
-  private
-    Fdia: Byte;
-  public
-    property dia: Byte read Fdia write Fdia;
   end;
 
   TDmDevCollectionS2299 = class(TACBrObjectList)
@@ -591,29 +571,6 @@ end;
 function TDMDevCollectionItemS2299.infoRRAInst: boolean;
 begin
   Result := Assigned(FInfoRRA);
-end;
-
-{ TinfoIntermCollection }
-
-function TinfoIntermCollection.Add: TinfoIntermCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TinfoIntermCollection.GetItem(Index: Integer): TinfoIntermCollectionItem;
-begin
-  Result := TinfoIntermCollectionItem(inherited Items[Index]);
-end;
-
-procedure TinfoIntermCollection.SetItem(Index: Integer; Value: TinfoIntermCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-
-function TinfoIntermCollection.New: TinfoIntermCollectionItem;
-begin
-  Result := TinfoIntermCollectionItem.Create;
-  Self.Add(Result);
 end;
 
 { TInfoPerApur }
@@ -1112,23 +1069,6 @@ begin
     Gerador.wAlerta('', 'infoTrabInterm', 'Lista de Trabalhos Intermitente', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-procedure TEvtDeslig.GerarinfoInterm(obj: TinfoIntermCollection);
-var
-  i: integer;
-begin
-  for i := 0 to obj.Count - 1 do
-  begin
-    Gerador.wGrupo('infoInterm');
-
-    Gerador.wCampo(tcInt, '', 'dia', 1, 2, 1, obj[i].dia);
-
-    Gerador.wGrupo('/infoInterm');
-  end;
-
-  if obj.Count > 31 then
-    Gerador.wAlerta('', 'infoInterm', 'Informações relativas ao trabalho intermitente', ERR_MSG_MAIOR_MAXIMO + '31');
-end;
-
 procedure TEvtDeslig.GerarProcCS(obj: TProcCS);
 begin
   if Trim(obj.nrProcJud) <> '' then
@@ -1220,6 +1160,7 @@ begin
         with InfoDeslig.infoInterm.New do
         begin
           dia := INIRec.ReadInteger(sSecao, 'dia', 0);
+          hrsTrab := INIRec.ReadString(sSecao, 'hrsTrab', '');
         end;
 
         Inc(K);
@@ -1347,6 +1288,19 @@ begin
                   vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
                   vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
                   indApurIR  := eSStrToTpindApurIR(ok, INIRec.ReadString(sSecao, 'indApurIR', '0'));  //20/05/2021
+
+
+                  sSecao := 'descFolha' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
+                              IntToStrZero(K, 3);
+                  sFim := INIRec.ReadString(sSecao, 'tpDesc', '');
+
+                  if Trim(sFim) <> '' then
+                  begin
+                    descFolha.tpDesc := eSStrToTtpDesc(sFim);
+                    descFolha.nrDoc := INIRec.ReadString(sSecao, 'nrDoc', '');
+                    descFolha.instFinanc := INIRec.ReadString(sSecao, 'instFinanc', '');
+                    descFolha.observacao := INIRec.ReadString(sSecao, 'observacao', '');
+                  end;
                 end;
 
                 Inc(K);

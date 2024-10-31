@@ -153,10 +153,12 @@ type
   private
     FnrProcTrab: string;
     FperApurPgto: string;
+    FideSeqProc: Integer;
     Fobs: string;
   public
     property nrProcTrab: string read FnrProcTrab write FnrProcTrab;
     property perApurPgto: string read FperApurPgto write FperApurPgto;
+    property ideSeqProc: Integer read FideSeqProc write FideSeqProc;
     property obs: string read Fobs write Fobs;
   end;
 
@@ -257,6 +259,7 @@ type
   private
     FtpCR: string;
     FvrCR: double;
+    FvrCR13: Double;
     FinfoIR: TinfoIRCollection;
     FinfoRRA: TinfoRRA;
     FdedDepen: TdedDepenCollection;
@@ -280,6 +283,7 @@ type
 
     property tpCR: string read FtpCR write FtpCR;
     property vrCR: double read FvrCR write FvrCR;
+    property vrCR13: Double read FvrCR13 write FvrCR13;
     property infoIR: TinfoIRCollection read getInfoIR write FinfoIR;
     property infoRRA: TinfoRRA read getInfoRRA write FinfoRRA;
     property dedDepen: TdedDepenCollection read getDedDepen write FdedDepen;
@@ -307,6 +311,21 @@ type
     property vlrPensao: double read FvlrPensao write FvlrPensao;
   end;
 
+  TrendIsen0561 = class(TObject)
+  private
+    FvlrDiarias: Double;
+    FvlrAjudaCusto: Double;
+    FvlrIndResContrato: Double;
+    FvlrAbonoPec: Double;
+    FvlrAuxMoradia: Double;
+  public
+    property vlrDiarias: Double read FvlrDiarias write FvlrDiarias;
+    property vlrAjudaCusto: Double read FvlrAjudaCusto write FvlrAjudaCusto;
+    property vlrIndResContrato: Double read FvlrIndResContrato write FvlrIndResContrato;
+    property vlrAbonoPec: Double read FvlrAbonoPec write FvlrAbonoPec;
+    property vlrAuxMoradia: Double read FvlrAuxMoradia write FvlrAuxMoradia;
+  end;
+
   TinfoIRCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfoIRCollectionItem;
@@ -321,20 +340,32 @@ type
     FvrRendTrib: double;
     FvrRendTrib13: double;
     FvrRendMoleGrave: double;
+    FvrRendModeGrave13: double;
     FvrRendIsen65: double;
+    FvrRendIsen65Dec: double;
     FvrJurosMora: double;
+    FvrJurosMora13: double;
     FvrRendIsenNTrib: double;
     FdescIsenNTrib: string;
     FvrPrevOficial: double;
+    FvrPrevOficial13: double;
+    FrendIsen0561: TrendIsen0561;
   public
+    constructor Create;
+    destructor Destroy; override;
     property vrRendTrib: double read FvrRendTrib write FvrRendTrib;
     property vrRendTrib13: double read FvrRendTrib13 write FvrRendTrib13;
     property vrRendMoleGrave: double read FvrRendMoleGrave write FvrRendMoleGrave;
+    property vrRendMoleGrave13: double read FvrRendMoleGrave write FvrRendMoleGrave;
     property vrRendIsen65: double read FvrRendIsen65 write FvrRendIsen65;
+    property vrRendIsen65Dec: double read FvrRendIsen65Dec write FvrRendIsen65Dec;
     property vrJurosMora: double read FvrJurosMora write FvrJurosMora;
+    property vrJurosMora13: Double read FvrJurosMora13 write FvrJurosMora13;
     property vrRendIsenNTrib: double read FvrRendIsenNTrib write FvrRendIsenNTrib;
     property descIsenNTrib: string read FdescIsenNTrib write FdescIsenNTrib;
     property vrPrevOficial: double read FvrPrevOficial write FvrPrevOficial;
+    property vrPrevOficial13: double read FvrPrevOficial13 write FvrPrevOficial13;
+    property rendIsen0561: TrendIsen0561 read FrendIsen0561 write FrendIsen0561;
   end;
 
   TdedDepenCollection = class(TACBrObjectList)
@@ -1157,12 +1188,21 @@ end;
 procedure TEvtContProc.GerarInfoCRIRRF(obj: TInfoCRIRRFCollection);
 var
   i: integer;
+  LAtributos: String;
 begin
   for i := 0 to obj.Count - 1 do
   begin
-    Gerador.wGrupo('infoCRIRRF tpCR="' + obj.Items[i].tpCR + '"' +
-                             ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'
-                  );
+    if VersaoDF < veS01_03_00 then
+      LAtributos :='tpCR="' + obj.Items[i].tpCR + '"' +
+                   ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'
+    else
+      LAtributos := 'tpCR="' + obj.Items[i].tpCR + '"' +
+                    ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'+
+                    ' vrCR13="' + FloatToString(obj.Items[i].vrCR13, '.', FloatMask(2, False))+ '"';
+
+
+
+    Gerador.wGrupo('infoCRIRRF ' + LAtributos);
 
     if VersaoDF >= veS01_02_00 then
     begin
@@ -1196,15 +1236,49 @@ begin
        (obj[i].vrRendIsen65 > 0)    or (obj[i].vrJurosMora > 0)   or (obj[i].vrRendIsenNTrib > 0) or
        (obj[i].descIsenNTrib <> '') or (obj[i].vrPrevOficial > 0) then
     begin
-      Gerador.wGrupo('infoIR' + IfThen(obj[i].vrRendTrib > 0,      ' vrRendTrib="'      + FloatToString(obj[i].vrRendTrib, '.',   FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendTrib13 > 0,    ' vrRendTrib13="'    + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendMoleGrave > 0, ' vrRendMoleGrave="' + FloatToString(obj[i].vrRendMoleGrave, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendIsen65 > 0,    ' vrRendIsen65="'    + FloatToString(obj[i].vrRendIsen65, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrJurosMora > 0,     ' vrJurosMora="'     + FloatToString(obj[i].vrJurosMora, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].vrRendIsenNTrib > 0, ' vrRendIsenNTrib="' + FloatToString(obj[i].vrRendIsenNTrib, '.', FloatMask(2, False)) + '"', '')
-                              + IfThen(obj[i].descIsenNTrib <> '', ' descIsenNTrib="'   + TiraAcentos(obj[i].descIsenNTrib)                            + '"', '')
-                              + IfThen(obj[i].vrPrevOficial > 0,   ' vrPrevOficial="'   + FloatToString(obj[i].vrPrevOficial, '.', FloatMask(2, False)) + '"', '') 
-                    );
+      if VersaoDF < veS01_03_00 then
+      begin
+        Gerador.wGrupo('infoIR' + IfThen(obj[i].vrRendTrib > 0,      ' vrRendTrib="'      + FloatToString(obj[i].vrRendTrib, '.',   FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendTrib13 > 0,    ' vrRendTrib13="'    + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendMoleGrave > 0, ' vrRendMoleGrave="' + FloatToString(obj[i].vrRendMoleGrave, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendIsen65 > 0,    ' vrRendIsen65="'    + FloatToString(obj[i].vrRendIsen65, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrJurosMora > 0,     ' vrJurosMora="'     + FloatToString(obj[i].vrJurosMora, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendIsenNTrib > 0, ' vrRendIsenNTrib="' + FloatToString(obj[i].vrRendIsenNTrib, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].descIsenNTrib <> '', ' descIsenNTrib="'   + TiraAcentos(obj[i].descIsenNTrib)                            + '"', '')
+                                + IfThen(obj[i].vrPrevOficial > 0,   ' vrPrevOficial="'   + FloatToString(obj[i].vrPrevOficial, '.', FloatMask(2, False)) + '"', '')
+                      );
+      end else
+      begin
+        Gerador.wGrupo('infoIR' + IfThen(obj[i].vrRendTrib > 0,      ' vrRendTrib="'      + FloatToString(obj[i].vrRendTrib, '.',   FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendTrib13 > 0,    ' vrRendTrib13="'    + FloatToString(obj[i].vrRendTrib13, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendMoleGrave > 0, ' vrRendMoleGrave="' + FloatToString(obj[i].vrRendMoleGrave, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendMoleGrave > 0, ' vrRendMoleGrave13="' + FloatToString(obj[i].vrRendMoleGrave13, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendIsen65 > 0,    ' vrRendIsen65="'    + FloatToString(obj[i].vrRendIsen65, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendIsen65Dec > 0, ' vrRendIsen65Dec="' + FloatToString(obj[i].vrRendIsen65Dec, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrJurosMora > 0,     ' vrJurosMora="'     + FloatToString(obj[i].vrJurosMora, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrJurosMora > 0,     ' vrJurosMora13="'   + FloatToString(obj[i].vrJurosMora13, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrRendIsenNTrib > 0, ' vrRendIsenNTrib="' + FloatToString(obj[i].vrRendIsenNTrib, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].descIsenNTrib <> '', ' descIsenNTrib="'   + TiraAcentos(obj[i].descIsenNTrib)                            + '"', '')
+                                + IfThen(obj[i].vrPrevOficial > 0,   ' vrPrevOficial="'   + FloatToString(obj[i].vrPrevOficial, '.', FloatMask(2, False)) + '"', '')
+                                + IfThen(obj[i].vrPrevOficial > 0,   ' vrPrevOficial13="' + FloatToString(obj[i].vrPrevOficial13, '.', FloatMask(2, False)) + '"', '')
+                      );
+
+
+        if (obj[i].rendIsen0561.vlrDiarias > 0) or (obj[i].rendIsen0561.vlrAjudaCusto > 0) or
+           (obj[i].rendIsen0561.vlrIndResContrato > 0) or (obj[i].rendIsen0561.vlrAbonoPec > 0) or
+           (obj[i].rendIsen0561.vlrAuxMoradia > 0) then
+        begin
+          Gerador.wGrupo('rendIsen0561'
+                          + IfThen(obj[i].rendIsen0561.vlrDiarias > 0,        ' vlrDiarias="' + FloatToString(obj[i].rendIsen0561.vlrDiarias, '.', FloatMask(2, False)) + '"', '')
+                          + ifThen(obj[i].rendIsen0561.vlrAjudaCusto > 0,     ' vlrAjudaCusto="' + FloatToString(obj[i].rendIsen0561.vlrAjudaCusto, '.', FloatMask(2, False)) + '"', '')
+                          + ifThen(obj[i].rendIsen0561.vlrIndResContrato > 0, ' vlrIndResContrato="' + FloatToString(obj[i].rendIsen0561.vlrIndResContrato, '.', FloatMask(2, False)) + '"', '')
+                          + IfThen(obj[i].rendIsen0561.vlrAbonoPec > 0,       ' vlrAbonoPec="' + FloatToString(obj[i].rendIsen0561.vlrAbonoPec, '.', FloatMask(2, False)) + '"', '')
+                          + IfThen(obj[i].rendIsen0561.vlrAuxMoradia > 0,     ' vlrAuxMoradia="' + FloatToString(obj[i].rendIsen0561.vlrAuxMoradia, '.', FloatMask(2, False)) + '"', '')
+                         );
+          Gerador.wGrupo('/rendIsen0561');
+
+        end;
+      end;
 
       Gerador.wGrupo('/infoIR');
     end;
@@ -1262,6 +1336,9 @@ begin
 
   Gerador.wCampo(tcStr, '', 'nrProcTrab',  15,  20, 1, obj.nrProcTrab);
   Gerador.wCampo(tcStr, '', 'perApurPgto',  7,   7, 1, obj.perApurPgto);
+
+  if (obj.ideSeqProc > 0) and (VersaoDF = veS01_03_00) then
+    Gerador.wCampo(tcStr, '', 'ideSeqProc', 01, 03, 0, obj.ideSeqProc);
 
   if obj.obs <> '' then
     Gerador.wCampo(tcStr, '', 'obs',        0, 999, 0, obj.obs);
@@ -1332,6 +1409,7 @@ begin
       sSecao := 'ideProc';
       ideProc.nrProcTrab  := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
       ideProc.perApurPgto := INIRec.ReadString(sSecao, 'perApurPgto', EmptyStr);
+      ideProc.ideSeqProc  := INIRec.ReadInteger(sSecao, 'ideSeqProc', 0);
       ideProc.obs         := INIRec.ReadString(sSecao, 'obs', EmptyStr);
 
       I := 1;
@@ -1403,6 +1481,7 @@ begin
             begin
               tpCR := sFim;
               vrCR := StringToFloat(INIRec.ReadString(sSecao, 'vrCR', '0'));
+              vrCR13 := StringToFloat(INIRec.ReadString(sSecao, 'vrCR13', '0'));
 
               K := 1;
               while true do
@@ -1425,11 +1504,25 @@ begin
                   vrRendTrib := StringToFloat(INIRec.ReadString(sSecao, 'vrRendTrib', '0'));
                   vrRendTrib13 := StringToFloat(INIRec.ReadString(sSecao, 'vrRendTrib13', '0'));
                   vrRendMoleGrave := StringToFloat(INIRec.ReadString(sSecao, 'vrRendMoleGrave', '0'));
+                  vrRendMoleGrave13 := StringToFloat(INIRec.ReadString(sSecao, 'vrRendMoleGrave13', '0'));
                   vrRendIsen65 := StringToFloat(INIRec.ReadString(sSecao, 'vrRendIsen65', '0'));
+                  vrRendIsen65Dec := StringToFloat(INIRec.ReadString(sSecao, 'vrRendIsen65Dec', '0'));
                   vrJurosMora := StringToFloat(INIRec.ReadString(sSecao, 'vrJurosMora', '0'));
+                  vrJurosMora13 := StringToFloat(INIRec.ReadString(sSecao, 'vrJurosMora13', '0'));
                   vrRendIsenNTrib := StringToFloat(INIRec.ReadString(sSecao, 'vrRendIsenNTrib', '0'));
                   descIsenNTrib := INIRec.ReadString(sSecao, 'descIsenNTrib', '');
                   vrPrevOficial := StringToFloat(INIRec.ReadString(sSecao, 'vrPrevOficial', '0'));
+                  vrPrevOficial13 := StringToFloat(INIRec.ReadString(sSecao, 'vrPrevOficial13', '0'));
+
+                  sSecao := 'rendISen0561' + IntToStrZero(I, 4) + IntToStrZero(J, 2) + IntToStrZero(K, 1);
+                  if INIRec.SectionExists(sSecao) then
+                  begin
+                    rendIsen0561.vlrDiarias := StringToFloat(INIRec.ReadString(sSecao, 'vlrDiarias', '0'));
+                    rendIsen0561.vlrAjudaCusto := StringToFloat(INIRec.ReadString(sSecao, 'vlrAjudaCusto', '0'));
+                    rendIsen0561.vlrIndResContrato := StringToFloat(INIRec.ReadString(sSecao, 'vlrIndResContrato', '0'));
+                    rendIsen0561.vlrAbonoPec   := StringToFloat(INIRec.ReadString(sSecao, 'vlrAbonoPec', '0'));
+                    rendIsen0561.vlrAuxMoradia := StringToFloat(INIRec.ReadString(sSecao, 'vlrAuxMoradia', '0'));
+                  end;
                 end;
 
                 Inc(K);
@@ -1809,6 +1902,20 @@ begin
 
   if obj.Count > 999 then
     Gerador.wAlerta('', 'infoDep', 'Informações de dependentes não cadastrados pelos eventos', ERR_MSG_MAIOR_MAXIMO + '999');
+end;
+
+{ TinfoIRCollectionItem }
+
+constructor TinfoIRCollectionItem.Create;
+begin
+  inherited Create;
+  FrendIsen0561 := TrendIsen0561.Create;
+end;
+
+destructor TinfoIRCollectionItem.Destroy;
+begin
+  FrendIsen0561.Free;
+  inherited;
 end;
 
 end.

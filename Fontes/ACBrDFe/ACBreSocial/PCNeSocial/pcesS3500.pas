@@ -121,10 +121,12 @@ type
     FcpfTrab: string;
     FnrProcTrab: string;
     FperApurPgto: string;
+    FideSeqProc: integer;
   public
     property cpfTrab: string read FcpfTrab write FcpfTrab;
     property nrProcTrab: string read FnrProcTrab write FnrProcTrab;
     property perApurPgto: string read FperApurPgto write FperApurPgto;
+    property ideSeqProc: integer read FideSeqProc write FideSeqProc;
   end;
 
 implementation
@@ -232,7 +234,11 @@ begin
     if self.InfoExclusao.tpEvento = teS2500 then
       Gerador.wCampo(tcStr, '', 'cpfTrab'    ,  11, 11, 1, self.InfoExclusao.ideProcTrab.cpfTrab)
     else if self.InfoExclusao.tpEvento = teS2501 then
+    begin
       Gerador.wCampo(tcStr, '', 'perApurPgto',   7,  7, 1, self.InfoExclusao.ideProcTrab.perApurPgto);
+      if VersaoDF > veS01_02_00 then
+        Gerador.wCampo(tcInt, '', 'ideSeqProc', 3, 3, 0, Self.infoExclusao.ideProcTrab.ideSeqProc);
+    end;
 
     Gerador.wGrupo('/ideProcTrab');
     Gerador.wGrupo('/infoExclusao');
@@ -286,6 +292,7 @@ begin
       infoExclusao.ideProcTrab.cpfTrab     := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
       infoExclusao.ideProcTrab.nrProcTrab  := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
       infoExclusao.ideProcTrab.perApurPgto := INIRec.ReadString(sSecao, 'perApurPgto', EmptyStr);
+      infoExclusao.ideProcTrab.ideSeqProc  := INIRec.ReadInteger(sSecao, 'ideSeqProc', 0);
     end;
 
     GerarXML;

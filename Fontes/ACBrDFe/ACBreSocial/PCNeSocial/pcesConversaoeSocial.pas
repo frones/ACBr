@@ -95,7 +95,7 @@ type
                              schRetornoEvento, schRetornoProcessamentoLote, schConsultaIdentEventos,
                              schDownloadEventos, schEvtToxic, schEvtTreiCap, schevtCdBenefAlt,
                              schevtCdBenIn, schevtCessao, schevtCdBenAlt, schevtReativBen,
-                             schevtCdBenTerm, schNaoIdentificado, schevtProcTrab, schevtContProc,
+                             schevtCdBenTerm, schNaoIdentificado, schevtProcTrab, schevtContProc, schEvtConsolidContProc,
                              schevtInfoIR, schevtExcProcTrab,
                              schevtCdBenPrRP // Especifico para versões do eSocial anterior a vS1.0.0.00
                              );
@@ -113,13 +113,13 @@ type
                              teS2240, teS2245, teS2250, teS2260, teS2298, teS2299, teS2300, teS2305,
                              teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS2231, teS5002,
                              teS5003, teS5011, teS5012, teS5013, teS2221, teS2405, teS2410, teS5001,
-                             teS2416, teS2418, teS2420, teS2500, teS2501, teS3500, teS5501, teS5503,
-                             teS8299, teConsultaIdentEventos, teConsultaLoteEventos, teDownloadEventos, teEnvioLoteEventos,
+                             teS2416, teS2418, teS2420, teS2500, teS2501, teS2555, teS3500, teS5501,
+                             teS5503, teS8299, teConsultaIdentEventos, teConsultaLoteEventos, teDownloadEventos, teEnvioLoteEventos,
                              teErro, teRetornoEnvioLoteEventos, teRetornoEvento, teRetornoProcessamentoLote,
                              teInsApo, teAdesao, teCadInicial, teASO, teNaoIdentificado
                              );
   const
-    TTipoEventoString   : array[0..77] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
+    TTipoEventoString   : array[0..78] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
                                                    'S-1035', 'S-1040', 'S-1050', 'S-1060', 'S-1070',
                                                    'S-1080', 'S-2100', 'S-1200', 'S-1202', 'S-1207',
                                                    'S-1210', 'S-1220', 'S-1250', 'S-1260', 'S-1270',
@@ -131,8 +131,8 @@ type
                                                    'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
                                                    'S-5012', 'S-5013', 'S-2221', 'S-2405', 'S-2410',
                                                    'S-2231', 'S-2416', 'S-2418', 'S-2420', 'S-2500',
-                                                   'S-2501', 'S-3500', 'S-5501', 'S-5503', 'S-8299',
-                                                   'S-CONSULTAIDENTEVENTOS', 'S-CONSULTALOTEEVENTOS',
+                                                   'S-2501', 'S-2555', 'S-3500', 'S-5501', 'S-5503',
+                                                   'S-8299', 'S-CONSULTAIDENTEVENTOS', 'S-CONSULTALOTEEVENTOS',
                                                    'S-DOWNLOADEVENTOS', 'S-ENVIOLOTEEVENTOS',
                                                    'S-ERRO','S-RETORNOENVIOLOTEEVENTOS',
                                                    'S-RETORNOEVENTO', 'S-RETORNOPROCESSAMENTOLOTE',
@@ -314,7 +314,27 @@ type
                              cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicialDecimo,
                              cicpNenhum);
   const
+
   tpCodIncCPRPArrayStrings: array[tpCodIncCPRP] of string = ('00', '11', '12', '31', '32', '91', '92', '99');
+
+  type
+
+  tpCodIncPISPASEP        = (ciPISPASEPNaoeBasedeCalculodo,
+                             ciPISPASEPBasedeCalculodoMensal,
+                             ciPISPASEPBasedeCalculodoDecimo,
+                             ciPISPASEPSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicial,
+                             ciPISPASEPSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicialDecimo,
+                             ciPISPASEPNenhum);
+  const
+  tpCodIncPISPASEPArrayStrings: array[tpCodIncPISPASEP] of string = ('00', '11', '12', '91', '92', '99');
+
+  type
+
+  tpValorPISPASEP         = (ciPISPASEPBasedeCalculo, ciPISPASEPIncidenciaSuspensaDecisaoJudicial);
+
+  const
+
+  tpValorPISPASEPArrayStrings: array[tpValorPISPASEP] of string = ('11', '91');
 
   type
 
@@ -616,11 +636,11 @@ type
 
   tpNacProf               = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
 
-  TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00, veS01_02_00);
+  TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00, veS01_01_00, veS01_02_00, veS01_03_00);
 const
-  TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00', 'S01_02_00');
-  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00', 'v_S_01_02_00');
-  TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000, 10.2000);
+  TVersaoeSocialArrayStrings : array[TVersaoeSocial] of string = ('02_04_01', '02_04_02', '02_05_00', 'S01_00_00', 'S01_01_00', 'S01_02_00', 'S01_03_00');
+  TVersaoeSocialSchemasArrayStrings : array[TVersaoeSocial] of string = ('v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00', 'v_S_01_01_00', 'v_S_01_02_00', 'v_S_01_03_00');
+  TVersaoeSocialArrayReals : array[TVersaoeSocial] of Real = (2.0401, 2.0402, 2.0500, 10.0000, 10.1000, 10.2000, 10.3000);
 
 type
 
@@ -703,7 +723,7 @@ type
 
   tpRepercProc            = (repDecisaoComPagamentoDeVerbasDeNaturezaRemuneratoria, repDecisaoSemPagamentoDeVerbasDeNaturezaRemuneratoria);
 
-  tpIndReperc             = (repDecisaoComRepercussaoTributariaEOuFGTS, repDecisaoSemRepercussaoTributariaOuFGTS, repDecisaoComRepercussaoExclusivaParaDeclaracaoDeRendimentos);
+  tpIndReperc             = (repDecisaoComRepercussaoTributariaEOuFGTS, repDecisaoSemRepercussaoTributariaOuFGTS, repDecisaoComRepercussaoExclusivaParaDeclaracaoDeRendimentos, repDecisaoComRepercussaoExclusivaParaDeclaracaoDeRendimentosDepositoJudicial, repDecisaoComRepercussaoTributariaEOuFGTSDepositoJudicial);
 
   tpOrigemProc            = (oprProcessoJudicial, oprDemandaSubmetidaACCPOuAoNINTER);
 
@@ -724,6 +744,12 @@ type
                              tpdtPensaoAlimenticia,
                              tpdtDependentes);
 
+  type
+  TtpDesc = (tpdNaoInformado, tpdeConsignado);
+  const
+  TtpDescArrayStrings: Array[TtpDesc] of String = ('', '1');
+
+  type
   TMatrixEventoInfo       = (meiTipoEvento, meiTipoEventoString, meiVersao, meiEventoString, meiSchema, meiStrEventoToTipoEvento, meiObservacao);
 
   TRecMatrixEventoInfo = record
@@ -786,12 +812,18 @@ const
                                           701, 711, 712, 721, 722, 723, 731, 734, 738, 741,
                                           751, 761, 771, 781, 901, 902, 903, 904);
 
+type
+  TtpValorPisPasep = (tpvBaseCalculoPISPASEP, tpvIncidenciaSuspensaPISPASEP);
+const
+  TtpValorPisPasepArrayStrings: Array[TtpValorPisPasep] of String = ('11', '91');
+
 const
     __LAST_VERSION = High(TVersaoeSocial); // A última versão setada em TVersaoeSocial
 
-    __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 76] of TRecMatrixEventoInfo =
+    __ARRAY_MATRIX_EVENTO_INFO: array [1 .. 77] of TRecMatrixEventoInfo =
     (
     // Eventos a partir do leiaute veS01_00_03 (S-1.3)
+    (TipoEvento: teS2555                   ; TipoEventoString: 'S-2555'                    ; VersaoeSocialDe: veS01_03_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtConsolidContProc'        ; Schema: schEvtConsolidContProc     ; StrEventoToTipoEvento: 'evtConsolidContProc'        ; Observacao: ''),
 
     // Eventos a partir do leiaute veS01_00_02 (S-1.2)
     (TipoEvento: teS2221                   ; TipoEventoString: 'S-2221'                    ; VersaoeSocialDe: veS01_02_00; VersaoeSocialAte: __LAST_VERSION; EventoString: 'evtToxic'                   ; Schema: schEvtToxic                ; StrEventoToTipoEvento: 'evtToxic'                   ; Observacao: ''),
@@ -938,6 +970,9 @@ function eSStrToCodIncFGTS(var ok: boolean; const s: string): TpCodIncFGTS;
 
 function eSCodIncCPRPToStr(const t: TpCodIncCPRP ): string;
 function eSStrToCodIncCPRP(var ok: boolean; const s: string): TpCodIncCPRP;
+
+function eSCodIncPISPASEPToStr(const t: TpCodIncPISPASEP ): string;
+function eSStrToCodIncPISPASEP(var ok: boolean; const s: string): TpCodIncPISPASEP;
 
 function eSIndSuspToStr(const t: tpIndSusp): string;
 function eSStrToIndSusp(var ok: Boolean; const s: string): tpIndSusp;
@@ -1288,6 +1323,13 @@ function eSStrTotpIndTpDeducao(var ok: boolean; const s: string): tpIndTpDeducao
 function eStpTpIndTpDeducaoTToStr(const t: tpIndTpDeducaoT): string;
 function eSStrTotpIndTpDeducaoT(var ok: boolean; const s: string): tpIndTpDeducaoT;
 
+function eSStrToTtpValorPisPasep(const s: String): TtpValorPisPasep;
+function eSTtpValorPisPasepToStr(const t: TtpValorPisPasep): String;
+
+function eSStrToTtpDesc(const s: String): TtpDesc;
+function eSTtpDescToStr(const t: TtpDesc): String;
+
+
 implementation
 
 uses
@@ -1470,6 +1512,7 @@ begin
      teS2420: Result := schevtCdBenTerm;
      teS2500: Result := schevtProcTrab;
      teS2501: Result := schevtContProc;
+     teS2555: Result := schEvtConsolidContProc;
      teS3000: Result := schevtExclusao;
      teS3500: Result := schevtExcProcTrab;
 
@@ -2011,6 +2054,16 @@ begin
   result := tpCodIncCPRP( StrToEnumerado2(ok , s, tpCodIncCPRPArrayStrings ));
 end;
 
+function eSCodIncPISPASEPToStr(const t:tpCodIncPISPASEP ): string;
+begin
+  result := EnumeradoToStr2(t,tpCodIncPISPASEPArrayStrings );
+end;
+
+function eSStrToCodIncPISPASEP(var ok: boolean; const s: string): tpCodIncPISPASEP;
+begin
+  result := tpCodIncPISPASEP( StrToEnumerado2(ok , s, tpCodIncPISPASEPArrayStrings ));
+end;
+
 function eSIndSuspToStr(const t: tpIndSusp): string;
 begin
   result := EnumeradoToStr2(t,[ '01', '02', '03','04', '05', '08', '09', '10',
@@ -2526,6 +2579,7 @@ begin
     veS01_00_00: result := 10.0000;
     veS01_01_00: result := 10.1000;
     veS01_02_00: result := 10.2000;
+    veS01_03_00: result := 10.3000;
   else
     result := 0;
   end;
@@ -2547,9 +2601,11 @@ begin
     result := veS01_01_00
   else if (d = 10.2000)  then
     result := veS01_02_00
+  else if (d = 10.3000) then
+    result := veS01_03_00
   else
   begin
-    result := veS01_00_00;
+    result := veS01_02_00;
     ok := False;
   end;
 end;
@@ -2932,7 +2988,7 @@ end;
 
 function eSTpTpIndRepercToStr(const t: tpIndReperc): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString1_3);
+  result := EnumeradoToStr2(t, TGenericosString1_5);
 end;
 
 function eSStrToTpIndReperc(var ok: boolean; const s: string): tpIndReperc;
@@ -3008,6 +3064,46 @@ end;
 function eSStrTotpIndTpDeducaoT(var ok: boolean; const s: string): tpIndTpDeducaoT;
 begin
   result := tpIndTpDeducaoT(StrToEnumerado2(ok , s, ['1', '5', '7']));
+end;
+
+function eSStrToTtpValorPisPasep(const s: String): TtpValorPisPasep;
+var
+  idx: TtpValorPisPasep;
+begin
+  for idx := Low(TtpValorPisPasepArrayStrings) to High(TtpValorPisPasepArrayStrings)do
+  begin
+    if TtpValorPisPasepArrayStrings[idx] = s then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpValorPisPasep: %s', [s]);
+end;
+
+function eSTtpValorPisPasepToStr(const t: TtpValorPisPasep): String;
+begin
+  Result := TtpValorPisPasepArrayStrings[t];
+end;
+
+function eSStrToTtpDesc(const s: String): TtpDesc;
+var
+  idx: TtpDesc;
+begin
+  for idx := Low(TtpDescArrayStrings) to High(TtpDescArrayStrings) do
+  begin
+    if TtpDescArrayStrings[idx] = s then
+    begin
+      Result := idx;
+      exit;
+    end;
+  end;
+  raise EACBrException.CreateFmt('Valor string inválido para TtpDesc: %s', [s]);
+end;
+
+function eSTtpDescToStr(const t: TtpDesc): String;
+begin
+  Result := TtpDescArrayStrings[t];
 end;
 
 function IntToTpProf(codCateg : Integer): tpTpProf;

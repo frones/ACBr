@@ -723,8 +723,7 @@ begin
 
     if Leitor.rExtrai(1, 'evtAdmissao') <> '' then
     begin
-      if Self.Id = '' then
-        Self.Id := Leitor.rAtributo('Id=');
+      Id := Leitor.rAtributo('Id=');
 
       if Leitor.rExtrai(2, 'ideEvento') <> '' then
       begin

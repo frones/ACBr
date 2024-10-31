@@ -170,7 +170,7 @@ constructor TGeralConfeSocial.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FVersaoDF := veS01_01_00;
+  FVersaoDF := veS01_02_00;
   FIdTransmissor := '';
   FIdEmpregador := '';
   FTipoEmpregador := tePessoaJuridica;

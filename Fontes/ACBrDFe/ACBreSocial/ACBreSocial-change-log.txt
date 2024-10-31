@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2024
+-- Diversos --
+[*] TK-5666-1 - Compatibiliza o e-Social com a versão S-1.3 do leiaute.
+Por: Marcelo Pontes Melim / Diego Folieni
+
 28/10/2024
 -- pcesConversaoeSocial --
 [-] TK-6179 - Correção do enumerado tpPlanRP

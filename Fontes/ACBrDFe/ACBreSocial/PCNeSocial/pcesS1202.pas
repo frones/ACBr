@@ -792,7 +792,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I, J, K, L, M, N: Integer;
+  I, J, K, L, M: Integer;
   dmDevItem: TDMDevCollectionItem;
   ideADVItem: TIdeADVCollectionItem;
   ideEstabItem: TIdeEstabCollectionItem;
@@ -924,6 +924,14 @@ begin
                 ItensRemunItem.vrRubr     := StrToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', EmptyStr), 0);
                 ItensRemunItem.indApurIR  := eSStrToTpindApurIR(Ok, INIRec.ReadString(sSecao, 'indApurIR', '0'));
 
+                sSecao := 'descFolha'+IntToStrZero(I,3) + IntToStrZero(J,3) + IntToStrZero(K, 1) + IntToStrZero(L, 3);
+                if INIRec.SectionExists(sSecao) then
+                begin
+                  itensRemunItem.descFolha.tpDesc := eSStrToTtpDesc(INIRec.ReadString(sSecao, 'tpDesc', ''));
+                  itensRemunItem.descFolha.instFinanc := INIRec.ReadString(sSecao, 'instFinanc', '');
+                  itensRemunItem.descFolha.nrDoc := INIRec.ReadString(sSecao, 'nrDoc', '');
+                  itensRemunItem.descFolha.observacao := INIRec.ReadString(sSecao, 'observacao', '');
+                end;
 
                 Inc(L);
               end;

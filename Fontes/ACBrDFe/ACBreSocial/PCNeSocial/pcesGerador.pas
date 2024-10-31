@@ -173,6 +173,9 @@ type
     procedure GerarInfoRRA(obj: TInfoRRA);
     procedure GerarDespProcJud(obj: TDespProcJud);
     procedure GerarIdeAdv(obj: TIdeAdvCollection);
+    procedure GerardescFolha(obj: TdescFolha);
+    procedure GerarInfoInterm(obj: TinfoIntermCollection);
+    procedure GerarPerAnt(obj: TperAnt);
 
   public
     FACBreSocial: TObject; //alimenta no create
@@ -349,6 +352,7 @@ begin
   begin
     if Self.Id = '' then
       LerIdEvento(FXML);
+    FXMLAssinado := FXML;
   end;
 end;
 
@@ -1608,6 +1612,10 @@ begin
       if objItensRemun.items[i].indApurIR > tiaiNenhum then
         Gerador.wCampo(tcStr, '', 'indApurIR',  1,  1, 0, eSTpindApurIRToStr(objItensRemun.Items[i].indApurIR));
 
+    if VersaoDF > veS01_02_00 then
+      GerardescFolha(objItensRemun.Items[i].descFolha);
+
+
     Gerador.wGrupo('/' + GroupName);
   end;
 
@@ -2175,6 +2183,21 @@ begin
   end;
 end;
 
+procedure TeSocialEvento.GerardescFolha(obj: TdescFolha);
+begin
+  if obj.tpDesc <> tpdNaoInformado then
+  begin
+    Gerador.wGrupo('descFolha');
+
+    Gerador.wCampo(tcStr, '', 'tpDesc', 1, 1, 1, eSTtpDescToStr(obj.tpDesc));
+    Gerador.wCampo(tcStr, '', 'instFinanc', 3, 3, 1, obj.instFinanc);
+    Gerador.wCampo(tcStr, '', 'nrDoc', 8, 12, 1, obj.nrDoc);
+    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, obj.observacao);
+
+    Gerador.wGrupo('/descFolha');
+  end;
+end;
+
 procedure TeSocialEvento.GerarIdeAdv(obj: TIdeAdvCollection);
 var
   i: integer;
@@ -2220,6 +2243,48 @@ begin
     GerarIdeAdv(obj.ideAdv);
 
   Gerador.wGrupo('/infoRRA');
+end;
+
+procedure TeSocialEvento.GerarInfoInterm(obj: TinfoIntermCollection);
+var
+  i: integer;
+begin
+  if obj.Count > 0 then
+  begin
+    if VersaoDF <= ve02_05_00 then
+    begin
+      Gerador.wGrupo('infoInterm');
+
+      Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1, 2, 1, obj[0].qtdDiasInterm);
+
+      Gerador.wGrupo('/infoInterm');
+    end
+    else
+    begin
+      for i := 0 to obj.Count - 1 do
+      begin
+        Gerador.wGrupo('infoInterm');
+
+        Gerador.wCampo(tcInt, '', 'dia', 1, 2, 1, obj[i].dia);
+
+        if VersaoDF > veS01_02_00 then
+          Gerador.wCampo(tcStr, '', 'hrsTrab', 4, 4, 0, obj[i].hrsTrab);
+
+        Gerador.wGrupo('/infoInterm');
+      end;
+    end;
+
+    if obj.Count > 31 then
+      Gerador.wAlerta('', 'infoInterm', 'Informações relativas ao trabalho intermitente', ERR_MSG_MAIOR_MAXIMO + '31');
+  end;
+end;
+
+procedure TeSocialEvento.GerarPerAnt(obj: TperAnt);
+begin
+  Gerador.wGrupo('perAnt');
+  Gerador.wCampo(tcStr, '', 'perRefAjuste', 7, 7, 1, obj.perRefAjuste);
+  Gerador.wCampo(tcStr, '', 'nrRec1210Orig', 23, 23, 1, obj.nrRec1210Orig);
+  Gerador.wGrupo('/perAnt');
 end;
 
 end.

@@ -88,8 +88,6 @@ type
   TInfoTrabIntermCollectionItem = class;
   TInfoTrabIntermCollection = class;
   TInfoComplCont = class;
-  TinfoIntermCollection = class;
-  TinfoIntermCollectionItem = class;
 
   TS1200Collection = class(TeSocialCollection)
   private
@@ -178,7 +176,6 @@ type
     procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
     procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
     procedure GerarInfoTrabInterm(pInfoTrabInterm: TInfoTrabIntermCollection);
-    procedure GerarInfoInterm(obj: TinfoIntermCollection);
     procedure GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
 
   public
@@ -405,25 +402,6 @@ type
     FcodConv: string;
   public
     property codConv: string read FcodConv write FcodConv;
-  end;
-
-  TinfoIntermCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TinfoIntermCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfoIntermCollectionItem);
-  public
-    function Add: TinfoIntermCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfoIntermCollectionItem;
-    property Items[Index: Integer]: TinfoIntermCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfoIntermCollectionItem = class(TObject)
-  private
-    FqtdDiasInterm : Byte;
-    Fdia : Byte;
-  public
-    property qtdDiasInterm : Byte read FqtdDiasInterm write FqtdDiasInterm;
-    property dia : Byte read Fdia write Fdia;
   end;
 
   TInfoComplCont = class(TObject)
@@ -730,29 +708,6 @@ end;
 function TeS1200IdeTrabalhador.infoMVInst: boolean;
 begin
   Result := Assigned(FInfoMV);
-end;
-
-{ TinfoIntermCollection }
-
-function TinfoIntermCollection.Add: TinfoIntermCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TinfoIntermCollection.GetItem(Index: Integer): TinfoIntermCollectionItem;
-begin
-  Result := TinfoIntermCollectionItem(inherited Items[Index]);
-end;
-
-procedure TinfoIntermCollection.SetItem(Index: Integer; Value: TinfoIntermCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-
-function TinfoIntermCollection.New: TinfoIntermCollectionItem;
-begin
-  Result := TinfoIntermCollectionItem.Create;
-  Self.Add(Result);
 end;
 
 { TDMDevCollection }
@@ -1185,37 +1140,6 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '');
 end;
 
-procedure TEvtRemun.GerarInfoInterm(obj: TinfoIntermCollection);
-var
-  i: integer;
-begin
-  if obj.Count > 0 then
-  begin
-    if VersaoDF <= ve02_05_00 then
-    begin
-      Gerador.wGrupo('infoInterm');
-
-      Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1, 2, 1, obj[0].qtdDiasInterm);
-
-      Gerador.wGrupo('/infoInterm');
-    end
-    else
-    begin
-      for i := 0 to obj.Count - 1 do
-      begin
-        Gerador.wGrupo('infoInterm');
-
-        Gerador.wCampo(tcInt, '', 'dia', 1, 2, 1, obj[i].dia);
-
-        Gerador.wGrupo('/infoInterm');
-      end;
-    end;
-
-    if obj.Count > 31 then
-      Gerador.wAlerta('', 'infoInterm', 'Informações relativas ao trabalho intermitente', ERR_MSG_MAIOR_MAXIMO + '31');
-  end;
-end;
-
 procedure TEvtRemun.GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
 begin
   Gerador.wGrupo('infoComplCont');
@@ -1549,6 +1473,18 @@ begin
                       vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
                       vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
                       indApurIR  := eSStrToTpindApurIR(ok, INIRec.ReadString(sSecao, 'indApurIR', EmptyStr));
+
+                      sSecao := 'descFolha' + IntToStrZero(I, 3) +
+                                IntToStrZero(J, 3) + IntToStrZero(K, 1) +
+                                IntToStrZero(L, 3);
+
+                      if INIRec.SectionExists(sSecao) then
+                      begin
+                        descFolha.tpDesc := eSStrToTtpDesc(INIRec.ReadString(sSecao, 'tpDesc', ''));
+                        descFolha.instFinanc := INIRec.ReadString(sSecao, 'instFinanc', '');
+                        descFolha.nrDoc := INIRec.ReadString(sSecao, 'nrDoc', '');
+                        descFolha.observacao := INIRec.ReadString(sSecao, 'observacao', '');
+                      end;
                     end;
 
                     Inc(L);
@@ -1704,6 +1640,7 @@ begin
                               vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
                               vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
                               indApurIR  := eSStrToTpindApurIR(ok, INIRec.ReadString(sSecao, 'indApurIR', '0'));  //09/02/2023
+
                             end;
 
                             Inc(N);

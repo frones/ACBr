@@ -57,7 +57,7 @@ uses
   pcesS2250, pcesS2260, pcesS2298, pcesS2299, pcesS2300,
   pcesS2306, pcesS2399, pcesS2400, pcesS3000, pcesS2245,
   pcesS2405, pcesS2410, pcesS2416, pcesS2418, pcesS2420,
-  pcesS2500, pcesS2501, pcesS3500;
+  pcesS2500, pcesS2501, pcesS2555, pcesS3500;
 
 type
 
@@ -89,6 +89,7 @@ type
     FS2420: TS2420Collection;
     FS2500: TS2500Collection;
     FS2501: TS2501Collection;
+    FS2555: TS2555Collection;
     FS3000: TS3000Collection;
     FS3500: TS3500Collection;
 
@@ -119,6 +120,7 @@ type
     procedure setS2420(const Value: TS2420Collection);
     procedure setS2500(const Value: TS2500Collection);
     procedure setS2501(const Value: TS2501Collection);
+    procedure setS2555(const Value: TS2555Collection);
     procedure setS3000(const Value: TS3000Collection);
     procedure setS3500(const Value: TS3500Collection);
 
@@ -162,6 +164,7 @@ type
     property S2420: TS2420Collection read FS2420 write setS2420;
     property S2500: TS2500Collection read FS2500 write setS2500;
     property S2501: TS2501Collection read FS2501 write setS2501;
+    property S2555: TS2555Collection read FS2555 write setS2555;
     property S3000: TS3000Collection read FS3000 write setS3000;
     property S3500: TS3500Collection read FS3500 write setS3500;
   end;
@@ -203,6 +206,7 @@ begin
   FS2420.Clear;
   FS2500.Clear;
   FS2501.Clear;
+  FS2555.Clear;
   FS3000.Clear;
   FS3500.Clear;
 end;
@@ -237,6 +241,7 @@ begin
   FS2420 := TS2420Collection.Create(AOwner);
   FS2500 := TS2500Collection.Create(AOwner);
   FS2501 := TS2501Collection.Create(AOwner);
+  FS2555 := TS2555Collection.Create(AOwner);
   FS3000 := TS3000Collection.Create(AOwner);
   FS3500 := TS3500Collection.Create(AOwner);
 end;
@@ -269,6 +274,7 @@ begin
   FS2420.Free;
   FS2500.Free;
   FS2501.Free;
+  FS2555.Free;
   FS3000.Free;
   FS3500.Free;
 
@@ -303,6 +309,7 @@ begin
             self.S2420.Count +
             self.S2500.Count +
             self.S2501.Count +
+            self.S2555.Count +
             self.S3000.Count +
             self.S3500.Count;
 end;
@@ -388,6 +395,9 @@ begin
 
   for I := 0 to Self.S2501.Count - 1 do
     Self.S2501.Items[i].EvtContProc.GerarXML;
+
+  for I := 0 to Self.S2555.Count - 1 do
+    Self.S2555.Items[i].EvtConsolidContProc.GerarXML;
 
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.GerarXML;
@@ -504,6 +514,10 @@ begin
     Self.S2501.Items[i].EvtContProc.XML :=
     Self.S2501.Items[i].EvtContProc.Assinar(Self.S2501.Items[i].EvtContProc.XML, 'evtContProc');
 
+  for I := 0 to Self.S2555.Count - 1 do
+    Self.S2555.Items[i].EvtConsolidContProc.XML :=
+    Self.S2555.Items[i].EvtConsolidContProc.Assinar(Self.S2555.Items[i].EvtConsolidContProc.XML, 'evtConsolidContProc');
+
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.XML :=
     Self.S3000.Items[i].EvtExclusao.Assinar(Self.S3000.Items[i].EvtExclusao.XML, 'evtExclusao');
@@ -594,6 +608,9 @@ begin
 
   for I := 0 to Self.S2501.Count - 1 do
     Self.S2501.Items[i].EvtContProc.Validar(schevtContProc);
+
+  for I := 0 to Self.S2555.Count - 1 do
+    Self.S2555.Items[i].EvtConsolidContProc.Validar(schEvtConsolidContProc);
 
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.Validar(schevtExclusao);
@@ -1026,6 +1043,22 @@ begin
     end;
   end;
 
+  for I := 0 to Self.S2555.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.S2555.Items[i].EvtConsolidContProc.Id) + '-' +
+     TipoEventoToStr(Self.S2555.Items[i].TipoEvento) + '-' + IntToStr(i);
+
+    Self.S2555.Items[i].EvtConsolidContProc.SaveToFile(PathName);
+
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
+    begin
+      TipoEvento := teS2555;
+      PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2555.Items[i].EvtConsolidContProc.Id);
+      XML := Self.S2555.Items[i].EvtConsolidContProc.XML;
+    end;
+  end;
+
   for I := 0 to Self.S3000.Count - 1 do
   begin
     PathName := Path + OnlyNumber(Self.S3000.Items[i].EvtExclusao.Id) + '-' +
@@ -1189,6 +1222,11 @@ begin
   FS2501.Assign(Value);
 end;
 
+procedure TNaoPeriodicos.setS2555(const Value: TS2555Collection);
+begin
+  FS2555.Assign(Value);
+end;
+
 procedure TNaoPeriodicos.setS3000(const Value: TS3000Collection);
 begin
   FS3000.Assign(Value);
@@ -1261,6 +1299,7 @@ begin
     teS2420: Self.S2420.New.EvtCdBenTerm.XML := AXMLString;
     teS2500: Self.S2500.New.EvtProcTrab.XML := AXMLString;
     teS2501: Self.S2501.New.EvtContProc.XML := AXMLString;
+    teS2555: Self.S2555.New.EvtConsolidContProc.XML := AXMLString;
     teS3000: Self.S3000.New.EvtExclusao.XML := AXMLString;
     teS3500: Self.S3500.New.EvtExcProcTrab.XML := AXMLString;
   end;
@@ -1302,6 +1341,7 @@ begin
     teS2420: Self.S2420.New.EvtCdBenTerm.LerArqIni(AIniString);
     teS2500: Self.S2500.New.EvtProcTrab.LerArqIni(AIniString);
     teS2501: Self.S2501.New.EvtContProc.LerArqIni(AIniString);
+    teS2555: Self.S2555.New.EvtConsolidContProc.LerArqIni(AIniString);
     teS3000: Self.S3000.New.EvtExclusao.LerArqIni(AIniString);
     teS3500: Self.S3500.New.EvtExcProcTrab.LerArqIni(AIniString);
   end;

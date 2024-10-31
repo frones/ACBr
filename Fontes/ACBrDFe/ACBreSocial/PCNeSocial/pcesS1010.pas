@@ -72,6 +72,8 @@ type
   TIdeProcessoIRRFCollection = class;
   TIdeProcessoFGTSCollection = class;
   TIdeProcessoSindCollection = class;
+  TIdeProcessoPisPasepCollection = class;
+  TIdeProcessoPisPasepCollectionItem = class;
 
   TS1010Collection = class(TeSocialCollection)
   private
@@ -115,6 +117,7 @@ type
     procedure GerarIdeRubrica;
     procedure GerarDadosRubrica;
     procedure GerarIdeProcessoCP;
+    procedure GerarIdeProcessoPisPasep;
     procedure GerarProcessos(const pChave: string; pProcessoCollection: TProcessoCollection);
   public
     constructor Create(AACBreSocial: TObject); override;
@@ -159,17 +162,20 @@ type
     FCodIncIRRF : tpCodIncIRRF;
     FCodIncFGTS : tpCodIncFGTS;
     FCodIncCPRP: tpCodIncCPRP;
+    FCodIncPisPasep: tpCodIncPisPasep;
     FTetoRemun: tpSimNaoFacultativo;
     FObservacao: string;
     FIdeProcessoCP: TIdeProcessoCPCollection;
     FIdeProcessoIRRF: TIdeProcessoIRRFCollection;
     FIdeProcessoFGTS: TIdeProcessoFGTSCollection;
     FIdeProcessoSIND: TIdeProcessoSindCollection;
+    FIdeProcessoPisPasep: TIdeProcessoPisPasepCollection;
 
     function getIdeProcessoCP(): TIdeProcessoCPCollection;
     function getIdeProcessoIRRF(): TIdeProcessoIRRFCollection;
     function getIdeProcessoFGTS(): TIdeProcessoFGTSCollection;
     function getIdeProcessoSIND(): TIdeProcessoSindCollection;
+    function getIdeProcessoPisPasep(): TIdeProcessoPisPasepCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -178,6 +184,7 @@ type
     function ideProcessoIRRFInst(): Boolean;
     function ideProcessoFGTSInst(): Boolean;
     function ideProcessoSINDInst(): Boolean;
+    function ideProcessoPisPasepInst(): Boolean;
 
     property dscRubr: string read FDscRubr write FDscRubr;
     property natRubr: integer read FNatRubr write FNatRubr;
@@ -186,12 +193,14 @@ type
     property codIncIRRF: tpCodIncIRRF read FCodIncIRRF write FCodIncIRRF;
     property codIncFGTS: tpCodIncFGTS read FCodIncFGTS write FCodIncFGTS;
     property codIncCPRP: tpCodIncCPRP read FCodIncCPRP write FCodIncCPRP;
+    property codIncPisPasep: tpcodIncPisPasep read FcodIncPisPasep write FcodIncPisPasep;
     property tetoRemun: tpSimNaoFacultativo read FTetoRemun write FTetoRemun;
     property observacao: string read FObservacao write FObservacao;
     property IdeProcessoCP: TIdeProcessoCPCollection read getIdeProcessoCP write FIdeProcessoCP;
     property IdeProcessoIRRF: TIdeProcessoIRRFCollection read getIdeProcessoIRRF write FIdeProcessoIRRF;
     property IdeProcessoFGTS: TIdeProcessoFGTSCollection read getIdeProcessoFGTS write FIdeProcessoFGTS;
     property IdeProcessoSIND: TIdeProcessoSindCollection read getIdeProcessoSIND write FIdeProcessoSIND;
+    property IdeProcessoPisPasep: TIdeProcessoPisPasepCollection read getIdeProcessoPisPasep write FIdeProcessoPisPasep;
   end;
 
   TIdeRubrica = class(TObject)
@@ -233,6 +242,24 @@ type
   end;
 
   TIdeProcessoSindCollection = class(TProcessoCollection)
+  end;
+
+  TIdeProcessoPisPasepCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TIdeProcessoPisPasepCollectionItem;
+    procedure SetItem(Index: Integer; Value: TIdeProcessoPisPasepCollectionItem);
+  public
+    function New: TIdeProcessoPisPasepCollectionItem;
+    property Items[Index: Integer]: TIdeProcessoPisPasepCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TIdeProcessoPisPasepCollectionItem = class(TIdeProcessoPisPasepCollection)
+  private
+    FnrProc: string;
+    FcodSusp: string;
+  public
+    property nrProc: string read FnrProc write FnrProc;
+    property codSusp: string read FcodSusp write FcodSusp;
   end;
 
 implementation
@@ -324,6 +351,10 @@ begin
     if InfoRubrica.dadosRubrica.codIncCPRP <> cicpNenhum then
       Gerador.wCampo(tcStr, '', 'codIncCPRP', 2, 2, 1, eSCodIncCPRPToStr(InfoRubrica.dadosRubrica.codIncCPRP));
 
+    if VersaoDF >= veS01_03_00 then
+      if InfoRubrica.dadosRubrica.codIncPisPasep <> ciPisPasepNenhum then
+        Gerador.wCampo(tcStr, '', 'codIncPisPasep', 2, 2, 1, eScodIncPisPasepToStr(InfoRubrica.dadosRubrica.codIncPisPasep));
+
     if InfoRubrica.dadosRubrica.tetoRemun <> snfNada then
       Gerador.wCampo(tcStr, '', 'tetoRemun', 1, 1, 1, eSSimNaoFacultativoToStr(InfoRubrica.dadosRubrica.tetoRemun));
   end;
@@ -332,8 +363,12 @@ begin
 
   GerarideProcessoCP;
 
+  if VersaoDF >= veS01_03_00 then
+    GerarideProcessoPisPasep;
+
   GerarProcessos('ideProcessoIRRF', InfoRubrica.dadosRubrica.IdeProcessoIRRF);
   GerarProcessos('ideProcessoFGTS', InfoRubrica.dadosRubrica.IdeProcessoFGTS);
+
   if VersaoDF <= ve02_05_00 then
      GerarProcessos('ideProcessoSIND', InfoRubrica.dadosRubrica.IdeProcessoSIND);
 
@@ -381,6 +416,27 @@ begin
   end;
 end;
 
+procedure TEvtTabRubrica.GerarIdeProcessoPisPasep;
+var
+  i: integer;
+begin
+  if (InfoRubrica.DadosRubrica.ideProcessoPisPasepInst()) then
+  begin
+    for i := 0 to InfoRubrica.DadosRubrica.IdeProcessoPisPasep.Count - 1 do
+    begin
+      Gerador.wGrupo('ideProcessoPisPasep');
+
+      Gerador.wCampo(tcStr, '', 'nrProc',     1, 20, 1, InfoRubrica.DadosRubrica.IdeProcessoPisPasep.GetItem(i).nrProc);
+      Gerador.wCampo(tcStr, '', 'codSusp',    1, 14, 1, InfoRubrica.DadosRubrica.IdeProcessoPisPasep.GetItem(i).codSusp);
+
+      Gerador.wGrupo('/ideProcessoPisPasep');
+    end;
+
+    if InfoRubrica.DadosRubrica.IdeProcessoPisPasep.Count > 99 then
+      Gerador.wAlerta('', 'ideProcessoPisPasep', 'Lista de Processos', ERR_MSG_MAIOR_MAXIMO + '99');
+  end;
+end;
+
 procedure TEvtTabRubrica.GerarIdeRubrica;
 begin
   Gerador.wGrupo('ideRubrica');
@@ -392,7 +448,7 @@ begin
     if (infoRubrica.ideRubrica.ideTabRubr <> '') then
       Gerador.wCampo(tcStr, '', 'ideTabRubr', 1, 8, 1, infoRubrica.ideRubrica.ideTabRubr);
   end
-  else  
+  else
     Gerador.wCampo(tcStr, '', 'ideTabRubr', 1, 8, 1, infoRubrica.ideRubrica.ideTabRubr);
 
   Gerador.wCampo(tcStr, '', 'iniValid', 7, 7, 1, infoRubrica.ideRubrica.iniValid);
@@ -544,6 +600,35 @@ begin
 
                 Inc(i);
               end;
+
+              if VersaoDF >= ve02_05_00 then
+              begin
+                i := 0;
+                while Leitor.rExtrai(5, 'ideProcessoSIND ', '', i + 1) <> '' do
+                begin
+                  with infoRubrica.dadosRubrica.ideProcessoSIND.New do
+                  begin
+                    nrProc := Leitor.rCampo(tcStr, 'nrProc');
+                  end;
+
+                  Inc(i);
+                end;
+              end;
+
+              if VersaoDF >= ve01_03_00 then
+              begin
+                i := 0;
+                while Leitor.rExtrai(5, 'ideProcessoPisPasep ', '', i + 1) <> '' do
+                begin
+                  with infoRubrica.dadosRubrica.ideProcessoPisPasep.New do
+                  begin
+                    nrProc := Leitor.rCampo(tcStr, 'nrProc');
+                    codSusp := Leitor.rCampo(tcStr, 'codSusp');
+                  end;
+
+                  Inc(i);
+                end;
+              end;
 }
             end;
 
@@ -679,6 +764,25 @@ begin
         while true do
         begin
           // de 01 até 99
+          sSecao := 'ideProcessoPisPasep' + IntToStrZero(I, 2);
+          sFim := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
+
+          if (Trim(sFim) = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoRubrica.DadosRubrica.IdeProcessoPisPasep.New do
+          begin
+            nrProc :=  sFim;
+            codSusp := INIRec.ReadString(sSecao, 'codSusp', '');
+          end;
+
+          Inc(I);
+        end;
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
           sSecao := 'ideProcessoSIND' + IntToStrZero(I, 2);
           sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
 
@@ -784,12 +888,13 @@ end;
 constructor TDadosRubrica.Create;
 begin
   inherited Create;
-  FCodIncCPRP      := cicpNenhum;
-  FIdeProcessoCP   := nil;
-  FIdeProcessoIRRF := nil;
-  FIdeProcessoFGTS := nil;
-  FIdeProcessoSIND := nil;
-  FTetoRemun       := snfNada;
+  FCodIncCPRP          := cicpNenhum;
+  FIdeProcessoCP       := nil;
+  FIdeProcessoIRRF     := nil;
+  FIdeProcessoFGTS     := nil;
+  FIdeProcessoSIND     := nil;
+  FIdeProcessoPisPasep := nil;
+  FTetoRemun           := snfNada;
 end;
 
 destructor TDadosRubrica.destroy;
@@ -798,6 +903,7 @@ begin
   FreeAndNil(FIdeProcessoIRRF);
   FreeAndNil(FIdeProcessoFGTS);
   FreeAndNil(FIdeProcessoSIND);
+  FreeAndNil(FIdeProcessoPisPasep);
 
   inherited;
 end;
@@ -830,6 +936,13 @@ begin
   Result := FIdeProcessoSIND;
 end;
 
+function TDadosRubrica.getIdeProcessoPisPasep: TIdeProcessoPisPasepCollection;
+begin
+  if Not(Assigned(FIdeProcessoPisPasep)) then
+    FIdeProcessoPisPasep := TIdeProcessoPisPasepCollection.Create;
+  Result := FIdeProcessoPisPasep;
+end;
+
 function TDadosRubrica.ideProcessoCPInst: Boolean;
 begin
   Result := Assigned(FIdeProcessoCP);
@@ -848,6 +961,11 @@ end;
 function TDadosRubrica.ideProcessoSINDInst: Boolean;
 begin
   Result := Assigned(FIdeProcessoSIND);
+end;
+
+function TDadosRubrica.ideProcessoPisPasepInst: Boolean;
+begin
+  Result := Assigned(FIdeProcessoPisPasep);
 end;
 
 { TProcessoCollection }
@@ -872,6 +990,26 @@ end;
 function TProcessoCollection.New: TProcesso;
 begin
   Result := TProcesso.Create;
+  Self.Add(Result);
+end;
+
+{ TIdeProcessoPisPasepCollection }
+
+function TIdeProcessoPisPasepCollection.GetItem(
+  Index: Integer): TIdeProcessoPisPasepCollectionItem;
+begin
+  Result := TIdeProcessoPisPasepCollectionItem(inherited Items[Index]);
+end;
+
+procedure TIdeProcessoPisPasepCollection.SetItem(Index: Integer;
+  Value: TIdeProcessoPisPasepCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TIdeProcessoPisPasepCollection.New: TIdeProcessoPisPasepCollectionItem;
+begin
+  Result := TIdeProcessoPisPasepCollectionItem.Create;
   Self.Add(Result);
 end;
 

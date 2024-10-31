@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/10/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6183: A cidade de Navirai/MS trocou de URL, o provedor continua o mesmo.
+   Por: J. B. Santos
+[*] #TK-6182: A cidade de Getulio Vargas/RS trocou de URL, o provedor continua o mesmo.
+   Por: Willian Delan
+[+] #TK-6181: Incluída a cidade de Arapopnga/MG, o provedor é Futurize.
+   Por: Marcos Giordani
+
 30/10/2024
 -- ACBrNFSeXGravarXml --
 [*] Correção, para gerar o Json correto dentro da tag Discriminacao.

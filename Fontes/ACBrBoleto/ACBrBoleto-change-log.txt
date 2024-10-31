@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2024
+-- ACBrBancoSantander --
+[*] TK-6190 - Ajuste de mensagem de Juros e Multa Boleto Santander
+    por Kaue Barros / Rev. Alexandre de Paula
+
 23/10/2024
 -- ACBrBoletoW_Itau_API.pas --
 [*] TK-6154 - TpConsulta nao permite view=specific tem q ser full. a para consultar specific deve se informar NossoNumero e nao retorna lista. TpConsultaDetalhe

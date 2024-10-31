@@ -901,10 +901,10 @@ begin
               LMensagem1 := TiraAcentos(Mensagem[0]);
 
             if Mensagem.Count >= 2 then
-              LMensagem1 := TiraAcentos(Mensagem[1]);
+              LMensagem2 := TiraAcentos(Mensagem[1]);
 
             if Mensagem.Count >= 3 then
-              LMensagem1 := TiraAcentos(Mensagem[2]);
+              LMensagem3 := TiraAcentos(Mensagem[2]);
 
             wLinha:= '2'                                                      + // 001-001 "2" - Recibo Pagador
                      space(16)                                                + // 002-017 Reservado Banco

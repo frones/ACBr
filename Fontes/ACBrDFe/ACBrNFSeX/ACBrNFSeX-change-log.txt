@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 31/10/2024
+-- NFEletronica.Provider --
+[*] #TK-6191: Correção, para gerar o ConsultarLinkNFSe corretamente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6183: A cidade de Navirai/MS trocou de URL, o provedor continua o mesmo.
    Por: J. B. Santos

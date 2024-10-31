@@ -446,8 +446,25 @@ end;
 procedure TACBrNFSeProviderNFEletronica.PrepararConsultaLinkNFSe(
   Response: TNFSeConsultaLinkNFSeResponse);
 var
+  AErro: TNFSeEventoCollectionItem;
   aParams: TNFSeParamsResponse;
 begin
+  if EstaVazio(Response.InfConsultaLinkNFSe.NumeroNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod108;
+    AErro.Descricao := ACBrStr(Desc108);
+    Exit;
+  end;
+
+  if Response.InfConsultaLinkNFSe.NumeroRps = 0 then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod102;
+    AErro.Descricao := ACBrStr(Desc102);
+    Exit;
+  end;
+
   aParams := TNFSeParamsResponse.Create;
   try
     aParams.Clear;
@@ -463,22 +480,15 @@ procedure TACBrNFSeProviderNFEletronica.GerarMsgDadosConsultaLinkNFSe(
 var
   Referencia, NumNota: string;
 begin
-  Referencia := '';
-  NumNota := '';
-
-  if Response.InfConsultaLinkNFSe.NumeroRps > 0 then
-    Referencia := IntToStr(Response.InfConsultaLinkNFSe.NumeroRps);
-
+  Referencia := IntToStr(Response.InfConsultaLinkNFSe.NumeroRps);
   NumNota := Response.InfConsultaLinkNFSe.NumeroNFSe;
 
-  if Referencia <> '' then
-    Response.ArquivoEnvio := '<ws:referencia>' +
-                                Referencia +
-                             '</ws:referencia>'
-  else
-    Response.ArquivoEnvio := '<ws:num_NF>' +
-                                NumNota +
-                             '</ws:num_NF>';
+  Response.ArquivoEnvio := '<ws:referencia>' +
+                              Referencia +
+                           '</ws:referencia>' +
+                           '<ws:num_NF>' +
+                              NumNota +
+                           '</ws:num_NF>';
 end;
 
 procedure TACBrNFSeProviderNFEletronica.TratarRetornoConsultaLinkNFSe(
@@ -488,6 +498,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   strRetorno: string;
+  CodigoErro: Int64;
 begin
   Document := TACBrXmlDocument.Create;
   try
@@ -500,13 +511,21 @@ begin
         Exit
       end;
 
+      if Pos('&b=', Response.ArquivoRetorno) > 0 then
+        Response.ArquivoRetorno := StringReplace(Response.ArquivoRetorno, '&b=', '&amp;b=', [rfReplaceAll]);
+
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
       strRetorno := ObterConteudoTag(ANode.Childrens.FindAnyNs('Consulta_LinkResult'), tcStr);
 
-      if not StringIsXML(strRetorno) then
+      if Pos('www.nf-eletronica', strRetorno) > 0 then
+        CodigoErro := 0
+      else
+        CodigoErro := StrToInt64Def(OnlyNumber(strRetorno), -1);
+
+      if not StringIsXML(strRetorno) and (CodigoErro < 0) then
       begin
         Response.ArquivoRetorno := '<Consulta_LinkResult>' +
                                      '<ListaMensagemRetorno>' +
@@ -518,6 +537,8 @@ begin
                                      '</ListaMensagemRetorno>' +
                                    '</Consulta_LinkResult>';
 
+        Response.ArquivoRetorno := StringReplace(Response.ArquivoRetorno, '&b=', '&amp;b=', [rfReplaceAll]);
+
         Document.Clear;
         Document.LoadFromXml(Response.ArquivoRetorno);
 
@@ -526,8 +547,7 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
-      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+      Response.Link := strRetorno;
     except
       on E:Exception do
       begin
@@ -600,9 +620,6 @@ begin
       end;
 
       ProcessarMensagemErros(ANode, Response);
-
-      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
-      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
     except
       on E:Exception do
       begin

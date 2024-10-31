@@ -10,10 +10,8 @@ object frmACBreSocial: TfrmACBreSocial
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1013,8 +1011,6 @@ object frmACBreSocial: TfrmACBreSocial
       object tbsEventosTabela: TTabSheet
         Caption = 'Eventos de Tabela'
         ImageIndex = 4
-        ExplicitLeft = 5
-        ExplicitTop = 22
         object cbS1000: TCheckBox
           Left = 12
           Top = 12
@@ -1501,13 +1497,13 @@ object frmACBreSocial: TfrmACBreSocial
         end
         object cbS3000: TCheckBox
           Left = 420
-          Top = 242
+          Top = 285
           Width = 175
           Height = 17
           Caption = 'S-3000 Exclus'#227'o de Eventos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 27
+          TabOrder = 28
         end
         object cbS2405: TCheckBox
           Left = 420
@@ -1559,13 +1555,13 @@ object frmACBreSocial: TfrmACBreSocial
         end
         object cbS3500: TCheckBox
           Left = 420
-          Top = 266
+          Top = 309
           Width = 275
           Height = 17
           Caption = 'S-3500 Exclus'#227'o de Eventos - Processo Trabalhista'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 28
+          TabOrder = 29
         end
         object CBS2500: TCheckBox
           Left = 420
@@ -1586,6 +1582,17 @@ object frmACBreSocial: TfrmACBreSocial
           DoubleBuffered = False
           ParentDoubleBuffered = False
           TabOrder = 26
+          WordWrap = True
+        end
+        object cbS2555: TCheckBox
+          Left = 420
+          Top = 244
+          Width = 357
+          Height = 32
+          Caption = 
+            'S-2555 Solicita'#231#227'o de Consolida'#231#227'o das Informa'#231#245'es de Tributos D' +
+            'ecorrentes de Processo Trabalhista'
+          TabOrder = 27
           WordWrap = True
         end
       end
@@ -1656,7 +1663,7 @@ object frmACBreSocial: TfrmACBreSocial
         Caption = 'Comandos'
         ImageIndex = 6
         object btnGerar: TButton
-          Left = 10
+          Left = 15
           Top = 12
           Width = 109
           Height = 25
@@ -1768,10 +1775,8 @@ object frmACBreSocial: TfrmACBreSocial
           Height = 302
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 634
-          ExplicitHeight = 242
           ControlData = {
-            4C000000DB510000361F00000000000000000000000000000000000000000000
+            4C0000007C410000F81800000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000

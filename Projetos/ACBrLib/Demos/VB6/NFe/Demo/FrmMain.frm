@@ -84,36 +84,36 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Consultas"
       TabPicture(1)   =   "FrmMain.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "btnStatusServicos"
-      Tab(1).Control(1)=   "btnConsultarRecibo"
+      Tab(1).Control(0)=   "btnConsultaChave"
+      Tab(1).Control(1)=   "btnConsultarCadastro"
       Tab(1).Control(2)=   "btnConsultaXXML"
-      Tab(1).Control(3)=   "btnConsultarCadastro"
-      Tab(1).Control(4)=   "btnConsultaChave"
+      Tab(1).Control(3)=   "btnConsultarRecibo"
+      Tab(1).Control(4)=   "btnStatusServicos"
       Tab(1).ControlCount=   5
       TabCaption(2)   =   "Eventos"
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "btnCancelarNFe"
-      Tab(2).Control(1)=   "btnCarregarEvento"
-      Tab(2).Control(2)=   "btnImprimirEvento"
+      Tab(2).Control(0)=   "btnImprimirEventoPDF"
+      Tab(2).Control(1)=   "btnLimparListaEvento"
+      Tab(2).Control(2)=   "btnEnviarEvento"
       Tab(2).Control(3)=   "btnEnviarEmailEvento"
-      Tab(2).Control(4)=   "btnEnviarEvento"
-      Tab(2).Control(5)=   "btnLimparListaEvento"
-      Tab(2).Control(6)=   "btnImprimirEventoPDF"
+      Tab(2).Control(4)=   "btnImprimirEvento"
+      Tab(2).Control(5)=   "btnCarregarEvento"
+      Tab(2).Control(6)=   "btnCancelarNFe"
       Tab(2).ControlCount=   7
       TabCaption(3)   =   "Inutilização"
       TabPicture(3)   =   "FrmMain.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "btnInutilizarNumeracao"
+      Tab(3).Control(0)=   "btnImprimirInutilizacaoPDF"
       Tab(3).Control(1)=   "btnImprimirInutilizacao"
-      Tab(3).Control(2)=   "btnImprimirInutilizacaoPDF"
+      Tab(3).Control(2)=   "btnInutilizarNumeracao"
       Tab(3).ControlCount=   3
       TabCaption(4)   =   "Distribuição DFe"
       TabPicture(4)   =   "FrmMain.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "btnDFePorChave"
+      Tab(4).Control(0)=   "btnDFePorUltNSU"
       Tab(4).Control(1)=   "btnDFePorNSU"
-      Tab(4).Control(2)=   "btnDFePorUltNSU"
+      Tab(4).Control(2)=   "btnDFePorChave"
       Tab(4).ControlCount=   3
       Begin VB.CommandButton btnDFePorUltNSU 
          Caption         =   "Por Ult. NSU"
@@ -428,21 +428,21 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Documento Auxiliar"
       TabPicture(1)   =   "FrmMain.frx":00A8
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "btnLogomarca"
-      Tab(1).Control(1)=   "txtLogomarca"
-      Tab(1).Control(2)=   "frmDANFe"
-      Tab(1).Control(3)=   "frmPosPrinter"
-      Tab(1).Control(4)=   "frmDANFCe"
-      Tab(1).Control(5)=   "lblLogomarca"
+      Tab(1).Control(0)=   "lblLogomarca"
+      Tab(1).Control(1)=   "frmDANFCe"
+      Tab(1).Control(2)=   "frmPosPrinter"
+      Tab(1).Control(3)=   "frmDANFe"
+      Tab(1).Control(4)=   "txtLogomarca"
+      Tab(1).Control(5)=   "btnLogomarca"
       Tab(1).ControlCount=   6
       TabCaption(2)   =   "Email"
       TabPicture(2)   =   "FrmMain.frx":00C4
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label13"
-      Tab(2).Control(1)=   "Label22"
+      Tab(2).Control(0)=   "txtMensagemEmail"
+      Tab(2).Control(1)=   "txtAssuntoEmail"
       Tab(2).Control(2)=   "Frame2"
-      Tab(2).Control(3)=   "txtAssuntoEmail"
-      Tab(2).Control(4)=   "txtMensagemEmail"
+      Tab(2).Control(3)=   "Label22"
+      Tab(2).Control(4)=   "Label13"
       Tab(2).ControlCount=   5
       Begin VB.CommandButton btnLogomarca 
          Caption         =   "..."
@@ -1273,22 +1273,22 @@ Begin VB.Form FrmMain
          TabCaption(3)   =   "Arquivos"
          TabPicture(3)   =   "FrmMain.frx":0251
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "lblPastaArqNFe"
-         Tab(3).Control(1)=   "lblPastaArqInutilizacao"
-         Tab(3).Control(2)=   "lblPastaArqEvento"
-         Tab(3).Control(3)=   "chkSalvarArqs"
-         Tab(3).Control(4)=   "chkPastaMensal"
-         Tab(3).Control(5)=   "chkAdicionaLiteral"
-         Tab(3).Control(6)=   "chkEmissaoPathNFe"
-         Tab(3).Control(7)=   "chkSalvaPathEvento"
-         Tab(3).Control(8)=   "chkSepararPorCNPJ"
-         Tab(3).Control(9)=   "chkSepararPorModelo"
-         Tab(3).Control(10)=   "txtArqNFe"
-         Tab(3).Control(11)=   "btnArqNFe"
-         Tab(3).Control(12)=   "txtArqInu"
-         Tab(3).Control(13)=   "btnArqInu"
-         Tab(3).Control(14)=   "btnArqEvento"
-         Tab(3).Control(15)=   "txtArqEvento"
+         Tab(3).Control(0)=   "txtArqEvento"
+         Tab(3).Control(1)=   "btnArqEvento"
+         Tab(3).Control(2)=   "btnArqInu"
+         Tab(3).Control(3)=   "txtArqInu"
+         Tab(3).Control(4)=   "btnArqNFe"
+         Tab(3).Control(5)=   "txtArqNFe"
+         Tab(3).Control(6)=   "chkSepararPorModelo"
+         Tab(3).Control(7)=   "chkSepararPorCNPJ"
+         Tab(3).Control(8)=   "chkSalvaPathEvento"
+         Tab(3).Control(9)=   "chkEmissaoPathNFe"
+         Tab(3).Control(10)=   "chkAdicionaLiteral"
+         Tab(3).Control(11)=   "chkPastaMensal"
+         Tab(3).Control(12)=   "chkSalvarArqs"
+         Tab(3).Control(13)=   "lblPastaArqEvento"
+         Tab(3).Control(14)=   "lblPastaArqInutilizacao"
+         Tab(3).Control(15)=   "lblPastaArqNFe"
          Tab(3).ControlCount=   16
          Begin VB.TextBox txtTimeOut 
             Alignment       =   1  'Right Justify
@@ -3414,8 +3414,25 @@ End Sub
 
 Private Sub btnObterCertificados_Click()
     
-    On Error GoTo Erro:
-    nfe.ObterCertificados
+    On Error GoTo Erro
+    
+    Dim ret As Variant
+    Dim certificado As Variant
+    Dim resultado As String
+
+    ret = nfe.ObterCertificados
+    
+    If IsArray(ret) Then
+        For Each certificado In ret
+            resultado = resultado & CStr(certificado) & vbCrLf
+        Next certificado
+    Else
+        resultado = CStr(ret)
+    End If
+    
+    rtbRespostas.Text = resultado
+    Exit Sub
+
 Erro:
     MsgBox Err.Description
     

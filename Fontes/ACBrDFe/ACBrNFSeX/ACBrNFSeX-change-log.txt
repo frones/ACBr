@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/11/2024
+-- IPM.LerXML --
+[*] #TK-6175: Adiciona condicação para preencher ISSRetido quando houver valor.
+   Por: Diego Folieni
 -- ISSSaoPaulo.Provider --
 [*] #TK-6180: Implementado a consulta ConsultarNFSeServicoPrestado e revisado
     a implementação do ConsultarNFSeServicoTomado.

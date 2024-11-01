@@ -192,6 +192,9 @@ begin
         ItemServico[i].CodCNO := ObterConteudo(ANodes[i].Childrens.FindAnyNs('cno'), tcStr);
       end;
 
+      if Valores.ValorIssRetido > 0 then
+        Valores.IssRetido := stRetencao;
+
       if ItemServico.Count > 0 then
       begin
         CodigoMunicipio := ItemServico[0].CodMunPrestacao;

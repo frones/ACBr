@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/11/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6192: Incluída a cidade de Lambari D Oeste/MT, o provedor é Fiorilli.
+   Por: Diego Reckziegel
+[+] #TK-6189: Incluída a cidade de Itapoa/SC, o provedor é IPM.
+   Por: C4Dev
+
 31/10/2024
 -- NFEletronica.Provider --
 [*] #TK-6191: Correção, para gerar o ConsultarLinkNFSe corretamente.

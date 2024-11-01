@@ -796,6 +796,7 @@ begin
   RespEnvioRetorno := TEnvioRetornoResposta.Create(TpResp, codUTF8);
   try
     RespEnvioRetorno.Processar(fACBrNFe);
+    fpCmd.Resposta := fpCmd.Resposta + sLineBreak;
     fpCmd.Resposta := fpCmd.Resposta + RespEnvioRetorno.Gerar;
 
   finally
@@ -1729,9 +1730,6 @@ begin
   Resp := ArqNFe;
   if (Alertas <> '') then
     Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
-
-  if LObjetoNFe.TpResp in [resINI] then
-    fpCmd.Resposta := Resp + sLineBreak;
 
   LNFe.WebServices.Enviar.Sincrono := ASincrono;
 

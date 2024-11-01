@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2024
+-- DoACBrNFeUnit --
+[*] #TK-6145: Ajuste visando a correta exibição da resposta em formato INI para o EnviarNFe.
+   Por: Diego Folieni 
+
 16/10/2024
 -- DoACBrNFSeUnit --
 [*] #TK-4956-2: Codificado em base64 o retorno do método ObterDANFSE do padrão nacional

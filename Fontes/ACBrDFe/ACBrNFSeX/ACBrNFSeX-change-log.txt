@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 01/11/2024
+-- ISSSaoPaulo.Provider --
+[*] #TK-6180: Implementado a consulta ConsultarNFSeServicoPrestado e revisado
+    a implementação do ConsultarNFSeServicoTomado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6192: Incluída a cidade de Lambari D Oeste/MT, o provedor é Fiorilli.
    Por: Diego Reckziegel

@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 04/11/2024
+-- ISSBarueri.Provider --
+[*] #TK-6197: Ajustes na montagem do conteudo do grupo <Body> do serviço: 
+    ConsultaNFeRecebidaPeriodo
+   Por: Italo Giurizzato Junior
+[*] #TK-6195: Alterada a função que converte de string para data, estava ocorrendo
+    erro na conversão.
+   Por: Jéter Rabelo Ferreira
+-- Sintese.Provider --
+[*] #TK-6194: Ajustes para usar o SoapAction correto em função da cidade.
+   Por: João Antônio
 -- ACBrNFSeXServicos --
 [*] #TK-6194: Incluída a URL de SoapAction para a cidade de Bocaiuva/MG, o provedor
     é o mesmo.

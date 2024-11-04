@@ -45,6 +45,8 @@ uses
 
 type
   TACBrNFSeXWebserviceSintese204 = class(TACBrNFSeXWebserviceSoap11)
+  private
+    function GetSoapAction: string;
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
@@ -58,6 +60,8 @@ type
     function SubstituirNFSe(const ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
+
+    property SoapAction: string read GetSoapAction;
   end;
 
   TACBrNFSeProviderSintese204 = class (TACBrNFSeProviderABRASFv2)
@@ -75,7 +79,9 @@ implementation
 uses
   ACBrUtil.XMLHTML,
   ACBrDFeException,
-  Sintese.GravarXml, Sintese.LerXml;
+  Sintese.GravarXml,
+  Sintese.LerXml,
+  ACBrNFSeX;
 
 { TACBrNFSeProviderSintese204 }
 
@@ -139,6 +145,28 @@ end;
 
 { TACBrNFSeXWebserviceSintese204 }
 
+function TACBrNFSeXWebserviceSintese204.GetSoapAction: string;
+var
+  xSoap: string;
+begin
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
+    xSoap := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.SoapAction
+  else
+    xSoap := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.SoapAction;
+
+  if xSoap = '' then
+  begin
+    xSoap := 'http://nfsews.sintesetecnologia.com.br/';
+  end
+  else
+  begin
+    if xSoap[Length(xSoap)] <> '/' then
+      xSoap := xSoap + '/';
+  end;
+
+  Result := xSoap;
+end;
+
 function TACBrNFSeXWebserviceSintese204.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
@@ -151,7 +179,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:EnviarLoteRpsEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/RecepcionarLoteRps', Request,
+  Result := Executar(SoapAction + 'RecepcionarLoteRps', Request,
                      ['outputXML', 'EnviarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -168,7 +196,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:EnviarLoteRpsSincronoEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/RecepcionarLoteRpsSincrono', Request,
+  Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono', Request,
                      ['outputXML', 'EnviarLoteRpsSincronoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -185,7 +213,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:GerarNfseEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/GerarNfse', Request,
+  Result := Executar(SoapAction + 'GerarNfse', Request,
                      ['outputXML', 'GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -202,7 +230,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarLoteRpsEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/ConsultarLoteRps', Request,
+  Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
                      ['outputXML', 'ConsultarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -219,7 +247,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfseFaixaEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/ConsultarNfseFaixa', Request,
+  Result := Executar(SoapAction + 'ConsultarNfseFaixa', Request,
                      ['outputXML', 'ConsultarNfseFaixaResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -236,7 +264,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfseRpsEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/ConsultarNfseRps', Request,
+  Result := Executar(SoapAction + 'ConsultarNfseRps', Request,
                      ['outputXML', 'ConsultarNfseRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -253,7 +281,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfseServicoPrestadoEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/ConsultarNfseServicoPrestado', Request,
+  Result := Executar(SoapAction + 'ConsultarNfseServicoPrestado', Request,
                      ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -270,7 +298,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfseServicoTomadoEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/ConsultarNfseServicoTomado', Request,
+  Result := Executar(SoapAction + 'ConsultarNfseServicoTomado', Request,
                      ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -286,7 +314,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:CancelarNfseEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/CancelarNfse', Request,
+  Result := Executar(SoapAction +'CancelarNfse', Request,
                      ['outputXML', 'CancelarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -303,7 +331,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:SubstituirNfseEnvio>';
 
-  Result := Executar('http://nfsews.sintesetecnologia.com.br/SubstituirNfse', Request,
+  Result := Executar(SoapAction + 'SubstituirNfse', Request,
                      ['outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;

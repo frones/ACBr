@@ -825,11 +825,11 @@ begin
 
         if NaoEstaVazio(Trim(Copy(Dados[1], 22, 6))) then
         begin
-          Response.Data := EncodeDataHora(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
+          Response.Data := StringToDateTime(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
           Response.Data := Response.Data + StrToTime(Format('%S:%S:%S', [Trim(Copy(Dados[1], 21, 2)), Trim(Copy(Dados[1], 23, 2)), Trim(Copy(Dados[1], 25, 2))]));
         end
         else
-          Response.Data := EncodeDataHora(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
+          Response.Data := StringToDateTime(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
 
         if (FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1) then
           Response.Link := 'https://www.barueri.sp.gov.br/nfe/xmlNFe.ashx'
@@ -1156,7 +1156,7 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfe:ConsultaNFeRecebidaPeriodo  xmlns="http://www.barueri.sp.gov.br/nfe">';
+  Request := '<nfe:ConsultaNFeRecebidaPeriodo>';
   Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
   Request := Request + '<nfe:MensagemXML>';
   Request := Request + IncluirCDATA(AMSG);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/11/2024
+-- ACBrNFe.XmlReader --
+[*] #TK-6202: Ajuste visando a correta leitura das informações do grupo ICMSST
+  Por: Diego Folieni 
+
 21/10/2024
 -- pcnConversaoNFe --
 [+] acrescentado o enumerador: teRegistroPassagemMDFe.

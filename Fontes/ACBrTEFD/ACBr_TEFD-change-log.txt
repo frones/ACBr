@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/11/2024
+-- ACBrTEFDestaxaComum --
+[+] Início do desenvolvimento do novo modelo de TEF "Destaxa"
+    por: Elias César
+
 14/10/2024
 -- ACBrTEFAPI, ACBrTEFAPIAditum --
 [+] Inicio do desenvolvimento de novo modelo de TEF "tefAditumAPI"

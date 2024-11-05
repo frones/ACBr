@@ -59,6 +59,7 @@ resourcestring
   sErrEndServNaoInformado = 'Endereço do Servidor não informada em "EnderecoIP"';
   sErrPortServNaoInformado = 'Porta do Servidor não informada em "PortTCP"';
   sErrNaoConectado = 'Não conectado ao Servidor Scope';
+  sErrSemSessao = 'SessãO TEF não foi aberta';
 
   sMsgAbrindoConexao = 'Abrindo comunicação...'+sLineBreak+'Empresa: %s, Filial %s';
   sMsgConctadoAoServidor = 'Conectado Scope em: %s';
@@ -363,6 +364,9 @@ type
 type
   EACBrTEFScopeAPI = class(Exception);
 
+  TACBrTEFScopeOperacao = ( scoCredito, scoDebito, scoPagto, scoConsCDC, scoCheque, scoCanc,
+                    scoReimpComp, scoResVenda, scoRecargaCel, scoPreAutCredito );
+
   TACBrTEFScopeGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
   TACBrTEFScopeExibeMensagem = procedure(
@@ -498,7 +502,10 @@ type
     procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
     procedure VerificaSessaoTEFAnterior;
 
-    procedure ContinuarTransacaoTEF;
+    procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao; const Param1,
+      Param2, Param3: String);
+    procedure ExecutarTransacao;
+
     procedure AbrirPinPad;
     procedure ConfigurarColeta;
     function ConfigurarScope(AId: LongInt; Ligado: Boolean): Boolean;
@@ -560,7 +567,7 @@ type
 implementation
 
 uses
-  IniFiles, StrUtils,
+  IniFiles, StrUtils, TypInfo,
   ACBrUtil.Strings, ACBrUtil.FilesIO;
 
 { TACBrTEFScopeAPI }
@@ -1308,9 +1315,45 @@ begin
   end;
 end;
 
-procedure TACBrTEFScopeAPI.ContinuarTransacaoTEF;
+procedure TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
+  const Param1, Param2, Param3: String);
+var
+  p1, p2, p3: PAnsiChar;
+  ret: LongInt;
 begin
-  GravarLog('ContinuarTransacaoTEF');
+  GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
+            ', '+Param1+', '+Param2+', '+Param3+' )' );
+
+  if not fSessaoAberta then
+    DoException(ACBrStr(sErrSemSessao));
+
+  p1 := PAnsiChar(AnsiString(Param1));
+  p2 := PAnsiChar(AnsiString(Param2));
+  p3 := PAnsiChar(AnsiString(Param3));
+  ret := 0;
+
+  case Operacao of
+    scoCredito:
+      begin
+        GravarLog('ScopeCompraCartaoCredito( '+Param1+', '+Param2+' )');
+        ret := xScopeCompraCartaoCredito(p1, p2);
+      end;
+
+    scoDebito:
+      begin
+        GravarLog('ScopeCompraCartaoDebito( '+Param1+' )');
+        ret := xScopeCompraCartaoDebito(p1);
+      end;
+  end;
+
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> SCO_SUCESSO) then
+    TratarErroScope(ret);
+end;
+
+procedure TACBrTEFScopeAPI.ExecutarTransacao;
+begin
+  GravarLog('ExecutarTransacao');
 
 end;
 

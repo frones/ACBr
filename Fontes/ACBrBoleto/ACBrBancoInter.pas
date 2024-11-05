@@ -6,7 +6,7 @@
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Victor Hugo Gonzales - Panda, Douglas Tybel,    }
-{   Rodrigo Cardilo, WindSoft, Aggille Sistema de Gestão, Zoobre               }
+{   Rodrigo Cardilo, WindSoft, Aggille Sistema de Gestão, Zoobre, André - Minf }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -213,6 +213,7 @@ var
   wCarteira, ValorMora, EspecieDoc, ADesconto, AMensagem, LDigitoVerificador : string;
   Boleto : TACBrBoleto;
   ADataLimitePagamento : Byte;
+  iSequencia : integer;
 begin
   Boleto := ACBrTitulo.ACBrBoleto;
 
@@ -337,6 +338,35 @@ begin
             IntToStrZero(ARemessa.Count + 1, 6);                                                                                                           // 395 a 400 Nº sequencial do registro
 
   ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
+
+  //4.4. Registro de transação Tipo 3 (opcional) Utilizado para envio de e-mail ao pagador pelo banco
+  if (ACBrTitulo.Sacado.Email <> '') or (ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF <> '') then
+  begin
+     iSequencia := aRemessa.Count + 1;
+     wLinha:= '3'                                                                     + // 001 - 001 Identificação do registro
+        PadRight(ACBrTitulo.Sacado.Email, 50, ' ')                                    + // 002 - 051 E-mail do Pagador
+        Space(10)                                                                     + // 052 - 061 Campo em branco
+        PadLeft(ATipoSacado, 2, '0')                                                  + // 062 - 063 Tipo de documento Beneficiário Final
+        PadLeft(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF), 14, '0')        + // 064 - 077 CPF/CNPJ do Beneficiário Final
+        PadLeft(TiraAcentos(ACBrTitulo.Sacado.SacadoAvalista.NomeAvalista), 60, ' ')  + // 078 - 137 Nome do Beneficiário Final
+        PadRight(RemoverEspacosDuplos( TiraAcentos( ACBrTitulo.Sacado.SacadoAvalista.Logradouro
+                                                    + ' '
+                                                    + ACBrTitulo.Sacado.SacadoAvalista.Numero
+                                                    + ' '
+                                                    + ACBrTitulo.Sacado.SacadoAvalista.Complemento)),
+                 60, ' ')                                                             + // 138 - 197 Endereço do Beneficiário Final
+        PadRight(ACBrTitulo.Sacado.SacadoAvalista.Bairro, 45, ' ')                    + // 198 - 242 Bairro do Beneficiário Final
+        PadLeft(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CEP), 8, '0')             + // 243 - 250 CEP do Beneficiário Final
+        PadRight(ACBrTitulo.Sacado.SacadoAvalista.Cidade, 30, ' ')                    + // 251 - 280 Cidade do Beneficiário Final
+        PadRight(ACBrTitulo.Sacado.SacadoAvalista.UF, 2, ' ')                         + // 281 - 282 UF do Beneficiário Final
+        space(5)                                                                      + // 283 - 287 Agência + DV (Campo não obrigatório)
+        space(10)                                                                     + // 288 - 297 Conta + DV (Campo não obrigatório)
+        space(97)                                                                     + // 298 - 394 Campo em branco
+        IntToStrZero(iSequencia , 6);
+
+
+        aRemessa.Add(UpperCase(wLinha));
+  end;
 
 end;
 

@@ -131,8 +131,8 @@ uses
 
 procedure TBoletoW_Sicoob_V3.DefinirURL;
 var
-  LNossoNumero, LContrato: string;
-  LCodigoSolicitacao, LIdArquivo: integer;
+  LNossoNumero, LContrato, LIdArquivo: string;
+  LCodigoSolicitacao :integer;
 begin
 
   if( aTitulo <> nil ) then
@@ -168,11 +168,11 @@ begin
     tpBaixa:  FPURL := FPURL + '/boletos/'+LNossoNumero+'/baixar';
     tpConsulta:
     begin
-      if ((LIdArquivo > 0) and (LCodigoSolicitacao > 0)) then    {Download do(s) arquivo(s) de movimentação.}
-         FPURL := FPURL + '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)+'&idArquivo='+inttostr(LIdArquivo)
-      else if ((LIdArquivo=0) and (LCodigoSolicitacao > 0)) then  {Consultar a situação da solicitação da movimentação}
+      if ((LIdArquivo.ToInteger > 0) and (LCodigoSolicitacao > 0)) then    {Download do(s) arquivo(s) de movimentação.}
+         FPURL := FPURL + '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)+'&idArquivo='+LIdArquivo
+      else if ((LIdArquivo.ToInteger=0) and (LCodigoSolicitacao > 0)) then  {Consultar a situação da solicitação da movimentação}
          FPURL := FPURL + '/boletos/movimentacoes?numeroCliente='+LContrato+'&codigoSolicitacao='+inttostr(LCodigoSolicitacao)
-      else if ((LIdArquivo=0) and (LCodigoSolicitacao=0)) then     {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
+      else if ((LIdArquivo.ToInteger=0) and (LCodigoSolicitacao=0)) then     {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
          FPURL := FPURL + '/boletos/movimentacoes'
       else
         raise EACBrBoletoWSException.Create
@@ -181,9 +181,7 @@ begin
 //    tpFazSolicitacaoConsultaMovimentacao           : FPURL := FPURL + '/boletos/movimentacoes';
 //    tpConsultaListaArquivosSolicitacaoMovimentacao : FPURL := FPURL + '/boletos/movimentacoes?numeroCliente='+LContrato+'&codigoSolicitacao='+LCodigoSolicitacao;
 //    tpConsultaArquivoSolicitacaoMovimentacao       : FPURL := FPURL + '/boletos/movimentacoes/download?numeroCliente='+LContrato+'&codigoSolicitacao='+LCodigoSolicitacao+'&idArquivo='+LIdArquivo;
-
   end;
-
 end;
 
 procedure TBoletoW_Sicoob_V3.DefinirContentType;
@@ -204,7 +202,8 @@ end;
 
 procedure TBoletoW_Sicoob_V3.GerarDados;
 Var
-  LCodigoSolicitacao, LIdArquivo: Integer;
+  LCodigoSolicitacao: Integer;
+  LIdArquivo:string;
 begin
   if Assigned(Boleto) then
 
@@ -235,17 +234,17 @@ begin
       begin
         LCodigoSolicitacao := Boleto.Configuracoes.WebService.Filtro.NumeroProtocolo;
         LIdArquivo         := Boleto.Configuracoes.WebService.Filtro.Identificador;
-        if ((LIdArquivo>0) and (LCodigoSolicitacao>0)) then {Download do(s) arquivo(s) de movimentação.}
+        if ((LIdArquivo.tointeger>0) and (LCodigoSolicitacao>0)) then {Download do(s) arquivo(s) de movimentação.}
         begin
           FMetodoHTTP := htGET; // Define Método POST Consulta Requisição
           FPDadosMsg := '';
         end
-        else if ((LIdArquivo=0) and (LCodigoSolicitacao>0)) then {Consultar a situação da solicitação da movimentação}
+        else if ((LIdArquivo.ToInteger=0) and (LCodigoSolicitacao>0)) then {Consultar a situação da solicitação da movimentação}
         begin
           FMetodoHTTP := htGET; // Define Método POST Consulta Requisição
           FPDadosMsg := '';
         end
-        else if ((LIdArquivo=0) and (LCodigoSolicitacao=0)) then   {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
+        else if ((LIdArquivo.tointeger=0) and (LCodigoSolicitacao=0)) then   {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
         begin
           FMetodoHTTP := htPOST; // Define Método POST Consulta Requisição
           RequisicaoSolicitacaoConsultaMovimentacoes;

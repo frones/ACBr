@@ -318,7 +318,8 @@ var
   AJsonBoletosArray: TACBrJSONArray;
   LMensagemRejeicao: TACBrBoletoRejeicao;
   LSituacao, LRetorno, LMovimento : string;
-  I, LCodigoSolicitacao, LIdArquivo: Integer;
+  I, LCodigoSolicitacao: Integer;
+  LIdArquivo:string;
   aJsonString:String;
   IDArquivos: TACBrJSONArray;
   LStream : TStringStream;
@@ -375,12 +376,12 @@ begin
          if (ACBrBoleto.Configuracoes.WebService.Operacao = tpConsulta) then
          begin
            {Solicitar a movimentação da carteira de cobrança registrada para beneficiário informado}
-           if ((LIdArquivo=0) and (LCodigoSolicitacao=0)) then
+           if ((LIdArquivo.ToInteger=0) and (LCodigoSolicitacao=0)) then
            begin
             //ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
             ListaRetorno.DadosRet.TituloRet.NossoNumeroCorrespondente := aJson.AsJSONObject['resultado'].AsString['codigoSolicitacao'];
            end
-           else if ((LIdArquivo=0) and (LCodigoSolicitacao>0)) then  {Consultar a situação da solicitação da movimentação}
+           else if ((LIdArquivo.tointeger=0) and (LCodigoSolicitacao>0)) then  {Consultar a situação da solicitação da movimentação}
            begin
               if aJson.AsJSONObject['resultado'].IsJSONArray('idArquivos') then
               begin
@@ -394,7 +395,7 @@ begin
                 end;
               end;
            end
-           else if ((LIdArquivo>0) and (LCodigoSolicitacao>0)) then {Download do(s) arquivo(s) de movimentação.}
+           else if ((LIdArquivo.tointeger>0) and (LCodigoSolicitacao>0)) then {Download do(s) arquivo(s) de movimentação.}
            begin
               if aJson.AsJSONObject['resultado'].AsString['arquivo'] <> EmptyStr then
               begin

@@ -137,7 +137,8 @@ type
     cobBancoBocomBBM,
     cobBancoSicoob,
     cobBancoSisprime,
-    cobBancoAilos
+    cobBancoAilos,
+    cobBancoCora
     );
 
   TACBrTitulo = class;
@@ -958,7 +959,7 @@ type
     FCarteira                   : Integer;
     FCarteiraVariacao           : Integer;
     FNumeroProtocolo            : Integer;
-    FIdentificador              : Integer;
+    FIdentificador              : String;
     procedure SetContaCaucao(const Value: Integer);
     procedure SetCnpjCpfPagador(const Value: string);
     procedure SetDataVencimento(const Value: TACBrDataPeriodo);
@@ -987,7 +988,7 @@ type
     property carteira                   : Integer                      read FCarteira                   write SetCarteira;
     property carteiraVariacao           : Integer                      read FCarteiraVariacao           write FCarteiraVariacao;
     property NumeroProtocolo            : Integer                      read FNumeroProtocolo            write FNumeroProtocolo;
-    property Identificador              : Integer                      read FIdentificador              write FIdentificador;
+    property Identificador              : String                       read FIdentificador              write FIdentificador;
   end;
 
   { TACBrWebService }
@@ -2208,7 +2209,7 @@ begin
   FModalidadeCobrancao:= 0;
   FCarteira:= 0;
   FNumeroProtocolo := 0;
-  FIdentificador := 0;
+  FIdentificador := '';
 end;
 
 destructor TACBrBoletoWSFiltroConsulta.Destroy;
@@ -3874,6 +3875,7 @@ begin
     341: Result := cobItau;
     389: Result := cobBancoMercantil;
     399: Result := cobHSBC;
+    403: Result := cobBancoCora;
     422: Result := cobBancoSafra;
     457: Result := cobBancoUY3;
     604: Result := cobBancoIndustrialBrasil;
@@ -4314,7 +4316,7 @@ begin
       Configuracoes.WebService.Filtro.carteiraVariacao := IniBoletos.ReadInteger(Sessao,'CarteiraVariacao', 0 );
       Configuracoes.WebService.Filtro.indiceContinuidade := IniBoletos.ReadInteger(Sessao,'IndiceContinuidade', 0 );
       Configuracoes.WebService.Filtro.NumeroProtocolo := IniBoletos.ReadInteger(Sessao,'NumeroProtocolo', 0 );
-      Configuracoes.WebService.Filtro.Identificador   := IniBoletos.ReadInteger(Sessao,'Identificador', 0 );
+      Configuracoes.WebService.Filtro.Identificador   := IniBoletos.ReadString(Sessao,'Identificador', '' );
 
 
       Result := True;
@@ -4765,6 +4767,7 @@ begin
      cobBancoAthenaBradesco  : fBancoClass := TACBrBancoAthenaBradesco.Create(Self);  {237}
      cobBancoQITechSCD       : fBancoClass := TACBrBancoQITechSCD.Create(Self);  {329}
      cobBancoUY3             : fBancoClass := TACBrBancoUY3.create(Self);            {457}
+//     cobBancoCora            : fBancoClass := TACBrBancoCora.create(Self);            {403}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

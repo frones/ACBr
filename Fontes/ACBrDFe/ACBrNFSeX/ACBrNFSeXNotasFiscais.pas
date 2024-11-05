@@ -720,18 +720,23 @@ begin
 
       Servico.Valores.ValorPis := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorPis', ''), 0);
       Servico.Valores.AliquotaPis := StringToFloatDef(AINIRec.ReadString(sSecao, 'AliquotaPis', ''), 0);
+      Servico.Valores.RetidoPis := FProvider.StrToSimNao(Ok, AINIRec.ReadString(sSecao, 'RetidoPis', ''));
 
       Servico.Valores.ValorCofins := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorCofins', ''), 0);
       Servico.Valores.AliquotaCofins := StringToFloatDef(AINIRec.ReadString(sSecao, 'AliquotaCofins', ''), 0);
+      Servico.Valores.RetidoCofins := FProvider.StrToSimNao(Ok, AINIRec.ReadString(sSecao, 'RetidoCofins', ''));
 
       Servico.Valores.ValorInss := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorInss', ''), 0);
       Servico.Valores.AliquotaInss := StringToFloatDef(AINIRec.ReadString(sSecao, 'AliquotaInss', ''), 0);
+      Servico.Valores.RetidoInss := FProvider.StrToSimNao(Ok, AIniRec.ReadString(sSecao, 'RetidoInss', ''));
 
       Servico.Valores.ValorIr := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorIr', ''), 0);
       Servico.Valores.AliquotaIr := StringToFloatDef(AINIRec.ReadString(sSecao, 'AliquotaIr', ''), 0);
+      Servico.Valores.RetidoIr := FProvider.StrToSimNao(Ok, AINIRec.ReadString(sSecao, 'RetidoIr', ''));
 
       Servico.Valores.ValorCsll := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorCsll', ''), 0);
       Servico.Valores.AliquotaCsll := StringToFloatDef(AINIRec.ReadString(sSecao, 'AliquotaCsll', ''), 0);
+      Servico.Valores.RetidoCsll := FProvider.StrToSimNao(Ok, AIniRec.ReadString(sSecao, 'RetidoCsll', ''));
 
       Servico.Valores.ISSRetido := FProvider.StrToSituacaoTributaria(Ok, AINIRec.ReadString(sSecao, 'ISSRetido', '0'));
 
@@ -1242,11 +1247,16 @@ begin
       INIRec.WriteFloat(sSecao, 'AliquotaDeducoes', Servico.Valores.AliquotaDeducoes);
       INIRec.WriteFloat(sSecao, 'ValorPis', Servico.Valores.ValorPis);
       INIRec.WriteFloat(sSecao, 'AliquotaPis', Servico.Valores.AliquotaPis);
+      INIRec.WriteString(sSecao, 'RetidoPis', FProvider.SimNaoToStr(Servico.Valores.RetidoPis));
       INIRec.WriteFloat(sSecao, 'ValorCofins', Servico.Valores.ValorCofins);
       INIRec.WriteFloat(sSecao, 'AliquotaCofins', Servico.Valores.AliquotaCofins);
+      INIRec.WriteString(sSecao, 'RetidoCofins', FProvider.SimNaoToStr(Servico.Valores.RetidoCofins));
       INIRec.WriteFloat(sSecao, 'ValorInss', Servico.Valores.ValorInss);
+      INIRec.WriteString(sSecao, 'RetidoInss', FProvider.SimNaoToStr(Servico.Valores.RetidoInss));
       INIRec.WriteFloat(sSecao, 'ValorIr', Servico.Valores.ValorIr);
+      INIRec.WriteString(sSecao, 'RetidoIr', FProvider.SimNaoToStr(Servico.Valores.RetidoIr));
       INIRec.WriteFloat(sSecao, 'ValorCsll', Servico.Valores.ValorCsll);
+      INIRec.WriteString(sSecao, 'RetidoCsll', FProvider.SimNaoToStr(Servico.Valores.RetidoCsll));
       INIRec.WriteString(sSecao, 'ISSRetido', FProvider.SituacaoTributariaToStr(Servico.Valores.IssRetido));
       INIRec.WriteFloat(sSecao, 'OutrasRetencoes', Servico.Valores.OutrasRetencoes);
       INIRec.WriteFloat(sSecao, 'DescontoIncondicionado', Servico.Valores.DescontoIncondicionado);

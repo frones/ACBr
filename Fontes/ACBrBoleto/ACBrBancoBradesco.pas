@@ -54,6 +54,7 @@ type
               const ACBrTitulo: TACBrTitulo); override;
     function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; override;
     function GerarLinhaRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList): String;
+    procedure LerRetorno400(ARetorno:TStringList); override;
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
@@ -70,7 +71,6 @@ type
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
 
     Procedure LerRetorno400Transacao4(ACBrTitulo :TACBrTitulo; ALinha:String); override;
-    function DefineNossoNumeroRetorno(const Retorno: String): String; override;
 
 
   end;
@@ -99,19 +99,6 @@ begin
                       ACBrTitulo.Carteira +
                       ACBrTitulo.NossoNumero +
                       PadLeft(RightStr(Cedente.Conta,7),7,'0') + '0';
-  end;
-end;
-
-function TACBrBancoBradesco.DefineNossoNumeroRetorno( const Retorno: String): String;
-var LTamanhoMaximoNossoNum : Integer;
-begin
-  LTamanhoMaximoNossoNum := TamanhoMaximoNossoNum;
-  try
-    if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
-      fpTamanhoMaximoNossoNum := LTamanhoMaximoNossoNum+1;
-  inherited;
-  finally
-    fpTamanhoMaximoNossoNum := LTamanhoMaximoNossoNum;
   end;
 end;
 
@@ -164,58 +151,74 @@ end;
 constructor TACBrBancoBradesco.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito                     := 2;
-   fpNome                       := 'BRADESCO';
-   fpNumero                     := 237;
-   fpTamanhoMaximoNossoNum      := 11;
-   fpTamanhoAgencia             := 4;
-   fpTamanhoConta               := 7;
-   fpTamanhoCarteira            := 2;
-   fpLayoutVersaoArquivo        := 84;
-   fpLayoutVersaoLote           := 42;
-   fpDensidadeGravacao          := '06250';
-   fpModuloMultiplicadorInicial := 0;
-   fpModuloMultiplicadorFinal   := 7;
-   fpCodParametroMovimento      := 'MX';
-   fpCodigosMoraAceitos         := '123';
+   fpDigito                 := 2;
+   fpNome                   := 'BRADESCO';
+   fpNumero                 := 237;
+   fpTamanhoMaximoNossoNum  := 11;
+   fpTamanhoAgencia         := 4;
+   fpTamanhoConta           := 7;
+   fpTamanhoCarteira        := 2;
+   fpLayoutVersaoArquivo    := 84;
+   fpLayoutVersaoLote       := 42;
+   fpDensidadeGravacao      := '06250';
+   fpModuloMultiplicadorInicial:= 0;
+   fpModuloMultiplicadorFinal:= 7;
+   fpCodParametroMovimento:= 'MX';
+   fpCodigosMoraAceitos    := '123';
 end;
 
-function TACBrBancoBradesco.MontaInstrucoesCNAB400(const ACBrTitulo: TACBrTitulo; const nRegistro: Integer): String;
+function TACBrBancoBradesco.MontaInstrucoesCNAB400(
+  const ACBrTitulo: TACBrTitulo; const nRegistro: Integer): String;
 var sNossoNumero,sDigitoNossoNumero : String;
-  I : Integer;
 begin
   Result := '';
 
   ValidaNossoNumeroResponsavel(sNossoNumero, sDigitoNossoNumero, ACBrTitulo);
 
-  {Primeira instrução vai no registro 1}
-  if ACBrTitulo.Mensagem.Count <= 1 then
-    Exit;
+  With ACBrTitulo, ACBrBoleto do begin
 
-  Result := '2'; // Identificação do layout para o registro
+    {Primeira instrução vai no registro 1}
+    if Mensagem.Count <= 1 then begin
+       Result := '';
+       Exit;
+    end;
 
-  for I := 1 to 4 do
-  begin
-    if ACBrTitulo.Mensagem.Count >= i + 1 then                                                                                  // 002-321 MENSAGEM 1 A 4
-      Result := Result + Copy(PadRight(Trim(ACBrTitulo.Mensagem[I]), 80, ' '), 1, 80)
+    Result := '2'               +                                                                          // 001-001 IDENTIFICAÇÃO DO LAYOUT PARA O REGISTRO
+              Copy(PadRight(Mensagem[1], 80, ' '), 1, 80);                                                 // 002-081 CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+
+    if Mensagem.Count >= 3 then
+      Result := Result +
+                Copy(PadRight(Mensagem[2], 80, ' '), 1, 80)                                                // 082-161 CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
     else
-      Result := Result + PadRight('', 80, ' ');
+      Result := Result + PadRight('', 80, ' ');                                                            // 082-161 CONTEÚDO DO RESTANTE DAS LINHAS
+
+    if Mensagem.Count >= 4 then
+      Result := Result +
+                Copy(PadRight(Mensagem[3], 80, ' '), 1, 80)                                                // 162-241 CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+    else
+      Result := Result + PadRight('', 80, ' ');                                                            // 162-241 CONTEÚDO DO RESTANTE DAS LINHAS
+
+    if Mensagem.Count >= 5 then
+      Result := Result +
+                Copy(PadRight(Mensagem[4], 80, ' '), 1, 80)                                                // 242-321 CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+    else
+      Result := Result + PadRight('', 80, ' ');                                                            // 242-321 CONTEÚDO DO RESTANTE DAS LINHAS
+
+
+    Result := Result
+              + IfThen(DataDesconto2 > 0,FormatDateTime( 'ddmmyy', DataDesconto2),PadLeft('', 6, '0'))     // 322-327 Data limite para concessão de Desconto 2
+              + IntToStrZero( round( ValorDesconto2 * 100 ), 13)                                           // 328-340 Valor do Desconto 2
+              + IfThen(DataDesconto3 > 0, FormatDateTime( 'ddmmyy', DataDesconto3) ,PadLeft('', 6, '0'))   // 341-346 Data limite para concessão de Desconto 3
+              + IntToStrZero( round( ValorDesconto3 * 100 ), 13)                                           // 347-359 Valor do Desconto 3
+              + space(7)                                                                                   // 360-366 Filler
+              + IntToStrZero(StrToIntDef(trim(Carteira), 0), 3)                                            // 367-369 Num. da Carteira
+              + IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia), 0), 5)                    // 370-374 Código da Agência Beneficiário
+              + IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta)  , 0), 7)                    // 375-381 Num. da Conta-Corrente
+              + Cedente.ContaDigito                                                                        // 382-382 DAC C/C
+              + sNossoNumero                                                                               // 383-393 Nosso Número
+              + sDigitoNossoNumero                                                                         // 394-394 DAC Nosso Número
+              + IntToStrZero( nRegistro + 1, 6);                                                           // 395-400 Num. Sequencial do Registro
   end;
-
-
-  Result := Result
-            + IfThen(ACBrTitulo.DataDesconto2 > 0,FormatDateTime( 'ddmmyy', ACBrTitulo.DataDesconto2),PadLeft('', 6, '0'))      // 322-327 Data limite para concessão de Desconto 2
-            + IntToStrZero( round( ACBrTitulo.ValorDesconto2 * 100 ), 13)                                                       // 328-340 Valor do Desconto 2
-            + IfThen(ACBrTitulo.DataDesconto3 > 0, FormatDateTime( 'ddmmyy', ACBrTitulo.DataDesconto3) ,PadLeft('', 6, '0'))    // 341-346 Data limite para concessão de Desconto 3
-            + IntToStrZero( round( ACBrTitulo.ValorDesconto3 * 100 ), 13)                                                       // 347-359 Valor do Desconto 3
-            + space(7)                                                                                                          // 360-366 Filler
-            + IntToStrZero(StrToIntDef(trim(ACBrTitulo.Carteira), 0), 3)                                                        // 367-369 Num. da Carteira
-            + IntToStrZero(StrToIntDef(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Agencia), 0), 5)                                // 370-374 Código da Agência Beneficiário
-            + IntToStrZero(StrToIntDef(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Conta)  , 0), 7)                                // 375-381 Num. da Conta-Corrente
-            + ACBrTitulo.ACBrBoleto.Cedente.ContaDigito                                                                         // 382-382 DAC C/C
-            + sNossoNumero                                                                                                      // 383-393 Nosso Número
-            + sDigitoNossoNumero                                                                                                // 394-394 DAC Nosso Número
-            + IntToStrZero( nRegistro + 1, 6);                                                                                  // 395-400 Num. Sequencial do Registro
 end;
 
 function TACBrBancoBradesco.MontarCampoNossoNumero (
@@ -532,7 +535,7 @@ begin
   LLinha := MontaInstrucoesCNAB400(ACBrTitulo, aRemessa.Count );
 
   if not(LLinha = EmptyStr) then
-    aRemessa.Add(AnsiUpperCase(LLinha));
+    aRemessa.Add(UpperCase(LLinha));
 
   if (ACBrTitulo.Sacado.SacadoAvalista.NomeAvalista <> '') then
   begin
@@ -553,7 +556,20 @@ begin
     PadLeft(LDigitoNossoNumero ,1,' ')                                           + // 394 a 394 - Digito Nosso Número
     IntToStrZero( ARemessa.Count + 1, 6);                                          // 395 a 400 - Número sequencial do registro
 
-    ARemessa.Add(AnsiUpperCase(LLinha));
+    ARemessa.Add(UpperCase(LLinha));
+  end;
+end;
+
+procedure TACBrBancoBradesco.LerRetorno400(ARetorno: TStringList);
+var LTamanhoMaximoNossoNum : Integer;
+begin
+  LTamanhoMaximoNossoNum := TamanhoMaximoNossoNum;
+  try
+    if ACBrBanco.ACBrBoleto.LerNossoNumeroCompleto then
+      fpTamanhoMaximoNossoNum := LTamanhoMaximoNossoNum+1;
+    inherited;
+  finally
+    fpTamanhoMaximoNossoNum := LTamanhoMaximoNossoNum;
   end;
 end;
 

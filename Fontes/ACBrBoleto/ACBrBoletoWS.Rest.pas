@@ -131,7 +131,6 @@ function TRetornoEnvioREST.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
   if (ACBrBoleto.ListadeBoletos.Count > 0) and (ACBrBoleto.Configuracoes.WebService.Operacao <> tpConsulta) then
   begin
-    ACBrTitulo := ACBrBoleto.ListadeBoletos[ AIndex ];
     Result := LerRetorno(ACBrBoleto.ListadeBoletos[ AIndex ].RetornoWeb);
     ACBrBoleto.ListadeBoletos[ AIndex ].QrCode; //GetQRCode valida campos no titulo
   end

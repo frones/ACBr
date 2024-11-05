@@ -54,7 +54,6 @@ type
 
   { TBoletoW_Bradesco}
   TBoletoW_Bradesco = class(TBoletoWSREST)
-    FUnixTime : Int64;
   private
     procedure AlteracaoDesconto(AJsonObject: TACBrJSONObject);
     procedure AlteraDataVencimento(AJsonObject: TACBrJSONObject);
@@ -87,7 +86,7 @@ type
     procedure GerarDesconto(AJsonObject: TACBrJSONObject);
 
   public
-    constructor Create(ABoletoWS: TBoletoWS; AACBrBoleto : TACBrBoleto); reintroduce;
+    constructor Create(ABoletoWS: TBoletoWS); override;
     function GerarRemessa: string; override;
     function Enviar: boolean; override;
   end;
@@ -97,8 +96,11 @@ const
   C_URL_HOM         = 'https://proxy.api.prebanco.com.br';
   URI_REG_BOLETO    = '/v1/boleto-hibrido/registrar-boleto';
 
-  C_URL_OAUTH_PROD  = 'https://openapi.bradesco.com.br/auth/server/v%s/token';
-  C_URL_OAUTH_HOM   = 'https://proxy.api.prebanco.com.br/auth/server/v%s/token';
+  C_URL_OAUTH_JWS_PROD  = 'https://openapi.bradesco.com.br/auth/server/v1.1/token';
+  C_URL_OAUTH_JWS_HOM   = 'https://proxy.api.prebanco.com.br/auth/server/v1.1/token';
+
+  C_URL_OAUTH_PROD  = 'https://openapi.bradesco.com.br/auth/server/v1.2/token';
+  C_URL_OAUTH_HOM   = 'https://proxy.api.prebanco.com.br/auth/server/v1.2/token';
 
   C_CONTENT_TYPE    = 'application/x-www-form-urlencoded';
   C_ACCEPT          = '*/*';
@@ -107,7 +109,7 @@ const
   C_ACCEPT_ENCODING = 'gzip, deflate, br';
 
   C_CHARSET         = 'utf-8';
-  C_ACCEPT_CHARSET  = 'utf8';
+  C_ACCEPT_CHARSET  = 'utf-8';
 
 implementation
 
@@ -160,11 +162,24 @@ begin
   DefinirKeyUser;
   if FPDadosMsg <> '' then
   begin
+     LDataAtual       := Now;
+//     LIntMiliSegundos := DateTimeToUnix(LDataAtual, False) * 1000;
+//     LStrTimeStamp    := DateToISO8601(now);
+     LStrConteudo := 'POST' + AnsiChar(#10) +
+                     '/v1/boleto-hibrido/registrar-boleto' + AnsiChar(#10) +
+                     '' + AnsiChar(#10) +
+                     FPDadosMsg + AnsiChar(#10) +
+                     OAuth.Token + AnsiChar(#10) +
+                     IntToStr(LIntMiliSegundos) + AnsiChar(#10) +
+                     LStrTimeStamp + AnsiChar(#10) +
+                     'SHA256';
+     LStrRequestAssinado := DFeSSL.CalcHash(AnsiString(LStrConteudo), dgstSHA256, outBase64, True);
+
      FPHeaders.Add('Accept-Encoding: ' + C_ACCEPT_ENCODING);
      FPHeaders.Add('Content-Type: application/json');
-     FPHeaders.Add('X-Brad-Signature: ' + OAuth.Token);
-     FPHeaders.Add('X-Brad-Nonce: ' + IntToStr(FUnixTime * 1000));
-     FPHeaders.Add('X-Brad-Timestamp: ' + IntToStr(FUnixTime));
+     FPHeaders.Add('X-Brad-Signature: ' + LStrRequestAssinado);
+     FPHeaders.Add('X-Brad-Nonce: ' + IntToStr(LIntMiliSegundos));
+     FPHeaders.Add('X-Brad-Timestamp: ' + LStrTimeStamp);
      FPHeaders.Add('X-Brad-Algorithm: SHA256');
      FPHeaders.Add('acess-token: ' + Boleto.Cedente.CedenteWS.ClientID);
      FPHeaders.Add('cpf-cnpj: ' + OnlyNumber(Boleto.Cedente.CNPJCPF));
@@ -210,42 +225,9 @@ begin
 end;
 
 function TBoletoW_Bradesco.GerarTokenAutenticacao: string;
-const PARAMS_OAUTH = '{"aud": "%s","sub": "%s","iat": "%s","exp": "%s","jti": "%s","ver": "%s"}';
-var
-  LVersao, LURL : String;
 begin
   OAuth.Payload := True;
-  result:= '';
-  if Boleto.Cedente.CedenteWS.IndicadorPix then
-    LVersao := '1.2'
-  else
-    LVersao := '1.1';
-
-  FUnixTime := DateTimeToUnix(Now, False);
-
-  if  Boleto.Configuracoes.WebService.Ambiente = taProducao then
-    LURL := Format(OAuth.URL,['1.1']) //página 7
-  else
-    LURL := Format(OAuth.URL,[LVersao]);
-
-  if Assigned(OAuth) then
-  begin
-    OAuth.GrantType   := 'urn:ietf:params:oauth:grant-type:jwt-bearer';
-    OAuth.ParamsOAuth := Format(PARAMS_OAUTH,
-                                [LURL,
-                                 Boleto.Cedente.CedenteWS.ClientID,
-                                 IntToStr(FUnixTime),
-                                 IntToStr(FUnixTime + 3600),
-                                 IntToStr(FUnixTime * 1000),
-                                 LVersao]);
-    OAuth.AddHeaderParam('accept-encoding', C_ACCEPT_ENCODING);
-    OAuth.AddHeaderParam('accept-charset' , C_ACCEPT_CHARSET);
-    OAuth.AddHeaderParam('accept','*/*');
-    if OAuth.GerarToken then
-      result := OAuth.Token
-    else
-      raise EACBrBoletoWSException.Create(ClassName + Format( S_ERRO_GERAR_TOKEN_AUTENTICACAO, [OAuth.ErroComunicacao] ));
-  end;
+  Result := inherited GerarTokenAutenticacao;
 end;
 
 procedure TBoletoW_Bradesco.DefinirKeyUser;
@@ -616,7 +598,7 @@ begin
   end;
 end;
 
-constructor TBoletoW_Bradesco.Create(ABoletoWS: TBoletoWS; AACBrBoleto : TACBrBoleto);
+constructor TBoletoW_Bradesco.Create(ABoletoWS: TBoletoWS);
 begin
   inherited Create(ABoletoWS);
 
@@ -628,16 +610,9 @@ begin
       OAuth.URL := C_URL_OAUTH_HOM
     else
       OAuth.URL := C_URL_OAUTH_PROD;
-
-
-    if AACBrBoleto.Cedente.CedenteWS.IndicadorPix then
-      OAuth.URL := Format(OAuth.URL, ['1.2'])
-    else
-      OAuth.URL := Format(OAuth.URL, ['1.1']);
-
     OAuth.Payload := True;
     OAuth.ContentType       := 'application/x-www-form-urlencoded';
-    OAuth.AuthorizationType := atJWT;
+    OAuth.AuthorizationType := atNoAuth;//precisa alterar para NoAuth para não mandar o Basic.
   end;
 end;
 

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/11/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6201: A cidade de Primavera do Leste/MT trocou de provedor, agora é RLZ
+    versão 2.03.
+   Por: Diego Reckziegel
+[*] #TK-6204: A cidade de Candelaria/RS trocou de provedor, agora é Tecnos.
+   Por: DNA Automacao
+
 04/11/2024
 -- ISSBarueri.Provider --
 [*] #TK-6197: Ajustes na montagem do conteudo do grupo <Body> do serviço: 

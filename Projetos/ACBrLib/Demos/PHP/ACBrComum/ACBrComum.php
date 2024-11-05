@@ -100,6 +100,16 @@ function CarregaIniPath($dir, $nomeLib)
 
 function CarregaContents($importsPath, $dllPath)
 {
+    $modoGrafico = verificaAmbienteGrafico();
+    if ( $modoGrafico === 0) {
+        throw new Exception("Ambiente gráfico não identificado");
+        return -10;
+    }
+
+    if ($modoGrafico === 2){
+        putenv("DISPLAY=:1");
+    }
+
     $ffi = FFI::cdef(
         file_get_contents($importsPath),
         $dllPath
@@ -155,8 +165,8 @@ function strDateTimeToDoubleDateTime($dateString) {
 
     // Fração de um dia (horas, minutos, segundos)
     $fraction = ($inputDate->format('H') / 24) +
-                ($inputDate->format('i') / 1440) +
-                ($inputDate->format('s') / 86400);
+        ($inputDate->format('i') / 1440) +
+        ($inputDate->format('s') / 86400);
 
     // Retorna o valor em formato double
     return $daysDiff + $fraction;
@@ -192,4 +202,26 @@ function parseIniToStr($ini)
     }
 
     return $config;
+}
+
+function verificaAmbienteGrafico()
+{
+    $verificaX11 = shell_exec('pgrep Xorg 2>&1') !== null;
+    $displayX11 = getenv('DISPLAY') !== false;
+
+    if ($verificaX11 || $displayX11) {
+        // Ambiente grafico X11
+        return 1;
+    } else {
+        $verificaXVFB = shell_exec('pgrep Xvfb 2>&1') !== null;
+        $displayXVFB = strpos(getenv('DISPLAY'), ':99') !== false;
+
+        if ($verificaXVFB || $displayXVFB) {
+            // Emulador XVFB    
+            return 2;
+        } else {
+            // Sem ambiente grafico
+            return 0;
+        }
+    }
 }

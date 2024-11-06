@@ -460,7 +460,7 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeValidaInterfacePP: function(IntPP: Byte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //?? ScopeConsultaPP não documentado?? ...
+    //Busca informações de configurações no servidor deles...
     xScopeConsultaPP: function(Configurado, UsoExclusivoScope, Porta: PByte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
@@ -515,12 +515,8 @@ type
     procedure VerificarSeEstaConectadoScope;
     procedure VerificarSeMantemConexaoScope;
 
-    procedure AbrirSessaoTEF;
-    procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
     procedure VerificaSessaoTEFAnterior;
 
-    procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao; const Param1,
-      Param2, Param3: String);
     procedure ExecutarTransacao;
 
     procedure AbrirPinPad;
@@ -574,6 +570,12 @@ type
 
     procedure Inicializar;
     procedure DesInicializar;
+
+//E
+    procedure AbrirSessaoTEF;
+    procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
+    procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao; const Param1,
+      Param2, Param3: String);
 
     function ObterVersaoScope: String;
     function AcharPortaPinPad: String;
@@ -1322,6 +1324,7 @@ var
   Acao, DesfezTEF: Byte;
   ret: LongInt;
 begin
+  TransacaoFoiDesfeita := False;
   if not fSessaoAberta then
     Exit;
 
@@ -1395,6 +1398,8 @@ end;
 procedure TACBrTEFScopeAPI.ExecutarTransacao;
 begin
   GravarLog('ExecutarTransacao');
+
+  //Ver método FinalizaTransacaoTEF exemplo Delphi para entender loop...
 
 end;
 

@@ -139,7 +139,7 @@ begin
 
   fTEFScopeAPI := TACBrTEFScopeAPI.Create;
   fTEFScopeAPI.OnGravarLog := QuandoGravarLogAPI;
-  //fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
+  fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
   //fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
   //fTEFScopeAPI.OnObtemCampo := QuandoPerguntarCampoAPI;
 end;
@@ -290,7 +290,11 @@ function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
 var
   PA: TACBrTEFParametros;
   SomaCartoes, ModalidadeInt, FinanciamentoInt: Integer;
-  ValDbl: Double;
+  ValDbl, ValorTaxaServico: Double;
+  ValorTransacaoString: string;
+  ValorTaxaServicoString: string;
+  ResultadoDeSessao: Boolean;
+  Param3: string;
 begin
   VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
@@ -301,47 +305,52 @@ begin
     PA.Text := DadosAdicionais;
 
     ValDbl := ValorPagto * 100;
+    ValorTaxaServico := 0;
+    ValorTransacaoString := IntToStr(Trunc(RoundTo(ValDbl,-2)));
+    ValorTaxaServicoString := IntToStr(Trunc(RoundTo(0,-2)));
+
     //PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
     //PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
     //PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValDbl,-2)));
     //PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(fpACBrTEFAPI.DadosAutomacao.MoedaISO4217); // '986' ISO4217 - BRL
-
-    case Modalidade of
-      tefmpCartao: ModalidadeInt := 1;
-      tefmpDinheiro: ModalidadeInt := 2;
-      tefmpCheque: ModalidadeInt := 4;
-      tefmpCarteiraVirtual: ModalidadeInt := 8;
-    else
-      ModalidadeInt := 0;
-    end;
+//E
+    //case Modalidade of
+    //  tefmpCartao: ModalidadeInt := 1;
+    //  tefmpDinheiro: ModalidadeInt := 2;
+    //  tefmpCheque: ModalidadeInt := 4;
+    //  tefmpCarteiraVirtual: ModalidadeInt := 8;
+    //else
+    //  ModalidadeInt := 0;
+    //end;
     //if (ModalidadeInt > 0) then
     //  PA.ValueInfo[PWINFO_PAYMNTTYPE] := IntToStr(ModalidadeInt);
 
-    SomaCartoes := 0;
-    if teftcCredito in CartoesAceitos then
-      Inc(SomaCartoes, 1);
-    if teftcDebito in CartoesAceitos then
-      Inc(SomaCartoes, 2);
-    if teftcVoucher in CartoesAceitos then
-      Inc(SomaCartoes, 4);
-    if teftcPrivateLabel in CartoesAceitos then
-      Inc(SomaCartoes, 8);
-    if teftcFrota in CartoesAceitos then
-      Inc(SomaCartoes, 16);
-    if teftcOutros in CartoesAceitos then
-      Inc(SomaCartoes, 128);
+//E
+    //SomaCartoes := 0;
+    //if teftcCredito in CartoesAceitos then
+    //  Inc(SomaCartoes, 1);
+    //if teftcDebito in CartoesAceitos then
+    //  Inc(SomaCartoes, 2);
+    //if teftcVoucher in CartoesAceitos then
+    //  Inc(SomaCartoes, 4);
+    //if teftcPrivateLabel in CartoesAceitos then
+    //  Inc(SomaCartoes, 8);
+    //if teftcFrota in CartoesAceitos then
+    //  Inc(SomaCartoes, 16);
+    //if teftcOutros in CartoesAceitos then
+    //  Inc(SomaCartoes, 128);
     //if (SomaCartoes > 0) then
     //  PA.ValueInfo[PWINFO_CARDTYPE] := IntToStr(SomaCartoes);
-
-    case Financiamento of
-      tefmfAVista: FinanciamentoInt := 1;
-      tefmfParceladoEmissor: FinanciamentoInt := 2;
-      tefmfParceladoEstabelecimento: FinanciamentoInt := 4;
-      tefmfPredatado: FinanciamentoInt := 8;
-      tefmfCreditoEmissor: FinanciamentoInt := 16;
-    else
-      FinanciamentoInt := 0;
-    end;
+//E
+    //case Financiamento of
+    //  tefmfAVista: FinanciamentoInt := 1;
+    //  tefmfParceladoEmissor: FinanciamentoInt := 2;
+    //  tefmfParceladoEstabelecimento: FinanciamentoInt := 4;
+    //  tefmfPredatado: FinanciamentoInt := 8;
+    //  tefmfCreditoEmissor: FinanciamentoInt := 16;
+    //else
+    //  FinanciamentoInt := 0;
+    //end;
     //if (FinanciamentoInt > 0) then
     //  PA.ValueInfo[PWINFO_FINTYPE] := IntToStr(FinanciamentoInt);
     //
@@ -354,8 +363,20 @@ begin
     //if (fAutorizador <> '') then
     //  PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
 
-    //fTEFPayGoAPI.IniciarTransacao(fOperacaoVenda, PA);
-//D    Result := fTEFScopeAPI.ExecutarTransacao;
+    //fTEFScopeAPI.IniciarTransacao(fOperacaoVenda, PA);
+    //D    Result := fTEFScopeAPI.ExecutarTransacao;
+
+//E ?? na verdade precisaria abrir sessao uma vez, efetuar várias transações
+//    eno final fechar a sessão Confirmando TODAS **ou** Cancelando TODAS..
+    fTEFScopeAPI.AbrirSessaoTEF;
+    fTEFScopeAPI.IniciarTransacao(scoCredito, ValorTransacaoString, ValorTaxaServicoString, Param3);
+
+    //fTEFScopeAPI.ExecutarTransacao;
+
+
+
+    fTEFScopeAPI.FecharSessaoTEF(True, ResultadoDeSessao);
+  //???Tratar o retorno de FecharSessaoTEF???
   finally
     PA.Free;
   end;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/11/2024
+-- ACBrNFSeXServicos --
+[*] Incluída as URLs de Link da cidade de Joinville/SC.
+   Por: Sandro Felipe Adad
+
 05/11/2024
 -- ACBrNFSeXNotasFiscais --
 [*] #TK-6174: Adiciona na leitura e escrita de INI as propriedades RetidoPIS, RetidoCofins, RetidoInss, RetidoIr e RetidoCsll.

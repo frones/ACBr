@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 06/11/2024
+-- NFEletronica.GravarXml --
+[*] A tag IssRetido tem que conter o valor do ISS Retido e não se o ISS é
+    Retido ou não, sendo assim, devemos alimentar o campo ValorIssRetido em
+    vez de IssRetido para gerar essa tag.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluída as URLs de Link da cidade de Joinville/SC.
    Por: Sandro Felipe Adad

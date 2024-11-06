@@ -135,8 +135,8 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#13', 'ValorServicos', 1, 15, 1,
                              NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO));
 
-  Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 1, 1,
-    FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
+  Result.AppendChild(AddNode(tcDe2, '#20', 'IssRetido', 1, 15, 1,
+                           NFSe.Servico.Valores.ValorIssRetido, DSC_INDISSRET));
 
   Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIR', 1, 15, 1,
                                         NFSe.Servico.Valores.ValorIr, DSC_VIR));

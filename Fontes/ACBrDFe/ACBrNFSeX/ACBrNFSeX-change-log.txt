@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/11/2024
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade de Ponta Pora/MS, o provedor continua o mesmo.
+   Por: Diego Reckziegel
 -- NFEletronica.GravarXml --
 [*] A tag IssRetido tem que conter o valor do ISS Retido e não se o ISS é
     Retido ou não, sendo assim, devemos alimentar o campo ValorIssRetido em

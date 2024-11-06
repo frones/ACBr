@@ -221,7 +221,7 @@ begin
   else
     LVersao := '1.1';
 
-  FUnixTime := DateTimeToUnix(Now, False);
+  FUnixTime := DateTimeToUnix(Now);
 
   if  Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
     LURL := Format(OAuth.URL,['1.1']) //página 7

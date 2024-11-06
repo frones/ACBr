@@ -288,7 +288,9 @@ uses
   IniFiles, typinfo, dateutils, math, strutils, LCLType,
   frIncluirPagamento, frMenuTEF, frObtemCampo, frExibeMensagem,
   configuraserial,
-  ACBrUtil, ACBrDelphiZXingQRCode,
+  //ACBrUtil,
+  ACBrDelphiZXingQRCode,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrTEFPayGoComum, ACBrTEFAPIPayGoWeb, ACBrTEFAPIStoneAutoTEF;
 
 {$R *.lfm}

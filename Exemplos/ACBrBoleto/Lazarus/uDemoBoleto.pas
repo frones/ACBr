@@ -30,6 +30,8 @@
 
 unit uDemoBoleto;
 
+{$MODE Delphi}
+
 interface
 
 //descomentar o motor de relatório que desejar utilizar! removendo o ponto
@@ -43,9 +45,11 @@ uses
   ACBrBoletoConversao, ACBrBoletoRetorno, ComCtrls, MaskEdit
   {$IFDEF GERADOR_FORTES_REPORT},ACBrBoletoFCFortesFr{$ENDIF}
   {$IFDEF GERADOR_FAST_REPORT},ACBrBoletoFCFR{$ENDIF}
-  ,ACBrBoletoFPDF
-  ;
+  ,ACBrBoletoFPDF;
 type
+
+  { TfrmDemoBoleto }
+
   TfrmDemoBoleto = class(TForm)
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
@@ -266,7 +270,6 @@ type
     TabSheet9: TTabSheet;
     cxbEMV: TCheckBox;
     chkIndicadorPix: TCheckBox;
-    ckbEmHomologacao: TCheckBox;
     TabSheet10: TTabSheet;
     Label85: TLabel;
     cbbWSConsulta: TComboBox;
@@ -282,6 +285,8 @@ type
     edtCIP: TEdit;
     Label88: TLabel;
     Label89: TLabel;
+    cbbAmbiente: TComboBox;
+    Label90: TLabel;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -328,6 +333,7 @@ type
     procedure CarregarTipoCarteira;
     procedure CarregarTipoDocumento;
     procedure CarregarSSLLib;
+    procedure CarregarAmbiente;
     procedure GravarIniComponente;
     procedure LerIniComponente(const ADialog : Boolean = False);
     procedure AplicarConfiguracoesAoComponente;
@@ -436,7 +442,7 @@ begin
 
   Boleto.PrefixArqRemessa                  := edtPrefixRemessa.Text;
   Boleto.LayoutRemessa                     := TACBrLayoutRemessa(cbxCNAB.itemindex);
-  Boleto.Homologacao                       := ckbEmHomologacao.Checked;
+  Boleto.Configuracoes.WebService.Ambiente := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
 
   Boleto.ImprimirMensagemPadrao            := ckbImprimirMensagemPadrao.Checked;
   Boleto.LeCedenteRetorno                  := ckbLerCedenteArquivoRetorno.Checked;
@@ -501,7 +507,7 @@ begin
   BeneficiarioWS.KeyUser      := edtKeyUser.Text;
   BeneficiarioWS.Scope        := edtScope.Text;
   BeneficiarioWS.IndicadorPix := chkIndicadorPix.Checked;
-  WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+  WebService.Ambiente         := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
   WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 
   Boleto.Configuracoes.Arquivos.LogNivel           := TNivelLog(cbbLogNivel.Items.Objects[cbbLogNivel.ItemIndex]);
@@ -532,8 +538,8 @@ begin
 
   edtPrefixRemessa.Text               := Boleto.PrefixArqRemessa;
 
-  cbxCNAB.itemindex                   := Ord(Boleto.LayoutRemessa);
-  ckbEmHomologacao.Checked            := Boleto.Homologacao;
+  cbxCNAB.ItemIndex                   := Ord(Boleto.LayoutRemessa);
+  cbbAmbiente.ItemIndex               := Ord(Boleto.Configuracoes.WebService.Ambiente);
   ckbImprimirMensagemPadrao.Checked   := Boleto.ImprimirMensagemPadrao;
   ckbLerCedenteArquivoRetorno.Checked := Boleto.LeCedenteRetorno;
   ckbLerNossoNumeroCompleto.Checked   := Boleto.LerNossoNumeroCompleto;
@@ -654,6 +660,7 @@ begin
       RetText.Add('Descriçãoo Comando :: '  + Retorno[i].DescricaoMotivoRejeicaoComando.Text);
       RetText.Add('EMV (QrCode Pix) :: '  + Retorno[i].QrCode.emv);
       RetText.Add('---------------------------');
+
       //[...] demais propriedades do titulo a gosto
     end;
     RetText.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoProcessado.txt' );
@@ -705,6 +712,7 @@ begin
   Titulo.DataProcessamento := Now;
   Titulo.Carteira          := edtCarteira.Text;
   Titulo.NossoNumero       := edtNossoNro.Text;
+  Titulo.NossoNumeroCorrespondente := ''; //utilizado na Consulta, Alteração e Baixa da API Inter com QrCode
   Titulo.ValorDocumento    := StrToCurr(edtValorDoc.Text);
   Titulo.Sacado.NomeSacado := edtNome.Text;
   Titulo.Sacado.CNPJCPF    := OnlyNumber(edtCPFCNPJ.Text);
@@ -864,6 +872,7 @@ begin
   CarregarTipoCarteira;
   CarregarTipoDocumento;
   CarregarSSLLib;
+  CarregarAmbiente;
   LerIniComponente;
   AplicarConfiguracoesComponenteATela;
   edtPathRemessa.Text := ExtractFilePath(ParamStr(0))+'Remessa';
@@ -879,10 +888,17 @@ end;
 procedure TfrmDemoBoleto.carregarBancos;
 var
   Banco: TACBrTipoCobranca;
+  LBanco : String;
 begin
   cbxBanco.Items.clear;
 	for Banco := Low(TACBrTipoCobranca) to High(TACBrTipoCobranca) do
-    cbxBanco.Items.AddObject( GetEnumName(TypeInfo(TACBrTipoCobranca), integer(Banco) ), TObject(integer(Banco)) );
+  begin
+    LBanco := GetEnumName(TypeInfo(TACBrTipoCobranca), integer(Banco) );
+    if not ((pos('Brasil',LBanco) > 0) or (pos('Bancoob',LBanco) > 0) or (pos('Nordeste',LBanco) > 0))  then
+      LBanco := StringReplace(LBanco, 'cobBanco','', [rfReplaceAll,rfIgnoreCase]);
+    LBanco := StringReplace(LBanco, 'cob','', [rfReplaceAll,rfIgnoreCase]);
+    cbxBanco.Items.AddObject( LBanco , TObject(integer(Banco)) );
+  end;
 end;
 
 procedure TfrmDemoBoleto.CarregarCaracteristicaTitulo;
@@ -918,6 +934,15 @@ begin
   cbxSSLLib.Items.clear;
 	for SSLLib := Low(TSSLHttpLib) to High(TSSLHttpLib) do
     cbxSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(SSLLib) ) );
+end;
+
+procedure TfrmDemoBoleto.CarregarAmbiente;
+var
+  LAmbiente: TTipoAmbienteWS;
+begin
+  cbbAmbiente.Items.clear;
+	for LAmbiente := Low(TTipoAmbienteWS) to High(TTipoAmbienteWS) do
+    cbbAmbiente.Items.Add( GetEnumName(TypeInfo(TTipoAmbienteWS), integer(LAmbiente) ) );
 end;
 
 procedure TfrmDemoBoleto.CarregarTipoCarteira;
@@ -1103,6 +1128,7 @@ begin
               SLRetorno.Add('valorPago = '                  + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.ValorPago));
               SLRetorno.Add('NossoNumeroCorrespondente = '  + RetornoDetalhe.DadosRet.TituloRet.NossoNumeroCorrespondente);
               SLRetorno.Add('EMV (QrCode Pix) = '           + RetornoDetalhe.DadosRet.TituloRet.EMV);
+
               SLRetorno.Add('  ---  ');
             end;
             SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsultaDetalhe.txt' );
@@ -1193,26 +1219,26 @@ begin
         if NaoEstaVazio(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
         begin
          SLRemessa.Add('TITULO_RETORNO'            + sLineBreak  +
-         'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
-         'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
-         'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
-         'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
-         'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
-         'NossoNumeroCorrespondente='             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumeroCorrespondente+ sLineBreak +
-         'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
-         'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
-         'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
-         'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
-         'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
-         'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
-         'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
-         'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
-         'valor_outra_deducao='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
-         'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
-         'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
-         'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
-         'EMV (QrCode) ='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV + sLineBreak +
-         'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
+          'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+          'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+          'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
+          'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
+          'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+          'NossoNumeroCorrespondente='             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumeroCorrespondente+ sLineBreak +
+          'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
+          'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
+          'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
+          'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
+          'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
+          'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
+          'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
+          'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
+          'valor_outra_deducao='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
+          'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
+          'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
+          'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+          'EMV (QrCode) ='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV + sLineBreak +
+          'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
         end;
       end;
       SLRemessa.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );

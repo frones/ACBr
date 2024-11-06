@@ -883,10 +883,17 @@ end;
 procedure TfrmDemoBoleto.carregarBancos;
 var
   Banco: TACBrTipoCobranca;
+  LBanco : String;
 begin
   cbxBanco.Items.clear;
 	for Banco := Low(TACBrTipoCobranca) to High(TACBrTipoCobranca) do
-    cbxBanco.Items.AddObject( GetEnumName(TypeInfo(TACBrTipoCobranca), integer(Banco) ), TObject(integer(Banco)) );
+  begin
+    LBanco := GetEnumName(TypeInfo(TACBrTipoCobranca), integer(Banco) );
+    if not ((pos('Brasil',LBanco) > 0) or (pos('Bancoob',LBanco) > 0) or (pos('Nordeste',LBanco) > 0))  then
+      LBanco := StringReplace(LBanco, 'cobBanco','', [rfReplaceAll,rfIgnoreCase]);
+    LBanco := StringReplace(LBanco, 'cob','', [rfReplaceAll,rfIgnoreCase]);
+    cbxBanco.Items.AddObject( LBanco , TObject(integer(Banco)) );
+  end;
 end;
 
 procedure TfrmDemoBoleto.CarregarCaracteristicaTitulo;

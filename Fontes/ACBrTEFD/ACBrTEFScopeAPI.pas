@@ -144,22 +144,22 @@ const
   SCO_PRIMEIRO_COLETA_DADOS:        LongInt = $FC00;
   SCO_COLETAR_CARTAO:               LongInt = $FC00;
 
-  SCO_CARTAO:                       LongInt = $FC00;
-  SCO_IMPRIME_CUPOM:                LongInt = $FC02;
-  SCO_IMPRIME_CHEQUE:               LongInt = $FC08;
-  SCO_SENHA:                        LongInt = $FC11;
-  SCO_IMPRIME_CONSULTA:             LongInt = $FC1B;
-  SCO_COLETA_VALOR_RECARGA:         LongInt = $FC2E;
-  SCO_IMPRIME_CUPOM_PARCIAL:        LongInt = $FC46;
-  SCO_COLETA_AUT_OU_CARTAO:         LongInt = $FC6C;
-  SCO_COLETA_OPERADORA:             LongInt = $FC70;
-  SCO_CARTAO_DIGITADO:              LongInt = $FC85;
+  SCO_CARTAO = $FC00;
+  SCO_IMPRIME_CUPOM = $FC02;
+  SCO_IMPRIME_CHEQUE = $FC08;
+  SCO_SENHA = $FC11;
+  SCO_IMPRIME_CONSULTA = $FC1B;
+  SCO_COLETA_VALOR_RECARGA = $FC2E;
+  SCO_IMPRIME_CUPOM_PARCIAL = $FC46;
+  SCO_COLETA_AUT_OU_CARTAO = $FC6C;
+  SCO_COLETA_OPERADORA = $FC70;
+  SCO_CARTAO_DIGITADO = $FC85;
 
-  SCO_COLETA_CARTAO_EM_ANDAMENTO:   LongInt = $FCFC;
-  SCO_COLETA_EM_ANDAMENTO:          LongInt = $FCFD;
-  SCO_MOSTRA_INFO_RET_SCOPE:        LongInt = $FCFE; // mostra informações e retorna para scope
-  SCO_MOSTRA_INFO_AGUARDA_CONF:     LongInt = $FCFF; // mostra informações e aguarda operador
-  SCO_ULTIMO_COLETA_DADOS:          LongInt = $FCFF;
+  SCO_COLETA_CARTAO_EM_ANDAMENTO = $FCFC;
+  SCO_COLETA_EM_ANDAMENTO = $FCFD;
+  SCO_MOSTRA_INFO_RET_SCOPE = $FCFE; // mostra informações e retorna para scope
+  SCO_MOSTRA_INFO_AGUARDA_CONF = $FCFF; // mostra informações e aguarda operador
+  SCO_ULTIMO_COLETA_DADOS = $FCFF;
 
   SCO_EXISTE_TRN_SUSPENSA:          LongInt = $FE03;  // existe transação suspensa
   SCO_NAO_EXISTE_TRN_SUSPENSA:      LongInt = $FE04;  // não existe transação suspensa
@@ -517,8 +517,6 @@ type
 
     procedure VerificaSessaoTEFAnterior;
 
-    procedure ExecutarTransacao;
-
     procedure AbrirPinPad;
     procedure ConfigurarColeta;
     function ConfigurarScope(AId: LongInt; Ligado: Boolean): Boolean;
@@ -576,6 +574,7 @@ type
     procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
     procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao; const Param1,
       Param2, Param3: String);
+    procedure ExecutarTransacao;
 
     function ObterVersaoScope: String;
     function AcharPortaPinPad: String;
@@ -965,7 +964,7 @@ var
   ini: TMemIniFile;
   sl: TStringList;
   i: Integer;
-  sPathScopeIni, SecName, sEmpresa, sFilial, sName, sPort: String;
+  sPathScopeIni, SecName, sEmpresa, sFilial, {sName,} sPort: String;
   ApagaSessoPrincipal, SemSessaoPrincipal: Boolean;
 
   procedure AjustarParamSeNaoExistir(const ASessao: String; const AChave: String; ValorPadrao: String);
@@ -1396,10 +1395,234 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.ExecutarTransacao;
+var
+  iRet,
+  iAux:       LongInt;
+  PColeta:    TParam_Coleta;
+  PColetaMsg: TColeta_Msg;
+  bAux:       Byte;
+  sBufEntrAux: string;
+
+  //ForcarFinalizar :Boolean;
 begin
   GravarLog('ExecutarTransacao');
+  //ForcarFinalizar := False;
 
   //Ver método FinalizaTransacaoTEF exemplo Delphi para entender loop...
+  repeat
+    iAux := 0;
+    bAux := 0;
+    sBufEntrAux := '';
+    //FillChar(sBufEntr, length(sBufEntr) * sizeof(AnsiChar), #0);
+    //ZeroMemory(@PColeta, SizeOf(TParam_Coleta));//abaixo
+    FillChar(PColeta, SizeOf(TParam_Coleta), 0);
+
+    // Enquanto a transacao estiver em andamento, aguarda....Loop
+    repeat
+      iRet := xScopeStatus;
+      //Apenas Exibe uma mensagem na tela para não parecer que está travado?
+      //if (iAux = 0) then
+      //  atualizMsg ('... transacao em andamento |    -> ' + IntToStr(iRet))
+      //else if (iAux = 1) then
+      //  atualizMsg ('... transacao em andamento /    -> ' + IntToStr(iRet))
+      //else if (iAux = 2) then
+      //  atualizMsg ('... transacao em andamento -    -> ' + IntToStr(iRet))
+      //else
+      //begin
+      //  atualizMsg ('... transacao em andamento \    -> ' + IntToStr(iRet));
+      //  iAux := -1;
+      //end;
+      //iAux := iAux + 1;
+
+      // Tratar quando usuário clicou em Cancelar???
+      // Tratar a coleta de cartao manualmente, em paralelo c/ o PINPad
+
+    until (iRet <> SCO_TRN_EM_ANDAMENTO);//...
+
+    //Ainda está em modo Coleta de dados?
+    if ((iRet < SCO_PRIMEIRO_COLETA_DADOS) or
+         (iRet > SCO_ULTIMO_COLETA_DADOS)) then
+    begin
+      //Exibir uma mensagem de saída??
+      //encerraTransacao(iRet);
+      Break;
+    end;
+
+    // Guardar os bits q ligamos nos passos anteriores
+    iAux := PColeta.HabTeclas;
+
+    // Obtem dados do Scope e exibe as mensagens do cliente e operador
+    xScopeGetParam(iRet, @PColeta);
+
+    // Restaurar os bits armazenados anteriorm/te
+    PColeta.HabTeclas := PColeta.HabTeclas or iAux;
+
+    // Tratamento dos estados
+    case iRet of
+      SCO_CARTAO, SCO_COLETA_AUT_OU_CARTAO :
+      begin
+        sBufEntrAux := 'Digite o numero do cartao:';
+      end;
+
+      // imprime Cheque
+      SCO_IMPRIME_CHEQUE:
+      begin
+        //// P/ indicarmos p/ a funcao execFormAux exibir esse texto no memo
+        //// de exibicao
+        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+        //sBufEntrAux := ObtemDadosCupom();
+        //Imprime(sBufEntrAux);
+        DoException('Não Implementado: SCO_IMPRIME_CHEQUE');
+      end;
+
+      // recupera a lista de valores da Recarga de Celular
+      SCO_COLETA_VALOR_RECARGA:
+      begin
+        //sBufEntrAux := ObtemValoresRecarga(PColeta);
+        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+        //Imprime(sBufEntrAux);
+        DoException('Não Implementado: SCO_COLETA_VALOR_RECARGA');
+      end;
+
+      // recupera a lista de operadoras da Recarga de Celular
+      SCO_COLETA_OPERADORA:
+      begin
+        //sBufEntrAux := ObtemOperadorasRecarga(PColeta);
+        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+        //Imprime(sBufEntrAux);
+        DoException('Não Implementado: SCO_COLETA_OPERADORA');
+      end;
+
+      // imprime Cupom + Nota Promissoria + Cupom Promocional
+      SCO_IMPRIME_CUPOM,
+      SCO_IMPRIME_CUPOM_PARCIAL, // imprime Cupom Parcial
+      SCO_IMPRIME_CONSULTA: // imprime Consulta
+      begin
+        //{ P/ indicarmos p/ a funcao execFormAux exibir esse texto
+        //no memo de exibicao }
+        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+        //sBufEntrAux := ObtemCupons(PColeta);
+        //Imprime(sBufEntrAux);
+        DoException('Não Implementado: SCO_IMPRIME_CXXXX');
+      end;
+
+      // SCOPE aguardando o cartao que foi digitado
+      SCO_CARTAO_DIGITADO:
+      begin
+        // Vamos ver c o usr ja' digitou o texto
+        //sBufEntrAux := frmAuxParallelCtl (2, @bAux);
+        //if bAux = 0 then
+        //begin
+        //  if Length (sBufEntrAux) <> 0 then
+        //  begin
+        //    // O texto ja' esta' em sBufEntrAux
+        //    iAux := 0;  // Proximo estado
+        //    bAux := 1;  // Nao podemos executar a funcao execFormAux
+        //  end
+        //  else
+        //    // O usr teclou 'Cancelar' no PPad
+        //    sBufEntrAux := 'Coleta:';
+        //end;
+        DoException('Não Implementado: SCO_CARTAO_DIGITADO');
+      end;
+
+      // mostra informacao e aguarda confirmacao do usuario
+      SCO_MOSTRA_INFO_RET_SCOPE:
+      begin
+        if Length (sBufEntrAux) = 0 then
+          sBufEntrAux := 'Coleta:';
+        PColeta.HabTeclas := BIT9_ON;
+        iAux := 0; // Garantir o envio da acao PROXIMO ao SCOPE
+      end;
+
+      SCO_COLETA_EM_ANDAMENTO:
+      begin
+        bAux := 1
+      end;
+
+      // Todos os outros estados nao tratados
+      else
+      begin
+        if Length (sBufEntrAux) = 0 then
+          sBufEntrAux := 'Coleta:';
+      end;
+    end;
+
+    // Exibe as msgs retornadas pelo SCOPE
+    if (bAux <> 1) then
+    begin
+      //iSinc := iSinc and not (ACAO_PROX + ACAO_ANTER + ACAO_CANCELAR);
+      //Chama Form para usuário.
+      //sBufEntrAux := execFormAux ( TrimRight ( string (PColeta.MsgOp1) ),
+      //                          TrimRight ( string (PColeta.MsgOp2) ),
+      //                          TrimRight ( string (PColeta.MsgCl1) ),
+      //                          TrimRight ( string (PColeta.MsgCl2) ),
+      //                          sBufEntrAux,
+      //                          PColeta.HabTeclas);
+      ExibirMensagem(TrimRight(string(PColeta.MsgOp1))+ TrimRight(string(PColeta.MsgOp2))+
+                     TrimRight(string(PColeta.MsgCl1))+ TrimRight(string(PColeta.MsgCl2)) );
+      // Em qual botao o usr clicou?
+      // Proximo
+      //if (iSinc and ACAO_PROX) <> 0 then
+      //  iAux := COLETA_PROXIMO_ESTADO
+      //// Anterior
+      //else if (iSinc and ACAO_ANTER) <> 0 then
+      //  iAux := COLETA_ANTERIOR_ESTADO
+      //// Cancelar
+      //else if (iSinc and ACAO_CANCELAR) <> 0 then
+      //  iAux := COLETA_CANCELAR;
+    end;
+
+    //if ( iSinc and (ACAO_PROX + ACAO_ANTER + ACAO_CANCELAR) = 0 ) then
+      //sBufEntrAux := '';
+
+    iRet := xScopeResumeParam(iRet, PAnsiChar(AnsiString(sBufEntrAux)), SCO_TECLADO, iAux);
+
+    if (iRet <> SCO_SUCESSO) then
+    begin
+      iAux := xScopeGetLastMsg (@PColetaMsg);
+      if (iAux <> SCO_SUCESSO) then
+      begin
+      //E
+        //MostramensagemErro
+        //showMensagemErro('Erro ao obter mensagens', iRet);
+        //Application.MessageBox(PWideChar('ERRO NO ScopeGetLastMsg() = ' + IntToStr(iRet)), 'TEF', MB_OK);
+      end;
+
+      // Se o erro for de dado invalido, vamos permitir o usuario tentar novamente
+      if (iRet <> SCO_DADO_INVALIDO) then
+        Break
+      else
+        Continue;
+
+      //E
+      //Nunca Chega aqui!!! Código desnecessário.
+      //execFormAux ( TrimRight ( string (PColeta.MsgOp1) ),
+      //              TrimRight ( string (PColeta.MsgOp2) ),
+      //              TrimRight ( string (PColeta.MsgCl1) ),
+      //              TrimRight ( string (PColeta.MsgCl2) ),
+      //              'Coleta:',
+      //              2);
+    end;
+
+
+  until ((iRet < SCO_PRIMEIRO_COLETA_DADOS) and
+            (iRet > SCO_ULTIMO_COLETA_DADOS));
+
+  //fEnd:
+
+  //sBufEntrAux := execFormAux ('Confirmar essa transacao? (1/0)',
+                                      //'', '', '', 'Opcao', 2);
+
+  //if ((Length(sBufEntrAux) = 0) or (StrToInt (sBufEntrAux) <> 0)) then
+  //  bAux := SCO_CONFIRMA_TEF
+  //else
+  //  bAux := SCO_DESFAZ_TEF;
+  //FechaSessaoTEF (bAux);
+
+  //Result := iRet;
+
+
 
 end;
 

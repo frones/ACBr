@@ -371,9 +371,7 @@ begin
     fTEFScopeAPI.AbrirSessaoTEF;
     fTEFScopeAPI.IniciarTransacao(scoCredito, ValorTransacaoString, ValorTaxaServicoString, Param3);
 
-    //fTEFScopeAPI.ExecutarTransacao;
-
-
+    fTEFScopeAPI.ExecutarTransacao;
 
     fTEFScopeAPI.FecharSessaoTEF(True, ResultadoDeSessao);
   //???Tratar o retorno de FecharSessaoTEF???

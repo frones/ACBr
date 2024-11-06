@@ -214,7 +214,6 @@ type
     ckbRemoverAcentuacaoRemessa: TCheckBox;
     chkEMVFicticio: TCheckBox;
     chkIndicadorPix: TCheckBox;
-    ckbEmHomologacao: TCheckBox;
     FACBrBoleto: TACBrBoleto;
     ckbLerCedenteArquivoRetorno: TCheckBox;
     pnpBolAcrescDesconto: TPanel;
@@ -727,6 +726,8 @@ type
     Label102: TLabel;
     edtDataDesconto3: TMaskEdit;
     Label103: TLabel;
+    cbbAmbiente: TComboBox;
+    Label104: TLabel;
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL,
       AMethod: string; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
@@ -881,6 +882,7 @@ type
     procedure EncerraVenda(LFlag: Boolean);
     procedure zoomin(LFlag: Boolean);
     procedure VisualizaReposta(aArquivo: string);
+    procedure CarregarAmbiente;
 
   public
     { Public declarations }
@@ -1127,6 +1129,15 @@ begin
   cbxTipoDocumento.ItemIndex := 0;
 end;
 
+procedure TfrmPrincipal.CarregarAmbiente;
+var
+  LAmbiente: TTipoAmbienteWS;
+begin
+  cbbAmbiente.Items.clear;
+	for LAmbiente := Low(TTipoAmbienteWS) to High(TTipoAmbienteWS) do
+    cbbAmbiente.Items.Add( GetEnumName(TypeInfo(TTipoAmbienteWS), integer(LAmbiente) ) );
+end;
+
 procedure TfrmPrincipal.CarregarTipoMulta;
 begin
   cbxTipoMulta.Items.Clear;
@@ -1178,6 +1189,7 @@ begin
   { carregamento Combos }
   // CarregarTipoDistribuicao;
   CarregarTipoDocumento;
+  CarregarAmbiente;
   CarregarCaracTitulo;
   CarregarResponsavelEmissao;
   // CarregarTipoCarteira;
@@ -1422,11 +1434,13 @@ begin
   Boleto.Banco.TipoCobranca := cobBancoC6;
 
   Boleto.LayoutRemessa := TACBrLayoutRemessa(0);
-  Boleto.Homologacao := ckbEmHomologacao.Checked;
+//  Boleto.Homologacao := ckbEmHomologacao.Checked;
 
   Boleto.ImprimirMensagemPadrao := ckbImprimirMensagemPadrao.Checked;
   Boleto.LeCedenteRetorno := ckbLerCedenteArquivoRetorno.Checked;
   Boleto.RemoveAcentosArqRemessa := ckbRemoverAcentuacaoRemessa.Checked;
+  Boleto.Configuracoes.WebService.Ambiente := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
+
 
   Beneficiario := Boleto.Cedente;
   BeneficiarioWS := Beneficiario.CedenteWS;
@@ -1480,8 +1494,9 @@ begin
   // Beneficiario.PIX.TipoChavePIX := tchAleatoria;
   // Beneficiario.PIX.Chave := '112';
 
-  WebService.Ambiente := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+
   WebService.SSLHttpLib := httpOpenSSL;
+  WebService.Ambiente   := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
 
   Boleto.Configuracoes.Arquivos.LogNivel := TNivelLog(cbxLogNivel.ItemIndex);
   Boleto.Configuracoes.Arquivos.PathGravarRegistro := edtPathLog.Text;
@@ -1648,7 +1663,8 @@ begin
   Boleto.ListadeBoletos.Clear;
 
   cbxCNAB.ItemIndex := 0;
-  ckbEmHomologacao.Checked := Boleto.Homologacao;
+  cbbAmbiente.ItemIndex    := Ord(Boleto.Configuracoes.WebService.Ambiente);
+//  ckbEmHomologacao.Checked := Boleto.Homologacao;
   ckbImprimirMensagemPadrao.Checked := Boleto.ImprimirMensagemPadrao;
   ckbLerCedenteArquivoRetorno.Checked := Boleto.LeCedenteRetorno;
   ckbRemoverAcentuacaoRemessa.Checked := Boleto.RemoveAcentosArqRemessa;

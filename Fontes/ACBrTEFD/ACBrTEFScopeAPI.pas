@@ -87,18 +87,18 @@ const
   SCO_DESFAZ_TEF = 0;
   SCO_CONFIRMA_TEF = 1;
 
-  SCO_ERRO_PARM_1 = 64001;
-  SCO_ERRO_PARM_2 = 64002;
-  SCO_ERRO_PARM_3 = 64003;
-  SCO_ERRO_PARM_4 = 64004;
+  SCO_ERRO_PARM_1 = 64001; //0xFA01
+  SCO_ERRO_PARM_2 = 64002; //0xFA02
+  SCO_ERRO_PARM_3 = 64003; //0xFA03
+  SCO_ERRO_PARM_4 = 64004; //0xFA04
 
-  SCO_ERRO_ARQ_CICLO_TEF = 64264;
-  SCO_TRN_EM_ANDAMENTO = 65024;
-  SCO_API_NAO_INICIALIZADA = 65025;
-  SCO_API_JA_INICIALIZADA = 65026;
-  SCO_SRV_NOT_CFG = 65033;
-  SCO_ERRO_LOGON_PDV = 65349;
-  SCO_ERRO_CONFIG_PDV = 65430;
+  SCO_ERRO_ARQ_CICLO_TEF = 64264; //0xFB08
+  SCO_TRN_EM_ANDAMENTO = 65024; //0xFE00
+  SCO_API_NAO_INICIALIZADA = 65025; //0xFE01
+  SCO_API_JA_INICIALIZADA = 65026; //0xFE02
+  SCO_SRV_NOT_CFG = 65033; //0xFE09
+  SCO_ERRO_LOGON_PDV = 65349; //0xFF45
+  SCO_ERRO_CONFIG_PDV = 65430; //0xFF96
 
   OP_DESABILITA	= 0;
   OP_HABILITA = 1;
@@ -460,16 +460,33 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeValidaInterfacePP: function(IntPP: Byte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    //?? ScopeConsultaPP não documentado?? ...
     xScopeConsultaPP: function(Configurado, UsoExclusivoScope, Porta: PByte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopePPOpen: function(Porta: Word): LongInt;
-      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
     xScopePPOpenSecure: function(TipoCanal: word; Endereco: PAnsiChar): LongInt
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPClose: function(IdleMsg: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPGetCOMPort: function(szComEndereco: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+//E
+  //Implementar??
+    //xScopePPGetInfoEx
+    //ScopePPStartGetData
+    //ScopePPGetData
+    //ScopePPStartOptionMenu
+    //ScopePPOptionMenu]
+    //ScopePPGetOperationMode
+    xScopePPDisplay: function(Msg: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    //ScopePPDisplayEx
+  //Descontinuadas (pág. 142)
+    xScopePPOpen: function(Porta: Word): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    //xScopePPGetInfo
+    //xScopePPStartGetPIN
+  //.... Descontinuadas
 
     procedure SetPathLib(const AValue: String);
     procedure SetDiretorioTrabalho(AValue: String);
@@ -560,6 +577,7 @@ type
 
     function ObterVersaoScope: String;
     function AcharPortaPinPad: String;
+    procedure ExibirMensagemPinPad(const MsgPinPad: String);
 
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
   end;
@@ -574,6 +592,7 @@ uses
 
 constructor TACBrTEFScopeAPI.Create;
 begin
+  inherited;
   fCarregada := False;
   fInicializada := False;
   fConectado := False;
@@ -612,9 +631,13 @@ begin
   GravarLog('TACBrTEFScopeAPI.Inicializar');
 
   VerificarDiretorioDeTrabalho;
+//E
+  //Se o arquivo INI estiver configurado, a chamada abaixo talvez possa ser dispensada.
+  //Ver também função ScopeOpenVerify() como possível adição para essa feature.
   VerificarEAjustarScopeINI;
   LoadLibFunctions;
-  AbrirPinPad;
+//E
+  AbrirPinPad; //exemplo em Delphi parece não precisar do PINPAD.
 
   fInicializada := True;
   fConectado := False;
@@ -855,6 +878,9 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopePPOpenSecure', @xScopePPOpenSecure);
   ScopeFunctionDetect(sLibName, 'ScopePPClose', @xScopePPClose);
   ScopeFunctionDetect(sLibName, 'ScopePPGetCOMPort', @xScopePPGetCOMPort);
+
+  ScopeFunctionDetect(sLibName, 'ScopePPDisplay', @xScopePPDisplay);
+
   fCarregada := True;
 end;
 
@@ -908,6 +934,7 @@ begin
   xScopePPOpenSecure := Nil;
   xScopePPClose := Nil;
   xScopePPGetCOMPort := Nil;
+  xScopePPDisplay := Nil;
 end;
 
 procedure TACBrTEFScopeAPI.DoException(const AErrorMsg: String);
@@ -1161,10 +1188,24 @@ begin
   end;
 end;
 
+procedure TACBrTEFScopeAPI.ExibirMensagemPinPad(const MsgPinPad: String);
+var
+  ret: LongInt;
+begin
+  GravarLog('xScopePPDisplay( '+MsgPinPad+' )');
+  ret := xScopePPDisplay(PAnsiChar(MsgPinPad));
+  GravarLog('  ret: '+IntToStr(ret));
+
+  if ret <> PC_OK then
+    TratarErroScope(ret);
+end;
+
 procedure TACBrTEFScopeAPI.TratarErroScope(AErrorCode: LongInt);
 var
   MsgErro: String;
 begin
+//E
+  //Adicionar erros como os do Pinpad (Ex.: PC_NAO_ABERTO_APP ver pág 148)
   case AErrorCode of
     SCO_SUCESSO: MsgErro := '';
     SCO_ERRO_PARM_1: MsgErro := 'Parâmetro 1 inválido';
@@ -1369,17 +1410,18 @@ begin
   GravarLog('ScopeValidaInterfacePP( '+IntToStr(PP_INTERFACE_LIB_COMPARTILHADA)+' )');
   ret := xScopeValidaInterfacePP( PP_INTERFACE_LIB_COMPARTILHADA );
   GravarLog('  ret: '+IntToStr(ret));
+//E
+  //GravarLog('ScopeConsultaPP()');
+  //ret := xScopeConsultaPP(@bConfig, @bExclusivo, @bPorta);
+  //GravarLog('  ret: '+IntToStr(ret)+
+  //          ', Config:'+IntToStr(bConfig)+
+  //          ', Exclusivo:'+IntToStr(bExclusivo)+
+  //          ', Porta:'+IntToStr(bPorta) );
+  //if ret <> PC_OK then
+  //  DoException(ACBrStr(Format('Erro %d ao consultar o PinPad', [ret])));
 
-  GravarLog('ScopeConsultaPP()');
-  ret := xScopeConsultaPP(@bConfig, @bExclusivo, @bPorta);
-  GravarLog('  ret: '+IntToStr(ret)+
-            ', Config:'+IntToStr(bConfig)+
-            ', Exclusivo:'+IntToStr(bExclusivo)+
-            ', Porta:'+IntToStr(bPorta) );
-  if ret <> PC_OK then
-    DoException(ACBrStr(Format('Erro %d ao consultar o PinPad', [ret])));
-
-  if (bExclusivo = 0) then
+  //if (bExclusivo = 0) then
+  if (True) then
   begin
     if (bPorta < 1) or (fPortaPinPad <> '') then
       bPorta := ConfigurarPortaPinPad(fPortaPinPad);

@@ -165,7 +165,7 @@ begin
 
   IpStr := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
   PortaStr := '';
-  p := pos(IpStr, ':');
+  p := pos(':', IpStr);
   if (p > 0) then
   begin
     PortaStr := copy(IpStr, p+1, Length(IpStr));
@@ -173,11 +173,11 @@ begin
   end;
 
 //D
-  //fTEFScopeAPI.DiretorioTrabalho := ADir;
-  //fTEFScopeAPI.EnderecoIP := IpStr;
-  //fTEFScopeAPI.PortaTCP := PortaStr;
+  fTEFScopeAPI.DiretorioTrabalho := ADir;
+  fTEFScopeAPI.EnderecoIP := IpStr;
+  fTEFScopeAPI.PortaTCP := PortaStr;
   //fTEFScopeAPI.Aplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
-  //fTEFScopeAPI.VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
+  fTEFScopeAPI.VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
   //fTEFScopeAPI.SoftwareHouse := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse;
   //fTEFScopeAPI.NomeEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
   //fTEFScopeAPI.SuportaSaque := fpACBrTEFAPI.DadosAutomacao.SuportaSaque;
@@ -194,6 +194,12 @@ begin
   //else
   //  fTEFScopeAPI.OnAvaliarTransacaoPendente := Nil;
   //
+
+//E
+  fTEFScopeAPI.Empresa := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
+  fTEFScopeAPI.Filial := fpACBrTEFAPI.DadosTerminal.CodFilial;
+  fTEFScopeAPI.PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
+
   fTEFScopeAPI.Inicializar;
 
   inherited;
@@ -209,7 +215,8 @@ procedure TACBrTEFAPIClassScope.InicializarChamadaAPI(
   AMetodoOperacao: TACBrTEFAPIMetodo);
 begin
   inherited;
-  // PayGoWeb não consegue efetuar nova Operação, se a anterior ficou pendente
+//E??
+  // Scope... não consegue efetuar nova Operação, se a anterior ficou pendente
   fpACBrTEFAPI.ConfirmarTransacoesPendentes;
 end;
 
@@ -471,7 +478,7 @@ end;
 
 procedure TACBrTEFAPIClassScope.ExibirMensagemPinPad(const MsgPinPad: String);
 begin
-  //D fTEFScopeAPI.ExibirMensagemPinPad(MsgPinPad);
+  fTEFScopeAPI.ExibirMensagemPinPad(MsgPinPad);
 end;
 
 function TACBrTEFAPIClassScope.ObterDadoPinPad(
@@ -507,7 +514,7 @@ begin
 
   if Inicializado then
     fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPIComponenteInicializadoException),
-                                     ['TACBrTEFAPIClassPayGoWeb.DiretorioTrabalho']));
+                                     ['TACBrTEFAPIClassScope.DiretorioTrabalho']));
 
   fDiretorioTrabalho := AValue;
 end;

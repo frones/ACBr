@@ -18,7 +18,7 @@ object frmDemoBoleto: TfrmDemoBoleto
     Top = 0
     Width = 986
     Height = 523
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -1392,7 +1392,7 @@ object frmDemoBoleto: TfrmDemoBoleto
         Top = 298
         Width = 249
         Height = 194
-        ActivePage = TabSheet11
+        ActivePage = TabSheet9
         TabOrder = 3
         object TabSheet8: TTabSheet
           Caption = 'Conf. A'
@@ -1432,6 +1432,13 @@ object frmDemoBoleto: TfrmDemoBoleto
         object TabSheet9: TTabSheet
           Caption = 'Conf. B'
           ImageIndex = 1
+          object Label90: TLabel
+            Left = 3
+            Top = 47
+            Width = 65
+            Height = 13
+            Caption = 'Ambiente WS'
+          end
           object cxbEMV: TCheckBox
             Left = 3
             Top = 3
@@ -1448,14 +1455,12 @@ object frmDemoBoleto: TfrmDemoBoleto
             Caption = 'Indicador de Pix'
             TabOrder = 1
           end
-          object ckbEmHomologacao: TCheckBox
+          object cbbAmbiente: TComboBox
             Left = 3
-            Top = 45
-            Width = 151
-            Height = 17
-            Caption = 'Boleto em Homologa'#231#227'o'
-            Checked = True
-            State = cbChecked
+            Top = 66
+            Width = 235
+            Height = 21
+            Style = csDropDownList
             TabOrder = 2
           end
         end

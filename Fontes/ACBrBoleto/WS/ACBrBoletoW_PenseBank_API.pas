@@ -102,7 +102,7 @@ procedure TBoletoW_PenseBank_API.DefinirURL;
 var
   ID, NConvenio : string;
 begin
-  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
+  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,C_URL, C_URL_HOM);
 
   if ATitulo <> nil then
     ID      := ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo);
@@ -204,7 +204,7 @@ end;
 
 function TBoletoW_PenseBank_API.ValidaAmbiente: Integer;
 begin
-  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, '1','2'),2);
+  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, '1','2'),2);
 end;
 
 procedure TBoletoW_PenseBank_API.RequisicaoJson;

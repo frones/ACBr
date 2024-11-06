@@ -120,9 +120,8 @@ begin
   if RetWS <> '' then
   begin
     try
-      LJsonObject := TACBrJSONObject.Create;
+      LJsonObject := TACBrJSONObject.Parse(RetWS);
       try
-        LJsonObject.Parse(RetWS);
         ARetornoWS.JSON           := LJsonObject.ToJSON;
         case HttpResultCode of
           207, 400, 406, 500:

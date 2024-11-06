@@ -139,7 +139,7 @@ begin
     end;
 
 
-  if Boleto.Configuracoes.WebService.Ambiente = taProducao then
+  if Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
    FPURL := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix, C_URLPIX, C_URL)
   else
    FPURL := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix, C_URL_HOMPIX, C_URL_HOM);
@@ -387,7 +387,7 @@ end;
 
 function TBoletoW_Inter_API.ValidaAmbiente: Integer;
 begin
-  result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, '1','2'), 2);
+  result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, '1','2'), 2);
 end;
 
 procedure TBoletoW_Inter_API.RequisicaoJson;
@@ -818,12 +818,12 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := C_URL_OAUTH_HOM
+    if OAuth.Ambiente = tawsProducao then
+      OAuth.URL := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_HOM;
 
-    OAuth.Payload := OAuth.Ambiente = taHomologacao;
+    OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
   end;
 end;
 

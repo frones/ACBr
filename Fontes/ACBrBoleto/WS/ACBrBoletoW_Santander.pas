@@ -90,7 +90,7 @@ implementation
 
 function TBoletoW_Santander.AmbienteWS: String;
 begin
-  Result := IfThen(ATitulo.ACBrBoleto.Configuracoes.WebService.Ambiente = taProducao,'P','T');
+  Result := IfThen(ATitulo.ACBrBoleto.Configuracoes.WebService.Ambiente = tawsProducao,'P','T');
 end;
 
 constructor TBoletoW_Santander.Create(ABoletoWS: TBoletoWS);

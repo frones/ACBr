@@ -100,7 +100,7 @@ uses
 
 procedure TBoletoW_Itau.DefinirURL;
 begin
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,
+  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,
     C_URL, C_URL_HOM);
 
 end;
@@ -166,7 +166,7 @@ end;
 
 function TBoletoW_Itau.ValidaAmbiente: Integer;
 begin
-  if Boleto.Configuracoes.WebService.Ambiente = taProducao then
+  if Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
     Result := 2
   else
     Result := 1;
@@ -740,10 +740,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := C_URL_OAUTH_HOM
+    if OAuth.Ambiente = tawsProducao then
+      OAuth.URL := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_HOM;
 
     OAuth.Payload := True;
   end;

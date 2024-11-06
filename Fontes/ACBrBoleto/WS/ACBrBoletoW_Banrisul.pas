@@ -117,7 +117,7 @@ procedure TBoletoW_Banrisul.DefinirURL;
 var
    DevAPP, ID, NConvenio: String;
 begin
-   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL,
+   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,
      C_URL_HOM);
 
    if ATitulo <> nil then
@@ -219,7 +219,17 @@ end;
 
 function TBoletoW_Banrisul.ValidaAmbiente: String;
 begin
-  Result := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, 'P', 'T');
+  Result := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, 'P', 'T');
+
+  //Produção    = P
+  //Homologação = T
+  //SandBox     = T
+
+  //Homologação: na sua primeira chamada em produção você deve informar o conteúdo "T"
+  //no atributo "ambiente" do payload de entrada. Este procedimento deve ser feito apenas
+  //no EndPoint de registro, a fim de homologar sua API, não sendo necessário nos demais
+  //EndPoints. Após sua homologação, você deve enviar cinco requisições e retornos de
+  //sucesso e os respectivos boletos em formato PDF para o e-mail
 end;
 
 procedure TBoletoW_Banrisul.RequisicaoJson;
@@ -633,10 +643,8 @@ begin
 
    if Assigned(OAuth) then
    begin
-      OAuth.URL := IfThen(OAuth.Ambiente = taHomologacao, C_URL_OAUTH_HOM, C_URL_OAUTH_PROD);
-
+      OAuth.URL := IfThen(OAuth.Ambiente = tawsProducao, C_URL_OAUTH_PROD, C_URL_OAUTH_HOM);
       OAuth.Payload := True;
-
    end;
 end;
 

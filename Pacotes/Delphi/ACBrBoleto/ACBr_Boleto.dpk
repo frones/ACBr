@@ -134,6 +134,9 @@ contains
   ACBrBoletoWS.Rest in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.Rest.pas',
   ACBrBoletoWS.SOAP in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoWS.SOAP.pas',
   ACBrBancoUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUniprime.pas',
-  ACBrBancoSisprime in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSisprime.pas';
+  ACBrBancoSisprime in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSisprime.pas',
+  ACBrBancoCora in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCora.pas',
+  ACBrBoletoW_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cora.pas',
+  ACBrBoletoRet_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas';
 
 end.

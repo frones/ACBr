@@ -121,7 +121,7 @@ begin
   if (aTitulo <> nil) then
     aNossoNumero := PadLeft(aTitulo.NossoNumero, 11, '0');
 
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL, C_URL_HOM);
+  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM);
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:
@@ -196,8 +196,8 @@ begin
       LSeuNumero   := aTitulo.SeuNumero;
     end;
     try
-      Consulta.Add('agencia=' + IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Agencia, ''));
-      Consulta.Add('conta=' + IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, aTitulo.ACBrBoleto.Cedente.Conta, ''));
+      Consulta.Add('agencia=' + IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, aTitulo.ACBrBoleto.Cedente.Agencia, ''));
+      Consulta.Add('conta=' + IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, aTitulo.ACBrBoleto.Cedente.Conta, ''));
 
       if LNossoNumero <> '' then
         Consulta.Add('numero=' + LNossoNumero);
@@ -229,7 +229,7 @@ end;
 
 function TBoletoW_Safra.ValidaAmbiente: Integer;
 begin
-  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, '1', '2'), 2);
+  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, '1', '2'), 2);
 end;
 
 procedure TBoletoW_Safra.RequisicaoJson;
@@ -475,12 +475,12 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := C_URL_OAUTH_HOM
+    if OAuth.Ambiente = tawsProducao then
+      OAuth.URL := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_HOM;
 
-    OAuth.Payload := OAuth.Ambiente = taHomologacao;
+    OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
   end;
 
 end;

@@ -102,14 +102,14 @@ begin
          try
             LJSonObject.Parse(RetWS);
             ARetornoWS.JSON           := LJsonObject.ToJSON;
-            case HttpResultCode of
-               207, 400, 406, 500 :
-               begin
-                  ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-                  ARejeicao.Codigo     := LJsonObject.AsString['code'];
-                  ARejeicao.mensagem   := LJsonObject.AsString['message'];
-               end;
-               200 :
+
+            if (HttpResultCode >= 207) then
+            begin
+              ARejeicao            := ARetornoWS.CriarRejeicaoLista;
+              ARejeicao.Codigo     := LJsonObject.AsString['code'];
+              ARejeicao.mensagem   := LJsonObject.AsString['message'];
+            end else
+            begin
                //retorna quando tiver sucesso
                if (ARetornoWS.ListaRejeicao.Count = 0) then
                begin
@@ -211,10 +211,6 @@ begin
                      // não possui dados de retorno..
                   end;
                end;
-            else
-               ARejeicao            := ARetornoWS.CriarRejeicaoLista;
-               ARejeicao.Codigo     := LJsonObject.AsString['code'];
-               ARejeicao.mensagem   := LJsonObject.AsString['message'];
             end;
          Finally
             LJsonObject.free;

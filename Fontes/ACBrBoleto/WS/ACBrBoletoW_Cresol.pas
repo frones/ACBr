@@ -97,16 +97,16 @@ var
 begin
    if( aTitulo <> nil ) then
       LNossoNumero := OnlyNumber(aTitulo.NossoNumeroCorrespondente);
-   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL,C_URL_HOM);
+   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,C_URL_HOM);
    case Boleto.Configuracoes.WebService.Operacao of
-      tpInclui:  FPURL := FPURL + 'titulos';
+      tpInclui:  FPURL := FPURL + 'titulos/';
       tpAltera:
       begin
          if ATitulo.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
             FPURL := FPURL + 'titulos/' + LNossoNumero;// Feito um Put com a DtVencimento para alterar o vencimento.
       end;
       tpConsultaDetalhe:  FPURL := FPURL + 'titulos/' + LNossoNumero;//Se não tiver IDBolApi, vai pela URL que traz todos os boletos
-      tpConsulta:  FPURL := FPURL + 'titulos' ;
+      tpConsulta:  FPURL := FPURL + 'titulos/' ;
       tpBaixa:  FPURL := FPURL + 'titulos/' + LNossoNumero + '/operacao/baixar';
    end;
 //Exemplo de Consultas por status:
@@ -122,9 +122,10 @@ end;
 
 procedure TBoletoW_Cresol.GerarHeader;
 begin
+   FPHeaders.clear;
    DefinirContentType;
    DefinirAuthorization;
-   FPIdentificador := 'ApiCresol';
+ //  FPIdentificador := 'ApiCresol';
 end;
 
 procedure TBoletoW_Cresol.GerarDados;
@@ -331,10 +332,11 @@ begin
    FPAccept := C_ACCEPT;
    if Assigned(OAuth) then
    begin
-      if OAuth.Ambiente = taHomologacao then
-         OAuth.URL := C_URL_TOKEN_HOM
+      if OAuth.Ambiente = tawsProducao then
+         OAuth.URL := C_URL_TOKEN
       else
-         OAuth.URL := C_URL_TOKEN;
+         OAuth.URL := C_URL_TOKEN_HOM;
+
       OAuth.Payload := True;
    end;
 end;

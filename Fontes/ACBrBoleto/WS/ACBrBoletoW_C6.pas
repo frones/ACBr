@@ -103,7 +103,7 @@ begin
   if Assigned(Atitulo) then
     LNossoNumeroCorrespondente := ATitulo.NossoNumeroCorrespondente;
 
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL, C_URL_HOM);
+  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM);
 
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui           :    FPURL := FPURL + '/';
@@ -409,12 +409,12 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := C_URL_OAUTH_HOM
+    if OAuth.Ambiente = tawsProducao then
+      OAuth.URL := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_HOM;
 
-    OAuth.Payload := OAuth.Ambiente = taHomologacao;
+    OAuth.Payload := not (OAuth.Ambiente = tawsProducao);
   end;
 end;
 

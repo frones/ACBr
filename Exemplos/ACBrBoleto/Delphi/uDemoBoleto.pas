@@ -43,8 +43,7 @@ uses
   ACBrBoletoConversao, ACBrBoletoRetorno, ComCtrls
   {$IFDEF GERADOR_FORTES_REPORT},ACBrBoletoFCFortesFr{$ENDIF}
   {$IFDEF GERADOR_FAST_REPORT},ACBrBoletoFCFR{$ENDIF}
-  ,ACBrBoletoFPDF
-  ;
+  ,ACBrBoletoFPDF;
 type
   TfrmDemoBoleto = class(TForm)
     PageControl1: TPageControl;
@@ -266,7 +265,6 @@ type
     TabSheet9: TTabSheet;
     cxbEMV: TCheckBox;
     chkIndicadorPix: TCheckBox;
-    ckbEmHomologacao: TCheckBox;
     TabSheet10: TTabSheet;
     Label85: TLabel;
     cbbWSConsulta: TComboBox;
@@ -282,6 +280,8 @@ type
     edtCIP: TEdit;
     Label88: TLabel;
     Label89: TLabel;
+    cbbAmbiente: TComboBox;
+    Label90: TLabel;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -328,6 +328,7 @@ type
     procedure CarregarTipoCarteira;
     procedure CarregarTipoDocumento;
     procedure CarregarSSLLib;
+    procedure CarregarAmbiente;
     procedure GravarIniComponente;
     procedure LerIniComponente(const ADialog : Boolean = False);
     procedure AplicarConfiguracoesAoComponente;
@@ -436,7 +437,7 @@ begin
 
   Boleto.PrefixArqRemessa                  := edtPrefixRemessa.Text;
   Boleto.LayoutRemessa                     := TACBrLayoutRemessa(cbxCNAB.itemindex);
-  Boleto.Homologacao                       := ckbEmHomologacao.Checked;
+  Boleto.Configuracoes.WebService.Ambiente := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
 
   Boleto.ImprimirMensagemPadrao            := ckbImprimirMensagemPadrao.Checked;
   Boleto.LeCedenteRetorno                  := ckbLerCedenteArquivoRetorno.Checked;
@@ -501,7 +502,7 @@ begin
   BeneficiarioWS.KeyUser      := edtKeyUser.Text;
   BeneficiarioWS.Scope        := edtScope.Text;
   BeneficiarioWS.IndicadorPix := chkIndicadorPix.Checked;
-  WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+  WebService.Ambiente         := TTipoAmbienteWS(cbbAmbiente.ItemIndex);
   WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 
   Boleto.Configuracoes.Arquivos.LogNivel           := TNivelLog(cbbLogNivel.Items.Objects[cbbLogNivel.ItemIndex]);
@@ -532,8 +533,8 @@ begin
 
   edtPrefixRemessa.Text               := Boleto.PrefixArqRemessa;
 
-  cbxCNAB.itemindex                   := Ord(Boleto.LayoutRemessa);
-  ckbEmHomologacao.Checked            := Boleto.Homologacao;
+  cbxCNAB.ItemIndex                   := Ord(Boleto.LayoutRemessa);
+  cbbAmbiente.ItemIndex               := Ord(Boleto.Configuracoes.WebService.Ambiente);
   ckbImprimirMensagemPadrao.Checked   := Boleto.ImprimirMensagemPadrao;
   ckbLerCedenteArquivoRetorno.Checked := Boleto.LeCedenteRetorno;
   ckbLerNossoNumeroCompleto.Checked   := Boleto.LerNossoNumeroCompleto;
@@ -866,6 +867,7 @@ begin
   CarregarTipoCarteira;
   CarregarTipoDocumento;
   CarregarSSLLib;
+  CarregarAmbiente;
   LerIniComponente;
   AplicarConfiguracoesComponenteATela;
   edtPathRemessa.Text := ExtractFilePath(ParamStr(0))+'Remessa';
@@ -920,6 +922,15 @@ begin
   cbxSSLLib.Items.clear;
 	for SSLLib := Low(TSSLHttpLib) to High(TSSLHttpLib) do
     cbxSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(SSLLib) ) );
+end;
+
+procedure TfrmDemoBoleto.CarregarAmbiente;
+var
+  LAmbiente: TTipoAmbienteWS;
+begin
+  cbbAmbiente.Items.clear;
+	for LAmbiente := Low(TTipoAmbienteWS) to High(TTipoAmbienteWS) do
+    cbbAmbiente.Items.Add( GetEnumName(TypeInfo(TTipoAmbienteWS), integer(LAmbiente) ) );
 end;
 
 procedure TfrmDemoBoleto.CarregarTipoCarteira;

@@ -142,7 +142,7 @@ begin
                                                   TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ) ] ));
   end;
 
-  FPServico := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, C_URL, C_URL_HOM) + Servico;
+  FPServico := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM) + Servico;
   FPURL := FPServico;
 
   FPSoapAction := Servico;
@@ -407,10 +407,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := C_URL_OAUTH_HOM
+    if OAuth.Ambiente = tawsProducao then
+      OAuth.URL := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_HOM;
   end;
 
 end;

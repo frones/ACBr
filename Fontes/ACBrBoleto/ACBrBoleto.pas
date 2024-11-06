@@ -137,7 +137,8 @@ type
     cobBancoBocomBBM,
     cobBancoSicoob,
     cobBancoSisprime,
-    cobBancoAilos
+    cobBancoAilos,
+    cobBancoCora
     );
 
   TACBrTitulo = class;
@@ -958,7 +959,7 @@ type
     FCarteira                   : Integer;
     FCarteiraVariacao           : Integer;
     FNumeroProtocolo            : Integer;
-    FIdentificador              : Integer;
+    FIdentificador              : String;
     procedure SetContaCaucao(const Value: Integer);
     procedure SetCnpjCpfPagador(const Value: string);
     procedure SetDataVencimento(const Value: TACBrDataPeriodo);
@@ -987,7 +988,7 @@ type
     property carteira                   : Integer                      read FCarteira                   write SetCarteira;
     property carteiraVariacao           : Integer                      read FCarteiraVariacao           write FCarteiraVariacao;
     property NumeroProtocolo            : Integer                      read FNumeroProtocolo            write FNumeroProtocolo;
-    property Identificador              : Integer                      read FIdentificador              write FIdentificador;
+    property Identificador              : String                       read FIdentificador              write FIdentificador;
   end;
 
   { TACBrWebService }
@@ -996,9 +997,12 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
+
+  TTipoAmbienteWS = (tawsProducao, tawsHomologacao, tawsSandBox);
+
   TACBrWebService = class(TDFeSSL)
   private
-    fAmbiente: TpcnTipoAmbiente;
+    fAmbiente: TTipoAmbienteWS;
     fOperacao: TOperacao;
     fVersaoDF: String;
     FBoletoWSConsulta: TACBrBoletoWSFiltroConsulta;
@@ -1015,7 +1019,7 @@ type
     function Enviar: Boolean; virtual;
     property Filtro: TACBrBoletoWSFiltroConsulta read FBoletoWSConsulta write SetWSBoletoConsulta;
   published
-    property Ambiente: TpcnTipoAmbiente read fAmbiente write fAmbiente;
+    property Ambiente: TTipoAmbienteWS read fAmbiente write fAmbiente;
     property Operacao: TOperacao read fOperacao write fOperacao;
     property VersaoDF: string read fVersaoDF write fVersaoDF;
     property ArquivoCRT: string read FArquivoCRT write FArquivoCRT;
@@ -2120,7 +2124,8 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF}
      ACBrBancoAthenaBradesco, 
      ACBrBancoQITech,
      ACBrBancoUY3,
-     ACBrBancoBocomBBM;
+     ACBrBancoBocomBBM,
+     ACBrBancoCora;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2208,7 +2213,7 @@ begin
   FModalidadeCobrancao:= 0;
   FCarteira:= 0;
   FNumeroProtocolo := 0;
-  FIdentificador := 0;
+  FIdentificador := '';
 end;
 
 destructor TACBrBoletoWSFiltroConsulta.Destroy;
@@ -2381,7 +2386,7 @@ end;
 constructor TACBrWebService.Create(AOwner: TComponent);
 begin
   inherited Create;
-  fAmbiente := taHomologacao;
+  fAmbiente := tawsHomologacao;
   fOperacao := tpInclui;
   fVersaoDF := '1.2';
   SSLHttpLib:= httpOpenSSL;
@@ -3874,6 +3879,7 @@ begin
     341: Result := cobItau;
     389: Result := cobBancoMercantil;
     399: Result := cobHSBC;
+    403: Result := cobBancoCora;
     422: Result := cobBancoSafra;
     457: Result := cobBancoUY3;
     604: Result := cobBancoIndustrialBrasil;
@@ -4075,7 +4081,7 @@ begin
         CedenteWS.IndicadorPix              := IniBoletos.ReadBool(CWebService,'IndicadorPix', CedenteWS.IndicadorPix);
         CedenteWS.Scope                     := IniBoletos.ReadString(CWebService,'Scope', CedenteWS.Scope);
 
-        Configuracoes.WebService.Ambiente   := TpcnTipoAmbiente(IniBoletos.ReadInteger(CWebService,'Ambiente', Integer(Configuracoes.WebService.Ambiente)));
+        Configuracoes.WebService.Ambiente   := TTipoAmbienteWS(IniBoletos.ReadInteger(CWebService,'Ambiente', Integer(Configuracoes.WebService.Ambiente)));
         Configuracoes.WebService.SSLHttpLib := TSSLHttpLib(IniBoletos.ReadInteger(CWebService,'SSLHttpLib', Integer(Configuracoes.WebService.SSLHttpLib)));
         Configuracoes.WebService.SSLCryptLib := TSSLCryptLib( IniBoletos.ReadInteger(CWebService,'SSLCryptLib',Integer(Configuracoes.WebService.SSLCryptLib)));
         Configuracoes.WebService.SSLXmlSignLib:= TSSLXmlSignLib( IniBoletos.ReadInteger(CWebService,'SSLXmlSignLib',Integer(Configuracoes.WebService.SSLXmlSignLib)));
@@ -4314,7 +4320,7 @@ begin
       Configuracoes.WebService.Filtro.carteiraVariacao := IniBoletos.ReadInteger(Sessao,'CarteiraVariacao', 0 );
       Configuracoes.WebService.Filtro.indiceContinuidade := IniBoletos.ReadInteger(Sessao,'IndiceContinuidade', 0 );
       Configuracoes.WebService.Filtro.NumeroProtocolo := IniBoletos.ReadInteger(Sessao,'NumeroProtocolo', 0 );
-      Configuracoes.WebService.Filtro.Identificador   := IniBoletos.ReadInteger(Sessao,'Identificador', 0 );
+      Configuracoes.WebService.Filtro.Identificador   := IniBoletos.ReadString(Sessao,'Identificador', '' );
 
 
       Result := True;
@@ -4765,6 +4771,7 @@ begin
      cobBancoAthenaBradesco  : fBancoClass := TACBrBancoAthenaBradesco.Create(Self);  {237}
      cobBancoQITechSCD       : fBancoClass := TACBrBancoQITechSCD.Create(Self);  {329}
      cobBancoUY3             : fBancoClass := TACBrBancoUY3.create(Self);            {457}
+     cobBancoCora            : fBancoClass := TACBrBancoCora.create(Self);            {403}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

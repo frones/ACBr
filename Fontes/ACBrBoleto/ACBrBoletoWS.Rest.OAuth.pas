@@ -41,23 +41,24 @@ uses
   httpsend,
   ACBrBoletoConversao,
   ACBrBoleto,
-  ACBrUtil.FilesIO;
+  ACBrUtil.FilesIO,
+  ACBr.Auth.JWT;
 
 type
-  TpAuthorizationType = (atNoAuth, atBearer);
-
+  TpAuthorizationType = (atNoAuth, atBearer, atJWT);
+  
   TParams = record
     prName, PrValue: String;
   end;
 
-    { TOAuth }
+{ TOAuth }
   TOAuth = class
   private
     FURL              : String;
     FContentType      : String;
     FGrantType        : String;
     FScope            : String;
-    FAmbiente         : TpcnTipoAmbiente;
+    FAmbiente         : TTipoAmbienteWS;
     FClientID         : String;
     FClientSecret     : String;
     FToken            : String;
@@ -70,6 +71,7 @@ type
     FHeaderParamsList : Array of TParams;
     FACBrBoleto       : TACBrBoleto;
     FArqLOG           : String;
+    FExigirClientSecret : Boolean;
     procedure setURL(const AValue: String);
     procedure setContentType(const AValue: String);
     procedure setGrantType(const AValue: String);
@@ -101,17 +103,16 @@ type
     property Scope: String read getScope;
     property ClientID: String read getClientID;
     property ClientSecret: String read getClientSecret;
-    property Ambiente: TpcnTipoAmbiente read FAmbiente default taHomologacao;
+    property Ambiente: TTipoAmbienteWS read FAmbiente default tawsHomologacao;
     property Expire: TDateTime read FExpire;
     property ErroComunicacao: String read FErroComunicacao;
     property Token: String read FToken;
     property Payload: Boolean read FPayload write setPayload;
     property AuthorizationType: TpAuthorizationType read FAuthorizationType write SetAuthorizationType;
     procedure DoLog(const AString: String; const ANivelSeveridadeLog : TNivelLog);
+    property ExigirClientSecret : Boolean read FExigirClientSecret write FExigirClientSecret;
   end;
-
 implementation
-
 uses
   SysUtils,
   ACBrUtil.Strings,
@@ -120,10 +121,9 @@ uses
   ACBrJSON,
   DateUtils,
   Classes,
-  synacode,
-  synautil;
-
-  { TOAuth }
+  synacode, synautil;
+  
+{ TOAuth }
 
 procedure TOAuth.setURL(const AValue: String);
 begin
@@ -192,6 +192,11 @@ end;
 
 function TOAuth.getClientSecret: String;
 begin
+  Result := '';
+
+  if not FExigirClientSecret then
+    Exit;
+
   if FClientSecret = '' then
     Raise Exception.Create(ACBrStr('Client_Secret não Informado'));
 
@@ -258,6 +263,8 @@ function TOAuth.Executar(const AAuthBase64: String): Boolean;
 var
   LHeaders: TStringList;
   I       : Integer;
+  LJWTAuth : TACBrJWTAuth;
+  LParamsOAuth : String;
 begin
   FErroComunicacao := '';
 
@@ -274,6 +281,17 @@ begin
       //LHeaders.Add(C_CONTENT_TYPE  + ': ' + ContentType);
     if Self.AuthorizationType = atBearer then
       LHeaders.Add(C_AUTHORIZATION + ': ' + AAuthBase64);
+    if Self.AuthorizationType = atJWT then
+    begin
+      LJWTAuth := TACBrJWTAuth.Create(FHTTPSend.Sock.SSL.PrivateKey);
+      try
+        LParamsOAuth := FParamsOAuth;
+        FParamsOAuth := 'grant_type=' + FGrantType +'&'+
+                        'assertion=' + LJWTAuth.GenerateJWT(LParamsOAuth);
+      finally
+        LJWTAuth.Free;
+      end;
+    end;
       //LHeaders.Add(C_CACHE_CONTROL + ': ' + C_NO_CACHE);
     for I := 0 to Length(FHeaderParamsList) - 1 do
       LHeaders.Add(FHeaderParamsList[ I ].prName + ': ' + FHeaderParamsList[ I ].PrValue);
@@ -307,7 +325,12 @@ begin
 
       FHTTPSend.Document.Position := 0;
       ProcessarRespostaOAuth(ReadStrFromStream(FHTTPSend.Document, FHTTPSend.Document.Size));
-
+      DoLog('Cookies:', logParanoico);
+      DoLog(FHTTPSend.Cookies.Text, logParanoico);
+      DoLog(FHTTPSend.Sock.SSL.CertificateFile, logParanoico);
+      DoLog(FHTTPSend.Sock.SSL.PrivateKeyFile, logParanoico);
+      DoLog('Header:', logParanoico);
+      DoLog(FHTTPSend.Headers.Text, logParanoico);
       Result := true;
     except
       on E: Exception do
@@ -342,36 +365,56 @@ begin
 end;
 
 constructor TOAuth.Create(ASSL: THTTPSend; AACBrBoleto: TACBrBoleto = nil);
+var LStringList : TStringList;
 begin
   if Assigned(ASSL) then
     FHTTPSend := ASSL;
 
   FACBrBoleto := AACBrBoleto;
 
+  if FACBrBoleto.Configuracoes.WebService.UseCertificateHTTP then
+  begin
     // adiciona a chave privada
-  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
-  begin
-    if StringIsPEM(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
-      FHTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.ChavePrivada)
+    if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
+    begin
+      if StringIsPEM(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
+        FHTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.ChavePrivada)
+      else
+        FHTTPSend.Sock.SSL.PrivateKey := AACBrBoleto.Configuracoes.WebService.ChavePrivada;
+    end
     else
-      FHTTPSend.Sock.SSL.PrivateKey := AACBrBoleto.Configuracoes.WebService.ChavePrivada;
-  end
-  else
-    if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
-      FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
-
-    // adiciona o certificado
-  if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.Certificado) then
-  begin
-    if StringIsPEM(AACBrBoleto.Configuracoes.WebService.Certificado) then
-      FHTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.Certificado)
+      if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
+      begin
+        FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
+      end;
+      // adiciona o certificado
+    if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.Certificado) then
+    begin
+      if StringIsPEM(AACBrBoleto.Configuracoes.WebService.Certificado) then
+        FHTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.Certificado)
+      else
+        FHTTPSend.Sock.SSL.Certificate := AACBrBoleto.Configuracoes.WebService.Certificado;
+    end
     else
-      FHTTPSend.Sock.SSL.Certificate := AACBrBoleto.Configuracoes.WebService.Certificado;
-  end
-  else
-    if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
-      FHTTPSend.Sock.SSL.CertificateFile := AACBrBoleto.Configuracoes.WebService.ArquivoCRT;
+      if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
+        FHTTPSend.Sock.SSL.CertificateFile := AACBrBoleto.Configuracoes.WebService.ArquivoCRT;
 
+    FHTTPSend.Sock.SSL.Connect;
+
+  end else
+  begin
+    if Self.AuthorizationType = atJWT then
+    begin
+      LStringList := TStringList.Create;
+      try
+        //FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
+        LStringList.LoadFromFile(AACBrBoleto.Configuracoes.WebService.ArquivoKEY);
+        FHTTPSend.Sock.SSL.PrivateKey     := LStringList.Text;
+      finally
+        LStringList.Free;
+      end;
+    end;
+  end;
   FAmbiente          := AACBrBoleto.Configuracoes.WebService.Ambiente;
   FClientID          := AACBrBoleto.Cedente.CedenteWS.ClientID;
   FClientSecret      := AACBrBoleto.Cedente.CedenteWS.ClientSecret;
@@ -384,6 +427,7 @@ begin
   FErroComunicacao   := '';
   FPayload           := False;
   FAuthorizationType := atBearer;
+  FExigirClientSecret := True;
 
   if AACBrBoleto.Configuracoes.Arquivos.NomeArquivoLog = '' then
     AACBrBoleto.Configuracoes.Arquivos.NomeArquivoLog := C_ARQBOLETOWS_LOG;

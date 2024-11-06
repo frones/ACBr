@@ -140,6 +140,7 @@ type
   TRetornoEnvioClass = class
   private
     FACBrBoleto    : TACBrBoleto;
+    FACBrTitulo    : TACBrTitulo;
     FRetWS         : String;
     FEnvWS         : String;
     FCodRetorno    : Integer;
@@ -151,6 +152,7 @@ type
     function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean; virtual;
     function RetornoEnvio(const AIndex: Integer): Boolean; virtual;
 
+    property ACBrTitulo: TACBrTitulo read FACBrTitulo write FACBrTitulo;
     property ACBrBoleto: TACBrBoleto read FACBrBoleto;
     property Leitor: TLeitor read FLeitor;
     property RetWS: String read FRetWS write FRetWS;
@@ -245,7 +247,9 @@ uses
   ACBrBoletoW_Bradesco,
   ACBrBoletoRet_Bradesco,
   ACBrBoletoW_Banrisul,
-  ACBrBoletoRet_Banrisul;
+  ACBrBoletoRet_Banrisul,
+  ACBrBoletoW_Cora,
+  AcbrBoletoRet_Cora;
 
   { TRetornoEnvioClass }
 
@@ -281,6 +285,7 @@ end;
 
 function TRetornoEnvioClass.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
+  FACBrTitulo := FACBrBoleto.ListadeBoletos[AIndex];
   Result := False;
   raise EACBrBoletoWSException.Create(ACBrStr(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_RETORNO_ENVIO ])));
 
@@ -445,13 +450,18 @@ begin
       end;
     //cobBradesco :
       //begin
-        //FBoletoWSClass := TBoletoW_Bradesco.Create(Self);
+        //FBoletoWSClass := TBoletoW_Bradesco.Create(Self, FBoleto);
         //FRetornoBanco  := TRetornoEnvio_Bradesco.Create(FBoleto);
       //end;
     cobBanrisul :
       begin
         FBoletoWSClass := TBoletoW_Banrisul.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Banrisul.Create(FBoleto);
+      end;
+    cobBancoCora :
+      begin
+        FBoletoWSClass := TBoletoW_Cora.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Cora.Create(FBoleto);
       end;
     else
       FBoletoWSClass := TBoletoWSClass.Create(Self);

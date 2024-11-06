@@ -122,7 +122,7 @@ procedure TBoletoW_Sicredi_APIV2.DefinirURL;
 var
   LId: String;
 begin
-  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
+  FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,C_URL, C_URL_HOM);
 
   if ATitulo <> nil then
 		LId      := DefinirNossoNumero;
@@ -340,7 +340,7 @@ end;
 
 function TBoletoW_Sicredi_APIV2.ValidaAmbiente: Integer;
 begin
-  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao, '1', '2'), 2);
+  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, '1', '2'), 2);
 end;
 
 procedure TBoletoW_Sicredi_APIV2.RequisicaoJson;
@@ -692,10 +692,10 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = taHomologacao then
-      OAuth.URL := C_URL_OAUTH_HOM
+    if OAuth.Ambiente = tawsProducao then
+      OAuth.URL := C_URL_OAUTH_PROD
     else
-      OAuth.URL := C_URL_OAUTH_PROD;
+      OAuth.URL := C_URL_OAUTH_HOM;
 
     OAuth.Payload := True;
   end;

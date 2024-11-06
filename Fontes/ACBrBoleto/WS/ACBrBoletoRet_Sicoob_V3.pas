@@ -332,7 +332,7 @@ begin
   ListaRetorno.HTTPResultCode := HTTPResultCode;
   ListaRetorno.JSONEnvio      := EnvWs;
   LCodigoSolicitacao := ACBrBoleto.Configuracoes.WebService.Filtro.NumeroProtocolo;
-  LIdArquivo         := ACBrBoleto.Configuracoes.WebService.Filtro.Identificador;
+  LIdArquivo         := StrToInt64Def(ACBrBoleto.Configuracoes.WebService.Filtro.Identificador,0);
 
   if RetWS <> '' then
   begin

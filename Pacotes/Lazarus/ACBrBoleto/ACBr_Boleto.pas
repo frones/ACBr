@@ -36,7 +36,8 @@ uses
   ACBrBancoSofisaItau, ACBrBoletoRet_Santander_API, ACBrBoletoW_Santander_API, 
   ACBrBancoAthenaBradesco, ACBrBancoIndustrialBrasil, ACBrBancoQITech, 
   ACBrBoletoRet_Itau_API, ACBrBoletoW_Itau_API, ACBrBancoBocomBBM, 
-  ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, LazarusPackageIntf;
+  ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, ACBrBancoCora, ACBrBoletoW_Cora,
+  ACBrBoletoRet_Cora, LazarusPackageIntf;
 
 implementation
 

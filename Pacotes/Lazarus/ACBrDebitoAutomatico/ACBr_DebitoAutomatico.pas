@@ -8,34 +8,23 @@ unit ACBr_DebitoAutomatico;
 interface
 
 uses
-  ACBrDebitoAutomatico, 
-  ACBrDebitoAutomaticoArquivo, 
-  ACBrDebitoAutomaticoArquivoClass, 
-  ACBrDebitoAutomaticoConfiguracoes, 
-  ACBrDebitoAutomaticoReg, 
-  DebitoAutomatico.BancodoBrasil.GravarTxtRemessa, 
+  ACBrDebitoAutomatico, ACBrDebitoAutomaticoArquivo, 
+  ACBrDebitoAutomaticoArquivoClass, ACBrDebitoAutomaticoConfiguracoes, 
+  ACBrDebitoAutomaticoReg, DebitoAutomatico.BancodoBrasil.GravarTxtRemessa, 
   DebitoAutomatico.BancodoBrasil.LerTxtRetorno, 
   DebitoAutomatico.BancodoBrasil.Provider, 
   DebitoAutomatico.Banrisul.GravarTxtRemessa, 
-  DebitoAutomatico.Banrisul.LerTxtRetorno, 
-  DebitoAutomatico.Banrisul.Provider, 
+  DebitoAutomatico.Banrisul.LerTxtRetorno, DebitoAutomatico.Banrisul.Provider, 
   DebitoAutomatico.Santander.GravarTxtRemessa, 
   DebitoAutomatico.Santander.LerTxtRetorno, 
-  DebitoAutomatico.Santander.Provider, 
+  DebitoAutomatico.Santander.Provider, ACBrDebitoAutomaticoClass, 
+  ACBrDebitoAutomaticoConversao, ACBrDebitoAutomaticoParametros, 
+  ACBrDebitoAutomaticoGravarTxt, ACBrDebitoAutomaticoInterface, 
+  ACBrDebitoAutomaticoLerTxt, ACBrDebitoAutomaticoProviderBase, 
+  ACBrDebitoAutomaticoProviderManager, Febraban150.GravarTxtRemessa, 
+  Febraban150.LerTxtRetorno, Febraban150.Provider, 
   DebitoAutomatico.Sicredi.GravarTxtRemessa, 
-  DebitoAutomatico.Sicredi.LerTxtRetorno, 
-  DebitoAutomatico.Sicredi.Provider, 
-  ACBrDebitoAutomaticoClass, 
-  ACBrDebitoAutomaticoConversao, 
-  ACBrDebitoAutomaticoParametros, 
-  ACBrDebitoAutomaticoGravarTxt, 
-  ACBrDebitoAutomaticoInterface, 
-  ACBrDebitoAutomaticoLerTxt, 
-  ACBrDebitoAutomaticoProviderBase, 
-  ACBrDebitoAutomaticoProviderManager, 
-  Febraban150.GravarTxtRemessa, 
-  Febraban150.LerTxtRetorno, 
-  Febraban150.Provider, 
+  DebitoAutomatico.Sicredi.LerTxtRetorno, DebitoAutomatico.Sicredi.Provider, 
   LazarusPackageIntf;
 
 implementation
@@ -47,5 +36,4 @@ end;
 
 initialization
   RegisterPackage('ACBr_DebitoAutomatico', @Register);
-	
 end.

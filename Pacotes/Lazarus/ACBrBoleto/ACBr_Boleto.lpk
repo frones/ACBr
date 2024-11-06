@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="90">
+    <Files Count="93">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -383,6 +383,18 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cresol.pas"/>
         <UnitName Value="ACBrBoletoW_Cresol"/>
       </Item90>
+	  <Item91>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCora.pas"/>
+        <UnitName Value="ACBrBancoCora"/>
+      </Item91>
+	  <Item92>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cora.pas"/>
+        <UnitName Value="ACBrBoletoW_Cora"/>
+      </Item92>
+	  <Item93>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas"/>
+        <UnitName Value="ACBrBoletoRet_Cora"/>
+      </Item93>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

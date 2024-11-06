@@ -140,7 +140,7 @@ begin
       FPURL := FPURL + '/invoices';
     tpConsulta:
       FPURL := FPURL + '/invoices?' + DefinirParametros;
-    tpCancelar:
+    tpBaixa,tpCancelar:
       begin
         if (LNossoNumeroCorrespondente <> '') then
         begin
@@ -154,9 +154,7 @@ begin
           FPURL := FPURL + '/invoices/' + LNossoNumeroCorrespondente;
         end;
       end;
-
   end;
-
 end;
 
 procedure TBoletoW_Cora.DefinirContentType;

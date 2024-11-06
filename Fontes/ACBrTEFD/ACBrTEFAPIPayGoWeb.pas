@@ -192,7 +192,7 @@ begin
 
   IpStr := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
   PortaStr := '';
-  p := pos(IpStr, ':');  //Verificar Possível inversão???
+  p := pos(':', IpStr);
   if (p > 0) then
   begin
     PortaStr := copy(IpStr, p+1, Length(IpStr));

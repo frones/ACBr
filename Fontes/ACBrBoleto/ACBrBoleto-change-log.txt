@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2024
+-- ACBrBoletoRet_BancoBrasil_API --
+[-] Correção de AV
+    por Victor Gonzales e Alexandre de Paula
+
 31/10/2024
 -- ACBrBancoSantander --
 [*] TK-6190 - Ajuste de mensagem de Juros e Multa Boleto Santander

@@ -367,7 +367,8 @@ begin
   LListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
   LListaRetorno.HTTPResultCode := HTTPResultCode;
   LListaRetorno.JSONEnvio      := EnvWs;
-  LListaRetorno.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
+  If Assigned(ACBrTitulo) then
+    LListaRetorno.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
   if RetWS <> '' then
   begin
     try

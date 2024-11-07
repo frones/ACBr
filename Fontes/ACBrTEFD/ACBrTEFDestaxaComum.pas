@@ -44,10 +44,18 @@ uses
 resourcestring
   sDestaxa_TipoCartao_NaoInformado = 'Tipo do Cartão não informado(Crédito, Débito)';
   sDestaxa_TipoPagamento_NaoInformado = 'Tipo do Pagamento não informado(A Vista, Parcelado, Pré-Datado)';
+  sDestaxa_TipoPagamento_NaoAceito = 'Tipo de Pagamento não aceito';
 
 const
   CDESTAXA_TERMINADOR = #13 + #10 + #09 + #09 + #13 + #10 + #09 + #09 + #09 + #13 + #10 + #09 + #09 + #13 + #10 + #09;
+  CDESTAXA_IP = 'localhost';
+  CDESTAXA_PORT = '60906';
+  CDESTAXA_TIMEOUT = 3000;
+
   CDESTAXA_CARTAO_VENDER = 'Cartao Vender';
+  CDESTAXA_ADM_PENDENTE = 'Administracao Pendente';
+  CDESTAXA_ADM_CANCELAR = 'Administracao Cancelar';
+  CDESTAXA_MENU_ADMIN = 'Menu Administrativo';
 
 type
 
@@ -256,7 +264,6 @@ type
     ftransacao_codigo_barras: String;
     ftransacao_concessionaria: String;
     ftransacao_data: TDateTime;
-    ftransacao_financiado: String;
     ftransacao_informacao: String;
     ftransacao_linha_digitavel: String;
     ftransacao_nsu: String;
@@ -277,6 +284,7 @@ type
     fservico: TACBrTEFDestaxaServico;
     ftransacao_tipo_cartao: TACBrDestaxaTipoCartao;
     ftransacao_pagamento: TACBrTEFDestaxaPagamento;
+    ftransacao_financiado: TACBrTEFDestaxaFinanciado;
     ftransacao_binario_tipo: TACBrTEFDestaxaBinarioTipo;
     function GetAsString: AnsiString;
     procedure SetAsString(aValue: AnsiString);
@@ -303,7 +311,7 @@ type
     property transacao_codigo_barras: String read ftransacao_codigo_barras write ftransacao_codigo_barras;
     property transacao_concessionaria: String read ftransacao_concessionaria write ftransacao_concessionaria;
     property transacao_data: TDateTime read ftransacao_data write ftransacao_data;
-    property transacao_financiado: String read ftransacao_financiado write ftransacao_financiado;
+    property transacao_financiado: TACBrTEFDestaxaFinanciado read ftransacao_financiado write ftransacao_financiado;
     property transacao_informacao: String read ftransacao_informacao write ftransacao_informacao;
     property transacao_linha_digitavel: String read ftransacao_linha_digitavel write ftransacao_linha_digitavel;
     property transacao_nsu: String read ftransacao_nsu write ftransacao_nsu;
@@ -498,7 +506,7 @@ type
     constructor Create(aOwner: TACBrTEFDestaxaClient);
     destructor Destroy; override;
 
-    procedure EnviarComando;
+    procedure ExecutarTransacao;
     procedure EnviarComandoColeta;
 
     procedure Reconectar;
@@ -565,6 +573,8 @@ type
     procedure GravarLog(const aString: AnsiString; Traduz: Boolean = False);
 
     function CartaoVender: Boolean;
+    function AdministracaoCancelar: Boolean;
+    function AdministracaoPendente: Boolean;
 
     property Socket: TACBrTEFDestaxaSocket read GetSocket;
     property Resposta: TACBrTEFDestaxaTransacaoResposta read GetResposta;
@@ -598,22 +608,18 @@ function DestaxaTipoCartaoToString(const aCartao: TACBrDestaxaTipoCartao): Strin
 function StringToDestaxaTipoCartao(const aString: String): TACBrDestaxaTipoCartao;
 function DestaxaPagamentoToString(const aPagamento: TACBrTEFDestaxaPagamento): String;
 function StringToDestaxaPagamento(const aString: String): TACBrTEFDestaxaPagamento;
-function DestaxaColetaRetornoToInteger(
-  const aColetaRetorno: TACBrTEFDestaxaColetaRetorno): Integer;
-function IntegerToDestaxaColetaRetorno(
-  const aColetaRetorno: Integer): TACBrTEFDestaxaColetaRetorno;
-function DestaxaRetornoRequisicaoToInteger(
-  const aRetorno: TACBrTEFDestaxaRetornoRequisicao): Integer;
-function IntegerToDestaxaRetornoRequisicao(
-  const aRetorno: Integer): TACBrTEFDestaxaRetornoRequisicao;
-function DestaxaRetornoRespostaToInteger(
-  const aRetorno: TACBrTEFDestaxaRetornoResposta): Integer;
-function IntegerToDestaxaRetornoResposta(
-  const aRetorno: Integer): TACBrTEFDestaxaRetornoResposta;
+function DestaxaColetaRetornoToInteger(const aColetaRetorno: TACBrTEFDestaxaColetaRetorno): Integer;
+function IntegerToDestaxaColetaRetorno(const aColetaRetorno: Integer): TACBrTEFDestaxaColetaRetorno;
+function DestaxaRetornoRequisicaoToInteger(const aRetorno: TACBrTEFDestaxaRetornoRequisicao): Integer;
+function IntegerToDestaxaRetornoRequisicao(const aRetorno: Integer): TACBrTEFDestaxaRetornoRequisicao;
+function DestaxaRetornoRespostaToInteger(const aRetorno: TACBrTEFDestaxaRetornoResposta): Integer;
+function IntegerToDestaxaRetornoResposta(const aRetorno: Integer): TACBrTEFDestaxaRetornoResposta;
 function DestaxaColetaTipoToString(const aTipo: TACBrTEFDestaxaColetaTipo): String;
 function StringToDestaxaColetaTipo(const aString: String): TACBrTEFDestaxaColetaTipo;
 function DestaxaMensagemToString(const aMensagem: TACBrTEFDestaxaMensagem): String;
 function StringToDestaxaMensagem(const aString: String): TACBrTEFDestaxaMensagem;
+function DestaxaFinanciadoToString(const aFin: TACBrTEFDestaxaFinanciado): String;
+function StringToDestaxaFinanciado(const aString: String): TACBrTEFDestaxaFinanciado;
 
 implementation
 
@@ -796,8 +802,7 @@ begin
   end;
 end;
 
-function IntegerToDestaxaRetornoResposta(
-  const aRetorno: Integer): TACBrTEFDestaxaRetornoResposta;
+function IntegerToDestaxaRetornoResposta(const aRetorno: Integer): TACBrTEFDestaxaRetornoResposta;
 begin
   Result := drsNenhum;
   case aRetorno of
@@ -891,6 +896,28 @@ begin
     Result := dmsTransacaoCancelada
   else if aString = 'WAIT' then
     Result := dmsAguarde;
+end;
+
+function DestaxaFinanciadoToString(const aFin: TACBrTEFDestaxaFinanciado): String;
+begin
+  Result := EmptyStr;
+  case aFin of
+    dxfNenhum: Result := 'Nenhum';
+    dxfEstabelecimento: Result := 'Estabelecimento';
+    dxfAdministradora: Result := 'Administradora';
+    dxfAVista: Result := 'A vista';
+  end;
+end;
+
+function StringToDestaxaFinanciado(const aString: String): TACBrTEFDestaxaFinanciado;
+begin
+  Result := dxfNenhum;
+  if aString = 'Estabelecimento' then
+    Result := dxfEstabelecimento
+  else if aString = 'Administradora' then
+    Result := dxfAdministradora
+  else if aString = 'A vista' then
+    Result := dxfAVista
 end;
 
 { TACBrTEFDestaxaAutomacaoColeta }
@@ -1048,7 +1075,7 @@ begin
   inherited CarregarCampos(aStrList);
 
   fcodigo_bandeira := aStrList.Values['codigo_bandeira'];
-  festado.Value := StrToIntDef(aStrList.Values['estado'], 0);
+  estado.Value := StrToIntDef(aStrList.Values['estado'], 0);
   ftransacao_autorizacao := aStrList.Values['transacao_autorizacao'];
   ftransacao_comprovante_1via := aStrList.Values['transacao_comprovante_1via'];
   ftransacao_comprovante_2via := aStrList.Values['transacao_comprovante_2via'];
@@ -1198,9 +1225,8 @@ var
   TX: AnsiString;
   Erro: Integer;
 begin
-  TX := aComando + sLineBreak + '		' + sLineBreak +
-    '			' + sLineBreak + '		' + sLineBreak + '	';
-  fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Transmitir: ' + TX);
+  TX := aComando + sLineBreak;
+  fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Transmitir: ' + sLineBreak + TX);
   SendString(TX);
   Erro := LastError;
   fDestaxaClient.GravarLog(sLineBreak + '  TRANSMITIDO' + sLineBreak +
@@ -1231,6 +1257,7 @@ end;
 
 constructor TACBrTEFDestaxaSocket.Create(aOwner: TACBrTEFDestaxaClient);
 begin
+  inherited Create;
   fEmTransacao := False;
   fDestaxaClient := aOwner;
   fOnGravarLog := nil;
@@ -1250,8 +1277,7 @@ begin
   CloseSocket;
   Connect(fDestaxaClient.EnderecoIP, fDestaxaClient.Porta);
   Result := LastError;
-  fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Conectar - Result: ' +
-    IntToStr(Result));
+  fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Conectar - Result: ' + IntToStr(Result));
 end;
 
 procedure TACBrTEFDestaxaSocket.Reconectar;
@@ -1262,37 +1288,48 @@ begin
   Conectar;
 end;
 
-procedure TACBrTEFDestaxaSocket.EnviarComando;
+procedure TACBrTEFDestaxaSocket.ExecutarTransacao;
 var
   RX: AnsiString;
+  Erro: Integer;
 begin
   Resposta.Clear;
 
-  try
+  //try
     Transmitir(Requisicao.AsString);
-  except
+  //except
     // 10054-Connection reset by peer; 10057-Socket is not connected
-    if (LastError <> 10054) and (LastError <> 10057) then
-      raise;
+  //  if (LastError <> 10054) and (LastError <> 10057) then
+  //    raise;
 
-    Reconectar;
-    Transmitir(Requisicao.AsString);
-  end;
+  //  Reconectar;
+  //  Transmitir(Requisicao.AsString);
+  //end;
 
-  while NaoEstaZerado(LastError) do
+  Erro := -1;
+  while NaoEstaZerado(Erro) do
   begin
     fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket - Aguardando Resposta...');
     RX := RecvTerminated(fDestaxaClient.TimeOut, fDestaxaClient.Terminador);
 
-    if EstaZerado(LastError) then
+    Erro := LastError;
+    if NaoEstaZerado(Erro) then
     begin
-      fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Resposta - RX: ' + RX);
-      Resposta.AsString := RX;
-      if (Resposta.automacao_coleta_sequencial > 0) then
-        ColetaResposta.AsString := RX;
-    end
-    else
       TratarErro;
+      Exit;
+    end;
+
+    fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Resposta - RX: ' + sLineBreak + RX);
+    Resposta.AsString := RX;
+
+    if (Resposta.automacao_coleta_sequencial > 0) then
+      ColetaResposta.AsString := RX;
+
+    if (Resposta.retorno = drsErroSequencialInvalido) then
+    begin
+      Requisicao.sequencial := Resposta.sequencial;
+      ExecutarTransacao;
+    end;
   end;
 end;
 
@@ -1345,25 +1382,23 @@ begin
   if fEmTransacao then
     Exit;
 
-  repeat
-    Requisicao.Clear;
-    Requisicao.servico := dxsIniciar;
-    Requisicao.loja := fDestaxaClient.Loja;
-    Requisicao.terminal := fDestaxaClient.Terminal;
-    Requisicao.aplicacao := fDestaxaClient.Aplicacao;
-    Requisicao.versao := fDestaxaClient.AplicacaoVersao;
-    Requisicao.aplicacao_tela := fDestaxaClient.AplicacaoTela;
-    Requisicao.estabelecimento := fDestaxaClient.Estabelecimento;
-    //Requisicao.computador_nome := fComputadorNome;
-    //Requisicao.computador_endereco := fComputadorEndereco;
+  Requisicao.Clear;
+  Requisicao.sequencial := 1;
+  Requisicao.servico := dxsIniciar;
+  Requisicao.loja := fDestaxaClient.Loja;
+  Requisicao.retorno := drqExecutarServico;
+  Requisicao.terminal := fDestaxaClient.Terminal;
+  Requisicao.aplicacao := fDestaxaClient.Aplicacao;
+  Requisicao.versao := fDestaxaClient.AplicacaoVersao;
+  Requisicao.aplicacao_tela := fDestaxaClient.AplicacaoTela;
+  Requisicao.estabelecimento := fDestaxaClient.Estabelecimento;
+  //Requisicao.computador_nome := fComputadorNome;
+  //Requisicao.computador_endereco := fComputadorEndereco;
 
-    EnviarComando;
+  ExecutarTransacao;
 
-    if (Resposta.Sequencial < Requisicao.Sequencial) then
-      Requisicao.Sequencial := Resposta.Sequencial;
-
-  until (Resposta.retorno = drsSucessoSemConfirmacao) and
-    (Resposta.Servico = Requisicao.Servico);
+  Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.Servico = Requisicao.Servico);
+  Requisicao.sequencial := Requisicao.sequencial + 1;
   fEmTransacao := True;
 end;
 
@@ -1373,27 +1408,20 @@ begin
   if not fEmTransacao then
     Exit;
 
+  Requisicao.Clear;
   Requisicao.servico := dxsFinalizar;
-
-  EnviarComando;
-
-  if Resposta.Sequencial < Requisicao.Sequencial then
-    Requisicao.Sequencial := Resposta.Sequencial;
+  ExecutarTransacao;
   fEmTransacao := False;
+  Requisicao.sequencial := Requisicao.sequencial + 1;
 end;
 
 function TACBrTEFDestaxaSocket.Consultar: Boolean;
 begin
-  Iniciar;
-  try
-    Requisicao.servico := dxsConsultar;
-    Requisicao.retorno := drqExecutarServico;
-    EnviarComando;
-    Result := (Resposta.servico = dxsConsultar) and
-      (Resposta.retorno = drsSucessoSemConfirmacao);
-  finally
-    Finalizar;
-  end;
+  Requisicao.servico := dxsConsultar;
+  Requisicao.retorno := drqExecutarServico;
+  ExecutarTransacao;
+  Result := (Resposta.servico = dxsConsultar) and (Resposta.retorno = drsSucessoSemConfirmacao);
+  Requisicao.sequencial := Requisicao.sequencial + 1;
 end;
 
 function TACBrTEFDestaxaSocket.Executar(aTransacao: String): Boolean;
@@ -1402,15 +1430,11 @@ begin
   if EstaVazio(aTransacao) then
     Exit;
 
-  Iniciar;
-  try
-    Requisicao.servico := dxsExecutar;
-    Requisicao.transacao := aTransacao;
-    EnviarComando;
-    Result := True;
-  finally
-    Finalizar;
-  end;
+  Requisicao.servico := dxsExecutar;
+  Requisicao.transacao := aTransacao;
+  ExecutarTransacao;
+  Result := True;
+  Requisicao.sequencial := Requisicao.sequencial + 1;
 end;
 
 function TACBrTEFDestaxaSocket.Mostrar(aMensagem: TACBrTEFDestaxaMensagem): Boolean;
@@ -1422,9 +1446,9 @@ begin
   try
     Requisicao.servico := dxsMostrar;
     Requisicao.mensagem := DestaxaMensagemToString(aMensagem);
-    EnviarComando;
-    Result := (Resposta.servico = dxsMostrar) and
-      (Resposta.retorno = drsSucessoSemConfirmacao);
+    ExecutarTransacao;
+    Result := (Resposta.servico = dxsMostrar) and (Resposta.retorno = drsSucessoSemConfirmacao);
+    Requisicao.sequencial := Requisicao.sequencial + 1;
   finally
     Finalizar;
   end;
@@ -1455,9 +1479,10 @@ begin
       msg := msg + ';' + IntToStr(aTempoEspera);
     Requisicao.mensagem := msg;
 
-    EnviarComando;
+    ExecutarTransacao;
     if (Resposta.retorno = drsSucessoSemConfirmacao) then
       Result := Resposta.transacao_informacao;
+    Requisicao.sequencial := Requisicao.sequencial + 1;
   finally
     Finalizar;
   end;
@@ -1595,12 +1620,6 @@ procedure TACBrTEFDestaxaClient.EfetuarValidacoesCartaoVender;
 begin
   if EstaZerado(Requisicao.ftransacao_valor) then
     raise EACBrTEFDestaxaErro.Create(sACBrTEFAPIValorPagamentoInvalidoException);
-
-  if (Requisicao.ftransacao_tipo_cartao = dtcNenhum) then
-    raise EACBrTEFDestaxaErro.Create(sDestaxa_TipoCartao_NaoInformado);
-
-  if (Requisicao.ftransacao_pagamento = dpgNenhum) then
-    raise EACBrTEFDestaxaErro.Create(sDestaxa_TipoPagamento_NaoInformado);
 end;
 
 constructor TACBrTEFDestaxaClient.Create;
@@ -1630,6 +1649,9 @@ begin
   fEstabelecimento := EmptyStr;
   fLoja := EmptyStr;
   fTerminal := EmptyStr;
+  fEnderecoIP := CDESTAXA_IP;
+  fPorta := CDESTAXA_PORT;
+  fTimeOut := CDESTAXA_TIMEOUT;
 end;
 
 procedure TACBrTEFDestaxaClient.GravarLog(const aString: AnsiString; Traduz: Boolean);
@@ -1654,7 +1676,6 @@ begin
   Result := False;
   EfetuarValidacoesCartaoVender;
 
-  Socket.Conectar;
   Socket.Iniciar;
   try
     Socket.Executar(CDESTAXA_CARTAO_VENDER);
@@ -1671,7 +1692,52 @@ begin
     Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
   finally
     Socket.Finalizar;
-    Socket.Desconectar;
+  end;
+end;
+
+function TACBrTEFDestaxaClient.AdministracaoCancelar: Boolean;
+begin
+  Result := False;
+
+  Socket.Iniciar;
+  try
+    Socket.Executar(CDESTAXA_ADM_CANCELAR);
+    ProcessarResposta;
+
+    if (Resposta.retorno = drsSucessoComConfirmacao) then
+    begin
+      Requisicao.Clear;
+      Requisicao.sequencial := Resposta.sequencial;
+      Requisicao.retorno := drqConfirmarTransacao;
+      Socket.Executar(CDESTAXA_ADM_CANCELAR);
+    end;
+
+    Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
+  finally
+    Socket.Finalizar;
+  end;
+end;
+
+function TACBrTEFDestaxaClient.AdministracaoPendente: Boolean;
+begin
+  Result := False;
+
+  Socket.Iniciar;
+  try
+    Socket.Executar(CDESTAXA_ADM_PENDENTE);
+    ProcessarResposta;
+
+    if (Resposta.retorno = drsSucessoComConfirmacao) then
+    begin
+      Requisicao.Clear;
+      Requisicao.sequencial := Resposta.sequencial;
+      Requisicao.retorno := drqConfirmarTransacao;
+      Socket.Executar(CDESTAXA_ADM_PENDENTE);
+    end;
+
+    Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
+  finally
+    Socket.Finalizar;
   end;
 end;
 
@@ -1699,15 +1765,14 @@ begin
 
   Campos := TStringList.Create;
   try
-    Campos.Text := aValue;
+    Campos.Text := StringReplace(aValue, '"', '', [rfReplaceAll]);
     CarregarCampos(Campos);
   finally
     Campos.Free;
   end;
 end;
 
-procedure TACBrTEFDestaxaTransacaoClass.PreencherCampo(
-  const aStrList: TStringList; const aCampo: String; const aConteudo: Double);
+procedure TACBrTEFDestaxaTransacaoClass.PreencherCampo(const aStrList: TStringList; const aCampo: String; const aConteudo: Double);
 var
   s: String;
 begin
@@ -1741,10 +1806,12 @@ procedure TACBrTEFDestaxaTransacaoClass.PreencherCampos(const aStrList: TStringL
 begin
   if not Assigned(aStrList) then
     Exit;
-
+                              
+  PreencherCampo(aStrList, 'versao', fversao);
+  PreencherCampo(aStrList, 'sequencial', fsequencial);
+  PreencherCampo(aStrList, 'servico', DestaxaServicoToString(servico));
   PreencherCampo(aStrList, 'aplicacao', faplicacao);
   PreencherCampo(aStrList, 'mensagem', fmensagem);
-  PreencherCampo(aStrList, 'sequencial', fsequencial);
   PreencherCampo(aStrList, 'transacao', ftransacao);
   PreencherCampo(aStrList, 'transacao_banco', ftransacao_banco);
   PreencherCampo(aStrList, 'transacao_binario', ftransacao_binario);
@@ -1753,7 +1820,6 @@ begin
   PreencherCampo(aStrList, 'transacao_codigo_barras', ftransacao_codigo_barras);
   PreencherCampo(aStrList, 'transacao_concessionaria', ftransacao_concessionaria);
   PreencherCampo(aStrList, 'transacao_data', ftransacao_data);
-  PreencherCampo(aStrList, 'transacao_financiado', ftransacao_financiado);
   PreencherCampo(aStrList, 'transacao_informacao', ftransacao_informacao);
   PreencherCampo(aStrList, 'transacao_linha_digitavel', ftransacao_linha_digitavel);
   PreencherCampo(aStrList, 'transacao_nsu', ftransacao_nsu);
@@ -1761,8 +1827,7 @@ begin
   PreencherCampo(aStrList, 'transacao_parcela', ftransacao_parcela);
   PreencherCampo(aStrList, 'transacao_parcela_entrada', ftransacao_parcela_entrada);
   PreencherCampo(aStrList, 'transacao_parcela_valor', ftransacao_parcela_valor);
-  PreencherCampo(aStrList, 'transacao_parcela_vencimento',
-    ftransacao_parcela_vencimento);
+  PreencherCampo(aStrList, 'transacao_parcela_vencimento', ftransacao_parcela_vencimento);
   PreencherCampo(aStrList, 'transacao_produto', ftransacao_produto);
   PreencherCampo(aStrList, 'transacao_rede', ftransacao_rede);
   PreencherCampo(aStrList, 'transacao_telefone_ddd', ftransacao_telefone_ddd);
@@ -1771,8 +1836,9 @@ begin
   PreencherCampo(aStrList, 'transacao_valor', ftransacao_valor);
   PreencherCampo(aStrList, 'transacao_valor_ajuste', ftransacao_valor_ajuste);
   PreencherCampo(aStrList, 'transacao_vencimento', ftransacao_vencimento);
-  PreencherCampo(aStrList, 'versao', fversao);
-  PreencherCampo(aStrList, 'servico', DestaxaServicoToString(servico));
+
+  if (ftransacao_financiado <> dxfNenhum) then
+    PreencherCampo(aStrList, 'transacao_financiado', DestaxaFinanciadoToString(ftransacao_financiado));
 
   if (ftransacao_tipo_cartao <> dtcNenhum) then
     PreencherCampo(aStrList, 'transacao_tipo_cartao', DestaxaTipoCartaoToString(transacao_tipo_cartao));
@@ -1792,8 +1858,7 @@ begin
   faplicacao := aStrList.Values['aplicacao'];
   fmensagem := aStrList.Values['mensagem'];
   fsequencial := StrToIntDef(aStrList.Values['sequencial'], -1);
-  fColetaRetornoSequencial :=
-    StrToIntDef(aStrList.Values['ColetaRetornoSequencial'], -1);
+  fColetaRetornoSequencial := StrToIntDef(aStrList.Values['ColetaRetornoSequencial'], -1);
   ftransacao := aStrList.Values['transacao'];
   ftransacao_banco := StrToIntDef(aStrList.Values['transacao_banco'], -1);
   ftransacao_binario := AnsiString(aStrList.Values['transacao_binario']);
@@ -1802,7 +1867,7 @@ begin
   ftransacao_codigo_barras := aStrList.Values['transacao_codigo_barras'];
   ftransacao_concessionaria := aStrList.Values['transacao_concessionaria'];
   ftransacao_data := StrToDateTimeDef(aStrList.Values['transacao_data'], 0);
-  ftransacao_financiado := aStrList.Values['transacao_financiado'];
+  ftransacao_financiado := StringToDestaxaFinanciado(aStrList.Values['transacao_financiado']);
   ftransacao_informacao := aStrList.Values['transacao_informacao'];
   ftransacao_linha_digitavel := aStrList.Values['transacao_linha_digitavel'];
   ftransacao_nsu := aStrList.Values['transacao_nsu'];
@@ -1849,7 +1914,6 @@ begin
   ftransacao_cheque_vencimento := EmptyStr;
   ftransacao_codigo_barras := EmptyStr;
   ftransacao_concessionaria := EmptyStr;
-  ftransacao_financiado := EmptyStr;
   ftransacao_informacao := EmptyStr;
   ftransacao_linha_digitavel := EmptyStr;
   ftransacao_nsu := EmptyStr;
@@ -1872,6 +1936,7 @@ begin
   ftransacao_tipo_cartao := dtcNenhum;
   ftransacao_pagamento := dpgNenhum;
   ftransacao_binario_tipo := dbtNenhum;
+  ftransacao_financiado := dxfNenhum;
 end;
 
 end.

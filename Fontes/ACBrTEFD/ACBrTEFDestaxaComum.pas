@@ -291,7 +291,7 @@ type
     procedure SetAsString(aValue: AnsiString);
     procedure PreencherCampo(const aStrList: TStringList; const aCampo: String; const aConteudo: Double); overload;
     procedure PreencherCampo(const aStrList: TStringList; const aCampo: String; const aConteudo: Integer); overload;
-    procedure PreencherCampo(const aStrList: TStringList; const aCampo: String; const aConteudo: TDateTime); overload;
+    procedure PreencherCampoData(const aStrList: TStringList; const aCampo: String; const aConteudo: TDateTime); overload;
     procedure PreencherCampo(const aStrList: TStringList; const aCampo, aConteudo: AnsiString; PreencherVazio: Boolean = False); overload;
     function CarregarCampoFloat(aCampo: String): Double;
     function CarregarCampoInteger(aCampo: String): Integer;
@@ -1139,10 +1139,10 @@ begin
   s := aStrList.Text;
   if (CountStr(s, 'transacao_comprovante_1via') > 0) then
   begin
-    v1 := Copy(s, Pos('transacao_comprovante_1via', s)+28);
-    v1 := Copy(v1, 1, Pos('"', v1)-1);
-    v2 := Copy(s, Pos('transacao_comprovante_2via', s)+28);
-    v2 := Copy(v2, 1, Pos('"', v2)-1);
+    v1 := Copy(s, (Pos('transacao_comprovante_1via', s)+28), Length(s));
+    v1 := Copy(v1, 1, (Pos('"', v1)-1));
+    v2 := Copy(s, (Pos('transacao_comprovante_2via', s)+28), Length(s));
+    v2 := Copy(v2, 1, (Pos('"', v2)-1));
     if NaoEstaVazio(v1) then
       ftransacao_comprovante_1via.Text := v1;
     if NaoEstaVazio(v2) then
@@ -1960,7 +1960,7 @@ begin
   aStrList.Values[aCampo] := '"' + IntToStr(aConteudo) + '"';
 end;
 
-procedure TACBrTEFDestaxaTransacaoClass.PreencherCampo(
+procedure TACBrTEFDestaxaTransacaoClass.PreencherCampoData(
   const aStrList: TStringList; const aCampo: String; const aConteudo: TDateTime);
 begin
   if not Assigned(aStrList) or (aConteudo <= 0) then
@@ -2023,7 +2023,7 @@ begin
   PreencherCampo(aStrList, 'transacao_cheque_vencimento', ftransacao_cheque_vencimento);
   PreencherCampo(aStrList, 'transacao_codigo_barras', ftransacao_codigo_barras);
   PreencherCampo(aStrList, 'transacao_concessionaria', ftransacao_concessionaria);
-  PreencherCampo(aStrList, 'transacao_data', ftransacao_data);
+  PreencherCampoData(aStrList, 'transacao_data', ftransacao_data);
   PreencherCampo(aStrList, 'transacao_informacao', ftransacao_informacao);
   PreencherCampo(aStrList, 'transacao_linha_digitavel', ftransacao_linha_digitavel);
   PreencherCampo(aStrList, 'transacao_nsu', ftransacao_nsu);
@@ -2031,7 +2031,7 @@ begin
   PreencherCampo(aStrList, 'transacao_parcela', ftransacao_parcela);
   PreencherCampo(aStrList, 'transacao_parcela_entrada', ftransacao_parcela_entrada);
   PreencherCampo(aStrList, 'transacao_parcela_valor', ftransacao_parcela_valor);
-  PreencherCampo(aStrList, 'transacao_parcela_vencimento', ftransacao_parcela_vencimento);
+  PreencherCampoData(aStrList, 'transacao_parcela_vencimento', ftransacao_parcela_vencimento);
   PreencherCampo(aStrList, 'transacao_produto', ftransacao_produto);
   PreencherCampo(aStrList, 'transacao_rede', ftransacao_rede);
   PreencherCampo(aStrList, 'transacao_telefone_ddd', ftransacao_telefone_ddd);
@@ -2039,7 +2039,7 @@ begin
   PreencherCampo(aStrList, 'transacao_timeout', ftransacao_timeout);
   PreencherCampo(aStrList, 'transacao_valor', ftransacao_valor);
   PreencherCampo(aStrList, 'transacao_valor_ajuste', ftransacao_valor_ajuste);
-  PreencherCampo(aStrList, 'transacao_vencimento', ftransacao_vencimento);
+  PreencherCampoData(aStrList, 'transacao_vencimento', ftransacao_vencimento);
 
   if (ftransacao_financiado <> dxfNenhum) then
     PreencherCampo(aStrList, 'transacao_financiado', DestaxaFinanciadoToString(ftransacao_financiado));

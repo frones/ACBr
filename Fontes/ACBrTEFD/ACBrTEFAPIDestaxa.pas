@@ -165,7 +165,7 @@ begin
 
     p := Pos(':', fpACBrTEFAPI.DadosTerminal.EnderecoServidor);
     fDestaxaClient.EnderecoIP := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, 1, p-1);
-    fDestaxaClient.Porta := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, p+1);
+    fDestaxaClient.Porta := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, p+1, Length(fpACBrTEFAPI.DadosTerminal.EnderecoServidor));
   end;
   Result := fDestaxaClient;
 end;
@@ -303,8 +303,6 @@ end;
 function TACBrTEFAPIClassDestaxa.EfetuarPagamento(ValorPagto: Currency; Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte; DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 begin
-  Result := False;
-
   if NaoEstaZerado(ValorPagto) then
     DestaxaClient.Requisicao.transacao_valor := ValorPagto;
 

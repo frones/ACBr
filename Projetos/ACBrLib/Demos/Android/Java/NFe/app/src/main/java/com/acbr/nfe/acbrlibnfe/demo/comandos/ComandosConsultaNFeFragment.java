@@ -94,6 +94,8 @@ public class ComandosConsultaNFeFragment extends Fragment {
             }
         });
 
+
+
         return view;
     }
 

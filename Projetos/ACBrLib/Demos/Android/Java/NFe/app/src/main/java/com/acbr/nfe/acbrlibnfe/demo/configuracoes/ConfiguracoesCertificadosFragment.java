@@ -11,9 +11,9 @@ import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 
+import com.acbr.nfe.acbrlibnfe.demo.R;
 import com.acbr.nfe.acbrlibnfe.demo.utils.ACBrLibHelper;
 import com.acbr.nfe.acbrlibnfe.demo.utils.NfeApplication;
-import com.acbr.nfe.acbrlibnfe.demo.R;
 import com.acbr.nfe.acbrlibnfe.demo.utils.SpinnerUtils;
 
 import br.com.acbr.lib.comum.dfe.SSLCryptLib;
@@ -37,6 +37,7 @@ public class ConfiguracoesCertificadosFragment extends Fragment {
     private Button btnSalvarConfiguracoesCertificados;
     private Button btnCarregarConfiguracoesCertificados;
     private Button btnObterCertificados;
+    private Button btnSelecionarCertificado;
 
     SSLCryptLib[] sslCryptLibs = SSLCryptLib.values();
     SSLHttpLib[] sslHttpLibs = SSLHttpLib.values();
@@ -60,6 +61,7 @@ public class ConfiguracoesCertificadosFragment extends Fragment {
         btnObterCertificados = view.findViewById(R.id.btnObterCertificados);
         btnSalvarConfiguracoesCertificados = view.findViewById(R.id.btnSalvarConfiguracoesCertificados);
         btnCarregarConfiguracoesCertificados = view.findViewById(R.id.btnCarregarConfiguracoesCertificados);
+        btnSelecionarCertificado = view.findViewById(R.id.btnSelecionarCertificado);
         application = ((NfeApplication) this.getContext().getApplicationContext());
         txtCertPath.setText(application.getPfxPath());
 
@@ -88,7 +90,7 @@ public class ConfiguracoesCertificadosFragment extends Fragment {
             }
         });
 
-        txtCertPath.setOnClickListener(new View.OnClickListener() {
+        btnSelecionarCertificado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((ConfiguracoesNFeActivity) getActivity()).getCertificate();

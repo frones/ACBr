@@ -287,9 +287,9 @@ public class ComandosEnvioNFeFragment extends Fragment {
                 return;
             }
 
-            // Converte o PDF para Bitmap
-            int targetWidth = 320; // Largura em pixels.
-            int targetHeight = 500; // Altura em pixels.
+            int targetWidth = 850;
+            int targetHeight = 1200;
+
             Bitmap bitmap = savePdfAndConvertToBitmap(requireActivity(), pdfFile.getAbsolutePath(), targetWidth, targetHeight);
             if (bitmap == null) {
                 Log.e("Erro ao Imprimir NFCe", "Bitmap está nulo. Conversão de PDF para Bitmap falhou.");
@@ -323,13 +323,18 @@ public class ComandosEnvioNFeFragment extends Fragment {
 
             PdfRenderer.Page page = pdfRenderer.openPage(0);
 
-            // Cria um Bitmap com o fundo branco
+            // Cria um Bitmap com o fundo branco e tamanho ajustado
             Bitmap bitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             canvas.drawColor(Color.WHITE); // Define o fundo como branco
 
+            // Define uma proporção para redimensionar o conteúdo para caber no bitmap
+            float scale = Math.min((float) targetWidth / page.getWidth(), (float) targetHeight / page.getHeight());
+            int scaledWidth = (int) (page.getWidth() * scale);
+            int scaledHeight = (int) (page.getHeight() * scale);
+
             // Renderiza o conteúdo do PDF no bitmap redimensionado
-            Rect rect = new Rect(0, 0, page.getWidth(), page.getHeight()); // Zera as margens
+            Rect rect = new Rect(0, 0, scaledWidth, scaledHeight);
             page.render(bitmap, rect, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
             // Fecha a página após a renderização

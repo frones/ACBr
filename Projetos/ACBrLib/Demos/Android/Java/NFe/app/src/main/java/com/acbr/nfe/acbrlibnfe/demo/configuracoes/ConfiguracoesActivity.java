@@ -17,11 +17,10 @@ import br.com.acbr.lib.nfe.ACBrLibNFe;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
-    private EditText editExportedConfig;
-    //Propriedades do ACBrLibNFe
     private ACBrLibNFe ACBrNFe;
-
+    private EditText editExportedConfig;
     private NfeApplication application;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +42,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
         this.ACBrNFe = application.getAcBrLibNFe();
 
+        verConfiguracoesAtuais();
     }
 
     private void irParaTelaConfiguracoesNFe() {

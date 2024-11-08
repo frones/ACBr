@@ -2,6 +2,7 @@ package com.acbr.nfe.acbrlibnfe.demo.comandos;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,5 +51,6 @@ public class ComandosNFeActivity extends AppCompatActivity {
         });
 
         mediator.attach();
+        Toast.makeText(this, "Clique na aba para ver os comandos disponíveis", Toast.LENGTH_LONG).show();
     }
 }

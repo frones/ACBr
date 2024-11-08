@@ -1,122 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".ComandosEventoNFeFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="32dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".ComandosEventoNFeFragment">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Justificativa:" />
+            android:orientation="vertical"
+            android:padding="32dp">
 
-        <EditText
-            android:id="@+id/txtJustificativaCancelarNFe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Justificativa:" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Chave:" />
+            <EditText
+                android:id="@+id/txtJustificativaCancelarNFe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp" />
 
-        <EditText
-            android:id="@+id/txtChaveCancelarNFe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Chave:" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="CNPJ:" />
+            <EditText
+                android:id="@+id/txtChaveCancelarNFe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp" />
 
-        <EditText
-            android:id="@+id/txtCNPJCancelarNFe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="CNPJ:" />
 
-        <Button
-            android:id="@+id/btnCancelarNFe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="onClick"
-            android:text="Cancelar NFe" />
+            <EditText
+                android:id="@+id/txtCNPJCancelarNFe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Evento NFe INI:" />
+            <Button
+                android:id="@+id/btnCancelarNFe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onClick"
+                android:text="Cancelar NFe" />
 
-        <EditText
-            android:id="@+id/txtEventoNFeINI"
-            android:layout_width="match_parent"
-            android:layout_height="276dp"
-            android:layout_marginTop="10dp"
-            android:textSize="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Evento NFe INI:" />
 
-        <Button
-            android:id="@+id/btnCarregarEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="onClick"
-            android:text="Carregar Evento" />
+            <EditText
+                android:id="@+id/txtEventoNFeINI"
+                android:layout_width="match_parent"
+                android:layout_height="276dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp" />
 
-        <Button
-            android:id="@+id/btnEnviarEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="onClick"
-            android:text="Enviar Evento" />
+            <Button
+                android:id="@+id/btnCarregarEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onClick"
+                android:text="Carregar Evento" />
 
-        <Button
-            android:id="@+id/btnLimparListaEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="onClick"
-            android:text="Limpar Lista Eventos" />
+            <Button
+                android:id="@+id/btnEnviarEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onClick"
+                android:text="Enviar Evento" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Resposta:" />
+            <Button
+                android:id="@+id/btnLimparListaEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onClick"
+                android:text="Limpar Lista Eventos" />
 
-        <EditText
-            android:id="@+id/txtRespostaEvento"
-            android:layout_width="match_parent"
-            android:layout_height="355dp"
-            android:layout_marginTop="10dp"
-            android:textSize="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Resposta:" />
 
-        <Button
-            android:id="@+id/btnLimparRespostaEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="onClick"
-            android:text="Limpar Resposta" />
+            <EditText
+                android:id="@+id/txtRespostaEvento"
+                android:layout_width="match_parent"
+                android:layout_height="355dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnLimparRespostaEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onClick"
+                android:text="Limpar Resposta" />
 
-</ScrollView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

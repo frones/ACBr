@@ -517,7 +517,7 @@ begin
   IniciarOperacao;
   StatusVenda := stsOperacaoTEF;
   try
-    ACBrTEFAPI1.EfetuarAdministrativa(tefopReimpressao);
+    ACBrTEFAPI1.EfetuarAdministrativa('', '');
   finally
     StatusVenda := stsFinalizada;
   end;

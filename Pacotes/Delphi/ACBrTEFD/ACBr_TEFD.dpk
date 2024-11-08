@@ -76,6 +76,8 @@ contains
   ACBrTEFDCliSiTefModular in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTefModular.pas',
   ACBrTEFDDirecao in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDirecao.pas',
   ACBrTEFDDialScopeGetcard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDialScopeGetcard.pas',
-  ACBrTEFDElgin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDElgin.pas';
+  ACBrTEFDElgin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDElgin.pas',
+  ACBrTEFAPIDestaxa in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIDestaxa.pas',
+  ACBrTEFDestaxaComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDestaxaComum.pas';
 
 end.

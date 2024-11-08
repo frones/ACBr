@@ -65,8 +65,7 @@ type
 
     procedure QuandoGravarLogAPI(const aLogLine: String; var Tratado: Boolean);
     //procedure QuandoExibirQRCodeAPI(const Dados: String);
-    procedure QuandoExibirMensagemAPI(aMensagem: String; var Cancelar: Boolean);
-    //procedure QuandoAguardaPinPadAPI( OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean);
+    procedure QuandoExibirMensagemAPI(aMensagem: String; MilissegundosExibicao: Integer; var Cancelar: Boolean);
     procedure QuandoPerguntarMenuAPI(aMensagem: String; aOpcoes: TSplitResult; var aOpcao: Integer; var Cancelado: Boolean);
     procedure QuandoPerguntarCampoAPI(aMensagem, aMascara: String; aTipo: TACBrTEFDestaxaColetaTipo; var Resposta: String; var Cancelar: Boolean);
 
@@ -82,8 +81,7 @@ type
     procedure Inicializar; override;
     procedure DesInicializar; override;
 
-    procedure FinalizarTransacao(
-      const Rede, NSU, CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
+    procedure FinalizarTransacao(const Rede, NSU, CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
 
     procedure ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
     procedure AbortarTransacaoEmAndamento; override;
@@ -103,18 +101,52 @@ type
 implementation
 
 uses
-  ACBrUtil.Base;
+  ACBrUtil.Base, ACBrUtil.Math;
 
 { TACBrTEFRespDestaxa }
 
 procedure TACBrTEFRespDestaxa.ConteudoToProperty;
+var
+  wDestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
 begin
-  inherited ConteudoToProperty;
+  wDestaxaResposta := TACBrTEFDestaxaTransacaoResposta.Create;
+  try
+    wDestaxaResposta.AsString := StringToBinaryString(Conteudo.LeInformacao(899, 201).AsString);
+
+    Sucesso := (wDestaxaResposta.transacao_resposta = 0);
+    Rede := wDestaxaResposta.transacao_rede;
+    NSU := wDestaxaResposta.transacao_nsu;
+    ValorTotal := wDestaxaResposta.transacao_valor;
+    NSU_TEF := wDestaxaResposta.transacao_nsu_rede;
+    DataHoraTransacaoLocal := wDestaxaResposta.transacao_data;
+    DataHoraTransacaoHost := wDestaxaResposta.transacao_data;
+    DataVencimento := wDestaxaResposta.transacao_vencimento;
+
+    CodigoBandeiraPadrao := wDestaxaResposta.codigo_bandeira;
+    NomeAdministradora := wDestaxaResposta.transacao_administradora;
+    CodigoAutorizacaoTransacao := wDestaxaResposta.transacao_autorizacao;
+
+    Credito := (wDestaxaResposta.transacao_tipo_cartao = dtcCredito);
+    Debito := wDestaxaResposta.transacao_tipo_cartao = dtcDebito;
+
+    ImagemComprovante1aVia.Text := wDestaxaResposta.transacao_comprovante_1via.Text;
+    ImagemComprovante2aVia.Text := wDestaxaResposta.transacao_comprovante_2via.Text;
+
+    case wDestaxaResposta.transacao_pagamento of
+      dpgAVista: TipoOperacao := opAvista;
+      dpgParcelado: TipoOperacao := opParcelado;
+      dpgPreDatado: TipoOperacao := opPreDatado;
+    end;
+  finally
+    wDestaxaResposta.Free;
+  end;
 end;
 
 { TACBrTEFAPIClassDestaxa }
 
 function TACBrTEFAPIClassDestaxa.DestaxaClient: TACBrTEFDestaxaClient;
+var
+  p: Integer;
 begin
   if (not Assigned(fDestaxaClient)) then
   begin
@@ -127,7 +159,13 @@ begin
     fDestaxaClient.Estabelecimento := fpACBrTEFAPI.DadosTerminal.CodFilial;
     fDestaxaClient.OnGravarLog := QuandoGravarLogAPI;
     fDestaxaClient.OnColetarOpcao := QuandoPerguntarMenuAPI;
+    fDestaxaClient.OnColetarInformacao := QuandoPerguntarCampoAPI;
     fDestaxaClient.OnExibirMensagem := QuandoExibirMensagemAPI;
+    fDestaxaClient.OnAguardarResposta := TACBrTEFAPI(fpACBrTEFAPI).QuandoEsperarOperacao;
+
+    p := Pos(':', fpACBrTEFAPI.DadosTerminal.EnderecoServidor);
+    fDestaxaClient.EnderecoIP := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, 1, p-1);
+    fDestaxaClient.Porta := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, p+1);
   end;
   Result := fDestaxaClient;
 end;
@@ -138,9 +176,9 @@ begin
   Tratado := True;
 end;
 
-procedure TACBrTEFAPIClassDestaxa.QuandoExibirMensagemAPI(aMensagem: String; var Cancelar: Boolean);
+procedure TACBrTEFAPIClassDestaxa.QuandoExibirMensagemAPI(aMensagem: String; MilissegundosExibicao: Integer; var Cancelar: Boolean);
 begin
-  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(aMensagem, telaTodas, -1);
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(aMensagem, telaTodas, MilissegundosExibicao);
 end;
 
 procedure TACBrTEFAPIClassDestaxa.QuandoPerguntarMenuAPI(aMensagem: String;aOpcoes: TSplitResult; var aOpcao: Integer; var Cancelado: Boolean);
@@ -167,8 +205,29 @@ var
   Def: TACBrTEFAPIDefinicaoCampo;
 begin
   Validado := False;
+  Def.TamanhoMinimo := 0;
+  Def.TipoDeEntrada := tedTodos;
   Def.TituloPergunta := aMensagem;
-  Def.MascaraDeCaptura := aMascara;
+  Def.ValidacaoDado := valdNenhuma;
+  Def.OcultarDadosDigitados := False;
+  //Def.MascaraDeCaptura := aMascara;
+  
+    {TipoDeEntrada: TACBrTEFAPITiposEntrada;
+    TamanhoMinimo: Integer;
+    TamanhoMaximo: Integer;
+    ValorMinimo : LongWord;
+    ValorMaximo : LongWord;
+    OcultarDadosDigitados: Boolean;
+    ValidacaoDado: TACBrTEFAPIValidacaoDado;
+    ValorInicial: String;
+    MsgErroDeValidacao: String;
+    MsgErroDadoMaior: String;
+    MsgErroDadoMenor: String;
+    MsgConfirmacaoDuplaDigitacao: String;
+    TipoEntradaCodigoBarras: TACBrTEFAPITipoBarras;
+    TipoCampo: integer;}
+
+  //Def.MascaraDeCaptura := StringReplace(aMascara, '.##', ',0.00', [rfReplaceAll]);
   case aTipo of
     dctNaoExibivel: Def.TipoDeEntrada := tedApenasLeitura;
     dctAlfabetico: Def.TipoDeEntrada := tedAlfabetico;
@@ -180,8 +239,15 @@ begin
 end;
 
 procedure TACBrTEFAPIClassDestaxa.InterpretarRespostaAPI;
+var
+  resp: String;
 begin
-  fpACBrTEFAPI.GravarLog(fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.Conteudo.Text);
+  resp := BinaryStringToString(DestaxaClient.Resposta.AsString);
+
+  AtualizarHeader;
+  fpACBrTEFAPI.UltimaRespostaTEF.Clear;
+  fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(899, 201, resp);
+  fpACBrTEFAPI.UltimaRespostaTEF.DocumentoVinculado := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
   fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
 end;
@@ -194,8 +260,10 @@ end;
 
 procedure TACBrTEFAPIClassDestaxa.FinalizarChamadaAPI;
 begin
-  DestaxaClient.Socket.Iniciar;
   inherited FinalizarChamadaAPI;
+
+  if DestaxaClient.Socket.EmTransacao then
+    DestaxaClient.Socket.Finalizar;
 end;
 
 constructor TACBrTEFAPIClassDestaxa.Create(aACBrTEFAPI: TACBrTEFAPIComum);
@@ -255,13 +323,18 @@ begin
     end;
   end;
 
+  if (teftcCredito in CartoesAceitos) and (not (teftcDebito in CartoesAceitos)) then
+    DestaxaClient.Requisicao.transacao_tipo_cartao := dtcCredito;
+  if (teftcDebito in CartoesAceitos) and (not (teftcCredito in CartoesAceitos)) then
+    DestaxaClient.Requisicao.transacao_tipo_cartao := dtcDebito;
+
   if (DestaxaClient.Requisicao.transacao_pagamento <> dpgAVista) and NaoEstaZerado(Parcelas) then
     DestaxaClient.Requisicao.transacao_parcela := Parcelas;
 
   if NaoEstaZerado(DataPreDatado) then
     DestaxaClient.Requisicao.transacao_vencimento := DataPreDatado;
 
-  DestaxaClient.CartaoVender;
+  Result := DestaxaClient.CartaoVender;
 end;
 
 function TACBrTEFAPIClassDestaxa.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao): Boolean;
@@ -282,8 +355,9 @@ begin
   Cancelar := False;
 
   DestaxaClient.Socket.Consultar;
+
   if (DestaxaClient.Resposta.servico <> dxsConsultar) or
-     (DestaxaClient.Resposta.retorno <> drsErroDesconhecido) or
+     (DestaxaClient.Resposta.retorno = drsErroDesconhecido) or
      EstaVazio(DestaxaClient.Resposta.transacao) then
     Exit;
 
@@ -292,7 +366,7 @@ begin
   QuandoPerguntarMenuAPI(CDESTAXA_MENU_ADMIN, sr, wOpcao, Cancelar);
 
   if (wOpcao >= 0) then
-    DestaxaClient.Socket.Executar(sr[wOpcao]);
+    DestaxaClient.ExecutarTransacao(sr[wOpcao]);
   Result := True;
 end;
 
@@ -306,7 +380,7 @@ begin
   if NaoEstaZerado(Valor) then
     DestaxaClient.Requisicao.transacao_valor := Valor;
 
-  DestaxaClient.AdministracaoCancelar;
+  Result := DestaxaClient.AdministracaoCancelar;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU, CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);

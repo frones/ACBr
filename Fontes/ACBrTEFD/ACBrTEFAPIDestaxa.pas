@@ -107,13 +107,19 @@ uses
 
 procedure TACBrTEFRespDestaxa.ConteudoToProperty;
 var
+  wResp: String;
   wDestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
 begin
+  wResp := Conteudo.LeInformacao(899, 201).AsString;
+  if EstaVazio(wResp) then
+    Exit;
+
   wDestaxaResposta := TACBrTEFDestaxaTransacaoResposta.Create;
   try
-    wDestaxaResposta.AsString := StringToBinaryString(Conteudo.LeInformacao(899, 201).AsString);
+    wDestaxaResposta.AsString := StringToBinaryString(wResp);
 
     Sucesso := (wDestaxaResposta.transacao_resposta = 0);
+    Confirmar := True;
     Rede := wDestaxaResposta.transacao_rede;
     NSU := wDestaxaResposta.transacao_nsu;
     ValorTotal := wDestaxaResposta.transacao_valor;
@@ -263,7 +269,10 @@ begin
   inherited FinalizarChamadaAPI;
 
   if DestaxaClient.Socket.EmTransacao then
+  begin
+    DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
     DestaxaClient.Socket.Finalizar;
+  end;
 end;
 
 constructor TACBrTEFAPIClassDestaxa.Create(aACBrTEFAPI: TACBrTEFAPIComum);
@@ -381,14 +390,19 @@ begin
   Result := DestaxaClient.AdministracaoCancelar;
 end;
 
-procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU, CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
+procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU, CodigoFinalizacao: String; aStatus: TACBrTEFStatusTransacao);
 begin
-  //inherited FinalizarTransacao(Rede, NSU, CodigoFinalizacao, AStatus);
+  if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
+    DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
+  else
+    DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
+  DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial;
+  DestaxaClient.ExecutarTransacao(CDESTAXA_CARTAO_VENDER);
 end;
 
 procedure TACBrTEFAPIClassDestaxa.ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao);
 begin
-  DestaxaClient.AdministracaoPendente;
+  //DestaxaClient.AdministracaoPendente;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.AbortarTransacaoEmAndamento;

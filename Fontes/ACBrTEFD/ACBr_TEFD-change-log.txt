@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2024
+-- ACBrTEFDestaxaComum, ACBrTEFAPIDestaxa --
+[*] Ajustes no controle do Sequencial;
+[*] Ajuste na confirmação de transação.
+    por: Elias César 
+
 04/11/2024
 -- ACBrTEFDestaxaComum --
 [+] Início do desenvolvimento do novo modelo de TEF "Destaxa"

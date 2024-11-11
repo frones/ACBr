@@ -55,6 +55,7 @@ const
   CDESTAXA_CARTAO_VENDER = 'Cartao Vender';
   CDESTAXA_ADM_PENDENTE = 'Administracao Pendente';
   CDESTAXA_ADM_CANCELAR = 'Administracao Cancelar';
+  //CDESTAXA_ADM_EXTRATO_TRANSACAO = 'Administracao Extrato Transacao";"Administracao Cancelar";"Administracao Extrato";"Administracao Extrato Transacao";"Administracao Manutencao Rede Consultar";"Administracao Reimprimir";"Cartao Consultar Endereco";"Cartao Consultar Financiado";"Cartao Pagar";"Cartao Pre-autorizacao Capturar";"Cartao Pre-autorizacao Solicitar";"Cartao Senha Trocar";"Cartao Vender";"Conta Consultar";"Conta Pagar";"Digital Pagar"
   CDESTAXA_MENU_ADMIN = 'Menu Administrativo';
 
 type
@@ -523,7 +524,7 @@ type
     function Conectar: Integer;
     function Desconectar: Integer;
 
-    function Iniciar: Boolean;
+    function Iniciar(aSequencial: Integer = 0): Boolean;
     function Finalizar(aRetorno: TACBrTEFDestaxaRetornoRequisicao = drqNenhum): Boolean;
     function Consultar: Boolean;
     function Executar(aTransacao: String): Boolean;
@@ -557,7 +558,7 @@ type
     fOnColetarOpcao: TACBrDestaxaColetarOpcao;
     fOnExibirMensagem: TACBrDestaxaExibirMensagem;
     fPorta: String;
-    fSequencial: Integer;
+    fUltimoSequencial: Integer;
     fTerminador: AnsiString;
     fTerminal: String;
     fOnGravarLog: TACBrGravarLog;
@@ -599,6 +600,7 @@ type
     property Requisicao: TACBrTEFDestaxaTransacaoRequisicao read GetRequisicao;
     property ColetaResposta: TACBrTEFDestaxaAutomacaoColeta read GetColetaResposta;
     property ColetaRequisicao: TACBrTEFDestaxaAutomacaoColeta read GetColetaRequisicao;
+    property UltimoSequencial: Integer read fUltimoSequencial write fUltimoSequencial;
 
     property Loja: String read fLoja write fLoja;
     property Terminal: String read fTerminal write fTerminal;
@@ -1428,14 +1430,16 @@ begin
     IntToStr(Result));
 end;
 
-function TACBrTEFDestaxaSocket.Iniciar: Boolean;
+function TACBrTEFDestaxaSocket.Iniciar(aSequencial: Integer): Boolean;
 begin
   Result := False;
   if fEmTransacao then
     Exit;
 
   Requisicao.Clear;
-  Requisicao.sequencial := 1;
+  Requisicao.sequencial := aSequencial;
+  if EstaZerado(Requisicao.sequencial) then
+    Requisicao.sequencial := 1;
   Requisicao.servico := dxsIniciar;
   Requisicao.loja := fDestaxaClient.Loja;
   Requisicao.retorno := drqExecutarServico;
@@ -1478,7 +1482,6 @@ begin
   Requisicao.retorno := drqExecutarServico;
   ExecutarTransacao;
   Result := (Resposta.servico = dxsConsultar) and (Resposta.retorno = drsSucessoSemConfirmacao);
-  Requisicao.sequencial := Requisicao.sequencial + 1;
 end;
 
 function TACBrTEFDestaxaSocket.Executar(aTransacao: String): Boolean;
@@ -1491,7 +1494,6 @@ begin
   Requisicao.transacao := aTransacao;
   ExecutarTransacao;
   Result := True;
-  Requisicao.sequencial := Requisicao.sequencial + 1;
 end;
 
 function TACBrTEFDestaxaSocket.Mostrar(aMensagem: TACBrTEFDestaxaMensagem): Boolean;
@@ -1505,7 +1507,6 @@ begin
     Requisicao.mensagem := DestaxaMensagemToString(aMensagem);
     ExecutarTransacao;
     Result := (Resposta.servico = dxsMostrar) and (Resposta.retorno = drsSucessoSemConfirmacao);
-    Requisicao.sequencial := Requisicao.sequencial + 1;
   finally
     Finalizar;
   end;
@@ -1539,7 +1540,6 @@ begin
     ExecutarTransacao;
     if (Resposta.retorno = drsSucessoSemConfirmacao) then
       Result := Resposta.transacao_informacao;
-    Requisicao.sequencial := Requisicao.sequencial + 1;
   finally
     Finalizar;
   end;
@@ -1704,7 +1704,7 @@ begin
     ProcessarColeta;
 
   if NaoEstaZerado(Resposta.sequencial) then
-    fSequencial := Resposta.sequencial + 1;
+    fUltimoSequencial := Resposta.sequencial;
 end;
 
 procedure TACBrTEFDestaxaClient.TratarErro;
@@ -1793,7 +1793,7 @@ begin
   fOnColetarInformacao := Nil;
   fOnAguardarResposta := Nil;
   fOnExibirMensagem := Nil;
-  fSequencial := 0;
+  fUltimoSequencial := 0;
   fTimeOut := 5000;
   fTerminador := CDESTAXA_TERMINADOR;
 end;
@@ -1841,7 +1841,7 @@ begin
   Result := False;
   EfetuarValidacoesCartaoVender;
 
-  Requisicao.sequencial := fSequencial;
+  Requisicao.sequencial := fUltimoSequencial+1;
   Requisicao.retorno := drqExecutarServico;
   Socket.Executar(CDESTAXA_CARTAO_VENDER);
 
@@ -1854,14 +1854,14 @@ begin
 
   Socket.Iniciar;
   try 
-    Requisicao.sequencial := fSequencial;
+    Requisicao.sequencial := fUltimoSequencial+1;
     Requisicao.retorno := drqExecutarServico;
     Socket.Executar(CDESTAXA_ADM_CANCELAR);
 
     if (Resposta.retorno = drsSucessoComConfirmacao) then
     begin
       Requisicao.Clear;
-      Requisicao.sequencial := Resposta.sequencial;
+      Requisicao.sequencial := Resposta.sequencial+1;
       Requisicao.retorno := drqConfirmarTransacao;
       Socket.Executar(CDESTAXA_ADM_CANCELAR);
     end;
@@ -1878,13 +1878,13 @@ begin
 
   Socket.Iniciar;
   try
-    Requisicao.sequencial := fSequencial;
+    Requisicao.sequencial := UltimoSequencial+1;
     Socket.Executar(CDESTAXA_ADM_PENDENTE);
 
     if (Resposta.retorno = drsSucessoComConfirmacao) then
     begin
       Requisicao.Clear;
-      Requisicao.sequencial := Resposta.sequencial;
+      Requisicao.sequencial := UltimoSequencial+1;
       Requisicao.retorno := drqConfirmarTransacao;
       Socket.Executar(CDESTAXA_ADM_PENDENTE);
     end;

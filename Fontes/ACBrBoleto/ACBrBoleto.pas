@@ -5333,7 +5333,7 @@ begin
                 else
                  begin
                    //Apos o 1º motivo os 00 significam que não existe mais motivo
-                   if CodMotivo <> 0 then
+                  if (not(VarIsNumeric(CodMotivo)) or (CodMotivo <> 0)) then
                    begin
                       MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ','00',copy(Linha,MotivoLinha,2)));
                       if VarIsNumeric(CodMotivo) then

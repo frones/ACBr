@@ -78,6 +78,8 @@ contains
   ACBrTEFDDialScopeGetcard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDialScopeGetcard.pas',
   ACBrTEFDElgin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDElgin.pas',
   ACBrTEFAPIDestaxa in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIDestaxa.pas',
-  ACBrTEFDestaxaComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDestaxaComum.pas';
+  ACBrTEFDestaxaComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDestaxaComum.pas',
+  ACBrTEFScopeAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFScopeAPI.pas',
+  ACBrTEFAPIScope in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIScope.pas';
 
 end.

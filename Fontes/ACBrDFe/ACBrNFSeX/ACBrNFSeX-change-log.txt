@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6214: Incluida a cidade de Sede Nova\RS, provedor é o IPM na versão 1.01
+   Por: romariorigoli 
 
 06/11/2024
 -- ACBrNFSeXServicos --

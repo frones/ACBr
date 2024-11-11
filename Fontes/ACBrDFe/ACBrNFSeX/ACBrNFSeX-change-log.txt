@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/11/2024
+-- ACBrNFSeXServicos --
+[*] As cidades abaixo já consta a troca do provedor Ginfes por Giss para que
+    os desenvolvedores possam fazer os seus testes em ambiente de produção também.
+    Cidades: Maceio/AL, Marechal Deodoro/AL, Muriae/MG, Campos Dos Goytacazes/RJ,
+             Embu-Guacu/SP, Guaruja/SP, Guarulhos/SP, Itu/SP, Jaboticabal/SP, 
+             Jundiai/SP, Matao/SP, Maua/SP, Praia Grande/SP, Santo Andre/SP,
+             Santos/SP, Sao Jose do Rio Preto/SP, Umuarama/PR e Mineiros/GO.
+   Por: Italo Giurizzato Junior
 -- Giss.GravarXml/Giss.Provider --
 [*] Ajustes para gerar o envio em lote assinando o RPS e o Lote.
    Por: Italo Giurizzato Junior

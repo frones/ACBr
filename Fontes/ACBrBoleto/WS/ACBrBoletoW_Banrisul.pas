@@ -117,8 +117,7 @@ procedure TBoletoW_Banrisul.DefinirURL;
 var
    DevAPP, ID, NConvenio: String;
 begin
-   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL,
-     C_URL_HOM);
+   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], C_URL, C_URL_HOM);
 
    if ATitulo <> nil then
       ID := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
@@ -456,7 +455,8 @@ begin
             case ATitulo.CodigoMoraJuros of
                cjValorDia:    ATitulo.CodigoMora := '1';
                cjTaxaMensal:  ATitulo.CodigoMora := '2';
-               cjIsento:      ATitulo.CodigoMora := '3';
+            else
+              ATitulo.CodigoMora := '3';
             end;
          end;
 

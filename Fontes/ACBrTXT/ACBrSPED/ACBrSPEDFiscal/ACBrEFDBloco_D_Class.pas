@@ -43,7 +43,7 @@ type
   { TBloco_D }
 
   TBloco_D = class(TACBrSPED)
-  private
+  protected 
     FOnBeforeWriteRegistroD100: TWriteRegistroEvent;
     FOnBeforeWriteRegistroD110: TWriteRegistroEvent;
     FOnBeforeWriteRegistroD510: TWriteRegistroEvent;
@@ -120,7 +120,7 @@ type
     procedure WriteRegistroD162(RegD160: TRegistroD160);
     procedure WriteRegistroD170(RegD100: TRegistroD100);
     procedure WriteRegistroD180(RegD100: TRegistroD100);
-    procedure WriteRegistroD190(RegD100: TRegistroD100);
+    procedure WriteRegistroD190(RegD100: TRegistroD100); virtual;
     procedure WriteRegistroD195(RegD100: TRegistroD100);
     procedure WriteRegistroD197(RegD195: TRegistroD195);
     procedure WriteRegistroD300(RegD001: TRegistroD001);

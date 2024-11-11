@@ -265,6 +265,7 @@ type
     FLogNivel: TNivelLog;
     FNomeArquivoLog: String;
     FPathGravarRegistro: String;
+    FAmbiente: TTipoAmbienteWS;
     FOperacao: TOperacao;
     FVersaoDF: String;
     FUseCertificateHTTP: Boolean;
@@ -280,6 +281,7 @@ type
     property LogNivel: TNivelLog read FLogNivel write FLogNivel;
     property NomeArquivoLog: String read FNomeArquivoLog write FNomeArquivoLog;
     property PathGravarRegistro: String read FPathGravarRegistro write FPathGravarRegistro;
+    property Ambiente: TTipoAmbienteWS read FAmbiente write FAmbiente;
     property Operacao: TOperacao read FOperacao write FOperacao;
     property VersaoDF: String read FVersaoDF write FVersaoDF;
     property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
@@ -358,6 +360,7 @@ begin
   FLogNivel := logNenhum;
   FNomeArquivoLog:= '';
   FPathGravarRegistro:= '';
+  FAmbiente:= tawsHomologacao;
   FOperacao:= tpInclui;
   FVersaoDF:= '1.2';
   FUseCertificateHTTP:= False;
@@ -371,6 +374,7 @@ begin
   LogNivel := TNivelLog(AIni.ReadInteger(CSessaoBoletoWebService, CChaveLogNivel, Integer(LogNivel)));
   NomeArquivoLog:= AIni.ReadString(CSessaoBoletoWebService, CChaveNomeArquivoLog, NomeArquivoLog);
   PathGravarRegistro:= AIni.ReadString(CSessaoBoletoWebService, CChavePathGravarRegistro, PathGravarRegistro );
+  Ambiente:= TTipoAmbienteWS(AIni.ReadInteger(CSessaoBoletoWebService, CChaveAmbiente, Integer(Ambiente)));
   Operacao:= TOperacao( AIni.ReadInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) ) );
   VersaoDF:= AIni.ReadString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
   UseCertificateHTTP:= AIni.ReadBool(CSessaoBoletoWebService, CChaveUseCertificateHTTP, UseCertificateHTTP );
@@ -383,6 +387,7 @@ begin
   AIni.WriteInteger(CSessaoBoletoWebService, CChaveLogNivel, Integer(LogNivel));
   AIni.WriteString(CSessaoBoletoWebService, CChaveNomeArquivoLog, NomeArquivoLog);
   AIni.WriteString(CSessaoBoletoWebService, CChavePathGravarRegistro, PathGravarRegistro );
+  AIni.WriteInteger(CSessaoBoletoWebService, CChaveAmbiente, Integer(Ambiente));
   AIni.WriteInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) );
   AIni.WriteString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
   AIni.WriteBool(CSessaoBoletoWebService, CChaveUseCertificateHTTP, UseCertificateHTTP );

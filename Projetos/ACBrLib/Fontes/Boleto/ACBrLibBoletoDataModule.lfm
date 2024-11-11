@@ -2,8 +2,8 @@ inherited LibBoletoDM: TLibBoletoDM
   Left = 346
   Top = 174
   Height = 269
-  HorizontalOffset = -1766
-  VerticalOffset = 299
+  HorizontalOffset = 1078
+  VerticalOffset = 277
   Width = 328
   object ACBrBoleto1: TACBrBoleto[0]
     MAIL = ACBrMail1
@@ -23,7 +23,7 @@ inherited LibBoletoDM: TLibBoletoDM
     Configuracoes.WebService.SSLHttpLib = httpOpenSSL
     Configuracoes.WebService.StoreName = 'My'
     Configuracoes.WebService.UseCertificateHTTP = False
-    Configuracoes.WebService.Ambiente = taHomologacao
+    Configuracoes.WebService.Ambiente = tawsHomologacao
     Configuracoes.WebService.Operacao = tpInclui
     Configuracoes.WebService.VersaoDF = '1.2'
     Left = 59

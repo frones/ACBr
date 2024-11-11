@@ -196,7 +196,7 @@ begin
       Arquivos.NomeArquivoLog := LibConfig.BoletoConfigWS.NomeArquivoLog;
       Arquivos.PathGravarRegistro := LibConfig.BoletoConfigWS.PathGravarRegistro;
 
-      WebService.Ambiente := LibConfig.BoletoDFeConfigWS.WebServices.Ambiente;
+      WebService.Ambiente := LibConfig.BoletoConfigWS.Ambiente;
       WebService.Operacao := LibConfig.BoletoConfigWS.Operacao;
       WebService.VersaoDF := LibConfig.BoletoConfigWS.VersaoDF;
       WebService.ArquivoCRT:= LibConfig.BoletoConfigWS.ArquivoCRT;

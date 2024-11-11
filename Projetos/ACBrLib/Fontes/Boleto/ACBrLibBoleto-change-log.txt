@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2024
+--- ACBrLibBoletoConfig, ACBrLibBoletoDataModule ---
+[*] Alteração Domínio Ambiente WebServices.
+    #TK-6212 - https://www.projetoacbr.com.br/forum/topic/80514-acbrboleto-altera%C3%A7%C3%A3o-dom%C3%ADnio-ambiente-webservices/
+    Por: Victor Panda / Antonio Carlos Junior
+
 24/10/2024
 --- ACBrLibBoletoConfig ---
 [*] Ajuste da propriedade CasasDecimaisMoraJuros para deixar igual ao componente ao criar o ini, valor 2

@@ -890,6 +890,7 @@ type
     fIdentDistribuicao: TACBrIdentDistribuicao;
     fOperacao: string;
     FPIX               : TACBrBoletoChavePIX;
+    fCodigoFlash   : String;
     procedure SetAgencia(const AValue: String);
     procedure SetCNPJCPF ( const AValue: String ) ;
     procedure SetConta(const AValue: String);
@@ -923,6 +924,7 @@ type
     property UF          : String  read fUF          write fUF;
     property CEP         : String  read fCEP         write fCEP;
     property Telefone    : String  read fTelefone    write fTelefone;
+    property CodigoFlash : String  read fCodigoFlash write FCodigoFlash;
     property DigitoVerificadorAgenciaConta  : String read fDigitoVerificadorAgenciaConta write fDigitoVerificadorAgenciaConta;
     property CedenteWS: TACBrCedenteWS read fCedenteWS;
     property IdentDistribuicao: TACBrIdentDistribuicao read fIdentDistribuicao  write fIdentDistribuicao default tbClienteDistribui;
@@ -3959,6 +3961,7 @@ begin
         DigitoVerificadorAgenciaConta := IniBoletos.ReadString(CCedente,'DigitoVerificadorAgenciaConta', DigitoVerificadorAgenciaConta);
         IdentDistribuicao := TACBrIdentDistribuicao(IniBoletos.ReadInteger(CCedente,'IdentDistribuicao', Integer(IdentDistribuicao)));
         Operacao          := IniBoletos.ReadString(CCedente,'Operacao', Operacao);
+        CodigoFlash       := IniBoletos.ReadString(CCedente,'CodigoFlash',CodigoFlash);
 
         PIX.Chave        :=  IniBoletos.ReadString(CCedente,'PIX.Chave','');
         PIX.TipoChavePIX :=  TACBrPIXTipoChave(IniBoletos.ReadInteger(CCedente,'PIX.TipoChavePIX', 0 ));
@@ -4383,6 +4386,7 @@ begin
        IniRetorno.WriteInteger(CCedente,'IdentDistribuicao',Integer(Cedente.IdentDistribuicao));
        IniRetorno.WriteInteger(CCedente,'ResponEmissao',Integer(Cedente.ResponEmissao));
        IniRetorno.WriteString(CCedente,'Operacao',Cedente.Operacao);
+       IniRetorno.WriteString(CCedente,'CodigoFlash',Cedente.CodigoFlash);
 
 
        IniRetorno.WriteString(CCedente,'PIX.Chave',Cedente.PIX.Chave);

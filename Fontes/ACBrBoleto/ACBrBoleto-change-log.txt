@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/11/2024
+-- ACBrBoleto.pas --
+[*] TK-6052 - Criado a propriedade Cedente p Flash
+	https://www.projetoacbr.com.br/forum/topic/80019-desabilitar-mensagem-padr%C3%A3o-para-carteira-112-banco-ita%C3%BA-cnab400-n%C3%A3o-esta-sendo-aceita/
+	por Daniel de Morais InfoCotidiano
+
+11/11/2024
 -- ACBrBancoItau.pas --
 [*] TK-6052 - add segmento 7 conforme manual de msg que o usuario nos enviou
 	https://www.projetoacbr.com.br/forum/topic/80019-desabilitar-mensagem-padr%C3%A3o-para-carteira-112-banco-ita%C3%BA-cnab400-n%C3%A3o-esta-sendo-aceita/

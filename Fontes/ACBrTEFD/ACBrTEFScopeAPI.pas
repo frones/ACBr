@@ -59,17 +59,26 @@ resourcestring
   sErrEndServNaoInformado = 'Endereço do Servidor não informada em "EnderecoIP"';
   sErrPortServNaoInformado = 'Porta do Servidor não informada em "PortTCP"';
   sErrNaoConectado = 'Não conectado ao Servidor Scope';
-  sErrSemSessao = 'SessãO TEF não foi aberta';
+  sErrSemSessao = 'Sessão TEF não foi aberta';
+  sErrEventoNaoAtribuido = 'Evento %s não atribuido';
+  sErrTransacaoNaoIniciada = 'Transação não foi iniciada';
+  sErrTransacaoJaIniciada = 'Transação já foi iniciada';
 
   sMsgAbrindoConexao = 'Abrindo comunicação...'+sLineBreak+'Empresa: %s, Filial %s';
   sMsgConctadoAoServidor = 'Conectado Scope em: %s';
   sMsgDesconectado = 'Desconectado Scope';
   sMsgInicioSessaoTEF = 'Iniciando sessão TEF';
+  sMsgTransacaoEmAndamento = 'Transação em Andamento %s';
   sMsgTransacaoDesfeita = 'A TRANSAÇÃO TEF ANTERIOR FOI DESFEITA.'+sLineBreak+'RETER O CUPOM TEF.';
 
 const
+  CINTERVALO_COLETA = 200;
   SCO_SUCESSO = 0;
   PC_OK = 0;
+
+  INFO_CUPOM_LOJA = 'CupomLoja';
+  INFO_CUPOM_CLIENTE = 'CupomCliente';
+  INFO_CUPOM_REDUZIDO = 'CupomReduzido';
 
   PP_NAO_UTILIZA = 0;
   PP_INTERFACE_LIB_VISA = 1;
@@ -117,15 +126,17 @@ const
 
 
   // Identificacao das redes
-  R_GWCEL:                          LongInt = 90;
+  R_GWCEL = 90;
 
   {- entrada dos dados -}
-  SCO_NONE:                         LongInt = $0000;
-  SCO_TECLADO:                      LongInt = $0004;
-  SCO_PIN_PAD:                      LongInt = $0008;
-  SCO_CMC_7:                        LongInt = $0010;
-  SCO_CARTAO_MAGNETICO:             LongInt = $0020;
-  SCO_SCANNER:                      LongInt = $0040;
+  //E 
+  //verificar esses nomes que foram mudados de constantes... era SCO_NONE, mudou para ENT_NONE//???
+  ENT_NONE = 0; //$0000;
+  ENT_TECLADO = 4; //$0004;
+  ENT_PIN_PAD = 8; //$0008;
+  ENT_CMC_7 = 16; //$0010;
+  ENT_CARTAO_MAGNETICO = 32; // $0020;
+  ENT_SCANNER = 64; // $0040;
 
   {- ainda não sei para que servem estes ??? -}
   SCO_AUTO_ERRO_CRD_RLV_INVALIDO:   LongInt = $F900;
@@ -141,25 +152,172 @@ const
   SCO_ERRO_MONTA_MSG:               LongInt = $FB04;
 
   {-coleta de dados -}
-  SCO_PRIMEIRO_COLETA_DADOS:        LongInt = $FC00;
-  SCO_COLETAR_CARTAO:               LongInt = $FC00;
+  SCO_COLETAR_CARTAO = 64512;
+  SCO_COLETAR_VALIDADE_CARTAO = 64513;
+  SCO_IMPRIMIR_CUPOM = 64514;
+  SCO_COLETAR_CGC_CPF = 64515;
+  SCO_COLETAR_BANCO = 64516;
+  SCO_COLETAR_AGENIA = 64517;
+  SCO_COLTAR_NUM_CHEQUE = 64518;
+  SCO_COLETAR_DATA_CHEQUE = 64519;
+  SCO_IMPRIMIR_CHEQUE = 64520;
+  SCO_COLETAR_TRANSACAO_VISIVEL = 64521;
+  SCO_COLETAR_TIPO_PARCELAMENTO = 64522;
+  SCO_COLETAR_PREDATADO = 64523;
+  SCO_COLETAR_PARCELA_AVISTA = 64524;
+  SCO_COLETAR_DIAS_ENTRE_PARCELAS = 64525;
+  SCO_COLETAR_QTD_PARCELAS = 64526;
+  SCO_COLETAR_PLANO_FINANC = 64527;
+  SCO_COLETAR_DDMM = 64528;
+  SCO_COLETAR_SENHA = 64529;
+  SCO_COLETAR_CONTROLE_SCOPE = 64530;
+  SCO_COLETAR_FORMA_PAGTO = 64531;
+  SCO_COLETAR_PRIMEIRO_VENCTO = 64532;
+  SCO_COLETAR_VALOR_ENTRADA = 64533;
+  SCO_COLETAR_FORMA_ENTRADA = 64534;
+  SCO_COLETAR_CONTA_CORRENTE = 64535;
+  SCO_COLETAR_QUARTO_ULT_DIGITOS = 64536;
+  SCO_REIMPIRESSAO_COMPROVANTE = 64537;
+  SCO_COLETAR_DEVE_CONSULTAR_PARCELAS = 64538;
+  SCO_IMPRIMIR_CONSULTA = 64539;
+  SCO_COLETAR_CONTINUAR = 64540;
+  SCO_COLETAR_DECIDE_ULTIMO = 64541;
+  SCO_COLETAR_NUM_CHEQUE_CDC = 64542;
+  SCO_COLETAR_QTD_DIAS = 64543;
+  SCO_COLETAR_NUM_PREAUTORIZACAO = 64544;
+  SCO_COLETAR_DIA_MES_FECHADO = 64545;
+  SCO_IMPRIMIR_NOTA_PROMISSORIA = 64546;
+  SCO_COLETAR_CEP = 64547;
+  SCO_COLETAR_NUM_ENDERECO = 64548;
+  SCO_COLETAR_NUM_COMPLEMENTO = 64549;
+  SCO_COLETAR_PLANO_PAGTO = 64550;
+  SCO_COLETAR_CICLOS_PULAR = 64551;
+  SCO_COLETAR_NUM_ITEM = 64552;
+  SCO_COLETAR_COD_SEGURANCA = 64553;
+  SCO_COLETAR_COD_SEGURANCA_VISIVEL = 64554;
+  SCO_COLETAR_PREDATADO_TEM_GARANTIA = 64555;
+  SCO_COLETAR_ACEITA_RISCO = 64556;
+  SCO_COLETAR_VALOR_SAQUE = 64557;
+  SCO_COLETAR_VALOR_RECARGA = 64558;
+  SCO_COLETAR_DDD = 64559;
+  SCO_COLETAR_FONE = 64560;
+  SCO_COLETAR_DIG_VERIF_FONE = 64561;
+  SCO_COLETAR_DDMMAA =64562;
+  SCO_COLETAR_TAXA_SERVICO = 64563;
+  SCO_COLETAR_VALOR = 64564;
+  SCO_COLETAR_REALIZA_SAQUE = 64565;
+  SCO_COLETAR_SIMULACAO_SAQUE = 64566;
+  SCO_COLETAR_SALDO_OU_EXTRATO = 64567;
+  SCO_COLETAR_EXTRATO_RESUM_OU_SEGVIA = 64568;
+  SCO_COLETAR_CONSULTA_INVEST_OU_RESGATE = 64569;
+  SCO_COLETAR_COD_AUTORIZACAO = 64573;
+  SCO_COLETAR_RESGATE_AVULSO = 64576;
+  SCO_COLETAR_DDMMAAAA = 64577;
+  SCO_COLETAR_COD_AUT_PBMS = 64578;
+  SCO_COLETAR_LISTA_MEDICAM = 64579;
+  SCO_RETORNAR_LISTA_MEDICAM = 64580;
+  SCO_EXIBIR_MSG = 64581;
+  SCO_IMPRIMIR_CUPOM_PARCIAL = 64582;
+  SCO_COLETAR_QTD_PARCELAS_ACEITA1 = 64583;
+  SCO_COLETAR_COD_BARRAS = 64584;
+  SCO_COLETAR_COD_CONSULTA_PBM = 64585;
+  SCO_COLETAR_CRM_MEDICO = 64586;
+  SCO_COLETAR_UF_CRM_MEDICO = 64587;
+  SCO_COLETAR_ADERIR_SEGURO = 64588;
+  SCO_COLETAR_PAGTO_POR_CARTAO = 64589;
+  SCO_COLETAR_DADOS_TOKORO = 64590;
+  SCO_COLETAR_PAGAR_APOS_VENCTO = 64591;
+  SCO_COLETAR_USAR_SENHA = 64592;
+  SCO_IMPRIMIR_CUPOM_PROMO = 64593;
+  SCO_COLETAR_UTILIZA_SALDO = 64594;
+  SCO_COLETAR_COD_MATERIAL = 64595;
+  SCO_COLETAR_COD_PLANO = 64596;
+  SCO_COLETAR_PAGTO_POR_CHEQUE = 64597;
+  SCO_COLETAR_CONFIRMACAO = 64598;
+  SCO_COLETAR_PAGTO_NO_ROTATIVO = 64599;
+  SCO_COLETAR_CMC7 = 64600;
+  SCO_COLETAR_PAGTO_POR_DINHEIRO = 64601;
+  SCO_COLETAR_GRUPO_SERV = 64602;
+  SCO_COLETAR_CODIGO_REDE = 64603;
+  SCO_COLETAR_COD_ESTAB = 64604;
+  SCO_COLETAR_NSU_HOST = 64605;
+  SCO_COLETAR_ddmmaaaa_EXT = 64606;
+  SCO_COLETAR_E_CONSULTA = 64607;
+  SCO_COLETAR_CONT_APOS_VERIF_CTA = 64608;
+  SCO_COLETAR_COD_BANDEIRA = 64609;
+  SCO_COLETAR_CONTA_OU_FATURA = 64610;
+  SCO_COLETAR_VALOR_TOTAL = 64611;
+  SCO_COLETAR_RG = 64612;
+  SCO_COLETAR_RETENTAR = 64613;
+  SCO_COLETAR_CPF_NO_HOST = 64614;
+  SCO_COLETAR_ENDERECO = 64615;
+  SCO_COLETAR_ANDAR = 64616;
+  SCO_COLETAR_CONJUNTO = 64617;
+  SCO_COLETAR_BLOCO = 64618;
+  SCO_COLETAR_BAIRRO = 64619;
+  SCO_COLETAR_AUTORIZ_OU_CARTAO = 64620;
+  SCO_COLETAR_EMISSAO_CARTAO = 64621;
+  SCO_COLETAR_PLANO_INFOCARDS = 64622;
+  SCO_COLETAR_NUM_CUPOM_FISCAL = 64623;
+  SCO_COLETAR_COD_OPERADORA_RECARGA = 64624;
+  SCO_COLETAR_DADOS_SAB = 64625;
+  SCO_COLETAR_FONE_COM_DIGITO = 64626;
+  SCO_COLETAR_DADOS_SAB_FORCADO = 64627;
+  SCO_COLETAR_TIPO_SERVIC_TEC = 64628;
+  SCO_COLETAR_NUM_OS = 64629;
+  SCO_COLETAR_ID_TECNICO = 64630;
+  SCO_COLETAR_COD_OCORRENCIA = 64631;
+  SCO_COLETAR_EPS_CREDENC = 64632;
+  SCO_COLETAR_VALOR_PRIMEIRA_PARC = 64635;
+  SCO_COLETAR_DADOS_ADICION = 64636;
+  SCO_COLETAR_CANCELAR = 64637;
+  SCO_GO_ONCHIP = 64638;
+  SCO_RETIRAR_CARTAO = 64639;
+  SCO_COLETAR_TAXA_EMBARQUE = 64640;
+  SCO_EXIBIR_MSG_SALDO = 64641;
+  SCO_OBTER_SERVICOS = 64644;
+  SCO_COLETAR_CARTAO_DIGITADO = 64645;
+  SCO_COLETAR_COD_PRODUTO = 64646;
+  SCO_EXBIR_MENU = 64647;
+  SCO_COLETAR_INSS_OU_CHEQUE = 64648;
+  SCO_COLETAR_CONTRATO = 64649;
+  SCO_COLETAR_DATA_CARTAO = 64650;
+  SCO_EXIBIR_VALOR_VALE_GAS = 64651;
+  SCO_COLETAR_DDMMAA2 = 64652;
+  SCO_COLETAR_NSU_ORIGINAL = 64653;
+  SCO_COLETAR_VIA_IMPRESAO = 64655;
+  SCO_COLETAR_DDD_PINPAD = 64656;
+  SCO_COLETAR_FONE_PINPAD = 64657;
+  SCO_COLETAR_FONE_COM_DIGITO_PINPAD = 64658;
+  SCO_COLETAR_REDIGITACAO_PINPAD = 64659;
+  SCO_TRANSACAO_APROVADA_PARCIAL = 64660;
+  SCO_COLETAR_VALOR_PARCELAS = 64661;
+  SCO_COLETAR_PARC1_30_OU_60 = 64662;
+  SCO_COLETAR_NUM_CARTAO = 64666;
+  SCO_COLETAR_COD_SERV_POSTO_BANRISUL = 64667;
+  SCO_COLETAR_MATRICULA_POSTO_BANRISUL = 64668;
+  SCO_COLETAR_QTD_POSTO_BANRISUL = 64669;
+  SCO_COLETAR_HODOMETRO_POSTO_BANRISUL = 64670;
+  SCO_COLETAR_PLACA_VEICULO_POSTO_BANRISUL = 64671;
+  SCO_COLETAR_NUM_RESGATE_PREMIO = 64673;
+  SCO_OPCAO_RESGATE_PREMIO = 64674;
+  SCO_COLETAR_CONFIRM_RESGATE = 64675;
+  SCO_COLETAR_NUM_RESGATE = 64676;
+  SCO_COLETAR_NUM_VOUCHER = 64677;
+  SCO_COLETAR_DARF_OU_GPS = 64678;
 
-  SCO_CARTAO = $FC00;
-  SCO_IMPRIME_CUPOM = $FC02;
-  SCO_IMPRIME_CHEQUE = $FC08;
-  SCO_SENHA = $FC11;
-  SCO_IMPRIME_CONSULTA = $FC1B;
-  SCO_COLETA_VALOR_RECARGA = $FC2E;
-  SCO_IMPRIME_CUPOM_PARCIAL = $FC46;
-  SCO_COLETA_AUT_OU_CARTAO = $FC6C;
-  SCO_COLETA_OPERADORA = $FC70;
-  SCO_CARTAO_DIGITADO = $FC85;
+  SCO_COLETAR_COD_IDENT_FATURA = 64735;
+  SCO_COLETAR_CONSULTA_PLANOS = 64754;
+  SCO_COLETAR_DADOS_ESPECIAL = 64756;
+  SCO_COLTAR_CPF_PINPAD = 64758;
+  SCO_COLETAR_PARCELA_GRATIS = 64761;
+  SCO_COLETA_CARTAO_EM_ANDAMENTO = 64764;
+  SCO_COLETA_EM_ANDAMENTO = 64765;
+  SCO_MOSTRA_INFO_RET_SCOPE = 64766;  //SCO_MOSTRAR_INFO_RETORNAR_FLUXO??? mostra informações e retorna para scope
+  SCO_MOSTRA_INFO_AGUARDA_CONF = 64767;  //SCO_MOSTRAR_INFO_AGUARDAR_CONFIRM???? mostra informações e retorna para scope
 
-  SCO_COLETA_CARTAO_EM_ANDAMENTO = $FCFC;
-  SCO_COLETA_EM_ANDAMENTO = $FCFD;
-  SCO_MOSTRA_INFO_RET_SCOPE = $FCFE; // mostra informações e retorna para scope
-  SCO_MOSTRA_INFO_AGUARDA_CONF = $FCFF; // mostra informações e aguarda operador
-  SCO_ULTIMO_COLETA_DADOS = $FCFF;
+  SCO_ESTADO_COLETA_INICIAL = SCO_COLETAR_CARTAO; // SCO_PRIMEIRO_COLETA_DADOS???
+  SCO_ESTADO_COLETA_FINAL = SCO_MOSTRAR_INFO_AGUARDAR_CONFIRM; //SCO_ULTIMO_COLETA_DADOS???
 
   SCO_EXISTE_TRN_SUSPENSA:          LongInt = $FE03;  // existe transação suspensa
   SCO_NAO_EXISTE_TRN_SUSPENSA:      LongInt = $FE04;  // não existe transação suspensa
@@ -187,9 +345,6 @@ const
   SCO_NAO_EXITE_CUPOM_VALIDO:       LongInt = $FF11;
   SCO_AREA_RESERVADA_INSUFICIENTE:  LongInt = $FF12;
   SCO_ERRO_GENERICO:                LongInt = $FFFF;
-
-  {- Define os campos para as funcoes ScopeObtemCampo() e para ScopeObtemCampoExt() -}
-  Cod_Rede:                         LongInt = $400000;
 
   {- Define os parametros para a funcao ScopeObtemHandle -}
   HDL_TRANSACAO_ANTERIOR:           LongInt = $0000;
@@ -231,18 +386,186 @@ const
   INI_SESSAO:                       LongInt = $0002;
   INI_APLCOLET:                     LongInt = $0004;
 
-  ACAO_PROX:                        LongInt = $0008;
-  ACAO_ANTER:                       LongInt = $0010;
-  ACAO_CANCELAR:                    LongInt = $0020;
+//E?
+//  ACAO_PROX:                        LongInt = $0008;
+//  ACAO_ANTER:                       LongInt = $0010;
+//  ACAO_CANCELAR:                    LongInt = $0020;
 
-  COLETA_PROXIMO_ESTADO:            LongInt = 0;
-  COLETA_ANTERIOR_ESTADO:           LongInt = 1;
-  COLETA_CANCELAR:                  LongInt = 2;
+//E
+// Nomes? 
+  ACAO_COLETA_PROXIMO = 0;
+  ACAO_COLETA_ANTERIOR = 1;
+  ACAO_COLETA_CANCELAR = 2;
+  ACAO_COLETA_ERRO = 2;
 
   BIT6_ON:                          LongInt = $0040;
   BIT7_ON:                          LongInt = $0080;
   BIT8_ON:                          LongInt = $0100;
   BIT9_ON:                          LongInt = $0200;
+
+{--------------------------------------------------------------------------------------------
+   Constantes da máscara 1 da função ScopeObtemCampoExt2
+--------------------------------------------------------------------------------------------}
+const
+  Numero_Conta_PAN                   = $00000001;  { Personal Account Number (Card number) }
+  Valor_transacao                    = $00000002;  { Amount }
+  NSU_transacao                      = $00000004;  { Transaction Id assigned by Scope }
+  Hora_local_transacao               = $00000008;  { Transaction time }
+  Data_local_transacao               = $00000010;  { Transaction date }
+  Data_vencimento_cartao             = $00000020;  { Card due date }
+  Data_referencia                    = $00000040;  { Account date }
+  Numero_cheque                      = $00000080;  { Check number }
+  Codigo_autorizacao                 = $00000100;  { Authorization code }
+  Codigo_resposta                    = $00000200;  { Action code }
+  Identificacao_terminal             = $00000400;  { POS Id }
+  Codigo_Origem_Mensagem             = $00000800;  { Store Id assigned by the acquirer at agreement time }
+  Plano_Pagamento                    = $00001000;  { Number of parcels }
+  Valor_Taxa_Servico                 = $00002000;  { Tip value }
+  NSU_Host                           = $00004000;  { Transaction Id assigned by Acquirer }
+  Cod_Banco                          = $00008000;  { Bank code }
+  Cod_Agencia                        = $00010000;  { Branch code }
+  Data_Vencimento                    = $00020000;  { Due date (99ddmmyyyy [...]) }
+  Cod_Bandeira                       = $00040000;  { Acquirer Code }
+  Cod_Servico                        = $00080000;  { Service Code }
+  Texto_BIT_62                       = $00100000;  { BIT 62 }
+  Controle_Dac                       = $00200000;  { Control DAC }
+  Cod_Rede                           = $00400000;  { Net Code }
+  Nome_Bandeira                      = $00800000;  { Acquirer Name }
+  Nome_Rede                          = $01000000;  { Net Name }
+  Cartao_Trilha02                    = $02000000;  { Card - Track 02 }
+  Numero_Promissorias                = $04000000;  { Number of promissory note }
+  Cod_Estab_Impresso                 = $08000000;  { Establishment code printed on ticket }
+  Numero_CMC7                        = $10000000;  { CMC7 Number }
+  CGC_Convenio                       = $20000000;  { CGC Number }
+  Msg_Autentic_Cheque                = $40000000;  { Check Autentic Message }
+  Saldo_Disponivel                   = $80000000;  { Available Cache }
+
+{--------------------------------------------------------------------------------------------
+   Constantes da máscara 2 da função ScopeObtemCampoExt2
+--------------------------------------------------------------------------------------------}
+const
+  NSU_transacao_Original             = $00000001;  { Cancel Transaction Id assigned by Scope }
+  Cliente_Com_Seguro                 = $00000002;  { Ensured Client }
+  Dados_Parcelado_Cetelem            = $00000004;  { Informations about parcels Cetelem }
+  Data_Movimento                     = $00000008;  { Interchange: Data Movimento }
+  Nome_Convenio                      = $00000010;  { Interchange: Nome da Empresa de Convênio }
+  Lista_TEF_Permitidas               = $00000020;  { Interchange: Lista das formas de pagamento em TEF permitidas }
+  Linha_Autenticacao                 = $00000040;  { Interchange - Fininvest: Linha de autenticação }
+  Dados_Consulta_Fatura              = $00000080;  { Interchange - Fininvest: Dados da Consulta Fatura }
+  Forma_Financiamento                = $00000100;  { Type of Financing }
+  Codigo_Resposta_AVS                = $00000200;  { Return Code for AVS }
+  Pontos_AdquiridosOuResgatados      = $00000400;  { Pontos adquiridos ou resgatados }
+  Fator_Compra                       = $00000800;  { Fator de compra }
+  NSU_Host_Transacao_Original        = $00001000;  { NSU Host da transação original (cancelamento) }
+  Identificacao_Cliente_PBM          = $00002000;  { Identificação do Cliente junto a Autorizadora }
+  Cod_Operadora                      = $00004000;  { Código da Operadora de Celular }
+  Cod_Local_Telefone                 = $00008000;  { DDD }
+  Num_Telefone                       = $00010000;  { Telefone }
+  Dados_ValeGas                      = $00020000;  { ULTRAGAZ: Dados do ValeGás }
+  Codigo_IF                          = $00040000;  { Código IF (Instituição Financeira) }
+  Numero_Item                        = $00080000;  { Fininvest, Cetelem }
+  Num_Contrato                       = Numero_Item; { IBI: Numero do contrato (CPCHEQUE/INSS) }
+  Valor_Taxa_Embarque                = $00100000;  { Taxa de embarque }
+  Digitos_TR2SON                     = $00200000;  { Uso exclusivo sonae }
+  Taxa_Cliente_Lojista               = $00400000;  { Informação bit 124 - CDC Orbitall }
+  Cod_Servico_Original               = $00800000;  { Transação de cancelamento: Código de Serviço da transação original }
+  Cod_Barras                         = $01000000;  { Código de Barras }
+  Permite_Desfazimento               = $02000000;  { Permite cancelamento }
+  Logo_PAN                           = $04000000;  { Retorna o LOGO do cartão: bytes 7 e 8 do PAN }
+  Cod_Empresa                        = $08000000;  { Código da Empresa - HSBC }
+  Cod_Autenticacao                   = $10000000;  { Código de autenticação - ISOGCB }
+  Dados_Pagto_ISOGCB                 = $20000000;  { Dados do pagamento ISOGCB }
+  UsoRes_63                          = $40000000;  { BIT 63 - Projeto Vale Gás GetNet }
+  Numero_PDV                         = $80000000;  { Número do PDV - HSBC }
+
+{--------------------------------------------------------------------------------------------
+   Constantes da máscara 3 da função ScopeObtemCampoExt2
+--------------------------------------------------------------------------------------------}
+const
+  DadosQtdeECupons                   = $00000001;  { Informações sobre a quantidade e os e-cupons disponíveis ao cliente }
+  DescResgateMonetario               = $00000002;  { Desconto do resgate monetário }
+  Dados_Pagto_Bit48_BRADESCO         = $00000004;  { Bradesco - Informações sobre o Bit 48 }
+  Modo_Entrada                       = $00000008;  { Modo de entrada da transação (Entry Mode) }
+  Valor_Saque                        = $00000010;  { Valor do Saque }
+  Resposta_Consulta_Infocards        = $00000020;  { Resposta da consulta Infocards (bit 62 da 0110) }
+  Dados_Resposta_Consulta_EPAY       = $00000040;  { Dados da resposta de Consulta da EPAY. Os dados retornados
+                                                      consistem em 3 valores de concatenados:
+                                                      1. Valor Mínimo ( 12 dígitos )
+                                                      2. Valor Máximo ( 12 dígitos )
+                                                      3. Saldo Disponível ( 12 dígitos )}
+  Dados_Resposta_Consulta_INCOMM     = $00000040;  { Dados da resposta de Consulta valor Gift Card (INCOMM)
+                                                      Os dados retornados consistem em 3 valores de concatenados:
+                                                      1. Valor Mínimo ( 12 dígitos )
+                                                      2. Valor Máximo ( 12 dígitos )
+                                                      3. Saldo Disponível ( 12 dígitos )}
+  Max_Mercadorias_TicketCar          = $00000100;  { Máximo de mercadorias permitidas para uma transação (Cartão TicketCar, Valecard, entre outras)
+                                                     O dado retornado é um campo de 2 dígitos.}
+  Codigo_SAT                         = $00000200;  { Código SAT (ver códigos em Código das redes)}
+  Versao_Carga_Tabelas_Host          = $00000400;  { Versão corrente de Carga de Tabelas do Host Formato: 10 dígitos
+                                                    (Preenchido com zeros a esquerda, caso necessário). Disponível em
+                                                    transações com as seguintes Redes: SAVS}
+  CNPJ_Rede_Credenciadora_SAT        = $00002000;  { CNPJ da rede credenciadora - SAT }
+  Dados_Correspondente_Bancario      = $00008000;  { Dados do Correspondente Bancário }
+  Dados_Adicionais_Gift_Card         = $00010000;  { Dados Adicionais Gift Card:
+                                                      - Para Incomm: código UPC11
+                                                      - Para BlackHawk: código EAN12
+                                                      - Para EPAY: código do produto com 8 dígitos, com brancos à direita se menor }
+  Dados_Operacao_Fidelidade_SGF      = $00020000;  { Dados retornados da Operação Fidelidade (SGF) }
+  Valor_Total_Pagamento              = $00040000;  { Valor Total do Pagamento }
+  Valor_Descontos_Pagamento          = $00080000;  { Valor de Descontos do Pagamento }
+  Valor_Entrada_IATA                 = $00800000;  { Valor de Entrada (IATA) }
+  Valor_Acrescimos_Pagamento         = $00100000;  { Valor de Acréscimos do Pagamento }
+  Dados_Perfil_Pagamento_Recorrente  = $01000000;  { Dados do Perfil de Pagamento Recorrente }
+  Dados_Assinatura_Pagamento         = $02000000;  { Dados da Assinatura do Pagamento Recorrente }
+  Dados_Consulta_BACEN               = $04000000;  { Dados Consulta BACEN – para títulos registrados }
+  Valor_Documento                    = $08000000;  { Valor Documento }
+  Resposta_Consulta_BACEN_Comprovante = $10000000; { Resposta Consulta BACEN – comprovante }
+  Modo_Pagamento                     = $20000000;  { Modo Pagamento:
+                                                      ‘00’ – não informado
+                                                      '01' – cheque (Utilizado para pagamento de contas)
+                                                      '02' – dinheiro (Utilizado para pagamento de contas)
+                                                      '03' – debito em conta (Utilizado para carteiras virtuais/pagamento de contas)
+                                                      '04' – cartao credito (Utilizado para carteiras virtuais)
+                                                      '05' – pix (Utilizado para carteiras virtuais)
+                                                      ‘06’ – cartao de debito (Utilizado para carteiras virtuais)
+                                                      ‘07’ – saldo + cartao (Utilizado para carteiras virtuais) }
+  Consulta_Cedente_BACEN_BRADESCO    = $40000000;  { Consulta Cedente - Dados da Consulta BACEN BRADESCO }
+  Data_Vencimento_CORBAN             = $80000000;  { Data Vencimento CORBAN – do título/conta }
+
+  {--------------------------------------------------------------------------------------------
+     Constantes da máscara 4 da função ScopeObtemCampoExt3
+  --------------------------------------------------------------------------------------------}
+const
+    Nome_Portador_Cartao           = $00000001;  { Nome do Portador do Cartão (Informação com até 26 caracteres) }
+    Data_Validade_Cartao           = $00000002;  { Data de Validade do Cartão (YYMMDD) }
+    Merchant_ID                    = $00000004;  { Merchant ID (informação com até 32 caracteres) }
+    Codigo_Estab_Externo           = $00000008;  { Código do Estabelecimento Externo (informação com até 15 caracteres) }
+    String_QRCode                  = $00000020;  { String para gerar o QRCode }
+    Relacao_Descontos_Item         = $00000080;  { Relação de Descontos por Item, recebidos da Ticket Log no bit 54 da 0210 }
+    Indicador_Saldo_Disponivel     = $00000100;  { Informa se o Saldo_Disponivel está em [0] = Reais (default) ou [1] = Litros }
+    Numero_CPF                     = $00000200;  { Número do CPF }
+    ARQC_Chip                      = $00000400;  { ARQC do chip, se disponibilizado pelo cartão }
+    AID_Chip                       = $00000800;  { AID do chip, se disponibilizado pelo cartão }
+    Transacao_Autorizada_Por_Senha = $00001000;  { Indicação se a transação foi autorizada mediante uso de senha pessoal [1] = Sim, [0] = Não }
+    //????????                     = $00002000;  { ?????????? }
+    Campo_TID_Pix                  = $00004000;  { campo TID da tabela Mensagem (do Banco de Dados) - transações pix (txid) }
+    Campo_Referencia_Pix           = $00008000;  { campo Referência da tabela Mensagem (do Banco de Dados) - transações pix (end2endId) }
+    Tamanho_BIN                    = $00010000;  { Tamanho do BIN }
+    Estrutura_Strings_DCC          = $00020000;  { Estrutura de strings finalizadas com null:
+                                                    Dado Tamanho + null Obs
+                                                    Valor Convertido 12 + 1
+                                                    Cotação de Conversão 8 + 1
+                                                    Taxa Markup 5 + 1 %
+                                                    Sigla da Moeda Estrangeira 3 + 1 ISO 4217
+                                                    Código da Moeda Estrangeira 3 + 1 ISO 4217
+                                                    Pode ser usada a estrutura stDadosDCC definida em scopeapi.h }
+    Status_DCC                      = $00040000;  { Status DCC:
+                                                    ‘0’ = Não Realizado
+                                                    ‘1’ = Cliente Não Aceitou
+                                                    ‘2’ = Cliente Aceitou
+                                                    ‘3’ = Não Elegível
+                                                    ‘4’ = Erro de Comunicação
+                                                    Qualquer outro valor = Desconhecido }
 
 
 
@@ -268,20 +591,20 @@ type
   PParam_Coleta = ^TParam_Coleta;
 
   TParam_Coleta = packed record
-    Bandeira:             Word;
-    FormatoDado:          Word;
-    HabTeclas:            Word;
-    MsgOp1:               array [1..64]  of AnsiChar;
-    MsgOp2:               array [1..64]  of AnsiChar;
-    MsgCl1:               array [1..64]  of AnsiChar;
-    MsgCl2:               array [1..64]  of AnsiChar;
-    WrkKey:               array [1..17]  of AnsiChar;
-    PosMasterKey:         Word;
-    PAN:                  array [1..20]  of AnsiChar;
-    UsaCriptoPinpad:      Byte;
-    IdModoPagto:          Byte;
+    Bandeira: Word;
+    FormatoDado: Word;
+    HabTeclas: Word;
+    MsgOp1: array [1..64]  of AnsiChar;
+    MsgOp2: array [1..64]  of AnsiChar;
+    MsgCl1: array [1..64]  of AnsiChar;
+    MsgCl2: array [1..64]  of AnsiChar;
+    WrkKey: array [1..17]  of AnsiChar;
+    PosMasterKey: Word;
+    PAN: array [1..20]  of AnsiChar;
+    UsaCriptoPinpad: Byte;
+    IdModoPagto: Byte;
     AceitaCartaoDigitado: Byte;
-    Reservado:            array [1..105] of AnsiChar;
+    Reservado: array [1..105] of AnsiChar;
   end;
 
 
@@ -369,15 +692,33 @@ type
 
   TACBrTEFScopeGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
+  TACBrTEFScopeTerminalMensagem = (tmOperador, tmCliente);
+
   TACBrTEFScopeExibeMensagem = procedure(
     Mensagem: String;
+    Terminal: TACBrTEFScopeTerminalMensagem;
     MilissegundosExibicao: Integer  // 0 - Para com OK; Positivo - aguarda Ok ou N milissegundos; Negativo - Apenas exibe a Msg (não aguarda)
     ) of object;
+
+  TACBrTEFScopeExibeMenu = procedure(
+    Titulo: String;
+    Opcoes: TStringList;
+    var ItemSelecionado: Integer) of object ;  // -1 = Cancelado
+
+  TACBrTEFScopeEstadoOperacao = ( scoestFluxoAPI,
+                                  scoestAguardaUsuario,
+                                  scoestPinPad,
+                                  scoestPinPadLerCartao,
+                                  scoestPinPadDigitacao,
+                                  scoestRemoveCartao,
+                                  scoestLeituraQRCode );
+
+  TACBrTEFScopeTransacaoEmAndamento = procedure(
+    EstadoOperacao: TACBrTEFScopeEstadoOperacao; out Cancelar: Boolean) of object;
 
   { TACBrTEFScopeAPI }
 
   TACBrTEFScopeAPI = Class
-
   private
     fCarregada: Boolean;
     fConectado: Boolean;
@@ -386,12 +727,16 @@ type
     fCupomReduzido: Boolean;
     fDiretorioTrabalho: String;
     fEmpresa: String;
+    fEmTransacao: Boolean;
     fEnderecoIP: String;
     fFilial: String;
     fInicializada: Boolean;
     fMsgPinPad: String;
+    fDadosTransacao: TStringList;
     fOnExibeMensagem: TACBrTEFScopeExibeMensagem;
+    fOnExibeMenu: TACBrTEFScopeExibeMenu;
     fOnGravarLog: TACBrTEFScopeGravarLog;
+    fOnTransacaoEmAndamento: TACBrTEFScopeTransacaoEmAndamento;
     fPathLib: String;
     fPDV: String;
     fPermitirCancelarOperacaoPinPad: Boolean;
@@ -442,6 +787,12 @@ type
     xScopeResumoVendas: function(): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeObtemCampoExt: function(_Handle, _Masc, _Masc2: LongInt;
+      _FieldSeparator: Byte; _Buffer: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeObtemCampoExt2: function(_Handle, _Masc, _Masc2, _Masc3: LongInt;
+      _FieldSeparator: Byte; _Buffer: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeObtemCampoExt3: function(_Handle, _Masc, _Masc2, _Masc3, _Masc4: LongInt;
       _FieldSeparator: Byte; _Buffer: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeObtemHandle: function(_Desloc: LongInt): LongInt;
@@ -498,6 +849,9 @@ type
     procedure SetEnderecoIP(AValue: String);
     procedure SetPortaTCP(AValue: String);
 
+    procedure SetEmTransacao(AValue: Boolean);
+    procedure ChamarTransacaoEmAndamento(EstadoOperacao: TACBrTEFScopeEstadoOperacao;
+      out Cancelar: Boolean);
   protected
     function GetLibFullPath: String;
     function GetScopeIniFullPath: String;
@@ -528,7 +882,12 @@ type
     procedure ObterDadosScopeINI(out AEmpresa: String; out AFilial: String;
       out AEnderecoIP: String; out APortaTCP: String);
 
-    procedure ExibirMensagem(const AMsg: String; TempoEspera: Integer = -1);
+    procedure ExibirMensagem(const AMsg: String;
+      Terminal: TACBrTEFScopeTerminalMensagem = tmOperador; TempoEspera: Integer = -1);
+
+    function ObterScopeStatus: Longint;
+    function ObterDadosCupom: Longint;
+    procedure ObterDadosDaTransacao;
 
   public
     constructor Create;
@@ -561,20 +920,28 @@ type
     property Inicializada: Boolean read fInicializada write SetInicializada;
     property Conectado: Boolean read fConectado;
     property SessaoAberta: Boolean read fSessaoAberta;
+    property EmTransacao: Boolean read fEmTransacao;
 
     property OnExibeMensagem: TACBrTEFScopeExibeMensagem read fOnExibeMensagem
       write fOnExibeMensagem;
+    property OnExibeMenu: TACBrTEFScopeExibeMenu read fOnExibeMenu
+      write fOnExibeMenu;
+    property OnTransacaoEmAndamento: TACBrTEFScopeTransacaoEmAndamento read fOnTransacaoEmAndamento
+      write fOnTransacaoEmAndamento;
+
     property OnGravarLog: TACBrTEFScopeGravarLog read fOnGravarLog write fOnGravarLog;
 
     procedure Inicializar;
     procedure DesInicializar;
 
-//E
     procedure AbrirSessaoTEF;
     procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
     procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao; const Param1,
       Param2, Param3: String);
     procedure ExecutarTransacao;
+    function EnviarParametroTransacao(Acao: LongInt; codTipoColeta: LongInt = -1; Dados: AnsiString = '';
+      dadosParam: Word = 0): LongInt;
+    procedure AbortarTransacao;
 
     function ObterVersaoScope: String;
     function AcharPortaPinPad: String;
@@ -587,7 +954,7 @@ implementation
 
 uses
   IniFiles, StrUtils, TypInfo,
-  ACBrUtil.Strings, ACBrUtil.FilesIO;
+  ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 { TACBrTEFScopeAPI }
 
@@ -614,6 +981,9 @@ begin
   fConfirmarTransacoesPendentes := True;
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
+  fOnExibeMenu := Nil;
+  fOnTransacaoEmAndamento := Nil;
+  fDadosTransacao := TStringList.Create;
 end;
 
 destructor TACBrTEFScopeAPI.Destroy;
@@ -621,6 +991,7 @@ begin
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
   DesInicializar;
+  fDadosTransacao.Free;
   inherited Destroy;
 end;
 
@@ -631,14 +1002,18 @@ begin
 
   GravarLog('TACBrTEFScopeAPI.Inicializar');
 
+  //if not Assigned(fOnExibeMenu) then
+    //DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMenu']));
+  if not Assigned(fOnExibeMensagem) then
+    DoException(Format(ACBrStr(sErrEventoNaoAtribuido), ['OnExibeMensagem']));
+
   VerificarDiretorioDeTrabalho;
-//E
-  //Se o arquivo INI estiver configurado, a chamada abaixo talvez possa ser dispensada.
+  //E: Se o arquivo INI estiver configurado, a chamada abaixo talvez possa ser dispensada.
   //Ver também função ScopeOpenVerify() como possível adição para essa feature.
   VerificarEAjustarScopeINI;
   LoadLibFunctions;
-//E
-  AbrirPinPad; //exemplo em Delphi parece não precisar do PINPAD.
+
+  AbrirPinPad; //E: exemplo em Delphi não precisa abrir o PINPAD aqui.
 
   fInicializada := True;
   fConectado := False;
@@ -799,6 +1174,30 @@ begin
   fPortaTCP := Trim(AValue);
 end;
 
+procedure TACBrTEFScopeAPI.SetEmTransacao(AValue: Boolean);
+begin
+  if (not fInicializada) or (AValue = fEmTransacao) then
+    Exit;
+
+  fEmTransacao := AValue;
+
+  if not fEmTransacao then
+    ExibirMensagem('');
+end;
+
+procedure TACBrTEFScopeAPI.ChamarTransacaoEmAndamento(
+  EstadoOperacao: TACBrTEFScopeEstadoOperacao; out Cancelar: Boolean);
+begin
+  Cancelar := False;
+  if not Assigned(fOnTransacaoEmAndamento) then
+    Exit;
+
+  GravarLog('  OnTransacaoEmAndamento( '+GetEnumName(TypeInfo(TACBrTEFScopeEstadoOperacao),
+            integer(EstadoOperacao))+' )');
+  fOnTransacaoEmAndamento(EstadoOperacao, Cancelar);
+  GravarLog('    Cancelar: '+BoolToStr(Cancelar, True) );
+end;
+
 function TACBrTEFScopeAPI.GetLibFullPath: String;
 begin
   if (PathLib <> '') then
@@ -866,6 +1265,8 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopeReimpressaoComprovante', @xScopeReimpressaoComprovante);
   ScopeFunctionDetect(sLibName, 'ScopeResumoVendas', @xScopeResumoVendas);
   ScopeFunctionDetect(sLibName, 'ScopeObtemCampoExt', @xScopeObtemCampoExt);
+  ScopeFunctionDetect(sLibName, 'ScopeObtemCampoExt2', @xScopeObtemCampoExt2);
+  ScopeFunctionDetect(sLibName, 'ScopeObtemCampoExt3', @xScopeObtemCampoExt3);
   ScopeFunctionDetect(sLibName, 'ScopeObtemHandle', @xScopeObtemHandle);
   ScopeFunctionDetect(sLibName, 'ScopePagamento', @xScopePagamento);
   ScopeFunctionDetect(sLibName, 'ScopeRecargaCelular', @xScopeRecargaCelular);
@@ -922,6 +1323,8 @@ begin
   xScopeReimpressaoComprovante := Nil;
   xScopeResumoVendas := Nil;
   xScopeObtemCampoExt := Nil;
+  xScopeObtemCampoExt2 := Nil;
+  xScopeObtemCampoExt3 := Nil;
   xScopeObtemHandle := Nil;
   xScopePagamento := Nil;
   xScopeRecargaCelular := Nil;
@@ -1110,11 +1513,12 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.ExibirMensagem(const AMsg: String;
-  TempoEspera: Integer);
+  Terminal: TACBrTEFScopeTerminalMensagem; TempoEspera: Integer);
 begin
   GravarLog('  OnExibeMensagem( '+AMsg+
-                                ', '+IntToStr(TempoEspera)+' )', True);
-  fOnExibeMensagem(AMsg, TempoEspera);
+            ', '+GetEnumName(TypeInfo(TACBrTEFScopeTerminalMensagem), integer(Terminal) )+
+            ', '+IntToStr(TempoEspera)+' )', True);
+  fOnExibeMensagem(AMsg, Terminal, TempoEspera);
 end;
 
 function TACBrTEFScopeAPI.ConfigurarPortaPinPad(const APortaPinPad: String
@@ -1214,7 +1618,7 @@ begin
     SCO_ERRO_PARM_3: MsgErro := 'Parâmetro 3 inválido';
     SCO_ERRO_PARM_4: MsgErro := 'Parâmetro 4 inválido';
     SCO_ERRO_ARQ_CICLO_TEF: MsgErro := 'Erro no arquivo de controle, finalização multi-TEF';
-    SCO_TRN_EM_ANDAMENTO: MsgErro := 'Transação em andamento';
+    SCO_TRN_EM_ANDAMENTO: MsgErro := ''; //'Transação em andamento';
     SCO_API_NAO_INICIALIZADA: MsgErro := 'SCOPE API não foi inicializada';
     SCO_API_JA_INICIALIZADA: MsgErro := 'SCOPE API já foi inicializada';
     SCO_SRV_NOT_CFG: MsgErro := 'Servidor não configurado no arquivo '+CScopeINi;
@@ -1241,7 +1645,9 @@ begin
   ObterDadosScopeINI(sEmpresa, sFilial, sEnderecoIP, sPorta);
   ExibirMensagem( ACBrStr(Format(sMsgAbrindoConexao, [sEmpresa, sFilial]) ));
   if (fPDV = '') then
-    sPDV := '001';
+    sPDV := '001'
+  else
+    sPDV:= fPDV;
 
   GravarLog('ScopeOpen( 2, '+sEmpresa+', '+sFilial+', '+sPDV+' )');
   ret := xScopeOpen( PAnsiChar('2'),
@@ -1353,7 +1759,7 @@ begin
   FecharSessaoTEF(fConfirmarTransacoesPendentes, DesfezTEF);
   if DesfezTEF then
   begin
-    ExibirMensagem(sMsgTransacaoDesfeita, 0);
+    ExibirMensagem(sMsgTransacaoDesfeita, tmOperador, 0);
     ExibirMensagem('');
   end;
 end;
@@ -1363,12 +1769,16 @@ procedure TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
 var
   p1, p2, p3: PAnsiChar;
   ret: LongInt;
+  b: Boolean;
 begin
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
             ', '+Param1+', '+Param2+', '+Param3+' )' );
 
+  if fEmTransacao then
+    DoException(ACBrStr(sErrTransacaoJaIniciada));
+
   if not fSessaoAberta then
-    DoException(ACBrStr(sErrSemSessao));
+    AbrirSessaoTEF;
 
   p1 := PAnsiChar(AnsiString(Param1));
   p2 := PAnsiChar(AnsiString(Param2));
@@ -1391,238 +1801,203 @@ begin
 
   GravarLog('  ret: '+IntToStr(ret));
   if (ret <> SCO_SUCESSO) then
-    TratarErroScope(ret);
+  begin
+    FecharSessaoTEF(False, b);
+    TratarErroScope(ret)
+  end
+  else
+    SetEmTransacao(True);
 end;
 
 procedure TACBrTEFScopeAPI.ExecutarTransacao;
 var
-  iRet,
-  iAux:       LongInt;
-  PColeta:    TParam_Coleta;
-  PColetaMsg: TColeta_Msg;
-  bAux:       Byte;
-  sBufEntrAux: string;
-
-  //ForcarFinalizar :Boolean;
+  ret, Status, Acao, TipoColeta: LongInt;
+  iBarra: Byte;
+  Cancelar: Boolean;
+  pColeta: TParam_Coleta;
+  pBuffer: PAnsiChar;
+  s: String;
+const
+  cBarras = '|/-\';
 begin
   GravarLog('ExecutarTransacao');
-  //ForcarFinalizar := False;
 
-  //Ver método FinalizaTransacaoTEF exemplo Delphi para entender loop...
-  repeat
-    iAux := 0;
-    bAux := 0;
-    sBufEntrAux := '';
-    //FillChar(sBufEntr, length(sBufEntr) * sizeof(AnsiChar), #0);
-    //ZeroMemory(@PColeta, SizeOf(TParam_Coleta));//abaixo
-    FillChar(PColeta, SizeOf(TParam_Coleta), 0);
+  if not fEmTransacao then
+    DoException(ACBrStr(sErrTransacaoNaoIniciada));
 
-    // Enquanto a transacao estiver em andamento, aguarda....Loop
+  fDadosTransacao.Clear;
+  pBuffer := AllocMem(2048); // Buffer de 2K
+  try
     repeat
-      iRet := xScopeStatus;
-      //Apenas Exibe uma mensagem na tela para não parecer que está travado?
-      //if (iAux = 0) then
-      //  atualizMsg ('... transacao em andamento |    -> ' + IntToStr(iRet))
-      //else if (iAux = 1) then
-      //  atualizMsg ('... transacao em andamento /    -> ' + IntToStr(iRet))
-      //else if (iAux = 2) then
-      //  atualizMsg ('... transacao em andamento -    -> ' + IntToStr(iRet))
-      //else
-      //begin
-      //  atualizMsg ('... transacao em andamento \    -> ' + IntToStr(iRet));
-      //  iAux := -1;
-      //end;
-      //iAux := iAux + 1;
+      // Enquanto a transacao estiver em andamento, aguarda....Loop
+      Status := ObterScopeStatus;
+      iBarra := 0;
+      while (Status = SCO_TRN_EM_ANDAMENTO) or (Status =  SCO_COLETA_CARTAO_EM_ANDAMENTO) do
+      begin
+        //Apenas Exibe uma mensagem na tela para não parecer que está travado?
+        inc(iBarra);
+        if (iBarra) > 4 then
+          iBarra := 1;
+        ExibirMensagem(Format(ACBrStr(sMsgTransacaoEmAndamento), [cBarras[iBarra]]));
 
-      // Tratar quando usuário clicou em Cancelar???
-      // Tratar a coleta de cartao manualmente, em paralelo c/ o PINPad
+        ChamarTransacaoEmAndamento(scoestFluxoAPI, Cancelar);
+        if Cancelar then
+        begin
+          AbortarTransacao;
+          Exit;
+        end;
 
-    until (iRet <> SCO_TRN_EM_ANDAMENTO);//...
+        Sleep(CINTERVALO_COLETA);
+        Status := ObterScopeStatus;
+      end;
 
-    //Ainda está em modo Coleta de dados?
-    if ((iRet < SCO_PRIMEIRO_COLETA_DADOS) or
-         (iRet > SCO_ULTIMO_COLETA_DADOS)) then
+      //Ainda está em modo Coleta de dados?
+      if ((Status < SCO_ESTADO_COLETA_INICIAL) or
+          (Status > SCO_ESTADO_COLETA_FINAL)) then
+      begin
+        if (Status = SCO_SUCESSO) then
+        begin
+          ObterDadosDaTransacao;
+          ExibirMensagem('Transacao completa')
+        end
+        else
+          TratarErroScope(Status);
+
+        Break;
+      end;
+
+      // Inicializa variveis do fluxo
+      Acao := ACAO_COLETA_PROXIMO;
+      TipoColeta := ENT_TECLADO;
+      FillChar(pBuffer , length(pBuffer), #0);
+      {$IfDef FPC}
+       Initialize(pColeta);
+      {$Else}
+       FillChar(pColeta, SizeOf(TParam_Coleta), 0);
+      {$EndIf}
+
+      // Obtem dados do Scope e exibe as mensagens do cliente e operador */
+      ret := xScopeGetParam(Status, @PColeta);
+      if (ret <> SCO_SUCESSO) then
+        TratarErroScope(Status);
+
+      s := Trim(pColeta.MsgOp1 + sLineBreak + pColeta.MsgOp2);
+      if (s <> '') then
+        ExibirMensagem(s, tmOperador);
+
+      s := Trim(pColeta.MsgCl1 + sLineBreak + pColeta.MsgCl2);
+      if (s <> '') then
+        ExibirMensagem(s, tmCliente);
+
+      case Status of
+        SCO_COLETAR_CARTAO,
+        SCO_COLETAR_AUTORIZ_OU_CARTAO:
+          begin
+
+          end;
+
+        SCO_IMPRIMIR_CUPOM,
+        SCO_IMPRIMIR_CUPOM_PARCIAL,
+        SCO_IMPRIMIR_CONSULTA:
+        begin
+          ObterDadosCupom;
+        end;
+      end;
+
+    until False;
+
+  finally
+    Freemem(pBuffer);
+  end;
+end;
+
+function TACBrTEFScopeAPI.EnviarParametroTransacao(Acao: LongInt;
+  codTipoColeta: LongInt; Dados: AnsiString; dadosParam: Word): LongInt;
+begin
+  if (codTipoColeta < 0) then
+    codTipoColeta := ObterScopeStatus;
+
+  GravarLog('ScopeResumeParam( '+IntToStr(codTipoColeta)+', '+Dados+', '+IntToStr(dadosParam)+', '+IntToStr(Acao)+' )');
+  Result := xScopeResumeParam(codTipoColeta, PAnsiChar(Dados), dadosParam, Acao);
+  GravarLog('  ret: '+IntToStr(Result));
+end;
+
+procedure TACBrTEFScopeAPI.AbortarTransacao;
+begin
+  EnviarParametroTransacao(ACAO_COLETA_CANCELAR);
+  SetEmTransacao(False);
+end;
+
+function TACBrTEFScopeAPI.ObterScopeStatus: Longint;
+begin
+  GravarLog('xScopeStatus');
+  Result := xScopeStatus;
+  GravarLog('  ret: '+IntToStr(Result));
+end;
+
+function TACBrTEFScopeAPI.ObterDadosCupom: Longint;
+var
+  pCabec, pCupomCliente, pCupomLoja, pCupomReduzido: PAnsiChar;
+  NumeroLinhasReduzido: Byte;
+  sCabec: String;
+begin
+  pCabec := AllocMem(1024);
+  pCupomCliente := AllocMem(2048);
+  pCupomLoja := AllocMem(2048);
+  pCupomReduzido := AllocMem(2048);
+  try
+    GravarLog('ScopeGetCupomEx');
+    Result := xScopeGetCupomEx( SizeOf(pCabec), pCabec,
+                                SizeOf(pCupomCliente), pCupomCliente,
+                                SizeOf(pCupomLoja), pCupomLoja,
+                                SizeOf(pCupomReduzido), pCupomReduzido,
+                                @NumeroLinhasReduzido);
+    GravarLog('  ret: '+IntToStr(Result));
+
+    if (Result = SCO_SUCESSO) then
     begin
-      //Exibir uma mensagem de saída??
-      //encerraTransacao(iRet);
-      Break;
+      sCabec := String(pCabec);
+      fDadosTransacao.Values[INFO_CUPOM_CLIENTE] := BinaryStringToString( sCabec + sLineBreak + String(pCupomCliente) );
+      fDadosTransacao.Values[INFO_CUPOM_LOJA] := BinaryStringToString( sCabec + sLineBreak + String(pCupomLoja) );
+      fDadosTransacao.Values[INFO_CUPOM_REDUZIDO] := BinaryStringToString( String(pCupomReduzido) );
     end;
+  finally
+    Freemem(pCabec);
+    Freemem(pCupomCliente);
+    Freemem(pCupomLoja);
+    Freemem(pCupomReduzido);
+  end;
+end;
 
-    // Guardar os bits q ligamos nos passos anteriores
-    iAux := PColeta.HabTeclas;
+procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
+  function PegaCampoMascara1(const handle:LongInt; const Campo1: LongInt): string;
+  var
+    BufferRetorno:      array [1..1024] of AnsiChar;
+  begin
+    xScopeObtemCampoExt3(handle, Campo1, 0, 0, 0, Byte(':'),
+      PAnsiChar(@BufferRetorno));
+    Result := AnsiString(BufferRetorno);
+  end;
+var
+  HandleTransacao: LongInt;
+  ValorCampo: string;
+begin
+  fDadosTransacao.Clear; //???
+  //* receber o ;ntificador da transacao */
+  HandleTransacao := xScopeObtemHandle(0);
 
-    // Obtem dados do Scope e exibe as mensagens do cliente e operador
-    xScopeGetParam(iRet, @PColeta);
-
-    // Restaurar os bits armazenados anteriorm/te
-    PColeta.HabTeclas := PColeta.HabTeclas or iAux;
-
-    // Tratamento dos estados
-    case iRet of
-      SCO_CARTAO, SCO_COLETA_AUT_OU_CARTAO :
-      begin
-        sBufEntrAux := 'Digite o numero do cartao:';
-      end;
-
-      // imprime Cheque
-      SCO_IMPRIME_CHEQUE:
-      begin
-        //// P/ indicarmos p/ a funcao execFormAux exibir esse texto no memo
-        //// de exibicao
-        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
-        //sBufEntrAux := ObtemDadosCupom();
-        //Imprime(sBufEntrAux);
-        DoException('Não Implementado: SCO_IMPRIME_CHEQUE');
-      end;
-
-      // recupera a lista de valores da Recarga de Celular
-      SCO_COLETA_VALOR_RECARGA:
-      begin
-        //sBufEntrAux := ObtemValoresRecarga(PColeta);
-        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
-        //Imprime(sBufEntrAux);
-        DoException('Não Implementado: SCO_COLETA_VALOR_RECARGA');
-      end;
-
-      // recupera a lista de operadoras da Recarga de Celular
-      SCO_COLETA_OPERADORA:
-      begin
-        //sBufEntrAux := ObtemOperadorasRecarga(PColeta);
-        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
-        //Imprime(sBufEntrAux);
-        DoException('Não Implementado: SCO_COLETA_OPERADORA');
-      end;
-
-      // imprime Cupom + Nota Promissoria + Cupom Promocional
-      SCO_IMPRIME_CUPOM,
-      SCO_IMPRIME_CUPOM_PARCIAL, // imprime Cupom Parcial
-      SCO_IMPRIME_CONSULTA: // imprime Consulta
-      begin
-        //{ P/ indicarmos p/ a funcao execFormAux exibir esse texto
-        //no memo de exibicao }
-        //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
-        //sBufEntrAux := ObtemCupons(PColeta);
-        //Imprime(sBufEntrAux);
-        DoException('Não Implementado: SCO_IMPRIME_CXXXX');
-      end;
-
-      // SCOPE aguardando o cartao que foi digitado
-      SCO_CARTAO_DIGITADO:
-      begin
-        // Vamos ver c o usr ja' digitou o texto
-        //sBufEntrAux := frmAuxParallelCtl (2, @bAux);
-        //if bAux = 0 then
-        //begin
-        //  if Length (sBufEntrAux) <> 0 then
-        //  begin
-        //    // O texto ja' esta' em sBufEntrAux
-        //    iAux := 0;  // Proximo estado
-        //    bAux := 1;  // Nao podemos executar a funcao execFormAux
-        //  end
-        //  else
-        //    // O usr teclou 'Cancelar' no PPad
-        //    sBufEntrAux := 'Coleta:';
-        //end;
-        DoException('Não Implementado: SCO_CARTAO_DIGITADO');
-      end;
-
-      // mostra informacao e aguarda confirmacao do usuario
-      SCO_MOSTRA_INFO_RET_SCOPE:
-      begin
-        if Length (sBufEntrAux) = 0 then
-          sBufEntrAux := 'Coleta:';
-        PColeta.HabTeclas := BIT9_ON;
-        iAux := 0; // Garantir o envio da acao PROXIMO ao SCOPE
-      end;
-
-      SCO_COLETA_EM_ANDAMENTO:
-      begin
-        bAux := 1
-      end;
-
-      // Todos os outros estados nao tratados
-      else
-      begin
-        if Length (sBufEntrAux) = 0 then
-          sBufEntrAux := 'Coleta:';
-      end;
-    end;
-
-    // Exibe as msgs retornadas pelo SCOPE
-    if (bAux <> 1) then
-    begin
-      //iSinc := iSinc and not (ACAO_PROX + ACAO_ANTER + ACAO_CANCELAR);
-      //Chama Form para usuário.
-      //sBufEntrAux := execFormAux ( TrimRight ( string (PColeta.MsgOp1) ),
-      //                          TrimRight ( string (PColeta.MsgOp2) ),
-      //                          TrimRight ( string (PColeta.MsgCl1) ),
-      //                          TrimRight ( string (PColeta.MsgCl2) ),
-      //                          sBufEntrAux,
-      //                          PColeta.HabTeclas);
-      ExibirMensagem(TrimRight(string(PColeta.MsgOp1))+ TrimRight(string(PColeta.MsgOp2))+
-                     TrimRight(string(PColeta.MsgCl1))+ TrimRight(string(PColeta.MsgCl2)) );
-      // Em qual botao o usr clicou?
-      // Proximo
-      //if (iSinc and ACAO_PROX) <> 0 then
-      //  iAux := COLETA_PROXIMO_ESTADO
-      //// Anterior
-      //else if (iSinc and ACAO_ANTER) <> 0 then
-      //  iAux := COLETA_ANTERIOR_ESTADO
-      //// Cancelar
-      //else if (iSinc and ACAO_CANCELAR) <> 0 then
-      //  iAux := COLETA_CANCELAR;
-    end;
-
-    //if ( iSinc and (ACAO_PROX + ACAO_ANTER + ACAO_CANCELAR) = 0 ) then
-      //sBufEntrAux := '';
-
-    iRet := xScopeResumeParam(iRet, PAnsiChar(AnsiString(sBufEntrAux)), SCO_TECLADO, iAux);
-
-    if (iRet <> SCO_SUCESSO) then
-    begin
-      iAux := xScopeGetLastMsg (@PColetaMsg);
-      if (iAux <> SCO_SUCESSO) then
-      begin
-      //E
-        //MostramensagemErro
-        //showMensagemErro('Erro ao obter mensagens', iRet);
-        //Application.MessageBox(PWideChar('ERRO NO ScopeGetLastMsg() = ' + IntToStr(iRet)), 'TEF', MB_OK);
-      end;
-
-      // Se o erro for de dado invalido, vamos permitir o usuario tentar novamente
-      if (iRet <> SCO_DADO_INVALIDO) then
-        Break
-      else
-        Continue;
-
-      //E
-      //Nunca Chega aqui!!! Código desnecessário.
-      //execFormAux ( TrimRight ( string (PColeta.MsgOp1) ),
-      //              TrimRight ( string (PColeta.MsgOp2) ),
-      //              TrimRight ( string (PColeta.MsgCl1) ),
-      //              TrimRight ( string (PColeta.MsgCl2) ),
-      //              'Coleta:',
-      //              2);
-    end;
-
-
-  until ((iRet < SCO_PRIMEIRO_COLETA_DADOS) and
-            (iRet > SCO_ULTIMO_COLETA_DADOS));
-
-  //fEnd:
-
-  //sBufEntrAux := execFormAux ('Confirmar essa transacao? (1/0)',
-                                      //'', '', '', 'Opcao', 2);
-
-  //if ((Length(sBufEntrAux) = 0) or (StrToInt (sBufEntrAux) <> 0)) then
-  //  bAux := SCO_CONFIRMA_TEF
-  //else
-  //  bAux := SCO_DESFAZ_TEF;
-  //FechaSessaoTEF (bAux);
-
-  //Result := iRet;
-
-
+  if HandleTransacao <= $FFFF then
+  begin
+    //TratarErroScope(HandleTransacao);
+    DoException('Erro ScopeObtemHandle: '+ IntToStr(HandleTransacao));
+  end;
+  ValorCampo := PegaCampoMascara1(HandleTransacao, NSU_transacao);
+  //AData := BinaryStringToString(AnsiString(pszData));
+  //GravarLog('  '+Format('%s=%s', [InfoStr, AData]));
+  fDadosTransacao.Add(Format('%d=%s', [NSU_transacao, ValorCampo]));
+  //O cmapo NSU_transacao tem o mesmo valor de Dados_Parcelado_Cetelem mas são campos de mascaras diferentes;
+  //Talvez usar isso como índice para o Value como abaixo??
+  //fDadosTransacao.Add(Format('%d=%s', ['Mask1'+NSU_transacao, ValorCampo]));
 
 end;
 
@@ -1732,3 +2107,178 @@ end;
 
 end.
 
+
+(*Verificar Daniel
+// Guardar os bits q ligamos nos passos anteriores
+iAux := PColeta.HabTeclas;
+// Obtem dados do Scope e exibe as mensagens do cliente e operador
+ret := xScopeGetParam(status, @PColeta);
+// Restaurar os bits armazenados anteriormente
+PColeta.HabTeclas := PColeta.HabTeclas or iAux;
+
+// Tratamento dos estados
+case ret of
+  SCO_COLETAR_CARTAO, SCO_COLETAR_AUTORIZ_OU_CARTAO :
+  begin
+    sBufEntrAux := 'Digite o numero do cartao:';
+  end;
+
+  // imprime Cheque
+  SCO_IMPRIME_CHEQUE:
+  begin
+    //// P/ indicarmos p/ a funcao execFormAux exibir esse texto no memo
+    //// de exibicao
+    //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+    //sBufEntrAux := ObtemDadosCupom();
+    //Imprime(sBufEntrAux);
+    DoException('Não Implementado: SCO_IMPRIME_CHEQUE');
+  end;
+
+  // recupera a lista de valores da Recarga de Celular
+  SCO_COLETA_VALOR_RECARGA:
+  begin
+    //sBufEntrAux := ObtemValoresRecarga(PColeta);
+    //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+    //Imprime(sBufEntrAux);
+    DoException('Não Implementado: SCO_COLETA_VALOR_RECARGA');
+  end;
+
+  // recupera a lista de operadoras da Recarga de Celular
+  SCO_COLETA_OPERADORA:
+  begin
+    //sBufEntrAux := ObtemOperadorasRecarga(PColeta);
+    //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+    //Imprime(sBufEntrAux);
+    DoException('Não Implementado: SCO_COLETA_OPERADORA');
+  end;
+
+  // imprime Cupom + Nota Promissoria + Cupom Promocional
+  SCO_IMPRIME_CUPOM,
+  SCO_IMPRIME_CUPOM_PARCIAL, // imprime Cupom Parcial
+  SCO_IMPRIME_CONSULTA: // imprime Consulta
+  begin
+    //{ P/ indicarmos p/ a funcao execFormAux exibir esse texto
+    //no memo de exibicao }
+    //PColeta.HabTeclas := PColeta.HabTeclas or BIT7_ON;
+    //sBufEntrAux := ObtemCupons(PColeta);
+    //Imprime(sBufEntrAux);
+    DoException('Não Implementado: SCO_IMPRIME_CXXXX');
+  end;
+
+  // SCOPE aguardando o cartao que foi digitado
+  SCO_CARTAO_DIGITADO:
+  begin
+    // Vamos ver c o usr ja' digitou o texto
+    //sBufEntrAux := frmAuxParallelCtl (2, @bAux);
+    //if bAux = 0 then
+    //begin
+    //  if Length (sBufEntrAux) <> 0 then
+    //  begin
+    //    // O texto ja' esta' em sBufEntrAux
+    //    iAux := 0;  // Proximo estado
+    //    bAux := 1;  // Nao podemos executar a funcao execFormAux
+    //  end
+    //  else
+    //    // O usr teclou 'Cancelar' no PPad
+    //    sBufEntrAux := 'Coleta:';
+    //end;
+    DoException('Não Implementado: SCO_CARTAO_DIGITADO');
+  end;
+
+  // mostra informacao e aguarda confirmacao do usuario
+  SCO_MOSTRA_INFO_RET_SCOPE:
+  begin
+    if Length (sBufEntrAux) = 0 then
+      sBufEntrAux := 'Coleta:';
+    PColeta.HabTeclas := BIT9_ON;
+    iAux := 0; // Garantir o envio da acao PROXIMO ao SCOPE
+  end;
+
+  SCO_COLETA_EM_ANDAMENTO:
+  begin
+    bAux := 1
+  end;
+
+  // Todos os outros estados nao tratados
+  else
+  begin
+    if Length (sBufEntrAux) = 0 then
+      sBufEntrAux := 'Coleta:';
+  end;
+end;
+
+// Exibe as msgs retornadas pelo SCOPE
+if (bAux <> 1) then
+begin
+  //iSinc := iSinc and not (ACAO_PROX + ACAO_ANTER + ACAO_CANCELAR);
+  //Chama Form para usuário.
+  //sBufEntrAux := execFormAux ( TrimRight ( string (PColeta.MsgOp1) ),
+  //                          TrimRight ( string (PColeta.MsgOp2) ),
+  //                          TrimRight ( string (PColeta.MsgCl1) ),
+  //                          TrimRight ( string (PColeta.MsgCl2) ),
+  //                          sBufEntrAux,
+  //                          PColeta.HabTeclas);
+  ExibirMensagem(TrimRight(string(PColeta.MsgOp1))+ TrimRight(string(PColeta.MsgOp2))+
+                 TrimRight(string(PColeta.MsgCl1))+ TrimRight(string(PColeta.MsgCl2)) );
+  // Em qual botao o usr clicou?
+  // Proximo
+  //if (iSinc and ACAO_PROX) <> 0 then
+  //  iAux := COLETA_PROXIMO_ESTADO
+  //// Anterior
+  //else if (iSinc and ACAO_ANTER) <> 0 then
+  //  iAux := COLETA_ANTERIOR_ESTADO
+  //// Cancelar
+  //else if (iSinc and ACAO_CANCELAR) <> 0 then
+  //  iAux := COLETA_CANCELAR;
+end;
+
+//if ( iSinc and (ACAO_PROX + ACAO_ANTER + ACAO_CANCELAR) = 0 ) then
+  //sBufEntrAux := '';
+
+iRet := xScopeResumeParam(iRet, PAnsiChar(AnsiString(sBufEntrAux)), SCO_TECLADO, iAux);
+
+if (iRet <> SCO_SUCESSO) then
+begin
+  iAux := xScopeGetLastMsg (@PColetaMsg);
+  if (iAux <> SCO_SUCESSO) then
+  begin
+  //E
+    //MostramensagemErro
+    //showMensagemErro('Erro ao obter mensagens', iRet);
+    //Application.MessageBox(PWideChar('ERRO NO ScopeGetLastMsg() = ' + IntToStr(iRet)), 'TEF', MB_OK);
+  end;
+
+  // Se o erro for de dado invalido, vamos permitir o usuario tentar novamente
+  if (iRet <> SCO_DADO_INVALIDO) then
+    Break
+  else
+    Continue;
+
+  //E
+  //Nunca Chega aqui!!! Código desnecessário.
+  //execFormAux ( TrimRight ( string (PColeta.MsgOp1) ),
+  //              TrimRight ( string (PColeta.MsgOp2) ),
+  //              TrimRight ( string (PColeta.MsgCl1) ),
+  //              TrimRight ( string (PColeta.MsgCl2) ),
+  //              'Coleta:',
+  //              2);
+end;
+
+
+until ((iRet < SCO_PRIMEIRO_COLETA_DADOS) and
+        (iRet > SCO_ULTIMO_COLETA_DADOS));
+
+//fEnd:
+
+//sBufEntrAux := execFormAux ('Confirmar essa transacao? (1/0)',
+                                  //'', '', '', 'Opcao', 2);
+
+//if ((Length(sBufEntrAux) = 0) or (StrToInt (sBufEntrAux) <> 0)) then
+//  bAux := SCO_CONFIRMA_TEF
+//else
+//  bAux := SCO_DESFAZ_TEF;
+//FechaSessaoTEF (bAux);
+
+//Result := iRet;
+
+*)

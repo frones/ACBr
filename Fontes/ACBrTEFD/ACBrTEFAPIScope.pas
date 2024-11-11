@@ -61,7 +61,8 @@ type
     fTEFScopeAPI: TACBrTEFScopeAPI;
 
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-    procedure QuandoExibirMensagemAPI( Mensagem: String; MilissegundosExibicao: Integer);
+    procedure QuandoExibirMensagemAPI( Mensagem: String;
+       Terminal: TACBrTEFScopeTerminalMensagem; MilissegundosExibicao: Integer);
 
     procedure SetDiretorioTrabalho(const AValue: String);
 
@@ -236,11 +237,20 @@ begin
 end;
 
 procedure TACBrTEFAPIClassScope.QuandoExibirMensagemAPI(Mensagem: String;
-  MilissegundosExibicao: Integer);
+  Terminal: TACBrTEFScopeTerminalMensagem; MilissegundosExibicao: Integer);
+var
+  TelaMsg: TACBrTEFAPITela;
 begin
+  case Terminal of
+    tmOperador: TelaMsg := telaOperador;
+    tmCliente: TelaMsg := telaCliente;
+  else
+    TelaMsg := telaTodas;
+  end;
+
   TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(
     Mensagem,
-    telaOperador,
+    TelaMsg,
     MilissegundosExibicao );
 end;
 
@@ -492,7 +502,7 @@ end;
 
 procedure TACBrTEFAPIClassScope.AbortarTransacaoEmAndamento;
 begin
-  //D fTEFScopeAPI.AbortarTransacao;
+  fTEFScopeAPI.AbortarTransacao;
 end;
 
 procedure TACBrTEFAPIClassScope.ExibirMensagemPinPad(const MsgPinPad: String);

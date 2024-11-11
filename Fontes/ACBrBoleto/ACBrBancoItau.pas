@@ -693,8 +693,8 @@ var
    ATipoCedente, ATipoSacado, ATipoSacadoAvalista, ATipoOcorrencia    :String;
    ADataMoraJuros, ADataDesconto, ATipoAceite    :String;
    ATipoEspecieDoc, ANossoNumero,wLinha,wCarteira :String;
-   wLinhaMulta,LCPFCNPJBeneciciario :String;
-   iSequencia : integer;
+   wLinhaMulta,LCPFCNPJBeneciciario, LTextoMensagem :String;
+   iSequencia, I : integer;
 
 begin
    with ACBrTitulo do
@@ -816,7 +816,7 @@ begin
                    FormatDateTime('ddmmyy', DataDocumento)                                        + // DATA DA EMISSÃO DO TÍTULO
                    PadLeft(trim(ACBrStr(Instrucao1)), 2, '0')                                     + // 1ª INSTRUÇÃO
                    PadLeft(trim(ACBrStr(Instrucao2)), 2, '0')                                     + // 2ª INSTRUÇÃO
-                   IntToStrZero( round(ValorMoraJuros * 100 ), 13)                                + // VALOR DE MORA POR DIA DE ATRASO
+                   IntToStrZero( round(ValorMoraJuros * 100 ), 13)                                + //161-173 VALOR DE MORA POR DIA DE ATRASO
                    ADataDesconto                                                                  + // DATA LIMITE PARA CONCESSÃO DE DESCONTO
                    IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 13),
                    PadLeft('', 13, '0'))                                                          + // VALOR DO DESCONTO A SER CONCEDIDO
@@ -910,6 +910,30 @@ begin
 
                      aRemessa.Add(UpperCase(wLinhaMulta));
                    end;
+
+                  if (Mensagem.Count > 0) then
+                  begin
+                    LTextoMensagem := '';
+                    for I := 0 to Mensagem.Count - 1 do
+                    begin
+                      LTextoMensagem := LTextoMensagem + Trim(Mensagem[I])+' ';
+                    end;
+                    LTextoMensagem := Trim(LTextoMensagem);
+                    wLinha := '7'                                                 + // 001 - 001 - IDENTIFICAÇÃO DO REGISTRO MENSAGEM (FRENTE)
+                              PadRight(copy(Cedente.CodigoFlash,1,3),3)           + // 002 - 004 - CÓDIGO DO FLASH
+                              PadRight('01',2)                                    + // 005 - 006 - NÚMERO DA 1ª LINHA A SER IMPRESSA
+                              PadRight(Copy(LTextoMensagem, 1, 128),128)          + // 007 - 134 - CONTEÚDO DA LINHA 1
+                              PadRight('02',2)                                    + // 135 - 136 - NÚMERO DA 2ª LINHA A SER IMPRESSA
+                              PadRight(Copy(LTextoMensagem, 129, 128),128)        + // 137 - 264 - CONTEÚDO DA LINHA 2
+                              PadRight('03',2)                                    + // 265 - 266 - NÚMERO DA 2ª LINHA A SER IMPRESSA
+                              PadRight(Copy(LTextoMensagem, 257, 127),127)        + // 267 - 393 - NÚMERO DA 3ª LINHA A SER IMPRESSA
+                              IfThen(Cedente.ResponEmissao=tbBancoEmite,'1','0')  + // 394 - 394 - IDENTIFICA O DESTINO DO BOLETO
+                              IntToStrZero(ARemessa.Count + 1, 6);               // 395 a 400 - Número sequencial do registro
+                    iSequencia := aRemessa.Count + 1;
+                    ARemessa.Add(UpperCase(wLinha));
+                  end;
+
+
         end;
     end;
   end;

@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2024
+-- ACBrBancoItau.pas --
+[*] TK-6052 - add segmento 7 conforme manual de msg que o usuario nos enviou
+	https://www.projetoacbr.com.br/forum/topic/80019-desabilitar-mensagem-padr%C3%A3o-para-carteira-112-banco-ita%C3%BA-cnab400-n%C3%A3o-esta-sendo-aceita/
+	http://svn.code.sf.net/p/acbr/code/tools/Bancos/341-Itau/cobranca_cnab400_mensagem.pdf
+	por Daniel de Morais InfoCotidiano
+
 07/11/2024
 -- ACBrBoletoRet_BancoBrasil_API --
 [-] Correção de AV

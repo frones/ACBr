@@ -71,8 +71,12 @@ type
     function PrepararRps(const aXml: string): string;
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
+
     procedure GerarMsgDadosConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
+
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
   end;
@@ -93,11 +97,11 @@ procedure TACBrNFSeProviderGiss204.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.Identificador := '';
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
   with ConfigAssinar do
   begin
+    Rps := True;
     LoteRps := True;
     ConsultarLote := True;
     ConsultarNFSeRps := True;
@@ -107,22 +111,20 @@ begin
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     SubstituirNFSe := True;
-
-    IncluirURI := False;
   end;
 
   with ConfigWebServices do
   begin
-    VersaoDados := '1.00';
-    VersaoAtrib := '1.00';
+    VersaoDados := '2.04';
+    VersaoAtrib := '2.04';
   end;
 
   with ConfigMsgDados do
   begin
     GerarPrestadorLoteRps := True;
 
-    Prefixo := 'ns3';
-    PrefixoTS := 'ns4';
+//    Prefixo := 'ns3';
+//    PrefixoTS := 'ns4';
 
     XmlRps.xmlns := 'http://www.giss.com.br/tipos-v2_04.xsd';
 
@@ -163,6 +165,7 @@ begin
     GerarNFSe := 'gerar-nfse-envio-v2_04.xsd';
     RecepcionarSincrono := 'enviar-lote-rps-sincrono-envio-v2_04.xsd';
     SubstituirNFSe := 'substituir-nfse-envio-v2_04.xsd';
+
     Validar := False;
   end;
 end;
@@ -427,6 +430,55 @@ begin
     GerarMsgDadosEmitir(Response, aParams);
   finally
     aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderGiss204.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  Prestador: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    if Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono, meTeste] then
+    begin
+      if ConfigMsgDados.GerarPrestadorLoteRps then
+      begin
+        Prestador := '<' + Prefixo2 + 'Prestador xmlns="http://www.giss.com.br/tipos-v2_04.xsd">' +
+                       '<' + Prefixo2 + 'CpfCnpj>' +
+                         GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                       '</' + Prefixo2 + 'CpfCnpj>' +
+                       GetInscMunic(Emitente.InscMun, Prefixo2) +
+                     '</' + Prefixo2 + 'Prestador>'
+      end
+      else
+        Prestador := '<' + Prefixo2 + 'CpfCnpj>' +
+                       GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                     '</' + Prefixo2 + 'CpfCnpj>' +
+                     GetInscMunic(Emitente.InscMun, Prefixo2);
+
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                             '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
+                               '<' + Prefixo2 + 'NumeroLote xmlns="http://www.giss.com.br/tipos-v2_04.xsd">' +
+                                  Response.NumeroLote +
+                               '</' + Prefixo2 + 'NumeroLote>' +
+                               Prestador +
+                               '<' + Prefixo2 + 'QuantidadeRps xmlns="http://www.giss.com.br/tipos-v2_04.xsd">' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</' + Prefixo2 + 'QuantidadeRps>' +
+                               '<' + Prefixo2 + 'ListaRps xmlns="http://www.giss.com.br/tipos-v2_04.xsd">' +
+                                  Xml +
+                               '</' + Prefixo2 + 'ListaRps>' +
+                             '</' + Prefixo + 'LoteRps>' +
+                           '</' + Prefixo + TagEnvio + '>';
+    end
+    else
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                              Xml +
+                           '</' + Prefixo + TagEnvio + '>';
   end;
 end;
 

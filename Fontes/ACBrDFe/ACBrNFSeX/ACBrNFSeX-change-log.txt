@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/11/2024
+-- Giss.GravarXml/Giss.Provider --
+[*] Ajustes para gerar o envio em lote assinando o RPS e o Lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6214: Incluida a cidade de Sede Nova\RS, provedor é o IPM na versão 1.01
    Por: romariorigoli 

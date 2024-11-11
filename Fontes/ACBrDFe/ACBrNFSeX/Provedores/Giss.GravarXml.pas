@@ -71,7 +71,7 @@ begin
 
   TagTomador := 'TomadorServico';
 
-  PrefixoPadrao := 'ns4';
+//  PrefixoPadrao := 'ns4';
 end;
 
 end.

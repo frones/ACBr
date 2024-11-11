@@ -1188,10 +1188,8 @@ begin
   cdsDuplicatas.Close;
   cdsDuplicatas.CreateDataSet;
   if (FDANFEClassOwner is TACBrNFeDANFEClass) and
-     Not ((TACBrNFeDANFEClass(FDANFEClassOwner).ExibeCampoFatura) and
-          (FNFe.Ide.indPag = ipVista) and (FNFe.infNFe.Versao <= 3.10)) then
+     (TACBrNFeDANFEClass(FDANFEClassOwner).ExibeCampoDuplicata) then
   begin
-
     with cdsDuplicatas do
     begin
       for i := 0 to (NFe.Cobr.Dup.Count - 1) do
@@ -1313,7 +1311,6 @@ begin
         Cancel
       else
         Post;
-
     end;
   end;
 end;

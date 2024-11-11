@@ -2255,7 +2255,9 @@ var
   procedure Ler_Secao_InfNFe(const Secao: string; Nivel1, Nivel2: Integer; infNFe: TInfNFeCollection);
   var
     Nivel: string;
+    ValorInicialJ: Integer;
   begin
+    ValorInicialJ := J;
     with infNFe.New do
     begin
       chave := INIRec.ReadString(sSecao,'chave','');
@@ -2358,6 +2360,7 @@ var
         inc(J);
       end;
     end;
+    J := ValorInicialJ;
   end;
 
   procedure Ler_Secao_Cobr(cobr: TCobr);

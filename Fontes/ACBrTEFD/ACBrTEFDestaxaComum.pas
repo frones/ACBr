@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -1117,7 +1117,7 @@ begin
   inherited CarregarCampos(aStrList);
 
   fcodigo_bandeira := CarregarCampoString(aStrList.Values['codigo_bandeira']);
-  estado.Value := CarregarCampoInteger(aStrList.Values['estado']);
+  estado.Value := Max(0, CarregarCampoInteger(aStrList.Values['estado']));
   ftransacao_autorizacao := CarregarCampoString(aStrList.Values['transacao_autorizacao']);
   ftransacao_comprovante_1via.Text := CarregarCampoString(aStrList.Values['transacao_comprovante_1via']);
   ftransacao_comprovante_2via.Text := CarregarCampoString(aStrList.Values['transacao_comprovante_2via']);

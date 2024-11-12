@@ -1,21 +1,19 @@
 object FormPrincipal: TFormPrincipal
   Left = 440
   Top = 146
-  Width = 1126
-  Height = 539
   Caption = 'ACBrTEFAPI - Demo'
+  ClientHeight = 500
+  ClientWidth = 1110
   Color = clBtnFace
   Constraints.MinHeight = 500
   Constraints.MinWidth = 1110
   ParentFont = True
   KeyPreview = True
-  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
-  PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 15
   object Splitter2: TSplitter
     Left = 775
     Top = 0
@@ -44,275 +42,503 @@ object FormPrincipal: TFormPrincipal
       Top = 0
       Width = 775
       Height = 375
-      ActivePage = tsOperacao
+      ActivePage = tsConfiguracao
       Align = alTop
       Constraints.MinHeight = 375
       Images = ImageList1
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configura'#231#227'o'
-        object pConfiguracao: TPanel
+        object PageControl1: TPageControl
           Left = 0
           Top = 0
           Width = 767
-          Height = 346
+          Height = 345
+          ActivePage = tsConfigTEF
           Align = alClient
-          BevelOuter = bvNone
           TabOrder = 0
-          object gbConfigTEF: TGroupBox
-            Left = 0
-            Top = 0
-            Width = 316
-            Height = 346
-            Align = alLeft
-            Caption = 'TEF'
-            TabOrder = 0
-            DesignSize = (
-              316
-              346)
-            object Label11: TLabel
-              Left = 14
-              Top = 74
-              Width = 40
-              Height = 13
-              Alignment = taRightJustify
-              Caption = 'Arq.Log:'
-              Color = clBtnFace
-              ParentColor = False
-            end
-            object SbArqLog: TSpeedButton
-              Left = 126
-              Top = 91
-              Width = 24
-              Height = 22
-              Caption = '...'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'MS Sans Serif'
-              Font.Style = []
-              ParentFont = False
-              OnClick = SbArqLogClick
-            end
-            object Label9: TLabel
-              Left = 168
-              Top = 28
-              Width = 41
-              Height = 13
-              Caption = 'QRCode'
-              Color = clBtnFace
-              ParentColor = False
-            end
-            object Label1: TLabel
-              Left = 9
-              Top = 28
-              Width = 81
-              Height = 13
-              Caption = 'Gerenciador TEF'
-              Color = clBtnFace
-              ParentColor = False
-            end
-            object Label10: TLabel
-              Left = 168
-              Top = 74
-              Width = 88
-              Height = 13
-              Caption = 'Imprimir Via Cliente'
-              Color = clBtnFace
-              ParentColor = False
-            end
-            object Label12: TLabel
-              Left = 9
-              Top = 120
-              Width = 100
-              Height = 13
-              Caption = 'Transa'#231#227'o Pendente'
-              Color = clBtnFace
-              ParentColor = False
-            end
-            object Label18: TLabel
-              Left = 168
-              Top = 120
-              Width = 127
-              Height = 13
-              Caption = 'Pendencia na Inicializa'#231#227'o'
-              Color = clBtnFace
-              ParentColor = False
-            end
-            object cbSuportaDesconto: TCheckBox
-              Left = 195
-              Top = 172
-              Width = 114
-              Height = 19
-              Caption = 'Suporta Desconto'
-              TabOrder = 9
-            end
-            object cbSuportaSaque: TCheckBox
-              Left = 195
-              Top = 197
-              Width = 96
-              Height = 19
-              Caption = 'Suporta Saque'
-              TabOrder = 10
-            end
-            object cbImprimirViaReduzida: TCheckBox
-              Left = 9
-              Top = 195
-              Width = 136
-              Height = 19
-              Caption = 'Imprimir Via Reduzida'
-              TabOrder = 7
-            end
-            object edLog: TEdit
-              Left = 9
-              Top = 90
-              Width = 117
-              Height = 21
-              Cursor = crIBeam
-              TabOrder = 2
-            end
-            object btTestarTEF: TBitBtn
-              Left = 110
-              Top = 238
-              Width = 117
-              Height = 36
-              Anchors = [akLeft, akBottom]
-              Caption = 'Testar TEF'
-              TabOrder = 11
-              OnClick = btTestarTEFClick
-            end
-            object cbxQRCode: TComboBox
-              Left = 168
-              Top = 44
-              Width = 135
-              Height = 21
-              Style = csDropDownList
-              ItemHeight = 13
-              ItemIndex = 1
-              TabOrder = 1
-              Text = 'Auto'
-              Items.Strings = (
-                'N'#227'o Suportado'
-                'Auto'
-                'Exibir no PinPad'
-                'Exibir na Tela'
-                'Imprimir')
-            end
-            object cbConfirmarAutomaticamente: TCheckBox
-              Left = 9
-              Top = 220
-              Width = 229
-              Height = 19
-              Caption = 'Confirmar Transa'#231#227'o Automaticamente'
-              TabOrder = 8
-            end
-            object cbxGP: TComboBox
-              Left = 9
-              Top = 44
-              Width = 141
-              Height = 21
-              Style = csDropDownList
-              ItemHeight = 13
+          object tsConfigTEF: TTabSheet
+            Caption = 'Configura'#231#227'o TEF'
+            object pConfiguracao: TPanel
+              Left = 0
+              Top = 0
+              Width = 759
+              Height = 315
+              Align = alClient
+              BevelOuter = bvNone
               TabOrder = 0
-            end
-            object cbAutoAtendimento: TCheckBox
-              Left = 10
-              Top = 170
-              Width = 182
-              Height = 19
-              Caption = 'Terminal de Auto atendimento'
-              TabOrder = 6
-            end
-            object btSalvarParametros: TBitBtn
-              Left = 14
-              Top = 283
-              Width = 136
-              Height = 28
-              Anchors = [akLeft, akBottom]
-              Caption = 'Salvar Par'#226'metros'
-              TabOrder = 12
-              OnClick = btSalvarParametrosClick
-            end
-            object btLerParametros: TBitBtn
-              Left = 161
-              Top = 283
-              Width = 136
-              Height = 28
-              Anchors = [akLeft, akBottom]
-              Caption = 'Ler Par'#226'metros'
-              TabOrder = 13
-              OnClick = btLerParametrosClick
-            end
-            object cbxImpressaoViaCliente: TComboBox
-              Left = 168
-              Top = 90
-              Width = 135
-              Height = 21
-              Style = csDropDownList
-              ItemHeight = 13
-              ItemIndex = 0
-              TabOrder = 3
-              Text = 'Imprimir'
-              Items.Strings = (
-                'Imprimir'
-                'Perguntar'
-                'N'#227'o Imprimir')
-            end
-            object cbxTransacaoPendente: TComboBox
-              Left = 9
-              Top = 136
-              Width = 141
-              Height = 21
-              Style = csDropDownList
-              ItemHeight = 13
-              ItemIndex = 0
-              TabOrder = 4
-              Text = 'Confirmar'
-              Items.Strings = (
-                'Confirmar'
-                'Estornar'
-                'Perguntar')
-            end
-            object cbxTransacaoPendenteInicializacao: TComboBox
-              Left = 168
-              Top = 136
-              Width = 135
-              Height = 21
-              Style = csDropDownList
-              ItemHeight = 13
-              ItemIndex = 1
-              TabOrder = 5
-              Text = 'Processar Pendentes'
-              Items.Strings = (
-                'N'#227'o Fazer nada'
-                'Processar Pendentes'
-                'Cancelar/Estornar')
+              ExplicitWidth = 767
+              ExplicitHeight = 345
+              object gbConfigTEF: TGroupBox
+                Left = 0
+                Top = 0
+                Width = 316
+                Height = 315
+                Align = alLeft
+                Caption = 'TEF'
+                TabOrder = 0
+                ExplicitHeight = 345
+                DesignSize = (
+                  316
+                  315)
+                object Label11: TLabel
+                  Left = 9
+                  Top = 74
+                  Width = 45
+                  Height = 15
+                  Alignment = taRightJustify
+                  Caption = 'Arq.Log:'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object SbArqLog: TSpeedButton
+                  Left = 126
+                  Top = 91
+                  Width = 24
+                  Height = 22
+                  Caption = '...'
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  OnClick = SbArqLogClick
+                end
+                object Label9: TLabel
+                  Left = 168
+                  Top = 28
+                  Width = 44
+                  Height = 15
+                  Caption = 'QRCode'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object Label1: TLabel
+                  Left = 9
+                  Top = 28
+                  Width = 85
+                  Height = 15
+                  Caption = 'Gerenciador TEF'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object Label10: TLabel
+                  Left = 168
+                  Top = 74
+                  Width = 105
+                  Height = 15
+                  Caption = 'Imprimir Via Cliente'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object Label12: TLabel
+                  Left = 9
+                  Top = 120
+                  Width = 105
+                  Height = 15
+                  Caption = 'Transa'#231#227'o Pendente'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object Label18: TLabel
+                  Left = 168
+                  Top = 120
+                  Width = 138
+                  Height = 15
+                  Caption = 'Pendencia na Inicializa'#231#227'o'
+                  Color = clBtnFace
+                  ParentColor = False
+                end
+                object cbSuportaDesconto: TCheckBox
+                  Left = 195
+                  Top = 172
+                  Width = 114
+                  Height = 19
+                  Caption = 'Suporta Desconto'
+                  TabOrder = 9
+                end
+                object cbSuportaSaque: TCheckBox
+                  Left = 195
+                  Top = 197
+                  Width = 96
+                  Height = 19
+                  Caption = 'Suporta Saque'
+                  TabOrder = 10
+                end
+                object cbImprimirViaReduzida: TCheckBox
+                  Left = 9
+                  Top = 195
+                  Width = 136
+                  Height = 19
+                  Caption = 'Imprimir Via Reduzida'
+                  TabOrder = 7
+                end
+                object edLog: TEdit
+                  Left = 9
+                  Top = 90
+                  Width = 117
+                  Height = 23
+                  Cursor = crIBeam
+                  TabOrder = 2
+                end
+                object btTestarTEF: TBitBtn
+                  Left = 97
+                  Top = 241
+                  Width = 117
+                  Height = 36
+                  Anchors = [akLeft, akBottom]
+                  Caption = 'Testar TEF'
+                  TabOrder = 11
+                  OnClick = btTestarTEFClick
+                end
+                object cbxQRCode: TComboBox
+                  Left = 168
+                  Top = 44
+                  Width = 135
+                  Height = 23
+                  Style = csDropDownList
+                  ItemIndex = 1
+                  TabOrder = 1
+                  Text = 'Auto'
+                  Items.Strings = (
+                    'N'#227'o Suportado'
+                    'Auto'
+                    'Exibir no PinPad'
+                    'Exibir na Tela'
+                    'Imprimir')
+                end
+                object cbConfirmarAutomaticamente: TCheckBox
+                  Left = 9
+                  Top = 220
+                  Width = 229
+                  Height = 19
+                  Caption = 'Confirmar Transa'#231#227'o Automaticamente'
+                  TabOrder = 8
+                end
+                object cbxGP: TComboBox
+                  Left = 9
+                  Top = 44
+                  Width = 141
+                  Height = 23
+                  Style = csDropDownList
+                  TabOrder = 0
+                end
+                object cbAutoAtendimento: TCheckBox
+                  Left = 10
+                  Top = 170
+                  Width = 182
+                  Height = 19
+                  Caption = 'Terminal de Auto atendimento'
+                  TabOrder = 6
+                end
+                object btSalvarParametros: TBitBtn
+                  Left = 14
+                  Top = 283
+                  Width = 136
+                  Height = 28
+                  Anchors = [akLeft, akBottom]
+                  Caption = 'Salvar Par'#226'metros'
+                  TabOrder = 12
+                  OnClick = btSalvarParametrosClick
+                end
+                object btLerParametros: TBitBtn
+                  Left = 161
+                  Top = 283
+                  Width = 136
+                  Height = 28
+                  Anchors = [akLeft, akBottom]
+                  Caption = 'Ler Par'#226'metros'
+                  TabOrder = 13
+                  OnClick = btLerParametrosClick
+                end
+                object cbxImpressaoViaCliente: TComboBox
+                  Left = 168
+                  Top = 90
+                  Width = 135
+                  Height = 23
+                  Style = csDropDownList
+                  ItemIndex = 0
+                  TabOrder = 3
+                  Text = 'Imprimir'
+                  Items.Strings = (
+                    'Imprimir'
+                    'Perguntar'
+                    'N'#227'o Imprimir')
+                end
+                object cbxTransacaoPendente: TComboBox
+                  Left = 9
+                  Top = 136
+                  Width = 141
+                  Height = 23
+                  Style = csDropDownList
+                  ItemIndex = 0
+                  TabOrder = 4
+                  Text = 'Confirmar'
+                  Items.Strings = (
+                    'Confirmar'
+                    'Estornar'
+                    'Perguntar')
+                end
+                object cbxTransacaoPendenteInicializacao: TComboBox
+                  Left = 168
+                  Top = 136
+                  Width = 135
+                  Height = 23
+                  Style = csDropDownList
+                  ItemIndex = 1
+                  TabOrder = 5
+                  Text = 'Processar Pendentes'
+                  Items.Strings = (
+                    'N'#227'o Fazer nada'
+                    'Processar Pendentes'
+                    'Cancelar/Estornar')
+                end
+              end
+              object pConfigImpSwHouseEstab: TPanel
+                Left = 316
+                Top = 0
+                Width = 443
+                Height = 315
+                Align = alClient
+                BevelOuter = bvNone
+                TabOrder = 1
+                object GroupBox1: TGroupBox
+                  Left = 0
+                  Top = 0
+                  Width = 443
+                  Height = 124
+                  Align = alTop
+                  Caption = 'Software House e Aplica'#231#227'o'
+                  TabOrder = 0
+                  DesignSize = (
+                    443
+                    124)
+                  object Label14: TLabel
+                    Left = 24
+                    Top = 19
+                    Width = 33
+                    Height = 15
+                    Caption = 'Nome'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label16: TLabel
+                    Left = 24
+                    Top = 67
+                    Width = 88
+                    Height = 15
+                    Caption = 'Nome Aplica'#231#227'o'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label19: TLabel
+                    Left = 294
+                    Top = 67
+                    Width = 34
+                    Height = 15
+                    Anchors = [akTop, akRight]
+                    Caption = 'Vers'#227'o'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label15: TLabel
+                    Left = 294
+                    Top = 19
+                    Width = 27
+                    Height = 15
+                    Anchors = [akTop, akRight]
+                    Caption = 'CNPJ'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object edRazaoSocialSwHouse: TEdit
+                    Left = 24
+                    Top = 35
+                    Width = 246
+                    Height = 23
+                    Anchors = [akLeft, akTop, akRight]
+                    TabOrder = 0
+                    Text = 'PROJETO ACBR'
+                  end
+                  object edNomeAplicacao: TEdit
+                    Left = 24
+                    Top = 83
+                    Width = 246
+                    Height = 23
+                    Anchors = [akLeft, akTop, akRight]
+                    TabOrder = 2
+                    Text = 'TEFAPIDemo'
+                  end
+                  object edVersaoAplicacao: TEdit
+                    Left = 294
+                    Top = 83
+                    Width = 141
+                    Height = 23
+                    Anchors = [akTop, akRight]
+                    TabOrder = 3
+                    Text = '1.0'
+                  end
+                  object edCNPJSwHouse: TEdit
+                    Left = 294
+                    Top = 35
+                    Width = 141
+                    Height = 23
+                    Anchors = [akTop, akRight]
+                    TabOrder = 1
+                  end
+                end
+                object GroupBox2: TGroupBox
+                  Left = 0
+                  Top = 124
+                  Width = 443
+                  Height = 79
+                  Align = alTop
+                  Caption = 'Estabelecimento Comercial'
+                  TabOrder = 1
+                  ExplicitLeft = 1
+                  DesignSize = (
+                    443
+                    79)
+                  object Label17: TLabel
+                    Left = 24
+                    Top = 20
+                    Width = 65
+                    Height = 15
+                    Caption = 'Raz'#227'o Social'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label21: TLabel
+                    Left = 294
+                    Top = 20
+                    Width = 27
+                    Height = 15
+                    Anchors = [akTop, akRight]
+                    Caption = 'CNPJ'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object edRazaoSocialEstabelecimento: TEdit
+                    Left = 24
+                    Top = 36
+                    Width = 246
+                    Height = 23
+                    Anchors = [akLeft, akTop, akRight]
+                    TabOrder = 0
+                    Text = 'PROJETO ACBR'
+                  end
+                  object edCNPJEstabelecimento: TEdit
+                    Left = 294
+                    Top = 35
+                    Width = 141
+                    Height = 23
+                    Anchors = [akTop, akRight]
+                    TabOrder = 1
+                  end
+                end
+                object gbDadosTerminal: TGroupBox
+                  Left = 0
+                  Top = 203
+                  Width = 443
+                  Height = 117
+                  Align = alTop
+                  Caption = 'Dados Terminal'
+                  TabOrder = 2
+                  ExplicitLeft = 2
+                  ExplicitTop = 251
+                  DesignSize = (
+                    443
+                    117)
+                  object Label8: TLabel
+                    Left = 24
+                    Top = 21
+                    Width = 70
+                    Height = 15
+                    Caption = 'Cod.Terminal'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label20: TLabel
+                    Left = 294
+                    Top = 64
+                    Width = 68
+                    Height = 15
+                    Caption = 'Porta PinPad'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label23: TLabel
+                    Left = 24
+                    Top = 64
+                    Width = 95
+                    Height = 15
+                    Caption = 'Endere'#231'o Servidor'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object Label24: TLabel
+                    Left = 294
+                    Top = 21
+                    Width = 70
+                    Height = 15
+                    Caption = 'Cod.Empresa'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
+                  object edCodTerminal: TEdit
+                    Left = 24
+                    Top = 36
+                    Width = 246
+                    Height = 23
+                    TabOrder = 0
+                  end
+                  object edPortaPinPad: TEdit
+                    Left = 294
+                    Top = 78
+                    Width = 141
+                    Height = 23
+                    TabOrder = 3
+                  end
+                  object edEnderecoServidor: TEdit
+                    Left = 24
+                    Top = 79
+                    Width = 246
+                    Height = 23
+                    Anchors = [akLeft, akTop, akRight]
+                    TabOrder = 2
+                  end
+                  object edCodEmpresa: TEdit
+                    Left = 294
+                    Top = 36
+                    Width = 141
+                    Height = 23
+                    TabOrder = 1
+                  end
+                end
+              end
             end
           end
-          object pConfigImpSwHouseEstab: TPanel
-            Left = 316
-            Top = 0
-            Width = 451
-            Height = 346
-            Align = alClient
-            BevelOuter = bvNone
-            TabOrder = 1
+          object tsConfigImpressora: TTabSheet
+            Caption = 'Impressora'
+            ImageIndex = 1
             object gbConfigImpressora: TGroupBox
               Left = 0
-              Top = 203
-              Width = 451
+              Top = 0
+              Width = 759
               Height = 124
               Align = alTop
               Caption = 'Impressora'
-              TabOrder = 2
+              TabOrder = 0
+              ExplicitTop = 8
               DesignSize = (
-                451
+                759
                 124)
               object Label25: TLabel
                 Left = 171
                 Top = 70
-                Width = 58
-                Height = 13
+                Width = 64
+                Height = 15
                 Caption = 'Linhas Pular'
                 Color = clBtnFace
                 ParentColor = False
@@ -320,8 +546,8 @@ object FormPrincipal: TFormPrincipal
               object Label26: TLabel
                 Left = 93
                 Top = 70
-                Width = 41
-                Height = 13
+                Width = 42
+                Height = 15
                 Caption = 'Espa'#231'os'
                 Color = clBtnFace
                 ParentColor = False
@@ -329,8 +555,8 @@ object FormPrincipal: TFormPrincipal
               object Label27: TLabel
                 Left = 12
                 Top = 70
-                Width = 38
-                Height = 13
+                Width = 43
+                Height = 15
                 Caption = 'Colunas'
                 Color = clBtnFace
                 ParentColor = False
@@ -338,8 +564,8 @@ object FormPrincipal: TFormPrincipal
               object Label28: TLabel
                 Left = 12
                 Top = 19
-                Width = 35
-                Height = 13
+                Width = 41
+                Height = 15
                 Caption = 'Modelo'
                 Color = clBtnFace
                 ParentColor = False
@@ -348,8 +574,8 @@ object FormPrincipal: TFormPrincipal
               object Label7: TLabel
                 Left = 179
                 Top = 19
-                Width = 25
-                Height = 13
+                Width = 28
+                Height = 15
                 Caption = 'Porta'
                 Color = clBtnFace
                 ParentColor = False
@@ -357,8 +583,8 @@ object FormPrincipal: TFormPrincipal
               object Label29: TLabel
                 Left = 251
                 Top = 70
-                Width = 72
-                Height = 13
+                Width = 79
+                Height = 15
                 Caption = 'P'#225'g. de c'#243'digo'
                 Color = clBtnFace
                 ParentColor = False
@@ -384,7 +610,7 @@ object FormPrincipal: TFormPrincipal
                 Left = 171
                 Top = 87
                 Width = 60
-                Height = 22
+                Height = 24
                 MaxValue = 255
                 MinValue = 0
                 TabOrder = 4
@@ -394,7 +620,7 @@ object FormPrincipal: TFormPrincipal
                 Left = 93
                 Top = 87
                 Width = 60
-                Height = 22
+                Height = 24
                 MaxValue = 255
                 MinValue = 0
                 TabOrder = 3
@@ -404,7 +630,7 @@ object FormPrincipal: TFormPrincipal
                 Left = 12
                 Top = 87
                 Width = 60
-                Height = 22
+                Height = 24
                 MaxValue = 999
                 MinValue = 1
                 TabOrder = 2
@@ -414,173 +640,37 @@ object FormPrincipal: TFormPrincipal
                 Left = 12
                 Top = 36
                 Width = 145
-                Height = 21
+                Height = 23
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 0
               end
               object cbxPorta: TComboBox
                 Left = 171
                 Top = 36
-                Width = 151
-                Height = 21
+                Width = 169
+                Height = 23
                 Anchors = [akLeft, akTop, akRight]
-                ItemHeight = 13
                 TabOrder = 1
               end
               object cbxPagCodigo: TComboBox
                 Left = 251
                 Top = 87
                 Width = 89
-                Height = 21
+                Height = 23
                 Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 5
               end
               object btTestarPosPrinter: TBitBtn
-                Left = 383
-                Top = 36
+                Left = 367
+                Top = 29
                 Width = 57
                 Height = 74
                 Anchors = [akTop, akRight]
                 Caption = 'Testar'
+                Layout = blGlyphTop
                 TabOrder = 6
                 OnClick = btTestarPosPrinterClick
-                Layout = blGlyphTop
-              end
-            end
-            object GroupBox1: TGroupBox
-              Left = 0
-              Top = 0
-              Width = 451
-              Height = 124
-              Align = alTop
-              Caption = 'Software House e Aplica'#231#227'o'
-              TabOrder = 0
-              DesignSize = (
-                451
-                124)
-              object Label14: TLabel
-                Left = 24
-                Top = 19
-                Width = 28
-                Height = 13
-                Caption = 'Nome'
-                Color = clBtnFace
-                ParentColor = False
-              end
-              object Label16: TLabel
-                Left = 24
-                Top = 67
-                Width = 78
-                Height = 13
-                Caption = 'Nome Aplica'#231#227'o'
-                Color = clBtnFace
-                ParentColor = False
-              end
-              object Label19: TLabel
-                Left = 294
-                Top = 67
-                Width = 33
-                Height = 13
-                Anchors = [akTop, akRight]
-                Caption = 'Vers'#227'o'
-                Color = clBtnFace
-                ParentColor = False
-              end
-              object Label15: TLabel
-                Left = 294
-                Top = 19
-                Width = 27
-                Height = 13
-                Anchors = [akTop, akRight]
-                Caption = 'CNPJ'
-                Color = clBtnFace
-                ParentColor = False
-              end
-              object edRazaoSocialSwHouse: TEdit
-                Left = 24
-                Top = 35
-                Width = 246
-                Height = 21
-                Anchors = [akLeft, akTop, akRight]
-                TabOrder = 0
-                Text = 'PROJETO ACBR'
-              end
-              object edNomeAplicacao: TEdit
-                Left = 24
-                Top = 83
-                Width = 246
-                Height = 21
-                Anchors = [akLeft, akTop, akRight]
-                TabOrder = 2
-                Text = 'TEFAPIDemo'
-              end
-              object edVersaoAplicacao: TEdit
-                Left = 294
-                Top = 83
-                Width = 141
-                Height = 21
-                Anchors = [akTop, akRight]
-                TabOrder = 3
-                Text = '1.0'
-              end
-              object edCNPJSwHouse: TEdit
-                Left = 294
-                Top = 35
-                Width = 141
-                Height = 21
-                Anchors = [akTop, akRight]
-                TabOrder = 1
-              end
-            end
-            object GroupBox2: TGroupBox
-              Left = 0
-              Top = 124
-              Width = 451
-              Height = 79
-              Align = alTop
-              Caption = 'Estabelecimento Comercial'
-              TabOrder = 1
-              DesignSize = (
-                451
-                79)
-              object Label17: TLabel
-                Left = 24
-                Top = 20
-                Width = 63
-                Height = 13
-                Caption = 'Raz'#227'o Social'
-                Color = clBtnFace
-                ParentColor = False
-              end
-              object Label21: TLabel
-                Left = 294
-                Top = 20
-                Width = 27
-                Height = 13
-                Anchors = [akTop, akRight]
-                Caption = 'CNPJ'
-                Color = clBtnFace
-                ParentColor = False
-              end
-              object edRazaoSocialEstabelecimento: TEdit
-                Left = 24
-                Top = 36
-                Width = 246
-                Height = 21
-                Anchors = [akLeft, akTop, akRight]
-                TabOrder = 0
-                Text = 'PROJETO ACBR'
-              end
-              object edCNPJEstabelecimento: TEdit
-                Left = 294
-                Top = 35
-                Width = 141
-                Height = 21
-                Anchors = [akTop, akRight]
-                TabOrder = 1
               end
             end
           end
@@ -593,14 +683,15 @@ object FormPrincipal: TFormPrincipal
           Left = 762
           Top = 0
           Width = 5
-          Height = 346
+          Height = 345
           Align = alRight
+          ExplicitHeight = 346
         end
         object pOperacao: TPanel
           Left = 0
           Top = 0
           Width = 762
-          Height = 346
+          Height = 345
           Align = alClient
           BevelOuter = bvNone
           Constraints.MinWidth = 460
@@ -619,8 +710,8 @@ object FormPrincipal: TFormPrincipal
             object Label2: TLabel
               Left = 25
               Top = 24
-              Width = 54
-              Height = 13
+              Width = 60
+              Height = 15
               Caption = 'Valor Inicial'
               Color = clBtnFace
               ParentColor = False
@@ -628,8 +719,8 @@ object FormPrincipal: TFormPrincipal
             object Label3: TLabel
               Left = 136
               Top = 24
-              Width = 46
-              Height = 13
+              Width = 50
+              Height = 15
               Caption = 'Desconto'
               Color = clBtnFace
               ParentColor = False
@@ -637,8 +728,8 @@ object FormPrincipal: TFormPrincipal
             object Label4: TLabel
               Left = 248
               Top = 24
-              Width = 49
-              Height = 13
+              Width = 56
+              Height = 15
               Caption = 'Acr'#233'scimo'
               Color = clBtnFace
               ParentColor = False
@@ -646,8 +737,8 @@ object FormPrincipal: TFormPrincipal
             object Label5: TLabel
               Left = 25
               Top = 80
-              Width = 89
-              Height = 13
+              Width = 81
+              Height = 14
               Caption = 'Total Opera'#231#227'o'
               Color = clBtnFace
               Font.Charset = DEFAULT_CHARSET
@@ -661,8 +752,8 @@ object FormPrincipal: TFormPrincipal
             object Label6: TLabel
               Left = 136
               Top = 80
-              Width = 63
-              Height = 13
+              Width = 56
+              Height = 14
               Caption = 'Total Pago'
               Color = clBtnFace
               Font.Charset = DEFAULT_CHARSET
@@ -676,8 +767,8 @@ object FormPrincipal: TFormPrincipal
             object Label13: TLabel
               Left = 248
               Top = 80
-              Width = 34
-              Height = 13
+              Width = 31
+              Height = 14
               Caption = 'Troco'
               Color = clBtnFace
               Font.Charset = DEFAULT_CHARSET
@@ -803,7 +894,7 @@ object FormPrincipal: TFormPrincipal
               Left = 24
               Top = 40
               Width = 89
-              Height = 21
+              Height = 23
               TabOrder = 0
               OnChange = seValorInicialVendaChange
               OnKeyPress = seValorInicialVendaKeyPress
@@ -812,7 +903,7 @@ object FormPrincipal: TFormPrincipal
               Left = 136
               Top = 40
               Width = 89
-              Height = 21
+              Height = 23
               TabOrder = 1
               OnChange = seTotalDescontoChange
               OnKeyPress = seValorInicialVendaKeyPress
@@ -821,7 +912,7 @@ object FormPrincipal: TFormPrincipal
               Left = 248
               Top = 40
               Width = 89
-              Height = 21
+              Height = 23
               TabOrder = 2
               OnChange = seTotalAcrescimoChange
               OnKeyPress = seValorInicialVendaKeyPress
@@ -831,15 +922,15 @@ object FormPrincipal: TFormPrincipal
             Left = 0
             Top = 186
             Width = 762
-            Height = 160
+            Height = 159
             Align = alClient
             Caption = 'Pagamentos'
             TabOrder = 1
             object sgPagamentos: TStringGrid
               Left = 2
-              Top = 15
+              Top = 17
               Width = 652
-              Height = 143
+              Height = 140
               Align = alClient
               ColCount = 7
               DefaultColWidth = 30
@@ -850,15 +941,15 @@ object FormPrincipal: TFormPrincipal
             end
             object pBotoesPagamentos: TPanel
               Left = 654
-              Top = 15
+              Top = 17
               Width = 106
-              Height = 143
+              Height = 140
               Align = alRight
               BevelOuter = bvNone
               TabOrder = 1
               DesignSize = (
                 106
-                143)
+                140)
               object btIncluirPagamentos: TBitBtn
                 Left = 8
                 Top = 16
@@ -910,9 +1001,9 @@ object FormPrincipal: TFormPrincipal
             ParentFont = False
             TabOrder = 2
             object lNumOperacao: TLabel
-              Left = 673
+              Left = 680
               Top = 4
-              Width = 85
+              Width = 78
               Height = 42
               Align = alRight
               Caption = '000000'
@@ -920,6 +1011,8 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
               Layout = tlCenter
               Visible = False
+              ExplicitLeft = 673
+              ExplicitHeight = 29
             end
             object btOperacao: TBitBtn
               Left = 8
@@ -980,9 +1073,9 @@ object FormPrincipal: TFormPrincipal
     TabOrder = 0
     object lSaidaImpressao: TLabel
       Left = 0
-      Top = 213
+      Top = 212
       Width = 330
-      Height = 20
+      Height = 18
       Align = alTop
       Alignment = taCenter
       Caption = 'Sa'#237'da de Impress'#227'o'
@@ -994,12 +1087,14 @@ object FormPrincipal: TFormPrincipal
       Font.Style = []
       ParentColor = False
       ParentFont = False
+      ExplicitTop = 213
+      ExplicitWidth = 140
     end
     object lURLTEF: TLabel
       Left = 0
       Top = 0
       Width = 330
-      Height = 20
+      Height = 19
       Cursor = crHandPoint
       Align = alTop
       Alignment = taCenter
@@ -1014,12 +1109,13 @@ object FormPrincipal: TFormPrincipal
       ParentFont = False
       Transparent = False
       OnClick = lURLTEFClick
+      ExplicitWidth = 167
     end
     object mImpressao: TMemo
       Left = 0
-      Top = 233
+      Top = 230
       Width = 330
-      Height = 79
+      Height = 82
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -1050,14 +1146,14 @@ object FormPrincipal: TFormPrincipal
         Height = 52
         Anchors = [akTop]
         Caption = 'Opera'#231'oes'
+        Layout = blGlyphTop
         TabOrder = 0
         OnClick = btMudaPaginaClick
-        Layout = blGlyphTop
       end
     end
     object pMensagem: TPanel
       Left = 0
-      Top = 20
+      Top = 19
       Width = 330
       Height = 193
       Align = alTop
@@ -1085,7 +1181,7 @@ object FormPrincipal: TFormPrincipal
           Left = 1
           Top = 1
           Width = 316
-          Height = 13
+          Height = 14
           Align = alTop
           Caption = 'Mensagem Operador'
           Color = clBtnFace
@@ -1096,12 +1192,13 @@ object FormPrincipal: TFormPrincipal
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+          ExplicitWidth = 117
         end
         object lMensagemOperador: TLabel
           Left = 1
-          Top = 14
+          Top = 15
           Width = 316
-          Height = 55
+          Height = 54
           Align = alClient
           Alignment = taCenter
           Caption = 'lMensagemOperador'
@@ -1109,6 +1206,9 @@ object FormPrincipal: TFormPrincipal
           ParentColor = False
           Layout = tlCenter
           WordWrap = True
+          ExplicitTop = 14
+          ExplicitWidth = 159
+          ExplicitHeight = 19
         end
       end
       object pMensagemCliente: TPanel
@@ -1123,7 +1223,7 @@ object FormPrincipal: TFormPrincipal
           Left = 1
           Top = 1
           Width = 316
-          Height = 13
+          Height = 14
           Align = alTop
           Caption = 'Mensagem Cliente'
           Color = clBtnFace
@@ -1134,12 +1234,13 @@ object FormPrincipal: TFormPrincipal
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+          ExplicitWidth = 104
         end
         object lMensagemCliente: TLabel
           Left = 1
-          Top = 14
+          Top = 15
           Width = 316
-          Height = 96
+          Height = 95
           Align = alClient
           Alignment = taCenter
           Caption = 'lMensagemCliente'
@@ -1147,6 +1248,9 @@ object FormPrincipal: TFormPrincipal
           ParentColor = False
           Layout = tlCenter
           WordWrap = True
+          ExplicitTop = 14
+          ExplicitWidth = 140
+          ExplicitHeight = 19
         end
       end
     end

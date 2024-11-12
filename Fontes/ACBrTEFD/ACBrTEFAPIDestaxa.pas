@@ -169,9 +169,12 @@ begin
     fDestaxaClient.OnExibirMensagem := QuandoExibirMensagemAPI;
     fDestaxaClient.OnAguardarResposta := TACBrTEFAPI(fpACBrTEFAPI).QuandoEsperarOperacao;
 
-    p := Pos(':', fpACBrTEFAPI.DadosTerminal.EnderecoServidor);
-    fDestaxaClient.EnderecoIP := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, 1, p-1);
-    fDestaxaClient.Porta := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, p+1, Length(fpACBrTEFAPI.DadosTerminal.EnderecoServidor));
+    if NaoEstaVazio(fpACBrTEFAPI.DadosTerminal.EnderecoServidor) then
+    begin
+      p := Pos(':', fpACBrTEFAPI.DadosTerminal.EnderecoServidor);
+      fDestaxaClient.EnderecoIP := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, 1, p-1);
+      fDestaxaClient.Porta := Copy(fpACBrTEFAPI.DadosTerminal.EnderecoServidor, p+1, Length(fpACBrTEFAPI.DadosTerminal.EnderecoServidor));
+    end;
   end;
   Result := fDestaxaClient;
 end;

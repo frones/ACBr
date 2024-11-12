@@ -612,7 +612,7 @@ begin
   begin
     Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Pedido>' +
-                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + NameSpace2 + '>' +
+                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr{ + NameSpace2} + '>' +
                                '<' + Prefixo2 + 'IdentificacaoNfse>' +
                                  '<' + Prefixo2 + 'Numero>' +
                                     InfoCanc.NumeroNFSe +

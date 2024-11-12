@@ -346,7 +346,7 @@ begin
      wLinha:= '3'                                                                     + // 001 - 001 Identificação do registro
         PadRight(ACBrTitulo.Sacado.Email, 50, ' ')                                    + // 002 - 051 E-mail do Pagador
         Space(10)                                                                     + // 052 - 061 Campo em branco
-        PadLeft(ATipoSacado, 2, '0')                                                  + // 062 - 063 Tipo de documento Beneficiário Final
+        IfThen(ACBrTitulo.Sacado.SacadoAvalista.Pessoa=pFisica,'01','02')             + // 062 - 063 Tipo de documento Beneficiário Final
         PadLeft(OnlyNumber(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF), 14, '0')        + // 064 - 077 CPF/CNPJ do Beneficiário Final
         PadLeft(TiraAcentos(ACBrTitulo.Sacado.SacadoAvalista.NomeAvalista), 60, ' ')  + // 078 - 137 Nome do Beneficiário Final
         PadRight(RemoverEspacosDuplos( TiraAcentos( ACBrTitulo.Sacado.SacadoAvalista.Logradouro
@@ -363,7 +363,6 @@ begin
         space(10)                                                                     + // 288 - 297 Conta + DV (Campo não obrigatório)
         space(97)                                                                     + // 298 - 394 Campo em branco
         IntToStrZero(iSequencia , 6);
-
 
         aRemessa.Add(UpperCase(wLinha));
   end;

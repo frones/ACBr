@@ -46,6 +46,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2024
+-- ACBrTEFDestaxaComum --
+[-] Ajuste para utilização em Delphi
+
+-- ACBrTEFAPIDestaxa --
+[*] Ajuste para utilizar endereço IP e porta padrão, caso não informado no componente
+    por: Elias César
+
 11/11/2024
 -- ACBrTEFDestaxaComum, ACBrTEFAPIDestaxa --
 [*] Ajustes no controle do Sequencial;

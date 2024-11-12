@@ -645,7 +645,7 @@ function StringToDestaxaFinanciado(const aString: String): TACBrTEFDestaxaFinanc
 implementation
 
 uses
-  ACBrTEFAPIComum,
+  ACBrTEFAPIComum, Math,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   ACBrUtil.Base;

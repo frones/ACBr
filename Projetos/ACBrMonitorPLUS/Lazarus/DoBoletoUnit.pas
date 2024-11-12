@@ -433,7 +433,7 @@ begin
             Titulos[I] := Titulo;
           end;
 
-          fpCmd.Resposta := TACBrObjectSerializer.Gerar<TRetornoRegistroWeb>(Titulos, TpResp, codUTF8);
+          fpCmd.Resposta := GerarResposta<TRetornoRegistroWeb>(Titulos);
         finally
           for I:= 0 to High(Titulos) do
           begin
@@ -1276,7 +1276,7 @@ begin
             Titulos[I] := Titulo;
           end;
 
-          fpCmd.Resposta := TACBrObjectSerializer.Gerar<TRetornoRegistroWeb>(Titulos, TpResp, codUTF8);
+          fpCmd.Resposta := GerarResposta<TRetornoRegistroWeb>(Titulos);
         finally
           for I:= 0 to High(Titulos) do
           begin

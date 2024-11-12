@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2024
+-- ACBrBancoAilos.pas --
+[*] TK-6127 - Criado Registro Detalhe - Segmento S Para tipo de impressão 3 conforme novo manual.
+	https://www.projetoacbr.com.br/forum/topic/80213-remessa-cnab-240-ailoscecred-n%C3%A3o-gera-segmento-s-e-a-multa-n%C3%A3o-vai-em-percentual/
+	http://svn.code.sf.net/p/acbr/code/tools/Bancos/085-Cecred-Ailos/CNAB240_V08_JANEIRO_2023.pdf
+	por Daniel de Morais InfoCotidiano
+
 11/11/2024
 -- ACBrBoleto.pas --
 [*] TK-6052 - Criado a propriedade Cedente p Flash

@@ -232,8 +232,7 @@ begin
       GravarCampo(Favorecido.ContaCorrente.Conta.DV, 1, tcStr);
       GravarCampo(' ', 1, tcStr);
       GravarCampo(Favorecido.Nome, 30, tcStr, True);
-      GravarCampo(Credito.SeuNumero, 16, tcStr);
-      GravarCampo(' ', 4, tcStr);
+      GravarCampo(Credito.SeuNumero, 20, tcStr);
       GravarCampo(Credito.DataPagamento, 8, tcDat);
       GravarCampo(TpMoedaToStr(Credito.Moeda.Tipo), 3, tcStr);
       GravarCampo(0, 15, tcDe5);

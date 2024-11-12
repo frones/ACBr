@@ -6389,6 +6389,7 @@ begin
 
   wIni := TMemIniFile.Create('');
   try
+    Clear;
     LerIniArquivoOuString(aIniStr, wIni);
     wSecao := 'SolicitarRetirada';
     LoadFromMemIni(wIni, wSecao, EmptyStr);
@@ -7726,8 +7727,8 @@ begin
 
   wIni := TMemIniFile.Create('');
   try
+    Clear;
     LerIniArquivoOuString(aIniStr, wIni);
-
     wSecao := 'SolicitarDevolucao';
     LoadFromMemIni(wIni, wSecao, EmptyStr);
     Result := True;
@@ -10029,6 +10030,7 @@ begin
 
   wIni := TMemIniFile.Create('');
   try
+    Clear;
     LerIniArquivoOuString(aIniStr, wIni);
     wSecao := 'IncluirQRCode';
     LoadFromMemIni(wIni, wSecao, EmptyStr);
@@ -10611,6 +10613,7 @@ begin
 
   wIni := TMemIniFile.Create('');
   try
+    Clear;
     LerIniArquivoOuString(aIniStr, wIni);
     wSecao := 'IncluirConta';
     LoadFromMemIni(wIni, wSecao, EmptyStr);

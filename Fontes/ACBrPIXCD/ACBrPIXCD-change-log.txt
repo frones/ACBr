@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2024
+-- ACBrSchemasMatera --
+[-] Alteração para limpar a classe antes de carregar as informações do Ini.
+    por: Elias César
+	
 21/10/2024
 -- ACBrPIXCD, ACBrPIXPSPBancoDoBrasil --
 [-] Corrige envio de datas na consulta PIX para o BB, volta o original do ACBrPIXCD --

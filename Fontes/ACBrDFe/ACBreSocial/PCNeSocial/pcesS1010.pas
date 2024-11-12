@@ -482,7 +482,8 @@ begin
 
       if (ModoLancamento = mlAlteracao) then
         if (InfoRubrica.novaValidadInst()) then
-          GerarIdePeriodo(InfoRubrica.novaValidade, 'novaValidade');
+          if InfoRubrica.novaValidade.IniValid <> '' then
+            GerarIdePeriodo(InfoRubrica.novaValidade, 'novaValidade');
     end;
 
     GerarModoFechamento(Self.ModoLancamento);

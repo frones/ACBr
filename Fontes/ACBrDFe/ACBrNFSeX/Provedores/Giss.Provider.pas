@@ -74,9 +74,15 @@ type
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
       Params: TNFSeParamsResponse); override;
 
+    procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+
+    procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
     procedure GerarMsgDadosConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
 
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
   end;
@@ -226,6 +232,12 @@ var
   TagEnvio, Prefixo, PrefixoTS: string;
   I: Integer;
 begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := '';
+    PrefixoTS := '';
+  end;
+
   if EstaVazio(Response.NumeroLote) then
   begin
     AErro := Response.Erros.New;
@@ -482,6 +494,63 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderGiss204.PrepararConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse);
+begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+  end;
+
+  inherited PrepararConsultaLoteRps(Response);
+  {
+  with ConfigMsgDados do
+  begin
+    Prefixo := '';
+    PrefixoTS := '';
+  end;
+  }
+end;
+
+procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+  end;
+
+  inherited PrepararConsultaNFSeporRps(Response);
+  {
+  with ConfigMsgDados do
+  begin
+    Prefixo := '';
+    PrefixoTS := '';
+  end;
+  }
+end;
+
+procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeporFaixa(
+  Response: TNFSeConsultaNFSeResponse);
+begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+  end;
+
+  inherited PrepararConsultaNFSeporFaixa(Response);
+  {
+  with ConfigMsgDados do
+  begin
+    Prefixo := '';
+    PrefixoTS := '';
+  end;
+  }
+end;
+
 procedure TACBrNFSeProviderGiss204.GerarMsgDadosConsultaNFSeporFaixa(
   Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
 var
@@ -509,6 +578,25 @@ begin
                            '</' + Prefixo + 'Pagina>' +
                          '</' + Prefixo + 'ConsultarNfseFaixaEnvio>';
   end;
+end;
+
+procedure TACBrNFSeProviderGiss204.PrepararCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+begin
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'ns3';
+    PrefixoTS := 'ns4';
+  end;
+
+  inherited PrepararCancelaNFSe(Response);
+  {
+  with ConfigMsgDados do
+  begin
+    Prefixo := '';
+    PrefixoTS := '';
+  end;
+  }
 end;
 
 procedure TACBrNFSeProviderGiss204.GerarMsgDadosCancelaNFSe(

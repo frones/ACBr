@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2024
+-- Giss.Provider --
+[*] Ajustes para realizar as consultas: Consultar Lote, Consultar NFSe por RPS
+    e Consultar NFSe Por Faixa.
+   Por: Italo Giurizzato Junior
+
 11/11/2024
 -- ACBrNFSeXServicos --
 [*] As cidades abaixo já consta a troca do provedor Ginfes por Giss para que

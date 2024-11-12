@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/11/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6208: A cidade de Serra Negra/SP trocou de URL mas o provedor continua
+    o mesmo.
+   Por: Pedro William
+[*] #TK-6215: A cidade de Sao Goncalo do Sapucai/MG trocou de versão mas o provedor continua
+    o mesmo.
+   Por: João Antônio
+[+] #TK-6210: Incluida a cidade de Sao Vendelino/RS, provedor é o Tecnos na versão 2.01
+   Por: C4Dev
 -- Giss.Provider --
 [*] Ajustes para realizar as consultas: Consultar Lote, Consultar NFSe por RPS
     e Consultar NFSe Por Faixa.
@@ -61,7 +70,7 @@ Símbolo : Significado
 [*] Ajustes para gerar o envio em lote assinando o RPS e o Lote.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
-[+] #TK-6214: Incluida a cidade de Sede Nova\RS, provedor é o IPM na versão 1.01
+[+] #TK-6214: Incluida a cidade de Sede Nova/RS, provedor é o IPM na versão 1.01
    Por: romariorigoli 
 
 06/11/2024

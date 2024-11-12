@@ -1,34 +1,34 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-{ - Elias C√©sar Vieira                                                         }
+{ - Elias CÈsar Vieira                                                         }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -42,9 +42,9 @@ uses
   ACBrUtil.Strings;
 
 resourcestring
-  sDestaxa_TipoCartao_NaoInformado = 'Tipo do Cart√£o n√£o informado(Cr√©dito, D√©bito)';
-  sDestaxa_TipoPagamento_NaoInformado = 'Tipo do Pagamento n√£o informado(A Vista, Parcelado, Pr√©-Datado)';
-  sDestaxa_TipoPagamento_NaoAceito = 'Tipo de Pagamento n√£o aceito';
+  sDestaxa_TipoCartao_NaoInformado = 'Tipo do Cart„o n„o informado(CrÈdito, DÈbito)';
+  sDestaxa_TipoPagamento_NaoInformado = 'Tipo do Pagamento n„o informado(A Vista, Parcelado, PrÈ-Datado)';
+  sDestaxa_TipoPagamento_NaoAceito = 'Tipo de Pagamento n„o aceito';
 
 const
   CDESTAXA_TERMINADOR = #13 + #10 + #09 + #09 + #13 + #10 + #09 + #09 + #09 + #13 + #10 + #09 + #09 + #13 + #10 + #09;
@@ -139,12 +139,12 @@ type
 
   TACBrTEFDestaxaRetornoResposta = (
     drsNenhum,
-    drsSucessoComConfirmacao,            // Sucesso com confirma√ß√£o da Aplica√ß√£o Comercial
-    drsSucessoSemConfirmacao,            // Sucesso sem confirma√ß√£o da Aplica√ß√£o Comercial
-    drsErroSequencialInvalido,           // Erro: Sequencial inv√°lido
-    drsErroTransacaoCanceladaOperador,   // Erro: Transa√ß√£o cancelada pelo operador
-    drsErroTransacaoCanceladaCliente,    // Erro: Transa√ß√£o cancelada pelo cliente
-    drsErroParametrosInvalidos,          // Erro: Par√¢metros insuficientes ou inv√°lidos
+    drsSucessoComConfirmacao,            // Sucesso com confirmaÁ„o da AplicaÁ„o Comercial
+    drsSucessoSemConfirmacao,            // Sucesso sem confirmaÁ„o da AplicaÁ„o Comercial
+    drsErroSequencialInvalido,           // Erro: Sequencial inv·lido
+    drsErroTransacaoCanceladaOperador,   // Erro: TransaÁ„o cancelada pelo operador
+    drsErroTransacaoCanceladaCliente,    // Erro: TransaÁ„o cancelada pelo cliente
+    drsErroParametrosInvalidos,          // Erro: Par‚metros insuficientes ou inv·lidos
     drsErroComunicacaoClienteServidor,   // Erro: Problemas entre o V$PagueClient e V$PagueServer
     drsErroComunicacaoServidorRede,      // Erro: Problemas entre o V$PagueServer e a Rede
     drsErroTempoLimiteExcedido,          // Erro: Tempo limite de espera excedido
@@ -155,7 +155,7 @@ type
     dcrNenhum,
     dcrExecutarProcedimento,        // Executar procedimento / Procedimento Executado
     dcrFinalizarProcedimento,       // Finalizar procedimento
-    dcrErroParametrosInvalidos,     // Par√¢metros insuficientes ou inv√°lidos
+    dcrErroParametrosInvalidos,     // Par‚metros insuficientes ou inv·lidos
     dcrErroTempoLimiteExcedido,     // Tempo limite de espera excedido
     dcrCancelarProcedimento         // Cancelar o procedimento
   );
@@ -438,7 +438,7 @@ type
     property transacao_comprovante_1via: TStringList read ftransacao_comprovante_1via;
     property transacao_comprovante_2via: TStringList read ftransacao_comprovante_2via;
     property transacao_comprovante_resumido: String read ftransacao_comprovante_resumido;
-    property transacao_identificacao: String read ftransacao_identificacao write ftransacao_identificacao;  // N√∫mero L√≥gico
+    property transacao_identificacao: String read ftransacao_identificacao write ftransacao_identificacao;  // N˙mero LÛgico
     property transacao_nsu_rede: String read ftransacao_nsu_rede write ftransacao_nsu_rede;
     property transacao_operadora: String read ftransacao_operadora write ftransacao_operadora;
     property transacao_payment_id: String read ftransacao_payment_id write ftransacao_payment_id;  // End2End Pix/Wallet
@@ -718,7 +718,7 @@ function DestaxaTipoCartaoToString(const aCartao: TACBrDestaxaTipoCartao): Strin
 begin
   Result := EmptyStr;
   case aCartao of
-    dtcDebito: Result := 'D√©bito';
+    dtcDebito: Result := 'DÈbito';
     dtcCredito: Result := 'Credito';
   end;
 end;
@@ -726,7 +726,7 @@ end;
 function StringToDestaxaTipoCartao(const aString: String): TACBrDestaxaTipoCartao;
 begin
   Result := dtcNenhum;
-  if aString = 'D√©bito' then
+  if aString = 'DÈbito' then
     Result := dtcDebito
   else if aString = 'Credito' then
     Result := dtcCredito;
@@ -738,7 +738,7 @@ begin
   case APagamento of
     dpgAVista: Result := 'A vista';
     dpgParcelado: Result := 'Parcelado';
-    dpgPreDatado: Result := 'Pr√©-datado';
+    dpgPreDatado: Result := 'PrÈ-datado';
   end;
 end;
 
@@ -749,7 +749,7 @@ begin
     Result := dpgAVista
   else if AString = 'Parcelado' then
     Result := dpgParcelado
-  else if AString = 'Pr√©-datado' then
+  else if AString = 'PrÈ-datado' then
     Result := dpgPreDatado;
 end;
 
@@ -1201,7 +1201,7 @@ procedure TACBrTEFDestaxaTransacaoRequisicao.Setaplicacao_tela(aValue: String);
 begin
   if (faplicacao_tela = aValue) then
     Exit;
-  faplicacao_tela := Copy(aValue, 1, 32);  // Deve conter no m√°ximo 32 posi√ß√µes
+  faplicacao_tela := Copy(aValue, 1, 32);  // Deve conter no m·ximo 32 posiÁıes
 end;
 
 procedure TACBrTEFDestaxaTransacaoRequisicao.PreencherCampos(
@@ -1301,7 +1301,7 @@ begin
   fDestaxaClient.GravarLog(' - Transmitido ' + GetErrorDesc(Erro));
   if NaoEstaZerado(Erro) then
     raise EACBrTEFDestaxaErro.Create(
-      ACBrStr('Erro ao Transmitir Comando' + sLineBreak + 'Endere√ßo: ' +
+      ACBrStr('Erro ao Transmitir Comando' + sLineBreak + 'EndereÁo: ' +
       fDestaxaClient.EnderecoIP + sLineBreak + 'Porta: ' + fDestaxaClient.Porta +
       sLineBreak + 'Erro: ' + IntToStr(Erro) + '-' + GetErrorDesc(Erro)));
 end;
@@ -1421,8 +1421,6 @@ end;
 
 function TACBrTEFDestaxaSocket.Desconectar: Integer;
 begin
-  Result := -1;
-
   CloseSocket;
   Result := LastError;
 
@@ -1498,6 +1496,7 @@ end;
 
 function TACBrTEFDestaxaSocket.Mostrar(aMensagem: TACBrTEFDestaxaMensagem): Boolean;
 begin
+  Result := False;
   if (aMensagem = dmsNenhum) then
     Exit;
 
@@ -1723,7 +1722,7 @@ begin
 
     if Cancelar then
     begin
-      GravarLog(' - Transa√ß√£o Cancelada pelo Usu√°rio');
+      GravarLog(' - TransaÁ„o Cancelada pelo Usu·rio');
 
       wSequencial := Requisicao.sequencial;
       Requisicao.Clear;
@@ -1736,7 +1735,7 @@ begin
   else
     raise EACBrTEFDestaxaErro.Create(
       ACBrStr('Erro ao Receber resposta do V&SPague' + sLineBreak +
-      'Endere√ßo: ' + EnderecoIP + sLineBreak +
+      'EndereÁo: ' + EnderecoIP + sLineBreak +
       'Porta: ' + Porta + sLineBreak + 'Erro: ' +
       IntToStr(Socket.LastError) + '-' + Socket.GetErrorDesc(Socket.LastError)));
 end;
@@ -1756,7 +1755,7 @@ begin
 
     if Cancelar then
     begin
-      GravarLog(' - Transa√ß√£o Cancelada pelo Usu√°rio');
+      GravarLog(' - TransaÁ„o Cancelada pelo Usu·rio');
 
       wSequencial := ColetaRequisicao.automacao_coleta_sequencial;
       ColetaRequisicao.Clear;
@@ -1769,7 +1768,7 @@ begin
   else
     raise EACBrTEFDestaxaErro.Create(
       ACBrStr('Erro ao Receber resposta do V&SPague' + sLineBreak +
-      'Endere√ßo: ' + EnderecoIP + sLineBreak +
+      'EndereÁo: ' + EnderecoIP + sLineBreak +
       'Porta: ' + Porta + sLineBreak + 'Erro: ' +
       IntToStr(Socket.LastError) + '-' + Socket.GetErrorDesc(Socket.LastError)));
 end;

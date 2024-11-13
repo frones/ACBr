@@ -70,6 +70,8 @@ type
     procedure QuandoPerguntarCampoAPI(aMensagem, aMascara: String; aTipo: TACBrTEFDestaxaColetaTipo; var Resposta: String; var Cancelar: Boolean);
 
     //procedure QuandoAvaliarTransacaoPendenteAPI(var Status: LongWord; pszReqNum: String; pszLocRef: String; pszExtRef: String; pszVirtMerch: String; pszAuthSyst: String);
+
+    function ExibirMenuAdministrativo: Boolean;
   protected
     procedure InterpretarRespostaAPI; override;
     procedure InicializarChamadaAPI(aMetodoOperacao: TACBrTEFAPIMetodo); override;
@@ -85,6 +87,8 @@ type
 
     procedure ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
     procedure AbortarTransacaoEmAndamento; override;
+
+    procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
               
     function VerificarPresencaPinPad: Byte; override;
     function EfetuarPagamento(ValorPagto: Currency; Modalidade: TACBrTEFModalidadePagamento = tefmpNaoDefinido;
@@ -96,6 +100,8 @@ type
 
     function CancelarTransacao(const NSU, CodigoAutorizacaoTransacao: String;DataHoraTransacao: TDateTime;Valor: Double;
       const CodigoFinalizacao: String = ''; const Rede: String = ''): Boolean; override;
+
+    function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: Integer = 30000; MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
   end;
 
 implementation
@@ -119,7 +125,7 @@ begin
     wDestaxaResposta.AsString := StringToBinaryString(wResp);
 
     Sucesso := (wDestaxaResposta.transacao_resposta = 0);
-    Confirmar := True;
+    Confirmar := (wDestaxaResposta.retorno = drsSucessoComConfirmacao);
     Rede := wDestaxaResposta.transacao_rede;
     NSU := wDestaxaResposta.transacao_nsu;
     ValorTotal := wDestaxaResposta.transacao_valor;
@@ -247,6 +253,30 @@ begin
   TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(Def, Resposta, Validado, Cancelar);
 end;
 
+function TACBrTEFAPIClassDestaxa.ExibirMenuAdministrativo: Boolean;
+var
+  wOpcao: Integer;
+  sr: TSplitResult;
+  Cancelar: Boolean;
+begin
+  wOpcao := -1;
+  Result := False;
+  Cancelar := False;
+  DestaxaClient.Socket.Consultar;
+
+  if (DestaxaClient.Resposta.servico <> dxsConsultar) or
+     (DestaxaClient.Resposta.retorno = drsErroDesconhecido) or
+     EstaVazio(DestaxaClient.Resposta.transacao) then
+    Exit;
+
+  sr := Split(';', DestaxaClient.Resposta.transacao);
+
+  QuandoPerguntarMenuAPI(CDESTAXA_MENU_ADMIN, sr, wOpcao, Cancelar);
+
+  if (wOpcao >= 0) then
+    Result := DestaxaClient.ExecutarTransacao(sr[wOpcao]);
+end;
+
 procedure TACBrTEFAPIClassDestaxa.InterpretarRespostaAPI;
 var
   resp: String;
@@ -264,17 +294,16 @@ end;
 procedure TACBrTEFAPIClassDestaxa.InicializarChamadaAPI(aMetodoOperacao: TACBrTEFAPIMetodo);
 begin
   inherited InicializarChamadaAPI(aMetodoOperacao);
-  DestaxaClient.Socket.Iniciar;
+  DestaxaClient.IniciarRequisicao;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.FinalizarChamadaAPI;
 begin
   inherited FinalizarChamadaAPI;
-
   if DestaxaClient.Socket.EmTransacao then
   begin
     DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
-    DestaxaClient.Socket.Finalizar;
+    DestaxaClient.FinalizarRequisicao;
   end;
 end;
 
@@ -303,7 +332,7 @@ begin
         'Endereço: ' + DestaxaClient.EnderecoIP + sLineBreak +
         'Porta: ' + DestaxaClient.Porta + sLineBreak +
         'Erro: ' + IntToStr(wErro) + '-' + DestaxaClient.Socket.LastErrorDesc));
-  inherited Inicializar;
+  fpInicializado := True;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.DesInicializar;
@@ -348,36 +377,30 @@ begin
 end;
 
 function TACBrTEFAPIClassDestaxa.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao): Boolean;
+var
+  transacao: String;
 begin
-  Result := False;
+  transacao := EmptyStr;
 
-  //
+  case OperacaoAdm of
+    tefopCancelamento: transacao := CDESTAXA_ADM_CANCELAR;
+    tefopReimpressao: transacao := CDESTAXA_ADM_REIMPRIMIR;
+  end;
+
+  Result := EfetuarAdministrativa(transacao);
 end;
 
 function TACBrTEFAPIClassDestaxa.EfetuarAdministrativa(const CodOperacaoAdm: String): Boolean;
-var
-  wOpcao: Integer;
-  sr: TSplitResult;
-  Cancelar: Boolean;
 begin
-  wOpcao := -1;
-  Result := False;
-  Cancelar := False;
-
-  DestaxaClient.Socket.Consultar;
-
-  if (DestaxaClient.Resposta.servico <> dxsConsultar) or
-     (DestaxaClient.Resposta.retorno = drsErroDesconhecido) or
-     EstaVazio(DestaxaClient.Resposta.transacao) then
+  if EstaVazio(CodOperacaoAdm) then
+  begin
+    Result := ExibirMenuAdministrativo;
     Exit;
-
-  sr := Split(';', DestaxaClient.Resposta.transacao);
-
-  QuandoPerguntarMenuAPI(CDESTAXA_MENU_ADMIN, sr, wOpcao, Cancelar);
-
-  if (wOpcao >= 0) then
-    DestaxaClient.ExecutarTransacao(sr[wOpcao]);
-  Result := True;
+  end;
+      
+  DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
+  DestaxaClient.Requisicao.retorno := drqExecutarServico;
+  DestaxaClient.Socket.Executar(CodOperacaoAdm);
 end;
 
 function TACBrTEFAPIClassDestaxa.CancelarTransacao(const NSU, CodigoAutorizacaoTransacao: String; DataHoraTransacao: TDateTime;
@@ -393,14 +416,44 @@ begin
   Result := DestaxaClient.AdministracaoCancelar;
 end;
 
-procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU, CodigoFinalizacao: String; aStatus: TACBrTEFStatusTransacao);
+procedure TACBrTEFAPIClassDestaxa.ExibirMensagemPinPad(const MsgPinPad: String);
+var
+  Msg: TACBrTEFDestaxaMensagem;
+begin
+  Msg := StringToDestaxaMensagem(MsgPinPad);
+  DestaxaClient.IniciarRequisicao;
+  try
+    DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
+    DestaxaClient.Requisicao.retorno := drqExecutarServico;
+    DestaxaClient.Socket.Mostrar(Msg);
+  finally
+    DestaxaClient.FinalizarRequisicao;
+  end;
+end;
+
+function TACBrTEFAPIClassDestaxa.ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: Integer; MinLen: SmallInt; MaxLen: SmallInt): String;
+begin
+  DestaxaClient.IniciarRequisicao;
+  try
+    DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
+    DestaxaClient.Requisicao.retorno := drqExecutarServico;
+
+    Result := DestaxaClient.Socket.Coletar(TipoDado, MinLen, MaxLen, TimeOut);
+  finally
+    DestaxaClient.FinalizarRequisicao;
+  end;
+end;
+
+procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU,
+  CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 begin
   if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
     DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
   else
     DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
+
   DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial;
-  DestaxaClient.ExecutarTransacao(CDESTAXA_CARTAO_VENDER);
+  DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
 end;
 
 procedure TACBrTEFAPIClassDestaxa.ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao);
@@ -410,18 +463,20 @@ end;
 
 procedure TACBrTEFAPIClassDestaxa.AbortarTransacaoEmAndamento;
 begin
-  DestaxaClient.Socket.Finalizar;
+  DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
+  DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
+  DestaxaClient.Socket.Executar(CDESTAXA_CARTAO_VENDER);
 end;
 
 function TACBrTEFAPIClassDestaxa.VerificarPresencaPinPad: Byte;
 begin
   Result := 0;
-  DestaxaClient.Socket.Iniciar;
+  DestaxaClient.IniciarRequisicao;
   try
     if DestaxaClient.Resposta.estado.ConfiguradoComPinpad then
       Result := 99;
   finally
-    DestaxaClient.Socket.Finalizar;
+    DestaxaClient.FinalizarRequisicao;
   end;
 end;
 

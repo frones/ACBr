@@ -55,7 +55,13 @@ const
   CDESTAXA_CARTAO_VENDER = 'Cartao Vender';
   CDESTAXA_ADM_PENDENTE = 'Administracao Pendente';
   CDESTAXA_ADM_CANCELAR = 'Administracao Cancelar';
-  //CDESTAXA_ADM_EXTRATO_TRANSACAO = 'Administracao Extrato Transacao";"Administracao Cancelar";"Administracao Extrato";"Administracao Extrato Transacao";"Administracao Manutencao Rede Consultar";"Administracao Reimprimir";"Cartao Consultar Endereco";"Cartao Consultar Financiado";"Cartao Pagar";"Cartao Pre-autorizacao Capturar";"Cartao Pre-autorizacao Solicitar";"Cartao Senha Trocar";"Cartao Vender";"Conta Consultar";"Conta Pagar";"Digital Pagar"
+  CDESTAXA_ADM_EXTRATO_TRANSACAO = 'Administracao Extrato Transacao';
+  CDESTAXA_ADM_EXTRATO = 'Administracao Extrato';
+  CDESTAXA_ADM_MANUTENCAO_REDE_CONSULTAR = 'Administracao Manutencao Rede Consultar';
+  CDESTAXA_ADM_REIMPRIMIR = 'Administracao Reimprimir';
+  CDESTAXA_ADM_CONSULTAR_ENDERECO = 'Cartao Consultar Endereco';
+  CDESTAXA_ADM_CONSULTAR_FINANCIADO = 'Cartao Consultar Financiado';
+
   CDESTAXA_MENU_ADMIN = 'Menu Administrativo';
 
 type
@@ -70,63 +76,6 @@ type
     dxsFinalizar,
     dxsIniciar,
     dxsMostrar
-  );
-
-  TACBrTEFDestaxaTipoSolicitacao = (
-    dtsNenhum,
-    dtsDigiteDDD,
-    dtsRedigiteDDD,
-    dtsDigiteTelefone,
-    dtsRedigiteTelefone,
-    dtsDigiteDDDTelefone,
-    dtsRedigiteDDDTelefone,
-    dtsDigiteCPF,
-    dtsRedigiteCPF,
-    dtsDigiteRG,
-    dtsRedigiteRG,
-    dtsDigite4Ultimos,
-    dtsDigiteCodigoSeguranca,
-    dtsDigiteCNPJ,
-    dtsRedigiteCNPJ,
-    dtsDigiteDataDDMMAAAA,
-    dtsDigiteDataDDMMAA,
-    dtsDigiteDataDDMM,
-    dtsDigiteDia,
-    dtsDigiteMes,
-    dtsDigiteAnoAA,
-    dtsDigiteAnoAAAA,
-    dtsDigiteDataNascimentoDDMMAAAA,
-    dtsDigiteDataNascimentoDDMMAA,
-    dtsDigiteDataNascimentoDDMM,
-    dtsDigiteDiaNascimento,
-    dtsDigiteMesNascimento,
-    dtsDigiteAnoNascimentoAA,
-    dtsDigiteAnoNascimentoAAAA,
-    dtsDigiteIdentificacao,
-    dtsDigiteCodigoFidelidade,
-    dtsDigiteNumeroMesa,
-    dtsDigiteQuantidadePessoas,
-    dtsDigiteQuantidade,
-    dtsDigiteNumeroBomba,
-    dtsDigiteNumeroVaga,
-    dtsDigiteNumeroCaixa,
-    dtsDigiteCodigoVendedor,
-    dtsDigiteCodigoGarcom,
-    dtsDigiteNotaAtendimento,
-    dtsDigiteNumeroNotaFiscal,
-    dtsDigiteNumeroComanda,
-    dtsDigitePlacaVeiculo,
-    dtsDigiteQuilometragem,
-    dtsDigiteQuilometragemInicial,
-    dtsDigiteQuilometragemFinal,
-    dtsDigitePorcentagem,
-    dtsDigitePesquisaSatisfacao,
-    dtsDigiteAvalieAtendimento,
-    dtsDigiteToken,
-    dtsDigiteNumeroCartao,
-    dtsDigiteNumeroParcelas,
-    dtsDigiteCodigoPlano,
-    dtsDigiteCodigoProduto
   );
 
   TACBrTEFDestaxaRetornoRequisicao = (
@@ -524,12 +473,12 @@ type
     function Conectar: Integer;
     function Desconectar: Integer;
 
-    function Iniciar(aSequencial: Integer = 0): Boolean;
+    function Iniciar(aSequencial: Integer = 1): Boolean;
     function Finalizar(aRetorno: TACBrTEFDestaxaRetornoRequisicao = drqNenhum): Boolean;
     function Consultar: Boolean;
     function Executar(aTransacao: String): Boolean;
     function Mostrar(aMensagem: TACBrTEFDestaxaMensagem): Boolean;
-    function Coletar(const aSolicitacao: TACBrTEFDestaxaTipoSolicitacao;
+    function Coletar(const aSolicitacao: TACBrTEFAPIDadoPinPad;
       const aTamanhoMin: Integer = 0; const aTamanhoMax: Integer = 0;
       const aTempoEspera: Integer = 0): AnsiString;
 
@@ -579,7 +528,7 @@ type
     procedure ProcessarResposta;
 
     procedure TratarErro;
-    procedure TratarErroColeta;
+    procedure TratarErroColeta(var aCancelar: Boolean);
 
     procedure DoQuandoReceberResposta(aResposta: AnsiString);
     procedure EfetuarValidacoesCartaoVender;
@@ -590,9 +539,13 @@ type
 
     procedure GravarLog(const aString: AnsiString; Traduz: Boolean = False);
 
+    function IniciarRequisicao: Boolean;
+    function FinalizarRequisicao(const aRetorno: TACBrTEFDestaxaRetornoRequisicao = drqNenhum): Boolean;
+
     function CartaoVender: Boolean;
     function AdministracaoCancelar: Boolean;
     function AdministracaoPendente: Boolean;
+    function AdministracaoReimprimir: Boolean;
     function ExecutarTransacao(const aTransacao: String): Boolean;
 
     property Socket: TACBrTEFDestaxaSocket read GetSocket;
@@ -600,7 +553,7 @@ type
     property Requisicao: TACBrTEFDestaxaTransacaoRequisicao read GetRequisicao;
     property ColetaResposta: TACBrTEFDestaxaAutomacaoColeta read GetColetaResposta;
     property ColetaRequisicao: TACBrTEFDestaxaAutomacaoColeta read GetColetaRequisicao;
-    property UltimoSequencial: Integer read fUltimoSequencial write fUltimoSequencial;
+    property UltimoSequencial: Integer read fUltimoSequencial;
 
     property Loja: String read fLoja write fLoja;
     property Terminal: String read fTerminal write fTerminal;
@@ -639,6 +592,7 @@ function DestaxaColetaTipoToString(const aTipo: TACBrTEFDestaxaColetaTipo): Stri
 function StringToDestaxaColetaTipo(const aString: String): TACBrTEFDestaxaColetaTipo;
 function DestaxaMensagemToString(const aMensagem: TACBrTEFDestaxaMensagem): String;
 function StringToDestaxaMensagem(const aString: String): TACBrTEFDestaxaMensagem;
+function FindDestaxaMensagemFromString(const aString: String): TACBrTEFDestaxaMensagem;
 function DestaxaFinanciadoToString(const aFin: TACBrTEFDestaxaFinanciado): String;
 function StringToDestaxaFinanciado(const aString: String): TACBrTEFDestaxaFinanciado;
 
@@ -917,6 +871,42 @@ begin
   else if aString = 'TRAC' then
     Result := dmsTransacaoCancelada
   else if aString = 'WAIT' then
+    Result := dmsAguarde;
+end;
+
+function FindDestaxaMensagemFromString(const aString: String): TACBrTEFDestaxaMensagem;
+var
+  Msg: String;
+begin
+  Result := dmsNenhum;
+  Msg := UpperCase(aString);
+  if (Msg = 'SEM COMUNICAÇÃO') then
+    Result := dmsSemComunicacao
+  else if (Msg = 'AGUARDE LIBERAR') then
+    Result := dmsAguardeLiberar
+  else if (Msg = 'SELECIONE OPÇÃO') then
+    Result := dmsSelecioneOpcao
+  else if (Msg = 'AGUARDE LIBERAR O PRODUTO') then
+    Result := dmsAguardeLiberarProduto
+  else if (Msg = 'CONFIRME SELEÇÃO DO PRODUTO') then
+    Result := dmsConfirmeSelecaoProduto
+  else if (Msg = 'PRODUTO LIBERADO') then
+    Result := dmsProdutoLiberado
+  else if (Msg = 'PRODUTO NÃO LIBERADO') then
+    Result := dmsProdutoNaoLiberado
+  else if (Msg = 'RETIRE O PRODUTO') then
+    Result := dmsRetireProduto
+  else if (Msg = 'SELECIONE O PRODUTO') then
+    Result := dmsSelecioneProduto
+  else if (Msg = 'CONFIRME SELEÇÃO') then
+    Result := dmsConfirmeSelecao
+  else if (Msg = 'SEM SINAL') then
+    Result := dmsSemSinal
+  else if (Msg = 'TRANSAÇÃO APROVADA') then
+    Result := dmsTransacaoAprovada
+  else if (Msg = 'TRANSAÇÃO CANCELADA') then
+    Result := dmsTransacaoCancelada
+  else if (Pos(Msg, 'AGUARDE') > 0) then
     Result := dmsAguarde;
 end;
 
@@ -1380,6 +1370,7 @@ procedure TACBrTEFDestaxaSocket.ExecutarColeta(AguardarResposta: Boolean);
 var
   RX: AnsiString;
   Erro: Integer;
+  wCancelar: Boolean;
 begin
   ColetaResposta.Clear;
 
@@ -1413,8 +1404,10 @@ begin
     end
     else
     begin
-      fDestaxaClient.TratarErroColeta;
-      Erro := -1;
+      wCancelar := False;
+      fDestaxaClient.TratarErroColeta(wCancelar);
+      if (not wCancelar) then
+        Erro := -1;
     end;
   end;
 end;
@@ -1436,8 +1429,6 @@ begin
 
   Requisicao.Clear;
   Requisicao.sequencial := aSequencial;
-  if EstaZerado(Requisicao.sequencial) then
-    Requisicao.sequencial := 1;
   Requisicao.servico := dxsIniciar;
   Requisicao.loja := fDestaxaClient.Loja;
   Requisicao.retorno := drqExecutarServico;
@@ -1472,6 +1463,7 @@ begin
   ExecutarTransacao;
   fEmTransacao := False;
   Requisicao.Clear;
+  Result := Resposta.retorno in [drsSucessoSemConfirmacao, drsSucessoComConfirmacao];
 end;
 
 function TACBrTEFDestaxaSocket.Consultar: Boolean;
@@ -1512,36 +1504,51 @@ begin
 end;
 
 function TACBrTEFDestaxaSocket.Coletar(
-  const aSolicitacao: TACBrTEFDestaxaTipoSolicitacao; const aTamanhoMin: Integer;
+  const aSolicitacao: TACBrTEFAPIDadoPinPad; const aTamanhoMin: Integer;
   const aTamanhoMax: Integer; const aTempoEspera: Integer): AnsiString;
 var
   msg: String;
   tipo: Integer;
+  TemMin, TemMax, TemTimeOut: Boolean;
 begin
   Result := EmptyStr;
-  tipo := Ord(aSolicitacao);
+  tipo := Ord(aSolicitacao)+1;
   if EstaZerado(tipo) then
     Exit;
 
-  Iniciar;
-  try
-    Requisicao.servico := dxsColetar;
+  TemMin := (aTamanhoMin > 0);
+  TemMax := (aTamanhoMax > 0);
+  TemTimeOut := (aTempoEspera > 0);
+  Requisicao.servico := dxsColetar;
 
-    msg := IntToStr(tipo);
-    if NaoEstaZerado(aTamanhoMin) then
-      msg := msg + ';' + IntToStr(aTamanhoMin);
-    if NaoEstaZerado(aTamanhoMax) then
-      msg := msg + ';' + IntToStr(aTamanhoMax);
-    if NaoEstaZerado(aTempoEspera) then
-      msg := msg + ';' + IntToStr(aTempoEspera);
-    Requisicao.mensagem := msg;
+  msg := IntToStr(tipo);
 
-    ExecutarTransacao;
-    if (Resposta.retorno = drsSucessoSemConfirmacao) then
-      Result := Resposta.transacao_informacao;
-  finally
-    Finalizar;
+  if TemMin or TemMax or TemTimeOut then
+  begin
+    msg := msg + ';';
+    if (aTamanhoMin > 0) then
+      msg := msg + IntToStr(aTamanhoMin);
   end;
+
+  if TemMax or TemTimeOut then
+  begin
+    msg := msg + ';';
+    if (aTamanhoMax > 0) then
+      msg := msg + IntToStr(aTamanhoMax);
+  end;
+
+  if TemTimeOut then
+  begin
+    msg := msg + ';';
+    if (aTempoEspera > 0) then
+      msg := msg + IntToStr(aTempoEspera);
+  end;
+
+  Requisicao.mensagem := msg;
+
+  ExecutarTransacao;
+  if (Resposta.retorno = drsSucessoSemConfirmacao) then
+    Result := Resposta.transacao_informacao;
 end;
 
 { TACBrTEFDestaxaClient }
@@ -1687,7 +1694,7 @@ begin
   end;
 
   Cancelar := False;
-  if NaoEstaVazio(Resposta.mensagem) and Assigned(fOnExibirMensagem) then
+  if (Resposta.retorno = drsSucessoComConfirmacao) and NaoEstaVazio(Resposta.mensagem) and Assigned(fOnExibirMensagem) then
     fOnExibirMensagem(Resposta.mensagem, 0, Cancelar);
 
   if Cancelar or (Resposta.retorno = drsErroDesconhecido) then
@@ -1702,7 +1709,7 @@ begin
   if NaoEstaZerado(Resposta.automacao_coleta_sequencial) then
     ProcessarColeta;
 
-  if NaoEstaZerado(Resposta.sequencial) then
+  if (Resposta.sequencial > 0) then
     fUltimoSequencial := Resposta.sequencial;
 end;
 
@@ -1717,8 +1724,8 @@ begin
   if (Socket.LastError = 10060) then  // TimeOut
   begin
     Cancelar := False;
-    //if Assigned(OnAguardarResposta) then
-    //  OnAguardarResposta(opapiFluxoAPI, Cancelar);
+    if Assigned(OnAguardarResposta) then
+      OnAguardarResposta(opapiFluxoAPI, Cancelar);
 
     if Cancelar then
     begin
@@ -1740,29 +1747,28 @@ begin
       IntToStr(Socket.LastError) + '-' + Socket.GetErrorDesc(Socket.LastError)));
 end;
 
-procedure TACBrTEFDestaxaClient.TratarErroColeta;
+procedure TACBrTEFDestaxaClient.TratarErroColeta(var aCancelar: Boolean);
 var
-  Cancelar: Boolean;
   wSequencial: Integer;
 begin
   GravarLog('TratarErroColeta: ' + IntToStr(Socket.LastError) + ' - ' + Socket.GetErrorDesc(Socket.LastError));
 
   if (Socket.LastError = 10060) then  // TimeOut
   begin
-    Cancelar := False;
-    //if Assigned(OnAguardarResposta) then
-    //  OnAguardarResposta(opapiFluxoAPI, Cancelar);
+    aCancelar := False;
+    if Assigned(OnAguardarResposta) then
+      OnAguardarResposta(opapiFluxoAPI, aCancelar);
 
-    if Cancelar then
+    if aCancelar then
     begin
       GravarLog(' - Transação Cancelada pelo Usuário');
 
       wSequencial := ColetaRequisicao.automacao_coleta_sequencial;
       ColetaRequisicao.Clear;
-      ColetaRequisicao.automacao_coleta_sequencial := wSequencial + 1;
+      ColetaRequisicao.automacao_coleta_sequencial := wSequencial;
       ColetaRequisicao.automacao_coleta_retorno := dcrCancelarProcedimento;
 
-      Socket.ExecutarTransacao;
+      Socket.ExecutarColeta(False);
     end;
   end
   else
@@ -1793,7 +1799,7 @@ begin
   fOnAguardarResposta := Nil;
   fOnExibirMensagem := Nil;
   fUltimoSequencial := 0;
-  fTimeOut := 5000;
+  fTimeOut := 1000;
   fTerminador := CDESTAXA_TERMINADOR;
 end;
 
@@ -1835,9 +1841,19 @@ begin
   fOnGravarLog(wLog, wTratado);
 end;
 
+function TACBrTEFDestaxaClient.IniciarRequisicao: Boolean;
+begin
+  Result := Socket.Iniciar(UltimoSequencial+1);
+end;
+
+function TACBrTEFDestaxaClient.FinalizarRequisicao(const aRetorno: TACBrTEFDestaxaRetornoRequisicao): Boolean;
+begin
+  Requisicao.sequencial := UltimoSequencial+1;
+  Result := Socket.Finalizar(aRetorno);
+end;
+
 function TACBrTEFDestaxaClient.CartaoVender: Boolean;
 begin
-  Result := False;
   EfetuarValidacoesCartaoVender;
 
   Requisicao.sequencial := fUltimoSequencial+1;
@@ -1849,36 +1865,45 @@ end;
 
 function TACBrTEFDestaxaClient.AdministracaoCancelar: Boolean;
 begin
-  Result := False;
+  Requisicao.sequencial := fUltimoSequencial+1;
+  Requisicao.retorno := drqExecutarServico;
+  Socket.Executar(CDESTAXA_ADM_CANCELAR);
 
-  Socket.Iniciar;
-  try 
-    Requisicao.sequencial := fUltimoSequencial+1;
-    Requisicao.retorno := drqExecutarServico;
+  if (Resposta.retorno = drsSucessoComConfirmacao) then
+  begin
+    Requisicao.Clear;
+    Requisicao.sequencial := Resposta.sequencial+1;
+    Requisicao.retorno := drqConfirmarTransacao;
     Socket.Executar(CDESTAXA_ADM_CANCELAR);
-
-    if (Resposta.retorno = drsSucessoComConfirmacao) then
-    begin
-      Requisicao.Clear;
-      Requisicao.sequencial := Resposta.sequencial+1;
-      Requisicao.retorno := drqConfirmarTransacao;
-      Socket.Executar(CDESTAXA_ADM_CANCELAR);
-    end;
-
-    Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
-  finally
-    Socket.Finalizar;
   end;
+
+  Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
 end;
 
 function TACBrTEFDestaxaClient.AdministracaoPendente: Boolean;
+begin
+  Requisicao.sequencial := UltimoSequencial+1;
+  Socket.Executar(CDESTAXA_ADM_PENDENTE);
+
+  if (Resposta.retorno = drsSucessoComConfirmacao) then
+  begin
+    Requisicao.Clear;
+    Requisicao.sequencial := UltimoSequencial+1;
+    Requisicao.retorno := drqConfirmarTransacao;
+    Socket.Executar(CDESTAXA_ADM_PENDENTE);
+  end;
+
+  Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
+end;
+
+function TACBrTEFDestaxaClient.AdministracaoReimprimir: Boolean;
 begin
   Result := False;
 
   Socket.Iniciar;
   try
     Requisicao.sequencial := UltimoSequencial+1;
-    Socket.Executar(CDESTAXA_ADM_PENDENTE);
+    Socket.Executar(CDESTAXA_ADM_REIMPRIMIR);
 
     if (Resposta.retorno = drsSucessoComConfirmacao) then
     begin
@@ -1897,14 +1922,8 @@ end;
 function TACBrTEFDestaxaClient.ExecutarTransacao(const aTransacao: String): Boolean;
 begin
   Result := False;
-
-  Socket.Iniciar;
-  try
-    Socket.Executar(aTransacao);
-    Result := (Resposta.retorno in [drsSucessoSemConfirmacao, drsSucessoComConfirmacao]) and (Resposta.servico = dxsExecutar);
-  finally
-    Socket.Finalizar;
-  end;
+  Socket.Executar(aTransacao);
+  Result := (Resposta.retorno in [drsSucessoSemConfirmacao, drsSucessoComConfirmacao]) and (Resposta.servico = dxsExecutar);
 end;
 
 { TACBrTEFDestaxaTransacaoClass }

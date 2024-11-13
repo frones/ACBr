@@ -173,6 +173,7 @@ type
     FDigitoVerificadorAgenciaConta: String;
     FIdentDistribuicao: TACBrIdentDistribuicao;
     FOperacao: String;
+    FCodigoFlash : String;
     FPIXChave: String;
     FPIXTipoChave : TACBrPIXTipoChave;
 
@@ -208,9 +209,10 @@ type
     property DigitoVerificadorAgenciaConta : String read FDigitoVerificadorAgenciaConta   write FDigitoVerificadorAgenciaConta;
     property IdentDistribuicao: TACBrIdentDistribuicao read FIdentDistribuicao  write FIdentDistribuicao;
     property Operacao: string read FOperacao write FOperacao;
-    property PIXChave         :String read FPIXChave write FPIXChave;
+    property CodigoFlash      : String read fCodigoFlash write FCodigoFlash;
+	property PIXChave         :String read FPIXChave write FPIXChave;
     property PIXTipoChave     : TACBrPIXTipoChave read FPIXTipoChave write FPIXTipoChave;
-
+    
   end;
 
   { TBoletoFCFortesConfig }
@@ -632,6 +634,7 @@ begin
   FOperacao := '';
   FPIXChave:= '';
   FPIXTipoChave := tchNenhuma;
+  FCodigoFlash := '';
 end;
 
 procedure TBoletoCedenteConfig.LerIni(const AIni: TCustomIniFile);
@@ -672,6 +675,7 @@ begin
   DigitoVerificadorAgenciaConta:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveDigitoVerificadorAgenciaConta, DigitoVerificadorAgenciaConta);
   IdentDistribuicao:= TACBrIdentDistribuicao(AIni.ReadInteger(CSessaoBoletoCedenteConfig, CChaveIdentDistribuicao, integer(FIdentDistribuicao)));
   Operacao:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveOperacao, Operacao);
+  CodigoFlash:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChaveCodigoFlash, CodigoFlash );
   PIXChave:= AIni.ReadString(CSessaoBoletoCedenteConfig, CChavePIX, PIXChave);
   PIXTipoChave := TACBrPIXTipoChave(AIni.ReadInteger(CSessaoBoletoCedenteConfig, CTipoChavePix, Integer(PIXTipoChave)));
 end;
@@ -704,6 +708,7 @@ begin
   AIni.WriteString(CSessaoBoletoCedenteConfig, CChaveDigitoVerificadorAgenciaConta, DigitoVerificadorAgenciaConta );
   AIni.WriteInteger(CSessaoBoletoCedenteConfig, CChaveIdentDistribuicao, integer(FIdentDistribuicao));
   AIni.WriteString(CSessaoBoletoCedenteConfig, CChaveOperacao, Operacao);
+  AIni.WriteString(CSessaoBoletoCedenteConfig, CChaveCodigoFlash, CodigoFlash );
   AIni.WriteString(CSessaoBoletoCedenteConfig, CChavePIX, PIXChave);
   AIni.WriteInteger(CSessaoBoletoCedenteConfig, CTipoChavePix, integer(PIXTipoChave));
 end;

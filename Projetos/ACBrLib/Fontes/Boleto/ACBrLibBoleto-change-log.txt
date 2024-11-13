@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2024
+--- ACBrLibBoletoConfig, ACBrLibBoletoDataModule, ACBrLibBoletoConsts ---
+[*] #TK-6052-1 - Adicionado propriedade CodigoFlash utilizado Itau seg Mensagens conf novo manual.
+    Por: Daniel de Morais InfoCotidiano
+
 11/11/2024
 --- ACBrLibBoletoConfig, ACBrLibBoletoDataModule ---
 [*] Alteração Domínio Ambiente WebServices.

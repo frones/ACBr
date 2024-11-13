@@ -177,6 +177,7 @@ begin
     DigitoVerificadorAgenciaConta := LibConfig.BoletoCedenteConfig.DigitoVerificadorAgenciaConta;
     IdentDistribuicao := LibConfig.BoletoCedenteConfig.IdentDistribuicao;
     Operacao := LibConfig.BoletoCedenteConfig.Operacao;
+    CodigoFlash := LibConfig.BoletoCedenteConfig.CodigoFlash;
     PIX.Chave := LibConfig.BoletoCedenteConfig.PIXChave;
     PIX.TipoChavePIX := LibConfig.BoletoCedenteConfig.PIXTipoChave;
   end;

@@ -96,6 +96,7 @@ const
   CChaveDigitoVerificadorAgenciaConta= 'DigitoVerificadorAgenciaConta';
   CChaveIdentDistribuicao= 'IdentDistribuicao';
   CChaveOperacao= 'Operacao';
+  CChaveCodigoFlash= 'CodigoFlash';
   CChavePIX = 'ChavePIX';
   CTipoChavePix = 'TipoChavePIX';
 

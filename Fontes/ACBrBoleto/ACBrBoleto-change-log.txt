@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2024
+-- AACBrBoletoRet_Sicoob.pas --
+[-] TK-6226 - Ajustado try, end, finally 
+	por Daniel de Morais InfoCotidiano
+
 12/11/2024
 -- ACBrBancoAilos.pas --
 [*] TK-6127 - Criado Registro Detalhe - Segmento S Para tipo de impressão 3 conforme novo manual.

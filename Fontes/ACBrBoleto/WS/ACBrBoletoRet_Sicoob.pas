@@ -362,9 +362,9 @@ begin
 
   if RetWS <> '' then
   begin
-
+    AJSon := TACBrJSONObject.Parse(RetWS);
     try
-      AJSon := TACBrJSONObject.Parse(RetWS);
+
       try
 
         if HTTPResultCode >= 400 then
@@ -451,13 +451,14 @@ begin
           end;
         end;
 
-      finally
-        AJson.free;
+      except
+        Result := False;
       end;
 
-    except
-      Result := False;
+    finally
+      AJson.free;
     end;
+
 
   end;
 end;

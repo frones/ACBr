@@ -35,6 +35,12 @@
 library ACBrLibLCB;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
   ACBrLibLCBClass, ACBrLibLCBConfig, ACBrLibLCBDataModule;

@@ -35,6 +35,12 @@
 library ACBrLibPosPrinter;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, printer4lazarus, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
   {$IFDEF MT}ACBrLibPosPrinterMT{$ELSE}ACBrLibPosPrinterST{$ENDIF},

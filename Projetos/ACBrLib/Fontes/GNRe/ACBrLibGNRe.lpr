@@ -3,6 +3,12 @@
 library ACBrLibGNRe;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, sysutils, Classes, Forms, ACBrLibConfig,
   {$IFDEF MT}ACBrLibGNReMT{$ELSE}ACBrLibGNReST{$ENDIF},
   ACBrLibComum, ACBrLibConsts, ACBrLibGNReConfig, ACBrLibResposta,

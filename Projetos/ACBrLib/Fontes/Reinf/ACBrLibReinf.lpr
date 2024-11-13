@@ -36,6 +36,12 @@
 library ACBrLibReinf;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, Forms,
   sysutils, Classes, ACBrLibReinfDataModule,
   {$IFDEF MT} ACBrLibReinfMT {$ELSE} ACBrLibReinfST{$ENDIF},

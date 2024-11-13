@@ -35,6 +35,12 @@
 library ACBrLibNCMs;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   ACBrLibConsts,
   Interfaces, sysutils, Classes, ACBrLibConfig, ACBrLibComum,
   ACBrLibNCMsConfig, ACBrLibNCMsDataModule, ACBrLibNCMsBase,

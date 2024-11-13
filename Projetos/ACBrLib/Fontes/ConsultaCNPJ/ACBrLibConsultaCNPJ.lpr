@@ -35,6 +35,12 @@
 library ACBrLibConsultaCNPJ;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, Forms, sysutils, Classes,
   {$IFDEF MT} ACBrLibConsultaCNPJMT{$ELSE}ACBrLibConsultaCNPJST{$ENDIF},
   ACBrLibConsultaCNPJDataModule, ACBrLibConsultaCNPJConfig, ACBrLibConsultaCNPJBase,

@@ -36,6 +36,12 @@
 library ACBrLibNFSe;
 
 uses
+  {$IFDEF MT}
+   {$IFDEF UNIX}
+    cthreads,
+    cmem, // the c memory manager is on some systems much faster for multi-threading
+   {$ENDIF}
+  {$ENDIF}
   Interfaces, sysutils, Classes, Forms,
   {$IFDEF MT}ACBrLibNFSeMT{$ELSE}ACBrLibNFSeST{$ENDIF},
   DFeReportConfig, ACBrLibNFSeRespostas, ACBrLibNFSeBase, ACBrLibNFSeDataModule;

@@ -1332,6 +1332,7 @@ const
   CKeyBOLETOCEP =                           'CEP';
   CKeyBOLETOComplemento =                   'Complemento';
   CKeyBOLETOUF =                            'UF';
+  CKeyBOLETOCodigoFlash =                   'CodigoFlash';
   CKeyBOLETORespEmis =                      'RespEmis';
   CKeyBOLETOPessoa =                        'Pessoa';
   CKeyBOLETOCodTransmissao =                'CodTransmissao';

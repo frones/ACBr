@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/11/2024
+-- ACBrMonitor1.lfm, ACBrMonitor1.pas, ACBrMonitorConfig.pas, ACBrMonitorConsts.pas, DoBoletoUnit.pas --
+[*] #TK-6052-2 Inclussão da propriedade CodigoFlash utilizado Boleto Itau Segmento de Mensagem 
+    Por: Daniel de Morais InfoCotidiano
+
+13/11/2024
 [*] Alteração Domínio Ambiente WebServices.
     #TK-6212 - https://www.projetoacbr.com.br/forum/topic/80514-acbrboleto-altera%C3%A7%C3%A3o-dom%C3%ADnio-ambiente-webservices/
     Por: Victor Panda / Antonio Carlos Junior

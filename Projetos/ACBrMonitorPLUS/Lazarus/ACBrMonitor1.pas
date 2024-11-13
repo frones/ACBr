@@ -693,6 +693,7 @@ type
     edtTimeoutWebServicesBoleto: TSpinEdit;
     edtToken: TEdit;
     edtURLPFX: TEdit;
+    edtBoletoCodigoFlash: TEdit;
     edUSUCNPJ: TEdit;
     edUSUEndereco: TEdit;
     edUSUIE: TEdit;
@@ -870,6 +871,7 @@ type
     Label285: TLabel;
     Label286: TLabel;
     Label287: TLabel;
+    Label288: TLabel;
     lblConsCNPJ: TLabel;
     lblConsCNPJProvedor: TLabel;
     lblConCNPJSenha: TLabel;
@@ -5770,6 +5772,7 @@ begin
     edtBOLNumero.Text                 := Numero;
     edtBOLBairro.Text                 := Bairro;
     edtBOLCEP.Text                    := CEP;
+    edtBoletoCodigoFlash.Text         := CodigoFlash;
 
     CarregarListaDeCidades(UFtoCUF(UF));
     cbxBOLUF.ItemIndex                := cbxBOLUF.Items.IndexOf(UF);
@@ -5796,7 +5799,6 @@ begin
     with Conta do
     begin
       cbxBOLEmissao.ItemIndex          := RespEmis;
-
       edtModalidade.Text               := Modalidade;
       edtConvenio.Text                 := Convenio;
       cbxBOLBanco.ItemIndex            := Banco;
@@ -7720,6 +7722,7 @@ begin
      Cidade             := cbxEmitCidade.Text ;
      CEP                := ifthen(TrimedCEP = '', '', edtBOLCEP.Text);
      Complemento        := edtBOLComplemento.Text;
+     CodigoFlash        := edtBoletoCodigoFlash.Text;
      UF                 := cbxBOLUF.Text;
 
      with Conta do

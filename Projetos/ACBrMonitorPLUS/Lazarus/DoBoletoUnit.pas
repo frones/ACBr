@@ -1329,6 +1329,7 @@ begin
     CEP                := fACBrBoleto.Cedente.CEP;
     Complemento        := fACBrBoleto.Cedente.Complemento;
     UF                 := fACBrBoleto.Cedente.UF;
+    CodigoFlash        := fACBrBoleto.Cedente.CodigoFlash;
     with Conta do
     begin
       CodCedente       := fACBrBoleto.Cedente.CodigoCedente;

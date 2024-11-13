@@ -741,6 +741,7 @@ type
     CEP                        : String ;
     Complemento                : String ;
     UF                         : String ;
+    CodigoFlash                : String;
     Conta                      : TBoletoConta;
     Layout                     : TBoletoLayout;
     RemessaRetorno             : TBoletoRemessaRetorno;
@@ -1496,6 +1497,7 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETOCEP,           CEP           );
       ini.WriteString( CSecBOLETO, CKeyBOLETOComplemento,   Complemento   );
       ini.WriteString( CSecBOLETO, CKeyBOLETOUF,            UF            );
+      ini.WriteString( CSecBOLETO, CKeyBOLETOCodigoFlash,   CodigoFlash   );
     end;
 
     with Boleto.Conta do
@@ -2305,6 +2307,7 @@ begin
       CEP                    :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCEP,         ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCEP, '') );
       Complemento            :=  ini.ReadString( CSecBOLETO, CKeyBOLETOComplemento, ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteComplemento, '') );
       UF                     :=  ini.ReadString( CSecBOLETO, CKeyBOLETOUF,          ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteUF, '') );
+      CodigoFlash            :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodigoFlash,   CodigoFlash);
     end;
 
     with Boleto.Conta do

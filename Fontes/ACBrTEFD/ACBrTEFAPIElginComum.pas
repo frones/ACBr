@@ -828,7 +828,6 @@ class function TACBrTEFElginUtils.FormatNumber(const AStr: string;
 var
   dotPos: integer;
   cleanString: string;
-  num: double;
   len: integer;
 begin
   cleanString := RemoveNonNumericChars(AStr);

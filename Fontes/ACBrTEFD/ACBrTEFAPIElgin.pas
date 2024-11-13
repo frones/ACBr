@@ -547,7 +547,7 @@ function TACBrTEFAPIClassElgin.EfetuarPagamento(ValorPagto: Currency;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  CartaoInt, vCount, i: integer;
+  CartaoInt, vCount: integer;
   CACount, CartaoAceito: TACBrTEFTipoCartao;
   resp, sValor: String;
 begin

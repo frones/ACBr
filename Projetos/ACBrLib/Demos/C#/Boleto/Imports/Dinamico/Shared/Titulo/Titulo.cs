@@ -48,6 +48,8 @@ namespace ACBrLib.Boleto
 
         public DateTime? DataMoraJuros { get; set; }
 
+        public ACBrCodigoMulta CodigoMulta { get; set; }
+
         public DateTime? DataMulta { get; set; }
 
         public int DiasDeProtesto { get; set; }

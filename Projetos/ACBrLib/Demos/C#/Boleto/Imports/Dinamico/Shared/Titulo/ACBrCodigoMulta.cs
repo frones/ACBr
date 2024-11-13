@@ -3,6 +3,7 @@
     public enum ACBrCodigoMulta
     {
         cmValorFixo,
-        cmPercentual
+        cmPercentual,
+        cmIsenato
     }
 }

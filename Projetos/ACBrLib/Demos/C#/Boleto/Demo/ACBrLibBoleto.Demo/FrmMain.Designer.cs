@@ -191,6 +191,7 @@
             this.btnGerarRemessaStream = new System.Windows.Forms.Button();
             this.btnLerRetornoStream = new System.Windows.Forms.Button();
             this.btnLimparResposta = new System.Windows.Forms.Button();
+            this.rdbSandBox = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1404,6 +1405,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.rdbSandBox);
             this.groupBox3.Controls.Add(this.rdbHomologacao);
             this.groupBox3.Controls.Add(this.rdbProducao);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1418,7 +1420,7 @@
             // 
             this.rdbHomologacao.AutoSize = true;
             this.rdbHomologacao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbHomologacao.Location = new System.Drawing.Point(6, 19);
+            this.rdbHomologacao.Location = new System.Drawing.Point(106, 19);
             this.rdbHomologacao.Name = "rdbHomologacao";
             this.rdbHomologacao.Size = new System.Drawing.Size(91, 17);
             this.rdbHomologacao.TabIndex = 1;
@@ -1430,7 +1432,7 @@
             this.rdbProducao.AutoSize = true;
             this.rdbProducao.Checked = true;
             this.rdbProducao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbProducao.Location = new System.Drawing.Point(211, 19);
+            this.rdbProducao.Location = new System.Drawing.Point(29, 19);
             this.rdbProducao.Name = "rdbProducao";
             this.rdbProducao.Size = new System.Drawing.Size(71, 17);
             this.rdbProducao.TabIndex = 0;
@@ -1915,6 +1917,17 @@
             this.btnLimparResposta.UseVisualStyleBackColor = true;
             this.btnLimparResposta.Click += new System.EventHandler(this.btnLimparResposta_Click);
             // 
+            // rdbSandBox
+            // 
+            this.rdbSandBox.AutoSize = true;
+            this.rdbSandBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbSandBox.Location = new System.Drawing.Point(203, 19);
+            this.rdbSandBox.Name = "rdbSandBox";
+            this.rdbSandBox.Size = new System.Drawing.Size(68, 17);
+            this.rdbSandBox.TabIndex = 2;
+            this.rdbSandBox.Text = "SandBox";
+            this.rdbSandBox.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2152,6 +2165,7 @@
         private System.Windows.Forms.Button btnGerarRemessaStream;
         private System.Windows.Forms.Button btnLerRetornoStream;
         private System.Windows.Forms.Button btnLimparResposta;
+        private System.Windows.Forms.RadioButton rdbSandBox;
     }
 }
 

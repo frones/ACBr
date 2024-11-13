@@ -2,10 +2,13 @@
 {
     public enum AmbienteWebservice
     {
+        [EnumValue("0")]
+        Producao,
+
         [EnumValue("1")]
         Homologaçao,
 
-        [EnumValue("0")]
-        Producao
+        [EnumValue("2")]
+        SandBox,
     }
 }

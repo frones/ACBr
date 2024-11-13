@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2024
+[*] Alteração Domínio Ambiente WebServices.
+    #TK-6212 - https://www.projetoacbr.com.br/forum/topic/80514-acbrboleto-altera%C3%A7%C3%A3o-dom%C3%ADnio-ambiente-webservices/
+    Por: Victor Panda / Antonio Carlos Junior
+
 01/11/2024
 -- DoACBrNFeUnit --
 [*] #TK-6145: Ajuste visando a correta exibição da resposta em formato INI para o EnviarNFe.

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6225: A cidade de Cariacica/ES trocou de URL mas o provedor continua
+    o mesmo.
+   Por: Heronim Antonio Marçal
+
 12/11/2024
 -- Giss.Provider --
 [*] Ajustes para realizar o cancelamento.

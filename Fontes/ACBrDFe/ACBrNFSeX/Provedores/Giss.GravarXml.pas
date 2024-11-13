@@ -69,6 +69,8 @@ begin
   NrOcorrCodigoPaisServico := 0;
   NrOcorrCodigoPaisTomador := -1;
 
+  NrOcorrAliquota := 1;
+
   TagTomador := 'TomadorServico';
 
 //  PrefixoPadrao := 'ns4';

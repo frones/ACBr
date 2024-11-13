@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/11/2024
+-- Giss.GravarXml --
+[*] Alteração visando gerar a tag Aliquota mesmo que o seu valor seja zero.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6225: A cidade de Cariacica/ES trocou de URL mas o provedor continua
     o mesmo.

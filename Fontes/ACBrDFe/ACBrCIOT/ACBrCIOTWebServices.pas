@@ -603,6 +603,23 @@ begin
         FPArqResp := 'res-AlterarDataLiberacaoPagamento';
         Acao      := 'AlterarDataLiberacaoPagamento';
       end;
+
+    opRegistrarQtdeMercadoriaDesembarque:
+      begin
+        FPArqEnv  := 'ped-RegistrarQtdeMercadoriaDesembarque';
+        FPArqResp := 'res-RegistrarQtdeMercadoriaDesembarque';
+        Acao      := 'RegistrarQuantidadeDaMercadoriaNoDesembarque';
+
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:reg="http://schemas.ipc.adm.br/efrete/pef/objects/' + Acao + '"';
+      end;
+
+    opRegistrarPagamentoQuitacao:
+      begin
+        FPArqEnv  := 'ped-RegistrarPagamentoQuitacao';
+        FPArqResp := 'res-RegistrarPagamentoQuitacao';
+        Acao      := 'RegistrarPagamentoQuitacao';
+      end;
   end;
 
   FPServico := CURL_WSDL + Acao;

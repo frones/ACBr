@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2024
+-- ACBrCIOTWebServices --
+[*] Correção para gerar corretamente SoapAction antes do envio das novas Operações
+    implementadas.
+  Por: Italo Giurizzato Junior
+
 30/10/2024
 -- Diversos --
 [+] Implementado as Operações: Registrar Qtde da Mercadoria no Desembarque e 

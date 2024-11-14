@@ -1290,7 +1290,7 @@ begin
               J := 1;
               while true do
               begin
-                sSecao := 'dePag' + IntToStrZero(J, 3);
+                sSecao := 'detPag' + IntToStrZero(J, 3);
                 sFim := OnlyNumber(INIRec.ReadString(sSecao,'vPag', 'FIM'));
 
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then

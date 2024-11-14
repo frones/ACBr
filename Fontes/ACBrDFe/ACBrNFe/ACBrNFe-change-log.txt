@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2024
+-- ACBrNFe.EnvEvento --
+[-] Correção na grafia da seção de detalhamento de pagamento ao ler o arquivo INI.
+   Por: Italo Giurizzato Junior
+
 04/11/2024
 -- ACBrNFe.XmlReader --
 [*] #TK-6202: Ajuste visando a correta leitura das informações do grupo ICMSST
@@ -51,7 +56,7 @@ Símbolo : Significado
 
 21/10/2024
 -- pcnConversaoNFe --
-[+] acrescentado o enumerador: teRegistroPassagemMDFe.
+[+] Acrescentado o enumerador: teRegistroPassagemMDFe.
    Por: Italo Giurizzato Junior
 -- ACBrDFeDANFeReport --
 [*] Adiciona validação que verifica se propriedade tem valor diferente de nil antes de utilizar.

@@ -306,7 +306,7 @@ begin
              '1'                                                        + //59 - Forma de cadastramento do título no banco (1=Cobrança Registrada, 2=Cobrança sem Registro)
              ' '                                                        + //60 - Tipo de documento: Brancos
              ATipoBoleto                                                + //61 - Quem emite
-             ' '                                                        + //62 - Quem distribui
+             ATipoBoleto                                                + //62 - Quem distribui
              PadRight(NumeroDocumento, 10)                              + //63 a 72 - Nº do documento de cobrança
              Space(5)                                                   + //73 a 77 - Brancos
              FormatDateTime('ddmmyyyy', Vencimento)                     + //78 a 85 - Data de vencimento do título

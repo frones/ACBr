@@ -76,6 +76,8 @@ type
     procedure InterpretarRespostaAPI; override;
     procedure InicializarChamadaAPI(aMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure FinalizarChamadaAPI; override;
+
+    procedure CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas); override;
   public
     constructor Create(aACBrTEFAPI: TACBrTEFAPIComum);
     destructor Destroy; override;
@@ -262,6 +264,7 @@ begin
   wOpcao := -1;
   Result := False;
   Cancelar := False;
+  DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
   DestaxaClient.Socket.Consultar;
 
   if (DestaxaClient.Resposta.servico <> dxsConsultar) or
@@ -274,7 +277,10 @@ begin
   QuandoPerguntarMenuAPI(CDESTAXA_MENU_ADMIN, sr, wOpcao, Cancelar);
 
   if (wOpcao >= 0) then
+  begin
+    DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
     Result := DestaxaClient.ExecutarTransacao(sr[wOpcao]);
+  end;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.InterpretarRespostaAPI;
@@ -347,6 +353,12 @@ begin
   if NaoEstaZerado(ValorPagto) then
     DestaxaClient.Requisicao.transacao_valor := ValorPagto;
 
+  if (Modalidade = tefmpCarteiraVirtual) then
+  begin
+    DestaxaClient.DigitalPagar;
+    Exit;
+  end;
+
   case Financiamento of
     tefmfAVista: DestaxaClient.Requisicao.transacao_pagamento := dpgAVista;
     tefmfPredatado: DestaxaClient.Requisicao.transacao_pagamento := dpgPreDatado;
@@ -406,14 +418,19 @@ end;
 function TACBrTEFAPIClassDestaxa.CancelarTransacao(const NSU, CodigoAutorizacaoTransacao: String; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: String; const Rede: String): Boolean;
 begin
-  if NaoEstaVazio(NSU) then
-    DestaxaClient.Requisicao.transacao_nsu := NSU;
-  if NaoEstaZerado(DataHoraTransacao) then
-    DestaxaClient.Requisicao.transacao_data := DataHoraTransacao;
-  if NaoEstaZerado(Valor) then
-    DestaxaClient.Requisicao.transacao_valor := Valor;
+  DestaxaClient.IniciarRequisicao;
+  try
+    if NaoEstaVazio(NSU) then
+      DestaxaClient.Requisicao.transacao_nsu := NSU;
+    if NaoEstaZerado(DataHoraTransacao) then
+      DestaxaClient.Requisicao.transacao_data := DataHoraTransacao;
+    if NaoEstaZerado(Valor) then
+      DestaxaClient.Requisicao.transacao_valor := Valor;
 
-  Result := DestaxaClient.AdministracaoCancelar;
+    Result := DestaxaClient.AdministracaoCancelar;
+  finally
+    DestaxaClient.FinalizarRequisicao;
+  end;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.ExibirMensagemPinPad(const MsgPinPad: String);
@@ -447,6 +464,7 @@ end;
 procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 begin
+  DestaxaClient.Requisicao.Clear;
   if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
     DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
   else
@@ -456,16 +474,70 @@ begin
   DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
 end;
 
+procedure TACBrTEFAPIClassDestaxa.CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas);
+var
+  ultNSU: String;
+  wResp: TACBrTEFResp;
+begin
+  ultNSU := EmptyStr;
+  AListaRespostasTEF.CarregarRespostasDoDiretorioTrabalho; 
+  Exit;
+
+  DestaxaClient.Socket.ColetaAutomatica := False;
+  DestaxaClient.IniciarRequisicao;
+  try
+    DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
+    DestaxaClient.Requisicao.retorno := drqExecutarServico;
+    DestaxaClient.ExecutarTransacao(CDESTAXA_ADM_PENDENTE);
+    if NaoEstaZerado(DestaxaClient.Resposta.automacao_coleta_sequencial) then
+    begin
+      DestaxaClient.ColetaRequisicao.automacao_coleta_retorno := dcrExecutarProcedimento;
+      DestaxaClient.ColetaRequisicao.automacao_coleta_sequencial := DestaxaClient.ColetaResposta.automacao_coleta_sequencial;
+      DestaxaClient.ColetaRequisicao.automacao_coleta_informacao := CDESTAXA_ADM_PRIMEIRA;
+      DestaxaClient.Socket.ExecutarColeta;
+      while (DestaxaClient.ColetaResposta.automacao_coleta_retorno = dcrExecutarProcedimento) and
+            (DestaxaClient.ColetaResposta.transacao_nsu <> ultNSU) do
+      begin
+        ultNSU := DestaxaClient.ColetaResposta.transacao_nsu;
+        wResp := TACBrTEFRespDestaxa.Create;
+        try
+          wResp.Conteudo.GravaInformacao(899, 201, DestaxaClient.ColetaResposta.AsString);
+          wResp.ConteudoToProperty;
+
+          AListaRespostasTEF.AdicionarRespostaTEF(wResp);
+        finally
+          wResp.Free;
+        end;
+        DestaxaClient.ColetaRequisicao.automacao_coleta_retorno := dcrExecutarProcedimento;
+        DestaxaClient.ColetaRequisicao.automacao_coleta_sequencial := DestaxaClient.ColetaResposta.automacao_coleta_sequencial;
+        DestaxaClient.ColetaRequisicao.automacao_coleta_informacao := CDESTAXA_ADM_PROXIMA;
+        DestaxaClient.Socket.ExecutarColeta;
+      end;
+    end;
+  finally
+    DestaxaClient.Socket.ColetaAutomatica := True;
+    DestaxaClient.FinalizarRequisicao;
+  end;
+end;
+
 procedure TACBrTEFAPIClassDestaxa.ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao);
 begin
-  //DestaxaClient.AdministracaoPendente;
+  if (AStatus in [tefstsErroImpressao, tefstsErroDispesador, tefstsErroEnergia, tefstsErroDiverso]) then
+  begin
+    CancelarTransacao(
+      fpACBrTEFAPI.UltimaRespostaTEF.NSU,
+      fpACBrTEFAPI.UltimaRespostaTEF.CodigoAutorizacaoTransacao,
+      fpACBrTEFAPI.UltimaRespostaTEF.DataHoraTransacaoLocal,
+      fpACBrTEFAPI.UltimaRespostaTEF.ValorTotal, EmptyStr,
+      fpACBrTEFAPI.UltimaRespostaTEF.Rede);
+  end;
 end;
 
 procedure TACBrTEFAPIClassDestaxa.AbortarTransacaoEmAndamento;
 begin
   DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
   DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
-  DestaxaClient.Socket.Executar(CDESTAXA_CARTAO_VENDER);
+  DestaxaClient.Socket.Executar(DestaxaClient.Resposta.transacao);
 end;
 
 function TACBrTEFAPIClassDestaxa.VerificarPresencaPinPad: Byte;

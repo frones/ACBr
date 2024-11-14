@@ -517,7 +517,7 @@ begin
   IniciarOperacao;
   StatusVenda := stsOperacaoTEF;
   try
-    ACBrTEFAPI1.EfetuarAdministrativa('', '');
+    ACBrTEFAPI1.EfetuarAdministrativa(tefopAdministrativo);
   finally
     StatusVenda := stsFinalizada;
   end;
@@ -1460,8 +1460,7 @@ begin
       end;
       *)
       Ok := ACBrTEFAPI1.EfetuarPagamento( IntToStr(Venda.NumOperacao),
-                                          AValor, Modalidade, CartoesAceitos,
-                                          tefmfAVista );
+                                          AValor, Modalidade, CartoesAceitos);
 
       Ok := Ok and
             ACBrTEFAPI1.UltimaRespostaTEF.Sucesso and

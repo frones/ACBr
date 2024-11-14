@@ -113,6 +113,7 @@ end;
 procedure TNFSeR_Simple.LerTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  aValor: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('tTomador');
 
@@ -128,6 +129,13 @@ begin
       Endereco.UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('sUfTomador'), tcStr);
 
       Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('sEmailTomador'), tcStr);
+
+      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('sTipoTomador'), tcStr);
+
+      TomadorExterior := snNao;
+
+      if aValor = 'E' then
+        TomadorExterior := snSim;
     end;
   end;
 end;

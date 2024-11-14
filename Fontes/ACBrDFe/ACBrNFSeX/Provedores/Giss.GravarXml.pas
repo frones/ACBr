@@ -72,8 +72,6 @@ begin
   NrOcorrAliquota := 1;
 
   TagTomador := 'TomadorServico';
-
-//  PrefixoPadrao := 'ns4';
 end;
 
 end.

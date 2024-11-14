@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/11/2024
+-- Giss.GravarXml/Giss.Provider --
+[*] Limpeza, remoção de linhas comentadas.
+   Por: Italo Giurizzato Junior
+-- RLZ.Provider --
+[*] Alterada a configuração para assinar o Lote.
+   Por: Italo Giurizzato Junior
+-- Simple.LerXml --
+[*] Alteração visando ler a tag sTipoTomador.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6098: A cidade de Gramado/RS trocou de URL mas o provedor continua
     o mesmo.

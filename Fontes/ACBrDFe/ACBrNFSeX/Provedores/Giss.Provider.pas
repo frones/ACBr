@@ -129,9 +129,6 @@ begin
   begin
     GerarPrestadorLoteRps := True;
 
-//    Prefixo := 'ns3';
-//    PrefixoTS := 'ns4';
-
     XmlRps.xmlns := 'http://www.giss.com.br/tipos-v2_04.xsd';
 
     LoteRps.xmlns := 'http://www.giss.com.br/enviar-lote-rps-envio-v2_04.xsd';
@@ -171,8 +168,6 @@ begin
     GerarNFSe := 'gerar-nfse-envio-v2_04.xsd';
     RecepcionarSincrono := 'enviar-lote-rps-sincrono-envio-v2_04.xsd';
     SubstituirNFSe := 'substituir-nfse-envio-v2_04.xsd';
-
-    Validar := False;
   end;
 end;
 
@@ -504,13 +499,6 @@ begin
   end;
 
   inherited PrepararConsultaLoteRps(Response);
-  {
-  with ConfigMsgDados do
-  begin
-    Prefixo := '';
-    PrefixoTS := '';
-  end;
-  }
 end;
 
 procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeporRps(
@@ -523,13 +511,6 @@ begin
   end;
 
   inherited PrepararConsultaNFSeporRps(Response);
-  {
-  with ConfigMsgDados do
-  begin
-    Prefixo := '';
-    PrefixoTS := '';
-  end;
-  }
 end;
 
 procedure TACBrNFSeProviderGiss204.PrepararConsultaNFSeporFaixa(
@@ -542,13 +523,6 @@ begin
   end;
 
   inherited PrepararConsultaNFSeporFaixa(Response);
-  {
-  with ConfigMsgDados do
-  begin
-    Prefixo := '';
-    PrefixoTS := '';
-  end;
-  }
 end;
 
 procedure TACBrNFSeProviderGiss204.GerarMsgDadosConsultaNFSeporFaixa(
@@ -590,13 +564,6 @@ begin
   end;
 
   inherited PrepararCancelaNFSe(Response);
-  {
-  with ConfigMsgDados do
-  begin
-    Prefixo := '';
-    PrefixoTS := '';
-  end;
-  }
 end;
 
 procedure TACBrNFSeProviderGiss204.GerarMsgDadosCancelaNFSe(

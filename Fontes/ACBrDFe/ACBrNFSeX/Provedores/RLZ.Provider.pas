@@ -115,6 +115,8 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
+  ConfigAssinar.LoteRps := True;
+
   with ConfigWebServices do
   begin
     VersaoDados := '2.03';

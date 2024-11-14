@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6098: A cidade de Gramado/RS trocou de URL mas o provedor continua
+    o mesmo.
+   Por: Sanvitron
+
 13/11/2024
 -- Giss.GravarXml --
 [*] Alteração visando gerar a tag Aliquota mesmo que o seu valor seja zero.

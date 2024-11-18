@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2024
+-- ACBrLibPIXCDBase, ACBrLibPIXCDRespostas --
+[*] #TK-6237: Adiciona na leitura do retorno as informações relacionadas a cobrança.
+   Por: Diego Folieni
+
 30/10/2024
 --- ACBrLibPIXCDRespostas ---
 [*] Ajustes respostas do método PIXCD_CriarCobranca e PIXCD_ConsultarCobranca

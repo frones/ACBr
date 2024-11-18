@@ -35,7 +35,7 @@ unit ACBrLibPIXCDRespostas;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, StrUtils,
   ACBrBase, ACBrPIXCD, ACBrPIXBase,
   ACBrPIXSchemasCob, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
   ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao, ACBrPIXSchemasPixConsultados,
@@ -233,7 +233,7 @@ type
       fPix: TACBrObjectList;
 
     public
-      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao; const AIndice: Integer = 0); reintroduce;
       destructor Destroy; override;
 
       procedure Clear;
@@ -266,7 +266,7 @@ type
       fPix: TACBrObjectList;
 
     public
-      constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao; const AIndice: Integer = 0); reintroduce;
       destructor Destroy; override;
 
       procedure Clear;
@@ -353,7 +353,7 @@ type
   { TLibPIXCDCobsVConsultadas }
   TLibPIXCDCobsVConsultadas = class(TACBrLibRespostaBase)
     private
-      fcobsV: TLibPIXCDCobVCompletaArray;
+      fcobsV: TACBrObjectList;
       fparametros: TLibPIXCDParametrosConsultaCob;
 
     public
@@ -364,7 +364,7 @@ type
       procedure Processar(const CobsVConsultadas: TACBrPIXCobsVConsultadas);
 
     published
-      property cobsV: TLibPIXCDCobVCompletaArray read fcobsV write fcobsV;
+      property cobsV: TACBrObjectList read fcobsV write fcobsV;
       property parametros: TLibPIXCDParametrosConsultaCob read fparametros write fparametros;
   end;
 
@@ -387,7 +387,7 @@ type
   { TLibPIXCDCobsConsultadas }
   TLibPIXCDCobsConsultadas = class(TACBrLibRespostaBase)
     private
-      fcobs: TLibPIXCDCobCompletaArray;
+      fcobs: TACBrObjectList;
       fparametros: TLibPIXCDParametrosConsultaCob;
 
     public
@@ -398,7 +398,7 @@ type
       procedure Processar(const CobsConsultadas: TACBrPIXCobsConsultadas);
 
     published
-      property cobs: TLibPIXCDCobCompletaArray read fcobs write fcobs;
+      property cobs: TACBrObjectList read fcobs write fcobs;
       property parametros: TLibPIXCDParametrosConsultaCob read fparametros write fparametros;
   end;
 
@@ -751,14 +751,16 @@ begin
 end;
 
 { TLibPIXCDCobVResposta }
-constructor TLibPIXCDCobVResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+constructor TLibPIXCDCobVResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao; const AIndice: Integer = 0);
 begin
-  inherited Create(CSessaoRespCobVGerada, ATipo, AFormato);
-  fcalendario := TLibPIXCDCalendarioVInfo.Create(CSessaoRespCalendario, ATipo, AFormato);
-  fdevedor := TLibPIXCDDevedorInfo.Create(CSessaoRespDevedor, ATipo, AFormato);
-  floc := TLibPIXCDLocInfo.Create(CSessaoRespLocation, ATipo, AFormato);
-  frecebedor := TLibPIXCDDevedorInfo.Create(CSessaoRespRecebedor, ATipo, AFormato);
-  fvalor := TLibPixCDValorVInfo.Create(CSessaoRespValor, ATipo, AFormato);
+  //Usada em mais de um local.
+  //Parâmetro AIndice usado quando há listas.
+  inherited Create(IfThen(AIndice > 0, ASessao + IntToStr(AIndice), ASessao), ATipo, AFormato);
+  fcalendario := TLibPIXCDCalendarioVInfo.Create(IfThen(AIndice > 0, CSessaoRespCalendario + IntToStr(AIndice), CSessaoRespCalendario), ATipo, AFormato);
+  fdevedor := TLibPIXCDDevedorInfo.Create(IfThen(AIndice > 0, CSessaoRespDevedor + IntToStr(AIndice), CSessaoRespDevedor), ATipo, AFormato);
+  floc := TLibPIXCDLocInfo.Create(IfThen(AIndice > 0, CSessaoRespLocation + IntToStr(AIndice), CSessaoRespLocation), ATipo, AFormato);
+  frecebedor := TLibPIXCDDevedorInfo.Create(IfThen(AIndice > 0, CSessaoRespRecebedor + IntToStr(AIndice), CSessaoRespRecebedor), ATipo, AFormato);
+  fvalor := TLibPixCDValorVInfo.Create(IfThen(AIndice > 0, CSessaoRespValor + IntToStr(AIndice), CSessaoRespValor), ATipo, AFormato);
   fPix := TACBrObjectList.Create;
   Clear;
 end;
@@ -815,15 +817,15 @@ begin
 end;
 
 { TLibPIXCDCobResposta }
-constructor TLibPIXCDCobResposta.Create(const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodificacao);
+constructor TLibPIXCDCobResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao; const AIndice: Integer = 0);
 begin
-  inherited Create(CSessaoRespCobGerada, ATipo, AFormato);
-
-  fCalendario := TLibPIXCDCalendarioInfo.Create(CSessaoRespCalendario, ATipo, AFormato);
-  fDevedor := TLibPIXCDDevedorInfo.Create(CSessaoRespDevedor, ATipo, AFormato);
-  fLoc := TLibPIXCDLocInfo.Create(CSessaoRespLocation, ATipo, AFormato);
-  fValor := TLibPIXCDValorInfo.Create(CSessaoRespValor, ATipo, AFormato);
+  inherited Create(IfThen(AIndice > 0, ASessao + IntToStr(AIndice), ASessao), ATipo, AFormato);
+  //Usada em mais de uma ocasião.
+  //O parâmetro AIndice é usado quando houver lista.
+  fCalendario := TLibPIXCDCalendarioInfo.Create(ifThen(AIndice > 0, CSessaoRespCalendario + IntToStr(AIndice), CSessaoRespCalendario), ATipo, AFormato);
+  fDevedor := TLibPIXCDDevedorInfo.Create(IfThen(AIndice > 0, CSessaoRespDevedor + IntToStr(AIndice), CSessaoRespDevedor), ATipo, AFormato);
+  fLoc := TLibPIXCDLocInfo.Create(IfThen(AIndice > 0, CSessaoRespLocation + IntToStr(AIndice), CSessaoRespLocation), ATipo, AFormato);
+  fValor := TLibPIXCDValorInfo.Create(IfThen(AIndice > 0, CSessaoRespValor + IntToStr(AIndice), CSessaoRespValor), ATipo, AFormato);
   fPix := TACBrObjectList.Create;
   Clear;
 end;
@@ -1107,7 +1109,7 @@ end;
 constructor TLibPIXCDCobsConsultadas.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespCobsConsultadas, ATipo, AFormato);
-  fcobs := TLibPIXCDCobCompletaArray.Create(CSessaoRespCobCompleta, ATipo, AFormato);
+  fcobs := TACBrObjectList.Create;
   fparametros := TLibPIXCDParametrosConsultaCob.Create(CSessaoRespParametrosConsultaCob, ATipo, AFormato);
 end;
 
@@ -1127,23 +1129,22 @@ end;
 procedure TLibPIXCDCobsConsultadas.Processar(const CobsConsultadas: TACBrPIXCobsConsultadas);
 var
   i: Integer;
-  InfoCobs: TLibPIXCDCobCompletaArray;
+  InfoCobs: TLibPIXCDCobResposta;
 begin
-
+  parametros.Processar(CobsConsultadas.parametros);
   for i := 0 to CobsConsultadas.cobs.Count - 1 do
   begin
-    InfoCobs := TLibPIXCDCobCompletaArray.Create(CSessaoRespCobsInfo + IntToStr(i), Tipo, Codificacao);
-    InfoCobs.Processar(CobsConsultadas.cobs.Items[i].pix);
-    cobs.cobs.Add(InfoCobs);
+    InfoCobs := TLibPIXCDCobResposta.Create(CSessaoRespCobsInfo, Tipo, Codificacao, i+1);
+    InfoCobs.ProcessarCobCompleta(CobsConsultadas.cobs.Items[i]);
+    cobs.Add(InfoCobs);
   end;
-  parametros.Processar(CobsConsultadas.parametros);
 end;
 
 { TLibPIXCDCobsVConsultadas }
 constructor TLibPIXCDCobsVConsultadas.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespCobsVConsultadas, ATipo, AFormato);
-  fcobsV := TLibPIXCDCobVCompletaArray.Create(CSessaoRespCobCompleta, ATipo, AFormato);
+  fcobsV := TACBrObjectList.Create;
   fparametros := TLibPIXCDParametrosConsultaCob.Create(CSessaoRespParametrosConsultaCobV, ATipo, AFormato);
 end;
 
@@ -1163,15 +1164,15 @@ end;
 procedure TLibPIXCDCobsVConsultadas.Processar(const CobsVConsultadas: TACBrPIXCobsVConsultadas);
 var
   i: Integer;
-  InfoCobsV: TLibPIXCDCobVCompletaArray;
+  InfoCobsV: TLibPIXCDCobVResposta;
 begin
+  parametros.Processar(CobsVConsultadas.parametros);
   for i := 0 to CobsVConsultadas.cobs.Count - 1 do
   begin
-    InfoCobsV := TLibPIXCDCobVCompletaArray.Create(CSessaoRespCobsVInfo + IntToStr(i), Tipo, Codificacao);;
-    InfoCobsV.Processar(CobsVConsultadas.cobs.Items[i].pix);
-    cobsV.cobsV.Add(InfoCobsV);
+    InfoCobsV := TLibPIXCDCobVResposta.Create(CSessaoRespCobsVInfo, Tipo, Codificacao, i+1);
+    InfoCobsV.ProcessarCobVCompleta(CobsVConsultadas.cobs.Items[i]);
+    cobsV.Add(InfoCobsV);
   end;
-  parametros.Processar(CobsVConsultadas.parametros);
 end;
 
 { TLibPIXCDCobCompletaArray }

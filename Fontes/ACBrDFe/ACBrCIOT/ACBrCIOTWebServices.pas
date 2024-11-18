@@ -619,6 +619,9 @@ begin
         FPArqEnv  := 'ped-RegistrarPagamentoQuitacao';
         FPArqResp := 'res-RegistrarPagamentoQuitacao';
         Acao      := 'RegistrarPagamentoQuitacao';
+
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:reg="http://schemas.ipc.adm.br/efrete/pef/objects/' + Acao + '"';
       end;
   end;
 

@@ -1991,7 +1991,7 @@ begin
 
           if NotasFiscais.Count > 0 then
           begin
-            Gerador.Prefixo := 'enc:';
+            Gerador.Prefixo := 'reg:';
             Gerador.wGrupo('NotasFiscais', 'AP37');
 
             for i := 0 to NotasFiscais.Count -1 do
@@ -2009,6 +2009,7 @@ begin
           end;
         end;
 
+        Gerador.Prefixo := 'obj:';
         Gerador.wGrupo('/RegistrarQuantidadeDaMercadoriaNoDesembarqueRequest');
 
         Gerador.Prefixo := 'pef:';
@@ -2030,7 +2031,7 @@ begin
 
           if NotasFiscais.Count > 0 then
           begin
-            Gerador.Prefixo := 'enc:';
+            Gerador.Prefixo := 'reg:';
             Gerador.wGrupo('NotasFiscais', 'AP37');
 
             for i := 0 to NotasFiscais.Count -1 do
@@ -2048,6 +2049,7 @@ begin
           end;
         end;
 
+        Gerador.Prefixo := 'obj:';
         Gerador.wGrupo('/RegistrarPagamentoQuitacaoRequest');
 
         Gerador.Prefixo := 'pef:';

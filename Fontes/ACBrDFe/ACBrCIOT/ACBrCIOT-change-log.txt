@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2024
+-- ACBrCIOTWebServices/pcnCIOTW_eFrete --
+[*] Correção, estava gerando algumas tags com o prefixo errado.
+  Por: Italo Giurizzato Junior
+
 14/11/2024
 -- ACBrCIOTWebServices --
 [*] Correção para gerar corretamente SoapAction antes do envio das novas Operações

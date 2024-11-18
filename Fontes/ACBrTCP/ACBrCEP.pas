@@ -1185,7 +1185,7 @@ end ;
 constructor TACBrWSViaCEP.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-  fpURL := 'http://viacep.com.br/ws/';
+  fpURL := 'https://viacep.com.br/ws/';
 end;
 
 procedure TACBrWSViaCEP.BuscarPorCEP(const ACEP: String);

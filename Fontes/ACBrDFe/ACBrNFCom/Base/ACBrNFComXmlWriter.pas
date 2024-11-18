@@ -865,17 +865,20 @@ function TNFComXmlWriter.Gerar_det_imposto_ICMS(aDet: Integer): TACBrXmlNode;
   end;
 
 var
-  sTagTemp: String;
+  sTagTemp, sCST: String;
 
 begin
   with NFCom.Det[aDet].Imposto.ICMS do
   begin
     sTagTemp := BuscaTag(CST);
+    sCST := CSTICMSTOStr(CST);
+
+    if sCST = 'SN' then
+      sCST := '90';
 
     Result := FDocument.CreateElement('ICMS' + sTagTemp);
 
-    Result.AppendChild(AddNode(tcStr, '#174', 'CST', 2, 2, 1,
-                                                   CSTICMSTOStr(CST), DSC_CST));
+    Result.AppendChild(AddNode(tcStr, '#174', 'CST', 2, 2, 1, sCST, DSC_CST));
 
     case CST of
       cst00:

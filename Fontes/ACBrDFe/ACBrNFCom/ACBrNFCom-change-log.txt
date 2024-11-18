@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/11/2024
+-- ACBrNFComXmlWriter --
+[-] Quando o ICMS for SN (Simples Nacional) gerar com o valor 90 para o CST.
+   Por: Italo Giurizzato Junior
+
 08/10/2024
 -- ACBrNFComServicos --
 [+] Incluído as URLs de homologação da SEFAZ-MG

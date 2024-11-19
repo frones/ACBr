@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2024
+-- ACBrLibPIXCMateraRespostas --
+[*] #TK-6170: Corrige a resposta do método ConsultarExtrato
+  Por: Antonio Carlos Junior / Julio Cavalcante / Diego Folieni
+
 18/11/2024
 -- ACBrLibPIXCDBase, ACBrLibPIXCDRespostas --
 [*] #TK-6237: Adiciona na leitura do retorno as informações relacionadas a cobrança.

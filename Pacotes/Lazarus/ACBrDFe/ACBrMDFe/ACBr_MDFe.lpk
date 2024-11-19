@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="25">
+    <Files Count="31">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas"/>
         <UnitName Value="ACBrMDFe"/>
@@ -102,21 +102,45 @@
         <UnitName Value="pmdfeProcInfraSA"/>
       </Item21>
       <Item22>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas"/>
-        <UnitName Value="ACBrMDFe.XmlReader"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.ProcInfraSA.pas"/>
+        <UnitName Value="ACBrMDFe.ProcInfraSA"/>
       </Item22>
       <Item23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlWriter.pas"/>
-        <UnitName Value="ACBrMDFe.XmlWriter"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas"/>
+        <UnitName Value="ACBrMDFe.XmlReader"/>
       </Item23>
       <Item24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsNaoEnc.pas"/>
-        <UnitName Value="ACBrMDFe.ConsNaoEnc"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlWriter.pas"/>
+        <UnitName Value="ACBrMDFe.XmlWriter"/>
       </Item24>
       <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsNaoEnc.pas"/>
+        <UnitName Value="ACBrMDFe.ConsNaoEnc"/>
+      </Item25>
+      <Item26>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetConsNaoEnc.pas"/>
         <UnitName Value="ACBrMDFe.RetConsNaoEnc"/>
-      </Item25>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsSit.pas"/>
+        <UnitName Value="ACBrMDFe.ConsSit"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetConsSit.pas"/>
+        <UnitName Value="ACBrMDFe.RetConsSit"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.EventoClass.pas"/>
+        <UnitName Value="ACBrMDFe.EventoClass"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.EnvEvento.pas"/>
+        <UnitName Value="ACBrMDFe.EnvEvento"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetEnvEvento.pas"/>
+        <UnitName Value="ACBrMDFe.RetEnvEvento"/>
+      </Item31>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

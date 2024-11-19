@@ -2027,21 +2027,22 @@ begin
 
         with CIOT.RegistrarPagamentoQuitacao do
         begin
-          Gerador.wCampo(tcStr, 'KP02', 'TokenCompra', 01, 06, 1, TokenCompra);
+          Gerador.wCampo(tcStr, 'RPP05', 'CodigoIdentificacaoOperacao', 01, 30, 1, CodigoIdentificacaoOperacao, '');
+          Gerador.wCampo(tcStr, 'RPP06', 'TokenCompra', 01, 06, 1, TokenCompra);
 
           if NotasFiscais.Count > 0 then
           begin
             Gerador.Prefixo := 'reg:';
-            Gerador.wGrupo('NotasFiscais', 'AP37');
+            Gerador.wGrupo('NotasFiscais', 'RPP07');
 
             for i := 0 to NotasFiscais.Count -1 do
             begin
               Item := NotasFiscais[i];
 
-              Gerador.wGrupo('NotaFiscal', 'AP38');
-              Gerador.wCampo(tcStr, 'AP39', 'Numero                             ', 01, 01, 0, Item.Numero);
-              Gerador.wCampo(tcStr, 'AP40', 'Serie                              ', 01, 01, 0, Item.Serie);
-              Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, Item.QuantidadeDaMercadoriaNoDesembarque);
+              Gerador.wGrupo('NotaFiscal', 'RPP08');
+              Gerador.wCampo(tcStr, 'RPP09', 'Numero                             ', 01, 01, 0, Item.Numero);
+              Gerador.wCampo(tcStr, 'RPP10', 'Serie                              ', 01, 01, 0, Item.Serie);
+              Gerador.wCampo(tcDe5, 'RPP11', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, Item.QuantidadeDaMercadoriaNoDesembarque);
 
               Gerador.wGrupo('/NotaFiscal');
             end;

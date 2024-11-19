@@ -927,12 +927,14 @@ type
   private
     FTokenCompra: string;
     FNotasFiscais: TNotaFiscalCollection;
+    FCodigoIdentificacaoOperacao: string;
 
     procedure SetNotasFiscais(const Value: TNotaFiscalCollection);
   public
     constructor Create;
     destructor Destroy; override;
 
+    property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property TokenCompra: string read FTokenCompra write FTokenCompra;
     property NotasFiscais: TNotaFiscalCollection read FNotasFiscais write SetNotasFiscais;
   end;
@@ -1031,6 +1033,9 @@ type
     FEstadoCiot: tpEstadoCIOT;
     FTipoCarga: TConsultaTipoCargaCollection;
     FAlterarDataLiberacaoPagamento: TAlterarDataLiberacaoPagamento;
+    FValorLiquido: Double;
+    FValorQuebra: Double;
+    FValorDiferencaDeFrete: Double;
 
     procedure SetDocumentoViagem(const Value: TMensagemCollection);
     procedure SetDocumentoPagamento(const Value: TMensagemCollection);
@@ -1066,6 +1071,10 @@ type
     property EstadoCiot: tpEstadoCIOT read FEstadoCiot write FEstadoCiot;
     property TipoCarga: TConsultaTipoCargaCollection read FTipoCarga write SetTipoCarga;
     property AlterarDataLiberacaoPagamento: TAlterarDataLiberacaoPagamento read FAlterarDataLiberacaoPagamento write FAlterarDataLiberacaoPagamento;
+
+    property ValorLiquido: Double read FValorLiquido write FValorLiquido;
+    property ValorQuebra: Double read FValorQuebra write FValorQuebra;
+    property ValorDiferencaDeFrete: Double read FValorDiferencaDeFrete write FValorDiferencaDeFrete;
   end;
 
 implementation

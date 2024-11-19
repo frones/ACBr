@@ -107,7 +107,9 @@ begin
        (leitor.rExtrai(1, 'CancelarPagamentoResponse') <> '') or
        (leitor.rExtrai(1, 'EncerrarOperacaoTransporteResponse') <> '') or
        (leitor.rExtrai(1, 'ConsultarTipoCargaResponse') <> '') or
-       (leitor.rExtrai(1, 'AlterarDataLiberacaoPagamentoResponse') <> '') then
+       (leitor.rExtrai(1, 'AlterarDataLiberacaoPagamentoResponse') <> '') or
+       (leitor.rExtrai(1, 'RegistrarPagamentoQuitacaoResponse') <> '') or
+       (leitor.rExtrai(1, 'RegistrarQuantidadeDaMercadoriaNoDesembarqueResponse') <> '') then
     begin
       if (leitor.rExtrai(2, 'LoginResult') <> '') or
          (leitor.rExtrai(2, 'LogoutResult') <> '') or
@@ -124,7 +126,9 @@ begin
          (leitor.rExtrai(2, 'CancelarPagamentoResult') <> '') or
          (leitor.rExtrai(2, 'EncerrarOperacaoTransporteResult') <> '') or
          (leitor.rExtrai(2, 'ConsultarTipoCargaResult') <> '') or
-         (leitor.rExtrai(2, 'AlterarDataLiberacaoPagamentoResult') <> '') then
+         (leitor.rExtrai(2, 'AlterarDataLiberacaoPagamentoResult') <> '') or
+         (leitor.rExtrai(2, 'RegistrarQuantidadeDaMercadoriaNoDesembarqueResult') <> '') or
+         (leitor.rExtrai(2, 'RegistrarPagamentoQuitacaoResult') <> '') then
       begin
         with RetEnvio do
         begin
@@ -147,6 +151,10 @@ begin
           QuantidadeViagens           := leitor.rCampo(tcInt, 'QuantidadeViagens');
           QuantidadePagamentos        := leitor.rCampo(tcInt, 'QuantidadePagamentos');
           IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
+
+          ValorLiquido                := leitor.rCampo(tcDe2, 'ValorLiquido');
+          ValorQuebra                 := leitor.rCampo(tcDe2, 'ValorQuebra');
+          ValorDiferencaDeFrete       := leitor.rCampo(tcDe2, 'ValorDiferencaDeFrete');
 
           sAux := leitor.rCampo(tcStr, 'EstadoCiot');
           EstadoCiot := ecEmViagem;

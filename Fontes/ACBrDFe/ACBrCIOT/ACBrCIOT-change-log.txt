@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2024
+-- pcnCIOT/pcnCIOTW_eFrete/pcnRetEnvCIOT --
+[-] Correção tanto na geração quanto na leitura do retorno.
+  Por: Italo Giurizzato Junior
+
 18/11/2024
 -- ACBrCIOTWebServices/pcnCIOTW_eFrete --
 [*] Correção, estava gerando algumas tags com o prefixo errado.

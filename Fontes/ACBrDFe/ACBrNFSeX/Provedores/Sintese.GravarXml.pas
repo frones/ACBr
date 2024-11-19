@@ -51,6 +51,9 @@ type
 
 implementation
 
+uses
+  ACBrXmlBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Sintese
@@ -61,6 +64,8 @@ implementation
 procedure TNFSeW_Sintese204.Configuracao;
 begin
   inherited Configuracao;
+
+  FormatoAliq := tcDe2;
 
   TagTomador := 'TomadorServico';
 

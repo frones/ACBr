@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/11/2024
+-- RLZ.Provider --
+[*] Alterada a configuração para assinar o Rps e o Lote.
+   Por: Italo Giurizzato Junior
 -- Sintese.GravarXml --
 [*] Alteração visando gerar a tag Aliquota com apenas 2 casas decimais.
    Por: Italo Giurizzato Junior

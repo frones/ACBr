@@ -115,6 +115,7 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
+  ConfigAssinar.Rps := True;
   ConfigAssinar.LoteRps := True;
 
   with ConfigWebServices do

@@ -73,8 +73,8 @@ implementation
 uses
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
-  ACBrMDFe, 
-  pmdfeEnvEventoMDFe,
+  ACBrMDFe,
+  ACBrMDFe.EnvEvento,
   ACBrMDFeDAMDFeRLRetrato, 
   ACBrMDFeDAEventoRL, 
   ACBrMDFeDAEventoRLRetrato;

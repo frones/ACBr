@@ -40,14 +40,18 @@ uses
   Classes, SysUtils, synacode,
   ACBrDFe, ACBrDFeWebService,
   pmdfeMDFe,
-  pcnRetConsReciDFe,
   pcnConversao, pmdfeConversaoMDFe,
-  pmdfeProcMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
-  pmdfeRetConsSitMDFe,
+  pcnRetConsReciDFe,
+  ACBrMDFe.ProcInfraSA,
+  ACBrMDFe.EnvEvento,
+  ACBrMDFe.RetEnvEvento,
+  ACBrMDFe.RetConsSit,
   ACBrMDFe.RetConsNaoEnc,
-  pmdfeRetEnvMDFe,
-  pcnDistDFeInt, pcnRetDistDFeInt,
-  ACBrMDFeManifestos, ACBrMDFeConfiguracoes, pmdfeProcInfraSA;
+  ACBrDFeComum.Proc,
+  ACBrDFeComum.RetEnvio,
+  ACBrDFeComum.DistDFeInt,
+  ACBrDFeComum.RetDistDFeInt,
+  ACBrMDFeManifestos, ACBrMDFeConfiguracoes;
 
 type
 
@@ -131,7 +135,7 @@ type
     FMsgUnZip: String;
 
     FMDFeRetornoSincrono: TRetConsSitMDFe;
-    FMDFeRetorno: TretEnvMDFe;
+    FMDFeRetorno: TretEnvDFe;
 
     function GetLote: String;
     function GetRecibo: String;
@@ -283,7 +287,7 @@ type
     FcUF: Integer;
     FRetMDFeDFe: String;
 
-    FprotMDFe: TProcMDFe;
+    FprotMDFe: TProcDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
     FprocInfraSA: TProcInfraSA;
 
@@ -315,7 +319,7 @@ type
     property cUF: Integer read FcUF;
     property RetMDFeDFe: String read FRetMDFeDFe;
 
-    property protMDFe: TProcMDFe read FprotMDFe;
+    property protMDFe: TProcDFe read FprotMDFe;
     property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe;
     property procInfraSA: TProcInfraSA read FprocInfraSA;
   end;
@@ -410,7 +414,6 @@ type
 
     function GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
   protected
-//    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -501,17 +504,20 @@ uses
   StrUtils, Math,
   ACBrDFeConsts,
   ACBrDFeUtil,
+  ACBrXmlBase,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrMDFe, pmdfeConsts,
-  pcnGerador, pcnLeitor,
+  ACBrCompress,
+  ACBrMDFe,
+  pmdfeConsts,
+  pcnConsReciDFe,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
-  pmdfeEventoMDFe,
-  pmdfeConsSitMDFe, pcnConsReciDFe,
+  ACBrMDFe.EventoClass,
+  ACBrMDFe.ConsSit,
   ACBrMDFe.ConsNaoEnc;
 
 { TMDFeWebService }
@@ -730,8 +736,8 @@ begin
   if Assigned(FMDFeRetorno) then
     FMDFeRetorno.Free;
 
-  FMDFeRetornoSincrono := TRetConsSitMDFe.Create;
-  FMDFeRetorno := TretEnvMDFe.Create;
+  FMDFeRetornoSincrono := TRetConsSitMDFe.Create(FPVersaoServico);
+  FMDFeRetorno := TretEnvDFe.Create;
 end;
 
 function TMDFeRecepcao.GetLote: String;
@@ -861,7 +867,7 @@ function TMDFeRecepcao.TratarResposta: Boolean;
 var
   I: integer;
   chMDFe, AXML, NomeXMLSalvo: String;
-  AProcMDFe: TProcMDFe;
+  AProcMDFe: TProcDFe;
   SalvarXML: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['mdfeRecepcaoLoteResult',
@@ -875,8 +881,7 @@ begin
     else
       AXML := FPRetWS;
 
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-    FMDFeRetornoSincrono.Leitor.Arquivo := UTF8ToNativeString(ParseText(AXML));
+    FMDFeRetornoSincrono.XmlRetorno := ParseText(AXML);
     FMDFeRetornoSincrono.LerXml;
 
     Fversao := FMDFeRetornoSincrono.versao;
@@ -884,7 +889,7 @@ begin
     FverAplic := FMDFeRetornoSincrono.verAplic;
 
     FcUF := FMDFeRetornoSincrono.cUF;
-    chMDFe := FMDFeRetornoSincrono.ProtMDFe.chMDFe;
+    chMDFe := FMDFeRetornoSincrono.ProtMDFe.chDFe;
     FdhRecbto := FMDFeRetornoSincrono.ProtMDFe.dhRecbto;
 
     if (FMDFeRetornoSincrono.protMDFe.cStat > 0) then
@@ -929,22 +934,18 @@ begin
             MDFe.procMDFe.cStat := FMDFeRetornoSincrono.protMDFe.cStat;
             MDFe.procMDFe.tpAmb := FMDFeRetornoSincrono.tpAmb;
             MDFe.procMDFe.verAplic := FMDFeRetornoSincrono.verAplic;
-            MDFe.procMDFe.chMDFe := FMDFeRetornoSincrono.protMDFe.chMDFe;
+            MDFe.procMDFe.chMDFe := FMDFeRetornoSincrono.protMDFe.chDFe;
             MDFe.procMDFe.dhRecbto := FMDFeRetornoSincrono.protMDFe.dhRecbto;
             MDFe.procMDFe.nProt := FMDFeRetornoSincrono.protMDFe.nProt;
             MDFe.procMDFe.digVal := FMDFeRetornoSincrono.protMDFe.digVal;
             MDFe.procMDFe.xMotivo := FMDFeRetornoSincrono.protMDFe.xMotivo;
 
-            AProcMDFe := TProcMDFe.Create;
+            AProcMDFe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_MDFE, 'mdfeProc', 'MDFe');
             try
               // Processando em UTF8, para poder gravar arquivo corretamente //
-              AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(XMLAssinado);
+              AProcMDFe.XML_DFe := RemoverDeclaracaoXML(XMLAssinado);
               AProcMDFe.XML_Prot := FMDFeRetornoSincrono.XMLprotMDFe;
-              AProcMDFe.Versao := FPVersaoServico;
-              AjustarOpcoes( AProcMDFe.Gerador.Opcoes );
-              AProcMDFe.GerarXML;
-
-              XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcMDFe.GerarXML;
 
               if FPConfiguracoesMDFe.Arquivos.Salvar then
               begin
@@ -977,12 +978,11 @@ begin
   end
   else
   begin
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-    FMDFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+    FMDFeRetorno.XmlRetorno := ParseText(FPRetWS);
     FMDFeRetorno.LerXml;
 
     Fversao := FMDFeRetorno.versao;
-    FTpAmb := FMDFeRetorno.TpAmb;
+    FTpAmb := TpcnTipoAmbiente(FMDFeRetorno.TpAmb);
     FverAplic := FMDFeRetorno.verAplic;
     FcStat := FMDFeRetorno.cStat;
     FxMotivo := FMDFeRetorno.xMotivo;
@@ -1027,7 +1027,7 @@ begin
                              'Recebimento: %s ' + LineBreak +
                              'Tempo Médio: %s ' + LineBreak),
                        [FMDFeRetorno.versao,
-                        TpAmbToStr(FMDFeRetorno.TpAmb),
+                        TipoAmbienteToStr(FMDFeRetorno.TpAmb),
                         FMDFeRetorno.verAplic,
                         IntToStr(FMDFeRetorno.cStat),
                         FMDFeRetorno.xMotivo,
@@ -1221,7 +1221,6 @@ begin
   try
     ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsReciMDFe.nRec := FRecibo;
-//    ConsReciMDFe.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
 
@@ -1257,10 +1256,10 @@ end;
 function TMDFeRetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: Integer;
-  AProcMDFe: TProcMDFe;
+  AProcMDFe: TProcDFe;
   AInfProt: TProtDFeCollection;
   SalvarXML: Boolean;
-  NomeXMLSalvo: String;
+  NomeXMLSalvo, aXml: String;
 begin
   Result := False;
 
@@ -1302,16 +1301,15 @@ begin
         // Monta o XML do MDF-e assinado e com o protocolo de Autorização
         if (AInfProt.Items[I].cStat = 100) then
         begin
-          AProcMDFe := TProcMDFe.Create;
+          AProcMDFe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_MDFE, 'mdfeProc', 'MDFe');
           try
-            AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(FManifestos.Items[J].XMLAssinado);
+            AProcMDFe.XML_DFe := RemoverDeclaracaoXML(FManifestos.Items[J].XMLAssinado);
             AProcMDFe.XML_Prot := AInfProt.Items[I].XMLprotDFe;
-            AProcMDFe.Versao := FPVersaoServico;
-            AProcMDFe.GerarXML;
+            aXml := AProcMDFe.GerarXML;
 
             with FManifestos.Items[J] do
             begin
-              XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := aXml;
 
               if FPConfiguracoesMDFe.Arquivos.Salvar then
               begin
@@ -1330,10 +1328,6 @@ begin
 
                   if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
                     GravarXML; // Salva na pasta baseado nas configurações do PathMDFe
-
-//                  FPDFeOwner.Gravar(AInfProt.Items[I].chMDFe + '-mdfe.xml',
-//                                    XMLOriginal,
-//                                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(0)));
                 end;
               end;
             end;
@@ -1518,7 +1512,6 @@ begin
   try
     ConsReciMDFe.tpAmb := FTpAmb;
     ConsReciMDFe.nRec := FRecibo;
-//    ConsReciMDFe.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
 
@@ -1618,7 +1611,7 @@ begin
   if Assigned(FprocInfraSA) then
     FprocInfraSA.Free;
 
-  FprotMDFe       := TProcMDFe.Create;
+  FprotMDFe       := TProcDFe.Create(FPVersaoServico, NAME_SPACE_MDFE, 'mdfeProc', 'MDFe');
   FprocEventoMDFe := TRetEventoMDFeCollection.Create;
 
   FprocInfraSA := TProcInfraSA.Create;
@@ -1681,11 +1674,7 @@ begin
     ConsSitMDFe.chMDFe := FMDFeChave;
     ConsSitMDFe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( ConsSitMDFe.Gerador.Opcoes );
-
-    ConsSitMDFe.GerarXML;
-
-    FPDadosMsg := ConsSitMDFe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsSitMDFe.GerarXML;
   finally
     ConsSitMDFe.Free;
   end;
@@ -1739,19 +1728,18 @@ var
   MDFeRetorno: TRetConsSitMDFe;
   SalvarXML, MDFCancelado, MDFEncerrado, Atualiza: Boolean;
   aEventos, sPathMDFe, NomeXMLSalvo: String;
-  AProcMDFe: TProcMDFe;
+  AProcMDFe: TProcDFe;
   I, J, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
   Item: TRetEventoMDFe;
   ItemRetInfEvento: TRetInfEvento;
 begin
-  MDFeRetorno := TRetConsSitMDFe.Create;
+  MDFeRetorno := TRetConsSitMDFe.Create(FPVersaoServico);
 
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'mdfeConsultaMDFResult');
 
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-    MDFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+    MDFeRetorno.XmlRetorno := ParseText(FPRetWS);
     MDFeRetorno.LerXML;
 
     MDFCancelado := False;
@@ -1766,25 +1754,32 @@ begin
     FcStat := MDFeRetorno.cStat;
     FXMotivo := MDFeRetorno.xMotivo;
     FcUF := MDFeRetorno.cUF;
-//    FMDFeChave := MDFeRetorno.chMDFe;
     FPMsg := FXMotivo;
+
+//    if MDFeRetorno.chMDFe <> '' then
+//      FMDFeChave := MDFeRetorno.chMDFe;
 
     FprocInfraSA.nProtDTe := MDFeRetorno.procInfraSA.nProtDTe;
     FprocInfraSA.dhProt := MDFeRetorno.procInfraSA.dhProt;
 
     // <protMDFe> - Retorno dos dados do ENVIO da NF-e
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotMDFe.PathMDFe            := MDFeRetorno.protMDFe.PathMDFe;
-    FprotMDFe.PathRetConsReciMDFe := MDFeRetorno.protMDFe.PathRetConsReciMDFe;
-    FprotMDFe.PathRetConsSitMDFe  := MDFeRetorno.protMDFe.PathRetConsSitMDFe;
-    FprotMDFe.tpAmb               := MDFeRetorno.protMDFe.tpAmb;
-    FprotMDFe.verAplic            := MDFeRetorno.protMDFe.verAplic;
-    FprotMDFe.chMDFe              := MDFeRetorno.protMDFe.chMDFe;
-    FprotMDFe.dhRecbto            := MDFeRetorno.protMDFe.dhRecbto;
-    FprotMDFe.nProt               := MDFeRetorno.protMDFe.nProt;
-    FprotMDFe.digVal              := MDFeRetorno.protMDFe.digVal;
-    FprotMDFe.cStat               := MDFeRetorno.protMDFe.cStat;
-    FprotMDFe.xMotivo             := MDFeRetorno.protMDFe.xMotivo;
+
+    FprotMDFe.PathDFe            := MDFeRetorno.protMDFe.PathDFe;
+    FprotMDFe.PathRetConsReciDFe := MDFeRetorno.protMDFe.PathRetConsReciDFe;
+    FprotMDFe.PathRetConsSitDFe  := MDFeRetorno.protMDFe.PathRetConsSitDFe;
+    FprotMDFe.tpAmb              := MDFeRetorno.protMDFe.tpAmb;
+    FprotMDFe.PathDFe            := MDFeRetorno.protMDFe.PathDFe;
+    FprotMDFe.PathRetConsReciDFe := MDFeRetorno.protMDFe.PathRetConsReciDFe;
+    FprotMDFe.PathRetConsSitDFe  := MDFeRetorno.protMDFe.PathRetConsSitDFe;
+    FprotMDFe.tpAmb              := MDFeRetorno.protMDFe.tpAmb;
+    FprotMDFe.verAplic           := MDFeRetorno.protMDFe.verAplic;
+    FprotMDFe.chDFe              := MDFeRetorno.protMDFe.chDFe;
+    FprotMDFe.dhRecbto           := MDFeRetorno.protMDFe.dhRecbto;
+    FprotMDFe.nProt              := MDFeRetorno.protMDFe.nProt;
+    FprotMDFe.digVal             := MDFeRetorno.protMDFe.digVal;
+    FprotMDFe.cStat              := MDFeRetorno.protMDFe.cStat;
+    FprotMDFe.xMotivo            := MDFeRetorno.protMDFe.xMotivo;
 
     if Assigned(MDFeRetorno.procEventoMDFe) and (MDFeRetorno.procEventoMDFe.Count > 0) then
     begin
@@ -1939,14 +1934,11 @@ begin
                 MDFe.procMDFe.cStat := MDFeRetorno.cStat;
                 MDFe.procMDFe.xMotivo := MDFeRetorno.xMotivo;
 
-                AProcMDFe := TProcMDFe.Create;
+                AProcMDFe := TProcDFe.Create(FPVersaoServico, NAME_SPACE_MDFE, 'mdfeProc', 'MDFe');
                 try
-                  AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(XMLOriginal);
+                  AProcMDFe.XML_DFe := RemoverDeclaracaoXML(XMLOriginal);
                   AProcMDFe.XML_Prot := MDFeRetorno.XMLprotMDFe;
-                  AProcMDFe.Versao := FPVersaoServico;
-                  AProcMDFe.GerarXML;
-
-                  XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
+                  XMLOriginal := AProcMDFe.GerarXML;
 
                   FRetMDFeDFe := '';
 
@@ -2317,11 +2309,9 @@ begin
 
     EventoMDFe.Versao := FPVersaoServico;
 
-    AjustarOpcoes( EventoMDFe.Gerador.Opcoes );
-
     EventoMDFe.GerarXML;
 
-    Eventos := NativeStringToUTF8( EventoMDFe.Gerador.ArquivoFormatoXML );
+    Eventos := NativeStringToUTF8( EventoMDFe.XmlEnvio );
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
@@ -2436,7 +2426,8 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoEventoResult');
 
   //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-  EventoRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+//  EventoRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  EventoRetorno.XmlRetorno := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;
@@ -2598,7 +2589,13 @@ begin
     ConsMDFeNaoEnc.CNPJCPF := OnlyNumber( FCNPJCPF );
     ConsMDFeNaoEnc.Versao  := FPVersaoServico;
 
+//    AjustarOpcoes( ConsMDFeNaoEnc.Gerador.Opcoes );
+//    ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
+
+//    ConsMDFeNaoEnc.GerarXML;
     FPDadosMsg := ConsMDFeNaoEnc.GerarXML;
+
+//    FPDadosMsg := ConsMDFeNaoEnc.Gerador.ArquivoFormatoXML;
   finally
     ConsMDFeNaoEnc.Free;
   end;
@@ -2614,6 +2611,8 @@ begin
   FRetConsMDFeNaoEnc.Free;
   FRetConsMDFeNaoEnc := TRetConsMDFeNaoEnc.Create;
 
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
+//  FRetConsMDFeNaoEnc.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FRetConsMDFeNaoEnc.XmlRetorno := ParseText(FPRetWS);
   FRetConsMDFeNaoEnc.LerXml;
 
@@ -2686,7 +2685,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create('MDFe');
+  FretDistDFeInt := TRetDistDFeInt.Create(TACBrMDFe(FPDFeOwner),'MDFe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -2713,11 +2712,7 @@ begin
     DistDFeInt.NSU := FNSU;
     DistDFeInt.Chave := trim(FchMDFe);
 
-    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
-
-    DistDFeInt.GerarXML;
-
-    FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := DistDFeInt.GerarXML;
   finally
     DistDFeInt.Free;
   end;
@@ -2730,9 +2725,7 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeDistDFeInteresseResult');
 
-  // Processando em UTF8, para poder gravar arquivo corretamente //
-  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-  FretDistDFeInt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
@@ -2906,9 +2899,10 @@ begin
 end;
 
 procedure TMDFeEnvioWebService.DefinirDadosMsg;
-var
-  LeitorXML: TLeitor;
+//var
+//  LeitorXML: TLeitor;
 begin
+{
   LeitorXML := TLeitor.Create;
   try
     LeitorXML.Arquivo := FXMLEnvio;
@@ -2917,7 +2911,7 @@ begin
   finally
     LeitorXML.Free;
   end;
-
+}
   FPDadosMsg := FXMLEnvio;
 end;
 

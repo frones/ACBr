@@ -44,7 +44,8 @@ uses
   ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
   ACBrMDFeDAMDFEClass,
-  pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe, pmdfeEnvEventoMDFe;
+  pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
+  ACBrMDFe.EnvEvento;
 
 const
   ACBRMDFE_NAMESPACE = 'http://www.portalfiscal.inf.br/mdfe';
@@ -312,11 +313,11 @@ end;
 
 function TACBrMDFe.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoMDFe.Gerador.ArquivoFormatoXML) then
+  if EstaVazio(FEventoMDFe.XmlEnvio) then
     FEventoMDFe.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoMDFe.Gerador.ArquivoFormatoXML));
+  WriteStrToStream(AStream, AnsiString(FEventoMDFe.XmlEnvio));
   Result := True;
 end;
 

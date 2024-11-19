@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2024
+-- Diversos --
+[*] Migração para as novas units.
+   Por: Italo Giurizzato Junior
+
 04/10/2024
 -- Diversos --
 [*] #TK-5866-2: Ajuste visando padronização do caractere de quebra de linha.

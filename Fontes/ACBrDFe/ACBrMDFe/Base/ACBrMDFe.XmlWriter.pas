@@ -1568,22 +1568,25 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#046', 'xMunDescarga', 2, 60, 1,
                          MDFe.infDoc.infMunDescarga[i].xMunDescarga, DSC_XMUN));
 
-
     case MDFe.Ide.tpEmit of
      // Se Tipo de Emitente for Prestador de Serviço de Transporte
      // só pode relacionar os grupos de documentos CT-e e CT
      teTransportadora:
        begin
-         nodeArray := Gerar_infMunDescarga_infCTe(i);
-         for j := 0 to MDFe.infDoc.infMunDescarga[i].infCTe.Count - 1 do
+         // Se indCarregaPosterior <> 1 gerar os grupos de CTe
+         if MDFe.ide.indCarregaPosterior = tiNao then
          begin
-           Result[i].AppendChild(nodeArray[j]);
-         end;
+           nodeArray := Gerar_infMunDescarga_infCTe(i);
+           for j := 0 to MDFe.infDoc.infMunDescarga[i].infCTe.Count - 1 do
+           begin
+             Result[i].AppendChild(nodeArray[j]);
+           end;
 
-         nodeArray := Gerar_infMunDescarga_infCT(i);
-         for j := 0 to MDFe.infDoc.infMunDescarga[i].infCT.Count - 1 do
-         begin
-           Result[i].AppendChild(nodeArray[j]);
+           nodeArray := Gerar_infMunDescarga_infCT(i);
+           for j := 0 to MDFe.infDoc.infMunDescarga[i].infCT.Count - 1 do
+           begin
+             Result[i].AppendChild(nodeArray[j]);
+           end;
          end;
        end;
 
@@ -1594,16 +1597,20 @@ begin
      //      transporte de carga própria.
      teTranspCargaPropria, teTranspCTeGlobalizado:
        begin
-         nodeArray := Gerar_infMunDescarga_infNFe(i);
-         for j := 0 to MDFe.infDoc.infMunDescarga[i].infNFe.Count - 1 do
+         // Se indCarregaPosterior <> 1 gerar os grupos de NFe
+         if MDFe.ide.indCarregaPosterior = tiNao then
          begin
-           Result[i].AppendChild(nodeArray[j]);
-         end;
+           nodeArray := Gerar_infMunDescarga_infNFe(i);
+           for j := 0 to MDFe.infDoc.infMunDescarga[i].infNFe.Count - 1 do
+           begin
+             Result[i].AppendChild(nodeArray[j]);
+           end;
 
-         nodeArray := Gerar_infMunDescarga_infNF(i);
-         for j := 0 to MDFe.infDoc.infMunDescarga[i].infNF.Count - 1 do
-         begin
-           Result[i].AppendChild(nodeArray[j]);
+           nodeArray := Gerar_infMunDescarga_infNF(i);
+           for j := 0 to MDFe.infDoc.infMunDescarga[i].infNF.Count - 1 do
+           begin
+             Result[i].AppendChild(nodeArray[j]);
+           end;
          end;
        end;
     end;

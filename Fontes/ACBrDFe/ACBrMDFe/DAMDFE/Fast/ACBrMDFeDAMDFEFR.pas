@@ -38,7 +38,9 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrMDFeDAMDFeClass, pcnConversao,
-  pmdfeMDFe, frxClass, ACBrDFeUtil, pmdfeEnvEventoMDFe, frxDBSet,
+  pmdfeMDFe, frxClass, ACBrDFeUtil,
+  ACBrMDFe.EnvEvento,
+  frxDBSet,
   frxExportPDF, frxBarcode;
 
 type

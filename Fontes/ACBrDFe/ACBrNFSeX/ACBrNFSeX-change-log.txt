@@ -44,6 +44,8 @@ Símbolo : Significado
 
 19/11/2024
 -- ACBrNFSeXServicos --
+[*] Incluída a URL de SoapAction de homologação para a cidade de Bocaiuva/MG
+   Por: Italo Giurizzato Junior
 [+] #TK-6243: Incluida a cidade de Formosa do Rio Preto/BA, provedor é o Saatri na versão 2.03
    Por: Alfredo Lopes
 [*] #TK-6242: A cidade de Lacerdopolis/SC trocou de provedor, agora é IPM versão 2.04

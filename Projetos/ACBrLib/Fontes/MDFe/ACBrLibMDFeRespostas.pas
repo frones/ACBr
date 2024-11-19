@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, contnrs,
   ACBrMDFe.RetConsNaoEnc,
-  pmdfeEventoMDFe,
+  ACBrMDFe.EventoClass,
   ACBrMDFe, ACBrLibResposta, ACBrLibConfig, ACBrLibConsReciDFe;
 
 type

@@ -49,8 +49,8 @@ uses
   ACBrMDFe.RetConsNaoEnc,
   ACBrDFeComum.Proc,
   ACBrDFeComum.RetEnvio,
-  ACBrDFeComum.DistDFeInt,
-  ACBrDFeComum.RetDistDFeInt,
+  pcnDistDFeInt,
+  pcnRetDistDFeInt,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes;
 
 type
@@ -2685,7 +2685,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create(TACBrMDFe(FPDFeOwner),'MDFe');
+  FretDistDFeInt := TRetDistDFeInt.Create('MDFe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -2712,7 +2712,11 @@ begin
     DistDFeInt.NSU := FNSU;
     DistDFeInt.Chave := trim(FchMDFe);
 
-    FPDadosMsg := DistDFeInt.GerarXML;
+    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
+    DistDFeInt.GerarXML;
+
+    FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
+//    FPDadosMsg := DistDFeInt.GerarXML;
   finally
     DistDFeInt.Free;
   end;
@@ -2725,8 +2729,12 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeDistDFeInteresseResult');
 
-  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
+  // Processando em UTF8, para poder gravar arquivo corretamente //
+  //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXMLDocument
+  FretDistDFeInt.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
   FretDistDFeInt.LerXml;
+//  FretDistDFeInt.XmlRetorno := ParseText(FPRetWS);
+//  FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/11/2024
+-- ACBrMDFeWebServices --
+[*] Ajustes para a migração para as novas units.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Migração para as novas units.
    Por: Italo Giurizzato Junior

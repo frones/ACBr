@@ -176,8 +176,7 @@ begin
    fpAutenticado := True;
   end
   else
-    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
-      [Http.ResultCode, ChttpMethodGET, AURL]));
+    DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp, [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
 procedure TACBrPSPSicoob.QuandoReceberRespostaEndPoint(const AEndPoint, AURL,

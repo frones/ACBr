@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2024
+-- ACBrPIXPSPSicoob --
+[-] Correção do log no momento da autenticação do componente.
+    por: Elias César
+
 12/11/2024
 -- ACBrSchemasMatera --
 [-] Alteração para limpar a classe antes de carregar as informações do Ini.

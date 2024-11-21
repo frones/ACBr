@@ -63,9 +63,6 @@ procedure TNFSeW_Giss204.Configuracao;
 begin
   inherited Configuracao;
 
-  DivAliq100 := True;
-  FormatoAliq := tcDe4;
-
   NrOcorrCodigoPaisServico := 0;
   NrOcorrCodigoPaisTomador := -1;
 

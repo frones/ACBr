@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2024
+-- Giss.GravarXml --
+[*] Removido da procedure Configuração a definição para dividir por 100 e 4 casas decimais.
+    Agora essas configurações vão ser definidas na seção das cidades que usam o provedor.
+   Por: Italo Giurizzato Junior
+
 19/11/2024
 -- ACBrNFSeXServicos --
 [*] Incluída a URL de SoapAction de homologação para a cidade de Bocaiuva/MG

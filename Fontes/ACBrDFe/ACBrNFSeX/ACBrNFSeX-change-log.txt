@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/11/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6252: A cidade de Guacui/ES trocou a URL e a versão o provedor continua sendo o EL.
+   Por: Heronim Antonio Marçal
+[+] #TK-6253: Incluida a cidade de Brunopolis/SC, provedor é o Betha.
+   Por: Willian Delan
 -- Giss.GravarXml --
 [*] Removido da procedure Configuração a definição para dividir por 100 e 4 casas decimais.
     Agora essas configurações vão ser definidas na seção das cidades que usam o provedor.

@@ -103,6 +103,7 @@ procedure TACBrNFSeProviderGiss204.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.ModoEnvio := meLoteAssincrono;
   ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
 
   with ConfigAssinar do

@@ -226,7 +226,7 @@ type
       floc: TLibPIXCDLocInfo;
       frecebedor: TLibPIXCDDevedorInfo;
       frevisao: Integer;
-      fstatus: TACBrPIXStatusCobranca;
+      fstatus: String;
       ftxId: String;
       fvalor: TLibPixCDValorVInfo;
       fpixCopiaECola: String;
@@ -246,7 +246,7 @@ type
       property loc: TLibPIXCDLocInfo read floc;
       property recebedor: TLibPIXCDDevedorInfo read frecebedor;
       property revisao: Integer read frevisao;
-      property status: TACBrPIXStatusCobranca read fstatus;
+      property status: String read fstatus;
       property txId: String read fTxId;
       property pixCopiaECola: String read fpixCopiaECola write fpixCopiaECola;
       property valor: TLibPixCDValorVInfo read fvalor;
@@ -260,7 +260,7 @@ type
       fRevisao: Integer;
       fDevedor: TLibPIXCDDevedorInfo;
       fLoc: TLibPIXCDLocInfo;
-      fStatus: TACBrPIXStatusCobranca;
+      fStatus: String;
       fValor: TLibPIXCDValorInfo;
       fPixCopiaeCola: String;
       fPix: TACBrObjectList;
@@ -276,7 +276,7 @@ type
     published
       property txId: String read fTxId write fTxId;
       property revisao: Integer read fRevisao write fRevisao;
-      property status: TACBrPIXStatusCobranca read fStatus write fStatus;
+      property status: String read fStatus write fStatus;
       property calendario: TLibPIXCDCalendarioInfo read fCalendario write fCalendario;
       property devedor: TLibPIXCDDevedorInfo read fDevedor write fDevedor;
       property loc: TLibPIXCDLocInfo read fLoc write fLoc;
@@ -412,7 +412,7 @@ type
       fid: String;
       fmotivo: String;
       frtrId: String;
-      fstatus: TACBrPIXStatusDevolucao;
+      fstatus: String;
 
     public
       constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce; overload;
@@ -429,7 +429,7 @@ type
       property id: String read fId write fId;
       property motivo: String read fmotivo write fmotivo;
       property rtrId: String read frtrId write frtrId;
-      property status: TACBrPIXStatusDevolucao read fStatus write fStatus;
+      property status: String read fStatus write fStatus;
   end;
 
   { TLibPIXCDConsultarPixRecebidosResposta }
@@ -783,7 +783,7 @@ begin
   floc.Clear;
   frecebedor.Clear;
   frevisao := 0;
-  fstatus := stcNENHUM;
+  fstatus := EmptyStr;
   ftxId := EmptyStr;
   fvalor.Clear;
   fpixCopiaECola := EmptyStr;
@@ -796,7 +796,7 @@ begin
   floc.Processar(CobVGerada.loc);
   frecebedor.ProcessarDadosRecebedor(CobVGerada.recebedor);
   frevisao := CobVGerada.revisao;
-  fstatus := CobVGerada.status;
+  fstatus := PIXStatusCobrancaToString(CobVGerada.status);
   ftxId := CobVGerada.txId;
   fvalor.Processar(CobVGerada.valor);
   fpixCopiaECola := CobVGerada.pixCopiaECola;
@@ -847,7 +847,7 @@ begin
   fRevisao := 0;
   fDevedor.Clear;
   fLoc.Clear;
-  fStatus := TACBrPIXStatusCobranca.stcNENHUM;
+  fStatus := EmptyStr;
   fValor.Clear;
   fPix.Clear;
 end;
@@ -856,7 +856,7 @@ procedure TLibPIXCDCobResposta.ProcessarCobGerada(const CobGerada: TACBrPIXCobGe
 begin
   TxId := CobGerada.txId;
   Revisao := CobGerada.revisao;
-  Status := CobGerada.status;
+  Status := PIXStatusCobrancaToString(CobGerada.status);
   pixCopiaeCola := CobGerada.pixCopiaECola;
 
   Calendario.Processar(CobGerada.calendario);
@@ -899,7 +899,7 @@ begin
   fid := EmptyStr;
   fmotivo := EmptyStr;
   frtrId := EmptyStr;
-  fstatus := stdNENHUM;
+  fstatus := EmptyStr;
 end;
 
 procedure TLibPIXCDDevolucaoPixResposta.Processar(const Devolucao: TACBrPIXDevolucao);
@@ -911,7 +911,7 @@ begin
   id := Devolucao.id;
   motivo := Devolucao.motivo;
   rtrId := Devolucao.rtrId;
-  status := Devolucao.status;
+  status := PIXStatusDevolucaoToString(Devolucao.status);
 end;
 
 { TLibPIXCDConsultarPixRecebidosResposta }

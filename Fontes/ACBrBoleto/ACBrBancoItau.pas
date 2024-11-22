@@ -433,6 +433,11 @@ begin
         fDataProtestoNegativacao := DataNegativacao;
         fDiasProtestoNegativacao := IntToStr(DiasDeNegativacao);
       end
+      else if ((ACodProtesto= '0') and (DataLimitePagto > 0)) then
+      begin
+          fDataProtestoNegativacao := DataLimitePagto;
+          fDiasProtestoNegativacao := inttostr( DaysBetween(Vencimento,DataLimitePagto));
+      end
       else
       begin
         if ((ACodProtesto <> '3') and (ACodProtesto <> '8')) then

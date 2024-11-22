@@ -124,7 +124,9 @@ uses
   Elmar.Provider, Sam.GravarXml, Sam.LerXml, Sam.Provider, 
   ISSCampinas.GravarXml, ISSCampinas.LerXml, ISSCampinas.Provider, 
   Kalana.GravarXml, Kalana.LerXml, Kalana.Provider, NFEletronica.GravarXml, 
-  NFEletronica.LerXml, NFEletronica.Provider, LazarusPackageIntf;
+  NFEletronica.LerXml, NFEletronica.Provider, 
+  XTRTecnologia.GravarJson, XTRTecnologia.LerJson, XTRTecnologia.Provider, 
+  LazarusPackageIntf;
 
 implementation
 

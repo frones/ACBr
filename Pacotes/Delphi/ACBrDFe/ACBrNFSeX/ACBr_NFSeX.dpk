@@ -499,6 +499,9 @@ contains
   WebFisco.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebFisco.Provider.pas',
   WebISS.GravarXml in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.GravarXml.pas',
   WebISS.LerXml in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.LerXml.pas',
-  WebISS.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.Provider.pas';
+  WebISS.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\WebISS.Provider.pas',
+  XTRTecnologia.GravarJson in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\XTRTecnologia.GravarJson.pas',
+  XTRTecnologia.LerJson in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\XTRTecnologia.LerJson.pas',
+  XTRTecnologia.Provider in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\XTRTecnologia.Provider.pas';
 
 end.

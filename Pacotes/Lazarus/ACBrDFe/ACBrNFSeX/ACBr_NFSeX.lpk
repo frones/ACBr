@@ -1743,6 +1743,18 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFEletronica.Provider.pas"/>
         <UnitName Value="NFEletronica.Provider"/>
       </Item432>
+      <Item433>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\XTRTecnologia.GravarJson.pas"/>
+        <UnitName Value="XTRTecnologia.GravarJson"/>
+      </Item433>
+      <Item434>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\XTRTecnologia.LerJson.pas"/>
+        <UnitName Value="XTRTecnologia.LerJson"/>
+      </Item434>
+      <Item435>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\XTRTecnologia.Provider.pas"/>
+        <UnitName Value="XTRTecnologia.Provider"/>
+      </Item435>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

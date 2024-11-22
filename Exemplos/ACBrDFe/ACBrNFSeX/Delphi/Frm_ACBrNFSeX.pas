@@ -829,7 +829,7 @@ begin
            proCTA, proCTAConsult, proEquiplano, proFacundo, proFGMaiss, proEL,
            proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSam,
            proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS, proISSCampinas,
-           proSoftPlan] then
+           proSoftPlan, proXTRTecnologia] then
       begin
         Servico.Valores.ValorServicos := 0;
 
@@ -1350,7 +1350,7 @@ begin
 
           BaseCalculo := ValorTotal - ValorDeducoes - DescontoIncondicionado;
 
-          Aliquota := 2;
+          Aliquota := 2.5;
 
           ValorISS := BaseCalculo * Aliquota / 100;
 
@@ -1419,7 +1419,7 @@ begin
 
           BaseCalculo := ValorTotal - ValorDeducoes - DescontoIncondicionado;
 
-          Aliquota := 2;
+          Aliquota := 2.5;
 
           ValorISS := BaseCalculo * Aliquota / 100;
 
@@ -1492,7 +1492,7 @@ begin
         Servico.Valores.BaseCalculo := Servico.Valores.ValorServicos -
         Servico.Valores.ValorDeducoes - Servico.Valores.DescontoIncondicionado;
 
-        Servico.Valores.Aliquota := 2;
+        Servico.Valores.Aliquota := 2.5;
 
         Servico.Valores.tribMun.cPaisResult := 0;
         // TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
@@ -1578,7 +1578,7 @@ begin
       // Informar A Exigibilidade ISS para fintelISS [1/2/3/4/5/6/7]
       Servico.ExigibilidadeISS := exiExigivel;
 
-      Servico.CodigoPais := 1058; // Brasil
+//      Servico.CodigoPais := 1058; // Brasil
       Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
 
       {=========================================================================

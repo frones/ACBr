@@ -901,7 +901,8 @@ begin
       if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
            proCTA, proCTAConsult, proEquiplano, proFacundo, proFGMaiss, proEL,
            proGoverna, proInfisc, proIPM, proISSDSF, proPriMax, proRLZ, proSimple,
-           proSmarAPD, proWebFisco, proBauhaus, proeISS, proSoftPlan] then
+           proSmarAPD, proWebFisco, proBauhaus, proeISS, proSoftPlan, 
+		   proXTRTecnologia] then
       begin
         with Servico.ItemServico.New do
         begin

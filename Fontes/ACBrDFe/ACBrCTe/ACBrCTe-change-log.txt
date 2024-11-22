@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2024
+-- ACBrCTeWebServices --
+[*] #TK-6256: Removido o ParseText antes da leitura do XML retornado para evitar erros
+    na leitura do XML quando estiver tiver alguma tag com o caractere &. 
+   Por: Italo Giurizzato Junior
+
 11/11/2024
 -- ACBrCTeConhecimentos, pcteCTeW --
 [*] #TK-6193: Ajustes visando correta leitura e geração do CTeSimp a partir de arquivo INI.

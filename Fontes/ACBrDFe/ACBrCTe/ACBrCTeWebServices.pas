@@ -745,7 +745,7 @@ begin
   CTeRetorno := TRetConsStatServ.Create('CTe');
 
   try
-    CTeRetorno.XmlRetorno := ParseText(FPRetWS);
+    CTeRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
     CTeRetorno.LerXml;
 
     Fversao := CTeRetorno.versao;
@@ -1154,8 +1154,7 @@ begin
           else
             AXML := FPRetWS;
 
-          //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-          FCTeRetornoSincrono.XmlRetorno := ParseText(AXML);
+          FCTeRetornoSincrono.XmlRetorno := AXML; // ParseText(AXML);
           FCTeRetornoSincrono.LerXml;
 
           Fversao := FCTeRetornoSincrono.versao;
@@ -1309,8 +1308,7 @@ begin
         end;
       end;
 
-      //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-      FCTeRetornoSincrono.XmlRetorno := ParseText(AXML);
+      FCTeRetornoSincrono.XmlRetorno := AXML; // ParseText(AXML);
       FCTeRetornoSincrono.LerXml;
 
       Fversao := FCTeRetornoSincrono.versao;
@@ -2232,8 +2230,7 @@ begin
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'cteConsultaCTResult');
 
-    //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-    CTeRetorno.XmlRetorno := ParseText(FPRetWS);
+    CTeRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
     CTeRetorno.LerXML;
 
     CTCancelado := False;
@@ -2928,7 +2925,7 @@ begin
 
   VerificarSemResposta;
 
-  FRetConsCad.XmlRetorno := ParseText(FPRetWS);
+  FRetConsCad.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
   FRetConsCad.LerXml;
 
   Fversao := FRetConsCad.versao;

@@ -86,7 +86,7 @@ function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
 
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método SeparaDados()' {$ENDIF};
 function XmlEhUTF8(const AXML: String): Boolean;
-function XmlEhUTF8BOOM(const AXML: String): Boolean;
+function XmlEhUTF8BOM(const AXML: String): Boolean;
 function ConverteXMLtoUTF8(const AXML: String): String;
 function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
@@ -214,9 +214,9 @@ begin
 end;
 
 {------------------------------------------------------------------------------
-   Retorna True se o XML contêm a os bytes do BOOM em seu início;
+   Retorna True se o XML contêm a os bytes do BOM em seu início;
  ------------------------------------------------------------------------------}
-function XmlEhUTF8BOOM(const AXML: String): Boolean;
+function XmlEhUTF8BOM(const AXML: String): Boolean;
 const
   UTF8BOM: array[0..2] of Byte = ($EF, $BB, $BF);
 var

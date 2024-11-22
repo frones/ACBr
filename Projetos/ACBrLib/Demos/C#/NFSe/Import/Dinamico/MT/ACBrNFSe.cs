@@ -479,7 +479,7 @@ namespace ACBrLib.NFSe
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<NFSE_ConsultarNFSeServicoPrestadoPorPeriodo>();
-            var ret = ExecuteMethod(() => method(libHandle, aDataFinal, aDataFinal, aPagina, aTipoPeriodo, buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(libHandle, aDataInicial, aDataFinal, aPagina, aTipoPeriodo, buffer, ref bufferLen));
 
             CheckResult(ret);
 

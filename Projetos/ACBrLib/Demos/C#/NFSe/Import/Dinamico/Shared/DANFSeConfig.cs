@@ -35,6 +35,18 @@ namespace ACBrLib.NFSe
             get => GetProperty<bool>();
             set => SetProperty(value);
         }
+
+        public bool Producao
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
+
+        public bool DetalharServico
+        {
+            get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
         #endregion Properties
     }
 }

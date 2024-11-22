@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2024
+-- ACBrUtil.XMLHTML --
+[*] #TK-6139: Adiciona uma função para verificar se o XML possui os bytes do BOM.
+  Por: Diego Folieni 
 
 26/08/2024
 -- ACBrUtil.Math--

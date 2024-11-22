@@ -86,6 +86,7 @@ function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
 
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método SeparaDados()' {$ENDIF};
 function XmlEhUTF8(const AXML: String): Boolean;
+function XmlEhUTF8BOOM(const AXML: String): Boolean;
 function ConverteXMLtoUTF8(const AXML: String): String;
 function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
@@ -210,6 +211,24 @@ begin
   XmlStart := LowerCase(LeftStr(AXML, 50));
   P := pos('encoding', XmlStart);
   Result := (P > 0) and (pos('utf-8', XmlStart) > P);
+end;
+
+{------------------------------------------------------------------------------
+   Retorna True se o XML contêm a os bytes do BOOM em seu início;
+ ------------------------------------------------------------------------------}
+function XmlEhUTF8BOOM(const AXML: String): Boolean;
+const
+  UTF8BOM: array[0..2] of Byte = ($EF, $BB, $BF);
+var
+  LBytesOfXML: array[0..2] of Byte;
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    LBytesOfXML[i-1] := Byte(ord(AXML[i]));
+
+  Result := (LBytesOfXML[0] = UTF8BOM[0]) and
+            (LBytesOfXML[1] = UTF8BOM[1]) and
+            (LBytesOfXML[2] = UTF8BOM[2]) ;
 end;
 
 {------------------------------------------------------------------------------

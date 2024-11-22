@@ -238,7 +238,6 @@ begin
     if Self.infoFech.transDCTFWeb = snfSim then
       Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 1, eSSimNaoFacultativoToStr(self.infoFech.transDCTFWeb));
 
-    if Self.infoFech.naoValid = snfSim then
       Gerador.wCampo(tcStr, '', 'naoValid',     1, 1, 1, eSSimNaoFacultativoToStr(self.infoFech.naoValid));
   end;
 

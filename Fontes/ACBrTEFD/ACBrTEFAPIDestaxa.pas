@@ -109,11 +109,62 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Math;
+  ACBrUtil.Base, ACBrUtil.Math, math, DateUtils;
 
 { TACBrTEFRespDestaxa }
 
 procedure TACBrTEFRespDestaxa.ConteudoToProperty;
+
+  procedure ConteudoToParcelas(resp: TACBrTEFDestaxaTransacaoResposta);
+  var
+    i: Integer;
+    venc: TDateTime;
+    parc_val, saldo: Double;
+    parc: TACBrTEFRespParcela;
+    vencs, valores: TSplitResult;
+  begin
+    Parcelas.Clear;
+    if (resp.transacao_parcela > 0) then
+      QtdParcelas := resp.transacao_parcela;
+
+    if NaoEstaVazio(resp.transacao_administradora) then
+      valores := Split(';', resp.transacao_parcela_valor);
+
+    if NaoEstaVazio(resp.transacao_parcela_vencimento) then
+      vencs := Split(';', resp.transacao_parcela_vencimento);
+    
+    for i := 0 to Length(valores) - 1 do
+    begin
+      parc := TACBrTEFRespParcela.Create;
+      parc.Valor := StrToFloatDef(valores[i], 0);
+
+      if (Length(vencs) >= (i+1)) then
+        parc.Vencimento := StrToDateDef(vencs[i], 0);
+      Parcelas.Add(parc);
+    end;
+
+    if EstaZerado(Parcelas.Count) and (QtdParcelas > 0) then
+    begin
+      saldo := resp.transacao_valor;
+      parc_val := RoundABNT((saldo / QtdParcelas), -2);
+      venc := IncDay(DateOf(resp.transacao_data), 30);
+      for i := 1 to QtdParcelas do
+      begin
+        parc := TACBrTEFRespParcela.Create;
+        parc.Vencimento := venc;
+
+        if (i = QtdParcelas) then
+          parc.Valor := saldo
+        else
+          parc.Valor := parc_val;
+
+        Parcelas.Add(parc);
+        venc := IncDay(venc, 30);
+        saldo := saldo - parc_val;
+      end;
+    end;
+  end;
+
 var
   wResp: String;
   wDestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
@@ -146,6 +197,12 @@ begin
     ImagemComprovante1aVia.Text := wDestaxaResposta.transacao_comprovante_1via.Text;
     ImagemComprovante2aVia.Text := wDestaxaResposta.transacao_comprovante_2via.Text;
 
+    ConteudoToParcelas(wDestaxaResposta);
+    case wDestaxaResposta.transacao_financiado of
+      dxfAdministradora: ParceladoPor := parcADM;
+      dxfEstabelecimento: ParceladoPor := parcLoja;
+    end;
+
     case wDestaxaResposta.transacao_pagamento of
       dpgAVista: TipoOperacao := opAvista;
       dpgParcelado: TipoOperacao := opParcelado;
@@ -170,7 +227,7 @@ begin
     fDestaxaClient.Aplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
     //fDestaxaClient.AplicacaoTela := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
     fDestaxaClient.AplicacaoVersao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
-    fDestaxaClient.Estabelecimento := fpACBrTEFAPI.DadosTerminal.CodFilial;
+    fDestaxaClient.Estabelecimento := fpACBrTEFAPI.DadosEstabelecimento.CNPJ;
     fDestaxaClient.OnGravarLog := QuandoGravarLogAPI;
     fDestaxaClient.OnColetarOpcao := QuandoPerguntarMenuAPI;
     fDestaxaClient.OnColetarInformacao := QuandoPerguntarCampoAPI;
@@ -205,7 +262,7 @@ var
 begin
   sl := TStringList.Create;
   try
-    for i := 0 to Pred(Length(aOpcoes)) do
+    for i := 0 to Length(aOpcoes) - 1 do
       sl.Add(aOpcoes[i]);
 
     TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu(aMensagem, sl, aOpcao);
@@ -223,28 +280,21 @@ var
 begin
   Validado := False;
   Def.TamanhoMinimo := 0;
+  Def.TamanhoMaximo := 0;
   Def.TipoDeEntrada := tedTodos;
   Def.TituloPergunta := aMensagem;
   Def.ValidacaoDado := valdNenhuma;
   Def.OcultarDadosDigitados := False;
-  //Def.MascaraDeCaptura := aMascara;
-  
-    {TipoDeEntrada: TACBrTEFAPITiposEntrada;
-    TamanhoMinimo: Integer;
-    TamanhoMaximo: Integer;
-    ValorMinimo : LongWord;
-    ValorMaximo : LongWord;
-    OcultarDadosDigitados: Boolean;
-    ValidacaoDado: TACBrTEFAPIValidacaoDado;
-    ValorInicial: String;
-    MsgErroDeValidacao: String;
-    MsgErroDadoMaior: String;
-    MsgErroDadoMenor: String;
-    MsgConfirmacaoDuplaDigitacao: String;
-    TipoEntradaCodigoBarras: TACBrTEFAPITipoBarras;
-    TipoCampo: integer;}
 
-  //Def.MascaraDeCaptura := StringReplace(aMascara, '.##', ',0.00', [rfReplaceAll]);
+  if (aMascara = CDESTAXA_MASCARA_DATA1) then
+    Def.MascaraDeCaptura := '**/**/**'
+  else if (aMascara = CDESTAXA_MASCARA_DATA2) then
+    Def.MascaraDeCaptura := '**/**/****'
+  else if (aMascara = CDESTAXA_MASCARA_DECIMAL) then
+    Def.MascaraDeCaptura := '@,@@'
+  else
+    Def.MascaraDeCaptura := aMascara;
+
   case aTipo of
     dctNaoExibivel: Def.TipoDeEntrada := tedApenasLeitura;
     dctAlfabetico: Def.TipoDeEntrada := tedAlfabetico;

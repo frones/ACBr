@@ -46,6 +46,8 @@ Símbolo : Significado
 
 22/11/2024
 -- ACBrNFeNotasFiscais --
+[*] Corrige o nome da função
+   Por: Diego Folieni
 [*] #TK-6139: Adiciona tratativa para arquivos UTF8BOM.
    Por: Diego Folieni 
 

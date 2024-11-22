@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/11/2024
+-- Diversos --
+[+] Implementado o provedor XTRTecnologia.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [+] Implementado o método SalvarXmlCancelamento.
    Por: Italo Giurizzato Junior

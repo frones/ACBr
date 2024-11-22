@@ -200,7 +200,8 @@ uses
   SigISSWeb.Provider,
   Simple.Provider,
   SoftPlan.Provider,
-  WebFisco.Provider;
+  WebFisco.Provider,
+  XTRTecnologia.Provider;
 
   { TACBrNFSeXProviderManager }
 
@@ -664,6 +665,9 @@ begin
             Result := nil;
           end;
         end;
+
+      proXTRTecnologia:
+        Result := TACBrNFSeProviderXTRTecnologia.Create(ACBrNFSe);
     else
       Result := nil;
     end;

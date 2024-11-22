@@ -145,7 +145,7 @@ type
                    proSmarAPD, proSoftPlan, proSpeedGov, proSSInformatica,
                    proSudoeste, proSysISS, proSystemPro, proTcheInfo, proTecnos,
                    proThema, proTinus, proTiplan, proTributus, proVersaTecnologia,
-                   proVirtual, proWebFisco, proWebISS);
+                   proVirtual, proWebFisco, proWebISS, proXTRTecnologia);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao, stNenhum,
                              stRetidoForaMunicipio, stDevidoForaMunicipioNaoRetido);

@@ -2456,7 +2456,7 @@ begin
     LMS.LoadFromFile(ARQUIVO_UTF8BOM);
     LXML := ReadStrFromStream(LMS, LMS.Size);
 
-    Check(XmlEhUTF8BOOM(LXML), 'Falhou ao definir se é UTF8BOM');
+    Check(XmlEhUTF8BOM(LXML), 'Falhou ao definir se é UTF8BOM');
   finally
     LMS.Free;
   end;
@@ -2472,7 +2472,7 @@ begin
     LMS.LoadFromFile(ARQUIVO_UTF8);
     LXML := ReadStrFromStream(LMS, LMS.Size);
 
-    Check(not XmlEhUTF8BOOM(LXML), 'Falhou ao definir se é UTF8BOM');
+    Check(not XmlEhUTF8BOM(LXML), 'Falhou ao definir se é UTF8BOM');
   finally
     LMS.Free;
   end;
@@ -2488,7 +2488,7 @@ begin
     LMS.LoadFromFile(ARQUIVO_ANSI);
     LXML := ReadStrFromStream(LMS, LMS.Size);
 
-    Check(not XmlEhUTF8BOOM(LXML), 'Falhou ao definir se é UTF8BOM');
+    Check(not XmlEhUTF8BOM(LXML), 'Falhou ao definir se é UTF8BOM');
   finally
     LMS.Free;
   end;

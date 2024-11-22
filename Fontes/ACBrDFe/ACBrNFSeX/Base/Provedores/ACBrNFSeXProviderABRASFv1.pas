@@ -1501,7 +1501,8 @@ var
   Document: TACBrXmlDocument;
   ANode, AuxNode, ANodePed, ANodeInfCon: TACBrXmlNode;
   Ret: TRetCancelamento;
-  IdAttr: string;
+  IdAttr, xCancelamento, xXMLNS: string;
+  Inicio, Fim: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -1591,7 +1592,24 @@ begin
         Ret.DataHora := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
         if Ret.DataHora > 0 then
-          Ret.Situacao := 'Cancelado'
+        begin
+          Ret.Situacao := 'Cancelado';
+
+          Inicio := Pos('CancelarNfseEnvio', Response.ArquivoEnvio) + 16;
+          Fim := Pos('>', Response.ArquivoEnvio) - 1;
+
+          if Inicio = Fim then
+            xXMLNS := ''
+          else
+            xXMLNS := ' ' + Copy(Response.ArquivoEnvio, Inicio + 1, Fim - (Inicio + 1));
+
+          xCancelamento := '<Cancelamento' + xXMLNS + '>' +
+                              SeparaDados(Response.ArquivoEnvio, 'Pedido', True) +
+                              SepararDados(Response.ArquivoRetorno, 'InfConfirmacaoCancelamento', True) +
+                           '</Cancelamento>';
+
+          SalvarXmlCancelamento(Ret.Pedido.InfID.ID + '-procCancNFSe', xCancelamento);
+        end
         else
           Ret.Situacao := '';
       end;

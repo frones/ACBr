@@ -2245,8 +2245,9 @@ var
   Document: TACBrXmlDocument;
   ANode, AuxNode: TACBrXmlNode;
   Ret: TRetCancelamento;
-  IdAttr: string;
+  IdAttr, xCancelamento, xXMLNS: string;
   AErro: TNFSeEventoCollectionItem;
+  Inicio, Fim: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -2308,17 +2309,6 @@ begin
       Ret := Response.RetCancelamento;
       Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
-      if Ret.DataHora > 0 then
-      begin
-        Ret.Sucesso := 'Sim';
-        Ret.Situacao := 'Cancelado';
-      end
-      else
-      begin
-        Ret.Sucesso := '';
-        Ret.Situacao := '';
-      end;
-
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
       else
@@ -2359,6 +2349,32 @@ begin
 
         InscricaoMunicipal := ObterConteudoTag(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
         CodigoMunicipio := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+      end;
+
+      if Ret.DataHora > 0 then
+      begin
+        Ret.Sucesso := 'Sim';
+        Ret.Situacao := 'Cancelado';
+
+        Inicio := Pos('CancelarNfseEnvio', Response.ArquivoEnvio) + 16;
+        Fim := Pos('>', Response.ArquivoEnvio) - 1;
+
+        if Inicio = Fim then
+          xXMLNS := ''
+        else
+          xXMLNS := ' ' + Copy(Response.ArquivoEnvio, Inicio + 1, Fim - (Inicio + 1));
+
+        xCancelamento := '<Cancelamento' + xXMLNS + '>' +
+                            SeparaDados(Response.ArquivoEnvio, 'Pedido', True) +
+                            SepararDados(Response.ArquivoRetorno, 'DataHora', True) +
+                         '</Cancelamento>';
+
+        SalvarXmlCancelamento(Ret.Pedido.InfID.ID + '-procCancNFSe', xCancelamento);
+      end
+      else
+      begin
+        Ret.Sucesso := '';
+        Ret.Situacao := '';
       end;
     except
       on E:Exception do

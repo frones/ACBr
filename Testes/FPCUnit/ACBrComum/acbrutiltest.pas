@@ -11,6 +11,12 @@ uses
   {$endif}
   ACBrTests.Util;
 
+
+const
+  ARQUIVO_UTF8BOM = '..\..\..\..\Recursos\Xml\21_XmlUTF8BOM.xml';
+  ARQUIVO_UTF8 = '..\..\..\..\Recursos\Xml\22_XmlUTF8SemBOM.xml';
+  ARQUIVO_ANSI = '..\..\..\..\Recursos\Xml\23_XmlAnsi.xml';
+
 type
 
   { ParseTextTest }
@@ -54,6 +60,15 @@ type
     procedure PadraoUTF8AspasSimplesLowerCase;
     procedure NaoUTF8;
     procedure ApenasXML10;
+  end;
+
+  { TestXmlEhUTF8BOM }
+
+  TestXmlEhUTF8BOM = class(TTestCase)
+  published
+    procedure ArquivoUTF8BOM;
+    procedure ArquivoUTF8SemBOM;
+    procedure ArquivoAnsi;
   end;
 
   { SepararDadosTest }
@@ -583,7 +598,7 @@ type
 implementation
 
 uses
-  synacode,
+  synacode, synautil,
   ACBrCompress, ACBrConsts, ACBrUtil.Compatibilidade, ACBrUtil.Base, ACBrUtil.FilesIO,
   ACBrUtil.Math, ACBrUtil.XMLHTML, ACBrUtil.Strings;
 
@@ -2429,6 +2444,56 @@ begin
   CheckFalse( XmlEhUTF8( '<?xml version="1.0"?>' ) );
 end;
 
+{ TestXmlEhUTF8BOM }
+
+procedure TestXmlEhUTF8BOM.ArquivoUTF8BOM;
+var
+  LMS: TMemoryStream;
+  LXML: AnsiString;
+begin
+  LMS := TMemoryStream.Create;
+  try
+    LMS.LoadFromFile(ARQUIVO_UTF8BOM);
+    LXML := ReadStrFromStream(LMS, LMS.Size);
+
+    Check(XmlEhUTF8BOOM(LXML), 'Falhou ao definir se é UTF8BOM');
+  finally
+    LMS.Free;
+  end;
+end;
+
+procedure TestXmlEhUTF8BOM.ArquivoUTF8SemBOM;
+var
+  LMS: TMemoryStream;
+  LXML: AnsiString;
+begin
+  LMS := TMemoryStream.Create;
+  try
+    LMS.LoadFromFile(ARQUIVO_UTF8);
+    LXML := ReadStrFromStream(LMS, LMS.Size);
+
+    Check(not XmlEhUTF8BOOM(LXML), 'Falhou ao definir se é UTF8BOM');
+  finally
+    LMS.Free;
+  end;
+end;
+
+procedure TestXmlEhUTF8BOM.ArquivoAnsi;
+var
+  LMS: TMemoryStream;
+  LXML: AnsiString;
+begin
+  LMS := TMemoryStream.Create;
+  try
+    LMS.LoadFromFile(ARQUIVO_ANSI);
+    LXML := ReadStrFromStream(LMS, LMS.Size);
+
+    Check(not XmlEhUTF8BOOM(LXML), 'Falhou ao definir se é UTF8BOM');
+  finally
+    LMS.Free;
+  end;
+end;
+
 { ParseTextTest }
 
 procedure ParseTextTest.ParseDecode;
@@ -2804,6 +2869,7 @@ initialization
   _RegisterTest('ACBrComum.ACBrUtil', ParseTextTest);
   _RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest);
   _RegisterTest('ACBrComum.ACBrUtil', TestXmlEhUTF8);
+  _RegisterTest('ACBrComum.ACBrUtil', TestXmlEhUTF8BOM);
   _RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest);
   _RegisterTest('ACBrComum.ACBrUtil', TruncFixTest);
   _RegisterTest('ACBrComum.ACBrUtil', TruncToTest);

@@ -4294,7 +4294,14 @@ var
 
 begin
   // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
-  XMLStr := ConverteXMLtoNativeString(AXMLString);
+
+  if (XmlEhUTF8BOOM(AXMLString)) then
+  begin
+    //Se tiver o BOM, eu ignoro os bytes do mesmo.
+    XMLStr := Copy(AXMLString, 4, Length(AXMLString));
+    XMLStr := ConverteXMLtoNativeString(XMLStr);
+  end else
+    XMLStr := ConverteXMLtoNativeString(AXMLString);
 
   N := PosNFe;
   while N > 0 do

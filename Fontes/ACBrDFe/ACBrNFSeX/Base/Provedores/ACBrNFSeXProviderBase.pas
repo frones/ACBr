@@ -87,7 +87,8 @@ type
     procedure SalvarXmlRps(aNota: TNotaFiscal);
     procedure SalvarXmlNfse(aNota: TNotaFiscal);
     procedure SalvarPDFNfse(const aNome: string; const aPDF: AnsiString);
-    procedure SalvarXmlEvento(const aNome: string; const  aEvento: AnsiString);
+    procedure SalvarXmlEvento(const aNome: string; const aEvento: AnsiString);
+    procedure SalvarXmlCancelamento(const aNome, aCancelamento: string);
 
     function CarregarXmlNfse(aNota: TNotaFiscal; const aXml: string): TNotaFiscal;
 
@@ -1072,7 +1073,7 @@ begin
 end;
 
 procedure TACBrNFSeXProvider.SalvarXmlEvento(const aNome: string;
-  const  aEvento: AnsiString);
+  const aEvento: AnsiString);
 var
   aPath, aNomeArq, Extensao: string;
   aConfig: TConfiguracoesNFSe;
@@ -1112,6 +1113,50 @@ begin
       aNomeArq := StringReplace(aNomeArq, '.xml', Extensao, [rfReplaceAll]);
 
     WriteToTXT(aNomeArq, ArqEvento, False, False);
+  end;
+end;
+
+procedure TACBrNFSeXProvider.SalvarXmlCancelamento(const aNome,
+  aCancelamento: string);
+var
+  aPath, aNomeArq, Extensao: string;
+  aConfig: TConfiguracoesNFSe;
+  ConteudoEhXml: Boolean;
+  ArqCancelamento: string;
+begin
+  aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+
+  aPath := aConfig.Arquivos.GetPathCan(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
+
+  aNomeArq := PathWithDelim(aPath) + aNome + '.xml';
+
+  if FAOwner.Configuracoes.Arquivos.Salvar then
+  begin
+    case ConfigGeral.FormatoArqEvento of
+      tfaJson:
+        Extensao := '.json';
+      tfaTxt:
+        Extensao := '.txt';
+    else
+      Extensao := '.xml';
+    end;
+
+    if ConfigGeral.FormatoArqEvento <> tfaXml then
+    begin
+      ArqCancelamento := RemoverDeclaracaoXML(aCancelamento);
+      ConteudoEhXml := False;
+    end
+    else
+    begin
+      ArqCancelamento := aCancelamento;
+      ConteudoEhXml := True;
+    end;
+
+    if not ConteudoEhXml then
+      aNomeArq := StringReplace(aNomeArq, '.xml', Extensao, [rfReplaceAll]);
+
+    WriteToTXT(aNomeArq, ArqCancelamento, False, False);
   end;
 end;
 
@@ -2694,8 +2739,8 @@ begin
 
       aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
 
-      AService.Path := aConfig.Arquivos.GetPathCan(0, aConfig.Geral.Emitente.CNPJ,
-                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
+//      AService.Path := aConfig.Arquivos.GetPathCan(0, aConfig.Geral.Emitente.CNPJ,
+//                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
 
       CancelaNFSeResponse.ArquivoRetorno := AService.Cancelar(ConfigMsgDados.DadosCabecalho, CancelaNFSeResponse.ArquivoEnvio);
 

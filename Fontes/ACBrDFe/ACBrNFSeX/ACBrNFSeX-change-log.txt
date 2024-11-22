@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/11/2024
+-- ACBrNFSeXProviderBase --
+[+] Implementado o método SalvarXmlCancelamento.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [+] Implementado a gravação do XML de cancelamento processado na pasta Can, para os
     provedores que seguem a versão 1 e 2 do layout da ABRASF.

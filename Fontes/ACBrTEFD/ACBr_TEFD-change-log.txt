@@ -46,6 +46,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2024
+-- ACBrTEFAPIAditum --
+[-] Ajuste em 'TACBrTEFAPIClassAditum.TransmitirHttp' para evitar loop infinito,
+    e considerar erros na inicialização
+[-] Correção em 'TACBrTEFAPIClassAditum.Autenticar', no tratamento de resposta
+    com erro
+[*] Ajuste para simular Menu Administrativo quando chamar EfetuarAdministrativa,
+    sem parâmetros
+    (por: DSA)
+
+21/11/2024
+-- ACBrTEFAPIStoneAutoTEF --
+[-] Correção para transações Credito A VISTA e Parcelado
+[*] Ajuste para simular Menu Administrativo quando chamar EfetuarAdministrativa,
+    sem parâmetros
+    (por: DSA)
+
 14/11/2024
 -- ACBrTEFDestaxaComum, ACBrTEFAPIDestaxa --
 [*] Ajustes para integração com a Destaxa

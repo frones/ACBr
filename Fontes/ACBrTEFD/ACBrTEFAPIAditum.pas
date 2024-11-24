@@ -320,16 +320,19 @@ procedure TACBrTEFAPIClassAditum.TransmitirHttp(const AMethod,
   AEndpoint: String; const ABody: AnsiString);
 var
   url: String;
-  Transmitir: Boolean;
+  ReTransmitir, ReAutenticar: Boolean;
   js: TACBrJSONObject;
   jserrors: TACBrJSONArray;
-  i: Integer;
+  i, t: Integer;
 begin
-  Transmitir := True;
-  while Transmitir do
+  t := 0;
+  ReTransmitir := True;
+  while ReTransmitir do
   begin
-    Transmitir := False;
+    ReTransmitir := False;
+    inc(t);
     LimparRespostaHTTP;
+
     url := EncodeURL( fpACBrTEFAPI.DadosTerminal.EnderecoServidor + AEndpoint );
     GravarLog('TransmitirHttp( '+AMethod+', '+url+', '+ABody+' )');
 
@@ -349,27 +352,36 @@ begin
       GravarLog('  ResultCode: '+IntToStr(FHTTPResultCode)+', Response: '+FHTTPResponse);
     end;
 
-    if (FHTTPResultCode <> HTTP_OK) and (pos('pinpad/init', url) = 0) then
-    try
-      js := TACBrJSONObject.Parse(FHTTPResponse);
+    if (FHTTPResultCode <> HTTP_OK) and (pos('pinpad/init', url) = 0) and (t < 3) then
+    begin
+      ReAutenticar := false;
+
       try
-        jserrors := js.AsJSONArray['errors'];
-        if Assigned(jserrors) then
-        begin
-          for i := 0 to jserrors.Count-1 do
+        js := TACBrJSONObject.Parse(FHTTPResponse);
+        try
+          jserrors := js.AsJSONArray['errors'];
+          if Assigned(jserrors) then
           begin
-            if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = -1000) then
+            for i := 0 to jserrors.Count-1 do
             begin
-              Transmitir := True;
-              Autenticar;
-              Break;
+              if (GetErrorCode(jserrors.ItemAsJSONObject[i]) = -1000) then
+              begin
+                ReAutenticar := True;
+                Break;
+              end;
             end;
           end;
+        finally
+          js.free;
         end;
-      finally
-        js.free;
+      except
       end;
-    except
+
+      if ReAutenticar then
+      begin
+        Autenticar;
+        ReTransmitir := True;
+      end;
     end;
   end;
 end;
@@ -567,7 +579,7 @@ begin
   begin
     js := TACBrJSONObject.Parse(FHTTPResponse);
     try
-      if (LowerCase(js.AsString['sucess']) = 'true') then
+      if (LowerCase(js.AsString['sucess']) <> 'true') then
         TratarRetornoComErro;
 
       jsmerchantInfo := js.AsJSONObject['merchantInfo'];
@@ -809,15 +821,37 @@ end;
 
 function TACBrTEFAPIClassAditum.EfetuarAdministrativa(
   OperacaoAdm: TACBrTEFOperacao): Boolean;
+var
+  sl: TStringList;
+  ItemSel: Integer;
 begin
   LimparRespostaHTTP;
   Result := False;
+
+  if (OperacaoAdm = tefopAdministrativo) then
+  begin
+    sl := TStringList.Create;
+    try
+      sl.Add('Teste PinPad');
+      sl.Add('Reimpressão');
+      ItemSel := -1;
+      TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', sl, ItemSel );
+      if (ItemSel = 0) then
+        OperacaoAdm := tefopTesteComunicacao
+      else if (ItemSel = 1) then
+        OperacaoAdm := tefopReimpressao
+      else
+        Exit;
+    finally
+      sl.Free;
+    end;
+  end;
+
   if (OperacaoAdm = tefopTesteComunicacao) then
   begin
     VerificarPresencaPinPad;
     Result := True;
   end
-
   else if (OperacaoAdm = tefopReimpressao) then
   begin
     if (fpACBrTEFAPI.UltimaRespostaTEF.NSU = '') then

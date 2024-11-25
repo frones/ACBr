@@ -1483,6 +1483,9 @@ begin
       32: Result := toRetornoOutrasTarifasAlteracao;
       33: Result := toRetornoEstornoBaixaLiquidacao;
       34: Result := toRetornoDebitoTarifas;
+      51: Result := toRetornoTituloDDAReconhecidoPagador;
+      52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      53: Result := toRetornoTituloDDARecusadoCIP;
       99: Result := toRetornoRegistroRecusado;
     end;
   end;

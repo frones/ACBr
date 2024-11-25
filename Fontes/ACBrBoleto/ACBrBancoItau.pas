@@ -1229,6 +1229,8 @@ begin
       71: Result := toRetornoEntradaRegistradaAguardandoAvaliacao;
       72: Result := toRetornoBaixaCreditoCCAtravesSispagSemTituloCorresp;
       73: Result := toRetornoConfirmacaoEntradaCobrancaSimples;
+      74: Result := toRetornoConfRecPedidoNegativacao;
+      75: result := toRetornoConfEntradaNegativacao;
       76: Result := toRetornoChequeCompensado;
     end;
   end;

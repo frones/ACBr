@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2024
+-- ACBrBoletoRet_Sicoob_V3.pas --
+[-] TK-6244  - Nao estava devolvendo ListaRetorno.Header.Operacao na consulta. 
+	por Daniel de Morais InfoCotidiano
+
 22/11/2024
 -- ACBrBancoItau.pas --
 [*] TK-6257 - Alterado para gerar qde de dias posicao 392a393 - Vide Particularidades Itau

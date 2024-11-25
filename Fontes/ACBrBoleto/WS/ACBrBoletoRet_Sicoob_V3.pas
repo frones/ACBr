@@ -331,6 +331,8 @@ begin
   ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
   ListaRetorno.HTTPResultCode := HTTPResultCode;
   ListaRetorno.JSONEnvio      := EnvWs;
+  ListaRetorno.Header.Operacao:= ACBrBoleto.Configuracoes.WebService.Operacao;
+
   LCodigoSolicitacao := ACBrBoleto.Configuracoes.WebService.Filtro.NumeroProtocolo;
   LIdArquivo         := StrToInt64Def(ACBrBoleto.Configuracoes.WebService.Filtro.Identificador,0);
 

@@ -725,7 +725,7 @@ begin
   Item.Prod.veicProd.pot          := ObterConteudo(ANode.Childrens.Find('pot'), tcStr);
   Item.Prod.veicProd.Cilin        := ObterConteudo(ANode.Childrens.Find('cilin'), tcStr);
   Item.Prod.veicProd.pesoL        := ObterConteudo(ANode.Childrens.Find('pesoL'), tcStr);
-  Item.Prod.veicProd.pesoB        := ObterConteudo(ANode.Childrens.Find(''), tcStr);
+  Item.Prod.veicProd.pesoB        := ObterConteudo(ANode.Childrens.Find('pesoB'), tcStr);
   Item.Prod.veicProd.nSerie       := ObterConteudo(ANode.Childrens.Find('nSerie'), tcStr);
   Item.Prod.veicProd.tpComb       := ObterConteudo(ANode.Childrens.Find('tpComb'), tcStr);
   Item.Prod.veicProd.nMotor       := ObterConteudo(ANode.Childrens.Find('nMotor'), tcStr);

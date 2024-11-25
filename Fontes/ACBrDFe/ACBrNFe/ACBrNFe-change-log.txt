@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2024
+-- ACBrNFe.XmlReader --
+[*] TK-6266: Adiciona leitura da tag pesoB.
+   Por: Diego Folieni 
+
 22/11/2024
 -- ACBrNFeNotasFiscais --
 [*] Corrige o nome da função

@@ -312,10 +312,10 @@ Public Function ConsultaMDFeNaoEnc(ByVal nCNPJ As String) As String
 
 End Function
 
-Public Sub EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
+Public Function EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
                         ByVal cMunicipioDescarga As String, _
                         Optional ByVal nCNPJ As String = "", _
-                        Optional ByVal nProtocolo As String = "")
+                        Optional ByVal nProtocolo As String = "") As String
 
     Dim retorno As Long
     Dim buffer As String
@@ -327,8 +327,10 @@ Public Sub EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
     
     retorno = MDFE_EncerrarMDFe(libHandler, eChaveouMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen)
     CheckResult retorno
+    
+    EncerrarMDFe = buffer
 
-End Sub
+End Function
 
 Public Sub ConfigImportar(ByVal eArqConfig As String)
 

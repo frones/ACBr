@@ -255,10 +255,10 @@ Public Sub FinalizarLib()
     CheckResult retorno
 End Sub
 
-Public Sub EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
+Public Function EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
                         ByVal cMunicipioDescarga As String, _
                         Optional ByVal nCNPJ As String = "", _
-                        Optional ByVal nProtocolo As String = "")
+                        Optional ByVal nProtocolo As String = "") As String
 
     Dim retorno As Long
     Dim buffer As String
@@ -270,8 +270,10 @@ Public Sub EncerrarMDFe(ByVal eChaveouMDFe As String, ByVal eDtEnc As String, _
     
     retorno = MDFE_EncerrarMDFe(eChaveouMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen)
     CheckResult retorno
+    
+    EncerrarMDFe = buffer
 
-End Sub
+End Function
 
 Public Sub EnviarEmailEvento(ByVal ePara As String, ByVal eChaveNFe As String, ByVal aEnviaPDF As Boolean, _
                        ByVal eAssunto As String, ByVal eMensagem As String, _

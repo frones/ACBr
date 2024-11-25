@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/11/2024
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração visando a impressão do Código CNAE quando este existir no XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6262: A cidade de Lontras/SC trocou a URL e a versão o provedor continua sendo o IPM.
    Por: Willian Delan

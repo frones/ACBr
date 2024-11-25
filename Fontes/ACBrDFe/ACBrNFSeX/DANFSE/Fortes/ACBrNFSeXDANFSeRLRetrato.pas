@@ -522,6 +522,9 @@ begin
       end
     end;
 
+    if Servico.CodigoCnae <> '' then
+      rlmCodServico.Lines.Append('Código CNAE: ' + Servico.CodigoCnae);
+
     rllValorPIS.Caption := FormatFloat(',0.00', Servico.Valores.ValorPis);
     rllValorCOFINS.Caption := FormatFloat(',0.00', Servico.Valores.ValorCofins);
     rllValorIR.Caption := FormatFloat(',0.00', Servico.Valores.ValorIr);

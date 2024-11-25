@@ -60,6 +60,7 @@ const
 
   CDESTAXA_CARTAO_VENDER = 'Cartao Vender';
   CDESTAXA_DIGITAL_PAGAR = 'Digital Pagar';
+  CDESTAXA_TRANSACAO_CONFIRMADA = 'Transacao Confirmada';
   CDESTAXA_ADM_PENDENTE = 'Administracao Pendente';
   CDESTAXA_ADM_CANCELAR = 'Administracao Cancelar';
   CDESTAXA_ADM_EXTRATO_TRANSACAO = 'Administracao Extrato Transacao';
@@ -76,7 +77,8 @@ const
   CDESTAXA_ADM_PROXIMA = 'Proxima';
   CDESTAXA_ADM_ULTIMA = 'Ultima';
   CDESTAXA_ADM_FECHAR = 'Fechar';
-
+  
+  CDESTAXA_MASCARA_VALIDADE = 'MM/yy';
   CDESTAXA_MASCARA_DATA1 = 'dd/MM/yy';
   CDESTAXA_MASCARA_DATA2 = 'dd/MM/yyyy';
   CDESTAXA_MASCARA_DECIMAL = '.##';
@@ -437,7 +439,7 @@ type
     fautomacao_coleta_sequencial: Integer;
     fautomacao_coleta_timeout: Integer;
     fautomacao_coleta_tipo: TACBrTEFDestaxaColetaTipo;
-    fautomacao_coleta_transacao_resposta: Integer;
+    fautomacao_coleta_transacao_resposta: String;
   protected
     procedure PreencherCampos(const aStrList: TStringList); override;
     procedure CarregarCampos(const aStrList: TStringList); override;
@@ -447,7 +449,7 @@ type
     property automacao_coleta_mensagem_tipo: TACBrTEFDestaxaBinarioTipo read fautomacao_coleta_mensagem_tipo write fautomacao_coleta_mensagem_tipo;
     property automacao_coleta_retorno: TACBrTEFDestaxaColetaRetorno read fautomacao_coleta_retorno write fautomacao_coleta_retorno;
     property automacao_coleta_sequencial: Integer read fautomacao_coleta_sequencial write fautomacao_coleta_sequencial;
-    property automacao_coleta_transacao_resposta: Integer read fautomacao_coleta_transacao_resposta write fautomacao_coleta_transacao_resposta;
+    property automacao_coleta_transacao_resposta: String read fautomacao_coleta_transacao_resposta write fautomacao_coleta_transacao_resposta;
     property automacao_coleta_timeout: Integer read fautomacao_coleta_timeout write fautomacao_coleta_timeout;
     property automacao_coleta_informacao: String read fautomacao_coleta_informacao write fautomacao_coleta_informacao;
     property automacao_coleta_mascara: String read fautomacao_coleta_mascara write fautomacao_coleta_mascara;
@@ -979,7 +981,7 @@ begin
   fautomacao_coleta_mensagem := CarregarCampoString(aStrList.Values['automacao_coleta_mensagem']);
   fautomacao_coleta_sequencial := CarregarCampoInteger(aStrList.Values['automacao_coleta_sequencial']);
   fautomacao_coleta_timeout := CarregarCampoInteger(aStrList.Values['automacao_coleta_timeout']);
-  fautomacao_coleta_transacao_resposta := CarregarCampoInteger(aStrList.Values['automacao_coleta_transacao_resposta']);
+  fautomacao_coleta_transacao_resposta := CarregarCampoString(aStrList.Values['automacao_coleta_transacao_resposta']);
   fautomacao_coleta_retorno := IntegerToDestaxaColetaRetorno(CarregarCampoInteger(aStrList.Values['automacao_coleta_retorno']));
   fautomacao_coleta_mensagem_tipo := StringToDestaxaBinarioTipo(CarregarCampoString(aStrList.Values['automacao_coleta_mensagem_tipo']));
 end;
@@ -993,7 +995,7 @@ begin
   fautomacao_coleta_tipo := dctNenhum;
   fautomacao_coleta_informacao := EmptyStr;
   fautomacao_coleta_mensagem := EmptyStr;
-  fautomacao_coleta_transacao_resposta := -1;
+  fautomacao_coleta_transacao_resposta := EmptyStr;
   fautomacao_coleta_sequencial := -1;
   fautomacao_coleta_timeout := -1;
   fautomacao_coleta_mensagem_tipo := dbtNenhum;
@@ -1639,7 +1641,8 @@ procedure TACBrTEFDestaxaClient.ProcessarColeta;
 var
   Cancelar: Boolean;
 begin
-  while (ColetaResposta.automacao_coleta_retorno in [dcrExecutarProcedimento, dcrErroParametrosInvalidos]) do
+  Cancelar := False;
+  while (ColetaResposta.automacao_coleta_retorno in [dcrExecutarProcedimento, dcrErroParametrosInvalidos, dcrErroTempoLimiteExcedido]) do
   begin
     ColetaRequisicao.Clear;
     if NaoEstaVazio(ColetaResposta.automacao_coleta_opcao) then
@@ -1653,17 +1656,44 @@ begin
     ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
     Socket.ExecutarColeta;
   end;
+     
+  if NaoEstaVazio(ColetaResposta.mensagem) and Assigned(fOnExibirMensagem) and
+     (ColetaResposta.retorno in
+     [drsErroTransacaoCanceladaOperador,
+      drsErroTransacaoCanceladaCliente,
+      drsErroParametrosInvalidos,
+      drsErroComunicacaoClienteServidor,
+      drsErroComunicacaoServidorRede,
+      drsErroTempoLimiteExcedido]) then
+    fOnExibirMensagem(ColetaResposta.mensagem, 0, Cancelar);
 
   if (ColetaResposta.automacao_coleta_retorno = dcrCancelarProcedimento) then
   begin
-    Cancelar := False;
     if Assigned(fOnExibirMensagem) and NaoEstaVazio(ColetaResposta.automacao_coleta_mensagem) then
-      fOnExibirMensagem(ColetaResposta.automacao_coleta_mensagem, -1, Cancelar);
+      fOnExibirMensagem(ColetaResposta.automacao_coleta_mensagem, 0, Cancelar);
 
-    ColetaRequisicao.automacao_coleta_retorno := dcrCancelarProcedimento;
+    {while (ColetaResposta.automacao_coleta_retorno = dcrCancelarProcedimento) do
+    begin
+      ColetaRequisicao.Clear;
+      ColetaRequisicao.automacao_coleta_retorno := dcrCancelarProcedimento;
+      ColetaRequisicao.automacao_coleta_mensagem := ColetaResposta.automacao_coleta_mensagem;
+      ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
+      ColetaRequisicao.automacao_coleta_transacao_resposta := ColetaResposta.automacao_coleta_transacao_resposta;
+      Socket.ExecutarColeta;
+    end;}
+
+    ColetaRequisicao.Clear;
+    ColetaRequisicao.automacao_coleta_retorno := ColetaResposta.automacao_coleta_retorno;
     ColetaRequisicao.automacao_coleta_mensagem := ColetaResposta.automacao_coleta_mensagem;
     ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
-    Socket.ExecutarColeta(False);
+    ColetaRequisicao.automacao_coleta_transacao_resposta := ColetaResposta.automacao_coleta_transacao_resposta;
+    //if NaoEstaVazio(ColetaRequisicao.automacao_coleta_transacao_resposta) then
+    //  Socket.ExecutarColeta
+    //else
+    //begin
+      Socket.ExecutarColeta(False);
+      Sleep(600);
+    //end;
   end;
 end;
 
@@ -1687,7 +1717,7 @@ begin
   wSeg := 0;
   Cancelar := False;
   if Assigned(fOnExibirMensagem) and NaoEstaVazio(Resposta.mensagem) and
-     (Resposta.retorno in [drsSucessoComConfirmacao, drsSucessoSemConfirmacao]) then
+     (not (Resposta.retorno in [drsNenhum, drsErroDesconhecido])) then
   begin
     if (Resposta.retorno = drsSucessoSemConfirmacao) then
       wSeg := -1;

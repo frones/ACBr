@@ -46,6 +46,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2024
+-- ACBrTEFAPIDestaxa --
+[+] Alteração para carregar as respostas pendentes do próprio V$PagueClient
+    através do comando "Adminitracao Pendente".
+[*] Alteração para também utilizar o comando "Administracao Pendente" ao 
+    resolver uma transacao pendente.
+    por: Elias César
+
+-- ACBrTEFAPIDestaxaComum --
+[*] Ajuste no ProcessarColeta para exibição correta das mensagens.
+[-] Correção do tipo da propriedade automacao_coleta_transacao_resposta para String.
+
+-- ACBrTEFAPI --
+[+] Inclusão de nova propriedade para não remover a máscara no momento de enviar
+    a resposta em OnObterCampo.
+
 24/11/2024
 -- ACBrTEFAPIAditum --
 [-] Ajuste em 'TACBrTEFAPIClassAditum.TransmitirHttp' para evitar loop infinito,

@@ -63,6 +63,7 @@ type
   private
     { private declarations }
     fMascara: String;
+    fNaoRemoverMascaraResposta: Boolean;
     FTamanhoMaximo: Integer;
     FTamanhoMinimo: Integer;
     fTipoCampo: TTipoCampo;
@@ -82,12 +83,13 @@ type
     property Titulo: String read GetTitulo write SetTitulo;
     property Resposta: String read GetResposta write SetResposta;
     property Ocultar: Boolean read GetOcultar write SetOcultar;
+    property NaoRemoverMascaraResposta: Boolean read fNaoRemoverMascaraResposta write fNaoRemoverMascaraResposta default False;
   end;
 
 implementation
 
 uses
-  ACBrConsts, ACBrUtil, ACBrValidador;
+  ACBrConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrValidador;
 
 { TFormObtemCampo }
 
@@ -120,7 +122,11 @@ begin
    begin
      if (fMascara <> '') then
      begin
-       TamMascara := CountStr(fMascara, '*');
+       if NaoRemoverMascaraResposta then
+         TamMascara := Length(fMascara)
+       else
+         TamMascara := CountStr(fMascara, '*');
+
        if TamanhoMaximo = 0 then
          TamanhoMaximo := TamMascara;
 
@@ -233,7 +239,7 @@ begin
     AValor := StrToIntDef(OnlyNumber(edtResposta.Text), 0);
     Result := FloatToString(AValor/100, '.', '0.00');
   end
-  else if (fMascara <> '') then
+  else if (fMascara <> '') and (not fNaoRemoverMascaraResposta) then
     Result := ACBrValidador.RemoverMascara(edtResposta.Text, fMascara)
   else
     Result := edtResposta.Text;

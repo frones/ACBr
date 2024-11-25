@@ -926,6 +926,7 @@ begin
     FormObtemCampo.Resposta := DefinicaoCampo.ValorInicial;
     FormObtemCampo.Ocultar := DefinicaoCampo.OcultarDadosDigitados;
     FormObtemCampo.Mascara := DefinicaoCampo.MascaraDeCaptura;
+    FormObtemCampo.NaoRemoverMascaraResposta := DefinicaoCampo.NaoRemoverMascaraResposta;
     FormObtemCampo.btVoltar.Visible := False;  // PayGoWeb não suporta Voltar;
 
     if (pos('R$', DefinicaoCampo.MascaraDeCaptura) > 0) or
@@ -1044,6 +1045,11 @@ begin
     edRazaoSocialEstabelecimento.Text := INI.ReadString('Estabelecimento', 'RazaoSocial', edRazaoSocialEstabelecimento.Text);
     edCNPJEstabelecimento.Text := INI.ReadString('Estabelecimento', 'CNPJ', edCNPJEstabelecimento.Text);
 
+    edCodTerminal.Text := INI.ReadString('Terminal', 'CodTerminal', edCodTerminal.Text);
+    edCodEmpresa.Text := INI.ReadString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
+    edPortaPinPad.Text := INI.ReadString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
+    edEnderecoServidor.Text := INI.ReadString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
+
     cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', 1);
     cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
     cbxPagCodigo.ItemIndex := INI.ReadInteger('PosPrinter','PaginaDeCodigo', 2);
@@ -1083,6 +1089,11 @@ begin
 
     INI.WriteString('Estabelecimento', 'RazaoSocial', edRazaoSocialEstabelecimento.Text);
     INI.WriteString('Estabelecimento', 'CNPJ', edCNPJEstabelecimento.Text);
+
+    INI.WriteString('Terminal', 'CodTerminal', edCodTerminal.Text);
+    INI.WriteString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
+    INI.WriteString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
+    INI.WriteString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
 
     INI.WriteInteger('PosPrinter', 'Modelo', cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta', cbxPorta.Text);
@@ -1865,6 +1876,11 @@ begin
 
   ACBrTEFAPI1.DadosEstabelecimento.RazaoSocial := edRazaoSocialEstabelecimento.Text;
   ACBrTEFAPI1.DadosEstabelecimento.CNPJ := edCNPJEstabelecimento.Text;
+
+  ACBrTEFAPI1.DadosTerminal.CodTerminal := edCodTerminal.Text;
+  ACBrTEFAPI1.DadosTerminal.CodEmpresa := edCodEmpresa.Text;
+  ACBrTEFAPI1.DadosTerminal.PortaPinPad := edPortaPinPad.Text;
+  ACBrTEFAPI1.DadosTerminal.EnderecoServidor := edEnderecoServidor.Text;
 
   case cbxQRCode.ItemIndex of
     0: ACBrTEFAPI1.ExibicaoQRCode := qrapiNaoSuportado;

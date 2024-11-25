@@ -2195,8 +2195,8 @@ begin
             FieldByName('NotaFiscal').AsString  := Copy(chave, 26, 9);
             NroNota                             := StrToInt(Copy(chave, 26, 9));
             FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave;
+            Post;
           end;
-          Post;
         end;
       end;
     end else
@@ -2213,8 +2213,8 @@ begin
           FieldByName('NotaFiscal').AsString  := nDoc;
           FieldByName('TextoImpressao').AsString := 'NF              ' + DoctoRem + '                              ' +
             serie + '  /  ' + FormatFloat('00000000000000000000', StrToInt64(nDoc));
+          Post;
         end;
-        Post;
       end;
 
       for i := 0 to CTE.infCTeNorm.infDoc.InfNFE.Count - 1 do
@@ -2229,8 +2229,8 @@ begin
           FieldByName('NotaFiscal').AsString  := Copy(chave, 26, 9);
           NroNota                             := StrToInt(Copy(chave, 26, 9));
           FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave;
+          Post;
         end;
-        Post;
       end;
 
       for i := 0 to CTE.infCTeNorm.infDoc.infOutros.Count - 1 do
@@ -2253,6 +2253,7 @@ begin
           else
             FieldByName('TextoImpressao').AsString := 'Não informado       ' + DoctoRem + '                                        ' + nDoc;
           end;
+          Post;
         end;
         Post;
       end;

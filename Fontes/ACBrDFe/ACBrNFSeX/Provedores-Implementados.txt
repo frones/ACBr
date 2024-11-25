@@ -170,3 +170,4 @@ Virtual              2.02
 WebFisco             1.00  20/09/2022
 WebISS               1.00
 WebISS               2.02
+XTRTecnologia        1.00

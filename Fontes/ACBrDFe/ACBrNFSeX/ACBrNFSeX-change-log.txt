@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/11/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6262: A cidade de Lontras/SC trocou a URL e a versão o provedor continua sendo o IPM.
+   Por: Willian Delan
+
 22/11/2024
 -- Diversos --
 [+] Implementado o provedor XTRTecnologia.

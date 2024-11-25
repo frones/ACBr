@@ -2010,7 +2010,7 @@ begin
       GravarLog('  ret: '+IntToStr(ret));
       val := String(pBuffer);
       fDadosTransacao.Add(Format('%s-%s=%s', ['mask1', hmask, val]));
-      mask := mask << 1;
+      mask := mask shl 1;
     end;
 
     for i := 1 to 32 do
@@ -2022,7 +2022,7 @@ begin
       GravarLog('  ret: '+IntToStr(ret));
       val := String(pBuffer);
       fDadosTransacao.Add(Format('%s-%s=%s', ['mask2', hmask, val]));
-      mask := mask << 1;
+      mask := mask shl 1;
     end;
 
     for i := 1 to 32 do
@@ -2034,7 +2034,7 @@ begin
       GravarLog('  ret: '+IntToStr(ret));
       val := String(pBuffer);
       fDadosTransacao.Add(Format('%s-%s=%s', ['mask3', hmask, val]));
-      mask := mask << 1;
+      mask := mask shl 1;
     end;
 
     for i := 1 to 32 do
@@ -2046,7 +2046,7 @@ begin
       GravarLog('  ret: '+IntToStr(ret));
       val := String(pBuffer);
       fDadosTransacao.Add(Format('%s-%s=%s', ['mask4', hmask, val]));
-      mask := mask << 1;
+      mask := mask shl 1;
     end;
   finally
     Freemem(pBuffer);

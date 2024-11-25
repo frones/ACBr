@@ -2168,6 +2168,9 @@ var
   i,J : Integer;
   DoctoRem: string;
   NroNota : Integer;
+  LInfNfItem : TInfNFCollectionItem;
+  LInfNfeItem : TInfNFeCollectionItem;
+  LInfOutrosItem : TInfOutrosCollectionItem;
 begin
   { dados das Notas Fiscais }
   DoctoRem := FCTe.Rem.CNPJCPF;
@@ -2176,88 +2179,92 @@ begin
   else
     DoctoRem := FormatMaskText('###.###.###-##;0;_', DoctoRem);
 
-  with cdsDadosNotasFiscais do
+
+  //Varrendo NFe
+  if FCTe.ide.tpCTe in [tcCTeSimp, tcSubstCTeSimpl] then
   begin
-    //Varrendo NFe
-    if FCTe.ide.tpCTe in [tcCTeSimp, tcSubstCTeSimpl] then
+    for i := 0 to Pred(FCTe.det.Count) do
     begin
-      for i := 0 to (FCTe.det.Count - 1) do
+      for j := 0 to Pred(FCTe.det[i].infNFe.Count) do
       begin
-        for j := 0 to (FCTe.det[i].infNFe.Count - 1) do
-        begin
-          with FCTe.det[i].infNFe[j] do
-          begin
-            Append;
-            FieldByName('tpDoc').AsString       := 'NFe';
-            FieldByName('CNPJCPF').AsString     := FCTe.Rem.CNPJCPF;
-            FieldByName('Serie').AsString       := Copy(chave, 23, 3);
-            FieldByName('ChaveAcesso').AsString := chave;
-            FieldByName('NotaFiscal').AsString  := Copy(chave, 26, 9);
-            NroNota                             := StrToInt(Copy(chave, 26, 9));
-            FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave;
-            Post;
-          end;
-        end;
-      end;
-    end else
-    begin
-      for i := 0 to CTE.infCTeNorm.infDoc.infNF.Count - 1 do
-      begin
-        with FCTe.infCTeNorm.infDoc.infNF.Items[i] do
-        begin
-          Append;
-          FieldByName('tpDoc').AsString       := 'NF';
-          FieldByName('CNPJCPF').AsString     := DoctoRem;
-          FieldByName('Serie').AsString       := serie;
-          FieldByName('ChaveAcesso').AsString := '';
-          FieldByName('NotaFiscal').AsString  := nDoc;
-          FieldByName('TextoImpressao').AsString := 'NF              ' + DoctoRem + '                              ' +
-            serie + '  /  ' + FormatFloat('00000000000000000000', StrToInt64(nDoc));
-          Post;
-        end;
-      end;
+        cdsDadosNotasFiscais.Append;
+        LInfNfeItem := FCTe.det[i].infNFe[j];
 
-      for i := 0 to CTE.infCTeNorm.infDoc.InfNFE.Count - 1 do
-      begin
-        with FCTe.infCTeNorm.infDoc.InfNFE.Items[i] do
-        begin
-          Append;
-          FieldByName('tpDoc').AsString       := 'NFe';
-          FieldByName('CNPJCPF').AsString     := FCTe.Rem.CNPJCPF;
-          FieldByName('Serie').AsString       := Copy(chave, 23, 3);
-          FieldByName('ChaveAcesso').AsString := chave;
-          FieldByName('NotaFiscal').AsString  := Copy(chave, 26, 9);
-          NroNota                             := StrToInt(Copy(chave, 26, 9));
-          FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave;
-          Post;
-        end;
-      end;
+        cdsDadosNotasFiscais.FieldByName('tpDoc').AsString       := 'NFe';
+        cdsDadosNotasFiscais.FieldByName('CNPJCPF').AsString     := DoctoRem;
+        cdsDadosNotasFiscais.FieldByName('Serie').AsString       := Copy(LInfNfeItem.chave, 23, 3);
+        cdsDadosNotasFiscais.FieldByName('ChaveAcesso').AsString := LInfNfeItem.chave;
+        cdsDadosNotasFiscais.FieldByName('NotaFiscal').AsString  := Copy(LInfNfeItem.chave, 26, 9);
+        NroNota                             := StrToInt(Copy(LInfNfeItem.chave, 26, 9));
+        cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'NF-e '
+                                                                       + FormatFloat('000000000', NroNota)
+                                                                       + '      '
+                                                                       + LInfNfeItem.chave;
 
-      for i := 0 to CTE.infCTeNorm.infDoc.infOutros.Count - 1 do
-      begin
-        with FCTe.infCTeNorm.infDoc.infOutros.Items[i] do
-        begin
-          Append;
-          FieldByName('tpDoc').AsString       := 'Outros';
-          FieldByName('CNPJCPF').AsString     := FCTe.Rem.CNPJCPF;
-          FieldByName('Serie').AsString       := '';
-          FieldByName('ChaveAcesso').AsString := '';
-          FieldByName('NotaFiscal').AsString  := '';
-
-          case tpDoc of
-            tdCFeSAT    : FieldByName('TextoImpressao').AsString := 'CF-e SAT            ' + DoctoRem + '                                        ' + nDoc;
-            tdNFCe      : FieldByName('TextoImpressao').AsString := 'NFC-e               ' + DoctoRem + '                                        ' + nDoc;
-            tdDeclaracao: FieldByName('TextoImpressao').AsString := 'Declaração          ' + DoctoRem + '                                        ' + nDoc;
-            tdOutros    : FieldByName('TextoImpressao').AsString := 'Outros              ' + DoctoRem + '                                        ' + nDoc;
-            tdDutoviario: FieldByName('TextoImpressao').AsString := 'Dutoviário          ' + DoctoRem + '                                        ' + nDoc;
-          else
-            FieldByName('TextoImpressao').AsString := 'Não informado       ' + DoctoRem + '                                        ' + nDoc;
-          end;
-          Post;
-        end;
-        Post;
+        cdsDadosNotasFiscais.Post;
       end;
     end;
+  end else
+  begin
+    for i := 0 to Pred(CTE.infCTeNorm.infDoc.infNF.Count) do
+    begin
+      cdsDadosNotasFiscais.Append;
+      LInfNfItem := FCTe.infCTeNorm.infDoc.infNF[i];
+
+      cdsDadosNotasFiscais.FieldByName('tpDoc').AsString       := 'NF';
+      cdsDadosNotasFiscais.FieldByName('CNPJCPF').AsString     := DoctoRem;
+      cdsDadosNotasFiscais.FieldByName('Serie').AsString       := LInfNfItem.serie;
+      cdsDadosNotasFiscais.FieldByName('ChaveAcesso').AsString := '';
+      cdsDadosNotasFiscais.FieldByName('NotaFiscal').AsString  := LInfNfItem.nDoc;
+      cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'NF              '
+                                                                      + DoctoRem
+                                                                      + '                              '
+                                                                      + LInfNfItem.serie
+                                                                      + '  /  '
+                                                                      + FormatFloat('00000000000000000000', StrToInt64(LInfNfItem.nDoc));
+      cdsDadosNotasFiscais.Post;
+    end;
+
+    for i := 0 to Pred(CTE.infCTeNorm.infDoc.InfNFE.Count) do
+    begin
+      cdsDadosNotasFiscais.Append;
+      LInfNfeItem := FCTe.infCTeNorm.infDoc.InfNFE[I];
+
+      cdsDadosNotasFiscais.FieldByName('tpDoc').AsString       := 'NFe';
+      cdsDadosNotasFiscais.FieldByName('CNPJCPF').AsString     := DoctoRem;
+      cdsDadosNotasFiscais.FieldByName('Serie').AsString       := Copy(LInfNfeItem.chave, 23, 3);
+      cdsDadosNotasFiscais.FieldByName('ChaveAcesso').AsString := LInfNfeItem.chave;
+      cdsDadosNotasFiscais.FieldByName('NotaFiscal').AsString  := Copy(LInfNfeItem.chave, 26, 9);
+      NroNota                                                  := StrToInt(Copy(LInfNfeItem.chave, 26, 9));
+      cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'NF-e '
+                                                                     + FormatFloat('000000000', NroNota)
+                                                                     + '      '
+                                                                     + LInfNfeItem.chave;
+
+      cdsDadosNotasFiscais.Post;
+    end;
+
+    for i := 0 to CTE.infCTeNorm.infDoc.infOutros.Count - 1 do
+    begin
+      cdsDadosNotasFiscais.Append;
+      LInfOutrosItem := FCTe.infCTeNorm.infDoc.infOutros[I];
+      cdsDadosNotasFiscais.FieldByName('tpDoc').AsString       := 'Outros';
+      cdsDadosNotasFiscais.FieldByName('CNPJCPF').AsString     := FCTe.Rem.CNPJCPF;
+      cdsDadosNotasFiscais.FieldByName('Serie').AsString       := '';
+      cdsDadosNotasFiscais.FieldByName('ChaveAcesso').AsString := '';
+      cdsDadosNotasFiscais.FieldByName('NotaFiscal').AsString  := '';
+
+      case LInfOutrosItem.tpDoc of
+        tdCFeSAT    : cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'CF-e SAT            ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
+        tdNFCe      : cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'NFC-e               ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
+        tdDeclaracao: cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'Declaração          ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
+        tdOutros    : cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'Outros              ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
+        tdDutoviario: cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'Dutoviário          ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
+      else
+        cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'Não informado       ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
+      end;
+    end;
+    cdsDadosNotasFiscais.Post;
   end;
 
   if cdsDadosNotasFiscais.IsEmpty

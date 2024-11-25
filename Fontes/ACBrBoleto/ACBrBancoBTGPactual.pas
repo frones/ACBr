@@ -50,7 +50,8 @@ type
     procedure EhObrigatorioContaDV; override;
     procedure EhObrigatorioAgenciaDV; override;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo): String; override;
-    function DefinePosicaoNossoNumeroRetorno: Integer; override;                     //Define posição para leitura de Retorno campo: NossoNumero
+    function DefinePosicaoNossoNumeroRetorno: Integer; override; //Define posição para leitura de Retorno campo: NossoNumero
+    function DefinePosicaoCarteiraRetorno: Integer; override;
     function MontaInstrucoesCNAB240(ATitulo : TACBrTitulo; AIndex : Integer) : string;
     function ConverterDigitoModuloFinal(): String; override;
     function DefineDataOcorrencia(const ALinha: String): String; override;
@@ -362,9 +363,14 @@ begin
     Result := copy(ALinha, 138, 2)+'/'+copy(ALinha, 140, 2)+'/'+copy(ALinha, 142, 4);
 end;
 
+function TACBrBancoBTGPactual.DefinePosicaoCarteiraRetorno: Integer;
+begin
+  Result := 58
+end;
+
 function TACBrBancoBTGPactual.DefinePosicaoNossoNumeroRetorno: Integer;
 begin
-  Result := 47
+  Result := 38
 end;
 
 procedure TACBrBancoBTGPactual.EhObrigatorioAgenciaDV;
@@ -827,7 +833,7 @@ begin
              IntToStrZero(round(ValorDesconto * 100), 15)                           + // 151 a 165 Valor do desconto por dia {ok}
              IntToStrZero(Round(ValorIOF * 100), 15)                                + // 166 a 180 Valor do IOF a ser recolhido {ok}
              IntToStrZero(Round(ValorAbatimento * 100), 15)                         + // 181 a 195 Valor do abatimento {ok}
-             PadRight(NumeroDocumento, 25)                                          + // 196 a 220 Identificação do título na empresa  {ok}
+             PadRight(IfThen(SeuNumero <> '',SeuNumero, NumeroDocumento), 25, ' ')  + // 196 a 220 Identificação do título na empresa  {ok}
              CodProtesto                                                            + // 221 a 221 Código para protesto   {ok}
              DiasProtesto                                                           + // 222 a 223 Número de dias para protesto {ok}
              IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2')        + // 224 a 224 Código para baixa/devolução: Não baixar/não devolver

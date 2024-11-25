@@ -448,11 +448,11 @@ begin
         FBoletoWSClass := TBoletoW_Cresol.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Cresol.Create(FBoleto);
       end;
-    //cobBradesco :
-      //begin
-        //FBoletoWSClass := TBoletoW_Bradesco.Create(Self, FBoleto);
-        //FRetornoBanco  := TRetornoEnvio_Bradesco.Create(FBoleto);
-      //end;
+    cobBradesco :
+      begin
+        FBoletoWSClass := TBoletoW_Bradesco.Create(Self, FBoleto);
+        FRetornoBanco  := TRetornoEnvio_Bradesco.Create(FBoleto);
+      end;
     cobBanrisul :
       begin
         FBoletoWSClass := TBoletoW_Banrisul.Create(Self);

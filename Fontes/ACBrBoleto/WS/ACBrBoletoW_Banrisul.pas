@@ -472,6 +472,10 @@ begin
 
          AJson.AddPair('juros', LJsonJurosObject);
 
+      end else
+      begin
+        LJsonJurosObject.AddPair('valor', 3);
+        AJson.AddPair('juros', LJsonJurosObject);
       end;
    end;
 end;
@@ -643,7 +647,7 @@ begin
 
    if Assigned(OAuth) then
    begin
-      OAuth.URL := IfThen(OAuth.Ambiente = tawsProducao, C_URL_OAUTH_PROD, C_URL_OAUTH_HOM);
+      OAuth.URL := IfThen(OAuth.Ambiente in [tawsProducao,tawsHomologacao], C_URL_OAUTH_PROD, C_URL_OAUTH_HOM);
       OAuth.Payload := True;
    end;
 end;

@@ -303,7 +303,7 @@
                     <div id="webservices" class="panelAba panelConfiguracoes-container">
                         <div class="grid3Col">
                             <div class="form-group">
-                                <label for="UF">Uf Destino</label>
+                                <label for="UF">UF do Emitente</label>
                                 <select id="UF">
                                     <option value="AC">AC</option>
                                     <option value="AL">AL</option>

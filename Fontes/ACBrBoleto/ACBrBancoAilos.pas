@@ -447,7 +447,7 @@ begin
     ACodigoNegativacao := DefineCodigoProtesto(ACBrTitulo);
     DefineDataProtestoNegativacao(ACBrTitulo);
 
-    if CodigoMulta = cmValorFixo then
+    if (CodigoMulta = cmPercentual) or (MultaValorFixo = true)  then
     begin
       aCodMulta := '1';
       if PercentualMulta > 0 then

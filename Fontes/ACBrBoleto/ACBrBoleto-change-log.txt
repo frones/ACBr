@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/11/2024
+-- ACBrBancoAilos.pas --
+[*] TK-6127 - Ajustado para aceitar MultavalorFixo tbm na condição de validacao.
+	https://www.projetoacbr.com.br/forum/topic/80213-remessa-cnab-240-ailoscecred-n%C3%A3o-gera-segmento-s-e-a-multa-n%C3%A3o-vai-em-percentual/
+	por Daniel de Morais InfoCotidiano
+
+25/11/2024
 -- ACBrBoletoRet_Sicoob_V3.pas --
 [-] TK-6244  - Nao estava devolvendo ListaRetorno.Header.Operacao na consulta. 
 	por Daniel de Morais InfoCotidiano

@@ -2254,8 +2254,8 @@ begin
             FieldByName('TextoImpressao').AsString := 'Não informado       ' + DoctoRem + '                                        ' + nDoc;
           end;
         end;
+        Post;
       end;
-      Post;
     end;
   end;
 

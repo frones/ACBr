@@ -212,7 +212,7 @@ end;
 function TBoletoW_Bradesco.GerarTokenAutenticacao: string;
 const PARAMS_OAUTH = '';
 var
-  LVersao, LURL : String;
+  LVersao : String;
   LJSonObject : TACBrJSONObject;
 begin
   OAuth.Payload := True;
@@ -225,10 +225,20 @@ begin
   //FUnixTime := DateTimeToUnix(Now, False);
   FUnixTime := DateTimeToUnix(ACBrUtil.DateTime.DateTimeUniversal(ACBrUtil.DateTime.GetUTCSistema,Now));
 
-  if  Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
-    LURL := Format(OAuth.URL,['1.1']) //página 7
+  if OAuth.Ambiente = tawsProducao then
+    OAuth.URL := C_URL_OAUTH_PROD
   else
-    LURL := Format(OAuth.URL,[LVersao]);
+    OAuth.URL := C_URL_OAUTH_HOM;
+
+  if Boleto.Cedente.CedenteWS.IndicadorPix then
+    LVersao := '1.2'
+  else
+    LVersao := '1.1';
+
+  if  Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
+    OAuth.URL := Format(OAuth.URL,['1.1']) //página 7
+  else
+    OAuth.URL := Format(OAuth.URL,[LVersao]);
 
   if Assigned(OAuth) then
   begin
@@ -236,7 +246,7 @@ begin
     OAuth.GrantType   := 'urn:ietf:params:oauth:grant-type:jwt-bearer';
     try
       LJSonObject := TACBrJSONObject.Create
-                     .AddPair('aud',LURL)
+                     .AddPair('aud',OAuth.URL)
                      .AddPair('sub',Trim(Boleto.Cedente.CedenteWS.ClientID))
                      .AddPair('iat',FUnixTime - 3600 )
                      .AddPair('exp',FUnixTime + 3600)
@@ -632,17 +642,6 @@ begin
   FPAccept := C_ACCEPT;
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
-      OAuth.URL := C_URL_OAUTH_PROD
-    else
-      OAuth.URL := C_URL_OAUTH_HOM;
-
-
-    if AACBrBoleto.Cedente.CedenteWS.IndicadorPix then
-      OAuth.URL := Format(OAuth.URL, ['1.2'])
-    else
-      OAuth.URL := Format(OAuth.URL, ['1.1']);
-
     OAuth.Payload := True;
     OAuth.ContentType       := 'application/x-www-form-urlencoded';
     OAuth.AuthorizationType := atJWT;

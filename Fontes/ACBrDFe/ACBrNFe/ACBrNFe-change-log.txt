@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2024
+-- pcnEnvNFe --
+[*] TK-5991: Removida a referida unit por ela não ser utilizada pelo componente.
+   Por: Italo Giurizzato Junior
+
 25/11/2024
 -- ACBrNFe.XmlReader --
 [*] TK-6266: Adiciona leitura da tag pesoB.

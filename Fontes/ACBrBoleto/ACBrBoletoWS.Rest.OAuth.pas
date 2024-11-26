@@ -111,6 +111,7 @@ type
     property AuthorizationType: TpAuthorizationType read FAuthorizationType write SetAuthorizationType;
     procedure DoLog(const AString: String; const ANivelSeveridadeLog : TNivelLog);
     property ExigirClientSecret : Boolean read FExigirClientSecret write FExigirClientSecret;
+    procedure CarregaCertificados;
   end;
 implementation
 uses
@@ -271,6 +272,8 @@ begin
   if not Assigned(FHTTPSend) then
     raise EACBrBoletoWSException.Create(ClassName + Format(S_METODO_NAO_IMPLEMENTADO, [ C_DFESSL ]));
 
+  CarregaCertificados;
+
   //Definido Valor para Timeout com a configuração da Classe
   FHTTPSend.Timeout := FACBrBoleto.Configuracoes.WebService.TimeOut;
 
@@ -284,6 +287,12 @@ begin
     if Self.AuthorizationType = atJWT then
     begin
       LJWTAuth := TACBrJWTAuth.Create(FHTTPSend.Sock.SSL.PrivateKey);
+      if not FACBrBoleto.Configuracoes.WebService.UseCertificateHTTP then
+      begin
+        FHTTPSend.Sock.SSL.PrivateKey      := '';
+        FHTTPSend.Sock.SSL.CertificateFile := '';
+        FHTTPSend.Sock.SSL.Certificate     := '';
+      end;
       try
         LParamsOAuth := FParamsOAuth;
         FParamsOAuth := 'grant_type=' + FGrantType +'&'+
@@ -293,6 +302,7 @@ begin
       end;
     end;
       //LHeaders.Add(C_CACHE_CONTROL + ': ' + C_NO_CACHE);
+
     for I := 0 to Length(FHeaderParamsList) - 1 do
       LHeaders.Add(FHeaderParamsList[ I ].prName + ': ' + FHeaderParamsList[ I ].PrValue);
     FHTTPSend.Headers.AddStrings(LHeaders);
@@ -323,6 +333,7 @@ begin
         FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL + '?' + FParamsOAuth);
       end;
 
+      FErroComunicacao := FHTTPSend.ResultString;
       FHTTPSend.Document.Position := 0;
       ProcessarRespostaOAuth(ReadStrFromStream(FHTTPSend.Document, FHTTPSend.Document.Size));
       DoLog('Cookies:', logParanoico);
@@ -358,46 +369,35 @@ begin
   FHeaderParamsList[ Length(FHeaderParamsList) - 1 ].PrValue := AParamValue;
 end;
 
-function TOAuth.ClearHeaderParams: TOAuth;
-begin
-  SetLength(FHeaderParamsList, 0);
-  Result := Self;
-end;
-
-constructor TOAuth.Create(ASSL: THTTPSend; AACBrBoleto: TACBrBoleto = nil);
+procedure TOAuth.CarregaCertificados;
 var LStringList : TStringList;
 begin
-  if Assigned(ASSL) then
-    FHTTPSend := ASSL;
-
-  FACBrBoleto := AACBrBoleto;
-
   if FACBrBoleto.Configuracoes.WebService.UseCertificateHTTP then
   begin
     // adiciona a chave privada
-    if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
+    if NaoEstaVazio(FACBrBoleto.Configuracoes.WebService.ChavePrivada) then
     begin
-      if StringIsPEM(AACBrBoleto.Configuracoes.WebService.ChavePrivada) then
-        FHTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.ChavePrivada)
+      if StringIsPEM(FACBrBoleto.Configuracoes.WebService.ChavePrivada) then
+        FHTTPSend.Sock.SSL.PrivateKey := ConvertPEMToASN1(FACBrBoleto.Configuracoes.WebService.ChavePrivada)
       else
-        FHTTPSend.Sock.SSL.PrivateKey := AACBrBoleto.Configuracoes.WebService.ChavePrivada;
+        FHTTPSend.Sock.SSL.PrivateKey := FACBrBoleto.Configuracoes.WebService.ChavePrivada;
     end
     else
-      if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
+      if NaoEstaVazio(FACBrBoleto.Configuracoes.WebService.ArquivoKEY) then
       begin
-        FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
+        FHTTPSend.Sock.SSL.PrivateKeyFile := FACBrBoleto.Configuracoes.WebService.ArquivoKEY;
       end;
       // adiciona o certificado
-    if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.Certificado) then
+    if NaoEstaVazio(FACBrBoleto.Configuracoes.WebService.Certificado) then
     begin
-      if StringIsPEM(AACBrBoleto.Configuracoes.WebService.Certificado) then
-        FHTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(AACBrBoleto.Configuracoes.WebService.Certificado)
+      if StringIsPEM(FACBrBoleto.Configuracoes.WebService.Certificado) then
+        FHTTPSend.Sock.SSL.Certificate := ConvertPEMToASN1(FACBrBoleto.Configuracoes.WebService.Certificado)
       else
-        FHTTPSend.Sock.SSL.Certificate := AACBrBoleto.Configuracoes.WebService.Certificado;
+        FHTTPSend.Sock.SSL.Certificate := FACBrBoleto.Configuracoes.WebService.Certificado;
     end
     else
-      if NaoEstaVazio(AACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
-        FHTTPSend.Sock.SSL.CertificateFile := AACBrBoleto.Configuracoes.WebService.ArquivoCRT;
+      if NaoEstaVazio(FACBrBoleto.Configuracoes.WebService.ArquivoCRT) then
+        FHTTPSend.Sock.SSL.CertificateFile := FACBrBoleto.Configuracoes.WebService.ArquivoCRT;
 
     FHTTPSend.Sock.SSL.Connect;
 
@@ -408,13 +408,27 @@ begin
       LStringList := TStringList.Create;
       try
         //FHTTPSend.Sock.SSL.PrivateKeyFile := AACBrBoleto.Configuracoes.WebService.ArquivoKEY;
-        LStringList.LoadFromFile(AACBrBoleto.Configuracoes.WebService.ArquivoKEY);
+        LStringList.LoadFromFile(FACBrBoleto.Configuracoes.WebService.ArquivoKEY);
         FHTTPSend.Sock.SSL.PrivateKey     := LStringList.Text;
       finally
         LStringList.Free;
       end;
     end;
   end;
+end;
+
+function TOAuth.ClearHeaderParams: TOAuth;
+begin
+  SetLength(FHeaderParamsList, 0);
+  Result := Self;
+end;
+
+constructor TOAuth.Create(ASSL: THTTPSend; AACBrBoleto: TACBrBoleto = nil);
+begin
+  if Assigned(ASSL) then
+    FHTTPSend := ASSL;
+
+  FACBrBoleto := AACBrBoleto;
   FAmbiente          := AACBrBoleto.Configuracoes.WebService.Ambiente;
   FClientID          := AACBrBoleto.Cedente.CedenteWS.ClientID;
   FClientSecret      := AACBrBoleto.Cedente.CedenteWS.ClientSecret;

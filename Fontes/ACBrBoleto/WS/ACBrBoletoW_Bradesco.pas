@@ -107,7 +107,7 @@ const
   C_ACCEPT_ENCODING = 'gzip, deflate, br';
 
   C_CHARSET         = 'utf-8';
-  C_ACCEPT_CHARSET  = 'UTF8';
+  C_ACCEPT_CHARSET  = 'UTF-8';
 
 implementation
 
@@ -210,9 +210,10 @@ begin
 end;
 
 function TBoletoW_Bradesco.GerarTokenAutenticacao: string;
-const PARAMS_OAUTH = '{"aud": "%s","sub": "%s","iat": "%s","exp": "%s","jti": "%s","ver": "%s"}';
+const PARAMS_OAUTH = '';
 var
   LVersao, LURL : String;
+  LJSonObject : TACBrJSONObject;
 begin
   OAuth.Payload := True;
   result:= '';
@@ -221,7 +222,8 @@ begin
   else
     LVersao := '1.1';
 
-  FUnixTime := DateTimeToUnix(Now);
+  //FUnixTime := DateTimeToUnix(Now, False);
+  FUnixTime := DateTimeToUnix(ACBrUtil.DateTime.DateTimeUniversal(ACBrUtil.DateTime.GetUTCSistema,Now));
 
   if  Boleto.Configuracoes.WebService.Ambiente = tawsProducao then
     LURL := Format(OAuth.URL,['1.1']) //página 7
@@ -230,14 +232,21 @@ begin
 
   if Assigned(OAuth) then
   begin
+    OAuth.AuthorizationType := atJWT;
     OAuth.GrantType   := 'urn:ietf:params:oauth:grant-type:jwt-bearer';
-    OAuth.ParamsOAuth := Format(PARAMS_OAUTH,
-                                [LURL,
-                                 Boleto.Cedente.CedenteWS.ClientID,
-                                 IntToStr(FUnixTime),
-                                 IntToStr(FUnixTime + 3600),
-                                 IntToStr(FUnixTime * 1000),
-                                 LVersao]);
+    try
+      LJSonObject := TACBrJSONObject.Create
+                     .AddPair('aud',LURL)
+                     .AddPair('sub',Trim(Boleto.Cedente.CedenteWS.ClientID))
+                     .AddPair('iat',FUnixTime - 3600 )
+                     .AddPair('exp',FUnixTime + 3600)
+                     .AddPair('jti',FUnixTime * 1000)
+                     .AddPair('ver',LVersao);
+      OAuth.ParamsOAuth := LJSonObject.ToJSON;
+    finally
+      LJSonObject.Free;
+    end;
+
     OAuth.AddHeaderParam('Accept-Encoding', C_ACCEPT_ENCODING);
     OAuth.AddHeaderParam('Accept-Charset' , C_ACCEPT_CHARSET);
     OAuth.AddHeaderParam('Accept','*/*');
@@ -621,7 +630,6 @@ begin
   inherited Create(ABoletoWS);
 
   FPAccept := C_ACCEPT;
-
   if Assigned(OAuth) then
   begin
     if OAuth.Ambiente = tawsProducao then

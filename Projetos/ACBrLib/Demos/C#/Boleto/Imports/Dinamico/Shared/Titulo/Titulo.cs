@@ -120,7 +120,9 @@ namespace ACBrLib.Boleto
 
         public bool Verso { get; set; }
 
-        public QrCode QrCode { get;} = new QrCode();
+        public QrCode QrCode { get; } = new QrCode();
+
+        public ACBrCodigoDesconto CodigoDesconto { get; set; }
 
     public List<BoletoNotaFiscal> NotaFiscais { get; } = new List<BoletoNotaFiscal>();
 

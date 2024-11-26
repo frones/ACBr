@@ -183,6 +183,11 @@ begin
     DataHoraTransacaoLocal := wDestaxaResposta.transacao_data;
     DataHoraTransacaoHost := wDestaxaResposta.transacao_data;
     DataVencimento := wDestaxaResposta.transacao_vencimento;
+    TaxaServico := StrToFloatDef(wDestaxaResposta.transacao_valor_taxa_servico, 0);
+
+    NFCeSAT.Bandeira := wDestaxaResposta.transacao_administradora;
+    NFCeSAT.Autorizacao := wDestaxaResposta.transacao_autorizacao;
+    NFCeSAT.CNPJCredenciadora := wDestaxaResposta.transacao_rede_cnpj;
 
     CodigoBandeiraPadrao := wDestaxaResposta.codigo_bandeira;
     NomeAdministradora := wDestaxaResposta.transacao_administradora;

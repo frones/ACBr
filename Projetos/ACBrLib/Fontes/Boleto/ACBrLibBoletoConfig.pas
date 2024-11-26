@@ -365,7 +365,7 @@ begin
   FAmbiente:= tawsHomologacao;
   FOperacao:= tpInclui;
   FVersaoDF:= '1.2';
-  FUseCertificateHTTP:= False;
+  FUseCertificateHTTP:= True;
   FArquivoCRT:= '';
   FArquivoKEY:= '';
 

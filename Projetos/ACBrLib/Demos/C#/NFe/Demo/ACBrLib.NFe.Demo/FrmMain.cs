@@ -149,7 +149,7 @@ namespace ACBrLib.NFe.Demo
             //Destinatario
             notaFiscal.Destinatario.idEstrangeiro = "";
             notaFiscal.Destinatario.CNPJCPF = "99999999999999";
-            notaFiscal.Destinatario.xNome = "PROJETO ACBR";
+            notaFiscal.Destinatario.xNome = "PROJETO ACBR Destinatario";
             notaFiscal.Destinatario.indIEDest = IndicadorIE.inContribuinte;
             notaFiscal.Destinatario.IE = "999999999999";
             notaFiscal.Destinatario.ISUF = "";
@@ -190,7 +190,69 @@ namespace ACBrLib.NFe.Demo
             produto.vDesc = 0;
             produto.infAdProd = "Informacao Adicional do Produto";
 
+            produto.PIS.CST = CSTPIS.pis04;
+            produto.COFINS.CST = CSTCofins.cof04;
+
             notaFiscal.Produtos.Add(produto);
+
+            PagamentoNFe pagtoDinheiro = new PagamentoNFe();
+            pagtoDinheiro.tpIntegra = TpIntegra.tiNaoInformado;
+            pagtoDinheiro.indPag = IndicadorPagamento.ipVista;
+            pagtoDinheiro.tPag = FormaPagamento.fpDinheiro;
+            pagtoDinheiro.vPag = 100;
+            pagtoDinheiro.dPag = DateTime.Now;
+
+            //Exemplos de integração dos meios de pagamento aos documentos fiscais eletrônicos mencionados na aula
+            //https://acbr.nutror.com/curso/8d575bd8a7c0ac0fda312f9b12b1eb521e606446/aula/9286660
+            //Disponível no curso Integração dos Meios de Pagamento aos Documentos Fiscais Eletrônicos
+            //-->Exemplo pagamento cartão débigo\crédito para o Mato Grosso.
+            //PagamentoNFe pagtoCartaoMT = new PagamentoNFe();
+            //pagtoCartaoMT.tPag = FormaPagamento.fpCartaoCredito;
+
+            //pagtoCartaoMT.vPag = 100;
+            //pagtoCartaoMT.tpIntegra = TpIntegra.tiPagIntegrado;
+            //pagtoCartaoMT.CNPJ = "99999999999999";
+            //pagtoCartaoMT.cAut = "123456789012345678901234567890";
+            //pagtoCartaoMT.CNPJReceb = "123456789101234";
+            //pagtoCartaoMT.idTermPag = "12345678901234567890";
+
+            //notaFiscal.Pagamentos.Add(pagtoCartaoMT);
+
+            //-->Exemplo pagamento PIX para o Mato Grosso.
+            //PagamentoNFe pagtoPIXMT = new PagamentoNFe();
+            //pagtoPIXMT.tPag = FormaPagamento.fpPagamentoInstantaneo;
+            //pagtoPIXMT.vPag = 100;
+            //pagtoPIXMT.tpIntegra = TpIntegra.tiPagIntegrado;
+            //pagtoPIXMT.CNPJ = "99999999999999";
+            //pagtoPIXMT.cAut = "123456789012345678901234657890123456789012346578901234567890123456789012345678901234567980";
+            //pagtoPIXMT.CNPJReceb = "12345678901234";
+            //pagtoPIXMT.idTermPag = "12345678901234567890";
+
+            //notaFiscal.Pagamentos.Add(pagtoPIXMT);
+
+
+            //-->Exemplo pagamento cartão débigo\crédito para o Rio Grande do Sul.
+            //PagamentoNFe pagtoCartaoRS = new PagamentoNFe();
+            //pagtoCartaoRS.tPag = FormaPagamento.fpCartaoCredito;
+
+            //pagtoCartaoRS.vPag = 100;
+            //pagtoCartaoRS.tpIntegra = TpIntegra.tiPagIntegrado;
+            //pagtoCartaoRS.cAut = "123456789012345678901234567890";
+
+            //notaFiscal.Pagamentos.Add(pagtoCartaoRS);
+
+            //-->Exemplo pagamento PIX para o Rio Grande do Sul.
+            //PagamentoNFe pagtoPIXRS = new PagamentoNFe();
+            //pagtoPIXRS.tPag = FormaPagamento.fpPagamentoInstantaneo;
+            //pagtoPIXRS.vPag = 100;
+            //pagtoPIXRS.tpIntegra = TpIntegra.tiPagIntegrado;
+            ////pagtoPIXRS.CNPJ = "99999999999999";
+            //pagtoPIXRS.cAut = "123456789012345678901234657890123456789012346578901234567890123456789012345678901234567980";
+            ////pagtoPIXRS.CNPJReceb = "13245678901234";
+            ////pagtoPIXRS.idTermPag = "12345678901234567890";
+
+            //notaFiscal.Pagamentos.Add(pagtoPIXRS);
+
 
             return notaFiscal.ToString();
         }

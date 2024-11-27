@@ -340,14 +340,13 @@ begin
               LConsulta.Add( 'ordenarPor='+LOrdenarDataVencimento );
             end;
 
-            if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0
-            then
+            if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0 then
+            {por data de registro, devolve qq status, pois o boleto pode ter sido pago ou baixado}
             begin
-              LConsulta.Add( 'filtrarDataPor='+LFiltroDataEmissao );
-              LConsulta.Add('situacao='+LSituacaoAbertos);
+              LConsulta.Add('filtrarDataPor='+'EMISSAO' );
               LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio));
-              LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.DataRegistro.DataFinal));
-              LConsulta.Add( 'ordenarPor='+LOrdenarDataSituacao);
+              LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataFinal));
+              LConsulta.Add( 'ordenarPor='+'STATUS' );
             end;
           end;
       end;

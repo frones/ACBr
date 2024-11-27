@@ -49,12 +49,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2024
+-- ACBrBoletoW_Inter_API --
+[*] TK-6247 - Ajustado consulta banco inter data de registro.
+	https://www.projetoacbr.com.br/forum/topic/80683-acbrlibboleto-c-consulta-de-t%C3%ADtulos-banco-inter-api/
+	por Daniel de Morais InfoCotidiano
+
+
 26/11/2024
 -- ACBrBoleto.pas --
 [*] TK-6127-1 - Criado a propriedade CodigoDesconto no LerArqINI
 	https://www.projetoacbr.com.br/forum/topic/80213-remessa-cnab-240-ailoscecred-n%C3%A3o-gera-segmento-s-e-a-multa-n%C3%A3o-vai-em-percentual/
 	por Daniel de Morais InfoCotidiano/ Julio Cavalcanti / Antonio Carlos Junior
-
 
 25/11/2024
 -- ACBrBancoCaixa.pas --

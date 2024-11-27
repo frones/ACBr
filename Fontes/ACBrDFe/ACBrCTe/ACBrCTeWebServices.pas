@@ -44,12 +44,12 @@ uses
   pcteCTe,
   pcnRetConsReciDFe,
   ACBrDFeComum.RetConsCad,
+  ACBrDFeComum.RetEnvio,
   pcnConversao,
   pcteConversaoCTe, pcteProcCte,
   ACBrCTe.EnvEvento,
   ACBrCTe.RetEnvEvento,
   ACBrCTe.RetConsSit,
-  pcteRetEnvCTe,
   pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes, pcteConsts;
 
@@ -135,7 +135,7 @@ type
     FSincrono: Boolean;
     FMsgUnZip: String;
 
-    FCTeRetorno: TretEnvCTe;
+    FCTeRetorno: TretEnvDFe;
 //    FCTeRetornoOS: TRetConsSitCTe;
     FCTeRetornoSincrono: TRetConsSitCTe;
 
@@ -586,6 +586,7 @@ implementation
 
 uses
   StrUtils, Math,
+  ACBrXmlBase,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
@@ -847,7 +848,7 @@ begin
 //  if Assigned(FCTeRetornoOS) then
 //    FCTeRetornoOS.Free;
 
-  FCTeRetorno := TretEnvCTe.Create;
+  FCTeRetorno := TretEnvDFe.Create;
 //  FCTeRetornoOS := TRetConsSitCTe.Create;
   FCTeRetornoSincrono := TRetConsSitCTe.Create(FPVersaoServico);
 end;
@@ -884,6 +885,7 @@ var
   VerServ: Double;
   Modelo: TModeloCTe;
   Ok: Boolean;
+  Emissao: TACBrTipoEmissao;
 begin
   case FPConfiguracoesCTe.Geral.ModeloDF of
     moCTe:
@@ -948,8 +950,9 @@ begin
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
+  Emissao := TACBrTipoEmissao(FPConfiguracoesCTe.Geral.FormaEmissao);
 
-  case FPConfiguracoesCTe.Geral.FormaEmissao of
+  case Emissao of
     teSVCRS: xUF := 'SVC-RS';
     teSVCSP: xUF := 'SVC-SP';
   else
@@ -1254,12 +1257,11 @@ begin
         end
         else
         begin
-          //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-          FCTeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+          FCTeRetorno.XmlRetorno := FPRetWS; // ParseText(FPRetWS);
           FCTeRetorno.LerXml;
 
           Fversao := FCTeRetorno.versao;
-          FTpAmb := FCTeRetorno.TpAmb;
+          FTpAmb := TpcnTipoAmbiente(FCTeRetorno.TpAmb);
           FverAplic := FCTeRetorno.verAplic;
           FcStat := FCTeRetorno.cStat;
           FxMotivo := FCTeRetorno.xMotivo;
@@ -1444,7 +1446,7 @@ begin
                                'Recebimento: %s ' + LineBreak +
                                'Tempo Médio: %s ' + LineBreak),
                        [FCTeRetorno.versao,
-                        TpAmbToStr(FCTeRetorno.TpAmb),
+                        TipoAmbienteToStr(FCTeRetorno.TpAmb),
                         FCTeRetorno.verAplic,
                         IntToStr(FCTeRetorno.cStat),
                         FCTeRetorno.xMotivo,
@@ -1611,6 +1613,7 @@ var
   VerServ: Double;
   Modelo: TModeloCTe;
   Ok: Boolean;
+  Emissao: TACBrTipoEmissao;
 begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPHeaderElement := 'cteCabecMsg'
@@ -1641,8 +1644,9 @@ begin
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
+  Emissao := TACBrTipoEmissao(FPConfiguracoesCTe.Geral.FormaEmissao);
 
-  case FPConfiguracoesCTe.Geral.FormaEmissao of
+  case Emissao of
     teSVCRS: xUF := 'SVC-RS';
     teSVCSP: xUF := 'SVC-SP';
   else
@@ -1930,6 +1934,7 @@ var
   VerServ: Double;
   Modelo: TModeloCTe;
   Ok: Boolean;
+  Emissao: TACBrTipoEmissao;
 begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPHeaderElement := 'cteCabecMsg'
@@ -1960,8 +1965,9 @@ begin
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
+  Emissao := TACBrTipoEmissao(FPConfiguracoesCTe.Geral.FormaEmissao);
 
-  case FPConfiguracoesCTe.Geral.FormaEmissao of
+  case Emissao of
     teSVCRS: xUF := 'SVC-RS';
     teSVCSP: xUF := 'SVC-SP';
   else
@@ -2111,6 +2117,7 @@ var
   VerServ: Double;
   Modelo, xUF: String;
   Ok: Boolean;
+  Emissao: TACBrTipoEmissao;
 begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPHeaderElement := 'cteCabecMsg'
@@ -2122,13 +2129,14 @@ begin
   Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
   FcUF    := ExtrairUFChaveAcesso(FCTeChave);
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  Emissao := TACBrTipoEmissao(FPConfiguracoesCTe.Geral.FormaEmissao);
 
   if FConhecimentos.Count > 0 then
     FTpAmb := FConhecimentos.Items[0].CTe.Ide.tpAmb
   else
     FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
 
-  case FPConfiguracoesCTe.Geral.FormaEmissao of
+  case Emissao of
     teSVCRS: xUF := 'SVC-RS';
     teSVCSP: xUF := 'SVC-SP';
   else
@@ -2244,7 +2252,7 @@ begin
     FcStat := CTeRetorno.cStat;
     FXMotivo := CTeRetorno.xMotivo;
     FcUF := CTeRetorno.cUF;
-    FCTeChave := CTeRetorno.chCTe;
+//    FCTeChave := CTeRetorno.chCTe;
     FdhRecbto := CTeRetorno.dhRecbto;
 
     FPMsg := FXMotivo;
@@ -2842,7 +2850,7 @@ begin
   if Assigned(FPDFeOwner.Integrador) then
   begin
     FPDFeOwner.Integrador.Parametros.Values['versaoDados'] := VersaoCTeToStr(FPConfiguracoesCTe.Geral.VersaoDF);
-    FPDFeOwner.Integrador.SetNomeMetodo('CadConsultaCadastro2Soap12', (FPConfiguracoesCTe.WebServices.Ambiente = taHomologacao) );
+    FPDFeOwner.Integrador.SetNomeMetodo('CadConsultaCadastro2Soap12', (FPConfiguracoesCTe.WebServices.AmbienteCodigo = 2) );
   end;
 end;
 
@@ -3021,6 +3029,7 @@ var
   UF, Modelo: String;
   VerServ: Double;
   Ok: Boolean;
+  Emissao: TACBrTipoEmissao;
 begin
   if FPConfiguracoesCTe.Geral.VersaoDF <= ve300 then
     FPHeaderElement := 'cteCabecMsg'
@@ -3032,8 +3041,9 @@ begin
   FIE     := FEvento.Evento.Items[0].InfEvento.detEvento.IE;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe) ));
+  Emissao := TACBrTipoEmissao(FPConfiguracoesCTe.Geral.FormaEmissao);
 
-  case FPConfiguracoesCTe.Geral.FormaEmissao of
+  case Emissao of
     teSVCRS: UF := 'SVC-RS';
     teSVCSP: UF := 'SVC-SP';
   else

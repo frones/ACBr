@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2024
+-- ACBrCTe.Consts --
+[+] #TK-5994: Disponibilizado a nova Unit de Constantes do CTe, mas ela ainda não esta
+    em uso.
+   Por: Italo Giurizzato Junior
+-- ACBrCTeWebServices --
+[*] #TK-5995: Realiado a troca da unit pcteRetEnvCTe pela unit ACBrDFeComum.RetEnvio.
+   Por: Italo Giurizzato Junior
+
 22/11/2024
 -- ACBrCTeWebServices --
 [*] #TK-6256: Removido o ParseText antes da leitura do XML retornado para evitar erros

@@ -50,6 +50,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/11/2024
+-- ACBrBoletoRet_Sicoob_V3.pas --
+[*] TK-6244  - Ajustado para retornar em todos os titulo o header de consulta correto.
+	por Daniel de Morais InfoCotidiano
+
+27/11/2024
 -- ACBrBoletoW_Inter_API --
 [*] TK-6247 - Ajustado consulta banco inter data de registro.
 	https://www.projetoacbr.com.br/forum/topic/80683-acbrlibboleto-c-consulta-de-t%C3%ADtulos-banco-inter-api/

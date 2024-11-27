@@ -416,6 +416,8 @@ begin
                     if I > 0 then
                       ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
 
+                    ListaRetorno.Header.Operacao := tpConsulta;
+
                     AJSonObject  := AJsonBoletosArray.ItemAsJSONObject[I];
 
                     ListaRetorno.DadosRet.IDBoleto.CodBarras             := AJSonObject.AsString['codigoBarras'];

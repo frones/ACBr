@@ -46,6 +46,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2024
+-- ACBrTEFAPIDestaxa --
+[+] Criada função TesteComunicacao para se comportar como o TEF PayGo.
+
+-- ACBrTEFAPIDestaxaComum --
+[-] Correção da consulta dos bits no retorno do campo Estado.
+    por: Elias César
+
+26/11/2024
+-- ACBrTEFAPIDestaxa --
+[+] Inclusão de campos referentes à credenciadora em ConteudoToProperty.
+    por: Elias César
+
 25/11/2024
 -- ACBrTEFAPIDestaxa --
 [+] Alteração para carregar as respostas pendentes do próprio V$PagueClient

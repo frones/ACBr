@@ -94,6 +94,7 @@ type
       CartoesAceitos: TACBrTEFTiposCartao = []; Financiamento: TACBrTEFModalidadeFinanciamento = tefmfNaoDefinido;
       Parcelas: Byte = 0; DataPreDatado: TDateTime = 0; DadosAdicionais: String = ''): Boolean; override;
 
+    function TesteComunicacao: Boolean;
     function EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(const CodOperacaoAdm: String = ''): Boolean; overload; override;
 
@@ -173,6 +174,15 @@ begin
   wDestaxaResposta := TACBrTEFDestaxaTransacaoResposta.Create;
   try
     wDestaxaResposta.AsString := StringToBinaryString(wResp);
+
+    if (wDestaxaResposta.servico = dxsIniciar) then
+    begin
+      Confirmar := False;
+      if wDestaxaResposta.estado.Conectado then
+        Sucesso := (not wDestaxaResposta.estado.ConfiguradoComPinpad) or
+                   (wDestaxaResposta.estado.ConfiguradoComPinpad and wDestaxaResposta.estado.PinpadEncontrado);
+      Exit;
+    end;
 
     Sucesso := (wDestaxaResposta.transacao_resposta = 0);
     Confirmar := (wDestaxaResposta.retorno = drsSucessoComConfirmacao);
@@ -444,6 +454,24 @@ begin
   Result := DestaxaClient.CartaoVender;
 end;
 
+function TACBrTEFAPIClassDestaxa.TesteComunicacao: Boolean;
+var
+  wIniciarTransacao: Boolean;
+begin
+  wIniciarTransacao := (not DestaxaClient.Socket.EmTransacao);
+  if wIniciarTransacao then
+    DestaxaClient.IniciarRequisicao;
+  try
+    if DestaxaClient.Resposta.estado.ConfiguradoComPinpad then
+      Result := DestaxaClient.Resposta.estado.PinpadEncontrado
+    else
+      Result := DestaxaClient.Resposta.estado.Conectado;
+  finally
+    if wIniciarTransacao then
+      DestaxaClient.FinalizarRequisicao;
+  end;
+end;
+
 function TACBrTEFAPIClassDestaxa.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao): Boolean;
 var
   transacao: String;
@@ -453,6 +481,11 @@ begin
   case OperacaoAdm of
     tefopCancelamento: transacao := CDESTAXA_ADM_CANCELAR;
     tefopReimpressao: transacao := CDESTAXA_ADM_REIMPRIMIR;
+    tefopTesteComunicacao:
+    begin
+      Result := TesteComunicacao;
+      Exit;
+    end;
   end;
 
   Result := EfetuarAdministrativa(transacao);

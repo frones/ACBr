@@ -208,8 +208,8 @@ type
 
     function GetConectado: Boolean;
     function GetConfiguradoComPinpad: Boolean;
-    function GetPinpadEncontrado: Boolean;
     function GetNovaConfiguracaoRecebida: Boolean;
+    function GetPinpadEncontrado: Boolean;
   public
     constructor Create;
     property Value: Byte read fValue write fValue;
@@ -1014,12 +1014,12 @@ begin
   Result := (fValue and $02) <> 0;
 end;
 
-function TACBrTEFDestaxaEstado.GetPinpadEncontrado: Boolean;
+function TACBrTEFDestaxaEstado.GetNovaConfiguracaoRecebida: Boolean;
 begin
   Result := (fValue and $04) <> 0;
 end;
 
-function TACBrTEFDestaxaEstado.GetNovaConfiguracaoRecebida: Boolean;
+function TACBrTEFDestaxaEstado.GetPinpadEncontrado: Boolean;
 begin
   Result := (fValue and $08) <> 0;
 end;

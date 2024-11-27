@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2024
+-- ACBrMDFe.Consts --
+[+] #TK-5997: Disponibilizado a nova Unit de Constantes do MDFe, mas ela ainda não esta
+    em uso.
+   Por: Italo Giurizzato Junior
+
 19/11/2024
 -- ACBrMDFeWebServices --
 [*] Ajustes para a migração para as novas units.

@@ -201,6 +201,7 @@ namespace ACBrLib.NFe.Demo
             pagtoDinheiro.tPag = FormaPagamento.fpDinheiro;
             pagtoDinheiro.vPag = 100;
             pagtoDinheiro.dPag = DateTime.Now;
+            notaFiscal.Pagamentos.Add(pagtoDinheiro);
 
             //Exemplos de integração dos meios de pagamento aos documentos fiscais eletrônicos mencionados na aula
             //https://acbr.nutror.com/curso/8d575bd8a7c0ac0fda312f9b12b1eb521e606446/aula/9286660

@@ -472,8 +472,8 @@ begin
     end;
 
     Result := True;
-  except
-    SLResultGuia.Free;
+  finally
+     SLResultGuia.Free;
   end;
 end;
 

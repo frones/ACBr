@@ -2124,6 +2124,8 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.Aliquota = 2
     CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFe = ACBrNFe1
+    ExibeInforAdicProduto = infNenhum
+    ImprimeDetalhamentoEspecifico = False
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
     Left = 427

@@ -39,7 +39,7 @@ uses
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
   ACBrDFe, ACBrDFeReport, ACBrBase,
-  ACBrNFComDANFComClass, ACBrMail, ACBrNFCom;
+  ACBrNFComDANFComClass, ACBrMail, ACBrNFCom, ACBrNFCom.DANFComRLClass;
 
 type
   TfrmACBrNFCom = class(TForm)
@@ -213,6 +213,7 @@ type
     rgTipoDANFCom: TRadioGroup;
     ACBrNFCom1: TACBrNFCom;
     wbXmlEnvio: TWebBrowser;
+    ACBrNFComDANFComRL1: TACBrNFComDANFComRL;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -1585,12 +1586,7 @@ begin
   ACBrNFCom1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFCom1.Configuracoes.Certificados.Senha       := edtSenha.Text;
   ACBrNFCom1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-  {
-  if cbModeloDF.ItemIndex = 0 then
-    ACBrNFCom1.DANFCom := ACBrNFComDANFComRL1
-  else
-    ACBrNFCom1.DANFCom := ACBrNFComDANFComESCPOS1;
-  }
+
   ACBrNFCom1.SSL.DescarregarCertificado;
 
   with ACBrNFCom1.Configuracoes.Geral do
@@ -1662,7 +1658,7 @@ begin
   if ACBrNFCom1.DANFCom <> nil then
   begin
     ACBrNFCom1.DANFCom.TipoDANFCom := StrToTpImp(OK, IntToStr(rgTipoDaNFCom.ItemIndex + 1));
-    ACBrNFCom1.DANFCom.Logo       := edtLogoMarca.Text;
+    ACBrNFCom1.DANFCom.Logo := edtLogoMarca.Text;
   end;
 end;
 

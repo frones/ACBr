@@ -50,7 +50,7 @@ Símbolo : Significado
     em uso.
    Por: Italo Giurizzato Junior
 -- ACBrCTeWebServices --
-[*] #TK-5995: Realiado a troca da unit pcteRetEnvCTe pela unit ACBrDFeComum.RetEnvio.
+[*] #TK-5995: Realizado a troca da unit pcteRetEnvCTe pela unit ACBrDFeComum.RetEnvio.
    Por: Italo Giurizzato Junior
 
 22/11/2024

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2024
+-- ACBrECFBloco_0_Class --
+[-] Correção de memory leaks.
+    https://www.projetoacbr.com.br/forum/topic/80766-problema-de-memoryleak-no-bloco-0-do-acbrspedecf/
+    por: doszapro
+
 30/10/2024
 -- ACBrECDBloco_K --
 [-] Correção do problema de MemoryLeak no Registro K210, K310, K315 

@@ -149,6 +149,13 @@ begin
   inherited ;
   FRegistro0000.Free;
   fRegistro0001.Free;
+  fRegistro0010.Free;
+  fRegistro0020.Free;
+  fRegistro0021.Free;
+  fRegistro0030.Free;
+  fRegistro0035.Free;
+  fRegistro0930.Free;
+
   FRegistro0990.Free;
 end;
 

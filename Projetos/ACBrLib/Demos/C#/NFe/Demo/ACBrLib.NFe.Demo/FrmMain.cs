@@ -121,11 +121,12 @@ namespace ACBrLib.NFe.Demo
             notaFiscal.Identificacao.procEmi = ProcessoEmissao.peAplicativoContribuinte;
             notaFiscal.Identificacao.indIntermed = IndIntermed.iiSemOperacao;
             notaFiscal.Identificacao.verProc = "ACBrNFe";
-            notaFiscal.Identificacao.dhCont = DateTime.Now;
-            notaFiscal.Identificacao.xJust = "";
+            //Só usar na emissão em contingência
+            //notaFiscal.Identificacao.dhCont = DateTime.Now;
+            //notaFiscal.Identificacao.xJust = "";
 
             //Emitente
-            notaFiscal.Emitente.CRT = CRT.crtSimplesNacional;
+            notaFiscal.Emitente.CRT = CRT.crtRegimeNormal;
             notaFiscal.Emitente.CNPJCPF = "99999999999999";
             notaFiscal.Emitente.xNome = "PROJETO ACBR";
             notaFiscal.Emitente.xFant = "PROJETO ACBR";
@@ -190,6 +191,12 @@ namespace ACBrLib.NFe.Demo
             produto.vDesc = 0;
             produto.infAdProd = "Informacao Adicional do Produto";
 
+            produto.ICMS.CSOSN = CSOSNIcms.csosnVazio;
+            produto.ICMS.CST = CSTIcms.cst00;
+            produto.ICMS.modBC = DeterminacaoBaseIcms.dbiPauta;
+            produto.ICMS.vBC = 100;
+            produto.ICMS.pICMS = 0.8m;
+            produto.ICMS.vICMS = 8;
             produto.PIS.CST = CSTPIS.pis04;
             produto.COFINS.CST = CSTCofins.cof04;
 

@@ -3101,8 +3101,6 @@ begin
 end;
 
 procedure TfrmACBrCTe.btnLerArqINIClick(Sender: TObject);
-var
-  vNumLote: string;
 begin
   OpenDialog1.Title := 'Selecione o Arquivo INI';
   OpenDialog1.DefaultExt := '*.ini';

@@ -333,7 +333,7 @@ begin
         FHTTPSend.HTTPMethod(MetodoHTTPToStr(htPOST), URL + '?' + FParamsOAuth);
       end;
 
-      FErroComunicacao := FHTTPSend.ResultString;
+      //FErroComunicacao := FHTTPSend.ResultString;
       FHTTPSend.Document.Position := 0;
       ProcessarRespostaOAuth(ReadStrFromStream(FHTTPSend.Document, FHTTPSend.Document.Size));
       DoLog('Cookies:', logParanoico);

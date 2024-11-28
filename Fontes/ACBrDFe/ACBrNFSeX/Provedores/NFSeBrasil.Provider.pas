@@ -126,7 +126,8 @@ begin
   FPMsgOrig := AMSG;
 
   // Tratamento de nomes com &
-  AMSGaux := StringReplace(AMSG, '&amp;', '&amp;amp;', [rfReplaceAll]);
+//  AMSGaux := StringReplace(AMSG, '&amp;', '&amp;amp;', [rfReplaceAll]);
+  AMSGaux := AMSG;
 
   Request := '<urn:tm_lote_rps_service.importarLoteRPS' + encodingStyle +'>';
   Request := Request + '<xml xsi:type="xsd:string">' + XmlToStr(AMSGaux) + '</xml>';
@@ -212,7 +213,8 @@ begin
   FPMsgOrig := AMSG;
 
   // Tratamento de nomes com &
-  AMSGaux := StringReplace(AMSG, '&amp;', '&amp;amp;', [rfReplaceAll]);
+//  AMSGaux := StringReplace(AMSG, '&amp;', '&amp;amp;', [rfReplaceAll]);
+  AMSGaux := AMSG;
 
   Request := '<urn:tm_lote_rps_service.testarLoteRPSRequest' + encodingStyle +'>';
   Request := Request + '<xml xsi:type="xsd:string">' + XmlToStr(AMSGaux) + '</xml>';
@@ -230,7 +232,7 @@ begin
   Result := ConverteANSIparaUTF8(aXML);
   Result := inherited TratarXmlRetornado(Result);
 
-  Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
+//  Result := StringReplace(Result, '&amp;amp;', 'e',[rfReplaceAll]);
   Result := ParseText(Result);
   Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverDeclaracaoXML(Result, True);

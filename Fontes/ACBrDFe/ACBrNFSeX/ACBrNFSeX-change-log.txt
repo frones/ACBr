@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/11/2024
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Ajustes para gerar as tags do grupo ConstrucaoCivil da forma correta.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao --
 [*] #TK-6285: Acrescentado a Natureza de Operação: no119 (ISS Retido pelo tomador - Poder Publico).
    Por: Sandro Felipe Adad

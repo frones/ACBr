@@ -1073,18 +1073,32 @@ begin
 end;
 
 function TNFSeW_ABRASFv2.GerarConstrucaoCivil: TACBrXmlNode;
+var
+  NrOcorrCodigoObra: integer;
+  NrOcorrArt: integer;
 begin
   // Em conformidade com a versão 2 do layout da ABRASF não deve ser alterado
   Result := nil;
 
-  if (NFSe.ConstrucaoCivil.CodigoObra <> '') then
+  if ((NFSe.ConstrucaoCivil.CodigoObra <> '') or (NFSe.ConstrucaoCivil.Art <> '')) then
   begin
+    if (NFSe.ConstrucaoCivil.CodigoObra <> '') then
+    begin
+      NrOcorrCodigoObra := 1;
+      NrOcorrArt := 0;
+    end
+    else
+    begin
+      NrOcorrCodigoObra := 0;
+      NrOcorrArt := 1;
+    end;
+
     Result := CreateElement('ConstrucaoCivil');
 
-    Result.AppendChild(AddNode(tcStr, '#51', 'CodigoObra', 1, 15, 1,
+    Result.AppendChild(AddNode(tcStr, '#51', 'CodigoObra', 1, 15, NrOcorrCodigoObra,
                                    NFSe.ConstrucaoCivil.CodigoObra, DSC_COBRA));
 
-    Result.AppendChild(AddNode(tcStr, '#52', 'Art', 1, 15, 1,
+    Result.AppendChild(AddNode(tcStr, '#52', 'Art', 1, 15, NrOcorrArt,
                                             NFSe.ConstrucaoCivil.Art, DSC_ART));
   end;
 end;

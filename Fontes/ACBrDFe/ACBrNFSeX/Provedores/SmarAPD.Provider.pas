@@ -674,7 +674,8 @@ var
   Request, AMSGaux: string;
 begin
   FPMsgOrig := AMSG;
-  AMSGaux := StringReplace(AMSG, '&amp;', '&amp;amp;',[rfReplaceAll]);
+//  AMSGaux := StringReplace(AMSG, '&amp;', '&amp;amp;',[rfReplaceAll]);
+  AMSGaux := AMSG;
 
   Request := '<sil:nfdEntrada xmlns:sil="http://webservices.sil.com/">';
   Request := Request + DadosUsuario;

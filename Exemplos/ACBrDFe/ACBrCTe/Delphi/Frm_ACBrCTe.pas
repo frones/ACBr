@@ -2319,6 +2319,13 @@ begin
   MemoResp.Lines.Text   := ACBrCTe1.WebServices.Consulta.RetWS;
   memoRespWS.Lines.Text := ACBrCTe1.WebServices.Consulta.RetornoWS;
 
+  MemoDados.Lines.Add('');
+  MemoDados.Lines.Add('Consulta Pela Chave');
+  MemoDados.Lines.Add('versao: ' + ACBrCTe1.WebServices.Consulta.versao);
+  MemoDados.Lines.Add('verAplic: ' + ACBrCTe1.WebServices.Consulta.verAplic);
+  MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrCTe1.WebServices.Consulta.cStat));
+  MemoDados.Lines.Add('xMotivo: ' + ACBrCTe1.WebServices.Consulta.xMotivo);
+
   LoadXML(ACBrCTe1.WebServices.Consulta.RetWS, WBResposta);
 end;
 

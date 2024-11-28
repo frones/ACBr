@@ -176,7 +176,7 @@ begin
   ValidaNossoNumeroResponsavel(sNossoNumero, sDigitoNossoNumero, ACBrTitulo);
 
   With ACBrTitulo, ACBrBoleto do begin
-
+    Mensagem.Text := TiraAcentos(AnsiUpperCase(Mensagem.Text));
     {Primeira instrução vai no registro 1}
     if Mensagem.Count <= 1 then begin
        Result := '';

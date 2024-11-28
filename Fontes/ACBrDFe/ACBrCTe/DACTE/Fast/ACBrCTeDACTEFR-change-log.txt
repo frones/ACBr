@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+28/11/2024
+-- ACBrCTeDACTeFR --
+[*] Corrige posição de um DataSet.Post que estava em local indevido.
+  Por: Diego Folieni
+
 03/01/2024
 -- ACBrCTeDACTEFR --
 [*] Ajustes na impressão do DACTE - para mostrar a versão correta do CT-e no

@@ -2263,8 +2263,8 @@ begin
       else
         cdsDadosNotasFiscais.FieldByName('TextoImpressao').AsString := 'Não informado       ' + DoctoRem + '                                        ' + LInfOutrosItem.nDoc;
       end;
+      cdsDadosNotasFiscais.Post;
     end;
-    cdsDadosNotasFiscais.Post;
   end;
 
   if cdsDadosNotasFiscais.IsEmpty

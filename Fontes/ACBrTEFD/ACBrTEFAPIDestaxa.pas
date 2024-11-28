@@ -178,9 +178,7 @@ begin
     if (wDestaxaResposta.servico = dxsIniciar) then
     begin
       Confirmar := False;
-      if wDestaxaResposta.estado.Conectado then
-        Sucesso := (not wDestaxaResposta.estado.ConfiguradoComPinpad) or
-                   (wDestaxaResposta.estado.ConfiguradoComPinpad and wDestaxaResposta.estado.PinpadEncontrado);
+      Sucesso := wDestaxaResposta.estado.Conectado;
       Exit;
     end;
 
@@ -462,10 +460,7 @@ begin
   if wIniciarTransacao then
     DestaxaClient.IniciarRequisicao;
   try
-    if DestaxaClient.Resposta.estado.ConfiguradoComPinpad then
-      Result := DestaxaClient.Resposta.estado.PinpadEncontrado
-    else
-      Result := DestaxaClient.Resposta.estado.Conectado;
+    Result := DestaxaClient.Resposta.estado.Conectado;
   finally
     if wIniciarTransacao then
       DestaxaClient.FinalizarRequisicao;

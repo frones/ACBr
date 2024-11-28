@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2024
+-- ACBrTEFAPIDestaxa --
+[*] Após orientação da Destaxa, foi alterado para não utilizar a tag estado para 
+    verificar se o pinpad foi encontrado, pois o retorno dessa tag está incorreto.
+    A função TesteConexao considerará apenas a conexão com o V$PagueServer.
+    por: Elias César
+
 27/11/2024
 -- ACBrTEFAPIDestaxa --
 [+] Criada função TesteComunicacao para se comportar como o TEF PayGo.

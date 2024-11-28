@@ -69,6 +69,8 @@ resourcestring
   sACBrAditumErroDadoNaoEJSon = 'Dado informado em %s não é um JSON válido';
   sACBrAditumErroEstabelecimentoNaoAtivo = 'Estabelecimento %s não está Ativo';
   sACBrAditumSemNSU = 'NSU não informado';
+  sACBrAditumSemComunicacaoURL = 'Falha na comunicação. Erro: %d, URL: %s';
+
 
 type
 
@@ -85,6 +87,7 @@ type
   private
     FavailableBrands: TStringList;
     FHTTP: THTTPSend;
+    FURL: String;
     FHTTPResponse: AnsiString;
     FHTTPResultCode: Integer;
 
@@ -154,6 +157,7 @@ type
     property AvailableBrands: TStringList read FavailableBrands;
     property HTTPResultCode: Integer read FHTTPResultCode;
     property HTTPResponse: AnsiString read FHTTPResponse;
+    property URL: String read FURL;
   end;
 
 
@@ -314,12 +318,12 @@ begin
   FHTTP.Clear;
   FHTTPResultCode := 0;
   FHTTPResponse := '';
+  FURL := '';
 end;
 
 procedure TACBrTEFAPIClassAditum.TransmitirHttp(const AMethod,
   AEndpoint: String; const ABody: AnsiString);
 var
-  url: String;
   ReTransmitir, ReAutenticar: Boolean;
   js: TACBrJSONObject;
   jserrors: TACBrJSONArray;
@@ -333,8 +337,8 @@ begin
     inc(t);
     LimparRespostaHTTP;
 
-    url := EncodeURL( fpACBrTEFAPI.DadosTerminal.EnderecoServidor + AEndpoint );
-    GravarLog('TransmitirHttp( '+AMethod+', '+url+', '+ABody+' )');
+    FURL := EncodeURL( fpACBrTEFAPI.DadosTerminal.EnderecoServidor + AEndpoint );
+    GravarLog('TransmitirHttp( '+AMethod+', '+FURL+', '+ABody+' )');
 
     FHTTP.Headers.Add('Authorization: '+fpACBrTEFAPI.DadosTerminal.CodEmpresa);
     if (ABody <> '') then
@@ -344,7 +348,7 @@ begin
     end;
 
     try
-      FHTTP.HTTPMethod(AMethod, url);
+      FHTTP.HTTPMethod(AMethod, FURL);
     finally
       FHTTPResultCode := FHTTP.ResultCode;
       FHTTP.Document.Position := 0;
@@ -352,7 +356,7 @@ begin
       GravarLog('  ResultCode: '+IntToStr(FHTTPResultCode)+', Response: '+FHTTPResponse);
     end;
 
-    if (FHTTPResultCode <> HTTP_OK) and (pos('pinpad/init', url) = 0) and (t < 3) then
+    if (FHTTPResultCode <> HTTP_OK) and (pos('pinpad/init', FURL) = 0) and (t < 3) then
     begin
       ReAutenticar := false;
 
@@ -469,9 +473,12 @@ begin
     eCode := FHTTPResultCode;
 
   if (sMessage = '') then
-    sMessage := FHTTPResponse
+    sMessage := Trim(FHTTPResponse)
   else
     sMessage := Trim(sMessage);
+
+  if (eCode = 0) and (sMessage = '') then
+    sMessage := Format(sACBrAditumSemComunicacaoURL, [0, FURL]);
 
   DoException(sMessage);
 end;
@@ -1160,4 +1167,5 @@ begin
 end;
 
 end.
+
 

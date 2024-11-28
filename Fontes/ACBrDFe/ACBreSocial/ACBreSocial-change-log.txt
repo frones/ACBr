@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2024
+-- pcesS1299 --
+[*] TK-6287 - Configurado infoFech.naoValid, no S1299, para considerar a versão do leiaute para o preenchimento do campo.
+Por: Jeihcio Francis / Renato Rubinho
+
 12/11/2024
 -- pcesS1010.pas --
 [*] Sem TK - Corrigido S1010 para não gerar grupo novaValidade quando iniValid estiver em branco.

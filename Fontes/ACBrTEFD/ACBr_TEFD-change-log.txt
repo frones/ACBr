@@ -48,6 +48,8 @@ Símbolo : Significado
 
 28/11/2024
 -- ACBrTEFAPIDestaxaComum --
+[+] Criada função para possibilitar executar uma AdministracaoPendente sem exibir
+    mensagens para a aplicação.
 [*] Ajustes após retorno de homologação do parceiro CertaSoluções (Ademir P. Voigt);
 [-] Remoção de parâmetro desnecessário na function FinalizarRequisicao e Finalizar;
 [-] Remoção da procedure TratarRetorno, pois estava causando funcionamento inesperado
@@ -56,6 +58,8 @@ Símbolo : Significado
 
 28/11/2024
 -- ACBrTEFAPIDestaxa --
+[*] Ajuste em CarregarRespostasPendentes e ResolverTransacaoPendente para utilizarem
+    a nova função ExecutarTransacaoSilenciosa;
 [*] Após orientação da Destaxa, foi alterado para não utilizar a tag estado para 
     verificar se o pinpad foi encontrado, pois o retorno dessa tag está incorreto.
     A função TesteConexao considerará apenas a conexão com o V$PagueServer.

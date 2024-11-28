@@ -569,7 +569,7 @@ begin
   try
     DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
     DestaxaClient.Requisicao.retorno := drqExecutarServico;
-    DestaxaClient.ExecutarTransacao(CDESTAXA_ADM_PENDENTE);
+    DestaxaClient.ExecutarTransacaoSilenciosa(CDESTAXA_ADM_PENDENTE);
     if NaoEstaZerado(DestaxaClient.Resposta.automacao_coleta_sequencial) and
        NaoEstaVazio(DestaxaClient.Resposta.transacao_nsu) then
     begin
@@ -624,7 +624,7 @@ begin
   try
     DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
     DestaxaClient.Requisicao.retorno := drqExecutarServico;
-    DestaxaClient.ExecutarTransacao(CDESTAXA_ADM_PENDENTE);
+    DestaxaClient.ExecutarTransacaoSilenciosa(CDESTAXA_ADM_PENDENTE);
     if NaoEstaZerado(DestaxaClient.Resposta.automacao_coleta_sequencial) and
        NaoEstaVazio(DestaxaClient.Resposta.transacao_nsu) then
     begin

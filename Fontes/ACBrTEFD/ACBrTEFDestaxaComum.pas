@@ -527,6 +527,7 @@ type
     fTerminal: String;
     fOnGravarLog: TACBrGravarLog;
     fSocket: TACBrTEFDestaxaSocket;
+    fExibirMensagem: Boolean;
     fTimeOut: Integer;
 
     function GetColetaRequisicao: TACBrTEFDestaxaAutomacaoColeta;
@@ -562,6 +563,7 @@ type
     function AdministracaoPendente: Boolean;
     function AdministracaoReimprimir: Boolean;
     function ExecutarTransacao(const aTransacao: String): Boolean;
+    function ExecutarTransacaoSilenciosa(const aTransacao: String): Boolean;
 
     property Socket: TACBrTEFDestaxaSocket read GetSocket;
     property Resposta: TACBrTEFDestaxaTransacaoResposta read GetResposta;
@@ -1621,7 +1623,7 @@ begin
     Exit;
 
   wCancelar := False;
-  if Assigned(fOnExibirMensagem) then
+  if Assigned(fOnExibirMensagem) and fExibirMensagem then
     fOnExibirMensagem(ColetaResposta.automacao_coleta_mensagem, MilissegundosExibicao, wCancelar);
 
   if wCancelar then
@@ -1642,7 +1644,7 @@ begin
       AutomacaoColetarOpcao
     else if (ColetaResposta.automacao_coleta_tipo <> dctNenhum) then
       AutomacaoColetarInformacao
-    else if NaoEstaVazio(ColetaResposta.automacao_coleta_mensagem) then
+    else if NaoEstaVazio(ColetaResposta.automacao_coleta_mensagem) and fExibirMensagem then
       AutomacaoExibirMensagem(-1);
 
     ColetaRequisicao.automacao_coleta_retorno := dcrExecutarProcedimento;
@@ -1650,7 +1652,7 @@ begin
     Socket.ExecutarColeta;
   end;
      
-  if NaoEstaVazio(ColetaResposta.mensagem) and Assigned(fOnExibirMensagem) and
+  if NaoEstaVazio(ColetaResposta.mensagem) and Assigned(fOnExibirMensagem) and fExibirMensagem and
      (ColetaResposta.retorno in
      [drsErroTransacaoCanceladaOperador,
       drsErroTransacaoCanceladaCliente,
@@ -1662,7 +1664,7 @@ begin
 
   if (ColetaResposta.automacao_coleta_retorno = dcrCancelarProcedimento) then
   begin
-    if Assigned(fOnExibirMensagem) and NaoEstaVazio(ColetaResposta.automacao_coleta_mensagem) then
+    if Assigned(fOnExibirMensagem) and fExibirMensagem and NaoEstaVazio(ColetaResposta.automacao_coleta_mensagem) then
       fOnExibirMensagem(ColetaResposta.automacao_coleta_mensagem, 0, Cancelar);
 
     ColetaRequisicao.Clear;
@@ -1693,7 +1695,7 @@ begin
 
   wSeg := 0;
   Cancelar := False;
-  if Assigned(fOnExibirMensagem) and NaoEstaVazio(Resposta.mensagem) and
+  if Assigned(fOnExibirMensagem) and fExibirMensagem and NaoEstaVazio(Resposta.mensagem) and
      (not (Resposta.retorno in [drsNenhum, drsErroDesconhecido])) then
   begin
     if (Resposta.retorno = drsSucessoSemConfirmacao) then
@@ -1792,6 +1794,7 @@ begin
   fOnExibirMensagem := Nil;
   fUltimoSequencial := 0;
   fTimeOut := 1000;
+  fExibirMensagem := True;
   fTerminador := CDESTAXA_TERMINADOR;
 end;
 
@@ -1917,6 +1920,16 @@ begin
   Result := False;
   Socket.Executar(aTransacao);
   Result := (Resposta.retorno in [drsSucessoSemConfirmacao, drsSucessoComConfirmacao]) and (Resposta.servico = dxsExecutar);
+end;
+
+function TACBrTEFDestaxaClient.ExecutarTransacaoSilenciosa(const aTransacao: String): Boolean;
+begin
+  fExibirMensagem := False;
+  try
+    Result := ExecutarTransacao(aTransacao);
+  finally
+    fExibirMensagem := True;
+  end;
 end;
 
 { TACBrTEFDestaxaTransacaoClass }

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2024
+-- ACBrXmlBase --
+[*] Comentado a linha que executa o ParseText na função FiltrarTextoXML, uma vez que
+    a libxml2 já tem um Parse que executa a mesma tarefa. 
+   Por: Italo Giurizzato Junior
+
 11/10/2024
 -- ACBrDFeConsts --
 [*] #TK-5978: Move as constantes adicionadas para pcnNFeConsts por ser local mais adequado.

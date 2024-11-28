@@ -123,7 +123,7 @@ begin
   if RetirarAcentos then
      aTexto := TiraAcentos(aTexto);
 
-  aTexto := ParseText(AnsiString(aTexto), False );
+//  aTexto := ParseText(AnsiString(aTexto), False );
 
   if RetirarEspacos then
   begin

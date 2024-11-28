@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/11/2024
+-- ACBrNFSeXConversao --
+[*] #TK-6285: Acrescentado a Natureza de Operação: no119 (ISS Retido pelo tomador - Poder Publico).
+   Por: Sandro Felipe Adad
 -- eGoverneISS.GravarXml --
 [*] #TK-6281: A tag SubstituicaoTributaria sempre era gerada com o valor false independente3
     da situação tributaria, agora é verificado se o ISS é retido ou não.

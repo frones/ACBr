@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 28/11/2024
+-- eGoverneISS.GravarXml --
+[*] #TK-6281: A tag SubstituicaoTributaria sempre era gerada com o valor false independente3
+    da situação tributaria, agora é verificado se o ISS é retido ou não.
+   Por: Anderson Grolli
 -- ACBrNFSeXServicos --
 [*] #TK-6282: A cidade de Teixeira de Freitas/BA trocou de provedor, agora é 
     Sudoeste versão 2.02

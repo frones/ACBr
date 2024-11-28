@@ -50,6 +50,10 @@ Símbolo : Significado
     https://www.projetoacbr.com.br/forum/topic/80766-problema-de-memoryleak-no-bloco-0-do-acbrspedecf/
     por: doszapro
 
+-- Frm_SPEDFiscal, ACBrEFDBloco_D, ACBrEFDBloco_D_Class, ACBrEFDBlocos --
+[+] #TK-6218 - Novo leiaute 019 (vlVersao118) do EFD-ICMS/IPI com inicio em 01/2025 - https://www.projetoacbr.com.br/forum/topic/80580-publicada-vers%C3%A3o-317-do-guia-pr%C3%A1tico-da-efd-icms-ipi/
+    por: Renato Rubinho
+
 30/10/2024
 -- ACBrECDBloco_K --
 [-] Correção do problema de MemoryLeak no Registro K210, K310, K315 

@@ -51,6 +51,9 @@ Símbolo : Significado
 [*] Após orientação da Destaxa, foi alterado para não utilizar a tag estado para 
     verificar se o pinpad foi encontrado, pois o retorno dessa tag está incorreto.
     A função TesteConexao considerará apenas a conexão com o V$PagueServer.
+
+-- ACBrTEFAPIDestaxaComum --
+[-] Correção de problema ao Reimprimir apenas a 2ªvia (portador)
     por: Elias César
 
 27/11/2024

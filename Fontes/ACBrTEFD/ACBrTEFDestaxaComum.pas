@@ -1101,10 +1101,14 @@ begin
   begin
     v1 := Copy(s, (Pos('transacao_comprovante_1via', s)+28), Length(s));
     v1 := Copy(v1, 1, (Pos('"', v1)-1));
-    v2 := Copy(s, (Pos('transacao_comprovante_2via', s)+28), Length(s));
-    v2 := Copy(v2, 1, (Pos('"', v2)-1));
     if NaoEstaVazio(v1) then
       ftransacao_comprovante_1via.Text := v1;
+  end;
+
+  if (CountStr(s, 'transacao_comprovante_2via') > 0) then
+  begin
+    v2 := Copy(s, (Pos('transacao_comprovante_2via', s)+28), Length(s));
+    v2 := Copy(v2, 1, (Pos('"', v2)-1));
     if NaoEstaVazio(v2) then
       ftransacao_comprovante_2via.Text := v2;
   end;

@@ -14,7 +14,7 @@ uses
   pcnNFeConsts, ACBrDFeDANFeReport, ACBrNFe.AdmCSC, ACBrNFe.ConsSit, 
   ACBrNFe.EnvEvento, ACBrNFe.EventoClass, ACBrNFe.Inut, ACBrNFe.RetAdmCSC, 
   ACBrNFe.RetConsSit, ACBrNFe.RetEnvEvento, ACBrNFe.RetInut, 
-  ACBrNFe.XmlReader, ACBrNFe.XmlWriter, LazarusPackageIntf;
+  ACBrNFe.XmlReader, ACBrNFe.XmlWriter, ACBrNFe.Consts, LazarusPackageIntf;
 
 implementation
 

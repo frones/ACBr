@@ -17,7 +17,7 @@ uses
   ACBrMDFe.XmlReader, ACBrMDFe.XmlWriter, ACBrMDFe.ConsNaoEnc, 
   ACBrMDFe.RetConsNaoEnc, ACBrMDFe.ConsSit, ACBrMDFe.RetConsSit, 
   ACBrMDFe.EventoClass, ACBrMDFe.EnvEvento, ACBrMDFe.RetEnvEvento, 
-  LazarusPackageIntf;
+  ACBrMDFe.Consts, LazarusPackageIntf;
 
 implementation
 

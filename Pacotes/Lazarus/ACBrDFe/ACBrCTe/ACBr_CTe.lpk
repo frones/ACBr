@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="20">
+    <Files Count="21">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas"/>
         <UnitName Value="ACBrCTeConhecimentos"/>
@@ -97,6 +97,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.RetEnvEvento.pas"/>
         <UnitName Value="ACBrCTe.RetEnvEvento"/>
       </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Consts.pas"/>
+        <UnitName Value="ACBrCTe.Consts"/>
+      </Item21>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

@@ -93,6 +93,8 @@ contains
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
   pcteRetEnvCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvCTe.pas',
 
+  ACBrCTe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Consts.pas',
+
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrCTe.XmlHandler in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas',
   {$ELSE}

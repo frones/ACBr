@@ -79,6 +79,8 @@ contains
   pmdfeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsts.pas',
   pmdfeConversaoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConversaoMDFe.pas',
 
+  ACBrMDFe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Consts.pas',
+
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrMDFe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas',
   ACBrMDFe.XmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlWriter.pas',

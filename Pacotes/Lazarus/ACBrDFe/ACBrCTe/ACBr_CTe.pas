@@ -12,7 +12,7 @@ uses
   ACBrCTeReg, ACBrCTeWebServices, pcteCTe, pcteCTeR, pcteCTeW, pcteInutCTe, 
   pcteProcCTe, ACBrCTeDACTEClass, pcteConsts, ACBrCTe.XmlHandler, 
   ACBrCTe.ConsSit, ACBrCTe.RetConsSit, ACBrCTe.EventoClass, ACBrCTe.EnvEvento, 
-  ACBrCTe.RetEnvEvento, LazarusPackageIntf;
+  ACBrCTe.RetEnvEvento, ACBrCTe.Consts, LazarusPackageIntf;
 
 implementation
 

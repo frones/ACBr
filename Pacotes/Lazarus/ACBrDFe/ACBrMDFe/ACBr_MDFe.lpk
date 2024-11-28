@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="31">
+    <Files Count="32">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas"/>
         <UnitName Value="ACBrMDFe"/>
@@ -141,6 +141,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetEnvEvento.pas"/>
         <UnitName Value="ACBrMDFe.RetEnvEvento"/>
       </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Consts.pas"/>
+        <UnitName Value="ACBrMDFe.Consts"/>
+      </Item32>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

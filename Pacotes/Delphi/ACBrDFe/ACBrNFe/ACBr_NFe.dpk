@@ -92,6 +92,8 @@ contains
   pcnProcNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnProcNFe.pas',
   pcnRetEnvNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvNFe.pas',
   
+  ACBrNFe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.Consts.pas',
+
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrNFe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.XmlReader.pas',
   ACBrNFe.XmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\Base\ACBrNFe.XmlWriter.pas',

@@ -169,8 +169,10 @@ begin
     xVer := '016'
   else if (DtRef.DateTime >= StrToDate('01/01/2023')) and (DtRef.DateTime <= StrToDate('31/12/2023')) then
     xVer := '017'
+  else if (DtRef.DateTime >= StrToDate('01/01/2024')) and (DtRef.DateTime <= StrToDate('31/12/2024')) then
+    xVer := '018'
   else
-    xVer := '018';
+    xVer := '019';
   Result := StrToCodVer(xVer);
 end;
 
@@ -1041,8 +1043,8 @@ begin
         VL_RED_BC := 0.00;
         COD_OBS := '000001';
       end;
-    end;
-  end;
+      end;
+      end;
 
   if cbConcomitante.Checked then
   begin

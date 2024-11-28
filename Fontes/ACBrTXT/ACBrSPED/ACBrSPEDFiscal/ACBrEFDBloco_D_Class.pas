@@ -2029,7 +2029,8 @@ var
   intFor: Integer; 
   wCodSit: String;
   wRegD700: TRegistroD700;
-begin  
+  strLinha: String;
+begin
   if (FBloco_0.Registro0000.COD_VER < vlVersao116) then
     Exit;
 
@@ -2037,6 +2038,7 @@ begin
   begin
     for intFor := 0 to RegD001.RegistroD700.Count - 1 do
     begin
+      strLinha := '';
       wRegD700 := RegD001.RegistroD700.Items[intFor];
 
       // COD_MOD
@@ -2048,7 +2050,8 @@ begin
       Check(MatchText(wCodSit, ['00', '08']),
         'Registro D700: O código da situação do documento fiscal "%s" não está na lista de valores válidos "%s"!', [wCodSit, '[00, 08]']);
 
-      Add(LFill('D700') +
+      strLinha :=
+        LFill('D700') +
         LFill(IndOperToStr(wRegD700.IND_OPER), 0) +
         LFill(IndEmitToStr(wRegD700.IND_EMIT), 0) +
         LFill(wRegD700.COD_PART) +
@@ -2069,16 +2072,30 @@ begin
         LFill(wRegD700.COD_INF ) +
         LFill(wRegD700.VL_PIS,0,2, True ) +
         LFill(wRegD700.VL_COFINS,0,2, True) +
-        LFill(wRegD700.CHV_DOCe) +
-        LFill(FinEmissaoFatEletToStr(wRegD700.FIN_DOCe)) +
-        LFill(TipoFaturamentoDOCeToStr(wRegD700.TIP_FAT)) +
+        LFill(wRegD700.CHV_DOCe);
+
+      if (FBloco_0.Registro0000.COD_VER < vlVersao118) then
+        strLinha := strLinha +
+          LFill(FinEmissaoFatEletToStr(wRegD700.FIN_DOCe)) +
+          LFill(TipoFaturamentoDOCeToStr(wRegD700.TIP_FAT))
+      else
+        strLinha := strLinha +
+          LFill(FinEmissaoFatEletToStr(wRegD700.FIN_DOCe), 1, False, '0') +
+          LFill(TipoFaturamentoDOCeToStr(wRegD700.TIP_FAT), 1, False, '0');
+
+      strLinha := strLinha +
         LFill(wRegD700.COD_MOD_DOC_REF) +
         LFill(wRegD700.CHV_DOCe_REF) +
         LFill(wRegD700.HASH_DOC_REF) +
         LFill(wRegD700.SER_DOC_REF) +
         LFill(wRegD700.NUM_DOC_REF) +
         LFill(wRegD700.MES_DOC_REF) +
-        LFill(wRegD700.COD_MUN_DEST));
+        LFill(wRegD700.COD_MUN_DEST);
+
+      if (FBloco_0.Registro0000.COD_VER >= vlVersao118) then
+        strLinha := strLinha + LFill(wRegD700.DED, 0, 2, True);
+
+      Add(strLinha);
 
       WriteRegistroD730(wRegD700);
       WriteRegistroD735(wRegD700);
@@ -2194,6 +2211,7 @@ procedure TBloco_D.WriteRegistroD750(RegD001: TRegistroD001);
 var
   intFor: Integer;
   wRegD750: TRegistroD750;
+  strLinha: String;
 begin
   if (FBloco_0.Registro0000.COD_VER < vlVersao116) then
     Exit;
@@ -2202,9 +2220,11 @@ begin
   begin
     for intFor := 0 to RegD001.RegistroD750.Count - 1 do
     begin
+      strLinha := '';
       wRegD750 := RegD001.RegistroD750.Items[intFor];
 
-      Add(LFill('D750') +
+      strLinha :=
+        LFill('D750') +
         LFill(wRegD750.COD_MOD, 2) +
         LFill(wRegD750.SER) +
         LFill(wRegD750.DT_DOC) +
@@ -2218,8 +2238,18 @@ begin
         LFill(wRegD750.VL_DA, 0, 2) +
         LFill(wRegD750.VL_BC_ICMS, 0, 2) +
         LFill(wRegD750.VL_ICMS, 0, 2) +
-        LFill(wRegD750.VL_PIS,0,2, True ) +
-        LFill(wRegD750.VL_COFINS,0,2, True));
+        LFill(wRegD750.VL_PIS, 0, 2) +
+        LFill(wRegD750.VL_COFINS, 0, 2);
+
+      if (FBloco_0.Registro0000.COD_VER < vlVersao118) then
+        strLinha := strLinha +
+          LFill(wRegD750.VL_PIS, 0, 2) +
+          LFill(wRegD750.VL_COFINS, 0, 2)
+      else
+        strLinha := strLinha +
+          LFill(wRegD750.VL_PIS, 0, 2, True ) +
+          LFill(wRegD750.VL_COFINS, 0, 2, True) +
+          LFill(wRegD750.DED, 0, 2, True);
 
       WriteRegistroD760(wRegD750);
       RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;

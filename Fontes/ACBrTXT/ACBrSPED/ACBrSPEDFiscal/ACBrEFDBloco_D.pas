@@ -1541,6 +1541,7 @@ type
     FCOD_MUN_DEST: String;     // Código do município do destinatário conforme a tabela do IBGE
     FCOD_PART: String;         // Código do participante
     FCOD_SIT: TACBrCodSit;     // Código da situação do documento fiscal
+    FDED: Currency;            // Deduções
     FDT_DOC: TDateTime;        // Data da emissão do documento fiscal
     FDT_E_S: TDateTime;        // Data da entrada
     FFIN_DOCe: TACBrFinEmissaoFaturaEletronica;  // Finalidade da emissão do documento eletrônico
@@ -1575,6 +1576,7 @@ type
     property COD_PART: String read FCOD_PART write FCOD_PART;
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
     property COD_SIT: TACBrCodSit read FCOD_SIT write FCOD_SIT;
+    property DED: Currency read FDED write FDED;
     property SER: String read FSER write FSER;
     property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
@@ -1743,6 +1745,7 @@ type
   TRegistroD750 = class
   private
     FCOD_MOD: String;                        // Código do modelo do documento fiscal
+    FDED: Currency;                          // Deduções
     FDT_DOC: TDateTime;                      // Data da emissão dos documentos
     FIND_PREPAGO: TACBrIndicadorFormaPagto;  // Forma de pagamento
     fQTD_CONS: Currency;                     // Quantidade de documentos consolidados neste registro
@@ -1764,6 +1767,7 @@ type
     destructor Destroy; override;
 
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
+    property DED: Currency read FDED write FDED;
     property SER: String read FSER write FSER;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property QTD_CONS: Currency read fQTD_CONS write fQTD_CONS;

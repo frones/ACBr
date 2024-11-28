@@ -488,7 +488,7 @@ type
     function Desconectar: Integer;
 
     function Iniciar(aSequencial: Integer = 1): Boolean;
-    function Finalizar(aRetorno: TACBrTEFDestaxaRetornoRequisicao = drqNenhum): Boolean;
+    function Finalizar: Boolean;
     function Consultar: Boolean;
     function Executar(aTransacao: String): Boolean;
     function Mostrar(aMensagem: TACBrTEFDestaxaMensagem): Boolean;
@@ -544,7 +544,6 @@ type
 
     procedure TratarErro;
     procedure TratarErroColeta(var aCancelar: Boolean);
-    procedure TratarRetorno(const aRetornoResposta: TACBrTEFDestaxaRetornoResposta);
 
     procedure DoQuandoReceberResposta(aResposta: AnsiString);
   public
@@ -555,7 +554,7 @@ type
     procedure GravarLog(const aString: AnsiString; Traduz: Boolean = False);
 
     function IniciarRequisicao: Boolean;
-    function FinalizarRequisicao(const aRetorno: TACBrTEFDestaxaRetornoRequisicao = drqNenhum): Boolean;
+    function FinalizarRequisicao: Boolean;
 
     function CartaoVender: Boolean;
     function DigitalPagar: Boolean;
@@ -1329,7 +1328,6 @@ begin
     RX := RecvTerminated(fDestaxaClient.TimeOut, fDestaxaClient.Terminador);
     fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Resposta - RX: ' + sLineBreak + RX);
 
-    fDestaxaClient.TratarRetorno(Resposta.retorno);
     Erro := LastError;
     if NaoEstaZerado(Erro) then
       fDestaxaClient.TratarErro;
@@ -1372,7 +1370,6 @@ begin
     RX := RecvTerminated(fDestaxaClient.TimeOut, fDestaxaClient.Terminador);
     fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Resposta - RX: ' + sLineBreak + RX);
 
-    fDestaxaClient.TratarRetorno(ColetaResposta.retorno);
     Erro := LastError;
     if EstaZerado(Erro) then
     begin
@@ -1425,7 +1422,7 @@ begin
   Requisicao.Clear;
 end;
 
-function TACBrTEFDestaxaSocket.Finalizar(aRetorno: TACBrTEFDestaxaRetornoRequisicao): Boolean;
+function TACBrTEFDestaxaSocket.Finalizar: Boolean;
 begin
   Result := False;
   if not fEmTransacao then
@@ -1436,10 +1433,7 @@ begin
   ColetaResposta.Clear;
   ColetaRequisicao.Clear;
 
-  Requisicao.retorno := aRetorno;
-  if (Requisicao.retorno = drqNenhum) then
-    Requisicao.retorno := drqConfirmarTransacao;
-
+  Requisicao.retorno := drqExecutarServico;
   Requisicao.servico := dxsFinalizar;
   ExecutarTransacao;
   fEmTransacao := False;
@@ -1473,15 +1467,10 @@ begin
   if (aMensagem = dmsNenhum) then
     Exit;
 
-  Iniciar;
-  try
-    Requisicao.servico := dxsMostrar;
-    Requisicao.mensagem := DestaxaMensagemToString(aMensagem);
-    ExecutarTransacao;
-    Result := (Resposta.servico = dxsMostrar) and (Resposta.retorno = drsSucessoSemConfirmacao);
-  finally
-    Finalizar;
-  end;
+  Requisicao.servico := dxsMostrar;
+  Requisicao.mensagem := DestaxaMensagemToString(aMensagem);
+  ExecutarTransacao;
+  Result := (Resposta.servico = dxsMostrar) and (Resposta.retorno = drsSucessoSemConfirmacao);
 end;
 
 function TACBrTEFDestaxaSocket.Coletar(
@@ -1676,28 +1665,12 @@ begin
     if Assigned(fOnExibirMensagem) and NaoEstaVazio(ColetaResposta.automacao_coleta_mensagem) then
       fOnExibirMensagem(ColetaResposta.automacao_coleta_mensagem, 0, Cancelar);
 
-    {while (ColetaResposta.automacao_coleta_retorno = dcrCancelarProcedimento) do
-    begin
-      ColetaRequisicao.Clear;
-      ColetaRequisicao.automacao_coleta_retorno := dcrCancelarProcedimento;
-      ColetaRequisicao.automacao_coleta_mensagem := ColetaResposta.automacao_coleta_mensagem;
-      ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
-      ColetaRequisicao.automacao_coleta_transacao_resposta := ColetaResposta.automacao_coleta_transacao_resposta;
-      Socket.ExecutarColeta;
-    end;}
-
     ColetaRequisicao.Clear;
     ColetaRequisicao.automacao_coleta_retorno := ColetaResposta.automacao_coleta_retorno;
     ColetaRequisicao.automacao_coleta_mensagem := ColetaResposta.automacao_coleta_mensagem;
     ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
     ColetaRequisicao.automacao_coleta_transacao_resposta := ColetaResposta.automacao_coleta_transacao_resposta;
-    //if NaoEstaVazio(ColetaRequisicao.automacao_coleta_transacao_resposta) then
-    //  Socket.ExecutarColeta
-    //else
-    //begin
-      Socket.ExecutarColeta(False);
-      Sleep(600);
-    //end;
+    Socket.ExecutarColeta(False);
   end;
 end;
 
@@ -1730,11 +1703,7 @@ begin
 
   if Cancelar or (Resposta.retorno = drsErroDesconhecido) then
   begin
-    Sleep(200);  // Para não concatenar com o comando anterior
-    Requisicao.sequencial := fUltimoSequencial;
-    Requisicao.servico := Resposta.servico;
-    Requisicao.retorno := drqCancelarTransacao;
-    Socket.Finalizar(drqCancelarTransacao);
+    FinalizarRequisicao;
     Exit;
   end;
 
@@ -1808,35 +1777,6 @@ begin
       IntToStr(Socket.LastError) + '-' + Socket.GetErrorDesc(Socket.LastError)));
 end;
 
-procedure TACBrTEFDestaxaClient.TratarRetorno(const aRetornoResposta: TACBrTEFDestaxaRetornoResposta);
-var
-  wErro: String;
-begin
-  wErro := EmptyStr;
-  if (aRetornoResposta in [drsSucessoComConfirmacao, drsSucessoSemConfirmacao, drsErroDesconhecido]) then
-    Exit;
-
-  if (Resposta.automacao_coleta_sequencial > 0) and NaoEstaVazio(ColetaResposta.mensagem) then
-    wErro := ColetaResposta.mensagem
-  else if NaoEstaVazio(Resposta.mensagem) then
-    wErro := Resposta.mensagem;
-
-  if EstaVazio(wErro) then
-  begin
-    case aRetornoResposta of
-      drsErroTransacaoCanceladaOperador: wErro := sDestaxa_Erro_Cancelado_Operador;
-      drsErroTransacaoCanceladaCliente: wErro := sDestaxa_Erro_Cancelado_Cliente;
-      drsErroParametrosInvalidos: wErro := sDestaxa_Erro_Parametros;
-      drsErroComunicacaoClienteServidor: wErro := sDestaxa_Erro_Conexao_Servidor;
-      drsErroComunicacaoServidorRede: wErro := sDestaxa_Erro_Conexao_Rede;
-      drsErroTempoLimiteExcedido: wErro := sDestaxa_Erro_Tempo_Excedido;
-    end;
-  end;
-
-  if NaoEstaVazio(wErro) then
-    raise EACBrTEFAPIErro.Create(ACBrStr(wErro));
-end;
-
 procedure TACBrTEFDestaxaClient.DoQuandoReceberResposta(aResposta: AnsiString);
 begin
   ProcessarResposta;
@@ -1898,10 +1838,10 @@ begin
   Result := Socket.Iniciar(UltimoSequencial+1);
 end;
 
-function TACBrTEFDestaxaClient.FinalizarRequisicao(const aRetorno: TACBrTEFDestaxaRetornoRequisicao): Boolean;
+function TACBrTEFDestaxaClient.FinalizarRequisicao: Boolean;
 begin
   Requisicao.sequencial := UltimoSequencial+1;
-  Result := Socket.Finalizar(aRetorno);
+  Result := Socket.Finalizar;
 end;
 
 function TACBrTEFDestaxaClient.CartaoVender: Boolean;
@@ -1958,24 +1898,18 @@ end;
 function TACBrTEFDestaxaClient.AdministracaoReimprimir: Boolean;
 begin
   Result := False;
+  Requisicao.sequencial := UltimoSequencial+1;
+  Socket.Executar(CDESTAXA_ADM_REIMPRIMIR);
 
-  Socket.Iniciar;
-  try
+  if (Resposta.retorno = drsSucessoComConfirmacao) then
+  begin
+    Requisicao.Clear;
     Requisicao.sequencial := UltimoSequencial+1;
-    Socket.Executar(CDESTAXA_ADM_REIMPRIMIR);
-
-    if (Resposta.retorno = drsSucessoComConfirmacao) then
-    begin
-      Requisicao.Clear;
-      Requisicao.sequencial := UltimoSequencial+1;
-      Requisicao.retorno := drqConfirmarTransacao;
-      Socket.Executar(CDESTAXA_ADM_PENDENTE);
-    end;
-
-    Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
-  finally
-    Socket.Finalizar;
+    Requisicao.retorno := drqConfirmarTransacao;
+    Socket.Executar(CDESTAXA_ADM_PENDENTE);
   end;
+
+  Result := (Resposta.retorno = drsSucessoSemConfirmacao) and (Resposta.servico = dxsExecutar);
 end;
 
 function TACBrTEFDestaxaClient.ExecutarTransacao(const aTransacao: String): Boolean;

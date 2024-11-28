@@ -47,6 +47,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/11/2024
+-- ACBrTEFAPIDestaxaComum --
+[*] Ajustes após retorno de homologação do parceiro CertaSoluções (Ademir P. Voigt);
+[-] Remoção de parâmetro desnecessário na function FinalizarRequisicao e Finalizar;
+[-] Remoção da procedure TratarRetorno, pois estava causando funcionamento inesperado
+    no fluxo.
+    por: Elias César
+
+28/11/2024
 -- ACBrTEFAPIDestaxa --
 [*] Após orientação da Destaxa, foi alterado para não utilizar a tag estado para 
     verificar se o pinpad foi encontrado, pois o retorno dessa tag está incorreto.

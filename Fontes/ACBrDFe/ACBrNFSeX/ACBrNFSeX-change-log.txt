@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 28/11/2024
+-- ACBrNFSeXServicos --
+[*] Todas as cidades que usam o provedor IPM na versão 1.01 tiveram suas URLs de homologação
+    alteradas, deixando-as iguais a de produção, uma vez que esse provedor nessa versão tem
+    uma tag que defini se é homologação ou produção.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Ajustes para gerar as tags do grupo ConstrucaoCivil da forma correta.
    Por: Italo Giurizzato Junior

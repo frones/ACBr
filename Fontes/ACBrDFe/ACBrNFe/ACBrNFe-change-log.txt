@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2024
+-- ACBrNFeNotasFiscais --
+[*] Alterado a condição na leitura do arquivo INI que determina se vai ler os
+    campos referente a Retirada e Entrega.
+   Por: Italo Giurizzato Junior
+
 27/11/2024
 -- ACBrNFe.Consts --
 [+] #TK-5993: Disponibilizado a nova Unit de Constantes do NFe, mas ela ainda não esta

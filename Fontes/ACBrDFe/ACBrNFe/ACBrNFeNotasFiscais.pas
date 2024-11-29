@@ -1601,7 +1601,7 @@ var
   OK, bVol: boolean;
   I, J, K: Integer;
   sFim, sProdID, sDINumber, sADINumber, sDupNumber, sAdittionalField, sType,
-  sDay, sDeduc, sNVE, sCNPJCPF: String;
+  sDay, sDeduc, sNVE, sLogradouro: string;
   cVTroco: Currency;
 begin
   Result := False;
@@ -1781,12 +1781,12 @@ begin
       Dest.EnderDest.xPais   := INIRec.ReadString(  sSecao,'xPais'       ,INIRec.ReadString( sSecao,'Pais','BRASIL'));
       Dest.EnderDest.Fone    := INIRec.ReadString(  sSecao,'Fone'       ,'');
 
-      sCNPJCPF := INIRec.ReadString( 'Retirada','CNPJ',INIRec.ReadString( 'Retirada','CPF',INIRec.ReadString( 'Retirada','CNPJCPF','')));
-      if sCNPJCPF <> '' then
+      sLogradouro := INIRec.ReadString( 'Retirada','xLgr','');
+      if sLogradouro <> '' then
       begin
-        Retirada.CNPJCPF := sCNPJCPF;
+        Retirada.CNPJCPF := INIRec.ReadString( 'Retirada','CNPJ',INIRec.ReadString('Retirada','CPF',INIRec.ReadString('Retirada','CNPJCPF','')));
         Retirada.xNome   := INIRec.ReadString( 'Retirada','xNome','');
-        Retirada.xLgr    := INIRec.ReadString( 'Retirada','xLgr','');
+        Retirada.xLgr    := sLogradouro;
         Retirada.nro     := INIRec.ReadString( 'Retirada','nro' ,'');
         Retirada.xCpl    := INIRec.ReadString( 'Retirada','xCpl','');
         Retirada.xBairro := INIRec.ReadString( 'Retirada','xBairro','');
@@ -1801,12 +1801,12 @@ begin
         Retirada.IE      := INIRec.ReadString( 'Retirada','IE'  ,'');
       end;
 
-      sCNPJCPF := INIRec.ReadString(  'Entrega','CNPJ',INIRec.ReadString(  'Entrega','CPF',INIRec.ReadString(  'Entrega','CNPJCPF','')));
-      if sCNPJCPF <> '' then
+      sLogradouro := INIRec.ReadString(  'Entrega','xLgr','');
+      if sLogradouro <> '' then
       begin
-        Entrega.CNPJCPF := sCNPJCPF;
+        Entrega.CNPJCPF := INIRec.ReadString(  'Entrega','CNPJ',INIRec.ReadString('Entrega','CPF',INIRec.ReadString('Entrega','CNPJCPF','')));
         Entrega.xNome   := INIRec.ReadString( 'Entrega','xNome','');
-        Entrega.xLgr    := INIRec.ReadString(  'Entrega','xLgr','');
+        Entrega.xLgr    := sLogradouro;
         Entrega.nro     := INIRec.ReadString(  'Entrega','nro' ,'');
         Entrega.xCpl    := INIRec.ReadString(  'Entrega','xCpl','');
         Entrega.xBairro := INIRec.ReadString(  'Entrega','xBairro','');

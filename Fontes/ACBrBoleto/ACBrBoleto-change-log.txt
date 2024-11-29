@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2024
+-- ACBrBancoItau.pas --
+[*] TK-6052-5  - Removido Registro 7 por estar sendo rejeitado.
+    https://www.projetoacbr.com.br/forum/topic/80837-itau-cnab400-segmento-7/
+	por Daniel de Morais InfoCotidiano / Victor Gonzales Pandaaa
+
 27/11/2024
 -- ACBrBoletoRet_Sicoob_V3.pas --
 [*] TK-6244  - Ajustado para retornar em todos os titulo o header de consulta correto.

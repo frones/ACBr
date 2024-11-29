@@ -915,7 +915,7 @@ begin
 
                      aRemessa.Add(UpperCase(wLinhaMulta));
                    end;
-
+                  (*
                   if (Mensagem.Count > 0) then
                   begin
                     LTextoMensagem := '';
@@ -937,8 +937,7 @@ begin
                     iSequencia := aRemessa.Count + 1;
                     ARemessa.Add(UpperCase(wLinha));
                   end;
-
-
+                  *)
         end;
     end;
   end;

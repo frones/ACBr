@@ -61,8 +61,16 @@ type
     fTEFScopeAPI: TACBrTEFScopeAPI;
 
     procedure QuandoGravarLogAPI(const ALogLine: String; var Tratado: Boolean);
-    procedure QuandoExibirMensagemAPI( Mensagem: String;
+    procedure QuandocopeTransacaoEmAndamentoAPI( EstadoOperacao: TACBrTEFScopeEstadoOperacao;
+      out Cancelar: Boolean);
+
+    procedure QuandoExibirMensagemAPI(const Mensagem: String;
        Terminal: TACBrTEFScopeTerminalMensagem; MilissegundosExibicao: Integer);
+    procedure QuandoPerguntarMenuAPI(const Titulo: String; Opcoes: TStringList;
+       var ItemSelecionado: Integer);
+    procedure QuandoPerguntarCampoAPI( const MsgOperador: String;
+       const MsgCliente: String; const TituloCampo: String; const AcoesPermitidas: Byte;
+       var Resposta: String; var AcaoResposta: Byte);
 
     procedure SetDiretorioTrabalho(const AValue: String);
 
@@ -139,10 +147,11 @@ begin
   fpTEFRespClass := TACBrTEFRespScope;
 
   fTEFScopeAPI := TACBrTEFScopeAPI.Create;
+  fTEFScopeAPI.OnTransacaoEmAndamento := QuandocopeTransacaoEmAndamentoAPI;
   fTEFScopeAPI.OnGravarLog := QuandoGravarLogAPI;
   fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
-  //fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
-  //fTEFScopeAPI.OnObtemCampo := QuandoPerguntarCampoAPI;
+  fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
+  fTEFScopeAPI.OnPerguntaCampo := QuandoPerguntarCampoAPI;
 end;
 
 destructor TACBrTEFAPIClassScope.Destroy;
@@ -236,7 +245,17 @@ begin
   Tratado := True;
 end;
 
-procedure TACBrTEFAPIClassScope.QuandoExibirMensagemAPI(Mensagem: String;
+procedure TACBrTEFAPIClassScope.QuandocopeTransacaoEmAndamentoAPI(
+  EstadoOperacao: TACBrTEFScopeEstadoOperacao; out Cancelar: Boolean);
+var
+  i: Integer;
+begin
+  i := Integer(EstadoOperacao);
+  Cancelar := False;
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoEsperarOperacao(TACBrTEFAPIOperacaoAPI(i), Cancelar);
+end;
+
+procedure TACBrTEFAPIClassScope.QuandoExibirMensagemAPI(const Mensagem: String;
   Terminal: TACBrTEFScopeTerminalMensagem; MilissegundosExibicao: Integer);
 var
   TelaMsg: TACBrTEFAPITela;
@@ -254,43 +273,58 @@ begin
     MilissegundosExibicao );
 end;
 
-
-function TACBrTEFAPIClassScope.EfetuarAdministrativa(
-  OperacaoAdm: TACBrTEFOperacao): Boolean;
+procedure TACBrTEFAPIClassScope.QuandoPerguntarMenuAPI(const Titulo: String;
+  Opcoes: TStringList; var ItemSelecionado: Integer);
 begin
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, ItemSelecionado );
+end;
+
+procedure TACBrTEFAPIClassScope.QuandoPerguntarCampoAPI(
+  const MsgOperador: String; const MsgCliente: String;
+  const TituloCampo: String; const AcoesPermitidas: Byte; var Resposta: String;
+  var AcaoResposta: Byte);
+var
+  Validado, Cancelado: Boolean;
+  DefCampo: TACBrTEFAPIDefinicaoCampo;
+begin
+  DefCampo.TituloPergunta := TituloCampo;
+  DefCampo.MascaraDeCaptura := '';
+  DefCampo.TipoDeEntrada := tedTodos;
+  DefCampo.TamanhoMinimo := 0;
+  DefCampo.TamanhoMaximo := 100;
+  DefCampo.ValorMinimo := 0;
+  DefCampo.ValorMaximo := 0;
+  DefCampo.OcultarDadosDigitados := False;
+  DefCampo.ValidacaoDado := valdNenhuma;
+  DefCampo.ValorInicial := Resposta;
+  DefCampo.MsgErroDeValidacao := '';
+  DefCampo.MsgErroDadoMaior := '';
+  DefCampo.MsgErroDadoMenor := '';
+  DefCampo.MsgConfirmacaoDuplaDigitacao := '';
+  DefCampo.TipoEntradaCodigoBarras := tbQualquer;
+  DefCampo.TipoCampo := 0;
+  DefCampo.NaoRemoverMascaraResposta := False;
+
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(DefCampo, Resposta, Validado, Cancelado);
+
+  if Cancelado or (Resposta = ':-1') then
+    AcaoResposta := ACAO_RESUME_CANCELAR
+  else if (Resposta = ':-2') then
+    AcaoResposta := ACAO_RESUME_ESTADO_ANTERIOR
+  else
+    AcaoResposta := ACAO_RESUME_PROXIMO_ESTADO;
+end;
+
+
+function TACBrTEFAPIClassScope.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao): Boolean;
+begin
+  EfetuarAdministrativa('');
 end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
-var
-  PA: TACBrTEFParametros;
-  OpInt: Integer;
-  OpByte: Byte;
 begin
-  //D
-  //PA := TACBrTEFParametros.Create;
-  //try
-  //  OpByte := fOperacaoAdministrativa;
-  //  if (CodOperacaoAdm <> '') then
-  //  begin
-  //    OpInt := StrToIntDef(CodOperacaoAdm, -1);
-  //    if (OpInt >= 0) then
-  //    begin
-  //     if (OpInt <= High(Byte)) then
-  //       OpByte := OpInt;
-  //    end;
-  //  end;
-  //
-  //  if (fAutorizador <> '') then
-  //    PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
-  //
-  //  if (fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao <> '') then
-  //    PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
-  //
-  //  fTEFPayGoAPI.IniciarTransacao(OpByte, PA);
-  //  Result := fTEFPayGoAPI.ExecutarTransacao;
-  //finally
-  //  PA.Free;
-  //end;
+  fTEFScopeAPI.IniciarTransacao(scoMenu);
+  fTEFScopeAPI.ExecutarTransacao;
 end;
 
 function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
@@ -298,96 +332,17 @@ function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  PA: TACBrTEFParametros;
-  SomaCartoes, ModalidadeInt, FinanciamentoInt: Integer;
-  ValDbl, ValorTaxaServico: Double;
-  ValorTransacaoString: string;
-  ValorTaxaServicoString: string;
-  ResultadoDeSessao: Boolean;
-  Param3: string;
+  ValorTransacaoString, ValorTaxaServicoString: string;
 begin
   VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
     fpACBrTEFAPI.DoException(sACBrTEFAPIValorPagamentoInvalidoException);
 
-  PA := TACBrTEFParametros.Create;
-  try
-    PA.Text := DadosAdicionais;
+  ValorTransacaoString := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
+  ValorTaxaServicoString := '000';
 
-    ValDbl := ValorPagto * 100;
-    ValorTaxaServico := 0;
-    ValorTransacaoString := IntToStr(Trunc(RoundTo(ValDbl,-2)));
-    ValorTaxaServicoString := IntToStr(Trunc(RoundTo(0,-2)));
-
-    //PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
-    //PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
-    //PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValDbl,-2)));
-    //PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(fpACBrTEFAPI.DadosAutomacao.MoedaISO4217); // '986' ISO4217 - BRL
-//E
-    //case Modalidade of
-    //  tefmpCartao: ModalidadeInt := 1;
-    //  tefmpDinheiro: ModalidadeInt := 2;
-    //  tefmpCheque: ModalidadeInt := 4;
-    //  tefmpCarteiraVirtual: ModalidadeInt := 8;
-    //else
-    //  ModalidadeInt := 0;
-    //end;
-    //if (ModalidadeInt > 0) then
-    //  PA.ValueInfo[PWINFO_PAYMNTTYPE] := IntToStr(ModalidadeInt);
-
-//E
-    //SomaCartoes := 0;
-    //if teftcCredito in CartoesAceitos then
-    //  Inc(SomaCartoes, 1);
-    //if teftcDebito in CartoesAceitos then
-    //  Inc(SomaCartoes, 2);
-    //if teftcVoucher in CartoesAceitos then
-    //  Inc(SomaCartoes, 4);
-    //if teftcPrivateLabel in CartoesAceitos then
-    //  Inc(SomaCartoes, 8);
-    //if teftcFrota in CartoesAceitos then
-    //  Inc(SomaCartoes, 16);
-    //if teftcOutros in CartoesAceitos then
-    //  Inc(SomaCartoes, 128);
-    //if (SomaCartoes > 0) then
-    //  PA.ValueInfo[PWINFO_CARDTYPE] := IntToStr(SomaCartoes);
-//E
-    //case Financiamento of
-    //  tefmfAVista: FinanciamentoInt := 1;
-    //  tefmfParceladoEmissor: FinanciamentoInt := 2;
-    //  tefmfParceladoEstabelecimento: FinanciamentoInt := 4;
-    //  tefmfPredatado: FinanciamentoInt := 8;
-    //  tefmfCreditoEmissor: FinanciamentoInt := 16;
-    //else
-    //  FinanciamentoInt := 0;
-    //end;
-    //if (FinanciamentoInt > 0) then
-    //  PA.ValueInfo[PWINFO_FINTYPE] := IntToStr(FinanciamentoInt);
-    //
-    //if (Parcelas > 0) then
-    //  PA.ValueInfo[PWINFO_INSTALLMENTS] := IntToStr(Parcelas);
-    //
-    //if (DataPreDatado <> 0) then
-    //  PA.ValueInfo[PWINFO_INSTALLMDATE] := FormatDateTime('ddmmyy', DataPreDatado);
-    //
-    //if (fAutorizador <> '') then
-    //  PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
-
-    //fTEFScopeAPI.IniciarTransacao(fOperacaoVenda, PA);
-    //D    Result := fTEFScopeAPI.ExecutarTransacao;
-
-//E ?? na verdade precisaria abrir sessao uma vez, efetuar várias transações
-//    eno final fechar a sessão Confirmando TODAS **ou** Cancelando TODAS..
-    fTEFScopeAPI.AbrirSessaoTEF;
-    fTEFScopeAPI.IniciarTransacao(scoCredito, ValorTransacaoString, ValorTaxaServicoString, Param3);
-
-    fTEFScopeAPI.ExecutarTransacao;
-
-    fTEFScopeAPI.FecharSessaoTEF(True, ResultadoDeSessao);
-  //???Tratar o retorno de FecharSessaoTEF???
-  finally
-    PA.Free;
-  end;
+  fTEFScopeAPI.IniciarTransacao(scoCredito, ValorTransacaoString, ValorTaxaServicoString);
+  fTEFScopeAPI.ExecutarTransacao;
 end;
 
 procedure TACBrTEFAPIClassScope.FinalizarTransacao(const Rede, NSU,

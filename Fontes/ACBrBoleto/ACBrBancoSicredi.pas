@@ -113,7 +113,7 @@ function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitu
 begin
    Modulo.CalculoPadrao;
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-                       PadLeft(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito, 2, '0') +
+                       PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito), 2, '0') +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 5, '0');
 
   if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (Length(ACBrTitulo.CodigoGeracao) = 3)) then
@@ -151,7 +151,7 @@ begin
                       '1'                                             + { 1-Carteira simples }
                       OnlyNumber(MontarCampoNossoNumero(ACBrTitulo))  +
                       PadLeft(OnlyNumber(Cedente.Agencia),4,'0')      + { Código agência (cooperativa) }
-                      PadLeft(Cedente.AgenciaDigito,2,'0')            + { Dígito da agência (posto da cooperativa) }
+                      PadLeft(OnlyNumber(Cedente.AgenciaDigito),2,'0')+ { Dígito da agência (posto da cooperativa) }
                       PadLeft(OnlyNumber(Cedente.CodigoCedente),5,'0')+ { Código cedente }  //  Ver manual página 86 - CNAB240 ou 51 - CNAB400
                       '1'                                             + { Filler - zero. Obs: Será 1 quando o valor do documento for diferente se zero }
                       '0';                                              { Filler - zero }
@@ -203,7 +203,7 @@ end;
 function TACBrBancoSicredi.MontarCampoCodigoCedente (const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia + '.' +
-             PadLeft(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+ '.' +
+             PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito),2,'0')+ '.' +
              PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,5,'0');
 end;
 
@@ -705,7 +705,7 @@ begin
 
     Cedente.CodigoCedente:= rCodCedente;
     Cedente.Agencia      := rAgencia;
-    Cedente.AgenciaDigito:= rDigitoAgencia;
+    Cedente.AgenciaDigito:= OnlyNumber(rDigitoAgencia);
     Cedente.Conta        := rConta;
     Cedente.ContaDigito  := rDigitoConta;
 
@@ -2213,7 +2213,7 @@ begin
 
       Cedente.CodigoCedente:= rCodCedente;
       Cedente.Agencia      := rAgencia;
-      Cedente.AgenciaDigito:= rDigitoAgencia;
+      Cedente.AgenciaDigito:= OnlyNumber(rDigitoAgencia);
       Cedente.Conta        := rConta;
       Cedente.ContaDigito  := rDigitoConta;
 

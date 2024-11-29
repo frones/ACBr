@@ -1970,7 +1970,7 @@ begin
   if not Assigned(aStrList) or (aConteudo <= 0) then
     Exit;
 
-  s := FormatFloat(',0.00', aConteudo);
+  s := FormatFloat('0.00', aConteudo);
   s := StringReplace(s, ',', '.', [rfReplaceAll]);
   aStrList.Values[aCampo] := '"' + s + '"';
 end;

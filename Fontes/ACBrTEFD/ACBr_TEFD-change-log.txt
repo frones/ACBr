@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2024
+-- ACBrTEFDestaxaComum --
+[-] Correção da máscara de envio de valores float ao client.
+    por: Elias César
+
 28/11/2024
 -- ACBrTEFAPIDestaxaComum --
 [+] Criada função para possibilitar executar uma AdministracaoPendente sem exibir

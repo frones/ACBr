@@ -63,6 +63,7 @@ type
 
     function DestaxaClient: TACBrTEFDestaxaClient;
 
+    procedure QuandoExibirQRCodeAPI(const aDados: String);
     procedure QuandoGravarLogAPI(const aLogLine: String; var Tratado: Boolean);
     procedure QuandoExibirMensagemAPI(aMensagem: String; MilissegundosExibicao: Integer; var Cancelar: Boolean);
     procedure QuandoPerguntarMenuAPI(aMensagem: String; aOpcoes: TSplitResult; var aOpcao: Integer; var Cancelado: Boolean);
@@ -242,6 +243,7 @@ begin
     fDestaxaClient.OnColetarOpcao := QuandoPerguntarMenuAPI;
     fDestaxaClient.OnColetarInformacao := QuandoPerguntarCampoAPI;
     fDestaxaClient.OnExibirMensagem := QuandoExibirMensagemAPI;
+    fDestaxaClient.OnExibirQRCode := QuandoExibirQRCodeAPI;
     fDestaxaClient.OnAguardarResposta := TACBrTEFAPI(fpACBrTEFAPI).QuandoEsperarOperacao;
 
     if NaoEstaVazio(fpACBrTEFAPI.DadosTerminal.EnderecoServidor) then
@@ -252,6 +254,13 @@ begin
     end;
   end;
   Result := fDestaxaClient;
+end;
+
+procedure TACBrTEFAPIClassDestaxa.QuandoExibirQRCodeAPI(const aDados: String);
+begin
+  if (not Assigned(TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirQRCode)) then
+    fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPIEventoInvalidoException), ['QuandoExibirQRCode']));
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirQRCode(aDados);
 end;
 
 procedure TACBrTEFAPIClassDestaxa.QuandoGravarLogAPI(const aLogLine: String; var Tratado: Boolean);

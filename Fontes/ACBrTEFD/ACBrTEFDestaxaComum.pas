@@ -77,6 +77,7 @@ const
   CDESTAXA_ADM_PROXIMA = 'Proxima';
   CDESTAXA_ADM_ULTIMA = 'Ultima';
   CDESTAXA_ADM_FECHAR = 'Fechar';
+  CDESTAXA_STR_QRCODE = 'QRCODE';
   
   CDESTAXA_MASCARA_VALIDADE = 'MM/yy';
   CDESTAXA_MASCARA_DATA1 = 'dd/MM/yy';
@@ -521,6 +522,7 @@ type
     fOnColetarInformacao: TACBrDestaxaColetarInformacao;
     fOnColetarOpcao: TACBrDestaxaColetarOpcao;
     fOnExibirMensagem: TACBrDestaxaExibirMensagem;
+    fOnExibirQRCode: TACBrTEFAPIQuandoExibirQRCode;
     fPorta: String;
     fUltimoSequencial: Integer;
     fTerminador: AnsiString;
@@ -536,6 +538,7 @@ type
     function GetResposta: TACBrTEFDestaxaTransacaoResposta;
     function GetSocket: TACBrTEFDestaxaSocket;
 
+    procedure AutomacaoExibirQRCode;
     procedure AutomacaoColetarOpcao;
     procedure AutomacaoColetarInformacao;
     procedure AutomacaoExibirMensagem(MilissegundosExibicao: Integer = 0);
@@ -589,6 +592,7 @@ type
     property OnColetarOpcao: TACBrDestaxaColetarOpcao read fOnColetarOpcao write FOnColetarOpcao;
     property OnColetarInformacao: TACBrDestaxaColetarInformacao read fOnColetarInformacao write fOnColetarInformacao;
     property OnExibirMensagem: TACBrDestaxaExibirMensagem read fOnExibirMensagem write fOnExibirMensagem;
+    property OnExibirQRCode: TACBrTEFAPIQuandoExibirQRCode read fOnExibirQRCode write fOnExibirQRCode;
   end;
 
 function DestaxaServicoToString(const aServico: TACBrTEFDestaxaServico): String;
@@ -1555,6 +1559,21 @@ begin
   Result := fSocket;
 end;
 
+procedure TACBrTEFDestaxaClient.AutomacaoExibirQRCode;
+var
+  msgs: TSplitResult;
+begin
+  if EstaVazio(ColetaResposta.automacao_coleta_mensagem)  then
+    Exit;
+
+  msgs := Split(';', ColetaResposta.automacao_coleta_mensagem);
+  if (Length(msgs) < 3) or (msgs[0] <> CDESTAXA_STR_QRCODE) then
+    Exit;
+
+  if Assigned(fOnExibirQRCode) then
+    fOnExibirQRCode(msgs[2]);
+end;
+
 procedure TACBrTEFDestaxaClient.AutomacaoColetarOpcao;
 var
   wOpcao: Integer;
@@ -1640,6 +1659,9 @@ begin
   while (ColetaResposta.automacao_coleta_retorno in [dcrExecutarProcedimento, dcrErroParametrosInvalidos, dcrErroTempoLimiteExcedido]) do
   begin
     ColetaRequisicao.Clear;
+
+    if (Pos(CDESTAXA_STR_QRCODE, ColetaResposta.automacao_coleta_mensagem) > 0) then
+      AutomacaoExibirQRCode;
     if NaoEstaVazio(ColetaResposta.automacao_coleta_opcao) then
       AutomacaoColetarOpcao
     else if (ColetaResposta.automacao_coleta_tipo <> dctNenhum) then
@@ -1698,6 +1720,11 @@ begin
   if Assigned(fOnExibirMensagem) and fExibirMensagem and NaoEstaVazio(Resposta.mensagem) and
      (not (Resposta.retorno in [drsNenhum, drsErroDesconhecido])) then
   begin
+    // Remove o QRCode da tela
+    if (Resposta.transacao = CDESTAXA_DIGITAL_PAGAR) and (CDESTAXA_TRANSACAO_CONFIRMADA = Resposta.mensagem) and
+       Assigned(fOnExibirQRCode) then
+      fOnExibirQRCode(EmptyStr);
+
     if (Resposta.retorno = drsSucessoSemConfirmacao) then
       wSeg := -1;
     fOnExibirMensagem(Resposta.mensagem, wSeg, Cancelar);
@@ -1792,6 +1819,7 @@ begin
   fOnColetarInformacao := Nil;
   fOnAguardarResposta := Nil;
   fOnExibirMensagem := Nil;
+  fOnExibirQRCode := Nil;
   fUltimoSequencial := 0;
   fTimeOut := 1000;
   fExibirMensagem := True;

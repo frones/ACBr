@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2024
+-- ACBrTEFAPIDestaxa, ACBrTEFDestaxaComum --
+[+] Inclusão de eventos para envio do QRCode pra tela.
+    por: Elias César
+
 29/11/2024
 -- ACBrTEFDestaxaComum --
 [-] Correção da máscara de envio de valores float ao client.

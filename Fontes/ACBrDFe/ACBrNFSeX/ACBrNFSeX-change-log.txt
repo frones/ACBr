@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/12/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6296: Incluída a cidade de Estiva/MG, o provedor é Fiorilli.
+   Por: Anderson Grolli
+[*] #TK-6295: A cidade de Rio Negro/PR mudou a versão e as URLs, o provedor 
+    continua o mesmo.
+   Por: C4Dev
+[+] #TK-6289: Incluída a cidade de Datas/MG, o provedor é Sintese versão 2.04
+   Por: Willian Delan
+
 28/11/2024
 -- ACBrNFSeXServicos --
 [*] Todas as cidades que usam o provedor IPM na versão 1.01 tiveram suas URLs de homologação

@@ -303,9 +303,17 @@ begin
   FcdsTitulo.FieldDefs.Add('Sacado_Cidade', ftString, 100);
   FcdsTitulo.FieldDefs.Add('Sacado_UF', ftString, 2);
   FcdsTitulo.FieldDefs.Add('Sacado_CEP', ftString, 9);
-  FcdsTitulo.FieldDefs.Add('Sacado_Avalista', ftString, 100);
-  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_CNPJCPF', ftString, 18);
   FcdsTitulo.FieldDefs.Add('Sacado_Fone', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_Nome', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_CNPJCPF', ftString, 18);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_Logradouro', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_Numero', ftString, 10);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_Complemento', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_Bairro', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_Cidade', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_UF', ftString, 2);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_CEP', ftString, 9);
   FcdsTitulo.CreateDataSet;
 
   FfrxTitulo := TfrxDBDataset.Create(Self);
@@ -575,9 +583,20 @@ var
   Field_Sacado_Cidade: TField;
   Field_Sacado_UF: TField;
   Field_Sacado_CEP: TField;
-  Field_Sacado_Avalista: TField;
-  Field_Sacado_Avalista_CNPJCPF : TField;
   Field_Sacado_Fone: TField;
+
+  //Campos novos do Sacado_Avalista
+  Field_Sacado_Avalista: TField;
+  Field_Sacado_Avalista_Nome          : TField;
+  Field_Sacado_Avalista_CNPJCPF       : TField;
+  Field_Sacado_Avalista_Logradouro    : TField;
+  Field_Sacado_Avalista_Numero        : TField;
+  Field_Sacado_Avalista_Complemento   : TField;
+  Field_Sacado_Avalista_Bairro        : TField;
+  Field_Sacado_Avalista_Cidade        : TField;
+  Field_Sacado_Avalista_UF            : TField;
+  Field_Sacado_Avalista_CEP           : TField;
+
 
   procedure InserirTitulo(Indice: Integer);
   begin
@@ -647,9 +666,18 @@ var
         Field_Sacado_Cidade.AsString := ListadeBoletos[Indice].Sacado.Cidade;
         Field_Sacado_UF.AsString := ListadeBoletos[Indice].Sacado.UF;
         Field_Sacado_CEP.AsString := ListadeBoletos[Indice].Sacado.CEP;
-        Field_Sacado_Avalista.AsString := ListadeBoletos[Indice].Sacado.Avalista;
-        Field_Sacado_Avalista_CNPJCPF.asString := ListadeBoletos[Indice].Sacado.SacadoAvalista.CNPJCPF;
-        Field_Sacado_Fone.AsString := ListadeBoletos[Indice].Sacado.Fone;
+        
+        Field_Sacado_Fone.AsString                    :=  ListadeBoletos[Indice].Sacado.Fone;
+        Field_Sacado_Avalista.AsString                :=  ListadeBoletos[Indice].Sacado.Avalista;
+        Field_Sacado_Avalista_Nome.AsString           :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.NomeAvalista;
+        Field_Sacado_Avalista_CNPJCPF.asString        :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.CNPJCPF;
+        Field_Sacado_Avalista_Logradouro.AsString     :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.Logradouro;
+        Field_Sacado_Avalista_Numero.AsString         :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.Numero;
+        Field_Sacado_Avalista_Complemento.AsString    :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.Complemento;
+        Field_Sacado_Avalista_Bairro.AsString         :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.Bairro;
+        Field_Sacado_Avalista_Cidade.AsString         :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.Cidade;
+        Field_Sacado_Avalista_UF.AsString             :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.UF;
+        Field_Sacado_Avalista_CEP.AsString            :=  ListadeBoletos[Indice].Sacado.SacadoAvalista.CEP;
 
         Post;
       end;
@@ -747,9 +775,17 @@ begin
       Field_Sacado_Cidade := FieldByName('Sacado_Cidade');
       Field_Sacado_UF := FieldByName('Sacado_UF');
       Field_Sacado_CEP := FieldByName('Sacado_CEP');
-      Field_Sacado_Avalista := FieldByName('Sacado_Avalista');
-      Field_Sacado_Avalista_CNPJCPF := FieldByName('Sacado_Avalista_CNPJCPF');
       Field_Sacado_Fone := FieldByName('Sacado_Fone');
+      Field_Sacado_Avalista                := FieldByName('Sacado_Avalista');
+      Field_Sacado_Avalista_Nome           := FieldByName('Sacado_Avalista_Nome');
+      Field_Sacado_Avalista_CNPJCPF        := FieldByName('Sacado_Avalista_CNPJCPF');
+      Field_Sacado_Avalista_Logradouro     := FieldByName('Sacado_Avalista_Logradouro');
+      Field_Sacado_Avalista_Numero         := FieldByName('Sacado_Avalista_Numero');
+      Field_Sacado_Avalista_Complemento    := FieldByName('Sacado_Avalista_Complemento');
+      Field_Sacado_Avalista_Bairro         := FieldByName('Sacado_Avalista_Bairro');
+      Field_Sacado_Avalista_Cidade         := FieldByName('Sacado_Avalista_Cidade');
+      Field_Sacado_Avalista_UF             := FieldByName('Sacado_Avalista_UF');
+      Field_Sacado_Avalista_CEP            := FieldByName('Sacado_Avalista_CEP');
     end;
 
     if IndiceImprimirIndividual > -1 then

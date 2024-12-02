@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2024
+-- ACBrBoletoW_Safra.pas --
+[*] TK-6299  - Ajustado o tamanho do email do pagador conforme manual.
+    https://www.projetoacbr.com.br/forum/topic/80844-ajuste-tamanho-m%C3%A1ximo-email-sacado-ws-banco-safra/
+	por Daniel de Morais InfoCotidiano 
+
 29/11/2024
 -- ACBrBancoItau.pas --
 [*] TK-6052-5  - Removido Registro 7 por estar sendo rejeitado.

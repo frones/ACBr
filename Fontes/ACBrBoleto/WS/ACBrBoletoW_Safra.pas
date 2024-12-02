@@ -377,7 +377,7 @@ begin
       LJsonDadosPagador.AddPair('nome', Copy(aTitulo.Sacado.NomeSacado, 1, 40));
       LJsonDadosPagador.AddPair('tipoPessoa', IfThen(Length(OnlyNumber(aTitulo.Sacado.CNPJCPF)) = 11, 'F', 'J'));
       LJsonDadosPagador.AddPair('numeroDocumento', OnlyNumber(aTitulo.Sacado.CNPJCPF));
-      LJsonDadosPagador.AddPair('email',Copy(aTitulo.Sacado.Email, 1, 14));
+      LJsonDadosPagador.AddPair('email',Copy(aTitulo.Sacado.Email, 1, 50));
       GerarEnderecoPagador(LJsonDadosPagador);
       AJson.AddPair('pagador',LJsonDadosPagador);
     end;

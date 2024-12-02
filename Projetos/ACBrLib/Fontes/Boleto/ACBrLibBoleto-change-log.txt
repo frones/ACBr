@@ -42,8 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-26/11/2024
---- ACBrLibBoletoConfig ---
+02/12/2024
+--- ACBrLibBoletoRespostas.pas ---
+[*] TK-6276 Adicionado na resposta a propriedade MotivoRejeicaoComando.
+	https://www.projetoacbr.com.br/forum/topic/80760-acbrlibboleto-arquivo-de-retorno-cnab-leitura-dos-c%C3%B3digos-de-motivosrejei%C3%A7%C3%A3o/
+    Por: Daniel de Morais InfoCotidiano
+	
 [*] Alteração valor padrão da propriedade UseCertificateHTTP para True.
     Por: Antonio Carlos Junior / Victor Panda
 

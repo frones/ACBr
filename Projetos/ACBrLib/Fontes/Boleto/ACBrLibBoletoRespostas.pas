@@ -128,6 +128,7 @@ type
     FID : Integer;
     FIDRej : Integer;
     FMotivoRejeicao : String;
+    FMotivoRejeicaoComando: string;
 
   public
     constructor Create( const AIDRej: Integer; const AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -135,6 +136,7 @@ type
 
   published
     property MotivoRejeicao : String read FMotivoRejeicao write FMotivoRejeicao;
+    property MotivoRejeicaoComando: string read FMotivoRejeicaoComando write FMotivoRejeicaoComando;
 
   end;
 
@@ -835,6 +837,7 @@ end;
 procedure TRetornoRejeicoesTitulo.Processar(const ACBrBoleto: TACBrBoleto);
 begin
   MotivoRejeicao := ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando[FIDRej];
+  MotivoRejeicaoComando := ACBrBoleto.ListadeBoletos[FID].MotivoRejeicaoComando[FIDRej];
 end;
 
 { TRetornoBoleto }

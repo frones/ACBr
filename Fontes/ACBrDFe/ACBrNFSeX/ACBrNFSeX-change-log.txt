@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 02/12/2024
+-- PadraoNacional.LerXml --
+[*] #TK-6301: Incluído a chamada a função RemoverCaracteresDesnecessarios, pois
+    no XML da NFS-e retornado pelo webservice continha a sequencia <br>.
+   Por: Sergio Fuchs
 -- ACBrNFSeXServicos --
 [+] #TK-6296: Incluída a cidade de Estiva/MG, o provedor é Fiorilli.
    Por: Anderson Grolli

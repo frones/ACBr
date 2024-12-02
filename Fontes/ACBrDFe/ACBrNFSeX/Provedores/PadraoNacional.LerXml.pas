@@ -1352,7 +1352,7 @@ begin
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('xOutInf'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                            sLineBreak, [rfReplaceAll, rfIgnoreCase]);
     NFSe.Servico.Valores.Aliquota := NFSe.infNFSe.valores.Aliquota;
     NFSe.Servico.Valores.ValorIss := NFSe.infNFSe.valores.ValorIss;
   end;
@@ -1388,6 +1388,8 @@ begin
   LerParamsTabIni(True);
 
   Arquivo := NormatizarXml(Arquivo);
+
+  Arquivo := RemoverCaracteresDesnecessarios(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();

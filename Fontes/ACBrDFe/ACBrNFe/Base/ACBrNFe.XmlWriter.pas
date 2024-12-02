@@ -36,7 +36,8 @@ interface
 
 uses
   Classes, SysUtils,
-  pcnNFe, pcnGerador, pcnConversao, pcnNFeConsts,
+  pcnNFe, pcnGerador, pcnConversao,
+  ACBrNFe.Consts,
   pcnConversaoNFe,
   ACBrXmlDocument, ACBrXmlWriter, ACBrXmlBase;
 
@@ -2236,10 +2237,16 @@ begin
                   01, 15, 1, NFe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET));
 
                 if (NFe.infNFe.Versao >= 4) then
-                  xmlNode.AppendChild(
-                    AddNode(FormatoValor4ou2, 'N26.1',
+                begin
+                  xmlNode.AppendChild(AddNode(FormatoValor4ou2, 'N26.1',
                     'pST', 01, IfThen(Usar_tcDe4, 07, 05), 1,
                     NFe.Det[i].Imposto.ICMS.pST, DSC_PST));
+
+                  // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
+                  xmlNode.AppendChild(AddNode(tcDe2, 'N26b',
+                    'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto,
+                    NFe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO));
+                end;
 
                 xmlNode.AppendChild(AddNode(tcDe2, 'N27', 'vICMSSTRet',
                   01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET));

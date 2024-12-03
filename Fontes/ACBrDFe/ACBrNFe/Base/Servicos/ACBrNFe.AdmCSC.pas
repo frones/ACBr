@@ -66,7 +66,7 @@ type
 implementation
 
 uses
-  pcnNFeConsts,
+  ACBrNFe.Consts,
   ACBrUtil.Base;
 
 { TAdmCSCNFCe }

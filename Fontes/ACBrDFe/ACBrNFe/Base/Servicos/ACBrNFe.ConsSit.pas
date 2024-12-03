@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  pcnNFeConsts,
+  ACBrNFe.Consts,
   ACBrUtil.Strings;
 
 { TConsSitNFe }

@@ -38,8 +38,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnNFeConsts,
   pcnConversao,
+  ACBrNFe.Consts,
   ACBrNFe.RetInut,
   pcnSignature,
   ACBrXmlBase;

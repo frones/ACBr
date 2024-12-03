@@ -52,7 +52,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrDFeConsts,
-  pcnNFeConsts,
+  ACBrNFe.Consts,
   pcnConversao, pcnGerador;
 
 type

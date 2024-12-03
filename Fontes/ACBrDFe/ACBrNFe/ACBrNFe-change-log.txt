@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+-- ACBrNFeWebServices/ACBrNFe.AdmCSC/ACBrNFe.ConsSit/ACBrNFe.EnvEvento --
+-- ACBrNFe.Inut/ACBrNFe.RetConsSit/pcnNFeW/pcnProcNFe --
+[*] #TK-5993: Realizado a substituição da unit de constantes de: pcnNFeConsts
+    por: ACBrNFe.Consts 
+   Por: Italo Giurizzato Junior
+
 02/12/2024
 -- ACBrNFe.XmlWriter --
 [-] Corrigido a geração da tag vICMSSubstituto para o ICMS60.

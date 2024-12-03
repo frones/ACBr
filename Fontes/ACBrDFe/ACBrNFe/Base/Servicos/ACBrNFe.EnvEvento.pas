@@ -45,8 +45,8 @@ uses
   {$IfEnd}
   ACBrDFeConsts,
   pcnConversao,
-  pcnNFeConsts,
   pcnSignature,
+  ACBrNFe.Consts,
   ACBrNFe.EventoClass,
   ACBrBase,
   ACBrXmlBase,

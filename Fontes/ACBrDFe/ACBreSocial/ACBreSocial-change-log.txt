@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+-- pcesS1010 --
+[*] TK-6283 - Configurada leitura do ini e do xml do evento S1010 para considerarem o campo dadosRubrica.codInscPisPasep - https://www.projetoacbr.com.br/forum/topic/80820-codincpispasep-no-evento-s-1010/
+Por: Renato Rubinho
+
 02/12/2024
 -- pcesS1299 --
 [*] TK-6284 - Corrigidos S1000, S1005, S1020, S1070 para não gerar grupo novaValidade quando iniValid estiver em branco. - https://www.projetoacbr.com.br/forum/topic/80807-nova-validade-eventos-de-tabelas-dll/

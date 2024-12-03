@@ -602,7 +602,7 @@ begin
       ImprimirRelatorio( '</ce>'+
                          '<qrcode_largura>8</qrcode_largura>'+
                          '<qrcode>'+DadosQRCode+'</qrcode>'+
-                         '</lf>');
+                         '</lf>' + '</lf>' + '</lf>' + '</lf>');
 
     Exit;
   end;

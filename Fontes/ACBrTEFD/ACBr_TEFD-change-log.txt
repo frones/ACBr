@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+-- ACBrTEFDestaxaComum --
+[*] Ajuste para não exibir QRCode e não enviar como mensagem o hexa da imagem.
+    por: Elias César
+
 02/12/2024
 -- ACBrTEFAPIDestaxa, ACBrTEFDestaxaComum --
 [+] Inclusão de eventos para envio do QRCode pra tela.

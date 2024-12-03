@@ -530,6 +530,7 @@ type
     fOnGravarLog: TACBrGravarLog;
     fSocket: TACBrTEFDestaxaSocket;
     fExibirMensagem: Boolean;
+    fAguardandoQRCode: Boolean;
     fTimeOut: Integer;
 
     function GetColetaRequisicao: TACBrTEFDestaxaAutomacaoColeta;
@@ -1570,7 +1571,8 @@ begin
   if (Length(msgs) < 3) or (msgs[0] <> CDESTAXA_STR_QRCODE) then
     Exit;
 
-  if Assigned(fOnExibirQRCode) then
+  fAguardandoQRCode := Assigned(fOnExibirQRCode);
+  if fAguardandoQRCode then
     fOnExibirQRCode(msgs[2]);
 end;
 
@@ -1661,8 +1663,8 @@ begin
     ColetaRequisicao.Clear;
 
     if (Pos(CDESTAXA_STR_QRCODE, ColetaResposta.automacao_coleta_mensagem) > 0) then
-      AutomacaoExibirQRCode;
-    if NaoEstaVazio(ColetaResposta.automacao_coleta_opcao) then
+      AutomacaoExibirQRCode
+    else if NaoEstaVazio(ColetaResposta.automacao_coleta_opcao) then
       AutomacaoColetarOpcao
     else if (ColetaResposta.automacao_coleta_tipo <> dctNenhum) then
       AutomacaoColetarInformacao
@@ -1720,11 +1722,6 @@ begin
   if Assigned(fOnExibirMensagem) and fExibirMensagem and NaoEstaVazio(Resposta.mensagem) and
      (not (Resposta.retorno in [drsNenhum, drsErroDesconhecido])) then
   begin
-    // Remove o QRCode da tela
-    if (Resposta.transacao = CDESTAXA_DIGITAL_PAGAR) and (CDESTAXA_TRANSACAO_CONFIRMADA = Resposta.mensagem) and
-       Assigned(fOnExibirQRCode) then
-      fOnExibirQRCode(EmptyStr);
-
     if (Resposta.retorno = drsSucessoSemConfirmacao) then
       wSeg := -1;
     fOnExibirMensagem(Resposta.mensagem, wSeg, Cancelar);
@@ -1734,6 +1731,12 @@ begin
   begin
     FinalizarRequisicao;
     Exit;
+  end;
+
+  if fAguardandoQRCode and Assigned(fOnExibirQRCode) then
+  begin
+    fOnExibirQRCode(EmptyStr);
+    fAguardandoQRCode := False;
   end;
 
   if  NaoEstaZerado(Resposta.automacao_coleta_sequencial) and Socket.ColetaAutomatica then
@@ -1823,6 +1826,7 @@ begin
   fUltimoSequencial := 0;
   fTimeOut := 1000;
   fExibirMensagem := True;
+  fAguardandoQRCode := False;
   fTerminador := CDESTAXA_TERMINADOR;
 end;
 

@@ -1196,9 +1196,12 @@ begin
       LAtributos :='tpCR="' + obj.Items[i].tpCR + '"' +
                    ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'
     else
+    begin
       LAtributos := 'tpCR="' + obj.Items[i].tpCR + '"' +
-                    ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"'+
-                    ' vrCR13="' + FloatToString(obj.Items[i].vrCR13, '.', FloatMask(2, False))+ '"';
+                    ' vrCR="' + FloatToString(obj.Items[i].vrCR, '.', FloatMask(2, False))+'"';
+      if obj.Items[i].vrCR13 > 0.00 then
+        LAtributos := LAtributos + ' vrCR13="' + FloatToString(obj.Items[i].vrCR13, '.', FloatMask(2, False))+ '"';
+    end;
 
 
 

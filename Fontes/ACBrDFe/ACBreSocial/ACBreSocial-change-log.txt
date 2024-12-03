@@ -59,6 +59,9 @@ Por: Diego Folieni
 -- pcesS1010 --
 [*] TK-6283 - Configurada leitura do ini e do xml do evento S1010 para considerarem o campo dadosRubrica.codInscPisPasep - https://www.projetoacbr.com.br/forum/topic/80820-codincpispasep-no-evento-s-1010/
 Por: Renato Rubinho
+-- pcesS2501 --
+[*] TK-6294 - Corrigido S2510 para gerar o atributo vrCR13 somente quando for maior que zero  - https://www.projetoacbr.com.br/forum/topic/80842-sugest%C3%A3o-de-melhoria-evento-s-2501/
+Por: Andergoncalves
 
 02/12/2024
 -- pcesS1299 --

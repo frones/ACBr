@@ -29,6 +29,13 @@ namespace ACBrLib.Boleto
 
         public int VersaoLote { get; set; }
 
+        public int CasasDecimaisMoraJuros { get; set; }
+
+        public int Numero { get; set; }
+
+        public string DensidadeGravacao { get; set; }
+
+
         #endregion Properties
 
         #region Methods

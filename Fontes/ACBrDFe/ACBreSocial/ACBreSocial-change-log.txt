@@ -53,6 +53,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/12/2024
+-- pcesS2200 --
+[*] #TK-6309 - Adiciona na rotina de leitura do INI nova informação para correta geração de EnderecoExterior. - https://www.projetoacbr.com.br/forum/topic/80885-evento-s-2200-valida%C3%A7%C3%B5es/
+Por: Diego Folieni
 -- pcesS1010 --
 [*] TK-6283 - Configurada leitura do ini e do xml do evento S1010 para considerarem o campo dadosRubrica.codInscPisPasep - https://www.projetoacbr.com.br/forum/topic/80820-codincpispasep-no-evento-s-1010/
 Por: Renato Rubinho

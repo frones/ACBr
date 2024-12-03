@@ -244,6 +244,9 @@ begin
       trabalhador.GrauInstr  := INIRec.ReadString(sSecao, 'grauInstr', '01');
       Trabalhador.IndPriEmpr := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPriEmpr', 'S'));
       trabalhador.nmSoc      := INIRec.ReadString(sSecao, 'nmSoc', EmptyStr);
+      sFim := INIRec.ReadString(sSecao, 'ExtrangeiroSN', '');
+      if Trim(sFim) <> '' then
+        trabalhador.ExtrangeiroSN := StrToBoolDef(sFim, Trabalhador.ExtrangeiroSN);
 
       sSecao := 'nascimento';
       trabalhador.Nascimento.dtNascto   := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
@@ -395,7 +398,7 @@ begin
       begin
         trabalhador.contato.FonePrinc     := INIRec.ReadString(sSecao, 'fonePrinc', '');
         trabalhador.contato.FoneAlternat  := INIRec.ReadString(sSecao, 'foneAlternat', 'S');
-        trabalhador.contato.EmailPrinc    := INIRec.ReadString(sSecao, 'emailPrinc', 'S');
+        trabalhador.contato.EmailPrinc    := INIRec.ReadString(sSecao, 'emailPrinc', '');
         trabalhador.contato.EmailAlternat := INIRec.ReadString(sSecao, 'emailAlternat', 'S');
       end;
 

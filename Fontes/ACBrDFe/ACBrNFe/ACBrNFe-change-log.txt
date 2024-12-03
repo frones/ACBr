@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/12/2024
+-- pcnModeloNFe --
+[*] Removida a referida unit por ela não ser utilizada pelo componente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFeWebServices/ACBrNFe.AdmCSC/ACBrNFe.ConsSit/ACBrNFe.EnvEvento --
 -- ACBrNFe.Inut/ACBrNFe.RetConsSit/pcnNFeW/pcnProcNFe --
 [*] #TK-5993: Realizado a substituição da unit de constantes de: pcnNFeConsts

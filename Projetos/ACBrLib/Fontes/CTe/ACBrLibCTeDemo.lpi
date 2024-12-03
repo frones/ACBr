@@ -23,7 +23,7 @@
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="3"/>
       <RevisionNr Value="6"/>
-      <BuildNr Value="261"/>
+      <BuildNr Value="262"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCTe - Biblioteca para emissão e impressão de Conhecimento de Transporte Eletrônico" InternalName="ACBrLibCTe" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrCTe " ProductVersion="0.3.3.20"/>

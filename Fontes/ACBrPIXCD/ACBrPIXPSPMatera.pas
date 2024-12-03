@@ -1007,9 +1007,13 @@ var
 begin
   wJO := TACBrJSONObject.Parse(aJson);
   try
-    Result := wJO.AsJSONObject['data'].ToJSON;
-  except
-    Result := aJson;
+    try
+      Result := wJO.AsJSONObject['data'].ToJSON;
+    except
+      Result := aJson;
+    end;
+  finally
+    wJO.Free;
   end;
 end;
 

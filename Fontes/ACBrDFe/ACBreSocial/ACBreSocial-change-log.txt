@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2024
+-- pcesS1299 --
+[*] TK-6284 - Corrigidos S1000, S1005, S1020, S1070 para não gerar grupo novaValidade quando iniValid estiver em branco. - https://www.projetoacbr.com.br/forum/topic/80807-nova-validade-eventos-de-tabelas-dll/
+Por: Renato Rubinho
+
 28/11/2024
 -- pcesS1299 --
 [*] TK-6287 - Configurado infoFech.naoValid, no S1299, para considerar a versão do leiaute para o preenchimento do campo.

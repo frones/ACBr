@@ -471,7 +471,8 @@ begin
 
       if Self.ModoLancamento = mlAlteracao then
         if (InfoProcesso.novaValidadeInst()) then
-          GerarIdePeriodo(self.InfoProcesso.NovaValidade,'novaValidade');
+          if InfoProcesso.NovaValidade.IniValid <> '' then
+            GerarIdePeriodo(self.InfoProcesso.NovaValidade,'novaValidade');
     end;
 
     GerarModoFechamento(Self.ModoLancamento);

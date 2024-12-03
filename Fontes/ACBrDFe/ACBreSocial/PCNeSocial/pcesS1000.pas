@@ -573,7 +573,8 @@ begin
         GerarInfoCadastro;
       if ModoLancamento = mlAlteracao then
         if (InfoEmpregador.novaValidadeInst()) then
-          GerarIdePeriodo(InfoEmpregador.novaValidade, 'novaValidade');
+          if InfoEmpregador.NovaValidade.IniValid <> '' then
+            GerarIdePeriodo(InfoEmpregador.novaValidade, 'novaValidade');
     end;
 
     GerarModoFechamento(Self.ModoLancamento);

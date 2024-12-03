@@ -449,7 +449,8 @@ begin
 
       if Self.ModoLancamento = mlAlteracao then
         if (infoLotacao.novaValidadeInst()) then
-          GerarIdePeriodo(self.infoLotacao.NovaValidade, 'novaValidade');
+          if self.infoLotacao.NovaValidade.IniValid <> '' then
+            GerarIdePeriodo(self.infoLotacao.NovaValidade, 'novaValidade');
     end;
 
     GerarModoFechamento(ModoLancamento);

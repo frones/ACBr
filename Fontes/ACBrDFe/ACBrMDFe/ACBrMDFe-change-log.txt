@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/12/2024
+-- pmdfeConsMDFeNaoEnc/pmdfeConsSitMDFe/pmdfeEnvEventoMDFe/pmdfeEventoMDFe --
+-- pmdfeProcInfraSA/pmdfeRetConsMDFeNaoEnc/pmdfeRetConsSitMDFe --
+-- pmdfeRetEnvEventoMDFe/pmdfeRetEnvMDFe --
+[*] #TK-5874: Removido as units acima por estarem em desuso.
+   Por: Italo Giurizzato Junior
 -- ACBrMDFeWebServices/ACBrMDFe.XmlWriter/ACBrMDFe.ConsNaoEnc/ACBrMDFe.ConsSit --
 -- ACBrMDFe.EnvEvento/ACBrMDFe.RetConsSit/pmdfeConsMDFeNaoEnc/pmdfeConsSitMDFe --
 -- pmdfeEnvEventoMDFe/pmdfeMDFeW/pmdfeProcMDFe --

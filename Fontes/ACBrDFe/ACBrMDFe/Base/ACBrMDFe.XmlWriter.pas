@@ -215,7 +215,7 @@ uses
   StrUtils,
   Math,
   ACBrDFeConsts,
-  pmdfeConsts,
+  ACBrMDFe.Consts,
   ACBrValidador,
   ACBrDFeUtil,
   ACBrUtil.Base,

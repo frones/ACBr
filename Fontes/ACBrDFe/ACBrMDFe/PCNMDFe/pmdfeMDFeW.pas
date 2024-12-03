@@ -43,7 +43,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.DateTime,
-  pmdfeConsts, ACBrDFeUtil;
+  ACBrMDFe.Consts, ACBrDFeUtil;
 
 type
   TGeradorOpcoes = class(TPersistent)

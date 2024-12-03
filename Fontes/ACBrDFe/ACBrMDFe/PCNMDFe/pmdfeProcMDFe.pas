@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnLeitor, pmdfeConsts;
+  pcnConversao, pcnGerador, pcnLeitor, ACBrMDFe.Consts;
 
 type
 

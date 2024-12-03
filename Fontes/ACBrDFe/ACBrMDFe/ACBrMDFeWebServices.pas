@@ -512,10 +512,10 @@ uses
   ACBrUtil.FilesIO,
   ACBrCompress,
   ACBrMDFe,
-  pmdfeConsts,
   pcnConsReciDFe,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
+  ACBrMDFe.Consts,
   ACBrMDFe.EventoClass,
   ACBrMDFe.ConsSit,
   ACBrMDFe.ConsNaoEnc;

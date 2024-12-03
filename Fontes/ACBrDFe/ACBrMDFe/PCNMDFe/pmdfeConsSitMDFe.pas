@@ -40,7 +40,7 @@ uses
   SysUtils, Classes,
   pcnConversao, pcnGerador,
   ACBrUtil.Strings,
-  pmdfeConsts;
+  ACBrMDFe.Consts;
 
 type
 

@@ -44,9 +44,9 @@ uses
    System.Contnrs,
   {$IfEnd}
   pcnConversao,
-  pmdfeConsts,
   ACBrBase, ACBrXmlBase,
   ACBrDFeComum.Proc,
+  ACBrMDFe.Consts,
   ACBrMDFe.RetEnvEvento,
   ACBrMDFe.ProcInfraSA;
 

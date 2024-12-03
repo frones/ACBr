@@ -61,7 +61,7 @@ implementation
 
 uses
   ACBrUtil.Strings,
-  pmdfeConsts;
+  ACBrMDFe.Consts;
 
 { TConsMDFeNaoEnc }
 

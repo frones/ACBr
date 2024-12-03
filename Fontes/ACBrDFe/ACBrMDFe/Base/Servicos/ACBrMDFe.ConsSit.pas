@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  pmdfeConsts,
+  ACBrMDFe.Consts,
   ACBrUtil.Strings;
 
 { TConsSitMDFe }

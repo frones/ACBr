@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+-- ACBrMDFeWebServices/ACBrMDFe.XmlWriter/ACBrMDFe.ConsNaoEnc/ACBrMDFe.ConsSit --
+-- ACBrMDFe.EnvEvento/ACBrMDFe.RetConsSit/pmdfeConsMDFeNaoEnc/pmdfeConsSitMDFe --
+-- pmdfeEnvEventoMDFe/pmdfeMDFeW/pmdfeProcMDFe --
+[*] #TK-5997: Realizado a substituição da unit de constantes de: pmdfeConsts
+    por: ACBrMDFe.Consts 
+   Por: Italo Giurizzato Junior
+
 27/11/2024
 -- ACBrMDFe.Consts --
 [+] #TK-5997: Disponibilizado a nova Unit de Constantes do MDFe, mas ela ainda não esta

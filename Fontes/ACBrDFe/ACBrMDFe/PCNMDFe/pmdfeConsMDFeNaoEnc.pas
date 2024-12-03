@@ -44,7 +44,7 @@ uses
   pcnConversao, pcnGerador,
   ACBrUtil.Strings,
   pmdfeConversaoMDFe,
-  pmdfeConsts;
+  ACBrMDFe.Consts;
 
 type
 

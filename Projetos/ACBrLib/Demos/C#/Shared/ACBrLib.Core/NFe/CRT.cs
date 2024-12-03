@@ -4,6 +4,7 @@
     {
         crtSimplesNacional = 1,
         crtSimplesExcessoReceita = 2,
-        crtRegimeNormal = 3
+        crtRegimeNormal = 3,
+        crtMEI = 4
     }
 }

@@ -574,6 +574,7 @@ type
     fCOD_INF              : string;                   //20	COD_INF	Código da informação complementar (campo 02 do Registro 0450)	C	006	-
     fVL_PIS               : Currency;                 //21	VL_PIS	Valor do PIS/PASEP	N	-	02
     fVL_COFINS            : Currency;                 //22	VL_COFINS	Valor da COFINS	N	-	02
+    fCHV_DOC_E            : string;                   //23	CHV_DOC_E Chave do Documento Fiscal Eletrônico
 
     FRegistroD501         : TRegistroD501List;
     FRegistroD505         : TRegistroD505List;
@@ -603,6 +604,7 @@ type
     property COD_INF      : string                   read FCOD_INF      write FCOD_INF;
     property VL_PIS       : Currency                 read FVL_PIS       write FVL_PIS;
     property VL_COFINS    : Currency                 read FVL_COFINS    write FVL_COFINS;
+    property CHV_DOC_E    : string                   read FCHV_DOC_E    write FCHV_DOC_E;
 
     property RegistroD501 : TRegistroD501List        read FRegistroD501 write FRegistroD501;
     property RegistroD505 : TRegistroD505List        read FRegistroD505 write FRegistroD505;

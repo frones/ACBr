@@ -161,7 +161,8 @@ end;
 
 procedure TBloco_P.WriteRegistroP001;
 begin
-  if Assigned( fRegistroP001 ) then
+  if Assigned( fRegistroP001 ) and
+     (Self.DT_INI < EncodeDate(2025,01,01)) then
   begin
     with fRegistroP001 do
     begin

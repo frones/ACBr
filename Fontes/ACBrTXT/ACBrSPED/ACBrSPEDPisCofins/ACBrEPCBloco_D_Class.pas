@@ -1013,11 +1013,14 @@ procedure TBloco_D.WriteRegistroD500(RegD010: TRegistroD010) ;
     strIND_OPER : String;
     strIND_EMIT : String;
     strCOD_SIT  : String;
+    strLinha    : String;
 begin
   if Assigned(RegD010.RegistroD500) then
   begin
      for intFor := 0 to RegD010.RegistroD500.Count - 1 do
      begin
+        strLinha := '';
+
         with RegD010.RegistroD500.Items[intFor] do
         begin
           Check(Pos(COD_MOD, '21 22') > 0, '(D-500) O Modelo do Documento "%s" é inválido!', [COD_MOD]);
@@ -1041,7 +1044,8 @@ begin
             sdfInutilizado     : strCOD_SIT := '08';
           end;
 
-          Add( LFill('D500')           +
+          strLinha :=
+               LFill('D500')           +
                LFill( strIND_OPER )    +
                LFill( strIND_EMIT )    +
                LFill( COD_PART )       +
@@ -1062,7 +1066,13 @@ begin
                LFill( VL_ICMS,0,2 )    +
                LFill( COD_INF )        +
                LFill( VL_PIS,0,2 )     +
-               LFill( VL_COFINS,0,2 ) );
+               LFill( VL_COFINS,0,2 );
+
+          if Self.DT_INI >= EncodeDate(2025,04,01) then
+            strLinha := strLinha +
+              LFill( CHV_DOC_E );
+
+          Add(strLinha);
         end;
 
         // Registros FILHOS

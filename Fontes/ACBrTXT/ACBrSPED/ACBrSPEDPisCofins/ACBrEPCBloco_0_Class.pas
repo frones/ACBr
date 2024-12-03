@@ -1052,7 +1052,8 @@ end;
 
 procedure TBloco_0.WriteRegistro0145(Reg0140: TRegistro0140);
 begin
-  if Assigned(Reg0140.Registro0145) and (Reg0140.Registro0145.COD_INC_TRIB <> '') then
+  if Assigned(Reg0140.Registro0145) and (Reg0140.Registro0145.COD_INC_TRIB <> '') and
+     (Self.DT_INI < EncodeDate(2025,01,01))then
   begin
     with Reg0140.Registro0145 do
     begin

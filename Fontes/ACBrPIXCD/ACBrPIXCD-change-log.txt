@@ -50,7 +50,8 @@ Símbolo : Significado
 03/12/2024
 -- ACBrPIXPSPMatera --
 [-] Correção de MemoryLeak.
-    por: Elias César
+    https://www.projetoacbr.com.br/forum/topic/80771-memory-leaked-no-acbrpspmatera-se-chamar-consultartransacao-ou-consultarextratoec/
+    por: Tales Mendes de Camargo
 
 21/11/2024
 -- ACBrPIXPSPSicoob --

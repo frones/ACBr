@@ -128,7 +128,7 @@ begin
     wVersaoArquivo := LibConfig.BoletoBancoConfig.LayoutVersaoArquivo;
     wVersaoLote := LibConfig.BoletoBancoConfig.LayoutVersaoLote;
     CasasDecimaisMoraJuros := LibConfig.BoletoBancoConfig.CasasDecimaisMoraJuros;
-    //DensidadeGravacao := LibConfig.BoletoBancoConfig.DensidadeGravacao;
+    DensidadeGravacao := LibConfig.BoletoBancoConfig.DensidadeGravacao;
     CIP := LibConfig.BoletoBancoConfig.CIP;
   end;
 

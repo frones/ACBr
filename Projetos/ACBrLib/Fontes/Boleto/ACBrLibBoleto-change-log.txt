@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+--- ACBrLibBoletoConfig.pas, ACBrLibBoletoConsts.pas, ACBrLibBoletoDataModule.pas ---
+[-] TK-6302 Descomentado a propriedade DensidadeGravacao para ser utilizada com a lib
+    Por: Daniel de Morais InfoCotidiano
+
 02/12/2024
 --- ACBrLibBoletoRespostas.pas ---
 [*] TK-6276 Adicionado na resposta a propriedade MotivoRejeicaoComando.

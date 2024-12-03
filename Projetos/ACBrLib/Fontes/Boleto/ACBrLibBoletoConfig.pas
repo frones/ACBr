@@ -738,7 +738,7 @@ begin
   OrientacaoBanco:= StringReplace(AIni.ReadString(CSessaoBoletoBancoConfig, CChaveOrientacaoBanco, OrientacaoBanco), '|', sLineBreak, [rfReplaceAll]);
   TipoCobranca:= TACBrTipoCobranca( AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveTipoCobranca, integer(TipoCobranca)));
   CasasDecimaisMoraJuros:= AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveCasasDecimaisMoraJuros, CasasDecimaisMoraJuros);
-  //DensidadeGravacao:= AIni.ReadString(CSessaoBoletoBancoConfig, CChaveDensidadeGravacao, DensidadeGravacao);
+  DensidadeGravacao:= AIni.ReadString(CSessaoBoletoBancoConfig, CChaveDensidadeGravacao, DensidadeGravacao);
   CIP:= AIni.ReadString(CSessaoBoletoBancoConfig, CChaveCIP, CIP);
 end;
 
@@ -753,7 +753,7 @@ begin
   AIni.WriteString(CSessaoBoletoBancoConfig, CChaveOrientacaoBanco, StringReplace(OrientacaoBanco,sLineBreak,'|',[rfReplaceAll]));
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveTipoCobranca, integer(TipoCobranca) );
   AIni.WriteInteger(CSessaoBoletoBancoConfig, CChaveCasasDecimaisMoraJuros, CasasDecimaisMoraJuros);
-  //AIni.WriteString(CSessaoBoletoBancoConfig, CChaveDensidadeGravacao, DensidadeGravacao);
+  AIni.WriteString(CSessaoBoletoBancoConfig, CChaveDensidadeGravacao, DensidadeGravacao);
   AIni.WriteString(CSessaoBoletoBancoConfig, CChaveCIP, CIP);
 
 end;

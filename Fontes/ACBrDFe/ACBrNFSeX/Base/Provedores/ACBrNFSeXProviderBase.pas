@@ -1888,9 +1888,9 @@ begin
   end;
 
   case GerarResponse.ModoEnvio of
-    meLoteAssincrono: ValidarSchema(EmiteResponse, tmRecepcionar);
-    meLoteSincrono: ValidarSchema(EmiteResponse, tmRecepcionarSincrono);
-    meTeste: ValidarSchema(EmiteResponse, tmTeste);
+    meLoteAssincrono: ValidarSchema(GerarResponse, tmRecepcionar);
+    meLoteSincrono: ValidarSchema(GerarResponse, tmRecepcionarSincrono);
+    meTeste: ValidarSchema(GerarResponse, tmTeste);
   else
     // meUnitario
     ValidarSchema(GerarResponse, tmGerar);

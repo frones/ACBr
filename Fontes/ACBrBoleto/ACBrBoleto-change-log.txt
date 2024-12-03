@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+-- ACBrBoletoRet_C6.pas --
+[-] TK-6304  - C6 mudou a API e nao atualizou documentação ate o momento, ajustado via json fornecido pelo usuario.
+    https://www.projetoacbr.com.br/forum/topic/80883-reportar-problema-no-consulta-de-api-do-c6
+	por Daniel de Morais InfoCotidiano 
+
 02/12/2024
 -- ACBrBoletoW_Safra.pas --
 [*] TK-6299  - Ajustado o tamanho do email do pagador conforme manual.

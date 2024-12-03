@@ -105,11 +105,11 @@ end;
 
 function TRetornoEnvio_C6.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
-  LJsonObject, AJSonObjectItem: TACBrJSONObject;
+  LJsonObject, AJSonObjectItem, LJsonListaPaymentsObject: TACBrJSONObject;
   LRejeicaoMensagem: TACBrBoletoRejeicao;
-  LJsonArray: TACBrJSONArray;
+  LJsonArray, LJsonArrayPayments: TACBrJSONArray;
   LTipoOperacao : TOperacao;
-  X:Integer;
+  X, I:Integer;
   LSituacao : AnsiString;
 begin
   Result := True;
@@ -191,11 +191,20 @@ begin
             ARetornoWS.DadosRet.TituloRet.ValorAtual      := LJsonObject.AsCurrency['amount'];
 
 
-            ARetornoWS.DadosRet.TituloRet.DataCredito     := DateToDateTime(LJsonObject.AsString['payment_date']);
-            ARetornoWS.DadosRet.TituloRet.DataBaixa       := DateToDateTime(LJsonObject.AsString['payment_date']);
-            ARetornoWS.DadosRet.TituloRet.DataMovimento   := DatetoDateTime( LJsonObject.asString['payment_date'] );
-            ARetornoWS.DadosRet.TituloRet.ValorPago       := LJsonObject.AsCurrency['payment_amount'];
-            ARetornoWS.DadosRet.TituloRet.ValorRecebido   := LJsonObject.AsCurrency['payment_amount'];
+            if LJSonObject.isJSONArray('payments') then
+            begin
+              LJsonArrayPayments :=  LJSonObject.AsJSONArray['payments'];
+//              Comentado pois C6 está atualizando documentacao. p saber se vai permitir mais que um pagamento.
+//              for i := 0 to Pred(LJsonArrayPayments.Count) do
+//              begin
+                LJsonListaPaymentsObject := LJsonArrayPayments.ItemAsJSONObject[0];
+                ARetornoWS.DadosRet.TituloRet.DataCredito     := DateToDateTime(LJsonListaPaymentsObject.AsString['date']);
+                ARetornoWS.DadosRet.TituloRet.DataBaixa       := DateToDateTime(LJsonListaPaymentsObject.AsString['date']);
+                ARetornoWS.DadosRet.TituloRet.DataMovimento   := DateToDateTime(LJsonListaPaymentsObject.AsString['date']);
+                ARetornoWS.DadosRet.TituloRet.ValorPago       := LJsonListaPaymentsObject.AsCurrency['amount'];
+                ARetornoWS.DadosRet.TituloRet.ValorRecebido   := LJsonListaPaymentsObject.AsCurrency['amount'];
+//              end;
+            end;
 
             ARetornoWS.DadosRet.TituloRet.DataRegistro    := DatetoDateTime( LJsonObject.asString['emission_date'] );
 

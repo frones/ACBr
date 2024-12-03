@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2023 Daniel Simoes de Almeida               }
 { Colaboradores nesse arquivo:  Willian Delan                                  }
-{ Delmar de Lima                                                               }
+{ Delmar de Lima, Jhonlenon Ribeiro                                            }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -152,22 +152,18 @@ begin
         begin
           if (LTipoOperacao = tpInclui) then
           begin
-            LJsonDetalhes := LJsonObject.AsJSONArray['details'];
-            LjsonDetalhe := LJsonDetalhes.ItemAsJSONObject[0];
-            ///IntToStr(LJsonObject.JsonArray[0].AsObject.Values['ctitloCobrCdent'].AsInteger);
-
-            ARetornoWS.DadosRet.TituloRet.NossoNumero                 := LjsonDetalhe.AsString['ctitloCobrCdent'];
-            ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca        := LjsonDetalhe.AsString['codStatus10'];//Ex. A Vencer/Vencido
-            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca  := LjsonDetalhe.AsString['codStatus10'];//Ex 01.
-            ARetornoWS.DadosRet.TituloRet.SeuNumero                   := LjsonDetalhe.AsString['snumero10'];
-            ARetornoWS.DadosRet.TituloRet.DataRegistro                := DateBradescoToDateTime(LjsonDetalhe.AsString['dataReg10']);
-            ARetornoWS.DadosRet.TituloRet.DataDocumento               := DateBradescoToDateTime(LjsonDetalhe.AsString['dataEmis10']);
-            ARetornoWS.DadosRet.TituloRet.ValorDocumento              := LjsonDetalhe.AsCurrency['valMoeda10'];
-            ARetornoWS.DadosRet.TituloRet.CodBarras                   := LjsonDetalhe.AsString['codBarras10'];
-            ARetornoWS.DadosRet.TituloRet.LinhaDig                    := LjsonDetalhe.AsString['linhaDig10'];
-            ARetornoWS.DadosRet.TituloRet.Vencimento                  := DateBradescoToDateTime(LjsonDetalhe.AsString['dataVenctoBol10']);
-            ARetornoWS.DadosRet.TituloRet.TxId                        := LjsonDetalhe.AsString['iconcPgtoSpi'];
-            ARetornoWS.DadosRet.TituloRet.EMV                         := LjsonDetalhe.AsString['wqrcdPdraoMercd'];
+            ARetornoWS.DadosRet.TituloRet.NossoNumero                 := LJsonObject.AsString['ctitloCobrCdent'];
+            ARetornoWS.DadosRet.TituloRet.CodBarras                   := LJsonObject.AsString['codBarras10'];
+            ARetornoWS.DadosRet.TituloRet.LinhaDig                    := LJsonObject.AsString['linhaDig10'];
+            ARetornoWS.DadosRet.TituloRet.EstadoTituloCobranca        := LJsonObject.AsString['codStatus10'];//Ex. A Vencer/Vencido
+            ARetornoWS.DadosRet.TituloRet.CodigoEstadoTituloCobranca  := LJsonObject.AsString['codStatus10'];//Ex 01.
+            ARetornoWS.DadosRet.TituloRet.SeuNumero                   := LJsonObject.AsString['snumero10'];
+            ARetornoWS.DadosRet.TituloRet.DataRegistro                := DateBradescoToDateTime(LJsonObject.AsString['dataReg10']);
+            ARetornoWS.DadosRet.TituloRet.DataDocumento               := DateBradescoToDateTime(LJsonObject.AsString['dataEmis10']);
+            ARetornoWS.DadosRet.TituloRet.ValorDocumento              := LJsonObject.AsCurrency['valMoeda10'];
+            ARetornoWS.DadosRet.TituloRet.Vencimento                  := DateBradescoToDateTime(LJsonObject.AsString['dataVencto10']);
+            ARetornoWS.DadosRet.TituloRet.TxId                        := LJsonObject.AsString['iconcPgtoSpi'];
+            ARetornoWS.DadosRet.TituloRet.EMV                         := LJsonObject.AsString['wqrcdPdraoMercd'];
           end
           else
           if (LTipoOperacao = tpConsultaDetalhe) then

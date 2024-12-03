@@ -102,64 +102,62 @@ type
 
   TAjustarDataHoraParaUfFunc = function(DataHora: TDateTime; const UF: string; out TimeZoneStr: string): TDateTime;
 
-function DateTimeWithTimeZone(DataHora: TDateTime; cUF: integer): string; overload;
-function DateTimeWithTimeZone(DataHora: TDateTime; const UF: string): string; overload;
-function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer): TDateTime; overload;
-function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string): TDateTime; overload;
-function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer; out TimeZoneStr: string): TDateTime; overload;
-function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string; out TimeZoneStr: string): TDateTime; overload;
+  function DateTimeWithTimeZone(DataHora: TDateTime; cUF: integer): string; overload;
+  function DateTimeWithTimeZone(DataHora: TDateTime; const UF: string): string; overload;
+  function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer): TDateTime; overload;
+  function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string): TDateTime; overload;
+  function AjustarDataHoraParaUf(DataHora: TDateTime; cUF: integer; out TimeZoneStr: string): TDateTime; overload;
+  function AjustarDataHoraParaUf(DataHora: TDateTime; const UF: string; out TimeZoneStr: string): TDateTime; overload;
 
-function DateTimeTodh(DataHora: TDateTime): string;
-function TimeToDecimal(const ATime: TDateTime): Double;
-function DateTimeToDataHora(DataHora: TDateTime): string;
+  function DateTimeTodh(DataHora: TDateTime): string;
+  function TimeToDecimal(const ATime: TDateTime): Double;
+  function DateTimeToDataHora(DataHora: TDateTime): string;
 
-function DateTimeTodhUTC(DataHora: TDateTime; const TZD: string): string;
-function GetUTC(UF: string; const dataHora: TDateTime): string;
-function GetUTCSistema: string;
-function GetUTCUF(UF: string; const dataHora: TDateTime): string;
-function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
-function GetPrimeiroDomingoDoMes(const ano, mes: Integer): TDateTime;
-function GetTerceiroDomingoDoMes(const ano, mes: Integer): TDateTime;
-function GetInicioDoHorarioDeVerao(const ano: Integer): TDateTime;
-function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
-function GetDataDoCarnaval(const ano: Integer): TDateTime;
-function GetDataDaPascoa(const ano: Integer): TDateTime;
+  function DateTimeTodhUTC(DataHora: TDateTime; const TZD: string): string;
+  function GetUTC(UF: string; const dataHora: TDateTime): string;
+  function GetUTCSistema: string;
+  function GetUTCUF(UF: string; const dataHora: TDateTime): string;
+  function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
+  function GetPrimeiroDomingoDoMes(const ano, mes: Integer): TDateTime;
+  function GetTerceiroDomingoDoMes(const ano, mes: Integer): TDateTime;
+  function GetInicioDoHorarioDeVerao(const ano: Integer): TDateTime;
+  function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
+  function GetDataDoCarnaval(const ano: Integer): TDateTime;
+  function GetDataDaPascoa(const ano: Integer): TDateTime;
 
-function TimeZoneConf: TTimeZoneConf;
+  function TimeZoneConf: TTimeZoneConf;
 
-function FormatDateBr(const ADateTime: TDateTime; AFormat: string = ''): string;
-function FormatDateTimeBr(const ADate: TDateTime; AFormat: string = ''): string;
-function StringToDateTime( const DateTimeString : string; const Format : string = '') : TDateTime;
-function StringToDateTimeDef( const DateTimeString : string; const DefaultValue : TDateTime;
-    const Format : string = '') : TDateTime;
-function StoD( YYYYMMDDhhnnss: string) : TDateTime;
-function DtoS( ADate : TDateTime) : string;
-function DTtoS( ADateTime : TDateTime) : string;
+  function FormatDateBr(const ADateTime: TDateTime; AFormat: string = ''): string;
+  function FormatDateTimeBr(const ADate: TDateTime; AFormat: string = ''): string;
+  function StringToDateTime( const DateTimeString : string; const Format : string = '') : TDateTime;
+  function StringToDateTimeDef( const DateTimeString : string; const DefaultValue : TDateTime; const Format : string = '') : TDateTime;
+  function StoD( YYYYMMDDhhnnss: string) : TDateTime;
+  function DtoS( ADate : TDateTime) : string;
+  function DTtoS( ADateTime : TDateTime) : string;
 
-function Iso8601ToDateTime(const AISODate: string): TDateTime;
-function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
+  function Iso8601ToDateTime(const AISODate: string): TDateTime;
+  function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
 
-{ Bias = Diferença em minutos do horário atual com o UTC }
-function BiasToTimeZone(const aBias: Integer): string;
-function TimeZoneToBias(const aTimeZone: string): Integer;
+  { Bias = Diferença em minutos do horário atual com o UTC }
+  function BiasToTimeZone(const aBias: Integer): string;
+  function TimeZoneToBias(const aTimeZone: string): Integer;
 
-function StrIsTimeZone(const aStr: string): Boolean;
-function StrHasTimeZone(const aStr: string): Boolean;
+  function StrIsTimeZone(const aStr: string): Boolean;
+  function StrHasTimeZone(const aStr: string): Boolean;
 
-function DateTimeUniversal(const AUTC: string = ''; const ADateTime: TDateTime = 0 ): TDateTime;
+  function DateTimeUniversal(const AUTC: string = ''; const ADateTime: TDateTime = 0): TDateTime;
+  function DateTimeUniversalToLocal(const AUTC: string = ''; const ADateTime: TDateTime = 0): TDateTime;
+  function IsWorkingDay(ADate: TDateTime): Boolean;
+  function WorkingDaysBetween(StartDate, EndDate: TDateTime): Integer;
+  function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
-function IsWorkingDay(ADate: TDateTime): Boolean;
-function WorkingDaysBetween(StartDate, EndDate: TDateTime): Integer;
-function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+  function EncodeDataHora(const DataStr: string; const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
+  function ParseDataHora(const DataStr: string): string;
+  function AjustarData(const DataStr: string): string;
 
-function EncodeDataHora(const DataStr: string;
-  const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
-function ParseDataHora(const DataStr: string): string;
-function AjustarData(const DataStr: string): string;
-
-var
-  TimeZoneConfInstance: TTimeZoneConf;
-  OnAjustarDataHoraParaUf: TAjustarDataHoraParaUfFunc;
+  var
+    TimeZoneConfInstance: TTimeZoneConf;
+    OnAjustarDataHoraParaUf: TAjustarDataHoraParaUfFunc;
 
 implementation
 
@@ -858,8 +856,24 @@ end;
 {-----------------------------------------------------------------------------
   Retorna ADateTime com hora convertida para TimeZone Universal, baseado no
   TimeZone passado por parâmetro ou no TimeZone Local. ex UTC: -03:00
+
+  ADecodeUTCTimeZone = (True)
+                       Ajusta o valor da hora recebida reduzindo o valor da data
+                       do pacifico / GMT para o horario local e aplicando
+                       o fuso horario escolhido.
+                       Valor Entrada  : 2024-11-28 13:42:38
+                       Valor Saída    : 2024-11-28 10:42:38
+                       Utilizado -03:00 como parametro AUTC.
+
+                       (False)
+                       Ajusta o valor da hora recebida para o horario do pacifico
+                       / GMT.
+                       Valor Entrada  : 2024-11-28 10:42:38
+                       Valor Saída    : 2024-11-28 13:42:38
+                       Utilizado -03:00 como parametro AUTC.
  -----------------------------------------------------------------------------}
-function DateTimeUniversal(const AUTC: string; const ADateTime: TDateTime ): TDateTime;
+
+function GetDateTimeUniversal(const AUTC: string; const ADateTime: TDateTime; const ADecodeUTCTimeZone : Boolean): TDateTime;
 var
   TZ: string;
   DT: TDateTime;
@@ -898,9 +912,22 @@ begin
   end;
 
   Bias := TimeZoneToBias(DateTimeToStr(DT) + TZ);
-  Result := IncMinute(DT, Bias);
+
+  if ADecodeUTCTimeZone then
+    Result := IncMinute(DT, -Bias)
+  else
+    Result := IncMinute(DT, Bias);
 end;
 
+function DateTimeUniversal(const AUTC: string = ''; const ADateTime: TDateTime = 0): TDateTime;
+begin
+  Result := GetDateTimeUniversal(AUTC, ADateTime, False);
+end;
+
+function DateTimeUniversalToLocal(const AUTC: string = ''; const ADateTime: TDateTime = 0): TDateTime;
+begin
+  Result := GetDateTimeUniversal(AUTC, ADateTime, True);
+end;
 {-----------------------------------------------------------------------------
   Retornar True, se a Data for de Segunda a Sexta-feira. Falso para Sábado e Domingo
  -----------------------------------------------------------------------------}

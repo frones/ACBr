@@ -41,12 +41,14 @@ type
   TACBrJWTAuth = class
     FSecretKey: String;
   private
-    function Base64UrlEncode(const AInput: String; AEncodeBase64 : boolean = true): String;
+
     function HMACSHA256(const AData, AKey: String): String;
   public
     constructor Create(const ASecretKey: String);
     function GenerateJWT(const APayload: String): String;
+    function Signature(const APayload : String) : String;
     function ValidateJWT(const AToken: String): Boolean;
+    function Base64UrlEncode(const AInput: String; AEncodeBase64 : boolean = true): String;
   end;
 
 implementation
@@ -75,6 +77,18 @@ begin
   end;
 end;
 
+function TACBrJWTAuth.Signature(const APayload: String): String;
+var LACBrOpenSSLUtils : TACBrOpenSSLUtils;
+begin
+  LACBrOpenSSLUtils := TACBrOpenSSLUtils.Create(nil);
+  try
+    LACBrOpenSSLUtils.LoadPrivateKeyFromString(FSecretKey);
+    Result := Base64UrlEncode(LACBrOpenSSLUtils.CalcHashFromString(APayload, algSHA256, sttBase64, True), False);
+  finally
+    LACBrOpenSSLUtils.Free;
+  end;
+end;
+
 function TACBrJWTAuth.Base64UrlEncode(const AInput: String; AEncodeBase64 : boolean = true): String;
 begin
   Result := AInput;
@@ -83,23 +97,19 @@ begin
   Result := StringReplace(Result, '+', '-', [rfReplaceAll]);
   Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
   Result := StringReplace(Result, '=', '', [rfReplaceAll]);
+  Result := StringReplace(Result, #13, '', [rfReplaceAll]); // Remove CR
+  Result := StringReplace(Result, #10, '', [rfReplaceAll]); // Remove LF
+  Result := StringReplace(Result, ' ', '', [rfReplaceAll]); // Remove espaços
 end;
 
 function TACBrJWTAuth.GenerateJWT(const APayload: String): String;
 var
-  LHeader, LToken, LSignature: String;
-  LACBrOpenSSLUtils : TACBrOpenSSLUtils;
+  LHeader, LToken: String;
+
 begin
   LHeader := '{"alg": "RS256","typ": "JWT"}';
   LToken := Base64UrlEncode(AnsiString(LHeader)) + '.' + Base64UrlEncode(AnsiString(APayload));
-  LACBrOpenSSLUtils := TACBrOpenSSLUtils.Create(nil);
-  try
-    LACBrOpenSSLUtils.LoadPrivateKeyFromString(FSecretKey);
-    LSignature := Base64UrlEncode(LACBrOpenSSLUtils.CalcHashFromString(LToken, algSHA256, sttBase64, True), False);
-  finally
-    LACBrOpenSSLUtils.Free;
-  end;
-  Result := LToken + '.' + LSignature;
+  Result := LToken + '.' + Signature(LToken);
 end;
 
 function TACBrJWTAuth.ValidateJWT(const AToken: String): Boolean;

@@ -56,6 +56,7 @@ type
     function DefineTipoDiasProtesto(const ACBrTitulo: TACBrTitulo): String; override;
     function InstrucoesProtesto(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineTipoCarteira(const ACBrTitulo: TACBrTitulo): String;
+    function DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String; override;
     function DefineCarteira(const ACBrTitulo: TACBrTitulo): String;
     function DefineTipoDocumento(const ACBrTitulo: TACBrTitulo): String; reintroduce;
     function MontaInstrucoes1CNAB240(const ACBrTitulo: TACBrTitulo): String;
@@ -318,6 +319,17 @@ begin
        else
         Result := '2';
     end;
+  end;
+end;
+
+function TACBrBancoSantander.DefineTipoSacado(const ACBrTitulo: TACBrTitulo): String;
+begin
+  case ACBrTitulo.Sacado.Pessoa of
+    pFisica   : Result := '01';
+    pJuridica : Result := '02';
+    pOutras   : Result := '99';
+  else
+    Result := '00';
   end;
 end;
 

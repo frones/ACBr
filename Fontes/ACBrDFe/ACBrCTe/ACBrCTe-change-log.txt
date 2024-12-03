@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2024
+-- ACBrCTeWebServices/ACBrCTe.ConsSit/ACBrCTe.EnvEvento/ACBrCTe.RetConsSit --
+-- pcteCTeW/pcteInutCTe/pcteProcCTe --
+[*] #TK-5994: Realizado a substituição da unit de constantes de: pcteConsts
+    por: ACBrCTe.Consts 
+   Por: Italo Giurizzato Junior
+
 27/11/2024
 -- ACBrCTe.Consts --
 [+] #TK-5994: Disponibilizado a nova Unit de Constantes do CTe, mas ela ainda não esta

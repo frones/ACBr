@@ -44,10 +44,10 @@ uses
    System.Contnrs,
   {$IfEnd}
   pcnConversao,
-  pcteConsts,
   ACBrBase, ACBrXmlBase,
 //  pcnProcCTe,
   ACBrDFeComum.Proc,
+  ACBrCTe.Consts,
   ACBrCTe.RetEnvEvento;
 
 type

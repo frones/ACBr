@@ -98,7 +98,7 @@ uses
   ACBrDFeUtil,
   ACBrUtil.Base,
   ACBrUtil.Strings,
-  pcteConsts;
+  ACBrCTe.Consts;
 
 { TProcCTe }
 

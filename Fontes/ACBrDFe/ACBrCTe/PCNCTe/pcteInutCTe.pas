@@ -43,7 +43,8 @@ uses
 {$ENDIF}
   ACBrDFeConsts,
   pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
-  pcnSignature, pcteConsts;
+  pcnSignature,
+  ACBrCTe.Consts;
 
 type
 

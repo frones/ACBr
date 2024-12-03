@@ -51,7 +51,8 @@ uses
   ACBrCTe.RetEnvEvento,
   ACBrCTe.RetConsSit,
   pcnDistDFeInt, pcnRetDistDFeInt,
-  ACBrCteConhecimentos, ACBrCTeConfiguracoes, pcteConsts;
+  ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
+  ACBrCTe.Consts;
 
 type
 

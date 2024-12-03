@@ -39,7 +39,9 @@ interface
 uses
   SysUtils, Classes,
   pcnConversao, pcnGerador, pcteCTe,
-  pcteConversaoCTe, pcteConsts, ACBrDFeUtil, ACBrDFeConsts;
+  pcteConversaoCTe,
+  ACBrCTe.Consts,
+  ACBrDFeUtil, ACBrDFeConsts;
 
 type
 

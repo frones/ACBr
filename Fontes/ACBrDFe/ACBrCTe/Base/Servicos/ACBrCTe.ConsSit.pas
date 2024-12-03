@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  pcteConsts,
+  ACBrCTe.Consts,
   ACBrUtil.Strings;
 
 { TConsSitCTe }

@@ -271,6 +271,9 @@ begin
 //      Trabalhador.IndPriEmpr := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPriEmpr', 'S'));
       trabalhador.nmSoc      := INIRec.ReadString(sSecao, 'nmSoc', EmptyStr);
       trabalhador.PaisNac    := INIRec.ReadString(sSecao, 'paisNac', '');
+      sFim := INIRec.ReadString(sSecao, 'ExtrangeiroSN', '');
+      if Trim(sFim) <> '' then
+        trabalhador.ExtrangeiroSN := StrToBoolDef(sFim, Trabalhador.ExtrangeiroSN);
 
       sSecao := 'nascimento';
       trabalhador.Nascimento.dtNascto   := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));

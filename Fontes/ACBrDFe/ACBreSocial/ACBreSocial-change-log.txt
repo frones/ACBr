@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2024
+-- pcesS2205, pcesS2300 --
+[*] #TK-6309 - Adiciona na rotina de leitura do INI nova informação para correta geração de EnderecoExterior. - https://www.projetoacbr.com.br/forum/topic/80885-evento-s-2200-valida%C3%A7%C3%B5es/
+Por: Diego Folieni
+
 03/12/2024
 -- pcesS2200 --
 [*] #TK-6309 - Adiciona na rotina de leitura do INI nova informação para correta geração de EnderecoExterior. - https://www.projetoacbr.com.br/forum/topic/80885-evento-s-2200-valida%C3%A7%C3%B5es/

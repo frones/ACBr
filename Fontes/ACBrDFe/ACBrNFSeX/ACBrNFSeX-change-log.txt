@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6305: A cidade de Varzea da Palma/MG mudou a URL, o provedor 
+    continua o mesmo.
+  Por: João Antônio
+
 03/12/2024
 -- ACBrNFSeXProviderBase --
 [*] Corrige o response utilizado na validação de schema do GerarLote.

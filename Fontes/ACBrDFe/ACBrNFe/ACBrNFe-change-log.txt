@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2024
+-- ACBrNFe.XmlWriter --
+[-] Corrigido as condições para gerar algumas tags do CST 60 e CSOSN 500.
+   Por: Italo Giurizzato Junior
+
 03/12/2024
 -- pcnModeloNFe --
 [*] Removida a referida unit por ela não ser utilizada pelo componente.

@@ -42,8 +42,8 @@ public class ConfiguracoesGeraisFragment extends Fragment {
     private Button btnSalvarConfiguracoesGerais;
     private Button btnCarregarConfiguracoesGerais;
 
-    private TipoEmissao[] tipoEmissao = TipoEmissao.values();
-    private ModeloDF[] modeloDF = ModeloDF.values();
+    private String[] tipoEmissao = {"Emissão normal (não em contingência)", "Contingência FS-IA, com impressão do DANFE em formulário de segurança", "Contingência SCAN(Sistema de Contingência do Ambiente Nacional)", "Contingência DPEC(Declaração Prévia da Emissão em Contingência)", "Contingência FS-DA, com impressão do DANFE em formulário de segurança", "Contingência SVC-AN(SEFAZ Virtual de Contingência do AN)", "Contingência SVC-RS(SEFAZ Virtual de Contingência do RS)", "Contingência SVC-SP(SEFAZ Virtual de Contingência de SP)", "Contingência off-line da NFC-e(as demais opções de contingência são válidas também para a NFC-e)"};
+    private String[] modeloDF = {"NFe - Nota Fiscal Eletrônica", "NFCe - Nota Fiscal do Consumidor Eletrônica"};
     private VersaoDF[] versaoDF = VersaoDF.values();
 
     @Override

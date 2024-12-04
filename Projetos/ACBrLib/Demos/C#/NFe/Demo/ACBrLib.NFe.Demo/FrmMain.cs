@@ -95,19 +95,19 @@ namespace ACBrLib.NFe.Demo
 
         private string AlimentarDados()
         {
-
             var notaFiscal = new NotaFiscal();
 
-            //infNFe
+            // infNFe
             notaFiscal.InfNFe.Versao = "4.0";
 
-            //Identificação
-            notaFiscal.Identificacao.cNF = 1;
-            notaFiscal.Identificacao.natOp = "Venda de Mercadoria";
+            // Identificação
+            notaFiscal.Identificacao.cUF = 35;
+            notaFiscal.Identificacao.cNF = 19456927;
+            notaFiscal.Identificacao.natOp = "VENDA";
             notaFiscal.Identificacao.indPag = IndicadorPagamento.ipVista;
             notaFiscal.Identificacao.modelo = cmbModeloDocumento.GetSelectedValue<ModeloNFe>();
             notaFiscal.Identificacao.Serie = "1";
-            notaFiscal.Identificacao.nNF = 000001401;
+            notaFiscal.Identificacao.nNF = 1;
             notaFiscal.Identificacao.dhEmi = DateTime.Now;
             notaFiscal.Identificacao.dhSaiEnt = DateTime.Now;
             notaFiscal.Identificacao.tpNF = TipoNFe.tnSaida;
@@ -116,91 +116,103 @@ namespace ACBrLib.NFe.Demo
             notaFiscal.Identificacao.tpImp = TipoDANFE.tiRetrato;
             notaFiscal.Identificacao.tpEmis = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
             notaFiscal.Identificacao.finNFe = FinalidadeNFe.fnNormal;
-            notaFiscal.Identificacao.indFinal = ConsumidorFinal.cfNao;
-            notaFiscal.Identificacao.indPres = PresencaComprador.pcOutros;
+            notaFiscal.Identificacao.indFinal = ConsumidorFinal.cfConsumidorFinal;
+            notaFiscal.Identificacao.indPres = PresencaComprador.pcPresencial;
             notaFiscal.Identificacao.procEmi = ProcessoEmissao.peAplicativoContribuinte;
             notaFiscal.Identificacao.indIntermed = IndIntermed.iiSemOperacao;
             notaFiscal.Identificacao.verProc = "ACBrNFe";
-            //Só usar na emissão em contingência
-            //notaFiscal.Identificacao.dhCont = DateTime.Now;
-            //notaFiscal.Identificacao.xJust = "";
 
-            //Emitente
+            // Emitente
             notaFiscal.Emitente.CRT = CRT.crtRegimeNormal;
             notaFiscal.Emitente.CNPJCPF = "99999999999999";
-            notaFiscal.Emitente.xNome = "PROJETO ACBR";
-            notaFiscal.Emitente.xFant = "PROJETO ACBR";
-            notaFiscal.Emitente.IE = "99999999999";
+            notaFiscal.Emitente.xNome = "Razao Social Emitente";
+            notaFiscal.Emitente.xFant = "Fantasia";
+            notaFiscal.Emitente.IE = "111111111111";
             notaFiscal.Emitente.IEST = "";
             notaFiscal.Emitente.IM = "";
             notaFiscal.Emitente.CNAE = "";
-            notaFiscal.Emitente.xLgr = "Rua Cel Aureliano Camargo";
-            notaFiscal.Emitente.nro = "973";
+            notaFiscal.Emitente.xLgr = "Logradouro, do emitente";
+            notaFiscal.Emitente.nro = "S/N";
             notaFiscal.Emitente.xCpl = "";
-            notaFiscal.Emitente.xBairro = "Centro";
-            notaFiscal.Emitente.cMun = 3554003;
-            notaFiscal.Emitente.xMun = "Tatui";
+            notaFiscal.Emitente.xBairro = "Bairro";
+            notaFiscal.Emitente.cMun = 3550308;
+            notaFiscal.Emitente.xMun = "São Paulo";
             notaFiscal.Emitente.cUF = "35";
             notaFiscal.Emitente.UF = "SP";
-            notaFiscal.Emitente.CEP = "18270000";
+            notaFiscal.Emitente.CEP = "11111111";
             notaFiscal.Emitente.cPais = 1058;
             notaFiscal.Emitente.xPais = "BRASIL";
-            notaFiscal.Emitente.Fone = "(11)9999-9999";
+            notaFiscal.Emitente.Fone = "11111111111111";
 
-            //Destinatario
-            notaFiscal.Destinatario.idEstrangeiro = "";
+            // Destinatário
+            // Observação ----> Obrigatório o preenchimento para o modelo 55.
             notaFiscal.Destinatario.CNPJCPF = "99999999999999";
-            notaFiscal.Destinatario.xNome = "PROJETO ACBR Destinatario";
-            notaFiscal.Destinatario.indIEDest = IndicadorIE.inContribuinte;
-            notaFiscal.Destinatario.IE = "999999999999";
+            notaFiscal.Destinatario.xNome = "Razao Social Destinatário";
+            notaFiscal.Destinatario.indIEDest = IndicadorIE.inNaoContribuinte;
+            notaFiscal.Destinatario.IE = "111111111111";
             notaFiscal.Destinatario.ISUF = "";
-            notaFiscal.Destinatario.Email = "acbr@projetoacbr.com.br";
-            notaFiscal.Destinatario.xLgr = "Rua das Flores";
-            notaFiscal.Destinatario.nro = "973";
+            notaFiscal.Destinatario.Email = "emaildest@mail.com.br";
+            notaFiscal.Destinatario.xLgr = "Logradouro, do destinatario";
+            notaFiscal.Destinatario.nro = "123";
             notaFiscal.Destinatario.xCpl = "";
             notaFiscal.Destinatario.xBairro = "Centro";
             notaFiscal.Destinatario.cMun = 3550308;
             notaFiscal.Destinatario.xMun = "São Paulo";
             notaFiscal.Destinatario.UF = "SP";
-            notaFiscal.Destinatario.CEP = "04615000";
+            notaFiscal.Destinatario.CEP = "00000000";
             notaFiscal.Destinatario.cPais = 1058;
             notaFiscal.Destinatario.xPais = "BRASIL";
-            notaFiscal.Destinatario.Fone = "(11)9999-9999";
+            notaFiscal.Destinatario.Fone = "11111111111111";
 
-            //Produto
+            // Produto
             var produto = new ProdutoNFe();
-
             produto.nItem = 1;
             produto.cProd = "123456";
             produto.cEAN = "7896523206646";
-            produto.xProd = "Camisa Polo ACBr";
-            produto.NCM = "61051000";
-            produto.EXTIPI = "";
+            produto.xProd = "Descrição do Produto";
+            produto.indTot = IndicadorTotal.itSomaTotalNFe;
+            produto.NCM = "85395200";
+            produto.CEST = "1111111";
             produto.CFOP = "5101";
             produto.uCom = "UN";
             produto.qCom = 1;
             produto.vUnCom = 100;
-            produto.vProd = 100;
             produto.cEANTrib = "7896523206646";
+            produto.cBarraTrib = "ABC123456";
             produto.uTrib = "UN";
             produto.qTrib = 1;
             produto.vUnTrib = 100;
-            produto.vOutro = 0;
-            produto.vFrete = 0;
-            produto.vSeg = 0;
-            produto.vDesc = 0;
-            produto.infAdProd = "Informacao Adicional do Produto";
 
+            // Calculando o total do produto corretamente
+            decimal totalProdutos = produto.vUnCom * produto.qCom;
+            produto.vProd = totalProdutos;
+
+            // Tributação
             produto.ICMS.CSOSN = CSOSNIcms.csosnVazio;
             produto.ICMS.CST = CSTIcms.cst00;
-            produto.ICMS.modBC = DeterminacaoBaseIcms.dbiPauta;
-            produto.ICMS.vBC = 100;
-            produto.ICMS.pICMS = 0.8m;
-            produto.ICMS.vICMS = 8;
+            produto.ICMS.modBC = DeterminacaoBaseIcms.dbiValorOperacao;  // Base de cálculo do ICMS
+            produto.ICMS.vBC = produto.vProd;  // Base de cálculo do ICMS
+            produto.ICMS.pICMS = 18;  // Alíquota de ICMS
+            produto.ICMS.vICMS = produto.ICMS.vBC * produto.ICMS.pICMS / 100;
+
+            // Cálculos de PIS e COFINS
             produto.PIS.CST = CSTPIS.pis04;
             produto.COFINS.CST = CSTCofins.cof04;
 
+            // Campos adicionais
+            produto.vFrete = 0;
+            produto.vSeg = 0;
+            produto.vDesc = 0;
+            produto.vOutro = 0;
+
+            produto.infAdProd = "Informação adicional do produto";
+
             notaFiscal.Produtos.Add(produto);
+
+            notaFiscal.Total.vBC = produto.vProd;
+            notaFiscal.Total.vICMS = (decimal)produto.ICMS.vICMS;
+            notaFiscal.Total.vProd = produto.vProd;
+            notaFiscal.Total.vNF = produto.vProd;
 
             PagamentoNFe pagtoDinheiro = new PagamentoNFe();
             pagtoDinheiro.tpIntegra = TpIntegra.tiNaoInformado;
@@ -213,7 +225,8 @@ namespace ACBrLib.NFe.Demo
             //Exemplos de integração dos meios de pagamento aos documentos fiscais eletrônicos mencionados na aula
             //https://acbr.nutror.com/curso/8d575bd8a7c0ac0fda312f9b12b1eb521e606446/aula/9286660
             //Disponível no curso Integração dos Meios de Pagamento aos Documentos Fiscais Eletrônicos
-            //-->Exemplo pagamento cartão débigo\crédito para o Mato Grosso.
+            //-->Exemplo pagamento cartão débito/crédito para o Mato Grosso.
+            
             //PagamentoNFe pagtoCartaoMT = new PagamentoNFe();
             //pagtoCartaoMT.tPag = FormaPagamento.fpCartaoCredito;
 
@@ -228,6 +241,7 @@ namespace ACBrLib.NFe.Demo
 
             //-->Exemplo pagamento PIX para o Mato Grosso.
             //PagamentoNFe pagtoPIXMT = new PagamentoNFe();
+            
             //pagtoPIXMT.tPag = FormaPagamento.fpPagamentoInstantaneo;
             //pagtoPIXMT.vPag = 100;
             //pagtoPIXMT.tpIntegra = TpIntegra.tiPagIntegrado;
@@ -239,7 +253,7 @@ namespace ACBrLib.NFe.Demo
             //notaFiscal.Pagamentos.Add(pagtoPIXMT);
 
 
-            //-->Exemplo pagamento cartão débigo\crédito para o Rio Grande do Sul.
+            //-->Exemplo pagamento cartão débito/crédito para o Rio Grande do Sul.
             //PagamentoNFe pagtoCartaoRS = new PagamentoNFe();
             //pagtoCartaoRS.tPag = FormaPagamento.fpCartaoCredito;
 

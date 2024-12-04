@@ -46,6 +46,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2024
+-- ACBrTEFAPIDestaxa --
+[*] Correção para respeitar o parâmetro "Perguntar" para Transações Pendentes.
+
+-- ACBrTEFAPIDestaxaComum --
+[*] Ajuste na leitura da mensagem com quebra de linha;
+[*] Ajuste para não enviar comandos após finalizar a transação;
+[+] Incluído sleep para não concatenar os comandos enviados ao client.
+    por: Elias César
+
 03/12/2024
 -- ACBrTEFDestaxaComum --
 [*] Ajuste para não exibir QRCode e não enviar como mensagem o hexa da imagem.

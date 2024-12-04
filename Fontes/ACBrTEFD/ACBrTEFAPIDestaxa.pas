@@ -184,7 +184,8 @@ begin
     end;
 
     Sucesso := (wDestaxaResposta.transacao_resposta = 0);
-    Confirmar := (wDestaxaResposta.retorno = drsSucessoComConfirmacao);
+    Confirmar := (wDestaxaResposta.retorno = drsSucessoComConfirmacao) or
+                 ((wDestaxaResposta.transacao = CDESTAXA_ADM_PENDENTE) and NaoEstaVazio(wDestaxaResposta.transacao_nsu));
     Rede := wDestaxaResposta.transacao_rede;
     NSU := wDestaxaResposta.transacao_nsu;
     ValorTotal := wDestaxaResposta.transacao_valor;

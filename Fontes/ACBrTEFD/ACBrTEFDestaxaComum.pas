@@ -978,18 +978,28 @@ begin
 end;
 
 procedure TACBrTEFDestaxaAutomacaoColeta.CarregarCampos(const aStrList: TStringList);
+var
+  s, msg: String;
 begin
   inherited CarregarCampos(aStrList);
   fautomacao_coleta_mascara := CarregarCampoString(aStrList.Values['automacao_coleta_mascara']);
   fautomacao_coleta_opcao := CarregarCampoString(aStrList.Values['automacao_coleta_opcao']);
   fautomacao_coleta_palavra_chave := CarregarCampoString(aStrList.Values['automacao_coleta_palavra_chave']);
   fautomacao_coleta_tipo := StringToDestaxaColetaTipo(CarregarCampoString(aStrList.Values['automacao_coleta_tipo']));
-  fautomacao_coleta_mensagem := CarregarCampoString(aStrList.Values['automacao_coleta_mensagem']);
   fautomacao_coleta_sequencial := CarregarCampoInteger(aStrList.Values['automacao_coleta_sequencial']);
   fautomacao_coleta_timeout := CarregarCampoInteger(aStrList.Values['automacao_coleta_timeout']);
   fautomacao_coleta_transacao_resposta := CarregarCampoString(aStrList.Values['automacao_coleta_transacao_resposta']);
   fautomacao_coleta_retorno := IntegerToDestaxaColetaRetorno(CarregarCampoInteger(aStrList.Values['automacao_coleta_retorno']));
   fautomacao_coleta_mensagem_tipo := StringToDestaxaBinarioTipo(CarregarCampoString(aStrList.Values['automacao_coleta_mensagem_tipo']));
+
+  s := aStrList.Text;
+  if (CountStr(s, 'automacao_coleta_mensagem') > 0) then
+  begin
+    msg := Copy(s, (Pos('automacao_coleta_mensagem', s)+27), Length(s));
+    msg := Copy(msg, 1, (Pos('"', msg)-1));
+    if NaoEstaVazio(msg) then
+      fautomacao_coleta_mensagem := msg;
+  end;
 end;
 
 procedure TACBrTEFDestaxaAutomacaoColeta.Clear;
@@ -1335,11 +1345,18 @@ begin
     RX := RecvTerminated(fDestaxaClient.TimeOut, fDestaxaClient.Terminador);
     fDestaxaClient.GravarLog('TACBrTEFDestaxaSocket.Resposta - RX: ' + sLineBreak + RX);
 
+    // Trata erro de Timeout
     Erro := LastError;
     if NaoEstaZerado(Erro) then
       fDestaxaClient.TratarErro;
 
     Resposta.AsString := RX;
+    if (Requisicao.servico = dxsFinalizar) and (Resposta.servico <> dxsFinalizar) then
+    begin
+      Erro := -1;
+      Continue;
+    end;
+
     if (Resposta.automacao_coleta_sequencial > 0) then
       ColetaResposta.AsString := RX;
 
@@ -1697,6 +1714,7 @@ begin
     ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
     ColetaRequisicao.automacao_coleta_transacao_resposta := ColetaResposta.automacao_coleta_transacao_resposta;
     Socket.ExecutarColeta(False);
+    Sleep(100);
   end;
 end;
 

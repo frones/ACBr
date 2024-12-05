@@ -366,7 +366,7 @@ begin
       if not ((ATitulo.NossoNumero = '0') or (ATitulo.NossoNumero = Poem_Zeros('',Boleto.Banco.TamanhoMaximoNossoNum)) ) then
         raise Exception.Create('Campo NossoNumero é inválido obrigatóriamente deve ser informado valor 0!');
 
-      LSeuNumero := Trim(ATitulo.NossoNumero);
+      LSeuNumero := Trim(ATitulo.SeuNumero);
 
       if (LSeuNumero <> '') then
         LJSON.AddPair('code', LSeuNumero);

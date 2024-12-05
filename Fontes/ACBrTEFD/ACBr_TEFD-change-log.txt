@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/12/2024
+-- ACBrTEFAPIDestaxa --
+[*] Alteração para não utilizar o comando Administracao Pendente para carregar
+    as transações pendentes ao inicializar o TEF. Será utilizado o arquivo bkp.
+    por: Elias César
+
 04/12/2024
 -- ACBrTEFAPIDestaxa --
 [*] Correção para respeitar o parâmetro "Perguntar" para Transações Pendentes.

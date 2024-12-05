@@ -75,7 +75,7 @@ type
     procedure InicializarChamadaAPI(aMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure FinalizarChamadaAPI; override;
 
-    procedure CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas); override;
+    //procedure CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas); override;
   public
     constructor Create(aACBrTEFAPI: TACBrTEFAPIComum);
     destructor Destroy; override;
@@ -183,6 +183,7 @@ begin
       Exit;
     end;
 
+    fpCNFEnviado := (UpperCase(Conteudo.LeInformacao(899,1).AsString) = 'S');
     Sucesso := (wDestaxaResposta.transacao_resposta = 0);
     Confirmar := (wDestaxaResposta.retorno = drsSucessoComConfirmacao) or
                  ((wDestaxaResposta.transacao = CDESTAXA_ADM_PENDENTE) and NaoEstaVazio(wDestaxaResposta.transacao_nsu));
@@ -568,7 +569,7 @@ begin
   DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
 end;
 
-procedure TACBrTEFAPIClassDestaxa.CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas);
+{procedure TACBrTEFAPIClassDestaxa.CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas);
 var
   ultNSU: String;
   wResp: TACBrTEFResp;
@@ -612,7 +613,7 @@ begin
     DestaxaClient.Socket.ColetaAutomatica := True;
     DestaxaClient.FinalizarRequisicao;
   end;
-end;
+end;}
 
 procedure TACBrTEFAPIClassDestaxa.ResolverTransacaoPendente(aStatus: TACBrTEFStatusTransacao);
 var

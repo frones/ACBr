@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/12/2024
+-- ACBrBoletoRet_Sicoob_V3.pas --
+[-] TK-6308 Quando API ocorre um erro, nao estava devolvendo NossoNumero
+    https://www.projetoacbr.com.br/forum/topic/80666-acbrlibboleto-api-sicoob-v3/?&_rid=1706#findComment-523349
+	por Daniel de Morais InfoCotidiano 
+
 03/12/2024
 -- ACBrBoletoRet_C6.pas --
 [-] TK-6304  - C6 mudou a API e nao atualizou documentação ate o momento, ajustado via json fornecido pelo usuario.

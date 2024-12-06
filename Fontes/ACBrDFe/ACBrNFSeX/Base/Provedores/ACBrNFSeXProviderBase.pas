@@ -1001,9 +1001,13 @@ begin
       aNota.NomeArqRps := aNota.CalcularNomeArquivoCompleto(aNota.NomeArqRps, '');
 
     if not ConteudoEhXml then
+    begin
       aNota.NomeArqRps := StringReplace(aNota.NomeArqRps, '.xml', Extensao, [rfReplaceAll]);
 
-    TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
+      WriteToTXT(aNota.NomeArqRps, aNota.XmlRps, False, False);
+    end
+    else
+      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps, '', ConteudoEhXml);
   end;
 end;
 
@@ -1050,9 +1054,13 @@ begin
       ConteudoEhXml := True;
 
     if not ConteudoEhXml then
+    begin
       aNota.NomeArq := StringReplace(aNota.NomeArq, '.xml', Extensao, [rfReplaceAll]);
 
-    TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aXml, '', ConteudoEhXml);
+      WriteToTXT(aNota.NomeArq, aXml, False, False);
+    end
+    else
+      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aXml, '', ConteudoEhXml);
   end;
 end;
 

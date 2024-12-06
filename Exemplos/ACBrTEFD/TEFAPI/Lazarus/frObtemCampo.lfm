@@ -14,7 +14,7 @@ object FormObtemCampo: TFormObtemCampo
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '3.4.0.0'
   object edtResposta: TEdit
     Left = 32
     Height = 33
@@ -23,10 +23,10 @@ object FormObtemCampo: TFormObtemCampo
     Alignment = taCenter
     Anchors = [akLeft, akRight, akBottom]
     AutoSelect = False
+    TabOrder = 0
     OnChange = edtRespostaChange
     OnKeyDown = edtRespostaKeyDown
     OnKeyPress = edtRespostaKeyPress
-    TabOrder = 0
   end
   object btOk: TBitBtn
     Left = 317

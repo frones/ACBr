@@ -36,9 +36,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
-  Spin, Buttons, DBCtrls, ExtCtrls, Grids,
-  uVendaClass,
-  ACBrPosPrinter, ACBrTEFComum, ACBrTEFAPI, ACBrBase, ACBrTEFAPIComum;
+  Spin, Buttons, DBCtrls, ExtCtrls, Grids, uVendaClass, ACBrPosPrinter,
+  ACBrAbecsPinPad, ACBrTEFComum, ACBrTEFAPI, ACBrBase, ACBrTEFAPIComum;
 
 type
 
@@ -47,6 +46,7 @@ type
   { TFormPrincipal }
 
   TFormPrincipal = class(TForm)
+    ACBrAbecsPinPad1: TACBrAbecsPinPad;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrTEFAPI1: TACBrTEFAPI;
     btAdministrativo: TBitBtn;
@@ -59,6 +59,7 @@ type
     btMudaPagina: TBitBtn;
     btMsgPinPad: TButton;
     btMenuPinPad: TButton;
+    btExibirImagemPinPad: TButton;
     btOperacao: TBitBtn;
     btEfetuarPagamentos: TBitBtn;
     btObterCPF: TButton;
@@ -174,6 +175,8 @@ type
     tsConfImpressora: TTabSheet;
     tsConfiguracao: TTabSheet;
     tsOperacao: TTabSheet;
+    procedure ACBrAbecsPinPad1WriteLog(const ALogLine: String;
+      var Tratado: Boolean);
     procedure ACBrTEFAPI1QuandoDetectarTransacaoPendente(
       RespostaTEF: TACBrTEFResp; const MsgErro: String);
     procedure ACBrTEFAPI1QuandoExibirMensagem(const Mensagem: String;
@@ -198,6 +201,7 @@ type
     procedure btIncluirPagamentosClick(Sender: TObject);
     procedure btMenuPinPadClick(Sender: TObject);
     procedure btMsgPinPadClick(Sender: TObject);
+    procedure btExibirImagemPinPadClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
     procedure btMudaPaginaClick(Sender: TObject);
@@ -336,7 +340,8 @@ end;
 
 procedure TFormPrincipal.FormDestroy(Sender: TObject);
 begin
-  FVenda.Free;
+  if Assigned(FVenda) then
+    FVenda.Free;
 end;
 
 procedure TFormPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
@@ -509,6 +514,94 @@ var
 begin
   Msg := 'PROJETO ACBR|'+FormatDateTimeBr(now,'DD/MM HH:NN:SS');
   ACBrTEFAPI1.ExibirMensagemPinPad(Msg);
+end;
+
+procedure TFormPrincipal.btExibirImagemPinPadClick(Sender: TObject);
+var
+  sl: TStringList;
+  PortFound, MediaName, FileLogo: String;
+  i: Integer;
+  ms: TMemoryStream;
+begin
+  // Procura a Porta do PinPad
+  sl := TStringList.Create;
+  try
+    ACBrAbecsPinPad1.Device.AcharPortasSeriais( sl );
+    i := 0;
+    PortFound := '';
+    while (i < sl.Count) and (PortFound = '') do
+    begin
+      try
+        ACBrAbecsPinPad1.Disable;
+        ACBrAbecsPinPad1.Port := sl[i];
+        ACBrAbecsPinPad1.Enable;
+        try
+          ACBrAbecsPinPad1.OPN;
+          ACBrAbecsPinPad1.CLO;
+          PortFound := ACBrAbecsPinPad1.Port;
+        finally
+          ACBrAbecsPinPad1.Disable;
+        end;
+      except
+      end;
+      Inc(i);
+    end;
+
+    if (PortFound = '') then
+      raise Exception.Create('Porta do PinPad não encontrada');
+
+    // Liga comunicação com o PinPad
+    ACBrAbecsPinPad1.Enable;
+    try
+      ACBrAbecsPinPad1.OPN;
+
+      // Carrega lista de imagens carregadas no PinPad
+      ACBrAbecsPinPad1.LMF;
+      sl.Clear;
+      ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_MFNAME, sl);
+
+      // Verifica se o "LOGOACBR" já está na memória do PinPad
+      MediaName := '';
+      for i := 0 to sl.Count-1 do
+      begin
+        if (trim(UpperCase(sl[i])) = 'LOGOACBR') then
+        begin
+          MediaName := sl[i];
+          Break;
+        end;
+      end;
+
+      // Se não estiver.. carrega o PNG do Logo e sobe no PinPad
+      if (MediaName = '') then
+      begin
+        FileLogo := ApplicationPath+'LogoACBr.png';
+        if not FileExists(FileLogo) then
+          raise Exception.Create('Imagem não encontrada: '+FileLogo);
+
+        ms := TMemoryStream.Create;
+        try
+          ms.LoadFromFile(FileLogo);
+          MediaName := 'LOGOACBR';
+          ACBrAbecsPinPad1.LoadMedia(MediaName, ms, mtPNG);
+        finally
+          ms.Free;
+        end;
+      end;
+
+      // Exibindo no PinPad, imagem gravada previamente
+      if (MediaName <> '') then
+        ACBrAbecsPinPad1.DSI(MediaName);
+
+    finally
+      // Fecha comunicação com o PinPad, para liberar a Porta
+      if ACBrAbecsPinPad1.IsEnabled then
+        ACBrAbecsPinPad1.CLO;
+
+      ACBrAbecsPinPad1.Disable;
+    end;
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TFormPrincipal.btAdministrativoClick(Sender: TObject);
@@ -856,6 +949,13 @@ begin
   end;
 end;
 
+procedure TFormPrincipal.ACBrAbecsPinPad1WriteLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  AdicionarLinhaLog(ALogLine);
+  Tratado := False;
+end;
+
 procedure TFormPrincipal.ACBrTEFAPI1QuandoGravarLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
@@ -941,9 +1041,15 @@ begin
 
     MR := FormObtemCampo.ShowModal ;
 
-    Cancelado := (MR <> mrOK) ;
+    Cancelado := (MR = mrCancel);
     Validado := False;  // Não fizemos as validações de "DefinicaoCampo.ValidacaoDado", vamos deixar o ACBrTEFAPI validar
-    Resposta := FormObtemCampo.Resposta;
+
+    if (MR = mrOK) then
+      Resposta := FormObtemCampo.Resposta
+    else if (MR = mrRetry) then  // Botão Voltar
+      Resposta := ':-2'
+    else if (MR = mrCancel) then // Botão Cancelar
+      Resposta := ':-1';
   finally
     FormObtemCampo.Free;
   end;

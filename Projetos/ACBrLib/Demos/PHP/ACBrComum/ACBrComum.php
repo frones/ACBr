@@ -174,7 +174,7 @@ function strDateTimeToDoubleDateTime($dateString) {
 
 function parseIniToStr($ini)
 {
-    $lines = explode("\r\n", $ini);
+    $lines = explode( PHP_EOL, $ini );
     $config = [];
     $section = null;
 

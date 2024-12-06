@@ -484,6 +484,7 @@ begin
 
   if (Assigned(FACBrBoleto.OnAntesAutenticar)) then
   begin
+    CarregaCertificados;
     FACBrBoleto.OnAntesAutenticar(LToken, LExpire);
     FToken  := LToken;
     FExpire := LExpire;

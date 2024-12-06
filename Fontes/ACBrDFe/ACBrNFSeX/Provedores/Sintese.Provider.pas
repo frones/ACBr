@@ -156,7 +156,7 @@ begin
 
   if xSoap = '' then
   begin
-    xSoap := 'http://nfsews.sintesetecnologia.com.br/';
+    xSoap := 'http://nfsews.sintesenotafiscal.com.br/';
   end
   else
   begin

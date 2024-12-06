@@ -47,6 +47,8 @@ Símbolo : Significado
 [*] #TK-6318: Ajuste para não gerar a linha do encoding ao salvar um Json.
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] #TK-6329: Adiciona Params Dividir100 e Aliquota4Casas para cidade de Itu/SP
+  Por: PC 
 [*] #TK-6328: A cidade de São Gabriel da Palha/ES trocou de provedor, agora é EL na versão 2.04
   Por: Desenvolvimento Objetiva
 [*] #TK-6315: Ajustes em URLs de todas as cidades atendidas pelo provedor Sintese.

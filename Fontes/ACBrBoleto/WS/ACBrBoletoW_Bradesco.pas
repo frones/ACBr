@@ -90,6 +90,7 @@ type
     constructor Create(ABoletoWS: TBoletoWS; AACBrBoleto : TACBrBoleto); reintroduce;
     function GerarRemessa: string; override;
     function Enviar: boolean; override;
+    function AgenciaContaFormatada(const APadding : Integer = 11) : String;
   end;
 
 const
@@ -176,7 +177,7 @@ begin
 
   LTimestamp := ACBrUtil.DateTime.DateTimeTodhUTC(ACBrUtil.DateTime.DateTimeUniversalToLocal(ACBrUtil.DateTime.GetUTCSistema,UnixToDateTime(FUnixTime)), ACBrUtil.DateTime.GetUTCSistema);
 
-  FPHeaders.Clear;
+  ClearHeaderParams;
   DefinirContentType;
   DefinirKeyUser;
   if FPDadosMsg <> '' then
@@ -210,12 +211,12 @@ begin
     finally
       LStringList.Free;
     end;
-    FPHeaders.Add('X-Brad-Signature: ' + LSignature);
-    FPHeaders.Add('X-Brad-Nonce: '     + IntToStr(FUnixTime * 1000) );
-    FPHeaders.Add('X-Brad-Timestamp: ' + LTimestamp );
-    FPHeaders.Add('X-Brad-Algorithm: SHA256');
-    FPHeaders.Add('acess-token: '      + Boleto.Cedente.CedenteWS.ClientID);
-    FPHeaders.Add('cpf-cnpj: '         + OnlyNumber(Boleto.Cedente.CNPJCPF) )
+    AddHeaderParam('X-Brad-Signature', LSignature);
+    AddHeaderParam('X-Brad-Nonce', IntToStr(FUnixTime * 1000) );
+    AddHeaderParam('X-Brad-Timestamp', LTimestamp );
+    AddHeaderParam('X-Brad-Algorithm', 'SHA256');
+    AddHeaderParam('acess-token',Boleto.Cedente.CedenteWS.ClientID);
+    AddHeaderParam('cpf-cnpj',OnlyNumber(Boleto.Cedente.CNPJCPF) )
   end;
 end;
 
@@ -370,7 +371,7 @@ begin
       LJsonCnpjCPF.AddPair('controle', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 13, 2));
       LJsonObject.AddPair('cpfCnpj', LJsonCnpjCPF);
       LJsonObject.AddPair('produto', RemoveZerosEsquerda(aTitulo.Carteira));
-      LJsonObject.AddPair('negociacao', Boleto.Cedente.Agencia+'0000000'+Boleto.Cedente.Conta);
+      LJsonObject.AddPair('negociacao', AgenciaContaFormatada(11));
       LJsonObject.AddPair('nossoNumero', OnlyNumber(aTitulo.NossoNumero));
       LJsonObject.AddPair('sequencia', '0');
       LJsonObject.AddPair('codigoBaixa', '57');
@@ -405,7 +406,7 @@ begin
       LJsonObject.AddPair('ctpoContrNegoc', 0);//FIXO.
       LJsonObject.AddPair('nseqContrNegoc', 0);//FIXO.
       LJsonObject.AddPair('cidtfdProdCobr', RemoveZerosEsquerda(aTitulo.Carteira));
-      LJsonObject.AddPair('cnegocCobr', Boleto.Cedente.Agencia+'0000000'+Boleto.Cedente.Conta);
+      LJsonObject.AddPair('cnegocCobr', AgenciaContaFormatada(18));
       LJsonObject.AddPair('codigoBanco', 237);//FIXO.
       LJsonObject.AddPair('filler', '');//FIXO.
       LJsonObject.AddPair('eNseqContrNegoc', 0);//FIXO.
@@ -574,15 +575,13 @@ begin
     try
       //Testado em produção
       LJsonCpfCnpj := TACBrJSONObject.Create;
-      
-        LJsonCpfCnpj.AddPair('cpfCnpj', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 1, 8));
-        LJsonCpfCnpj.AddPair('filial', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 9, 4));
-        LJsonCpfCnpj.AddPair('controle', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 13, 2));
-
-        LJsonObject.AddPair('cpfCnpj', LJsonCpfCnpj);
+      LJsonCpfCnpj.AddPair('cpfCnpj', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 1, 8));
+      LJsonCpfCnpj.AddPair('filial', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 9, 4));
+      LJsonCpfCnpj.AddPair('controle', Copy(OnlyNumber(Boleto.Cedente.CNPJCPF), 13, 2));
+      LJsonObject.AddPair('cpfCnpj', LJsonCpfCnpj);
       
       LJsonObject.AddPair('produto', RemoveZerosEsquerda(aTitulo.Carteira));
-      LJsonObject.AddPair('negociacao', Boleto.Cedente.Agencia +'0000000'+ Boleto.Cedente.Conta);
+      LJsonObject.AddPair('negociacao', AgenciaContaFormatada(11));
       LJsonObject.AddPair('nossoNumero', OnlyNumber(aTitulo.NossoNumero));
       LJsonObject.AddPair('sequencia', '0');
       LJsonObject.AddPair('status', 0);
@@ -652,6 +651,7 @@ begin
           end;
         2: // Mês
           begin
+            AJsonObject.AddPair('ptxJuroVcto', aTitulo.ValorMoraJuros*100);
             if aTitulo.ValorMoraJuros > 0 then
               AJsonObject.AddPair('qdiaInicJuro', DaysBetween(aTitulo.Vencimento, aTitulo.DataMoraJuros))
             else
@@ -858,6 +858,18 @@ begin
       GerarDesconto(AJsonObject);
     end;
   end;
+end;
+
+function TBoletoW_Bradesco.AgenciaContaFormatada(const APadding : Integer) : String;
+var
+  LAgencia, LConta, LZeros, LPadding : String;
+begin
+  LConta := RemoveZerosEsquerda(ATitulo.ACBrBoleto.Cedente.Conta);
+  LAgencia := ATitulo.ACBrBoleto.Cedente.Agencia;
+
+  LZeros := Poem_Zeros('0',APadding - (Length(LAgencia) + Length(LConta)));
+
+  Result := LAgencia + LZeros + LConta;
 end;
 
 procedure TBoletoW_Bradesco.AlteracaoDesconto(AJsonObject: TACBrJSONObject);

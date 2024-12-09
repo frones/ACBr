@@ -2107,7 +2107,8 @@ end;
 
 { TMetodoSetModeloDF }
 
-{ Params: 0 - NumAmbiente : Integer 57- CTe / 67- CTe OS
+{ Params: 0 - NumAmbiente : Integer 57- CTe / 64- GTVe / 67- CTe OS.
+                                    57- CTe Simplificado, deve ser informado(tpCTe = 5).
 }
 procedure TMetodoSetModeloDF.Executar;
 var
@@ -2116,7 +2117,7 @@ var
 begin
   NumModelo := StrToIntDef(fpCmd.Params(0), 2);
 
-  if not (NumModelo in [57, 67]) then
+  if not (NumModelo in [57, 64, 67]) then
     raise Exception.Create('Modelo Inválido: '+IntToStr(NumModelo));
 
   with TACBrObjetoCTe(fpObjetoDono) do

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/204
+[*] Realizado ajuste na função CTE.SetModeloDF para atender os modelos GTVe e CTe Simplificado.
+    #TK-6313 - ACBrMonitor - SetModeloDF não está considerando CteSimplificado e GTVe
+    https://www.projetoacbr.com.br/forum/topic/80888-erro-nenhum-elemento-encontrado-cte-simplificado/
+    Por: Antonio Carlos Junior / Diego Folieni.
+
 13/11/2024
 -- ACBrMonitor1.lfm, ACBrMonitor1.pas, ACBrMonitorConfig.pas, ACBrMonitorConsts.pas, DoBoletoUnit.pas --
 [*] #TK-6052-2 Inclussão da propriedade CodigoFlash utilizado Boleto Itau Segmento de Mensagem 

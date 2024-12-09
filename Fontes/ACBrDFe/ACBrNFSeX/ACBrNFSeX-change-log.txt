@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2024
+-- ACBrNFSeXInterface, ACBRNFSeXProviderBase, ISSCampinas.GrvarXML, ISSCampinas.LerXML. ISSDSF.LerXML, ISSDSF.GravarXML -- 
+[*] #TK-6059: Adiciona funções de conversão DeducaoPorToStr/StrToDeducaoPor e faz o uso das mesmas.
+  Por: Diego Folieni
+
 06/12/2024
 -- ACBrNFSeXProviderBase --
 [*] #TK-6318: Ajuste para não gerar a linha do encoding ao salvar um Json.

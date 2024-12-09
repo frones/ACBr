@@ -104,8 +104,7 @@ begin
       begin
         aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DeducaoPor'), tcStr);
 
-        DeducaoPor := StrToEnumerado(Ok, aValor, ['','Percentual','Valor'],
-                                             [dpNenhum, dpPercentual, dpValor]);
+        DeducaoPor := FpAOwner.StrToDeducaoPor(Ok, aValor);
 
         aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('TipoDeducao'), tcStr);
 

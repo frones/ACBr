@@ -298,6 +298,9 @@ type
     function TipoDeducaoToStr(const t: TTipoDeducao): string; virtual;
     function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao; virtual;
 
+    function DeducaoPorToStr(const t: TDeducaoPor): string; virtual;
+    function StrToDeducaoPor(out ok: Boolean; const s: string): TDeducaoPor; virtual;
+
     function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string; virtual;
     function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS; virtual;
 
@@ -1726,6 +1729,16 @@ begin
                            ['1', '2', '3', '4', '5', '6', '7'],
                  [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
                   tdVeiculacao, tdIntermediacao]);
+end;
+
+function TACBrNFSeXProvider.DeducaoPorToStr(const t: TDeducaoPor): string;
+begin
+  Result := EnumeradoToStr(t, ['', 'Percentual', 'Valor'], [dpNenhum, dpPercentual, dpValor]);
+end;
+
+function TACBrNFSeXProvider.StrToDeducaoPor(out ok: Boolean; const s: string): TDeducaoPor;
+begin
+  Result := StrToEnumerado(Ok, s, ['', 'Percentual', 'Valor'], [dpNenhum, dpPercentual, dpValor]);
 end;
 
 function TACBrNFSeXProvider.TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;

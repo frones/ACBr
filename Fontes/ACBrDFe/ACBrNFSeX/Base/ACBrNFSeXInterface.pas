@@ -119,6 +119,9 @@ type
     function TipoDeducaoToStr(const t: TTipoDeducao): string;
     function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
 
+    function DeducaoPorToStr(const t: TDeducaoPor): string;
+    function StrToDeducaoPor(out ok: Boolean; const s: string): TDeducaoPor;
+
     function TipoTributacaoRPSToStr(const t: TTipoTributacaoRPS): string;
     function StrToTipoTributacaoRPS(out ok: boolean; const s: string): TTipoTributacaoRPS;
 

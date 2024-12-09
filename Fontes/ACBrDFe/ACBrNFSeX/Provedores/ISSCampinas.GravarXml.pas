@@ -95,8 +95,7 @@ begin
   begin
     Result[i] := CreateElement('Deducao');
 
-    sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
-                              ['Percentual', 'Valor'], [dpPercentual, dpValor]);
+    sDeducaoPor := FpAOwner.DeducaoPorToStr(NFSe.Servico.Deducao.Items[i].DeducaoPor);
 
     sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].TipoDeducao,
       ['', 'Despesas com Materiais', 'Despesas com Subempreitada',

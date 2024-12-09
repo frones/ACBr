@@ -189,6 +189,8 @@ begin
                  ((wDestaxaResposta.transacao = CDESTAXA_ADM_PENDENTE) and NaoEstaVazio(wDestaxaResposta.transacao_nsu));
     Rede := wDestaxaResposta.transacao_rede;
     NSU := wDestaxaResposta.transacao_nsu;
+    TextoEspecialOperador := wDestaxaResposta.mensagem;
+    BIN := wDestaxaResposta.transacao_cartao_numero;
     ValorTotal := wDestaxaResposta.transacao_valor;
     NSU_TEF := wDestaxaResposta.transacao_nsu_rede;
     DataHoraTransacaoLocal := wDestaxaResposta.transacao_data;
@@ -199,6 +201,8 @@ begin
     NFCeSAT.Bandeira := wDestaxaResposta.transacao_administradora;
     NFCeSAT.Autorizacao := wDestaxaResposta.transacao_autorizacao;
     NFCeSAT.CNPJCredenciadora := wDestaxaResposta.transacao_rede_cnpj;
+    if NaoEstaVazio(wDestaxaResposta.transacao_cartao_numero) and (Length(wDestaxaResposta.transacao_cartao_numero) >= 4) then
+      NFCeSAT.UltimosQuatroDigitos := RightStr(wDestaxaResposta.transacao_cartao_numero, 4);
 
     CodigoBandeiraPadrao := wDestaxaResposta.codigo_bandeira;
     NomeAdministradora := wDestaxaResposta.transacao_administradora;
@@ -560,13 +564,18 @@ procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 begin
   DestaxaClient.Requisicao.Clear;
-  if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
-    DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
-  else
-    DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
+  if DestaxaClient.Socket.EmTransacao then
+  begin
+    if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
+      DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
+    else
+      DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
 
-  DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial;
-  DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
+    DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial;
+    DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
+  end
+  else if (fpACBrTEFAPI.UltimaRespostaTEF.NSU = NSU) then
+    ResolverTransacaoPendente(AStatus);
 end;
 
 {procedure TACBrTEFAPIClassDestaxa.CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas);

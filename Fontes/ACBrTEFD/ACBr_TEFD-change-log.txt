@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2024
+-- ACBrTEFAPIDestaxa --
+[*] Correção para parâmetro "Confirmar Transação Automaticamente";
+[+] Inclusão dos campos BIN e UltimosQuatroDigitos  no "ConteudoToProperty".
+    por: Elias César
+
 05/12/2024
 -- ACBrTEFAPIDestaxa --
 [*] Alteração para não utilizar o comando Administracao Pendente para carregar

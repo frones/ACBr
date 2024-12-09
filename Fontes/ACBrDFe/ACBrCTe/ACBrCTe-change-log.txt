@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2024
+-- ACBrCTeConhecimentos, pcteConversaoCTe --
+[*] Realizado ajustes e validação para que não ocorra erro de assinatura - #TK-6313
+    Por: Antonio Carlos Junior, Diego Folieni, Italo Giurizzato Junior.
+
 03/12/2024
 -- ACBrCTeWebServices/ACBrCTe.ConsSit/ACBrCTe.EnvEvento/ACBrCTe.RetConsSit --
 -- pcteCTeW/pcteInutCTe/pcteProcCTe --

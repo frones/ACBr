@@ -2441,7 +2441,7 @@ begin
       Ide.CFOP   := INIRec.ReadInteger('ide','CFOP',0);
       Ide.natOp  := INIRec.ReadString('ide','natOp',EmptyStr);
       Ide.forPag := StrTotpforPag(OK,INIRec.ReadString('ide','forPag','0'));
-      Ide.modelo := INIRec.ReadInteger( 'ide','mod' ,55);
+      Ide.modelo := INIRec.ReadInteger( 'ide','mod' ,57);
       Ide.serie   := INIRec.ReadInteger( 'ide','serie'  ,1);
       Ide.nCT     := INIRec.ReadInteger( 'ide','nCT' ,0);
       Ide.dhEmi   := StringToDateTime(INIRec.ReadString( 'ide','dhEmi','0'));
@@ -2449,6 +2449,19 @@ begin
       Ide.tpEmis  := StrToTpEmis( OK,INIRec.ReadString( 'ide','tpemis',IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
       Ide.tpAmb   := StrToTpAmb(  OK, INIRec.ReadString( 'ide','tpAmb', TpAmbToStr(FConfiguracoes.WebServices.Ambiente)));
       Ide.tpCTe   := StrTotpCTe(OK,INIRec.ReadString('ide','tpCTe','0'));
+
+      case Ide.modelo of
+        57:
+          begin
+            if ide.tpCTe in [tcCTeSimp, tcSubstCTeSimpl] then
+              FConfiguracoes.Geral.ModeloDF := moCTeSimp
+            else
+              FConfiguracoes.Geral.ModeloDF := moCTe;
+          end;
+        64: FConfiguracoes.Geral.ModeloDF := moGTVe;
+        67: FConfiguracoes.Geral.ModeloDF := moCTeOS;
+      end;
+
       Ide.procEmi := StrToProcEmi(OK,INIRec.ReadString( 'ide','procEmi','0'));
       Ide.verProc := INIRec.ReadString(  'ide','verProc' ,'ACBrCTe' );
       Ide.refCTe  := INIRec.ReadString('ide','refCTe','');

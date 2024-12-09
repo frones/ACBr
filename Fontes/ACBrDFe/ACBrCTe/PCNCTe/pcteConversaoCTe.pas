@@ -926,8 +926,8 @@ end;
 
 function StrToModeloCTe(out ok: Boolean; const s: String): TModeloCTe;
 begin
-  Result := StrToEnumerado(ok, s, ['57', '64', '67', '58'],
-                                  [moCTe, moGTVe, moCTeOS, moCTeSimp]);
+  Result := StrToEnumerado(ok, s, ['57', '64', '67'],
+                                  [moCTe, moGTVe, moCTeOS]);
 end;
 
 function ModeloCTeToPrefixo(const t: TModeloCTe): String;

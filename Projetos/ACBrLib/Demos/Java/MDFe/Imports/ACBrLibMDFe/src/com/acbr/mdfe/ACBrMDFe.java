@@ -55,6 +55,8 @@ public final class ACBrMDFe extends ACBrLibBase {
         int MDFE_Nome(ByteBuffer buffer, IntByReference bufferSize);
 
         int MDFE_Versao(ByteBuffer buffer, IntByReference bufferSize);
+        
+        int MDFE_OpenSSLInfo(ByteBuffer buffer, IntByReference bufferSize);
 
         int MDFE_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
 
@@ -187,6 +189,15 @@ public final class ACBrMDFe extends ACBrLibBase {
         checkResult(ret);
 
         return fromUTF8(buffer, bufferLen.getValue());
+    }
+    
+    public String openSSLInfo() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrMDFeLib.INSTANCE.MDFE_OpenSSLInfo(buffer, bufferLen);
+        checkResult(ret);
+        return processResult(buffer, bufferLen);
     }
 
     public void configLer() throws Exception {

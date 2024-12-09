@@ -68,39 +68,41 @@ public final class ACBrMDFe extends ACBrLibBase {
 
     int MDFE_Nome(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
 
-    int MDFE_Versao(Pointer libHandler,  ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_Versao(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
 
-    int MDFE_UltimoRetorno(Pointer libHandler,  ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_OpenSSLInfo(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+    
+    int MDFE_UltimoRetorno(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_ConfigImportar(Pointer libHandler, String eArqConfig);
         
     int MDFE_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
     
-    int MDFE_ConfigLer(Pointer libHandler,  String eArqConfig );
+    int MDFE_ConfigLer(Pointer libHandler, String eArqConfig );
 
-    int MDFE_ConfigGravar(Pointer libHandler,  String eArqConfig );
+    int MDFE_ConfigGravar(Pointer libHandler, String eArqConfig );
 
-    int MDFE_ConfigLerValor(Pointer libHandler,  String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_ConfigLerValor(Pointer libHandler, String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize );
 
-    int MDFE_ConfigGravarValor(Pointer libHandler,  String eSessao, String eChave, String valor );
+    int MDFE_ConfigGravarValor(Pointer libHandler, String eSessao, String eChave, String valor );
 
-    int MDFE_CarregarXML(Pointer libHandler,  String eArquivoOuXML );
+    int MDFE_CarregarXML(Pointer libHandler, String eArquivoOuXML );
 
-    int MDFE_CarregarINI(Pointer libHandler,  String eArquivoOuINI );
+    int MDFE_CarregarINI(Pointer libHandler, String eArquivoOuINI );
     
-    int MDFE_ObterXml(Pointer libHandler,  Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_ObterXml(Pointer libHandler, Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
     
-    int MDFE_GravarXml(Pointer libHandler,  Integer AIndex, String eNomeArquivo, String ePathArquivo );
+    int MDFE_GravarXml(Pointer libHandler, Integer AIndex, String eNomeArquivo, String ePathArquivo );
     
-    int MDFE_ObterIni(Pointer libHandler,  Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_ObterIni(Pointer libHandler, Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
     
-    int MDFE_GravarIni(Pointer libHandler,  Integer AIndex, String eNomeArquivo, String ePathArquivo );
+    int MDFE_GravarIni(Pointer libHandler, Integer AIndex, String eNomeArquivo, String ePathArquivo );
 
     int MDFE_LimparLista(Pointer libHandler);
 
-    int MDFE_CarregarEventoXML(Pointer libHandler,  String eArquivoOuXml );
+    int MDFE_CarregarEventoXML(Pointer libHandler, String eArquivoOuXml );
 
-    int MDFE_CarregarEventoINI(Pointer libHandler,  String eArquivoOuIni );
+    int MDFE_CarregarEventoINI(Pointer libHandler, String eArquivoOuIni );
 
     int MDFE_LimparListaEventos(Pointer libHandler);
 
@@ -125,6 +127,8 @@ public final class ACBrMDFe extends ACBrLibBase {
 
     int MDFE_Consultar(Pointer libHandler, String eChaveOuNFe, boolean AExtrairEventos, ByteBuffer buffer, IntByReference bufferSize );
 
+    int MDFE_ConsultaMDFeNaoEnc(Pointer libHandler, String aCNPJ, ByteBuffer buffer, IntByReference bufferSize);
+    
     int MDFE_Enviar(Pointer libHandler, int ALote, boolean Imprimir, boolean Sincrono, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_ConsultarRecibo(Pointer libHandler, String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
@@ -132,6 +136,8 @@ public final class ACBrMDFe extends ACBrLibBase {
     int MDFE_Cancelar(Pointer libHandler, String eChave, String eJustificativa, String eCNPJ, int ALote,
                       ByteBuffer buffer, IntByReference bufferSize );
 
+    int MDFE_EncerrarMDFe(Pointer libHandler, String eChaveOuMDFe, String eDtEnc, String cMunicipioDescarga, String nCNPJ, String nProtocolo, ByteBuffer buffer, IntByReference bufferSize);
+    
     int MDFE_EnviarEvento( Pointer libHandler, int idLote, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_DistribuicaoDFePorUltNSU( Pointer libHandler, int AcUFAutor, String eCNPJCPF, String eultNsu, ByteBuffer buffer,
@@ -202,6 +208,15 @@ public final class ACBrMDFe extends ACBrLibBase {
     checkResult( ret );
 
     return fromUTF8( buffer, bufferLen.getValue() );
+  }
+  
+  public String openSSLInfo() throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+    IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_OpenSSLInfo(getHandle(), buffer, bufferLen);
+    checkResult(ret);
+    return processResult(buffer, bufferLen);
   }
 
   public void configLer() throws Exception {
@@ -421,23 +436,33 @@ public final class ACBrMDFe extends ACBrLibBase {
 
     return processResult( buffer, bufferLen );
   }
+  
+  public String ConsultarMDFeNaoEnc(String aCNPJ) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+    IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-  public String enviar( int aLote ) throws Exception {
-    return enviar( aLote, false, false );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_ConsultaMDFeNaoEnc(getHandle(), toUTF8(aCNPJ), buffer, bufferLen);
+    checkResult(ret);
+
+    return processResult(buffer, bufferLen);
   }
   
-  public String enviar( int aLote , boolean imprimir) throws Exception {
-    return enviar( aLote, imprimir, false );
+  public String enviar(int aLote) throws Exception {
+    return enviar(aLote, false, false, false);
   }
 
-  public String enviar( int aLote, boolean imprimir, boolean sincrono ) throws Exception {
-    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+  public String enviar(int aLote, boolean imprimir) throws Exception {
+    return enviar(aLote, imprimir, false, false);
+  }
+  
+  public String enviar(int aLote, boolean imprimir, boolean sincrono, boolean zipado) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+    IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-    int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar( getHandle(), aLote, imprimir, sincrono, buffer, bufferLen );
-    checkResult( ret );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar(getHandle(), aLote, imprimir, sincrono, buffer, bufferLen);
+    checkResult(ret);
 
-    return processResult( buffer, bufferLen );
+    return processResult(buffer, bufferLen);
   }
 
   public String cancelar( String aChave, String aJustificativa, String aCNPJ ) throws Exception {
@@ -560,9 +585,27 @@ public final class ACBrMDFe extends ACBrLibBase {
         return fromUTF8(buffer, bufferLen.getValue());
 		
     }
+    
+    public String EncerrarMDFe(String eChaveOuMDFe, Date eDtEnc, String cMunicipioDescarga, String nCNPJ, String nProtocolo) throws Exception {
+
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        String pattern = "dd/MM/yyyy";
+        DateFormat df = new SimpleDateFormat(pattern);
+
+        int ret = ACBrMDFeLib.INSTANCE.MDFE_EncerrarMDFe(getHandle(), eChaveOuMDFe, df.format(eDtEnc), cMunicipioDescarga, nCNPJ, nProtocolo, buffer, bufferLen);
+        checkResult(ret);
+
+        return processResult(buffer, bufferLen);
+    }
   
   @Override
   protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
     ACBrMDFeLib.INSTANCE.MDFE_UltimoRetorno( getHandle(), buffer, bufferLen );
   }
+  
+      public void EncerrarMDFe(String eChave, Date date, String cMunicipio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

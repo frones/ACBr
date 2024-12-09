@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/12/2024
+-- ACBrBancoBS2.pas --
+[*] TK-6298 Ajustado a propriedade posição 148, quando cliente emite gerar como "N"
+    https://www.projetoacbr.com.br/forum/topic/80839-banco-bs2-arquivo-cnab400-erro-na-valida%C3%A7%C3%A3o/
+	por Daniel de Morais InfoCotidiano 
+
+09/12/2024
 -- ACBrBoleto,ACBrBoletoWS.Rest, ACBrBoletoW_BancoBrasil_API --
 [-] TK-6274 Criado a propriedade KeySoftwareHouse para que seja utilizado na api bb x-bb-portal-devx-cnpj-parceiro
     https://www.projetoacbr.com.br/forum/topic/76959-x-bb-portal-devx-cnpj-parceiro-no-header-da-api-do-banco-do-brasil/

@@ -192,7 +192,7 @@ end;
 procedure TACBrBancoBS2.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList);
 var
   ATipoSacado, ATipoSacadoAvalista, ADataMoraJuros, ADataDesconto, wLinha,
-  wCarteira, codigoServico,LTipoMulta, LValorMultaFixo,LValorMultaPercentual,LChaveNFe : string;
+  wCarteira, codigoServico,LTipoMulta, LValorMultaFixo,LValorMultaPercentual,LChaveNFe, LTipoEmissaoPostagem : string;
 begin
 
   { Data Mora }
@@ -244,7 +244,10 @@ begin
     LValorMultaPercentual := IntToStrZero(round(ACBrTitulo.PercentualMulta * 100), 4);
   end;
 
-
+  if ACBrTitulo.ACBrBoleto.Cedente.ResponEmissao = tbCliEmite then
+    LTipoEmissaoPostagem := 'N'
+  else
+    LTipoEmissaoPostagem := 'M';
 
  wLinha := '1'                                                                                     + // 001 a 001 Identificação do registro de transação
             PadLeft('', 10, '0')                                                                   + // 002 a 011 Zeros
@@ -265,7 +268,7 @@ begin
             FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                                      + // 122 a 129 Data do vencimento do título
             IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 13)                               + // 130 a 142 Valor do título
             Space(5)                                                                               + // 143 a 147 Branco
-            IfThen(LayoutVersaoArquivo > 1, 'M','0')                                               + // 148 a 148 Zero
+            IfThen(LayoutVersaoArquivo > 1, LTipoEmissaoPostagem,'0')                                               + // 148 a 148 Zero
             EspecieDocumentoToIndex(ACBrTitulo.EspecieDoc)                                         + // 149 a 149 Especie do documento
             IfThen(ACBrTitulo.Aceite = atSim,'A','N')                                              + // 150 a 150 Aceite (Envia "N" Padrao)
             FormatDateTime('ddmmyyyy', ACBrTitulo.DataDocumento)                                   + // 151 a 158 Data de emissao do título

@@ -352,12 +352,12 @@ object frmACBrNFSe: TfrmACBrNFSe
               Left = 3
               Top = 12
               Width = 265
-              Height = 365
+              Height = 378
               Caption = 'Geral'
               TabOrder = 0
               object sbtnPathSalvar: TSpeedButton
-                Left = 238
-                Top = 159
+                Left = 236
+                Top = 140
                 Width = 23
                 Height = 24
                 Glyph.Data = {
@@ -377,22 +377,22 @@ object frmACBrNFSe: TfrmACBrNFSe
                 OnClick = sbtnPathSalvarClick
               end
               object Label29: TLabel
-                Left = 8
-                Top = 88
+                Left = 6
+                Top = 69
                 Width = 86
                 Height = 13
                 Caption = 'Forma de Emiss'#227'o'
               end
               object Label31: TLabel
-                Left = 8
-                Top = 50
+                Left = 6
+                Top = 31
                 Width = 72
                 Height = 13
                 Caption = 'Formato Alerta'
               end
               object spPathSchemas: TSpeedButton
-                Left = 238
-                Top = 235
+                Left = 235
+                Top = 205
                 Width = 23
                 Height = 24
                 Glyph.Data = {
@@ -412,15 +412,15 @@ object frmACBrNFSe: TfrmACBrNFSe
                 OnClick = spPathSchemasClick
               end
               object Label6: TLabel
-                Left = 9
-                Top = 220
+                Left = 6
+                Top = 190
                 Width = 108
                 Height = 13
                 Caption = 'Schemas do Provedor:'
               end
               object Label49: TLabel
-                Left = 8
-                Top = 307
+                Left = 5
+                Top = 279
                 Width = 80
                 Height = 13
                 Alignment = taRightJustify
@@ -428,16 +428,25 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Color = clBtnFace
                 ParentColor = False
               end
+              object Label51: TLabel
+                Left = 7
+                Top = 322
+                Width = 107
+                Height = 13
+                Caption = 'Formato Discrimina'#231#227'o'
+                Color = clBtnFace
+                ParentColor = False
+              end
               object edtPathLogs: TEdit
-                Left = 8
-                Top = 162
+                Left = 6
+                Top = 143
                 Width = 228
                 Height = 21
-                TabOrder = 6
+                TabOrder = 5
               end
               object chkSalvarGer: TCheckBox
-                Left = 8
-                Top = 146
+                Left = 6
+                Top = 127
                 Width = 209
                 Height = 15
                 Caption = 'Salvar Arquivos de Envio e Resposta'
@@ -447,80 +456,80 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
                 ParentFont = False
-                TabOrder = 5
+                TabOrder = 4
               end
               object cbFormaEmissao: TComboBox
-                Left = 8
-                Top = 104
-                Width = 248
-                Height = 21
-                TabOrder = 3
-              end
-              object cbxAtualizarXML: TCheckBox
-                Left = 8
-                Top = 16
-                Width = 97
-                Height = 17
-                Caption = 'Atualizar XML'
-                TabOrder = 0
-              end
-              object cbxExibirErroSchema: TCheckBox
-                Left = 8
-                Top = 32
-                Width = 129
-                Height = 17
-                Caption = 'Exibir Erro Schema'
-                TabOrder = 1
-              end
-              object edtFormatoAlerta: TEdit
-                Left = 8
-                Top = 66
+                Left = 6
+                Top = 85
                 Width = 248
                 Height = 21
                 TabOrder = 2
               end
+              object cbxExibirErroSchema: TCheckBox
+                Left = 6
+                Top = 13
+                Width = 129
+                Height = 17
+                Caption = 'Exibir Erro Schema'
+                TabOrder = 0
+              end
+              object edtFormatoAlerta: TEdit
+                Left = 6
+                Top = 45
+                Width = 248
+                Height = 21
+                TabOrder = 1
+              end
               object cbxRetirarAcentos: TCheckBox
-                Left = 8
-                Top = 128
+                Left = 6
+                Top = 109
                 Width = 193
                 Height = 17
                 Caption = 'Retirar Acentos dos XMLs enviados'
-                TabOrder = 4
+                TabOrder = 3
               end
               object edtPathSchemas: TEdit
-                Left = 8
-                Top = 235
+                Left = 5
+                Top = 205
                 Width = 228
                 Height = 21
-                TabOrder = 7
+                TabOrder = 6
               end
               object chkConsultaLoteAposEnvio: TCheckBox
-                Left = 9
-                Top = 262
+                Left = 6
+                Top = 234
                 Width = 152
                 Height = 17
                 Caption = 'Consultar Lote Ap'#243's Envio'
-                TabOrder = 8
+                TabOrder = 7
               end
               object chkConsultaAposCancelar: TCheckBox
-                Left = 9
-                Top = 282
+                Left = 6
+                Top = 254
                 Width = 152
                 Height = 17
                 Caption = 'Consultar Ap'#243's Cancelar'
-                TabOrder = 9
+                TabOrder = 8
               end
               object chkMontarPathSchemas: TCheckBox
-                Left = 9
-                Top = 199
+                Left = 6
+                Top = 169
                 Width = 240
                 Height = 17
                 Caption = 'Montar automaticamente o Path dos Schemas'
-                TabOrder = 10
+                TabOrder = 9
               end
               object cbLayoutNFSe: TComboBox
-                Left = 9
-                Top = 323
+                Left = 6
+                Top = 295
+                Width = 160
+                Height = 21
+                Style = csDropDownList
+                TabOrder = 10
+              end
+              object cbFormatoDiscr: TComboBox
+                Left = 7
+                Top = 340
                 Width = 160
                 Height = 21
                 Style = csDropDownList
@@ -2444,7 +2453,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.Provedor = proNenhum
     Configuracoes.Geral.Versao = ve100
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
-    Configuracoes.Geral.FormatoDiscriminacao = fdJson
+    Configuracoes.Geral.FormatoDiscriminacao = fdTabulado
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

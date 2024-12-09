@@ -48,7 +48,6 @@ type
     edtPathLogs: TEdit;
     chkSalvarGer: TCheckBox;
     cbFormaEmissao: TComboBox;
-    cbxAtualizarXML: TCheckBox;
     cbxExibirErroSchema: TCheckBox;
     edtFormatoAlerta: TEdit;
     cbxRetirarAcentos: TCheckBox;
@@ -274,6 +273,8 @@ type
     btnInformacoes: TButton;
     Label50: TLabel;
     edtCidComProv: TEdit;
+    Label51: TLabel;
+    cbFormatoDiscr: TComboBox;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -4205,6 +4206,7 @@ var
   X: TSSLXmlSignLib;
   Y: TSSLType;
   L: TLayoutNFSe;
+  J: TFormatoDiscriminacao;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -4241,6 +4243,11 @@ begin
     cbLayoutNFSe.Items.Add(GetEnumName(TypeInfo(TLayoutNFSe), integer(L)));
   cbLayoutNFSe.ItemIndex := 0;
 
+  cbFormatoDiscr.Items.Clear;
+  for J := Low(TFormatoDiscriminacao) to High(TFormatoDiscriminacao) do
+    cbFormatoDiscr.Items.Add(GetEnumName(TypeInfo(TFormatoDiscriminacao), integer(J)));
+  cbFormatoDiscr.ItemIndex := 0;
+
   LerConfiguracao;
 
   pgRespostas.ActivePageIndex := 0;
@@ -4264,10 +4271,10 @@ begin
     Ini.WriteString( 'Certificado', 'Senha',      edtSenha.Text);
     Ini.WriteString( 'Certificado', 'NumSerie',   edtNumSerie.Text);
 
-    Ini.WriteBool(   'Geral', 'AtualizarXML',     cbxAtualizarXML.Checked);
     Ini.WriteBool(   'Geral', 'ExibirErroSchema', cbxExibirErroSchema.Checked);
     Ini.WriteString( 'Geral', 'FormatoAlerta',    edtFormatoAlerta.Text);
     Ini.WriteInteger('Geral', 'FormaEmissao',     cbFormaEmissao.ItemIndex);
+    Ini.WriteInteger('Geral', 'FormatoDiscr',     cbFormatoDiscr.ItemIndex);
     Ini.WriteBool(   'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
     Ini.WriteBool(   'Geral', 'Salvar',           chkSalvarGer.Checked);
     Ini.WriteString( 'Geral', 'PathSalvar',       edtPathLogs.Text);
@@ -4402,10 +4409,10 @@ begin
     edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
     edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
 
-    cbxAtualizarXML.Checked     := Ini.ReadBool(   'Geral', 'AtualizarXML',     True);
     cbxExibirErroSchema.Checked := Ini.ReadBool(   'Geral', 'ExibirErroSchema', True);
     edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
     cbFormaEmissao.ItemIndex    := Ini.ReadInteger('Geral', 'FormaEmissao',     0);
+    cbFormatoDiscr.ItemIndex    := Ini.ReadInteger('Geral', 'FormatoDiscr',     0);
 
     chkSalvarGer.Checked      := Ini.ReadBool(  'Geral', 'Salvar',         True);
     cbxRetirarAcentos.Checked := Ini.ReadBool(  'Geral', 'RetirarAcentos', True);
@@ -5189,6 +5196,8 @@ begin
     RetirarAcentos   := cbxRetirarAcentos.Checked;
     FormatoAlerta    := edtFormatoAlerta.Text;
     FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
+
+    FormatoDiscriminacao := TFormatoDiscriminacao(cbFormatoDiscr.ItemIndex);
 
     ConsultaLoteAposEnvio := chkConsultaLoteAposEnvio.Checked;
     ConsultaAposCancelar  := chkConsultaAposCancelar.Checked;

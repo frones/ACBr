@@ -108,7 +108,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Math, math, DateUtils;
+  ACBrUtil.Base, ACBrUtil.Math, math, DateUtils, StrUtils;
 
 { TACBrTEFRespDestaxa }
 

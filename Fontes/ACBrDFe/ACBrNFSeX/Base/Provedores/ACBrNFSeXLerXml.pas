@@ -274,7 +274,8 @@ begin
 
     with NFSe.Servico.ItemServico.New do
     begin
-      ItemListaServico := jsonItem.AsString['ItemServico'];
+      ItemListaServico := NormatizarItemListaServico(jsonItem.AsString['ItemServico']);
+      xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
       Descricao := jsonItem.AsString['Descricao'];
       ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
       Quantidade := jsonItem.AsCurrency['Quantidade'];
@@ -282,6 +283,9 @@ begin
       BaseCalculo := jsonItem.AsCurrency['ValorBaseCalculo'];
       Aliquota := jsonItem.AsCurrency['Aliquota'];
       ValorISS := jsonItem.AsCurrency['ValorISS'];
+
+      if ValorTotal = 0 then
+        ValorTotal := ValorUnitario * Quantidade;
 
       if ValorISS = 0 then
         ValorISS := BaseCalculo * Aliquota/100;
@@ -333,7 +337,8 @@ begin
     with NFSe.Servico.ItemServico.New do
     begin
       Descricao := xDescricao;
-      ItemListaServico := xItemServico;
+      ItemListaServico := NormatizarItemListaServico(xItemServico);
+      xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
       Quantidade := fQuantidade;
       ValorUnitario := fValorUnitario;
       ValorTotal := fValorServico;
@@ -341,6 +346,9 @@ begin
       BaseCalculo := fValorBC;
       Aliquota := fAliquota;
       ValorISS := fValorISS;
+
+      if ValorTotal = 0 then
+        ValorTotal := ValorUnitario * Quantidade;
 
       if ValorISS = 0 then
         ValorISS := BaseCalculo * Aliquota/100;

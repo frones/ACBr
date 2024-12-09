@@ -168,8 +168,6 @@ type
                               filsSemFormatacaoSemZeroEsquerda,
                               filsNaoSeAplica);
 
-  TFormatoDiscriminacao = (fdNenhum, fdConsolidado, fdTabulado, fdJson);
-
   TSituacaoTrib = (tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta, tsImune,
                    tsNaoTributada, tsFixo, tsOutroMunicipio);
 
@@ -207,6 +205,13 @@ const
   TmodoEnvioArrayStrings: array[TmodoEnvio] of string = ('Automatico',
     'Enviar Lote Assíncrono', 'Enviar Lote Síncrono', 'Gerar NFSe',
     'Teste de Envio de Lote');
+
+type
+  TFormatoDiscriminacao = (fdNenhum, fdConsolidado, fdTabulado, fdJson);
+
+const
+  TmodoEnvioArrayStringsArrayStrings: array[TFormatoDiscriminacao] of string =
+    ('0', '1', '2', '3');
 
 type
   TStatusNFSe = (snNormal, snCancelado, snSubstituido);
@@ -634,6 +639,9 @@ function StrToProvedor(const s: string): TnfseProvedor;
 function MetodoToStr(const t: TMetodo): string;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;
+
+function FormatoDiscriminacaoToStr(const t: TFormatoDiscriminacao): string;
+function StrToFormatoDiscriminacao(out ok: boolean; const s: string): TFormatoDiscriminacao;
 
 function StatusNFSeToStr(const t: TStatusNFSe): string;
 function StrToStatusNFSe(out ok: boolean; const s: string): TStatusNFSe;
@@ -12368,6 +12376,21 @@ begin
                        [meAutomatico, meLoteAssincrono, meLoteSincrono,
                         meUnitario, meTeste]);
 end;
+
+function FormatoDiscriminacaoToStr(const t: TFormatoDiscriminacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['0', '1', '2', '3'],
+                           [fdNenhum, fdConsolidado, fdTabulado, fdJson]);
+end;
+
+function StrToFormatoDiscriminacao(out ok: boolean; const s: string): TFormatoDiscriminacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['0', '1', '2', '3'],
+                           [fdNenhum, fdConsolidado, fdTabulado, fdJson]);
+end;
+
 
 function StatusNFSeToStr(const t: TStatusNFSe): string;
 begin

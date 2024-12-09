@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/12/2024
+-- Diversos --
+[*] Ajustes na leitura do XML e na impressão do DANFSE em Fortes Report.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais --
 [*] #TK-6059: Complementa as rotinas de Leitura e Escrita do INI com os campos faltantes.
   Por: Diego Folieni

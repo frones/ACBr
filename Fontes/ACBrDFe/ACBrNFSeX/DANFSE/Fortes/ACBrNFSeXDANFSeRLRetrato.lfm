@@ -1,7 +1,9 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 230
-  Top = 110
+  Left = 246
+  Height = 624
+  Top = 64
   Caption = 'frlXDANFSeRLRetrato'
+  ClientHeight = 624
   inherited RLNFSe: TRLReport
     Left = 32
     Top = 0
@@ -823,7 +825,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand[5]
       Left = 23
-      Height = 317
+      Height = 315
       Top = 535
       Width = 752
       BandType = btSummary
@@ -953,24 +955,11 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLLabel16: TRLLabel
+      object rlmCodServico: TRLMemo
         Left = 4
         Height = 14
         Top = 4
-        Width = 89
-        Caption = 'Código do Serviço:'
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        ParentFont = False
-        Transparent = False
-      end
-      object rlmCodServico: TRLMemo
-        Left = 100
-        Height = 16
-        Top = 4
-        Width = 645
-        AutoSize = False
+        Width = 741
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -11
@@ -1701,9 +1690,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllMsgTeste: TRLLabel
-        Left = 13
+        Left = 4
         Height = 31
-        Top = 45
+        Top = 23
         Width = 724
         Alignment = taCenter
         Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
@@ -1713,37 +1702,11 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object rllCodTributacaoMunicipio: TRLLabel
-        Left = 4
-        Height = 14
-        Top = 22
-        Width = 168
-        Caption = 'Código de Tributação do Município:'
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        ParentFont = False
-        Transparent = False
-      end
-      object rlmDescCodTributacaoMunicipio: TRLMemo
-        Left = 178
-        Height = 16
-        Top = 21
-        Width = 565
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
     end
     object rbOutrasInformacoes: TRLBand[6]
       Left = 23
       Height = 40
-      Top = 852
+      Top = 850
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1784,7 +1747,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object rlbCanhoto: TRLBand[7]
       Left = 23
       Height = 73
-      Top = 910
+      Top = 908
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -2113,7 +2076,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object RLBand1: TRLBand[10]
       Left = 23
       Height = 18
-      Top = 892
+      Top = 890
       Width = 752
       BandType = btSummary
       object rllDataHoraImpressao: TRLLabel
@@ -2143,7 +2106,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 144
-    Top = 24
+    Left = 136
+    Top = 16
   end
 end

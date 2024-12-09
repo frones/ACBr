@@ -122,7 +122,6 @@ type
     rllValorISS: TRLLabel;
     RLDraw4: TRLDraw;
     rllValorTotal: TRLLabel;
-    RLLabel16: TRLLabel;
     rlmCodServico: TRLMemo;
     RLLabel3: TRLLabel;
     rllAliquota: TRLLabel;
@@ -220,8 +219,6 @@ type
     rlmServicoDescricao: TRLMemo;
     txtServicoUnitario: TRLLabel;
     txtServicoTotal: TRLLabel;
-    rllCodTributacaoMunicipio: TRLLabel;
-    rlmDescCodTributacaoMunicipio: TRLMemo;
     RLLabel69: TRLLabel;
     rllPrestInscEstadual: TRLLabel;
     RLBand1: TRLBand;
@@ -435,10 +432,6 @@ var
 begin
   inherited;
 
-  RLLabel16.Visible := False;
-  rllCodTributacaoMunicipio.Visible := False;
-  rlmDescCodTributacaoMunicipio.Visible := False;
-
   FProvider := ACBrNFSe.Provider;
 
   With fpNFSe do
@@ -483,47 +476,33 @@ begin
 
     rlmCodServico.Lines.Clear;
 
-    if (Servico.xItemListaServico = '') and (Servico.ItemServico.Count > 0) then
+    if {(Servico.xItemListaServico = '') and} (Servico.ItemServico.Count > 0) then
     begin
-      RLLabel16.Visible := True;
+      rlmCodServico.Lines.Append(ACBrStr('Código Serviço:'));
 
       for i := 0 to Servico.ItemServico.Count -1 do
       begin
-        rlmCodServico.Lines.Append(Servico.ItemServico.Items[i].ItemListaServico +
-          ' - ' + Servico.ItemServico.Items[i].xItemListaServico);
+        rlmCodServico.Lines.Append('   ' + Servico.ItemServico.Items[i].ItemListaServico +
+          ' - ' + ACBrStr(Servico.ItemServico.Items[i].xItemListaServico));
       end;
     end;
 
-    if Servico.xItemListaServico <> '' then
+    if (Servico.xItemListaServico <> '') and (Servico.ItemServico.Count = 0) then
     begin
-      RLLabel16.Visible := True;
+      rlmCodServico.Lines.Append(ACBrStr('Código Serviço:'));
 
-      if fpDANFSe.Atividade <> '' then
-        rlmCodServico.Lines.Append('Atividade: ' + fpDANFSe.Atividade);
-
-      rlmCodServico.Lines.Append(Servico.ItemListaServico + ' - ' + Servico.xItemListaServico);
-
-      if (Servico.xCodigoTributacaoMunicipio <> '') then
-      begin
-        rllCodTributacaoMunicipio.Visible := True;
-        rlmDescCodTributacaoMunicipio.Visible := True;
-        rlmDescCodTributacaoMunicipio.Lines.Append(Servico.xCodigoTributacaoMunicipio);
-      end
-      else
-        rlmCodServico.Height := Trunc(rlmCodServico.Height * 2.5);
-    end
-    else
-    begin
-      if fpDANFSe.Atividade <> '' then
-      begin
-        RLLabel16.Visible := True;
-        RLLabel16.Caption := 'Atividade:';
-        rlmCodServico.Lines.Append(fpDANFSe.Atividade);
-      end
+      rlmCodServico.Lines.Append('   ' + Servico.ItemListaServico + ' - ' +
+      ACBrStr(Servico.xItemListaServico));
     end;
 
+    if fpDANFSe.Atividade <> '' then
+      rlmCodServico.Lines.Append('Atividade: ' + fpDANFSe.Atividade);
+
+    if (Servico.xCodigoTributacaoMunicipio <> '') then
+      rlmCodServico.Lines.Append('Cod. Tributacao Municipio: ' + Servico.xCodigoTributacaoMunicipio);
+
     if Servico.CodigoCnae <> '' then
-      rlmCodServico.Lines.Append('Código CNAE: ' + Servico.CodigoCnae);
+      rlmCodServico.Lines.Append(ACBrStr('Código CNAE: ') + Servico.CodigoCnae);
 
     rllValorPIS.Caption := FormatFloat(',0.00', Servico.Valores.ValorPis);
     rllValorCOFINS.Caption := FormatFloat(',0.00', Servico.Valores.ValorCofins);

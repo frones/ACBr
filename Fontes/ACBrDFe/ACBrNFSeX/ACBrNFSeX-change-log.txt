@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/12/2024
+-- ACBrNFSeXNotasFiscais --
+[*] #TK-6059: Complementa as rotinas de Leitura e Escrita do INI com os campos faltantes.
+  Por: Diego Folieni
 -- ACBrNFSeXInterface, ACBRNFSeXProviderBase, ISSCampinas.GrvarXML, ISSCampinas.LerXML. ISSDSF.LerXML, ISSDSF.GravarXML -- 
 [*] #TK-6059: Adiciona funções de conversão DeducaoPorToStr/StrToDeducaoPor e faz o uso das mesmas.
   Por: Diego Folieni

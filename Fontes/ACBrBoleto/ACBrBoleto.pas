@@ -1500,6 +1500,7 @@ type
     fPrefixArqRemessa : string;
     fOnAntesAutenticar:  TACBrWebServiceOnAntesAutenticar;
     fOnDepoisAutenticar: TACBrWebServiceOnDepoisAutenticar;
+    FKeySoftwareHouse: String;
 
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
@@ -1592,6 +1593,8 @@ type
     property Configuracoes: TConfiguracoes       read fConfiguracoes          write fConfiguracoes;
     property OnAntesAutenticar : TACBrWebServiceOnAntesAutenticar  read fOnAntesAutenticar  write fOnAntesAutenticar;
     property OnDepoisAutenticar: TACBrWebServiceOnDepoisAutenticar read fOnDepoisAutenticar write fOnDepoisAutenticar;
+    property KeySoftwareHouse: String 			     read FKeySoftwareHouse 	    write FKeySoftwareHouse;
+
   end;
 
   {TACBrBoletoFCClass}

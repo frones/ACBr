@@ -53,6 +53,9 @@ type
 {$IFDEF RTL230_UP}
   [ ComponentPlatformsAttribute(pidWin32 or pidWin64) ]
 {$ENDIF RTL230_UP}
+  TParams = record
+    prName, PrValue: String;
+  end;
 
   TBoletoWSREST = class(TBoletoWSClass)
   private
@@ -66,6 +69,7 @@ type
     FPAuthorization: String;
     FMetodoHTTP    : TMetodoHTTP;
     FParamsOAuth   : String;
+    FHeaderParamsList : Array of TParams;
     FPHeaders      : TStringList;
     procedure setDefinirAccept(const AValue: String);
     procedure setMetodoHTTP(const AValue: TMetodoHTTP);
@@ -87,7 +91,8 @@ type
   public
     constructor Create(ABoletoWS: TBoletoWS); override;
     destructor Destroy; override;
-
+    function AddHeaderParam(AParamName, AParamValue: String): TBoletoWSREST;
+    function ClearHeaderParams(): TBoletoWSREST;
   end;
 
     { TRetornoEnvioREST }  //Implementar Retornos em JSON
@@ -253,6 +258,7 @@ var
   LHeaders: TStringList;
   LStream : TStringStream;
   LCT     : TCompressType;
+  I : Integer;
 begin
   LStream  := TStringStream.Create('');
   LHeaders := TStringList.Create;
@@ -283,6 +289,9 @@ begin
 
     if FPHeaders.Count > 0 then
       httpsend.Headers.AddStrings(FPHeaders);
+
+    for I := 0 to Length(FHeaderParamsList) - 1 do
+      httpsend.Headers.Add(FHeaderParamsList[ I ].prName + ': ' + FHeaderParamsList[ I ].PrValue);
 
     httpsend.MimeType := FPContentType;
   finally
@@ -328,6 +337,20 @@ begin
       LStream.Free;
     end;
   end;
+end;
+
+function TBoletoWSREST.AddHeaderParam(AParamName,AParamValue: String): TBoletoWSREST;
+begin
+  Result := Self;
+  SetLength(FHeaderParamsList, Length(FHeaderParamsList) + 1);
+  FHeaderParamsList[ Length(FHeaderParamsList) - 1 ].prName := AParamName;
+  FHeaderParamsList[ Length(FHeaderParamsList) - 1 ].PrValue := AParamValue;
+end;
+
+function TBoletoWSREST.ClearHeaderParams: TBoletoWSREST;
+begin
+  SetLength(FHeaderParamsList, 0);
+  Result := Self;
 end;
 
 constructor TBoletoWSREST.Create(ABoletoWS: TBoletoWS);

@@ -162,6 +162,7 @@ procedure TBoletoW_BancoBrasil_API.GerarHeader;
 begin
   DefinirContentType;
   DefinirKeyUser;
+  AddHeaderParam('x-bb-portal-devx-cnpj-parceiro',Boleto.KeySoftwareHouse)
 end;
 
 procedure TBoletoW_BancoBrasil_API.GerarDados;

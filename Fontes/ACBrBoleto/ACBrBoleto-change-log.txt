@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2024
+-- ACBrBoleto,ACBrBoletoWS.Rest, ACBrBoletoW_BancoBrasil_API --
+[-] TK-6274 Criado a propriedade KeySoftwareHouse para que seja utilizado na api bb x-bb-portal-devx-cnpj-parceiro
+    https://www.projetoacbr.com.br/forum/topic/76959-x-bb-portal-devx-cnpj-parceiro-no-header-da-api-do-banco-do-brasil/
+	por Daniel de Morais InfoCotidiano 
+
 05/12/2024
 -- ACBrBoletoRet_Sicoob_V3.pas --
 [-] TK-6308 Quando API ocorre um erro, nao estava devolvendo NossoNumero

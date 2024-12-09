@@ -68,7 +68,7 @@ function CarregaDll($dir, $nomeLib)
         $dllPath = $dir . DIRECTORY_SEPARATOR . "ACBrLib" . DIRECTORY_SEPARATOR . "x" . $arquitetura . DIRECTORY_SEPARATOR;
 
         if (!file_exists($dllPath . $biblioteca)){
-            echo json_encode(["mensagem" => "DLL não encontrada no caminho especificado: $dllPath . $biblioteca"]);
+            echo json_encode(["mensagem" => "Biblioteca (.dll/.so) não encontrada no caminho especificado: $dllPath . $biblioteca"]);
             return -10;
         }
     }
@@ -107,7 +107,7 @@ function CarregaContents($importsPath, $dllPath)
     }
 
     if ($modoGrafico === 2){
-        putenv("DISPLAY=:1");
+        putenv("DISPLAY=:99");
     }
 
     $ffi = FFI::cdef(
@@ -206,22 +206,22 @@ function parseIniToStr($ini)
 
 function verificaAmbienteGrafico()
 {
-    $verificaX11 = shell_exec('pgrep Xorg 2>&1') !== null;
-    $displayX11 = getenv('DISPLAY') !== false;
+    $verificaXVFB = shell_exec('pgrep Xvfb 2>&1') !== null;
+    $displayXVFB = strpos(getenv('DISPLAY'), ':99') !== false;
 
-    if ($verificaX11 || $displayX11) {
-        // Ambiente grafico X11
-        return 1;
+    if ($verificaXVFB || $displayXVFB) {
+        // Emulador XVFB    
+        return 2;
     } else {
-        $verificaXVFB = shell_exec('pgrep Xvfb 2>&1') !== null;
-        $displayXVFB = strpos(getenv('DISPLAY'), ':99') !== false;
+        $verificaX11 = shell_exec('pgrep Xorg') !== null && trim(shell_exec('pgrep Xorg')) !== '';
+        $displayX11 = getenv('DISPLAY') !== false && trim(getenv('DISPLAY')) !== '';
+        $pacoteX11 = shell_exec('dpkg -l | grep xserver-xorg') !== null && trim(shell_exec('dpkg -l | grep xserver-xorg')) !== '';
 
-        if ($verificaXVFB || $displayXVFB) {
-            // Emulador XVFB    
-            return 2;
-        } else {
+        if ($verificaX11 || $displayX11 || $pacoteX11) {
+            // Ambiente grafico X11
+            return 1;
+        } else
             // Sem ambiente grafico
             return 0;
-        }
     }
 }

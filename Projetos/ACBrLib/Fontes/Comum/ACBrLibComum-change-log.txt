@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2024
+-- ACBrComum.php --
+[*] Sem TK: Ajuste na função para identificar ambiente gráfico ou emulado e comando no php para funcionar lib com gráfico emulado
+  Por: Renato Rubinho
+
 29/11/2024
 -- ACBrComum.php --
 [*] Sem TK: Corrigida composição do caminho da Lib no linux

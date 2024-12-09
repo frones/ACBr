@@ -1042,7 +1042,7 @@ var
 begin
   wDescAcresSubtotal := DescAcresSubtotal;
 
-  if (wDescAcresSubtotal = AValue) then
+  if ComparaValor(wDescAcresSubtotal, AValue) = 0 then
     Exit;
 
   if (wDescAcresSubtotal <> 0) then

@@ -409,6 +409,12 @@
             this.label138 = new System.Windows.Forms.Label();
             this.btnCancelarCobranca = new System.Windows.Forms.Button();
             this.btnLimparRespostas = new System.Windows.Forms.Button();
+            this.btnArquivoCertificadoCielo = new System.Windows.Forms.Button();
+            this.txtArquivoCertificadoCielo = new System.Windows.Forms.TextBox();
+            this.label139 = new System.Windows.Forms.Label();
+            this.btnArquivoChavePrivadaCielo = new System.Windows.Forms.Button();
+            this.txtArquivoChavePrivadaCielo = new System.Windows.Forms.TextBox();
+            this.label140 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -2915,6 +2921,12 @@
             // 
             // tabPage16
             // 
+            this.tabPage16.Controls.Add(this.btnArquivoCertificadoCielo);
+            this.tabPage16.Controls.Add(this.txtArquivoCertificadoCielo);
+            this.tabPage16.Controls.Add(this.label139);
+            this.tabPage16.Controls.Add(this.btnArquivoChavePrivadaCielo);
+            this.tabPage16.Controls.Add(this.txtArquivoChavePrivadaCielo);
+            this.tabPage16.Controls.Add(this.label140);
             this.tabPage16.Controls.Add(this.txtScopesCielo);
             this.tabPage16.Controls.Add(this.label101);
             this.tabPage16.Controls.Add(this.txtClientSecretCielo);
@@ -2934,7 +2946,7 @@
             // txtScopesCielo
             // 
             this.txtScopesCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScopesCielo.Location = new System.Drawing.Point(6, 173);
+            this.txtScopesCielo.Location = new System.Drawing.Point(6, 263);
             this.txtScopesCielo.Name = "txtScopesCielo";
             this.txtScopesCielo.Size = new System.Drawing.Size(389, 20);
             this.txtScopesCielo.TabIndex = 131;
@@ -2943,7 +2955,7 @@
             // 
             this.label101.AutoSize = true;
             this.label101.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label101.Location = new System.Drawing.Point(4, 156);
+            this.label101.Location = new System.Drawing.Point(4, 246);
             this.label101.Name = "label101";
             this.label101.Size = new System.Drawing.Size(49, 13);
             this.label101.TabIndex = 130;
@@ -4481,6 +4493,62 @@
             this.btnLimparRespostas.UseVisualStyleBackColor = true;
             this.btnLimparRespostas.Click += new System.EventHandler(this.btnLimparRespostas_Click);
             // 
+            // btnArquivoCertificadoCielo
+            // 
+            this.btnArquivoCertificadoCielo.Location = new System.Drawing.Point(369, 212);
+            this.btnArquivoCertificadoCielo.Name = "btnArquivoCertificadoCielo";
+            this.btnArquivoCertificadoCielo.Size = new System.Drawing.Size(26, 23);
+            this.btnArquivoCertificadoCielo.TabIndex = 137;
+            this.btnArquivoCertificadoCielo.Text = "...";
+            this.btnArquivoCertificadoCielo.UseVisualStyleBackColor = true;
+            this.btnArquivoCertificadoCielo.Click += new System.EventHandler(this.btnArquivoCertificadoCielo_Click);
+            // 
+            // txtArquivoCertificadoCielo
+            // 
+            this.txtArquivoCertificadoCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtArquivoCertificadoCielo.Location = new System.Drawing.Point(6, 215);
+            this.txtArquivoCertificadoCielo.Name = "txtArquivoCertificadoCielo";
+            this.txtArquivoCertificadoCielo.Size = new System.Drawing.Size(357, 20);
+            this.txtArquivoCertificadoCielo.TabIndex = 136;
+            // 
+            // label139
+            // 
+            this.label139.AutoSize = true;
+            this.label139.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label139.Location = new System.Drawing.Point(3, 199);
+            this.label139.Name = "label139";
+            this.label139.Size = new System.Drawing.Size(115, 13);
+            this.label139.TabIndex = 135;
+            this.label139.Text = "Arquivo Certificado";
+            // 
+            // btnArquivoChavePrivadaCielo
+            // 
+            this.btnArquivoChavePrivadaCielo.Location = new System.Drawing.Point(369, 162);
+            this.btnArquivoChavePrivadaCielo.Name = "btnArquivoChavePrivadaCielo";
+            this.btnArquivoChavePrivadaCielo.Size = new System.Drawing.Size(26, 23);
+            this.btnArquivoChavePrivadaCielo.TabIndex = 134;
+            this.btnArquivoChavePrivadaCielo.Text = "...";
+            this.btnArquivoChavePrivadaCielo.UseVisualStyleBackColor = true;
+            this.btnArquivoChavePrivadaCielo.Click += new System.EventHandler(this.btnArquivoChavePrivadaCielo_Click);
+            // 
+            // txtArquivoChavePrivadaCielo
+            // 
+            this.txtArquivoChavePrivadaCielo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtArquivoChavePrivadaCielo.Location = new System.Drawing.Point(6, 165);
+            this.txtArquivoChavePrivadaCielo.Name = "txtArquivoChavePrivadaCielo";
+            this.txtArquivoChavePrivadaCielo.Size = new System.Drawing.Size(357, 20);
+            this.txtArquivoChavePrivadaCielo.TabIndex = 133;
+            // 
+            // label140
+            // 
+            this.label140.AutoSize = true;
+            this.label140.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label140.Location = new System.Drawing.Point(3, 149);
+            this.label140.Name = "label140";
+            this.label140.Size = new System.Drawing.Size(137, 13);
+            this.label140.TabIndex = 132;
+            this.label140.Text = "Arquivo Chave Privada";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4984,6 +5052,12 @@
         private System.Windows.Forms.TextBox txtTxIdCancelarCobranca;
         private System.Windows.Forms.Label label138;
         private System.Windows.Forms.Button btnCancelarCobranca;
+        private System.Windows.Forms.Button btnArquivoCertificadoCielo;
+        private System.Windows.Forms.TextBox txtArquivoCertificadoCielo;
+        private System.Windows.Forms.Label label139;
+        private System.Windows.Forms.Button btnArquivoChavePrivadaCielo;
+        private System.Windows.Forms.TextBox txtArquivoChavePrivadaCielo;
+        private System.Windows.Forms.Label label140;
     }
 }
 

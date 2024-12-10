@@ -224,6 +224,8 @@ namespace ACBrLibPIXCD.Demo
                 ACBrPIXCD.Config.Cielo.ChavePIX = txtChavePIXCielo.Text;
                 ACBrPIXCD.Config.Cielo.ClientID = txtClientIDCielo.Text;
                 ACBrPIXCD.Config.Cielo.ClientSecret = txtClientSecretCielo.Text;
+                ACBrPIXCD.Config.Cielo.ArqChavePrivada = txtArquivoChavePrivadaCielo.Text;
+                ACBrPIXCD.Config.Cielo.ArqCertificado = txtArquivoCertificadoCielo.Text;
                 ACBrPIXCD.Config.Cielo.Scopes = txtScopesCielo.Text;
 
                 //MercadoPago
@@ -380,6 +382,8 @@ namespace ACBrLibPIXCD.Demo
             txtChavePIXCielo.Text = ACBrPIXCD.Config.Cielo.ChavePIX;
             txtClientIDCielo.Text = ACBrPIXCD.Config.Cielo.ClientID;
             txtClientSecretCielo.Text = ACBrPIXCD.Config.Cielo.ClientSecret;
+            txtArquivoChavePrivadaCielo.Text = ACBrPIXCD.Config.Cielo.ArqChavePrivada;
+            txtArquivoCertificadoCielo.Text = ACBrPIXCD.Config.Cielo.ArqCertificado;
             txtScopesCielo.Text = ACBrPIXCD.Config.Cielo.Scopes;
 
             //MercadoPago
@@ -492,7 +496,15 @@ namespace ACBrLibPIXCD.Demo
         {
             txtArquivoCertificadoMatera.Text = Helpers.OpenFile("Arquivos PEM (*.pem)|*.pem|Todos os Arquivos (*.*)|*.*");
         }
+        private void btnArquivoChavePrivadaCielo_Click(object sender, EventArgs e)
+        {
+            txtArquivoChavePrivadaCielo.Text = Helpers.OpenFile("Arquivos KEY (*.key)|*.key|Todos os Arquivos (*.*)|*.*");
+        }
 
+        private void btnArquivoCertificadoCielo_Click(object sender, EventArgs e)
+        {
+            txtArquivoCertificadoCielo.Text = Helpers.OpenFile("Arquivos CER (*.cer)|*.cer|Todos os Arquivos (*.*)|*.*");
+        }
         private void btnGerarQRCodeEstatico_Click(object sender, EventArgs e)
         {
             try

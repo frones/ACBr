@@ -36,6 +36,18 @@ namespace ACBrLib.PIXCD
             set => SetProperty(value);
         }
 
+        public string ArqChavePrivada
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        public string ArqCertificado
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         public string Scopes
         {
             get => GetProperty<string>();

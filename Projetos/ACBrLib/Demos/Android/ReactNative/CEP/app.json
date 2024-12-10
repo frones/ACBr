@@ -1,0 +1,8 @@
+{
+  "name": "acbrcepReact",
+  "displayName": "acbrcepReact",
+  "android":{
+    "package": "com.acbrcepreact",
+    "versionCode": 1
+  }
+}

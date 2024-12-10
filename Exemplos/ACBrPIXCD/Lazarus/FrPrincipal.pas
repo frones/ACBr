@@ -288,8 +288,10 @@ type
     edSicoobExtrairChavePrivada: TEdit;
     edSicrediArqCertificado: TEdit;
     edPagSeguroArqCertificado: TEdit;
+    edCieloArqCertificado: TEdit;
     edSicrediArqChavePrivada: TEdit;
     edPagSeguroArqChavePrivada: TEdit;
+    edCieloArqChavePrivada: TEdit;
     edSicrediChavePIX: TEdit;
     edPagSeguroChavePIX: TEdit;
     edSicrediClientID: TEdit;
@@ -397,10 +399,12 @@ type
     imSicoobErroChavePrivada: TImage;
     imSicrediErroCertificado: TImage;
     imPagSeguroErroCertificado: TImage;
+    imCieloErroCertificado: TImage;
     imSicrediErroChavePix: TImage;
     imPagSeguroErroChavePix: TImage;
     imSicrediErroChavePrivada: TImage;
     imPagSeguroErroChavePrivada: TImage;
+    imCieloErroChavePrivada: TImage;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -561,8 +565,10 @@ type
     lbSicoobTipoChave: TLabel;
     lbSicrediArqCertificado: TLabel;
     lbPagSeguroArqCertificado: TLabel;
+    lbCieloArqCertificado: TLabel;
     lbSicrediArqChavePrivada: TLabel;
     lbPagSeguroArqChavePrivada: TLabel;
+    lbCieloArqChavePrivada: TLabel;
     lbSicrediChavePIX: TLabel;
     lbPagSeguroChavePIX: TLabel;
     lbSicrediClientID: TLabel;
@@ -571,8 +577,10 @@ type
     lbPagSeguroClientSecret: TLabel;
     lbSicrediErroCertificado: TLabel;
     lbPagSeguroErroCertificado: TLabel;
+    lbCieloErroCertificado: TLabel;
     lbSicrediErroChavePrivada: TLabel;
     lbPagSeguroErroChavePrivada: TLabel;
+    lbCieloErroChavePrivada: TLabel;
     lbSicrediGerarCSR: TLabel;
     lbSicrediGerarChavePrivada: TLabel;
     lbSicrediGerarCSREmail: TLabel;
@@ -782,8 +790,10 @@ type
     sbSicoobAcharChavePrivada: TSpeedButton;
     sbSicrediAcharArqCertificado: TSpeedButton;
     sbPagSeguroAcharArqCertificado: TSpeedButton;
+    sbCieloAcharArqCertificado: TSpeedButton;
     sbSicrediAcharChavePrivada: TSpeedButton;
     sbPagSeguroAcharChavePrivada: TSpeedButton;
+    sbCieloAcharChavePrivada: TSpeedButton;
     sbSicrediAcharChavePrivada2: TSpeedButton;
     sbVerSenhaProxy: TSpeedButton;
     seCobrancaExpiracao: TSpinEdit;
@@ -977,6 +987,10 @@ type
     procedure edC6BankChavePIXChange(Sender: TObject);
     procedure edC6BankArqsChange(Sender: TObject);
     procedure edC6BankChavePrivadaExit(Sender: TObject);
+    procedure edCieloArqCertificadoChange(Sender: TObject);
+    procedure edCieloArqCertificadoExit(Sender: TObject);
+    procedure edCieloArqChavePrivadaChange(Sender: TObject);
+    procedure edCieloArqChavePrivadaExit(Sender: TObject);
     procedure edCieloChavePIXChange(Sender: TObject);
     procedure edGerenciaNetChavePIXChange(Sender: TObject);
     procedure edGerenciaNetArqPFXExit(Sender: TObject);
@@ -1032,6 +1046,8 @@ type
     procedure sbBBAcharChavePrivadaClick(Sender: TObject);
     procedure sbBBAcharPFXClick(Sender: TObject);
     procedure sbBradescoAcharPFXClick(Sender: TObject);
+    procedure sbCieloAcharArqCertificadoClick(Sender: TObject);
+    procedure sbCieloAcharChavePrivadaClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
     procedure sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
     procedure sbGerenciaNetAcharPFXClick(Sender: TObject);
@@ -1091,6 +1107,7 @@ type
     procedure ValidarChaveCertificadoPSPItau;
     procedure ValidarChavePSPItau;
     procedure ValidarChavePSPSicredi;
+    procedure ValidarChavePSPCielo;
     procedure ValidarChavePSPSicoob;
     procedure ValidarChavePSPPagSeguro;
     procedure ValidarChavePSPInter;
@@ -1102,6 +1119,7 @@ type
     procedure ValidarCertificadoPSPItau;
     procedure ValidarCertificadoPSPSicoob;
     procedure ValidarCertificadoPSPSicredi;
+    procedure ValidarCertificadoPSPCielo;
     procedure ValidarCertificadoPSPSantander;
     procedure ValidarCertificadoPSPPagSeguro;
     procedure ValidarCertificadoPSPGerenciaNet;
@@ -1284,6 +1302,22 @@ begin
   if OpenDialog1.Execute then
     edBradescoArqPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarCertificadoPSPBradesco;
+end;
+
+procedure TForm1.sbCieloAcharArqCertificadoClick(Sender: TObject);
+begin
+  OpenDialog1.FileName := edCieloArqCertificado.Text;
+  if OpenDialog1.Execute then
+    edCieloArqCertificado.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  ValidarCertificadoPSPCielo;
+end;
+
+procedure TForm1.sbCieloAcharChavePrivadaClick(Sender: TObject);
+begin
+  OpenDialog1.FileName := edCieloArqChavePrivada.Text;
+  if OpenDialog1.Execute then
+    edCieloArqChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  ValidarChavePSPCielo;
 end;
 
 procedure TForm1.sbConsultaCEPClick(Sender: TObject);
@@ -2882,6 +2916,28 @@ begin
   ValidarChavePSPC6Bank;
 end;
 
+procedure TForm1.edCieloArqCertificadoChange(Sender: TObject);
+begin
+  lbCieloErroChavePrivada.Caption := '';
+  lbCieloErroCertificado.Caption := '';
+end;
+
+procedure TForm1.edCieloArqCertificadoExit(Sender: TObject);
+begin
+  ValidarCertificadoPSPCielo;
+end;
+
+procedure TForm1.edCieloArqChavePrivadaChange(Sender: TObject);
+begin
+  lbCieloErroChavePrivada.Caption := '';
+  lbCieloErroCertificado.Caption := '';
+end;
+
+procedure TForm1.edCieloArqChavePrivadaExit(Sender: TObject);
+begin
+  ValidarChavePSPCielo;
+end;
+
 procedure TForm1.edCieloChavePIXChange(Sender: TObject);
 begin
   cbCieloTipoChave.ItemIndex := Integer(DetectarTipoChave(edCieloChavePIX.Text));
@@ -3380,6 +3436,29 @@ begin
   imSicrediErroChavePrivada.Visible := (e <> 'OK');
 end;
 
+procedure TForm1.ValidarChavePSPCielo;
+var
+  a, e: String;
+begin
+  a := AdicionarPathAplicacao(edCieloArqChavePrivada.Text);
+  e := 'OK';
+  if (a = '') then
+    e := ACBrStr('Arquivo não especificado')
+  else if (not FileExists(a)) then
+    e := ACBrStr('Arquivo não encontrado')
+  else
+  begin
+    try
+      ACBrOpenSSLUtils1.LoadPrivateKeyFromFile(a);
+    except
+      On Ex: Exception do
+        e := Ex.Message;
+    end;
+  end;
+  lbCieloErroChavePrivada.Caption := e;
+  imCieloErroChavePrivada.Visible := (e <> 'OK');
+end;
+
 procedure TForm1.ValidarChavePSPSicoob;
 var
   a, e: String;
@@ -3596,6 +3675,30 @@ begin
 
   lbSicrediErroCertificado.Caption := e;
   imSicrediErroCertificado.Visible := (e <> 'OK');
+end;
+
+procedure TForm1.ValidarCertificadoPSPCielo;
+var
+  a, e: String;
+begin
+  a := AdicionarPathAplicacao(edCieloArqCertificado.Text);
+  e := 'OK';
+  if (a = '') then
+    e := ACBrStr('Arquivo não especificado')
+  else if (not FileExists(a)) then
+    e := ACBrStr('Arquivo não encontrado')
+  else
+  begin
+    try
+      ACBrOpenSSLUtils1.LoadPEMFromFile(a);
+    except
+      On Ex: Exception do
+        e := Ex.Message;
+    end;
+  end;
+
+  lbCieloErroCertificado.Caption := e;
+  imCieloErroCertificado.Visible := (e <> 'OK');
 end;
 
 procedure TForm1.ValidarCertificadoPSPSantander;

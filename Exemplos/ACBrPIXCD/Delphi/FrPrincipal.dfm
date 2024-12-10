@@ -118,13 +118,15 @@ object Form1: TForm1
     Top = 0
     Width = 1008
     Height = 632
-    ActivePage = tsFluxoPagto
+    ActivePage = tsConfiguracao
     Align = alClient
     Images = ImageList1
     TabHeight = 30
     TabOrder = 0
     TabWidth = 335
     OnChange = pgPrincipalChange
+    ExplicitWidth = 1004
+    ExplicitHeight = 631
     object tsFluxoPagto: TTabSheet
       Caption = 'Fluxo de Pagamento'
       ImageIndex = 1
@@ -138,6 +140,8 @@ object Form1: TForm1
         Color = 15263976
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 996
+        ExplicitHeight = 591
         object pnFluxoPagto: TPanel
           Left = 30
           Top = 15
@@ -2847,7 +2851,7 @@ object Form1: TForm1
         Top = 0
         Width = 1000
         Height = 555
-        ActivePage = tsPIX
+        ActivePage = tsPSP
         Align = alClient
         Images = ImageList1
         TabHeight = 25
@@ -3296,7 +3300,7 @@ object Form1: TForm1
             Top = 0
             Width = 992
             Height = 520
-            ActivePage = tsMercadoPago
+            ActivePage = tsCielo
             Align = alClient
             TabOrder = 0
             TabWidth = 100
@@ -3861,7 +3865,7 @@ object Form1: TForm1
                     Left = 19
                     Top = 24
                     Width = 900
-                    Height = 380
+                    Height = 378
                     ActivePage = tsItauChaveCertificadoArquivos
                     Anchors = [akLeft, akTop, akRight, akBottom]
                     TabOrder = 0
@@ -3870,7 +3874,7 @@ object Form1: TForm1
                       Caption = 'Arquivos'
                       DesignSize = (
                         892
-                        352)
+                        350)
                       object lItauAvisoChaveCertificadoDesabilitado: TLabel
                         Left = 35
                         Top = 16
@@ -4011,12 +4015,12 @@ object Form1: TForm1
                       Caption = 'Gerar Chave e Certificado'
                       DesignSize = (
                         892
-                        352)
+                        350)
                       object pgPSPItauGerarChaveCertificado: TPageControl
                         Left = 16
                         Top = 16
                         Width = 842
-                        Height = 332
+                        Height = 330
                         ActivePage = tsItauCertPasso1
                         Anchors = [akLeft, akTop, akRight, akBottom]
                         TabOrder = 0
@@ -4024,7 +4028,7 @@ object Form1: TForm1
                           Caption = 'Passo 1 - Definir Chave Privada'
                           DesignSize = (
                             834
-                            304)
+                            302)
                           object Label39: TLabel
                             Left = 16
                             Top = 24
@@ -4057,7 +4061,7 @@ object Form1: TForm1
                             Left = 16
                             Top = 72
                             Width = 794
-                            Height = 215
+                            Height = 213
                             Anchors = [akLeft, akTop, akRight, akBottom]
                             Font.Charset = DEFAULT_CHARSET
                             Font.Color = clWindowText
@@ -4153,7 +4157,7 @@ object Form1: TForm1
                             Left = 0
                             Top = 136
                             Width = 834
-                            Height = 168
+                            Height = 166
                             Align = alClient
                             BevelOuter = bvNone
                             TabOrder = 2
@@ -4170,7 +4174,7 @@ object Form1: TForm1
                               Left = 0
                               Top = 13
                               Width = 834
-                              Height = 155
+                              Height = 153
                               Align = alClient
                               Font.Charset = DEFAULT_CHARSET
                               Font.Color = clWindowText
@@ -6043,8 +6047,8 @@ object Form1: TForm1
                   OnExit = edInterChavePrivadaExit
                 end
                 object edInterCertificado: TEdit
-                  Left = 24
-                  Top = 267
+                  Left = 25
+                  Top = 265
                   Width = 816
                   Height = 23
                   Anchors = [akLeft, akTop, akRight]
@@ -6566,6 +6570,82 @@ object Form1: TForm1
                   Anchors = [akTop, akRight]
                   Visible = False
                 end
+                object btCieloAcharArqCertificado: TSpeedButton
+                  Left = 852
+                  Top = 275
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = btCieloAcharArqCertificadoClick
+                end
+                object btCieloAcharChavePrivada: TSpeedButton
+                  Left = 852
+                  Top = 205
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = btCieloAcharChavePrivadaClick
+                end
+                object imCieloErroCertificado: TImage
+                  Left = 11
+                  Top = 279
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object imCieloErroChavePrivada: TImage
+                  Left = 10
+                  Top = 208
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object lbCieloArqCertificado: TLabel
+                  Left = 32
+                  Top = 259
+                  Width = 89
+                  Height = 13
+                  Caption = 'Arquivo Certificado'
+                end
+                object lbCieloArqChavePrivada: TLabel
+                  Left = 32
+                  Top = 189
+                  Width = 109
+                  Height = 13
+                  Caption = 'Arquivo Chave Privada'
+                end
+                object lbCieloErroCertificado: TLabel
+                  Left = 32
+                  Top = 302
+                  Width = 100
+                  Height = 13
+                  Caption = 'lbCieloErroCertificado'
+                end
+                object lbCieloErroChavePrivada: TLabel
+                  Left = 32
+                  Top = 230
+                  Width = 117
+                  Height = 13
+                  Caption = 'lbCieloErroChavePrivada'
+                end
                 object edCieloClientSecret: TEdit
                   Left = 24
                   Top = 148
@@ -6600,6 +6680,26 @@ object Form1: TForm1
                   Anchors = [akTop, akRight]
                   TabOrder = 1
                   TabStop = False
+                end
+                object edCieloArqCertificado: TEdit
+                  Left = 33
+                  Top = 273
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 4
+                  Text = 'CieloCertificado.cer'
+                end
+                object edCieloArqChavePrivada: TEdit
+                  Left = 32
+                  Top = 205
+                  Width = 816
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 5
+                  Text = 'CieloChavePrivada.key'
                 end
               end
             end

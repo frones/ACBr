@@ -266,9 +266,9 @@ end;
 
 procedure TBoletoW_Itau_API.DefinirKeyUser;
 begin
-  FPHeaders.Clear;
-  FPHeaders.Add('x-itau-apikey: ' + Boleto.Cedente.CedenteWS.ClientID);
-  FPHeaders.Add('x-itau-correlationID: ' + Boleto.Cedente.CedenteWS.ClientID);
+  ClearHeaderParams;
+  AddHeaderParam('x-itau-apikey', Boleto.Cedente.CedenteWS.ClientID);
+  AddHeaderParam('x-itau-correlationID', Boleto.Cedente.CedenteWS.ClientID);
 end;
 
 function TBoletoW_Itau_API.DefinirParametros: String;

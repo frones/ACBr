@@ -159,7 +159,7 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirCodigoBeneficiario;
 begin
-  FPHeaders.Add( Format('codigoBeneficiario: %s',[Boleto.Cedente.CodigoCedente]) );
+  AddHeaderParam('codigoBeneficiario',Boleto.Cedente.CodigoCedente);
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirContentType;
@@ -171,12 +171,12 @@ end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirCooperativa;
 begin
-  FPHeaders.Add( Format('cooperativa: %s',[OnlyNumber(Boleto.Cedente.Agencia)]) );
+  AddHeaderParam('cooperativa',OnlyNumber(Boleto.Cedente.Agencia) );
 end;
 
 procedure TBoletoW_Sicredi_APIV2.GerarHeader;
 begin
-	FPHeaders.Clear;
+  ClearHeaderParams;
   DefinirContentType;
   DefinirKeyUser;
   DefinirPosto;
@@ -330,7 +330,7 @@ procedure TBoletoW_Sicredi_APIV2.DefinirPosto;
 begin
   if Length(Boleto.Cedente.AgenciaDigito) <> 2 then
      raise EACBrException.Create('Agência necessidade de dois digitos!');
-  FPHeaders.Add( Format('posto: %s', [Boleto.Cedente.AgenciaDigito]) );
+  AddHeaderParam('posto',Boleto.Cedente.AgenciaDigito );
 end;
 
 procedure TBoletoW_Sicredi_APIV2.DefinirAutenticacao;

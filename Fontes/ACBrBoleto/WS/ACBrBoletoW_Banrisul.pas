@@ -195,13 +195,13 @@ begin
    if Assigned(ATitulo) then
       FPKeyUser := '';
 
-   FPHeaders.Clear;
-   FPHeaders.Add('bergs-beneficiario: ' + trim(Boleto.Cedente.Convenio));
+   ClearHeaderParams;
+   AddHeaderParam('bergs-beneficiario', trim(Boleto.Cedente.Convenio));
 
    if Assigned(Boleto) then
    begin
       if Boleto.Configuracoes.WebService.Operacao = tpBaixa then
-         FPHeaders.Add('bergs-ambiente: ' + ValidaAmbiente);
+         AddHeaderParam('bergs-ambiente', ValidaAmbiente);
    end;
 
 end;

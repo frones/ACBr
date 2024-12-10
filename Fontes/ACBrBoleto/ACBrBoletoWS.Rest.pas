@@ -59,7 +59,8 @@ type
 
   TBoletoWSREST = class(TBoletoWSClass)
   private
-
+    FPHeaders      : TStringList;
+	
   protected
     FPURL          : String;
     FPContentType  : String;
@@ -70,7 +71,7 @@ type
     FMetodoHTTP    : TMetodoHTTP;
     FParamsOAuth   : String;
     FHeaderParamsList : Array of TParams;
-    FPHeaders      : TStringList;
+
     procedure setDefinirAccept(const AValue: String);
     procedure setMetodoHTTP(const AValue: TMetodoHTTP);
     procedure DefinirAuthorization; virtual;

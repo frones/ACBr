@@ -121,10 +121,10 @@ end;
 
 procedure TBoletoW_C6.GerarHeader;
 begin
-  FPHeaders.Clear;
+  ClearHeaderParams;
   DefinirContentType;
   DefinirKeyUser;
-  FPHeaders.Add('partner-software-name: ProjetoACBr');
+  AddHeaderParam('partner-software-name', 'ProjetoACBr');
 end;
 
 procedure TBoletoW_C6.GerarDados;

@@ -136,8 +136,8 @@ end;
 
 procedure TBoletoW_Santander_API.GerarHeader;
 begin
-  Self.FPHeaders.Clear;
-  Self.FPHeaders.Add('Accept-Encoding: gzip, deflate, compress');
+  ClearHeaderParams;
+  AddHeaderParam('Accept-Encoding', 'gzip, deflate, compress');
   DefinirContentType;
   DefinirIdentificador;
 end;

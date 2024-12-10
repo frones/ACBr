@@ -181,13 +181,12 @@ end;
 
 procedure TBoletoW_Sicoob.GerarHeader;
 begin
-  FPHeaders.Clear;
+  ClearHeaderParams;
   DefinirContentType;
   DefinirKeyUser;
 
   if NaoEstaVazio(Boleto.Cedente.CedenteWS.ClientID) then
-    FPHeaders.Add(C_SICOOB_CLIENT + ': ' + Boleto.Cedente.CedenteWS.ClientID);
-//  HTTPSend.Headers.Add('Accept-Encoding: ' + C_ACCEPT_ENCODING);
+    AddHeaderParam(C_SICOOB_CLIENT, Boleto.Cedente.CedenteWS.ClientID);
 end;
 
 procedure TBoletoW_Sicoob.GerarDados;

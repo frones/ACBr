@@ -122,7 +122,7 @@ end;
 
 procedure TBoletoW_Cresol.GerarHeader;
 begin
-   FPHeaders.clear;
+   ClearHeaderParams;
    DefinirContentType;
    DefinirAuthorization;
  //  FPIdentificador := 'ApiCresol';

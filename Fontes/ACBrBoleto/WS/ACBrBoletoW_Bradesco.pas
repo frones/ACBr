@@ -51,6 +51,46 @@ uses
   ACBrBoletoWS.SOAP;
 
 type
+  TEspecieDocumento = record
+    Sigla: string;
+    Codigo: Integer;
+  end;
+const
+  TabelaEspecieDocumentos: array[1..32] of TEspecieDocumento = (
+    (Sigla: 'CH'; Codigo: 1),
+    (Sigla: 'DM'; Codigo: 2),
+    (Sigla: 'DMI'; Codigo: 3),
+    (Sigla: 'DS'; Codigo: 4),
+    (Sigla: 'DSI'; Codigo: 5),
+    (Sigla: 'DR'; Codigo: 6),
+    (Sigla: 'LC'; Codigo: 7),
+    (Sigla: 'NCC'; Codigo: 8),
+    (Sigla: 'NCE'; Codigo: 9),
+    (Sigla: 'NCI'; Codigo: 10),
+    (Sigla: 'NCR'; Codigo: 11),
+    (Sigla: 'NP'; Codigo: 12),
+    (Sigla: 'NPR'; Codigo: 13),
+    (Sigla: 'TM'; Codigo: 14),
+    (Sigla: 'TS'; Codigo: 15),
+    (Sigla: 'NS'; Codigo: 16),
+    (Sigla: 'RC'; Codigo: 17),
+    (Sigla: 'FAT'; Codigo: 18),
+    (Sigla: 'ND'; Codigo: 19),
+    (Sigla: 'AP'; Codigo: 20),
+    (Sigla: 'ME'; Codigo: 21),
+    (Sigla: 'PC'; Codigo: 22),
+    (Sigla: 'DD'; Codigo: 23),
+    (Sigla: 'CCB'; Codigo: 24),
+    (Sigla: 'FI'; Codigo: 25),
+    (Sigla: 'RD'; Codigo: 26),
+    (Sigla: 'DRI'; Codigo: 27),
+    (Sigla: 'EC'; Codigo: 28),
+    (Sigla: 'ECI'; Codigo: 29),
+    (Sigla: 'CC'; Codigo: 31),
+    (Sigla: 'BDP'; Codigo: 32),
+    (Sigla: 'OUT'; Codigo: 99)
+  );
+type
 
   { TBoletoW_Bradesco}
   TBoletoW_Bradesco = class(TBoletoWSREST)
@@ -91,6 +131,7 @@ type
     function GerarRemessa: string; override;
     function Enviar: boolean; override;
     function AgenciaContaFormatada(const APadding : Integer = 11) : String;
+    function EspecieDocumento : Integer;
   end;
 
 const
@@ -427,7 +468,7 @@ begin
       LJsonObject.AddPair('cindcdEconmMoeda', '00006');
       LJsonObject.AddPair('vnmnalTitloCobr', aTitulo.ValorDocumento*100);
       LJsonObject.AddPair('qmoedaNegocTitlo', 0);//FIXO.
-      LJsonObject.AddPair('cespceTitloCobr', aTitulo.EspecieDoc);
+      LJsonObject.AddPair('cespceTitloCobr', EspecieDocumento);
       LJsonObject.AddPair('cindcdAceitSacdo', 'N');
      //ctpoProteTitlo: Tipo de protesto automático do título: 1 = Dias corridos | 2 = Dias úteis.
       LJsonObject.AddPair('ctpoProteTitlo', 0);//NÃO Obrigatório;
@@ -734,6 +775,21 @@ begin
   result := inherited Enviar;
 end;
 
+function TBoletoW_Bradesco.EspecieDocumento: Integer;
+var
+  I: Integer;
+begin
+  for I := Low(TabelaEspecieDocumentos) to High(TabelaEspecieDocumentos) do
+  begin
+    if SameText(TabelaEspecieDocumentos[I].Sigla, ATitulo.EspecieDoc) then
+    begin
+      Result := TabelaEspecieDocumentos[I].Codigo;
+      Exit;
+    end;
+    Result := StrToIntDef(ATitulo.EspecieDoc,0);
+  end;
+end;
+
 procedure TBoletoW_Bradesco.GerarDesconto(AJsonObject: TACBrJSONObject);
 begin
  if Assigned(aTitulo) then
@@ -843,7 +899,7 @@ begin
     begin
         if (ATitulo.Vencimento > 0) then
         begin
-          AJsonObject.AddPair('especieDocumento',aTitulo.EspecieDoc);
+          AJsonObject.AddPair('especieDocumento',EspecieDocumento);
         end;
     end;
   end;

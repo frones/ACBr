@@ -321,7 +321,7 @@ begin
   if ACBrNFe1.DANFE is TACBrNFeDANFEClass then
     TACBrNFeDANFEClass(ACBrNFe1.DANFE).ImprimeDescAcrescItem := LibConfig.DANFe.NFe.ImprimeDescAcrescItemNFe
   else if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
-    TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
+    TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, LibConfig.DANFe.NFCe.ViaConsumidor);
 
   if Assigned(FDANFCeEscPos) then
   begin

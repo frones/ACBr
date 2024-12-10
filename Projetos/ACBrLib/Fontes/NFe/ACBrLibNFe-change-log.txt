@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrLibNFeDataModule --
+[*] #TK-6337: Ajuste para que a config ViaConsumidor definida seja considera caso parâmetro do comando vazio.
+  Por: Diego Folieni 
+
 09/12/2024
 -- ACBrNFeMT.php --
 [*] TK-6219: Aumentado buffer do retorno da Consulta de NFe pela chave para não truncar mais o conteúdo retornado

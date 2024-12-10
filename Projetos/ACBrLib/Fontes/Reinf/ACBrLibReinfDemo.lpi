@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="2"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="52"/>
+      <BuildNr Value="53"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrReinf - Biblioteca para envio, consulta do Reinf" InternalName="ACBrLibReinf" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="Reinf" ProductVersion="0.0.1.30"/>
     </VersionInfo>

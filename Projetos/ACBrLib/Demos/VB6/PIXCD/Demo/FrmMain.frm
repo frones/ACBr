@@ -101,38 +101,26 @@ Begin VB.Form FrmMain
          TabCaption(1)   =   "/Pix"
          TabPicture(1)   =   "FrmMain.frx":0038
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "btnConsultarPix(2)"
-         Tab(1).Control(0).Enabled=   0   'False
-         Tab(1).Control(1)=   "btnConsultarPixRecebidos(3)"
-         Tab(1).Control(1).Enabled=   0   'False
-         Tab(1).Control(2)=   "btnSolicitarDevolucaoPix(4)"
-         Tab(1).Control(2).Enabled=   0   'False
-         Tab(1).Control(3)=   "btnConsultarDevolucaoPix(5)"
-         Tab(1).Control(3).Enabled=   0   'False
+         Tab(1).Control(0)=   "btnConsultarDevolucaoPix(5)"
+         Tab(1).Control(1)=   "btnSolicitarDevolucaoPix(4)"
+         Tab(1).Control(2)=   "btnConsultarPixRecebidos(3)"
+         Tab(1).Control(3)=   "btnConsultarPix(2)"
          Tab(1).ControlCount=   4
          TabCaption(2)   =   "/Cob"
          TabPicture(2)   =   "FrmMain.frx":0054
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "btnCancelarCobrancaImediata(9)"
-         Tab(2).Control(0).Enabled=   0   'False
-         Tab(2).Control(1)=   "btnRevisarCobrancaImediata(8)"
-         Tab(2).Control(1).Enabled=   0   'False
-         Tab(2).Control(2)=   "btnConsultarCobrancaImediata(7)"
-         Tab(2).Control(2).Enabled=   0   'False
-         Tab(2).Control(3)=   "btnCriarCobrancaImediata(6)"
-         Tab(2).Control(3).Enabled=   0   'False
+         Tab(2).Control(0)=   "btnCriarCobrancaImediata(6)"
+         Tab(2).Control(1)=   "btnConsultarCobrancaImediata(7)"
+         Tab(2).Control(2)=   "btnRevisarCobrancaImediata(8)"
+         Tab(2).Control(3)=   "btnCancelarCobrancaImediata(9)"
          Tab(2).ControlCount=   4
          TabCaption(3)   =   "/CobV"
          TabPicture(3)   =   "FrmMain.frx":0070
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "btnCriarCobranca(0)"
-         Tab(3).Control(0).Enabled=   0   'False
-         Tab(3).Control(1)=   "btnConsultarCobranca(10)"
-         Tab(3).Control(1).Enabled=   0   'False
-         Tab(3).Control(2)=   "btnRevisarCobranca(11)"
-         Tab(3).Control(2).Enabled=   0   'False
-         Tab(3).Control(3)=   "btnCancelarCobranca(12)"
-         Tab(3).Control(3).Enabled=   0   'False
+         Tab(3).Control(0)=   "btnCancelarCobranca(12)"
+         Tab(3).Control(1)=   "btnRevisarCobranca(11)"
+         Tab(3).Control(2)=   "btnConsultarCobranca(10)"
+         Tab(3).Control(3)=   "btnCriarCobranca(0)"
          Tab(3).ControlCount=   4
          Begin VB.CommandButton btnCancelarCobranca 
             Caption         =   "Cancelar Cobrança"
@@ -320,6 +308,7 @@ Begin VB.Form FrmMain
          _Version        =   393216
          Style           =   1
          Tabs            =   2
+         Tab             =   1
          TabsPerRow      =   2
          TabHeight       =   520
          WordWrap        =   0   'False
@@ -334,20 +323,17 @@ Begin VB.Form FrmMain
          EndProperty
          TabCaption(0)   =   "Configurações PIX"
          TabPicture(0)   =   "FrmMain.frx":00A8
-         Tab(0).ControlEnabled=   -1  'True
+         Tab(0).ControlEnabled=   0   'False
          Tab(0).Control(0)=   "frmRecebedor"
-         Tab(0).Control(0).Enabled=   0   'False
          Tab(0).Control(1)=   "Frame1"
-         Tab(0).Control(1).Enabled=   0   'False
          Tab(0).Control(2)=   "Frame2"
-         Tab(0).Control(2).Enabled=   0   'False
          Tab(0).Control(3)=   "Frame3"
-         Tab(0).Control(3).Enabled=   0   'False
          Tab(0).ControlCount=   4
          TabCaption(1)   =   "Configurações PSP"
          TabPicture(1)   =   "FrmMain.frx":00C4
-         Tab(1).ControlEnabled=   0   'False
+         Tab(1).ControlEnabled=   -1  'True
          Tab(1).Control(0)=   "SSTab2(1)"
+         Tab(1).Control(0).Enabled=   0   'False
          Tab(1).ControlCount=   1
          Begin VB.Frame Frame3 
             Caption         =   "Log PSP"
@@ -361,7 +347,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   2175
-            Left            =   3840
+            Left            =   -71160
             TabIndex        =   43
             Top             =   4200
             Width           =   3135
@@ -434,7 +420,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   2175
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   36
             Top             =   4200
             Width           =   3615
@@ -579,7 +565,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   1695
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   31
             Top             =   2280
             Width           =   6855
@@ -731,7 +717,7 @@ Begin VB.Form FrmMain
                Strikethrough   =   0   'False
             EndProperty
             Height          =   1695
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   22
             Top             =   480
             Width           =   6855
@@ -845,7 +831,7 @@ Begin VB.Form FrmMain
          Begin TabDlg.SSTab SSTab2 
             Height          =   8535
             Index           =   1
-            Left            =   -75000
+            Left            =   0
             TabIndex        =   7
             Top             =   360
             Width           =   6945
@@ -854,6 +840,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Style           =   1
             Tabs            =   15
+            Tab             =   13
             TabsPerRow      =   9
             TabHeight       =   520
             WordWrap        =   0   'False
@@ -868,242 +855,279 @@ Begin VB.Form FrmMain
             EndProperty
             TabCaption(0)   =   "Bradesco"
             TabPicture(0)   =   "FrmMain.frx":02A0
-            Tab(0).ControlEnabled=   -1  'True
+            Tab(0).ControlEnabled=   0   'False
             Tab(0).Control(0)=   "Label6"
-            Tab(0).Control(0).Enabled=   0   'False
             Tab(0).Control(1)=   "Label7"
-            Tab(0).Control(1).Enabled=   0   'False
             Tab(0).Control(2)=   "Label9"
-            Tab(0).Control(2).Enabled=   0   'False
             Tab(0).Control(3)=   "Label11"
-            Tab(0).Control(3).Enabled=   0   'False
             Tab(0).Control(4)=   "Label12"
-            Tab(0).Control(4).Enabled=   0   'False
             Tab(0).Control(5)=   "txtChavePIXBradesco"
-            Tab(0).Control(5).Enabled=   0   'False
             Tab(0).Control(6)=   "txtClientIDBradesco"
-            Tab(0).Control(6).Enabled=   0   'False
             Tab(0).Control(7)=   "txtClientSecretBradesco"
-            Tab(0).Control(7).Enabled=   0   'False
             Tab(0).Control(8)=   "txtSenhaCertificadoBradesco"
-            Tab(0).Control(8).Enabled=   0   'False
             Tab(0).Control(9)=   "txtArquivoPFXBradesco"
-            Tab(0).Control(9).Enabled=   0   'False
             Tab(0).Control(10)=   "btnCertificadoBradesco"
-            Tab(0).Control(10).Enabled=   0   'False
             Tab(0).ControlCount=   11
             TabCaption(1)   =   "Sicredi"
             TabPicture(1)   =   "FrmMain.frx":02BC
             Tab(1).ControlEnabled=   0   'False
-            Tab(1).Control(0)=   "btnArquivoCertificadoSicredi"
-            Tab(1).Control(1)=   "txtArquivoCertificadoSicredi"
-            Tab(1).Control(2)=   "btnArquivoChavePrivadaSicredi"
-            Tab(1).Control(3)=   "txtArquivoChavePrivadaSicredi"
-            Tab(1).Control(4)=   "txtClientSecretSicredi"
-            Tab(1).Control(5)=   "txtClientIDSicredi"
-            Tab(1).Control(6)=   "txtChavePIXSicredi"
-            Tab(1).Control(7)=   "Label17"
-            Tab(1).Control(8)=   "Label16"
-            Tab(1).Control(9)=   "Label15"
-            Tab(1).Control(10)=   "Label14"
-            Tab(1).Control(11)=   "Label13"
+            Tab(1).Control(0)=   "Label13"
+            Tab(1).Control(1)=   "Label14"
+            Tab(1).Control(2)=   "Label15"
+            Tab(1).Control(3)=   "Label16"
+            Tab(1).Control(4)=   "Label17"
+            Tab(1).Control(5)=   "txtChavePIXSicredi"
+            Tab(1).Control(6)=   "txtClientIDSicredi"
+            Tab(1).Control(7)=   "txtClientSecretSicredi"
+            Tab(1).Control(8)=   "txtArquivoChavePrivadaSicredi"
+            Tab(1).Control(9)=   "btnArquivoChavePrivadaSicredi"
+            Tab(1).Control(10)=   "txtArquivoCertificadoSicredi"
+            Tab(1).Control(11)=   "btnArquivoCertificadoSicredi"
             Tab(1).ControlCount=   12
             TabCaption(2)   =   "Sicoob"
             TabPicture(2)   =   "FrmMain.frx":02D8
             Tab(2).ControlEnabled=   0   'False
-            Tab(2).Control(0)=   "btnArquivoCertificadoSicoob"
-            Tab(2).Control(1)=   "txtArquivoCertificadoSicoob"
-            Tab(2).Control(2)=   "btnArquivoChavePrivadaSicoob"
-            Tab(2).Control(3)=   "txtArquivoChavePrivadaSicoob"
-            Tab(2).Control(4)=   "txtTokenSandboxSicoob"
-            Tab(2).Control(5)=   "txtClientIDSicoob"
-            Tab(2).Control(6)=   "txtChavePIXSicoob"
-            Tab(2).Control(7)=   "Label22"
-            Tab(2).Control(8)=   "Label21"
-            Tab(2).Control(9)=   "Label20"
-            Tab(2).Control(10)=   "Label19"
-            Tab(2).Control(11)=   "Label18"
+            Tab(2).Control(0)=   "Label18"
+            Tab(2).Control(1)=   "Label19"
+            Tab(2).Control(2)=   "Label20"
+            Tab(2).Control(3)=   "Label21"
+            Tab(2).Control(4)=   "Label22"
+            Tab(2).Control(5)=   "txtChavePIXSicoob"
+            Tab(2).Control(6)=   "txtClientIDSicoob"
+            Tab(2).Control(7)=   "txtTokenSandboxSicoob"
+            Tab(2).Control(8)=   "txtArquivoChavePrivadaSicoob"
+            Tab(2).Control(9)=   "btnArquivoChavePrivadaSicoob"
+            Tab(2).Control(10)=   "txtArquivoCertificadoSicoob"
+            Tab(2).Control(11)=   "btnArquivoCertificadoSicoob"
             Tab(2).ControlCount=   12
             TabCaption(3)   =   "Shipay"
             TabPicture(3)   =   "FrmMain.frx":02F4
             Tab(3).ControlEnabled=   0   'False
-            Tab(3).Control(0)=   "txtAccessKeyShipay"
-            Tab(3).Control(1)=   "txtSecretKeyShipay"
-            Tab(3).Control(2)=   "txtClientIDShipay"
-            Tab(3).Control(3)=   "Label25"
-            Tab(3).Control(4)=   "Label24"
-            Tab(3).Control(5)=   "Label23"
+            Tab(3).Control(0)=   "Label23"
+            Tab(3).Control(1)=   "Label24"
+            Tab(3).Control(2)=   "Label25"
+            Tab(3).Control(3)=   "txtClientIDShipay"
+            Tab(3).Control(4)=   "txtSecretKeyShipay"
+            Tab(3).Control(5)=   "txtAccessKeyShipay"
             Tab(3).ControlCount=   6
             TabCaption(4)   =   "Santander"
             TabPicture(4)   =   "FrmMain.frx":0310
             Tab(4).ControlEnabled=   0   'False
-            Tab(4).Control(0)=   "btnArquivoCertificadoPFXSantander"
-            Tab(4).Control(1)=   "txtArquivoCertificadoPFXSantander"
-            Tab(4).Control(2)=   "txtSenhaCertificadoPFXSantander"
-            Tab(4).Control(3)=   "txtConsumerSecretSantander"
-            Tab(4).Control(4)=   "txtConsumerKeySantander"
+            Tab(4).Control(0)=   "Label26"
+            Tab(4).Control(1)=   "Label27"
+            Tab(4).Control(2)=   "Label28"
+            Tab(4).Control(3)=   "Label29"
+            Tab(4).Control(4)=   "Label30"
             Tab(4).Control(5)=   "txtChavePIXSantander"
-            Tab(4).Control(6)=   "Label30"
-            Tab(4).Control(7)=   "Label29"
-            Tab(4).Control(8)=   "Label28"
-            Tab(4).Control(9)=   "Label27"
-            Tab(4).Control(10)=   "Label26"
+            Tab(4).Control(6)=   "txtConsumerKeySantander"
+            Tab(4).Control(7)=   "txtConsumerSecretSantander"
+            Tab(4).Control(8)=   "txtSenhaCertificadoPFXSantander"
+            Tab(4).Control(9)=   "txtArquivoCertificadoPFXSantander"
+            Tab(4).Control(10)=   "btnArquivoCertificadoPFXSantander"
             Tab(4).ControlCount=   11
             TabCaption(5)   =   "PixPDV"
             TabPicture(5)   =   "FrmMain.frx":032C
             Tab(5).ControlEnabled=   0   'False
-            Tab(5).Control(0)=   "txtSecretKeyPixPDV"
-            Tab(5).Control(1)=   "txtPixPDVToken"
-            Tab(5).Control(2)=   "txtCNPJPixPDV"
-            Tab(5).Control(3)=   "Label33"
-            Tab(5).Control(4)=   "Label32"
-            Tab(5).Control(5)=   "Label31"
+            Tab(5).Control(0)=   "Label31"
+            Tab(5).Control(1)=   "Label32"
+            Tab(5).Control(2)=   "Label33"
+            Tab(5).Control(3)=   "txtCNPJPixPDV"
+            Tab(5).Control(4)=   "txtPixPDVToken"
+            Tab(5).Control(5)=   "txtSecretKeyPixPDV"
             Tab(5).ControlCount=   6
             TabCaption(6)   =   "PagSeguro"
             TabPicture(6)   =   "FrmMain.frx":0348
             Tab(6).ControlEnabled=   0   'False
-            Tab(6).Control(0)=   "btnArquivoCertificadoPagSeguro"
-            Tab(6).Control(1)=   "txtArquivoCertificadoPagSeguro"
-            Tab(6).Control(2)=   "btnArquivoChavePrivadaPagSeguro"
-            Tab(6).Control(3)=   "txtArquivoChavePrivadaPagSeguro"
-            Tab(6).Control(4)=   "txtClientSecretPagSeguro"
-            Tab(6).Control(5)=   "txtClientIDPagSeguro"
-            Tab(6).Control(6)=   "txtChavePIXPagSeguro"
-            Tab(6).Control(7)=   "Label38"
-            Tab(6).Control(8)=   "Label37"
-            Tab(6).Control(9)=   "Label36"
-            Tab(6).Control(10)=   "Label35"
-            Tab(6).Control(11)=   "Label34"
+            Tab(6).Control(0)=   "Label34"
+            Tab(6).Control(1)=   "Label35"
+            Tab(6).Control(2)=   "Label36"
+            Tab(6).Control(3)=   "Label37"
+            Tab(6).Control(4)=   "Label38"
+            Tab(6).Control(5)=   "txtChavePIXPagSeguro"
+            Tab(6).Control(6)=   "txtClientIDPagSeguro"
+            Tab(6).Control(7)=   "txtClientSecretPagSeguro"
+            Tab(6).Control(8)=   "txtArquivoChavePrivadaPagSeguro"
+            Tab(6).Control(9)=   "btnArquivoChavePrivadaPagSeguro"
+            Tab(6).Control(10)=   "txtArquivoCertificadoPagSeguro"
+            Tab(6).Control(11)=   "btnArquivoCertificadoPagSeguro"
             Tab(6).ControlCount=   12
             TabCaption(7)   =   "Itau"
             TabPicture(7)   =   "FrmMain.frx":0364
             Tab(7).ControlEnabled=   0   'False
-            Tab(7).Control(0)=   "btnArquivoCertificadoItau"
-            Tab(7).Control(1)=   "txtArquivoCertificadoItau"
-            Tab(7).Control(2)=   "btnArquivoChavePrivadaItau"
-            Tab(7).Control(3)=   "txtArquivoChavePrivadaItau"
-            Tab(7).Control(4)=   "txtClientSecretItau"
-            Tab(7).Control(5)=   "txtClientIDItau"
-            Tab(7).Control(6)=   "txtChavePIXItau"
-            Tab(7).Control(7)=   "Label43"
-            Tab(7).Control(8)=   "Label42"
-            Tab(7).Control(9)=   "Label41"
-            Tab(7).Control(10)=   "Label40"
-            Tab(7).Control(11)=   "Label39"
+            Tab(7).Control(0)=   "Label39"
+            Tab(7).Control(1)=   "Label40"
+            Tab(7).Control(2)=   "Label41"
+            Tab(7).Control(3)=   "Label42"
+            Tab(7).Control(4)=   "Label43"
+            Tab(7).Control(5)=   "txtChavePIXItau"
+            Tab(7).Control(6)=   "txtClientIDItau"
+            Tab(7).Control(7)=   "txtClientSecretItau"
+            Tab(7).Control(8)=   "txtArquivoChavePrivadaItau"
+            Tab(7).Control(9)=   "btnArquivoChavePrivadaItau"
+            Tab(7).Control(10)=   "txtArquivoCertificadoItau"
+            Tab(7).Control(11)=   "btnArquivoCertificadoItau"
             Tab(7).ControlCount=   12
             TabCaption(8)   =   "Inter"
             TabPicture(8)   =   "FrmMain.frx":0380
             Tab(8).ControlEnabled=   0   'False
-            Tab(8).Control(0)=   "btnArquivoCertificadoInter"
-            Tab(8).Control(1)=   "txtArquivoCertificadoInter"
-            Tab(8).Control(2)=   "btnArquivoChavePrivadaInter"
-            Tab(8).Control(3)=   "txtArquivoChavePrivadaInter"
-            Tab(8).Control(4)=   "txtClientSecretInter"
-            Tab(8).Control(5)=   "txtClientIDInter"
-            Tab(8).Control(6)=   "txtChavePIXInter"
-            Tab(8).Control(7)=   "Label48"
-            Tab(8).Control(8)=   "Label47"
-            Tab(8).Control(9)=   "Label46"
-            Tab(8).Control(10)=   "Label45"
-            Tab(8).Control(11)=   "Label44"
+            Tab(8).Control(0)=   "Label44"
+            Tab(8).Control(1)=   "Label45"
+            Tab(8).Control(2)=   "Label46"
+            Tab(8).Control(3)=   "Label47"
+            Tab(8).Control(4)=   "Label48"
+            Tab(8).Control(5)=   "txtChavePIXInter"
+            Tab(8).Control(6)=   "txtClientIDInter"
+            Tab(8).Control(7)=   "txtClientSecretInter"
+            Tab(8).Control(8)=   "txtArquivoChavePrivadaInter"
+            Tab(8).Control(9)=   "btnArquivoChavePrivadaInter"
+            Tab(8).Control(10)=   "txtArquivoCertificadoInter"
+            Tab(8).Control(11)=   "btnArquivoCertificadoInter"
             Tab(8).ControlCount=   12
             TabCaption(9)   =   "GerenciaNet"
             TabPicture(9)   =   "FrmMain.frx":039C
             Tab(9).ControlEnabled=   0   'False
-            Tab(9).Control(0)=   "Label49"
-            Tab(9).Control(1)=   "Label50"
-            Tab(9).Control(2)=   "Label51"
-            Tab(9).Control(3)=   "Label52"
+            Tab(9).Control(0)=   "btnArquivoCertificadoGerenciaNet"
+            Tab(9).Control(1)=   "txtArquivoCertificadoGerenciaNet"
+            Tab(9).Control(2)=   "txtClientSecretGerenciaNet"
+            Tab(9).Control(3)=   "txtClientIDGerenciaNet"
             Tab(9).Control(4)=   "txtChavePIXGerenciaNet"
-            Tab(9).Control(5)=   "txtClientIDGerenciaNet"
-            Tab(9).Control(6)=   "txtClientSecretGerenciaNet"
-            Tab(9).Control(7)=   "txtArquivoCertificadoGerenciaNet"
-            Tab(9).Control(8)=   "btnArquivoCertificadoGerenciaNet"
+            Tab(9).Control(5)=   "Label52"
+            Tab(9).Control(6)=   "Label51"
+            Tab(9).Control(7)=   "Label50"
+            Tab(9).Control(8)=   "Label49"
             Tab(9).ControlCount=   9
             TabCaption(10)  =   "BancoBrasil"
             TabPicture(10)  =   "FrmMain.frx":03B8
             Tab(10).ControlEnabled=   0   'False
-            Tab(10).Control(0)=   "cmbBBAPIVersao"
-            Tab(10).Control(1)=   "txtSenhaPFXBancoBrasil"
-            Tab(10).Control(2)=   "btnArquivoPXFBancoBrasil"
-            Tab(10).Control(3)=   "txtArquivoPXFBancoBrasil"
-            Tab(10).Control(4)=   "btnArquivoCertificadoBancoBrasil"
-            Tab(10).Control(5)=   "txtArquivoCertificadoBancoBrasil"
-            Tab(10).Control(6)=   "btnArquivoChavePrivadaBancoBrasil"
-            Tab(10).Control(7)=   "txtArquivoChavePrivadaBancoBrasil"
-            Tab(10).Control(8)=   "txtDeveloperApplicationKeyBancoBrasil"
-            Tab(10).Control(9)=   "txtClientSecretBancoBrasil"
+            Tab(10).Control(0)=   "Label53"
+            Tab(10).Control(1)=   "Label54"
+            Tab(10).Control(2)=   "Label55"
+            Tab(10).Control(3)=   "Label56"
+            Tab(10).Control(4)=   "Label57"
+            Tab(10).Control(5)=   "Label58"
+            Tab(10).Control(6)=   "Label59"
+            Tab(10).Control(7)=   "Label60"
+            Tab(10).Control(8)=   "lblBBAPIVersao(0)"
+            Tab(10).Control(9)=   "txtChavePIXBancoBrasil"
             Tab(10).Control(10)=   "txtClientIDBancoBrasil"
-            Tab(10).Control(11)=   "txtChavePIXBancoBrasil"
-            Tab(10).Control(12)=   "lblBBAPIVersao(0)"
-            Tab(10).Control(13)=   "Label60"
-            Tab(10).Control(14)=   "Label59"
-            Tab(10).Control(15)=   "Label58"
-            Tab(10).Control(16)=   "Label57"
-            Tab(10).Control(17)=   "Label56"
-            Tab(10).Control(18)=   "Label55"
-            Tab(10).Control(19)=   "Label54"
-            Tab(10).Control(20)=   "Label53"
+            Tab(10).Control(11)=   "txtClientSecretBancoBrasil"
+            Tab(10).Control(12)=   "txtDeveloperApplicationKeyBancoBrasil"
+            Tab(10).Control(13)=   "txtArquivoChavePrivadaBancoBrasil"
+            Tab(10).Control(14)=   "btnArquivoChavePrivadaBancoBrasil"
+            Tab(10).Control(15)=   "txtArquivoCertificadoBancoBrasil"
+            Tab(10).Control(16)=   "btnArquivoCertificadoBancoBrasil"
+            Tab(10).Control(17)=   "txtArquivoPXFBancoBrasil"
+            Tab(10).Control(18)=   "btnArquivoPXFBancoBrasil"
+            Tab(10).Control(19)=   "txtSenhaPFXBancoBrasil"
+            Tab(10).Control(20)=   "cmbBBAPIVersao"
             Tab(10).ControlCount=   21
             TabCaption(11)  =   "Ailos"
             TabPicture(11)  =   "FrmMain.frx":03D4
             Tab(11).ControlEnabled=   0   'False
-            Tab(11).Control(0)=   "btnArquivoCeriticadoRootAilos"
-            Tab(11).Control(1)=   "txtArquivoCeriticadoRootAilos"
-            Tab(11).Control(2)=   "btnArquivoCertificadoAilos"
-            Tab(11).Control(3)=   "txtArquivoCertificadoAilos"
-            Tab(11).Control(4)=   "btnArquivoChavePrivadaAilos"
-            Tab(11).Control(5)=   "txtArquivoChavePrivadaAilos"
-            Tab(11).Control(6)=   "txtClientSecretAilos"
+            Tab(11).Control(0)=   "Label61"
+            Tab(11).Control(1)=   "Label62"
+            Tab(11).Control(2)=   "Label63"
+            Tab(11).Control(3)=   "Label64"
+            Tab(11).Control(4)=   "Label65"
+            Tab(11).Control(5)=   "Label66"
+            Tab(11).Control(6)=   "txtChavePIXAilos"
             Tab(11).Control(7)=   "txtClientIDAilos"
-            Tab(11).Control(8)=   "txtChavePIXAilos"
-            Tab(11).Control(9)=   "Label66"
-            Tab(11).Control(10)=   "Label65"
-            Tab(11).Control(11)=   "Label64"
-            Tab(11).Control(12)=   "Label63"
-            Tab(11).Control(13)=   "Label62"
-            Tab(11).Control(14)=   "Label61"
+            Tab(11).Control(8)=   "txtClientSecretAilos"
+            Tab(11).Control(9)=   "txtArquivoChavePrivadaAilos"
+            Tab(11).Control(10)=   "btnArquivoChavePrivadaAilos"
+            Tab(11).Control(11)=   "txtArquivoCertificadoAilos"
+            Tab(11).Control(12)=   "btnArquivoCertificadoAilos"
+            Tab(11).Control(13)=   "txtArquivoCeriticadoRootAilos"
+            Tab(11).Control(14)=   "btnArquivoCeriticadoRootAilos"
             Tab(11).ControlCount=   15
             TabCaption(12)  =   "Matera"
             TabPicture(12)  =   "FrmMain.frx":03F0
             Tab(12).ControlEnabled=   0   'False
-            Tab(12).Control(0)=   "Label67"
-            Tab(12).Control(1)=   "Label68"
-            Tab(12).Control(2)=   "Label69"
-            Tab(12).Control(3)=   "Label70"
-            Tab(12).Control(4)=   "Label71"
-            Tab(12).Control(5)=   "Label72"
-            Tab(12).Control(6)=   "Label73"
-            Tab(12).Control(7)=   "Label74"
-            Tab(12).Control(8)=   "txtChavePIXMatera"
-            Tab(12).Control(9)=   "txtClientIDMatera"
-            Tab(12).Control(10)=   "txtClientSecretMatera"
-            Tab(12).Control(11)=   "txtSecretKeyMatera"
-            Tab(12).Control(12)=   "txtAccountIDMatera"
-            Tab(12).Control(13)=   "txtMediatorFeeMatera"
-            Tab(12).Control(14)=   "txtArquivoChavePrivadaMatera"
-            Tab(12).Control(15)=   "btnArquivoChavePrivadaMatera"
-            Tab(12).Control(16)=   "txtArquivoCertificadoMatera"
-            Tab(12).Control(17)=   "btnArquivoCertificadoMatera"
+            Tab(12).Control(0)=   "btnArquivoCertificadoMatera"
+            Tab(12).Control(1)=   "txtArquivoCertificadoMatera"
+            Tab(12).Control(2)=   "btnArquivoChavePrivadaMatera"
+            Tab(12).Control(3)=   "txtArquivoChavePrivadaMatera"
+            Tab(12).Control(4)=   "txtMediatorFeeMatera"
+            Tab(12).Control(5)=   "txtAccountIDMatera"
+            Tab(12).Control(6)=   "txtSecretKeyMatera"
+            Tab(12).Control(7)=   "txtClientSecretMatera"
+            Tab(12).Control(8)=   "txtClientIDMatera"
+            Tab(12).Control(9)=   "txtChavePIXMatera"
+            Tab(12).Control(10)=   "Label74"
+            Tab(12).Control(11)=   "Label73"
+            Tab(12).Control(12)=   "Label72"
+            Tab(12).Control(13)=   "Label71"
+            Tab(12).Control(14)=   "Label70"
+            Tab(12).Control(15)=   "Label69"
+            Tab(12).Control(16)=   "Label68"
+            Tab(12).Control(17)=   "Label67"
             Tab(12).ControlCount=   18
             TabCaption(13)  =   "Cielo"
             TabPicture(13)  =   "FrmMain.frx":040C
-            Tab(13).ControlEnabled=   0   'False
-            Tab(13).Control(0)=   "txtClientSecretCielo"
-            Tab(13).Control(1)=   "txtClientIDCielo"
-            Tab(13).Control(2)=   "txtChavePIXCielo"
-            Tab(13).Control(3)=   "Label77"
-            Tab(13).Control(4)=   "Label76"
-            Tab(13).Control(5)=   "Label75"
-            Tab(13).ControlCount=   6
+            Tab(13).ControlEnabled=   -1  'True
+            Tab(13).Control(0)=   "Label75"
+            Tab(13).Control(0).Enabled=   0   'False
+            Tab(13).Control(1)=   "Label76"
+            Tab(13).Control(1).Enabled=   0   'False
+            Tab(13).Control(2)=   "Label77"
+            Tab(13).Control(2).Enabled=   0   'False
+            Tab(13).Control(3)=   "Label80"
+            Tab(13).Control(3).Enabled=   0   'False
+            Tab(13).Control(4)=   "Label81"
+            Tab(13).Control(4).Enabled=   0   'False
+            Tab(13).Control(5)=   "txtChavePIXCielo"
+            Tab(13).Control(5).Enabled=   0   'False
+            Tab(13).Control(6)=   "txtClientIDCielo"
+            Tab(13).Control(6).Enabled=   0   'False
+            Tab(13).Control(7)=   "txtClientSecretCielo"
+            Tab(13).Control(7).Enabled=   0   'False
+            Tab(13).Control(8)=   "btnArquivoCertificadoCielo"
+            Tab(13).Control(8).Enabled=   0   'False
+            Tab(13).Control(9)=   "txtArquivoCertificadoCielo"
+            Tab(13).Control(9).Enabled=   0   'False
+            Tab(13).Control(10)=   "btnArquivoChavePrivadaCielo"
+            Tab(13).Control(10).Enabled=   0   'False
+            Tab(13).Control(11)=   "txtArquivoChavePrivadaCielo"
+            Tab(13).Control(11).Enabled=   0   'False
+            Tab(13).ControlCount=   12
             TabCaption(14)  =   "MercadoPago"
             TabPicture(14)  =   "FrmMain.frx":0428
             Tab(14).ControlEnabled=   0   'False
-            Tab(14).Control(0)=   "txtAccessTokenMercadoPago"
-            Tab(14).Control(1)=   "txtChavePIXMercadoPago"
-            Tab(14).Control(2)=   "Label79"
-            Tab(14).Control(3)=   "Label78"
+            Tab(14).Control(0)=   "Label78"
+            Tab(14).Control(1)=   "Label79"
+            Tab(14).Control(2)=   "txtChavePIXMercadoPago"
+            Tab(14).Control(3)=   "txtAccessTokenMercadoPago"
             Tab(14).ControlCount=   4
+            Begin VB.TextBox txtArquivoChavePrivadaCielo 
+               Height          =   285
+               Left            =   120
+               TabIndex        =   227
+               Top             =   2760
+               Width           =   6075
+            End
+            Begin VB.CommandButton btnArquivoChavePrivadaCielo 
+               Caption         =   "..."
+               Height          =   260
+               Left            =   6240
+               TabIndex        =   226
+               Top             =   2760
+               Width           =   390
+            End
+            Begin VB.TextBox txtArquivoCertificadoCielo 
+               Height          =   285
+               Left            =   120
+               TabIndex        =   225
+               Top             =   3360
+               Width           =   6075
+            End
+            Begin VB.CommandButton btnArquivoCertificadoCielo 
+               Caption         =   "..."
+               Height          =   260
+               Left            =   6240
+               TabIndex        =   224
+               Top             =   3360
+               Width           =   390
+            End
             Begin VB.TextBox txtAccessTokenMercadoPago 
                Height          =   285
                Left            =   -74880
@@ -1120,21 +1144,21 @@ Begin VB.Form FrmMain
             End
             Begin VB.TextBox txtClientSecretCielo 
                Height          =   285
-               Left            =   -74880
+               Left            =   120
                TabIndex        =   218
                Top             =   2160
                Width           =   6555
             End
             Begin VB.TextBox txtClientIDCielo 
                Height          =   285
-               Left            =   -74880
+               Left            =   120
                TabIndex        =   216
                Top             =   1560
                Width           =   6555
             End
             Begin VB.TextBox txtChavePIXCielo 
                Height          =   285
-               Left            =   -74880
+               Left            =   120
                TabIndex        =   214
                Top             =   960
                Width           =   6555
@@ -1746,45 +1770,83 @@ Begin VB.Form FrmMain
             Begin VB.CommandButton btnCertificadoBradesco 
                Caption         =   "..."
                Height          =   260
-               Left            =   6240
+               Left            =   -68760
                TabIndex        =   67
                Top             =   2760
                Width           =   390
             End
             Begin VB.TextBox txtArquivoPFXBradesco 
                Height          =   285
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   66
                Top             =   2760
                Width           =   6075
             End
             Begin VB.TextBox txtSenhaCertificadoBradesco 
                Height          =   285
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   64
                Top             =   3360
                Width           =   6555
             End
             Begin VB.TextBox txtClientSecretBradesco 
                Height          =   285
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   60
                Top             =   2160
                Width           =   6555
             End
             Begin VB.TextBox txtClientIDBradesco 
                Height          =   285
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   58
                Top             =   1560
                Width           =   6555
             End
             Begin VB.TextBox txtChavePIXBradesco 
                Height          =   285
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   56
                Top             =   960
                Width           =   6555
+            End
+            Begin VB.Label Label81 
+               AutoSize        =   -1  'True
+               BackStyle       =   0  'Transparent
+               Caption         =   "Arquivo Chave Privada"
+               BeginProperty Font 
+                  Name            =   "Tahoma"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   700
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   195
+               Left            =   120
+               TabIndex        =   229
+               Top             =   2520
+               Width           =   1920
+            End
+            Begin VB.Label Label80 
+               AutoSize        =   -1  'True
+               BackStyle       =   0  'Transparent
+               Caption         =   "Arquivo Certificado"
+               BeginProperty Font 
+                  Name            =   "Tahoma"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   700
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               Height          =   195
+               Left            =   120
+               TabIndex        =   228
+               Top             =   3120
+               Width           =   1620
             End
             Begin VB.Label Label79 
                AutoSize        =   -1  'True
@@ -1838,7 +1900,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   -74880
+               Left            =   120
                TabIndex        =   219
                Top             =   1920
                Width           =   1080
@@ -1857,7 +1919,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   -74880
+               Left            =   120
                TabIndex        =   217
                Top             =   1320
                Width           =   720
@@ -1876,7 +1938,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   -74880
+               Left            =   120
                TabIndex        =   215
                Top             =   720
                Width           =   855
@@ -3093,7 +3155,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   65
                Top             =   3120
                Width           =   1485
@@ -3112,7 +3174,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   63
                Top             =   2520
                Width           =   1005
@@ -3131,7 +3193,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   61
                Top             =   1920
                Width           =   1080
@@ -3150,7 +3212,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   59
                Top             =   1320
                Width           =   720
@@ -3169,7 +3231,7 @@ Begin VB.Form FrmMain
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   195
-               Left            =   120
+               Left            =   -74880
                TabIndex        =   57
                Top             =   720
                Width           =   855
@@ -3361,6 +3423,8 @@ Private Sub LoadConfig()
     txtChavePIXCielo.Text = pixcd.ConfigLerValor(SESSAO_Cielo, "ChavePIX")
     txtClientIDCielo.Text = pixcd.ConfigLerValor(SESSAO_Cielo, "ClientID")
     txtClientSecretCielo.Text = pixcd.ConfigLerValor(SESSAO_Cielo, "ClientSecret")
+    txtArquivoChavePrivadaCielo.Text = pixcd.ConfigLerValor(SESSAO_Cielo, "ArqChavePrivada")
+    txtArquivoCertificadoCielo.Text = pixcd.ConfigLerValor(SESSAO_Cielo, "ArqCertificado")
     
     'MercadoPago
     txtChavePIXMercadoPago.Text = pixcd.ConfigLerValor(SESSAO_MercadoPago, "ChavePIX")
@@ -3484,6 +3548,8 @@ Private Sub SalvarConfig()
     pixcd.ConfigGravarValor SESSAO_Cielo, "ChavePIX", txtChavePIXCielo.Text
     pixcd.ConfigGravarValor SESSAO_Cielo, "ClientID", txtClientIDCielo.Text
     pixcd.ConfigGravarValor SESSAO_Cielo, "ClientSecret", txtClientSecretCielo.Text
+    pixcd.ConfigGravarValor SESSAO_Cielo, "ArqChavePrivada", txtArquivoChavePrivadaCielo.Text
+    pixcd.ConfigGravarValor SESSAO_Cielo, "ArqCertificado", txtArquivoCertificadoCielo.Text
     
     'MercadoPago
     pixcd.ConfigGravarValor SESSAO_MercadoPago, "ChavePIX", txtChavePIXMercadoPago.Text
@@ -3529,6 +3595,30 @@ Private Sub btnArquivoCertificadoSicredi_Click()
     If Err Then Exit Sub
     
     txtArquivoCertificadoSicredi.Text = CommonDialog1.FileName
+End Sub
+
+Private Sub btnArquivoCertificadoCielo_Click()
+    On Error Resume Next
+    CommonDialog1.DialogTitle = "Selecione Arquivo CER"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivos CER (*.cer)|*.cer|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.ShowOpen
+            
+    If Err Then Exit Sub
+    
+    txtArquivoCertificadoCielo.Text = CommonDialog1.FileName
+End Sub
+
+Private Sub btnArquivoChavePrivadaCielo_Click()
+    On Error Resume Next
+    CommonDialog1.DialogTitle = "Selecione Arquivo KEY"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivos KEY (*.key)|*.key|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.ShowOpen
+            
+    If Err Then Exit Sub
+    
+    txtArquivoChavePrivadaCielo.Text = CommonDialog1.FileName
 End Sub
 
 Private Sub btnArquivoChavePrivadaSicoob_Click()

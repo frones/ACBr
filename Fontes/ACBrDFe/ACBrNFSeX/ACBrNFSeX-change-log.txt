@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/12/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6338: A cidade de Palma Sola/SC mudou a versão e a URL, o provedor continua
+    o mesmo.
+  Por: Limber Software
+[*] #TK-6339: Realizado a troca do provedor Giss por Ginfes para a cidade de 
+    Guarulhos/SP.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [*] #TK-6341: Ajustes para interromper a execução do método Emitir quando o 
     retorno conter erros.

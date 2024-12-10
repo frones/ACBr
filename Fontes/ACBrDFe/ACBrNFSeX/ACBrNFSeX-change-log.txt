@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrNFSeX --
+[*] #TK-6341: Ajustes para interromper a execução do método Emitir quando o 
+    retorno conter erros.
+  Por: Italo Giurizzato Junior
+
 09/12/2024
 -- Diversos --
 [*] Ajustes na leitura do XML e na impressão do DANFSE em Fortes Report.

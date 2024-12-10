@@ -474,6 +474,9 @@ begin
 
   FProvider.Emite;
 
+  if FWebService.Emite.Erros.Count > 0 then
+    Exit;
+
   if Configuracoes.Geral.ConsultaLoteAposEnvio and
      (FWebService.Emite.ModoEnvio = meLoteAssincrono) then
   begin

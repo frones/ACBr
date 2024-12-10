@@ -78,9 +78,22 @@ const
   {$ENDIF}
 {$ENDIF}
 
+  CSITEF_OP_Venda = 0;
+  CSITEF_OP_Administrativo = 110;
+  CSITEF_OP_ConsultarTrasPendente = 130;
+  CSITEF_OP_Cancelamento = 200;
+  CSITEF_ESPERA_MINIMA_MSG_FINALIZACAO = 5000;
+  CSITEF_OP_DadosPinPadAberto = 789;
+
+  CSITEF_RestricoesCueque = '10';
+  CSITEF_RestricoesCredito = '24;26;27;28;29;30;34;35;44;73';
+  CSITEF_RestricoesDebito = '16;17;18;19;42;43';
+  CSITEF_RestricoesAVista = '16;24;26;34';
+  CSITEF_RestricoesParcelado = '18;35;44';
+  CSITEF_RestricoesParcelaEstabelecimento = '27;3988';
+  CSITEF_RestricoesParcelaAministradora = '28;3988';
 
 type
-
   { TACBrTEFRespCliSiTef }
 
   TACBrTEFRespCliSiTef = class(TACBrTEFResp)
@@ -407,7 +420,9 @@ begin
     end;
 
     QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
-    Confirmar := (QtdLinhasComprovante > 0);
+    Confirmar := (QtdLinhasComprovante > 0) or (LeInformacao(899, 110).AsInteger = CSITEF_OP_ConsultarTrasPendente);
+
+
     Sucesso := (NSU_TEF <> '') or Confirmar;
 
     // leitura de parcelas conforme nova documentação

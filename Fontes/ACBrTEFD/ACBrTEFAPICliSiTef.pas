@@ -47,20 +47,6 @@ uses
 
 const
   CSUBDIRETORIO_PAYGOWEB = 'PGWeb';
-  CSITEF_OP_Venda = 0;
-  CSITEF_OP_Administrativo = 110;
-  CSITEF_OP_ConsultarTrasPendente = 130;
-  CSITEF_OP_Cancelamento = 200;
-  CSITEF_ESPERA_MINIMA_MSG_FINALIZACAO = 5000;
-  CSITEF_OP_DadosPinPadAberto = 789;
-
-  CSITEF_RestricoesCueque = '10';
-  CSITEF_RestricoesCredito = '24;26;27;28;29;30;34;35;44;73';
-  CSITEF_RestricoesDebito = '16;17;18;19;42;43';
-  CSITEF_RestricoesAVista = '16;24;26;34';
-  CSITEF_RestricoesParcelado = '18;35;44';
-  CSITEF_RestricoesParcelaEstabelecimento = '27;3988';
-  CSITEF_RestricoesParcelaAministradora = '28;3988';
 
 // https://dev.softwareexpress.com.br/en/docs/clisitef/clisitef_documento_principal/
 
@@ -316,6 +302,7 @@ begin
     fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(899,103, IntToStr(Trunc(SimpleRoundTo( Valor * 100 ,0))) );
 
   fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(899, 102, fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao);
+  fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(899, 110, IntToStr(Funcao));
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.FazerRequisicaoSiTef(Funcao: Integer;
@@ -917,6 +904,7 @@ begin
         RespTEFPendente.Conteudo.GravaInformacao(105,000, DataFiscal + HoraFiscal);
         InfValor.AsFloat := ValorTransacao;
         RespTEFPendente.Conteudo.GravaInformacao(899,103, InfValor);
+        RespTEFPendente.Conteudo.GravaInformacao(899,110, IntToStr(CSITEF_OP_ConsultarTrasPendente));
 
         RespTEFPendente.Finalizacao := CupomFiscal;
         RespTEFPendente.DocumentoVinculado := CupomFiscal;
@@ -1028,7 +1016,7 @@ begin
   Restricoes := DadosAdicionais;
   if (pos('[', fParamAdicFuncao.Text) = 0) then   // Não especificou Restrições de Menu ?
   begin
-    if (Op <> 1) then       // Débito
+    if (Op <> 0) and (OP <> 1) then       // Débito
       Restricoes := Restricoes + CSITEF_RestricoesCueque + ';';
 
     if (Op = 2) then       // Débito
@@ -1075,6 +1063,7 @@ begin
         Restricoes := StringReplace(Trim(SL.Text), sLineBreak, ';', [rfReplaceAll]);
         if Restricoes <> '' then
           Restricoes := '['+Restricoes+']';
+
         if fParamAdicConfig.Count > 0 then
            Restricoes := Restricoes + ';'+ Trim(fParamAdicConfig.Text);
 

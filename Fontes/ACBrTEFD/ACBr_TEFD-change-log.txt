@@ -46,6 +46,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrTEFAPICliSiTef, ACBrTEFCliSiTefComum --
+[-] Ajuste para que o método "ConteudoToProperty" sempre considere a resposta
+    lida pelo método "CarregarRespostasPendentes" com o Status de Confirmar = True
+
+-- ACBrTEFAPICliSiTef --
+[*] Ajuste no método "EfetuarPagamento", para não adicionar restrições na
+    transação, quando a operação for igual a 0
+    (por: DSA)
+
 09/12/2024
 -- ACBrTEFAPIDestaxa --
 [*] Correção para parâmetro "Confirmar Transação Automaticamente";

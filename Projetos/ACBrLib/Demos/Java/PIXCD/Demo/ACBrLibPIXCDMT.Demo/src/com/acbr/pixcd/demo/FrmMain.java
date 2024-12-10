@@ -274,6 +274,12 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel125 = new javax.swing.JLabel();
         jLabel126 = new javax.swing.JLabel();
         txtChavePIXCielo = new javax.swing.JTextField();
+        jLabel137 = new javax.swing.JLabel();
+        txtArquivoChavePrivadaCielo = new javax.swing.JTextField();
+        btnArquivoChavePrivadaCielo = new javax.swing.JButton();
+        jLabel138 = new javax.swing.JLabel();
+        txtArquivoCertificadoCielo = new javax.swing.JTextField();
+        btnArquivoCertificadoCielo = new javax.swing.JButton();
         jPanel22 = new javax.swing.JPanel();
         txtAccessTokenMercadoPago = new javax.swing.JTextField();
         jLabel127 = new javax.swing.JLabel();
@@ -1749,22 +1755,52 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel126.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel126.setText("Chave PIX");
 
+        jLabel137.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel137.setText("Arquivo Chave Privada");
+
+        btnArquivoChavePrivadaCielo.setText("...");
+        btnArquivoChavePrivadaCielo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArquivoChavePrivadaCieloActionPerformed(evt);
+            }
+        });
+
+        jLabel138.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel138.setText("Arquivo Certificado");
+
+        btnArquivoCertificadoCielo.setText("...");
+        btnArquivoCertificadoCielo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArquivoCertificadoCieloActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+            .addGroup(jPanel20Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtClientIDCielo)
                     .addComponent(txtChavePIXCielo)
                     .addComponent(txtClientSecretCielo)
                     .addGroup(jPanel20Layout.createSequentialGroup()
+                        .addComponent(txtArquivoChavePrivadaCielo, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnArquivoChavePrivadaCielo))
+                    .addGroup(jPanel20Layout.createSequentialGroup()
+                        .addComponent(txtArquivoCertificadoCielo, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnArquivoCertificadoCielo))
+                    .addGroup(jPanel20Layout.createSequentialGroup()
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel125)
                             .addComponent(jLabel126)
-                            .addComponent(jLabel124))
-                        .addGap(0, 373, Short.MAX_VALUE)))
+                            .addComponent(jLabel124)
+                            .addComponent(jLabel137)
+                            .addComponent(jLabel138))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
@@ -1782,7 +1818,19 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jLabel124)
                 .addGap(3, 3, 3)
                 .addComponent(txtClientSecretCielo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel137)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtArquivoChavePrivadaCielo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArquivoChavePrivadaCielo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel138)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtArquivoCertificadoCielo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArquivoCertificadoCielo))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Cielo", jPanel20);
@@ -2838,6 +2886,38 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConsultarCobrancasCobVActionPerformed
 
+    private void btnArquivoChavePrivadaCieloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoChavePrivadaCieloActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("key", "Arquivo Chave Privada (*.key)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            txtArquivoChavePrivadaCielo.setText(chooser.getSelectedFile().toString());
+            acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ArqChavePrivada", txtArquivoChavePrivadaCielo.getText());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnArquivoChavePrivadaCieloActionPerformed
+
+    private void btnArquivoCertificadoCieloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoCertificadoCieloActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("cer", "Arquivo Certificado (*.cer)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            txtArquivoCertificadoCielo.setText(chooser.getSelectedFile().toString());
+            acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ArqCertificado", txtArquivoCertificadoCielo.getText());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnArquivoCertificadoCieloActionPerformed
+
     private void loadConfig() {
         try 
         {    
@@ -2957,6 +3037,8 @@ public class FrmMain extends javax.swing.JFrame {
             txtChavePIXCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ChavePIX"));
             txtClientIDCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ClientID"));
             txtClientSecretCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ClientSecret"));
+            txtArquivoChavePrivadaCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ArqChavePrivada"));
+            txtArquivoCertificadoCielo.setText(acbrPIXCD.configLerValor(ACBrSessao.Cielo, "ArqCertificado"));
 
             //MercadoPago
             txtChavePIXMercadoPago.setText(acbrPIXCD.configLerValor(ACBrSessao.MercadoPago, "ChavePIX"));
@@ -3084,6 +3166,8 @@ public class FrmMain extends javax.swing.JFrame {
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ChavePIX", txtChavePIXCielo.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ClientID", txtClientIDCielo.getText());
             acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ClientSecret", txtClientSecretCielo.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ArqChavePrivada", txtArquivoChavePrivadaCielo.getText());
+            acbrPIXCD.configGravarValor(ACBrSessao.Cielo, "ArqCertificado", txtArquivoCertificadoCielo.getText());
             
             //MercadoPago
             acbrPIXCD.configGravarValor(ACBrSessao.MercadoPago, "ChavePIX", txtChavePIXMercadoPago.getText());
@@ -3102,6 +3186,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnArquivoCeriticadoRootAilos;
     private javax.swing.JButton btnArquivoCertificadoBancoBrasil;
     private javax.swing.JButton btnArquivoCertificadoBancoBrasil1;
+    private javax.swing.JButton btnArquivoCertificadoCielo;
     private javax.swing.JButton btnArquivoCertificadoGerenciaNet;
     private javax.swing.JButton btnArquivoCertificadoInter;
     private javax.swing.JButton btnArquivoCertificadoItau;
@@ -3112,6 +3197,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnArquivoCertificadoSicredi1;
     private javax.swing.JButton btnArquivoChavePrivadaAilos;
     private javax.swing.JButton btnArquivoChavePrivadaBancoBrasil;
+    private javax.swing.JButton btnArquivoChavePrivadaCielo;
     private javax.swing.JButton btnArquivoChavePrivadaInter;
     private javax.swing.JButton btnArquivoChavePrivadaItau;
     private javax.swing.JButton btnArquivoChavePrivadaMatera;
@@ -3182,6 +3268,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel134;
     private javax.swing.JLabel jLabel135;
     private javax.swing.JLabel jLabel136;
+    private javax.swing.JLabel jLabel137;
+    private javax.swing.JLabel jLabel138;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
@@ -3274,6 +3362,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtArquivoCeriticadoRootAilos;
     private javax.swing.JTextField txtArquivoCertificadoAilos;
     private javax.swing.JTextField txtArquivoCertificadoBancoBrasil;
+    private javax.swing.JTextField txtArquivoCertificadoCielo;
     private javax.swing.JTextField txtArquivoCertificadoGerenciaNet;
     private javax.swing.JTextField txtArquivoCertificadoInter;
     private javax.swing.JTextField txtArquivoCertificadoItau;
@@ -3284,6 +3373,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtArquivoCertificadoSicredi;
     private javax.swing.JTextField txtArquivoChavePrivadaAilos;
     private javax.swing.JTextField txtArquivoChavePrivadaBancoBrasil;
+    private javax.swing.JTextField txtArquivoChavePrivadaCielo;
     private javax.swing.JTextField txtArquivoChavePrivadaInter;
     private javax.swing.JTextField txtArquivoChavePrivadaItau;
     private javax.swing.JTextField txtArquivoChavePrivadaMatera;

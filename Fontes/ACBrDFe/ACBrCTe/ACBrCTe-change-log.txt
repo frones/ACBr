@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrCTe.XmlHandler --
+[-] #TK-6336: Correção, para a leitura de CT-e Simplificado.
+   Por: Evertof
+
 09/12/2024
 -- ACBrCTeConhecimentos, pcteConversaoCTe --
 [*] Realizado ajustes e validação para que não ocorra erro de assinatura - #TK-6313

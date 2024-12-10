@@ -1158,16 +1158,15 @@ begin
 
   if not Assigned(tomaNode) then exit;
 
-  (*B29*)toma4.toma := StrToTpTomador(OK, ObterConteudoTag(tomaNode.Childrens.FindAnyNs('toma'), tcStr));
+  toma4.toma := StrToTpTomador(OK, ObterConteudoTag(tomaNode.Childrens.FindAnyNs('toma'), tcStr));
 
-  (*B31*)toma4.CNPJCPF := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(toma4.CNPJCPF) = EmptyStr then
-    (*B31*)toma4.CNPJCPF := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('CPF'), tcStr);
-  (*B33*)toma4.IE := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('IE'), tcStr);
-  (*B34*)toma4.xNome := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('xNome'), tcStr);
-  (*B35*)toma4.xFant := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('xFant'), tcStr);
-  (*#44*)toma4.fone := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('fone'), tcStr);
-  (*#56*)toma4.email := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('email'), tcStr);
+  toma4.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
+
+  toma4.IE := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('IE'), tcStr);
+  toma4.xNome := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('xNome'), tcStr);
+  toma4.xFant := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('xFant'), tcStr);
+  toma4.fone := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('fone'), tcStr);
+  toma4.email := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('email'), tcStr);
 
   FEnderHandler.LerEnder(tomaNode.Childrens.FindAnyNs('enderToma'), toma4.enderToma);
 
@@ -1379,15 +1378,15 @@ var
 begin
   if not Assigned(ANode) then exit;
 
-  toma.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(toma.CNPJCPF) = EmptyStr then
-    toma.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
+  toma.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
 
-  toma.IE      := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  toma.xNome   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  toma.xFant   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xFant'), tcStr);
-  toma.fone    := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
-  toma.email   := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+  toma.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  toma.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  toma.xFant := ObterConteudoTag(ANode.Childrens.FindAnyNs('xFant'), tcStr);
+  toma.fone := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  toma.email := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+
+  toma.Toma := StrToTpTomador(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('toma'), tcStr));
   toma.indIEToma := StrToindIEDest(OK, ObterConteudoTag(ANode.Childrens.FindAnyNs('indIEToma'), tcStr));
 
   FEnderHandler.LerEnder(ANode.Childrens.FindAnyNs('enderToma'), toma.enderToma);
@@ -1411,15 +1410,13 @@ procedure TRemHandler.LerRem(const ANode: TACBrXMLNode; const Rem: TRem);
 begin
   if not Assigned(ANode) then exit;
 
-  Rem.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(Rem.CNPJCPF) = EmptyStr then
-    Rem.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+  Rem.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
 
-  Rem.IE      := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  Rem.xNome   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  Rem.xFant   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xFant'), tcStr);
-  Rem.fone    := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
-  Rem.email   := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+  Rem.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  Rem.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  Rem.xFant := ObterConteudoTag(ANode.Childrens.FindAnyNs('xFant'), tcStr);
+  Rem.fone := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  Rem.email := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
 
   FEnderHandler.LerEnder(ANode.Childrens.FindAnyNs('enderReme'), Rem.enderReme);
 end;
@@ -1442,14 +1439,12 @@ procedure TExpedHandler.LerExped(const ANode: TACBrXMLNode; const Exped: TExped)
 begin
   if not Assigned(ANode) then exit;
 
-  Exped.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(Exped.CNPJCPF) = EmptyStr then
-    Exped.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+  Exped.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
 
-  Exped.IE      := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  Exped.xNome   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  Exped.fone    := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
-  Exped.email   := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+  Exped.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  Exped.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  Exped.fone := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  Exped.email := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
 
   FEnderHandler.LerEnder(ANode.Childrens.FindAnyNs('enderExped'), Exped.enderExped);
 end;
@@ -1472,13 +1467,12 @@ procedure TRecebHandler.LerReceb(const ANode: TACBrXMLNode; const Receb: TReceb)
 begin
   if not Assigned(ANode) then exit;
 
-  receb.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(receb.CNPJCPF) = EmptyStr then
-    receb.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
-  receb.IE      := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  receb.xNome   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  receb.fone    := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
-  receb.email   := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+  receb.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
+
+  receb.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  receb.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  receb.fone := ObterConteudoTag(ANode.Childrens.FindAnyNs('fone'), tcStr);
+  receb.email := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
 
   FEnderHandler.LerEnder(ANode.Childrens.FindAnyNs('enderReceb'), receb.enderReceb);
 end;
@@ -1501,14 +1495,13 @@ procedure TDestHandler.LerDest(const ANode: TACBrXmlNode; const Dest: TDest);
 begin
   if not Assigned(ANode) then exit;
 
-  Dest.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(Dest.CNPJCPF) = EmptyStr then
-    Dest.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
-  Dest.IE      := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  Dest.xNome   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  Dest.fone    := ObterConteudoTag(ANode.Childrens.FindANyNs('fone'), tcStr);
-  Dest.ISUF    := ObterConteudoTag(ANode.Childrens.FindAnyNs('ISUF'), tcStr);
-  Dest.email   := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
+  Dest.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
+
+  Dest.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  Dest.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  Dest.fone := ObterConteudoTag(ANode.Childrens.FindANyNs('fone'), tcStr);
+  Dest.ISUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('ISUF'), tcStr);
+  Dest.email := ObterConteudoTag(ANode.Childrens.FindAnyNs('email'), tcStr);
 
   FEnderHandler.LerEnder(ANode.Childrens.FindAnyNs('enderDest'), Dest.enderDest);
 end;
@@ -2455,15 +2448,16 @@ begin
   if not Assigned(ANode) then exit;
   emiDocAnt.Clear;
   AuxNodeArray := ANode.Childrens.FindAllAnyNs('emiDocAnt');
+
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
     emiDocAnt.New;
-    emiDocAnt[i].CNPJCPF := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('CNPJ'), tcStr);
-    if Trim(emiDocAnt[i].CNPJCPF) = EmptyStr then
-      emiDocAnt[i].CNPJCPF := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('CPF'), tcStr);
-    emiDocAnt[i].IE      := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('IE'), tcStr);
-    emiDocAnt[i].UF      := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('UF'), tcStr);
-    emiDocAnt[i].xNome   := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('xNome'), tcStr);
+
+    emiDocAnt[i].CNPJCPF := ObterConteudoTagCNPJCPF(AuxNodeArray[i]);
+
+    emiDocAnt[i].IE := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('IE'), tcStr);
+    emiDocAnt[i].UF := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('UF'), tcStr);
+    emiDocAnt[i].xNome := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('xNome'), tcStr);
 
     FIdDocAntHandler.LerIdDocAnt(AuxNodeArray[i], emiDocAnt[i].idDocAnt);
   end;
@@ -2726,15 +2720,13 @@ var
 begin
   if not Assigned(ANode) then exit;
 
-  prop.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(prop.CNPJCPF) = EmptyStr then
-    prop.CNPJCPF := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+  prop.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
 
-  prop.RNTRC   := ObterConteudoTag(ANode.Childrens.FindAnyNs('RNTRC'), tcStr);
-  prop.xNome   := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  prop.IE      := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  prop.UF      := ObterConteudoTag(ANode.Childrens.FindAnyNs('UF'), tcStr);
-  prop.tpProp  := StrToTpProp(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpProp'), tcStr));
+  prop.RNTRC := ObterConteudoTag(ANode.Childrens.FindAnyNs('RNTRC'), tcStr);
+  prop.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  prop.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  prop.UF := ObterConteudoTag(ANode.Childrens.FindAnyNs('UF'), tcStr);
+  prop.tpProp := StrToTpProp(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpProp'), tcStr));
 end;
 
 { TlacRodoHandler }
@@ -2971,16 +2963,14 @@ procedure TRefNFHandler.LerRefNF(const ANode: TACBrXmlNode; const refNF: TRefNF)
 begin
   if not Assigned(ANode) then exit;
 
-  refNF.CNPJCPF  := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(refNF.CNPJCPF) = EmptyStr then
-    refNF.CNPJCPF  := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
+  refNF.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
 
-  refNF.modelo   := ObterConteudoTag(ANode.Childrens.FindAnyNs('mod'), tcStr);
-  refNF.serie    := ObterConteudoTag(ANode.Childrens.FindAnyNs('serie'), tcInt);
+  refNF.modelo := ObterConteudoTag(ANode.Childrens.FindAnyNs('mod'), tcStr);
+  refNF.serie := ObterConteudoTag(ANode.Childrens.FindAnyNs('serie'), tcInt);
   refNF.subserie := ObterConteudoTag(ANode.Childrens.FindAnyNs('subserie'), tcInt);
-  refNF.nro      := ObterConteudoTag(ANode.Childrens.FindAnyNs('nro'), tcInt);
-  refNF.valor    := ObterConteudoTag(ANode.Childrens.FindAnyNs('valor'), tcDe2);
-  refNF.dEmi     := ObterConteudoTag(ANode.Childrens.FindAnyNs('dEmi'), tcDat);
+  refNF.nro := ObterConteudoTag(ANode.Childrens.FindAnyNs('nro'), tcInt);
+  refNF.valor := ObterConteudoTag(ANode.Childrens.FindAnyNs('valor'), tcDe2);
+  refNF.dEmi := ObterConteudoTag(ANode.Childrens.FindAnyNs('dEmi'), tcDat);
 end;
 
 { TTomaNaoICMSHandler }
@@ -3094,9 +3084,8 @@ begin
   for i:=0 to Length(AuxNodeArray)-1 do
   begin
     autXML.New;
-    autXML[i].CNPJCPF := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('CNPJ'), tcStr);
-    if Trim(autXML[i].CNPJCPF) = EmptyStr then
-      autXML[i].CNPJCPF := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('CPF'), tcStr);
+
+    autXML[i].CNPJCPF := ObterConteudoTagCNPJCPF(AuxNodeArray[i]);
   end;
 end;
 
@@ -3340,15 +3329,14 @@ var
 begin
   if not Assigned(ANode) then exit;
 
-  propOS.CNPJCPF        := ObterConteudoTag(ANode.Childrens.FindAnyNs('CNPJ'), tcStr);
-  if Trim(propOS.CNPJCPF) = EmptyStr then
-    propOS.CNPJCPF        := ObterConteudoTag(ANode.Childrens.FindAnyNs('CPF'), tcStr);
-  propOS.TAF            := ObterConteudoTag(ANode.Childrens.FindAnyNs('TAF'), tcStr);
+  propOS.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
+
+  propOS.TAF := ObterConteudoTag(ANode.Childrens.FindAnyNs('TAF'), tcStr);
   propOS.NroRegEstadual := ObterConteudoTag(ANode.Childrens.FindAnyNs('NroRegEstadual'), tcStr);
-  propOS.xNome          := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
-  propOS.IE             := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
-  propOS.UF             := ObterConteudoTag(ANode.Childrens.FindAnyNs('UF'), tcStr);
-  propOS.tpProp         := StrToTpProp(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpProp'), tcStr));
+  propOS.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
+  propOS.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  propOS.UF := ObterConteudoTag(ANode.Childrens.FindAnyNs('UF'), tcStr);
+  propOS.tpProp := StrToTpProp(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpProp'), tcStr));
 end;
 
 { TInfFretamentoHandler }

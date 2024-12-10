@@ -305,10 +305,12 @@ begin
 
     with ACBrPSPCielo1 do
     begin
-      ChavePIX     := pLibPIXCDConfig.PIXCDCielo.ChavePIX;
-      ClientID     := pLibPIXCDConfig.PIXCDCielo.ClientID;
-      ClientSecret := pLibPIXCDConfig.PIXCDCielo.ClientSecret;
-      Scopes       := pLibPIXCDConfig.PIXCDCielo.Scopes;
+      ChavePIX            := pLibPIXCDConfig.PIXCDCielo.ChavePIX;
+      ClientID            := pLibPIXCDConfig.PIXCDCielo.ClientID;
+      ClientSecret        := pLibPIXCDConfig.PIXCDCielo.ClientSecret;
+      ArquivoChavePrivada := pLibPIXCDConfig.PIXCDCielo.ArqChavePrivada;
+      ArquivoCertificado  := pLibPIXCDConfig.PIXCDCielo.ArqCertificado;
+      Scopes              := pLibPIXCDConfig.PIXCDCielo.Scopes;
     end;
 
     with ACBrPSPMercadoPago1 do

@@ -135,6 +135,8 @@ type
     FChavePIX: String;
     FClientID: String;
     FClientSecret: String;
+    FArqChavePrivada: String;
+    FArqCertificado: String;
 
     public
     Constructor Create;
@@ -145,6 +147,8 @@ type
     property ChavePIX: String read FChavePIX write FChavePIX;
     property ClientID: String read FClientID write FClientID;
     property ClientSecret: String read FClientSecret write FClientSecret;
+    property ArqChavePrivada: String read FArqChavePrivada write FArqChavePrivada;
+    property ArqCertificado: String read FArqCertificado write FArqCertificado;
   end;
 
   { TPIXCDMateraConfig }
@@ -1213,6 +1217,8 @@ begin
   FChavePIX := EmptyStr;
   FClientID := EmptyStr;
   FClientSecret := EmptyStr;
+  FArqChavePrivada:= EmptyStr;
+  FArqCertificado := EmptyStr;
   FSessaoPSP := CSessaoPIXCDCieloConfig;
 end;
 
@@ -1222,6 +1228,8 @@ begin
   ChavePIX := AIni.ReadString(CSessaoPIXCDCieloConfig, CChavePIXCielo, ChavePIX);
   ClientID := AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveClientIDCielo, ClientID);
   ClientSecret := AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveClientSecretCielo, ClientSecret);
+  ArqChavePrivada := AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveArqChavePrivadaCielo, ArqChavePrivada);
+  ArqCertificado := AIni.ReadString(CSessaoPIXCDCieloConfig, CChaveArqCertificadoCielo, ArqCertificado);
 end;
 
 procedure TPIXCDCieloConfig.GravarIni(const AIni: TCustomIniFile);
@@ -1230,6 +1238,8 @@ begin
   AIni.WriteString(CSessaoPIXCDCieloConfig, CChavePIXCielo, ChavePIX);
   AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveClientIDCielo, ClientID);
   AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveClientSecretCielo, ClientSecret);
+  AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveArqChavePrivadaCielo, ArqChavePrivada);
+  AIni.WriteString(CSessaoPIXCDCieloConfig, CChaveArqCertificadoCielo, ArqCertificado);
 end;
 
 { TPIXCDMercadoPagoConfig }

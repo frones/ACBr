@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig --
+[*] Inclusão das propriedades ArquivoChavePrivada e ArquivoCertificado para uso do PSP Cielo em Produção.
+    #TK-6118 - ACBrPIXCD - Como passar os certificados - PSP Cielo - Produção.
+    Por: Antonio Carlos Junior
+
+
 21/11/2024
 --- ACBrLibPIXCDRespostas ---
 [*] Ajuste no Status da Devolução e Cobranças para retornar o texto ao invés do valor.

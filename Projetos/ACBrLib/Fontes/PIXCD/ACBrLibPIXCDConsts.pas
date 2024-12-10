@@ -310,6 +310,8 @@ const
   CChavePIXCielo = 'ChavePIX';
   CChaveClientIDCielo = 'ClientID';
   CChaveClientSecretCielo = 'ClientSecret';
+  CChaveArqChavePrivadaCielo = 'ArqChavePrivada';
+  CChaveArqCertificadoCielo = 'ArqCertificado';
 
   CSessaoPIXCDMercadoPagoConfig = 'MercadoPago';
   CChavePIXMercadoPago = 'ChavePIX';

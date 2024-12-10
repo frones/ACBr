@@ -41,7 +41,7 @@ interface
 
 uses
   SysUtils, Classes, Contnrs,
-  pcnConversao, pcnConversaoNFe{, pcnSignature, pcnProcNFe, pcnGerador};
+  pcnConversao, pcnConversaoNFe;
 
 type
   TadicaoCollection = class;

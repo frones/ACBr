@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2024
+-- ACBrNFeMT.php --
+[*] TK-6219: Aumentado buffer do retorno da Consulta de NFe pela chave para não truncar mais o conteúdo retornado
+  Por: Renato Rubinho
+
 05/12/2024
 -- ACBrLibNFeConsoleMT.lpi, ACBrLibNFeConsoleMTDemo.lpi--
 [*] Por conta do commit 36367, foi realizada a inclusão da nova unit de constants para compilação ACBrLibNFe Android.

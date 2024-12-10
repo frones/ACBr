@@ -508,7 +508,7 @@ function Consultar($handle, $ffi, $eChaveOuNFe, $AExtrairEventos, &$retornoGeral
 {
     $esTamanho = FFI::new("long");
     $esTamanho->cdata = 9048;
-    $sMensagem = FFI::new("char[535]");
+    $sMensagem = FFI::new("char[9048]");
     $retorno = $ffi->NFE_Consultar($handle->cdata, $eChaveOuNFe, $AExtrairEventos, $sMensagem, FFI::addr($esTamanho));
 
     if ($retorno !== 0) {

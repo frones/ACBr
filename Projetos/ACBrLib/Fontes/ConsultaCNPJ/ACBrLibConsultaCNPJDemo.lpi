@@ -443,7 +443,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrlibconsultacnpj64"/>
+            <Filename Value="bin\MT\Linux\acbrconsultacnpj64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -485,7 +485,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrlibconsultacnpj32"/>
+            <Filename Value="bin\MT\Linux\acbrconsultacnpj32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

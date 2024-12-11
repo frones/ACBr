@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrLibConsultaCNPJ.lpi, ACBrLibConsultaCNPJDemo.lpi --
+[*] Correção nome para compilação Linux.
+    Por: Renato Rubinho, Antonio Carlos Junior
+
 13/08/2024
 --- ACBrLibConsultaCNPJConsoleMT.lpi ---
 [+] Adicionado novo Projeto, 100% CONSOLE e MT

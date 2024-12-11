@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2024
+-- ACBrNFe.Classes --
+[+] #TK-6346: Criação da nova unit que contem as classes do NF-e.
+   Por: Italo Giurizzato Junior
+
 04/12/2024
 -- ACBrNFe.XmlWriter --
 [-] Corrigido as condições para gerar algumas tags do CST 60 e CSOSN 500.

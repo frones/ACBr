@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrBoleto;..\..\..\..\..\Fontes\ACBrBoleto\WS;..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrBoleto\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -29,10 +29,10 @@
     </Files>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="frce"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>

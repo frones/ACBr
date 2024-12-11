@@ -137,6 +137,9 @@ contains
   ACBrBancoSisprime in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSisprime.pas',
   ACBrBancoCora in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCora.pas',
   ACBrBoletoW_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cora.pas',
-  ACBrBoletoRet_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas';
+  ACBrBoletoRet_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas',
+  ACBrBoletoW_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Kobana.pas',
+  ACBrBoleto.Kobana.Classes in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoleto.Kobana.Classes.pas',
+  ACBrBoletoRet_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Kobana.pas';
 
 end.

@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="93">
+    <Files Count="96">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -395,6 +395,18 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas"/>
         <UnitName Value="ACBrBoletoRet_Cora"/>
       </Item93>
+	  <Item94>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Kobana.pas"/>
+        <UnitName Value="ACBrBoletoW_Kobana"/>
+      </Item94>
+	  <Item95>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoleto.Kobana.Classes.pas"/>
+        <UnitName Value="ACBrBoleto.Kobana.Classes"/>
+      </Item95>
+	  <Item96>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Kobana.pas"/>
+        <UnitName Value="ACBrBoletoRet_Kobana"/>
+      </Item96>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

@@ -529,6 +529,9 @@ type
     TCompCancelaNegativacaoAutomatica
   );
 
+  {Identificação da Integradora}
+  TACBrIntegradoraBoleto = (tibNenhum, tibKobana);
+
   {TACBrOcorrencia}
   TACBrOcorrencia = class
   private
@@ -891,6 +894,7 @@ type
     fOperacao: string;
     FPIX               : TACBrBoletoChavePIX;
     fCodigoFlash   : String;
+    FIntegradoraBoleto: TACBrIntegradoraBoleto;
     procedure SetAgencia(const AValue: String);
     procedure SetCNPJCPF ( const AValue: String ) ;
     procedure SetConta(const AValue: String);
@@ -930,6 +934,7 @@ type
     property IdentDistribuicao: TACBrIdentDistribuicao read fIdentDistribuicao  write fIdentDistribuicao default tbClienteDistribui;
     property Operacao: string read fOperacao write fOperacao;
     property PIX: TACBrBoletoChavePIX read FPIX write FPIX;
+    property IntegradoraBoleto: TACBrIntegradoraBoleto read FIntegradoraBoleto write FIntegradoraBoleto;
   end;
 
   { TACBrDataPeriodo }
@@ -3965,6 +3970,7 @@ begin
         IdentDistribuicao := TACBrIdentDistribuicao(IniBoletos.ReadInteger(CCedente,'IdentDistribuicao', Integer(IdentDistribuicao)));
         Operacao          := IniBoletos.ReadString(CCedente,'Operacao', Operacao);
         CodigoFlash       := IniBoletos.ReadString(CCedente,'CodigoFlash',CodigoFlash);
+        IntegradoraBoleto:= TACBrIntegradoraBoleto(IniBoletos.ReadInteger(CCedente,'IntegradoraBoleto', Integer(IntegradoraBoleto) ));
 
         PIX.Chave        :=  IniBoletos.ReadString(CCedente,'PIX.Chave','');
         PIX.TipoChavePIX :=  TACBrPIXTipoChave(IniBoletos.ReadInteger(CCedente,'PIX.TipoChavePIX', 0 ));
@@ -4392,7 +4398,8 @@ begin
        IniRetorno.WriteString(CCedente,'Operacao',Cedente.Operacao);
        IniRetorno.WriteString(CCedente,'CodigoFlash',Cedente.CodigoFlash);
 
-
+       IniRetorno.WriteInteger(CCedente,'IntegradoraBoleto',Integer(Cedente.IntegradoraBoleto));
+       
        IniRetorno.WriteString(CCedente,'PIX.Chave',Cedente.PIX.Chave);
        IniRetorno.WriteInteger(CCedente,'PIX.TipoChavePIX',Integer(Cedente.PIX.TipoChavePIX));
 

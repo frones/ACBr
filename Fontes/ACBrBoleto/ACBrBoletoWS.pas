@@ -116,7 +116,7 @@ type
     FArqLOG       : String;
     procedure SetBanco(ABanco: TACBrTipoCobranca);
     procedure GravaLog(const AString: AnsiString);
-
+    procedure InstanciarIntegradora;
     procedure Clear;
 
   protected
@@ -249,7 +249,10 @@ uses
   ACBrBoletoW_Banrisul,
   ACBrBoletoRet_Banrisul,
   ACBrBoletoW_Cora,
-  AcbrBoletoRet_Cora;
+  AcbrBoletoRet_Cora,
+  ACBrBoletoW_Kobana,
+  ACBrBoletoRet_Kobana,
+  ACBrBoleto.Kobana.Classes;
 
   { TRetornoEnvioClass }
 
@@ -339,11 +342,19 @@ begin
   if ABanco = FBanco then
     exit;
 
+  FBanco                 := ABanco;
+
   if Assigned(FBoletoWSClass) then
     FreeAndNil(FBoletoWSClass);
 
   if Assigned(FRetornoBanco) then
     FreeAndNil(FRetornoBanco);
+
+  if Integer(FBoleto.Cedente.IntegradoraBoleto) > 0 then
+  begin
+    InstanciarIntegradora;
+    exit;
+  end;
 
   LVersaoDF := UpperCase(FBoleto.Configuracoes.WebService.VersaoDF);
   LVersaoDFInt := StrToIntDef(FBoleto.Configuracoes.WebService.VersaoDF,0);
@@ -468,7 +479,7 @@ begin
       FRetornoBanco  := TRetornoEnvioClass.Create(FBoleto);
   end;
   FBoletoWSClass.FBoleto := FBoleto;
-  FBanco                 := ABanco;
+
 end;
 
 constructor TBoletoWS.Create(AOwner: TComponent);
@@ -525,6 +536,19 @@ begin
     exit;
 
   WriteLog(FArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + ' - ' + AString);
+end;
+
+procedure TBoletoWS.InstanciarIntegradora;
+begin
+  case FBoleto.Cedente.IntegradoraBoleto of
+    tibKobana :
+      begin
+        FBoletoWSClass := TBoletoW_Kobana.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Kobana.Create(FBoleto);
+      end;
+  end;
+
+  FBoletoWSClass.FBoleto := FBoleto;
 end;
 
 destructor TBoletoWS.Destroy;

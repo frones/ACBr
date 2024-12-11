@@ -94,6 +94,7 @@ type
     destructor Destroy; override;
     function AddHeaderParam(AParamName, AParamValue: String): TBoletoWSREST;
     function ClearHeaderParams(): TBoletoWSREST;
+    property Headers:TStringList read FPHeaders;
   end;
 
     { TRetornoEnvioREST }  //Implementar Retornos em JSON

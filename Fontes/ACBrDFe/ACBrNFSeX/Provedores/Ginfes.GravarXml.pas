@@ -75,6 +75,9 @@ begin
   NrOcorrValorIss := 1;
   DivAliq100  := True;
 
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
+
   PrefixoPadrao := 'ns4';
 end;
 

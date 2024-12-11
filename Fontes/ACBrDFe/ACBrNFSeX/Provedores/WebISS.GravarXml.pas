@@ -75,6 +75,10 @@ begin
   inherited Configuracao;
 
   DivAliq100 := True;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
+
   FormatoItemListaServico := filsSemFormatacao;
   NrOcorrAliquota := 1;
 end;

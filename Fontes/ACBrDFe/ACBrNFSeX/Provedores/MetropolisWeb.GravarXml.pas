@@ -66,6 +66,9 @@ begin
 
   // Incluida a linha abaixo para a cidade Lauro de Freitas/BA em 23/02/2022
   DivAliq100 := True;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
 end;
 
 end.

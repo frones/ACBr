@@ -71,6 +71,9 @@ begin
 
   DivAliq100 := True;
 
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
+
   NrOcorrCodigoCnae := -1;
   NrOcorrCodTribMun := -1;
 

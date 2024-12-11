@@ -75,6 +75,9 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
   DivAliq100 := True;
+
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
+    DivAliq100 := False;
 end;
 
 function TNFSeW_Thema.GerarConstrucaoCivil: TACBrXmlNode;

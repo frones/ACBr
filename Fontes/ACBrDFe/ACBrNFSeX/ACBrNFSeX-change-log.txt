@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2024
+-- Diversos --
+[*] Ajustes visando tornar o parâmetro Dividir100 e NaoDividir100 parametrizaveis
+    via arquivo ACBrNFSeXServicos.ini
+  Por: Italo Giurizzato Junior
+
 10/12/2024
 -- ACBrNFSeXServicos --
 [*] #TK-6338: A cidade de Palma Sola/SC mudou a versão e a URL, o provedor continua

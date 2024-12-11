@@ -81,8 +81,6 @@ begin
 
   Opcoes.QuebraLinha    := CRLF;
   Opcoes.RetirarEspacos := False;
-  FormatoAliq := tcDe4;
-  DivAliq100  := False;
 end;
 
 function TNFSeW_ISSCambe.GerarDadosPrestador: TACBrXmlNode;

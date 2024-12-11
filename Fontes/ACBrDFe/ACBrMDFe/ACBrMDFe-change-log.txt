@@ -46,6 +46,9 @@ Símbolo : Significado
 -- ACBrMDFe.Classes --
 [+] #TK-6345: Criação da nova unit que contem as classes do MDF-e.
    Por: Italo Giurizzato Junior
+-- ACBrMDFeWebServices.pas --
+[*] Corrigida leitura do xml da consulta por chave quando houverem caracteres especiais.
+   Por: Renato Rubinho
 
 03/12/2024
 -- pmdfeConsMDFeNaoEnc/pmdfeConsSitMDFe/pmdfeEnvEventoMDFe/pmdfeEventoMDFe --

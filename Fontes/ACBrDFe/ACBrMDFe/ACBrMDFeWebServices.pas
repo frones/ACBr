@@ -1739,7 +1739,7 @@ begin
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'mdfeConsultaMDFResult');
 
-    MDFeRetorno.XmlRetorno := ParseText(FPRetWS);
+    MDFeRetorno.XmlRetorno := FPRetWS;
     MDFeRetorno.LerXML;
 
     MDFCancelado := False;

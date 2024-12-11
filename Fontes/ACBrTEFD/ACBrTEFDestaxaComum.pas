@@ -567,6 +567,7 @@ type
     function AdministracaoPendente: Boolean;
     function AdministracaoReimprimir: Boolean;
     function ExecutarTransacao(const aTransacao: String): Boolean;
+    function ExecutarTransacaoAnterior(const aTransacao: String): Boolean;
     function ExecutarTransacaoSilenciosa(const aTransacao: String): Boolean;
 
     property Socket: TACBrTEFDestaxaSocket read GetSocket;
@@ -1714,7 +1715,7 @@ begin
     ColetaRequisicao.automacao_coleta_sequencial := ColetaResposta.automacao_coleta_sequencial;
     ColetaRequisicao.automacao_coleta_transacao_resposta := ColetaResposta.automacao_coleta_transacao_resposta;
     Socket.ExecutarColeta(False);
-    Sleep(100);
+    Sleep(200);
   end;
 end;
 
@@ -1970,6 +1971,18 @@ begin
   Result := False;
   Socket.Executar(aTransacao);
   Result := (Resposta.retorno in [drsSucessoSemConfirmacao, drsSucessoComConfirmacao]) and (Resposta.servico = dxsExecutar);
+end;
+
+function TACBrTEFDestaxaClient.ExecutarTransacaoAnterior(const aTransacao: String): Boolean;
+var
+  seqAtual: Integer;
+begin
+  seqAtual := fUltimoSequencial;
+  try
+    Result := ExecutarTransacao(aTransacao);
+  finally
+    fUltimoSequencial := seqAtual;
+  end;
 end;
 
 function TACBrTEFDestaxaClient.ExecutarTransacaoSilenciosa(const aTransacao: String): Boolean;

@@ -47,6 +47,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/12/2024
+-- ACBrTEFAPIDestaxaComum --
+[+] Criação de função para possibilitar executar transação sem alterar último sequencial
+
+-- ACBrTEFAPIDestaxa --
+[*] Alterada TACBrTEFRespDestaxa para possibilitar o acesso às propriedades da resposta
+    original do TEF Destaxa;
+[*] Ajuste para confirmar as Transações que estão pendentes dentro da venda.
+    por: Elias César
+
+11/12/2024
 -- ACBrTEFAPIDestaxa --
 [-] Correção para retorno correto ao efetuar Venda Pix.
     por: Digital Way

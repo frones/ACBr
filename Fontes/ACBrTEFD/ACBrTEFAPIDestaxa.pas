@@ -51,8 +51,13 @@ type
   { TACBrTEFRespDestaxa }
 
   TACBrTEFRespDestaxa = class(TACBrTEFResp)
+  private
+    fDestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
   public
+    destructor Destroy; override;
+
     procedure ConteudoToProperty; override;
+    function DestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
   end;
 
   { TACBrTEFAPIClassDestaxa }
@@ -112,6 +117,13 @@ uses
 
 { TACBrTEFRespDestaxa }
 
+destructor TACBrTEFRespDestaxa.Destroy;
+begin
+  if Assigned(fDestaxaResposta) then
+    fDestaxaResposta.Free;
+  inherited Destroy;
+end;
+
 procedure TACBrTEFRespDestaxa.ConteudoToProperty;
 
   procedure ConteudoToParcelas(resp: TACBrTEFDestaxaTransacaoResposta);
@@ -166,68 +178,69 @@ procedure TACBrTEFRespDestaxa.ConteudoToProperty;
 
 var
   wResp: String;
-  wDestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
 begin
+  DestaxaResposta.Clear;
   wResp := Conteudo.LeInformacao(899, 201).AsString;
   if EstaVazio(wResp) then
     Exit;
 
-  wDestaxaResposta := TACBrTEFDestaxaTransacaoResposta.Create;
-  try
-    wDestaxaResposta.AsString := StringToBinaryString(wResp);
-
-    if (wDestaxaResposta.servico = dxsIniciar) then
-    begin
-      Confirmar := False;
-      Sucesso := wDestaxaResposta.estado.Conectado;
-      Exit;
-    end;
-
-    fpCNFEnviado := (UpperCase(Conteudo.LeInformacao(899,1).AsString) = 'S');
-    Sucesso := (wDestaxaResposta.transacao_resposta = 0);
-    Confirmar := (wDestaxaResposta.retorno = drsSucessoComConfirmacao) or
-                 ((wDestaxaResposta.transacao = CDESTAXA_ADM_PENDENTE) and NaoEstaVazio(wDestaxaResposta.transacao_nsu));
-    Rede := wDestaxaResposta.transacao_rede;
-    NSU := wDestaxaResposta.transacao_nsu;
-    TextoEspecialOperador := wDestaxaResposta.mensagem;
-    BIN := wDestaxaResposta.transacao_cartao_numero;
-    ValorTotal := wDestaxaResposta.transacao_valor;
-    NSU_TEF := wDestaxaResposta.transacao_nsu_rede;
-    DataHoraTransacaoLocal := wDestaxaResposta.transacao_data;
-    DataHoraTransacaoHost := wDestaxaResposta.transacao_data;
-    DataVencimento := wDestaxaResposta.transacao_vencimento;
-    TaxaServico := StrToFloatDef(wDestaxaResposta.transacao_valor_taxa_servico, 0);
-
-    NFCeSAT.Bandeira := wDestaxaResposta.transacao_administradora;
-    NFCeSAT.Autorizacao := wDestaxaResposta.transacao_autorizacao;
-    NFCeSAT.CNPJCredenciadora := wDestaxaResposta.transacao_rede_cnpj;
-    if NaoEstaVazio(wDestaxaResposta.transacao_cartao_numero) and (Length(wDestaxaResposta.transacao_cartao_numero) >= 4) then
-      NFCeSAT.UltimosQuatroDigitos := RightStr(wDestaxaResposta.transacao_cartao_numero, 4);
-
-    CodigoBandeiraPadrao := wDestaxaResposta.codigo_bandeira;
-    NomeAdministradora := wDestaxaResposta.transacao_administradora;
-    CodigoAutorizacaoTransacao := wDestaxaResposta.transacao_autorizacao;
-
-    Credito := (wDestaxaResposta.transacao_tipo_cartao = dtcCredito);
-    Debito := wDestaxaResposta.transacao_tipo_cartao = dtcDebito;
-
-    ImagemComprovante1aVia.Text := wDestaxaResposta.transacao_comprovante_1via.Text;
-    ImagemComprovante2aVia.Text := wDestaxaResposta.transacao_comprovante_2via.Text;
-
-    ConteudoToParcelas(wDestaxaResposta);
-    case wDestaxaResposta.transacao_financiado of
-      dxfAdministradora: ParceladoPor := parcADM;
-      dxfEstabelecimento: ParceladoPor := parcLoja;
-    end;
-
-    case wDestaxaResposta.transacao_pagamento of
-      dpgAVista: TipoOperacao := opAvista;
-      dpgParcelado: TipoOperacao := opParcelado;
-      dpgPreDatado: TipoOperacao := opPreDatado;
-    end;
-  finally
-    wDestaxaResposta.Free;
+  DestaxaResposta.AsString := StringToBinaryString(wResp);
+  if (DestaxaResposta.servico = dxsIniciar) then
+  begin
+    Confirmar := False;
+    Sucesso := DestaxaResposta.estado.Conectado;
+    Exit;
   end;
+
+  fpCNFEnviado := (UpperCase(Conteudo.LeInformacao(899,1).AsString) = 'S');
+  Sucesso := (DestaxaResposta.transacao_resposta = 0);
+  Confirmar := (DestaxaResposta.retorno = drsSucessoComConfirmacao) or
+               ((DestaxaResposta.transacao = CDESTAXA_ADM_PENDENTE) and NaoEstaVazio(DestaxaResposta.transacao_nsu));
+  Rede := DestaxaResposta.transacao_rede;
+  NSU := DestaxaResposta.transacao_nsu;
+  TextoEspecialOperador := DestaxaResposta.mensagem;
+  BIN := DestaxaResposta.transacao_cartao_numero;
+  ValorTotal := DestaxaResposta.transacao_valor;
+  NSU_TEF := DestaxaResposta.transacao_nsu_rede;
+  DataHoraTransacaoLocal := DestaxaResposta.transacao_data;
+  DataHoraTransacaoHost := DestaxaResposta.transacao_data;
+  DataVencimento := DestaxaResposta.transacao_vencimento;
+  TaxaServico := StrToFloatDef(DestaxaResposta.transacao_valor_taxa_servico, 0);
+
+  NFCeSAT.Bandeira := DestaxaResposta.transacao_administradora;
+  NFCeSAT.Autorizacao := DestaxaResposta.transacao_autorizacao;
+  NFCeSAT.CNPJCredenciadora := DestaxaResposta.transacao_rede_cnpj;
+  if NaoEstaVazio(DestaxaResposta.transacao_cartao_numero) and (Length(DestaxaResposta.transacao_cartao_numero) >= 4) then
+    NFCeSAT.UltimosQuatroDigitos := RightStr(DestaxaResposta.transacao_cartao_numero, 4);
+
+  CodigoBandeiraPadrao := DestaxaResposta.codigo_bandeira;
+  NomeAdministradora := DestaxaResposta.transacao_administradora;
+  CodigoAutorizacaoTransacao := DestaxaResposta.transacao_autorizacao;
+
+  Credito := (DestaxaResposta.transacao_tipo_cartao = dtcCredito);
+  Debito := DestaxaResposta.transacao_tipo_cartao = dtcDebito;
+
+  ImagemComprovante1aVia.Text := DestaxaResposta.transacao_comprovante_1via.Text;
+  ImagemComprovante2aVia.Text := DestaxaResposta.transacao_comprovante_2via.Text;
+
+  ConteudoToParcelas(DestaxaResposta);
+  case DestaxaResposta.transacao_financiado of
+    dxfAdministradora: ParceladoPor := parcADM;
+    dxfEstabelecimento: ParceladoPor := parcLoja;
+  end;
+
+  case DestaxaResposta.transacao_pagamento of
+    dpgAVista: TipoOperacao := opAvista;
+    dpgParcelado: TipoOperacao := opParcelado;
+    dpgPreDatado: TipoOperacao := opPreDatado;
+  end;
+end;
+
+function TACBrTEFRespDestaxa.DestaxaResposta: TACBrTEFDestaxaTransacaoResposta;
+begin
+  if (not Assigned(fDestaxaResposta)) then
+    fDestaxaResposta := TACBrTEFDestaxaTransacaoResposta.Create;
+  Result := fDestaxaResposta;
 end;
 
 { TACBrTEFAPIClassDestaxa }
@@ -560,21 +573,37 @@ end;
 
 procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
+var
+  retorno: TACBrTEFDestaxaRetornoRequisicao;
+  i: Integer;
 begin
   DestaxaClient.Requisicao.Clear;
-
-  if (not fpACBrTEFAPI.ConfirmarTransacaoAutomaticamente) and (DestaxaClient.Resposta.transacao = CDESTAXA_CARTAO_VENDER) then
-    Exit; // ToDo: Corrigir rotina de ConfirmarTransacaoAutomaticamente = False
+  if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
+    retorno := drqConfirmarTransacao
+  else
+    retorno := drqCancelarTransacao;
 
   if (DestaxaClient.Resposta.retorno = drsSucessoComConfirmacao) and DestaxaClient.Socket.EmTransacao then
   begin
-    if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
-      DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
-    else
-      DestaxaClient.Requisicao.retorno := drqCancelarTransacao;
-
+    DestaxaClient.Requisicao.retorno := retorno;
     DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial;
     DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
+  end
+  else if (not fpACBrTEFAPI.ConfirmarTransacaoAutomaticamente) then
+  begin
+    if (not DestaxaClient.Socket.EmTransacao) then
+      DestaxaClient.IniciarRequisicao;
+
+    for i := 0 to Pred(fpACBrTEFAPI.RespostasTEF.Count) do
+    if (fpACBrTEFAPI.RespostasTEF[i] is TACBrTEFRespDestaxa) and (fpACBrTEFAPI.RespostasTEF[i].NSU = NSU) then
+    begin
+      DestaxaClient.Requisicao.retorno := retorno;
+      DestaxaClient.Requisicao.sequencial := TACBrTEFRespDestaxa(fpACBrTEFAPI.RespostasTEF[i]).DestaxaResposta.sequencial;
+      DestaxaClient.ExecutarTransacaoAnterior(CDESTAXA_CARTAO_VENDER);
+    end;
+
+    if (fpACBrTEFAPI.UltimaRespostaTEF.NSU = NSU) then
+      DestaxaClient.FinalizarRequisicao;
   end;
 end;
 

@@ -165,10 +165,20 @@ begin
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ws_001_in_nfse_valor_deducoes', 1, 18, 0,
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
 
-  if NFSe.Tomador.Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
-    issRetido := 'S'
+  if Length(NFSe.Servico.CodigoMunicipio) = 7 then
+  begin
+    if NFSe.Servico.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
+      issRetido := 'S'
+    else
+      issRetido := 'N';
+  end
   else
-    issRetido := 'N';
+  begin
+    if NFSe.Tomador.Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
+      issRetido := 'S'
+    else
+      issRetido := 'N';
+  end;
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ws_001_in_nfse_local_retencao', 1, 1, 1,
                                       issRetido, ''));

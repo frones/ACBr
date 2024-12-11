@@ -47,6 +47,9 @@ Símbolo : Significado
 [*] Ajustes visando tornar o parâmetro Dividir100 e NaoDividir100 parametrizaveis
     via arquivo ACBrNFSeXServicos.ini
   Por: Italo Giurizzato Junior
+-- Siappa.GravarXml --
+[*] Sem TK - Alterado para o Município da Prestação prevalecer sobre o endereço do tomador ao preencher ISSRetido.
+   Por: Renato Rubinho 
 
 10/12/2024
 -- ACBrNFSeXServicos --

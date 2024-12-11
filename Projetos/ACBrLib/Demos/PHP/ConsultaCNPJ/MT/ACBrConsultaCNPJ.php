@@ -65,7 +65,7 @@ function CarregaDll()
     if (file_exists($dllPath))
         return $dllPath;
 
-    $dllPath = __DIR__ . DIRECTORY_SEPARATOR . "ACBrLib\\x" . $arquitetura . DIRECTORY_SEPARATOR . $biblioteca;
+    $dllPath = __DIR__ . DIRECTORY_SEPARATOR . "ACBrLib" . DIRECTORY_SEPARATOR . "x" . $arquitetura . DIRECTORY_SEPARATOR . $biblioteca;
 
     if (file_exists($dllPath))
         return $dllPath;

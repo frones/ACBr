@@ -68,7 +68,7 @@ function CarregaDll($dir, $nomeLib)
         $dllPath = $dir . DIRECTORY_SEPARATOR . "ACBrLib" . DIRECTORY_SEPARATOR . "x" . $arquitetura . DIRECTORY_SEPARATOR;
 
         if (!file_exists($dllPath . $biblioteca)){
-            echo json_encode(["mensagem" => "Biblioteca (.dll/.so) não encontrada no caminho especificado: $dllPath . $biblioteca"]);
+            echo json_encode(["mensagem" => "Biblioteca (.dll/.so) não encontrada no caminho especificado: " . $dllPath . $biblioteca]);
             return -10;
         }
     }

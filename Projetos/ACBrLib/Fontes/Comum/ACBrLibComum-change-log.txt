@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2024
+-- ACBrConsultaCNPJ.php, ACBrConsultaCNPJ.php --
+[*] #TK-6342: Correção na composição do caminho da lib para usar somente DIRECTORY_SEPARATOR
+  Por: Renato Rubinho
+
 09/12/2024
 -- ACBrComum.php --
 [*] Sem TK: Ajuste na função para identificar ambiente gráfico ou emulado e comando no php para funcionar lib com gráfico emulado

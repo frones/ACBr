@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2024
+-- ACBrTEFAPIDestaxa --
+[-] Correção para retorno correto ao efetuar Venda Pix.
+    por: Digital Way
+[+] Correção de problema ao imprimir comprovantes de Cancelamento.
+    por: Elias César
+
 10/12/2024
 -- ACBrTEFAPICliSiTef, ACBrTEFCliSiTefComum --
 [-] Ajuste para que o método "ConteudoToProperty" sempre considere a resposta

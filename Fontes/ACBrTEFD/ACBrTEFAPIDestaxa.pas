@@ -108,7 +108,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Math, math, DateUtils, StrUtils;
+  ACBrUtil.Base, ACBrUtil.Math, DateUtils, StrUtils;
 
 { TACBrTEFRespDestaxa }
 
@@ -434,7 +434,7 @@ begin
 
   if (Modalidade = tefmpCarteiraVirtual) then
   begin
-    DestaxaClient.DigitalPagar;
+    Result := DestaxaClient.DigitalPagar;
     Exit;
   end;
 
@@ -517,19 +517,17 @@ end;
 function TACBrTEFAPIClassDestaxa.CancelarTransacao(const NSU, CodigoAutorizacaoTransacao: String; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: String; const Rede: String): Boolean;
 begin
-  DestaxaClient.IniciarRequisicao;
-  try
-    if NaoEstaVazio(NSU) then
-      DestaxaClient.Requisicao.transacao_nsu := NSU;
-    if NaoEstaZerado(DataHoraTransacao) then
-      DestaxaClient.Requisicao.transacao_data := DataHoraTransacao;
-    if NaoEstaZerado(Valor) then
-      DestaxaClient.Requisicao.transacao_valor := Valor;
+  Result := False;
+  if NaoEstaVazio(NSU) then
+    DestaxaClient.Requisicao.transacao_nsu := NSU;
+  if NaoEstaZerado(DataHoraTransacao) then
+    DestaxaClient.Requisicao.transacao_data := DataHoraTransacao;
+  if NaoEstaZerado(Valor) then
+    DestaxaClient.Requisicao.transacao_valor := Valor;
 
-    Result := DestaxaClient.AdministracaoCancelar;
-  finally
-    DestaxaClient.FinalizarRequisicao;
-  end;
+  DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial+1;
+  DestaxaClient.Requisicao.retorno := drqExecutarServico;
+  Result := DestaxaClient.ExecutarTransacao(CDESTAXA_ADM_CANCELAR);
 end;
 
 procedure TACBrTEFAPIClassDestaxa.ExibirMensagemPinPad(const MsgPinPad: String);
@@ -564,7 +562,11 @@ procedure TACBrTEFAPIClassDestaxa.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 begin
   DestaxaClient.Requisicao.Clear;
-  if DestaxaClient.Socket.EmTransacao then
+
+  if (not fpACBrTEFAPI.ConfirmarTransacaoAutomaticamente) and (DestaxaClient.Resposta.transacao = CDESTAXA_CARTAO_VENDER) then
+    Exit; // ToDo: Corrigir rotina de ConfirmarTransacaoAutomaticamente = False
+
+  if (DestaxaClient.Resposta.retorno = drsSucessoComConfirmacao) and DestaxaClient.Socket.EmTransacao then
   begin
     if aStatus in [tefstsSucessoManual, tefstsSucessoAutomatico] then
       DestaxaClient.Requisicao.retorno := drqConfirmarTransacao
@@ -573,9 +575,7 @@ begin
 
     DestaxaClient.Requisicao.sequencial := DestaxaClient.UltimoSequencial;
     DestaxaClient.ExecutarTransacao(DestaxaClient.Resposta.transacao);
-  end
-  else if (fpACBrTEFAPI.UltimaRespostaTEF.NSU = NSU) then
-    ResolverTransacaoPendente(AStatus);
+  end;
 end;
 
 {procedure TACBrTEFAPIClassDestaxa.CarregarRespostasPendentes(const AListaRespostasTEF: TACBrTEFAPIRespostas);

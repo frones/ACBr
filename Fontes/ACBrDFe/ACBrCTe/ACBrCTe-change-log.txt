@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2024
+-- ACBrCTe.Classes --
+[+] #TK-6344: Criação da nova unit que contem as classes do CT-e.
+   Por: Italo Giurizzato Junior
+
 10/12/2024
 -- ACBrCTe.XmlHandler --
 [-] #TK-6336: Correção, para a leitura de CT-e Simplificado.

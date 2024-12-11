@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/12/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6350: A cidade de Candelaria/RS trocou de provedor, agora é IPM.
+  Por: DNA Automacao
+[*] #TK-6348: A cidade de Penápolis/SP mudou a URL, o provedor continua o mesmo.
+  Por: Felipe Brambilla
 -- NFEletronica.GravarXml --
 [-] #TK-6349: O provedor exige que mesmo informando o CPF do tomador a tag tem que
     ser <Cnpj>

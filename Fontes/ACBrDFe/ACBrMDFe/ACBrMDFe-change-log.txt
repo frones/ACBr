@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2024
+-- ACBrMDFe.Classes --
+[+] #TK-6345: Criação da nova unit que contem as classes do MDF-e.
+   Por: Italo Giurizzato Junior
+
 03/12/2024
 -- pmdfeConsMDFeNaoEnc/pmdfeConsSitMDFe/pmdfeEnvEventoMDFe/pmdfeEventoMDFe --
 -- pmdfeProcInfraSA/pmdfeRetConsMDFeNaoEnc/pmdfeRetConsSitMDFe --

@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/12/2024
+-- pcteRetEnvCTe --
+[*] Remoção de unit sem uso.
+   Por: Italo Giurizzato Junior
+
 -- ACBrCTe.Classes --
 [+] #TK-6344: Criação da nova unit que contem as classes do CT-e.
    Por: Italo Giurizzato Junior

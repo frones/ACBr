@@ -1484,10 +1484,26 @@ begin
         qCarga := 10;
       end;
 
-      {Informações dos Documentos}
+      {Informações dos Documentos - NF-e}
       with infDoc.infNFe.New do
         // chave da NFe emitida pelo remente da carga
         chave := '33190100127817000125650080000000581000384589';
+
+      (*
+         Usado para informar os dados do documento que não seja uma NF-e
+
+      {Informações dos Documentos - Outros}
+      with infDoc.infOutros.New do
+      begin
+        // tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros
+        tpDoc := tdOutros;
+        descOutros := 'Carta Remessa de Mercadoria';
+        nDoc := '1234';
+        dEmi := StrToDate('10/12/2024');
+        vDocFisc := 100;
+        dPrev := StrToDate('20/12/2024');
+      end;
+      *)
 
       // o bloco de código abaixo devemos utilizar para informar documentos
       // anteriores emitidos por outras transportadoras que chamamos de

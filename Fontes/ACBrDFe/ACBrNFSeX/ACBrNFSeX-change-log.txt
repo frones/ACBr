@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6352: Incluída a cidade de Piedade/SP, o provedor é Ginfes.
+[+] #TK-6353: Incluída a cidade de Pinhão/PR, o provedor é Elotech.
+[+] #TK-6354: Incluída a cidade de Silvianopolis/MG, o provedor é ISSLegal.
+  Por: Anderson Grolli
+[*] #TK-6355: Incluído o Params para a cidade de São Gonçalo dos Campos/BA.
+  Por: DeveloperATS
+
 11/12/2024
 -- ACBrNFSeXServicos --
 [*] #TK-6350: A cidade de Candelaria/RS trocou de provedor, agora é IPM.

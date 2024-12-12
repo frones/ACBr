@@ -1,4 +1,4 @@
-package br.com.acbr.acbrlibbal.bridge;
+package br.com.acbr.lib.bal.bridge;
 
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;

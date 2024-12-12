@@ -1,4 +1,4 @@
-package br.com.acbr.acbrlibbal;
+package br.com.acbr.lib.bal;
 
 import android.util.Log;
 
@@ -10,7 +10,7 @@ import com.sun.jna.ptr.PointerByReference;
 
 import java.nio.ByteBuffer;
 
-import br.com.acbr.acbrlibbal.bridge.ACBrBALBridge;
+import br.com.acbr.lib.bal.bridge.ACBrBALBridge;
 import br.com.acbr.lib.comum.ACBrLibBase;
 import br.com.acbr.lib.comum.ACBrLibBuffer;
 import br.com.acbr.lib.comum.ACBrLibInstance;

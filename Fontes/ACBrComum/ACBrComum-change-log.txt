@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2024
+-- ACBrCompress --
+[*] Melhoria na exibição de Erro, em D7 por falta de suporte a Zipfile
+    (por: DSA)
+
 22/11/2024
 -- ACBrUtil.XMLHTML --
 [*] Corrige o nome da função.

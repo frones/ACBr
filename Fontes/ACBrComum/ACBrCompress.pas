@@ -54,6 +54,9 @@ uses
    {$EndIf}
   {$EndIf};
 
+resourcestring
+  CACBrNoZipFileSupport = 'O seu compilador não tem suporte nativo a ZipFile.';
+
 type
   TCompressType = ( ctUnknown, ctZLib, ctGZip, ctZipFile );
 
@@ -181,7 +184,8 @@ begin
 
   if (DetectCompressType(inStream) = ctGZip) then
     ACBrZLibExGZ.GZDecompressStream(inStream, outStream)
-  else
+    
+  else if (DetectCompressType(inStream) = ctZLib) then
   begin
     ds := Tdecompressionstream.Create(inStream);
     GetMem(Buffer, MAXWORD);
@@ -196,7 +200,9 @@ begin
       Freemem(Buffer);
       ds.Free;
     end;
-  end;
+  end
+  else
+    raise Exception.Create(CACBrNoZipFileSupport);
 
   Result := True;
 end;
@@ -345,7 +351,7 @@ end;
 {$Else}
 function ZipFileCompress(inStream, outStream: TStream; const AFileName: String): Boolean;
 begin
-  raise Exception.Create('O seu compilador não tem suporte nativo a ZipFile.');
+  raise Exception.Create(CACBrNoZipFileSupport);
 end;
 {$EndIf}
 {$EndIf}
@@ -455,7 +461,7 @@ end;
 {$Else}
 function ZipFileDeCompress(inStream, outStream: TStream): Boolean;
 begin
-  raise Exception.Create('O seu compilador não tem suporte nativo a ZipFile.');
+  raise Exception.Create(CACBrNoZipFileSupport);
 end;
 {$EndIf}
 {$EndIf}

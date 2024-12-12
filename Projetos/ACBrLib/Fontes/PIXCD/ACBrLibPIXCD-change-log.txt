@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2024
+--- ACBrLibPIXCDMateraRespostas ---
+[*] Ajuste na classe TLibPIXCDMateraDestinationAccount e TLibPIXCDMateraBankTransfer para retornar o texto ao invés do valor.
+    Por: Antonio Carlos Junior, Elias César, Júlio Cavalcanti
+
 10/12/2024
 -- ACBrLibPIXCDDataModule, ACBrLibPIXCDConsts, ACBrLibPIXCDConfig --
 [*] Inclusão das propriedades ArquivoChavePrivada e ArquivoCertificado para uso do PSP Cielo em Produção.

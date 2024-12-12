@@ -449,7 +449,7 @@ type
   TLibPIXCDMateraDestinationAccount = class(TACBrLibRespostaBase)
     private
       faccount: String;
-      faccountType: TMateraAccountTypeDestination;
+      faccountType: String;
       fbranch: String;
 
     public
@@ -458,7 +458,7 @@ type
 
     published
       property account: String read faccount write faccount;
-      property accountType: TMateraAccountTypeDestination read faccountType write faccountType;
+      property accountType: String read faccountType write faccountType;
       property branch: String read fbranch write fbranch;
   end;
 
@@ -1132,7 +1132,7 @@ type
     private
       faccountDestination: String;
       faccountDigitDestination: String;
-      faccountTypeDestination: TMateraAccountTypeDestination;
+      faccountTypeDestination: String;
       fbankDestination: String;
       fbranchDestination: String;
       fhistoryCode: String;
@@ -1152,7 +1152,7 @@ type
     published
       property accountDestination: String read faccountDestination write faccountDestination;
       property accountDigitDestination: String read faccountDigitDestination write faccountDigitDestination;
-      property accountTypeDestination: TMateraAccountTypeDestination read faccountTypeDestination write faccountTypeDestination;
+      property accountTypeDestination: String read faccountTypeDestination write faccountTypeDestination;
       property bankDestination: String read fbankDestination write fbankDestination;
       property branchDestination: String read fbranchDestination write fbranchDestination;
       property historyCode: String read fhistoryCode write fhistoryCode;
@@ -2180,7 +2180,7 @@ procedure TLibPIXCDMateraBankTransfer.Clear;
 begin
   faccountDestination := EmptyStr;
   faccountDigitDestination := EmptyStr;
-  faccountTypeDestination := matdNone;
+  faccountTypeDestination := EmptyStr;
   fbankDestination := EmptyStr;
   fbranchDestination := EmptyStr;
   fhistoryCode := EmptyStr;
@@ -2195,7 +2195,7 @@ procedure TLibPIXCDMateraBankTransfer.Processar(const MateraBankTransfer: TMater
 begin
   accountDestination := MateraBankTransfer.accountDestination;
   accountDigitDestination := MateraBankTransfer.accountDigitDestination;
-  accountTypeDestination := MateraBankTransfer.accountTypeDestination;
+  accountTypeDestination := MateraAccountTypeDestinationToString(MateraBankTransfer.accountTypeDestination);
   bankDestination := MateraBankTransfer.bankDestination;
   branchDestination := MateraBankTransfer.branchDestination;
   historyCode := MateraBankTransfer.historyCode;
@@ -2486,14 +2486,14 @@ end;
 procedure TLibPIXCDMateraDestinationAccount.Clear;
 begin
   faccount := EmptyStr;
-  faccountType := matdNone;
+  faccountType := EmptyStr;
   fbranch := EmptyStr;
 end;
 
 procedure TLibPIXCDMateraDestinationAccount.Processar(const MateraDestinationAccount: TMateraDestinationAccount);
 begin
   account := MateraDestinationAccount.account;
-  accountType := MateraDestinationAccount.accountType;
+  accountType := MateraAccountTypeDestinationToString(MateraDestinationAccount.accountType);
   branch := MateraDestinationAccount.branch;
 end;
 

@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2024
+-- ACBrNFeWebService --
+[*] #TK-5992: Trocado a unit pcnRetEnvNFe pela ACBrDFeComum.RetEnvio que não
+    utiliza a pcnLeitor para realizar a leitura do XML de retorno do envio da
+    NF-e.
+  Por: Italo Giurizzato Junior
+
 11/12/2024
 -- ACBrNFe.Classes --
 [+] #TK-6346: Criação da nova unit que contem as classes do NF-e.

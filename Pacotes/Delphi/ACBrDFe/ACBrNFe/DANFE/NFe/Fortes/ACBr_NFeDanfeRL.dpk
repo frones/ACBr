@@ -87,6 +87,7 @@ contains
   ACBrDANFCeFortesFr in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas' {ACBrNFeDANFCeFortesFr},
   ACBrDANFCeFortesFrA4 in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas' {ACBrNFeDANFCeFortesFrA4},
   ACBrNFeDAInutRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRLRetrato.pas',
+  ACBrNFeDANFeRLEtiqueta in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLEtiqueta.pas',
   ACBrNFeDAInutRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRL.pas' {frmNFeDAInutRL};
 
 end.

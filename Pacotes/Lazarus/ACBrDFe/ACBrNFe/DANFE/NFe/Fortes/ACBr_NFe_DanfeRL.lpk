@@ -21,7 +21,7 @@
     </CompilerOptions>
     <Description Value="ACBr - DANFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="14">
+    <Files Count="15">
       <Item1>
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas"/>
         <UnitName Value="ACBrNFeDANFeRL"/>
@@ -64,21 +64,25 @@
         <UnitName Value="ACBrNFeDAInutRLRetrato"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.lfm"/>
-        <Type Value="LFM"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLEtiqueta.pas"/>
+        <UnitName Value="ACBrNFeDANFeRLEtiqueta"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <UnitName Value="ACBrDANFCeFortesFr"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.lfm"/>
+        <Type Value="LFM"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.lfm"/>
-        <Type Value="LFM"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <UnitName Value="ACBrDANFCeFortesFr"/>
       </Item13>
       <Item14>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.lfm"/>
+        <Type Value="LFM"/>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas"/>
         <UnitName Value="ACBrDANFCeFortesFrA4"/>
-      </Item14>
+      </Item15>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

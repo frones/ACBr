@@ -45,7 +45,8 @@ uses
   ACBrBoleto,
   ACBrBoletoWS.Rest,
   ACBrUtil.Strings,
-  ACBrJSON;
+  ACBrJSON,
+  ACBrUtil.Base;
 
 
 type
@@ -162,7 +163,8 @@ procedure TBoletoW_BancoBrasil_API.GerarHeader;
 begin
   DefinirContentType;
   DefinirKeyUser;
-  AddHeaderParam('x-bb-portal-devx-cnpj-parceiro',Boleto.KeySoftwareHouse)
+  if NaoEstaVazio(Boleto.KeySoftwareHouse) then
+    AddHeaderParam('x-bb-portal-devx-cnpj-parceiro',Boleto.KeySoftwareHouse)
 end;
 
 procedure TBoletoW_BancoBrasil_API.GerarDados;
@@ -484,7 +486,7 @@ begin
         LJsonObject.AddPair('indicadorAlterarSeuNumero', 'S');
         AlteracaoSeuNumero(LJsonObject);
       end;
-      toRemessaCobrarJurosMora: begin
+      toRemessaCobrarJurosMora : begin
         LJsonObject.AddPair('indicadorCobrarJuros', 'S');
         AtribuirJuros(LJsonObject);
       end;

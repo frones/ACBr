@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+13/12/2024
+-- ACBrBoletoW_BancoBrasil_API --
+[*] TK-6274 alterado para so add o header do parceiro se informado
+    https://www.projetoacbr.com.br/forum/topic/76959-x-bb-portal-devx-cnpj-parceiro-no-header-da-api-do-banco-do-brasil/
+	por Daniel de Morais InfoCotidiano 
+
 13/12/2024
 -- ACBrBoletoRet_Safra.pas --
 [-] TK-6358 Corrigido a propriedade para alimentar o componente a apos inclusao e msg de erro qdo NN ja cadastrado 

@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+13/12/2024
+-- ACBrBoletoRet_Safra.pas --
+[-] TK-6358 Corrigido a propriedade para alimentar o componente a apos inclusao e msg de erro qdo NN ja cadastrado 
+    https://www.projetoacbr.com.br/forum/topic/80993-listaretornoweb-safra-n%C3%A3o-retorna-os-dados-no-componente
+	por Alexandre B. Paula / Daniel de Morais InfoCotidiano 
 
 09/12/2024
 -- ACBrBancoBS2.pas --

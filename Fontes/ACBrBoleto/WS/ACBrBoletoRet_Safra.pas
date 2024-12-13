@@ -116,11 +116,9 @@ begin
   if RetWS <> '' then
   begin
     try
-      //LJson := TJson.Create;
+      LJson := TACBrJSONObject.Parse(RetWS);
       try
-        LJson := TACBrJSONObject.Parse(RetWS);
         ARetornoWS.JSON := LJson.ToJSON;
-
         case HTTPResultCode of
           400, 415:
             begin
@@ -138,14 +136,23 @@ begin
 
           404:
             begin
-              if LJson.IsJSONObject('codigo') then
-                if NaoEstaVazio(LJson.AsString[ 'codigo' ]) then
-                begin
-                  ARejeicao          := ARetornoWS.CriarRejeicaoLista;
-                  ARejeicao.Codigo   := LJson.AsString[ 'codigo' ];
-                  ARejeicao.Versao   := LJson.AsString[ 'parametro' ];
-                  ARejeicao.Mensagem := LJson.AsString[ 'mensagem' ];
-                end;
+              if (LJson.ValueExists('codigo') and NaoEstaVazio(LJson.AsString[ 'codigo' ])) then
+              begin
+                ARejeicao          := ARetornoWS.CriarRejeicaoLista;
+                ARejeicao.Codigo   := LJson.AsString[ 'codigo' ];
+                ARejeicao.Versao   := LJson.AsString[ 'parametro' ];
+                ARejeicao.Mensagem := LJson.AsString[ 'mensagem' ];
+              end;
+            end;  
+
+          422:
+            begin
+              if (LJson.ValueExists('code') and NaoEstaVazio(LJson.AsString[ 'code' ])) then
+              begin
+                ARejeicao          := ARetornoWS.CriarRejeicaoLista;
+                ARejeicao.Codigo   := LJson.AsString[ 'code' ];
+                ARejeicao.Mensagem := LJson.AsString[ 'message' ];
+              end;
 
             end;
 
@@ -156,15 +163,17 @@ begin
         begin
           if (TipoOperacao = tpInclui) then
           begin
+            if LJson.IsJSONObject('data') then
+            begin
+              ARetornoWS.DadosRet.IDBoleto.CodBarras  := LJson.AsJSONObject['data'].AsString[ 'codigoBarras' ];
+              ARetornoWS.DadosRet.IDBoleto.NossoNum   := LJson.AsJSONObject['data'].AsString[ 'numero' ];
+              ARetornoWS.DadosRet.TituloRet.SeuNumero := LJson.AsJSONObject['data'].AsString[ 'numeroCliente' ];
 
-            ARetornoWS.DadosRet.IDBoleto.CodBarras := LJson.AsString[ 'codigoBarras' ];
-            ARetornoWS.DadosRet.IDBoleto.LinhaDig  := LJson.AsString[ 'linhaDigitavel' ];
-            ARetornoWS.DadosRet.IDBoleto.NossoNum  := LJson.AsString[ 'nossoNumero' ];
+              ARetornoWS.DadosRet.TituloRet.CodBarras   := ARetornoWS.DadosRet.IDBoleto.CodBarras;
+              ARetornoWS.DadosRet.TituloRet.LinhaDig    := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
+              ARetornoWS.DadosRet.TituloRet.NossoNumero := ARetornoWS.DadosRet.IDBoleto.NossoNum;
 
-            ARetornoWS.DadosRet.TituloRet.CodBarras   := ARetornoWS.DadosRet.IDBoleto.CodBarras;
-            ARetornoWS.DadosRet.TituloRet.LinhaDig    := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
-            ARetornoWS.DadosRet.TituloRet.NossoNumero := ARetornoWS.DadosRet.IDBoleto.NossoNum;
-
+            end;
           end
           else
             if (TipoOperacao = tpConsultaDetalhe) then
@@ -237,7 +246,8 @@ end;
 function TRetornoEnvio_Safra.LerListaRetorno: Boolean;
 var
   ListaRetorno: TACBrBoletoRetornoWS;
-  LJson, LJSonObject : TACBrJSONObject;
+  LJson : TACBrJSONObject;
+  LJSonObject : TACBrJSONObject;
   LRejeicao   : TACBrBoletoRejeicao;
   LJsonArrayBoletos: TACBrJSONArray;
   I           : Integer;
@@ -252,7 +262,7 @@ begin
   begin
 
     try
-      //LJson := TJson.Create;
+      LJson := TACBrJSONObject.Create();
       try
         LJson.Parse(RetWS);
 

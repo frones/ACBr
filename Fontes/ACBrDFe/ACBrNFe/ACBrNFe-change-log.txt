@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2024
+-- Diversos --
+[+] #TK-5944: Implementado a unit especifica para imprimir a DANFE em Etiqueta
+    em Fortes.
+  Por: Rodrigo Ogioni/Italo Giurizzato Junior
+
 12/12/2024
 -- ACBrNFeWebService --
 [*] #TK-5992: Trocado a unit pcnRetEnvNFe pela ACBrDFeComum.RetEnvio que não

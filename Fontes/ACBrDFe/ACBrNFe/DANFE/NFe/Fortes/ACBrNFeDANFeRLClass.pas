@@ -148,6 +148,7 @@ uses
   ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
   ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado,
+  ACBrNFeDANFeRLEtiqueta,
   ACBrNFeDAInutRLRetrato;
 
 { TFonte }
@@ -238,7 +239,10 @@ begin
     tiSimplificado:
       TfrlDANFeRLSimplificado.Imprimir(Self, Notas);
   else
-    TfrlDANFeRLRetrato.Imprimir(Self, Notas);
+    if Etiqueta then
+      TfrlDANFeRLEtiqueta.Imprimir(Self, Notas)
+    else
+      TfrlDANFeRLRetrato.Imprimir(Self, Notas);
   end;
 end;
 
@@ -266,7 +270,10 @@ var
       tiSimplificado:
         TfrlDANFeRLSimplificado.SalvarPDF(Self, ANFe, Result);
     else
-      TfrlDANFeRLRetrato.SalvarPDF(Self, ANFe, Result);
+      if Etiqueta then
+        TfrlDANFeRLEtiqueta.SalvarPDF(Self, ANFe, Result)
+      else
+        TfrlDANFeRLRetrato.SalvarPDF(Self, ANFe, Result);
     end;
   end;
 
@@ -307,7 +314,10 @@ var
       tiSimplificado:
         TfrlDANFeRLSimplificado.SalvarPDF(Self, ANFe, AStream);
     else
-      TfrlDANFeRLRetrato.SalvarPDF(Self, ANFe, AStream);
+      if Etiqueta then
+        TfrlDANFeRLEtiqueta.SalvarPDF(Self, ANFe, AStream)
+      else
+        TfrlDANFeRLRetrato.SalvarPDF(Self, ANFe, AStream);
     end;
   end;
 

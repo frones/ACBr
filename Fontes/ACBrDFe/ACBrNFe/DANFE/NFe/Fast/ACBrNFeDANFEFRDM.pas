@@ -1891,6 +1891,7 @@ procedure TACBrNFeFRClass.CarregaDadosEventos;
 var
   i: Integer;
   CondicoesUso, Correcao: String;
+  documentoAtor: String;
 begin
   with cdsEventos do
   begin
@@ -1955,7 +1956,7 @@ begin
         FieldByName('nProt').AsString         := RetInfEvento.nProt;
         FieldByName('dhRegEvento').AsDateTime := RetInfEvento.dhRegEvento;
 
-        if InfEvento.tpEvento <> teCCe then
+        if (InfEvento.tpEvento <> teCCe) and (InfEvento.tpEvento <> teAtorInteressadoNFe) then
         begin
           FieldByName('xJust').AsString := InfEvento.detEvento.xJust;
           if InfEvento.tpEvento = teInsucessoEntregaNFe then
@@ -1973,6 +1974,18 @@ begin
 
           FieldByName('xCondUso').AsString  := CondicoesUso;
           FieldByName('xCorrecao').AsString := Correcao;
+
+          if (InfEvento.tpEvento = teAtorInteressadoNFe) then
+          begin
+              documentoAtor := InfEvento.detEvento.autXML[0].CNPJCPF;
+
+              FieldByName('xJust').AsString := 'CNPJ: ' + documentoAtor;
+              if (documentoAtor > '') and (length(documentoAtor) < 14) then
+                  FieldByName('xJust').AsString := 'CPF: ' + documentoAtor;
+
+              if (InfEvento.detEvento.tpAutorizacao <> taNaoInformar) then
+                  FieldByName('xJust').AsString := FieldByName('xJust').AsString + ' - Tipo Autorização: ' + AutorizacaoToStr(InfEvento.detEvento.tpAutorizacao);
+          end;
         end;
       end;
       Post;

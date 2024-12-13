@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_BoletoFC_Fortes"/>
     <Type Value="RunAndDesignTime"/>
@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrBoleto;..\..\..\..\..\Fontes\ACBrBoleto\WS;..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrBoleto\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -27,6 +27,7 @@
         <UnitName Value="ACBrBoletoFCFortesFrReg"/>
       </Item2>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBr_Boleto"/>

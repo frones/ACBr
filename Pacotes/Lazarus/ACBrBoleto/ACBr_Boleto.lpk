@@ -383,29 +383,29 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cresol.pas"/>
         <UnitName Value="ACBrBoletoW_Cresol"/>
       </Item90>
-	  <Item91>
+      <Item91>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCora.pas"/>
         <UnitName Value="ACBrBancoCora"/>
       </Item91>
-	  <Item92>
+      <Item92>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cora.pas"/>
         <UnitName Value="ACBrBoletoW_Cora"/>
       </Item92>
-	  <Item93>
+      <Item93>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas"/>
         <UnitName Value="ACBrBoletoRet_Cora"/>
       </Item93>
-	  <Item94>
+      <Item94>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Kobana.pas"/>
         <UnitName Value="ACBrBoletoW_Kobana"/>
       </Item94>
-	  <Item95>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoleto.Kobana.Classes.pas"/>
-        <UnitName Value="ACBrBoleto.Kobana.Classes"/>
-      </Item95>
-	  <Item96>
+      <Item95>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Kobana.pas"/>
         <UnitName Value="ACBrBoletoRet_Kobana"/>
+      </Item95>
+      <Item96>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoKobana.Classes.pas"/>
+        <UnitName Value="ACBrBoletoKobana.Classes"/>
       </Item96>
     </Files>
     <CompatibilityMode Value="True"/>

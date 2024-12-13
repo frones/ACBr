@@ -139,7 +139,7 @@ contains
   ACBrBoletoW_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cora.pas',
   ACBrBoletoRet_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas',
   ACBrBoletoW_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Kobana.pas',
-  ACBrBoleto.Kobana.Classes in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoleto.Kobana.Classes.pas',
+  ACBrBoletoKobana.Classes in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoKobana.Classes.pas',
   ACBrBoletoRet_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Kobana.pas';
 
 end.

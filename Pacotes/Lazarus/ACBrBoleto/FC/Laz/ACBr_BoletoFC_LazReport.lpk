@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_BoletoFC_LazReport"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliana Rodrigues - Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -11,9 +12,6 @@
         <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrBoleto\FC\Laz"/>
         <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrBoleto\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Boleto Impressão em LazReport - (http://www.projectoacbr.com.br/)"/>
     <Version Minor="1"/>
@@ -24,7 +22,7 @@
         <UnitName Value="ACBrBoletoFCLazReportDm"/>
       </Item1>
     </Files>
-    <Type Value="RunAndDesignTime"/>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="lazreportpdfexport"/>

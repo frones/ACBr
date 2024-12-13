@@ -20,10 +20,12 @@
       <Item1>
         <Filename Value="..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDF.pas"/>
         <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="ACBrBoletoFPDF"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\..\..\Fontes\ACBrBoleto\FC\FPDF\ACBrBoletoFPDFReg.pas"/>
         <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrBoletoFPDFReg"/>
       </Item2>
     </Files>
     <CompatibilityMode Value="True"/>

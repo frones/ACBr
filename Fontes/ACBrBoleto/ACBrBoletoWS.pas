@@ -251,8 +251,7 @@ uses
   ACBrBoletoW_Cora,
   AcbrBoletoRet_Cora,
   ACBrBoletoW_Kobana,
-  ACBrBoletoRet_Kobana,
-  ACBrBoleto.Kobana.Classes;
+  ACBrBoletoRet_Kobana;
 
   { TRetornoEnvioClass }
 

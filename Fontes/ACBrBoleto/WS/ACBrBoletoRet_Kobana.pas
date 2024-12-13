@@ -40,7 +40,7 @@ uses
   ACBrBoletoWS.Rest,
   ACBrBoletoRetorno,
   ACBrBoleto,
-  ACBrBoleto.Kobana.Classes;
+  ACBrBoletoKobana.Classes;
 
 type
   TRetornoEnvio_Kobana = class(TRetornoEnvioRest)

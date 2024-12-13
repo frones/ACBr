@@ -43,7 +43,7 @@ uses
   ACBrBoletoWS.REST,
   ACBrBoletoConversao,
   ACBrBoletoRetorno,
-  ACBrBoleto.Kobana.Classes;
+  ACBrBoletoKobana.Classes;
 
 type
   TBoletoW_Kobana = class(TBoletoWSREST)

@@ -31,7 +31,7 @@
 //INCLUIDO EM 11/12/2024
 
 {$I ACBr.inc}
-unit ACBrBoleto.Kobana.Classes;
+unit ACBrBoletoKobana.Classes;
 
 interface
 

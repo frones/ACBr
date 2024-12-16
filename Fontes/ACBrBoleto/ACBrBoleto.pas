@@ -3925,7 +3925,7 @@ var
   LTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
   wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
   wVersaoLote, wVersaoArquivo: Integer;
-  wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento: String;
+  wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento, LDensidadeGravacao: String;
   Sessao, sFim, LocalPagamento, OrientacoesBanco: String;
   I, N: Integer;
   DtMovimento, DtRegistro, DtVencimento: String;
@@ -4021,7 +4021,7 @@ begin
           Banco.OrientacoesBanco.Text       := OrientacoesBanco;
 
         Banco.CasasDecimaisMoraJuros      := IniBoletos.ReadInteger(CBanco,'CasasDecimaisMoraJuros',Banco.CasasDecimaisMoraJuros);
-        Banco.DensidadeGravacao           := IniBoletos.ReadString(CBanco,'DensidadeGravacao',Banco.DensidadeGravacao);
+        LDensidadeGravacao := IniBoletos.ReadString(CBanco,'DensidadeGravacao',Banco.DensidadeGravacao);
         Banco.CIP                         := IniBoletos.ReadString(CBanco,'CIP',Banco.CIP);
 
         {$IFDEF SUPPORTS_REGION}{$REGION 'deprecated enviados para sessão de [BoletoConfig] - previsão para remoção de retirada XX/XX/XXXX'}{$ENDIF}
@@ -4062,6 +4062,9 @@ begin
 
         if ( wVersaoLote > 0 ) then
           Banco.LayoutVersaoLote:= wVersaoLote;
+
+        if NaoEstaVazio(LDensidadeGravacao) then
+           Banco.DensidadeGravacao := LDensidadeGravacao;
 
         Result := True;
       end;

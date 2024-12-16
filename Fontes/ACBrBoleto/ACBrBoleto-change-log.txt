@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2024
+-- ACBrBoleto.pas --
+[*] TK-6298-1 Ajustado tratamento como outros campos da seção e retorno foi OK
+    https://www.projetoacbr.com.br/forum/topic/80839-banco-bs2-arquivo-cnab400-erro-na-valida%C3%A7%C3%A3o/page/2/?&_rid=1706#findComment-524987
+	por Daniel de Morais InfoCotidiano 
+
 13/12/2024
 -- ACBrBoletoW_BancoBrasil_API --
 [*] TK-6274 alterado para so add o header do parceiro se informado

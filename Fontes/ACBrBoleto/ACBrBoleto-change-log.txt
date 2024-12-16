@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2024
+-- ACBrBoletoW_Itau_API --
+[-] TK-6363 Ajustado calculo desconto em percentuais
+    https://www.projetoacbr.com.br/forum/topic/81046-d%C3%BAvida-sobre-c%C3%A1lculo-de-desconto-no-acbrboleto/
+	por Daniel de Morais InfoCotidiano 
 
 16/12/2024
 -- ACBrBoletoW_Itau_API --

@@ -3715,7 +3715,7 @@ end;
 
 function TACBrBoleto.CalcularPercentualValor(AValorPercentual, AValorDocumento: Double): Double;
 begin
-  Result := (AValorPercentual / AValorDocumento) * 100 ;
+  Result := RoundABNT((AValorPercentual / 100 ) * AValorDocumento, 2);
 end;
 
 function TACBrBoleto.CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto): Double;

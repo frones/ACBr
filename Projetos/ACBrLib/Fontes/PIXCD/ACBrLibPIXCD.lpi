@@ -475,7 +475,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\acbrlibpixcd32"/>
+            <Filename Value="bin\MT\Linux\acbrpixcd32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+16/12/2024
+-- ACBrBoletoW_Itau_API --
+[*] TK-5662 Ajustado ambiente Producao, Homologacao e Sandbox
+    https://www.projetoacbr.com.br/forum/topic/79704-d%C3%BAvida-ita%C3%BA-produ%C3%A7%C3%A3o/
+	por Daniel de Morais InfoCotidiano 
+
 16/12/2024
 -- ACBrBoleto.pas --
 [*] TK-6298-1 Ajustado tratamento como outros campos da seção e retorno foi OK

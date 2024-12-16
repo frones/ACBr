@@ -138,21 +138,21 @@ uses
 procedure TBoletoW_Itau_API.DefinirURL;
 begin
 
-  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM);
+  FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], C_URL, C_URL_HOM);
   case Boleto.Configuracoes.WebService.Operacao of
     tpInclui:
       begin
         if Boleto.Cedente.CedenteWS.IndicadorPix then
-         FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL_PIX, C_URL_PIX_HOM) + '/boletos_pix'
+         FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], C_URL_PIX, C_URL_PIX_HOM) + '/boletos_pix'
         else
-         FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM) + '/boletos';
+         FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL, C_URL_HOM) + '/boletos';
       end;
 
     tpConsulta:
-      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
+      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao], C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
 
     tpConsultaDetalhe:
-      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao,
+      FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente  in [tawsProducao, tawsHomologacao],
         C_URL_CONSULTA, C_URL_HOM) + '/boletos?' + DefinirParametros;
 
     tpAltera:
@@ -363,7 +363,7 @@ end;
 
 function TBoletoW_Itau_API.ValidaAmbiente: Integer;
 begin
-  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, '1', '2'), 2);
+  Result := StrToIntDef(IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], '1', '2'), 2);
 end;
 
 procedure TBoletoW_Itau_API.GeraIdBeneficiario(AJson: TACBrJSONObject);
@@ -1242,7 +1242,7 @@ begin
 
   if Assigned(OAuth) then
   begin
-    if OAuth.Ambiente = tawsProducao then
+    if OAuth.Ambiente in [tawsProducao, tawsHomologacao] then
       OAuth.URL := C_URL_OAUTH_PROD
     else
       OAuth.URL := C_URL_OAUTH_HOM;

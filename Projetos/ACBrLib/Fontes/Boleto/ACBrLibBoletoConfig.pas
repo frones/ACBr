@@ -725,6 +725,9 @@ begin
   FOrientacaoBanco:= '';
   FTipoCobranca:= cobNenhum;
   FCasasDecimaisMoraJuros := 2;
+  FDensidadeGravacao := '';
+  FCIP := '';
+
 end;
 
 procedure TBoletoBancoConfig.LerIni(const AIni: TCustomIniFile);

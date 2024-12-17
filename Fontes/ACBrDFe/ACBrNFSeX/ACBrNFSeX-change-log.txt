@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6370: Incluído diversas cidades que se utilizam do provedor ISSMap que esta
+    sendo implementado.
+  Por: Italo Giurizzato Junior
+[*] #TK-6369: Incluída o campo Params para a cidade de Santos/SP, o provedor é Giss.
+  Por: Destak
+
 12/12/2024
 -- ACBrNFSeXServicos --
 [+] #TK-6352: Incluída a cidade de Piedade/SP, o provedor é Ginfes.

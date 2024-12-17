@@ -99,7 +99,7 @@ type
       const ANumLote: String = '');
 
     procedure ConsultarNFSePorRps(const ANumRPS, ASerie, ATipo: String;
-      const ACodVerificacao: string = '');
+      const ACodVerificacao: string = ''; const ACNPJTomador: string = '');
 
     // Usado pelos provedores que seguem a versão 1 do layout da ABRASF.
     procedure ConsultarNFSePorNumero(const aNumero: string; aPagina: Integer = 1);
@@ -789,7 +789,7 @@ begin
 end;
 
 procedure TACBrNFSeX.ConsultarNFSePorRps(const ANumRPS, ASerie, ATipo,
-  ACodVerificacao: String);
+  ACodVerificacao, ACNPJTomador: String);
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
@@ -799,6 +799,7 @@ begin
   FWebService.ConsultaNFSeporRps.SerieRps := ASerie;
   FWebService.ConsultaNFSeporRps.TipoRps := ATipo;
   FWebService.ConsultaNFSeporRps.CodigoVerificacao := ACodVerificacao;
+  FWebService.ConsultaNFSeporRps.CNPJCPFTomador := ACNPJTomador;
 
   FProvider.ConsultaNFSeporRps;
 end;
@@ -1063,6 +1064,7 @@ begin
     NumeroNFSeSubst := aInfCancelamento.NumeroNFSeSubst;
     SerieNFSeSubst := aInfCancelamento.SerieNFSeSubst;
     CodServ := aInfCancelamento.CodServ;
+    CNPJCPFTomador := aInfCancelamento.CNPJCPFTomador;
 
     if aInfCancelamento.CodMunicipio = 0 then
       aInfCancelamento.CodMunicipio := Configuracoes.Geral.CodigoMunicipio;

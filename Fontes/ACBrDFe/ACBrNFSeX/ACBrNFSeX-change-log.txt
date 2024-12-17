@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/12/2024
+-- Diversos --
+[+] #TK-6370: Implementado o provedor ISSMap (Layout Próprio).
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6370: Incluído diversas cidades que se utilizam do provedor ISSMap que esta
     sendo implementado.

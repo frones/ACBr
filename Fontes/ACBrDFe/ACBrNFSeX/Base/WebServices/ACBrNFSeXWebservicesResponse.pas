@@ -337,6 +337,7 @@ type
     FTipoRps: string;
     FCodigoVerificacao: string;
     FCancelamento: TNFSeCancelamento;
+    FCNPJCPFTomador: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -348,6 +349,7 @@ type
     property TipoRps: string read FTipoRps write FTipoRps;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
+    property CNPJCPFTomador: string read FCNPJCPFTomador write FCNPJCPFTomador;
   end;
 
   TNFSeConsultaNFSeResponse = class(TNFSeWebserviceResponse)
@@ -865,6 +867,7 @@ begin
   TipoRps := '';
   CodigoVerificacao := '';
   NumNotaSubstituidora := '';
+  CNPJCPFTomador := '';
 
   if Assigned(FCancelamento) then
     FCancelamento.Free;

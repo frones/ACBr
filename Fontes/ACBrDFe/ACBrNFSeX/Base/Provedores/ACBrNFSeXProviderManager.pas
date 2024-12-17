@@ -190,6 +190,7 @@ uses
   ISSCampinas.Provider,
   ISSDSF.Provider,
   ISSLencois.Provider,
+  ISSMap.Provider,
   ISSSaoPaulo.Provider,
   Prescon.Provider,
   PriMax.Provider,
@@ -442,6 +443,7 @@ begin
       proISSLencois:
         Result := TACBrNFSeProviderISSLencois.Create(ACBrNFSe);
 
+      proISSMap:   Result := TACBrNFSeProviderISSMap.Create(ACBrNFSe);
       proISSNatal: Result := TACBrNFSeProviderISSNatal.Create(ACBrNFSe);
 
       proISSNet:

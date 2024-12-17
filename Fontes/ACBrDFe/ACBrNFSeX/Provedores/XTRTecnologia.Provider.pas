@@ -177,10 +177,10 @@ end;
 procedure TACBrNFSeProviderXTRTecnologia.ProcessarMensagemDeErros(
   LJson: TACBrJSONObject; Response: TNFSeWebserviceResponse);
 var
-  JSonErro: TACBrJSONObject;
+//  JSonErro: TACBrJSONObject;
   AErro: TNFSeEventoCollectionItem;
-  i: Integer;
-  xDetailError: String;
+//  i: Integer;
+//  xDetailError: String;
 begin
   if not Assigned(LJson) then Exit;
 

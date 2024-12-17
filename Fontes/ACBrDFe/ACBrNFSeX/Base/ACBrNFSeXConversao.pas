@@ -130,7 +130,7 @@ type
                    proIntertec, proIPM, proIsaneto, proISSBarueri, proISSCamacari,
                    proISSCambe, proISSCampinas, proISSCuritiba, proISSDigital,
                    proISSDSF, proISSe, proISSFortaleza, proISSGoiania, proISSIntel,
-                   proISSJoinville, proISSLegal, proISSLencois, proISSNatal,
+                   proISSJoinville, proISSLegal, proISSLencois, proISSMap, proISSNatal,
                    proISSNet, proISSPortoVelho, proISSRecife, proISSRio,
                    proISSSalvador, proISSSaoPaulo, proISSSJP, proISSVitoria,
                    proKalana, proLexsom, proLibre, proLink3, proMegaSoft,

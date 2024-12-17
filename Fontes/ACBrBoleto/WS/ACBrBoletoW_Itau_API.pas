@@ -523,10 +523,10 @@ begin
     if (ATitulo.Instrucao1) <> '' then
     begin
       LJsonDados.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 1, 1));
-      if Boleto.Cedente.CedenteWS.IndicadorPix then
-        LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2))
-      else
-        LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 3, 2));
+      //if Boleto.Cedente.CedenteWS.IndicadorPix then
+      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao1)), 3, 2))
+      //else
+      //  LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao1)), 3, 2));
       LJsonDados.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
       LJsonArray.AddElementJSON(LJsonDados);
     end;
@@ -534,10 +534,10 @@ begin
     begin
       LJsonDados2 := TACBrJSONObject.Create;
       LJsonDados2.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 1, 1));
-      if Boleto.Cedente.CedenteWS.IndicadorPix then
-        LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao2)), 3, 2))
-      else
-        LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 3, 2));
+      //if Boleto.Cedente.CedenteWS.IndicadorPix then
+      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao2)), 3, 2))
+      //else
+      //LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao2)), 3, 2));
       LJsonDados2.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
       LJsonArray.AddElementJSON(LJsonDados2);
     end;
@@ -545,10 +545,10 @@ begin
     begin
       LJsonDados3 := TACBrJSONObject.Create;
       LJsonDados3.AddPair('codigo_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 1,1));
-      if Boleto.Cedente.CedenteWS.IndicadorPix then
-        LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao3)), 3, 2))
-      else
-        LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 3, 2));
+      //if Boleto.Cedente.CedenteWS.IndicadorPix then
+      LJsonDados.AddPair('quantidade_dias_apos_vencimento', Copy(trim((ATitulo.Instrucao3)), 3, 2))
+      //else
+      //LJsonDados.AddPair('quantidade_dias_instrucao_cobranca', Copy(trim((ATitulo.Instrucao3)), 3, 2));
       LJsonDados3.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
       LJsonArray.AddElementJSON(LJsonDados3);
     end;

@@ -1039,6 +1039,7 @@ begin
 
       Servico.CodigoPais := 1058; // Brasil
       Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
+      Servico.MunicipioPrestacaoServico := 'Cidade onde servico executado';
 
       // Provedor GeisWeb
       // tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador, tlSimplesNacional, tlIsentoImune
@@ -1748,7 +1749,7 @@ procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
   Titulo, NumNFSe, Codigo, Motivo, NumLote, CodVerif, SerNFSe, NumRps,
   SerRps, ValNFSe, ChNFSe, eMailTomador, vNumRPS, xCodServ, CodMun,
-  xDataEmissao: String;
+  xDataEmissao, xCNPJTomador: string;
   DataEmissao: TDateTime;
   CodCanc: Integer;
   InfCancelamento: TInfCancelamento;
@@ -1930,6 +1931,13 @@ begin
     Alimentar_Componente(vNumRPS, '1');
   end;
 
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSMap then
+  begin
+    xCNPJTomador := '';
+    if not(InputQuery(Titulo, 'CNPJ/CPF Tomador', xCNPJTomador)) then
+      exit;
+  end;
+
   InfCancelamento := TInfCancelamento.Create;
 
   try
@@ -1949,6 +1957,7 @@ begin
       DataEmissaoNFSe := DataEmissao;
       CodServ         := xCodServ;
       CodMunicipio    := StrToIntDef(CodMun, 0);
+      CNPJCPFTomador  := xCNPJTomador;
     end;
 
     ACBrNFSeX1.CancelarNFSe(InfCancelamento);
@@ -2519,19 +2528,20 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeRPSClick(Sender: TObject);
 var
-  NumeroRps, SerieRps, TipoRps, CodVerificacao: String;
+  Titulo, NumeroRps, SerieRps, TipoRps, CodVerificacao, xCNPJTomador: string;
   iTipoRps: Integer;
 begin
+  Titulo := 'Consultar NFSe por RPS';
   NumeroRps := '';
-  if not (InputQuery('Consultar NFSe por RPS', 'Numero do RPS:', NumeroRps)) then
+  if not (InputQuery(Titulo, 'Numero do RPS:', NumeroRps)) then
     exit;
 
   SerieRps := '1';
-  if not (InputQuery('Consultar NFSe por RPS', 'Serie do RPS:', SerieRps)) then
+  if not (InputQuery(Titulo, 'Serie do RPS:', SerieRps)) then
     exit;
 
   TipoRps := '1';
-  if not (InputQuery('Consultar NFSe por RPS', 'Tipo do RPS:', TipoRps)) then
+  if not (InputQuery(Titulo, 'Tipo do RPS:', TipoRps)) then
     exit;
 
   // Provedor ISSDSF e Siat
@@ -2565,15 +2575,23 @@ begin
     end;
   end;
 
+  CodVerificacao := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proGiap, proGoverna,
      proPrescon, proIntertec] then
   begin
-    CodVerificacao := '123';
-    if not (InputQuery('Consultar NFSe por RPS', 'Codigo Verificação:', CodVerificacao)) then
+    if not (InputQuery(Titulo, 'Codigo Verificação:', CodVerificacao)) then
       exit;
   end;
 
-  ACBrNFSeX1.ConsultarNFSePorRps(NumeroRps, SerieRps, TipoRps, CodVerificacao);
+  xCNPJTomador := '';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSMap then
+  begin
+    if not (InputQuery(Titulo, 'CNPJ/CPF Tomador:', xCNPJTomador)) then
+      exit;
+  end;
+
+  ACBrNFSeX1.ConsultarNFSePorRps(NumeroRps, SerieRps, TipoRps, CodVerificacao,
+    xCNPJTomador);
 
   ChecarResposta(tmConsultarNFSePorRps);
 end;

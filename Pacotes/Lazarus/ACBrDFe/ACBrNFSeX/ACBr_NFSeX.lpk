@@ -1756,12 +1756,12 @@
         <UnitName Value="XTRTecnologia.Provider"/>
       </Item435>
       <Item436>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSMap.GravarJson.pas"/>
-        <UnitName Value="ISSMap.GravarJson"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSMap.GravarXml.pas"/>
+        <UnitName Value="ISSMap.GravarXml"/>
       </Item436>
       <Item437>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSMap.LerJson.pas"/>
-        <UnitName Value="ISSMap.LerJson"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSMap.LerXml.pas"/>
+        <UnitName Value="ISSMap.LerXml"/>
       </Item437>
       <Item438>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\ISSMap.Provider.pas"/>

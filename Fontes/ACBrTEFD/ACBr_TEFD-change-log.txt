@@ -47,6 +47,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/12/2024
+-- ACBrTEFDestaxaComum --
+[-] Correção de exibição do QRCode na tela.
+    por: Elias César
+
+17/12/2024
 -- ACBrTEFAPICliSiTef, ACBrTEFAPIElgin, ACBrTEFAPIPaygoWeb --
 [*] Altera para definir a propriedade 'NaoRemoverMascaraResposta' ao chamar evento
     'QuandoPerguntarCampo' nos demais TEFs.

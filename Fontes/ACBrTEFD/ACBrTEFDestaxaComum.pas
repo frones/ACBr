@@ -998,6 +998,10 @@ begin
   begin
     msg := Copy(s, (Pos('automacao_coleta_mensagem', s)+27), Length(s));
     msg := Copy(msg, 1, (Pos('"', msg)-1));
+
+    if (Pos(CDESTAXA_STR_QRCODE, msg) > 0) then
+      msg := CarregarCampoString(aStrList.Values['automacao_coleta_mensagem']);
+
     if NaoEstaVazio(msg) then
       fautomacao_coleta_mensagem := msg;
   end;

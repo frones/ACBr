@@ -1,6 +1,9 @@
 package com.example.demoacbrbal;
 
 import androidx.annotation.NonNull;
+
+import java.io.File;
+import android.content.Context;
 import android.util.Log;
 import br.com.acbr.acbrlibbal.ACBrLibBAL;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -10,14 +13,15 @@ import io.flutter.plugin.common.MethodChannel;
 public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler {
     private MethodChannel channel;
     private ACBrLibBAL acbrBal;
-    private DemoBalApplication app;
     private String arquivoConfig;
+    private File appDir;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        app = (DemoBalApplication) binding.getApplicationContext();
-        arquivoConfig = app.getApplicationContext().getExternalFilesDir(null).getAbsolutePath() + "/acbrlib.ini";
-        
+        Context context = binding.getApplicationContext();
+        appDir = (File) context.getExternalFilesDir(null);
+        arquivoConfig =  appDir.getAbsolutePath() + "/acbrlib.ini";
+
         channel = new MethodChannel(binding.getBinaryMessenger(), "com.example.demoacbrbal");
         channel.setMethodCallHandler(this);
         acbrBal = new ACBrLibBAL(arquivoConfig, "");
@@ -157,7 +161,7 @@ public class ACBrBalAarPlugin implements FlutterPlugin, MethodChannel.MethodCall
         }
     }
     private void aplicaConfiguracoesPadrao() throws Exception {
-        acbrBal.configGravarValor("Principal", "LogPath", app.getFilesDir().getAbsolutePath());  
+        acbrBal.configGravarValor("Principal", "LogPath",appDir.getAbsolutePath());  
         acbrBal.configGravarValor("BAL", "Modelo", "2");
         acbrBal.configGravarValor("BAL", "Porta", "/dev/ttyUSER0");
         acbrBal.configGravarValor("BAL_Device", "Baud", "9600");

@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2024
+-- ACBrTEFAPICliSiTef, ACBrTEFAPIElgin, ACBrTEFAPIPaygoWeb --
+[*] Altera para definir a propriedade 'NaoRemoverMascaraResposta' ao chamar evento
+    'QuandoPerguntarCampo' nos demais TEFs.
+    por: Elias César
+
 11/12/2024
 -- ACBrTEFAPIDestaxaComum --
 [+] Criação de função para possibilitar executar transação sem alterar último sequencial

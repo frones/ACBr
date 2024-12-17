@@ -573,6 +573,7 @@ begin
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
              DefinicaoCampo.MascaraDeCaptura := EmptyStr;
+             DefinicaoCampo.NaoRemoverMascaraResposta := False;
 
              Validado := True;
              if Resposta = '' then
@@ -594,6 +595,7 @@ begin
              DefinicaoCampo.TipoEntradaCodigoBarras := tbQualquer;
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
+             DefinicaoCampo.NaoRemoverMascaraResposta := False;
 
              Validado := True;
              if Resposta = '' then
@@ -616,6 +618,7 @@ begin
              DefinicaoCampo.TipoEntradaCodigoBarras := tbQualquer;
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
+             DefinicaoCampo.NaoRemoverMascaraResposta := False;
 
              Validado := True;
              if Resposta = '' then
@@ -640,6 +643,7 @@ begin
              DefinicaoCampo.TipoEntradaCodigoBarras := tbLeitor;
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
+             DefinicaoCampo.NaoRemoverMascaraResposta := False;
 
              Validado := True;
              if Resposta = '' then
@@ -661,6 +665,7 @@ begin
              DefinicaoCampo.TamanhoMaximo := TamanhoMaximo;
              DefinicaoCampo.TamanhoMinimo := TamanhoMinimo;
              DefinicaoCampo.OcultarDadosDigitados := True;
+             DefinicaoCampo.NaoRemoverMascaraResposta := False;
 
              Validado := True;
              if Resposta = '' then

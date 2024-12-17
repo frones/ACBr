@@ -271,6 +271,7 @@ begin
   DefCampo.ValorMinimo := DefinicaoCampo.ValorMinimo;
   DefCampo.ValorMaximo := DefinicaoCampo.ValorMaximo;
   DefCampo.OcultarDadosDigitados := DefinicaoCampo.OcultarDadosDigitados;
+  DefCampo.NaoRemoverMascaraResposta := False;
 
   case DefinicaoCampo.TiposEntradaPermitidos of
     pgApenasLeitura: DefCampo.TipoDeEntrada := tedApenasLeitura;

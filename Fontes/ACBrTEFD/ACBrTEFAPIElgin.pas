@@ -323,6 +323,7 @@ var
       TituloPergunta := coletaMensagem;
       MascaraDeCaptura := coletaMascara;
       OcultarDadosDigitados := MatchText(UpperCase(TituloPergunta), ['SENHA']);
+      NaoRemoverMascaraResposta := False;
 
       case AnsiindexStr(coletaTipo, ELGIN_COLETA_TIPO) of
         0:

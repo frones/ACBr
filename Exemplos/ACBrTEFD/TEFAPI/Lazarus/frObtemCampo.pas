@@ -83,7 +83,6 @@ type
     property Titulo: String read GetTitulo write SetTitulo;
     property Resposta: String read GetResposta write SetResposta;
     property Ocultar: Boolean read GetOcultar write SetOcultar;
-    property NaoRemoverMascaraResposta: Boolean read fNaoRemoverMascaraResposta write fNaoRemoverMascaraResposta default False;
   end;
 
 implementation
@@ -122,10 +121,7 @@ begin
    begin
      if (fMascara <> '') then
      begin
-       if NaoRemoverMascaraResposta then
-         TamMascara := Length(fMascara)
-       else
-         TamMascara := CountStr(fMascara, '*');
+       TamMascara := CountStr(fMascara, '*');
 
        if TamanhoMaximo = 0 then
          TamanhoMaximo := TamMascara;

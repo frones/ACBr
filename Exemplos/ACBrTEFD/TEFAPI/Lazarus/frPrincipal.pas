@@ -1013,7 +1013,6 @@ begin
     FormObtemCampo.Resposta := DefinicaoCampo.ValorInicial;
     FormObtemCampo.Ocultar := DefinicaoCampo.OcultarDadosDigitados;
     FormObtemCampo.Mascara := DefinicaoCampo.MascaraDeCaptura;
-    FormObtemCampo.NaoRemoverMascaraResposta := DefinicaoCampo.NaoRemoverMascaraResposta;
     FormObtemCampo.btVoltar.Visible := False;  // PayGoWeb não suporta Voltar;
 
     if (pos('R$', DefinicaoCampo.MascaraDeCaptura) > 0) or

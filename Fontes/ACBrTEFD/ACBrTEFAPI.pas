@@ -135,7 +135,6 @@ type
     MsgConfirmacaoDuplaDigitacao: String;
     TipoEntradaCodigoBarras: TACBrTEFAPITipoBarras;
     TipoCampo: Integer;
-    NaoRemoverMascaraResposta: Boolean;
   end;
 
   TACBrTEFAPIQuandoEsperarFluxoAPI = procedure(

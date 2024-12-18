@@ -303,7 +303,6 @@ begin
   DefCampo.MsgConfirmacaoDuplaDigitacao := '';
   DefCampo.TipoEntradaCodigoBarras := tbQualquer;
   DefCampo.TipoCampo := 0;
-  DefCampo.NaoRemoverMascaraResposta := False;
 
   TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(DefCampo, Resposta, Validado, Cancelado);
 

@@ -46,6 +46,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2024
+-- ACBrTEFAPI --
+[-] Remoção da propriedade 'NaoRemoverMascaraResposta'.
+
+-- ACBrTEFAPICliSiTef, ACBrTEFAPIElgin, ACBrTEFAPIPaygoWeb --
+[-] Ajuste por removação da propriedade 'NaoRemoverMascaraResposta'.
+
+-- ACBrTEFAPIDestaxa --
+[+] Inclusão da função 'AplicarMascaraData()' para tratar automaticamente a resposta
+    do evento QuandoPerguntarCampoAPI().
+    por: Elias César
+
 17/12/2024
 -- ACBrTEFDestaxaComum --
 [-] Correção de exibição do QRCode na tela.

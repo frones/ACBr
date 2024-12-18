@@ -68,6 +68,8 @@ type
 
     function DestaxaClient: TACBrTEFDestaxaClient;
 
+    function AplicarMascaraData(const aMascara: String; var aResposta: String): String;
+
     procedure QuandoExibirQRCodeAPI(const aDados: String);
     procedure QuandoGravarLogAPI(const aLogLine: String; var Tratado: Boolean);
     procedure QuandoExibirMensagemAPI(aMensagem: String; MilissegundosExibicao: Integer; var Cancelar: Boolean);
@@ -178,6 +180,7 @@ procedure TACBrTEFRespDestaxa.ConteudoToProperty;
 
 var
   wResp: String;
+  i: Integer;
 begin
   DestaxaResposta.Clear;
   wResp := Conteudo.LeInformacao(899, 201).AsString;
@@ -192,7 +195,10 @@ begin
     Exit;
   end;
 
-  fpCNFEnviado := (UpperCase(Conteudo.LeInformacao(899,1).AsString) = 'S');
+  for i := 0 to Conteudo.Count-1 do
+    if (Conteudo.Linha[i].Identificacao <> 201) then
+      ProcessarTipoInterno(Conteudo.Linha[i]);
+
   Sucesso := (DestaxaResposta.transacao_resposta = 0);
   Confirmar := (DestaxaResposta.retorno = drsSucessoComConfirmacao) or
                ((DestaxaResposta.transacao = CDESTAXA_ADM_PENDENTE) and NaoEstaVazio(DestaxaResposta.transacao_nsu));
@@ -275,6 +281,32 @@ begin
   Result := fDestaxaClient;
 end;
 
+function TACBrTEFAPIClassDestaxa.AplicarMascaraData(const aMascara: String; var aResposta: String): String;
+var
+  tam, tamM, i, j: Integer;
+begin
+  Result := aResposta;
+  tam := Length(aResposta);
+  tamM := Length(OnlyAlphaNum(aMascara));
+
+  if (tam <> tamM) then
+    Exit;
+
+  j := 1;
+  Result := EmptyStr;
+  tamM := Length(aMascara);
+  for i := 1 to tamM do
+  begin
+    if (aMascara[i] = '/') then
+      Result := Result + '/'
+    else if (aMascara[i] = 'd') or (aMascara[i] = 'M') or (aMascara[i] = 'y') then
+    begin
+      Result := Result + aResposta[j];
+      Inc(j);
+    end;
+  end;
+end;
+
 procedure TACBrTEFAPIClassDestaxa.QuandoExibirQRCodeAPI(const aDados: String);
 begin
   if (not Assigned(TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirQRCode)) then
@@ -323,7 +355,6 @@ begin
   Def.TituloPergunta := aMensagem;
   Def.ValidacaoDado := valdNenhuma;
   Def.OcultarDadosDigitados := False;
-  Def.NaoRemoverMascaraResposta := True;
 
   if (aMascara = CDESTAXA_MASCARA_DATA1) then
     Def.MascaraDeCaptura := '**/**/**'
@@ -344,6 +375,9 @@ begin
   end;
 
   TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(Def, Resposta, Validado, Cancelar);
+
+  if (Pos('/', aMascara) > 0) then
+    Resposta := AplicarMascaraData(aMascara, Resposta);
 end;
 
 function TACBrTEFAPIClassDestaxa.ExibirMenuAdministrativo: Boolean;

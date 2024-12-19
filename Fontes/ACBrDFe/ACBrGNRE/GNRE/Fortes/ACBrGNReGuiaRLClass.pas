@@ -149,8 +149,9 @@ begin
   begin
     for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count -1 do
     begin
-      NomeArq:= OnlyNumber(TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE.IdentificadorGuia);
-      NomeArq:= PathWithDelim(Self.PathPDF) + NomeArq + '-guia.pdf';
+      NomeArq := DefinirNomeArquivo(Self.PathPDF,
+                 OnlyNumber(TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE.IdentificadorGuia) +
+                 '-guia.pdf', Self.ArquivoPDF);
 
       frlGuiaRLRetrato.SavePDF(Self,
           NomeArq,
@@ -169,8 +170,9 @@ begin
   end
   else
   begin
-    NomeArq:= OnlyNumber(AGNRE.IdentificadorGuia);
-    NomeArq:= PathWithDelim(Self.PathPDF) + NomeArq + '-guia.pdf';
+    NomeArq := DefinirNomeArquivo(Self.PathPDF,
+                                 OnlyNumber(AGNRE.IdentificadorGuia) + '-guia.pdf',
+                                 Self.ArquivoPDF);
 
     frlGuiaRLRetrato.SavePDF(Self,
           NomeArq,

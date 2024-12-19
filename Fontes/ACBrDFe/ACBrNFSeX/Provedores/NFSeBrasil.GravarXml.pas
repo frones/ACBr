@@ -77,6 +77,8 @@ begin
 
   FormatoAliq := tcDe2;
 
+  NrOcorrInscEstTomador := 0;
+
   NrOcorrComplTomador := 1;
   NrOcorrFoneTomador := 1;
   NrOcorrEmailTomador := 1;

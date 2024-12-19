@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 19/12/2024
+-- NFSeBrasil.GravarXml --
+[*] #TK-6386: Incluído a propriedade para deixar a Inscrição Estadual do Tomador
+    opcional ao gerar o XML do RPS.
+  Por: C4Dev
 -- ACBrNFSeXServicos --
 [*] #TK-6391: Incluído o campo Params para a de cidade de Jundiai/SP.
   Por: Destak

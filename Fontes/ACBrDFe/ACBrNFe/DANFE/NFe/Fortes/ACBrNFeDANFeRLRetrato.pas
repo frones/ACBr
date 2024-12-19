@@ -764,22 +764,25 @@ begin
 
   RLNFe.Title := OnlyNumber(fpNFe.InfNFe.Id);
 
-  if fpDANFe.LogoemCima then
+  if (fpDANFe.TamanhoLogoHeight = 0) and (fpDANFe.TamanhoLogoWidth = 0) then
   begin
-    rliLogo.Top := 16;
-    rliLogo.Left := 8;
-    rliLogo.Height := 42;
-    rliLogo.Width := 258;
+    if fpDANFe.LogoemCima then
+    begin
+      rliLogo.Top := 16;
+      rliLogo.Left := 8;
+      rliLogo.Height := 42;
+      rliLogo.Width := 258;
 
-    rlmEmitente.Top := 58;
-    rlmEmitente.Left := 8;
-    rlmEmitente.Height := 28;
-    rlmEmitente.Width := 255;
+      rlmEmitente.Top := 58;
+      rlmEmitente.Left := 8;
+      rlmEmitente.Height := 28;
+      rlmEmitente.Width := 255;
 
-    rlmEndereco.Top := 80;
-    rlmEndereco.Left := 8;
-    rlmEndereco.Height := 25;
-    rlmEndereco.Width := 255;
+      rlmEndereco.Top := 80;
+      rlmEndereco.Left := 8;
+      rlmEndereco.Height := 25;
+      rlmEndereco.Width := 255;
+    end;
   end;
 end;
 
@@ -1026,20 +1029,23 @@ begin
     rliChave3.Visible          := False;
   end;
 
-  // Expande a logomarca
-  if fpDANFe.ExpandeLogoMarca then
+  if (fpDANFe.TamanhoLogoHeight = 0) and (fpDANFe.TamanhoLogoWidth = 0) then
   begin
-    rlmEmitente.Visible := False;
-    rlmEndereco.Visible := False;
-
-    with rliLogo do
+    // Expande a logomarca
+    if fpDANFe.ExpandeLogoMarca then
     begin
-      Height := 101;
-      Width := 268;
-      Top := 14;
-      Left := 2;
+      rlmEmitente.Visible := False;
+      rlmEndereco.Visible := False;
 
-      TDFeReportFortes.AjustarLogo(rliLogo, fpDANFe.ExpandeLogoMarcaConfig);
+      with rliLogo do
+      begin
+        Height := 101;
+        Width := 268;
+        Top := 14;
+        Left := 2;
+
+        TDFeReportFortes.AjustarLogo(rliLogo, fpDANFe.ExpandeLogoMarcaConfig);
+      end;
     end;
   end;
 
@@ -1182,42 +1188,173 @@ procedure TfrlDANFeRLRetrato.DefinirEmitente;
 var
   sTemp: String;
 begin
-  rlmEmitente.AutoSize := False;
-  rlmEndereco.AutoSize := False;
-  with fpNFe.Emit do
+  if (fpDANFe.TamanhoLogoHeight = 0) and (fpDANFe.TamanhoLogoWidth = 0) then
   begin
-    if EstaVazio(FRecebemoDe) then
-      FRecebemoDe := rllRecebemosDe.Caption;
+    rlmEmitente.AutoSize := False;
+    rlmEndereco.AutoSize := False;
 
-    rllRecebemosDe.Caption := Format(FRecebemoDe, [XNome]);
-
-    rllInscricaoEstadual.Caption := IE;
-    rllInscrEstSubst.Caption := IEST;
-    rllCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF);
-    rlmEmitente.Lines.Text := fpDANFe.ManterNomeImpresso(XNome, XFant);
-    rlmEndereco.Top := rlmEmitente.Top + rlmEmitente.Height;
-    rlmEndereco.Lines.Clear;
-    with EnderEmit do
+    with fpNFe.Emit do
     begin
-      sTemp := Trim(XLgr) +
-        IfThen(Nro = '0', '', ', ' + Nro) + ' ' +
-        IfThen(NaoEstaVazio(xCpl), Trim(XCpl), '') + ' - ' +
-        Trim(XBairro);
-      sTemp := sTemp + ' - CEP:' + FormatarCEP(CEP) + ' - ' + XMun + ' - ' + UF;
-      rlmEndereco.Lines.add(sTemp);
+      if EstaVazio(FRecebemoDe) then
+        FRecebemoDe := rllRecebemosDe.Caption;
 
-      sTemp := 'TEL: ' + FormatarFone(Fone);
-      rlmEndereco.Lines.add(sTemp);
+      rllRecebemosDe.Caption := Format(FRecebemoDe, [XNome]);
+
+      rllInscricaoEstadual.Caption := IE;
+      rllInscrEstSubst.Caption := IEST;
+      rllCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF);
+      rlmEmitente.Lines.Text := fpDANFe.ManterNomeImpresso(XNome, XFant);
+      rlmEndereco.Top := rlmEmitente.Top + rlmEmitente.Height;
+      rlmEndereco.Lines.Clear;
+
+      with EnderEmit do
+      begin
+        sTemp := Trim(XLgr) +
+          IfThen(Nro = '0', '', ', ' + Nro) + ' ' +
+          IfThen(NaoEstaVazio(xCpl), Trim(XCpl), '') + ' - ' +
+          Trim(XBairro);
+        sTemp := sTemp + ' - CEP:' + FormatarCEP(CEP) + ' - ' + XMun + ' - ' + UF;
+        rlmEndereco.Lines.add(sTemp);
+
+        sTemp := 'TEL: ' + FormatarFone(Fone);
+        rlmEndereco.Lines.add(sTemp);
+      end;
     end;
+
+    if NaoEstaVazio(fpDANFe.Site) then
+      rlmEndereco.Lines.add(fpDANFe.Site);
+
+    if NaoEstaVazio(fpDANFe.Email) then
+      rlmEndereco.Lines.add(fpDANFe.Email);
+
+    rlmEndereco.Height := rliEmitente.Height - rlmEndereco.Top - 15;
+  end
+  else
+  begin
+    with fpNFe.Emit do
+    begin
+      if FRecebemoDe = '' then
+        FRecebemoDe := rllRecebemosDe.Caption;
+
+      rllRecebemosDe.Caption := Format (FRecebemoDe, [ XNome ]);
+      rllCNPJ.Caption := FormatarCNPJ(CNPJCPF );
+      rllInscrEstSubst.caption := IEST;
+      rllInscricaoEstadual.Caption := IE;
+      rlmEmitente.Lines.Text   := XNome;
+
+      with EnderEmit do
+      begin
+        rlmEndereco.AutoSize:= true;
+        rlmEndereco.Lines.Clear;
+        rlmEndereco.Lines.Add(XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
+                              ' ' + XCpl + ' - ' + XBairro + ' - ' + XMun +
+                              ' - ' + UF + ' - ' + FormatarCEP(IntToStr(CEP)) +
+                              ' - ' + FormatarFone(Fone) + ' ' + fpDANFe.Site +
+                              ' ' + fpDANFe.Email);
+      end;
+    end;
+
+    RLILogo.Left:= 4;
+    RLILogo.Top:= 3;
+    RLMEmitente.Top:= 3;
+    RLMEmitente.Left:= 148;
+    RLMEndereco.Top:= 80;
+    RLMEndereco.Left:= 3;
+
+    RLILogo.Width:=  fpDANFe.TamanhoLogoWidth;
+    RLILogo.Height:= fpDANFe.TamanhoLogoHeight;
+    RLMEmitente.Left:= RLILogo.Left + RLILogo.Width + 2;
+    RLMEmitente.Width:= RLIEmitente.Width - 8 - RLILogo.Width;
+    RLMEndereco.Font.Size:= fpDANFe.Fonte.TamanhoFonteEndereco;
+    RLMEndereco.Top:= RLILogo.Top + RLILogo.Height + 1;
+
+    if RLILogo.Width = 0 then
+      RLMEndereco.Top:= RLMEmitente.Top + RLMEmitente.Height + 1;
+
+    if fpDANFe.LogoemCima = true then
+    begin
+      rliLogo.Center:= false;
+      rliLogo.Stretch:= true;
+      RLILogo.Left:= StrToInt(CurrToStr(Trunc(RLIEmitente.Width / 2) - Trunc(RLILogo.Width /2)));
+      RLILogo.Top:= RLILogo.Top + (fpDANFe.RecuoLogo);
+
+      rlmEmitente.AutoSize:= true;
+      rlmEmitente.Left:= RLIEmitente.Left + 2;
+      rlmEmitente.Width:= RLIEmitente.Width-4;
+      rlmEmitente.Top:= RLILogo.Top + RLILogo.Height + 3;
+      rlmEmitente.Caption:= trim(rlmEmitente.Caption);
+
+      rlmEndereco.Alignment:= taCenter;
+      rlmEndereco.Left:= rlmEmitente.Left;
+      rlmEndereco.Width:= rlmEmitente.Width;
+      rlmEndereco.Top:= rlmEmitente.Top + rlmEmitente.Height + 5;
+    end;
+
+    if fpDANFe.LogoemCima = false then
+    begin
+      rlmemitente.Left:= 4;
+      rlmemitente.Top:= 12;
+
+      rliLogo.Center:= false;
+      rliLogo.Stretch:= true;
+      rliLogo.Left:= 4;
+      rliLogo.Top:= rlmEmitente.Top + rlmEmitente.Height + fpDANFe.RecuoLogo + 5;
+
+      rlmEmitente.Width:= RLIEmitente.Width - 4;
+      rlmEmitente.Top:= rlmEmitente.Top  + fpDANFe.RecuoEmpresa;
+
+      rlmEndereco.Left:= rliLogo.Left + rliLogo.Width + 5;
+      rlmEndereco.Top:= rlmEmitente.Top + rlmEmitente.Height + 5;
+
+      rlmEmitente.Caption:= trim(rlmEmitente.Caption);
+
+      rlmEndereco.Width:= RLIEmitente.Width - rlmEndereco.Left - 4;
+    end;
+
+    if fpDANFe.RecuoEmpresa <> 0 then
+      rlmEmitente.Top:= rlmEmitente.Top + fpDANFe.RecuoEmpresa;
+
+    if fpDANFe.RecuoEndereco <> 0 then
+      rlmEndereco.Top:= rlmEndereco.Top + fpDANFe.RecuoEndereco;
+
+    (*
+    rlmEndereco.AutoSize := False;
+    with fpNFe.Emit do
+    begin
+      if EstaVazio(FRecebemoDe) then
+        FRecebemoDe := rllRecebemosDe.Caption;
+
+      rllRecebemosDe.Caption := Format(FRecebemoDe, [XNome]);
+
+      rllInscricaoEstadual.Caption := IE;
+      rllInscrEstSubst.Caption := IEST;
+      rllCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF);
+      rlmEmitente.Lines.Text := fpDANFe.ManterNomeImpresso(XNome, XFant);
+      rlmEndereco.Top := rlmEmitente.Top + rlmEmitente.Height;
+      rlmEndereco.Lines.Clear;
+      with EnderEmit do
+      begin
+        sTemp := Trim(XLgr) +
+          IfThen(Nro = '0', '', ', ' + Nro) + ' ' +
+          IfThen(NaoEstaVazio(xCpl), Trim(XCpl), '') + ' - ' +
+          Trim(XBairro);
+        sTemp := sTemp + ' - CEP:' + FormatarCEP(CEP) + ' - ' + XMun + ' - ' + UF;
+        rlmEndereco.Lines.add(sTemp);
+
+        sTemp := 'TEL: ' + FormatarFone(Fone);
+        rlmEndereco.Lines.add(sTemp);
+      end;
+    end;
+
+    if NaoEstaVazio(fpDANFe.Site) then
+      rlmEndereco.Lines.add(fpDANFe.Site);
+
+    if NaoEstaVazio(fpDANFe.Email) then
+      rlmEndereco.Lines.add(fpDANFe.Email);
+
+    rlmEndereco.Height := rliEmitente.Height - rlmEndereco.Top - 15;
+    *)
   end;
-
-  if NaoEstaVazio(fpDANFe.Site) then
-    rlmEndereco.Lines.add(fpDANFe.Site);
-
-  if NaoEstaVazio(fpDANFe.Email) then
-    rlmEndereco.Lines.add(fpDANFe.Email);
-
-  rlmEndereco.Height := rliEmitente.Height - rlmEndereco.Top - 15;
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirDestinatario;

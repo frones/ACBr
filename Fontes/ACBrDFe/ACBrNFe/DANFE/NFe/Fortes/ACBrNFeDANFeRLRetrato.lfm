@@ -944,9 +944,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rlmEndereco: TRLMemo
         Tag = 703
-        Left = 80
+        Left = 81
         Height = 33
-        Top = 48
+        Top = 43
         Width = 185
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -6971,7 +6971,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsVertically
       end
       object rllNFe: TRLLabel
-        Left = 607
+        Left = 608
         Height = 16
         Top = 2
         Width = 128
@@ -7657,7 +7657,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 688
-    Top = 106
+    Left = 680
+    Top = 114
   end
 end

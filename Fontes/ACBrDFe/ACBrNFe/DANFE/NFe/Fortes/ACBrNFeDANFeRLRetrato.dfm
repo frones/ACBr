@@ -1023,8 +1023,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rlmEndereco: TRLMemo
         Tag = 703
-        Left = 80
-        Top = 48
+        Left = 81
+        Top = 43
         Width = 185
         Height = 33
         AutoSize = False
@@ -8518,6 +8518,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 688
-    Top = 106
+    Top = 114
   end
 end

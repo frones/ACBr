@@ -47,6 +47,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/12/2024
+-- ACBrNFeDANFeRLRetrato --
+[*] TK-6359 Ajustes para que os dados do Emitente obedeçam uma nova margem.
+  Por: Rodrigo Ogioni
+
 02/09/2024
 -- ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, 
 [*] #TK-5866: Ajuste visando padronização do caractere de quebra de linha.

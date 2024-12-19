@@ -14,7 +14,6 @@ object FormPrincipal: TFormPrincipal
   OnKeyDown = FormKeyDown
   ParentFont = True
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object Splitter2: TSplitter
     Left = 775
     Height = 634
@@ -394,19 +393,19 @@ object FormPrincipal: TFormPrincipal
                 end
                 object gbDadosTerminal: TGroupBox
                   Left = 0
-                  Height = 117
-                  Top = 178
+                  Height = 149
+                  Top = 180
                   Width = 413
                   Align = alTop
                   Caption = 'Dados Terminal'
-                  ClientHeight = 97
+                  ClientHeight = 129
                   ClientWidth = 409
                   TabOrder = 1
                   object Label17: TLabel
                     Left = 24
                     Height = 15
                     Top = -1
-                    Width = 71
+                    Width = 70
                     Caption = 'Cod.Terminal'
                     ParentColor = False
                   end
@@ -463,15 +462,32 @@ object FormPrincipal: TFormPrincipal
                     Width = 174
                     TabOrder = 1
                   end
+                  object edCodFilial: TEdit
+                    Left = 24
+                    Height = 23
+                    Top = 104
+                    Width = 174
+                    Anchors = [akTop, akLeft, akRight]
+                    TabOrder = 4
+                    Text = '0001'
+                  end
+                  object Label30: TLabel
+                    Left = 24
+                    Height = 15
+                    Top = 88
+                    Width = 24
+                    Caption = 'Filial'
+                    ParentColor = False
+                  end
                 end
                 object gbDadosEstabComercial: TGroupBox
                   Left = 0
-                  Height = 65
+                  Height = 67
                   Top = 113
                   Width = 413
                   Align = alTop
                   Caption = 'Estabelecimento Comercial'
-                  ClientHeight = 45
+                  ClientHeight = 47
                   ClientWidth = 409
                   TabOrder = 2
                   object Label20: TLabel
@@ -1444,8 +1460,8 @@ object FormPrincipal: TFormPrincipal
     QuandoPerguntarMenu = ACBrTEFAPI1QuandoPerguntarMenu
     QuandoPerguntarCampo = ACBrTEFAPI1QuandoPerguntarCampo
     QuandoExibirQRCode = ACBrTEFAPI1QuandoExibirQRCode
-    Left = 962
-    Top = 301
+    Left = 696
+    Top = 320
   end
   object ACBrAbecsPinPad1: TACBrAbecsPinPad
     OnWriteLog = ACBrAbecsPinPad1WriteLog

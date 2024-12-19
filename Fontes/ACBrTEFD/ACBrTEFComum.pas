@@ -1176,6 +1176,7 @@ begin
       102 : fpDocumentoVinculado := ALinha.Informacao.AsString;
       104 : fpRede               := ALinha.Informacao.AsString ;
       103 : fpValorTotal         := fpValorTotal + ALinha.Informacao.AsFloat;
+      105 : fpConfirmar          := (ALinha.Informacao.AsString = 'True');
       500 : fpIdPagamento        := ALinha.Informacao.AsInteger ;
       501 : fpIdRespostaFiscal   := ALinha.Informacao.AsInteger ;
       502 : fpSerialPOS          := ALinha.Informacao.AsString ;

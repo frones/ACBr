@@ -42,6 +42,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+19/12/2024
+-- ACBrNFSeXServicos --
+[*] #TK-6391: Incluído o campo Params para a de cidade de Jundiai/SP.
+  Por: Destak
+[*] #TK-6387: A cidade de Lapa/PR mudou a versão e as URLs, mas o provedor continua
+    o mesmo.
+  Por: Marcelo Dev
+[*] #TK-6384: A cidade de Santo Andre/SP voltou para o Ginfes, aguardando nova data para 
+    migrar para o Giss.
+  Por: Destak
+[+] #TK-6380: Incluída a cidade de Urupa/RO, o provedor é WebISS versão 2.01
+  Por: Diego Reckziegel
+[*] #TK-6374: Alterado a URL de produção da cidade de Presidente Medici/RO o
+    provedor continua o mesmo.
+  Por: Diego Reckziegel
+
 17/12/2024
 -- Diversos --
 [+] #TK-6370: Implementado o provedor ISSMap (Layout Próprio).

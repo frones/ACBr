@@ -44,6 +44,9 @@ Símbolo : Significado
 
 19/12/2024
 -- PagFor.Safra.GravarTxtRemessa --
+[-] A unit estava no formato UTF-8 BOM em vez de ANSI.
+  Por: Italo Giurizzato Junior
+-- PagFor.Safra.GravarTxtRemessa --
 [*] TK-6381: Acrescentado o override para a procedure: GeraSegmentoB.
   Por: Aleph Costa Melo
 

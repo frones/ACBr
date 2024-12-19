@@ -101,7 +101,8 @@ begin
   ARetornoWS.HTTPResultCode  := HTTPResultCode;
   ARetornoWS.JSONEnvio       := EnvWs;
   ARetornoWS.Header.Operacao := LTipoOperacao;
-  ARetornoWS.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
+  if Assigned(ACBrTitulo) then
+    ARetornoWS.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
 
   if RetWS <> '' then
   begin
@@ -195,7 +196,7 @@ begin
             ARetornoWS.DadosRet.IDBoleto.LinhaDig       := LJsonObject.AsString['codigoLinhaDigitavel'];
             ARetornoWS.DadosRet.IDBoleto.NossoNum       := LJsonObject.AsString['id'];
 
-            if ARetornoWS.DadosRet.IDBoleto.NossoNum = '' then
+            if EstaVazio(ARetornoWS.DadosRet.IDBoleto.NossoNum) and NaoEstaVazio(ARetornoWS.DadosRet.IDBoleto.LinhaDig) then
               ARetornoWS.DadosRet.IDBoleto.NossoNum := '000'
                                                       + Copy(ARetornoWS.DadosRet.IDBoleto.LinhaDig,12,7)
                                                       + Copy(ARetornoWS.DadosRet.IDBoleto.LinhaDig,20,10);

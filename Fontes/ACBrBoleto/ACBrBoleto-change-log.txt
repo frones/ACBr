@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2024
+-- ACBrBoletoRet_BancoBrasil_API --
+[*] TK-6393 Add Assigned para evitar erros. ao capturar nossonumero
+	por Daniel de Morais InfoCotidiano / Panda
+
 16/12/2024
 -- ACBrBoletoW_Itau_API --
 [-] TK-6363 Ajustado calculo desconto em percentuais

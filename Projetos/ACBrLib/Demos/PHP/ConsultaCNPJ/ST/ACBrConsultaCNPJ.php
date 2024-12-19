@@ -213,7 +213,7 @@ function Consultar($ffi, $cnpj_valor, &$iniContent)
 
 function parseIniToStr($ini)
 {
-    $lines = explode("\r\n", $ini);
+    $lines = explode(PHP_EOL, $ini);
     $config = [];
     $section = null;
 

@@ -65,7 +65,7 @@ function CarregaDll()
     if (file_exists($dllPath))
         return $dllPath;
 
-    $dllPath = __DIR__ . DIRECTORY_SEPARATOR . "ACBrLib\\x" . $arquitetura . DIRECTORY_SEPARATOR . $biblioteca;
+    $dllPath = __DIR__ . DIRECTORY_SEPARATOR . "ACBrLib". DIRECTORY_SEPARATOR . "x" . $arquitetura . DIRECTORY_SEPARATOR . $biblioteca;
 
     if (file_exists($dllPath))
         return $dllPath;
@@ -96,6 +96,16 @@ function CarregaIniPath()
 
 function CarregaContents($importsPath, $dllPath)
 {
+    $modoGrafico = verificaAmbienteGrafico();
+    if ( $modoGrafico === 0) {
+        throw new Exception("Ambiente gráfico não identificado");
+        return -10;
+    }
+
+    if ($modoGrafico === 2){
+        putenv("DISPLAY=:99");
+    }
+
     $ffi = FFI::cdef(
         file_get_contents($importsPath),
         $dllPath
@@ -219,7 +229,7 @@ function BuscarPorLogradouro($handle, $ffi, $cidadecons, $tipocons, $logradouroc
 
 function parseIniToStr($ini)
 {
-    $lines = explode("\r\n", $ini);
+    $lines = explode(PHP_EOL, $ini);    
     $config = [];
     $section = null;
 
@@ -247,4 +257,26 @@ function parseIniToStr($ini)
     }
 
     return $config;
+}
+
+function verificaAmbienteGrafico()
+{
+    $verificaXVFB = shell_exec('pgrep Xvfb 2>&1') !== null;
+    $displayXVFB = strpos(getenv('DISPLAY'), ':99') !== false;
+
+    if ($verificaXVFB || $displayXVFB) {
+        // Emulador XVFB    
+        return 2;
+    } else {
+        $verificaX11 = shell_exec('pgrep Xorg') !== null && trim(shell_exec('pgrep Xorg')) !== '';
+        $displayX11 = getenv('DISPLAY') !== false && trim(getenv('DISPLAY')) !== '';
+        $pacoteX11 = shell_exec('dpkg -l | grep xserver-xorg') !== null && trim(shell_exec('dpkg -l | grep xserver-xorg')) !== '';
+
+        if ($verificaX11 || $displayX11 || $pacoteX11) {
+            // Ambiente grafico X11
+            return 1;
+        } else
+            // Sem ambiente grafico
+            return 0;
+    }
 }

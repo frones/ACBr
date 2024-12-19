@@ -980,6 +980,8 @@ function TNFeXmlWriter.GerarAgropecuario: TACBrXmlNode;
 var
   AuxNode: TACBrXmlNode;
 begin
+  Result := nil;
+
   if Trim(NFe.agropecuario.defensivo.nReceituario) <> '' then
   begin
     Result := FDocument.CreateElement('agropecuario');
@@ -991,7 +993,10 @@ begin
 
     AuxNode.AppendChild(AddNode(tcStr, 'ZF03a', 'CPFRespTec', 01, 11, 1,
                                 NFe.agropecuario.defensivo.CPFRespTec));
-  end else
+
+    Result := AuxNode;
+  end
+  else
   if NFe.agropecuario.guiaTransito.tpGuia <> tpgNenhum then
   begin
     Result := FDocument.CreateElement('agropecuario');
@@ -1010,6 +1015,7 @@ begin
     AuxNode.AppendChild(AddNode(tcInt, 'ZF08', 'nGuia', 01, 09, 1,
                                 NFe.agropecuario.guiaTransito.nGuia));
 
+    Result := AuxNode;
   end;
 end;
 
@@ -1777,6 +1783,7 @@ function TNFeXmlWriter.GerarDetImpostoICMS(const i: integer): TACBrXmlNode;
 var
   sTagTemp: string;
   xmlNode: TACBrXmlNode;
+  NrOcorr: Integer;
 
   function BuscaTag(const t: TpcnCSTIcms): string;
   begin
@@ -2157,53 +2164,64 @@ begin
                   DSC_MOTDESICMS));
             end;
           end;
+
           cst51:
           begin
             //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
+            NrOcorr := 0;
+
+            {
+              41 = PR  Requer as informações mesmo elas sendo zeradas
+            }
+            if NFe.Ide.cUF = 41 then
+              NrOcorr := 1;
+
             if NFe.Det[i].Imposto.ICMS.modBC <> dbiNenhum then
-              xmlNode.AppendChild(AddNode(tcStr, 'N13', 'modBC',
-                01, 01, 0, modBCToStr(NFe.Det[i].Imposto.ICMS.modBC), DSC_MODBC));
+              xmlNode.AppendChild(AddNode(tcStr, 'N13', 'modBC', 1, 1, NrOcorr,
+                         modBCToStr(NFe.Det[i].Imposto.ICMS.modBC), DSC_MODBC));
 
             xmlNode.AppendChild(AddNode(FormatoValor4ou2,
-              'N14', 'pRedBC', 01, IfThen(Usar_tcDe4, 07, 05), 0,
-              NFe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC));
-            xmlNode.AppendChild(AddNode(tcStr,
-              'N14a', 'cBenefRBC', 08, 10, 0,
+              'N14', 'pRedBC', 01, IfThen(Usar_tcDe4, 7, 5), NrOcorr,
+                                   NFe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC));
+
+            xmlNode.AppendChild(AddNode(tcStr, 'N14a', 'cBenefRBC', 8, 10, 0,
               NFe.Det[i].Imposto.ICMS.cBenefRBC, DSC_CBENEFRBC));
-            xmlNode.AppendChild(AddNode(tcDe2, 'N15', 'vBC',
-              01, 15, 0, NFe.Det[i].Imposto.ICMS.vBC, DSC_VBC));
-            xmlNode.AppendChild(AddNode(FormatoValor4ou2,
-              'N16', 'pICMS', 01, IfThen(Usar_tcDe4, 07, 05), 0,
-              NFe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS));
-            xmlNode.AppendChild(AddNode(tcDe2, 'N16a', 'vICMSOp',
-              01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS));
-            xmlNode.AppendChild(AddNode(FormatoValor4ou2,
-              'N16b', 'pDif', 01, IfThen(Usar_tcDe4, 07, 05), 0,
-              NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF));
-            xmlNode.AppendChild(AddNode(tcDe2, 'N16c', 'vICMSDif',
-              01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS));
 
-            if (NFe.Det[i].Imposto.ICMS.pICMS = 0) and
-              (NFe.Det[i].Imposto.ICMS.pDif = 0) then
-              xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMS',
-                01, 15, 0, NFe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS))
-            else
-              xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMS',
-                01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS));
+            xmlNode.AppendChild(AddNode(tcDe2, 'N15', 'vBC', 1, 15, NrOcorr,
+                                         NFe.Det[i].Imposto.ICMS.vBC, DSC_VBC));
+
+            xmlNode.AppendChild(AddNode(FormatoValor4ou2,
+              'N16', 'pICMS', 01, IfThen(Usar_tcDe4, 7, 5), NrOcorr,
+                                     NFe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS));
+
+            xmlNode.AppendChild(AddNode(tcDe2, 'N16a', 'vICMSOp', 1, 15, NrOcorr,
+                                   NFe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS));
+
+            xmlNode.AppendChild(AddNode(FormatoValor4ou2,
+              'N16b', 'pDif', 01, IfThen(Usar_tcDe4, 7, 5), NrOcorr,
+                                       NFe.Det[i].Imposto.ICMS.pDif, DSC_PDIF));
+
+            xmlNode.AppendChild(AddNode(tcDe2, 'N16c', 'vICMSDif', 1, 15, NrOcorr,
+                                  NFe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS));
+
+            xmlNode.AppendChild(AddNode(tcDe2, 'N17', 'vICMS', 1, 15, NrOcorr,
+                                     NFe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS));
 
             if (NFe.infNFe.Versao >= 4) then
             begin
               if (NFe.Det[i].Imposto.ICMS.vBCFCP > 0) or
-                (NFe.Det[i].Imposto.ICMS.pFCP > 0) or
-                (NFe.Det[i].Imposto.ICMS.vFCP > 0) then
+                 (NFe.Det[i].Imposto.ICMS.pFCP > 0) or
+                 (NFe.Det[i].Imposto.ICMS.vFCP > 0) then
               begin
-                xmlNode.AppendChild(AddNode(tcDe2, 'N17a', 'vBCFCP',
-                  01, 15, 1, NFe.Det[i].Imposto.ICMS.vBCFCP, DSC_VBCFCP));
+                xmlNode.AppendChild(AddNode(tcDe2, 'N17a', 'vBCFCP', 1, 15, 1,
+                                   NFe.Det[i].Imposto.ICMS.vBCFCP, DSC_VBCFCP));
+
                 xmlNode.AppendChild(AddNode(FormatoValor4ou2,
                   'N17b', 'pFCP', 01, IfThen(Usar_tcDe4, 07, 05), 1,
-                  NFe.Det[i].Imposto.ICMS.pFCP, DSC_PFCP));
-                xmlNode.AppendChild(AddNode(tcDe2, 'N17c', 'vFCP',
-                  01, 15, 1, NFe.Det[i].Imposto.ICMS.vFCP, DSC_VFCP));
+                                       NFe.Det[i].Imposto.ICMS.pFCP, DSC_PFCP));
+
+                xmlNode.AppendChild(AddNode(tcDe2, 'N17c', 'vFCP', 1, 15, 1,
+                                       NFe.Det[i].Imposto.ICMS.vFCP, DSC_VFCP));
               end;
             end;
 
@@ -2215,13 +2233,13 @@ begin
               begin
                 xmlNode.AppendChild(AddNode(FormatoValor4ou2,
                   'N17d', 'pFCPDif', 01, IfThen(Usar_tcDe4,07,05), 1,
-                                   nfe.Det[i].Imposto.ICMS.pFCPDif, DSC_PFCPDIF));
+                                 nfe.Det[i].Imposto.ICMS.pFCPDif, DSC_PFCPDIF));
 
                 xmlNode.AppendChild(AddNode(tcDe2, 'N17e', 'vFCPDif', 1, 15, 1,
-                                   nfe.Det[i].Imposto.ICMS.vFCPDif, DSC_VFCPDIF));
+                                 nfe.Det[i].Imposto.ICMS.vFCPDif, DSC_VFCPDIF));
 
                 xmlNode.AppendChild(AddNode(tcDe2, 'N17f', 'vFCPEfet', 1, 15, 0,
-                                 nfe.Det[i].Imposto.ICMS.vFCPEfet, DSC_VFCPEFET));
+                               nfe.Det[i].Imposto.ICMS.vFCPEfet, DSC_VFCPEFET));
               end;
             end;
           end;

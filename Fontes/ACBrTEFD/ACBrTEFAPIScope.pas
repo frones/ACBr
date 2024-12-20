@@ -46,13 +46,6 @@ const
 
 type
 
-  { TACBrTEFRespScope }
-
-  TACBrTEFRespScope = class( TACBrTEFResp )
-  public
-    procedure ConteudoToProperty; override;
-  end;
-
   { TACBrTEFAPIClassScope }
 
   TACBrTEFAPIClassScope = class(TACBrTEFAPIClass)
@@ -130,13 +123,6 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.FilesIO;
-
-{ TACBrTEFRespScope }
-
-procedure TACBrTEFRespScope.ConteudoToProperty;
-begin
-  inherited ConteudoToProperty;
-end;
 
 { TACBrTEFAPIClassScope }
 
@@ -225,17 +211,17 @@ procedure TACBrTEFAPIClassScope.InicializarChamadaAPI(
   AMetodoOperacao: TACBrTEFAPIMetodo);
 begin
   inherited;
-//E??
-  // Scope... não consegue efetuar nova Operação, se a anterior ficou pendente
+//E?? - Poderia não confirmar as transações...
   fpACBrTEFAPI.ConfirmarTransacoesPendentes;
 end;
 
 procedure TACBrTEFAPIClassScope.InterpretarRespostaAPI;
 begin
-  inherited;
+  //inherited;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
-  //D DadosDaTransacaoToTEFResp( fTEFPayGoAPI.DadosDaTransacao,
-  //                             fpACBrTEFAPI.UltimaRespostaTEF );
+  //D
+  DadosDaTransacaoToTEFResp( fTEFScopeAPI.DadosDaTransacao,
+                             fpACBrTEFAPI.UltimaRespostaTEF );
 end;
 
 procedure TACBrTEFAPIClassScope.QuandoGravarLogAPI(const ALogLine: String;

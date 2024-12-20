@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2024
+-- pcnNFe --
+[*] #TK-6132: Altera o tipo dos campos qCom/qTrib para Double visando corrigir divergência no comportamento das compilações x86 e x64.
+  Por: Diego Folieni
+
 19/12/2024
 -- ACBrNFe.XmlWriter --
 [*] Imposta uma condição para que as tags do ICMS 51 sejam obrigatórias se a UF for PR.

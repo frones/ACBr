@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2024
+-- ACBrLibNFeConsoleMT.lpi, ACBrLibNFeConsoleMTDemo.lpi --
+[*] Adicionado path \Fontes\ACBrDFe\ACBrNFe\Base para uso da unit ACBrNFe.Consts
+   Por: Antonio Carlos Junior
+
 10/12/2024
 -- ACBrLibNFeDataModule --
 [*] #TK-6337: Ajuste para que a config ViaConsumidor definida seja considera caso parâmetro do comando vazio.

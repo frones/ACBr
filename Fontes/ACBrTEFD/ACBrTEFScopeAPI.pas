@@ -1590,19 +1590,19 @@ begin
     IDCampo := copy(LinChave, P + 1, Length(LinChave));
     if mask = 'mask1' then
     begin
-      TrataCamposMask1(Hex2Dec64(IDCampo), Linha);
+      TrataCamposMask1(StrToInt64(IDCampo), Linha);
     end
     else if mask = 'mask2' then
     begin
-      TrataCamposMask2(Hex2Dec64(IDCampo), Linha);
+      TrataCamposMask2(StrToInt64(IDCampo), Linha);
     end
     else if mask = 'mask3' then
     begin
-      TrataCamposMask3(Hex2Dec64(IDCampo), Linha);
+      TrataCamposMask3(StrToInt64(IDCampo), Linha);
     end
     else if mask = 'mask4' then
     begin
-      TrataCamposMask4(Hex2Dec64(IDCampo), Linha);
+      TrataCamposMask4(StrToInt64(IDCampo), Linha);
     end
     else
     begin

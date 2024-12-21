@@ -773,7 +773,7 @@ const
   --------------------------------------------------------------------------------------------}
   const
     MASK2_NSU_transacao_Original             = $00000001;  { Cancel Transaction Id assigned by Scope }
-    MASK2_Cliente_Com_Seguro                 = $00000002;  { Ensured Client }
+    MASK2_Cliente_Com_Seguro                 = $00000002;  { Ensured Client } {(IBICred)}
     MASK2_Dados_Parcelado_Cetelem            = $00000004;  { Informations about parcels Cetelem }
     MASK2_Data_Movimento                     = $00000008;  { Interchange: Data Movimento }
     MASK2_Nome_Convenio                      = $00000010;  { Interchange: Nome da Empresa de Convênio }
@@ -1308,7 +1308,7 @@ type
 implementation
 
 uses
-  IniFiles, StrUtils, TypInfo, Windows,
+  IniFiles, StrUtils, TypInfo, Windows, DateUtils,
   ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
@@ -1321,55 +1321,55 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
       MASK1_Valor_transacao:
         AACBrTEFResp.ValorTotal := Linha.Informacao.AsFloat;
       MASK1_NSU_transacao:
-        ;
+        AACBrTEFResp.NSU_TEF := Linha.Informacao.AsString;
       MASK1_Hora_local_transacao:
-        ;
+        AACBrTEFResp.DataHoraTransacaoLocal := DateOf(AACBrTEFResp.DataHoraTransacaoLocal) + Linha.Informacao.AsTime;
       MASK1_Data_local_transacao:
-        ;
+        AACBrTEFResp.DataHoraTransacaoLocal := Linha.Informacao.AsDate + TimeOf(AACBrTEFResp.DataHoraTransacaoLocal);
       MASK1_Data_vencimento_cartao:
-        ;
-      MASK1_Data_referencia:
-        ;
+        AACBrTEFResp.NFCeSAT.DataExpiracao := Linha.Informacao.AsString;
+      //MASK1_Data_referencia:
+      //  ;
       MASK1_Numero_cheque:
-        ;
+        AACBrTEFResp.Cheque := Linha.Informacao.AsString;
       MASK1_Codigo_autorizacao:
-        ;
+        AACBrTEFResp.CodigoAutorizacaoTransacao := Linha.Informacao.AsString;
       MASK1_Codigo_resposta:
-        ;
+        AACBrTEFResp.CodigoRedeAutorizada := Linha.Informacao.AsString;
       MASK1_Identificacao_terminal:
-        ;
-      MASK1_Codigo_Origem_Mensagem:
-        ;
+        AACBrTEFResp.Estabelecimento := Linha.Informacao.AsString; //???
+      //MASK1_Codigo_Origem_Mensagem:
+      //  ;
       MASK1_Plano_Pagamento:
-        ;
+        AACBrTEFResp.QtdParcelas := Linha.Informacao.AsInteger;
       MASK1_Valor_Taxa_Servico:
-        ;
+        AACBrTEFResp.TaxaServico := Linha.Informacao.AsFloat;
       MASK1_NSU_Host:
-        ;
+        AACBrTEFResp.NSU := Linha.Informacao.AsString;
       MASK1_Cod_Banco:
-        ;
+        AACBrTEFResp.Banco := Linha.Informacao.AsString;
       MASK1_Cod_Agencia:
-        ;
+        AACBrTEFResp.Agencia := Linha.Informacao.AsString;
       MASK1_Data_Vencimento:
-        ;
+        AACBrTEFResp.DataVencimento := Linha.Informacao.AsTimeStamp;
       MASK1_Cod_Bandeira:
-        ;
+        AACBrTEFResp.CodigoBandeiraPadrao := Linha.Informacao.AsString;
       MASK1_Cod_Servico:
-        ;
+        ;//Ver tabela Código serviços página 40
       MASK1_Texto_BIT_62:
-        ;
+        ;//????
       MASK1_Controle_Dac:
-        ;
+        ;///????
       MASK1_Cod_Rede:
-        ;
+        AACBrTEFResp.CodigoRedeAutorizada := Linha.Informacao.AsString;
       MASK1_Nome_Bandeira:
-        ;
+        AACBrTEFResp.NFCeSAT.Bandeira := Linha.Informacao.AsString;
       MASK1_Nome_Rede:
-        ;
+        AACBrTEFResp.Rede := Linha.Informacao.AsString;
       MASK1_Cartao_Trilha02:
-        ;
-      MASK1_Numero_Promissorias:
-        ;
+        ; //????
+      //MASK1_Numero_Promissorias:
+      //  ;
       MASK1_Cod_Estab_Impresso:
         ;
       MASK1_Numero_CMC7:
@@ -1389,7 +1389,7 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
   begin
     case IDCampo of
       MASK2_NSU_transacao_Original:
-        AACBrTEFResp.NSU := Linha.Informacao.AsBinary;
+        AACBrTEFResp.NSUTransacaoCancelada := Linha.Informacao.AsBinary;
       MASK2_Cliente_Com_Seguro:
         ;
       MASK2_Dados_Parcelado_Cetelem:
@@ -1452,7 +1452,6 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
         ;
       MASK2_Numero_PDV:
         ;
-
     //else
     //
     end;
@@ -1480,11 +1479,11 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
       MASK3_Max_Mercadorias_TicketCar:
         ;
       MASK3_Codigo_SAT:
-        ;
+        ; //Ver tabela Código das redes página 322
       MASK3_Versao_Carga_Tabelas_Host:
         ;
       MASK3_CNPJ_Rede_Credenciadora_SAT:
-        ;
+        AACBrTEFResp.NFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
       MASK3_Dados_Correspondente_Bancario:
         ;
       MASK3_Dados_Adicionais_Gift_Card:
@@ -1577,6 +1576,7 @@ begin
   AACBrTEFResp.Digitado := False;
   AACBrTEFResp.TaxaServico := 0;
   AACBrTEFResp.DataHoraTransacaoCancelada := 0;
+  AACBrTEFResp.DataHoraTransacaoLocal := 0;
 
   for I := 0 to AACBrTEFResp.Conteudo.Count - 1 do
   begin

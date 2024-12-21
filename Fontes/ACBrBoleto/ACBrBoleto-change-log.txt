@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2024
+-- ACBrBoletoW_Banrisul --
+[-] Correção na definição das URL de homologação.
+    https://www.projetoacbr.com.br/forum/topic/81118-erro-na-url-de-homologa%C3%A7%C3%A3o-do-boleto-banrisul-via-api/
+  Por: Jhonlenon Ribeiro
+
 19/12/2024
 -- ACBrBoletoRet_BancoBrasil_API --
 [*] TK-6393 Add Assigned para evitar erros. ao capturar nossonumero

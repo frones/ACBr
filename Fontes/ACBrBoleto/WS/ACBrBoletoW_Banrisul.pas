@@ -117,7 +117,7 @@ procedure TBoletoW_Banrisul.DefinirURL;
 var
    DevAPP, ID, NConvenio: String;
 begin
-   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente in [tawsProducao, tawsHomologacao], C_URL, C_URL_HOM);
+   FPURL := IfThen(Boleto.Configuracoes.WebService.Ambiente = tawsProducao, C_URL, C_URL_HOM);
 
    if ATitulo <> nil then
       ID := OnlyNumber(ATitulo.ACBrBoleto.Banco.MontarCampoNossoNumero(ATitulo));
@@ -647,7 +647,7 @@ begin
 
    if Assigned(OAuth) then
    begin
-      OAuth.URL := IfThen(OAuth.Ambiente in [tawsProducao,tawsHomologacao], C_URL_OAUTH_PROD, C_URL_OAUTH_HOM);
+      OAuth.URL := IfThen(OAuth.Ambiente = tawsProducao, C_URL_OAUTH_PROD, C_URL_OAUTH_HOM);
       OAuth.Payload := True;
    end;
 end;

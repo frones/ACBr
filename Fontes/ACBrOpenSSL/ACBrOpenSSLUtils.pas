@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2024 Daniel Simoes de Almeida               }
 
 { Colaboradores nesse arquivo:                                                 }
 
@@ -42,7 +42,8 @@ uses
   ACBrConsts, ACBrBase;
 
 resourcestring
-  sErrDigstNotFound = 'Algorithm %s not found in OpenSSL';
+  sErrAlgorithmNotFound = 'Algorithm %s not found in OpenSSL';
+  sErrCipherNotFound = 'Cipher %s not found in OpenSSL';
   sErrFileNotInformed = 'FileName is empty';
   sErrFileNotExists = 'File: %s does not exists';
   sErrLoadingRSAKey = 'Error loading RSA Key';
@@ -78,6 +79,17 @@ const
 type
   TACBrOpenSSLAlgorithm = ( algMD2, algMD4, algMD5, algRMD160, algSHA, algSHA1,
                             algSHA256, algSHA512);
+  TACBrOpenSSLCipher = ( cphRC4,
+                         cphDES_CBC, cphDES_EDE3_CBC, chp3DES,
+                         chpAES_128_CBC, chpAES_192_CBC, chpAES_256_CBC,
+                         chpAES_128_CTR, chpAES_192_CTR, chpAES_256_CTR,
+                         chpAES_128_ECB, chpAES_192_ECB, chpAES_256_ECB,
+                         chpAES_128_GCM, chpAES_192_GCM, chpAES_256_GCM,
+                         chpAES_128_OFB, chpAES_192_OFB, chpAES_256_OFB,
+                         chpDES_ECB, chpDES_EDE,
+                         chpDES_EDE_CBC,
+                         chpRC2_CBC);
+
   TACBrOpenSSLPadding = ( rsaPKCS1_PADDING, rsaSSLV23_PADDING, rsaNO_PADDING,
                           rsaPKCS1_OAEP_PADDING, rsaX931_PADDING, rsaPKCS1_PSS_PADDING,
                           rsaPKCS1_WITH_TLS_PADDING, rsaPKCS1_NO_IMPLICIT_REJECT_PADDING,
@@ -131,11 +143,18 @@ type
     procedure CheckCertificateIsLoaded;
 
     function GetEVPAlgorithmByName(Algorithm: TACBrOpenSSLAlgorithm): PEVP_MD;
+    function GetEVPCipherByName(Cipher: TACBrOpenSSLCipher): PEVP_CIPHER;
     procedure LoadPublicKeyFromCertificate(AX509: pX509);
+    function Pkcs5Pad(aStr: AnsiString; BlockSize: Integer; ZeroPad: Boolean = False): AnsiString;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Clear;
+
+    function EncryptFromString(const PlainText, aKey: AnsiString;
+      Cipher: TACBrOpenSSLCipher; OutputType: TACBrOpenSSLStrType = sttBase64): AnsiString;
+    function DecryptFromString(const CipherText, aKey: AnsiString;
+      Cipher: TACBrOpenSSLCipher; CipherTextType: TACBrOpenSSLStrType = sttBase64): AnsiString;
 
     function CalcHashFromStream(AStream: TStream; Algorithm: TACBrOpenSSLAlgorithm;
       OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
@@ -254,6 +273,7 @@ procedure GenerateKeyPair(out APrivateKey: String; out APublicKey: String;
 function GetLastOpenSSLError: String;
 function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
 function OpenSSLAlgorithmToStr(Algorithm: TACBrOpenSSLAlgorithm): String;
+function OpenSSLCipherToStr(Cipher: TACBrOpenSSLCipher): String;
 function OpenSSLPaddingToInt(APadding: TACBrOpenSSLPadding): Integer;
 function ConvertToStrType(ABinaryStr: AnsiString;
   OutputType: TACBrOpenSSLStrType = sttHexa): AnsiString;
@@ -656,6 +676,34 @@ begin
   end;
 end;
 
+function OpenSSLCipherToStr(Cipher: TACBrOpenSSLCipher): String;
+begin
+  case Cipher of
+    cphRC4: Result := 'rc4';
+    cphDES_CBC: Result := 'des-cbc';
+    cphDES_EDE3_CBC, chp3DES: Result := '3des';
+    chpAES_128_CBC: Result := 'aes-128-cbc';
+    chpAES_192_CBC: Result := 'aes-192-cbc';
+    chpAES_256_CBC: Result := 'aes-256-cbc';
+    chpAES_128_CTR: Result := 'aes-128-ctr';
+    chpAES_192_CTR: Result := 'aes-192-ctr';
+    chpAES_256_CTR: Result := 'aes-256-ctr';
+    chpAES_128_ECB: Result := 'aes-128-ecb';
+    chpAES_192_ECB: Result := 'aes-192-ecb';
+    chpAES_256_ECB: Result := 'aes-256-ecb';
+    chpAES_128_GCM: Result := 'aes-128-gcm';
+    chpAES_192_GCM: Result := 'aes-192-gcm';
+    chpAES_256_GCM: Result := 'aes-256-gcm';
+    chpAES_128_OFB: Result := 'aes-128-ofb';
+    chpAES_192_OFB: Result := 'aes-192-ofb';
+    chpAES_256_OFB: Result := 'aes-256-ofb';
+    chpDES_ECB: Result := 'des-ecb';
+    chpDES_EDE: Result := 'des-ede';
+    chpDES_EDE_CBC: Result := 'des-ede-cbc';
+    chpRC2_CBC: Result := 'rc2-cbc';
+  end;
+end;
+
 function OpenSSLPaddingToInt(APadding: TACBrOpenSSLPadding): Integer;
 begin
   case APadding of
@@ -721,6 +769,107 @@ procedure TACBrOpenSSLUtils.Clear;
 begin
   FreeCert;
   FreeKeys;
+end;
+
+function TACBrOpenSSLUtils.Pkcs5Pad(aStr: AnsiString; BlockSize: Integer;
+  ZeroPad: Boolean = False): AnsiString;
+var
+  npad: Byte;
+begin
+  npad := BlockSize - (Length(aStr) mod BlockSize);
+  Result := aStr + StringOfChar(chr(IfThen(ZeroPad, 0, npad)), npad);
+end;
+
+function TACBrOpenSSLUtils.EncryptFromString(const PlainText, aKey: AnsiString;
+  Cipher: TACBrOpenSSLCipher; OutputType: TACBrOpenSSLStrType): AnsiString;
+var
+  cph: PEVP_CIPHER;
+  ctx: PEVP_CIPHER_CTX;
+  ret, InLen, OutLen, FinalLen: longint;
+  pData: PByte;
+  k, o: AnsiString;
+begin
+  cph := GetEVPCipherByName(Cipher);
+  ctx := EVP_CIPHER_CTX_new;
+  if (ctx = nil) then
+    raise EACBrOpenSSLException.Create(sErrCreatingCtx);
+
+  try
+    InLen := Length(PlainText);
+    OutLen := 0; FinalLen := 0;
+    pData := AllocMem(InLen + cph.block_size);
+    try
+      k := Pkcs5Pad(aKey, cph.key_len, True);
+      ret := EVP_EncryptInit(ctx, cph, PByte(k), nil);
+      if (ret <> 1) then
+        raise EACBrOpenSSLException.CreateFmt(sErrMethodError, ['EVP_EncryptInit', GetLastOpenSSLError]);
+
+      ret := EVP_EncryptUpdate(ctx, pData, @OutLen, PByte(PlainText), InLen);
+      if (ret <> 1) then
+        raise EACBrOpenSSLException.CreateFmt(sErrMethodError, ['EVP_EncryptUpdate', GetLastOpenSSLError]);
+
+      ret := EVP_EncryptFinal(ctx, PByte(PtrUInt(pData) + OutLen), @FinalLen);
+      if (ret <> 1) then
+        raise EACBrOpenSSLException.CreateFmt(sErrMethodError, ['EVP_EncryptFinal', GetLastOpenSSLError]);
+
+      FinalLen := OutLen + FinalLen;
+      o := StringOfChar(#0, FinalLen);
+      Move(pData^, o[1], FinalLen);
+    finally
+      Freemem(pData);
+    end;
+  finally
+    EVP_CIPHER_CTX_free(ctx);
+  end;
+
+  Result := ConvertToStrType(o, OutputType);
+end;
+
+function TACBrOpenSSLUtils.DecryptFromString(const CipherText,
+  aKey: AnsiString; Cipher: TACBrOpenSSLCipher;
+  CipherTextType: TACBrOpenSSLStrType): AnsiString;
+var
+  cph: PEVP_CIPHER;
+  ctx: PEVP_CIPHER_CTX;
+  ret, InLen, OutLen, FinalLen: longint;
+  pData: PByte;
+  k, c, o: AnsiString;
+begin
+  cph := GetEVPCipherByName(Cipher);
+  ctx := EVP_CIPHER_CTX_new;
+  if (ctx = nil) then
+    raise EACBrOpenSSLException.Create(sErrCreatingCtx);
+
+  try
+    c := ConvertFromStrType(CipherText, CipherTextType);
+    InLen := Length(c);
+    OutLen := 0; FinalLen := 0;
+    pData := AllocMem(InLen + cph.block_size);
+    try
+      k := Pkcs5Pad(aKey, cph.key_len, True);
+      ret := EVP_DecryptInit(ctx, cph, PByte(k), nil);
+      if (ret <> 1) then
+        raise EACBrOpenSSLException.CreateFmt(sErrMethodError, ['EVP_DecryptInit', GetLastOpenSSLError]);
+
+      ret := EVP_DecryptUpdate(ctx, pData, @OutLen, PByte(c), InLen);
+      if (ret <> 1) then
+        raise EACBrOpenSSLException.CreateFmt(sErrMethodError, ['EVP_DecryptUpdate', GetLastOpenSSLError]);
+
+      ret := EVP_DecryptFinal(ctx, PByte(PtrUInt(pData) + OutLen), @FinalLen);
+      if (ret <> 1) then
+        raise EACBrOpenSSLException.CreateFmt(sErrMethodError, ['EVP_DecryptFinal', GetLastOpenSSLError]);
+
+      FinalLen := OutLen + FinalLen;
+      o := StringOfChar(#0, FinalLen);
+      Move(pData^, o[1], FinalLen);
+    finally
+      Freemem(pData);
+    end;
+  finally
+    EVP_CIPHER_CTX_free(ctx);
+  end;
+
+  Result := o;
 end;
 
 function TACBrOpenSSLUtils.CalcHashFromStream(AStream: TStream; Algorithm: TACBrOpenSSLAlgorithm;
@@ -1547,8 +1696,19 @@ begin
   s := OpenSSLAlgorithmToStr(Algorithm);
   Result := EVP_get_digestbyname(PAnsiChar(s));
   if (Result = nil) then
-    raise EACBrOpenSSLException.CreateFmt(sErrDigstNotFound,
+    raise EACBrOpenSSLException.CreateFmt(sErrAlgorithmNotFound,
       [GetEnumName(TypeInfo(TACBrOpenSSLAlgorithm), Integer(Algorithm))]);
+end;
+
+function TACBrOpenSSLUtils.GetEVPCipherByName(Cipher: TACBrOpenSSLCipher): PEVP_CIPHER;
+var
+  s: AnsiString;
+begin
+  s := OpenSSLCipherToStr(Cipher);
+  Result := EVP_get_cipherbyname(PAnsiChar(s));
+  if (Result = nil) then
+    raise EACBrOpenSSLException.CreateFmt(sErrCipherNotFound,
+      [GetEnumName(TypeInfo(TACBrOpenSSLCipher), Integer(Cipher))]);
 end;
 
 procedure TACBrOpenSSLUtils.LoadPublicKeyFromCertificate(AX509: pX509);

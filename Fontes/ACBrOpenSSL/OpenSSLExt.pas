@@ -1468,8 +1468,8 @@ var
   //
   function EVP_EncryptInit(ctx: PEVP_CIPHER_CTX; const chipher_: PEVP_CIPHER;
            const key, iv: PByte): cint;
-  function EVP_EncryptUpdate(ctx: PEVP_CIPHER_CTX; out_: pcuchar;
-           outlen: pcint; const in_: pcuchar; inlen: cint): cint;
+  function EVP_EncryptUpdate(ctx: PEVP_CIPHER_CTX; out_: PByte;
+           outlen: pcint; const in_: PByte; inlen: cint): cint;
   function EVP_EncryptFinal(ctx: PEVP_CIPHER_CTX; out_data: PByte; outlen: pcint): cint;
   //
   function EVP_DecryptInit(ctx: PEVP_CIPHER_CTX; chiphir_type: PEVP_CIPHER;
@@ -2025,8 +2025,8 @@ type
   //
   TEVP_EncryptInit = function(ctx: PEVP_CIPHER_CTX; const chipher_: PEVP_CIPHER;
            const key, iv: PByte): cint; cdecl;
-  TEVP_EncryptUpdate = function(ctx: PEVP_CIPHER_CTX; out_: pcuchar;
-           outlen: pcint; const in_: pcuchar; inlen: cint): cint; cdecl;
+  TEVP_EncryptUpdate = function(ctx: PEVP_CIPHER_CTX; out_: PByte;
+           outlen: pcint; const in_: PByte; inlen: cint): cint; cdecl;
   TEVP_EncryptFinal = function(ctx: PEVP_CIPHER_CTX; out_data: PByte; outlen: pcint): cint; cdecl;
   //
   TEVP_DecryptInit = function(ctx: PEVP_CIPHER_CTX; chiphir_type: PEVP_CIPHER;
@@ -4267,8 +4267,8 @@ begin
     Result := -1;
 end;
 
-function EVP_EncryptUpdate(ctx: PEVP_CIPHER_CTX; out_: pcuchar;
-         outlen: pcint; const in_: pcuchar; inlen: cint): cint;
+function EVP_EncryptUpdate(ctx: PEVP_CIPHER_CTX; out_: PByte;
+         outlen: pcint; const in_: PByte; inlen: cint): cint;
 begin
   if InitSSLInterface and Assigned(_EVP_EncryptUpdate) then
     Result := _EVP_EncryptUpdate(ctx, out_, outlen, in_, inlen)
@@ -5601,6 +5601,10 @@ end;
 
 Procedure LoadSSLEntryPoints;
 begin
+  {$IfDef ANDROID}{$IfDef FPC}
+   SysLogWrite(DefaultSysLogPriority, 'OpenSSL', 'LoadSSLEntryPoints');
+  {$EndIf}{$EndIf}
+
   _SslGetError := GetProcAddr(SSLLibHandle, 'SSL_get_error');
   _SslLibraryInit := GetProcAddr(SSLLibHandle, 'SSL_library_init');
   _SslLoadErrorStrings := GetProcAddr(SSLLibHandle, 'SSL_load_error_strings');
@@ -5657,6 +5661,10 @@ end;
 
 Procedure LoadUtilEntryPoints;
 begin
+  {$IfDef ANDROID}{$IfDef FPC}
+   SysLogWrite(DefaultSysLogPriority, 'OpenSSL', 'LoadUtilEntryPoints');
+  {$EndIf}{$EndIf}
+
   _OpenSSLVersionNum := GetProcAddr(SSLUtilHandle, 'OpenSSL_version_num');
   if not Assigned(_OpenSSLVersionNum) then
     _OpenSSLVersionNum := GetProcAddr(SSLUtilHandle, 'SSLeay');  // Version 1.0.x
@@ -6450,8 +6458,10 @@ begin
 end;
 
 Procedure UnloadLibraries;
-
 begin
+  {$IfDef ANDROID}{$IfDef FPC}
+   SysLogWrite(DefaultSysLogPriority, 'OpenSSL', 'UnloadLibraries');
+  {$EndIf}{$EndIf}
   SSLloaded := false;
   if SSLLibHandle <> 0 then
   begin
@@ -6473,6 +6483,10 @@ var
    s: String;
   {$EndIf}
 begin
+  {$IfDef ANDROID}{$IfDef FPC}
+  SysLogWrite(DefaultSysLogPriority, 'OpenSSL', PAnsiChar('LoadLibraries, SSLLibPath: '+SSLLibPath));
+  {$EndIf}{$EndIf}
+
   for i := low(DLLUtilNames) to high(DLLUtilNames) do
   begin
     SSLUtilHandle := LoadLib(DLLUtilNames[i]);
@@ -6518,11 +6532,12 @@ begin
   Result:=SSLLoaded;
   if Result then
     exit;
+  {$IfDef ANDROID}{$IfDef FPC}
+   SysLogWrite(DefaultSysLogPriority, 'OpenSSL', 'InitSSLInterface');
+  {$EndIf}{$EndIf}
+
   SSLCS.Enter;
   try
-    if SSLloaded then
-      Exit;
-
     {$IfDef ANDROID}
     if (SSLLibPath = '') then     // Try to load from "./assets/internal/" first
       SSLLibPath := {$IfNDef FPC}TPath.GetDocumentsPath{$Else}'./assets/internal/'{$EndIf};
@@ -6539,6 +6554,9 @@ begin
 
     if Not Result then
     begin
+      {$IfDef ANDROID}{$IfDef FPC}
+       SysLogWrite(DefaultSysLogPriority, 'OpenSSL', 'InitSSLInterface Fail');
+      {$EndIf}{$EndIf}
       UnloadLibraries;
       Exit;
     end;

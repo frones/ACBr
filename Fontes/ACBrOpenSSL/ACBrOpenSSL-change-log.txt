@@ -38,6 +38,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2024
+-- OpenSSLExt --
+[-] Correção na assinatura do método: 'EVP_EncryptUpdate';
+[+] Adicionado vários Logs para Android
+
+-- ACBrOpenSSLUtils --
+[+] Adicionados novos métodos, para Criptografia e Descriptografia de Strings
+    function EncryptFromString(const PlainText, aKey: AnsiString;
+      Cipher: TACBrOpenSSLCipher; OutputType: TACBrOpenSSLStrType = sttBase64): AnsiString;
+    function DecryptFromString(const CipherText, aKey: AnsiString;
+      Cipher: TACBrOpenSSLCipher; CipherTextType: TACBrOpenSSLStrType = sttBase64): AnsiString;
+    (por: DSA)
+
 25/03/2024
 [*] Alteração para importar corretamente arquivos de Chave Privada que possuem o 
     cabeçalho: "-----BEGIN PRIVATE KEY-----"

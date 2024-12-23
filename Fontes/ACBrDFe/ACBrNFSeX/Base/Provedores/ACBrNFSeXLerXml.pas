@@ -287,6 +287,11 @@ begin
       if ValorTotal = 0 then
         ValorTotal := ValorUnitario * Quantidade;
 
+      if BaseCalculo = 0 then
+        BaseCalculo := ValorTotal;
+
+      ValorBCINSS := BaseCalculo;
+
       if ValorISS = 0 then
         ValorISS := BaseCalculo * Aliquota/100;
     end;
@@ -342,13 +347,17 @@ begin
       Quantidade := fQuantidade;
       ValorUnitario := fValorUnitario;
       ValorTotal := fValorServico;
-      ValorBCINSS := fValorBC;
-      BaseCalculo := fValorBC;
       Aliquota := fAliquota;
       ValorISS := fValorISS;
 
       if ValorTotal = 0 then
         ValorTotal := ValorUnitario * Quantidade;
+
+      if fValorBC = 0 then
+        fValorBC := ValorTotal;
+
+      ValorBCINSS := fValorBC;
+      BaseCalculo := fValorBC;
 
       if ValorISS = 0 then
         ValorISS := BaseCalculo * Aliquota/100;

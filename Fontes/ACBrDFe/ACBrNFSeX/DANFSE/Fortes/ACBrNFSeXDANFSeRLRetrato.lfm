@@ -1,9 +1,7 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 246
-  Height = 624
-  Top = 64
+  Left = 229
+  Top = 106
   Caption = 'frlXDANFSeRLRetrato'
-  ClientHeight = 624
   inherited RLNFSe: TRLReport
     Left = 32
     Top = 0
@@ -825,8 +823,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand[5]
       Left = 23
-      Height = 315
-      Top = 535
+      Height = 259
+      Top = 593
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -838,14 +836,14 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw52: TRLDraw
         Left = 1
         Height = 1
-        Top = 76
+        Top = 20
         Width = 751
         DrawKind = dkLine
       end
       object RLDraw53: TRLDraw
         Left = 144
         Height = 42
-        Top = 94
+        Top = 38
         Width = 1
         Angle = 90
         DrawKind = dkLine
@@ -853,7 +851,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw54: TRLDraw
         Left = 436
         Height = 42
-        Top = 94
+        Top = 38
         Width = 1
         Angle = 90
         DrawKind = dkLine
@@ -861,15 +859,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw55: TRLDraw
         Left = 608
         Height = 42
-        Top = 94
+        Top = 38
         Width = 1
         Angle = 90
         DrawKind = dkLine
       end
       object RLLabel137: TRLLabel
-        Left = 297
+        Left = 299
         Height = 15
-        Top = 162
+        Top = 106
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -881,9 +879,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel138: TRLLabel
-        Left = 488
+        Left = 490
         Height = 15
-        Top = 210
+        Top = 154
         Width = 153
         AutoSize = False
         Caption = '(=) Base de Cálculo'
@@ -894,9 +892,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel139: TRLLabel
-        Left = 488
+        Left = 491
         Height = 15
-        Top = 269
+        Top = 214
         Width = 153
         AutoSize = False
         Caption = '(=) Valor ISS'
@@ -908,9 +906,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllBaseCalc: TRLLabel
-        Left = 648
+        Left = 650
         Height = 15
-        Top = 210
+        Top = 154
         Width = 97
         Alignment = taRightJustify
         AutoSize = False
@@ -921,9 +919,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorISS: TRLLabel
-        Left = 648
+        Left = 651
         Height = 15
-        Top = 269
+        Top = 214
         Width = 97
         Alignment = taRightJustify
         AutoSize = False
@@ -937,14 +935,14 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw4: TRLDraw
         Left = 0
         Height = 1
-        Top = 293
+        Top = 238
         Width = 752
         DrawKind = dkLine
       end
       object rllValorTotal: TRLLabel
         Left = 300
         Height = 13
-        Top = 298
+        Top = 243
         Width = 150
         Alignment = taCenter
         Caption = 'VALOR TOTAL DA NOTA = '
@@ -955,23 +953,10 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rlmCodServico: TRLMemo
-        Left = 4
-        Height = 14
-        Top = 4
-        Width = 741
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel3: TRLLabel
-        Left = 488
+        Left = 490
         Height = 15
-        Top = 226
+        Top = 170
         Width = 153
         AutoSize = False
         Caption = '(x) Alíquota (%)'
@@ -982,9 +967,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllAliquota: TRLLabel
-        Left = 648
+        Left = 650
         Height = 15
-        Top = 226
+        Top = 170
         Width = 97
         Alignment = taRightJustify
         AutoSize = False
@@ -997,24 +982,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw6: TRLDraw
         Left = 292
         Height = 42
-        Top = 94
+        Top = 38
         Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
       end
-      object rlsLinhaH1: TRLDraw
-        Left = 0
-        Height = 1
-        Top = 56
-        Width = 752
-        Brush.Style = bsClear
-        DrawKind = dkLine
-      end
       object rllCodigoObra: TRLLabel
-        Left = 432
+        Left = 431
         Height = 14
-        Top = 61
+        Top = 4
         Width = 76
         Caption = 'Código da Obra:'
         Font.Color = clBlack
@@ -1024,9 +1001,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodObra: TRLLabel
-        Left = 512
+        Left = 511
         Height = 13
-        Top = 61
+        Top = 4
         Width = 64
         Font.Color = clBlack
         Font.Height = -11
@@ -1036,9 +1013,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllTituloConstCivil: TRLLabel
-        Left = 6
+        Left = 5
         Height = 15
-        Top = 60
+        Top = 3
         Width = 334
         Alignment = taCenter
         Caption = 'DETALHAMENTO ESPECIFICO DA CONSTRUÇÃO CIVIL'
@@ -1050,9 +1027,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodigoArt: TRLLabel
-        Left = 595
+        Left = 594
         Height = 14
-        Top = 61
+        Top = 4
         Width = 64
         Caption = 'Código ART:'
         Font.Color = clBlack
@@ -1062,9 +1039,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodART: TRLLabel
-        Left = 663
+        Left = 662
         Height = 13
-        Top = 61
+        Top = 4
         Width = 59
         Font.Color = clBlack
         Font.Height = -11
@@ -1074,9 +1051,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel34: TRLLabel
-        Left = 7
+        Left = 4
         Height = 15
-        Top = 98
+        Top = 42
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1088,9 +1065,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorPIS: TRLLabel
-        Left = 7
+        Left = 4
         Height = 15
-        Top = 116
+        Top = 60
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1101,9 +1078,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel36: TRLLabel
-        Left = 152
+        Left = 149
         Height = 15
-        Top = 98
+        Top = 42
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1115,9 +1092,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorCOFINS: TRLLabel
-        Left = 152
+        Left = 149
         Height = 15
-        Top = 116
+        Top = 60
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1128,9 +1105,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel38: TRLLabel
-        Left = 300
+        Left = 297
         Height = 15
-        Top = 98
+        Top = 42
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1142,9 +1119,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorIR: TRLLabel
-        Left = 300
+        Left = 297
         Height = 15
-        Top = 116
+        Top = 60
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1155,9 +1132,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel40: TRLLabel
-        Left = 470
+        Left = 467
         Height = 15
-        Top = 98
+        Top = 42
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1169,9 +1146,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorINSS: TRLLabel
-        Left = 470
+        Left = 467
         Height = 15
-        Top = 116
+        Top = 60
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1182,9 +1159,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel42: TRLLabel
-        Left = 614
+        Left = 611
         Height = 15
-        Top = 98
+        Top = 42
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1196,9 +1173,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorCSLL: TRLLabel
-        Left = 614
+        Left = 611
         Height = 15
-        Top = 116
+        Top = 60
         Width = 130
         Alignment = taRightJustify
         AutoSize = False
@@ -1211,7 +1188,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel44: TRLLabel
         Left = 316
         Height = 15
-        Top = 79
+        Top = 22
         Width = 120
         Alignment = taCenter
         Caption = 'TRIBUTOS FEDERAIS'
@@ -1225,7 +1202,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw13: TRLDraw
         Left = 0
         Height = 1
-        Top = 94
+        Top = 38
         Width = 752
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1233,15 +1210,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw14: TRLDraw
         Left = 0
         Height = 1
-        Top = 135
+        Top = 80
         Width = 752
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object RLLabel35: TRLLabel
-        Left = 2
+        Left = 4
         Height = 14
-        Top = 139
+        Top = 83
         Width = 282
         Alignment = taCenter
         Caption = 'Detalhamento de Valores - Prestador dos Serviços'
@@ -1253,9 +1230,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel37: TRLLabel
-        Left = 488
+        Left = 490
         Height = 20
-        Top = 139
+        Top = 83
         Width = 258
         Alignment = taCenter
         AutoSize = False
@@ -1268,9 +1245,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel39: TRLLabel
-        Left = 297
+        Left = 299
         Height = 20
-        Top = 139
+        Top = 83
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -1283,9 +1260,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel41: TRLLabel
-        Left = 488
+        Left = 490
         Height = 15
-        Top = 162
+        Top = 106
         Width = 153
         AutoSize = False
         Caption = 'Valor dos Serviços'
@@ -1296,9 +1273,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel43: TRLLabel
-        Left = 488
+        Left = 490
         Height = 15
-        Top = 178
+        Top = 122
         Width = 153
         AutoSize = False
         Caption = '(-) Deduções permitidas em Lei'
@@ -1309,9 +1286,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel45: TRLLabel
-        Left = 488
+        Left = 490
         Height = 15
-        Top = 194
+        Top = 138
         Width = 153
         AutoSize = False
         Caption = '(-) Desconto Incondicionado'
@@ -1322,9 +1299,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel46: TRLLabel
-        Left = 488
+        Left = 490
         Height = 15
-        Top = 242
+        Top = 186
         Width = 153
         AutoSize = False
         Caption = 'ISS a reter:'
@@ -1335,9 +1312,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel47: TRLLabel
-        Left = 8
+        Left = 10
         Height = 15
-        Top = 162
+        Top = 106
         Width = 146
         AutoSize = False
         Caption = 'Valor dos Serviços'
@@ -1348,9 +1325,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel48: TRLLabel
-        Left = 8
+        Left = 10
         Height = 15
-        Top = 178
+        Top = 122
         Width = 146
         AutoSize = False
         Caption = '(-) Desconto Incondicionado'
@@ -1361,9 +1338,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel49: TRLLabel
-        Left = 8
+        Left = 10
         Height = 15
-        Top = 194
+        Top = 138
         Width = 146
         AutoSize = False
         Caption = '(-) Desconto Condicionado'
@@ -1374,9 +1351,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel50: TRLLabel
-        Left = 8
+        Left = 10
         Height = 15
-        Top = 210
+        Top = 154
         Width = 146
         AutoSize = False
         Caption = '(-) Retenções Federais'
@@ -1387,9 +1364,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel51: TRLLabel
-        Left = 8
+        Left = 10
         Height = 15
-        Top = 226
+        Top = 170
         Width = 146
         AutoSize = False
         Caption = '(-) Outras Retenções'
@@ -1400,9 +1377,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel52: TRLLabel
-        Left = 8
+        Left = 10
         Height = 15
-        Top = 242
+        Top = 186
         Width = 146
         AutoSize = False
         Caption = '(-) ISS Retido'
@@ -1413,9 +1390,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel53: TRLLabel
-        Left = 8
+        Left = 11
         Height = 15
-        Top = 269
+        Top = 214
         Width = 145
         AutoSize = False
         Caption = '(=) Valor Líquido'
@@ -1427,9 +1404,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel54: TRLLabel
-        Left = 297
+        Left = 299
         Height = 15
-        Top = 218
+        Top = 162
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -1441,9 +1418,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllOpcaoSN: TRLLabel
-        Left = 297
+        Left = 300
         Height = 15
-        Top = 261
+        Top = 206
         Width = 120
         AutoSize = False
         Caption = 'Opção Simples Nacional'
@@ -1454,9 +1431,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel56: TRLLabel
-        Left = 297
+        Left = 300
         Height = 15
-        Top = 277
+        Top = 222
         Width = 104
         AutoSize = False
         Caption = 'Incentivador Cultural'
@@ -1469,7 +1446,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw15: TRLDraw
         Left = 292
         Height = 158
-        Top = 135
+        Top = 80
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -1478,16 +1455,16 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw16: TRLDraw
         Left = 480
         Height = 159
-        Top = 135
+        Top = 80
         Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rllValorServicos1: TRLLabel
-        Left = 159
+        Left = 161
         Height = 15
-        Top = 162
+        Top = 106
         Width = 129
         Alignment = taRightJustify
         AutoSize = False
@@ -1498,9 +1475,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorServicos2: TRLLabel
-        Left = 648
+        Left = 650
         Height = 15
-        Top = 162
+        Top = 106
         Width = 97
         Alignment = taRightJustify
         AutoSize = False
@@ -1511,9 +1488,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllDescIncondicionado1: TRLLabel
-        Left = 159
+        Left = 161
         Height = 15
-        Top = 178
+        Top = 122
         Width = 129
         Alignment = taRightJustify
         AutoSize = False
@@ -1524,9 +1501,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllDescIncondicionado2: TRLLabel
-        Left = 648
+        Left = 650
         Height = 15
-        Top = 194
+        Top = 138
         Width = 97
         Alignment = taRightJustify
         AutoSize = False
@@ -1537,9 +1514,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllDescCondicionado: TRLLabel
-        Left = 159
+        Left = 161
         Height = 15
-        Top = 194
+        Top = 138
         Width = 129
         Alignment = taRightJustify
         AutoSize = False
@@ -1550,9 +1527,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllRetencoesFederais: TRLLabel
-        Left = 159
+        Left = 161
         Height = 15
-        Top = 210
+        Top = 154
         Width = 129
         Alignment = taRightJustify
         AutoSize = False
@@ -1563,9 +1540,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllOutrasRetencoes: TRLLabel
-        Left = 159
+        Left = 161
         Height = 15
-        Top = 226
+        Top = 170
         Width = 129
         Alignment = taRightJustify
         AutoSize = False
@@ -1576,9 +1553,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorIssRetido: TRLLabel
-        Left = 159
+        Left = 161
         Height = 15
-        Top = 242
+        Top = 186
         Width = 129
         Alignment = taRightJustify
         AutoSize = False
@@ -1589,9 +1566,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorLiquido: TRLLabel
-        Left = 160
+        Left = 163
         Height = 20
-        Top = 265
+        Top = 210
         Width = 121
         Alignment = taRightJustify
         AutoSize = False
@@ -1605,15 +1582,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw17: TRLDraw
         Left = 0
         Height = 1
-        Top = 260
+        Top = 204
         Width = 752
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rllIncentivador: TRLLabel
-        Left = 424
+        Left = 427
         Height = 15
-        Top = 277
+        Top = 222
         Width = 49
         Alignment = taRightJustify
         AutoSize = False
@@ -1624,9 +1601,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllNatOperacao: TRLMemo
-        Left = 297
+        Left = 299
         Height = 38
-        Top = 178
+        Top = 122
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -1638,9 +1615,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllValorDeducoes: TRLLabel
-        Left = 648
+        Left = 650
         Height = 15
-        Top = 178
+        Top = 122
         Width = 97
         Alignment = taRightJustify
         AutoSize = False
@@ -1651,9 +1628,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllRegimeEspecial: TRLLabel
-        Left = 297
+        Left = 299
         Height = 23
-        Top = 235
+        Top = 179
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -1664,9 +1641,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllOpcaoSimples: TRLLabel
-        Left = 424
+        Left = 427
         Height = 15
-        Top = 261
+        Top = 206
         Width = 49
         Alignment = taRightJustify
         AutoSize = False
@@ -1677,9 +1654,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllISSReter: TRLLabel
-        Left = 648
+        Left = 650
         Height = 15
-        Top = 242
+        Top = 186
         Width = 98
         Alignment = taRightJustify
         AutoSize = False
@@ -1689,24 +1666,11 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rllMsgTeste: TRLLabel
-        Left = 4
-        Height = 31
-        Top = 23
-        Width = 724
-        Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
-        Font.Color = clBlack
-        Font.Height = -27
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
     end
     object rbOutrasInformacoes: TRLBand[6]
       Left = 23
       Height = 40
-      Top = 850
+      Top = 852
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1747,7 +1711,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object rlbCanhoto: TRLBand[7]
       Left = 23
       Height = 73
-      Top = 908
+      Top = 910
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -2076,7 +2040,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object RLBand1: TRLBand[10]
       Left = 23
       Height = 18
-      Top = 890
+      Top = 892
       Width = 752
       BandType = btSummary
       object rllDataHoraImpressao: TRLLabel
@@ -2104,9 +2068,48 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
     end
+    object rbCodServico: TRLBand[11]
+      Left = 23
+      Height = 58
+      Top = 535
+      Width = 752
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      BeforePrint = rbCodServicoBeforePrint
+      object rlmCodServico: TRLMemo
+        Left = 4
+        Height = 14
+        Top = 4
+        Width = 741
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllMsgTeste: TRLLabel
+        Left = 4
+        Height = 31
+        Top = 23
+        Width = 724
+        Alignment = taCenter
+        Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
+        Font.Color = clBlack
+        Font.Height = -27
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 136
-    Top = 16
+    Left = 152
+    Top = 24
   end
 end

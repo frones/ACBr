@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/12/2024
+-- Diversos --
+[+] #TK-6375: Ajustes para não sobrepor as informações no momento da impressão.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6420: Alterado as URLs da cidade de Renascenca/PR o provedor continua o mesmo.
   Por: Limber Software

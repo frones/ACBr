@@ -329,6 +329,9 @@ begin
    DataStr := FormatDateTime('YYYYMMDD', DataHora );
    HoraStr := FormatDateTime('HHNNSS', DataHora );
    ValorStr := FormatFloatBr( Valor );
+   if (fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao = '') then
+     fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao := DataStr + HoraStr;
+
    DoctoStr := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
    OperadorStr := fpACBrTEFAPI.DadosTerminal.Operador;
    ParamAdicStr := StringReplace(Trim(fParamAdicFuncao.Text), sLineBreak, ';', [rfReplaceAll]);

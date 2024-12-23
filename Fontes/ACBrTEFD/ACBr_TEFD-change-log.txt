@@ -54,6 +54,8 @@ Símbolo : Significado
 [*] Ajuste em 'TACBrTEFAPIClassCliSiTef.ResolverTransacaoPendente' para exibir
     mensagens quando Confirmar ou Estornar a transação Pendente, conforme
     requisito de homologação
+[*] Ajuste para que todas as transações iniciadas, possuam um identificados único
+    Se nada for informado, usa a Data e Hora com a mascara 'yyyymmddhhmmss'
     https://www.projetoacbr.com.br/forum/index.php?showtopic=80973
 
 -- ACBrTEFAPIComum --

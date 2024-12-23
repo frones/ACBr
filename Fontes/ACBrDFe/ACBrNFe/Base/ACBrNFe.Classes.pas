@@ -2208,6 +2208,7 @@ procedure TNFe.SetXMLString(const AValue: AnsiString);
 var
  LocNFeR : TNFeR;
 begin
+  {
   LocNFeR := TNFeR.Create(Self);
   try
     LocNFeR.Leitor.Arquivo := AValue;
@@ -2215,6 +2216,7 @@ begin
   finally
     LocNFeR.Free
   end;
+  }
 end;
 
 constructor TNFe.Create;

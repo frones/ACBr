@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2024
+-- pcnNFeConsts --
+[*] Remoção de unit sem uso.
+   Por: Italo Giurizzato Junior
+
 20/12/2024
 -- pcnNFe --
 [*] #TK-6132: Altera o tipo dos campos qCom/qTrib para Double visando corrigir divergência no comportamento das compilações x86 e x64.

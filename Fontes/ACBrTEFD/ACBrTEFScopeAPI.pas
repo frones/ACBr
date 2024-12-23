@@ -90,6 +90,14 @@ const
   RCS_VOUCHER_APROVADO_PARCIAL                = $0106;
   RCS_APROVADO_COM_PREMIO                     = $0107;
 
+  RCS_SERVER_JAVA_OFF                         = $EE00;
+  RCS_SERVER_JAVA_TIMEOUT                     = $EE01;
+  RCS_NAO_AUTORIZADO                          = $EE02;
+  RCS_SENHA_INVALIDA                          = $EE03;
+
+  RCS_PAGREC_RESPOSTA_INCOMPLETA              = $F800;
+  RCS_PAGREC_RESPOSTA_INVALIDA                = $F801;
+
   RCS_AUTO_ERRO_CRD_RLV_INVALIDO              = $F900;
   RCS_AUTO_ERRO_CRD_TRK_INVALIDA              = $F901;
   RCS_AUTO_ERRO_CRD_INVALIDO                  = $F902;
@@ -135,6 +143,7 @@ const
   RCS_PROTOCOLO_INCOMPATIVEL                  = $FE0B;
   RCS_NAO_PODE_DESFAZER_TRN_ENCERRADA         = $FE0C;
   RCS_NAO_HA_CAMPOS_SALVOS                    = $FE0D;
+  RCS_CONTEUDO_INVALIDO                       = $FE0E;
 
   RCS_SERVER_OFF                              = $FF00;
   RCS_ACQUIRER_OFF                            = $FF01;
@@ -249,37 +258,52 @@ const
   RCS_PINPAD_NAO_SUPORTADO_PERFIL             = $FF74;
   RCS_ERRO_ESTATISTICA_REDECARD               = $FF75;
   RCS_PINPAD_TABELAS_VAZIAS                   = $FF76;  { PINPad com tabelas vazias. Verifique se todas as redes desta filial fizeram inicialização de tabelas com sucesso. }
-  RCS_CONTACTLESS_NAO_HABILITADO              = $FF77;  { Contactless não habilitado na carga de tabelas pela rede em questão para este estabelecimento. No caso da Cielo a habilitação é na tabela 1B – TerminalConfiguration. }
-  RCS_CONTACTLESS_NAO_PERMITIDO               = $FF78;  { Contactless não permitido. AID em questão não possui dados contactless habilitados na carga de tabelas. }
-  RCS_CONTACTLESS_SEM_PRODUTO                 = $FF79;  { Contactless sem produto habilitado pela rede em questão. No caso da Cielo o produto não está habilitado na tabela 7C – GrupoRangeFuncao. }
-  RCS_EXCEDE_LIMITE_CONTACTLESS               = $FF7A;  { Excede limite contactless. No caso da Cielo esse limite está estabelecido na tabela 4ª – RiscoContactless. }
-  RCS_MODO_INVALIDO                           = $FF7B;  { Modo Inválido – Insira cartão com chip na leitora. }
+  RCS_CTLSS_NAO_HABILITADO_TERMINAL           = $FF77;  { Contactless não habilitado na carga de tabelas pela rede em questão para este estabelecimento. No caso da Cielo a habilitação é na tabela 1B – TerminalConfiguration. }
+  RCS_CTLSS_NAO_PERMITIDO                     = $FF78;  { Contactless não permitido. AID em questão não possui dados contactless habilitados na carga de tabelas. }
+  RCS_CTLSS_SEM_PRODUTO_HABILITADO            = $FF79;  { Contactless sem produto habilitado pela rede em questão. No caso da Cielo o produto não está habilitado na tabela 7C – GrupoRangeFuncao. }
+  RCS_CTLSS_EXCEDE_VALOR_LIMITE               = $FF7A;  { Excede limite contactless. No caso da Cielo esse limite está estabelecido na tabela 4ª – RiscoContactless. }
+  RCS_MODO_INVALIDO_INSIRA_CHIP               = $FF7B;  { Modo Inválido – Insira cartão com chip na leitora. }
   RCS_FALLBACK_NAO_PERMITIDO                  = $FF7C;  { Fallback não permitido. }
   RCS_MOEDA_INVALIDA                          = $FF7D;  { Moeda inválida. }
-  RCS_MODO_ENTRADA_DIFERENTE                  = $FF7E;  { Modo de entrada difere da transação original. Use o mesmo modo de entrada da transação original. }
+  RCS_MODO_ENTRADA_DIFERE_ORIGINAL            = $FF7E;  { Modo de entrada difere da transação original. Use o mesmo modo de entrada da transação original. }
   RCS_DOCUMENTO_INVALIDO                      = $FF7F;  { Documento inválido. }
-  RCS_SCOPEOBTEMTRANSACAOID_NAO_PERMITIDA     = $FF80;  { Chamada à função ScopeObtemTransacaoId não permitida. É permitida somente durante uma operação de crédito ou débito. }
-  RCS_VALOR_MAXIMO_PARCELA_INVALIDO           = $FF81;  { Valor máximo da parcela inválido. }
-  RCS_VERIFICACAO_PERFIL_NEGADA               = $FF82;  { Verificação do Perfil de Pagamento Recorrente negada. }
+  RCS_FUNCAO_NAO_PERMITIDA                    = $FF80;  { Chamada à função ScopeObtemTransacaoId não permitida. É permitida somente durante uma operação de crédito ou débito. }
+  RCS_VALOR_MAX_PARC_INVALIDO                 = $FF81;  { Valor máximo da parcela inválido. }
+  RCS_VERIFY_PAYMENT_PROFILE_DENIED           = $FF82;  { Verificação do Perfil de Pagamento Recorrente negada. }
   RCS_ERRO_ALOCACAO_MEMORIA                   = $FF83;  { Erro de alocação de memória na função ScopeObtemTransacaoId. }
   RCS_TOKEN_INVALIDO                          = $FF84;  { Token utilizado nas funções de Pagamento Recorrente inválido. }
-  RCS_CARTAO_NAO_CORRESPONDE                  = $FF85;  { Cartão utilizado na função ScopeAlteraPreAutorizacaoCredito não corresponde ao utilizado na função ScopePreAutorizacaoCredito. }
-  RCS_COLETA_TERMINAL_OBRIGATORIA             = $FF86;  { Coleta do Terminal Origem nas funções ScopeAlteraPreAutorizacaoCredito e ScopeCapturaPreAutorizacaoCredito obrigatória. }
-  RCS_PRE_AUTORIZACAO_CANCELADA               = $FF87;  { Pré-Autorização foi cancelada. }
-  RCS_PRE_AUTORIZACAO_CONFIRMADA              = $FF88;  { Pré-Autorização já foi confirmada. }
+  RCS_CARTAO_DIFERENTE                        = $FF85;  { Cartão utilizado na função ScopeAlteraPreAutorizacaoCredito não corresponde ao utilizado na função ScopePreAutorizacaoCredito. }
+  RCS_TERMINAL_ORIGEM_OBRIGATORIO             = $FF86;  { Coleta do Terminal Origem nas funções ScopeAlteraPreAutorizacaoCredito e ScopeCapturaPreAutorizacaoCredito obrigatória. }
+  RCS_PRE_AUTORIZACAO_JA_CANCELADA            = $FF87;  { Pré-Autorização foi cancelada. }
+  RCS_PRE_AUTORIZACAO_JA_CONFIRMADA           = $FF88;  { Pré-Autorização já foi confirmada. }
   RCS_TERMINAL_ORIGEM_INVALIDO                = $FF89;  { Terminal Origem coletado nas funções ScopeAlteraPreAutorizacaoCredito e ScopeCapturaPreAutorizacaoCredito inválido. }
-  RCS_SEM_REDE_DISPONIVEL                     = $FF8A;  { Sem rede disponível para efetuar o débito para pagamento. }
-  RCS_CONTACTLESS_VALOR_ZERO                  = $FF8B;  { Contactless com valor zerado não permitido. }
+  RCS_DEBITO_PAGAMENTO_SEM_REDE_DISPONIVEL    = $FF8A;  { Sem rede disponível para efetuar o débito para pagamento. }
+  RCS_CTLSS_VALOR_ZERO_NAO_PERMITIDO          = $FF8B;  { Contactless com valor zerado não permitido. }
   RCS_DESCONTO_NAO_PERMITIDO                  = $FF8C;  { Desconto não permitido. }
   RCS_PRODUTO_NAO_DISPONIVEL                  = $FF8D;  { Produto não disponível. }
   RCS_ERRO_CONSULTA_DINAMICA                  = $FF8F;  { Erro na consulta dinâmica. }
-  RCS_CHAMADA_VALIDA_PINPAD_ABECS             = $FF90;  { Chamada válida somente para PINpads ABECS. }
-  RCS_TAMANHO_INVALIDO                        = $FF91;  { Tamanho inválido, obrigatoriamente deve ser 8 bytes. }
-  RCS_NAO_FOI_POSSIVEL_ABRIR_ARQUIVO          = $FF92;  { Não foi possível abrir o arquivo. }
-  RCS_NOME_ARQUIVO_MULTIMIDIA_INVALIDO        = $FF93;  { Nome do arquivo multimídia deve possuir somente caracteres numéricos e letras, sem espaços ou símbolos. Além disso, ele não é case sensitive. }
-  RCS_TIPO_ARQUIVO_INVALIDO                   = $FF94;  { Tipo de arquivo inválido. Deve ser um dos seguintes valores: ‘1’ = PNG, ‘2’ = JPG, ‘3’ = GIF. }
 
-  RCS_ERRO_CONFIG_PDV                         = $FF96;
+  RCS_ERRO_MODO_ABECS                         = $FF90;  { Chamada válida somente para PINpads ABECS. }
+  RCS_ERRO_TAMANHO_INVALIDO                   = $FF91;  { Tamanho inválido, obrigatoriamente deve ser 8 bytes. }
+  RCS_ERRO_ARQUIVO_INVALIDO                   = $FF92;  { Não foi possível abrir o arquivo. }
+  RCS_ERRO_NOME_ARQUIVO_PP_INVALIDO           = $FF93;  { Nome do arquivo multimídia deve possuir somente caracteres numéricos e letras, sem espaços ou símbolos. Além disso, ele não é case sensitive. }
+  RCS_ERRO_TIPO_ARQUIVO_PP_INVALIDO           = $FF94;  { Tipo de arquivo inválido. Deve ser um dos seguintes valores: ‘1’ = PNG, ‘2’ = JPG, ‘3’ = GIF. }
+  RCS_REDE_LOGON_REQUIRED                     = $FF95;
+  RCS_REDE_LISTA_PRIOR_AID_INDISPONIVEL       = $FF96;
+
+  RCS_PP_NAO_ENCONTRADO                       = $FF97;
+  RCS_NAO_EXISTEM_PRODUTOS                    = $FF98;
+  RCS_CTLSS_MAGNETICO_NAO_SUPORTADO           = $FF99;
+  RCS_ERRO_CONSULTA_PARAMETRO                 = $FF9A;
+  RCS_TRANS_CTLS_NAO_PERMITIDA                = $FF9E; // BUG#071232
+  RCS_PDV_SIGNATURE_REQUIRED                  = $FF9B; // BUG#069876
+  RCS_PDV_SIGNATURE_UNCHECK                   = $FF9C; // BUG#069876
+  RCS_SERVER_SIGNATURE_EMPTY                  = $FF9D; // BUG#069876
+
+  RCS_ERRO_GET_HASH                           = $FF9F;
+  RCS_ERRO_HASH                               = $FFA0;
+  RCS_ERRO_TAMANHO_HASH                       = $FFA1;
+
 
   RCS_ERRO_GENERICO                           = $FFFF;
 
@@ -374,18 +398,26 @@ const
   PC_VCINVCURR                = 75; // Moeda ?nv?lida.
   PC_ERRFALBACK               = 76; // Erro de alto nivel no cartao EMV que e passivel de Fallback.
 
-  // 77 a 99 Reservado para uso futuro.
-  PC_CARTAO_INVALIDADO        = 82; //0x0052 82 Cartão foi invalidado (seleção de aplicação retornou status ‘6ª81’).
-  PC_CARTAO_COM_PROBLEMAS     = 83; //0x0053 83 Cartão com problemas. Esse status é válido para muitas ocorrências no
+  // 77 a 79 Reservado para uso futuro.
+  PC_CARDBLOCKED_ABECS        = 79; // Cartão bloqueado
+
+  // 80 a 99 Erros de processamento de cartão com chip sem contato
+  PC_CTLSSMULTIPLE            = 80; // Mais de um cartão sem contato foi apresentado ao leitor (este código de retorno é opcional e depende da capacidade do equipamento em detectar esta situação).
+  PC_CTLSSCOMMERR             = 81; // Erro de comunicação entre o terminal (antena) e o cartão com chip sem contato.
+
+  PC_CTLSSINVALIDAT           = 82; //0x0052 82 Cartão foi invalidado (seleção de aplicação retornou status ‘6ª81’).
+  PC_CTLSSPROBLEMS            = 83; //0x0053 83 Cartão com problemas. Esse status é válido para muitas ocorrências no
                                     //processamento de cartões sem contato em que o cartão não se comporta
                                     //conforme o esperado e a transação deve ser finalizada.
-  PC_CARTAO_SEM_AID           = 84; //0x0054 84 Cartão sem nenhuma aplicação disponível para as condições pedidas
+  PC_CTLSSAPPNAV              = 84; //0x0054 84 Cartão sem nenhuma aplicação disponível para as condições pedidas
                                     //(nenhum AID encontrado).
-  PC_APLIC_NAO_PODE_SER_USADA = 85; //0x0055 85 A aplicação selecionada não pode ser utilizada (o Get Processing Options
+  PC_CTLSSAPPNAUT             = 85; //0x0055 85 A aplicação selecionada não pode ser utilizada (o Get Processing Options
                                     //retornou status ‘6985’ ou houve erro no comando Select final), e não há
                                     //outra aplicação compatível na lista de candidatas.
+  PC_CTLSSEXTCVM              = 86; // Holder must execute operation on device and tap again
+  PC_CTLSFALLBACK             = 87; // Fallback from CTLS to contact is required
 
-   // 200 a 299 Reservado para uso do Scope
+  // 200 a 299 Reservado para uso do Scope
   PC_RESERVADO                = 200; // Transacao negada na funcao PP_GoOnChip()
   PC_TRN_NEGADA_CHIP          = 201; // Transacao negada na funcao PP_GoOnChip()
   PC_MEM_NAO_ALOCADA          = 202; // Memoria nao alocada para a estrutura do pinpad compartilhado
@@ -404,12 +436,17 @@ const
   PC_COMANDA_VAZIA            = 214; // Comanda nao possui itens
   PC_COMANDA_INVALIDA         = 215; // A Leitura da comanda apresentou erros
   PC_PINPAD_TABELAS_VAZIAS    = 216; // As tabelas do pinpad estao vazias
-  PC_PINPAD_ERRO_CARGA_TABELAS= 217; // Problema na carga de tabelas do PINPad
-  PC_OPERACAO_INDISPONIVEL    = 218; // A operação não é permitida no modo, pois não está disponível
-  PC_SETA_PARA_CIMA           = 219; // Tecla seta para cima
-  PC_SETA_PARA_BAIXO          = 220; // Tecla seta para BAIXO
+  PC_PINPAD_TABELAS_INDISP    = 217; // Problema na carga de tabelas do PINPad
+  PC_NAO_PERMITIDA_NO_MODO    = 218; // A operação não é permitida no modo, pois não está disponível
+  PC_SETA_UP                  = 219; // Tecla seta para cima
+  PC_SETA_DOWN                = 220; // Tecla seta para BAIXO
+  PC_ERR_RSA_KEY_MAX_ATTEMPT  = 221; // Não conseguiu gerar chave RSA
 
-  // 213 a 299 Reservado para uso futuro.
+  PC_ERR_CARACTER_INVALIDO    = 222; // Caracter inválido na criptografia do bufffer - PinC_EncryptBuffer
+  PC_PINPAD_TAB_IND_RUNNING   = 223; // Problema na carga de tabelas do Pinpad em andamento
+  PC_PINPAD_TAB_INCOMPATIVEL  = 224; // Carga incompativel com pinpad compartilhado, tente ABECS 2.12
+
+  // 225 a 299 Reservado para uso futuro.
   PC_MAX_ERRO                 = 300; // Indica o fim da tabela de erros
 
   {--------------------------------------------------------------------------------------------
@@ -442,13 +479,16 @@ const
   CFG_CANCELAR_OPERACAO_PINPAD     = 1;   // Permite cancelar a interacao (leitura do cartao, senha e ...) no pinpad (default: desabilitado)
   CFG_OBTER_SERVICOS               = 2;   // Permite retornar o estado TC_OBTEM_SERVICOS durante o fluxo de TEF (default: desabilitado)
   CFG_NAO_ABRIR_DIGITADO_COM_PP    = 4;   // Permite nao abrir o digitado na leitura do cartao com o PP Compartilhado (default: desabilitado)
-  CFG_DEVOLVER_SENHA_CRIPTOGRAFADA = 8;   // Permite devolver a senha criptografada com a master key da Itautec (default: desabilitado, ou seja, devolve senha aberta)
+  CFG_DEVOLVER_SENHA_CRIPTOGRAFADA = 8;   // Permite devolver a senha criptografada com a master key da NCR (default: desabilitado, ou seja, devolve senha aberta)
   CFG_IMPRESSORA_CARBONADA         = 16;  // Permite configurar a impressora como carbonada para nao imprimir 2a via... (default: desabilitado, ou seja, no cupom exibira 1a e 2a via)
   CFG_ARMAZENA_EM_QUEDA            = 32;  // Armazena dados da coleta para recuperar em queda de energia. (default: desabilitado)
   CFG_MASCARAR_DADOS               = 64;  // Configura se mascaramento de dados pelo ObtemCampo esta habilitado. (default: habilitado)
   CFG_ATUALIZA_TRANSACAO_EM_QUEDA  = 128; // Permite confirmar/desfazer a transacao em caso de queda de energia. (default: desabilitado, ou seja, sempre desfazer)
   CFG_PERMITIR_SAQUE               = 256; // Habilita coleta de saque em operacoes de Debito A Vista da rede Cielo
   CFG_COLETA_RECARGA_PP            = 512; // Permite desabilitar a coleta do ddd e telefone no pinpad em recarga de celular (default: conforme configuracao do SCOPECNF)
+  CFG_HABILITA_QRCODE_TELA         = 1024; //$00000400; //Permite exibir o QRCode na tela, quando estiver habilitado, a automacao deve tratar o TC_OBTEM_QRCODE e obter o campo String_QRCode
+  CFG_SIMULA_PP_PRECALL            = 269488145; //$10101011; // Prepara a chamada para ligar simulação
+  CFG_SIMULA_PP                    = 269488144; //$10101010; // Liga a simulação de PP para Debug
 
   {--------------------------------------------------------------------------------------------
                 Valores válidos para Parâmetro "Param" do método "ScopeConfigura"
@@ -521,6 +561,7 @@ const
   TC_COLETA_NSU_HOST                 = $FC3A;
   TC_COLETA_SERVICO                  = $FC3B;
   TC_COLETA_COD_REDE                 = $FC3C;
+  TC_COLETA_COD_AUTORIZACAO_CREDITO  = $FC3D;
 
   TC_DECIDE_RESGATE_AVULSO           = $FC40;
   TC_COLETA_DDMMAAAA                 = $FC41;
@@ -676,6 +717,44 @@ const
   TC_COLETA_PRODUTO_SAV              = $FCD6;
   TC_COLETA_QUANTIDADE               = $FCD7;
   TC_COLETA_CLIENTE_PREFERENCIAL     = $FCD8;
+
+  TC_COLETA_RAMO_PRINC_CIELO_AUTO    = $FCD9;  { Coleta ramo principal - Cielo Auto }
+  TC_COLETA_COD_MERC_CIELO_AUTO      = $FCDA;  { Coleta código do mercado - Cielo Auto }
+  TC_COLETA_DEBITO_OU_CREDITO        = $FCDB;  { Coleta débito ou crédito }
+  TC_COLETA_PONTOS                   = $FCDC;  { Coleta pontos }
+  TC_RESP_CONS_RESG_PROD             = $FCDD;  { Resposta consulta resgate de produto }
+  TC_RESP_CONS_RESG_PONTOS           = $FCDE;  { Resposta consulta resgate de pontos }
+
+  TC_COLETA_MOEDA                    = $FCE0;  { Coleta moeda }
+  TC_COLETA_FORNECEDOR_SGF           = TC_COLETA_FORNECEDOR_SAV;  { Coleta fornecedor SGF - equivalente ao SAV }
+  TC_COLETA_CPF_CARTAO_OU_CODBARRAS  = $FCDF;  { Coleta CPF, cartão ou código de barras }
+  TC_REDIGITA_COLETA_DDMMAAAA        = $FCE4;  { Redigita coleta data (DDMMAAAA) }
+  TC_REDIGITA_VALOR                  = $FCE5;  { Redigita valor }
+  TC_COLETA_NOME_PORTADOR            = $FCE6;  { Coleta nome do portador }
+  TC_COLETA_COD_SEGURANCA_PP         = $FCE7;  { Coleta código de segurança do PP }
+
+  TC_COLETA_CPFCNPJ_BENEFICIARIO     = $FCE8;  { Coleta CPF/CNPJ do beneficiário }
+  TC_COLETA_CPFCNPJ_SACADOR          = $FCE9;  { Coleta CPF/CNPJ do sacador }
+  TC_COLETA_CPFCNPJ_PAGADOR          = $FCEA;  { Coleta CPF/CNPJ do pagador }
+  TC_COLETA_VALOR_DOCUMENTO          = $FCEB;  { Coleta valor do documento }
+  TC_RESP_CONS_BACEN                 = $FCEC;  { Resposta consulta BACEN }
+
+  TC_TERMINAL_ORIGEM                 = $FCED;  { Terminal origem }
+  TC_COLETA_OPERADORA_ONLINE         = $FCEE;  { Coleta operadora online }
+  TC_COLETA_VALOR_RECARGA_ONLINE     = $FCEF;  { Coleta valor de recarga online }
+  TC_DECIDE_CARTAO_OU_DINHEIRO       = $FCF0;  { Decide entre cartão ou dinheiro }
+
+  TC_DECIDE_CONSULTA_PARCELAMENTO    = $FCF2;  { Decide consulta parcelamento }
+  TC_OBTEM_QRCODE                    = $FCF3;  { Obtém QRCode }
+  TC_COLETA_DADO_ESPECIAL            = $FCF4;  { Coleta dado especial }
+  TC_DECIDE_CREDIARIO                = $FCF5;  { Decide crediário }
+  TC_COLETA_CPF_PP                   = $FCF6;  { Coleta CPF PP }
+  TC_COLETA_DADOS_SPLIT_PAGAMENTO    = $FCF7;  { Coleta dados para split de pagamento }
+  TC_DECIDE_NOVA_CONSULTA            = $FCF8;  { Decide nova consulta }
+  TC_COLETA_PARCELA_GRATIS           = $FCF9;  { Coleta parcela grátis }
+  TC_COLETA_LEITURA_SCANNER          = $FCFA;  { Coleta leitura por scanner }
+
+  TC_COLETA_EXT                      = $FCFB;  { Coleta extendida - Último TC }
 
   // --> Proximo Tipo Coleta AQUI (ACIMA) //
   TC_COLETA_CARTAO_EM_ANDAMENTO      = $FCFC;
@@ -875,11 +954,11 @@ const
       MASK4_ARQC_Chip                      = $00000400;  { ARQC do chip, se disponibilizado pelo cartão }
       MASK4_AID_Chip                       = $00000800;  { AID do chip, se disponibilizado pelo cartão }
       MASK4_Transacao_Autorizada_Por_Senha = $00001000;  { Indicação se a transação foi autorizada mediante uso de senha pessoal [1] = Sim, [0] = Não }
-      //MASK4_????????                     = $00002000;  { ?????????? }
+      MASK4_Ind_Versao_Especificacao       = $00002000;  { Índice da versão de especificação a ser devolvido para Automação Comercial }
       MASK4_Campo_TID_Pix                  = $00004000;  { campo TID da tabela Mensagem (do Banco de Dados) - transações pix (txid) }
       MASK4_Campo_Referencia_Pix           = $00008000;  { campo Referência da tabela Mensagem (do Banco de Dados) - transações pix (end2endId) }
-      MASK4_Tamanho_BIN                    = $00010000;  { Tamanho do BIN }
-      MASK4_Estrutura_Strings_DCC          = $00020000;  { Estrutura de strings finalizadas com null:
+      MASK4_Tamanho_BIN                    = $00010000;  { Tamanho do BIN - PR069279}
+      MASK4_Dados_DCC                      = $00020000;  { Estrutura de strings finalizadas com null:
                                                       Dado Tamanho + null Obs
                                                       Valor Convertido 12 + 1
                                                       Cotação de Conversão 8 + 1
@@ -1312,6 +1391,31 @@ uses
   ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
+  procedure TrataCamposMask0(const IDCampo: Int64; Linha: TACBrTEFLinha);
+  begin
+    case IDCampo of
+      MASK0_CUPOM_LOJA:
+        AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
+      MASK0_CUPOM_CLIENTE:
+        AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
+      //MASK0_CUPOM_REDUZIDO:
+      //  AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
+      MASK0_CHEQUE_BANCO:
+        AACBrTEFResp.Banco := Linha.Informacao.AsString;
+      MASK0_CHEQUE_AGENCIA:
+        AACBrTEFResp.Banco := Linha.Informacao.AsString;
+      MASK0_CHEQUE_NUMERO:
+        AACBrTEFResp.Cheque := Linha.Informacao.AsString;
+      MASK0_CHEQUE_VALOR:
+        ;
+      MASK0_CHEQUE_DATA:
+        AACBrTEFResp.DataCheque := Linha.Informacao.AsDate;
+      MASK0_CHEQUE_CODAUT:
+        ;
+      MASK0_CHEQUE_MUNICIP:
+        ;
+    end;
+  end;
 
   procedure TrataCamposMask1(const IDCampo: Int64; Linha: TACBrTEFLinha);
   begin
@@ -1357,7 +1461,7 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
       MASK1_Cod_Servico:
         ;//Ver tabela Código serviços página 40
       MASK1_Texto_BIT_62:
-        ;//????
+        ;// Parece muito o espelho do comprovante????
       MASK1_Controle_Dac:
         ;///????
       MASK1_Cod_Rede:
@@ -1552,7 +1656,7 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
         ;
       MASK4_Tamanho_BIN:
         ;
-      MASK4_Estrutura_Strings_DCC:
+      MASK4_Dados_DCC:
         ;
       MASK4_Status_DCC:
         ;
@@ -1578,6 +1682,7 @@ begin
   AACBrTEFResp.DataHoraTransacaoCancelada := 0;
   AACBrTEFResp.DataHoraTransacaoLocal := 0;
 
+
   for I := 0 to AACBrTEFResp.Conteudo.Count - 1 do
   begin
     //Ex.: mask1-$00000001=0000000000000219:
@@ -1588,7 +1693,11 @@ begin
     P := pos('-', LinChave);
     mask := copy(LinChave, 1, P - 1);
     IDCampo := copy(LinChave, P + 1, Length(LinChave));
-    if mask = 'mask1' then
+    if mask = 'mask0' then
+    begin
+      TrataCamposMask0(StrToInt64(IDCampo), Linha);
+    end
+    else if mask = 'mask1' then
     begin
       TrataCamposMask1(StrToInt64(IDCampo), Linha);
     end
@@ -1612,7 +1721,9 @@ begin
 
   //ConteudoToComprovantes;
   //ConteudoToParcelas;
-
+  //E verificar???
+  AACBrTEFResp.QtdLinhasComprovante := max(AACBrTEFResp.ImagemComprovante1aVia.Count, AACBrTEFResp.ImagemComprovante2aVia.Count);
+  AACBrTEFResp.Sucesso := Trim(AACBrTEFResp.ImagemComprovante1aVia.Text) <> '';
 
 end;
 
@@ -2331,7 +2442,7 @@ begin
     RCS_API_JA_INICIALIZADA: MsgErro := 'SCOPE API já foi inicializada';
     RCS_SRV_NOT_CFG: MsgErro := 'Servidor não configurado no arquivo '+CScopeINi;
     RCS_ERRO_LOGON_PDV: MsgErro := 'Verificar o erro retornado no log do ScopeSrv';
-    RCS_ERRO_CONFIG_PDV: MsgErro := 'Verifique a configuração do perfil do PDV';
+    RCS_REDE_LISTA_PRIOR_AID_INDISPONIVEL: MsgErro := 'Verifique a configuração do perfil do PDV';
     //D RCS_THREAD_API_NOT_INIT: MsgErro := 'Não foi possível criar a “thread” na coleta de dados';
     RCS_ERRO_NUM_MAX_TEF_SESSAO: MsgErro := 'Estourou o número máximo de TEF numa sessão multi-TEF';
     RCS_NAO_HA_CAMPOS_SALVOS: MsgErro := 'Não há arquivo com dados da transação anterior salvo';
@@ -2788,6 +2899,7 @@ procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
 var
   //pBuffer: PAnsiChar;
   pBuffer: array [1..1024] of AnsiChar;
+  pBuffer2: array [1..4096] of AnsiChar;
   h, i, ret, mask: LongInt;
   val, hmask: string;
 begin
@@ -2842,19 +2954,34 @@ begin
       mask := mask shl 1;
     end;
 
-    //Código abaixo está gerando AV quando chega na mask4 $00000020 ou posterior
-    //mask := 1;
-    //for i := 1 to 32 do
-    //begin
-    //  FillChar(pBuffer , length(pBuffer), #0);
-    //  hmask := '$'+IntToHex(mask, 8);
-    //  GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', 0, 0, 0, '+hmask+', : )');
-    //  ret := xScopeObtemCampoExt3(h, 0, 0, 0, mask, Byte(':'), @pBuffer);
-    //  GravarLog('  ret: '+IntToStr(ret));
-    //  val := String(pBuffer);
-    //  fDadosDaTransacao.Add(Format('%s-%s=%s', ['mask4', hmask, val]));
-    //  mask := mask shl 1;
-    //end;
+    mask := 1;
+    for i := 1 to 32 do
+    begin
+      if (mask = MASK4_String_QRCode) or (mask = MASK4_Campo_TID_Pix) or (mask = MASK4_Campo_Referencia_Pix) or
+         (mask = MASK4_Tamanho_BIN) or (mask = MASK4_Dados_DCC) or (mask = MASK4_Status_DCC) then
+      begin
+        //Código abaixo está gerando AV quando chega na mask4 $00000020 ou posterior
+        //FillChar(pBuffer2 , length(pBuffer2), #0);
+        //hmask := '$'+IntToHex(mask, 8);
+        //GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', 0, 0, 0, '+hmask+', : )');
+        //ret := xScopeObtemCampoExt3(h, 0, 0, 0, mask, Byte(':'), @pBuffer2);
+        //GravarLog('  ret: '+IntToStr(ret));
+        //val := String(pBuffer2);
+        //fDadosDaTransacao.Add(Format('%s-%s=%s', ['mask4', hmask, val]));
+      end
+      else
+      begin
+        FillChar(pBuffer , length(pBuffer), #0);
+        hmask := '$'+IntToHex(mask, 8);
+        GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', 0, 0, 0, '+hmask+', : )');
+        ret := xScopeObtemCampoExt3(h, 0, 0, 0, mask, Byte(':'), @pBuffer);
+        GravarLog('  ret: '+IntToStr(ret));
+        val := String(pBuffer);
+        fDadosDaTransacao.Add(Format('%s-%s=%s', ['mask4', hmask, val]));
+      end;
+
+      mask := mask shl 1;
+    end;
   finally
     //Freemem(pBuffer);
   end;

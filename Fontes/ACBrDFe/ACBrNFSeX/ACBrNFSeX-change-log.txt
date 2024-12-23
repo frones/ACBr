@@ -45,6 +45,8 @@ Símbolo : Significado
 
 23/12/2024
 -- ACBrNFSeXServicos --
+[*] #TK-6420: Alterado as URLs da cidade de Renascenca/PR o provedor continua o mesmo.
+  Por: Limber Software
 [+] #TK-6399: Incluída a cidade de Martinopolis/SP, o provedor é Fiorilli.
   Por: Automacao Samos
 

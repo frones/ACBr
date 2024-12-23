@@ -47,6 +47,10 @@ type
   { TACBrBancoSicredi }
 
   TACBrBancoSicredi = class(TACBrBancoClass)
+  private
+    function ObtemCodigoMoraJuros(const ACBrTitulo: TACBrTitulo): String;
+    function ConverterJurosDiario(const ACBrTitulo: TACBrTitulo): Double;
+    function ConverterMultaPercentual(const ACBrTitulo: TACBrTitulo): Double;
   protected
     function GetLocalPagamento: String; override;
   public
@@ -233,6 +237,54 @@ begin
    end;
 end;
 
+
+function TACBrBancoSicredi.ObtemCodigoMoraJuros(const ACBrTitulo: TACBrTitulo): String;
+begin
+  with ACBrTitulo do
+  begin
+    if (CodigoMora <> '') then
+      Result := CodigoMora
+    else
+    begin
+      case CodigoMoraJuros of
+        cjTaxaMensal,cjTaxaDiaria: Result := 'B';
+      else
+        Result := 'A';
+      end;
+    end
+  end;
+end;
+
+function TACBrBancoSicredi.ConverterJurosDiario(
+  const ACBrTitulo: TACBrTitulo): Double;
+begin
+  with ACBrTitulo do
+  begin
+    case CodigoMoraJuros of
+      cjIsento: Result := 0;
+      cjValorDia,cjTaxaDiaria: Result := ValorMoraJuros;
+      cjTaxaMensal,cjValorMensal: Result := (ValorMoraJuros / 30);
+    end;
+  end;
+end;
+
+function TACBrBancoSicredi.ConverterMultaPercentual(
+  const ACBrTitulo: TACBrTitulo): Double;
+begin
+  with ACBrTitulo do
+  begin
+    if MultaValorFixo then
+        if (ValorDocumento > 0) then
+          Result := (PercentualMulta / ValorDocumento) * 100
+        else
+          Result := 0
+      else
+        Result := PercentualMulta;
+  end;
+end;
+
+
+
 procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   wNossoNumeroCompleto, CodProtesto, DiasProtesto, CodNegativacao, DiasNegativacao: String;
@@ -241,6 +293,7 @@ var
   TextoRegInfo: String;
   ANumeroDocumento: String;
   LHibrido : string;
+  LValorMoraJuros, LPercentualMulta : Double;
 begin
 
    with ACBrTitulo do
@@ -344,8 +397,16 @@ begin
       else
          wModalidade := 'C'; 
 
-     if (CodigoMora <> 'A') and (CodigoMora <> 'B') then
-       CodigoMora := 'A';
+      //if (CodigoMora <> 'A') and (CodigoMora <> 'B') then
+      //  CodigoMora := 'A';
+
+      CodigoMora := ObtemCodigoMoraJuros(ACBrTitulo);
+
+      { Converte valor em moeda para valor diário, pois o arquivo só permite juros em R$/% diário }
+      LValorMoraJuros := ConverterJurosDiario(ACBrTitulo);
+
+      { Converte valor em moeda para %, pois o arquivo só permite multa em %}
+      LPercentualMulta := ConverterMultaPercentual(ACBrTitulo);
 
      TpDesconto := TipoDescontoToString(TipoDesconto);
 
@@ -393,7 +454,7 @@ begin
          wLinha:= wLinha +
                   Space(4)                                                              +  // 079 a 082 - Filler - Brancos
                   IntToStrZero(round(ValorDescontoAntDia * 100), 10)                    +  // 083 a 092 - Valor de desconto por dia de antecipação
-                  IntToStrZero( round( PercentualMulta * 100 ), 4)                      +  // 093 a 096 - % multa por pagamento em atraso
+                  IntToStrZero( round( LPercentualMulta * 100 ), 4)                      +  // 093 a 096 - % multa por pagamento em atraso
                   Space(12)                                                             +  // 097 a 108 - Filler - Brancos
                   Ocorrencia                                                            +  // 109 a 110 - Instrução = "01" Cadastro de título ... ---Anderson
                   ANumeroDocumento                                                      +  // 111 a 120 - Seu número
@@ -412,7 +473,7 @@ begin
             wLinha:= wLinha + Space(4);                                                    // 157 a 160 - Filler Brancos
 
          wLinha:= wLinha +
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)                       +  // 161 a 173 - Valor/% de juros por dia de atraso
+                  IntToStrZero( round(LValorMoraJuros * 100 ), 13)                       +  // 161 a 173 - Valor/% de juros por dia de atraso
                   IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
                          FormatDateTime( 'ddmmyy', DataDesconto))                       +  // 174 a 179 - Data limite para concessão de desconto
                   IntToStrZero( round( ValorDesconto * 100 ), 13);                         // 180 a 192 - Valor/% do desconto

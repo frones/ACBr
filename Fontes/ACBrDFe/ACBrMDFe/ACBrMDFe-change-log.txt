@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2024
+-- pmdfeConsts --
+[*] Remoção de unit sem uso.
+   Por: Italo Giurizzato Junior
+
 11/12/2024
 -- ACBrMDFe.Classes --
 [+] #TK-6345: Criação da nova unit que contem as classes do MDF-e.

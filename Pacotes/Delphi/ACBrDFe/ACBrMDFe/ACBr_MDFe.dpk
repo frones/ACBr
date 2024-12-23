@@ -76,10 +76,10 @@ contains
   ACBrMDFeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeWebServices.pas',
 
   pmdfeMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFe.pas',
-  pmdfeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsts.pas',
   pmdfeConversaoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConversaoMDFe.pas',
 
   ACBrMDFe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Consts.pas',
+  ACBrMDFe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Classes.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrMDFe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas',

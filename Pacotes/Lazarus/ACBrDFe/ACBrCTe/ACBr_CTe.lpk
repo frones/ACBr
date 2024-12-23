@@ -70,8 +70,8 @@
         <UnitName Value="ACBrCTeDACTEClass"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas"/>
-        <UnitName Value="pcteConsts"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Classes.pas"/>
+        <UnitName Value="ACBrCTe.Classes"/>
       </Item14>
       <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas"/>

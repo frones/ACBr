@@ -62,8 +62,8 @@
         <UnitName Value="ACBrMDFeDAMDFeClass"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConsts.pas"/>
-        <UnitName Value="pmdfeConsts"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Classes.pas"/>
+        <UnitName Value="ACBrMDFe.Classes"/>
       </Item12>
       <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.ProcInfraSA.pas"/>

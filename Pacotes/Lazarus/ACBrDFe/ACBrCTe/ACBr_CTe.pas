@@ -10,7 +10,7 @@ interface
 uses
   ACBrCTeConhecimentos, ACBrCTe, pcteConversaoCTe, ACBrCTeConfiguracoes, 
   ACBrCTeReg, ACBrCTeWebServices, pcteCTe, pcteCTeR, pcteCTeW, pcteInutCTe, 
-  pcteProcCTe, ACBrCTeDACTEClass, pcteConsts, ACBrCTe.XmlHandler, 
+  pcteProcCTe, ACBrCTeDACTEClass, ACBrCTe.Classes, ACBrCTe.XmlHandler, 
   ACBrCTe.ConsSit, ACBrCTe.RetConsSit, ACBrCTe.EventoClass, ACBrCTe.EnvEvento, 
   ACBrCTe.RetEnvEvento, ACBrCTe.Consts, LazarusPackageIntf;
 

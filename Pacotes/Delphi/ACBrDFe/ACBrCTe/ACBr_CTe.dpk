@@ -86,13 +86,13 @@ contains
   ACBrCTeConhecimentos in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas',
   ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
 
-  pcteConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas',
   pcteConversaoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConversaoCTe.pas',
   pcteCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas',
   pcteCTeW in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas',
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
 
   ACBrCTe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Consts.pas',
+  ACBrCTe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Classes.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrCTe.XmlHandler in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas',

@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/12/2024
+-- ACBrNFeDANFEClass --
+[*] #TK-6398: Ajustado a quantidade de casas decimais do campo qLote. 
+   Por: Italo Giurizzato Junior
 -- pcnNFeConsts --
 [*] Remoção de unit sem uso.
    Por: Italo Giurizzato Junior

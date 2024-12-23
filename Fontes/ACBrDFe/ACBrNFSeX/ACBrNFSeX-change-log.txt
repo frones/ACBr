@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/12/2024
+-- ACBrNFSeXServicos --
+[+] #TK-6399: Incluída a cidade de Martinopolis/SP, o provedor é Fiorilli.
+  Por: Automacao Samos
+
 19/12/2024
 -- NFSeBrasil.GravarXml --
 [*] #TK-6386: Incluído a propriedade para deixar a Inscrição Estadual do Tomador

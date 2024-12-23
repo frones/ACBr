@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/12/2024
+-- pcteConsts --
+[*] Remoção de unit sem uso.
+   Por: Italo Giurizzato Junior
 -- pcteCTeR --
 [-] #TK-6418: Alteração visando a leitura correta do grupo <toma> presente nos
     documentos: CT-e OS e CT-e Simplificado.

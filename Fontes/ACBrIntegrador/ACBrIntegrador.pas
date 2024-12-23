@@ -80,7 +80,7 @@ type
     procedure BackupArquivo(const ANomeArquivo, AXML: String);
 
   public
-    constructor Create( AOwner: TACBrIntegrador );
+    constructor Create( AOwner: TACBrIntegrador ); deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} '07/11/2022 -  Desativação do Integrador e Validador Fiscal - SEFAZ - CE https://www.sefaz.ce.gov.br/2022/05/11/comunicado-desativacao-integrador-e-validador-fiscal/' {$ENDIF};
     destructor Destroy; override;
     procedure Clear;
 

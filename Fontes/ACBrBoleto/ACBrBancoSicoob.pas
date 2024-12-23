@@ -79,16 +79,16 @@ uses  StrUtils, Variants, math,
 constructor TACBrBancoSicoob.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 0;
-   fpNome   := 'SICOOB';
-   fpNumero := 756;
-   fpTamanhoMaximoNossoNum := 7;
-   fpTamanhoCarteira   := 1;
-   fpTamanhoConta      := 12;
-   fpCodigosMoraAceitos:= '0123'; {0 isento CNAB, 3 IsentoAPI}
-   fpLayoutVersaoArquivo := 81;
-   fpLayoutVersaoLote    := 40;
-   fpValorTotalDocs := 0;
+   fpDigito                := 0;
+   fpNome                  := 'SICOOB';
+   fpNumero                := 756;
+   fpTamanhoMaximoNossoNum := 8;
+   fpTamanhoCarteira       := 1;
+   fpTamanhoConta          := 12;
+   fpCodigosMoraAceitos    := '0123'; {0 isento CNAB, 3 IsentoAPI}
+   fpLayoutVersaoArquivo   := 81;
+   fpLayoutVersaoLote      := 40;
+   fpValorTotalDocs        := 0;
 end;
 
 function TACBrBancoSicoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -99,8 +99,11 @@ const
   indice = '319731973197319731973';
 begin
 
-   Result := '0';
-
+   if fpLayoutVersaoArquivo = 810 then
+   begin
+     Result := '';
+     Exit;
+   end;
    Num :=  PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4, '0') +
            PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 10, '0') +
            PadLeft(trim(ACBrTitulo.NossoNumero), 7, '0');
@@ -169,16 +172,25 @@ begin
     FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
     ANossoNumero := ACBrTitulo.NossoNumero+CalcularDigitoVerificador(ACBrTitulo);
 
-    if (ACBrTitulo.Carteira = '1') or (ACBrTitulo.Carteira = '3')then
+    if (ACBrTitulo.Carteira = '1') or (ACBrTitulo.Carteira = '3') or (ACBrTitulo.Carteira = '9')then
        ACarteira := ACBrTitulo.Carteira
     else
-       raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "1" ou "3".') );
+       raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "1" ou "3" ou "9".') );
 
-    {Montando Campo Livre}
-    CampoLivre    := PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade), 2, '0') +
-                     PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente), 7, '0') +
-                     PadLeft(Copy(ANossoNumero,1,8), 8, '0') +  //7 Sequenciais + 1 do digito
-                     IntToStrZero(Max(1,ACBrTitulo.Parcela),3);
+    if ACarteira = '9' then
+    begin
+      {Montando Campo Livre - Nova Carteira}
+      CampoLivre    := PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente), 9, '0') +
+                       PadLeft(Copy(ANossoNumero,1,9), 9, '0') +
+                       PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade), 2, '0');
+    end else
+    begin
+      {Montando Campo Livre} (* CARTEIRAS LEGADAS *)
+      CampoLivre    := PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade), 2, '0') +
+                       PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente), 7, '0') +
+                       PadLeft(Copy(ANossoNumero,1,8), 8, '0') +  //7 Sequenciais + 1 do digito
+                       IntToStrZero(Max(1,ACBrTitulo.Parcela),3);
+    end;
 
     {Codigo de Barras}
     with ACBrTitulo.ACBrBoleto do
@@ -210,7 +222,11 @@ end;
 
 function TACBrBancoSicoob.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 begin
-  Result := ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
+  if fpLayoutVersaoArquivo = 810 then
+    Result := ACBrTitulo.NossoNumero
+  else
+    Result := ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
+
 end;
 
 procedure TACBrBancoSicoob.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa:TStringList);
@@ -710,8 +726,14 @@ function TACBrBancoSicoob.GerarRegistroHeader240(
   NumeroRemessa: Integer): String;
 var
   ATipoInscricao: string;
+  LLayoutVersaoArquivo : Integer;
 begin
   FNumeroSequencialRegistroNoLote := 0;
+
+  if fpLayoutVersaoArquivo = 810 then
+    LLayoutVersaoArquivo := 81
+  else
+    LLayoutVersaoArquivo := fpLayoutVersaoArquivo;
 
   with ACBrBanco.ACBrBoleto.Cedente do
     begin
@@ -741,7 +763,7 @@ begin
                FormatDateTime('hhmmss', Now)            + // 152 a 157 - Hora de geração do arquivo
 //               '000001'                                 + // 158 a 163 - Número sequencial do arquivo retorno
                PadLeft(OnlyNumber(inttostr(NumeroRemessa)), 6, '0')     + // 158 a 163 - Número sequencial do arquivo retorno  - marcio ereno 09/06/2018
-               PadLeft(IntToStr(fpLayoutVersaoArquivo) , 3, '0')  + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
+               PadLeft(IntToStr(LLayoutVersaoArquivo) , 3, '0')  + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
                '00000'                                  + // 167 a 171 - Zeros
                space(54)                                + // 172 a 225 - 54 Brancos
                space(3)                                 + // 226 a 228 - zeros

@@ -1699,6 +1699,8 @@ begin
   if fInicializada then
     Exit;
 
+  fConectado := False;
+  fSessaoAberta := False;
   GravarLog('TACBrTEFScopeAPI.Inicializar');
 
   if not Assigned(fOnTransacaoEmAndamento) then
@@ -1716,11 +1718,8 @@ begin
   VerificarEAjustarScopeINI;
   LoadLibFunctions;
 
-  fInicializada := True;
-  fConectado := False;
-  fSessaoAberta := False;
-
   AbrirPinPad;
+  fInicializada := True;
 
   if not ControleConexao then
     AbrirComunicacaoScope;
@@ -2920,7 +2919,7 @@ end;
 procedure TACBrTEFScopeAPI.AbrirPinPad;
 var
   ret: LongInt;
-  bConfig, bExclusivo, bPorta: Byte;
+  bConfig, bExclusivo, aPorta, bPorta: Byte;
   Canal: Word;
   endereco: AnsiString;
 begin
@@ -2947,26 +2946,27 @@ begin
 
     if (bExclusivo = 0) then
     begin
-      if (bPorta < 1) or (fPortaPinPad <> '') then
-        bPorta := ConfigurarPortaPinPad(fPortaPinPad);
+      aPorta := ConfigurarPortaPinPad(fPortaPinPad);
+      if (aPorta = 0) then
+        aPorta := bPorta;
 
       if (bConfig = PPCONF_MODO_ABECS) then
         fPinPadSeguro := True;
 
       if fPinPadSeguro then
       begin
-        if (bPorta = 0) then
+        if (aPorta = 0) then
           Canal := CANAL_COMM_NONE
         else
           Canal := CANAL_COMM_SERIAL;
 
-        GravarLog('ScopePPOpenSecure( '+IntToStr(Canal)+', '+IntToStr(bPorta)+' )');
-        endereco := IntToStr(bPorta);
+        GravarLog('ScopePPOpenSecure( '+IntToStr(Canal)+', '+IntToStr(aPorta)+' )');
+        endereco := IntToStr(aPorta);
         ret := xScopePPOpenSecure(Canal, PAnsiChar(endereco));
       end
       else
       begin
-        GravarLog('ScopePPOpen( '+IntToStr(bPorta)+' )');
+        GravarLog('ScopePPOpen( '+IntToStr(aPorta)+' )');
         ret := xScopePPOpen(bPorta);
       end;
 

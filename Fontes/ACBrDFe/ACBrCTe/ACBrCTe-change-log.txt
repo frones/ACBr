@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2024
+-- pcteCTeR --
+[-] #TK-6418: Alteração visando a leitura correta do grupo <toma> presente nos
+    documentos: CT-e OS e CT-e Simplificado.
+   Por: Evertof/Italo Giurizzato Junior
+
 11/12/2024
 -- pcteRetEnvCTe --
 [*] Remoção de unit sem uso.

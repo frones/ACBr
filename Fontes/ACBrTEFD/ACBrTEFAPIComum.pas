@@ -603,12 +603,14 @@ function TACBrTEFAPIRespostas.AcharTransacao(const Rede, NSU: String;
 var
   i: Integer;
   ATEFResp: TACBrTEFResp;
+  lRede: String;
 begin
+  lRede := LowerCase(Trim(Rede));
   Result := -1;
   for i := 0 to Count-1 do
   begin
     ATEFResp := Items[i];
-    if (ATEFResp.Rede = Rede) and
+    if (LowerCase(Trim(ATEFResp.Rede)) = lRede) and
        (ATEFResp.NSU = NSU) and
        ( (CodigoFinalizacao = '') or (ATEFResp.Finalizacao = CodigoFinalizacao) ) then
     begin

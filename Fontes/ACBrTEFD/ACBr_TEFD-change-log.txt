@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2024
+-- ACBrTEFAPIComum --
+[*] Método 'TACBrTEFAPIRespostas.AcharTransacao', modificado para não considerar
+    o Case na busca por 'REDE'
+    (por: DSA)
+
 18/12/2024
 -- ACBrTEFAPI --
 [-] Remoção da propriedade 'NaoRemoverMascaraResposta'.

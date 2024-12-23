@@ -47,6 +47,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/12/2024
+-- ACBrTEFCliSiTefComum --
+[*] Ajustes nos textos de mensagens de resolução de transação Pendente
+
+-- ACBrTEFAPICliSiTef --
+[*] Ajuste em 'TACBrTEFAPIClassCliSiTef.ResolverTransacaoPendente' para exibir
+    mensagens quando Confirmar ou Estornar a transação Pendente, conforme
+    requisito de homologação
+    https://www.projetoacbr.com.br/forum/index.php?showtopic=80973
+
 -- ACBrTEFAPIComum --
 [*] Método 'TACBrTEFAPIRespostas.AcharTransacao', modificado para não considerar
     o Case na busca por 'REDE'

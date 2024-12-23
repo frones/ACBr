@@ -714,9 +714,8 @@ end;
 procedure TACBrTEFAPIClassCliSiTef.FinalizarTransacaoSiTef(Confirma: Boolean;
   const DocumentoVinculado: String; DataHora: TDateTime);
 Var
-   DataStr, HoraStr, DoctoStr, ParamAdic: AnsiString;
-   Finalizacao : SmallInt;
-   AMsg: String;
+  DataStr, HoraStr, DoctoStr, ParamAdic: AnsiString;
+  Finalizacao: SmallInt;
 begin
    fRespostasPorTipo.Clear;
    fIniciouRequisicao := False;
@@ -762,17 +761,6 @@ begin
                                                  PAnsiChar(DataStr),
                                                  PAnsiChar(HoraStr),
                                                  PAnsiChar(ParamAdic) ) ;
-
-  if not Confirma then
-  begin
-    if fCancelamento then
-      AMsg := Format( CACBrTEFCliSiTef_TransacaoEfetuadaReImprimir,
-                      [fpACBrTEFAPI.UltimaRespostaTEF.NSU] )
-    else
-      AMsg := CACBrTEFCliSiTef_TransacaoNaoEfetuada;
-
-    TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(ACBrStr(AMsg), telaOperador, 0);
-  end;
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.InterpretarRetornoCliSiTef(const Ret: Integer);
@@ -1124,11 +1112,21 @@ end;
 
 procedure TACBrTEFAPIClassCliSiTef.ResolverTransacaoPendente(
   AStatus: TACBrTEFStatusTransacao);
+var
+  AMsg: String;
 begin
   FinalizarTransacao( fpACBrTEFAPI.UltimaRespostaTEF.Rede,
                       fpACBrTEFAPI.UltimaRespostaTEF.NSU,
                       fpACBrTEFAPI.UltimaRespostaTEF.Finalizacao,
                       AStatus );
+
+  if (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]) then
+    AMsg := Format( CACBrTEFCliSiTef_TransacaoEfetuadaReImprimir,
+                    [fpACBrTEFAPI.UltimaRespostaTEF.Finalizacao] )
+  else
+    AMsg := CACBrTEFCliSiTef_TransacaoNaoEfetuada;
+
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(ACBrStr(AMsg), telaOperador, 0);
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.AbortarTransacaoEmAndamento;

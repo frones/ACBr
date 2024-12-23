@@ -43,14 +43,14 @@ uses
 
 resourcestring
   CACBrTEFCliSiTef_PressioneEnter = 'PRESSIONE <ENTER>';
-  CACBrTEFCliSiTef_TransacaoNaoEfetuada = 'Transação não efetuada.';
+  CACBrTEFCliSiTef_TransacaoNaoEfetuada = 'Transação T.E.F. não efetuada.';
   CACBrTEFCliSiTef_TransacaoNaoEfetuadaReterCupom =
-    'Transação não efetuada.' + sLineBreak + 'Favor reter o Cupom';
+    'Transação T.E.F. não efetuada.' + sLineBreak + 'Favor reter o Cupom';
   CACBrTEFCliSiTef_TransacaoEfetuadaReImprimir =
-    'Transação TEF efetuada.' + sLineBreak +
-    'Favor reimprimir último Cupom.' + sLineBreak +
+    'Transação T.E.F. realizada com sucesso.'+ sLineBreak +
+    'Para reimpressão, favor solicitar o último cupom.' + sLineBreak +
     '%s' + sLineBreak +
-    '(Para Cielo utilizar os 6 últimos dígitos.)';
+    'No caso da Cielo, utilize apenas os 6 últimos dígitos';
   CACBrTEFCliSiTef_NaoInicializado = 'CliSiTEF não inicializado';
   CACBrTEFCliSiTef_NaoConcluido = 'Requisição anterior não concluida';
   CACBrTEFCliSiTef_Erro1 = 'Endereço IP inválido ou não resolvido';

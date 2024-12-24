@@ -1387,7 +1387,7 @@ type
 implementation
 
 uses
-  IniFiles, StrUtils, TypInfo, Windows, DateUtils,
+  IniFiles, StrUtils, TypInfo, Windows, DateUtils, Math,
   ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);

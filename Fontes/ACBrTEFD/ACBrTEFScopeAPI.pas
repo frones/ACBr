@@ -1482,10 +1482,17 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
         ;
       MASK1_Msg_Autentic_Cheque:
         ;
-      MASK1_Saldo_Disponivel:
-        ;
-    //else
-    //
+    else
+      // Case Delphi não permite valores fora do range 32 bits
+      if IDCampo =  MASK1_Saldo_Disponivel then
+      begin
+      
+      end
+      else
+      begin
+
+      end;
+    
     end;
   end;
 
@@ -1554,10 +1561,16 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
         ;
       MASK2_UsoRes_63:
         ;
-      MASK2_Numero_PDV:
-        ;
-    //else
-    //
+    else
+      // Case Delphi não permite valores fora do range 32 bits
+      if idcampo = MASK2_Numero_PDV then
+      begin
+      
+      end
+      else;
+      
+
+
     end;
   end;
 
@@ -1616,11 +1629,15 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
         ;
       MASK3_Consulta_Cedente_BACEN_BRADESCO:
         ;
-      MASK3_Data_Vencimento_CORBAN:
-        ;
 
-    //else
-    //
+    else
+      // Case Delphi não permite valores fora do range 32 bits
+      if idcampo = MASK3_Data_Vencimento_CORBAN then
+      begin
+
+      end
+      else;
+    
     end;
   end;
 
@@ -2903,7 +2920,8 @@ var
   h, i, ret, mask: LongInt;
   val, hmask: string;
 begin
-  fDadosDaTransacao.Clear;
+// Não Apagar os dados para não perder os comprovantes pegos em ObterDadosComprovantes ou ObterDadosCheque 
+//  fDadosDaTransacao.Clear;
 
   //* receber o identificador da transacao */
   GravarLog('ScopeObtemHandle');

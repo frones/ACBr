@@ -617,7 +617,7 @@ function TACBrTEFAPIClassStoneAutoTEF.EfetuarAdministrativa(
 begin
   if (CodOperacaoAdm = '') then
   begin
-    EfetuarAdministrativa(tefopAdministrativo);
+    Result := EfetuarAdministrativa(tefopAdministrativo);
     Exit;
   end;
 

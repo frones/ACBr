@@ -2,7 +2,7 @@ object FormPrincipal: TFormPrincipal
   Left = 440
   Top = 146
   Caption = 'ACBrTEFAPI - Demo'
-  ClientHeight = 500
+  ClientHeight = 600
   ClientWidth = 1110
   Color = clBtnFace
   Constraints.MinHeight = 500
@@ -18,20 +18,20 @@ object FormPrincipal: TFormPrincipal
     Left = 775
     Top = 0
     Width = 5
-    Height = 500
+    Height = 600
     Align = alRight
   end
   object pPrincipal: TPanel
     Left = 0
     Top = 0
     Width = 775
-    Height = 500
+    Height = 600
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     object Splitter3: TSplitter
       Left = 0
-      Top = 375
+      Top = 406
       Width = 775
       Height = 5
       Cursor = crVSplit
@@ -41,7 +41,7 @@ object FormPrincipal: TFormPrincipal
       Left = 0
       Top = 0
       Width = 775
-      Height = 375
+      Height = 406
       ActivePage = tsConfiguracao
       Align = alTop
       Constraints.MinHeight = 375
@@ -53,7 +53,7 @@ object FormPrincipal: TFormPrincipal
           Left = 0
           Top = 0
           Width = 767
-          Height = 345
+          Height = 376
           ActivePage = tsConfigTEF
           Align = alClient
           TabOrder = 0
@@ -63,24 +63,21 @@ object FormPrincipal: TFormPrincipal
               Left = 0
               Top = 0
               Width = 759
-              Height = 315
+              Height = 346
               Align = alClient
               BevelOuter = bvNone
               TabOrder = 0
-              ExplicitWidth = 767
-              ExplicitHeight = 345
               object gbConfigTEF: TGroupBox
                 Left = 0
                 Top = 0
                 Width = 316
-                Height = 315
+                Height = 346
                 Align = alLeft
                 Caption = 'TEF'
                 TabOrder = 0
-                ExplicitHeight = 345
                 DesignSize = (
                   316
-                  315)
+                  346)
                 object Label11: TLabel
                   Left = 9
                   Top = 74
@@ -184,7 +181,7 @@ object FormPrincipal: TFormPrincipal
                 end
                 object btTestarTEF: TBitBtn
                   Left = 97
-                  Top = 241
+                  Top = 272
                   Width = 117
                   Height = 36
                   Anchors = [akLeft, akBottom]
@@ -234,7 +231,7 @@ object FormPrincipal: TFormPrincipal
                 end
                 object btSalvarParametros: TBitBtn
                   Left = 14
-                  Top = 283
+                  Top = 314
                   Width = 136
                   Height = 28
                   Anchors = [akLeft, akBottom]
@@ -243,8 +240,8 @@ object FormPrincipal: TFormPrincipal
                   OnClick = btSalvarParametrosClick
                 end
                 object btLerParametros: TBitBtn
-                  Left = 161
-                  Top = 283
+                  Left = 167
+                  Top = 314
                   Width = 136
                   Height = 28
                   Anchors = [akLeft, akBottom]
@@ -299,7 +296,7 @@ object FormPrincipal: TFormPrincipal
                 Left = 316
                 Top = 0
                 Width = 443
-                Height = 315
+                Height = 346
                 Align = alClient
                 BevelOuter = bvNone
                 TabOrder = 1
@@ -307,16 +304,16 @@ object FormPrincipal: TFormPrincipal
                   Left = 0
                   Top = 0
                   Width = 443
-                  Height = 124
+                  Height = 113
                   Align = alTop
                   Caption = 'Software House e Aplica'#231#227'o'
                   TabOrder = 0
                   DesignSize = (
                     443
-                    124)
+                    113)
                   object Label14: TLabel
                     Left = 24
-                    Top = 19
+                    Top = 15
                     Width = 33
                     Height = 15
                     Caption = 'Nome'
@@ -325,7 +322,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object Label16: TLabel
                     Left = 24
-                    Top = 67
+                    Top = 65
                     Width = 88
                     Height = 15
                     Caption = 'Nome Aplica'#231#227'o'
@@ -334,7 +331,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object Label19: TLabel
                     Left = 294
-                    Top = 67
+                    Top = 65
                     Width = 34
                     Height = 15
                     Anchors = [akTop, akRight]
@@ -344,7 +341,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object Label15: TLabel
                     Left = 294
-                    Top = 19
+                    Top = 17
                     Width = 27
                     Height = 15
                     Anchors = [akTop, akRight]
@@ -354,7 +351,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edRazaoSocialSwHouse: TEdit
                     Left = 24
-                    Top = 35
+                    Top = 33
                     Width = 246
                     Height = 23
                     Anchors = [akLeft, akTop, akRight]
@@ -363,7 +360,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edNomeAplicacao: TEdit
                     Left = 24
-                    Top = 83
+                    Top = 81
                     Width = 246
                     Height = 23
                     Anchors = [akLeft, akTop, akRight]
@@ -372,7 +369,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edVersaoAplicacao: TEdit
                     Left = 294
-                    Top = 83
+                    Top = 81
                     Width = 141
                     Height = 23
                     Anchors = [akTop, akRight]
@@ -381,7 +378,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edCNPJSwHouse: TEdit
                     Left = 294
-                    Top = 35
+                    Top = 33
                     Width = 141
                     Height = 23
                     Anchors = [akTop, akRight]
@@ -390,19 +387,18 @@ object FormPrincipal: TFormPrincipal
                 end
                 object GroupBox2: TGroupBox
                   Left = 0
-                  Top = 124
+                  Top = 113
                   Width = 443
-                  Height = 79
+                  Height = 65
                   Align = alTop
                   Caption = 'Estabelecimento Comercial'
                   TabOrder = 1
-                  ExplicitLeft = 1
                   DesignSize = (
                     443
-                    79)
+                    65)
                   object Label17: TLabel
                     Left = 24
-                    Top = 20
+                    Top = 15
                     Width = 65
                     Height = 15
                     Caption = 'Raz'#227'o Social'
@@ -411,7 +407,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object Label21: TLabel
                     Left = 294
-                    Top = 20
+                    Top = 15
                     Width = 27
                     Height = 15
                     Anchors = [akTop, akRight]
@@ -421,7 +417,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edRazaoSocialEstabelecimento: TEdit
                     Left = 24
-                    Top = 36
+                    Top = 31
                     Width = 246
                     Height = 23
                     Anchors = [akLeft, akTop, akRight]
@@ -430,7 +426,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edCNPJEstabelecimento: TEdit
                     Left = 294
-                    Top = 35
+                    Top = 30
                     Width = 141
                     Height = 23
                     Anchors = [akTop, akRight]
@@ -439,20 +435,18 @@ object FormPrincipal: TFormPrincipal
                 end
                 object gbDadosTerminal: TGroupBox
                   Left = 0
-                  Top = 203
+                  Top = 178
                   Width = 443
-                  Height = 117
+                  Height = 139
                   Align = alTop
                   Caption = 'Dados Terminal'
                   TabOrder = 2
-                  ExplicitLeft = 2
-                  ExplicitTop = 251
                   DesignSize = (
                     443
-                    117)
+                    139)
                   object Label8: TLabel
                     Left = 24
-                    Top = 21
+                    Top = 18
                     Width = 70
                     Height = 15
                     Caption = 'Cod.Terminal'
@@ -461,7 +455,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object Label20: TLabel
                     Left = 294
-                    Top = 64
+                    Top = 58
                     Width = 68
                     Height = 15
                     Caption = 'Porta PinPad'
@@ -470,7 +464,7 @@ object FormPrincipal: TFormPrincipal
                   end
                   object Label23: TLabel
                     Left = 24
-                    Top = 64
+                    Top = 58
                     Width = 95
                     Height = 15
                     Caption = 'Endere'#231'o Servidor'
@@ -486,6 +480,15 @@ object FormPrincipal: TFormPrincipal
                     Color = clBtnFace
                     ParentColor = False
                   end
+                  object Label30: TLabel
+                    Left = 24
+                    Top = 97
+                    Width = 24
+                    Height = 15
+                    Caption = 'Filial'
+                    Color = clBtnFace
+                    ParentColor = False
+                  end
                   object edCodTerminal: TEdit
                     Left = 24
                     Top = 36
@@ -495,14 +498,14 @@ object FormPrincipal: TFormPrincipal
                   end
                   object edPortaPinPad: TEdit
                     Left = 294
-                    Top = 78
-                    Width = 141
+                    Top = 72
+                    Width = 75
                     Height = 23
                     TabOrder = 3
                   end
                   object edEnderecoServidor: TEdit
                     Left = 24
-                    Top = 79
+                    Top = 73
                     Width = 246
                     Height = 23
                     Anchors = [akLeft, akTop, akRight]
@@ -514,6 +517,15 @@ object FormPrincipal: TFormPrincipal
                     Width = 141
                     Height = 23
                     TabOrder = 1
+                  end
+                  object edCodFilial: TEdit
+                    Left = 24
+                    Top = 113
+                    Width = 174
+                    Height = 23
+                    Anchors = [akLeft, akTop, akRight]
+                    TabOrder = 4
+                    Text = '0001'
                   end
                 end
               end
@@ -530,7 +542,6 @@ object FormPrincipal: TFormPrincipal
               Align = alTop
               Caption = 'Impressora'
               TabOrder = 0
-              ExplicitTop = 8
               DesignSize = (
                 759
                 124)
@@ -683,15 +694,14 @@ object FormPrincipal: TFormPrincipal
           Left = 762
           Top = 0
           Width = 5
-          Height = 345
+          Height = 376
           Align = alRight
-          ExplicitHeight = 346
         end
         object pOperacao: TPanel
           Left = 0
           Top = 0
           Width = 762
-          Height = 345
+          Height = 376
           Align = alClient
           BevelOuter = bvNone
           Constraints.MinWidth = 460
@@ -737,8 +747,8 @@ object FormPrincipal: TFormPrincipal
             object Label5: TLabel
               Left = 25
               Top = 80
-              Width = 81
-              Height = 14
+              Width = 89
+              Height = 13
               Caption = 'Total Opera'#231#227'o'
               Color = clBtnFace
               Font.Charset = DEFAULT_CHARSET
@@ -752,8 +762,8 @@ object FormPrincipal: TFormPrincipal
             object Label6: TLabel
               Left = 136
               Top = 80
-              Width = 56
-              Height = 14
+              Width = 63
+              Height = 13
               Caption = 'Total Pago'
               Color = clBtnFace
               Font.Charset = DEFAULT_CHARSET
@@ -767,8 +777,8 @@ object FormPrincipal: TFormPrincipal
             object Label13: TLabel
               Left = 248
               Top = 80
-              Width = 31
-              Height = 14
+              Width = 34
+              Height = 13
               Caption = 'Troco'
               Color = clBtnFace
               Font.Charset = DEFAULT_CHARSET
@@ -829,7 +839,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btEfetuarPagamentos: TBitBtn
               Left = 630
-              Top = 94
+              Top = 83
               Width = 113
               Height = 28
               Anchors = [akTop, akRight]
@@ -863,7 +873,7 @@ object FormPrincipal: TFormPrincipal
               OnClick = btAdministrativoClick
             end
             object cbSimularErroNoDoctoFiscal: TCheckBox
-              Left = 360
+              Left = 354
               Top = 102
               Width = 151
               Height = 19
@@ -871,20 +881,20 @@ object FormPrincipal: TFormPrincipal
               TabOrder = 8
             end
             object btObterCPF: TButton
-              Left = 630
-              Top = 44
+              Left = 511
+              Top = 16
               Width = 113
-              Height = 25
+              Height = 28
               Anchors = [akTop, akRight]
               Caption = 'Solicita CPF'
               TabOrder = 7
               OnClick = btObterCPFClick
             end
             object btMsgPinPad: TButton
-              Left = 630
-              Top = 69
+              Left = 511
+              Top = 51
               Width = 113
-              Height = 25
+              Height = 28
               Anchors = [akTop, akRight]
               Caption = 'Msg PinPad'
               TabOrder = 9
@@ -917,12 +927,51 @@ object FormPrincipal: TFormPrincipal
               OnChange = seTotalAcrescimoChange
               OnKeyPress = seValorInicialVendaKeyPress
             end
+            object btExibirImagemPinPad: TButton
+              Left = 392
+              Top = 16
+              Width = 113
+              Height = 28
+              Anchors = [akTop, akRight]
+              Caption = 'Imagem PinPad'
+              TabOrder = 11
+              OnClick = btExibirImagemPinPadClick
+            end
+            object btMenuPinPad: TButton
+              Left = 511
+              Top = 83
+              Width = 113
+              Height = 28
+              Anchors = [akTop, akRight]
+              Caption = 'Menu PinPad'
+              TabOrder = 12
+              OnClick = btMenuPinPadClick
+            end
+            object btCancelarUltima: TBitBtn
+              Left = 630
+              Top = 51
+              Width = 113
+              Height = 28
+              Anchors = [akTop, akRight]
+              Caption = 'Cancelar Ultima'
+              Enabled = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -12
+              Font.Name = 'Segoe UI'
+              Font.Style = []
+              ImageIndex = 11
+              Images = ImageList1
+              ParentFont = False
+              TabOrder = 13
+              OnClick = btCancelarUltimaClick
+            end
           end
           object gbPagamentos: TGroupBox
             Left = 0
             Top = 186
             Width = 762
-            Height = 159
+            Height = 190
             Align = alClient
             Caption = 'Pagamentos'
             TabOrder = 1
@@ -930,7 +979,7 @@ object FormPrincipal: TFormPrincipal
               Left = 2
               Top = 17
               Width = 652
-              Height = 140
+              Height = 171
               Align = alClient
               ColCount = 7
               DefaultColWidth = 30
@@ -943,13 +992,13 @@ object FormPrincipal: TFormPrincipal
               Left = 654
               Top = 17
               Width = 106
-              Height = 140
+              Height = 171
               Align = alRight
               BevelOuter = bvNone
               TabOrder = 1
               DesignSize = (
                 106
-                140)
+                171)
               object btIncluirPagamentos: TBitBtn
                 Left = 8
                 Top = 16
@@ -1001,9 +1050,9 @@ object FormPrincipal: TFormPrincipal
             ParentFont = False
             TabOrder = 2
             object lNumOperacao: TLabel
-              Left = 680
+              Left = 673
               Top = 4
-              Width = 78
+              Width = 85
               Height = 42
               Align = alRight
               Caption = '000000'
@@ -1011,8 +1060,6 @@ object FormPrincipal: TFormPrincipal
               ParentColor = False
               Layout = tlCenter
               Visible = False
-              ExplicitLeft = 673
-              ExplicitHeight = 29
             end
             object btOperacao: TBitBtn
               Left = 8
@@ -1037,9 +1084,9 @@ object FormPrincipal: TFormPrincipal
     end
     object pLogs: TPanel
       Left = 0
-      Top = 380
+      Top = 411
       Width = 775
-      Height = 120
+      Height = 189
       Align = alClient
       TabOrder = 1
       object sbLimparLog: TSpeedButton
@@ -1053,7 +1100,7 @@ object FormPrincipal: TFormPrincipal
         Left = 1
         Top = 1
         Width = 773
-        Height = 118
+        Height = 187
         Align = alClient
         ReadOnly = True
         ScrollBars = ssBoth
@@ -1066,16 +1113,16 @@ object FormPrincipal: TFormPrincipal
     Left = 780
     Top = 0
     Width = 330
-    Height = 500
+    Height = 600
     Align = alRight
     BevelOuter = bvNone
     Constraints.MinWidth = 300
     TabOrder = 0
     object lSaidaImpressao: TLabel
       Left = 0
-      Top = 212
+      Top = 213
       Width = 330
-      Height = 18
+      Height = 20
       Align = alTop
       Alignment = taCenter
       Caption = 'Sa'#237'da de Impress'#227'o'
@@ -1087,14 +1134,12 @@ object FormPrincipal: TFormPrincipal
       Font.Style = []
       ParentColor = False
       ParentFont = False
-      ExplicitTop = 213
-      ExplicitWidth = 140
     end
     object lURLTEF: TLabel
       Left = 0
       Top = 0
       Width = 330
-      Height = 19
+      Height = 20
       Cursor = crHandPoint
       Align = alTop
       Alignment = taCenter
@@ -1109,13 +1154,12 @@ object FormPrincipal: TFormPrincipal
       ParentFont = False
       Transparent = False
       OnClick = lURLTEFClick
-      ExplicitWidth = 167
     end
     object mImpressao: TMemo
       Left = 0
-      Top = 230
+      Top = 233
       Width = 330
-      Height = 82
+      Height = 179
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -1131,7 +1175,7 @@ object FormPrincipal: TFormPrincipal
     end
     object pSimulador: TPanel
       Left = 0
-      Top = 432
+      Top = 532
       Width = 330
       Height = 68
       Align = alBottom
@@ -1153,7 +1197,7 @@ object FormPrincipal: TFormPrincipal
     end
     object pMensagem: TPanel
       Left = 0
-      Top = 19
+      Top = 20
       Width = 330
       Height = 193
       Align = alTop
@@ -1181,7 +1225,7 @@ object FormPrincipal: TFormPrincipal
           Left = 1
           Top = 1
           Width = 316
-          Height = 14
+          Height = 13
           Align = alTop
           Caption = 'Mensagem Operador'
           Color = clBtnFace
@@ -1192,13 +1236,12 @@ object FormPrincipal: TFormPrincipal
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          ExplicitWidth = 117
         end
         object lMensagemOperador: TLabel
           Left = 1
-          Top = 15
+          Top = 14
           Width = 316
-          Height = 54
+          Height = 55
           Align = alClient
           Alignment = taCenter
           Caption = 'lMensagemOperador'
@@ -1206,9 +1249,6 @@ object FormPrincipal: TFormPrincipal
           ParentColor = False
           Layout = tlCenter
           WordWrap = True
-          ExplicitTop = 14
-          ExplicitWidth = 159
-          ExplicitHeight = 19
         end
       end
       object pMensagemCliente: TPanel
@@ -1223,7 +1263,7 @@ object FormPrincipal: TFormPrincipal
           Left = 1
           Top = 1
           Width = 316
-          Height = 14
+          Height = 13
           Align = alTop
           Caption = 'Mensagem Cliente'
           Color = clBtnFace
@@ -1234,13 +1274,12 @@ object FormPrincipal: TFormPrincipal
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
-          ExplicitWidth = 104
         end
         object lMensagemCliente: TLabel
           Left = 1
-          Top = 15
+          Top = 14
           Width = 316
-          Height = 95
+          Height = 96
           Align = alClient
           Alignment = taCenter
           Caption = 'lMensagemCliente'
@@ -1248,15 +1287,12 @@ object FormPrincipal: TFormPrincipal
           ParentColor = False
           Layout = tlCenter
           WordWrap = True
-          ExplicitTop = 14
-          ExplicitWidth = 140
-          ExplicitHeight = 19
         end
       end
     end
     object pImpressoraBotes: TPanel
       Left = 0
-      Top = 398
+      Top = 498
       Width = 330
       Height = 34
       Align = alBottom
@@ -1297,7 +1333,7 @@ object FormPrincipal: TFormPrincipal
     end
     object pQRCode: TPanel
       Left = 0
-      Top = 312
+      Top = 412
       Width = 330
       Height = 86
       Align = alBottom
@@ -1879,5 +1915,10 @@ object FormPrincipal: TFormPrincipal
       007F8001CFC3F839187F9FF9CFC3FFFDB87F8001C007FFFFF07FFFFFC00FFFFF
       E0FFFFFFFFFFFFFFF3FFFFFFFFFFFFFF00000000000000000000000000000000
       000000000000}
+  end
+  object ACBrAbecsPinPad1: TACBrAbecsPinPad
+    OnWriteLog = ACBrAbecsPinPad1WriteLog
+    Left = 840
+    Top = 296
   end
 end

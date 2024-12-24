@@ -39,7 +39,7 @@ uses
   Spin, Buttons, DBCtrls, ExtCtrls, Grids,
   uVendaClass,
   ACBrPosPrinter, ACBrTEFComum, ACBrTEFAPI, ACBrBase, ACBrTEFAPIComum,
-  ImgList;
+  ImgList, System.ImageList, ACBrAbecsPinPad;
 
 type
 
@@ -173,6 +173,12 @@ type
     edEnderecoServidor: TEdit;
     Label24: TLabel;
     edCodEmpresa: TEdit;
+    Label30: TLabel;
+    edCodFilial: TEdit;
+    ACBrAbecsPinPad1: TACBrAbecsPinPad;
+    btExibirImagemPinPad: TButton;
+    btMenuPinPad: TButton;
+    btCancelarUltima: TBitBtn;
     procedure ACBrTEFAPI1QuandoDetectarTransacaoPendente(
       RespostaTEF: TACBrTEFResp; const MsgErro: String);
     procedure ACBrTEFAPI1QuandoExibirMensagem(const Mensagem: String;
@@ -191,10 +197,13 @@ type
     procedure ACBrTEFAPI1QuandoPerguntarMenu(const Titulo: String;
       Opcoes: TStringList; var ItemSelecionado: Integer);
     procedure btAdministrativoClick(Sender: TObject);
+    procedure btCancelarUltimaClick(Sender: TObject);
     procedure btEfetuarPagamentosClick(Sender: TObject);
     procedure btExcluirPagamentoClick(Sender: TObject);
     procedure btIncluirPagamentosClick(Sender: TObject);
+    procedure btMenuPinPadClick(Sender: TObject);
     procedure btMsgPinPadClick(Sender: TObject);
+    procedure btExibirImagemPinPadClick(Sender: TObject);
     procedure btOperacaoClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
     procedure btMudaPaginaClick(Sender: TObject);
@@ -217,6 +226,8 @@ type
     procedure seTotalDescontoChange(Sender: TObject);
     procedure seValorInicialVendaChange(Sender: TObject);
     procedure seValorInicialVendaKeyPress(Sender: TObject; var Key: Char);
+    procedure ACBrAbecsPinPad1WriteLog(const ALogLine: string;
+      var Tratado: Boolean);
   private
     FVenda: TVenda;
     FTipoBotaoOperacao: TTipoBotaoOperacao;
@@ -286,9 +297,10 @@ uses
   IniFiles, typinfo, dateutils, math, strutils,
   frIncluirPagamento, frMenuTEF, frObtemCampo, frExibeMensagem,
   configuraserial,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.DateTime,
+  //ACBrUtil,
   ACBrDelphiZXingQRCode,
-  ACBrTEFPayGoComum, ACBrTEFAPIPayGoWeb;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrTEFPayGoComum, ACBrTEFAPIPayGoWeb, ACBrTEFAPIStoneAutoTEF;
 
 {$R *.dfm}
 
@@ -368,7 +380,8 @@ end;
 
 procedure TFormPrincipal.FormDestroy(Sender: TObject);
 begin
-  FVenda.Free;
+  if Assigned(FVenda) then
+    FVenda.Free;
 end;
 
 procedure TFormPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
@@ -533,12 +546,118 @@ begin
   end;
 end;
 
+procedure TFormPrincipal.btMenuPinPadClick(Sender: TObject);
+var
+  sl: TStringList;
+  i: Integer;
+begin
+  sl := TStringList.Create;
+  try
+    sl.Add('Item1');
+    sl.Add('Item2');
+    sl.Add('Item3');
+    i := ACBrTEFAPI1.MenuPinPad('Select', sl);
+
+    ShowMessage('Selecionada opção: '+IntToStr(i));
+  finally
+    sl.Free;
+  end;
+end;
+
 procedure TFormPrincipal.btMsgPinPadClick(Sender: TObject);
 var
   Msg: String;
 begin
   Msg := 'PROJETO ACBR|'+FormatDateTimeBr(now,'DD/MM HH:NN:SS');
   ACBrTEFAPI1.ExibirMensagemPinPad(Msg);
+end;
+
+procedure TFormPrincipal.btExibirImagemPinPadClick(Sender: TObject);
+var
+  sl: TStringList;
+  PortFound, MediaName, FileLogo: String;
+  i: Integer;
+  ms: TMemoryStream;
+begin
+  // Procura a Porta do PinPad
+  sl := TStringList.Create;
+  try
+    ACBrAbecsPinPad1.Device.AcharPortasSeriais( sl );
+    i := 0;
+    PortFound := '';
+    while (i < sl.Count) and (PortFound = '') do
+    begin
+      try
+        ACBrAbecsPinPad1.Disable;
+        ACBrAbecsPinPad1.Port := sl[i];
+        ACBrAbecsPinPad1.Enable;
+        try
+          ACBrAbecsPinPad1.OPN;
+          ACBrAbecsPinPad1.CLO;
+          PortFound := ACBrAbecsPinPad1.Port;
+        finally
+          ACBrAbecsPinPad1.Disable;
+        end;
+      except
+      end;
+      Inc(i);
+    end;
+
+    if (PortFound = '') then
+      raise Exception.Create('Porta do PinPad não encontrada');
+
+    // Liga comunicação com o PinPad
+    ACBrAbecsPinPad1.Enable;
+    try
+      ACBrAbecsPinPad1.OPN;
+
+      // Carrega lista de imagens carregadas no PinPad
+      ACBrAbecsPinPad1.LMF;
+      sl.Clear;
+      ACBrAbecsPinPad1.Response.GetResponseFromTagValue(PP_MFNAME, sl);
+
+      // Verifica se o "LOGOACBR" já está na memória do PinPad
+      MediaName := '';
+      for i := 0 to sl.Count-1 do
+      begin
+        if (trim(UpperCase(sl[i])) = 'LOGOACBR') then
+        begin
+          MediaName := sl[i];
+          Break;
+        end;
+      end;
+
+      // Se não estiver.. carrega o PNG do Logo e sobe no PinPad
+      if (MediaName = '') then
+      begin
+        FileLogo := ApplicationPath+'LogoACBr.png';
+        if not FileExists(FileLogo) then
+          raise Exception.Create('Imagem não encontrada: '+FileLogo);
+
+        ms := TMemoryStream.Create;
+        try
+          ms.LoadFromFile(FileLogo);
+          MediaName := 'LOGOACBR';
+          ACBrAbecsPinPad1.LoadMedia(MediaName, ms, mtPNG);
+        finally
+          ms.Free;
+        end;
+      end;
+
+      // Exibindo no PinPad, imagem gravada previamente
+      if (MediaName <> '') then
+        ACBrAbecsPinPad1.DSI(MediaName);
+
+    finally
+      // Fecha comunicação com o PinPad, para liberar a Porta
+      if ACBrAbecsPinPad1.IsEnabled then
+        ACBrAbecsPinPad1.CLO;
+
+      ACBrAbecsPinPad1.Disable;
+    end;
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TFormPrincipal.btAdministrativoClick(Sender: TObject);
@@ -548,6 +667,23 @@ begin
   StatusVenda := stsOperacaoTEF;
   try
     ACBrTEFAPI1.EfetuarAdministrativa(tefopAdministrativo);
+  finally
+    StatusVenda := stsFinalizada;
+  end;
+end;
+
+procedure TFormPrincipal.btCancelarUltimaClick(Sender: TObject);
+begin
+  AdicionarLinhaLog('- btCancelarUltimaClick');
+  IniciarOperacao;
+  StatusVenda := stsOperacaoTEF;
+  try
+    with ACBrTEFAPI1.UltimaRespostaTEF do
+    begin
+      ACBrTEFAPI1.CancelarTransacao( NSU, CodigoAutorizacaoTransacao,
+                                     DataHoraTransacaoHost, ValorTotal,
+                                     Finalizacao, Rede );
+    end;
   finally
     StatusVenda := stsFinalizada;
   end;
@@ -869,6 +1005,13 @@ begin
   end;
 end;
 
+procedure TFormPrincipal.ACBrAbecsPinPad1WriteLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  AdicionarLinhaLog(ALogLine);
+  Tratado := False;
+end;
+
 procedure TFormPrincipal.ACBrTEFAPI1QuandoGravarLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
@@ -1046,6 +1189,7 @@ begin
 
     edCodTerminal.Text := INI.ReadString('Terminal', 'CodTerminal', edCodTerminal.Text);
     edCodEmpresa.Text := INI.ReadString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
+    edCodFilial.Text := INI.ReadString('Terminal', 'CodFilial', edCodFilial.Text);
     edPortaPinPad.Text := INI.ReadString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
     edEnderecoServidor.Text := INI.ReadString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
 
@@ -1091,6 +1235,7 @@ begin
 
     INI.WriteString('Terminal', 'CodTerminal', edCodTerminal.Text);
     INI.WriteString('Terminal', 'CodEmpresa', edCodEmpresa.Text);
+    INI.WriteString('Terminal', 'CodFilial', edCodFilial.Text);
     INI.WriteString('Terminal', 'PortaPinPad', edPortaPinPad.Text);
     INI.WriteString('Terminal', 'EnderecoServidor', edEnderecoServidor.Text);
 
@@ -1176,6 +1321,9 @@ begin
   gbTotaisVenda.Enabled := (AValue in [stsLivre, stsIniciada]);
   gbPagamentos.Enabled := (AValue = stsEmPagamento);
   btAdministrativo.Enabled := (AValue = stsLivre);
+  btCancelarUltima.Enabled := (AValue = stsLivre);
+  btMsgPinPad.Enabled := (AValue = stsLivre);
+  btMenuPinPad.Enabled := (AValue = stsLivre);
   btObterCPF.Enabled := btAdministrativo.Enabled;
   pImpressao.Enabled := (AValue in [stsLivre, stsFinalizada, stsCancelada]);
   btEfetuarPagamentos.Enabled := (AValue = stsIniciada);
@@ -1422,7 +1570,7 @@ begin
     Modalidade := tefmpNaoDefinido;
     CartoesAceitos := [];
 
-    TemTEF := (IndicePagto >= 2) and (IndicePagto <= 5);
+    TemTEF := (IndicePagto >= 2) and (IndicePagto <= 6);
     case IndicePagto of
       2:
         Modalidade := tefmpCheque;
@@ -1448,11 +1596,15 @@ begin
     if TemTEF then
     begin
       // -- Exemplo, usando TypeCast, para inserir Propriedades direto na Classe de TEF -- //
+
       (*
       if ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb then
       begin
         with TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF) do
         begin
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_POSID] := '99999';   // PDC
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_DESTTCPIP] := 'esba-hom01.tpgweb.io:17500'  // Homologação
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_DESTTCPIP] := 'pl03.pgweb.io:17500'  // Produção
           TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST] := 'REDE';   // Autorizador
           TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE] := '2';       // 01: à vista, 2: parcelado
           TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_INSTALLMENTS] := '3';  // Parcelas
@@ -1878,6 +2030,7 @@ begin
 
   ACBrTEFAPI1.DadosTerminal.CodTerminal := edCodTerminal.Text;
   ACBrTEFAPI1.DadosTerminal.CodEmpresa := edCodEmpresa.Text;
+  ACBrTEFAPI1.DadosTerminal.CodFilial  := edCodFilial.Text;
   ACBrTEFAPI1.DadosTerminal.PortaPinPad := edPortaPinPad.Text;
   ACBrTEFAPI1.DadosTerminal.EnderecoServidor := edEnderecoServidor.Text;
 
@@ -1890,10 +2043,21 @@ begin
   end;
 
   // -- Exemplo de como ajustar o diretório de Trabalho, da PayGoWeb -- //
-  (*
+
   if (ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb) then
-    TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF).DiretorioTrabalho := 'C:\PAYGOWEB';
-  *)
+  begin
+    with TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF) do
+    begin
+      //DiretorioTrabalho := 'C:\PAYGOWEB\PROD';
+      //DiretorioTrabalho := 'C:\PAYGOWEB\INGENICO';
+      DiretorioTrabalho := 'C:\PAYGOWEB';
+      //TEFPayGoAPI.PathLib := 'C:\temp\64bits\PGWebLib.dll';
+      {$IFDEF DEBUG}
+       TEFPayGoAPI.IsDebug := True;
+      {$EndIf}
+    end;
+  end;
+
 end;
 
 procedure TFormPrincipal.AtivarTEF;

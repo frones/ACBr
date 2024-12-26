@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2024
+-- ACBrLibPIXCDConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+    Por: Antonio Carlos Junior
+
 18/12/2024
 --- ACBrLibPIXCDBase ---
 [*] Ajuste nos métodos MateraSolicitarRetirada, MateraConsultarAliasRetirada, MateraSolicitarDevolucao, MateraConsultarMotivosDevolucao, MateraConsultarExtratoEC             para mapear exceções de erro HTTP e trazer o JSON de retorno.

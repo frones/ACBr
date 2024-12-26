@@ -233,11 +233,11 @@ begin
 
       teAlteracaoPoltrona:
         begin
-          xEvento := '<evAlteraPoltronaBPe>' +
+          xEvento := '<evAlteracaoPoltrona>' +
                      '<descEvento>' + Evento.Items[i].InfEvento.DescEvento + '</descEvento>' +
                      '<nProt>' + Evento.Items[i].InfEvento.detEvento.nProt + '</nProt>' +
                      '<poltrona>' + IntToStr(Evento.Items[i].InfEvento.detEvento.poltrona) + '</poltrona>' +
-                     '</evAlteraPoltronaBPe>';
+                     '</evAlteracaoPoltrona>';
         end;
 
       teExcessoBagagem:

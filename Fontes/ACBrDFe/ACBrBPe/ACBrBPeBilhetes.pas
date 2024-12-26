@@ -554,6 +554,7 @@ begin
     FBPeW.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
     FBPeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FBPeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
+    FBPeW.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 

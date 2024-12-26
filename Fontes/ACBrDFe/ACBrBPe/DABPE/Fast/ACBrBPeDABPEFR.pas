@@ -293,7 +293,7 @@ begin
         with FBPe.Imp do
         begin
             FieldByName('vTotTrib').AsFloat := vTotTrib;
-            FieldByName('infAdFisco').AsString := StringReplace(infAdFisco, '|', sLineBreak, [rfReplaceAll]);
+            FieldByName('infAdFisco').AsString := StringReplace(infAdFisco, FDABPEClassOwner.CaractereQuebraDeLinha , sLineBreak, [rfReplaceAll]);
         end;
         Post;
     end;
@@ -306,7 +306,7 @@ begin
         Append;
         with FBPe.InfAdic do
         begin
-            FieldByName('infAdFisco').AsString := StringReplace(infAdFisco, '|', sLineBreak, [rfReplaceAll]);
+            FieldByName('infAdFisco').AsString := StringReplace(infAdFisco, FDABPEClassOwner.CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
             FieldByName('infCpl').AsString := infCpl;
         end;
         Post;

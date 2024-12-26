@@ -71,6 +71,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
+    function CaractereQuebraDeLinha: String;
     procedure ImprimirDABPE(BPe: TBPe = nil); virtual;
     procedure ImprimirDABPECancelado(BPe: TBPe = nil); virtual;
     procedure ImprimirDABPEResumido(BPe: TBPe = nil); virtual;
@@ -197,7 +198,7 @@ var
   ABPe: TBPe;
 begin
   Result := aInitialPath;
-  
+
   if Assigned(ACBrBPe) then  // Se tem o componente ACBrBPe
   begin
     if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then  // Se tem algum Bilhete carregado
@@ -218,6 +219,13 @@ begin
                          DescricaoModelo);
     end;
   end;
+end;
+
+function TACBrBPeDABPEClass.CaractereQuebraDeLinha: String;
+begin
+  Result := '|';
+  if Assigned(FACBrBPe) and (FACBrBPe is TACBrBPe) then
+    Result := TACBrBPe(FACBrBPe).Configuracoes.WebServices.QuebradeLinha;
 end;
 
 end.

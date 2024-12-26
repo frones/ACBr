@@ -46,6 +46,7 @@ uses
   ACBrBase,
   ACBrXmlBase,
   pcnConversao,
+  ACBrUtil.Strings,
   ACBrBPeConversao;
 
 type
@@ -183,7 +184,7 @@ begin
     teCCe:               Result := 'Carta de Correcao';
     teCancelamento:      Result := 'Cancelamento';
     teNaoEmbarque:       Result := 'Nao Embarque';
-    teAlteracaoPoltrona: Result := 'Alteracao de Poltrona';
+    teAlteracaoPoltrona: Result := 'Alteracao Poltrona';
     teExcessoBagagem:    Result := 'Excesso Bagagem';
   else
     Result := '';

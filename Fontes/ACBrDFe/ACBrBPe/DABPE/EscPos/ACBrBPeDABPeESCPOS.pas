@@ -506,7 +506,7 @@ begin
   TextoObservacao := Trim(FpBPe.InfAdic.infAdFisco);
   if TextoObservacao <> '' then
   begin
-    TextoObservacao := StringReplace(FpBPe.InfAdic.infAdFisco, ';', sLineBreak, [rfReplaceAll]);
+    TextoObservacao := StringReplace(FpBPe.InfAdic.infAdFisco, CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
   end;
 end;
@@ -518,7 +518,7 @@ begin
   TextoObservacao := Trim(FpBPe.InfAdic.infCpl);
   if TextoObservacao <> '' then
   begin
-    TextoObservacao := StringReplace(FpBPe.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);
+    TextoObservacao := StringReplace(FpBPe.InfAdic.infCpl, CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
   end;
 end;

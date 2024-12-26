@@ -42,7 +42,7 @@ uses
   pcnConversao,
   ACBrDFe,
   ACBrDFeWebService,
-  ACBrDFecomum.Proc,
+  ACBrDFeComum.Proc,
   ACBrDCe.Classes,
   ACBrDCe.Conversao,
   ACBrDCe.RetConsSit,

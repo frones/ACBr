@@ -1397,7 +1397,7 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
       MASK0_CUPOM_LOJA:
         AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
       MASK0_CUPOM_CLIENTE:
-        AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
+        AACBrTEFResp.ImagemComprovante2aVia.Text := Linha.Informacao.AsString;
       //MASK0_CUPOM_REDUZIDO:
       //  AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
       MASK0_CHEQUE_BANCO:
@@ -1684,8 +1684,8 @@ procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
 
 
 var
-  I,P, AInt: Integer;
-  LinStr, LinChave: String;
+  I,P: Integer;
+  LinChave: String;
   Linha: TACBrTEFLinha;
   mask, IDCampo: string;
 begin
@@ -2879,9 +2879,9 @@ begin
       TratarErroScope(Result);
 
     sCabec := String(pCabec);
-    fDadosDaTransacao.Values[CMASK0 + IntToHex(MASK0_CUPOM_LOJA, 8)] := BinaryStringToString( sCabec + sLineBreak + String(pCupomLoja) );
-    fDadosDaTransacao.Values[CMASK0 + IntToHex(MASK0_CUPOM_CLIENTE, 8)] := BinaryStringToString( sCabec + sLineBreak + String(pCupomCliente) );
-    fDadosDaTransacao.Values[CMASK0 + IntToHex(MASK0_CUPOM_REDUZIDO, 8)] := BinaryStringToString( String(pCupomReduzido) );
+    fDadosDaTransacao.Values[CMASK0 + IntToHex(MASK0_CUPOM_LOJA, 8)] := BinaryStringToString( TrimRight(sCabec) + sLineBreak + TrimRight(String(pCupomLoja)) );
+    fDadosDaTransacao.Values[CMASK0 + IntToHex(MASK0_CUPOM_CLIENTE, 8)] := BinaryStringToString( TrimRight(sCabec) + sLineBreak + TrimRight(String(pCupomCliente)) );
+    fDadosDaTransacao.Values[CMASK0 + IntToHex(MASK0_CUPOM_REDUZIDO, 8)] := BinaryStringToString( TrimRight(string(pCupomReduzido)) );
   finally
     //Freemem(pCabec);
     //Freemem(pCupomCliente);
@@ -2916,7 +2916,7 @@ procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
 var
   //pBuffer: PAnsiChar;
   pBuffer: array [1..1024] of AnsiChar;
-  pBuffer2: array [1..4096] of AnsiChar;
+//  pBuffer2: array [1..4096] of AnsiChar;
   h, i, ret, mask: LongInt;
   val, hmask: string;
 begin

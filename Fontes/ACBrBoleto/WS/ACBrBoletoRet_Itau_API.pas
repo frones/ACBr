@@ -41,7 +41,8 @@ interface
 uses
   ACBrBoleto,
   ACBrBoletoRetorno,
-  ACBrBoletoWS.Rest;
+  ACBrBoletoWS.Rest,
+  ACBrUtil.Base;
 
 type
 
@@ -94,18 +95,18 @@ begin
   ARetornoWS.HTTPResultCode  := HTTPResultCode;
   ARetornoWS.JSONEnvio       := EnvWs;
   ARetornoWS.Header.Operacao := TipoOperacao;
+  if Assigned(ACBrTitulo) then
+    ARetornoWS.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
 
   if Trim(RetWS) <> '' then
   begin
     try
+      LJsonObject := TACBrJsonObject.Parse( RetWS );
       try
-        LJsonObject := TACBrJsonObject.Parse( RetWS );
 
         ARetornoWS.JSON := LJsonObject.ToJSON;
-
-        if TipoOperacao = tpInclui then
+        if HTTPResultCode >= 300 then
         begin
-          //retorna quando houver erro
           if (LJsonObject.AsString['codigo'] <> '') or (LJsonObject.AsString['mensagem'] <> '') or
              (LJsonObject.AsString['codigo_erro'] <> '') or (LJsonObject.AsString['mensagem_erro'] <> '') then
           begin
@@ -130,10 +131,12 @@ begin
               LListaRejeicao.Codigo   := LJsonObject.AsString['codigo_erro'];
               LListaRejeicao.Mensagem := LJsonObject.AsString['mensagem_erro'];
             end;
-          end
-          else
-          begin
+          end;
+        end;
 
+
+        if TipoOperacao = tpInclui then
+        begin
             if LJsonObject.ValueExists('data') then
               LJsonBoletoObject  := LJsonObject.AsJSONObject['data'].AsJSONObject['dado_boleto']
             else
@@ -181,8 +184,11 @@ begin
               ARetornoWS.DadosRet.IDBoleto.LinhaDig  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_linha_digitavel'];
               ARetornoWS.DadosRet.IDBoleto.NossoNum  := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_nosso_numero'];
 
+              if Assigned(ACBrTitulo) and EstaVazio(ARetornoWS.DadosRet.IDBoleto.NossoNum) then
+                ARetornoWS.DadosRet.IDBoleto.NossoNum := ACBrTitulo.NossoNumero;
+
               ARetornoWS.DadosRet.TituloRet.Vencimento           := StringToDateTimeDef(LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['data_vencimento'], 0, 'yyyy-mm-dd');
-              ARetornoWS.DadosRet.TituloRet.NossoNumero          := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_nosso_numero'];
+              ARetornoWS.DadosRet.TituloRet.NossoNumero          := ARetornoWS.DadosRet.IDBoleto.NossoNum;
               ARetornoWS.DadosRet.TituloRet.SeuNumero            := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['texto_seu_numero'];
               ARetornoWS.DadosRet.TituloRet.CodBarras            := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['codigo_barras'];
               ARetornoWS.DadosRet.TituloRet.LinhaDig             := LJsonBoletoIndividualArray.ItemAsJSONObject[I].AsString['numero_linha_digitavel'];
@@ -206,25 +212,9 @@ begin
               ARetornoWS.DadosRet.TituloRet.UrlPix := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['location'];
               ARetornoWS.DadosRet.TituloRet.Url    := LJsonObject.AsJSONObject['data'].AsJSONObject['dados_qrcode'].AsString['location'];
             end;
-
-          end;
         end else
         if TipoOperacao = tpConsultaDetalhe then
         begin
-          if HTTPResultCode > 299 then
-          begin
-            if ( LJsonObject.IsJSONObject('codigo') ) then
-              if (LJsonObject.AsString['codigo'] <> '') or (LJsonObject.AsString['mensagem'] <> '') then
-              begin
-                CodRetorno := strtointdef(LJsonObject.AsString['codigo'], 0);
-                if CodRetorno < 1 then
-                   CodRetorno := StrToIntDef(LJsonObject.AsString['codigo'], 0);
-
-                 LListaRejeicao            := ARetornoWS.CriarRejeicaoLista;
-                 LListaRejeicao.Codigo     := inttostr(CodRetorno);
-                 LListaRejeicao.Mensagem   := LJsonObject.AsString['mensagem'];
-              end;
-          end;
           //retorna quando tiver sucesso
           if (ARetornoWS.ListaRejeicao.Count = 0) then
           begin

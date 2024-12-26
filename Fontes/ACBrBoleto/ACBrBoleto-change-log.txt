@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2024
+-- ACBrBoletoRet_Itau_API --
+[-] TK-6392 Correção ao ler as rejeições do retorno
+    https://www.projetoacbr.com.br/forum/topic/81104-converter-json-de-retorno/
+  Por: Daniel Morais Infocotidiano
+
 21/12/2024
 -- ACBrBoletoW_Banrisul --
 [-] Correção na definição das URL de homologação.

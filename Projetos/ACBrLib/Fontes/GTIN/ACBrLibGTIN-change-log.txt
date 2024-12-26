@@ -42,7 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-13/08/2024
+
+26/12/2024
+-- ACBrLibGTINConsoleMT.lpi, ACBrLibGTINConsoleMTDemo.lpi --
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão PRO e Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+    Por: Antonio Carlos Junior
+
 12/08/2024
 --- ACBrLibGTINBase, ACBrLibGTINST, ACBrLibGTINMT,
     ACBrLibGTINStaticImportST, ACBrLibGTINStaticImportMT, ACBrLibGTINRespostas ---

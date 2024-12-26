@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/12/2024
+-- RLZ.LerXml/RLZ.Provider --
+[*] #TK-6425: Ajustes para a leitura das tags: codigoverficacao e situacao.
+    Ajustes no TratarRetornoEmitir pois ao enviar o XML do RPS o mesmo não consta
+    o numero do RPS e nem da NFSe, logo não tem como comparar com o numero da nota
+    que consta no retorno.
+  Por: Massao Aihara
+
 23/12/2024
 -- Diversos --
 [+] #TK-6375: Ajustes para não sobrepor as informações no momento da impressão.

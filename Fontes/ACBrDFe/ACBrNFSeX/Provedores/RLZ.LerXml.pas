@@ -227,7 +227,11 @@ begin
     // <valor>/valor>
     // <valorimposto>?</valorimposto>
     OptanteSimplesNacional := FpAOwner.StrToSimNao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('optantesimples'), tcStr));
-    // <situacao>?</situacao>
+    CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
+
+    if (ObterConteudo(ANode.Childrens.FindAnyNs('situacao'), tcStr) = 'Emitida') then
+      SituacaoNfse := snNormal;
+
     // <deducao>?</deducao>
     // <basecalculo>?</basecalculo>
     // <retido>?</ retido >

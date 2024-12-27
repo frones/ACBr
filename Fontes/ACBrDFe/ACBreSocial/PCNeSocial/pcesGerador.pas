@@ -819,10 +819,7 @@ begin
 
   Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, pRemuneracao.VrSalFx);
   Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(pRemuneracao.UndSalFixo));
-
-  if (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '6') or
-     (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '7') then
-    Gerador.wCampo(tcStr, '', 'dscSalVar', 0, 255, 0, pRemuneracao.DscSalVar);
+  Gerador.wCampo(tcStr, '', 'dscSalVar', 0, 255, 0, pRemuneracao.DscSalVar);
 
   Gerador.wGrupo('/remuneracao');
 end;

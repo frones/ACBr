@@ -52,6 +52,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2024
+-- pcesGerador --
+[*] #TK-6364 - Alterado critério para geração do campo DscSalvar no S-2200, sem considerar o campo UndSalFixo - https://www.projetoacbr.com.br/forum/topic/81039-acbresocial-divergente-do-manual-e-leiaute-13/
+Por: Eduardo Rodrigues de Faria / Renato Rubinho
+-- pcesS5002 --
+[*] #TK-6364 - Alterada classe TinfoIRComplem do S-5002, que passou a ser uma TCollection devido a mudança do leiaute 1.3.
+Por: Renato Rubinho
+
 04/12/2024
 -- pcesS2205, pcesS2300 --
 [*] #TK-6309 - Adiciona na rotina de leitura do INI nova informação para correta geração de EnderecoExterior. - https://www.projetoacbr.com.br/forum/topic/80885-evento-s-2200-valida%C3%A7%C3%B5es/

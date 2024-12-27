@@ -44,6 +44,9 @@ uses
 const
   CSUBDIRETORIO_SCOPE = 'scope';
 
+resourcestring
+  sErro_RespostaInvalida = 'Resposta inválida: %s';
+
 type
 
   { TACBrTEFRespScope }
@@ -69,8 +72,8 @@ type
        Terminal: TACBrTEFScopeTerminalMensagem; MilissegundosExibicao: Integer);
     procedure QuandoPerguntarMenuAPI(const Titulo: String; Opcoes: TStringList;
        var ItemSelecionado: Integer);
-    procedure QuandoPerguntarCampoAPI( const MsgOperador: String;
-       const MsgCliente: String; const TituloCampo: String; const AcoesPermitidas: Byte;
+    procedure QuandoPerguntarCampoAPI( const TituloCampo: String;
+       const Param_Coleta: TParam_Coleta;
        var Resposta: String; var AcaoResposta: Byte);
 
     procedure SetDiretorioTrabalho(const AValue: String);
@@ -129,6 +132,7 @@ implementation
 uses
   math, TypInfo, DateUtils,
   ACBrUtil.Strings,
+  ACBrUtil.Base,
   ACBrUtil.Math,
   ACBrUtil.FilesIO;
 
@@ -615,9 +619,8 @@ begin
 end;
 
 procedure TACBrTEFAPIClassScope.QuandoPerguntarCampoAPI(
-  const MsgOperador: String; const MsgCliente: String;
-  const TituloCampo: String; const AcoesPermitidas: Byte; var Resposta: String;
-  var AcaoResposta: Byte);
+  const TituloCampo: String; const Param_Coleta: TParam_Coleta;
+  var Resposta: String; var AcaoResposta: Byte);
 var
   Validado, Cancelado: Boolean;
   DefCampo: TACBrTEFAPIDefinicaoCampo;
@@ -637,9 +640,151 @@ begin
   DefCampo.MsgErroDadoMenor := '';
   DefCampo.MsgConfirmacaoDuplaDigitacao := '';
   DefCampo.TipoEntradaCodigoBarras := tbQualquer;
-  DefCampo.TipoCampo := 0;
+  DefCampo.TipoCampo := Param_Coleta.FormatoDado;
 
-  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(DefCampo, Resposta, Validado, Cancelado);
+  case Param_Coleta.FormatoDado of
+    0:     // String representando uma data no formato “DDMMAA”
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 6;
+        DefCampo.TamanhoMaximo := 6;
+        DefCampo.ValidacaoDado := valdDiaMesAno;
+      end;
+    1,     // 1 - String representando uma data no formato “DDMM”
+    6:     // 6 - String representando um número com 4 dígitos
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 4;
+        DefCampo.TamanhoMaximo := 4;
+      end;
+    2:     // String representando uma data no formato “MMAA”
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 4;
+        DefCampo.TamanhoMaximo := 4;
+        DefCampo.ValidacaoDado := valdMesAno;
+      end;
+    3:     // String representando uma hora no formato “HHMMSS”
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 6;
+        DefCampo.TamanhoMaximo := 6;
+      end;
+    4:     // String representando um número
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+      end;
+    5:     // String representando uma senha que é numérica
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.OcultarDadosDigitados := True;
+        DefCampo.ValidacaoDado := valdSenhaGerente;
+      end;
+    7:     // String representando um dado alfanumérico
+      begin
+        DefCampo.TipoDeEntrada := tedAlfaNum;
+      end;
+    8:     // String representando uma data no formato “DDMMAAAA”
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 8;
+        DefCampo.TamanhoMaximo := 8;
+        DefCampo.ValidacaoDado := valdDiaMesAno;
+      end;
+    9:     // String de display para exibição (não há coleta)
+      begin
+        DefCampo.TipoDeEntrada := tedApenasLeitura;
+      end;
+   10:     // String representando uma data no formato “MMAAAA”
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 6;
+        DefCampo.TamanhoMaximo := 6;
+        DefCampo.ValidacaoDado := valdMesAno;
+      end;
+   11:     // Exibir ‘*’ na tela, mas enviar em claro
+     begin
+       DefCampo.OcultarDadosDigitados := True;
+       DefCampo.ValidacaoDado := valdSenhaLojista;
+     end;
+   12:     // String representando uma hora no formato “HHMM
+     begin
+       DefCampo.TipoDeEntrada := tedNumerico;
+       DefCampo.TamanhoMinimo := 4;
+       DefCampo.TamanhoMaximo := 4;
+     end;
+   13:     // Booleano, a resposta deve ser 0=Não ou 1=Sim
+     begin
+       //TODO: mudar para Menu
+       DefCampo.TipoDeEntrada := tedNumerico;
+       DefCampo.TamanhoMinimo := 1;
+       DefCampo.TamanhoMaximo := 1;
+     end;
+   14:     // String representando “valor monetário” com tamanho total de 12, sendo os dois últimos dígitos os centavos
+     begin
+       DefCampo.TipoDeEntrada := tedNumerico;
+       DefCampo.TamanhoMinimo := 1;
+       DefCampo.TamanhoMaximo := 12;
+       DefCampo.MascaraDeCaptura := '@@@.@@@.@@@.@@@,@@';
+     end;
+   15:     // String representando número não inteiro, com casas decimais
+     begin
+       DefCampo.TipoDeEntrada := tedNumerico;
+       DefCampo.TamanhoMinimo := 1;
+       DefCampo.TamanhoMaximo := 12;
+       DefCampo.MascaraDeCaptura := '@,@@';
+     end;
+   16:;    // Seleção de Opção (Menu)
+     //TODO
+   17:     // String representando o PAN do cartão
+     begin
+       DefCampo.TipoDeEntrada := tedNumerico;
+       DefCampo.TamanhoMinimo := 16;
+       DefCampo.TamanhoMaximo := 16;
+       DefCampo.MascaraDeCaptura := '@@@@.@@@@.@@@@.@@@@';
+     end;
+   18,     // Reservado para uso interno do SCOPE
+   19:;    // Formato desconhecido
+  end;
+
+  Validado := False;
+  Cancelado := False;
+  while not Validado do
+  begin
+    TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarCampo(DefCampo, Resposta, Validado, Cancelado);
+    if Cancelado then
+      Break;
+
+    if not Validado then
+    begin
+      case DefCampo.TipoDeEntrada of
+        tedNumerico: Validado := StrIsNumber(Resposta);
+        tedAlfabetico: Validado := StrIsAlpha(Resposta);
+        tedAlfaNum: Validado := StrIsAlphaNum(Resposta);
+      else
+        Validado := True;
+      end;
+    end;
+
+    if Validado then
+    begin
+      case DefCampo.TipoCampo of
+        0: Validado := ValidarDDMMAA(Resposta);
+        1: Validado := ValidarDDMM(Resposta);
+        2: Validado := ValidarMMAA(Resposta);
+        3: Validado := ValidarHHMMSS(Resposta);
+        8: Validado := ValidarDDMMAAAA(Resposta);
+       10: Validado := ValidarMMAAAA(Resposta);
+       12: Validado := ValidarHHMM(Resposta);
+       13: Validado := (Resposta = '0') or (Resposta = '1');
+      else
+        Validado := True;
+      end;
+    end;
+
+    if not Validado then
+      QuandoExibirMensagemAPI(Format(sErro_RespostaInvalida, [Resposta]), tmTodas, 0);
+  end;
 
   if Cancelado or (Resposta = ':-1') then
     AcaoResposta := ACAO_RESUME_CANCELAR

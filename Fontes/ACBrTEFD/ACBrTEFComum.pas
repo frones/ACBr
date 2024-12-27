@@ -538,6 +538,7 @@ begin
   Result := IntToStrZero(Identificacao, Casas) + '-' + IntToStrZero(Sequencia, 3);
 end;
 
+
 { TACBrTEFParametros }
 
 function TACBrTEFParametros.GetValueInfo(AInfo: Word): string;

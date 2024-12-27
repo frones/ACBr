@@ -709,8 +709,6 @@ type
     function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
     procedure LogPWGetData(AGetData: TPW_GetData; uiIndex: Word);
 
-    function ValidarMMAA(const AString: String): Boolean;
-    function ValidarDDMMAA(const AString: String): Boolean;
     function ValidarModulo10(const AString: String): Boolean;
   public
     constructor Create;
@@ -820,6 +818,7 @@ uses
   StrUtils, dateutils, math, typinfo,
   ACBrConsts,
   ACBrUtil.Strings,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Math,
   ACBrValidador
@@ -2570,35 +2569,6 @@ begin
     GravarLog(SL.Text);
   finally
     SL.Free;
-  end;
-end;
-
-function TACBrTEFPGWebAPI.ValidarMMAA(const AString: String): Boolean;
-begin
-  Result := False;
-  if Length(AString) <> 4 then
-    Exit;
-
-  Result := ValidarDDMMAA('01' + AString);
-end;
-
-function TACBrTEFPGWebAPI.ValidarDDMMAA(const AString: String): Boolean;
-var
-  AnoStr: String;
-begin
-  Result := False;
-  if (Length(AString) <> 6) then
-    Exit;
-  if not StrIsNumber(AString) then
-    Exit;
-
-  AnoStr := IntToStr(YearOf(Today));
-  try
-    EncodeDate( StrToInt( Copy(AnoStr , 1, 2) + Copy(AString, 5, 2) ),
-                StrToInt( Copy(AString, 3, 2) ),
-                StrToInt( Copy(AString, 1, 2) ) );
-    Result := True;
-  except
   end;
 end;
 

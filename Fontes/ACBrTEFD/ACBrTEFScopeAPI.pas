@@ -794,12 +794,16 @@ const
   ACAO_RESUME_APL_ERRO        = 3;
 
 {--------------------------------------------------------------------------------------------
-   Constantes de uso interno, não retornadas por Mask
+   Constantes retornadas por 'ScopeGetCupomEx'
 --------------------------------------------------------------------------------------------}
   CCUPOM_LOJA         = 'CUPOM_LOJA';
   CCUPOM_CLIENTE      = 'CUPOM_CLIENTE';
   CCUPOM_REDUZIDO     = 'CUPOM_REDUZIDO';
   CNUMLINHAS_REDUZIDO = 'NUMLINHAS_REDUZIDO';
+
+{--------------------------------------------------------------------------------------------
+   Constantes retornadas por 'ScopeGetCheque'
+--------------------------------------------------------------------------------------------}
   CCHEQUE_BANCO       = 'CHEQUE_BANCO';
   CCHEQUE_AGENCIA     = 'CHEQUE_AGENCIA';
   CCHEQUE_NUMERO      = 'CHEQUE_NUMERO';
@@ -807,6 +811,11 @@ const
   CCHEQUE_DATA        = 'CHEQUE_DATA';
   CCHEQUE_CODAUT      = 'CHEQUE_CODAUT';
   CCHEQUE_MUNICIP     = 'CHEQUE_MUNICIP';
+
+{--------------------------------------------------------------------------------------------
+   Constantes retornadas por 'ScopeGetParam'
+--------------------------------------------------------------------------------------------}
+  CBANDEIRA = 'BANDEIRA';
 
 {--------------------------------------------------------------------------------------------
    Constantes da máscara 1 da função ScopeObtemCampoExt2
@@ -1077,7 +1086,7 @@ type
 
   TACBrTEFScopeGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
-  TACBrTEFScopeTerminalMensagem = (tmOperador, tmCliente);
+  TACBrTEFScopeTerminalMensagem = (tmTodas, tmOperador, tmCliente);
 
   TACBrTEFScopeExibeMensagem = procedure(
     const Mensagem: String;
@@ -1091,9 +1100,8 @@ type
     var ItemSelecionado: Integer) of object ;  // -1 = Cancelado
 
   TACBrTEFScopePerguntarCampo = procedure(
-    const MsgOperador: String; const MsgCliente: String;
     const TituloCampo: String;
-    const AcoesPermitidas: Byte;
+    const Param_Coleta: TParam_Coleta;
     var Resposta: String;
     var AcaoResposta: Byte) of object ;
 
@@ -2330,6 +2338,9 @@ begin
       Resposta := '';
       TipoCaptura := COLETA_TECLADO;
 
+      if (rColeta.Bandeira <> 0) then
+        fDadosDaTransacao.Values[CBANDEIRA] := IntToStr(rColeta.Bandeira);
+
       // Trata os estados //
       case iStatus of
         TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
@@ -2388,7 +2399,7 @@ begin
           //TODO:
 
       else                            // deve coletar algo... //
-        fOnPerguntaCampo(MsgOp, MsgCli, Titulo, rColeta.HabTeclas, Resposta, Acao);
+        fOnPerguntaCampo(Titulo, rColeta, Resposta, Acao);
 
       end;
 

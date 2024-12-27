@@ -37,6 +37,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2024
+-- ACBrUtil.Base --
+[+] Adicionado os métodos:
+    function ValidarDDMMAA(const AString: String): Boolean;
+    function ValidarMMAA(const AString: String): Boolean;
+    function ValidarDDMM(const AString: String): Boolean;
+    function ValidarDDMMAAAA(const AString: String): Boolean;
+    function ValidarMMAAAA(const AString: String): Boolean;
+    function ValidarHHMMSS(const AString: String): Boolean;
+    function ValidarHHMM(const AString: String): Boolean;
+
+-- ACBrImage --
+[*] Método 'PNGInfoIHDR', modificado para ler o CRC da imagem
+    (por: DSA)
+
 12/12/2024
 -- ACBrCompress --
 [*] Melhoria na exibição de Erro, em D7 por falta de suporte a Zipfile

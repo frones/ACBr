@@ -126,6 +126,14 @@ procedure RttiSetProp(AObject: TObject; AProp: String; AValue: String);
 function CodigoUFparaUF(const codigo: integer): string;
 function UFparaCodigoUF(const UF: string): integer;
 
+function ValidarDDMMAA(const AString: String): Boolean;
+function ValidarMMAA(const AString: String): Boolean;
+function ValidarDDMM(const AString: String): Boolean;
+function ValidarDDMMAAAA(const AString: String): Boolean;
+function ValidarMMAAAA(const AString: String): Boolean;
+function ValidarHHMMSS(const AString: String): Boolean;
+function ValidarHHMM(const AString: String): Boolean;
+
 implementation
 
 uses
@@ -546,6 +554,99 @@ begin
   except
     result := 0;
   end;
+end;
+
+function ValidarDDMMAA(const AString: String): Boolean;
+var
+  AnoStr: String;
+begin
+  Result := False;
+  if (Length(AString) <> 6) then
+    Exit;
+  if not StrIsNumber(AString) then
+    Exit;
+
+  AnoStr := IntToStr(YearOf(Today));
+  try
+    EncodeDate( StrToInt( Copy(AnoStr , 1, 2) + Copy(AString, 5, 2) ),
+                StrToInt( Copy(AString, 3, 2) ),
+                StrToInt( Copy(AString, 1, 2) ) );
+    Result := True;
+  except
+  end;
+end;
+
+function ValidarMMAA(const AString: String): Boolean;
+begin
+  Result := False;
+  if (Length(AString) <> 4) then
+    Exit;
+
+  Result := ValidarDDMMAA('01' + AString);
+end;
+
+function ValidarDDMM(const AString: String): Boolean;
+var
+  AnoStr: String;
+begin
+  Result := False;
+  if (Length(AString) <> 4) then
+    Exit;
+
+  AnoStr := IntToStr(YearOf(Today));
+  Result := ValidarDDMMAAAA(AString + AnoStr);
+end;
+
+function ValidarDDMMAAAA(const AString: String): Boolean;
+begin
+  Result := False;
+  if (Length(AString) <> 8) then
+    Exit;
+  if not StrIsNumber(AString) then
+    Exit;
+
+  try
+    EncodeDate( StrToInt( Copy(AString, 5, 4) ),
+                StrToInt( Copy(AString, 3, 2) ),
+                StrToInt( Copy(AString, 1, 2) ) );
+    Result := True;
+  except
+  end;
+end;
+
+function ValidarMMAAAA(const AString: String): Boolean;
+begin
+  Result := False;
+  if (Length(AString) <> 6) then
+    Exit;
+
+  Result := ValidarDDMMAAAA('01' + AString);
+end;
+
+function ValidarHHMMSS(const AString: String): Boolean;
+begin
+  Result := False;
+  if (Length(AString) <> 6) then
+    Exit;
+  if not StrIsNumber(AString) then
+    Exit;
+
+  try
+    EncodeTime( StrToInt( Copy(AString, 1, 2) ),
+                StrToInt( Copy(AString, 3, 2) ),
+                StrToInt( Copy(AString, 5, 2) ), 0 );
+    Result := True;
+  except
+  end;
+end;
+
+function ValidarHHMM(const AString: String): Boolean;
+begin
+  Result := False;
+  if (Length(AString) <> 4) then
+    Exit;
+
+  Result := ValidarHHMMSS(AString + '00');
 end;
 
 initialization

@@ -190,19 +190,21 @@ var
 
   procedure ReadNextChunk(S: TStream; out Len: Cardinal; out ChunckType: AnsiString; out Data: AnsiString);
   var
-    LenStr: AnsiString;
+    LenStr, crc: AnsiString;
   begin
     Len := 0; LenStr := ''; ChunckType := ''; Data := '';
     Setlength(LenStr, 4);
     S.Read(PAnsiChar(LenStr)^, 4);
     Len := BEStrToInt(LenStr);
+    Setlength(ChunckType, 4);
+    S.Read(PAnsiChar(ChunckType)^, 4);
     if (Len > 0) then
     begin
-      Setlength(ChunckType, 4);
-      S.Read(PAnsiChar(ChunckType)^, 4);
       Setlength(Data, Len);
       S.Read(PAnsiChar(Data)^, Len);
     end;
+    SetLength(crc, 4);
+    S.ReadBuffer(crc[1], 4);
   end;
 
 begin

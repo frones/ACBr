@@ -39,7 +39,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\Console\libacbrbal64"/>
+            <Filename Value="bin\Demo\MT\Linux\Console\libacbrbal64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrSerial;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrComum"/>
@@ -65,7 +65,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dNOGUI -dMT  -dNOPRINTER"/>
+            <CustomOptions Value="-dDemo -dNOGUI -dMT  -dNOPRINTER"/>
           </Other>
         </CompilerOptions>
       </Item2>
@@ -78,7 +78,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Android\jniLibs\armeabi-v7a\libACBrLibBAL"/>
+            <Filename Value="bin\Demo\Android\jniLibs\armeabi-v7a\libACBrLibBAL"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrSerial;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrDiversos"/>
@@ -105,7 +105,8 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dANDROID
+            <CustomOptions Value="-dDemo
+-dANDROID
 -dNOGUI
 -dNOPRINTER
 -dMT
@@ -125,7 +126,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Android\jniLibs\arm64-v8a\libACBrLibBAL"/>
+            <Filename Value="bin\Demo\Android\jniLibs\arm64-v8a\libACBrLibBAL"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);$(ACBrDir)\Fontes\ACBrComum;$(ACBrDir)\Fontes\ACBrSerial;$(ACBrDir)\Fontes\ACBrTCP;$(ACBrDir)\Fontes\ACBrDiversos"/>
@@ -152,7 +153,8 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dANDROID
+            <CustomOptions Value="-dDemo
+-dANDROID
 -dNOGUI
 -dNOPRINTER
 -dMT

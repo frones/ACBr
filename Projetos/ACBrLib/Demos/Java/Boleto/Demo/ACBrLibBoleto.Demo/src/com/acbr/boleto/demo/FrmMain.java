@@ -16,6 +16,7 @@ import com.acbr.boleto.Operacao;
 import com.acbr.boleto.TipoCarteiraBoleto;
 import com.acbr.boleto.TipoDocumento;
 import com.acbr.boleto.TipoInscricao;
+import com.sun.jna.platform.win32.Winspool;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,6 +26,7 @@ import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,8 +47,7 @@ public class FrmMain extends javax.swing.JFrame {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,6 +86,11 @@ public class FrmMain extends javax.swing.JFrame {
         btnMontarNossoNumero1 = new javax.swing.JButton();
         btnEnviarBoletoWebService = new javax.swing.JButton();
         btnConsultarTitulosPorPeriodo = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        btnSalvarPDFStream = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        btnConsultaDetalhe = new javax.swing.JButton();
+        btnBaixaTitulo = new javax.swing.JButton();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
@@ -216,6 +222,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnPathLog = new javax.swing.JButton();
         btnGravarConfig = new javax.swing.JButton();
         btnCarregarConfiguracoes = new javax.swing.JButton();
+        btnLimparRespostas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibBoletoDemo");
@@ -246,10 +253,15 @@ public class FrmMain extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         btnIncluirTitulo.setText("Incluir Títulos");
+        btnIncluirTitulo.setMaximumSize(new java.awt.Dimension(170, 23));
+        btnIncluirTitulo.setMinimumSize(new java.awt.Dimension(170, 23));
+        btnIncluirTitulo.setPreferredSize(new java.awt.Dimension(170, 23));
         btnIncluirTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIncluirTituloActionPerformed(evt);
@@ -257,6 +269,9 @@ public class FrmMain extends javax.swing.JFrame {
         });
 
         btnGerarRemessa.setText("Gerar Remessa");
+        btnGerarRemessa.setMaximumSize(new java.awt.Dimension(170, 23));
+        btnGerarRemessa.setMinimumSize(new java.awt.Dimension(170, 23));
+        btnGerarRemessa.setPreferredSize(new java.awt.Dimension(170, 23));
         btnGerarRemessa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGerarRemessaActionPerformed(evt);
@@ -272,6 +287,9 @@ public class FrmMain extends javax.swing.JFrame {
         });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.setMaximumSize(new java.awt.Dimension(170, 23));
+        btnImprimir.setMinimumSize(new java.awt.Dimension(170, 23));
+        btnImprimir.setPreferredSize(new java.awt.Dimension(170, 23));
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirActionPerformed(evt);
@@ -344,6 +362,9 @@ public class FrmMain extends javax.swing.JFrame {
         });
 
         btnImprimirBoleto.setText("Imprimir Boleto");
+        btnImprimirBoleto.setMaximumSize(new java.awt.Dimension(170, 23));
+        btnImprimirBoleto.setMinimumSize(new java.awt.Dimension(170, 23));
+        btnImprimirBoleto.setPreferredSize(new java.awt.Dimension(170, 23));
         btnImprimirBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirBoletoActionPerformed(evt);
@@ -432,75 +453,94 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Ler Retorno (Stream)");
+
+        btnSalvarPDFStream.setText("Salvar PDF (Stream)");
+        btnSalvarPDFStream.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarPDFStreamActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Gerar Remessa (Stream)");
+
+        btnConsultaDetalhe.setText("Consulta Detalhe");
+
+        btnBaixaTitulo.setText("Baixa Título");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDadosCedente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnIncluirTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGerarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnImprimirBoleto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnGerarRemessa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnTotalTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLerRetorno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLimparLista, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSelecionaBanco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSelecionaBanco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnEnviarEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEnviarEmailBoleto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnListarBancos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLinhaDigitavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCodigoBarras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGerarHTML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnListarOcorrencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLinhaDigitavel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCodigoBarras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGerarHTML, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnListarOcorrencias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnListarCaracTitulos, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCodigoMoraAceitos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnIncluirTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDadosCedente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSalvarPDFStream, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(btnGerarPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnListarOcorrenciasEx, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTamNossoNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSetDiretorioArquivos)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnMontarNossoNumero1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEnviarBoletoWebService)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultarTitulosPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnListarOcorrenciasEx, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnListarCaracTitulos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConsultarTitulosPorPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnListarBancos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEnviarBoletoWebService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSetDiretorioArquivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMontarNossoNumero1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConsultaDetalhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBaixaTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCodigoMoraAceitos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTamNossoNumero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLimparLista, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnDadosCedente)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDadosCedente)
+                    .addComponent(btnSalvarPDFStream))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIncluirTitulo)
+                    .addComponent(btnIncluirTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGerarPDF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImprimir)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviarEmail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImprimirBoleto)
+                    .addComponent(btnImprimirBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviarEmailBoleto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGerarRemessa)
-                    .addComponent(btnListarBancos))
+                    .addComponent(btnGerarRemessa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTotalTitulo)
@@ -511,28 +551,36 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnCodigoBarras))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimparLista)
-                    .addComponent(btnGerarHTML))
+                    .addComponent(btnGerarHTML)
+                    .addComponent(jButton4))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelecionaBanco)
-                    .addComponent(btnListarOcorrencias))
+                    .addComponent(btnListarOcorrencias)
+                    .addComponent(btnSelecionaBanco))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCodigoMoraAceitos)
+                    .addComponent(btnListarCaracTitulos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnListarCaracTitulos)
-                    .addComponent(btnCodigoMoraAceitos))
+                    .addComponent(btnTamNossoNumero)
+                    .addComponent(btnListarOcorrenciasEx))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnListarOcorrenciasEx)
-                    .addComponent(btnTamNossoNumero))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSetDiretorioArquivos)
-                    .addComponent(btnMontarNossoNumero1))
+                    .addComponent(btnMontarNossoNumero1)
+                    .addComponent(btnSetDiretorioArquivos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEnviarBoletoWebService)
-                    .addComponent(btnConsultarTitulosPorPeriodo))
+                    .addComponent(btnConsultaDetalhe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultarTitulosPorPeriodo)
+                    .addComponent(btnBaixaTitulo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnListarBancos)
+                    .addComponent(btnLimparLista))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -665,9 +713,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel38)
-                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel34)
-                            .addComponent(txtCNPJCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(cmbUF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -675,7 +721,9 @@ public class FrmMain extends javax.swing.JFrame {
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel41)
                                 .addGap(61, 61, 61)
-                                .addComponent(jLabel42))))
+                                .addComponent(jLabel42))
+                            .addComponent(txtCNPJCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel45)
@@ -690,7 +738,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel44)
                             .addComponent(cmbTipoCarteira, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(46, 46, 46))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -739,7 +787,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel43)
@@ -834,7 +882,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(txtDirLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -984,7 +1032,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(txtDigConta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel25)
                     .addComponent(txtModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel13)
                     .addComponent(cmbRespEmissao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1044,7 +1092,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCodCedente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Conta Bancária", jPanel2);
@@ -1159,7 +1207,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNomeRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addContainerGap(336, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1262,12 +1310,12 @@ public class FrmMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
-                            .addComponent(nudPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, Short.MAX_VALUE))))
+                            .addComponent(nudPorta, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ckbSSL)
                     .addComponent(ckbTLS))
-                .addContainerGap(416, Short.MAX_VALUE))
+                .addContainerGap(445, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1496,7 +1544,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(chkGravarLog)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbOperacao, 0, 124, Short.MAX_VALUE)
+                            .addComponent(cmbOperacao, 0, 180, Short.MAX_VALUE)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel56)
@@ -1597,6 +1645,8 @@ public class FrmMain extends javax.swing.JFrame {
 
         btnGravarConfig.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         btnGravarConfig.setText("Salvar Configurações");
+        btnGravarConfig.setMaximumSize(new java.awt.Dimension(132, 23));
+        btnGravarConfig.setMinimumSize(new java.awt.Dimension(132, 23));
         btnGravarConfig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGravarConfigActionPerformed(evt);
@@ -1605,9 +1655,18 @@ public class FrmMain extends javax.swing.JFrame {
 
         btnCarregarConfiguracoes.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         btnCarregarConfiguracoes.setText("Carregar Configurações");
+        btnCarregarConfiguracoes.setMaximumSize(new java.awt.Dimension(145, 23));
+        btnCarregarConfiguracoes.setMinimumSize(new java.awt.Dimension(145, 23));
         btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCarregarConfiguracoesActionPerformed(evt);
+            }
+        });
+
+        btnLimparRespostas.setText("Limpar Respostas");
+        btnLimparRespostas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparRespostasActionPerformed(evt);
             }
         });
 
@@ -1616,35 +1675,35 @@ public class FrmMain extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(15, 15, 15)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCarregarConfiguracoes, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGravarConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimparRespostas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jTabbedPane5)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGravarConfig)
-                            .addComponent(btnCarregarConfiguracoes))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGravarConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCarregarConfiguracoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimparRespostas))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
 
         jTabbedPane5.getAccessibleContext().setAccessibleName("WebService");
@@ -1657,23 +1716,24 @@ public class FrmMain extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         try {
             PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
-            for (PrintService printer : printServices){
+            for (PrintService printer : printServices) {
                 cmbImpressora.addItem(printer.getName());
             }
             
-            if(printServices.length > 0)
+            if (printServices.length > 0) {
                 cmbImpressora.setSelectedIndex(0);
+            }
             
             cmbSSlType.setSelectedIndex(0);
             cmbHttp.setSelectedIndex(0);
-                                   
+
             // Altera as config de log
             Path path = Paths.get(System.getProperty("user.dir"), "Logs");
             if (!Files.isDirectory(path)) {
                 path.toFile().mkdirs();
-            }   
+            }
             
-            acbrBoleto.configGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);  
+            acbrBoleto.configGravarValor(ACBrSessao.Principal, "LogNivel", NivelLog.logParanoico);
             acbrBoleto.configGravarValor(ACBrSessao.Principal, "LogPath", path);
             acbrBoleto.configGravar();
             
@@ -1681,138 +1741,138 @@ public class FrmMain extends javax.swing.JFrame {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowActivated
-
-    private void loadConfig(){
-        try{
+    
+    private void loadConfig() {
+        try {
             acbrBoleto.configLer();
             
-            String ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "Layout");      
+            String ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "Layout");
             cmbModeloImpressao.setSelectedIndex(Integer.parseInt(ret));
-                
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview");      
-            chkPreview.setSelected(!"0".equals(ret));    
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview");
+            chkPreview.setSelected(!"0".equals(ret));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso");
             chkProgresso.setSelected(!"0".equals(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup");
             chkSetup.setSelected(!"0".equals(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "NomeArquivo");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "NomeArquivo");
             txtNomeArquivo.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "NumeroCopias");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "NumeroCopias");
             nudCopias.setValue(Integer.parseInt(ret));
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName");      
-            cmbImpressora.setSelectedItem(ret);  
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName");
+            cmbImpressora.setSelectedItem(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo");
             txtDirLogo.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca");
             cmbBanco.setSelectedIndex(Integer.parseInt(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoConfig, "LocalPagamento");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoBancoConfig, "LocalPagamento");
             txtLocalPagamento.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Agencia");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Agencia");
             txtAgencia.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito");
             txtDigAgencia.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Conta");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Conta");
             txtConta.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "ContaDigito");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "ContaDigito");
             txtDigConta.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CodigoTransmissao");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CodigoTransmissao");
             txtCodTransmissao.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Convenio");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Convenio");
             txtConvenio.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Modalidade");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Modalidade");
             txtModalidade.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CodigoCedente");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CodigoCedente");
             txtCodCedente.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao");
             cmbRespEmissao.setSelectedIndex(Integer.parseInt(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao");
             cmbRespEmissao.setSelectedIndex(Integer.parseInt(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Bairro");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Bairro");
             txtBairro.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CEP");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CEP");
             txtCEP.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Cidade");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Cidade");
             txtCidade.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CNPJCPF");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "CNPJCPF");
             txtCNPJCPF.setText(ret);
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Complemento");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Complemento");
             txtComplemento.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Logradouro");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Logradouro");
             txtLogradouro.setText(ret);
- 
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Nome");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Nome");
             txtNomeRes.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "NumeroRes");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "NumeroRes");
             txtNumeroRes.setText(ret);
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Telefone");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "Telefone");
             txtTelefone.setText(ret);
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "UF");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "UF");
             cmbUF.setSelectedItem(ret);
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira");
             cmbTipoCarteira.setSelectedIndex(Integer.parseInt(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento");
             cmbTipoDocumento.setSelectedIndex(Integer.parseInt(ret));
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao");
             cmbTipoInscricao.setSelectedIndex(Integer.parseInt(ret));
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa");      
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa");
             txtDirRemessa.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno");
             txtDirRetorno.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "LayoutRemessa");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "LayoutRemessa");
             cmbLayoutCNAB.setSelectedIndex(Integer.parseInt(ret));
-
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRemessa");      
-            txtNomeRemessa.setText(ret);   
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRetorno");      
-            txtNomeRetorno.setText(ret);    
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRemessa");
+            txtNomeRemessa.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "LeCedenteRetorno");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRetorno");
+            txtNomeRetorno.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "LeCedenteRetorno");
             ckbCedenteRetorno.setSelected(!"0".equals(ret));
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "ImprimirMensagemPadrao");      
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoDiretorioConfig, "ImprimirMensagemPadrao");
             ckbImprimirMensagemPadrao.setSelected(!"0".equals(ret));
-                     
-            ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Nome");            
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Nome");
             txtNome.setText(ret);
             
             ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Conta");
             txtEmail.setText(ret);
             
-            ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Usuario");            
+            ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Usuario");
             txtUsuario.setText(ret);
             
             ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Senha");
@@ -1820,10 +1880,10 @@ public class FrmMain extends javax.swing.JFrame {
             
             ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Servidor");
             txtHost.setText(ret);
-
+            
             ret = acbrBoleto.configLerValor(ACBrSessao.Email, "Porta");
             nudPorta.setValue(Integer.parseInt(ret));
-
+            
             ret = acbrBoleto.configLerValor(ACBrSessao.Email, "SSL");
             ckbSSL.setSelected(!"0".equals(ret));
             
@@ -1851,7 +1911,7 @@ public class FrmMain extends javax.swing.JFrame {
             ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "PathGravarRegistro");
             txtPathLog.setText(ret);
             
-            String ambiente = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "Ambiente");            
+            String ambiente = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "Ambiente");
             rdbHomologacao.setSelected("1".equals(ambiente));
             rdbProducao.setSelected("0".equals(ambiente));
             
@@ -1876,56 +1936,56 @@ public class FrmMain extends javax.swing.JFrame {
             ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "ArquivoKEY");
             txtArquivoKEY.setText(ret);
             
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+        
     }
     
-     private void saveConfig(){
-        try{
+    private void saveConfig() {
+        try {
             acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "Layout", Integer.toString(cmbModeloImpressao.getSelectedIndex()));
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview", chkPreview.isSelected() ? "1" : "0") ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso", chkProgresso.isSelected() ? "1" : "0") ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup", chkSetup.isSelected() ? "1" : "0") ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "NomeArquivo", txtNomeArquivo.getText()) ;       
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "NumeroCopias", nudCopias.getValue().toString()) ;             
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName", cmbImpressora.getSelectedItem().toString()) ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo", txtDirLogo.getText()) ; 
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarPreview", chkPreview.isSelected() ? "1" : "0");
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarProgresso", chkProgresso.isSelected() ? "1" : "0");
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "MostrarSetup", chkSetup.isSelected() ? "1" : "0");
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "NomeArquivo", txtNomeArquivo.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "NumeroCopias", nudCopias.getValue().toString());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "PrinterName", cmbImpressora.getSelectedItem().toString());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoFCFortesConfig, "DirLogo", txtDirLogo.getText());
             
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca", Integer.toString(cmbBanco.getSelectedIndex())) ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "LocalPagamento", txtLocalPagamento.getText()) ;
-                         
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", Integer.toString(cmbTipoCarteira.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", Integer.toString(cmbTipoDocumento.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", Integer.toString(cmbTipoInscricao.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Agencia", txtAgencia.getText()) ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito", txtDigAgencia.getText()) ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Conta", txtConta.getText()) ;               
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "ContaDigito", txtDigConta.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CodigoTransmissao", txtCodTransmissao.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Convenio", txtConvenio.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Modalidade", txtModalidade.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CodigoCedente", txtCodCedente.getText()) ;           
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao", Integer.toString(cmbRespEmissao.getSelectedIndex())) ;            
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Bairro", txtBairro.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CEP", txtCEP.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Cidade", txtCidade.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CNPJCPF", txtCNPJCPF.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Complemento", txtComplemento.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Logradouro", txtLogradouro.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Nome", txtNomeRes.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "NumeroRes", txtNumeroRes.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Telefone", txtTelefone.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "UF", cmbUF.getSelectedItem().toString() );
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "TipoCobranca", Integer.toString(cmbBanco.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoBancoConfig, "LocalPagamento", txtLocalPagamento.getText());
             
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa", txtDirRemessa.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno", txtDirRetorno.getText()) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "LayoutRemessa", Integer.toString(cmbLayoutCNAB.getSelectedIndex())) ; 
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRemessa", txtNomeRemessa.getText()) ;
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRetorno", txtNomeRetorno.getText()) ;        
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "LeCedenteRetorno", ckbCedenteRetorno.isSelected() ? "1" : "0") ;  
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "ImprimirMensagemPadrao", ckbImprimirMensagemPadrao.isSelected() ? "1" : "0") ;            
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoCarteira", Integer.toString(cmbTipoCarteira.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoDocumento", Integer.toString(cmbTipoDocumento.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "TipoInscricao", Integer.toString(cmbTipoInscricao.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Agencia", txtAgencia.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "AgenciaDigito", txtDigAgencia.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Conta", txtConta.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "ContaDigito", txtDigConta.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CodigoTransmissao", txtCodTransmissao.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Convenio", txtConvenio.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Modalidade", txtModalidade.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CodigoCedente", txtCodCedente.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "ResponEmissao", Integer.toString(cmbRespEmissao.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Bairro", txtBairro.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CEP", txtCEP.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Cidade", txtCidade.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "CNPJCPF", txtCNPJCPF.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Complemento", txtComplemento.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Logradouro", txtLogradouro.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Nome", txtNomeRes.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "NumeroRes", txtNumeroRes.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "Telefone", txtTelefone.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteConfig, "UF", cmbUF.getSelectedItem().toString());
+            
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRemessa", txtDirRemessa.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "DirArqRetorno", txtDirRetorno.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "LayoutRemessa", Integer.toString(cmbLayoutCNAB.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRemessa", txtNomeRemessa.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "NomeArqRetorno", txtNomeRetorno.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "LeCedenteRetorno", ckbCedenteRetorno.isSelected() ? "1" : "0");
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoDiretorioConfig, "ImprimirMensagemPadrao", ckbImprimirMensagemPadrao.isSelected() ? "1" : "0");
             
             acbrBoleto.configGravarValor(ACBrSessao.Email, "Nome", txtNome.getText());
             acbrBoleto.configGravarValor(ACBrSessao.Email, "Conta", txtEmail.getText());
@@ -1940,9 +2000,8 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "ClientSecret", txtClientSecret.getText());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "KeyUser", txtKeyUser.getText());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "Scope", txtScope.getText());
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "IndicadorPix", ckbIndicadorPix.isSelected() ? "1" : "0") ;
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "IndicadorPix", ckbIndicadorPix.isSelected() ? "1" : "0");
             
-            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "LogRegistro", chkGravarLog.isSelected() ? "1" : "0") ;
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "PathGravarRegistro", txtPathLog.getText());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "Ambiente", rdbHomologacao.isSelected() ? "1" : "0");
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "Operacao", Integer.toString(cmbOperacao.getSelectedIndex()));
@@ -1953,20 +2012,20 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoCRT", txtArquivoCRT.getText());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoKEY", txtArquivoKEY.getText());
             
-            acbrBoleto.configGravar(); 
+            acbrBoleto.configGravar();
             
-        }catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);        
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-     }
-     
+    }
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
     private void btnGravarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarConfigActionPerformed
-        try {                        
+        try {
             saveConfig();
             
         } catch (Exception ex) {
@@ -1977,7 +2036,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void txtNumeroResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroResActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroResActionPerformed
-
+    
     private String selecionarDiretorio(String windowTitle) {
         String result = "";
         try {
@@ -1987,7 +2046,7 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             chooser.setAcceptAllFileFilterUsed(false);
             
-            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {                
+            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 result = chooser.getSelectedFile().getAbsolutePath();
             }
         } catch (Exception e) {
@@ -1997,7 +2056,7 @@ public class FrmMain extends javax.swing.JFrame {
         
         return result;
     }
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         txtDirRemessa.setText(
                 selecionarDiretorio("Selecione o diretório dos arquivos de Remessa"));
@@ -2013,319 +2072,8 @@ public class FrmMain extends javax.swing.JFrame {
                 selecionarDiretorio("Selecione o diretório dos Logotipos"));
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnListarOcorrenciasExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarOcorrenciasExActionPerformed
-        try{
-            String[] ret = acbrBoleto.ListaOcorrenciasEX();
-            for(String item : ret){
-                rtbRespostas.append(item);
-            }
-            rtbRespostas.append("\n");
-        }catch (Exception ex){
-           Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex); 
-        }
-    }//GEN-LAST:event_btnListarOcorrenciasExActionPerformed
-
-    private void btnListarCaracTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarCaracTitulosActionPerformed
-        try{
-            String[] ret = acbrBoleto.ListaCaractTitulo();
-            for(String item : ret){
-                rtbRespostas.append(item);
-            }
-            
-            rtbRespostas.append("\n");
-            
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnListarCaracTitulosActionPerformed
-
-    private void btnSelecionaBancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionaBancoActionPerformed
-           
-        String codBanco = "001";
-        
-        try{
-            acbrBoleto.SelecionaBanco(codBanco);
-            rtbRespostas.append("Banco selecionando com sucesso"+ "\n");
-                
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnSelecionaBancoActionPerformed
-
-    private void btnImprimirBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirBoletoActionPerformed
-        
-        int indice = 0;
-
-        try{
-            acbrBoleto.ImprimirBoleto(indice,"");
-            rtbRespostas.append("Impressão Realizada com Sucesso"+ "\n");
-                
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnImprimirBoletoActionPerformed
-
-    private void btnDadosCedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDadosCedenteActionPerformed
-        try{
-            JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
-            if (returnVal != JFileChooser.APPROVE_OPTION) return;
-
-            acbrBoleto.ConfigurarDados(chooser.getSelectedFile().getAbsolutePath());
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnDadosCedenteActionPerformed
-
-    private void btnTotalTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalTituloActionPerformed
-        try{
-            String ret = Integer.toString(acbrBoleto.TotalTitulosLista());
-
-            rtbRespostas.append("Total Titulos: " + ret + "\n" );
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnTotalTituloActionPerformed
-
-    private void btnCodigoBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoBarrasActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            String ret = acbrBoleto.RetornaCodigoBarras(0);
-            rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );
-            rtbRespostas.append("\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnCodigoBarrasActionPerformed
-
-    private void btnLinhaDigitavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinhaDigitavelActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            String ret = acbrBoleto.RetornaLinhaDigitavel(0);
-            rtbRespostas.insert(ret,  rtbRespostas.getCaretPosition() );
-            rtbRespostas.append("\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnLinhaDigitavelActionPerformed
-
-    private void btnListarOcorrenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarOcorrenciasActionPerformed
-        try{
-            String ret[] = acbrBoleto.ListaOcorrencias();
-            for(String item : ret){
-                rtbRespostas.append(item);
-            }
-            rtbRespostas.append("\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnListarOcorrenciasActionPerformed
-
-    private void btnListarBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarBancosActionPerformed
-        try{
-            String ret[] = acbrBoleto.ListaBancos();
-            for(String item : ret){
-                rtbRespostas.append(item);
-            }
-            rtbRespostas.append("\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnListarBancosActionPerformed
-
-    private void btnLimparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparListaActionPerformed
-        try{
-            acbrBoleto.LimparLista();
-            rtbRespostas.append("Lista Limpa"+ "\n");
-
-        }catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnLimparListaActionPerformed
-
-    private void btnGerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarPDFActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            acbrBoleto.GerarPDF();
-            rtbRespostas.append("PDF gerado com Sucesso" + "\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnGerarPDFActionPerformed
-
-    private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            acbrBoleto.EnviarEmail(txtEmail.getText(),
-                "Teste envio Boleto",
-                "Boleto em anexo",
-                "");
-            rtbRespostas.append("e-mail enviado com Sucesso"+ "\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnEnviarEmailActionPerformed
-
-    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            acbrBoleto.Imprimir("");
-            rtbRespostas.append("Impressão Realizada com Sucesso"+ "\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnImprimirActionPerformed
-
-    private void btnLerRetornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLerRetornoActionPerformed
-        try{
-            JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("ret", "(*.ret)");
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
-            if (returnVal != JFileChooser.APPROVE_OPTION) return;
-
-            acbrBoleto.LerRetorno(chooser.getCurrentDirectory().getPath(),
-                chooser.getSelectedFile().getPath() );
-            rtbRespostas.append("Retorno Gerado com Sucesso"+ "\n");
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnLerRetornoActionPerformed
-
-    private void btnGerarRemessaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRemessaActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            acbrBoleto.GerarRemessa(txtDirRemessa.getText(),
-                1,
-                txtNomeRemessa.getText());
-            rtbRespostas.append("Remessa Gerada com Sucesso"+ "\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnGerarRemessaActionPerformed
-
-    private void btnIncluirTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirTituloActionPerformed
-
-        try{
-            JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
-            if (returnVal != JFileChooser.APPROVE_OPTION) return;
-
-            acbrBoleto.IncluirTitulos(chooser.getSelectedFile().getAbsolutePath(), "");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnIncluirTituloActionPerformed
-
-    private void btnSetDiretorioArquivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetDiretorioArquivosActionPerformed
-        try{
-            
-        String sDiretorio = (selecionarDiretorio("Selecione o diretório dos arquivos de Retorno"));
-        acbrBoleto.SetDiretorioArquivo(sDiretorio, "Arquivo");
-        rtbRespostas.append("Caminho selecionado");
-        
-        }catch (Exception ex){
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnSetDiretorioArquivosActionPerformed
-
-    private void btnEnviarEmailBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailBoletoActionPerformed
-        
-        int indice = 0;
-        
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            acbrBoleto.EnviarEmailBoleto(indice, txtEmail.getText(),
-                "Teste envio Boleto",
-                "Boleto em anexo",
-                "");
-            rtbRespostas.append("e-mail enviado com Sucesso"+ "\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnEnviarEmailBoletoActionPerformed
-
-    private void btnGerarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarHTMLActionPerformed
-        try{
-            if ( acbrBoleto.TotalTitulosLista() == 0 ) return;
-
-            acbrBoleto.GerarHTML();
-            rtbRespostas.append("HTML gerado com Sucesso" + "\n");
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnGerarHTMLActionPerformed
-
-    private void btnCodigoMoraAceitosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoMoraAceitosActionPerformed
-        try{
-            String ret = acbrBoleto.CodigosMoraAceitos();
-            rtbRespostas.append(ret);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnCodigoMoraAceitosActionPerformed
-
-    private void btnTamNossoNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTamNossoNumeroActionPerformed
-        
-        String sCarteira, sNossoNumero, sConvenio;
-        
-        sCarteira = "0";
-        sNossoNumero = "0";
-        sConvenio = "0";
-        
-        try{
-            String ret = Integer.toString(acbrBoleto.TamNossoNumero(sCarteira,sNossoNumero,sConvenio));
-            rtbRespostas.append(ret);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnTamNossoNumeroActionPerformed
-
-    private void btnMontarNossoNumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMontarNossoNumero1ActionPerformed
-        
-        int indice;
-        indice = 0;
-        
-        try{
-            String ret = acbrBoleto.MontarNossoNumero(indice);
-            rtbRespostas.append(ret);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnMontarNossoNumero1ActionPerformed
-
     private void btnCarregarConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarConfiguracoesActionPerformed
-        try {                        
+        try {
             loadConfig();
             
         } catch (Exception ex) {
@@ -2333,28 +2081,16 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCarregarConfiguracoesActionPerformed
 
-    private void btnEnviarBoletoWebServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarBoletoWebServiceActionPerformed
-        
-        try 
-        {
-            String ret = acbrBoleto.EnviarBoleto(cmbOperacao.getSelectedIndex());
-            rtbRespostas.append(ret);
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_btnEnviarBoletoWebServiceActionPerformed
-
     private void btnArquivoKEYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoKEYActionPerformed
-        try{
+        try {
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("key", "Arquivo KEY (*.key)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             
-            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
             txtArquivoKEY.setText(chooser.getSelectedFile().toString());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoPFX", txtArquivoKEY.getText());
             
@@ -2364,13 +2100,15 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArquivoKEYActionPerformed
 
     private void btnArquivoCRTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoCRTActionPerformed
-        try{
+        try {
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("crt", "Arquivo CRT (*.crt)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             
-            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
             txtArquivoCRT.setText(chooser.getSelectedFile().toString());
             acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "ArquivoCRT", txtArquivoCRT.getText());
             
@@ -2384,30 +2122,372 @@ public class FrmMain extends javax.swing.JFrame {
                 selecionarDiretorio("Selecione o diretorio do Log"));
     }//GEN-LAST:event_btnPathLogActionPerformed
 
+    private void btnSalvarPDFStreamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarPDFStreamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarPDFStreamActionPerformed
+
     private void btnConsultarTitulosPorPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarTitulosPorPeriodoActionPerformed
-        try{
+        try {
             JFileChooser chooser = new JFileChooser();
             OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             int returnVal = chooser.showSaveDialog(rootPane);
-            if (returnVal != JFileChooser.APPROVE_OPTION) return;
-
+            if (returnVal != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
             String ret = acbrBoleto.ConsultarTitulosPorPeriodo(chooser.getSelectedFile().getAbsolutePath());
             rtbRespostas.append(ret);
-
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConsultarTitulosPorPeriodoActionPerformed
 
+    private void btnEnviarBoletoWebServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarBoletoWebServiceActionPerformed
+        try {
+            String ret = acbrBoleto.EnviarBoleto(cmbOperacao.getSelectedIndex());
+            rtbRespostas.append(ret);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarBoletoWebServiceActionPerformed
+
+    private void btnMontarNossoNumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMontarNossoNumero1ActionPerformed
+        
+        int indice;
+        indice = 0;
+        
+        try {
+            String ret = acbrBoleto.MontarNossoNumero(indice);
+            rtbRespostas.append(ret);
             
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnMontarNossoNumero1ActionPerformed
+
+    private void btnTamNossoNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTamNossoNumeroActionPerformed
+        try {
+            String sCarteira = JOptionPane.showInputDialog(this, "Carteira", "Carteira:", JOptionPane.QUESTION_MESSAGE);
+            String sNossoNumero = JOptionPane.showInputDialog(this, "Nosso Número", "Nosso Número:", JOptionPane.QUESTION_MESSAGE);
+            String sConvenio = JOptionPane.showInputDialog(this, "Convênio", "Convênio:", JOptionPane.QUESTION_MESSAGE);
+            
+            int ret = acbrBoleto.TamNossoNumero(sCarteira, sNossoNumero, sConvenio);
+            rtbRespostas.append(Integer.toString(ret));
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnTamNossoNumeroActionPerformed
+
+    private void btnCodigoMoraAceitosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoMoraAceitosActionPerformed
+        try {
+            String ret = acbrBoleto.CodigosMoraAceitos();
+            rtbRespostas.append(ret);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCodigoMoraAceitosActionPerformed
+
+    private void btnGerarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarHTMLActionPerformed
+        try {
+            if (acbrBoleto.TotalTitulosLista() == 0) {
+                return;
+            }
+            
+            acbrBoleto.GerarHTML();
+            rtbRespostas.append("HTML gerado com Sucesso" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGerarHTMLActionPerformed
+
+    private void btnEnviarEmailBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailBoletoActionPerformed
+        
+        int indice = 0;
+        
+        try {
+            if (acbrBoleto.TotalTitulosLista() == 0) {
+                return;
+            }
+            
+            acbrBoleto.EnviarEmailBoleto(indice, txtEmail.getText(),
+                    "Teste envio Boleto",
+                    "Boleto em anexo",
+                    "");
+            rtbRespostas.append("e-mail enviado com Sucesso" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarEmailBoletoActionPerformed
+
+    private void btnSetDiretorioArquivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetDiretorioArquivosActionPerformed
+        try {
+            String sDiretorio = (selecionarDiretorio("Selecione o diretório dos arquivos de Retorno"));
+            acbrBoleto.SetDiretorioArquivo(sDiretorio, "Arquivo");
+            rtbRespostas.append("Diretório dos arquivos de retorno: " + sDiretorio);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSetDiretorioArquivosActionPerformed
+
+    private void btnListarOcorrenciasExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarOcorrenciasExActionPerformed
+        try {
+            String ret = acbrBoleto.ListaOcorrenciasEX();
+            rtbRespostas.append(ret + "\n\n");
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnListarOcorrenciasExActionPerformed
+
+    private void btnListarCaracTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarCaracTitulosActionPerformed
+        try {
+            String ret = acbrBoleto.ListaCaractTitulo();
+            rtbRespostas.append(ret + "\n\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnListarCaracTitulosActionPerformed
+
+    private void btnSelecionaBancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionaBancoActionPerformed
+        try {
+            String codBanco = JOptionPane.showInputDialog(this, "Selecionar Banco:", "Número do Banco", JOptionPane.QUESTION_MESSAGE);
+            
+            if (codBanco != null && !codBanco.isEmpty()) {
+                acbrBoleto.SelecionaBanco(codBanco);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhum texto foi capturado\n", "Erro", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSelecionaBancoActionPerformed
+
+    private void btnImprimirBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirBoletoActionPerformed
+        try {
+            acbrBoleto.ImprimirBoleto(0, "");
+            rtbRespostas.append("Impressão Realizada com Sucesso" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImprimirBoletoActionPerformed
+
+    private void btnDadosCedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDadosCedenteActionPerformed
+        try {
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(rootPane);
+            
+            if (returnVal != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            acbrBoleto.ConfigurarDados(chooser.getSelectedFile().getAbsolutePath());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDadosCedenteActionPerformed
+
+    private void btnTotalTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalTituloActionPerformed
+        try {
+            int ret = acbrBoleto.TotalTitulosLista();
+            rtbRespostas.append("Total Titulos: " + ret + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnTotalTituloActionPerformed
+
+    private void btnCodigoBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoBarrasActionPerformed
+        try {
+            if (acbrBoleto.TotalTitulosLista() == 0) {
+                return;
+            }
+            
+            String ret = acbrBoleto.RetornaCodigoBarras(0);
+            rtbRespostas.insert(ret, rtbRespostas.getCaretPosition());
+            rtbRespostas.append("\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCodigoBarrasActionPerformed
+
+    private void btnLinhaDigitavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinhaDigitavelActionPerformed
+        try {
+            if (acbrBoleto.TotalTitulosLista() == 0) {
+                return;
+            }
+            
+            String ret = acbrBoleto.RetornaLinhaDigitavel(0);
+            rtbRespostas.insert(ret, rtbRespostas.getCaretPosition());
+            rtbRespostas.append("\n\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLinhaDigitavelActionPerformed
+
+    private void btnListarOcorrenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarOcorrenciasActionPerformed
+        try {
+            String ret = acbrBoleto.ListaOcorrencias();
+            rtbRespostas.append(ret + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnListarOcorrenciasActionPerformed
+
+    private void btnListarBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarBancosActionPerformed
+        try {
+            String ret = acbrBoleto.ListaBancos();
+            rtbRespostas.append(ret + "\n\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnListarBancosActionPerformed
+
+    private void btnLimparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparListaActionPerformed
+        try {
+            acbrBoleto.LimparLista();
+            rtbRespostas.append("Lista Limpa" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLimparListaActionPerformed
+
+    private void btnGerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarPDFActionPerformed
+        try {
+            if (acbrBoleto.TotalTitulosLista() == 0) {
+                return;
+            }
+            
+            acbrBoleto.GerarPDF();
+            rtbRespostas.append("PDF gerado com Sucesso" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGerarPDFActionPerformed
+
+    private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
+        try {
+            if (acbrBoleto.TotalTitulosLista() == 0) {
+                return;
+            }
+            
+            acbrBoleto.EnviarEmail(txtEmail.getText(),
+                    "Teste envio Boleto",
+                    "Boleto em anexo",
+                    "");
+            rtbRespostas.append("e-mail enviado com Sucesso" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarEmailActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        try {
+//            if (acbrBoleto.TotalTitulosLista() == 0) {
+//                JOptionPane.showMessageDialog(this, "A lista de títulos está vazia!", "Erro", JOptionPane.INFORMATION_MESSAGE);
+//                return;
+//            }
+
+            acbrBoleto.Imprimir("");
+            rtbRespostas.append("Impressão Realizada com Sucesso!" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void btnLerRetornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLerRetornoActionPerformed
+        try {
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ret", "(*.ret)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(rootPane);
+            
+            if (returnVal != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            acbrBoleto.LerRetorno(chooser.getCurrentDirectory().getPath(), chooser.getSelectedFile().getPath());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLerRetornoActionPerformed
+
+    private void btnGerarRemessaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRemessaActionPerformed
+        try {
+            acbrBoleto.GerarRemessa(txtDirRemessa.getText(), 1, txtNomeRemessa.getText());
+            rtbRespostas.append("Remessa Gerada com Sucesso!" + "\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGerarRemessaActionPerformed
+
+    private void btnIncluirTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirTituloActionPerformed
+        try {
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(rootPane);
+            
+            if (returnVal != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            acbrBoleto.IncluirTitulos(chooser.getSelectedFile().getAbsolutePath(), "");
+            rtbRespostas.append("Título incluído com sucesso!" + "\n");
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIncluirTituloActionPerformed
+
+    private void btnLimparRespostasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparRespostasActionPerformed
+        rtbRespostas.setText("");
+    }//GEN-LAST:event_btnLimparRespostasActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArquivoCRT;
     private javax.swing.JButton btnArquivoKEY;
+    private javax.swing.JButton btnBaixaTitulo;
     private javax.swing.JButton btnCarregarConfiguracoes;
     private javax.swing.JButton btnCodigoBarras;
     private javax.swing.JButton btnCodigoMoraAceitos;
+    private javax.swing.JButton btnConsultaDetalhe;
     private javax.swing.JButton btnConsultarTitulosPorPeriodo;
     private javax.swing.JToggleButton btnDadosCedente;
     private javax.swing.JButton btnEnviarBoletoWebService;
@@ -2422,6 +2502,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnIncluirTitulo;
     private javax.swing.JToggleButton btnLerRetorno;
     private javax.swing.JButton btnLimparLista;
+    private javax.swing.JButton btnLimparRespostas;
     private javax.swing.JButton btnLinhaDigitavel;
     private javax.swing.JButton btnListarBancos;
     private javax.swing.JButton btnListarCaracTitulos;
@@ -2429,6 +2510,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnListarOcorrenciasEx;
     private javax.swing.JButton btnMontarNossoNumero1;
     private javax.swing.JButton btnPathLog;
+    private javax.swing.JButton btnSalvarPDFStream;
     private javax.swing.JButton btnSelecionaBanco;
     private javax.swing.JButton btnSetDiretorioArquivos;
     private javax.swing.JButton btnTamNossoNumero;
@@ -2457,6 +2539,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

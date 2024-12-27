@@ -38,7 +38,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\MT\Linux\Console\libacbrconsultacnpj64"/>
+            <Filename Value="bin\Demo\MT\Linux\Console\libacbrconsultacnpj64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
@@ -77,7 +77,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Android\jniLibs\armeabi-v7a\libACBrLibConsultaCNPJ"/>
+            <Filename Value="bin\Demo\Android\jniLibs\armeabi-v7a\libACBrLibConsultaCNPJ"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>
@@ -123,7 +123,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\Android\jniLibs\arm64-v8a\libACBrLibConsultaCNPJ"/>
+            <Filename Value="bin\Demo\Android\jniLibs\arm64-v8a\libACBrLibConsultaCNPJ"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum;$(ACBrDir)\Fontes\ACBrComum"/>

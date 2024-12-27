@@ -1076,8 +1076,9 @@ begin
 end;
 
 procedure TACBrNFeDANFCeFortesA4.ImprimirDANFEPDF(NFE: TNFe);
+var I : Integer;
 begin
-  if NFe = nil then
+(*  if NFe = nil then
    begin
      if not Assigned(ACBrNFe) then
         raise Exception.Create('Componente ACBrNFe não atribuí­do');
@@ -1087,6 +1088,27 @@ begin
   else
     FpNFe := NFE;
   Imprimir(False, fiPDF);
+*)
+  if not Assigned(ACBrNFe) then
+    raise Exception.Create('Componente ACBrNFe não atribuí­do');
+  FPArquivoPDF := '';
+  if (NFE = nil) then
+  begin
+    try
+      for I := 0 to Pred(TACBrNFe(ACBrNFe).NotasFiscais.Count) do
+      begin
+        FIndexImpressaoIndividual := I;
+        FpNFe := TACBrNFe(ACBrNFe).NotasFiscais[I].NFe;
+        Imprimir(False, fiPDF);
+      end;
+    finally
+      FIndexImpressaoIndividual := 0;
+    end;
+  end else
+  begin
+    FpNFe := NFE;
+    Imprimir(False, fiPDF);
+  end;
 end;
 
 procedure TACBrNFeDANFCeFortesA4.ImprimirDANFEResumido(NFE: TNFe);

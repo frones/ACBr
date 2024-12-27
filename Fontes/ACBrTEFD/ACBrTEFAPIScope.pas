@@ -194,6 +194,7 @@ begin
 //E
   fTEFScopeAPI.Empresa := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
   fTEFScopeAPI.Filial := fpACBrTEFAPI.DadosTerminal.CodFilial;
+  fTEFScopeAPI.PDV := fpACBrTEFAPI.DadosTerminal.CodTerminal;
   fTEFScopeAPI.PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
 
   fTEFScopeAPI.Inicializar;

@@ -37,7 +37,7 @@ unit ACBrTEFScopeAPI;
 interface
 
 uses
-  Classes, SysUtils, ACBrTEFComum;
+  Classes, SysUtils;
 
 {------------------------------------------------------------------------------
   DECLARACAO DE CONSTANTES GLOBAIS
@@ -74,7 +74,6 @@ resourcestring
 
 const
   CINTERVALO_COLETA = 200;
-
 
   {--------------------------------------------------------------------------------------------
                 Codigos/erros devolvidos pelo Scope
@@ -797,16 +796,17 @@ const
 {--------------------------------------------------------------------------------------------
    Constantes de uso interno, não retornadas por Mask
 --------------------------------------------------------------------------------------------}
-  MASK0_CUPOM_LOJA     = $00000001;
-  MASK0_CUPOM_CLIENTE  = $00000002;
-  MASK0_CUPOM_REDUZIDO = $00000004;
-  MASK0_CHEQUE_BANCO   = $00000008;
-  MASK0_CHEQUE_AGENCIA = $00000010;
-  MASK0_CHEQUE_NUMERO  = $00000020;
-  MASK0_CHEQUE_VALOR   = $00000040;
-  MASK0_CHEQUE_DATA    = $00000080;
-  MASK0_CHEQUE_CODAUT  = $00000100;
-  MASK0_CHEQUE_MUNICIP = $00000200;
+  CCUPOM_LOJA         = 'CUPOM_LOJA';
+  CCUPOM_CLIENTE      = 'CUPOM_CLIENTE';
+  CCUPOM_REDUZIDO     = 'CUPOM_REDUZIDO';
+  CNUMLINHAS_REDUZIDO = 'NUMLINHAS_REDUZIDO';
+  CCHEQUE_BANCO       = 'CHEQUE_BANCO';
+  CCHEQUE_AGENCIA     = 'CHEQUE_AGENCIA';
+  CCHEQUE_NUMERO      = 'CHEQUE_NUMERO';
+  CCHEQUE_VALOR       = 'CHEQUE_VALOR';
+  CCHEQUE_DATA        = 'CHEQUE_DATA';
+  CCHEQUE_CODAUT      = 'CHEQUE_CODAUT';
+  CCHEQUE_MUNICIP     = 'CHEQUE_MUNICIP';
 
 {--------------------------------------------------------------------------------------------
    Constantes da máscara 1 da função ScopeObtemCampoExt2
@@ -1109,17 +1109,6 @@ type
     EstadoOperacao: TACBrTEFScopeEstadoOperacao; out Cancelar: Boolean) of object;
 
 
-  { TACBrTEFRespScope }
-
-  TACBrTEFRespScope = class( TACBrTEFResp )
-  public
-    procedure ConteudoToProperty; override;
-  end;
-
-procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
-procedure DadosDaTransacaoToTEFResp(ADadosDaTransacao: TACBrTEFParametros; ATefResp: TACBrTEFResp);
-
-type
   { TACBrTEFScopeAPI }
 
   TACBrTEFScopeAPI = Class
@@ -1136,7 +1125,7 @@ type
     fFilial: String;
     fInicializada: Boolean;
     fMsgPinPad: String;
-    fDadosDaTransacao: TACBrTEFParametros;
+    fDadosDaTransacao: TStringList;
     fOnExibeMensagem: TACBrTEFScopeExibeMensagem;
     fOnExibeMenu: TACBrTEFScopeExibeMenu;
     fOnGravarLog: TACBrTEFScopeGravarLog;
@@ -1226,21 +1215,20 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPGetCOMPort: function(szComEndereco: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-//E
-  //Implementar??
-    //xScopePPGetInfoEx
-    //ScopePPStartGetData
-    //ScopePPGetData
-    //ScopePPStartOptionMenu
-    //ScopePPOptionMenu
-    //ScopePPGetOperationMode
+  //E - Implementar??
+  //xScopePPGetInfoEx
+  //ScopePPStartGetData
+  //ScopePPGetData
+  //ScopePPStartOptionMenu
+  //ScopePPOptionMenu
+  //ScopePPGetOperationMode
     xScopeMenu: function(_UsoFuturo: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPDisplay: function(Msg: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     //ScopePPDisplayEx
   //Descontinuadas (pág. 142)
     xScopePPOpen: function(Porta: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //xScopePPGetInfo
-    //xScopePPStartGetPIN
+  //xScopePPGetInfo
+  //xScopePPStartGetPIN
   //.... Descontinuadas
 
     procedure SetPathLib(const AValue: String);
@@ -1266,20 +1254,19 @@ type
     procedure ClearMethodPointers;
 
     procedure DoException(const AErrorMsg: String );
-
     procedure TratarErroScope(AErrorCode: LongInt);
 
     procedure AbrirComunicacaoScope;
     procedure FecharComunicacaoScope;
+
     procedure VerificarSeEstaConectadoScope;
     procedure VerificarSeMantemConexaoScope;
-
-    procedure VerificaSessaoTEFAnterior;
+    procedure VerificarSessaoTEFAnterior;
 
     procedure AbrirPinPad;
-    procedure ConfigurarColeta;
-    function ConfigurarScope(AId: LongInt; Ligado: Boolean): Boolean;
     procedure FecharPinPad;
+    procedure ConfigurarColeta;
+    function ConfigurarPropriedadeScope(AId: LongInt; Ligado: Boolean): Boolean;
 
     procedure VerificarDiretorioDeTrabalho;
     procedure VerificarEAjustarScopeINI;
@@ -1292,8 +1279,10 @@ type
 
     function ObterScopeStatus: Longint;
     function ObterDadosComprovantes: Longint;
+
     procedure ObterDadosCheque;
     procedure ObterDadosDaTransacao;
+
     procedure ExibirErroUltimaMsg;
     procedure LogColeta(AColeta: TParam_Coleta);
 
@@ -1311,7 +1300,7 @@ type
     property EnderecoIP: String  read fEnderecoIP write SetEnderecoIP;
     property PortaTCP: String read fPortaTCP write SetPortaTCP;
 
-    property DadosDaTransacao: TACBrTEFParametros read fDadosDaTransacao;
+    property DadosDaTransacao: TStringList read fDadosDaTransacao;
 
     property PortaPinPad: String read fPortaPinPad write fPortaPinPad;
     property MsgPinPad: String read fMsgPinPad write fMsgPinPad;
@@ -1348,6 +1337,7 @@ type
 
     procedure AbrirSessaoTEF;
     procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
+
     procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
       const Param1: String = ''; const Param2: String = ''; const Param3: String = '');
     procedure ExecutarTransacao;
@@ -1365,388 +1355,10 @@ type
 implementation
 
 uses
-  IniFiles, StrUtils, TypInfo, Windows, DateUtils, Math,
-  ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
-
-procedure ConteudoToPropertyScope(AACBrTEFResp: TACBrTEFResp);
-  procedure TrataCamposMask0(const IDCampo: Int64; Linha: TACBrTEFLinha);
-  begin
-    case IDCampo of
-      MASK0_CUPOM_LOJA:
-        AACBrTEFResp.ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString );
-      MASK0_CUPOM_CLIENTE:
-        AACBrTEFResp.ImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString );
-      //MASK0_CUPOM_REDUZIDO:
-      //  AACBrTEFResp.ImagemComprovante1aVia.Text := Linha.Informacao.AsString;
-      MASK0_CHEQUE_BANCO:
-        AACBrTEFResp.Banco := Linha.Informacao.AsString;
-      MASK0_CHEQUE_AGENCIA:
-        AACBrTEFResp.Banco := Linha.Informacao.AsString;
-      MASK0_CHEQUE_NUMERO:
-        AACBrTEFResp.Cheque := Linha.Informacao.AsString;
-      MASK0_CHEQUE_VALOR:
-        ;
-      MASK0_CHEQUE_DATA:
-        AACBrTEFResp.DataCheque := Linha.Informacao.AsDate;
-      MASK0_CHEQUE_CODAUT:
-        ;
-      MASK0_CHEQUE_MUNICIP:
-        ;
-    end;
-  end;
-
-  procedure TrataCamposMask1(const IDCampo: Int64; Linha: TACBrTEFLinha);
-  begin
-    case IDCampo of
-      MASK1_Numero_Conta_PAN:
-        ;
-      MASK1_Valor_transacao:
-        AACBrTEFResp.ValorTotal := Linha.Informacao.AsFloat;
-      MASK1_NSU_transacao:
-        AACBrTEFResp.NSU_TEF := Linha.Informacao.AsString;
-      MASK1_Hora_local_transacao:
-        AACBrTEFResp.DataHoraTransacaoLocal := DateOf(AACBrTEFResp.DataHoraTransacaoLocal) + Linha.Informacao.AsTime;
-      MASK1_Data_local_transacao:
-        AACBrTEFResp.DataHoraTransacaoLocal := Linha.Informacao.AsDate + TimeOf(AACBrTEFResp.DataHoraTransacaoLocal);
-      MASK1_Data_vencimento_cartao:
-        AACBrTEFResp.NFCeSAT.DataExpiracao := Linha.Informacao.AsString;
-      //MASK1_Data_referencia:
-      //  ;
-      MASK1_Numero_cheque:
-        AACBrTEFResp.Cheque := Linha.Informacao.AsString;
-      MASK1_Codigo_autorizacao:
-        AACBrTEFResp.CodigoAutorizacaoTransacao := Linha.Informacao.AsString;
-      MASK1_Codigo_resposta:
-        AACBrTEFResp.CodigoRedeAutorizada := Linha.Informacao.AsString;
-      MASK1_Identificacao_terminal:
-        AACBrTEFResp.Estabelecimento := Linha.Informacao.AsString; //???
-      //MASK1_Codigo_Origem_Mensagem:
-      //  ;
-      MASK1_Plano_Pagamento:
-        AACBrTEFResp.QtdParcelas := Linha.Informacao.AsInteger;
-      MASK1_Valor_Taxa_Servico:
-        AACBrTEFResp.TaxaServico := Linha.Informacao.AsFloat;
-      MASK1_NSU_Host:
-        AACBrTEFResp.NSU := Linha.Informacao.AsString;
-      MASK1_Cod_Banco:
-        AACBrTEFResp.Banco := Linha.Informacao.AsString;
-      MASK1_Cod_Agencia:
-        AACBrTEFResp.Agencia := Linha.Informacao.AsString;
-      MASK1_Data_Vencimento:
-        AACBrTEFResp.DataVencimento := Linha.Informacao.AsTimeStamp;
-      MASK1_Cod_Bandeira:
-        AACBrTEFResp.CodigoBandeiraPadrao := Linha.Informacao.AsString;
-      MASK1_Cod_Servico:
-        ;//Ver tabela Código serviços página 40
-      MASK1_Texto_BIT_62:
-        ;// Parece muito o espelho do comprovante????
-      MASK1_Controle_Dac:
-        ;///????
-      MASK1_Cod_Rede:
-        AACBrTEFResp.CodigoRedeAutorizada := Linha.Informacao.AsString;
-      MASK1_Nome_Bandeira:
-        AACBrTEFResp.NFCeSAT.Bandeira := Linha.Informacao.AsString;
-      MASK1_Nome_Rede:
-        AACBrTEFResp.Rede := Linha.Informacao.AsString;
-      MASK1_Cartao_Trilha02:
-        ; //????
-      //MASK1_Numero_Promissorias:
-      //  ;
-      MASK1_Cod_Estab_Impresso:
-        ;
-      MASK1_Numero_CMC7:
-        ;
-      MASK1_CGC_Convenio:
-        ;
-      MASK1_Msg_Autentic_Cheque:
-        ;
-    else
-      // Case Delphi não permite valores fora do range 32 bits
-      if IDCampo =  MASK1_Saldo_Disponivel then
-      begin
-      
-      end
-      else
-      begin
-
-      end;
-    
-    end;
-  end;
-
-  procedure TrataCamposMask2(const IDCampo: Int64; Linha: TACBrTEFLinha);
-  begin
-    case IDCampo of
-      MASK2_NSU_transacao_Original:
-        AACBrTEFResp.NSUTransacaoCancelada := Linha.Informacao.AsBinary;
-      MASK2_Cliente_Com_Seguro:
-        ;
-      MASK2_Dados_Parcelado_Cetelem:
-        ;
-      MASK2_Data_Movimento:
-        ;
-      MASK2_Nome_Convenio:
-        ;
-      MASK2_Lista_TEF_Permitidas:
-        ;
-      MASK2_Linha_Autenticacao:
-        ;
-      MASK2_Dados_Consulta_Fatura:
-        ;
-      MASK2_Forma_Financiamento:
-        ;
-      MASK2_Codigo_Resposta_AVS:
-        ;
-      MASK2_Pontos_AdquiridosOuResgatados:
-        ;
-      MASK2_Fator_Compra:
-        ;
-      MASK2_NSU_Host_Transacao_Original:
-        ;
-      MASK2_Identificacao_Cliente_PBM:
-        ;
-      MASK2_Cod_Operadora:
-        ;
-      MASK2_Cod_Local_Telefone:
-        ;
-      MASK2_Num_Telefone:
-        ;
-      MASK2_Dados_ValeGas:
-        ;
-      MASK2_Codigo_IF:
-        ;
-      MASK2_Num_Item_Finivest_ou_Contrato:
-        ;
-      MASK2_Valor_Taxa_Embarque:
-        ;
-      MASK2_Digitos_TR2SON:
-        ;
-      MASK2_Taxa_Cliente_Lojista:
-        ;
-      MASK2_Cod_Servico_Original:
-        ;
-      MASK2_Cod_Barras:
-        ;
-      MASK2_Permite_Desfazimento:
-        ;
-      MASK2_Logo_PAN:
-        ;
-      MASK2_Cod_Empresa:
-        ;
-      MASK2_Cod_Autenticacao:
-        ;
-      MASK2_Dados_Pagto_ISOGCB:
-        ;
-      MASK2_UsoRes_63:
-        ;
-    else
-      // Case Delphi não permite valores fora do range 32 bits
-      if idcampo = MASK2_Numero_PDV then
-      begin
-      
-      end
-      else;
-      
-
-
-    end;
-  end;
-
-  procedure TrataCamposMask3(const IDCampo: Int64; Linha: TACBrTEFLinha);
-  begin
-    case IDCampo of
-      MASK3_DadosQtdeECupons:
-        ;
-      MASK3_DescResgateMonetario:
-        ;
-      MASK3_Dados_Pagto_Bit48_BRADESCO:
-        ;
-      MASK3_Modo_Entrada:
-        ;
-      MASK3_Valor_Saque:
-        ;
-      MASK3_Resposta_Consulta_Infocards:
-        ;
-      MASK3_Dados_Resposta_Consulta_EPAY_INCOMM:
-        ;
-      //MASK3_Dados_Resposta_Consulta_INCOMM:
-      //  ;
-      MASK3_Max_Mercadorias_TicketCar:
-        ;
-      MASK3_Codigo_SAT:
-        ; //Ver tabela Código das redes página 322
-      MASK3_Versao_Carga_Tabelas_Host:
-        ;
-      MASK3_CNPJ_Rede_Credenciadora_SAT:
-        AACBrTEFResp.NFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
-      MASK3_Dados_Correspondente_Bancario:
-        ;
-      MASK3_Dados_Adicionais_Gift_Card:
-        ;
-      MASK3_Dados_Operacao_Fidelidade_SGF:
-        ;
-      MASK3_Valor_Total_Pagamento:
-        ;
-      MASK3_Valor_Descontos_Pagamento:
-        AACBrTEFResp.Desconto := Linha.Informacao.AsFloat ;
-      MASK3_Valor_Entrada_IATA:
-        ;
-      MASK3_Valor_Acrescimos_Pagamento:
-        ;
-      MASK3_Dados_Perfil_Pagamento_Recorrente:
-        ;
-      MASK3_Dados_Assinatura_Pagamento:
-        ;
-      MASK3_Dados_Consulta_BACEN:
-        ;
-      MASK3_Valor_Documento:
-        ;
-      MASK3_Resposta_Consulta_BACEN_Comprovante:
-        ;
-      MASK3_Modo_Pagamento:
-        ;
-      MASK3_Consulta_Cedente_BACEN_BRADESCO:
-        ;
-
-    else
-      // Case Delphi não permite valores fora do range 32 bits
-      if idcampo = MASK3_Data_Vencimento_CORBAN then
-      begin
-
-      end
-      else;
-    
-    end;
-  end;
-
-  procedure TrataCamposMask4(const IDCampo: Int64; Linha: TACBrTEFLinha);
-  begin
-    case IDCampo of
-      MASK4_Nome_Portador_Cartao:
-        ;
-      MASK4_Data_Validade_Cartao:
-        ;
-      MASK4_Merchant_ID:
-        ;
-      MASK4_Codigo_Estab_Externo:
-        ;
-      MASK4_String_QRCode:
-        AACBrTEFResp.QRCode := Linha.Informacao.AsBinary;
-      MASK4_Relacao_Descontos_Item:
-        ;
-      MASK4_Indicador_Saldo_Disponivel:
-        ;
-      MASK4_Numero_CPF:
-        ;
-      MASK4_ARQC_Chip:
-        ;
-      MASK4_AID_Chip:
-        ;
-      MASK4_Transacao_Autorizada_Por_Senha:
-        ;
-      //MASK4_????????
-      MASK4_Campo_TID_Pix:
-        ;
-      MASK4_Campo_Referencia_Pix:
-        ;
-      MASK4_Tamanho_BIN:
-        ;
-      MASK4_Dados_DCC:
-        ;
-      MASK4_Status_DCC:
-        ;
-    //else
-    //
-    end;
-  end;
-
-
-var
-  I,P: Integer;
-  LinChave: String;
-  Linha: TACBrTEFLinha;
-  mask, sIDCampo: string;
-  IDCampo: Int64;
-begin
-  //AACBrTEFResp.Clear;
-  AACBrTEFResp.ImagemComprovante1aVia.Clear;
-  AACBrTEFResp.ImagemComprovante2aVia.Clear;
-  AACBrTEFResp.Debito := False;
-  AACBrTEFResp.Credito := False;
-  AACBrTEFResp.Digitado := False;
-  AACBrTEFResp.TaxaServico := 0;
-  AACBrTEFResp.DataHoraTransacaoCancelada := 0;
-  AACBrTEFResp.DataHoraTransacaoLocal := 0;
-
-
-  for I := 0 to AACBrTEFResp.Conteudo.Count - 1 do
-  begin
-    //Ex.: mask1-$00000001=0000000000000219:
-    Linha := AACBrTEFResp.Conteudo.Linha[I];
-    LinChave := Linha.Chave;
-
-    //Ex.: mask1-$00000001:
-    P := pos('-', LinChave);
-    mask := copy(LinChave, 1, P - 1);
-    sIDCampo := copy(LinChave, P + 1, Length(LinChave));
-    IDCampo := StrToInt64(sIDCampo);
-    if (mask = 'mask0') then
-      TrataCamposMask0(IDCampo, Linha)
-    else if (mask = 'mask1') then
-      TrataCamposMask1(IDCampo, Linha)
-    else if (mask = 'mask2') then
-      TrataCamposMask2(IDCampo, Linha)
-    else if (mask = 'mask3') then
-      TrataCamposMask3(IDCampo, Linha)
-    else if (mask = 'mask4') then
-      TrataCamposMask4(IDCampo, Linha)
-    else
-      AACBrTEFResp.ProcessarTipoInterno(Linha);
-  end;
-
-  //ConteudoToComprovantes;
-  //ConteudoToParcelas;
-  //E verificar???
-  AACBrTEFResp.QtdLinhasComprovante := max(AACBrTEFResp.ImagemComprovante1aVia.Count, AACBrTEFResp.ImagemComprovante2aVia.Count);
-  AACBrTEFResp.Sucesso := Trim(AACBrTEFResp.ImagemComprovante1aVia.Text) <> '';
-
-end;
-
-procedure DadosDaTransacaoToTEFResp(ADadosDaTransacao: TACBrTEFParametros;
-  ATefResp: TACBrTEFResp);
-var
-  i, p: Integer;
-  Lin, AChave, AValue: String;
-begin
-  for i := 0 to ADadosDaTransacao.Count-1 do
-  begin
-    Lin := ADadosDaTransacao[i];
-    //OutputDebugString(PChar(Lin));
-    //Ex.: mask1-$00000001=0000000000000219:
-    //     Format('%s-%s=%s', ['mask1', hmask{ValorCampoEmHex8Char}, val]
-    p := pos('=', Lin);
-    if (p > 0) then
-    begin
-      AChave := Trim(copy(Lin, 1, p-1));
-      if (AChave <> '') then
-      begin
-        AValue := copy(Lin, P+1, Length(Lin)-1);
-        ATefResp.Conteudo.GravaInformacao(AChave, AValue);
-      end;
-    end;
-  end;
-
-  ConteudoToPropertyScope( ATefResp );
-end;
-
-{ TACBrTEFRespScope }
-
-procedure TACBrTEFRespScope.ConteudoToProperty;
-begin
-  ConteudoToPropertyScope( Self );
-  //inherited;
-end;
-
+  IniFiles, StrUtils, TypInfo, Math,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.FilesIO;
 
 { TACBrTEFScopeAPI }
 
@@ -1776,7 +1388,7 @@ begin
   fOnExibeMenu := Nil;
   fOnPerguntaCampo := Nil;
   fOnTransacaoEmAndamento := Nil;
-  fDadosDaTransacao := TACBrTEFParametros.Create;
+  fDadosDaTransacao := TStringList.Create;
 end;
 
 destructor TACBrTEFScopeAPI.Destroy;
@@ -2471,7 +2083,7 @@ begin
   //ExibirMensagem(Format(sMsgConctadoAoServidor, [sEnderecoIP+':'+sPorta]));
 
   ConfigurarColeta;
-  VerificaSessaoTEFAnterior;
+  VerificarSessaoTEFAnterior;
 end;
 
 procedure TACBrTEFScopeAPI.FecharComunicacaoScope;
@@ -2560,7 +2172,7 @@ begin
   VerificarSeMantemConexaoScope;
 end;
 
-procedure TACBrTEFScopeAPI.VerificaSessaoTEFAnterior;
+procedure TACBrTEFScopeAPI.VerificarSessaoTEFAnterior;
 var
   DesfezTEF: Boolean;
 begin
@@ -2720,6 +2332,13 @@ begin
 
       // Trata os estados //
       case iStatus of
+        TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
+        TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
+          Acao := ACAO_RESUME_PROXIMO_ESTADO;
+
+        TC_CARTAO_DIGITADO,
+          // TODO
+
         TC_CARTAO,                    // cartao //
         TC_COLETA_AUT_OU_CARTAO:;
           //TODO
@@ -2741,10 +2360,6 @@ begin
         TC_COLETA_REG_MEDICAMENTO:;   // se coletou lista de medicamentos, deve tambem atualizar o valor. //
           //TODO
 
-        TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
-        TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
-          Acao := ACAO_RESUME_PROXIMO_ESTADO;
-
         TC_OBTEM_SERVICOS:;           // recupera os servicos configurados //
           //TODO:
 
@@ -2758,6 +2373,9 @@ begin
           //TODO:
 
         TC_INFO_AGU_CONF_OP:;         // mostra informacao e aguarda confirmacao do usuario //
+          //TODO:
+
+        TC_OBTEM_QRCODE:;
           //TODO:
 
         TC_COLETA_DADOS_ECF:;         // coleta dados do ECF e do cupom fiscal para a transacao de debito voucher com o TICKET CAR //
@@ -2777,10 +2395,13 @@ begin
       ret := EnviarParametroTransacao(Acao, iStatus, Resposta, TipoCaptura);
       if (ret <> RCS_SUCESSO) then
       begin
-        ExibirErroUltimaMsg;
-
         if (ret <> RCS_DADO_INVALIDO) then
+        begin
+          iStatus := ret;
           Break;
+        end
+        else
+          ExibirErroUltimaMsg;
       end;
     end;
 
@@ -2790,7 +2411,10 @@ begin
       ObterDadosDaTransacao;
     end
     else
+    begin
+      ExibirErroUltimaMsg;
       TratarErroScope(iStatus);
+    end;
 
   finally
     SetEmTransacao(False);
@@ -2845,12 +2469,10 @@ begin
       TratarErroScope(Result);
 
     sCabec := TrimRight(String(pCabec));
-    fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CUPOM_LOJA, 8)] :=
-      BinaryStringToString( sCabec + sLineBreak + TrimRight(String(pCupomLoja)) );
-    fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CUPOM_CLIENTE, 8)] :=
-      BinaryStringToString( sCabec + sLineBreak + TrimRight(String(pCupomCliente)) );
-    fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CUPOM_REDUZIDO, 8)] :=
-      BinaryStringToString( TrimRight(string(pCupomReduzido)) );
+    fDadosDaTransacao.Values[CCUPOM_LOJA]     := BinaryStringToString( sCabec + sLineBreak + TrimRight(String(pCupomLoja)) );
+    fDadosDaTransacao.Values[CCUPOM_CLIENTE]  := BinaryStringToString( sCabec + sLineBreak + TrimRight(String(pCupomCliente)) );
+    fDadosDaTransacao.Values[CCUPOM_REDUZIDO] := BinaryStringToString( TrimRight(string(pCupomReduzido)) );
+    fDadosDaTransacao.Values[CNUMLINHAS_REDUZIDO] := IntToStr(NumeroLinhasReduzido);
   finally
     Freemem(pCabec);
     Freemem(pCupomCliente);
@@ -2872,13 +2494,13 @@ begin
   if (ret <> RCS_SUCESSO) then
     TratarErroScope(ret);
 
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_BANCO, 8)]   := String(PCheque.Banco);
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_AGENCIA, 8)] := String(PCheque.Agencia);
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_NUMERO, 8)]  := String(PCheque.NumCheque);
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_VALOR, 8)]   := String(PCheque.Valor);
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_DATA, 8)]    := String(PCheque.BomPara);
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_CODAUT, 8)]  := String(PCheque.CodAut);
-  fDadosDaTransacao.Values[CMASK0 + '$'+IntToHex(MASK0_CHEQUE_MUNICIP, 8)] := String(PCheque.Municipio);
+  fDadosDaTransacao.Values[CCHEQUE_BANCO]   := String(PCheque.Banco);
+  fDadosDaTransacao.Values[CCHEQUE_AGENCIA] := String(PCheque.Agencia);
+  fDadosDaTransacao.Values[CCHEQUE_NUMERO]  := String(PCheque.NumCheque);
+  fDadosDaTransacao.Values[CCHEQUE_VALOR]   := String(PCheque.Valor);
+  fDadosDaTransacao.Values[CCHEQUE_DATA]    := String(PCheque.BomPara);
+  fDadosDaTransacao.Values[CCHEQUE_CODAUT]  := String(PCheque.CodAut);
+  fDadosDaTransacao.Values[CCHEQUE_MUNICIP] := String(PCheque.Municipio);
 end;
 
 procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
@@ -2993,7 +2615,6 @@ begin
     if (MsgCli <> '') then
       ExibirMensagem(MsgCli, tmCliente);
   end;
-
 end;
 
 procedure TACBrTEFScopeAPI.LogColeta(AColeta: TParam_Coleta);
@@ -3082,39 +2703,6 @@ begin
   end;
 end;
 
-procedure TACBrTEFScopeAPI.ConfigurarColeta;
-var
-  ret: LongInt;
-begin
-  GravarLog('ScopeSetAplColeta()');
-  ret := xScopeSetAplColeta();
-  GravarLog('  ret: '+IntToStr(ret));
-
-  ConfigurarScope( CFG_CANCELAR_OPERACAO_PINPAD, fPermitirCancelarOperacaoPinPad);
-  ConfigurarScope( CFG_NAO_ABRIR_DIGITADO_COM_PP, not fPermitirCartaoDigitado);
-  ConfigurarScope( CFG_DEVOLVER_SENHA_CRIPTOGRAFADA, True);
-  ConfigurarScope( CFG_IMPRESSORA_CARBONADA, False);
-  ConfigurarScope( CFG_ARMAZENA_EM_QUEDA, False);
-  ConfigurarScope( CFG_ATUALIZA_TRANSACAO_EM_QUEDA, fConfirmarTransacoesPendentes);
-  ConfigurarScope( CFG_PERMITIR_SAQUE, fPermitirSaque);
-end;
-
-function TACBrTEFScopeAPI.ConfigurarScope(AId: LongInt; Ligado: Boolean
-  ): Boolean;
-var
-  ret, AParam: LongInt;
-begin
-  if Ligado then
-    AParam := OP_HABILITA
-  else
-    AParam := OP_DESABILITA;
-
-  GravarLog('ScopeConfigura( '+IntToStr(AId)+', '+IntToStr(AParam) +' )');
-  ret := xScopeConfigura(AId, AParam);
-  GravarLog('  ret: '+IntToStr(ret));
-  Result := (ret = RCS_SUCESSO);
-end;
-
 procedure TACBrTEFScopeAPI.FecharPinPad;
 var
   msg: AnsiString;
@@ -3130,6 +2718,39 @@ begin
   GravarLog('ScopePPClose( '+msg+' )');
   ret := xScopePPClose(PAnsiChar(msg));
   GravarLog('  ret: '+IntToStr(ret));
+end;
+
+procedure TACBrTEFScopeAPI.ConfigurarColeta;
+var
+  ret: LongInt;
+begin
+  GravarLog('ScopeSetAplColeta()');
+  ret := xScopeSetAplColeta();
+  GravarLog('  ret: '+IntToStr(ret));
+
+  ConfigurarPropriedadeScope( CFG_CANCELAR_OPERACAO_PINPAD, fPermitirCancelarOperacaoPinPad);
+  ConfigurarPropriedadeScope( CFG_NAO_ABRIR_DIGITADO_COM_PP, not fPermitirCartaoDigitado);
+  ConfigurarPropriedadeScope( CFG_DEVOLVER_SENHA_CRIPTOGRAFADA, True);
+  ConfigurarPropriedadeScope( CFG_IMPRESSORA_CARBONADA, False);
+  ConfigurarPropriedadeScope( CFG_ARMAZENA_EM_QUEDA, False);
+  ConfigurarPropriedadeScope( CFG_ATUALIZA_TRANSACAO_EM_QUEDA, fConfirmarTransacoesPendentes);
+  ConfigurarPropriedadeScope( CFG_PERMITIR_SAQUE, fPermitirSaque);
+end;
+
+function TACBrTEFScopeAPI.ConfigurarPropriedadeScope(AId: LongInt; Ligado: Boolean
+  ): Boolean;
+var
+  ret, AParam: LongInt;
+begin
+  if Ligado then
+    AParam := OP_HABILITA
+  else
+    AParam := OP_DESABILITA;
+
+  GravarLog('ScopeConfigura( '+IntToStr(AId)+', '+IntToStr(AParam) +' )');
+  ret := xScopeConfigura(AId, AParam);
+  GravarLog('  ret: '+IntToStr(ret));
+  Result := (ret = RCS_SUCESSO);
 end;
 
 end.

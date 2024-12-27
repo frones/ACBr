@@ -46,6 +46,14 @@ const
 
 type
 
+  { TACBrTEFRespScope }
+
+  TACBrTEFRespScope = class( TACBrTEFResp )
+  public
+    procedure ConteudoToProperty; override;
+  end;
+
+
   { TACBrTEFAPIClassScope }
 
   TACBrTEFAPIClassScope = class(TACBrTEFAPIClass)
@@ -119,10 +127,340 @@ type
 implementation
 
 uses
-  math, TypInfo,
+  math, TypInfo, DateUtils,
   ACBrUtil.Strings,
-  ACBrUtil.Base,
+  ACBrUtil.Math,
   ACBrUtil.FilesIO;
+
+{ TACBrTEFRespScope }
+
+procedure TACBrTEFRespScope.ConteudoToProperty;
+  procedure TrataCamposMask1(const IDCampo: Int64; Linha: TACBrTEFLinha);
+  begin
+    case IDCampo of
+      MASK1_Numero_Conta_PAN:
+        ;
+      MASK1_Valor_transacao:
+        ValorTotal := Linha.Informacao.AsFloat;
+      MASK1_NSU_transacao:
+        NSU_TEF := Linha.Informacao.AsString;
+      MASK1_Hora_local_transacao:
+        DataHoraTransacaoLocal := DateOf(DataHoraTransacaoLocal) + Linha.Informacao.AsTime;
+      MASK1_Data_local_transacao:
+        DataHoraTransacaoLocal := Linha.Informacao.AsDate + TimeOf(DataHoraTransacaoLocal);
+      MASK1_Data_vencimento_cartao:
+        NFCeSAT.DataExpiracao := Linha.Informacao.AsString;
+      //MASK1_Data_referencia:
+      //  ;
+      MASK1_Numero_cheque:
+        Cheque := Linha.Informacao.AsString;
+      MASK1_Codigo_autorizacao:
+        CodigoAutorizacaoTransacao := Linha.Informacao.AsString;
+      MASK1_Codigo_resposta:
+        CodigoRedeAutorizada := Linha.Informacao.AsString;
+      MASK1_Identificacao_terminal:
+        Estabelecimento := Linha.Informacao.AsString; //???
+      //MASK1_Codigo_Origem_Mensagem:
+      //  ;
+      MASK1_Plano_Pagamento:
+        QtdParcelas := Linha.Informacao.AsInteger;
+      MASK1_Valor_Taxa_Servico:
+        TaxaServico := Linha.Informacao.AsFloat;
+      MASK1_NSU_Host:
+        NSU := Linha.Informacao.AsString;
+      MASK1_Cod_Banco:
+        Banco := Linha.Informacao.AsString;
+      MASK1_Cod_Agencia:
+        Agencia := Linha.Informacao.AsString;
+      MASK1_Data_Vencimento:
+        DataVencimento := Linha.Informacao.AsTimeStamp;
+      MASK1_Cod_Bandeira:
+        CodigoBandeiraPadrao := Linha.Informacao.AsString;
+      MASK1_Cod_Servico:
+        ;//Ver tabela Código serviços página 40
+      MASK1_Texto_BIT_62:
+        ;// Parece muito o espelho do comprovante????
+      MASK1_Controle_Dac:
+        ;///????
+      MASK1_Cod_Rede:
+        CodigoRedeAutorizada := Linha.Informacao.AsString;
+      MASK1_Nome_Bandeira:
+        NFCeSAT.Bandeira := Linha.Informacao.AsString;
+      MASK1_Nome_Rede:
+        Rede := Linha.Informacao.AsString;
+      MASK1_Cartao_Trilha02:
+        ; //????
+      //MASK1_Numero_Promissorias:
+      //  ;
+      MASK1_Cod_Estab_Impresso:
+        ;
+      MASK1_Numero_CMC7:
+        ;
+      MASK1_CGC_Convenio:
+        ;
+      MASK1_Msg_Autentic_Cheque:
+        ;
+    else
+      // Case Delphi não permite valores fora do range 32 bits
+      if IDCampo =  MASK1_Saldo_Disponivel then
+      begin
+
+      end
+      else
+      begin
+
+      end;
+
+    end;
+  end;
+
+  procedure TrataCamposMask2(const IDCampo: Int64; Linha: TACBrTEFLinha);
+  begin
+    case IDCampo of
+      MASK2_NSU_transacao_Original:
+        NSUTransacaoCancelada := Linha.Informacao.AsBinary;
+      MASK2_Cliente_Com_Seguro:
+        ;
+      MASK2_Dados_Parcelado_Cetelem:
+        ;
+      MASK2_Data_Movimento:
+        ;
+      MASK2_Nome_Convenio:
+        ;
+      MASK2_Lista_TEF_Permitidas:
+        ;
+      MASK2_Linha_Autenticacao:
+        ;
+      MASK2_Dados_Consulta_Fatura:
+        ;
+      MASK2_Forma_Financiamento:
+        ;
+      MASK2_Codigo_Resposta_AVS:
+        ;
+      MASK2_Pontos_AdquiridosOuResgatados:
+        ;
+      MASK2_Fator_Compra:
+        ;
+      MASK2_NSU_Host_Transacao_Original:
+        ;
+      MASK2_Identificacao_Cliente_PBM:
+        ;
+      MASK2_Cod_Operadora:
+        ;
+      MASK2_Cod_Local_Telefone:
+        ;
+      MASK2_Num_Telefone:
+        ;
+      MASK2_Dados_ValeGas:
+        ;
+      MASK2_Codigo_IF:
+        ;
+      MASK2_Num_Item_Finivest_ou_Contrato:
+        ;
+      MASK2_Valor_Taxa_Embarque:
+        ;
+      MASK2_Digitos_TR2SON:
+        ;
+      MASK2_Taxa_Cliente_Lojista:
+        ;
+      MASK2_Cod_Servico_Original:
+        ;
+      MASK2_Cod_Barras:
+        ;
+      MASK2_Permite_Desfazimento:
+        ;
+      MASK2_Logo_PAN:
+        ;
+      MASK2_Cod_Empresa:
+        ;
+      MASK2_Cod_Autenticacao:
+        ;
+      MASK2_Dados_Pagto_ISOGCB:
+        ;
+      MASK2_UsoRes_63:
+        ;
+    else
+      // Case Delphi não permite valores fora do range 32 bits
+      if idcampo = MASK2_Numero_PDV then
+      begin
+
+      end
+      else;
+
+
+
+    end;
+  end;
+
+  procedure TrataCamposMask3(const IDCampo: Int64; Linha: TACBrTEFLinha);
+  begin
+    case IDCampo of
+      MASK3_DadosQtdeECupons:
+        ;
+      MASK3_DescResgateMonetario:
+        ;
+      MASK3_Dados_Pagto_Bit48_BRADESCO:
+        ;
+      MASK3_Modo_Entrada:
+        ;
+      MASK3_Valor_Saque:
+        ;
+      MASK3_Resposta_Consulta_Infocards:
+        ;
+      MASK3_Dados_Resposta_Consulta_EPAY_INCOMM:
+        ;
+      //MASK3_Dados_Resposta_Consulta_INCOMM:
+      //  ;
+      MASK3_Max_Mercadorias_TicketCar:
+        ;
+      MASK3_Codigo_SAT:
+        ; //Ver tabela Código das redes página 322
+      MASK3_Versao_Carga_Tabelas_Host:
+        ;
+      MASK3_CNPJ_Rede_Credenciadora_SAT:
+        NFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
+      MASK3_Dados_Correspondente_Bancario:
+        ;
+      MASK3_Dados_Adicionais_Gift_Card:
+        ;
+      MASK3_Dados_Operacao_Fidelidade_SGF:
+        ;
+      MASK3_Valor_Total_Pagamento:
+        ;
+      MASK3_Valor_Descontos_Pagamento:
+        Desconto := Linha.Informacao.AsFloat ;
+      MASK3_Valor_Entrada_IATA:
+        ;
+      MASK3_Valor_Acrescimos_Pagamento:
+        ;
+      MASK3_Dados_Perfil_Pagamento_Recorrente:
+        ;
+      MASK3_Dados_Assinatura_Pagamento:
+        ;
+      MASK3_Dados_Consulta_BACEN:
+        ;
+      MASK3_Valor_Documento:
+        ;
+      MASK3_Resposta_Consulta_BACEN_Comprovante:
+        ;
+      MASK3_Modo_Pagamento:
+        ;
+      MASK3_Consulta_Cedente_BACEN_BRADESCO:
+        ;
+
+    else
+      // Case Delphi não permite valores fora do range 32 bits
+      if idcampo = MASK3_Data_Vencimento_CORBAN then
+      begin
+
+      end
+      else;
+
+    end;
+  end;
+
+  procedure TrataCamposMask4(const IDCampo: Int64; Linha: TACBrTEFLinha);
+  begin
+    case IDCampo of
+      MASK4_Nome_Portador_Cartao:
+        ;
+      MASK4_Data_Validade_Cartao:
+        ;
+      MASK4_Merchant_ID:
+        ;
+      MASK4_Codigo_Estab_Externo:
+        ;
+      MASK4_String_QRCode:
+        QRCode := Linha.Informacao.AsBinary;
+      MASK4_Relacao_Descontos_Item:
+        ;
+      MASK4_Indicador_Saldo_Disponivel:
+        ;
+      MASK4_Numero_CPF:
+        ;
+      MASK4_ARQC_Chip:
+        ;
+      MASK4_AID_Chip:
+        ;
+      MASK4_Transacao_Autorizada_Por_Senha:
+        ;
+      //MASK4_????????
+      MASK4_Campo_TID_Pix:
+        ;
+      MASK4_Campo_Referencia_Pix:
+        ;
+      MASK4_Tamanho_BIN:
+        ;
+      MASK4_Dados_DCC:
+        ;
+      MASK4_Status_DCC:
+        ;
+    //else
+    //
+    end;
+  end;
+
+
+var
+  I,P: Integer;
+  LinChave: String;
+  Linha: TACBrTEFLinha;
+  mask, sIDCampo: string;
+  IDCampo: Int64;
+begin
+  ImagemComprovante1aVia.Clear;
+  ImagemComprovante2aVia.Clear;
+  Debito := False;
+  Credito := False;
+  Digitado := False;
+  TaxaServico := 0;
+  DataHoraTransacaoCancelada := 0;
+  DataHoraTransacaoLocal := 0;
+
+  for I := 0 to Conteudo.Count - 1 do
+  begin
+    Linha := Conteudo.Linha[I];
+    LinChave := Linha.Chave;
+
+    if (LinChave = CCUPOM_LOJA) then
+      ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
+    else if (LinChave = CCUPOM_CLIENTE) then
+      ImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
+    else if (LinChave = CCUPOM_REDUZIDO) and ViaClienteReduzida then
+      ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
+    else if (LinChave = CCHEQUE_BANCO) then
+      Banco := Linha.Informacao.AsString
+    else if (LinChave = CCHEQUE_AGENCIA) then
+      Banco := Linha.Informacao.AsString
+    else if (LinChave = CCHEQUE_NUMERO) then
+      Cheque := Linha.Informacao.AsString
+    else if (LinChave = CCHEQUE_DATA) then
+      DataCheque := Linha.Informacao.AsDate;
+
+    //Ex.: mask1-$00000001:
+    P := pos('-', LinChave);
+    mask := copy(LinChave, 1, P - 1);
+    sIDCampo := copy(LinChave, P + 1, Length(LinChave));
+    IDCampo := StrToInt64Def(sIDCampo, 0);
+    if (mask = 'mask1') then
+      TrataCamposMask1(IDCampo, Linha)
+    else if (mask = 'mask2') then
+      TrataCamposMask2(IDCampo, Linha)
+    else if (mask = 'mask3') then
+      TrataCamposMask3(IDCampo, Linha)
+    else if (mask = 'mask4') then
+      TrataCamposMask4(IDCampo, Linha)
+    else
+      ProcessarTipoInterno(Linha);
+  end;
+
+  //ConteudoToComprovantes;
+  //ConteudoToParcelas;
+  //E verificar???
+  QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
+  Sucesso := Trim(ImagemComprovante1aVia.Text) <> '';
+end;
+
 
 { TACBrTEFAPIClassScope }
 
@@ -217,12 +555,22 @@ begin
 end;
 
 procedure TACBrTEFAPIClassScope.InterpretarRespostaAPI;
+var
+  i: Integer;
+  AChave, AValue: String;
 begin
   //inherited;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
-  //D
-  DadosDaTransacaoToTEFResp( fTEFScopeAPI.DadosDaTransacao,
-                             fpACBrTEFAPI.UltimaRespostaTEF );
+
+  for i := 0 to fTEFScopeAPI.DadosDaTransacao.Count-1 do
+  begin
+    AChave := fTEFScopeAPI.DadosDaTransacao.Names[i];
+    AValue := fTEFScopeAPI.DadosDaTransacao.ValueFromIndex[i];
+
+    fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.GravaInformacao(AChave, AValue);
+  end;
+
+  fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
 end;
 
 procedure TACBrTEFAPIClassScope.QuandoGravarLogAPI(const ALogLine: String;

@@ -167,10 +167,13 @@ type
     procedure GravaInformacao(const Chave: AnsiString; const Informacao: TACBrInformacao); overload; virtual;
     procedure GravaInformacao(const Identificacao: Integer; const Sequencia: Integer; const Informacao: AnsiString); overload; virtual;
     procedure GravaInformacao(const Identificacao: Integer; const Sequencia: Integer; const Informacao: TACBrInformacao); overload; virtual;
-    function LeInformacao(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrInformacao; virtual;
+    function LeInformacao(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrInformacao; overload; virtual;
+    function LeInformacao(const Chave: AnsiString): TACBrInformacao; overload; virtual;
 
-    function AchaLinha(const Identificacao: Integer; const Sequencia: Integer = 0): Integer;
-    function LeLinha(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrTEFLinha; virtual;
+    function AchaLinha(const Identificacao: Integer; const Sequencia: Integer = 0): Integer; overload;
+    function AchaLinha(const Chave: AnsiString): Integer; overload;
+    function LeLinha(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrTEFLinha; overload; virtual;
+    function LeLinha(const Chave: AnsiString): TACBrTEFLinha; overload; virtual;
   end;
 
   TACBrTEFRespParceladoPor = (parcNenhum, parcADM, parcLoja);
@@ -612,10 +615,19 @@ begin
     Chave := copy(FLinha, 1, P - 1);
     Valor := copy(FLinha, P + 3, Length(FLinha));
 
-    P := max(pos('-', Chave), 4);
     Informacao.AsString := Valor;
-    FIdentificacao := StrToIntDef(copy(Chave, 1, P - 1), 0);
-    FSequencia := StrToIntDef(copy(Chave, P + 1, 3), 0);
+
+    P := max(pos('-', Chave), 4);
+    if (P > 0) then
+    begin
+      FIdentificacao := StrToIntDef(copy(Chave, 1, P - 1), 0);
+      FSequencia := StrToIntDef(copy(Chave, P + 1, 3), 0);
+    end
+    else
+    begin
+      FIdentificacao := 0;
+      FSequencia := 0;
+    end;
   end;
 end;
 
@@ -670,7 +682,7 @@ begin
   I := 0;
   while (IndChave < 0) and (I < FStringList.Count) do
   begin
-    if copy(FStringList[I], 1, Length(Chave) + 3) = Chave + ' = ' then
+    if (copy(FStringList[I], 1, Length(Chave) + 3) = Chave + ' = ') then
       IndChave := I
     else
       Inc(I);
@@ -708,15 +720,20 @@ end;
 function TACBrTEFArquivo.AchaLinha(const Identificacao: Integer; const Sequencia: Integer = 0): Integer;
 var
   Campo: String;
-  I: Integer;
 begin
   Campo := NomeCampo(Identificacao, Sequencia);
+  Result := AchaLinha(Campo);
+end;
 
+function TACBrTEFArquivo.AchaLinha(const Chave: AnsiString): Integer;
+var
+  I: Integer;
+begin
   Result := -1;
   I := 0;
   while (Result < 0) and (I < FStringList.Count) do
   begin
-    if copy(FStringList[I], 1, Length(Campo) + 3) = Campo + ' = ' then
+    if (copy(FStringList[I], 1, Length(Chave) + 3) = Chave + ' = ') then
       Result := I;
     Inc(I);
   end;
@@ -735,14 +752,21 @@ end;
 
 function TACBrTEFArquivo.LeLinha(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrTEFLinha;
 var
+  Campo: String;
+begin
+  Campo := NomeCampo(Identificacao, Sequencia);
+  Result := LeLinha(Campo);
+end;
+
+function TACBrTEFArquivo.LeLinha(const Chave: AnsiString): TACBrTEFLinha;
+var
   I: Integer;
 begin
-  I := AchaLinha(Identificacao, Sequencia);
-
+  I := AchaLinha(Chave);
   if I > -1 then
     FACBrTEFDLinha.Linha := FStringList[I]
   else
-    FACBrTEFDLinha.Linha := NomeCampo(Identificacao, Sequencia) + ' =  ';
+    FACBrTEFDLinha.Linha := Chave + ' =  ';
 
   Result := FACBrTEFDLinha;
 end;
@@ -750,6 +774,11 @@ end;
 function TACBrTEFArquivo.LeInformacao(const Identificacao: Integer; const Sequencia: Integer = 0): TACBrInformacao;
 begin
   Result := LeLinha(Identificacao, Sequencia).Informacao;
+end;
+
+function TACBrTEFArquivo.LeInformacao(const Chave: AnsiString): TACBrInformacao;
+begin
+  Result := LeLinha(Chave).Informacao;
 end;
 
 { TACBrTEFRespCB }

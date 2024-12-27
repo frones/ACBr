@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2024
+--- ACBrLibConsultaCNPJConsoleMTDemo.lpi ---
+[+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.
+[+] Compatível com compilação em Linux 64 e Android 32 e 64
+    Por: Antonio Carlos Junior
+
 10/12/2024
 -- ACBrLibConsultaCNPJ.lpi, ACBrLibConsultaCNPJDemo.lpi --
 [*] Correção nome para compilação Linux.

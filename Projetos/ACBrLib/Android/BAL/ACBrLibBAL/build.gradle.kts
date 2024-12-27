@@ -28,7 +28,7 @@ android {
     }
 }
 
-val ACBrLibComumJar = File("C:\\ACBr\\trunk2\\Projetos\\ACBrLib\\Android\\Comum\\libs\\jars\\ACBrLibComum.jar")
+val ACBrLibComumJar = File("../../Comum/libs/jars/ACBrLibComum.jar")
 
 dependencies {
     implementation(files(ACBrLibComumJar))

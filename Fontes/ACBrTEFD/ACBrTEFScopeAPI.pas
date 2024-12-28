@@ -63,7 +63,13 @@ resourcestring
   sErrEventoNaoAtribuido = 'Evento %s não atribuido';
   sErrTransacaoNaoIniciada = 'Transação não foi iniciada';
   sErrTransacaoJaIniciada = 'Transação já foi iniciada';
+  sErrNaoImplementado = 'Não implementado %s';
+  sErrEstruturaMenu = 'Erro na estrutura do Menu retornado';
 
+  sMsgTituloMenu = 'Escolha uma opção';
+  sMsgTituloAVista = 'A Vista ?';
+  sMsgItemSim = 'SIM';
+  sMsgItemNao = 'NÃO';
   sMsgAbrindoConexao = 'Abrindo comunicação...'+sLineBreak+'Empresa: %s, Filial %s, PDV: %S';
   sMsgConctadoAoServidor = 'Conectado Scope em: %s';
   sMsgDesconectado = 'Desconectado Scope';
@@ -485,9 +491,9 @@ const
   CFG_ATUALIZA_TRANSACAO_EM_QUEDA  = 128; // Permite confirmar/desfazer a transacao em caso de queda de energia. (default: desabilitado, ou seja, sempre desfazer)
   CFG_PERMITIR_SAQUE               = 256; // Habilita coleta de saque em operacoes de Debito A Vista da rede Cielo
   CFG_COLETA_RECARGA_PP            = 512; // Permite desabilitar a coleta do ddd e telefone no pinpad em recarga de celular (default: conforme configuracao do SCOPECNF)
-  CFG_HABILITA_QRCODE_TELA         = 1024; //$00000400; //Permite exibir o QRCode na tela, quando estiver habilitado, a automacao deve tratar o TC_OBTEM_QRCODE e obter o campo String_QRCode
-  CFG_SIMULA_PP_PRECALL            = 269488145; //$10101011; // Prepara a chamada para ligar simulação
-  CFG_SIMULA_PP                    = 269488144; //$10101010; // Liga a simulação de PP para Debug
+  CFG_HABILITA_QRCODE_TELA         = 1024; //$00000400, Permite exibir o QRCode na tela, quando estiver habilitado, a automacao deve tratar o TC_OBTEM_QRCODE e obter o campo String_QRCode
+  CFG_SIMULA_PP_PRECALL            = 269488145; //$10101011, Prepara a chamada para ligar simulação
+  CFG_SIMULA_PP                    = 269488144; //$10101010, Liga a simulação de PP para Debug
 
   {--------------------------------------------------------------------------------------------
                 Valores válidos para Parâmetro "Param" do método "ScopeConfigura"
@@ -766,6 +772,39 @@ const
 
 
   {--------------------------------------------------------------------------------------------
+                Valores possiveis para o parametro TParam_Coleta.FormatoDado
+  --------------------------------------------------------------------------------------------}
+  TM_DDMMAA          = 0;  // Data no formato DDMMAA
+  TM_DDMM            = 1;  // Data no formato DDMM
+  TM_MMAA            = 2;  // Data no formato MMAA
+  TM_HHMMSS          = 3;  // Hora no formato HHMMAA
+  TM_NUM             = 4;  // Número inteiro
+  TM_SENHA           = 5;  // Senha (interno ao SCOPE)
+  TM_ULTIMOS_DIGITOS = 6;  // Últimos dígitos
+  TM_ALFANUMERICO    = 7;  // Alfanumérico
+  TM_DDMMAAAA        = 8;  // Data no formado DDMMAAAA
+  TM_CONFIRMACAO     = 9;  // Display para exibição (não há coleta)
+  TM_MMAAAA          = 10; // Data no formato MMAAAA
+  TM_MASCARADO       = 11; // Exibir ‘*’ na tela, mas enviar em claro
+  TM_HHMM            = 12; // Hora no formato HHMM
+  TM_BOOL            = 13; // Booleano, a resposta deve ser 0=Não ou 1=Sim
+  TM_VALOR_MONETARIO = 14; // Valor monetário, de tam=10+2 casas decimais, total=12
+  TM_NUM_DECIMAL     = 15; // Número não inteiro (com casas decimais)
+  TM_SELECAO         = 16; // Seleção de opção (Menu)
+  TM_PAN             = 17;// PAN do cartão
+
+  {--------------------------------------------------------------------------------------------
+                Valores possiveis para o parametro TipoTabela de ScopeMenuRecuperaItens
+  --------------------------------------------------------------------------------------------}
+  MNU_TAB_TIPO_CIELO             = 1;  // Menu Dinâmico da CIELO
+  MNU_TAB_TIPO_GENERICO          = 2;  // Menu Genérico para Transação POS
+  MNU_TAB_TIPO_SAVS              = 3;  // Menu de Itens da Plataforma de Serviço;
+  MNU_TAB_TIPO_GENERICO_DINAMICO = 4;  // Menu Genérico para Transação POS Dinâmico
+  MNU_TAB_TIPO_SELECAO_ESPECIAL  = 5;  // Menu de Seleção, usado quando ScopeGetParamExt retornar TM_SELECAO em FormatoDado da stPARAM_COLETA_EXT
+  QTD_MAX_ITENS_PERG_DIN_SEL     = 21;
+  QTD_MAX_ITENS_PERG_GEN_SEL     = 16;
+
+  {--------------------------------------------------------------------------------------------
                 Valores possiveis para o parametro da funcao ScopeValidaInterfacePP()
   --------------------------------------------------------------------------------------------}
   PP_NAO_UTILIZA                 = 0;
@@ -1013,6 +1052,81 @@ type
     Reservado: array [1..105] of AnsiChar;
   end;
 
+  //** dados utlizados na coleta de parametros Extendida */
+  PStDadosExt = ^TDadosExt;
+  TDadosExt = packed record
+    Sigla: array [1..3] of AnsiChar;    // Identificacao da coleta extendida, se existir
+    Rotulo: array [1..41] of AnsiChar;  // Rotulo a ser exibido
+    AceitaVazio: Byte;                  // Aceita ou não dado vazio
+    QtdCasasDecimais: Byte;             // qtd de casas decimais, se pertinente
+    TamMin: array [1..2] of AnsiChar;   // Tamanho minimo do campo
+    TamMax: array [1..2] of AnsiChar;   // Tamanho maximo do campo
+  end;
+
+  PDadosLimite = ^TDadosLimite;
+  TDadosLimite = packed record
+    Inferior: array [1..12] of AnsiChar;  // Limite inferior (uso futuro)
+    Superior: array [1..12] of AnsiChar;  // Limite superior (uso futuro)
+  end;
+
+  PParam_Coleta_Ext = ^TParam_Coleta_Ext;
+  TParam_Coleta_Ext = packed record
+    FormatoDado: Byte;
+    HabTeclas: Byte;
+    CodBandeira: array [1..3] of AnsiChar;
+    CodRede: array [1..3] of AnsiChar;
+    MsgOp1: array [1..64]  of AnsiChar;
+    MsgOp2: array [1..64]  of AnsiChar;
+    MsgCl1: array [1..64]  of AnsiChar;
+    MsgCl2: array [1..64]  of AnsiChar;
+    UsaExt: Byte;                         // Indica se deve ou não usar os campos sExt abaixo
+    Ext: TDadosExt;                       // Dados extendidos
+    UsaLimites: Byte;                     // Indica se deve ou não usar os campos sLimite abaixo
+    Limite: TDadosLimite;                 // Limites inferior e superior: uso futuro
+    IdColetaExt: Word;                    // Identificacao da coleta estendida
+    Reservado: array [1..97]  of AnsiChar;
+  end;
+
+
+  //** Estruturas devolvida pela funcao ScopeMenuRecuperaItens */
+  TScopeMenuCieloItem = packed record
+    CodFuncao: array [1..5] of AnsiChar;
+    Descricao: array [1..41] of AnsiChar;
+    CodGrupoServico: array [1..3] of AnsiChar;
+    CodFluxoPDV: array [1..4] of AnsiChar;
+
+    CodRede: array [1..4] of AnsiChar;
+    CodBandeira: array [1..4] of AnsiChar;
+    CodFuncaoRede: array [1..5] of AnsiChar;
+  end;
+
+  TScopeMenuCielo = packed record
+    TipoTabela: AnsiChar; // MNU_TAB_TIPO_GENERICO = 2
+    QtdItens: Byte;
+    Itens: array [1..QTD_MAX_ITENS_PERG_GEN_SEL] of TScopeMenuCieloItem;
+  end;
+
+  TScopeMenuGenerico = packed record
+    TipoTabela: AnsiChar;  // MNU_TAB_TIPO_GENERICO_DINAMICO = 4
+    Itens: array [1..QTD_MAX_ITENS_PERG_GEN_SEL] of array [1..41] of AnsiChar; // Máximo 15 itens em formato "string" de no máximo 40 caracteres
+  end;
+
+  TScopeMenuDinamico = packed record
+    TipoTabela: AnsiChar; // MNU_TAB_TIPO_GENERICO = 2
+    QtdItens: Byte;
+    ItemGenerico: TScopeMenuGenerico;
+  end;
+
+  TScopeMenuEspecialItem = packed record
+    Sigla: array [1..3] of AnsiChar;   // Sigla da seleção (informativo)
+    Rotulo: array [1..41] of AnsiChar; // Rótulo da seleção (para display)
+  end;
+
+  TScopeMenuEspecial = packed record
+    QtdItens: array [1..2] of AnsiChar;   // // Qtd de itens de seleção
+    Itens: array [1..QTD_MAX_ITENS_PERG_DIN_SEL] of TScopeMenuEspecialItem;
+  end;
+
   //** Estrutura devolvida pela funcao ScopeGetLastMsg() */
   PColeta_Msg = ^TColeta_Msg;
   TColeta_Msg = packed record
@@ -1094,14 +1208,14 @@ type
     MilissegundosExibicao: Integer  // 0 - Para com OK; Positivo - aguarda Ok ou N milissegundos; Negativo - Apenas exibe a Msg (não aguarda)
     ) of object;
 
-  TACBrTEFScopeExibeMenu = procedure(
+  TACBrTEFScopePerguntarMenu = procedure(
     const Titulo: String;
     Opcoes: TStringList;
     var ItemSelecionado: Integer) of object ;  // -1 = Cancelado
 
   TACBrTEFScopePerguntarCampo = procedure(
     const TituloCampo: String;
-    const Param_Coleta: TParam_Coleta;
+    const Param_Coleta_Ext: TParam_Coleta_Ext;
     var Resposta: String;
     var AcaoResposta: Byte) of object ;
 
@@ -1135,7 +1249,7 @@ type
     fMsgPinPad: String;
     fDadosDaTransacao: TStringList;
     fOnExibeMensagem: TACBrTEFScopeExibeMensagem;
-    fOnExibeMenu: TACBrTEFScopeExibeMenu;
+    fOnPerguntarMenu: TACBrTEFScopePerguntarMenu;
     fOnGravarLog: TACBrTEFScopeGravarLog;
     fOnPerguntaCampo: TACBrTEFScopePerguntarCampo;
     fOnTransacaoEmAndamento: TACBrTEFScopeTransacaoEmAndamento;
@@ -1163,6 +1277,8 @@ type
     xScopeStatus: function(): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeGetParam: function (_TipoParam: LongInt; _lpParam: PParam_Coleta): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeGetParamExt: function (_TipoParam: LongInt; _lpParam: PParam_Coleta_Ext): LongInt;
+        {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeResumeParam: function(_CodTipoColeta: LongInt; _Dados: PAnsiChar;
       _DadosParam: Word; _Acao: LongInt): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -1217,6 +1333,11 @@ type
     xScopeConsultaPP: function(Configurado, UsoExclusivoScope, Porta: PByte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
+    xScopeMenuRecuperaItens: function(_TipoTabela: Byte; _Buffer: PAnsiChar; _TamBuffer: Word): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeMenuSelecionaItem: function(_Item: Byte): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
     xScopePPOpenSecure: function(TipoCanal: word; Endereco: PAnsiChar): LongInt
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPClose: function(IdleMsg: PAnsiChar): LongInt;
@@ -1230,9 +1351,9 @@ type
   //ScopePPStartOptionMenu
   //ScopePPOptionMenu
   //ScopePPGetOperationMode
+  //ScopePPDisplayEx
     xScopeMenu: function(_UsoFuturo: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPDisplay: function(Msg: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //ScopePPDisplayEx
   //Descontinuadas (pág. 142)
     xScopePPOpen: function(Porta: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
   //xScopePPGetInfo
@@ -1293,7 +1414,11 @@ type
 
     procedure ExibirErroUltimaMsg;
     procedure LogColeta(AColeta: TParam_Coleta);
+    procedure LogColetaEx(AColetaEx: TParam_Coleta_Ext);
+    procedure AssignColetaToColetaEx(const AColeta: TParam_Coleta; var AColetaEx: TParam_Coleta_Ext);
 
+    procedure PerguntarMenuScope(const TipoMenu: Byte; var Resposta: String; var Acao: Byte);
+    procedure PerguntarSimNao(const Titulo: String; var Resposta: String; var Acao: Byte);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1331,8 +1456,8 @@ type
 
     property OnExibeMensagem: TACBrTEFScopeExibeMensagem read fOnExibeMensagem
       write fOnExibeMensagem;
-    property OnExibeMenu: TACBrTEFScopeExibeMenu read fOnExibeMenu
-      write fOnExibeMenu;
+    property OnExibeMenu: TACBrTEFScopePerguntarMenu read fOnPerguntarMenu
+      write fOnPerguntarMenu;
     property OnPerguntaCampo: TACBrTEFScopePerguntarCampo read fOnPerguntaCampo
       write fOnPerguntaCampo;
     property OnTransacaoEmAndamento: TACBrTEFScopeTransacaoEmAndamento read fOnTransacaoEmAndamento
@@ -1344,7 +1469,8 @@ type
     procedure DesInicializar;
 
     procedure AbrirSessaoTEF;
-    procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean);
+    procedure FecharSessaoTEF; overload;
+    procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean); overload;
 
     procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
       const Param1: String = ''; const Param2: String = ''; const Param3: String = '');
@@ -1393,7 +1519,7 @@ begin
   fConfirmarTransacoesPendentes := True;
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
-  fOnExibeMenu := Nil;
+  fOnPerguntarMenu := Nil;
   fOnPerguntaCampo := Nil;
   fOnTransacaoEmAndamento := Nil;
   fDadosDaTransacao := TStringList.Create;
@@ -1419,7 +1545,7 @@ begin
 
   if not Assigned(fOnTransacaoEmAndamento) then
     DoException(Format(sErrEventoNaoAtribuido, ['OnTransacaoEmAndamento']));
-  if not Assigned(fOnExibeMenu) then
+  if not Assigned(fOnPerguntarMenu) then
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMenu']));
   if not Assigned(fOnPerguntaCampo) then
     DoException(Format(sErrEventoNaoAtribuido, ['OnPerguntaCampo']));
@@ -1596,9 +1722,8 @@ begin
     Exit;
 
   fEmTransacao := AValue;
-
-  if not fEmTransacao then
-    ExibirMensagem('');
+  //if not fEmTransacao then
+  //  ExibirMensagem('');
 end;
 
 procedure TACBrTEFScopeAPI.ChamarEventoTransacaoEmAndamento(
@@ -1669,6 +1794,7 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopeSetAplColeta', @xScopeSetAplColeta);
   ScopeFunctionDetect(sLibName, 'ScopeStatus', @xScopeStatus);
   ScopeFunctionDetect(sLibName, 'ScopeGetParam', @xScopeGetParam);
+  ScopeFunctionDetect(sLibName, 'ScopeGetParamExt', @xScopeGetParamExt, False);
   ScopeFunctionDetect(sLibName, 'ScopeResumeParam', @xScopeResumeParam);
   ScopeFunctionDetect(sLibName, 'ScopeGetLastMsg', @xScopeGetLastMsg);
   ScopeFunctionDetect(sLibName, 'ScopeGetCheque', @xScopeGetCheque);
@@ -1692,6 +1818,8 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopeConfigura', @xScopeConfigura);
   ScopeFunctionDetect(sLibName, 'ScopeValidaInterfacePP', @xScopeValidaInterfacePP);
   ScopeFunctionDetect(sLibName, 'ScopeConsultaPP', @xScopeConsultaPP);
+  ScopeFunctionDetect(sLibName, 'ScopeMenuRecuperaItens', @xScopeMenuRecuperaItens);
+  ScopeFunctionDetect(sLibName, 'ScopeMenuSelecionaItem', @xScopeMenuSelecionaItem);
   ScopeFunctionDetect(sLibName, 'ScopePPOpen', @xScopePPOpen);
   ScopeFunctionDetect(sLibName, 'ScopePPOpenSecure', @xScopePPOpenSecure);
   ScopeFunctionDetect(sLibName, 'ScopePPClose', @xScopePPClose);
@@ -1727,6 +1855,7 @@ begin
   xScopeSetAplColeta := Nil;
   xScopeStatus := Nil;
   xScopeGetParam := Nil;
+  xScopeGetParamExt := Nil;
   xScopeResumeParam := Nil;
   xScopeGetLastMsg := Nil;
   xScopeGetCheque := Nil;
@@ -1750,6 +1879,8 @@ begin
   xScopeConfigura := Nil;
   xScopeValidaInterfacePP := Nil;
   xScopeConsultaPP := Nil;
+  xScopeMenuRecuperaItens := Nil;
+  xScopeMenuSelecionaItem := Nil;
   xScopePPOpen := Nil;
   xScopePPOpenSecure := Nil;
   xScopePPClose := Nil;
@@ -2048,11 +2179,10 @@ begin
     //D RCS_THREAD_API_NOT_INIT: MsgErro := 'Não foi possível criar a “thread” na coleta de dados';
     RCS_ERRO_NUM_MAX_TEF_SESSAO: MsgErro := 'Estourou o número máximo de TEF numa sessão multi-TEF';
     RCS_NAO_HA_CAMPOS_SALVOS: MsgErro := 'Não há arquivo com dados da transação anterior salvo';
-
-    RCS_CANCELADA_PELO_OPERADOR: MsgErro := 'Transação cancelada pelo operador ou no caso de um estorno via REDE:estorno fora do prazo permitido, validade não confere.';
-
+    RCS_CANCELADA_PELO_OPERADOR: MsgErro := 'Transação cancelada pelo operador';
     RCS_PP_COMPARTILHADO_NAO_CONFIGURADO: MsgErro := 'PIN-Pad compartilhado não está configurado, mas a rede exige que seja compartilhado.';
     RCS_AREA_RESERVADA_INSUFICIENTE: MsgErro := 'Área reservada para o buffer é insuficiente para o SCOPE Client preencher com os dados solicitados';
+    RCS_NOT_FOUND: MsgErro := 'Não Encontrado';
   else
     MsgErro := Format('Erro: %d', [AErrorCode]);
   end;
@@ -2069,15 +2199,13 @@ begin
   if fConectado then
     Exit;
 
-  GravarLog('AbrirComunicacaoScope');
-
   ObterDadosScopeINI(sEmpresa, sFilial, sEnderecoIP, sPorta);
   if (fPDV = '') then
     sPDV := '001'
   else
     sPDV:= fPDV;
 
-  ExibirMensagem( Format(sMsgAbrindoConexao, [sEmpresa, sFilial, sPDV]) );
+  //ExibirMensagem( Format(sMsgAbrindoConexao, [sEmpresa, sFilial, sPDV]) );
   GravarLog('ScopeOpen( 2, '+sEmpresa+', '+sFilial+', '+sPDV+' )');
   ret := xScopeOpen( PAnsiChar('2'),
                      PAnsiChar(AnsiString(sEmpresa)),
@@ -2150,6 +2278,13 @@ begin
 
   ExibirMensagem('');
   fSessaoAberta := True;
+end;
+
+procedure TACBrTEFScopeAPI.FecharSessaoTEF;
+var
+  DesfezTEF: Boolean;
+begin
+  FecharSessaoTEF(True, DesfezTEF);
 end;
 
 procedure TACBrTEFScopeAPI.FecharSessaoTEF(Confirmar: Boolean; out
@@ -2251,8 +2386,10 @@ var
   ret, iStatus: LongInt;
   iBarra, Acao: Byte;
   rColeta: TParam_Coleta;
+  rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
-  MsgOp, MsgCli, Titulo, Resposta: String;
+  Resposta, MsgOp, MsgCli, Titulo: String;
+  op: TStringList;
 const
   cBarras = '|/-\';
 
@@ -2316,40 +2453,82 @@ begin
       if ((iStatus < TC_PRIMEIRO_TIPO_COLETA) or (iStatus > TC_MAX_TIPO_COLETA)) then
         Break;
 
-      // Coleta dados do Scope para esse passo //
-      GravarLog('ScopeGetParam');
-      FillChar(rColeta, SizeOf(TParam_Coleta), #0);
-      ret := xScopeGetParam(iStatus, @rColeta);
-      GravarLog('  ret: '+IntToStr(ret));
-      if (ret <> RCS_SUCESSO) then
-        TratarErroScope(ret);
-
-      LogColeta(rColeta);
-      // Exibe as mensagens do cliente e operador //
-      MsgOp := Trim(String(rColeta.MsgOp1)) + sLineBreak + Trim(String(rColeta.MsgOp2));
-      if (MsgOp <> '') then
-        ExibirMensagem(MsgOp, tmOperador);
-
-      MsgCli := Trim(String(rColeta.MsgCl1)) + sLineBreak + Trim(String(rColeta.MsgCl2));
-      if (MsgCli <> '') then
-        ExibirMensagem(MsgCli, tmCliente);
-
-      Titulo := MsgOp;
-      Resposta := '';
+      Resposta := ''; Titulo := '';
       TipoCaptura := COLETA_TECLADO;
 
-      if (rColeta.Bandeira <> 0) then
-        fDadosDaTransacao.Values[CBANDEIRA] := IntToStr(rColeta.Bandeira);
+      if (iStatus = TC_EXIBE_MENU) then
+      begin
+        PerguntarMenuScope(MNU_TAB_TIPO_CIELO, Resposta, Acao);  // MNU_TAB_TIPO_GENERICO
+      end
+      else
+      begin
+        // Obtendo informações da Coleta em curso
+        FillByte(rColeta, SizeOf(TParam_Coleta), 0);
+        FillByte(rColetaEx, SizeOf(TParam_Coleta_Ext), 0);
+
+        if ((iStatus = TC_COLETA_EXT) or (iStatus = TC_COLETA_DADO_ESPECIAL)) and
+           Assigned(xScopeGetParamExt) then
+        begin
+          GravarLog('ScopeGetParamExt');
+          ret := xScopeGetParamExt(iStatus, @rColetaEx);
+          GravarLog('  ret: '+IntToStr(ret));
+          if (ret <> RCS_SUCESSO) then
+            TratarErroScope(ret);
+
+          LogColetaEx(rColetaEx);
+        end
+        else
+        begin
+          // Coleta dados do Scope para esse passo //
+          GravarLog('ScopeGetParam');
+          ret := xScopeGetParam(iStatus, @rColeta);
+          GravarLog('  ret: '+IntToStr(ret));
+          if (ret <> RCS_SUCESSO) then
+            TratarErroScope(ret);
+
+          LogColeta(rColeta);
+          AssignColetaToColetaEx(rColeta, rColetaEx);
+        end;
+
+        // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
+        if (Trim(rColetaEx.CodBandeira) <> '') then
+          fDadosDaTransacao.Values[CBANDEIRA] := rColetaEx.CodBandeira;
+
+        if (rColetaEx.FormatoDado = TM_SELECAO) then
+        begin
+          PerguntarMenuScope(MNU_TAB_TIPO_SELECAO_ESPECIAL, Resposta, Acao);
+        end;
+
+        MsgOp := Trim(String(rColetaEx.MsgOp1)) + sLineBreak + Trim(String(rColetaEx.MsgOp2));
+        MsgCli := Trim(String(rColetaEx.MsgCl1)) + sLineBreak + Trim(String(rColetaEx.MsgCl2));
+        Titulo := MsgOp;
+
+        // Exibe as mensagens do cliente e operador //
+        if (MsgOp <> '') then
+          ExibirMensagem(MsgOp, tmOperador);
+        if (MsgCli <> '') then
+          ExibirMensagem(MsgCli, tmCliente);
+      end;
 
       // Trata os estados //
       case iStatus of
+        TC_EXIBE_MENU:;               // Já Tratado acima
+
         TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
         TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
           Acao := ACAO_RESUME_PROXIMO_ESTADO;
 
-        TC_CARTAO_DIGITADO,
-          // TODO
+        TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO:
+          begin
+            if (pos('?', rColetaEx.MsgOp1) > 0) then
+              Titulo := rColetaEx.MsgOp1
+            else
+              Titulo := rColetaEx.MsgOp2+'?';
+            Titulo := copy(Titulo, 1, Pos('?', Titulo));
+            PerguntarSimNao(Titulo, Resposta, Acao);
+          end;
 
+        TC_CARTAO_DIGITADO,
         TC_CARTAO,                    // cartao //
         TC_COLETA_AUT_OU_CARTAO:;
           //TODO
@@ -2399,7 +2578,7 @@ begin
           //TODO:
 
       else                            // deve coletar algo... //
-        fOnPerguntaCampo(Titulo, rColeta, Resposta, Acao);
+        fOnPerguntaCampo(Titulo, rColetaEx, Resposta, Acao);
 
       end;
 
@@ -2424,7 +2603,8 @@ begin
     else
     begin
       ExibirErroUltimaMsg;
-      TratarErroScope(iStatus);
+      if (iStatus <> RCS_CANCELADA_PELO_OPERADOR) then
+        TratarErroScope(iStatus);
     end;
 
   finally
@@ -2649,6 +2829,192 @@ begin
        '  Reservado: '+String(AColeta.Reservado);
 
   GravarLog(s);
+end;
+
+procedure TACBrTEFScopeAPI.LogColetaEx(AColetaEx: TParam_Coleta_Ext);
+var
+  s: String;
+begin
+  s := 'Param_Coleta_Ext.' + sLineBreak +
+       '  FormatoDado: '+IntToStr(AColetaEx.FormatoDado) + sLineBreak +
+       '  HabTeclas: '+IntToStr(AColetaEx.HabTeclas) + sLineBreak +
+       '  CodBandeira: '+AColetaEx.CodBandeira + sLineBreak +
+       '  CodRede: '+AColetaEx.CodRede + sLineBreak +
+       '  MsgOp1: '+String(AColetaEx.MsgOp1) + sLineBreak +
+       '  MsgOp2: '+String(AColetaEx.MsgOp2) + sLineBreak +
+       '  MsgCl1: '+String(AColetaEx.MsgCl1) + sLineBreak +
+       '  MsgCl2: '+String(AColetaEx.MsgCl2) + sLineBreak +
+       '  UsaExt: '+IntToStr(AColetaEx.UsaExt) + sLineBreak +
+       '    Ext.Sigla: '+ String(AColetaEx.Ext.Sigla) + sLineBreak +
+       '    Ext.Rotulo: '+ String(AColetaEx.Ext.Rotulo) + sLineBreak +
+       '    Ext.AceitaVazio: '+IntToStr(AColetaEx.Ext.AceitaVazio) + sLineBreak +
+       '    Ext.QtdCasasDecimais: '+IntToStr(AColetaEx.Ext.QtdCasasDecimais) + sLineBreak +
+       '    Ext.TamMin: '+ String(AColetaEx.Ext.TamMin) + sLineBreak +
+       '    Ext.TamMax: '+ String(AColetaEx.Ext.TamMax) + sLineBreak +
+       '  UsaLimites: '+IntToStr(AColetaEx.UsaLimites) + sLineBreak +
+       '    Limite.Inferior: '+ String(AColetaEx.Limite.Inferior) + sLineBreak +
+       '    Limite.Superior: '+ String(AColetaEx.Limite.Superior) + sLineBreak +
+       '  IdColetaExt: '+IntToStr(AColetaEx.IdColetaExt) + sLineBreak +
+       '  Reservado: '+String(AColetaEx.Reservado);
+
+  GravarLog(s);
+end;
+
+procedure TACBrTEFScopeAPI.AssignColetaToColetaEx(const AColeta: TParam_Coleta;
+  var AColetaEx: TParam_Coleta_Ext);
+begin
+  FillByte(AColetaEx, SizeOf(TParam_Coleta_Ext), 0);
+  AColetaEx.FormatoDado := AColeta.FormatoDado;
+  AColetaEx.HabTeclas := AColeta.HabTeclas;
+  AColetaEx.CodBandeira := Format('%.3d',[AColeta.Bandeira]);
+  move(AColeta.MsgOp1,  AColetaEx.MsgOp1, SizeOf(AColetaEx.MsgOp1) );
+  move(AColeta.MsgOp2,  AColetaEx.MsgOp2, SizeOf(AColetaEx.MsgOp2) );
+  move(AColeta.MsgCl1,  AColetaEx.MsgCl1, SizeOf(AColetaEx.MsgCl1) );
+  move(AColeta.MsgCl2,  AColetaEx.MsgCl2, SizeOf(AColetaEx.MsgCl2) );
+  move(AColeta.Reservado,  AColetaEx.Reservado, SizeOf(AColetaEx.Reservado) );
+end;
+
+procedure TACBrTEFScopeAPI.PerguntarMenuScope(const TipoMenu: Byte;
+  var Resposta: String; var Acao: Byte);
+var
+  ret: LongInt;
+  rMenuCielo: TScopeMenuCielo;
+  rMenuGenerico: TScopeMenuGenerico;
+  rMenuDinamico: TScopeMenuDinamico;
+  rMenuEspecial: TScopeMenuEspecial;
+  Titulo, s: String;
+  Opcoes: TStringList;
+  i, j, size: Word;
+  item: Integer;
+begin
+  GravarLog('PerguntarMenu( '+IntToStr(TipoMenu)+' )');
+  Resposta := '';
+  Acao := ACAO_RESUME_PROXIMO_ESTADO;
+  item := -1;
+
+  Opcoes := TStringList.Create;
+  try
+    Titulo := sMsgTituloMenu;
+
+    case TipoMenu of
+      MNU_TAB_TIPO_CIELO:
+        begin
+          size := SizeOf(TScopeMenuCielo);
+          ret := xScopeMenuRecuperaItens( TipoMenu, @rMenuCielo, size) ;
+          GravarLog('  ret: '+IntToStr(ret));
+          if (ret <> RCS_SUCESSO) then
+            TratarErroScope(ret);
+          if (Byte(rMenuCielo.TipoTabela) <> MNU_TAB_TIPO_CIELO) then
+            DoException(sErrEstruturaMenu);
+          for i := 1 to rMenuCielo.QtdItens do
+          begin
+            s := Trim(rMenuCielo.Itens[i].Descricao);
+            Opcoes.Add(s);
+          end;
+        end;
+
+      MNU_TAB_TIPO_GENERICO:
+        begin
+          size := SizeOf(TScopeMenuGenerico);
+          ret := xScopeMenuRecuperaItens( TipoMenu, @rMenuGenerico, size) ;
+          GravarLog('  ret: '+IntToStr(ret));
+          if (ret <> RCS_SUCESSO) then
+            TratarErroScope(ret);
+          if (StrToInt(rMenuGenerico.TipoTabela) <> MNU_TAB_TIPO_GENERICO) then
+            DoException(sErrEstruturaMenu);
+          for i := 1 to QTD_MAX_ITENS_PERG_GEN_SEL do
+          begin
+            s := Trim(rMenuGenerico.Itens[i]);
+            if (s = '') then
+              Break;
+            Opcoes.Add(s);
+          end;
+        end;
+
+      MNU_TAB_TIPO_SAVS:
+        DoException(Format(sErrNaoImplementado, ['MNU_TAB_TIPO_SAVS']));
+
+      MNU_TAB_TIPO_GENERICO_DINAMICO:
+        begin
+          size := SizeOf(TScopeMenuDinamico);
+          ret := xScopeMenuRecuperaItens( TipoMenu, @rMenuDinamico, size) ;
+          GravarLog('  ret: '+IntToStr(ret));
+          if (ret <> RCS_SUCESSO) then
+            TratarErroScope(ret);
+          if (StrToInt(rMenuDinamico.TipoTabela) <> MNU_TAB_TIPO_GENERICO_DINAMICO) then
+            DoException(sErrEstruturaMenu);
+          for i := 1 to rMenuDinamico.QtdItens do
+          begin
+            s := Trim(rMenuDinamico.ItemGenerico.Itens[i]);
+            Opcoes.Add(s);
+          end;
+        end;
+
+      MNU_TAB_TIPO_SELECAO_ESPECIAL:
+        begin
+          size := SizeOf(TScopeMenuEspecial);
+          ret := xScopeMenuRecuperaItens( TipoMenu, @rMenuEspecial, size) ;
+          GravarLog('  ret: '+IntToStr(ret));
+          if (ret <> RCS_SUCESSO) then
+            TratarErroScope(ret);
+          j := StrToInt(rMenuEspecial.QtdItens);
+          for i := 1 to j do
+          begin
+            s := Trim(rMenuEspecial.Itens[i].Rotulo);
+            Opcoes.Add(s);
+          end;
+        end;
+    end;
+
+    if (Opcoes.Count > 0) then
+    begin
+      fOnPerguntarMenu(ACBrStr(Titulo), Opcoes, item);
+      if (item = -2) then
+        Acao := ACAO_RESUME_ESTADO_ANTERIOR
+      else if (item = -1) then
+        Acao := ACAO_RESUME_CANCELAR
+      else
+        Resposta := IntToStr(item+1);;
+    end;
+
+  finally
+    Opcoes.Free;
+  end;
+
+  if (Acao = ACAO_RESUME_PROXIMO_ESTADO) then
+  begin
+    GravarLog('ScopeMenuSelecionaItem( '+Resposta+' )');
+    ret := xScopeMenuSelecionaItem(Byte(item+1)) ;
+    GravarLog('  ret: '+IntToStr(ret));
+    if (ret <> RCS_SUCESSO) then
+      TratarErroScope(ret);
+  end;
+end;
+
+procedure TACBrTEFScopeAPI.PerguntarSimNao(const Titulo: String;
+  var Resposta: String; var Acao: Byte);
+var
+  op: TStringList;
+  item: Integer;
+begin
+  Resposta := '0';
+  Acao := ACAO_RESUME_PROXIMO_ESTADO;
+
+  op := TStringList.Create;
+  try
+    op.Add(ACBrStr(sMsgItemSim));
+    op.Add(ACBrStr(sMsgItemNao));
+    item := 0;
+    fOnPerguntarMenu(ACBrStr(Titulo), op, item);
+    if (item = -2) then
+      Acao := ACAO_RESUME_ESTADO_ANTERIOR
+    else if (item = -1) then
+      Acao := ACAO_RESUME_CANCELAR
+    else if (item = 0) then  // Sim
+      Resposta := '1';
+  finally
+    op.Free;
+  end;
 end;
 
 procedure TACBrTEFScopeAPI.AbrirPinPad;

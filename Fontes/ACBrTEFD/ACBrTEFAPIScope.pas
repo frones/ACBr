@@ -73,7 +73,7 @@ type
     procedure QuandoPerguntarMenuAPI(const Titulo: String; Opcoes: TStringList;
        var ItemSelecionado: Integer);
     procedure QuandoPerguntarCampoAPI( const TituloCampo: String;
-       const Param_Coleta: TParam_Coleta;
+       const Param_Coleta_Ext: TParam_Coleta_Ext;
        var Resposta: String; var AcaoResposta: Byte);
 
     procedure SetDiretorioTrabalho(const AValue: String);
@@ -99,7 +99,7 @@ type
       DadosAdicionais: String = ''): Boolean; override;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
+      CodOperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(
       const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
@@ -615,11 +615,11 @@ end;
 procedure TACBrTEFAPIClassScope.QuandoPerguntarMenuAPI(const Titulo: String;
   Opcoes: TStringList; var ItemSelecionado: Integer);
 begin
-  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, ItemSelecionado );
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( Titulo, Opcoes, ItemSelecionado);
 end;
 
 procedure TACBrTEFAPIClassScope.QuandoPerguntarCampoAPI(
-  const TituloCampo: String; const Param_Coleta: TParam_Coleta;
+  const TituloCampo: String; const Param_Coleta_Ext: TParam_Coleta_Ext;
   var Resposta: String; var AcaoResposta: Byte);
 var
   Validado, Cancelado: Boolean;
@@ -640,111 +640,107 @@ begin
   DefCampo.MsgErroDadoMenor := '';
   DefCampo.MsgConfirmacaoDuplaDigitacao := '';
   DefCampo.TipoEntradaCodigoBarras := tbQualquer;
-  DefCampo.TipoCampo := Param_Coleta.FormatoDado;
+  DefCampo.TipoCampo := Param_Coleta_Ext.FormatoDado;
 
-  case Param_Coleta.FormatoDado of
-    0:     // String representando uma data no formato “DDMMAA”
+  case Param_Coleta_Ext.FormatoDado of
+    TM_DDMMAA:     // String representando uma data no formato “DDMMAA”
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 6;
         DefCampo.TamanhoMaximo := 6;
         DefCampo.ValidacaoDado := valdDiaMesAno;
       end;
-    1,     // 1 - String representando uma data no formato “DDMM”
-    6:     // 6 - String representando um número com 4 dígitos
+    TM_DDMM,            // 1 - String representando uma data no formato “DDMM”
+    TM_ULTIMOS_DIGITOS: // 6 - String representando um número com 4 dígitos
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 4;
         DefCampo.TamanhoMaximo := 4;
       end;
-    2:     // String representando uma data no formato “MMAA”
+    TM_MMAA:     // String representando uma data no formato “MMAA”
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 4;
         DefCampo.TamanhoMaximo := 4;
         DefCampo.ValidacaoDado := valdMesAno;
       end;
-    3:     // String representando uma hora no formato “HHMMSS”
+    TM_HHMMSS:     // String representando uma hora no formato “HHMMSS”
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 6;
         DefCampo.TamanhoMaximo := 6;
       end;
-    4:     // String representando um número
+    TM_NUM:     // String representando um número
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
       end;
-    5:     // String representando uma senha que é numérica
+    TM_SENHA:     // String representando uma senha que é numérica
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.OcultarDadosDigitados := True;
         DefCampo.ValidacaoDado := valdSenhaGerente;
       end;
-    7:     // String representando um dado alfanumérico
+    TM_ALFANUMERICO:     // String representando um dado alfanumérico
       begin
         DefCampo.TipoDeEntrada := tedAlfaNum;
       end;
-    8:     // String representando uma data no formato “DDMMAAAA”
+    TM_DDMMAAAA:     // String representando uma data no formato “DDMMAAAA”
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 8;
         DefCampo.TamanhoMaximo := 8;
         DefCampo.ValidacaoDado := valdDiaMesAno;
       end;
-    9:     // String de display para exibição (não há coleta)
+    TM_CONFIRMACAO:     // String de display para exibição (não há coleta)
       begin
         DefCampo.TipoDeEntrada := tedApenasLeitura;
       end;
-   10:     // String representando uma data no formato “MMAAAA”
+    TM_MMAAAA:     // String representando uma data no formato “MMAAAA”
       begin
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 6;
         DefCampo.TamanhoMaximo := 6;
         DefCampo.ValidacaoDado := valdMesAno;
       end;
-   11:     // Exibir ‘*’ na tela, mas enviar em claro
-     begin
-       DefCampo.OcultarDadosDigitados := True;
-       DefCampo.ValidacaoDado := valdSenhaLojista;
-     end;
-   12:     // String representando uma hora no formato “HHMM
-     begin
-       DefCampo.TipoDeEntrada := tedNumerico;
-       DefCampo.TamanhoMinimo := 4;
-       DefCampo.TamanhoMaximo := 4;
-     end;
-   13:     // Booleano, a resposta deve ser 0=Não ou 1=Sim
-     begin
-       //TODO: mudar para Menu
-       DefCampo.TipoDeEntrada := tedNumerico;
-       DefCampo.TamanhoMinimo := 1;
-       DefCampo.TamanhoMaximo := 1;
-     end;
-   14:     // String representando “valor monetário” com tamanho total de 12, sendo os dois últimos dígitos os centavos
-     begin
-       DefCampo.TipoDeEntrada := tedNumerico;
-       DefCampo.TamanhoMinimo := 1;
-       DefCampo.TamanhoMaximo := 12;
-       DefCampo.MascaraDeCaptura := '@@@.@@@.@@@.@@@,@@';
-     end;
-   15:     // String representando número não inteiro, com casas decimais
-     begin
-       DefCampo.TipoDeEntrada := tedNumerico;
-       DefCampo.TamanhoMinimo := 1;
-       DefCampo.TamanhoMaximo := 12;
-       DefCampo.MascaraDeCaptura := '@,@@';
-     end;
-   16:;    // Seleção de Opção (Menu)
-     //TODO
-   17:     // String representando o PAN do cartão
-     begin
-       DefCampo.TipoDeEntrada := tedNumerico;
-       DefCampo.TamanhoMinimo := 16;
-       DefCampo.TamanhoMaximo := 16;
-       DefCampo.MascaraDeCaptura := '@@@@.@@@@.@@@@.@@@@';
-     end;
-   18,     // Reservado para uso interno do SCOPE
-   19:;    // Formato desconhecido
+    TM_MASCARADO:     // Exibir ‘*’ na tela, mas enviar em claro
+      begin
+        DefCampo.OcultarDadosDigitados := True;
+        DefCampo.ValidacaoDado := valdSenhaLojista;
+      end;
+    TM_HHMM:     // String representando uma hora no formato “HHMM
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 4;
+        DefCampo.TamanhoMaximo := 4;
+      end;
+    TM_BOOL:     // Booleano, a resposta deve ser 0=Não ou 1=Sim
+      begin
+        //TODO: mudar para Menu
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 1;
+        DefCampo.TamanhoMaximo := 1;
+      end;
+    TM_VALOR_MONETARIO:     // String representando “valor monetário” com tamanho total de 12, sendo os dois últimos dígitos os centavos
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 1;
+        DefCampo.TamanhoMaximo := 12;
+        DefCampo.MascaraDeCaptura := '@@@.@@@.@@@.@@@,@@';
+      end;
+    TM_NUM_DECIMAL:     // String representando número não inteiro, com casas decimais
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 1;
+        DefCampo.TamanhoMaximo := 12;
+        DefCampo.MascaraDeCaptura := '@,@@';
+      end;
+    TM_PAN:     // String representando o PAN do cartão
+      begin
+        DefCampo.TipoDeEntrada := tedNumerico;
+        DefCampo.TamanhoMinimo := 16;
+        DefCampo.TamanhoMaximo := 16;
+        DefCampo.MascaraDeCaptura := '@@@@.@@@@.@@@@.@@@@';
+      end;
   end;
 
   Validado := False;
@@ -783,7 +779,7 @@ begin
     end;
 
     if not Validado then
-      QuandoExibirMensagemAPI(Format(sErro_RespostaInvalida, [Resposta]), tmTodas, 0);
+      QuandoExibirMensagemAPI(Format(ACBrStr(sErro_RespostaInvalida), [Resposta]), tmTodas, 0);
   end;
 
   if Cancelado or (Resposta = ':-1') then
@@ -795,15 +791,68 @@ begin
 end;
 
 
-function TACBrTEFAPIClassScope.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao): Boolean;
+function TACBrTEFAPIClassScope.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
+var
+  sl: TStringList;
+  ItemSel: Integer;
+  s: String;
+  b: Byte;
 begin
-  EfetuarAdministrativa('');
+  Result := False;
+
+  if (CodOperacaoAdm = tefopAdministrativo) then
+  begin
+    sl := TStringList.Create;
+    try
+      sl.Add('Versao');
+      sl.Add('Teste PinPad');
+      sl.Add('Reimpressão');
+      sl.Add('ADM');
+      ItemSel := -1;
+      TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', sl, ItemSel );
+      case ItemSel of
+        0: CodOperacaoAdm := tefopVersao;
+        1: CodOperacaoAdm := tefopTesteComunicacao;
+        2: CodOperacaoAdm := tefopReimpressao;
+        3: CodOperacaoAdm := tefopAdministrativo;
+      else
+        Exit;
+      end;
+    finally
+      sl.Free;
+    end;
+  end;
+
+  case CodOperacaoAdm of
+    tefopVersao:
+      begin
+        s := Trim(fTEFScopeAPI.ObterVersaoScope);
+        Result := (s <> '');
+        if Result then
+          TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(s, telaOperador, 0);
+        Exit;
+      end;
+
+    tefopTesteComunicacao:
+      begin
+        fTEFScopeAPI.AbrirSessaoTEF;
+        fTEFScopeAPI.FecharSessaoTEF;
+        Result := True;
+        Exit;
+      end;
+
+    tefopReimpressao:
+      fTEFScopeAPI.IniciarTransacao(scoReimpComp);
+  else
+    fTEFScopeAPI.IniciarTransacao(scoMenu);
+  end;
+
+  fTEFScopeAPI.ExecutarTransacao;
 end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
 begin
-  fTEFScopeAPI.IniciarTransacao(scoMenu);
-  fTEFScopeAPI.ExecutarTransacao;
+  Result := EfetuarAdministrativa( TACBrTEFOperacao(StrToIntDef(CodOperacaoAdm, 0)) );
 end;
 
 function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;

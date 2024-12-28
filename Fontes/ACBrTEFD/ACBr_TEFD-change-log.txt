@@ -53,6 +53,12 @@ Símbolo : Significado
 -- ACBrTEFAPIScope, ACBrTEFScopeAPI --
 [*] Refatoração de classes e métodos, para simplificação, e melhor isolamento de
     classes
+
+-- ACBrTEFAPIScope --
+[+] Implementação de Definiçoes de Campo e Validação em 'QuandoPerguntarCampoAPI'
+
+-- ACBrTEFPayGoWebComum --
+[*] Métodos 'ValidarMMAA' e 'ValidarDDMMAA' movidos para ACBrUtil.Base
     (por: DSA)
 
 23/12/2024

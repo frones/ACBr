@@ -2463,8 +2463,8 @@ begin
       else
       begin
         // Obtendo informações da Coleta em curso
-        FillByte(rColeta, SizeOf(TParam_Coleta), 0);
-        FillByte(rColetaEx, SizeOf(TParam_Coleta_Ext), 0);
+        FillChar(rColeta, SizeOf(TParam_Coleta), #0);
+        FillChar(rColetaEx, SizeOf(TParam_Coleta_Ext), #0);
 
         if ((iStatus = TC_COLETA_EXT) or (iStatus = TC_COLETA_DADO_ESPECIAL)) and
            Assigned(xScopeGetParamExt) then
@@ -2862,11 +2862,14 @@ end;
 
 procedure TACBrTEFScopeAPI.AssignColetaToColetaEx(const AColeta: TParam_Coleta;
   var AColetaEx: TParam_Coleta_Ext);
+var
+  s: String;
 begin
-  FillByte(AColetaEx, SizeOf(TParam_Coleta_Ext), 0);
+  FillChar(AColetaEx, SizeOf(TParam_Coleta_Ext), #0);
   AColetaEx.FormatoDado := AColeta.FormatoDado;
   AColetaEx.HabTeclas := AColeta.HabTeclas;
-  AColetaEx.CodBandeira := Format('%.3d',[AColeta.Bandeira]);
+  s := Format('%.3d',[AColeta.Bandeira]);
+  move(s[1], AColetaEx.CodBandeira, 3);
   move(AColeta.MsgOp1,  AColetaEx.MsgOp1, SizeOf(AColetaEx.MsgOp1) );
   move(AColeta.MsgOp2,  AColetaEx.MsgOp2, SizeOf(AColetaEx.MsgOp2) );
   move(AColeta.MsgCl1,  AColetaEx.MsgCl1, SizeOf(AColetaEx.MsgCl1) );

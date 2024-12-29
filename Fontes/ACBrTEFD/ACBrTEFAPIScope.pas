@@ -869,8 +869,16 @@ begin
   ValorTransacaoString := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
   ValorTaxaServicoString := '000';
 
+  if (Financiamento = tefmfAVista) then
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '1'
+  else if (Financiamento > tefmfAVista) then   // Parcelado
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '0';
+
   fTEFScopeAPI.IniciarTransacao(scoCredito, ValorTransacaoString, ValorTaxaServicoString);
   fTEFScopeAPI.ExecutarTransacao;
+
+  //TODO - verificar o estado em UltResposta
+  Result := True;
 end;
 
 procedure TACBrTEFAPIClassScope.FinalizarTransacao(const Rede, NSU,

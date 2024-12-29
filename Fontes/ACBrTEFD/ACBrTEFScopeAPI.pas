@@ -1248,6 +1248,7 @@ type
     fInicializada: Boolean;
     fMsgPinPad: String;
     fDadosDaTransacao: TStringList;
+    fRespostasPorEstados: TStringList;
     fOnExibeMensagem: TACBrTEFScopeExibeMensagem;
     fOnPerguntarMenu: TACBrTEFScopePerguntarMenu;
     fOnGravarLog: TACBrTEFScopeGravarLog;
@@ -1434,6 +1435,7 @@ type
     property PortaTCP: String read fPortaTCP write SetPortaTCP;
 
     property DadosDaTransacao: TStringList read fDadosDaTransacao;
+    property RespostasPorEstados: TStringList read fRespostasPorEstados;
 
     property PortaPinPad: String read fPortaPinPad write fPortaPinPad;
     property MsgPinPad: String read fMsgPinPad write fMsgPinPad;
@@ -1523,6 +1525,7 @@ begin
   fOnPerguntaCampo := Nil;
   fOnTransacaoEmAndamento := Nil;
   fDadosDaTransacao := TStringList.Create;
+  fRespostasPorEstados := TStringList.Create;
 end;
 
 destructor TACBrTEFScopeAPI.Destroy;
@@ -1531,6 +1534,8 @@ begin
   fOnExibeMensagem := Nil;
   DesInicializar;
   fDadosDaTransacao.Free;
+  fRespostasPorEstados.Free;
+
   inherited Destroy;
 end;
 
@@ -2393,7 +2398,7 @@ var
 const
   cBarras = '|/-\';
 
-  function UsuarioCancelouATransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
+  function VerificarSeUsuarioCancelouTransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
   var
     Cancelar: Boolean;
   begin
@@ -2419,7 +2424,12 @@ begin
     begin
       // Le o Status da Operação
       iStatus := ObterScopeStatus;
+
+      // Iniciliza as variáveis
+      Resposta := '';
+      Titulo := '';
       Acao := ACAO_RESUME_PROXIMO_ESTADO;
+      TipoCaptura := COLETA_TECLADO;
 
       // Enquanto a transacao estiver em andamento, aguarda, mas verifica se o usuário Cancelou //
       if (iStatus = RCS_TRN_EM_ANDAMENTO) then
@@ -2431,7 +2441,7 @@ begin
         //
         //ExibirMensagem(Format(sMsgTransacaoEmAndamento, [cBarras[iBarra]]));
 
-        if UsuarioCancelouATransacao(scoestFluxoAPI) then
+        if VerificarSeUsuarioCancelouTransacao(scoestFluxoAPI) then
           EnviarParametroTransacao(ACAO_RESUME_CANCELAR)
         else
           Sleep(CINTERVALO_COLETA);
@@ -2442,7 +2452,7 @@ begin
       // Efetuando Leitura do Cartão. Verifica se o operador cancelou a operacao via teclado //
       if (iStatus = TC_COLETA_CARTAO_EM_ANDAMENTO) then
       begin
-        if UsuarioCancelouATransacao(scoestPinPadLerCartao) then
+        if VerificarSeUsuarioCancelouTransacao(scoestPinPadLerCartao) then
           Acao := ACAO_RESUME_CANCELAR;
 
         EnviarParametroTransacao(Acao);
@@ -2452,9 +2462,6 @@ begin
       // Se estiver fora da faixa FC00 a FCFF, finaliza o processo //
       if ((iStatus < TC_PRIMEIRO_TIPO_COLETA) or (iStatus > TC_MAX_TIPO_COLETA)) then
         Break;
-
-      Resposta := ''; Titulo := '';
-      TipoCaptura := COLETA_TECLADO;
 
       if (iStatus = TC_EXIBE_MENU) then
       begin
@@ -2510,76 +2517,79 @@ begin
           ExibirMensagem(MsgCli, tmCliente);
       end;
 
-      // Trata os estados //
-      case iStatus of
-        TC_EXIBE_MENU:;               // Já Tratado acima
+      // Verifica se já tem resposta para esse estado //
+      Resposta := RespostasPorEstados.Values[IntToStr(iStatus)];
+      if (Resposta = '') then
+      begin
+        // Trata os estados //
+        case iStatus of
+          TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
+          TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
+            Acao := ACAO_RESUME_PROXIMO_ESTADO;
 
-        TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
-        TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
-          Acao := ACAO_RESUME_PROXIMO_ESTADO;
+          TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO:
+            begin
+              if (pos('?', rColetaEx.MsgOp1) > 0) then
+                Titulo := rColetaEx.MsgOp1
+              else
+                Titulo := rColetaEx.MsgOp2+'?';
+              Titulo := copy(Titulo, 1, Pos('?', Titulo));
+              PerguntarSimNao(Titulo, Resposta, Acao);
+            end;
 
-        TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO:
-          begin
-            if (pos('?', rColetaEx.MsgOp1) > 0) then
-              Titulo := rColetaEx.MsgOp1
-            else
-              Titulo := rColetaEx.MsgOp2+'?';
-            Titulo := copy(Titulo, 1, Pos('?', Titulo));
-            PerguntarSimNao(Titulo, Resposta, Acao);
-          end;
+          TC_CARTAO_DIGITADO,
+          TC_CARTAO,                    // cartao //
+          TC_COLETA_AUT_OU_CARTAO:;
+            //TODO
 
-        TC_CARTAO_DIGITADO,
-        TC_CARTAO,                    // cartao //
-        TC_COLETA_AUT_OU_CARTAO:;
-          //TODO
+          TC_IMPRIME_CHEQUE:            // imprime Cheque //
+            ObterDadosCheque;
 
-        TC_IMPRIME_CHEQUE:            // imprime Cheque //
-          ObterDadosCheque;
+          TC_IMPRIME_CUPOM,             // imprime Cupom + Nota Promissoria + Cupom Promocional //
+          TC_IMPRIME_CUPOM_PARCIAL,     // imprime Cupom Parcial //
+          TC_IMPRIME_CONSULTA:
+            ObterDadosComprovantes;
 
-        TC_IMPRIME_CUPOM,             // imprime Cupom + Nota Promissoria + Cupom Promocional //
-        TC_IMPRIME_CUPOM_PARCIAL,     // imprime Cupom Parcial //
-        TC_IMPRIME_CONSULTA:
-          ObterDadosComprovantes;
+          TC_DISP_LISTA_MEDICAMENTO:;   // recupera lista de Medicamentos //
+            //TODO
 
-        TC_DISP_LISTA_MEDICAMENTO:;   // recupera lista de Medicamentos //
-          //TODO
+          TC_DISP_VALOR:;               // recupera valor do Vale Gas //
+            //TODO
 
-        TC_DISP_VALOR:;               // recupera valor do Vale Gas //
-          //TODO
+          TC_COLETA_REG_MEDICAMENTO:;   // se coletou lista de medicamentos, deve tambem atualizar o valor. //
+            //TODO
 
-        TC_COLETA_REG_MEDICAMENTO:;   // se coletou lista de medicamentos, deve tambem atualizar o valor. //
-          //TODO
+          TC_OBTEM_SERVICOS:;           // recupera os servicos configurados //
+            //TODO:
 
-        TC_OBTEM_SERVICOS:;           // recupera os servicos configurados //
-          //TODO:
+          TC_COLETA_OPERADORA:;         // recupera a lista de operadoras da Recarga de Celular //
+            //TODO:
 
-        TC_COLETA_OPERADORA:;         // recupera a lista de operadoras da Recarga de Celular //
-          //TODO:
+          TC_COLETA_VALOR_RECARGA:;     // recupera a lista de valores da Recarga de Celular //
+            //TODO:
 
-        TC_COLETA_VALOR_RECARGA:;     // recupera a lista de valores da Recarga de Celular //
-          //TODO:
+          TC_SENHA:;                    // captura da senha do usuario //
+            //TODO:
 
-        TC_SENHA:;                    // captura da senha do usuario //
-          //TODO:
+          TC_INFO_AGU_CONF_OP:;         // mostra informacao e aguarda confirmacao do usuario //
+            //TODO:
 
-        TC_INFO_AGU_CONF_OP:;         // mostra informacao e aguarda confirmacao do usuario //
-          //TODO:
+          TC_OBTEM_QRCODE:;
+            //TODO:
 
-        TC_OBTEM_QRCODE:;
-          //TODO:
+          TC_COLETA_DADOS_ECF:;         // coleta dados do ECF e do cupom fiscal para a transacao de debito voucher com o TICKET CAR //
+            //TODO:
 
-        TC_COLETA_DADOS_ECF:;         // coleta dados do ECF e do cupom fiscal para a transacao de debito voucher com o TICKET CAR //
-          //TODO:
+          TC_COLETA_LISTA_MERCADORIAS:; // coleta Lista de Mercadorias para a transacao de debito voucher com o TICKET CAR //
+            //TODO:
 
-        TC_COLETA_LISTA_MERCADORIAS:; // coleta Lista de Mercadorias para a transacao de debito voucher com o TICKET CAR //
-          //TODO:
+          TC_COLETA_LISTA_PRECOS:;      // coleta Lista para Atualizacao de Precos (TICKET CAR)
+            //TODO:
 
-        TC_COLETA_LISTA_PRECOS:;      // coleta Lista para Atualizacao de Precos (TICKET CAR)
-          //TODO:
+        else                            // deve coletar algo... //
+          fOnPerguntaCampo(Titulo, rColetaEx, Resposta, Acao);
 
-      else                            // deve coletar algo... //
-        fOnPerguntaCampo(Titulo, rColetaEx, Resposta, Acao);
-
+        end;
       end;
 
       ret := EnviarParametroTransacao(Acao, iStatus, Resposta, TipoCaptura);
@@ -2816,13 +2826,13 @@ begin
        '  Bandeira: '+IntToStr(AColeta.Bandeira) + sLineBreak +
        '  FormatoDado: '+IntToStr(AColeta.FormatoDado) + sLineBreak +
        '  HabTeclas: '+IntToStr(AColeta.HabTeclas) + sLineBreak +
-       '  MsgOp1: '+String(AColeta.MsgOp1) + sLineBreak +
-       '  MsgOp2: '+String(AColeta.MsgOp2) + sLineBreak +
-       '  MsgCl1: '+String(AColeta.MsgCl1) + sLineBreak +
-       '  MsgCl2: '+String(AColeta.MsgCl2) + sLineBreak +
-       '  WrkKey: '+String(AColeta.WrkKey) + sLineBreak +
+       '  MsgOp1: '+TrimRight(String(AColeta.MsgOp1)) + sLineBreak +
+       '  MsgOp2: '+TrimRight(String(AColeta.MsgOp2)) + sLineBreak +
+       '  MsgCl1: '+TrimRight(String(AColeta.MsgCl1)) + sLineBreak +
+       '  MsgCl2: '+TrimRight(String(AColeta.MsgCl2)) + sLineBreak +
+       '  WrkKey: '+TrimRight(String(AColeta.WrkKey)) + sLineBreak +
        '  PosMasterKey: '+IntToStr(AColeta.PosMasterKey) + sLineBreak +
-       '  PAN: '+String(AColeta.PAN) + sLineBreak +
+       '  PAN: '+TrimRight(String(AColeta.PAN)) + sLineBreak +
        '  UsaCriptoPinpad: '+IntToStr(AColeta.UsaCriptoPinpad) + sLineBreak +
        '  IdModoPagto: '+IntToStr(AColeta.IdModoPagto) + sLineBreak +
        '  AceitaCartaoDigitado: '+IntToStr(AColeta.AceitaCartaoDigitado) + sLineBreak +
@@ -2840,22 +2850,22 @@ begin
        '  HabTeclas: '+IntToStr(AColetaEx.HabTeclas) + sLineBreak +
        '  CodBandeira: '+AColetaEx.CodBandeira + sLineBreak +
        '  CodRede: '+AColetaEx.CodRede + sLineBreak +
-       '  MsgOp1: '+String(AColetaEx.MsgOp1) + sLineBreak +
-       '  MsgOp2: '+String(AColetaEx.MsgOp2) + sLineBreak +
-       '  MsgCl1: '+String(AColetaEx.MsgCl1) + sLineBreak +
-       '  MsgCl2: '+String(AColetaEx.MsgCl2) + sLineBreak +
+       '  MsgOp1: '+TrimRight(String(AColetaEx.MsgOp1)) + sLineBreak +
+       '  MsgOp2: '+TrimRight(String(AColetaEx.MsgOp2)) + sLineBreak +
+       '  MsgCl1: '+TrimRight(String(AColetaEx.MsgCl1)) + sLineBreak +
+       '  MsgCl2: '+TrimRight(String(AColetaEx.MsgCl2)) + sLineBreak +
        '  UsaExt: '+IntToStr(AColetaEx.UsaExt) + sLineBreak +
-       '    Ext.Sigla: '+ String(AColetaEx.Ext.Sigla) + sLineBreak +
-       '    Ext.Rotulo: '+ String(AColetaEx.Ext.Rotulo) + sLineBreak +
+       '    Ext.Sigla: '+ TrimRight(String(AColetaEx.Ext.Sigla)) + sLineBreak +
+       '    Ext.Rotulo: '+ TrimRight(String(AColetaEx.Ext.Rotulo)) + sLineBreak +
        '    Ext.AceitaVazio: '+IntToStr(AColetaEx.Ext.AceitaVazio) + sLineBreak +
        '    Ext.QtdCasasDecimais: '+IntToStr(AColetaEx.Ext.QtdCasasDecimais) + sLineBreak +
-       '    Ext.TamMin: '+ String(AColetaEx.Ext.TamMin) + sLineBreak +
-       '    Ext.TamMax: '+ String(AColetaEx.Ext.TamMax) + sLineBreak +
+       '    Ext.TamMin: '+ TrimRight(String(AColetaEx.Ext.TamMin)) + sLineBreak +
+       '    Ext.TamMax: '+ TrimRight(String(AColetaEx.Ext.TamMax)) + sLineBreak +
        '  UsaLimites: '+IntToStr(AColetaEx.UsaLimites) + sLineBreak +
-       '    Limite.Inferior: '+ String(AColetaEx.Limite.Inferior) + sLineBreak +
-       '    Limite.Superior: '+ String(AColetaEx.Limite.Superior) + sLineBreak +
+       '    Limite.Inferior: '+ TrimRight(String(AColetaEx.Limite.Inferior)) + sLineBreak +
+       '    Limite.Superior: '+ TrimRight(String(AColetaEx.Limite.Superior)) + sLineBreak +
        '  IdColetaExt: '+IntToStr(AColetaEx.IdColetaExt) + sLineBreak +
-       '  Reservado: '+String(AColetaEx.Reservado);
+       '  Reservado: '+TrimRight(String(AColetaEx.Reservado));
 
   GravarLog(s);
 end;
@@ -2869,7 +2879,7 @@ begin
   AColetaEx.FormatoDado := AColeta.FormatoDado;
   AColetaEx.HabTeclas := AColeta.HabTeclas;
   s := Format('%.3d',[AColeta.Bandeira]);
-  move(s[1], AColetaEx.CodBandeira, 3);
+  move(s[1], AColetaEx.CodBandeira, SizeOf(AColetaEx.CodBandeira) );
   move(AColeta.MsgOp1,  AColetaEx.MsgOp1, SizeOf(AColetaEx.MsgOp1) );
   move(AColeta.MsgOp2,  AColetaEx.MsgOp2, SizeOf(AColetaEx.MsgOp2) );
   move(AColeta.MsgCl1,  AColetaEx.MsgCl1, SizeOf(AColetaEx.MsgCl1) );

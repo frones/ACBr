@@ -79,6 +79,9 @@ type
     procedure SetDiretorioTrabalho(const AValue: String);
 
   protected
+    procedure ExecutarTransacaoScope(OperacaoScope: TACBrTEFScopeOperacao;
+       const Param1: String = ''; const Param2: String = ''; const Param3: String = '');
+
     procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
 
@@ -114,8 +117,6 @@ type
       const Rede, NSU, CodigoFinalizacao: String;
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
 
-    procedure ResolverTransacaoPendente(
-      AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
     procedure AbortarTransacaoEmAndamento; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
@@ -797,17 +798,19 @@ var
   ItemSel: Integer;
   s: String;
   b: Byte;
+  op: TACBrTEFScopeOperacao;
 begin
   Result := False;
+  op := scoNone;
 
   if (CodOperacaoAdm = tefopAdministrativo) then
   begin
     sl := TStringList.Create;
     try
-      sl.Add('Versao');
-      sl.Add('Teste PinPad');
-      sl.Add('Reimpressão');
-      sl.Add('ADM');
+      sl.Add(ACBrStr('Versão'));
+      sl.Add(ACBrStr('Teste Comunicação'));
+      sl.Add(ACBrStr('Reimpressão'));
+      sl.Add(ACBrStr('Administrativo'));
       ItemSel := -1;
       TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', sl, ItemSel );
       case ItemSel of
@@ -835,6 +838,7 @@ begin
 
     tefopTesteComunicacao:
       begin
+        //TODO:
         fTEFScopeAPI.AbrirSessaoTEF;
         fTEFScopeAPI.FecharSessaoTEF;
         Result := True;
@@ -842,12 +846,15 @@ begin
       end;
 
     tefopReimpressao:
-      fTEFScopeAPI.IniciarTransacao(scoReimpComp);
+      op := scoReimpComp;
   else
-    fTEFScopeAPI.IniciarTransacao(scoMenu);
+    op := scoMenu;
   end;
 
-  fTEFScopeAPI.ExecutarTransacao;
+  if (op <> scoNone) then
+    ExecutarTransacaoScope(op);
+
+  Result := True;
 end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
@@ -861,6 +868,7 @@ function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
   ValorTransacaoString, ValorTaxaServicoString: string;
+  op: TACBrTEFScopeOperacao;
 begin
   VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
@@ -874,54 +882,35 @@ begin
   else if (Financiamento > tefmfAVista) then   // Parcelado
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '0';
 
-  fTEFScopeAPI.IniciarTransacao(scoCredito, ValorTransacaoString, ValorTaxaServicoString);
-  fTEFScopeAPI.ExecutarTransacao;
+  if (Parcelas > 0) then
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_QTDE_PARCELAS)] := IntToStr(Parcelas);
 
-  //TODO - verificar o estado em UltResposta
-  Result := True;
+  if teftcCredito in CartoesAceitos then
+    op := scoCredito
+  else if teftcDebito in CartoesAceitos then
+    op := scoDebito;
+
+  ExecutarTransacaoScope(op, ValorTransacaoString, ValorTaxaServicoString);
+
+  Result := fpACBrTEFAPI.UltimaRespostaTEF.Sucesso;
 end;
 
 procedure TACBrTEFAPIClassScope.FinalizarTransacao(const Rede, NSU,
   CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 var
-  i: Integer;
-  Resp: TACBrTEFResp;
-  PGWebStatus: LongWord;
+  Confirmar: Boolean;
+  TransacaoFoiDesfeita: Boolean;
 begin
-  i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
-  if (i >= 0) then
-    Resp := fpACBrTEFAPI.RespostasTEF[i]
-  else
-    fpACBrTEFAPI.DoException( Format(ACBrStr(sACBrTEFAPITransacaoNaoEncontradaException),
-      [Rede+' '+ NSU+' '+CodigoFinalizacao]) );
+  // TEF Scope, não tem o conceito de tratamento de transações anteriores a Última
+  //i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
 
-  //D
-  //PGWebStatus := StatusTransacaoToPWCNF_(AStatus);
-  //fTEFPayGoAPI.FinalizarTransacao( PGWebStatus,
-  //                                 IntToStr(Resp.NumeroLoteTransacao),
-  //                                 Resp.Finalizacao,
-  //                                 Resp.NSU,
-  //                                 Resp.Estabelecimento,
-  //                                 Resp.Rede );
+  Confirmar := (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]);
+  fTEFScopeAPI.FecharSessaoTEF(Confirmar, TransacaoFoiDesfeita);
 end;
 
 function TACBrTEFAPIClassScope.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
-var
-  PA: TACBrTEFParametros;
-  i: Integer;
-  Resp: TACBrTEFResp;
-
-  procedure CopiarValorDaUltimaResposta(AInfo: Integer);
-  var
-    AStr: String;
-  begin
-    AStr := Resp.LeInformacao(AInfo).AsString;
-    if (Trim(AStr) <> '') then
-      PA.ValueInfo[AInfo] := AStr;
-  end;
-
 begin
   //D
   //PA := TACBrTEFParametros.Create;
@@ -962,35 +951,6 @@ begin
   //end;
 end;
 
-procedure TACBrTEFAPIClassScope.ResolverTransacaoPendente(
-  AStatus: TACBrTEFStatusTransacao);
-var
-  PGWebStatus: LongWord;
-begin
-  //D
-  // Se não foi disparado por QuandoAvaliarTransacaoPendenteAPI, pegue as
-  //   informações da Transação atual, na memória
-  //if (fpndReqNum = '') then
-  //begin
-  //  with fpACBrTEFAPI.UltimaRespostaTEF do
-  //  begin
-  //    fpndReqNum := LeInformacao(PWINFO_REQNUM,0).AsString;
-  //    fPndLocRef := LeInformacao(PWINFO_AUTLOCREF,0).AsString;
-  //    fPndExtRef := LeInformacao(PWINFO_AUTEXTREF,0).AsString;
-  //    fPndVirtMerch := LeInformacao(PWINFO_VIRTMERCH,0).AsString;
-  //    fPndAuthSyst := LeInformacao(PWINFO_AUTHSYST,0).AsString;
-  //  end;
-  //end;
-  //
-  //if (fpndReqNum = '') then
-  //  fpACBrTEFAPI.DoException(sACBrTEFAPISemTransacaoPendenteException);
-  //
-  //PGWebStatus := StatusTransacaoToPWCNF_(AStatus);
-  //fTEFPayGoAPI.FinalizarTransacao(PGWebStatus,
-  //        fpndReqNum, fPndLocRef, fPndExtRef, fPndVirtMerch, fPndAuthSyst);
-  //LimparUltimaTransacaoPendente;
-end;
-
 procedure TACBrTEFAPIClassScope.AbortarTransacaoEmAndamento;
 begin
   fTEFScopeAPI.AbortarTransacao;
@@ -1024,8 +984,11 @@ begin
 end;
 
 function TACBrTEFAPIClassScope.VerificarPresencaPinPad: Byte;
+var
+  s: String;
 begin
-  //D Result := fTEFPayGoAPI.VerificarPresencaPinPad;
+  s := fTEFScopeAPI.AcharPortaPinPad;
+  Result := StrToIntDef(s, 0);
 end;
 
 procedure TACBrTEFAPIClassScope.SetDiretorioTrabalho(const AValue: String);
@@ -1037,6 +1000,19 @@ begin
                                      ['TACBrTEFAPIClassScope.DiretorioTrabalho']));
 
   fDiretorioTrabalho := AValue;
+end;
+
+procedure TACBrTEFAPIClassScope.ExecutarTransacaoScope(
+  OperacaoScope: TACBrTEFScopeOperacao; const Param1: String;
+  const Param2: String; const Param3: String);
+begin
+  fTEFScopeAPI.IniciarTransacao(OperacaoScope, Param1, Param2,Param3);
+  try
+    fTEFScopeAPI.ExecutarTransacao;
+  finally
+    if fpACBrTEFAPI.ConfirmarTransacaoAutomaticamente then
+      fTEFScopeAPI.FecharSessaoTEF;
+  end;
 end;
 
 end.

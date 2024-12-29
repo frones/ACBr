@@ -65,6 +65,7 @@ resourcestring
   sErrTransacaoJaIniciada = 'Transação já foi iniciada';
   sErrNaoImplementado = 'Não implementado %s';
   sErrEstruturaMenu = 'Erro na estrutura do Menu retornado';
+  sErrUltTransDesfeita = 'A transação TEF anterior foi desfeita (cancelada). Reter o cupom TEF';
 
   sMsgTituloMenu = 'Escolha uma opção';
   sMsgTituloAVista = 'A Vista ?';
@@ -1195,7 +1196,7 @@ type
 type
   EACBrTEFScopeAPI = class(Exception);
 
-  TACBrTEFScopeOperacao = ( scoMenu, scoCredito, scoDebito, scoPagto, scoConsCDC, scoCheque, scoCanc,
+  TACBrTEFScopeOperacao = ( scoNone, scoMenu, scoCredito, scoDebito, scoPagto, scoConsCDC, scoCheque, scoCanc,
                             scoReimpComp, scoResVenda, scoRecargaCel, scoPreAutCredito );
 
   TACBrTEFScopeGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
@@ -1301,7 +1302,7 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeCancelamento: function(_Valor, _TxServico: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopeReimpressaoComprovante: function(): LongInt;
+    xScopeReimpressaoOffLine: function(): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeResumoVendas: function(): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
@@ -1419,7 +1420,7 @@ type
     procedure AssignColetaToColetaEx(const AColeta: TParam_Coleta; var AColetaEx: TParam_Coleta_Ext);
 
     procedure PerguntarMenuScope(const TipoMenu: Byte; var Resposta: String; var Acao: Byte);
-    procedure PerguntarSimNao(const Titulo: String; var Resposta: String; var Acao: Byte);
+    procedure PerguntarSimNao(const ColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1809,7 +1810,7 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopeCompraCartaoDebito', @xScopeCompraCartaoDebito);
   ScopeFunctionDetect(sLibName, 'ScopeConsultaCheque', @xScopeConsultaCheque);
   ScopeFunctionDetect(sLibName, 'ScopeCancelamento', @xScopeCancelamento);
-  ScopeFunctionDetect(sLibName, 'ScopeReimpressaoComprovante', @xScopeReimpressaoComprovante);
+  ScopeFunctionDetect(sLibName, 'ScopeReimpressaoOffLine', @xScopeReimpressaoOffLine);
   ScopeFunctionDetect(sLibName, 'ScopeResumoVendas', @xScopeResumoVendas);
   ScopeFunctionDetect(sLibName, 'ScopeObtemCampoExt', @xScopeObtemCampoExt);
   ScopeFunctionDetect(sLibName, 'ScopeObtemCampoExt2', @xScopeObtemCampoExt2);
@@ -1870,7 +1871,7 @@ begin
   xScopeCompraCartaoDebito := Nil;
   xScopeConsultaCheque := Nil;
   xScopeCancelamento := Nil;
-  xScopeReimpressaoComprovante := Nil;
+  xScopeReimpressaoOffLine := Nil;
   xScopeResumoVendas := Nil;
   xScopeObtemCampoExt := Nil;
   xScopeObtemCampoExt2 := Nil;
@@ -2316,8 +2317,11 @@ begin
     TratarErroScope(ret);
 
   fSessaoAberta := False;
-
   VerificarSeMantemConexaoScope;
+
+  TransacaoFoiDesfeita := (DesfezTEF = 1);
+  if TransacaoFoiDesfeita then
+    ExibirMensagem(sErrUltTransDesfeita, tmOperador, 0);
 end;
 
 procedure TACBrTEFScopeAPI.VerificarSessaoTEFAnterior;
@@ -2373,15 +2377,18 @@ begin
         ret := xScopeCompraCartaoDebito(p1);
       end;
 
+    scoReimpComp:
+      begin
+        GravarLog('ScopeReimpressaoOffLine');
+        ret := xScopeReimpressaoOffLine();
+      end;
+
     //TODO: escrever outras outras operações
   end;
 
   GravarLog('  ret: '+IntToStr(ret));
   if (ret <> RCS_SUCESSO) then
-  begin
-    FecharSessaoTEF(False, b);
-    TratarErroScope(ret)
-  end
+    TratarErroScope(ret)   // Raise exception
   else
     SetEmTransacao(True);
 end;
@@ -2464,10 +2471,10 @@ begin
         Break;
 
       if (iStatus = TC_EXIBE_MENU) then
-      begin
-        PerguntarMenuScope(MNU_TAB_TIPO_CIELO, Resposta, Acao);  // MNU_TAB_TIPO_GENERICO
-      end
-      else
+        PerguntarMenuScope(MNU_TAB_TIPO_CIELO, Resposta, Acao);  // Deveria ser MNU_TAB_TIPO_GENERICO
+
+      // Se não tem a resposta por pergunta de Menu, colete //
+      if (Resposta = '') then
       begin
         // Obtendo informações da Coleta em curso
         FillChar(rColeta, SizeOf(TParam_Coleta), #0);
@@ -2519,6 +2526,8 @@ begin
 
       // Verifica se já tem resposta para esse estado //
       Resposta := RespostasPorEstados.Values[IntToStr(iStatus)];
+
+      // Se não recebeu resposta prédefinida para esse estado, trate a coleta
       if (Resposta = '') then
       begin
         // Trata os estados //
@@ -2527,14 +2536,9 @@ begin
           TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
             Acao := ACAO_RESUME_PROXIMO_ESTADO;
 
-          TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO:
+          TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO, TC_DECIDE_ULTIMO:
             begin
-              if (pos('?', rColetaEx.MsgOp1) > 0) then
-                Titulo := rColetaEx.MsgOp1
-              else
-                Titulo := rColetaEx.MsgOp2+'?';
-              Titulo := copy(Titulo, 1, Pos('?', Titulo));
-              PerguntarSimNao(Titulo, Resposta, Acao);
+              PerguntarSimNao(rColetaEx, Resposta, Acao);
             end;
 
           TC_CARTAO_DIGITADO,
@@ -2616,9 +2620,9 @@ begin
       if (iStatus <> RCS_CANCELADA_PELO_OPERADOR) then
         TratarErroScope(iStatus);
     end;
-
   finally
     SetEmTransacao(False);
+    RespostasPorEstados.Clear;
   end;
 end;
 
@@ -2808,13 +2812,13 @@ begin
     GravarLog(s);
 
     // Exibe as mensagens do cliente e operador //
-    MsgOp := Trim(String(MsgColetada.Op1)) + sLineBreak + Trim(String(MsgColetada.Op2));
-    if (MsgOp <> '') then
-      ExibirMensagem(MsgOp, tmOperador);
-
     MsgCli := Trim(String(MsgColetada.Cl1)) + sLineBreak + Trim(String(MsgColetada.Cl2));
     if (MsgCli <> '') then
       ExibirMensagem(MsgCli, tmCliente);
+
+    MsgOp := Trim(String(MsgColetada.Op1)) + sLineBreak + Trim(String(MsgColetada.Op2));
+    if (MsgOp <> '') then
+      ExibirMensagem(MsgOp, tmOperador, 0);
   end;
 end;
 
@@ -3004,12 +3008,16 @@ begin
   end;
 end;
 
-procedure TACBrTEFScopeAPI.PerguntarSimNao(const Titulo: String;
+procedure TACBrTEFScopeAPI.PerguntarSimNao(const ColetaEx: TParam_Coleta_Ext;
   var Resposta: String; var Acao: Byte);
 var
   op: TStringList;
   item: Integer;
+  Titulo: String;
 begin
+  Titulo := Trim(String(ColetaEx.MsgOp1)) + ' ' + Trim(String(ColetaEx.MsgOp2))+'?';
+  Titulo := copy(Titulo, 1, Pos('?', Titulo));
+
   Resposta := '0';
   Acao := ACAO_RESUME_PROXIMO_ESTADO;
 

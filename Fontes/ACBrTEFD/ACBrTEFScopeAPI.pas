@@ -1568,10 +1568,13 @@ begin
   VerificarEAjustarScopeINI;
   LoadLibFunctions;
 
-  if not ControleConexao then
-    AbrirComunicacaoScope;
+  try
+    AbrirPinPad;   // Chama AbrirComunicacaoScope
+  except
+    FecharComunicacaoScope;
+    raise;
+  end;
 
-  AbrirPinPad;
   fInicializada := True;
 end;
 
@@ -2320,12 +2323,9 @@ begin
   if (ret <> RCS_SUCESSO) then
     TratarErroScope(ret);
 
+  TransacaoFoiDesfeita := (DesfezTEF = 1);
   fSessaoAberta := False;
   VerificarSeMantemConexaoScope;
-
-  TransacaoFoiDesfeita := (DesfezTEF = 1);
-  if TransacaoFoiDesfeita then
-    ExibirMensagem(sErrUltTransDesfeita, tmOperador, 0);
 end;
 
 procedure TACBrTEFScopeAPI.VerificarSessaoTEFAnterior;
@@ -2345,8 +2345,8 @@ procedure TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
   const Param1: String; const Param2: String; const Param3: String);
 var
   p1, p2, p3: PAnsiChar;
+  w1, w2: Word;
   ret: LongInt;
-  b: Boolean;
 begin
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
             ', '+Param1+', '+Param2+', '+Param3+' )' );
@@ -2387,7 +2387,49 @@ begin
         ret := xScopeReimpressaoOffLine();
       end;
 
-    //TODO: escrever outras outras operações
+    scoCheque:
+      begin
+        GravarLog('ScopeConsultaCheque( '+Param1+' )');
+        ret := xScopeConsultaCheque(p1);
+      end;
+
+    scoConsCDC:
+      begin
+        GravarLog('ScopeConsultaCDC( '+Param1+', '+Param2+' )');
+        ret := xScopeConsultaCDC(p1, p2);
+      end;
+
+    scoCanc:
+      begin
+        GravarLog('ScopeCancelamento( '+Param1+', '+Param2+' )');
+        ret := xScopeCancelamento(p1, p2);
+      end;
+
+    scoResVenda:
+      begin
+        GravarLog('ScopeResumoVendas()');
+        ret := xScopeResumoVendas();
+      end;
+
+    scoRecargaCel:
+      begin
+        GravarLog('ScopeRecargaCelular');
+        ret := xScopeRecargaCelular();
+      end;
+
+    scoPagto:
+      begin
+        GravarLog('ScopePagamento( '+Param1+', '+Param2+' )');
+        w1 := StrToIntDef(Param1, 0);
+        w2 := StrToIntDef(Param2, 0);
+        ret := xScopePagamento(w1, w2);
+      end;
+
+    scoPreAutCredito:
+      begin
+        GravarLog('ScopePreAutorizacaoCredito( '+Param1+', '+Param2+' )');
+        ret := xScopePreAutorizacaoCredito(p1, p2);
+      end;
   end;
 
   GravarLog('  ret: '+IntToStr(ret));
@@ -2403,7 +2445,7 @@ var
   iBarra, Acao: Byte;
   rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
-  Resposta, Titulo: String;
+  Resposta: String;
 const
   cBarras = '|/-\';
 
@@ -2436,7 +2478,6 @@ begin
 
       // Iniciliza as variáveis
       Resposta := '';
-      Titulo := '';
       Acao := ACAO_RESUME_PROXIMO_ESTADO;
       TipoCaptura := COLETA_TECLADO;
 
@@ -2493,6 +2534,9 @@ begin
       begin
         // Trata os estados //
         case iStatus of
+          TC_EXIBE_MENU:                // Já tratado acima por 'PerguntarMenuScope'
+            {Nada a fazer};
+
           TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
           TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
             Acao := ACAO_RESUME_PROXIMO_ESTADO;
@@ -2552,10 +2596,7 @@ begin
             //TODO:
 
         else                            // deve coletar algo... //
-          begin
-            Titulo := MsgOperador(rColetaEx);
-            fOnPerguntaCampo(Titulo, rColetaEx, Resposta, Acao);
-          end;
+          fOnPerguntaCampo(MsgOperador(rColetaEx), rColetaEx, Resposta, Acao);
         end;
       end;
 
@@ -2618,8 +2659,6 @@ var
   pCabec, pCupomCliente, pCupomLoja, pCupomReduzido: PAnsiChar;
   NumeroLinhasReduzido: Byte;
   sCabec: String;
-const
-  CMASK0 = 'mask0-';
 begin
   pCabec := AllocMem(1024);
   pCupomCliente := AllocMem(2048);
@@ -2651,24 +2690,22 @@ end;
 
 procedure TACBrTEFScopeAPI.ObterDadosCheque;
 var
-  PCheque: TParam_Cheq;
+  rCheque: TParam_Cheq;
   ret: LongInt;
-const
-  CMASK0 = 'mask0-';
 begin
   GravarLog('ScopeGetCheque');
-  ret := xScopeGetCheque(@PCheque);
+  ret := xScopeGetCheque(@rCheque);
   GravarLog('  ret: '+IntToStr(ret));
   if (ret <> RCS_SUCESSO) then
     TratarErroScope(ret);
 
-  fDadosDaTransacao.Values[CCHEQUE_BANCO]   := String(PCheque.Banco);
-  fDadosDaTransacao.Values[CCHEQUE_AGENCIA] := String(PCheque.Agencia);
-  fDadosDaTransacao.Values[CCHEQUE_NUMERO]  := String(PCheque.NumCheque);
-  fDadosDaTransacao.Values[CCHEQUE_VALOR]   := String(PCheque.Valor);
-  fDadosDaTransacao.Values[CCHEQUE_DATA]    := String(PCheque.BomPara);
-  fDadosDaTransacao.Values[CCHEQUE_CODAUT]  := String(PCheque.CodAut);
-  fDadosDaTransacao.Values[CCHEQUE_MUNICIP] := String(PCheque.Municipio);
+  fDadosDaTransacao.Values[CCHEQUE_BANCO]   := String(rCheque.Banco);
+  fDadosDaTransacao.Values[CCHEQUE_AGENCIA] := String(rCheque.Agencia);
+  fDadosDaTransacao.Values[CCHEQUE_NUMERO]  := String(rCheque.NumCheque);
+  fDadosDaTransacao.Values[CCHEQUE_VALOR]   := String(rCheque.Valor);
+  fDadosDaTransacao.Values[CCHEQUE_DATA]    := String(rCheque.BomPara);
+  fDadosDaTransacao.Values[CCHEQUE_CODAUT]  := String(rCheque.CodAut);
+  fDadosDaTransacao.Values[CCHEQUE_MUNICIP] := String(rCheque.Municipio);
 end;
 
 procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
@@ -2781,7 +2818,10 @@ begin
 
     s := Trim(String(MsgColetada.Op1)) + sLineBreak + Trim(String(MsgColetada.Op2));
     if (s <> '') then
+    begin
+      ExibirMensagem(s, tmOperador);
       ExibirMensagem(s, tmOperador, 0);
+    end;
   end;
 end;
 

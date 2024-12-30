@@ -79,11 +79,15 @@ type
     procedure SetDiretorioTrabalho(const AValue: String);
 
   protected
-    procedure ExecutarTransacaoScopeSessaoUnica(OperacaoScope: TACBrTEFScopeOperacao;
-       const Param1: String = ''; const Param2: String = ''; const Param3: String = '');
+    function ExecutarTransacaoScopeSessaoUnica(OperacaoScope: TACBrTEFScopeOperacao;
+       const Param1: String = ''; const Param2: String = ''; const Param3: String = ''): Boolean;
 
     procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
+
+    function PerguntarMenuAdmScope: TACBrTEFOperacao;
+    function ExibirVersaoScope: Boolean;
+    function TestarComunicacaoScope: Boolean;
 
   public
     constructor Create(AACBrTEFAPI: TACBrTEFAPIComum);
@@ -581,6 +585,71 @@ begin
   fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
 end;
 
+function TACBrTEFAPIClassScope.PerguntarMenuAdmScope: TACBrTEFOperacao;
+var
+  slMenu: TStringList;
+  ItemSel: Integer;
+begin
+  Result := tefopNenhuma;
+
+  slMenu := TStringList.Create;
+  try
+    slMenu.Add(ACBrStr('Versão'));
+    slMenu.Add(ACBrStr('Teste Comunicação'));
+    slMenu.Add(ACBrStr('Reimpressão'));
+    slMenu.Add(ACBrStr('Cancelamento'));
+    slMenu.Add(ACBrStr('Pré-autorização Crédito'));
+    slMenu.Add(ACBrStr('Resumo de Vendas'));
+    slMenu.Add(ACBrStr('Pagamento de Conta'));
+    slMenu.Add(ACBrStr('Recarga de Celular'));
+    slMenu.Add(ACBrStr('Consulta CDC'));
+    slMenu.Add(ACBrStr('Consulta Cheque'));
+    slMenu.Add(ACBrStr('Administrativo'));
+    ItemSel := -1;
+    TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', slMenu, ItemSel );
+    case ItemSel of
+      0: Result := tefopVersao;
+      1: Result := tefopTesteComunicacao;
+      2: Result := tefopReimpressao;
+      3: Result := tefopCancelamento;
+      4: Result := tefopPreAutorizacao;
+      5: Result := tefopRelatSintetico;
+      6: Result := tefopPagamentoConta;
+      7: Result := tefopPrePago;
+      8: Result := tefopConsultaSaldo;
+      9: Result := tefopConsultaCheque;
+     10: Result := tefopAdministrativo;
+    end;
+  finally
+    slMenu.Free;
+  end;
+end;
+
+function TACBrTEFAPIClassScope.ExibirVersaoScope: Boolean;
+var
+  s: String;
+begin
+  s := Trim(fTEFScopeAPI.ObterVersaoScope);
+  Result := (s <> '');
+  if Result then
+    TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(s, telaOperador, 0);
+end;
+
+function TACBrTEFAPIClassScope.TestarComunicacaoScope: Boolean;
+var
+  s: String;
+begin
+  fTEFScopeAPI.AbrirSessaoTEF;
+  fTEFScopeAPI.FecharSessaoTEF;
+  Result := True;
+  s := Format(ACBrStr('Comunicação OK.'+sLineBreak+sLineBreak+
+                      'Empresa: %s, Filial %s, PDV: %S'+sLineBreak+
+                      'Servidor: %s:%s'),
+         [fTEFScopeAPI.Empresa, fTEFScopeAPI.Filial, fTEFScopeAPI.PDV,
+          fTEFScopeAPI.EnderecoIP, fTEFScopeAPI.PortaTCP]);
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(s, telaOperador, 0);
+end;
+
 procedure TACBrTEFAPIClassScope.QuandoGravarLogAPI(const ALogLine: String;
   var Tratado: Boolean);
 begin
@@ -797,67 +866,52 @@ end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
 var
-  sl: TStringList;
-  ItemSel: Integer;
-  s: String;
-  b: Byte;
-  op: TACBrTEFScopeOperacao;
+  OpScope: TACBrTEFScopeOperacao;
 begin
   Result := False;
-  op := scoNone;
+  if CodOperacaoAdm = tefopAdministrativo then
+    CodOperacaoAdm := PerguntarMenuAdmScope;
 
-  if (CodOperacaoAdm = tefopAdministrativo) then
-  begin
-    sl := TStringList.Create;
-    try
-      sl.Add(ACBrStr('Versão'));
-      sl.Add(ACBrStr('Teste Comunicação'));
-      sl.Add(ACBrStr('Reimpressão'));
-      sl.Add(ACBrStr('Administrativo'));
-      ItemSel := -1;
-      TACBrTEFAPI(fpACBrTEFAPI).QuandoPerguntarMenu( 'Menu Administrativo', sl, ItemSel );
-      case ItemSel of
-        0: CodOperacaoAdm := tefopVersao;
-        1: CodOperacaoAdm := tefopTesteComunicacao;
-        2: CodOperacaoAdm := tefopReimpressao;
-        3: CodOperacaoAdm := tefopAdministrativo;
-      else
-        Exit;
-      end;
-    finally
-      sl.Free;
-    end;
-  end;
+  OpScope := scoNone;
+  Result := True;
 
   case CodOperacaoAdm of
     tefopVersao:
-      begin
-        s := Trim(fTEFScopeAPI.ObterVersaoScope);
-        Result := (s <> '');
-        if Result then
-          TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(s, telaOperador, 0);
-        Exit;
-      end;
+      Result := ExibirVersaoScope();
 
     tefopTesteComunicacao:
-      begin
-        //TODO:
-        fTEFScopeAPI.AbrirSessaoTEF;
-        fTEFScopeAPI.FecharSessaoTEF;
-        Result := True;
-        Exit;
-      end;
+      Result := TestarComunicacaoScope();
 
     tefopReimpressao:
-      op := scoReimpComp;
+      OpScope := scoReimpComp;
+
+    tefopCancelamento:
+      OpScope := scoCanc;              // Valor, Taxa Serviço
+
+    tefopPreAutorizacao:
+      OpScope := scoPreAutCredito;     // Valor, Taxa Serviço
+
+    tefopRelatSintetico:
+      OpScope := scoResVenda;
+
+    tefopPagamentoConta:               // Serviço, Bandeira
+      OpScope := scoPagto;
+
+    tefopPrePago:
+      OpScope := scoPreAutCredito;     // Valor, Taxa Serviço
+
+    tefopConsultaSaldo:
+      OpScope := scoConsCDC;           // Valor, Taxa Serviço
+
+    tefopConsultaCheque:
+      OpScope := scoCheque;            // Valor
+
   else
-    op := scoMenu;
+    OpScope := scoMenu;
   end;
 
-  if (op <> scoNone) then
-    ExecutarTransacaoScopeSessaoUnica(op);
-
-  Result := True;
+  if (OpScope <> scoNone) then
+    Result := ExecutarTransacaoScopeSessaoUnica(OpScope);
 end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
@@ -905,16 +959,21 @@ var
   Confirmar: Boolean;
   TransacaoFoiDesfeita: Boolean;
 begin
-  // TEF Scope, não tem o conceito de tratamento de transações anteriores a Última
+  // TEF Scope, não tem o conceito de tratamento de transações anteriores, a não ser da Última transação
   //i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
 
   Confirmar := (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]);
   fTEFScopeAPI.FecharSessaoTEF(Confirmar, TransacaoFoiDesfeita);
+  if TransacaoFoiDesfeita then
+    TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(ACBrStr(sErrUltTransDesfeita), telaOperador, 0);
 end;
 
 procedure TACBrTEFAPIClassScope.ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao);
 begin
-  FinalizarTransacao('', '', '', AStatus);
+  FinalizarTransacao( fpACBrTEFAPI.UltimaRespostaTEF.Rede,
+                      fpACBrTEFAPI.UltimaRespostaTEF.NSU,
+                      fpACBrTEFAPI.UltimaRespostaTEF.Finalizacao,
+                      AStatus );
 end;
 
 function TACBrTEFAPIClassScope.CancelarTransacao(const NSU,
@@ -1011,15 +1070,17 @@ begin
   fDiretorioTrabalho := AValue;
 end;
 
-procedure TACBrTEFAPIClassScope.ExecutarTransacaoScopeSessaoUnica(
+function TACBrTEFAPIClassScope.ExecutarTransacaoScopeSessaoUnica(
   OperacaoScope: TACBrTEFScopeOperacao; const Param1: String;
-  const Param2: String; const Param3: String);
+  const Param2: String; const Param3: String): Boolean;
 begin
+  Result := False;
   fTEFScopeAPI.IniciarTransacao(OperacaoScope, Param1, Param2,Param3);
   try
     fTEFScopeAPI.ExecutarTransacao;
   finally
     fTEFScopeAPI.FecharSessaoTEF;
+    Result := True;
   end;
 end;
 

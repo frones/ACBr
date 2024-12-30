@@ -977,7 +977,7 @@ var
   aModalidade,wLinha, aTipoCobranca:String;
   TamConvenioMaior6                :Boolean;
   wCarteira, LDiasProtesto, LDiasTrabalhados : Integer;
-  sDiasBaixa: String;
+  sDiasBaixa, LConvenio: String;
 begin
 
    with ACBrTitulo do
@@ -997,6 +997,11 @@ begin
       end;
       
      TamConvenioMaior6:= Length(trim(ACBrBoleto.Cedente.Convenio)) > 6;
+     if (not TamConvenioMaior6) and (Length(trim(ACBrBoleto.Cedente.Convenio)) = 4) then
+       LConvenio := PadLeft(trim(ACBrBoleto.Cedente.Convenio), 6,'0')
+     else
+       LConvenio := PadLeft(trim(ACBrBoleto.Cedente.Convenio), 6);
+
      aAgencia         := PadLeft(ACBrBoleto.Cedente.Agencia, 4, '0');
      aConta           := RightStr(ACBrBoleto.Cedente.Conta, 8);
      aModalidade      := PadLeft(trim(ACBrBoleto.Cedente.Modalidade), 3, '0');
@@ -1215,7 +1220,7 @@ begin
        if TamConvenioMaior6 then
          wLinha:= wLinha + PadLeft( trim(Cedente.Convenio), 7)  // Número do convenio
        else
-         wLinha:= wLinha + PadLeft( trim(Cedente.Convenio), 6); // Número do convenio
+         wLinha:= wLinha + LConvenio; // Número do convenio
 
        wLinha:= wLinha + PadRight( SeuNumero, 25 );             // Numero de Controle do Participante
 

@@ -48,6 +48,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/12/2024
+-- ACBrBancoBrasil.pas --
+[-] TK-6430 Adicionado a condicao para quando convenio igual 4 posições enviar zeros a esquerda.
+  https://www.projetoacbr.com.br/forum/topic/81143-arquivo-de-remessa-banco-do-brasil-rejeitada-cnab400-com-4-posi%C3%A7%C3%B5es/
+  Por: Daniel Morais Infocotidiano
 
 30/12/2024
 -- ACBrBoleto.pas --

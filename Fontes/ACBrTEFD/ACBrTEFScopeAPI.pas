@@ -1376,20 +1376,14 @@ type
     xScopePPGetData: function(LenDados: Word; pDados: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPAbort: function(): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPStartOptionMenu: function(Titulo: PAnsiChar; Lista: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPOptionMenu: function(Indice: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
-  //E - Implementar??
-  //xScopePPGetInfoEx
-  //ScopePPStartOptionMenu
-  //ScopePPOptionMenu
-  //ScopePPGetOperationMode
-  //ScopePPDisplayEx
     xScopeMenu: function(_UsoFuturo: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPDisplay: function(Msg: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  //Descontinuadas (pág. 142)
     xScopePPOpen: function(Porta: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-  //xScopePPGetInfo
-  //xScopePPStartGetPIN
-  //.... Descontinuadas
 
     procedure SetIntervaloColeta(AValue: Integer);
     procedure SetPathLib(const AValue: String);
@@ -1524,7 +1518,9 @@ type
     function AcharPortaPinPad: String;
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(Dado: Word; MinLen, MaxLen: Word;
-      TimeOutMiliSec: SmallInt): String;
+      TimeOutMiliSec: Integer = 30000): String;
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings;
+      TimeOutMiliSec: Integer = 30000): Integer;
 
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
   end;
@@ -1911,6 +1907,8 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopePPStartGetData', @xScopePPStartGetData);
   ScopeFunctionDetect(sLibName, 'ScopePPGetData', @xScopePPGetData);
   ScopeFunctionDetect(sLibName, 'ScopePPAbort', @xScopePPAbort);
+  ScopeFunctionDetect(sLibName, 'ScopePPStartOptionMenu', @xScopePPStartOptionMenu);
+  ScopeFunctionDetect(sLibName, 'ScopePPOptionMenu', @xScopePPOptionMenu);
   ScopeFunctionDetect(sLibName, 'ScopePPDisplay', @xScopePPDisplay);
   ScopeFunctionDetect(sLibName, 'ScopeMenu', @xScopeMenu);
 
@@ -1975,6 +1973,8 @@ begin
   xScopePPStartGetData := Nil;
   xScopePPGetData := Nil;
   xScopePPAbort := Nil;
+  xScopePPStartOptionMenu := Nil;
+  xScopePPOptionMenu := Nil;
   xScopePPDisplay := Nil;
 end;
 
@@ -2249,7 +2249,7 @@ begin
 end;
 
 function TACBrTEFScopeAPI.ObterDadoPinPad(Dado: Word; MinLen, MaxLen: Word;
-  TimeOutMiliSec: SmallInt): String;
+  TimeOutMiliSec: Integer): String;
 var
   ret: LongInt;
   pBuffer: PAnsiChar;
@@ -2271,7 +2271,7 @@ begin
     while (ret = PC_PROCESSING) and (now < tf) do
     begin
       GravarLog('ScopePPGetData( '+IntToStr(BUFFER_SIZE)+' )');
-      ret := xScopePPGetData(BUFFER_SIZE, PBuffer);
+      ret := xScopePPGetData(BUFFER_SIZE, pBuffer);
       GravarLog('  ret: '+IntToStr(ret));
       Sleep(fIntervaloColeta);
     end;
@@ -2289,10 +2289,72 @@ begin
         ret := PC_TIMEOUT;
       end;
 
-      TratarErroPinPadScope(ret);
+      if (ret <> PC_CANCEL) then
+        TratarErroPinPadScope(ret);
     end;
 
-    Result := TrimRight(String(pBuffer));
+    if (ret = PC_OK) then
+      Result := TrimRight(String(pBuffer));
+  finally
+    Freemem(pBuffer);
+  end;
+end;
+
+function TACBrTEFScopeAPI.MenuPinPad(const Titulo: String; Opcoes: TStrings;
+  TimeOutMiliSec: Integer): Integer;
+var
+  ret, i: LongInt;
+  pBuffer: PAnsiChar;
+  tf: TDateTime;
+  Lin, Lista: AnsiString;
+const
+  BUFFER_SIZE = 10;
+begin
+  Result := -1;
+  Lista := '';
+  for i := 0 to Opcoes.Count-1 do
+  begin
+    Lin := copy(Opcoes[i],1,24);
+    Lista := Lista + Format('%.2d',[Length(Lin)]) + Lin;
+  end;
+
+  GravarLog('ScopePPStartOptionMenu( '+Titulo+', '+Lista+' )');
+  ret := xScopePPStartOptionMenu(PAnsiChar(Titulo), PAnsiChar(Lista));
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> PC_OK) then
+    TratarErroPinPadScope(ret);
+
+  PBuffer := AllocMem(BUFFER_SIZE);
+  try
+    ret := PC_PROCESSING;
+    tf := IncMilliSecond(now, TimeOutMiliSec);
+    while (ret = PC_PROCESSING) and (now < tf) do
+    begin
+      GravarLog('ScopePPOptionMenu( '+IntToStr(BUFFER_SIZE)+' )');
+      ret := xScopePPOptionMenu(pBuffer);
+      GravarLog('  ret: '+IntToStr(ret));
+      Sleep(fIntervaloColeta);
+    end;
+
+    if (ret <> PC_OK) then
+    begin
+      if (ret = PC_PROCESSING) and (now > tf) then
+      begin
+        GravarLog('ScopePPAbort');
+        ret := xScopePPAbort;
+        GravarLog('  ret: '+IntToStr(ret));
+        if (ret <> PC_OK) then
+          TratarErroPinPadScope(ret);
+
+        ret := PC_TIMEOUT;
+      end;
+
+      if (ret <> PC_CANCEL) then
+        TratarErroPinPadScope(ret);
+    end;
+
+    if (ret = PC_OK) then
+      Result := StrToIntDef(String(pBuffer), -1);
   finally
     Freemem(pBuffer);
   end;

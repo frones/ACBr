@@ -121,6 +121,7 @@ type
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: integer = 30000;
       MinLen: SmallInt = 0; MaxLen: SmallInt = 0): String; override;
+    function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer; override;
     function VerificarPresencaPinPad: Byte; override;
 
     property TEFScopeAPI: TACBrTEFScopeAPI read fTEFScopeAPI;
@@ -971,6 +972,12 @@ begin
     CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
 
   Result := fTEFScopeAPI.ObterDadoPinPad(Dado, MinLen, MaxLen, TimeOut);
+end;
+
+function TACBrTEFAPIClassScope.MenuPinPad(const Titulo: String;
+  Opcoes: TStrings; TimeOut: Integer): Integer;
+begin
+  Result := fTEFScopeAPI.MenuPinPad(Titulo, Opcoes, TimeOut);
 end;
 
 function TACBrTEFAPIClassScope.DadoPinPadToMsg(

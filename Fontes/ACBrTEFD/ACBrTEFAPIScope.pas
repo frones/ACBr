@@ -77,12 +77,12 @@ type
        var Resposta: String; var AcaoResposta: Byte);
 
     procedure SetDiretorioTrabalho(const AValue: String);
+    function DadoPinPadToMsg(ADadoPinPad: TACBrTEFAPIDadoPinPad): Word;
 
   protected
     function ExecutarTransacaoScopeSessaoUnica(OperacaoScope: TACBrTEFScopeOperacao;
        const Param1: String = ''; const Param2: String = ''; const Param3: String = ''): Boolean;
 
-    procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
 
     function PerguntarMenuAdmScope: TACBrTEFOperacao;
@@ -109,13 +109,6 @@ type
       CodOperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(
       const CodOperacaoAdm: string = ''): Boolean; overload; override;
-
-    function CancelarTransacao(
-      const NSU, CodigoAutorizacaoTransacao: string;
-      DataHoraTransacao: TDateTime;
-      Valor: Double;
-      const CodigoFinalizacao: string = '';
-      const Rede: string = ''): Boolean; override;
 
     procedure FinalizarTransacao(
       const Rede, NSU, CodigoFinalizacao: String;
@@ -467,7 +460,7 @@ begin
 
   //ConteudoToComprovantes;
   //ConteudoToParcelas;
-  //E verificar???
+  //TODO: verificar???
   QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
   Sucesso := Trim(ImagemComprovante1aVia.Text) <> '';
   Confirmar := True;
@@ -518,33 +511,16 @@ begin
     IpStr := copy(IpStr, 1, p-1);
   end;
 
-//D
   fTEFScopeAPI.DiretorioTrabalho := ADir;
   fTEFScopeAPI.EnderecoIP := IpStr;
   fTEFScopeAPI.PortaTCP := PortaStr;
-  //fTEFScopeAPI.Aplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
   fTEFScopeAPI.VersaoAutomacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
-  //fTEFScopeAPI.SoftwareHouse := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse;
-  //fTEFScopeAPI.NomeEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
-  //fTEFScopeAPI.SuportaSaque := fpACBrTEFAPI.DadosAutomacao.SuportaSaque;
-  //fTEFScopeAPI.SuportaDesconto := fpACBrTEFAPI.DadosAutomacao.SuportaDesconto;
-  //fTEFScopeAPI.SuportaViasDiferenciadas := fpACBrTEFAPI.DadosAutomacao.SuportaViasDiferenciadas;
-  //fTEFScopeAPI.ImprimeViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
-  //fTEFScopeAPI.UtilizaSaldoTotalVoucher := fpACBrTEFAPI.DadosAutomacao.UtilizaSaldoTotalVoucher;
-  //i := Integer(TACBrTEFAPI(fpACBrTEFAPI).ExibicaoQRCode);
-  //fTEFScopeAPI.ExibicaoQRCode := TACBrTEFPGWebAPIExibicaoQRCode(i);
-  //
-  //fTEFScopeAPI.ConfirmarTransacoesPendentesNoHost := (fpACBrTEFAPI.TratamentoTransacaoPendente = tefpenConfirmar);
-  //if (fpACBrTEFAPI.TratamentoTransacaoPendente = tefpenPerguntar) then
-  //  fTEFScopeAPI.OnAvaliarTransacaoPendente := QuandoAvaliarTransacaoPendenteAPI
-  //else
-  //  fTEFScopeAPI.OnAvaliarTransacaoPendente := Nil;
-  //
-
-//E
   fTEFScopeAPI.Empresa := fpACBrTEFAPI.DadosTerminal.CodEmpresa;
   fTEFScopeAPI.Filial := fpACBrTEFAPI.DadosTerminal.CodFilial;
   fTEFScopeAPI.PDV := fpACBrTEFAPI.DadosTerminal.CodTerminal;
+  fTEFScopeAPI.MsgPinPad := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse + '|' +
+                            fpACBrTEFAPI.DadosAutomacao.NomeAplicacao + ' ' +
+                            fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
   fTEFScopeAPI.PortaPinPad := fpACBrTEFAPI.DadosTerminal.PortaPinPad;
 
   fTEFScopeAPI.Inicializar;
@@ -556,14 +532,6 @@ procedure TACBrTEFAPIClassScope.DesInicializar;
 begin
   fTEFScopeAPI.DesInicializar;
   inherited;
-end;
-
-procedure TACBrTEFAPIClassScope.InicializarChamadaAPI(
-  AMetodoOperacao: TACBrTEFAPIMetodo);
-begin
-  inherited;
-//E?? - Poderia não confirmar as transações...
-  fpACBrTEFAPI.ConfirmarTransacoesPendentes;
 end;
 
 procedure TACBrTEFAPIClassScope.InterpretarRespostaAPI;
@@ -976,49 +944,6 @@ begin
                       AStatus );
 end;
 
-function TACBrTEFAPIClassScope.CancelarTransacao(const NSU,
-  CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
-  Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
-begin
-  //D
-  //PA := TACBrTEFParametros.Create;
-  //try
-  //  PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;
-  //  PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMYY', DataHoraTransacao);
-  //  PA.ValueInfo[PWINFO_TRNORIGTIME] := FormatDateTime('hhnnss', DataHoraTransacao);
-  //  //PA.ValueInfo[PWINFO_TRNORIGDATETIME] := FormatDateTime('YYYYMMDDhhnnss', DataHoraTransacao);
-  //  PA.ValueInfo[PWINFO_TRNORIGAMNT] :=  IntToStr(Trunc(RoundTo(Valor * 100,-2)));
-  //  PA.ValueInfo[PWINFO_TRNORIGAUTH] := CodigoAutorizacaoTransacao;
-  //  PA.ValueInfo[PWINFO_TRNORIGAUTHCODE] := CodigoAutorizacaoTransacao;
-  //
-  //  if (Rede <> '') and (CodigoFinalizacao <> '') then
-  //  begin
-  //    i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
-  //    if (i >= 0) then
-  //    begin
-  //      Resp := fpACBrTEFAPI.RespostasTEF[i];
-  //      PA.ValueInfo[PWINFO_TRNORIGLOCREF] := Resp.Finalizacao;
-  //      PA.ValueInfo[PWINFO_TRNORIGREQNUM] := IntToStr(Resp.NumeroLoteTransacao);
-  //      //CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
-  //      CopiarValorDaUltimaResposta(PWINFO_CARDTYPE);
-  //      CopiarValorDaUltimaResposta(PWINFO_VIRTMERCH);
-  //      CopiarValorDaUltimaResposta(PWINFO_AUTMERCHID);
-  //      CopiarValorDaUltimaResposta(PWINFO_FINTYPE);
-  //    end;
-  //  end;
-  //
-  //  if (Rede <> '') then
-  //    PA.ValueInfo[PWINFO_AUTHSYST] := Rede
-  //  else if (fAutorizador <> '') then
-  //    PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
-  //
-  //  fTEFPayGoAPI.IniciarTransacao(fOperacaoCancelamento, PA);
-  //  Result := fTEFPayGoAPI.ExecutarTransacao;
-  //finally
-  //  PA.Free;
-  //end;
-end;
-
 procedure TACBrTEFAPIClassScope.AbortarTransacaoEmAndamento;
 begin
   fTEFScopeAPI.AbortarTransacao;
@@ -1033,22 +958,42 @@ function TACBrTEFAPIClassScope.ObterDadoPinPad(
   TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: integer; MinLen: SmallInt;
   MaxLen: SmallInt): String;
 var
-  TipoMsg: Word;
+  Dado: Word;
 begin
-  //D
-  //TipoMsg := DadoPinPadToMsg(TipoDado);
-  //if (TipoMsg < 1) then
-  //begin
-  //  fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
-  //    [GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) ), ClassName] ));
-  //end;
-  //
-  //if (MinLen = 0) and (MaxLen = 0) then
-  //  CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
-  //
-  //Result := fTEFPayGoAPI.ObterDadoPinPad( TipoMsg,
-  //                                        MinLen, MaxLen,
-  //                                        Trunc(TimeOut/1000) );
+  Dado := DadoPinPadToMsg(TipoDado);
+  if (Dado < 1) then
+  begin
+    fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPICapturaNaoSuportada),
+      [GetEnumName(TypeInfo(TACBrTEFAPIDadoPinPad), integer(TipoDado) ), ClassName] ));
+  end;
+
+  if (MinLen = 0) and (MaxLen = 0) then
+    CalcularTamanhosCampoDadoPinPad(TipoDado, MinLen, MaxLen);
+
+  Result := fTEFScopeAPI.ObterDadoPinPad(Dado, MinLen, MaxLen, TimeOut);
+end;
+
+function TACBrTEFAPIClassScope.DadoPinPadToMsg(
+  ADadoPinPad: TACBrTEFAPIDadoPinPad): Word;
+begin
+  case ADadoPinPad of
+    dpDDD: Result := PP_DIGITE_O_DDD;
+    dpRedDDD: Result := PP_REDIGITE_O_DDD;
+    dpFone: Result := PP_DIGITE_O_TELEFONE;
+    dpRedFone: Result := PP_REDIGITE_O_TELEFONE;
+    dpDDDeFone: Result := PP_DIGITE_DDD_TELEFONE;
+    dpRedDDDeFone: Result := PP_REDIGITE_DDD_TELEFONE;
+    dpCPF: Result := PP_DIGITE_O_CPF;
+    dpRedCPF: Result := PP_REDIGITE_O_CPF;
+    dpRG: Result := PP_DIGITE_O_RG;
+    dpRedRG: Result := PP_REDIGITE_O_RG;
+    dp4UltDigitos: Result := PP_DIGITE_OS_4_ULTIMOS_DIGITOS;
+    dpCodSeguranca: Result := PP_DIGITE_CODIGO_DE_SEGURANCA;
+    dpCNPJ: Result := PP_DIGITE_O_CNPJ;
+    dpRedCNPJ: Result := PP_REDIGITE_O_CNPJ;
+  else
+    Result := 0;
+  end;
 end;
 
 function TACBrTEFAPIClassScope.VerificarPresencaPinPad: Byte;

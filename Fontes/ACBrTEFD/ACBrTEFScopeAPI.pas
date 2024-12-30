@@ -66,6 +66,12 @@ resourcestring
   sErrNaoImplementado = 'Não implementado %s';
   sErrEstruturaMenu = 'Erro na estrutura do Menu retornado';
   sErrUltTransDesfeita = 'A transação TEF anterior foi desfeita (cancelada). Reter o cupom TEF';
+  sErrVersaoAutomacaoInvalido = 'Versão Automação deve ser:'+sLineBreak+
+                                'RRAAAACCCC, onde:'+sLineBreak+
+                                'RR - Release Certificação TEF'+sLineBreak+
+                                'AAAA - Nome da Automação'+sLineBreak+
+                                'CCCC - Código do Memorando'+sLineBreak+
+                                'Exemplo: "01HOTK0000"';
 
   sMsgTituloMenu = 'Escolha uma opção';
   sMsgTituloAVista = 'A Vista ?';
@@ -80,7 +86,7 @@ resourcestring
   sMsgTransacaoDesfeita = 'A TRANSAÇÃO TEF ANTERIOR FOI DESFEITA.'+sLineBreak+'RETER O CUPOM TEF.';
 
 const
-  CINTERVALO_COLETA = 200;
+  CINTERVALO_COLETA = 300;
 
   {--------------------------------------------------------------------------------------------
                 Codigos/erros devolvidos pelo Scope
@@ -478,6 +484,24 @@ const
   CANAL_COMM_USB       = 2;  // Comunicacao USB
   CANAL_COMM_BLUETOOTH = 3;  // Comunicacao Bluetooth
 
+
+  {--------------------------------------------------------------------------------------------
+                Valores válidos para Parâmetro "Dado" do método "ScopePPStartGetData"
+  --------------------------------------------------------------------------------------------}
+  PP_DIGITE_O_DDD                = 1;
+  PP_REDIGITE_O_DDD              = 2;
+  PP_DIGITE_O_TELEFONE           = 3;
+  PP_REDIGITE_O_TELEFONE         = 4;
+  PP_DIGITE_DDD_TELEFONE         = 5;
+  PP_REDIGITE_DDD_TELEFONE       = 6;
+  PP_DIGITE_O_CPF                = 7;
+  PP_REDIGITE_O_CPF              = 8;
+  PP_DIGITE_O_RG                 = 9;
+  PP_REDIGITE_O_RG               = 10;
+  PP_DIGITE_OS_4_ULTIMOS_DIGITOS = 11;
+  PP_DIGITE_CODIGO_DE_SEGURANCA  = 12;
+  PP_DIGITE_O_CNPJ               = 13;
+  PP_REDIGITE_O_CNPJ             = 14;
 
   {--------------------------------------------------------------------------------------------
                 Valores válidos para Parâmetro "id" do método "ScopeConfigura"
@@ -1247,6 +1271,7 @@ type
     fEnderecoIP: String;
     fFilial: String;
     fInicializada: Boolean;
+    fIntervaloColeta: Integer;
     fMsgPinPad: String;
     fDadosDaTransacao: TStringList;
     fRespostasPorEstados: TStringList;
@@ -1346,10 +1371,14 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPGetCOMPort: function(szComEndereco: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPStartGetData: function(Dado: Word; TamMin: Word; TamMax: Word): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPGetData: function(LenDados: Word; pDados: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPAbort: function(): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
   //E - Implementar??
   //xScopePPGetInfoEx
-  //ScopePPStartGetData
-  //ScopePPGetData
   //ScopePPStartOptionMenu
   //ScopePPOptionMenu
   //ScopePPGetOperationMode
@@ -1362,6 +1391,7 @@ type
   //xScopePPStartGetPIN
   //.... Descontinuadas
 
+    procedure SetIntervaloColeta(AValue: Integer);
     procedure SetPathLib(const AValue: String);
     procedure SetDiretorioTrabalho(AValue: String);
     procedure SetEmpresa(const AValue: String);
@@ -1375,6 +1405,7 @@ type
     procedure SetEmTransacao(AValue: Boolean);
     procedure ChamarEventoTransacaoEmAndamento(EstadoOperacao: TACBrTEFScopeEstadoOperacao;
       out Cancelar: Boolean);
+    procedure SetVersaoAutomacao(AValue: String);
 
   protected
     function GetLibFullPath: String;
@@ -1386,6 +1417,7 @@ type
 
     procedure DoException(const AErrorMsg: String );
     procedure TratarErroScope(AErrorCode: LongInt);
+    procedure TratarErroPinPadScope(AErrorCode: LongInt);
 
     procedure AbrirComunicacaoScope;
     procedure FecharComunicacaoScope;
@@ -1425,6 +1457,7 @@ type
 
     function MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
     function MsgCliente(const rColetaEx: TParam_Coleta_Ext): String;
+    function FormatarMsgPinPad(const MsgPinPad: String): String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1438,13 +1471,14 @@ type
     property PDV: String read fPDV write SetPDV;
     property EnderecoIP: String  read fEnderecoIP write SetEnderecoIP;
     property PortaTCP: String read fPortaTCP write SetPortaTCP;
+    property IntervaloColeta: Integer read fIntervaloColeta write SetIntervaloColeta default CINTERVALO_COLETA;
 
     property DadosDaTransacao: TStringList read fDadosDaTransacao;
     property RespostasPorEstados: TStringList read fRespostasPorEstados;
 
     property PortaPinPad: String read fPortaPinPad write fPortaPinPad;
     property MsgPinPad: String read fMsgPinPad write fMsgPinPad;
-    property VersaoAutomacao: String read fVersaoAutomacao write fVersaoAutomacao;
+    property VersaoAutomacao: String read fVersaoAutomacao write SetVersaoAutomacao;
     property PinPadSeguro: Boolean read fPinPadSeguro write fPinPadSeguro default True;
     property CupomReduzido: Boolean read fCupomReduzido write fCupomReduzido default False;
     property PermitirCartaoDigitado: Boolean read fPermitirCartaoDigitado
@@ -1489,6 +1523,8 @@ type
     function ObterVersaoScope: String;
     function AcharPortaPinPad: String;
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
+    function ObterDadoPinPad(Dado: Word; MinLen, MaxLen: Word;
+      TimeOutMiliSec: SmallInt): String;
 
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
   end;
@@ -1496,7 +1532,7 @@ type
 implementation
 
 uses
-  IniFiles, StrUtils, TypInfo, Math,
+  IniFiles, StrUtils, TypInfo, Math, DateUtils,
   ACBrUtil.Strings,
   ACBrUtil.Math,
   ACBrUtil.FilesIO;
@@ -1524,6 +1560,7 @@ begin
   fPermitirCancelarOperacaoPinPad := True;
   fPermitirSaque := True;
   fConfirmarTransacoesPendentes := True;
+  fIntervaloColeta := CINTERVALO_COLETA;
   fOnGravarLog := Nil;
   fOnExibeMensagem := Nil;
   fOnPerguntarMenu := Nil;
@@ -1622,6 +1659,14 @@ begin
     DoException(sErrLibJaInicializda);
 
   fPathLib := PathWithDelim(ExtractFilePath(AValue));
+end;
+
+procedure TACBrTEFScopeAPI.SetIntervaloColeta(AValue: Integer);
+begin
+  if fIntervaloColeta = AValue then
+    Exit;
+
+  fIntervaloColeta := max(AValue, CINTERVALO_COLETA);
 end;
 
 procedure TACBrTEFScopeAPI.SetDiretorioTrabalho(AValue: String);
@@ -1752,6 +1797,32 @@ begin
   GravarLog('    Cancelar: '+BoolToStr(Cancelar, True) );
 end;
 
+procedure TACBrTEFScopeAPI.SetVersaoAutomacao(AValue: String);
+var
+  s: String;
+  l: Integer;
+  ok: Boolean;
+begin
+  if fVersaoAutomacao = AValue then
+    Exit;
+
+  s := Trim(AValue);
+  if (s <> '') then
+  begin
+    s := UpperCase(copy(AValue,1,10));
+    l := Length(s);
+    ok := (l = 10) and
+          StrIsNumber(copy(s,1,2)) and
+          StrIsAlphaNum(copy(s,3,4)) and
+          StrIsNumber(copy(s,7,4));
+
+    if not ok then
+      DoException(sErrVersaoAutomacaoInvalido);
+  end;
+
+  fVersaoAutomacao := s;
+end;
+
 function TACBrTEFScopeAPI.GetLibFullPath: String;
 begin
   if (PathLib <> '') then
@@ -1837,6 +1908,9 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopePPOpenSecure', @xScopePPOpenSecure);
   ScopeFunctionDetect(sLibName, 'ScopePPClose', @xScopePPClose);
   ScopeFunctionDetect(sLibName, 'ScopePPGetCOMPort', @xScopePPGetCOMPort);
+  ScopeFunctionDetect(sLibName, 'ScopePPStartGetData', @xScopePPStartGetData);
+  ScopeFunctionDetect(sLibName, 'ScopePPGetData', @xScopePPGetData);
+  ScopeFunctionDetect(sLibName, 'ScopePPAbort', @xScopePPAbort);
   ScopeFunctionDetect(sLibName, 'ScopePPDisplay', @xScopePPDisplay);
   ScopeFunctionDetect(sLibName, 'ScopeMenu', @xScopeMenu);
 
@@ -1898,6 +1972,9 @@ begin
   xScopePPOpenSecure := Nil;
   xScopePPClose := Nil;
   xScopePPGetCOMPort := Nil;
+  xScopePPStartGetData := Nil;
+  xScopePPGetData := Nil;
+  xScopePPAbort := Nil;
   xScopePPDisplay := Nil;
 end;
 
@@ -2148,7 +2225,7 @@ begin
     GravarLog('ScopePPGetCOMPort()');
     ret := xScopePPGetCOMPort(pszData);
     GravarLog('  ret: '+IntToStr(ret));
-    if (ret = RCS_SUCESSO) then
+    if (ret = PC_OK) then
     begin
       Result := String(pszData);
       GravarLog('  Result: '+Result);
@@ -2161,20 +2238,70 @@ end;
 procedure TACBrTEFScopeAPI.ExibirMensagemPinPad(const MsgPinPad: String);
 var
   ret: LongInt;
+  s: String;
 begin
-  GravarLog('xScopePPDisplay( '+MsgPinPad+' )');
-  ret := xScopePPDisplay(PAnsiChar(MsgPinPad));
+  s := FormatarMsgPinPad(MsgPinPad);
+  GravarLog('ScopePPDisplay( '+s+' )');
+  ret := xScopePPDisplay(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
-  if ret <> PC_OK then
-    TratarErroScope(ret);
+  if (ret <> PC_OK) then
+    TratarErroPinPadScope(ret);
+end;
+
+function TACBrTEFScopeAPI.ObterDadoPinPad(Dado: Word; MinLen, MaxLen: Word;
+  TimeOutMiliSec: SmallInt): String;
+var
+  ret: LongInt;
+  pBuffer: PAnsiChar;
+  tf: TDateTime;
+const
+  BUFFER_SIZE = 1024;
+begin
+  Result := '';
+  GravarLog('ScopePPStartGetData( '+IntToStr(Dado)+', '+IntToStr(MinLen)+', '+IntToStr(MaxLen)+' )');
+  ret := xScopePPStartGetData(Dado, MinLen, MaxLen);
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> PC_OK) then
+    TratarErroPinPadScope(ret);
+
+  PBuffer := AllocMem(BUFFER_SIZE);
+  try
+    ret := PC_PROCESSING;
+    tf := IncMilliSecond(now, TimeOutMiliSec);
+    while (ret = PC_PROCESSING) and (now < tf) do
+    begin
+      GravarLog('ScopePPGetData( '+IntToStr(BUFFER_SIZE)+' )');
+      ret := xScopePPGetData(BUFFER_SIZE, PBuffer);
+      GravarLog('  ret: '+IntToStr(ret));
+      Sleep(fIntervaloColeta);
+    end;
+
+    if (ret <> PC_OK) then
+    begin
+      if (ret = PC_PROCESSING) and (now > tf) then
+      begin
+        GravarLog('ScopePPAbort');
+        ret := xScopePPAbort;
+        GravarLog('  ret: '+IntToStr(ret));
+        if (ret <> PC_OK) then
+          TratarErroPinPadScope(ret);
+
+        ret := PC_TIMEOUT;
+      end;
+
+      TratarErroPinPadScope(ret);
+    end;
+
+    Result := TrimRight(String(pBuffer));
+  finally
+    Freemem(pBuffer);
+  end;
 end;
 
 procedure TACBrTEFScopeAPI.TratarErroScope(AErrorCode: LongInt);
 var
   MsgErro: String;
 begin
-//E
-  //Adicionar erros como os do Pinpad (Ex.: PC_NAO_ABERTO_APP ver pág 148) ou criar outra função para tratá-los??
   case AErrorCode of
     RCS_SUCESSO: MsgErro := '';
     RCS_TRN_EM_ANDAMENTO: MsgErro := ''; //'Transação em andamento';
@@ -2183,19 +2310,50 @@ begin
     RCS_ERRO_PARM_3: MsgErro := 'Parâmetro 3 inválido';
     RCS_ERRO_PARM_4: MsgErro := 'Parâmetro 4 inválido';
     RCS_ERRO_ARQ_CICLO_TEF: MsgErro := 'Erro no arquivo de controle, finalização multi-TEF';
-    //D RCS_API_NAO_FEZ_TRN: MsgErro := 'Ainda não fez nenhuma transação após a inicialização';
     RCS_API_NAO_INICIALIZADA: MsgErro := 'SCOPE API não foi inicializada';
     RCS_API_JA_INICIALIZADA: MsgErro := 'SCOPE API já foi inicializada';
     RCS_SRV_NOT_CFG: MsgErro := 'Servidor não configurado no arquivo '+CScopeINi;
     RCS_ERRO_LOGON_PDV: MsgErro := 'Verificar o erro retornado no log do ScopeSrv';
     RCS_REDE_LISTA_PRIOR_AID_INDISPONIVEL: MsgErro := 'Verifique a configuração do perfil do PDV';
-    //D RCS_THREAD_API_NOT_INIT: MsgErro := 'Não foi possível criar a “thread” na coleta de dados';
     RCS_ERRO_NUM_MAX_TEF_SESSAO: MsgErro := 'Estourou o número máximo de TEF numa sessão multi-TEF';
     RCS_NAO_HA_CAMPOS_SALVOS: MsgErro := 'Não há arquivo com dados da transação anterior salvo';
     RCS_CANCELADA_PELO_OPERADOR: MsgErro := 'Transação cancelada pelo operador';
     RCS_PP_COMPARTILHADO_NAO_CONFIGURADO: MsgErro := 'PIN-Pad compartilhado não está configurado, mas a rede exige que seja compartilhado.';
     RCS_AREA_RESERVADA_INSUFICIENTE: MsgErro := 'Área reservada para o buffer é insuficiente para o SCOPE Client preencher com os dados solicitados';
     RCS_NOT_FOUND: MsgErro := 'Não Encontrado';
+  else
+    MsgErro := Format('Erro: %d', [AErrorCode]);
+  end;
+
+  if (MsgErro <> '') then
+    DoException(MsgErro);
+end;
+
+procedure TACBrTEFScopeAPI.TratarErroPinPadScope(AErrorCode: LongInt);
+var
+  MsgErro: String;
+begin
+  case AErrorCode of
+    PC_INVCALL: MsgErro := 'Chamada invalida funcao. Operacoes previas sao necessarias.';
+    PC_INVPARM: MsgErro := 'Parametro invalido passado a funcao.';
+    PC_TIMEOUT: MsgErro := 'Esgotado o tempo maximo estipulado para a operacao.';
+    PC_CANCEL: MsgErro := 'Operacao cancelada pelo operador.';
+    PC_ALREADYOPEN: MsgErro := 'Pinpad ja aberto.';
+    PC_NOTOPEN: MsgErro := 'Pinpad nao foi aberto.';
+    PC_EXECERR: MsgErro := 'Erro interno de execucao - problema de implementao da biblioteca (software).';
+    PC_INVMODEL: MsgErro := 'Funcao nao suportada pelo modelo de pinpad.';
+    PC_NOFUNC: MsgErro := 'Funcao nao disponivel na Biblioteca do pinpad.';
+    PC_ERRMANDAT: MsgErro := 'Ausencia de dado mandatorio para o processamento.';
+    PC_PORTERR: MsgErro := 'Erro de comunicacao: porta serial do pinpad provavelmente ocupada.';
+    PC_COMMERR: MsgErro := 'Erro de comunicacao: pinpad provavelmente desconectado ou problemas com a interface serial.';
+    PC_UNKNOWNSTAT: MsgErro := 'Status informado pelo pinpad nao e conhecido.';
+    PC_RSPERR: MsgErro := 'Mensagem recebida do pinpad possui formato invalido.';
+    PC_COMMTOUT: MsgErro := 'Tempo esgotado ao esperar pela resposta do pinpad.';
+    PC_INTERR: MsgErro := 'Erro interno do pinpad.';
+    PC_PINPAD_NAO_CONFIGURADO: MsgErro := 'Pinpad nao configurado';
+    PC_DISPLAY_NAO_PERMITIDO: MsgErro := 'Display nao permitido neste momento ou situacao';
+    PC_NAO_ABERTO_APP: MsgErro := 'Pinpad nao foi aberto pela aplicacao';
+    PC_TIMEOUT_USER: MsgErro := 'Timeout do cliente/usuario';
   else
     MsgErro := Format('Erro: %d', [AErrorCode]);
   end;
@@ -2494,7 +2652,7 @@ begin
         if VerificarSeUsuarioCancelouTransacao(scoestFluxoAPI) then
           EnviarParametroTransacao(ACAO_RESUME_CANCELAR)
         else
-          Sleep(CINTERVALO_COLETA);
+          Sleep(fIntervaloColeta);
 
         Continue;
       end;
@@ -3100,6 +3258,24 @@ begin
   Result := Trim(String(rColetaEx.MsgCl1)) + sLineBreak + Trim(String(rColetaEx.MsgCl2));
 end;
 
+function TACBrTEFScopeAPI.FormatarMsgPinPad(const MsgPinPad: String): String;
+var
+  s, l1, l2: String;
+  p: Integer;
+begin
+  s := MsgPinPad;
+  p := pos('|', s);
+  if (p = 0) then
+  begin
+    p := 17;
+    Insert('|', s, p);
+  end;
+
+  l1 := PadRight(copy(s, 1, p-1), 16);
+  l2 := PadRight(copy(s, p+1, Length(s)), 16);
+  Result := l1 + l2;
+end;
+
 procedure TACBrTEFScopeAPI.AbrirPinPad;
 var
   ret: LongInt;
@@ -3113,8 +3289,8 @@ begin
   GravarLog('ScopeValidaInterfacePP( '+IntToStr(PP_INTERFACE_LIB_COMPARTILHADA)+' )');
   ret := xScopeValidaInterfacePP( PP_INTERFACE_LIB_COMPARTILHADA );
   GravarLog('  ret: '+IntToStr(ret));
-  if ret <> PC_OK then
-    TratarErroScope(ret);
+  if (ret <> PC_OK) then
+    TratarErroPinPadScope(ret);
 
   try
     AbrirComunicacaoScope;
@@ -3124,8 +3300,8 @@ begin
               ', Config:'+IntToStr(bConfig)+
               ', Exclusivo:'+IntToStr(bExclusivo)+
               ', Porta:'+IntToStr(bPorta) );
-    if ret <> PC_OK then
-      TratarErroScope(ret);
+    if (ret <> PC_OK) then
+      TratarErroPinPadScope(ret);
 
     if (bExclusivo = 0) then
     begin
@@ -3154,8 +3330,8 @@ begin
       end;
 
       GravarLog('  ret: '+IntToStr(ret));
-      if ret <> PC_OK then
-        DoException(Format('Erro %d ao abrir o PinPad', [ret]));
+      if (ret <> PC_OK) then
+        TratarErroPinPadScope(ret);
     end;
   finally
     VerificarSeMantemConexaoScope;
@@ -3164,19 +3340,15 @@ end;
 
 procedure TACBrTEFScopeAPI.FecharPinPad;
 var
-  msg: AnsiString;
   ret: LongInt;
+  s: String;
 begin
-  GravarLog('FecharPinPad');
-
-  if (Trim(fMsgPinPad) = '') then
-    msg := 'ACBR - SCOPE'
-  else
-    msg := fMsgPinPad;
-
-  GravarLog('ScopePPClose( '+msg+' )');
-  ret := xScopePPClose(PAnsiChar(msg));
+  s := FormatarMsgPinPad(fMsgPinPad);
+  GravarLog('ScopePPClose( '+s+' )');
+  ret := xScopePPClose(PAnsiChar(s));
   GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> PC_OK) then
+    TratarErroPinPadScope(ret);
 end;
 
 procedure TACBrTEFScopeAPI.ConfigurarColeta;

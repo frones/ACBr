@@ -95,7 +95,7 @@ procedure TLibBoletoDM.AplicarConfiguracoes;
 var
   LibConfig: TLibBoletoConfig;
   wVersaoLote, wVersaoArquivo, wNumeroCorrespondente: Integer;
-  LDensidadeGravacao :string;
+  LDensidadeGravacao, LKeySoftwareHouse :string;
 begin
 
   LibConfig := TLibBoletoConfig(Lib.Config);
@@ -130,6 +130,7 @@ begin
     wVersaoLote := LibConfig.BoletoBancoConfig.LayoutVersaoLote;
     CasasDecimaisMoraJuros := LibConfig.BoletoBancoConfig.CasasDecimaisMoraJuros;
     LDensidadeGravacao := LibConfig.BoletoBancoConfig.DensidadeGravacao;
+    LKeySoftwareHouse := LibConfig.BoletoBancoConfig.KeySoftwareHouse;
     CIP := LibConfig.BoletoBancoConfig.CIP;
   end;
 
@@ -150,6 +151,11 @@ begin
 
   if NaoEstaVazio(LDensidadeGravacao) then
      ACBrBoleto1.Banco.DensidadeGravacao := LDensidadeGravacao;
+
+  if NaoEstaVazio(LKeySoftwareHouse) then
+     ACBrBoleto1.KeySoftwareHouse := LKeySoftwareHouse;
+
+
 
   with ACBrBoleto1.Cedente do
   begin

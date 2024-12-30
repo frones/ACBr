@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2024
+--- ACBrLibBoletoConfig.pas,ACBrLibBoletoRespostas.pas, ACBrLibBoletoDataModule.pas, ACBrLibBoletoConsts.pas ---
+[*] TK-6431 Ajustado a lib para ler a nova propriedade KeySoftwareHouse, utilizado parceria BB
+	por Daniel de Morais InfoCotidiano 
+
 16/12/2024
 --- ACBrLibBoletoDataModule.pas, ACBrLibBoletoConfig.pas ---
 [-] TK-6298-1 Ajustado tratamento como outros campos da seção e retorno foi OK

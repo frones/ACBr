@@ -80,6 +80,7 @@ type
     FNomeArqRetorno: String;
     FDensidadeGravacao: String;
     FCIP: String;
+    FKeySoftwareHouse: String;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -96,6 +97,7 @@ type
     property NomeArqRetorno: String read FNomeArqRetorno write FNomeArqRetorno;
     property DensidadeGravacao: String read FDensidadeGravacao write FDensidadeGravacao;
     property CIP: String read FCIP write FCIP;
+    property KeySoftwareHouse: String read FKeySoftwareHouse write FKeySoftwareHouse;
 
   end;
 
@@ -999,6 +1001,7 @@ begin
     NomeArqRetorno := ACBrBoleto.NomeArqRetorno;
     DensidadeGravacao := ACBrBoleto.Banco.DensidadeGravacao;
     CIP := ACBrBoleto.Banco.CIP;
+    KeySoftwareHouse:= ACBrBoleto.KeySoftwareHouse;
   end;
 end;
 

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2024
+-- ACBrBoleto.pas --
+[*] TK-6431 Add a propriedade KeySoftwareHouse na função LerArqIni para ler na lib e Monitor
+  Por: Daniel Morais Infocotidiano
+
 26/12/2024
 -- ACBrBoletoRet_Itau_API --
 [-] TK-6392 Correção ao ler as rejeições do retorno

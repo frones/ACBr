@@ -3928,7 +3928,7 @@ var
   wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento, LDensidadeGravacao: String;
   Sessao, sFim, LocalPagamento, OrientacoesBanco: String;
   I, N: Integer;
-  DtMovimento, DtRegistro, DtVencimento: String;
+  DtMovimento, DtRegistro, DtVencimento, LKeySoftwareHouse: String;
 begin
   Result   := False;
 
@@ -4011,6 +4011,7 @@ begin
         wNumeroCorrespondente             := IniBoletos.ReadInteger(CBanco,'NumeroCorrespondente', 0 );
         wVersaoArquivo                    := IniBoletos.ReadInteger(CBanco,'VersaoArquivo', 0 );
         wVersaoLote                       := IniBoletos.ReadInteger(CBanco,'VersaoLote', 0 );
+        LKeySoftwareHouse                 := IniBoletos.ReadString(CBanco,'KeySoftwareHouse','');
 
         LocalPagamento := IniBoletos.ReadString(CBanco,'LocalPagamento','');
         if NaoEstaVazio(LocalPagamento) then
@@ -4065,6 +4066,9 @@ begin
 
         if NaoEstaVazio(LDensidadeGravacao) then
            Banco.DensidadeGravacao := LDensidadeGravacao;
+
+        if NaoEstaVazio(LKeySoftwareHouse) then
+           KeySoftwareHouse := LKeySoftwareHouse;
 
         Result := True;
       end;

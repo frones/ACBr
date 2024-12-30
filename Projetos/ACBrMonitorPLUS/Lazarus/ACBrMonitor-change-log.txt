@@ -43,6 +43,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+30/12/2024
+-- ACBrMonitorConfig.pas, DoBoletoUnit.pas, ACBrMonitor1.pas, ACBrMonitor1.lfm, ACBrMonitorConsts.pas  --
+[*] #TK-6431 Criado a propriedade KeySoftwareHouse para uso parceria BB API
+    Por: Daniel de Morais InfoCotidiano
 
 09/12/204
 [*] Realizado ajuste na função CTE.SetModeloDF para atender os modelos GTVe e CTe Simplificado.

@@ -519,6 +519,7 @@ type
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
     edConsultarGTIN: TEdit;
+    edtBoletoKeySoftwareHouse: TEdit;
     edtQuebraDeLinha: TEdit;
     edtConsCNPJ: TEdit;
     edtBolMargemInferior: TEdit;
@@ -872,6 +873,7 @@ type
     Label286: TLabel;
     Label287: TLabel;
     Label288: TLabel;
+    Label289: TLabel;
     lblConsCNPJ: TLabel;
     lblConsCNPJProvedor: TLabel;
     lblConCNPJSenha: TLabel;
@@ -5823,6 +5825,7 @@ begin
       edtPrefixRemessa.Text            := PrefixArqRemessa;
       edtVersaoArquivo.Text            := VersaoArquivo;
       edtVersaoLote.Text               := VersaoLote;
+      edtBoletoKeySoftwareHouse.Text   := KeySoftwareHouse;
     end;
 
     with Layout do
@@ -6779,6 +6782,7 @@ begin
     else
       LayoutRemessa := c400;
 
+    KeySoftwareHouse:= edtBoletoKeySoftwareHouse.text;
     DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
     LeCedenteRetorno:= chkLerBeneficiarioRetorno.Checked;
@@ -7778,6 +7782,7 @@ begin
        PrefixArqRemessa         := edtPrefixRemessa.Text;
        VersaoArquivo            := edtVersaoArquivo.Text;
        VersaoLote               := edtVersaoLote.Text;
+       KeySoftwareHouse         := edtBoletoKeySoftwareHouse.Text;
      end;
 
      with Email do

@@ -21486,11 +21486,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 519
             Top = 0
             Width = 1121
-            ActivePage = tsRemessaRetorno
+            ActivePage = tsBeneficiario
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 3
+            TabIndex = 0
             TabOrder = 0
             OnChange = pgBoletoChange
             object tsBeneficiario: TTabSheet
@@ -22823,6 +22823,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 104
                 Width = 76
                 Caption = 'Código Flash'
+                ParentColor = False
+              end
+              object edtBoletoKeySoftwareHouse: TEdit
+                Left = 760
+                Height = 25
+                Top = 122
+                Width = 112
+                TabOrder = 10
+              end
+              object Label289: TLabel
+                Left = 760
+                Height = 17
+                Top = 104
+                Width = 109
+                Caption = 'KeySoftwareHouse'
                 ParentColor = False
               end
             end
@@ -35159,6 +35174,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     Cedente.PIX.TipoChavePIX = tchNenhuma
+    Cedente.IntegradoraBoleto = tibNenhum
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoFCFortes1
     Configuracoes.Arquivos.LogNivel = logNenhum

@@ -1371,7 +1371,8 @@ begin
     Banco := Integer(fACBrBoleto.Banco.TipoCobranca);
   with MonitorConfig.BOLETO.RemessaRetorno do
     CNAB := Integer(fACBrBoleto.LayoutRemessa);
-
+  with MonitorConfig.BOLETO.RemessaRetorno do
+    KeySoftwareHouse := fACBrBoleto.KeySoftwareHouse;
 
   {Parametros da Conta}
   with MonitorConfig.BOLETO.Conta do

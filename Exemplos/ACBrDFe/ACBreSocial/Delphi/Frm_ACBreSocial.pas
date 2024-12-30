@@ -285,6 +285,7 @@ type
     { Private declarations }
     function GetTipoOperacao: TModoLancamento;
 
+    procedure LerRespostaConsultar(Sucesso: Boolean);
     // procedures eventos de tabela
     procedure GerareSocial1000;
     procedure GerareSocial1005;
@@ -7007,6 +7008,147 @@ begin
   end;
 end;
 
+procedure TfrmACBreSocial.LerRespostaConsultar(Sucesso: Boolean);
+var
+  i, J: Integer;
+  evtS5001: TS5001;
+  evtS5002: TS5002;
+  evtS5011: TS5011;
+  evtS5012: TS5012;
+  evtS5501: TS5501;
+  evtS5503: TS5503;
+  memoLinhas: TStrings;
+  vRetornoConsultaLote: TRetConsultaLote;
+  vRetEventos : TRetEventosCollectionItem;
+  vOcorrenciasItem : TOcorrenciasCollectionItem;
+begin
+  if Sucesso then
+  begin
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaLote.RetWS;
+
+    memoLinhas := MemoDados.Lines;
+    vRetornoConsultaLote := ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote;
+
+    memoLinhas.Add('');
+    memoLinhas.Add('Código Retorno: ' + IntToStr(vRetornoConsultaLote.Status.cdResposta));
+    memoLinhas.Add('Mensagem: ' + vRetornoConsultaLote.Status.descResposta);
+    memoLinhas.Add('Arquivo Salvo: ' + ACBreSocial1.WebServices.ConsultaLote.PathNome);
+
+    if vRetornoConsultaLote.Status.cdResposta in [201, 202] then
+    begin
+      memoLinhas.Add('ideEmpregador');
+      memoLinhas.Add(' - TpInsc: ' + eSTpInscricaoToStr(vRetornoConsultaLote.IdeEmpregador.TpInsc));
+      memoLinhas.Add(' - NrInsc: ' + vRetornoConsultaLote.IdeEmpregador.NrInsc);
+      memoLinhas.Add('ideTransmissor');
+      memoLinhas.Add(' - TpInsc: ' + eSTpInscricaoToStr(vRetornoConsultaLote.IdeTransmissor.TpInsc));
+      memoLinhas.Add(' - NrInsc: ' + vRetornoConsultaLote.IdeTransmissor.NrInsc);
+      memoLinhas.Add('dadosRecepcaoLote');
+      memoLinhas.Add(' - dhRecepcao..............: ' +
+        DateTimeToStr(vRetornoConsultaLote.dadosRecLote.dhRecepcao));
+      memoLinhas.Add(' - versaoAplicativoRecepcao: ' +
+        vRetornoConsultaLote.dadosRecLote.versaoAplicRecepcao);
+      memoLinhas.Add(' - protocoloEnvio..........: ' + vRetornoConsultaLote.dadosRecLote.Protocolo);
+
+      for i := 0 to vRetornoConsultaLote.retEventos.Count - 1 do
+      begin
+        vRetEventos := vRetornoConsultaLote.retEventos.Items[i];
+        memoLinhas.Add('Processamento');
+        memoLinhas.Add(' - ID Evento..........: ' + vRetEventos.Id);
+        memoLinhas.Add(' - cdResposta.........: ' +
+          IntToStr(vRetEventos.Processamento.cdResposta));
+        memoLinhas.Add(' - descResposta.......: ' + vRetEventos
+          .Processamento.descResposta);
+        memoLinhas.Add(' - versaoAplicProcLote: ' + vRetEventos
+          .Processamento.versaoAplicProcLote);
+        memoLinhas.Add(' - dhProcessamento....: ' + DateTimeToStr(vRetEventos
+          .Processamento.dhProcessamento));
+
+        if vRetEventos.Processamento.Ocorrencias.Count > 0 then
+        begin
+          memoLinhas.Add('Ocorrencias do Processamento');
+          for J := 0 to vRetEventos.Processamento.Ocorrencias.Count - 1 do
+          begin
+            memoLinhas.Add(' Ocorrencia ' + IntToStr(J));
+            memoLinhas.Add('   Código.....: ' +
+              IntToStr(vRetEventos.Processamento.Ocorrencias.Items
+              [J].Codigo));
+            memoLinhas.Add('   Descrição..: ' + vRetEventos
+              .Processamento.Ocorrencias.Items[J].Descricao);
+            memoLinhas.Add('   Tipo.......: ' +
+              IntToStr(vRetEventos.Processamento.Ocorrencias.Items
+              [J].Tipo));
+            memoLinhas.Add('   Localização: ' + vRetEventos
+              .Processamento.Ocorrencias.Items[J].Localizacao);
+          end;
+        end;
+
+        for J := 0 to vRetEventos.tot.Count - 1 do
+        begin
+          memoLinhas.Add(' Tot ' + IntToStr(J));
+          memoLinhas.Add('   Tipo.........: ' + vRetEventos.tot[J].Tipo);
+          case vRetEventos.tot[J].Evento.TipoEvento of
+            teS5001:
+              begin
+                evtS5001 := TS5001(vRetEventos.tot[J].Evento.GetEvento);
+                memoLinhas.Add('   Id...........: ' + evtS5001.EvtBasesTrab.Id);
+                memoLinhas.Add('   nrRecArqBase.: ' + evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
+              end;
+            teS5002:
+              begin
+                evtS5002 := TS5002(vRetEventos.tot[J].Evento.GetEvento);
+                memoLinhas.Add('   Id...........: ' + evtS5002.EvtirrfBenef.Id);
+                memoLinhas.Add('   nrRecArqBase.: ' + evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase);
+              end;
+            teS5011:
+              begin
+                evtS5011 := TS5011(vRetEventos.tot[J].Evento.GetEvento);
+                memoLinhas.Add('   Id...........: ' + evtS5011.EvtCS.Id);
+                memoLinhas.Add('   nrRecArqBase.: ' + evtS5011.EvtCS.IdeEvento.nrRecArqBase);
+              end;
+            teS5012:
+              begin
+                evtS5012 := TS5012(vRetEventos.tot[J].Evento.GetEvento);
+                memoLinhas.Add('   Id...........: ' + evtS5012.EvtIrrf.Id);
+                memoLinhas.Add('   nrRecArqBase.: ' + evtS5012.EvtIrrf.IdeEvento.nrRecArqBase);
+              end;
+            teS5501:
+              begin
+                evtS5501 := TS5501(vRetEventos.tot[J].Evento.GetEvento);
+                memoLinhas.Add('   Id...........: ' + evtS5501.EvtTribProcTrab.Id);
+                memoLinhas.Add('   nrRecArqBase.: ' + evtS5501.EvtTribProcTrab.IdeEvento.nrRecArqBase);
+              end;
+            teS5503:
+              begin
+                evtS5503 := TS5503(vRetEventos.tot[J].Evento.GetEvento);
+                memoLinhas.Add('   Id...........: ' + evtS5503.EvtFGTSProcTrab.Id);
+                memoLinhas.Add('   nrRecArqBase.: ' + evtS5503.EvtFGTSProcTrab.IdeEvento.nrRecArqBase);
+              end;
+          end;
+        end;
+
+        memoLinhas.Add('Recibo');
+        memoLinhas.Add(' - nrRecibo: ' + vRetEventos.Recibo.NrRecibo);
+        memoLinhas.Add(' - hash....: ' + vRetEventos.Recibo.hash);
+      end;
+    end
+    else
+    begin
+      for i := 0 to vRetornoConsultaLote.Status.Ocorrencias.Count - 1 do
+      begin
+        vOcorrenciasItem := vRetornoConsultaLote.Status.Ocorrencias.Items[i];
+
+        memoLinhas.Add(' Ocorrencia ' + IntToStr(i));
+        memoLinhas.Add('   Código.....: ' + IntToStr(vOcorrenciasItem.Codigo));
+        memoLinhas.Add('   Descrição..: ' + vOcorrenciasItem.Descricao);
+        memoLinhas.Add('   Tipo.......: ' + IntToStr(vOcorrenciasItem.Tipo));
+        memoLinhas.Add('   Localização: ' + vOcorrenciasItem.Localizacao);
+      end;
+    end;
+
+    pgRespostas.ActivePageIndex := 3;
+  end;
+end;
+
 procedure TfrmACBreSocial.ConfigurarComponente;
 var
   Ok: Boolean;
@@ -7397,147 +7539,22 @@ end;
 procedure TfrmACBreSocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
-  i, J: Integer;
-  evtS5001: TS5001;
-  evtS5002: TS5002;
-  evtS5011: TS5011;
-  evtS5012: TS5012;
-  evtS5501: TS5501;
-  evtS5503: TS5503;
-  memoLinhas: TStrings;
-  vRetornoConsultaLote: TRetConsultaLote;
-  vRetEventos : TRetEventosCollectionItem;
-  vOcorrenciasItem : TOcorrenciasCollectionItem;
 begin
-  Protocolo := '';
-  if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
-  then
-    Exit;
-
-  if ACBreSocial1.Consultar(Protocolo) then
+  OpenDialog1.Title := 'Selecione um arquivo de retorno para simular a leitura';
+  OpenDialog1.DefaultExt := '*.xml';
+  OpenDialog1.Filter := 'Arquivos de retorno (*-sit.xml)|*-sit.xml|Arquivos XML(*.XML)|*.XML|Arquivos xml(*.xml)|*.xml';
+  if OpenDialog1.Execute then
   begin
-    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaLote.RetWS;
-
-    memoLinhas := MemoDados.Lines;
-    vRetornoConsultaLote := ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote;
-
-    memoLinhas.Add('');
-    memoLinhas.Add('Código Retorno: ' + IntToStr(vRetornoConsultaLote.Status.cdResposta));
-    memoLinhas.Add('Mensagem: ' + vRetornoConsultaLote.Status.descResposta);
-    memoLinhas.Add('Arquivo Salvo: ' + ACBreSocial1.WebServices.ConsultaLote.PathNome);
-
-    if vRetornoConsultaLote.Status.cdResposta in [201, 202] then
-    begin
-      memoLinhas.Add('ideEmpregador');
-      memoLinhas.Add(' - TpInsc: ' + eSTpInscricaoToStr(vRetornoConsultaLote.IdeEmpregador.TpInsc));
-      memoLinhas.Add(' - NrInsc: ' + vRetornoConsultaLote.IdeEmpregador.NrInsc);
-      memoLinhas.Add('ideTransmissor');
-      memoLinhas.Add(' - TpInsc: ' + eSTpInscricaoToStr(vRetornoConsultaLote.IdeTransmissor.TpInsc));
-      memoLinhas.Add(' - NrInsc: ' + vRetornoConsultaLote.IdeTransmissor.NrInsc);
-      memoLinhas.Add('dadosRecepcaoLote');
-      memoLinhas.Add(' - dhRecepcao..............: ' +
-        DateTimeToStr(vRetornoConsultaLote.dadosRecLote.dhRecepcao));
-      memoLinhas.Add(' - versaoAplicativoRecepcao: ' +
-        vRetornoConsultaLote.dadosRecLote.versaoAplicRecepcao);
-      memoLinhas.Add(' - protocoloEnvio..........: ' + vRetornoConsultaLote.dadosRecLote.Protocolo);
-
-      for i := 0 to vRetornoConsultaLote.retEventos.Count - 1 do
-      begin
-        vRetEventos := vRetornoConsultaLote.retEventos.Items[i];
-        memoLinhas.Add('Processamento');
-        memoLinhas.Add(' - ID Evento..........: ' + vRetEventos.Id);
-        memoLinhas.Add(' - cdResposta.........: ' +
-          IntToStr(vRetEventos.Processamento.cdResposta));
-        memoLinhas.Add(' - descResposta.......: ' + vRetEventos
-          .Processamento.descResposta);
-        memoLinhas.Add(' - versaoAplicProcLote: ' + vRetEventos
-          .Processamento.versaoAplicProcLote);
-        memoLinhas.Add(' - dhProcessamento....: ' + DateTimeToStr(vRetEventos
-          .Processamento.dhProcessamento));
-
-        if vRetEventos.Processamento.Ocorrencias.Count > 0 then
-        begin
-          memoLinhas.Add('Ocorrencias do Processamento');
-          for J := 0 to vRetEventos.Processamento.Ocorrencias.Count - 1 do
-          begin
-            memoLinhas.Add(' Ocorrencia ' + IntToStr(J));
-            memoLinhas.Add('   Código.....: ' +
-              IntToStr(vRetEventos.Processamento.Ocorrencias.Items
-              [J].Codigo));
-            memoLinhas.Add('   Descrição..: ' + vRetEventos
-              .Processamento.Ocorrencias.Items[J].Descricao);
-            memoLinhas.Add('   Tipo.......: ' +
-              IntToStr(vRetEventos.Processamento.Ocorrencias.Items
-              [J].Tipo));
-            memoLinhas.Add('   Localização: ' + vRetEventos
-              .Processamento.Ocorrencias.Items[J].Localizacao);
-          end;
-        end;
-
-        for J := 0 to vRetEventos.tot.Count - 1 do
-        begin
-          memoLinhas.Add(' Tot ' + IntToStr(J));
-          memoLinhas.Add('   Tipo.........: ' + vRetEventos.tot[J].Tipo);
-          case vRetEventos.tot[J].Evento.TipoEvento of
-            teS5001:
-              begin
-                evtS5001 := TS5001(vRetEventos.tot[J].Evento.GetEvento);
-                memoLinhas.Add('   Id...........: ' + evtS5001.EvtBasesTrab.Id);
-                memoLinhas.Add('   nrRecArqBase.: ' + evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
-              end;
-            teS5002:
-              begin
-                evtS5002 := TS5002(vRetEventos.tot[J].Evento.GetEvento);
-                memoLinhas.Add('   Id...........: ' + evtS5002.EvtirrfBenef.Id);
-                memoLinhas.Add('   nrRecArqBase.: ' + evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase);
-              end;
-            teS5011:
-              begin
-                evtS5011 := TS5011(vRetEventos.tot[J].Evento.GetEvento);
-                memoLinhas.Add('   Id...........: ' + evtS5011.EvtCS.Id);
-                memoLinhas.Add('   nrRecArqBase.: ' + evtS5011.EvtCS.IdeEvento.nrRecArqBase);
-              end;
-            teS5012:
-              begin
-                evtS5012 := TS5012(vRetEventos.tot[J].Evento.GetEvento);
-                memoLinhas.Add('   Id...........: ' + evtS5012.EvtIrrf.Id);
-                memoLinhas.Add('   nrRecArqBase.: ' + evtS5012.EvtIrrf.IdeEvento.nrRecArqBase);
-              end;
-            teS5501:
-              begin
-                evtS5501 := TS5501(vRetEventos.tot[J].Evento.GetEvento);
-                memoLinhas.Add('   Id...........: ' + evtS5501.EvtTribProcTrab.Id);
-                memoLinhas.Add('   nrRecArqBase.: ' + evtS5501.EvtTribProcTrab.IdeEvento.nrRecArqBase);
-              end;
-            teS5503:
-              begin
-                evtS5503 := TS5503(vRetEventos.tot[J].Evento.GetEvento);
-                memoLinhas.Add('   Id...........: ' + evtS5503.EvtFGTSProcTrab.Id);
-                memoLinhas.Add('   nrRecArqBase.: ' + evtS5503.EvtFGTSProcTrab.IdeEvento.nrRecArqBase);
-              end;
-          end;
-        end;
-
-        memoLinhas.Add('Recibo');
-        memoLinhas.Add(' - nrRecibo: ' + vRetEventos.Recibo.NrRecibo);
-        memoLinhas.Add(' - hash....: ' + vRetEventos.Recibo.hash);
-      end;
-    end
-    else
-    begin
-      for i := 0 to vRetornoConsultaLote.Status.Ocorrencias.Count - 1 do
-      begin
-        vOcorrenciasItem := vRetornoConsultaLote.Status.Ocorrencias.Items[i];
-
-        memoLinhas.Add(' Ocorrencia ' + IntToStr(i));
-        memoLinhas.Add('   Código.....: ' + IntToStr(vOcorrenciasItem.Codigo));
-        memoLinhas.Add('   Descrição..: ' + vOcorrenciasItem.Descricao);
-        memoLinhas.Add('   Tipo.......: ' + IntToStr(vOcorrenciasItem.Tipo));
-        memoLinhas.Add('   Localização: ' + vOcorrenciasItem.Localizacao);
-      end;
-    end;
-
-    pgRespostas.ActivePageIndex := 3;
+    ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote.Leitor.CarregarArquivo(OpenDialog1.FileName);
+    ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote.LerXml;
+    LerRespostaConsultar(True);
+  end else
+  begin
+    Protocolo := '';
+    if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
+    then
+      Exit;
+    LerRespostaConsultar(ACBreSocial1.Consultar(Protocolo));
   end;
 end;
 

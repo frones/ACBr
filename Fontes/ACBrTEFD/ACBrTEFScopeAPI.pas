@@ -1417,17 +1417,21 @@ type
     procedure ExibirErroUltimaMsg;
     procedure LogColeta(AColeta: TParam_Coleta);
     procedure LogColetaEx(AColetaEx: TParam_Coleta_Ext);
-    procedure AssignColetaToColetaEx(const AColeta: TParam_Coleta; var AColetaEx: TParam_Coleta_Ext);
 
     procedure PerguntarMenuScope(const TipoMenu: Byte; var Resposta: String; var Acao: Byte);
-    procedure PerguntarSimNao(const ColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+    procedure PerguntarSimNao(const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+    procedure ColetarParametrosScope(const iStatus: Word; var rColetaEx: TParam_Coleta_Ext);
+    procedure AssignColetaToColetaEx(const rColeta: TParam_Coleta; var rColetaEx: TParam_Coleta_Ext);
+
+    function MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
+    function MsgCliente(const rColetaEx: TParam_Coleta_Ext): String;
   public
     constructor Create;
     destructor Destroy; override;
 
     property PathLib: String read fPathLib write SetPathLib;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
-    property ControleConexao: Boolean read fControleConexao write SetControleConexao default True;
+    property ControleConexao: Boolean read fControleConexao write SetControleConexao default False;
 
     property Empresa: String read fEmpresa write SetEmpresa;
     property Filial: String read fFilial write SetFilial;
@@ -1506,7 +1510,7 @@ begin
   fInicializada := False;
   fConectado := False;
   fSessaoAberta := False;
-  fControleConexao := True;
+  fControleConexao := False;
   fPathLib := '';
   fDiretorioTrabalho := '';
   fEnderecoIP := '';
@@ -1564,11 +1568,11 @@ begin
   VerificarEAjustarScopeINI;
   LoadLibFunctions;
 
-  AbrirPinPad;
-  fInicializada := True;
-
   if not ControleConexao then
     AbrirComunicacaoScope;
+
+  AbrirPinPad;
+  fInicializada := True;
 end;
 
 procedure TACBrTEFScopeAPI.DesInicializar;
@@ -2251,9 +2255,9 @@ begin
     Exit;
 
   if not fControleConexao then
-    DoException(sErrNaoConectado);
-
-  AbrirComunicacaoScope;
+    DoException(sErrNaoConectado)
+  else
+    AbrirComunicacaoScope;
 end;
 
 procedure TACBrTEFScopeAPI.VerificarSeMantemConexaoScope;
@@ -2397,11 +2401,9 @@ procedure TACBrTEFScopeAPI.ExecutarTransacao;
 var
   ret, iStatus: LongInt;
   iBarra, Acao: Byte;
-  rColeta: TParam_Coleta;
   rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
-  Resposta, MsgOp, MsgCli, Titulo: String;
-  op: TStringList;
+  Resposta, Titulo: String;
 const
   cBarras = '|/-\';
 
@@ -2470,64 +2472,23 @@ begin
       if ((iStatus < TC_PRIMEIRO_TIPO_COLETA) or (iStatus > TC_MAX_TIPO_COLETA)) then
         Break;
 
-      if (iStatus = TC_EXIBE_MENU) then
-        PerguntarMenuScope(MNU_TAB_TIPO_CIELO, Resposta, Acao);  // Deveria ser MNU_TAB_TIPO_GENERICO
-
-      // Se não tem a resposta por pergunta de Menu, colete //
-      if (Resposta = '') then
-      begin
-        // Obtendo informações da Coleta em curso
-        FillChar(rColeta, SizeOf(TParam_Coleta), #0);
-        FillChar(rColetaEx, SizeOf(TParam_Coleta_Ext), #0);
-
-        if ((iStatus = TC_COLETA_EXT) or (iStatus = TC_COLETA_DADO_ESPECIAL)) and
-           Assigned(xScopeGetParamExt) then
-        begin
-          GravarLog('ScopeGetParamExt');
-          ret := xScopeGetParamExt(iStatus, @rColetaEx);
-          GravarLog('  ret: '+IntToStr(ret));
-          if (ret <> RCS_SUCESSO) then
-            TratarErroScope(ret);
-
-          LogColetaEx(rColetaEx);
-        end
-        else
-        begin
-          // Coleta dados do Scope para esse passo //
-          GravarLog('ScopeGetParam');
-          ret := xScopeGetParam(iStatus, @rColeta);
-          GravarLog('  ret: '+IntToStr(ret));
-          if (ret <> RCS_SUCESSO) then
-            TratarErroScope(ret);
-
-          LogColeta(rColeta);
-          AssignColetaToColetaEx(rColeta, rColetaEx);
-        end;
-
-        // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
-        if (Trim(rColetaEx.CodBandeira) <> '') then
-          fDadosDaTransacao.Values[CBANDEIRA] := rColetaEx.CodBandeira;
-
-        if (rColetaEx.FormatoDado = TM_SELECAO) then
-        begin
-          PerguntarMenuScope(MNU_TAB_TIPO_SELECAO_ESPECIAL, Resposta, Acao);
-        end;
-
-        MsgOp := Trim(String(rColetaEx.MsgOp1)) + sLineBreak + Trim(String(rColetaEx.MsgOp2));
-        MsgCli := Trim(String(rColetaEx.MsgCl1)) + sLineBreak + Trim(String(rColetaEx.MsgCl2));
-        Titulo := MsgOp;
-
-        // Exibe as mensagens do cliente e operador //
-        if (MsgOp <> '') then
-          ExibirMensagem(MsgOp, tmOperador);
-        if (MsgCli <> '') then
-          ExibirMensagem(MsgCli, tmCliente);
-      end;
-
       // Verifica se já tem resposta para esse estado //
       Resposta := RespostasPorEstados.Values[IntToStr(iStatus)];
 
-      // Se não recebeu resposta prédefinida para esse estado, trate a coleta
+      if (Resposta = '') and (iStatus = TC_EXIBE_MENU) then
+        PerguntarMenuScope(MNU_TAB_TIPO_CIELO, Resposta, Acao);  // Deveria ser MNU_TAB_TIPO_GENERICO
+
+      // Se ainda não tem a Resposta colete os Parâmetros //
+      if (Resposta = '') then
+      begin
+        ColetarParametrosScope(iStatus, rColetaEx);
+
+        // Coleta recebeu instrução para Menu ? //
+        if (rColetaEx.FormatoDado = TM_SELECAO) then
+          PerguntarMenuScope(MNU_TAB_TIPO_SELECAO_ESPECIAL, Resposta, Acao);
+      end;
+
+      // Se não recebeu resposta para esse estado, trate a coleta
       if (Resposta = '') then
       begin
         // Trata os estados //
@@ -2591,8 +2552,10 @@ begin
             //TODO:
 
         else                            // deve coletar algo... //
-          fOnPerguntaCampo(Titulo, rColetaEx, Resposta, Acao);
-
+          begin
+            Titulo := MsgOperador(rColetaEx);
+            fOnPerguntaCampo(Titulo, rColetaEx, Resposta, Acao);
+          end;
         end;
       end;
 
@@ -2794,7 +2757,7 @@ procedure TACBrTEFScopeAPI.ExibirErroUltimaMsg;
 var
   MsgColetada: TColeta_Msg;
   ret: LongInt;
-  s, MsgOp, MsgCli: String;
+  s: String;
 begin
   // Coleta dados do Scope para esse passo //
   GravarLog('ScopeGetLastMsg');
@@ -2812,13 +2775,13 @@ begin
     GravarLog(s);
 
     // Exibe as mensagens do cliente e operador //
-    MsgCli := Trim(String(MsgColetada.Cl1)) + sLineBreak + Trim(String(MsgColetada.Cl2));
-    if (MsgCli <> '') then
-      ExibirMensagem(MsgCli, tmCliente);
+    s := Trim(String(MsgColetada.Cl1)) + sLineBreak + Trim(String(MsgColetada.Cl2));
+    if (s <> '') then
+      ExibirMensagem(s, tmCliente);
 
-    MsgOp := Trim(String(MsgColetada.Op1)) + sLineBreak + Trim(String(MsgColetada.Op2));
-    if (MsgOp <> '') then
-      ExibirMensagem(MsgOp, tmOperador, 0);
+    s := Trim(String(MsgColetada.Op1)) + sLineBreak + Trim(String(MsgColetada.Op2));
+    if (s <> '') then
+      ExibirMensagem(s, tmOperador, 0);
   end;
 end;
 
@@ -2872,23 +2835,6 @@ begin
        '  Reservado: '+TrimRight(String(AColetaEx.Reservado));
 
   GravarLog(s);
-end;
-
-procedure TACBrTEFScopeAPI.AssignColetaToColetaEx(const AColeta: TParam_Coleta;
-  var AColetaEx: TParam_Coleta_Ext);
-var
-  s: String;
-begin
-  FillChar(AColetaEx, SizeOf(TParam_Coleta_Ext), #0);
-  AColetaEx.FormatoDado := AColeta.FormatoDado;
-  AColetaEx.HabTeclas := AColeta.HabTeclas;
-  s := Format('%.3d',[AColeta.Bandeira]);
-  move(s[1], AColetaEx.CodBandeira, SizeOf(AColetaEx.CodBandeira) );
-  move(AColeta.MsgOp1,  AColetaEx.MsgOp1, SizeOf(AColetaEx.MsgOp1) );
-  move(AColeta.MsgOp2,  AColetaEx.MsgOp2, SizeOf(AColetaEx.MsgOp2) );
-  move(AColeta.MsgCl1,  AColetaEx.MsgCl1, SizeOf(AColetaEx.MsgCl1) );
-  move(AColeta.MsgCl2,  AColetaEx.MsgCl2, SizeOf(AColetaEx.MsgCl2) );
-  move(AColeta.Reservado,  AColetaEx.Reservado, SizeOf(AColetaEx.Reservado) );
 end;
 
 procedure TACBrTEFScopeAPI.PerguntarMenuScope(const TipoMenu: Byte;
@@ -3008,14 +2954,14 @@ begin
   end;
 end;
 
-procedure TACBrTEFScopeAPI.PerguntarSimNao(const ColetaEx: TParam_Coleta_Ext;
+procedure TACBrTEFScopeAPI.PerguntarSimNao(const rColetaEx: TParam_Coleta_Ext;
   var Resposta: String; var Acao: Byte);
 var
   op: TStringList;
   item: Integer;
   Titulo: String;
 begin
-  Titulo := Trim(String(ColetaEx.MsgOp1)) + ' ' + Trim(String(ColetaEx.MsgOp2))+'?';
+  Titulo := Trim(String(rColetaEx.MsgOp1)) + ' ' + Trim(String(rColetaEx.MsgOp2))+'?';
   Titulo := copy(Titulo, 1, Pos('?', Titulo));
 
   Resposta := '0';
@@ -3038,6 +2984,82 @@ begin
   end;
 end;
 
+procedure TACBrTEFScopeAPI.ColetarParametrosScope(const iStatus: Word;
+  var rColetaEx: TParam_Coleta_Ext);
+var
+  rColeta: TParam_Coleta;
+  ret: LongInt;
+  s: String;
+begin
+  // Obtendo informações da Coleta em curso
+  FillChar(rColeta, SizeOf(TParam_Coleta), #0);
+  FillChar(rColetaEx, SizeOf(TParam_Coleta_Ext), #0);
+
+  if ((iStatus = TC_COLETA_EXT) or (iStatus = TC_COLETA_DADO_ESPECIAL)) and
+     Assigned(xScopeGetParamExt) then
+  begin
+    GravarLog('ScopeGetParamExt');
+    ret := xScopeGetParamExt(iStatus, @rColetaEx);
+    GravarLog('  ret: '+IntToStr(ret));
+    if (ret <> RCS_SUCESSO) then
+      TratarErroScope(ret);
+
+    LogColetaEx(rColetaEx);
+  end
+  else
+  begin
+    // Coleta dados do Scope para esse passo //
+    GravarLog('ScopeGetParam');
+    ret := xScopeGetParam(iStatus, @rColeta);
+    GravarLog('  ret: '+IntToStr(ret));
+    if (ret <> RCS_SUCESSO) then
+      TratarErroScope(ret);
+
+    LogColeta(rColeta);
+    AssignColetaToColetaEx(rColeta, rColetaEx);
+  end;
+
+  // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
+  if (Trim(rColetaEx.CodBandeira) <> '') then
+    fDadosDaTransacao.Values[CBANDEIRA] := rColetaEx.CodBandeira;
+
+  // Exibe as mensagens do cliente e operador //
+  s := MsgOperador(rColetaEx);
+  if (s <> '') then
+    ExibirMensagem(s, tmOperador);
+
+  s := MsgCliente(rColetaEx);
+  if (s <> '') then
+    ExibirMensagem(s, tmCliente);
+end;
+
+procedure TACBrTEFScopeAPI.AssignColetaToColetaEx(const rColeta: TParam_Coleta;
+  var rColetaEx: TParam_Coleta_Ext);
+var
+  s: String;
+begin
+  FillChar(rColetaEx, SizeOf(TParam_Coleta_Ext), #0);
+  rColetaEx.FormatoDado := rColeta.FormatoDado;
+  rColetaEx.HabTeclas := rColeta.HabTeclas;
+  s := Format('%.3d',[rColeta.Bandeira]);
+  move(s[1], rColetaEx.CodBandeira, SizeOf(rColetaEx.CodBandeira) );
+  move(rColeta.MsgOp1,  rColetaEx.MsgOp1, SizeOf(rColetaEx.MsgOp1) );
+  move(rColeta.MsgOp2,  rColetaEx.MsgOp2, SizeOf(rColetaEx.MsgOp2) );
+  move(rColeta.MsgCl1,  rColetaEx.MsgCl1, SizeOf(rColetaEx.MsgCl1) );
+  move(rColeta.MsgCl2,  rColetaEx.MsgCl2, SizeOf(rColetaEx.MsgCl2) );
+  move(rColeta.Reservado,  rColetaEx.Reservado, SizeOf(rColetaEx.Reservado) );
+end;
+
+function TACBrTEFScopeAPI.MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
+begin
+  Result := Trim(String(rColetaEx.MsgOp1)) + sLineBreak + Trim(String(rColetaEx.MsgOp2));
+end;
+
+function TACBrTEFScopeAPI.MsgCliente(const rColetaEx: TParam_Coleta_Ext): String;
+begin
+  Result := Trim(String(rColetaEx.MsgCl1)) + sLineBreak + Trim(String(rColetaEx.MsgCl2));
+end;
+
 procedure TACBrTEFScopeAPI.AbrirPinPad;
 var
   ret: LongInt;
@@ -3055,8 +3077,7 @@ begin
     TratarErroScope(ret);
 
   try
-    VerificarSeEstaConectadoScope;
-
+    AbrirComunicacaoScope;
     GravarLog('ScopeConsultaPP()');
     ret := xScopeConsultaPP(@bConfig, @bExclusivo, @bPorta);
     GravarLog('  ret: '+IntToStr(ret)+

@@ -1538,7 +1538,7 @@ var
   i: Integer;
   ATEFResp: TACBrTEFResp;
 begin
-  GravarLog('FinalizarTransacoes( '+
+  GravarLog('FinalizarTransacoesPendentes( '+
             GetEnumName(TypeInfo(TACBrTEFStatusTransacao), integer(Status) )+' )');
 
   for i := 0 to RespostasTEF.Count-1 do

@@ -79,7 +79,7 @@ type
     procedure SetDiretorioTrabalho(const AValue: String);
 
   protected
-    procedure ExecutarTransacaoScope(OperacaoScope: TACBrTEFScopeOperacao;
+    procedure ExecutarTransacaoScopeSessaoUnica(OperacaoScope: TACBrTEFScopeOperacao;
        const Param1: String = ''; const Param2: String = ''; const Param3: String = '');
 
     procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
@@ -116,6 +116,8 @@ type
     procedure FinalizarTransacao(
       const Rede, NSU, CodigoFinalizacao: String;
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
+
+    procedure ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
 
     procedure AbortarTransacaoEmAndamento; override;
 
@@ -464,6 +466,7 @@ begin
   //E verificar???
   QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
   Sucesso := Trim(ImagemComprovante1aVia.Text) <> '';
+  Confirmar := True;
 end;
 
 
@@ -852,7 +855,7 @@ begin
   end;
 
   if (op <> scoNone) then
-    ExecutarTransacaoScope(op);
+    ExecutarTransacaoScopeSessaoUnica(op);
 
   Result := True;
 end;
@@ -890,7 +893,8 @@ begin
   else if teftcDebito in CartoesAceitos then
     op := scoDebito;
 
-  ExecutarTransacaoScope(op, ValorTransacaoString, ValorTaxaServicoString);
+  fTEFScopeAPI.IniciarTransacao(op, ValorTransacaoString, ValorTaxaServicoString);
+  fTEFScopeAPI.ExecutarTransacao;
 
   Result := fpACBrTEFAPI.UltimaRespostaTEF.Sucesso;
 end;
@@ -906,6 +910,11 @@ begin
 
   Confirmar := (AStatus in [tefstsSucessoAutomatico, tefstsSucessoManual]);
   fTEFScopeAPI.FecharSessaoTEF(Confirmar, TransacaoFoiDesfeita);
+end;
+
+procedure TACBrTEFAPIClassScope.ResolverTransacaoPendente(AStatus: TACBrTEFStatusTransacao);
+begin
+  FinalizarTransacao('', '', '', AStatus);
 end;
 
 function TACBrTEFAPIClassScope.CancelarTransacao(const NSU,
@@ -1002,7 +1011,7 @@ begin
   fDiretorioTrabalho := AValue;
 end;
 
-procedure TACBrTEFAPIClassScope.ExecutarTransacaoScope(
+procedure TACBrTEFAPIClassScope.ExecutarTransacaoScopeSessaoUnica(
   OperacaoScope: TACBrTEFScopeOperacao; const Param1: String;
   const Param2: String; const Param3: String);
 begin
@@ -1010,8 +1019,7 @@ begin
   try
     fTEFScopeAPI.ExecutarTransacao;
   finally
-    if fpACBrTEFAPI.ConfirmarTransacaoAutomaticamente then
-      fTEFScopeAPI.FecharSessaoTEF;
+    fTEFScopeAPI.FecharSessaoTEF;
   end;
 end;
 

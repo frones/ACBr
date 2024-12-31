@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/12/2024
+-- Diversos --
+[*] #TK-6368 - Ajustes visando sanar discordâncias relatadas - https://www.projetoacbr.com.br/forum/topic/80885-evento-s-2200-valida%C3%A7%C3%B5es/?&_rid=124795#findComment-524965
+Por: Diego Folieni 
+
 27/12/2024
 -- pcesGerador --
 [*] #TK-6364 - Alterado critério para geração do campo DscSalvar no S-2200, sem considerar o campo UndSalFixo - https://www.projetoacbr.com.br/forum/topic/81039-acbresocial-divergente-do-manual-e-leiaute-13/

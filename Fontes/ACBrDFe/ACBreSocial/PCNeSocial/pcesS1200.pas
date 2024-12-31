@@ -1449,7 +1449,7 @@ begin
 
                 with remunPerApur.New do
                 begin
-                  matricula  := INIRec.ReadString(sSecao, 'matricula', 'FIM');
+                  matricula  := INIRec.ReadString(sSecao, 'matricula', '');
                   indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
 
                   L := 1;

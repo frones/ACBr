@@ -1497,7 +1497,8 @@ procedure TeSocialEvento.GerarInfoDeficiencia(
 begin
   if (pInfoDeficiencia.DefFisica = tpSim) or (pInfoDeficiencia.DefVisual = tpSim) or
      (pInfoDeficiencia.DefAuditiva = tpSim) or (pInfoDeficiencia.DefMental = tpSim) or
-     (pInfoDeficiencia.DefIntelectual = tpSim) or (pInfoDeficiencia.ReabReadap = tpSim) then
+     (pInfoDeficiencia.DefIntelectual = tpSim) or (pInfoDeficiencia.ReabReadap = tpSim) or
+     (pInfoDeficiencia.infoCota = snfSim) then
   begin
     Gerador.wGrupo('infoDeficiencia');
 

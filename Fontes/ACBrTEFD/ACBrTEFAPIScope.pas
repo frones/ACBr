@@ -110,6 +110,14 @@ type
     function EfetuarAdministrativa(
       const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
+    function CancelarTransacao(
+      const NSU, CodigoAutorizacaoTransacao: string;
+      DataHoraTransacao: TDateTime;
+      Valor: Double;
+      const CodigoFinalizacao: string = '';
+      const Rede: string = ''): Boolean; override;
+
+
     procedure FinalizarTransacao(
       const Rede, NSU, CodigoFinalizacao: String;
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
@@ -186,7 +194,7 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
       MASK1_Texto_BIT_62:
         ;// Parece muito o espelho do comprovante????
       MASK1_Controle_Dac:
-        ;///????
+        Finalizacao := Linha.Informacao.AsString;
       MASK1_Cod_Rede:
         CodigoRedeAutorizada := Linha.Informacao.AsString;
       MASK1_Nome_Bandeira:
@@ -825,17 +833,18 @@ begin
   end;
 
   if Cancelado or (Resposta = ':-1') then
-    AcaoResposta := ACAO_RESUME_CANCELAR
+    AcaoResposta := ACAO_CANCELAR
   else if (Resposta = ':-2') then
-    AcaoResposta := ACAO_RESUME_ESTADO_ANTERIOR
+    AcaoResposta := ACAO_ESTADO_ANTERIOR
   else
-    AcaoResposta := ACAO_RESUME_PROXIMO_ESTADO;
+    AcaoResposta := ACAO_PROXIMO_ESTADO;
 end;
 
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
 var
   OpScope: TACBrTEFScopeOperacao;
+  Param1: String;
 begin
   Result := False;
   if CodOperacaoAdm = tefopAdministrativo then
@@ -843,6 +852,7 @@ begin
 
   OpScope := scoNone;
   Result := True;
+  Param1 := '';
 
   case CodOperacaoAdm of
     tefopVersao:
@@ -864,7 +874,10 @@ begin
       OpScope := scoResVenda;
 
     tefopPagamentoConta:               // Serviço, Bandeira
-      OpScope := scoPagto;
+      begin
+        OpScope := scoPagto;
+        Param1 := '87';
+      end;
 
     tefopPrePago:
       OpScope := scoPreAutCredito;     // Valor, Taxa Serviço
@@ -880,7 +893,7 @@ begin
   end;
 
   if (OpScope <> scoNone) then
-    Result := ExecutarTransacaoScopeSessaoUnica(OpScope);
+    Result := ExecutarTransacaoScopeSessaoUnica(OpScope, Param1);
 end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
@@ -888,20 +901,36 @@ begin
   Result := EfetuarAdministrativa( TACBrTEFOperacao(StrToIntDef(CodOperacaoAdm, 0)) );
 end;
 
+function TACBrTEFAPIClassScope.CancelarTransacao(const NSU,
+  CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
+  Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
+var
+  Param1, Param2: string;
+begin
+  Param1 := IntToStr(Trunc(RoundTo(Valor * 100,-2)));
+  Param2 := '000';
+
+  if (CodigoFinalizacao <> '') then
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_CONTROLE)] := CodigoFinalizacao;
+
+  ExecutarTransacaoScopeSessaoUnica(scoCanc, Param1, Param2);
+  Result := fpACBrTEFAPI.UltimaRespostaTEF.Sucesso;
+end;
+
 function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime; DadosAdicionais: String): Boolean;
 var
-  ValorTransacaoString, ValorTaxaServicoString: string;
+  Param1, Param2: string;
   op: TACBrTEFScopeOperacao;
 begin
   VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
     fpACBrTEFAPI.DoException(sACBrTEFAPIValorPagamentoInvalidoException);
 
-  ValorTransacaoString := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
-  ValorTaxaServicoString := '000';
+  Param1 := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
+  Param2 := '000';
 
   if (Financiamento = tefmfAVista) then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '1'
@@ -911,12 +940,21 @@ begin
   if (Parcelas > 0) then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_QTDE_PARCELAS)] := IntToStr(Parcelas);
 
-  if teftcCredito in CartoesAceitos then
+  if (Modalidade = tefmpCheque) then
+    op := scoCheque
+  else if (Modalidade = tefmpCarteiraVirtual) then
+  begin
+    op := scoPagto;
+    Param1 := '432';  // 432=PIX
+  end
+  else if (Financiamento = tefmfPredatado) then
+    op := scoPreAutCredito
+  else if (teftcCredito in CartoesAceitos) or (teftcPrivateLabel in CartoesAceitos) then
     op := scoCredito
-  else if teftcDebito in CartoesAceitos then
+  else  // Debito, Voucher, Frota
     op := scoDebito;
 
-  fTEFScopeAPI.IniciarTransacao(op, ValorTransacaoString, ValorTaxaServicoString);
+  fTEFScopeAPI.IniciarTransacao(op, Param1, Param2);
   fTEFScopeAPI.ExecutarTransacao;
 
   Result := fpACBrTEFAPI.UltimaRespostaTEF.Sucesso;

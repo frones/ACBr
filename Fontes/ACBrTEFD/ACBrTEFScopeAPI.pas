@@ -81,7 +81,7 @@ resourcestring
   sMsgConctadoAoServidor = 'Conectado Scope em: %s';
   sMsgDesconectado = 'Desconectado Scope';
   sMsgInicioSessaoTEF = 'Iniciando sessão TEF';
-  sMsgTransacaoEmAndamento = 'Transação em Andamento %s';
+  sMsgTransacaoEmAndamento = 'Transação em Andamento';
   sMsgTransacaoCompleta = 'Transação Completa';
   sMsgTransacaoDesfeita = 'A TRANSAÇÃO TEF ANTERIOR FOI DESFEITA.'+sLineBreak+'RETER O CUPOM TEF.';
 
@@ -852,10 +852,10 @@ const
   {--------------------------------------------------------------------------------------------
                 Valores possiveis para o parametro <Acao> da funcao ScopeResumeParam()
   --------------------------------------------------------------------------------------------}
-  ACAO_RESUME_PROXIMO_ESTADO  = 0;
-  ACAO_RESUME_ESTADO_ANTERIOR = 1;
-  ACAO_RESUME_CANCELAR        = 2;
-  ACAO_RESUME_APL_ERRO        = 3;
+  ACAO_PROXIMO_ESTADO  = 0;
+  ACAO_ESTADO_ANTERIOR = 1;
+  ACAO_CANCELAR        = 2;
+  ACAO_APL_ERRO        = 3;
 
 {--------------------------------------------------------------------------------------------
    Constantes retornadas por 'ScopeGetCupomEx'
@@ -1344,6 +1344,8 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePagamento: function(_Servico, _CodBandeira: Word): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePagamentoConta: function(_Servico: Word): LongInt;
+        {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeRecargaCelular: function(): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePreAutorizacaoCredito: function(_Valor, _TxServico: PAnsiChar): LongInt;
@@ -1384,6 +1386,9 @@ type
     xScopeMenu: function(_UsoFuturo: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPDisplay: function(Msg: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPOpen: function(Porta: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+
+    function PAnsiCharToString(APAnsiChar: PAnsiChar): String;
+    function ArrayOfCharToString(Arr: array of AnsiChar): String;
 
     procedure SetIntervaloColeta(AValue: Integer);
     procedure SetPathLib(const AValue: String);
@@ -1657,6 +1662,16 @@ begin
   fPathLib := PathWithDelim(ExtractFilePath(AValue));
 end;
 
+function TACBrTEFScopeAPI.PAnsiCharToString(APAnsiChar: PAnsiChar): String;
+begin
+  Result := TrimRight(String(APAnsiChar));
+end;
+
+function TACBrTEFScopeAPI.ArrayOfCharToString(Arr: array of AnsiChar): String;
+begin
+  Result := TrimRight(String(Arr));
+end;
+
 procedure TACBrTEFScopeAPI.SetIntervaloColeta(AValue: Integer);
 begin
   if fIntervaloColeta = AValue then
@@ -1891,6 +1906,7 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopeObtemCampoExt3', @xScopeObtemCampoExt3);
   ScopeFunctionDetect(sLibName, 'ScopeObtemHandle', @xScopeObtemHandle);
   ScopeFunctionDetect(sLibName, 'ScopePagamento', @xScopePagamento);
+  ScopeFunctionDetect(sLibName, 'ScopePagamentoConta', @xScopePagamentoConta);
   ScopeFunctionDetect(sLibName, 'ScopeRecargaCelular', @xScopeRecargaCelular);
   ScopeFunctionDetect(sLibName, 'ScopePreAutorizacaoCredito', @xScopePreAutorizacaoCredito);
   ScopeFunctionDetect(sLibName, 'ScopeRecuperaOperadorasRecCel', @xScopeRecuperaOperadorasRecCel);
@@ -1957,6 +1973,7 @@ begin
   xScopeObtemCampoExt3 := Nil;
   xScopeObtemHandle := Nil;
   xScopePagamento := Nil;
+  xScopePagamentoConta := Nil;
   xScopeRecargaCelular := Nil;
   xScopePreAutorizacaoCredito := Nil;
   xScopeRecuperaOperadorasRecCel := Nil;
@@ -2063,7 +2080,6 @@ begin
 
         AjustarParamSeNaoExistir(SecName, 'VersaoAutomacao', sName);
         AjustarParamSeNaoExistir(SecName, 'CupomReduzido', IfThen(fCupomReduzido, 's', 'n'));
-        AjustarParamSeNaoExistir(SecName, 'NaoAbrirDigitado', IfThen(fPermitirCartaoDigitado, 'n', 's'));
         AjustarParamSeNaoExistir(SecName, 'WKPAN', IfThen(fPinPadSeguro, 's', 'n'));
         Break;
       end;
@@ -2095,11 +2111,11 @@ begin
       ini.WriteString(SecName, 'TimeOutAdm', '120');
       ini.WriteString(SecName, 'VersaoAutomacao', fVersaoAutomacao);
       ini.WriteString(SecName, 'CupomReduzido', IfThen(fCupomReduzido, 's', 'n'));
-      ini.WriteString(SecName, 'NaoAbrirDigitado', IfThen(fPermitirCartaoDigitado, 'n', 's'));
       ini.WriteString(SecName, 'WKPAN', IfThen(fPinPadSeguro, 's', 'n'));
     end;
 
     AjustarParamSeNaoExistir('PINDPAD', 'TamMinDados', '4');
+    AjustarParamSeNaoExistir('PPCOMP', 'NaoAbrirDigitado', IfThen(fPermitirCartaoDigitado, 'n', 's'));
 
     SecName := 'SCOPEAPI';
     AjustarParamSeNaoExistir(SecName, 'TraceApi', 's');
@@ -2294,7 +2310,7 @@ begin
     end;
 
     if (ret = PC_OK) then
-      Result := TrimRight(String(pBuffer));
+      Result := PAnsiCharToString(pBuffer);
   finally
     Freemem(pBuffer);
   end;
@@ -2592,13 +2608,13 @@ begin
     scoCredito:
       begin
         GravarLog('ScopeCompraCartaoCredito( '+Param1+', '+Param2+' )');
-        ret := xScopeCompraCartaoCredito(p1, p2);
+        ret := xScopeCompraCartaoCredito(p1, p2);    // Valor, Taxa Serviço
       end;
 
     scoDebito:
       begin
         GravarLog('ScopeCompraCartaoDebito( '+Param1+' )');
-        ret := xScopeCompraCartaoDebito(p1);
+        ret := xScopeCompraCartaoDebito(p1);         // Valor
       end;
 
     scoReimpComp:
@@ -2610,19 +2626,19 @@ begin
     scoCheque:
       begin
         GravarLog('ScopeConsultaCheque( '+Param1+' )');
-        ret := xScopeConsultaCheque(p1);
+        ret := xScopeConsultaCheque(p1);             // Valor
       end;
 
     scoConsCDC:
       begin
         GravarLog('ScopeConsultaCDC( '+Param1+', '+Param2+' )');
-        ret := xScopeConsultaCDC(p1, p2);
+        ret := xScopeConsultaCDC(p1, p2);            // Valor, Taxa Serviço
       end;
 
     scoCanc:
       begin
         GravarLog('ScopeCancelamento( '+Param1+', '+Param2+' )');
-        ret := xScopeCancelamento(p1, p2);
+        ret := xScopeCancelamento(p1, p2);           // Valor, Taxa Serviço
       end;
 
     scoResVenda:
@@ -2639,16 +2655,15 @@ begin
 
     scoPagto:
       begin
-        GravarLog('ScopePagamento( '+Param1+', '+Param2+' )');
+        GravarLog('ScopePagamentoConta( '+Param1+' )');
         w1 := StrToIntDef(Param1, 0);
-        w2 := StrToIntDef(Param2, 0);
-        ret := xScopePagamento(w1, w2);
+        ret := xScopePagamentoConta(w1);              // Serviço
       end;
 
     scoPreAutCredito:
       begin
         GravarLog('ScopePreAutorizacaoCredito( '+Param1+', '+Param2+' )');
-        ret := xScopePreAutorizacaoCredito(p1, p2);
+        ret := xScopePreAutorizacaoCredito(p1, p2);   // Valor, Taxa Serviço
       end;
   end;
 
@@ -2662,12 +2677,11 @@ end;
 procedure TACBrTEFScopeAPI.ExecutarTransacao;
 var
   ret, iStatus: LongInt;
-  iBarra, Acao: Byte;
+  Acao: Byte;
   rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
   Resposta: String;
-const
-  cBarras = '|/-\';
+  Coletar: Boolean;
 
   function VerificarSeUsuarioCancelouTransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
   var
@@ -2687,9 +2701,7 @@ begin
 
   try
     fDadosDaTransacao.Clear;
-    iBarra := 1;
-
-    ExibirMensagem(Format(sMsgTransacaoEmAndamento, [cBarras[iBarra]]));
+    ExibirMensagem(sMsgTransacaoEmAndamento);
 
     while True do
     begin
@@ -2698,21 +2710,14 @@ begin
 
       // Iniciliza as variáveis
       Resposta := '';
-      Acao := ACAO_RESUME_PROXIMO_ESTADO;
+      Acao := ACAO_PROXIMO_ESTADO;
       TipoCaptura := COLETA_TECLADO;
 
       // Enquanto a transacao estiver em andamento, aguarda, mas verifica se o usuário Cancelou //
       if (iStatus = RCS_TRN_EM_ANDAMENTO) then
       begin
-        ////Apenas Exibe uma mensagem na tela para não parecer que está travado
-        //inc(iBarra);
-        //if (iBarra) > 4 then
-        //  iBarra := 1;
-        //
-        //ExibirMensagem(Format(sMsgTransacaoEmAndamento, [cBarras[iBarra]]));
-
         if VerificarSeUsuarioCancelouTransacao(scoestFluxoAPI) then
-          EnviarParametroTransacao(ACAO_RESUME_CANCELAR)
+          EnviarParametroTransacao(ACAO_CANCELAR)
         else
           Sleep(fIntervaloColeta);
 
@@ -2723,7 +2728,7 @@ begin
       if (iStatus = TC_COLETA_CARTAO_EM_ANDAMENTO) then
       begin
         if VerificarSeUsuarioCancelouTransacao(scoestPinPadLerCartao) then
-          Acao := ACAO_RESUME_CANCELAR;
+          Acao := ACAO_CANCELAR;
 
         EnviarParametroTransacao(Acao);
         Continue;
@@ -2752,6 +2757,8 @@ begin
       // Se não recebeu resposta para esse estado, trate a coleta
       if (Resposta = '') then
       begin
+        Coletar := False;
+
         // Trata os estados //
         case iStatus of
           TC_EXIBE_MENU:                // Já tratado acima por 'PerguntarMenuScope'
@@ -2759,17 +2766,26 @@ begin
 
           TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
           TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
-            Acao := ACAO_RESUME_PROXIMO_ESTADO;
+            Acao := ACAO_PROXIMO_ESTADO;
 
           TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO, TC_DECIDE_ULTIMO:
             begin
               PerguntarSimNao(rColetaEx, Resposta, Acao);
             end;
 
-          TC_CARTAO_DIGITADO,
+          TC_CARTAO_DIGITADO:
+            begin
+              if not fPermitirCartaoDigitado then
+                Acao := ACAO_CANCELAR
+              else
+                Coletar := True;
+            end;
+
           TC_CARTAO,                    // cartao //
-          TC_COLETA_AUT_OU_CARTAO:;
-            //TODO
+          TC_COLETA_AUT_OU_CARTAO:
+            begin
+              Coletar := True;
+            end;
 
           TC_IMPRIME_CHEQUE:            // imprime Cheque //
             ObterDadosCheque;
@@ -2816,8 +2832,11 @@ begin
             //TODO:
 
         else                            // deve coletar algo... //
-          fOnPerguntaCampo(MsgOperador(rColetaEx), rColetaEx, Resposta, Acao);
+          Coletar := True;
         end;
+
+        if Coletar then
+          fOnPerguntaCampo(MsgOperador(rColetaEx), rColetaEx, Resposta, Acao);
       end;
 
       ret := EnviarParametroTransacao(Acao, iStatus, Resposta, TipoCaptura);
@@ -2863,7 +2882,7 @@ end;
 
 procedure TACBrTEFScopeAPI.AbortarTransacao;
 begin
-  EnviarParametroTransacao(ACAO_RESUME_CANCELAR);
+  EnviarParametroTransacao(ACAO_CANCELAR);
   SetEmTransacao(False);
 end;
 
@@ -2878,7 +2897,7 @@ function TACBrTEFScopeAPI.ObterDadosComprovantes: Longint;
 var
   pCabec, pCupomCliente, pCupomLoja, pCupomReduzido: PAnsiChar;
   NumeroLinhasReduzido: Byte;
-  sCabec: String;
+  sCabecalho, sCupomLoja, sCupomCliente, sCupomReduzido: String;
 begin
   pCabec := AllocMem(1024);
   pCupomCliente := AllocMem(2048);
@@ -2895,10 +2914,19 @@ begin
     if (Result <> RCS_SUCESSO) then
       TratarErroScope(Result);
 
-    sCabec := TrimRight(String(pCabec));
-    fDadosDaTransacao.Values[CCUPOM_LOJA]     := BinaryStringToString( sCabec + sLineBreak + TrimRight(String(pCupomLoja)) );
-    fDadosDaTransacao.Values[CCUPOM_CLIENTE]  := BinaryStringToString( sCabec + sLineBreak + TrimRight(String(pCupomCliente)) );
-    fDadosDaTransacao.Values[CCUPOM_REDUZIDO] := BinaryStringToString( TrimRight(string(pCupomReduzido)) );
+    sCabecalho := PAnsiCharToString(pCabec);
+    sCupomLoja := PAnsiCharToString(pCupomLoja);
+    sCupomCliente:= PAnsiCharToString(pCupomCliente);
+    sCupomReduzido := PAnsiCharToString(pCupomReduzido);
+
+    GravarLog('Cabecalho: ' + sLineBreak + sCabecalho);
+    GravarLog('Cupom Loja: ' + sLineBreak + sCupomLoja);
+    GravarLog('Cupom Cliente: ' + sLineBreak + sCupomCliente);
+    GravarLog('Cupom Reduzido: '+IntToStr(NumeroLinhasReduzido)+' linhas' + sLineBreak + sCupomReduzido);
+
+    fDadosDaTransacao.Values[CCUPOM_LOJA]     := BinaryStringToString( sCabecalho + sLineBreak + sCupomLoja );
+    fDadosDaTransacao.Values[CCUPOM_CLIENTE]  := BinaryStringToString( sCabecalho + sLineBreak + sCupomCliente );
+    fDadosDaTransacao.Values[CCUPOM_REDUZIDO] := BinaryStringToString( sCupomReduzido );
     fDadosDaTransacao.Values[CNUMLINHAS_REDUZIDO] := IntToStr(NumeroLinhasReduzido);
   finally
     Freemem(pCabec);
@@ -2919,13 +2947,22 @@ begin
   if (ret <> RCS_SUCESSO) then
     TratarErroScope(ret);
 
-  fDadosDaTransacao.Values[CCHEQUE_BANCO]   := String(rCheque.Banco);
-  fDadosDaTransacao.Values[CCHEQUE_AGENCIA] := String(rCheque.Agencia);
-  fDadosDaTransacao.Values[CCHEQUE_NUMERO]  := String(rCheque.NumCheque);
-  fDadosDaTransacao.Values[CCHEQUE_VALOR]   := String(rCheque.Valor);
-  fDadosDaTransacao.Values[CCHEQUE_DATA]    := String(rCheque.BomPara);
-  fDadosDaTransacao.Values[CCHEQUE_CODAUT]  := String(rCheque.CodAut);
-  fDadosDaTransacao.Values[CCHEQUE_MUNICIP] := String(rCheque.Municipio);
+  fDadosDaTransacao.Values[CCHEQUE_BANCO]   := ArrayOfCharToString(rCheque.Banco);
+  fDadosDaTransacao.Values[CCHEQUE_AGENCIA] := ArrayOfCharToString(rCheque.Agencia);
+  fDadosDaTransacao.Values[CCHEQUE_NUMERO]  := ArrayOfCharToString(rCheque.NumCheque);
+  fDadosDaTransacao.Values[CCHEQUE_VALOR]   := ArrayOfCharToString(rCheque.Valor);
+  fDadosDaTransacao.Values[CCHEQUE_DATA]    := ArrayOfCharToString(rCheque.BomPara);
+  fDadosDaTransacao.Values[CCHEQUE_CODAUT]  := ArrayOfCharToString(rCheque.CodAut);
+  fDadosDaTransacao.Values[CCHEQUE_MUNICIP] := ArrayOfCharToString(rCheque.Municipio);
+
+  GravarLog('Dados do Cheque'+sLineBreak+
+            '  Banco: '+fDadosDaTransacao.Values[CCHEQUE_BANCO] + sLineBreak +
+            '  Agencia: '+fDadosDaTransacao.Values[CCHEQUE_AGENCIA] + sLineBreak +
+            '  NumCheque: '+fDadosDaTransacao.Values[CCHEQUE_NUMERO] + sLineBreak +
+            '  Valor: '+fDadosDaTransacao.Values[CCHEQUE_VALOR] + sLineBreak +
+            '  BomPara: '+fDadosDaTransacao.Values[CCHEQUE_DATA] + sLineBreak +
+            '  CodAut: '+fDadosDaTransacao.Values[CCHEQUE_CODAUT] + sLineBreak +
+            '  Municipio: '+fDadosDaTransacao.Values[CCHEQUE_MUNICIP]);
 end;
 
 procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
@@ -3053,17 +3090,17 @@ begin
        '  Bandeira: '+IntToStr(AColeta.Bandeira) + sLineBreak +
        '  FormatoDado: '+IntToStr(AColeta.FormatoDado) + sLineBreak +
        '  HabTeclas: '+IntToStr(AColeta.HabTeclas) + sLineBreak +
-       '  MsgOp1: '+TrimRight(String(AColeta.MsgOp1)) + sLineBreak +
-       '  MsgOp2: '+TrimRight(String(AColeta.MsgOp2)) + sLineBreak +
-       '  MsgCl1: '+TrimRight(String(AColeta.MsgCl1)) + sLineBreak +
-       '  MsgCl2: '+TrimRight(String(AColeta.MsgCl2)) + sLineBreak +
-       '  WrkKey: '+TrimRight(String(AColeta.WrkKey)) + sLineBreak +
+       '  MsgOp1: '+ArrayOfCharToString(AColeta.MsgOp1) + sLineBreak +
+       '  MsgOp2: '+ArrayOfCharToString(AColeta.MsgOp2) + sLineBreak +
+       '  MsgCl1: '+ArrayOfCharToString(AColeta.MsgCl1) + sLineBreak +
+       '  MsgCl2: '+ArrayOfCharToString(AColeta.MsgCl2) + sLineBreak +
+       '  WrkKey: '+ArrayOfCharToString(AColeta.WrkKey) + sLineBreak +
        '  PosMasterKey: '+IntToStr(AColeta.PosMasterKey) + sLineBreak +
-       '  PAN: '+TrimRight(String(AColeta.PAN)) + sLineBreak +
+       '  PAN: '+ArrayOfCharToString(AColeta.PAN) + sLineBreak +
        '  UsaCriptoPinpad: '+IntToStr(AColeta.UsaCriptoPinpad) + sLineBreak +
        '  IdModoPagto: '+IntToStr(AColeta.IdModoPagto) + sLineBreak +
        '  AceitaCartaoDigitado: '+IntToStr(AColeta.AceitaCartaoDigitado) + sLineBreak +
-       '  Reservado: '+String(AColeta.Reservado);
+       '  Reservado: '+ArrayOfCharToString(AColeta.Reservado);
 
   GravarLog(s);
 end;
@@ -3077,22 +3114,22 @@ begin
        '  HabTeclas: '+IntToStr(AColetaEx.HabTeclas) + sLineBreak +
        '  CodBandeira: '+AColetaEx.CodBandeira + sLineBreak +
        '  CodRede: '+AColetaEx.CodRede + sLineBreak +
-       '  MsgOp1: '+TrimRight(String(AColetaEx.MsgOp1)) + sLineBreak +
-       '  MsgOp2: '+TrimRight(String(AColetaEx.MsgOp2)) + sLineBreak +
-       '  MsgCl1: '+TrimRight(String(AColetaEx.MsgCl1)) + sLineBreak +
-       '  MsgCl2: '+TrimRight(String(AColetaEx.MsgCl2)) + sLineBreak +
+       '  MsgOp1: '+ArrayOfCharToString(AColetaEx.MsgOp1) + sLineBreak +
+       '  MsgOp2: '+ArrayOfCharToString(AColetaEx.MsgOp2) + sLineBreak +
+       '  MsgCl1: '+ArrayOfCharToString(AColetaEx.MsgCl1) + sLineBreak +
+       '  MsgCl2: '+ArrayOfCharToString(AColetaEx.MsgCl2) + sLineBreak +
        '  UsaExt: '+IntToStr(AColetaEx.UsaExt) + sLineBreak +
-       '    Ext.Sigla: '+ TrimRight(String(AColetaEx.Ext.Sigla)) + sLineBreak +
-       '    Ext.Rotulo: '+ TrimRight(String(AColetaEx.Ext.Rotulo)) + sLineBreak +
+       '    Ext.Sigla: '+ ArrayOfCharToString(AColetaEx.Ext.Sigla) + sLineBreak +
+       '    Ext.Rotulo: '+ ArrayOfCharToString(AColetaEx.Ext.Rotulo) + sLineBreak +
        '    Ext.AceitaVazio: '+IntToStr(AColetaEx.Ext.AceitaVazio) + sLineBreak +
        '    Ext.QtdCasasDecimais: '+IntToStr(AColetaEx.Ext.QtdCasasDecimais) + sLineBreak +
-       '    Ext.TamMin: '+ TrimRight(String(AColetaEx.Ext.TamMin)) + sLineBreak +
-       '    Ext.TamMax: '+ TrimRight(String(AColetaEx.Ext.TamMax)) + sLineBreak +
+       '    Ext.TamMin: '+ ArrayOfCharToString(AColetaEx.Ext.TamMin) + sLineBreak +
+       '    Ext.TamMax: '+ ArrayOfCharToString(AColetaEx.Ext.TamMax) + sLineBreak +
        '  UsaLimites: '+IntToStr(AColetaEx.UsaLimites) + sLineBreak +
-       '    Limite.Inferior: '+ TrimRight(String(AColetaEx.Limite.Inferior)) + sLineBreak +
-       '    Limite.Superior: '+ TrimRight(String(AColetaEx.Limite.Superior)) + sLineBreak +
+       '    Limite.Inferior: '+ ArrayOfCharToString(AColetaEx.Limite.Inferior) + sLineBreak +
+       '    Limite.Superior: '+ ArrayOfCharToString(AColetaEx.Limite.Superior) + sLineBreak +
        '  IdColetaExt: '+IntToStr(AColetaEx.IdColetaExt) + sLineBreak +
-       '  Reservado: '+TrimRight(String(AColetaEx.Reservado));
+       '  Reservado: '+ArrayOfCharToString(AColetaEx.Reservado);
 
   GravarLog(s);
 end;
@@ -3112,7 +3149,7 @@ var
 begin
   GravarLog('PerguntarMenu( '+IntToStr(TipoMenu)+' )');
   Resposta := '';
-  Acao := ACAO_RESUME_PROXIMO_ESTADO;
+  Acao := ACAO_PROXIMO_ESTADO;
   item := -1;
 
   Opcoes := TStringList.Create;
@@ -3193,9 +3230,9 @@ begin
     begin
       fOnPerguntarMenu(ACBrStr(Titulo), Opcoes, item);
       if (item = -2) then
-        Acao := ACAO_RESUME_ESTADO_ANTERIOR
+        Acao := ACAO_ESTADO_ANTERIOR
       else if (item = -1) then
-        Acao := ACAO_RESUME_CANCELAR
+        Acao := ACAO_CANCELAR
       else
         Resposta := IntToStr(item+1);;
     end;
@@ -3204,7 +3241,7 @@ begin
     Opcoes.Free;
   end;
 
-  if (Acao = ACAO_RESUME_PROXIMO_ESTADO) then
+  if (Acao = ACAO_PROXIMO_ESTADO) then
   begin
     GravarLog('ScopeMenuSelecionaItem( '+Resposta+' )');
     ret := xScopeMenuSelecionaItem(Byte(item+1)) ;
@@ -3221,11 +3258,11 @@ var
   item: Integer;
   Titulo: String;
 begin
-  Titulo := Trim(String(rColetaEx.MsgOp1)) + ' ' + Trim(String(rColetaEx.MsgOp2))+'?';
+  Titulo := StringReplace(MsgOperador(rColetaEx), sLineBreak, ' ', [rfReplaceAll])+'?';
   Titulo := copy(Titulo, 1, Pos('?', Titulo));
 
   Resposta := '0';
-  Acao := ACAO_RESUME_PROXIMO_ESTADO;
+  Acao := ACAO_PROXIMO_ESTADO;
 
   op := TStringList.Create;
   try
@@ -3234,9 +3271,9 @@ begin
     item := 0;
     fOnPerguntarMenu(ACBrStr(Titulo), op, item);
     if (item = -2) then
-      Acao := ACAO_RESUME_ESTADO_ANTERIOR
+      Acao := ACAO_ESTADO_ANTERIOR
     else if (item = -1) then
-      Acao := ACAO_RESUME_CANCELAR
+      Acao := ACAO_CANCELAR
     else if (item = 0) then  // Sim
       Resposta := '1';
   finally
@@ -3312,12 +3349,12 @@ end;
 
 function TACBrTEFScopeAPI.MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
 begin
-  Result := Trim(String(rColetaEx.MsgOp1)) + sLineBreak + Trim(String(rColetaEx.MsgOp2));
+  Result := ArrayOfCharToString(rColetaEx.MsgOp1) + sLineBreak + ArrayOfCharToString(rColetaEx.MsgOp2);
 end;
 
 function TACBrTEFScopeAPI.MsgCliente(const rColetaEx: TParam_Coleta_Ext): String;
 begin
-  Result := Trim(String(rColetaEx.MsgCl1)) + sLineBreak + Trim(String(rColetaEx.MsgCl2));
+  Result := ArrayOfCharToString(rColetaEx.MsgCl1) + sLineBreak + ArrayOfCharToString(rColetaEx.MsgCl2);
 end;
 
 function TACBrTEFScopeAPI.FormatarMsgPinPad(const MsgPinPad: String): String;

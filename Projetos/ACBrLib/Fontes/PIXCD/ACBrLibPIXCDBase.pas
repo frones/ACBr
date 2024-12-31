@@ -1142,6 +1142,9 @@ begin
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
 
+    on E: EACBrPixHttpException do
+      Result := SetRetorno(ErrHttp, ConverterStringSaida(E.Message + sLineBreak + 'Resposta HTTP: ' + PIXCDDM.ACBrPSPMatera1.ErroResposta.AsJSON));
+
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;

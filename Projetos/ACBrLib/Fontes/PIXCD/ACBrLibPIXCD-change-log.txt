@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/12/2024
+-- ACBrLibPIXCDBase --
+[*] Mapeando exceção EACBrPixHttpException no método MateraIncluirChavePix para exibir o 
+    JSON de resposta na descrição da exceção.
+    Por: Júlio Cavalcanti 
+
 26/12/2024
 -- ACBrLibPIXCDConsoleMTDemo.lpi --
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.

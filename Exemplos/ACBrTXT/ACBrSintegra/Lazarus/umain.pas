@@ -242,13 +242,47 @@ begin
 end;
 
 procedure TForm1.GerarRegistro51;
+var
+  wregistro51: TRegistro51;
 begin
+  wregistro51 := TRegistro51.Create;
+  wregistro51.CPFCNPJ := '43.214.055/0042-85';
+  wregistro51.Inscricao := '11349016872110';
+  wregistro51.DataDocumento := ACBrSintegra.Registro10.DataFinal;
+  wregistro51.Estado := 'SP';
+  wregistro51.Serie := '1';
+  wregistro51.Numero := '123';
+  wregistro51.CFOP := '2.102';
+  wregistro51.ValorContabil := 1500;
+  wregistro51.ValorIpi := 180;
+  wregistro51.ValorOutras := 100;
+  wregistro51.ValorIsentas := 50;
+  wregistro51.Situacao := 'N';
 
+  ACBrSintegra.Registros51.Add(wregistro51);
 end;
 
 procedure TForm1.GerarRegistro53;
+var
+  wregistro53: TRegistro53;
 begin
+  wregistro53 := TRegistro53.Create;
+  wregistro53.CPFCNPJ := '43.214.055/0042-85';
+  wregistro53.Inscricao := '11349016872110';
+  wregistro53.DataDocumento := ACBrSintegra.Registro10.DataFinal;
+  wregistro53.Estado := 'SP';
+  wregistro53.Modelo := '55';
+  wregistro53.Serie := '1';
+  wregistro53.Numero := '123';
+  wregistro53.CFOP := '2.102';
+  wregistro53.Emitente := 'P';
+  wregistro53.BaseST := 1500;
+  wregistro53.IcmsRetido := 180;
+  wregistro53.Despesas := 90;
+  wregistro53.Situacao := 'N';
+  wregistro53.CodigoAntecipacao := '1';
 
+  ACBrSintegra.Registros53.Add(wregistro53);
 end;
 
 procedure TForm1.GerarRegistro54;
@@ -416,8 +450,21 @@ ACBrSintegra.Registros60M.Add(wregistro60M);
 end;
 
 procedure TForm1.GerarRegistro70;
+var
+  wregistro70: TRegistro70;
 begin
-
+  wregistro70 := TRegistro70.Create;
+  wregistro70.CPFCNPJ := '43.214.055/0042-85';
+  wregistro70.Inscricao := '11349016872110';
+  wregistro70.DataDocumento := ACBrSintegra.Registro10.DataFinal;
+  wregistro70.UF := 'SP';
+  wregistro70.Modelo := '55';
+  wregistro70.Serie := '1';
+  wregistro70.SubSerie := '1';
+  wregistro70.Numero := '123';
+  wregistro70.Cfop := '2.102';
+  wregistro70.ValorContabil := 1500;
+  ACBrSintegra.Registros70.Add(wregistro70);
 end;
 
 

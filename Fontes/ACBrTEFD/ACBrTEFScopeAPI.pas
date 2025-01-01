@@ -876,6 +876,82 @@ const
   CCHEQUE_CODAUT      = 'CHEQUE_CODAUT';
   CCHEQUE_MUNICIP     = 'CHEQUE_MUNICIP';
 
+
+{--------------------------------------------------------------------------------------------
+   Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
+--------------------------------------------------------------------------------------------}
+  SRV_DEBITO_AVISTA = 006;           // Compra com cartão de débito á vista
+  SRV_CREDITO_AVISTA = 009;          // Compra com cartão de crédito á vista
+  SRV_PREAUT_CREDITO = 013;          // Pré-Autorização com cartão de crédito
+  SRV_CONS_CHEQUE = 017;             // Consulta de cheques – a vista
+  SRV_CONS_CHEQUE_PRE = 018;         // Consulta de cheques – pré-datados
+  SRV_DEBITO_AVISTA_FORC = 020;      // Compra com cartão de débito à vista forçada
+  SRV_DEBITO_PRE = 021;              // Compra com cartão de débito pré-datada
+  SRV_DEBITO_PARC_SEM_ENT = 022;     // Compra com cartão de débito parcelada sem parcela à vista
+  SRV_DEBITO_PARC_COM_ENT = 023;     // Compra com cartão de débito parcelada – parcela à vista
+  SRV_DEBITO_PARC_COM_ENT_FORC = 024;// Compra com cartão de débito parcelada – parcela à vista forçada
+  SRV_VALE_GAS = 025;                // Compra Vale Gás
+  SRV_CREDITO_PARC_ADM = 027;        // Compra com cartão de crédito parcelado pela administradora
+  SRV_CREDITO_PARC_ESTAB = 028;      // Compra com cartão de crédito parcelado pelo estabelecimento
+  SRV_CANC_DEBITO = 031;             // Cancelamento de compra de débito
+  SRV_CANC_CREDITO = 032;            // Cancelamento de compra de crédito
+  SRV_CDC = 034;                     // Compra CDC (CNS)
+  SRV_GRANTIA_CHEQUE = 035;          // Garantia de cheques
+  SRV_DESCONTO_CHEQUE = 036;         // Desconto de cheques
+  SRV_RESUMO_VENDA = 037;            // Solicitação de resumo de vendas
+  SRV_CREDITO_IATA = 039;            // Compra com cartão de crédito IATA
+  SRV_CREDITO_IATA_PARC_JUROS = 040; // Compra com cartão de crédito IATA parcelado com juros
+  SRV_CREDITO_IATA_PARC_SEM_JUROS = 041; // Compra com cartão de crédito IATA parcelado sem juros
+  SRV_CANC_CREDITO_IATA = 042;       // Cancelamento de compra de credito IATA
+  SRV_CANC_CDC = 043;                // Cancelamento compra com cartão CDC
+  SRV_CONS_CDC = 044;                // Consulta planos de pagamento para cartão CDC
+  SRV_CARTAO_CDC = 045;              // Compra com cartão CDC
+  SRV_CONS_PARC_CRED = 047;          // Consulta parcelas de crédito
+  SRV_CONS_PARC_DEB = 048;           // Consulta parcelas de débito
+  SRV_DEBITO_VOUCHER = 050;          // Compra com cartão de débito Voucher (Alimentação)
+  SRV_CANC_DEBITO_VOUCHER = 051;     // Cancelamento de compra com cartão de débito Voucher (Alimentação)
+  SRV_CANC_GARANTIA_CHEQUE = 056;    // Cancelamento de garantia de cheque
+  SRV_CONS_AVS = 058;                // Consulta AVS
+  SRV_CASH = 059;                    // Cash
+  SRV_CANC_CASH = 060;               // Cancelamento de Cash
+  SRV_CONFIRMA_PREAUT = 061;         // Confirmação de Pré-Autorização
+  SRV_ESTORNO_PREAUT = 062;          // Estorno de Pré-Autorização
+  SRV_CONS_FIDELIDADE = 063;         // Consulta de Pontos - Fidelidade
+  SRV_CONS_SALDO_CRED = 064;         // Consulta saldo de crédito
+  SRV_CONS_CASH = 065;               // Consulta Cash
+  SRV_CONS_VAL_RECARGA_CEL = 068;    // Consulta valores possíveis de recarga de celular
+  SRV_RECARGA_CEL = 069;             // Recarga de celular
+  SRV_CONS_SALDO = 070;              // Consulta saldo
+  SRV_CONS_EXTR_RESUMIDO = 071;      // Consulta extrato resumido
+  SRV_CONS_EXTRATO = 072;            // Consulta extrato
+  SRV_SIMULA_SAQUE = 073;            // Simulação de saque
+  SRV_SAQUE = 074;                   // Saque – Crédito
+  SRV_CONS_SALDO_INVEST = 075;       // Consulta saldo de investimento
+  SRV_CONS_EXTRATO_INVEST = 076;     // Consulta extrato de investimento
+  SRV_RESGATE_AVULSO = 077;          // Resgate avulso
+  SRV_RESGATE = 078;                 // Resgate
+  SRV_CANC_SAQUE = 079;              // Cancelamento de saque
+  SRV_CANC_RESGATE = 080;            // Cancelamento de resgate
+  SRV_OBTEM_CART_INVEST = 081;       // Obtém cartão de investimento
+  SRV_CONS_MEDICAMENTO = 082;        // Consulta medicamento
+  SRV_COMPRA_MEDICAMENTO = 083;      // Compra medicamento
+  SRV_ESTORNO_COMPRA_MEDICAMENTO = 084; // Estorno compra medicamento
+  SRV_PAGTO_CONTA_CARTAO = 085;      // Pagamento de conta com cartão
+  SRV_SOLIC_AUTORIZ = 086;           // Solicitação de autorização
+  SRV_PAGTO_CONTA_SEM_CARTAO = 087;  // Pagamento de conta sem cartão
+  SRV_DEBITO_VOUCHER_PARC = 088;     // Débito Voucher parcelado
+  SRV_CONS_PAGTO_CONTA = 089;        // onsulta pagamento de conta
+  SRV_ESTORNO_PAGTO_CONTA = 090;     // Estorno de pagamento de conta
+  SRV_PAGTO_FUTURA = 091;            // Pagamento de fatura
+  SRV_CONS_SALDO_DEBITO = 092;       // Consulta Saldo Dèbito
+  SRV_RESUMO_PAGTOS = 093;           // Resumo de Pagamentos
+  SRV_BAIXA_OS = 094;                // Baixa de O.S.
+  SRV_TESTE_COMUNIC = 095;           // Teste de Comunicação
+  SRV_ESTATISTICA = 096;             // Estatística
+  SRV_MOEDEIRO = 097;                // Moedeiro
+  SRV_CARTAO_DINHEIRO = 098;         // Compra com Cartão Dinheiro
+  SRV_ESTORNO_CARTAO_DINHEIRO = 099; // Estorno da compra com Cartão Dinheiro
+
 {--------------------------------------------------------------------------------------------
    Constantes retornadas por 'ScopeGetParam'
 --------------------------------------------------------------------------------------------}

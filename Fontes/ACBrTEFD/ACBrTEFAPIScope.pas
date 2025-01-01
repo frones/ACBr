@@ -876,7 +876,7 @@ begin
     tefopPagamentoConta:               // Serviço, Bandeira
       begin
         OpScope := scoPagto;
-        Param1 := '87';
+        Param1 := IntToStr(SRV_PAGTO_CONTA_CARTAO);
       end;
 
     tefopPrePago:

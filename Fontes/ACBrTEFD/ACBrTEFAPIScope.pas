@@ -408,8 +408,6 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
         ;
       MASK4_Status_DCC:
         ;
-    //else
-    //
     end;
   end;
 
@@ -435,19 +433,19 @@ begin
     Linha := Conteudo.Linha[I];
     LinChave := Linha.Chave;
 
-    if (LinChave = CCUPOM_LOJA) then
+    if (LinChave = RET_CUPOM_LOJA) then
       ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
-    else if (LinChave = CCUPOM_CLIENTE) then
+    else if (LinChave = RET_CUPOM_CLIENTE) then
       ImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
-    else if (LinChave = CCUPOM_REDUZIDO) and ViaClienteReduzida then
+    else if (LinChave = RET_CUPOM_REDUZIDO) and ViaClienteReduzida then
       ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
-    else if (LinChave = CCHEQUE_BANCO) then
+    else if (LinChave = RET_CHEQUE_BANCO) then
       Banco := Linha.Informacao.AsString
-    else if (LinChave = CCHEQUE_AGENCIA) then
+    else if (LinChave = RET_CHEQUE_AGENCIA) then
       Banco := Linha.Informacao.AsString
-    else if (LinChave = CCHEQUE_NUMERO) then
+    else if (LinChave = RET_CHEQUE_NUMERO) then
       Cheque := Linha.Informacao.AsString
-    else if (LinChave = CCHEQUE_DATA) then
+    else if (LinChave = RET_CHEQUE_DATA) then
       DataCheque := Linha.Informacao.AsDate;
 
     //Ex.: mask1-$00000001:
@@ -765,7 +763,6 @@ begin
       end;
     TM_BOOL:     // Booleano, a resposta deve ser 0=Não ou 1=Sim
       begin
-        //TODO: mudar para Menu
         DefCampo.TipoDeEntrada := tedNumerico;
         DefCampo.TamanhoMinimo := 1;
         DefCampo.TamanhoMaximo := 1;

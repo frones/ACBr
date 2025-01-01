@@ -857,29 +857,47 @@ const
   ACAO_CANCELAR        = 2;
   ACAO_APL_ERRO        = 3;
 
-{--------------------------------------------------------------------------------------------
-   Constantes retornadas por 'ScopeGetCupomEx'
---------------------------------------------------------------------------------------------}
-  CCUPOM_LOJA         = 'CUPOM_LOJA';
-  CCUPOM_CLIENTE      = 'CUPOM_CLIENTE';
-  CCUPOM_REDUZIDO     = 'CUPOM_REDUZIDO';
-  CNUMLINHAS_REDUZIDO = 'NUMLINHAS_REDUZIDO';
+  {--------------------------------------------------------------------------------------------
+                Enumerador dos tipos das operadoras de celular
+  --------------------------------------------------------------------------------------------}
+  REC_CEL_OPERADORAS_MODELO_1 = 1;
+  REC_CEL_OPERADORAS_MODELO_2 = 2;
 
-{--------------------------------------------------------------------------------------------
-   Constantes retornadas por 'ScopeGetCheque'
---------------------------------------------------------------------------------------------}
-  CCHEQUE_BANCO       = 'CHEQUE_BANCO';
-  CCHEQUE_AGENCIA     = 'CHEQUE_AGENCIA';
-  CCHEQUE_NUMERO      = 'CHEQUE_NUMERO';
-  CCHEQUE_VALOR       = 'CHEQUE_VALOR';
-  CCHEQUE_DATA        = 'CHEQUE_DATA';
-  CCHEQUE_CODAUT      = 'CHEQUE_CODAUT';
-  CCHEQUE_MUNICIP     = 'CHEQUE_MUNICIP';
+  {--------------------------------------------------------------------------------------------
+                Enumerador dos tipos de estruturas retornadas para os valores de recarga
+  --------------------------------------------------------------------------------------------}
+  REC_CEL_VALORES_MODELO_1 = 1;
+  REC_CEL_VALORES_MODELO_2 = 2;
+  REC_CEL_VALORES_MODELO_3 = 3;
+
+  {--------------------------------------------------------------------------------------------
+     Constantes retornadas por 'ScopeGetCupomEx'
+  --------------------------------------------------------------------------------------------}
+  RET_CUPOM_LOJA         = 'CUPOM_LOJA';
+  RET_CUPOM_CLIENTE      = 'CUPOM_CLIENTE';
+  RET_CUPOM_REDUZIDO     = 'CUPOM_REDUZIDO';
+  RET_NUMLINHAS_REDUZIDO = 'NUMLINHAS_REDUZIDO';
+
+  {--------------------------------------------------------------------------------------------
+     Constantes retornadas por 'ScopeObtemConsultaValeGas'
+  --------------------------------------------------------------------------------------------}
+  RET_VALOR_VALE_GAS = 'VALOR_VALE_GAS';
+
+  {--------------------------------------------------------------------------------------------
+     Constantes retornadas por 'ScopeGetCheque'
+  --------------------------------------------------------------------------------------------}
+  RET_CHEQUE_BANCO   = 'CHEQUE_BANCO';
+  RET_CHEQUE_AGENCIA = 'CHEQUE_AGENCIA';
+  RET_CHEQUE_NUMERO  = 'CHEQUE_NUMERO';
+  RET_CHEQUE_VALOR   = 'CHEQUE_VALOR';
+  RET_CHEQUE_DATA    = 'CHEQUE_DATA';
+  RET_CHEQUE_CODAUT  = 'CHEQUE_CODAUT';
+  RET_CHEQUE_MUNICIP = 'CHEQUE_MUNICIP';
 
 
-{--------------------------------------------------------------------------------------------
-   Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
---------------------------------------------------------------------------------------------}
+  {--------------------------------------------------------------------------------------------
+     Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
+  --------------------------------------------------------------------------------------------}
   SRV_DEBITO_AVISTA = 006;           // Compra com cartão de débito á vista
   SRV_CREDITO_AVISTA = 009;          // Compra com cartão de crédito á vista
   SRV_PREAUT_CREDITO = 013;          // Pré-Autorização com cartão de crédito
@@ -952,14 +970,14 @@ const
   SRV_CARTAO_DINHEIRO = 098;         // Compra com Cartão Dinheiro
   SRV_ESTORNO_CARTAO_DINHEIRO = 099; // Estorno da compra com Cartão Dinheiro
 
-{--------------------------------------------------------------------------------------------
-   Constantes retornadas por 'ScopeGetParam'
---------------------------------------------------------------------------------------------}
+  {--------------------------------------------------------------------------------------------
+     Constantes retornadas por 'ScopeGetParam'
+  --------------------------------------------------------------------------------------------}
   CBANDEIRA = 'BANDEIRA';
 
-{--------------------------------------------------------------------------------------------
-   Constantes da máscara 1 da função ScopeObtemCampoExt2
---------------------------------------------------------------------------------------------}
+  {--------------------------------------------------------------------------------------------
+     Constantes da máscara 1 da função ScopeObtemCampoExt2
+  --------------------------------------------------------------------------------------------}
   MASK1_Numero_Conta_PAN                   = $00000001;  { Personal Account Number (Card number) }
   MASK1_Valor_transacao                    = $00000002;  { Amount }
   MASK1_NSU_transacao                      = $00000004;  { Transaction Id assigned by Scope }
@@ -993,9 +1011,9 @@ const
   MASK1_Msg_Autentic_Cheque                = $40000000;  { Check Autentic Message }
   MASK1_Saldo_Disponivel                   = $80000000;  { Available Cache }
 
-{--------------------------------------------------------------------------------------------
-   Constantes da máscara 2 da função ScopeObtemCampoExt2
---------------------------------------------------------------------------------------------}
+  {--------------------------------------------------------------------------------------------
+     Constantes da máscara 2 da função ScopeObtemCampoExt2
+  --------------------------------------------------------------------------------------------}
   MASK2_NSU_transacao_Original             = $00000001;  { Cancel Transaction Id assigned by Scope }
   MASK2_Cliente_Com_Seguro                 = $00000002;  { Ensured Client } {(IBICred)}
   MASK2_Dados_Parcelado_Cetelem            = $00000004;  { Informations about parcels Cetelem }
@@ -1030,9 +1048,9 @@ const
   MASK2_UsoRes_63                          = $40000000;  { BIT 63 - Projeto Vale Gás GetNet }
   MASK2_Numero_PDV                         = $80000000;  { Número do PDV - HSBC }
 
-{--------------------------------------------------------------------------------------------
-   Constantes da máscara 3 da função ScopeObtemCampoExt2
---------------------------------------------------------------------------------------------}
+  {--------------------------------------------------------------------------------------------
+     Constantes da máscara 3 da função ScopeObtemCampoExt2
+  --------------------------------------------------------------------------------------------}
   MASK3_DadosQtdeECupons                   = $00000001;  { Informações sobre a quantidade e os e-cupons disponíveis ao cliente }
   MASK3_DescResgateMonetario               = $00000002;  { Desconto do resgate monetário }
   MASK3_Dados_Pagto_Bit48_BRADESCO         = $00000004;  { Bradesco - Informações sobre o Bit 48 }
@@ -1083,9 +1101,9 @@ const
   MASK3_Consulta_Cedente_BACEN_BRADESCO    = $40000000;  { Consulta Cedente - Dados da Consulta BACEN BRADESCO }
   MASK3_Data_Vencimento_CORBAN             = $80000000;  { Data Vencimento CORBAN – do título/conta }
 
-{--------------------------------------------------------------------------------------------
-   Constantes da máscara 4 da função ScopeObtemCampoExt3
---------------------------------------------------------------------------------------------}
+  {--------------------------------------------------------------------------------------------
+     Constantes da máscara 4 da função ScopeObtemCampoExt3
+  --------------------------------------------------------------------------------------------}
   MASK4_Nome_Portador_Cartao           = $00000001;  { Nome do Portador do Cartão (Informação com até 26 caracteres) }
   MASK4_Data_Validade_Cartao           = $00000002;  { Data de Validade do Cartão (YYMMDD) }
   MASK4_Merchant_ID                    = $00000004;  { Merchant ID (informação com até 32 caracteres) }
@@ -1117,23 +1135,10 @@ const
                                                   ‘4’ = Erro de Comunicação
                                                   Qualquer outro valor = Desconhecido }
 
-
-
-//------------------------------------------------------------------------------
-// DECLARACAO DAS ESTRUTURAS
-//------------------------------------------------------------------------------
+{------------------------------------------------------------------------------
+ DECLARACAO DAS ESTRUTURAS
+------------------------------------------------------------------------------}
 type
-  //** Enumerador dos tipos das operadoras de celular */
-  TEnumCelOperModelo = (
-        REC_CEL_OPERADORAS_MODELO_1 = 1,
-        REC_CEL_OPERADORAS_MODELO_2);
-
-  //** Enumerador dos tipos de estruturas retornadas para os valores de recarga */
-  TEnumCelOperVals = (
-        REC_CEL_VALORES_MODELO_1 = 1,
-        REC_CEL_VALORES_MODELO_2,
-        REC_CEL_VALORES_MODELO_3);
-
   //** dados utlizados na coleta de parametros */
   PParam_Coleta = ^TParam_Coleta;
   TParam_Coleta = packed record
@@ -1453,15 +1458,20 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPGetData: function(LenDados: Word; pDados: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopePPAbort: function(): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPAbort: function(): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPStartOptionMenu: function(Titulo: PAnsiChar; Lista: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPOptionMenu: function(Indice: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
-    xScopeMenu: function(_UsoFuturo: LongInt): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopePPDisplay: function(Msg: PAnsiChar): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopePPOpen: function(Porta: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeMenu: function(_UsoFuturo: LongInt): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPDisplay: function(Msg: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPOpen: function(Porta: Word): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeObtemConsultaValeGas: function(_Valor: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     function PAnsiCharToString(APAnsiChar: PAnsiChar): String;
     function ArrayOfCharToString(Arr: array of AnsiChar): String;
@@ -1516,7 +1526,8 @@ type
       Terminal: TACBrTEFScopeTerminalMensagem = tmOperador; TempoEspera: Integer = -1);
 
     function ObterScopeStatus: Longint;
-    function ObterDadosComprovantes: Longint;
+    procedure ObterDadosComprovantes;
+    procedure ColetarValoresConsulta;
 
     procedure ObterDadosCheque;
     procedure ObterDadosDaTransacao;
@@ -1527,6 +1538,8 @@ type
 
     procedure PerguntarMenuScope(const TipoMenu: Byte; var Resposta: String; var Acao: Byte);
     procedure PerguntarSimNao(const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+    procedure PerguntarMenuOperadora(const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+
     procedure ColetarParametrosScope(const iStatus: Word; var rColetaEx: TParam_Coleta_Ext);
     procedure AssignColetaToColetaEx(const rColeta: TParam_Coleta; var rColetaEx: TParam_Coleta_Ext);
 
@@ -1677,8 +1690,6 @@ begin
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMensagem']));
 
   VerificarDiretorioDeTrabalho;
-  //E: Se o arquivo INI estiver configurado, a chamada abaixo talvez possa ser dispensada.
-  //Ver também função ScopeOpenVerify() como possível adição para essa feature.
   VerificarEAjustarScopeINI;
   LoadLibFunctions;
 
@@ -2003,6 +2014,7 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopePPOptionMenu', @xScopePPOptionMenu);
   ScopeFunctionDetect(sLibName, 'ScopePPDisplay', @xScopePPDisplay);
   ScopeFunctionDetect(sLibName, 'ScopeMenu', @xScopeMenu);
+  ScopeFunctionDetect(sLibName, 'ScopeObtemConsultaValeGas', @xScopeObtemConsultaValeGas);
 
   fCarregada := True;
 end;
@@ -2069,6 +2081,7 @@ begin
   xScopePPStartOptionMenu := Nil;
   xScopePPOptionMenu := Nil;
   xScopePPDisplay := Nil;
+  xScopeObtemConsultaValeGas := Nil;
 end;
 
 procedure TACBrTEFScopeAPI.DoException(const AErrorMsg: String);
@@ -2530,7 +2543,7 @@ begin
   else
     sPDV:= fPDV;
 
-  //ExibirMensagem( Format(sMsgAbrindoConexao, [sEmpresa, sFilial, sPDV]) );
+  // ExibirMensagem( Format(sMsgAbrindoConexao, [sEmpresa, sFilial, sPDV]) );
   GravarLog('ScopeOpen( 2, '+sEmpresa+', '+sFilial+', '+sPDV+' )');
   ret := xScopeOpen( PAnsiChar('2'),
                      PAnsiChar(AnsiString(sEmpresa)),
@@ -2541,7 +2554,7 @@ begin
     TratarErroScope(ret);
 
   fConectado := True;
-  //ExibirMensagem(Format(sMsgConctadoAoServidor, [sEnderecoIP+':'+sPorta]));
+  // ExibirMensagem(Format(sMsgConctadoAoServidor, [sEnderecoIP+':'+sPorta]));
 
   ConfigurarColeta;
   VerificarSessaoTEFAnterior;
@@ -2561,7 +2574,7 @@ begin
     TratarErroScope(ret);
 
   fConectado := False;
-  //ExibirMensagem(sMsgDesconectado);
+  // ExibirMensagem(sMsgDesconectado);
 end;
 
 procedure TACBrTEFScopeAPI.VerificarSeEstaConectadoScope;
@@ -2871,20 +2884,20 @@ begin
           TC_IMPRIME_CONSULTA:
             ObterDadosComprovantes;
 
-          TC_DISP_LISTA_MEDICAMENTO:;   // recupera lista de Medicamentos //
+          //TC_DISP_LISTA_MEDICAMENTO:;   // recupera lista de Medicamentos //
             //TODO
 
-          TC_DISP_VALOR:;               // recupera valor do Vale Gas //
+          //TC_COLETA_REG_MEDICAMENTO:;   // se coletou lista de medicamentos, deve tambem atualizar o valor. //
             //TODO
 
-          TC_COLETA_REG_MEDICAMENTO:;   // se coletou lista de medicamentos, deve tambem atualizar o valor. //
-            //TODO
+          TC_DISP_VALOR:               // recupera valor do Vale Gas e da consulta de Cartão Dinheiro //
+            ColetarValoresConsulta;
 
-          TC_OBTEM_SERVICOS:;           // recupera os servicos configurados //
+          //TC_OBTEM_SERVICOS:;           // recupera os servicos configurados //
             //TODO:
 
-          TC_COLETA_OPERADORA:;         // recupera a lista de operadoras da Recarga de Celular //
-            //TODO:
+          TC_COLETA_OPERADORA:         // recupera a lista de operadoras da Recarga de Celular //
+            PerguntarMenuOperadora(rColetaEx, Resposta, Acao);
 
           TC_COLETA_VALOR_RECARGA:;     // recupera a lista de valores da Recarga de Celular //
             //TODO:
@@ -2969,8 +2982,9 @@ begin
   GravarLog('  ret: '+IntToStr(Result) + ' - $'+IntToHex(Result, 4));
 end;
 
-function TACBrTEFScopeAPI.ObterDadosComprovantes: Longint;
+procedure TACBrTEFScopeAPI.ObterDadosComprovantes;
 var
+  ret: LongInt;
   pCabec, pCupomCliente, pCupomLoja, pCupomReduzido: PAnsiChar;
   NumeroLinhasReduzido: Byte;
   sCabecalho, sCupomLoja, sCupomCliente, sCupomReduzido: String;
@@ -2981,14 +2995,14 @@ begin
   pCupomReduzido := AllocMem(2048);
   try
     GravarLog('ScopeGetCupomEx');
-    Result := xScopeGetCupomEx( 1024, pCabec,
-                                2048, pCupomCliente,
-                                2048, pCupomLoja,
-                                2048, pCupomReduzido,
-                                @NumeroLinhasReduzido);
-    GravarLog('  ret: '+IntToStr(Result));
-    if (Result <> RCS_SUCESSO) then
-      TratarErroScope(Result);
+    ret := xScopeGetCupomEx( 1024, pCabec,
+                             2048, pCupomCliente,
+                             2048, pCupomLoja,
+                             2048, pCupomReduzido,
+                             @NumeroLinhasReduzido);
+    GravarLog('  ret: '+IntToStr(ret));
+    if (ret <> RCS_SUCESSO) then
+      TratarErroScope(ret);
 
     sCabecalho := PAnsiCharToString(pCabec);
     sCupomLoja := PAnsiCharToString(pCupomLoja);
@@ -3000,16 +3014,38 @@ begin
     GravarLog('Cupom Cliente: ' + sLineBreak + sCupomCliente);
     GravarLog('Cupom Reduzido: '+IntToStr(NumeroLinhasReduzido)+' linhas' + sLineBreak + sCupomReduzido);
 
-    fDadosDaTransacao.Values[CCUPOM_LOJA]     := BinaryStringToString( sCabecalho + sLineBreak + sCupomLoja );
-    fDadosDaTransacao.Values[CCUPOM_CLIENTE]  := BinaryStringToString( sCabecalho + sLineBreak + sCupomCliente );
-    fDadosDaTransacao.Values[CCUPOM_REDUZIDO] := BinaryStringToString( sCupomReduzido );
-    fDadosDaTransacao.Values[CNUMLINHAS_REDUZIDO] := IntToStr(NumeroLinhasReduzido);
+    fDadosDaTransacao.Values[RET_CUPOM_LOJA]     := BinaryStringToString( sCabecalho + sLineBreak + sCupomLoja );
+    fDadosDaTransacao.Values[RET_CUPOM_CLIENTE]  := BinaryStringToString( sCabecalho + sLineBreak + sCupomCliente );
+    fDadosDaTransacao.Values[RET_CUPOM_REDUZIDO] := BinaryStringToString( sCupomReduzido );
+    fDadosDaTransacao.Values[RET_NUMLINHAS_REDUZIDO] := IntToStr(NumeroLinhasReduzido);
   finally
     Freemem(pCabec);
     Freemem(pCupomCliente);
     Freemem(pCupomLoja);
     Freemem(pCupomReduzido);
   end;
+end;
+
+procedure TACBrTEFScopeAPI.ColetarValoresConsulta;
+var
+  ret: LongInt;
+  pValor: PAnsiChar;
+  s: String;
+begin
+  pValor := AllocMem(100);
+  try
+    GravarLog('ScopeObtemConsultaValeGas');
+    ret := xScopeObtemConsultaValeGas(pValor);
+    s := PAnsiCharToString(pValor);
+    GravarLog('  ret: '+IntToStr(ret)+', Valor: '+s);
+    if (ret = RCS_SUCESSO) then
+      fDadosDaTransacao.Values[RET_VALOR_VALE_GAS] := s;
+  finally
+    Freemem(pValor);
+  end;
+
+  //TODO: Como obter Valor de consulta de Cartão Dinheiro ?
+  //TODO: Como obter valores de Pagamentos de Contas ?
 end;
 
 procedure TACBrTEFScopeAPI.ObterDadosCheque;
@@ -3023,22 +3059,22 @@ begin
   if (ret <> RCS_SUCESSO) then
     TratarErroScope(ret);
 
-  fDadosDaTransacao.Values[CCHEQUE_BANCO]   := ArrayOfCharToString(rCheque.Banco);
-  fDadosDaTransacao.Values[CCHEQUE_AGENCIA] := ArrayOfCharToString(rCheque.Agencia);
-  fDadosDaTransacao.Values[CCHEQUE_NUMERO]  := ArrayOfCharToString(rCheque.NumCheque);
-  fDadosDaTransacao.Values[CCHEQUE_VALOR]   := ArrayOfCharToString(rCheque.Valor);
-  fDadosDaTransacao.Values[CCHEQUE_DATA]    := ArrayOfCharToString(rCheque.BomPara);
-  fDadosDaTransacao.Values[CCHEQUE_CODAUT]  := ArrayOfCharToString(rCheque.CodAut);
-  fDadosDaTransacao.Values[CCHEQUE_MUNICIP] := ArrayOfCharToString(rCheque.Municipio);
+  fDadosDaTransacao.Values[RET_CHEQUE_BANCO]   := ArrayOfCharToString(rCheque.Banco);
+  fDadosDaTransacao.Values[RET_CHEQUE_AGENCIA] := ArrayOfCharToString(rCheque.Agencia);
+  fDadosDaTransacao.Values[RET_CHEQUE_NUMERO]  := ArrayOfCharToString(rCheque.NumCheque);
+  fDadosDaTransacao.Values[RET_CHEQUE_VALOR]   := ArrayOfCharToString(rCheque.Valor);
+  fDadosDaTransacao.Values[RET_CHEQUE_DATA]    := ArrayOfCharToString(rCheque.BomPara);
+  fDadosDaTransacao.Values[RET_CHEQUE_CODAUT]  := ArrayOfCharToString(rCheque.CodAut);
+  fDadosDaTransacao.Values[RET_CHEQUE_MUNICIP] := ArrayOfCharToString(rCheque.Municipio);
 
   GravarLog('Dados do Cheque'+sLineBreak+
-            '  Banco: '+fDadosDaTransacao.Values[CCHEQUE_BANCO] + sLineBreak +
-            '  Agencia: '+fDadosDaTransacao.Values[CCHEQUE_AGENCIA] + sLineBreak +
-            '  NumCheque: '+fDadosDaTransacao.Values[CCHEQUE_NUMERO] + sLineBreak +
-            '  Valor: '+fDadosDaTransacao.Values[CCHEQUE_VALOR] + sLineBreak +
-            '  BomPara: '+fDadosDaTransacao.Values[CCHEQUE_DATA] + sLineBreak +
-            '  CodAut: '+fDadosDaTransacao.Values[CCHEQUE_CODAUT] + sLineBreak +
-            '  Municipio: '+fDadosDaTransacao.Values[CCHEQUE_MUNICIP]);
+            '  Banco: '+fDadosDaTransacao.Values[RET_CHEQUE_BANCO] + sLineBreak +
+            '  Agencia: '+fDadosDaTransacao.Values[RET_CHEQUE_AGENCIA] + sLineBreak +
+            '  NumCheque: '+fDadosDaTransacao.Values[RET_CHEQUE_NUMERO] + sLineBreak +
+            '  Valor: '+fDadosDaTransacao.Values[RET_CHEQUE_VALOR] + sLineBreak +
+            '  BomPara: '+fDadosDaTransacao.Values[RET_CHEQUE_DATA] + sLineBreak +
+            '  CodAut: '+fDadosDaTransacao.Values[RET_CHEQUE_CODAUT] + sLineBreak +
+            '  Municipio: '+fDadosDaTransacao.Values[RET_CHEQUE_MUNICIP]);
 end;
 
 procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
@@ -3354,6 +3390,70 @@ begin
       Resposta := '1';
   finally
     op.Free;
+  end;
+end;
+
+procedure TACBrTEFScopeAPI.PerguntarMenuOperadora(
+  const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+var
+  ret, i, p, l: LongInt;
+  CodOp: Byte;
+  nOp: Smallint;
+  pBuffer: PAnsiChar;
+  s, NomeOp: String;
+  sl: TStringList;
+  item: Integer;
+const
+  BUFFER_SIZE = 4096;
+begin
+  Resposta := '';
+  Acao := ACAO_CANCELAR;
+
+  pBuffer := AllocMem(BUFFER_SIZE);
+  try
+    GravarLog('ScopeRecuperaOperadorasRecCel');
+    ret := xScopeRecuperaOperadorasRecCel(REC_CEL_OPERADORAS_MODELO_2, pBuffer, BUFFER_SIZE);
+    s := PAnsiCharToString(pBuffer);
+    GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+s);
+    if (ret = RCS_SUCESSO) then
+    begin
+      sl := TStringList.Create;
+      try
+        l := Length(s);
+        if (l > 2) then
+          move(s[1], nOp, 2)
+        else
+          nOp := 0;
+
+        i := 1;
+        p := 3;
+        while (i <= nOp) and (p < l) do
+        begin
+          move(s[p], CodOp, 1);
+          NomeOp := copy(s, p+1, 22);
+          Inc(p, 23);
+          Inc(i);
+          sl.Add(Format('%.3d - %s',[CodOp, NomeOp]));
+        end;
+
+        if (sl.Count > 0) then
+        begin
+          item := 0;
+          fOnPerguntarMenu('Escolha a Operadora', sl, item);
+          if (item = -2) then
+            Acao := ACAO_ESTADO_ANTERIOR
+          else
+          begin
+            Resposta := copy(sl[item], 1, 3);
+            Acao := ACAO_PROXIMO_ESTADO;
+          end;
+        end;
+      finally
+        sl.Free;
+      end;
+    end;
+  finally
+    Freemem(pBuffer);
   end;
 end;
 

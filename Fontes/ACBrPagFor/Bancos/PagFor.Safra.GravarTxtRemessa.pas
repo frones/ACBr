@@ -216,7 +216,6 @@ begin
       GravarCampo(Endereco.Bairro, 15, tcStr, True);
       GravarCampo(Endereco.Cidade, 20, tcStr, True);
       GravarCampo(Endereco.CEP, 8, tcInt);
-      GravarCampo(' ', 3, tcStr);
       GravarCampo(Endereco.Estado, 2, tcStr);
       GravarCampo(DataVencimento, 8, tcDat);
       GravarCampo(Valor, 15, tcDe2);

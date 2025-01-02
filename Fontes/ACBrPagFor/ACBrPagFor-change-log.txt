@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2025
+-- PagFor.Safra.GravarTxtRemessa --
+[-] A unit estava gerando o CEP com 11 dígitos em vez de 8.
+  Por: Italo Giurizzato Junior
+
 19/12/2024
 -- PagFor.Safra.GravarTxtRemessa --
 [-] A unit estava no formato UTF-8 BOM em vez de ANSI.

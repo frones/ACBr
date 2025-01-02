@@ -75,6 +75,8 @@ type
     procedure ImprimirEVENTO(NF3e: TNF3e = nil); virtual;
     procedure ImprimirEVENTOPDF(NF3e: TNF3e = nil); virtual;
 
+    function CaractereQuebraDeLinha: String;
+
   published
     property ACBrNF3e: TComponent          read FACBrNF3e            write SetACBrNF3e;
     property TipoDANF3e: TpcnTipoImpressao read FTipoDANF3e          write FTipoDANF3e;
@@ -214,6 +216,13 @@ begin
                          DescricaoModelo);
     end;
   end;
+end;
+
+function TACBrNF3eDANF3eClass.CaractereQuebraDeLinha: String;
+begin
+  Result := '|';
+  if Assigned(FACBrNF3e) and (FACBrNF3e is TACBrNF3e) then
+    Result := TACBrNF3e(FACBrNF3e).Configuracoes.WebServices.QuebradeLinha;
 end;
 
 end.

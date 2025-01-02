@@ -517,7 +517,7 @@ begin
                                          FPosPrinter.ColunasFonteCondensada, ''));
     FPosPrinter.Buffer.Add(' ');
 
-    TextoObservacao := StringReplace(FpNF3e.InfAdic.infAdFisco, ';', sLineBreak, [rfReplaceAll]);
+    TextoObservacao := StringReplace(FpNF3e.InfAdic.infAdFisco, CaractereQuebraDeLinha , sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
 
     FPosPrinter.Buffer.Add('</linha_simples>');
@@ -533,7 +533,7 @@ begin
   TextoObservacao := Trim(FpNF3e.InfAdic.infCpl);
   if TextoObservacao <> '' then
   begin
-    TextoObservacao := StringReplace(FpNF3e.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);
+    TextoObservacao := StringReplace(FpNF3e.InfAdic.infCpl, CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
   end;
 

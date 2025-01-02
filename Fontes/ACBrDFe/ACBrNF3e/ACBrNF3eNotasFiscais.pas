@@ -1834,6 +1834,7 @@ begin
     FNF3eW.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     FNF3eW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNF3eW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
+    FNF3eW.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 

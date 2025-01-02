@@ -348,7 +348,7 @@ begin
   rllChave.Caption := FormatarChaveAcesso(fpNF3e.infNF3e.ID);
 
   rlmMensagens.Lines.Clear;
-  rlmMensagens.Lines.Add(StringReplace(fpNF3e.infAdic.infCpl, ';', slineBreak, [rfReplaceAll]));
+  rlmMensagens.Lines.Add(StringReplace(fpNF3e.infAdic.infCpl, fpDANF3e.CaractereQuebraDeLinha, slineBreak, [rfReplaceAll]));
 
   rllXmotivo.Visible := True;
   {
@@ -646,7 +646,7 @@ begin
   end;
 
   rlmFisco.Lines.Clear;
-  rlmFisco.Lines.Text := StringReplace(fpNF3e.infAdic.infAdFisco, ';', slineBreak, [rfReplaceAll]);
+  rlmFisco.Lines.Text := StringReplace(fpNF3e.infAdic.infAdFisco, fpDANF3e.CaractereQuebraDeLinha, slineBreak, [rfReplaceAll]);
 end;
 
 procedure TfrmDANF3eRLRetrato.RLDivisao_05BeforePrint(Sender: TObject;

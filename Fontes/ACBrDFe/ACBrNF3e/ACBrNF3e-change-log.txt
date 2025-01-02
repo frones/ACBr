@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2025
+-- Diversos --
+[*] #TK-5866-2: Ajustes visando padronização do caractere de quebra de linha.
+   Por: Diego Folieni
+
 08/10/2024
 -- ACBrNF3e/ACBrNF3eWebServices --
 [*] Ajustes para que o envio ocorra somente no modo Síncrono.

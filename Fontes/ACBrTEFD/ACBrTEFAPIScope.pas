@@ -117,7 +117,6 @@ type
       const CodigoFinalizacao: string = '';
       const Rede: string = ''): Boolean; override;
 
-
     procedure FinalizarTransacao(
       const Rede, NSU, CodigoFinalizacao: String;
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoAutomatico); override;
@@ -672,6 +671,7 @@ procedure TACBrTEFAPIClassScope.QuandoPerguntarCampoAPI(
 var
   Validado, Cancelado: Boolean;
   DefCampo: TACBrTEFAPIDefinicaoCampo;
+  Inferior, Superior, ValResp: Double;
 begin
   DefCampo.TituloPergunta := TituloCampo;
   DefCampo.MascaraDeCaptura := '';
@@ -807,6 +807,17 @@ begin
       else
         Validado := True;
       end;
+    end;
+
+    if Validado and (Param_Coleta_Ext.UsaLimites = 1)then
+    begin
+      Inferior := StrToIntDef(Param_Coleta_Ext.Limite.Inferior, 0)/100;
+      Superior := StrToIntDef(Param_Coleta_Ext.Limite.Superior, 0)/100;
+      ValResp  := StrToIntDef(OnlyNumber(Resposta), 0)/100;
+      if (Inferior <> 0) then
+        Validado := (ValResp >= Inferior);
+      if Validado and (Superior <> 0) then
+        Validado := (ValResp <= Superior);
     end;
 
     if Validado then

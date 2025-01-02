@@ -316,7 +316,6 @@ const
   RCS_ERRO_HASH                               = $FFA0;
   RCS_ERRO_TAMANHO_HASH                       = $FFA1;
 
-
   RCS_ERRO_GENERICO                           = $FFFF;
 
   RCS_ERRO_DESMONTANDO_PACOTE_RECEBIDO        = -5000;  { Erro desmontando o pacote recebido }
@@ -327,12 +326,18 @@ const
   RCS_ERRO_LEITURA_TRILHA_OU_CARTAO           = -5005;  { Erro Leitura Cartao/Trilha }
 
   {--------------------------------------------------------------------------------------------
+                 Define os parametros para a funcao ScopeObtemHandle
+  --------------------------------------------------------------------------------------------}
+  HDL_TRANSACAO_ANTERIOR     = $0000;
+  HDL_TRANSACAO_EM_ARQUIVO   = $0008;
+  HDL_TRANSACAO_EM_ANDAMENTO = $0009;
+
+  {--------------------------------------------------------------------------------------------
                  Define as teclas que podem ser habilitadas
   --------------------------------------------------------------------------------------------}
   T_CANCELA = $01;
   T_PROXIMO = $02;
   T_RETORNA = $04;
-
 
   {--------------------------------------------------------------------------------------------
                  Codigos devolvidos pelas funcoes de acesso ao PIN-Pad Compartilhado
@@ -468,7 +473,6 @@ const
   PC_APL_DEBITO   = 2; // Aplicacao de Debito
   PC_APL_QUALQUER = 99; // Qualquer aplicacao
 
-
   {--------------------------------------------------------------------------------------------
                 Retornos do Parâmetro "Config" do método "ScopeConsultaPP"
   --------------------------------------------------------------------------------------------}
@@ -483,7 +487,6 @@ const
   CANAL_COMM_SERIAL    = 1;  // Comunicacao serial
   CANAL_COMM_USB       = 2;  // Comunicacao USB
   CANAL_COMM_BLUETOOTH = 3;  // Comunicacao Bluetooth
-
 
   {--------------------------------------------------------------------------------------------
                 Valores válidos para Parâmetro "Dado" do método "ScopePPStartGetData"
@@ -516,9 +519,9 @@ const
   CFG_ATUALIZA_TRANSACAO_EM_QUEDA  = 128; // Permite confirmar/desfazer a transacao em caso de queda de energia. (default: desabilitado, ou seja, sempre desfazer)
   CFG_PERMITIR_SAQUE               = 256; // Habilita coleta de saque em operacoes de Debito A Vista da rede Cielo
   CFG_COLETA_RECARGA_PP            = 512; // Permite desabilitar a coleta do ddd e telefone no pinpad em recarga de celular (default: conforme configuracao do SCOPECNF)
-  CFG_HABILITA_QRCODE_TELA         = 1024; //$00000400, Permite exibir o QRCode na tela, quando estiver habilitado, a automacao deve tratar o TC_OBTEM_QRCODE e obter o campo String_QRCode
-  CFG_SIMULA_PP_PRECALL            = 269488145; //$10101011, Prepara a chamada para ligar simulação
-  CFG_SIMULA_PP                    = 269488144; //$10101010, Liga a simulação de PP para Debug
+  CFG_HABILITA_QRCODE_TELA         = 1024; // $00000400, Permite exibir o QRCode na tela, quando estiver habilitado, a automacao deve tratar o TC_OBTEM_QRCODE e obter o campo String_QRCode
+  CFG_SIMULA_PP_PRECALL            = 269488145; // $10101011, Prepara a chamada para ligar simulação
+  CFG_SIMULA_PP                    = 269488144; // $10101010, Liga a simulação de PP para Debug
 
   {--------------------------------------------------------------------------------------------
                 Valores válidos para Parâmetro "Param" do método "ScopeConfigura"
@@ -856,12 +859,14 @@ const
   ACAO_ESTADO_ANTERIOR = 1;
   ACAO_CANCELAR        = 2;
   ACAO_APL_ERRO        = 3;
+  ACAO_COLETAR         = 99;
 
   {--------------------------------------------------------------------------------------------
                 Enumerador dos tipos das operadoras de celular
   --------------------------------------------------------------------------------------------}
   REC_CEL_OPERADORAS_MODELO_1 = 1;
   REC_CEL_OPERADORAS_MODELO_2 = 2;
+  REC_CEL_OPERADORAS_MODELO_3 = 3;
 
   {--------------------------------------------------------------------------------------------
                 Enumerador dos tipos de estruturas retornadas para os valores de recarga
@@ -1135,6 +1140,15 @@ const
                                                   ‘4’ = Erro de Comunicação
                                                   Qualquer outro valor = Desconhecido }
 
+  // Identificacao das redes
+  R_GWCEL = 90;
+
+  // Tamanhos da Estrutura TRec_Cel_Valores
+  TAM_NOME_OP     = 21;
+  TAM_VALOR_OP    = 12;
+  NUM_VLRS_RC     = 10;
+  TAM_MSG_PROM_OP = 41;
+
 {------------------------------------------------------------------------------
  DECLARACAO DAS ESTRUTURAS
 ------------------------------------------------------------------------------}
@@ -1258,28 +1272,28 @@ type
   //** Lista de Operadoras de Recarga de Celular retornadas pelo Servidor */
   PRec_Cel_Oper = ^TRec_Cel_Oper;
   TRec_Cel_Oper = packed record
-    NumOperCel: SmallInt;
-    OperCel:    array [1..2000] of AnsiChar;
+    NumOperCel:   SmallInt;
+    OperCel:      array [1..2000] of AnsiChar;
   end;
 
   //** Lista de Operadoras de Recarga de Celular retornadas pelo Servidor */
-  PRec_Cel_ID_Oper = ^TRec_Cel_ID_Oper;
-  TRec_Cel_ID_Oper = packed record
-    CodOperCel:  AnsiChar;
-    NomeOperCel: array [1..21] of AnsiChar;
+  PRec_Cel_ID_OperM3 = ^TRec_Cel_ID_OperM3;
+  TRec_Cel_ID_OperM3 = packed record
+    CodOperCel:   SmallInt;
+    NomeOperCel:  array [1..TAM_NOME_OP] of AnsiChar;
   end;
 
   //** Formato do valor para Recarga de Celular */
   PRec_Cel_Valor = ^TRec_Cel_Valor;
   TRec_Cel_Valor = packed record
-    Valor: array [1..12] of AnsiChar;
-    Bonus: array [1..12] of AnsiChar;
-    Custo: array [1..12] of AnsiChar;
+    Valor: array [1..TAM_VALOR_OP] of AnsiChar;
+    Bonus: array [1..TAM_VALOR_OP] of AnsiChar;
+    Custo: array [1..TAM_VALOR_OP] of AnsiChar;
   end;
 
   TRec_Cel_Faixa_Valores = packed record
-    ValorMin: array [1..12] of AnsiChar;
-    ValorMax: array [1..12] of AnsiChar;
+    ValorMin: array [1..TAM_VALOR_OP] of AnsiChar;
+    ValorMax: array [1..TAM_VALOR_OP] of AnsiChar;
   end;
 
   //** Lista de Valores de Recarga de Celular retornadas pelo Servidor */
@@ -1289,20 +1303,23 @@ type
                                               'V' - variavel(val min e val maximo)
                                               'F' - Fixo (apenas um valor fixo)
                                               'T' - Todos (tabela de valores) }
-    ValorMinimo:    array [1..12] of AnsiChar;
-    ValorMaximo:    array [1..12] of AnsiChar;
-    Totvalor:       AnsiChar;
-    TabValores:     array [1..10] of TRec_Cel_Valor;
-    MsgPromocional: array [1..41] of AnsiChar;
-    TotFaixaValores: AnsiChar;
-    TabFaixaValores:array [1..10] of TRec_Cel_Faixa_Valores;
+    ValorMinimo:    array [1..TAM_VALOR_OP] of AnsiChar;
+    ValorMaximo:    array [1..TAM_VALOR_OP] of AnsiChar;
+    TotValor:       Byte;
+    TabValores:     array [1..NUM_VLRS_RC] of TRec_Cel_Valor;
+    MsgPromocional: array [1..TAM_MSG_PROM_OP] of AnsiChar;
+    TotFaixaValores: Byte;
+    TabFaixaValores:array [1..NUM_VLRS_RC] of TRec_Cel_Faixa_Valores;
   end;
 
 type
   EACBrTEFScopeAPI = class(Exception);
 
-  TACBrTEFScopeOperacao = ( scoNone, scoMenu, scoCredito, scoDebito, scoPagto, scoConsCDC, scoCheque, scoCanc,
-                            scoReimpComp, scoResVenda, scoRecargaCel, scoPreAutCredito );
+  TACBrTEFScopeOperacao = ( scoNone, scoMenu,
+                            scoCredito, scoDebito, scoPagto,
+                            scoConsCDC, scoCheque, scoCanc,
+                            scoReimpComp, scoResVenda, scoRecargaCel,
+                            scoPreAutCredito );
 
   TACBrTEFScopeGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
@@ -1431,23 +1448,20 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePreAutorizacaoCredito: function(_Valor, _TxServico: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopeRecuperaOperadorasRecCel: function(_TipoTabela: Byte; _Buffer: PAnsiChar;
+    xScopeRecuperaOperadorasRecCel: function(_TipoTabela: Byte; rListaOperadoras: PRec_Cel_Oper;
       _TamBuffer: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    xScopeRecuperaValoresRecCel: function(_TipoTabela: Byte; _Buffer: PAnsiChar;
+    xScopeRecuperaValoresRecCel: function(_TipoTabela: Byte; rCelValores: PRec_Cel_Valores;
       _TamBuffer: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeConfigura: function(_Id, _Param: LongInt): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeValidaInterfacePP: function(IntPP: Byte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-    //Busca informações de configurações no servidor deles...
     xScopeConsultaPP: function(Configurado, UsoExclusivoScope, Porta: PByte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
-    xScopeMenuRecuperaItens: function(_TipoTabela: Byte; _Buffer: PAnsiChar; _TamBuffer: Word): LongInt;
-      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeMenuRecuperaItens: function(_TipoTabela: Byte; _Buffer: PAnsiChar;
+      _TamBuffer: Word): LongInt; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeMenuSelecionaItem: function(_Item: Byte): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
-
     xScopePPOpenSecure: function(TipoCanal: word; Endereco: PAnsiChar): LongInt
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePPClose: function(IdleMsg: PAnsiChar): LongInt;
@@ -1530,7 +1544,9 @@ type
     procedure ColetarValoresConsulta;
 
     procedure ObterDadosCheque;
+    function ObterHandleScope(TipoHandle: LongInt): LongInt;
     procedure ObterDadosDaTransacao;
+    function ObterCampoMask1(AMask: LongInt): String;
 
     procedure ExibirErroUltimaMsg;
     procedure LogColeta(AColeta: TParam_Coleta);
@@ -1538,9 +1554,11 @@ type
 
     procedure PerguntarMenuScope(const TipoMenu: Byte; var Resposta: String; var Acao: Byte);
     procedure PerguntarSimNao(const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
-    procedure PerguntarMenuOperadora(const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+    procedure PerguntarMenuOperadora(var rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+    procedure PerguntarMenuValorRecargaCel(var rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
 
     procedure ColetarParametrosScope(const iStatus: Word; var rColetaEx: TParam_Coleta_Ext);
+    procedure ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext);
     procedure AssignColetaToColetaEx(const rColeta: TParam_Coleta; var rColetaEx: TParam_Coleta_Ext);
 
     function MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
@@ -2770,7 +2788,6 @@ var
   rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
   Resposta: String;
-  Coletar: Boolean;
 
   function VerificarSeUsuarioCancelouTransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
   var
@@ -2837,6 +2854,7 @@ begin
       if (Resposta = '') then
       begin
         ColetarParametrosScope(iStatus, rColetaEx);
+        ExibirMsgColeta(rColetaEx);
 
         // Coleta recebeu instrução para Menu ? //
         if (rColetaEx.FormatoDado = TM_SELECAO) then
@@ -2846,8 +2864,6 @@ begin
       // Se não recebeu resposta para esse estado, trate a coleta
       if (Resposta = '') then
       begin
-        Coletar := False;
-
         // Trata os estados //
         case iStatus of
           TC_EXIBE_MENU:                // Já tratado acima por 'PerguntarMenuScope'
@@ -2867,14 +2883,12 @@ begin
               if not fPermitirCartaoDigitado then
                 Acao := ACAO_CANCELAR
               else
-                Coletar := True;
+                Acao := ACAO_COLETAR;
             end;
 
           TC_CARTAO,                    // cartao //
           TC_COLETA_AUT_OU_CARTAO:
-            begin
-              Coletar := True;
-            end;
+            Acao := ACAO_COLETAR;
 
           TC_IMPRIME_CHEQUE:            // imprime Cheque //
             ObterDadosCheque;
@@ -2884,23 +2898,34 @@ begin
           TC_IMPRIME_CONSULTA:
             ObterDadosComprovantes;
 
-          //TC_DISP_LISTA_MEDICAMENTO:;   // recupera lista de Medicamentos //
+          //TC_DISP_LISTA_MEDICAMENTO:; // recupera lista de Medicamentos //
             //TODO
 
-          //TC_COLETA_REG_MEDICAMENTO:;   // se coletou lista de medicamentos, deve tambem atualizar o valor. //
+          //TC_COLETA_REG_MEDICAMENTO:; // se coletou lista de medicamentos, deve tambem atualizar o valor. //
             //TODO
 
-          TC_DISP_VALOR:               // recupera valor do Vale Gas e da consulta de Cartão Dinheiro //
+          TC_DISP_VALOR:                // recupera valor do Vale Gas e da consulta de Cartão Dinheiro //
             ColetarValoresConsulta;
 
-          //TC_OBTEM_SERVICOS:;           // recupera os servicos configurados //
+          //TC_OBTEM_SERVICOS:;         // recupera os servicos configurados //
             //TODO:
 
-          TC_COLETA_OPERADORA:         // recupera a lista de operadoras da Recarga de Celular //
+          TC_COLETA_OPERADORA:          // recupera a lista de operadoras da Recarga de Celular //
             PerguntarMenuOperadora(rColetaEx, Resposta, Acao);
 
-          TC_COLETA_VALOR_RECARGA:;     // recupera a lista de valores da Recarga de Celular //
-            //TODO:
+          TC_COLETA_VALOR_RECARGA:      // recupera a lista de valores da Recarga de Celular //
+            PerguntarMenuValorRecargaCel(rColetaEx, Resposta, Acao);
+
+          TC_COLETA_DDD_PP:
+            Resposta := ObterDadoPinPad(PP_DIGITE_O_DDD, 3, 3);
+          TC_COLETA_REDIGITA_DDD_PP:
+            Resposta := ObterDadoPinPad(PP_REDIGITE_O_DDD, 3, 3);
+          TC_COLETA_NUM_TEL_PP:
+            Resposta := ObterDadoPinPad(PP_DIGITE_O_TELEFONE, 8, 9);
+          TC_COLETA_DDD_NUMTEL_PP:
+            Resposta := ObterDadoPinPad(PP_DIGITE_DDD_TELEFONE, 10, 11);
+          TC_REDIGITA_DDD_NUMTEL_PP:
+            Resposta := ObterDadoPinPad(PP_REDIGITE_DDD_TELEFONE, 10, 11);
 
           TC_SENHA:;                    // captura da senha do usuario //
             //TODO:
@@ -2921,11 +2946,15 @@ begin
             //TODO:
 
         else                            // deve coletar algo... //
-          Coletar := True;
+          Acao := ACAO_COLETAR;
         end;
 
-        if Coletar then
+        if (Acao = ACAO_COLETAR) then
+        begin
+          ExibirMsgColeta(rColetaEx);
+          Acao := ACAO_PROXIMO_ESTADO;
           fOnPerguntaCampo(MsgOperador(rColetaEx), rColetaEx, Resposta, Acao);
+        end;
       end;
 
       ret := EnviarParametroTransacao(Acao, iStatus, Resposta, TipoCaptura);
@@ -3077,6 +3106,15 @@ begin
             '  Municipio: '+fDadosDaTransacao.Values[RET_CHEQUE_MUNICIP]);
 end;
 
+function TACBrTEFScopeAPI.ObterHandleScope(TipoHandle: LongInt): LongInt;
+begin
+  GravarLog('ScopeObtemHandle( '+IntToStr(TipoHandle)+' )');
+  Result := xScopeObtemHandle(TipoHandle);
+  GravarLog('  ret: '+IntToStr(Result));
+  if (Result <= RCS_ERRO_GENERICO) then
+    TratarErroScope(Result);
+end;
+
 procedure TACBrTEFScopeAPI.ObterDadosDaTransacao;
 var
   pBuffer: PAnsiChar;
@@ -3085,13 +3123,7 @@ var
 const
   BUFFER_SIZE = 40960;
 begin
-  GravarLog('ScopeObtemHandle');
-  h := xScopeObtemHandle(0);
-  GravarLog('  ret: '+IntToStr(h));
-
-  if (h <= RCS_ERRO_GENERICO) then
-    TratarErroScope(h);
-
+  h := ObterHandleScope(HDL_TRANSACAO_ANTERIOR);
   pBuffer := AllocMem(BUFFER_SIZE);
   try
     GravarLog('-- Obtendo campos de Mask1 --');
@@ -3154,6 +3186,29 @@ begin
         mask := mask shl 1;
       end;
     end;
+  finally
+    Freemem(pBuffer);
+  end;
+end;
+
+function TACBrTEFScopeAPI.ObterCampoMask1(AMask: LongInt): String;
+var
+  pBuffer: PAnsiChar;
+  hmask: String;
+  ret, h: LongInt;
+const
+  BUFFER_SIZE = 40960;
+begin
+  Result := '';
+  h := ObterHandleScope(HDL_TRANSACAO_EM_ANDAMENTO);
+  pBuffer := AllocMem(BUFFER_SIZE);
+  try
+    pBuffer^ := #0;
+    hmask := '$'+IntToHex(AMask, 8);
+    GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', '+hmask+', 0, 0, 0 )');
+    ret := xScopeObtemCampoExt3(h, AMask, 0, 0, 0, 0, pBuffer);
+    Result := PAnsiCharToString(pBuffer);
+    GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+Result);
   finally
     Freemem(pBuffer);
   end;
@@ -3394,66 +3449,118 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.PerguntarMenuOperadora(
-  const rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+  var rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
 var
-  ret, i, p, l: LongInt;
-  CodOp: Byte;
-  nOp: Smallint;
-  pBuffer: PAnsiChar;
-  s, NomeOp: String;
+  rListaOperadoras: TRec_Cel_Oper;
+  rOperadora: TRec_Cel_ID_OperM3;
+  ret, i: LongInt;
   sl: TStringList;
   item: Integer;
-const
-  BUFFER_SIZE = 4096;
 begin
   Resposta := '';
   Acao := ACAO_CANCELAR;
 
-  pBuffer := AllocMem(BUFFER_SIZE);
-  try
-    GravarLog('ScopeRecuperaOperadorasRecCel');
-    ret := xScopeRecuperaOperadorasRecCel(REC_CEL_OPERADORAS_MODELO_2, pBuffer, BUFFER_SIZE);
-    s := PAnsiCharToString(pBuffer);
-    GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+s);
-    if (ret = RCS_SUCESSO) then
-    begin
-      sl := TStringList.Create;
-      try
-        l := Length(s);
-        if (l > 2) then
-          move(s[1], nOp, 2)
+  FillChar(rListaOperadoras, SizeOf(TRec_Cel_Oper), #0);
+  GravarLog('ScopeRecuperaOperadorasRecCel( '+IntToStr(REC_CEL_OPERADORAS_MODELO_3)+' )');
+  ret := xScopeRecuperaOperadorasRecCel(REC_CEL_OPERADORAS_MODELO_3, @rListaOperadoras, SizeOf(TRec_Cel_Oper));
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret = RCS_SUCESSO) then
+  begin
+    sl := TStringList.Create;
+    try
+      for i := 0 to rListaOperadoras.NumOperCel do
+      begin
+        move( rListaOperadoras.OperCel[i * SizeOf(TRec_Cel_ID_OperM3) + 1],
+          rOperadora, SizeOf(TRec_Cel_ID_OperM3) );
+        sl.Add(Format('%.3d - %s',[rOperadora.CodOperCel, ArrayOfCharToString(rOperadora.NomeOperCel)]));
+      end;
+
+      if (sl.Count > 0) then
+      begin
+        item := 0;
+        fOnPerguntarMenu('Escolha a Operadora', sl, item);
+        if (item = -2) then
+          Acao := ACAO_ESTADO_ANTERIOR
         else
-          nOp := 0;
-
-        i := 1;
-        p := 3;
-        while (i <= nOp) and (p < l) do
         begin
-          move(s[p], CodOp, 1);
-          NomeOp := copy(s, p+1, 22);
-          Inc(p, 23);
-          Inc(i);
-          sl.Add(Format('%.3d - %s',[CodOp, NomeOp]));
+          Resposta := copy(sl[item], 1, 3);
+          Acao := ACAO_PROXIMO_ESTADO;
         end;
+      end;
+    finally
+      sl.Free;
+    end;
+  end;
+end;
 
-        if (sl.Count > 0) then
+procedure TACBrTEFScopeAPI.PerguntarMenuValorRecargaCel(
+  var rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
+var
+  ret, i: LongInt;
+  rCelValores: TRec_Cel_Valores;
+  slMenu, slResp: TStringList;
+  tab: Byte;
+  Valor, Bonus, Custo: Double;
+  s: String;
+  item: Integer;
+begin
+  Resposta := '';
+  Acao := ACAO_CANCELAR;
+
+  tab := REC_CEL_VALORES_MODELO_2;
+  s := ObterCampoMask1(MASK1_Cod_Rede);
+  if (StrToIntDef(s, 0) = R_GWCEL) then
+    tab := REC_CEL_VALORES_MODELO_3;
+
+  FillChar(rCelValores, SizeOf(TRec_Cel_Valores), #0);
+  GravarLog('ScopeRecuperaValoresRecCel( '+IntToStr(tab)+' )');
+  ret := xScopeRecuperaValoresRecCel(tab, @rCelValores, SizeOf(TRec_Cel_Valores));
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret = RCS_SUCESSO) then
+  begin
+    slMenu := TStringList.Create;
+    slResp := TStringList.Create;
+    try
+      if (rCelValores.TipoValor in ['F','T']) and (rCelValores.TotValor > 0) then
+      begin
+        for i := 1 to rCelValores.TotValor do
         begin
+          s := ArrayOfCharToString(rCelValores.TabValores[i].Valor);
+          slResp.Add(s);
+          Valor := StrToIntDef(s, 0)/100;
+          s := ArrayOfCharToString(rCelValores.TabValores[i].Bonus);
+          Bonus := StrToIntDef(s, 0)/100;
+          s := ArrayOfCharToString(rCelValores.TabValores[i].Custo);
+          Custo := StrToIntDef(s, 0)/100;
+
+          slMenu.add( 'Valor: R$ '+Format('%5.2f', [Valor]) +
+                  ' Bonus: R$ '+Format('%5.2f', [Bonus]) +
+                  ' Custo: R$ '+Format('%5.2f', [Custo]) );
           item := 0;
-          fOnPerguntarMenu('Escolha a Operadora', sl, item);
+          fOnPerguntarMenu('Selecione o Valor', slMenu, item);
           if (item = -2) then
             Acao := ACAO_ESTADO_ANTERIOR
           else
           begin
-            Resposta := copy(sl[item], 1, 3);
+            Resposta := slResp[item];
             Acao := ACAO_PROXIMO_ESTADO;
           end;
         end;
-      finally
-        sl.Free;
+      end
+      else
+      begin
+        // Não tem valores fixos, colete o valor...
+        Acao := ACAO_COLETAR;
+        rColetaEx.UsaLimites := 1;
+        move(rCelValores.ValorMinimo, rColetaEx.Limite.Inferior, SizeOf(rColetaEx.Limite.Inferior));
+        move(rCelValores.ValorMaximo, rColetaEx.Limite.Superior, SizeOf(rColetaEx.Limite.Superior));
+        if (ArrayOfCharToString(rColetaEx.MsgCl2) <> '') then
+          move(rCelValores.MsgPromocional, rColetaEx.MsgCl2, SizeOf(rColetaEx.MsgCl2));
       end;
+    finally
+      slMenu.Free;
+      slResp.Free;
     end;
-  finally
-    Freemem(pBuffer);
   end;
 end;
 
@@ -3462,7 +3569,6 @@ procedure TACBrTEFScopeAPI.ColetarParametrosScope(const iStatus: Word;
 var
   rColeta: TParam_Coleta;
   ret: LongInt;
-  s: String;
 begin
   // Obtendo informações da Coleta em curso
   FillChar(rColeta, SizeOf(TParam_Coleta), #0);
@@ -3495,7 +3601,12 @@ begin
   // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
   if (Trim(rColetaEx.CodBandeira) <> '') then
     fDadosDaTransacao.Values[CBANDEIRA] := rColetaEx.CodBandeira;
+end;
 
+procedure TACBrTEFScopeAPI.ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext);
+var
+  s: String;
+begin
   // Exibe as mensagens do cliente e operador //
   s := MsgOperador(rColetaEx);
   if (s <> '') then

@@ -497,7 +497,7 @@ end;
 
 procedure TACBrTEFAPIClassScope.Inicializar;
 var
-  i, P: Integer;
+  P: Integer;
   ADir, IpStr, PortaStr: String;
 begin
   if Inicializado then

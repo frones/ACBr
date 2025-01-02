@@ -188,7 +188,7 @@ begin
     end;
 
     MoverStringParaPChar(AResposta, sResposta, esTamanho);
-    Result := SetRetorno(ErrOK, StrPas(sResposta));
+    Result := SetRetorno(ErrOK, AResposta);
 
   except
     on E: EACBrLibException do

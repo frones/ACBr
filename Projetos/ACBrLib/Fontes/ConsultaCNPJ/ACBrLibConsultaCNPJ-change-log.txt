@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2024
+--- ACBrLibConsultaCNPJBase ---
+[-] Correção no retorno do método Consultar
+    Por: Júlio Cavalcanti
+
 27/12/2024
 --- ACBrLibConsultaCNPJConsoleMTDemo.lpi ---
 [+] Adicionado novo Projeto, 100% CONSOLE e MT versão Demonstração.

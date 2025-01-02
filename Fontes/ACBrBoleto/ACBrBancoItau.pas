@@ -700,7 +700,6 @@ var
    ATipoEspecieDoc, ANossoNumero,wLinha,wCarteira :String;
    wLinhaMulta,LCPFCNPJBeneciciario, LTextoMensagem :String;
    iSequencia, I : integer;
-
 begin
    with ACBrTitulo do
    begin
@@ -736,6 +735,27 @@ begin
      {Pegando campo Intruções conforme código protesto}
      InstrucoesProtesto(ACBrTitulo);
      DefineDataProtestoNegativacao(ACBrTitulo);
+
+     {Mensagem Pagina 35 , "B" e "C" Quando Instrução 93 ou 94}
+     if (Mensagem.Count > 0) then
+     begin
+       LTextoMensagem := '';
+       for I := 0 to Mensagem.Count - 1 do
+         LTextoMensagem := LTextoMensagem + Trim(Mensagem[I])+' ';
+
+       LTextoMensagem := Trim(LTextoMensagem);
+     end;
+     if ((Instrucao1 = '94') or (Instrucao2 = '94')) then
+        LTextoMensagem := PadRight(copy(LTextoMensagem,0,30),40,' ')              // 352-391 MENSAGEM Pg 35 do manual "C"
+     else if ((Instrucao1 = '93') or (Instrucao2 = '93')) then
+        LTextoMensagem := PadRight(copy(LTextoMensagem,0,30),30,' ')            + // 352-381 MENSAGEM Pg 35 do manual "B"
+                          space(4)                                              + // 382-385 COMPLEMENTO DO REGISTRO
+                          ADataMoraJuros                                          // 386-391 DATA DE MORA
+     else
+        LTextoMensagem := PadRight(Sacado.SacadoAvalista.NomeAvalista, 30, ' ') + // 352-381 NOME DO SACADOR/AVALISTA
+                          space(4)                                              + // 382-385 COMPLEMENTO DO REGISTRO
+                          ADataMoraJuros;                                         // 386-391 DATA DE MORA
+
 
     with ACBrBoleto do
     begin
@@ -838,16 +858,14 @@ begin
                    PadRight(Sacado.Bairro, 12, ' ')                                               + // BAIRRO DO SACADO
                    PadLeft(OnlyNumber(Sacado.CEP), 8, '0')                                        + // CEP DO SACADO
                    PadRight(Sacado.Cidade, 15, ' ')                                               + // CIDADE DO SACADO
-                   PadRight(Sacado.UF, 2, ' ')                                                    + // UF DO SACADO
+                   PadRight(Sacado.UF, 2, ' ')                                                    + // 350-351 UF DO SACADO
 
                    {Dados do sacador/avalista}
-                   PadRight(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')                          + // NOME DO SACADOR/AVALISTA
-                   space(4)                                                                       + // COMPLEMENTO DO REGISTRO
-                   ADataMoraJuros                                                                 + // DATA DE MORA
+                   LTextoMensagem                                                                 + // 352-381 / 382-385 / 386-391 Mensagem Pagina 35 , "B" e "C"
                    IfThen((DataProtestoNegativacao <> 0) and (DataProtestoNegativacao > Vencimento),
-                        PadLeft(DiasProtestoNegativacao , 2, '0'), '00')+ // PRAZO
-                   space(1)                                                                       + // BRANCOS
-                   IntToStrZero(aRemessa.Count + 1, 6);                                             // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
+                        PadLeft(DiasProtestoNegativacao , 2, '0'), '00')                          + // 392-393 PRAZO
+                   space(1)                                                                       + // 394-394 BRANCOS
+                   IntToStrZero(aRemessa.Count + 1, 6);                                             // 395-400 Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
                    iSequencia := aRemessa.Count + 1;
                    aRemessa.Add(UpperCase(wLinha));

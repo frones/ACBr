@@ -48,6 +48,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+02/01/2025
+-- ACBrBancoItau.pas --
+[*] TK-6428 Adicionado instrucao Mensagem 93 e 94 (leia particularidades)
+  https://www.projetoacbr.com.br/forum/topic/81149-boleto-banco-ita%C3%BA-n%C3%A3o-est%C3%A1-saindo-a-mensagem/
+  Por: Daniel Morais Infocotidiano
+
 30/12/2024
 -- ACBrBancoBrasil.pas --
 [-] TK-6430 Adicionado a condicao para quando convenio igual 4 posições enviar zeros a esquerda.

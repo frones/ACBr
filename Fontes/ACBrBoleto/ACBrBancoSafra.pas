@@ -484,7 +484,9 @@ var
   sTipoDesconto,
   sDataDesconto,
   sDiasProtesto,
-  sDiasBaixaDevol : String;
+  sDiasBaixaDevol,
+  LRespEmissao,
+  LRespDistribuicao : String;
   ACodProtesto: Char;
   function MontarInstrucoes1: string;
   begin
@@ -672,6 +674,20 @@ begin
        sTipoCarteira := '2';
     end;
 
+    {Responsavel pela emissao VersaoLayout 60}
+    case ACBrBoleto.Cedente.ResponEmissao of
+      tbBancoEmite : LRespEmissao := '1'
+    else
+      LRespEmissao := '2';
+    end;
+
+    {Distribuição Layout 60}
+    case ACBrBoleto.Cedente.IdentDistribuicao of
+      tbBancoDistribui : LRespDistribuicao := '1'
+    else
+      LRespDistribuicao := '2';
+    end;
+
     case ACBrBoleto.Cedente.TipoDocumento of
       Tradicional: sTipoDocto := '1';
       Escritural: sTipoDocto := '2';
@@ -761,8 +777,8 @@ begin
                  PadLeft(ACBrTitulo.Carteira, 1)                                       + // 058-058 / Código da Carteira
                  sTipoCarteira                                                         + // 059-059 / Forma de Cadastro do título no banco
                  sTipoDocto                                                            + // 060-060 / Tipo de Documento
-                 sTipoCobranca                                                         + // 061-061 / Identificação da Emissão do Bloqueto
-                 '2'                                                                   + // 062-062 / Identificação da Distribuição
+                 IfThen(LayoutVersaoLote=60,LRespEmissao,sTipoCobranca)                + // 061-061 / Identificação da Emissão do Bloqueto
+                 IfThen(LayoutVersaoLote=60,LRespDistribuicao,'2')                     + // 062-062 / Identificação da Distribuição
                  ifThen(NaoEstaVazio(ACBrTitulo.NumeroDocumento),
                         PadRight(ACBrTitulo.NumeroDocumento, 15),
                         PadRight(ACBrTitulo.NossoNumero, 15))                          + // 063-077 / Número do Documento de Cobrança

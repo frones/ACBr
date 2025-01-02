@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+02/01/2025
+-- ACBrBancoSafra.pas --
+[*] TK-6429 Ajustado p novo layout. Seg P. 061-061/062-062 qdo LayoutVersaoLote=60
+  https://www.projetoacbr.com.br/forum/topic/81148-arquivo-remessa-banco-safra-cnab-240/
+  Por: Daniel Morais Infocotidiano
+
 02/01/2025
 -- ACBrBancoItau.pas --
 [*] TK-6428 Adicionado instrucao Mensagem 93 e 94 (leia particularidades)

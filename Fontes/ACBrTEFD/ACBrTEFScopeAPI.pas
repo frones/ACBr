@@ -2948,14 +2948,17 @@ begin
           TC_OBTEM_QRCODE:
             ObterDadosQRCode;
 
-          TC_COLETA_DADOS_ECF:;         // coleta dados do ECF e do cupom fiscal para a transacao de debito voucher com o TICKET CAR //
-            //TODO:
+          TC_COLETA_DADOS_ECF:          // coleta dados do ECF e do cupom fiscal para a transacao de debito voucher com o TICKET CAR //
+            //TODO - Não implementado no momento
+            Acao := ACAO_CANCELAR;
 
-          TC_COLETA_LISTA_MERCADORIAS:; // coleta Lista de Mercadorias para a transacao de debito voucher com o TICKET CAR //
-            //TODO:
+          TC_COLETA_LISTA_MERCADORIAS:  // coleta Lista de Mercadorias para a transacao de debito voucher com o TICKET CAR //
+            //TODO - Não implementado no momento
+            Acao := ACAO_CANCELAR;
 
-          TC_COLETA_LISTA_PRECOS:;      // coleta Lista para Atualizacao de Precos (TICKET CAR)
-            //TODO:
+          TC_COLETA_LISTA_PRECOS:       // coleta Lista para Atualizacao de Precos (TICKET CAR)
+            //TODO - Não implementado no momento
+            Acao := ACAO_CANCELAR;
 
         else                            // deve coletar algo... //
           Acao := ACAO_COLETAR;

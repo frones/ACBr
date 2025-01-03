@@ -153,12 +153,11 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     //MASK1_Numero_Conta_PAN
     //MASK1_Data_referencia
     //MASK1_Codigo_Origem_Mensagem
-    //MASK1_Cod_Servico    // Ver tabela Código serviços página 40
+    //MASK1_Cod_Servico    // Ver tabela Código serviços página 340
     //MASK1_Texto_BIT_62   // Parece muito o espelho do comprovante????
     //MASK1_Cartao_Trilha02
     //MASK1_Numero_Promissorias
-    //MASK1_Cod_Estab_Impresso
-    //MASK1_Numero_CMC7
+    //MASK1_Cod_Estab_Impresso //<-- CNPJ do Estabelecimento
     //MASK1_CGC_Convenio
     //MASK1_Msg_Autentic_Cheque
     //MASK1_Saldo_Disponivel
@@ -172,7 +171,10 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     else if IDCampo = MASK1_Hora_local_transacao then
       DataHoraTransacaoLocal := DateOf(DataHoraTransacaoLocal) + Linha.Informacao.AsTime
     else if IDCampo = MASK1_Data_local_transacao then
-      DataHoraTransacaoLocal := Linha.Informacao.AsDate + TimeOf(DataHoraTransacaoLocal)
+    begin
+      if Trim(Linha.Informacao.AsString) <> '' then
+        DataHoraTransacaoLocal := Linha.Informacao.AsDate + TimeOf(DataHoraTransacaoLocal);
+    end
     else if IDCampo = MASK1_Data_vencimento_cartao then
       NFCeSAT.DataExpiracao := Linha.Informacao.AsString
     else if IDCampo = MASK1_Numero_cheque then
@@ -197,7 +199,10 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     else if IDCampo = MASK1_Cod_Agencia then
       Agencia := Linha.Informacao.AsString
     else if IDCampo = MASK1_Data_Vencimento then
-      DataVencimento := Linha.Informacao.AsTimeStamp
+    begin
+      if Trim(Linha.Informacao.AsString) <> '' then
+        DataVencimento := Linha.Informacao.AsTimeStamp;
+    end
     else if IDCampo = MASK1_Cod_Bandeira then
       CodigoBandeiraPadrao := Linha.Informacao.AsString
     else if IDCampo = MASK1_Controle_Dac then
@@ -207,7 +212,10 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     else if IDCampo = MASK1_Nome_Bandeira then
       NFCeSAT.Bandeira := Linha.Informacao.AsString
     else if IDCampo = MASK1_Nome_Rede then
-      NomeAdministradora := Linha.Informacao.AsString;
+      NomeAdministradora := Linha.Informacao.AsString
+    else if IDCampo = MASK1_Numero_CMC7 then
+      CMC7 := Linha.Informacao.AsString
+
   end;
 
   procedure TrataCamposMask2(const IDCampo: Int64; Linha: TACBrTEFLinha);
@@ -219,7 +227,6 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     //MASK2_Data_Movimento:
     //MASK2_Nome_Convenio:
     //MASK2_Lista_TEF_Permitidas:
-    //MASK2_Linha_Autenticacao:
     //MASK2_Dados_Consulta_Fatura:
     //MASK2_Codigo_Resposta_AVS:
     //MASK2_Pontos_AdquiridosOuResgatados:
@@ -242,7 +249,9 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     //MASK2_UsoRes_63:
     //MASK2_Numero_PDV
 
-    if IDCampo = MASK2_NSU_transacao_Original then
+    if IDCampo = MASK2_Linha_Autenticacao then
+      Autenticacao := Linha.Informacao.AsString
+    else if IDCampo = MASK2_NSU_transacao_Original then
       NSUTransacaoCancelada := Linha.Informacao.AsString
     else if IDCampo = MASK2_Cod_Operadora then
       CodigoOperadoraCelular := Linha.Informacao.AsString
@@ -270,7 +279,6 @@ procedure TACBrTEFRespScope.ConteudoToProperty;
     //MASK3_DescResgateMonetario:
     //MASK3_Dados_Pagto_Bit48_BRADESCO:
     //MASK3_Modo_Entrada:
-    //MASK3_Valor_Saque:
     //MASK3_Resposta_Consulta_Infocards:
     //MASK3_Dados_Resposta_Consulta_EPAY_INCOMM:
     //MASK3_Dados_Resposta_Consulta_INCOMM:
@@ -350,9 +358,9 @@ begin
     if (LinChave = RET_STATUS) then
       Sucesso := (Linha.Informacao.AsInteger = RCS_SUCESSO)
     else if (LinChave = RET_CUPOM_LOJA) then
-      ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
-    else if (LinChave = RET_CUPOM_CLIENTE) then
       ImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
+    else if (LinChave = RET_CUPOM_CLIENTE) then
+      ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
     else if (LinChave = RET_CUPOM_REDUZIDO) and ViaClienteReduzida then
       ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
     else if (LinChave = RET_CHEQUE_BANCO) then

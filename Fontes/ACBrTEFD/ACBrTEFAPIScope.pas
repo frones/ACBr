@@ -348,7 +348,7 @@ begin
     LinChave := Linha.Chave;
 
     if (LinChave = RET_STATUS) then
-      Sucesso := (StrToIntDef(LinChave,-1) = RCS_SUCESSO)
+      Sucesso := (Linha.Informacao.AsInteger = RCS_SUCESSO)
     else if (LinChave = RET_CUPOM_LOJA) then
       ImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
     else if (LinChave = RET_CUPOM_CLIENTE) then

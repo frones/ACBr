@@ -2642,10 +2642,7 @@ begin
   if fSessaoAberta then
     Exit;
 
-  GravarLog('AbrirSessaoTEF');
-
   VerificarSeEstaConectadoScope;
-
   ExibirMensagem(sMsgInicioSessaoTEF);
   GravarLog('ScopeAbreSessaoTEF()');
   ret := xScopeAbreSessaoTEF;
@@ -2674,7 +2671,6 @@ begin
   if not fSessaoAberta then
     Exit;
 
-  GravarLog('FecharSessaoTEF( '+BoolToStr(Confirmar, True)+' )');
   if Confirmar then
     Acao := ACAO_FECHA_CONFIRMA_TEF
   else
@@ -2713,7 +2709,7 @@ var
   ret: LongInt;
 begin
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
-            ', '+Param1+', '+Param2+', '+Param3+' )' );
+            ', '+Param1+', '+Param2+', '+Param3+', '+Param4+' )' );
 
   if fEmTransacao then
     DoException(sErrTransacaoJaIniciada);
@@ -3226,7 +3222,7 @@ begin
     begin
       if not
          ( (mask = MASK4_String_QRCode) or (mask = MASK4_Campo_TID_Pix) or (mask = MASK4_Campo_Referencia_Pix) or
-           (mask = MASK4_Tamanho_BIN) or (mask = MASK4_Dados_DCC) or (mask = MASK4_Status_DCC) ) then
+           (mask = MASK4_Tamanho_BIN) or (mask = MASK4_Dados_DCC) or (mask = MASK4_Status_DCC) ) then   // Causam A.V.
       begin
         pBuffer^ := #0;
         hmask := '$'+IntToHex(mask, 8);
@@ -3394,6 +3390,7 @@ begin
   try
     Titulo := sMsgTituloMenu;
 
+    GravarLog('ScopeMenuRecuperaItens( '+IntToStr(TipoMenu)+' )');
     case TipoMenu of
       MNU_TAB_TIPO_CIELO:
         begin

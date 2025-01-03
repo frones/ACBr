@@ -115,6 +115,8 @@ var
 begin
   Document := TACBrXmlDocument.Create;
 
+  Result := False;
+
   try
     try
       if XmlRetorno = '' then Exit;

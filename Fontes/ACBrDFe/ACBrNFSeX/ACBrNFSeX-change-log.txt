@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6432: Alterado as URLs da cidade de Cajati/SP o provedor continua o mesmo.
+  Por: tdp Sistemas
+
 26/12/2024
 -- RLZ.LerXml/RLZ.Provider --
 [*] #TK-6425: Ajustes para a leitura das tags: codigoverficacao e situacao.

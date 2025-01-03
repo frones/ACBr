@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/01/2025
+-- ACBrBoletoW_C6.pas --
+[*] Ajustado quando jurosmora = cjTaxaMensal, enviar percentual dia
+  https://discord.com/channels/798697718800318484/1316413204146159678/1324746699671077036
+  Por: Daniel Morais Infocotidiano
+
+03/01/2025
 -- ACBrBoletoRet_Cresol/ACBrBoletoW_Cresol --
 [*] TK-6163 Ajustes para o envio do NossoNumero do título e na leitura do retorno.
   Por: Delcio

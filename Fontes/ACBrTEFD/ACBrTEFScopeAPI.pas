@@ -1574,6 +1574,8 @@ type
     function MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
     function MsgCliente(const rColetaEx: TParam_Coleta_Ext): String;
     function FormatarMsgPinPad(const MsgPinPad: String): String;
+
+    function PerguntarValorTransacao: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1635,7 +1637,7 @@ type
       const Param1: String = ''; const Param2: String = '';
       const Param3: String = ''; const Param4: String = '');
     procedure ExecutarTransacao;
-    function EnviarParametroTransacao(Acao: LongInt; codTipoColeta: LongInt = -1;
+    function EnviarParametroTransacao(Acao: LongInt; codTipoColeta: LongInt;
       Dados: AnsiString = ''; dadosParam: Word = 0): LongInt;
     procedure AbortarTransacao;
 
@@ -2707,6 +2709,8 @@ var
   p1, p2, p3, p4: PAnsiChar;
   w1, w2, w3, w4: Word;
   ret: LongInt;
+  f1: Double;
+  s1: String;
 begin
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
             ', '+Param1+', '+Param2+', '+Param3+', '+Param4+' )' );
@@ -2772,7 +2776,20 @@ begin
 
     scoCanc:
       begin
-        GravarLog('ScopeCancelamento( '+Param1+', '+Param2+' )');
+        w1 := StrToIntDef(Param1, 0);
+        if (w1 <= 0) then
+        begin
+          f1 := PerguntarValorTransacao;
+          if (f1 < 0) then
+            Exit;
+
+          s1 := IntToStr(Trunc(RoundTo(f1 * 100,-2)));
+          p1 := PAnsiChar(AnsiString(s1))
+        end
+        else
+          s1 := Param1;
+
+        GravarLog('ScopeCancelamento( '+s1+', '+Param2+' )');
         ret := xScopeCancelamento(p1, p2);           // Valor, Taxa Serviço
       end;
 
@@ -2853,7 +2870,7 @@ begin
       if (iStatus = RCS_TRN_EM_ANDAMENTO) then
       begin
         if VerificarSeUsuarioCancelouTransacao(scoestFluxoAPI) then
-          EnviarParametroTransacao(ACAO_CANCELAR)
+          EnviarParametroTransacao(ACAO_CANCELAR, iStatus)
         else
           Sleep(fIntervaloColeta);
 
@@ -2867,7 +2884,7 @@ begin
         if VerificarSeUsuarioCancelouTransacao(scoestPinPadLerCartao) then
           Acao := ACAO_CANCELAR;
 
-        EnviarParametroTransacao(Acao);
+        EnviarParametroTransacao(Acao, iStatus);
         Continue;
       end;
 
@@ -3026,17 +3043,19 @@ end;
 function TACBrTEFScopeAPI.EnviarParametroTransacao(Acao: LongInt;
   codTipoColeta: LongInt; Dados: AnsiString; dadosParam: Word): LongInt;
 begin
-  if (codTipoColeta < 0) then
-    codTipoColeta := ObterScopeStatus;
-
   GravarLog('ScopeResumeParam( '+IntToStr(codTipoColeta)+', "'+Dados+'", '+IntToStr(dadosParam)+', '+IntToStr(Acao)+' )');
   Result := xScopeResumeParam(codTipoColeta, PAnsiChar(Dados), dadosParam, Acao);
   GravarLog('  ret: '+IntToStr(Result));
+  if (Result <> RCS_SUCESSO) then
+    TratarErroScope(Result);
 end;
 
 procedure TACBrTEFScopeAPI.AbortarTransacao;
+var
+  codTipoColeta: LongInt;
 begin
-  EnviarParametroTransacao(ACAO_CANCELAR);
+  codTipoColeta := ObterScopeStatus;
+  EnviarParametroTransacao(ACAO_CANCELAR, codTipoColeta);
   SetEmTransacao(False);
 end;
 
@@ -3728,6 +3747,24 @@ begin
   l1 := PadRight(copy(s, 1, p-1), 16);
   l2 := PadRight(copy(s, p+1, Length(s)), 16);
   Result := l1 + l2;
+end;
+
+function TACBrTEFScopeAPI.PerguntarValorTransacao: Double;
+var
+  Resposta: String;
+  rColetaEx: TParam_Coleta_Ext;
+  Acao: Byte;
+begin
+  Resposta := '';
+  rColetaEx.FormatoDado := TM_VALOR_MONETARIO;
+  Acao := ACAO_PROXIMO_ESTADO;
+  fOnPerguntaCampo(ACBrStr('Valor da Transação'), rColetaEx, Resposta, Acao);
+  if (Acao = ACAO_PROXIMO_ESTADO) then
+    Result := StrToIntDef(OnlyNumber(Resposta), 0) / 100
+  else if (Acao = ACAO_ESTADO_ANTERIOR) then
+    Result := -2
+  else
+    Result := -1;
 end;
 
 procedure TACBrTEFScopeAPI.AbrirPinPad;

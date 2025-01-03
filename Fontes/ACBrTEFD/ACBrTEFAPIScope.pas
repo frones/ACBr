@@ -588,6 +588,7 @@ var
   Validado, Cancelado: Boolean;
   DefCampo: TACBrTEFAPIDefinicaoCampo;
   Inferior, Superior, ValResp: Double;
+  s: String;
 begin
   DefCampo.TituloPergunta := TituloCampo;
   DefCampo.MascaraDeCaptura := '';
@@ -714,14 +715,13 @@ begin
     if Cancelado then
       Break;
 
-    if not Validado then
+    Validado := True;
+    if (DefCampo.MascaraDeCaptura = '') then
     begin
       case DefCampo.TipoDeEntrada of
         tedNumerico: Validado := StrIsNumber(Resposta);
         tedAlfabetico: Validado := StrIsAlpha(Resposta);
         tedAlfaNum: Validado := StrIsAlphaNum(Resposta);
-      else
-        Validado := True;
       end;
     end;
 
@@ -739,14 +739,22 @@ begin
     if Validado then
     begin
       case DefCampo.TipoCampo of
-        0: Validado := ValidarDDMMAA(Resposta);
-        1: Validado := ValidarDDMM(Resposta);
-        2: Validado := ValidarMMAA(Resposta);
-        3: Validado := ValidarHHMMSS(Resposta);
-        8: Validado := ValidarDDMMAAAA(Resposta);
-       10: Validado := ValidarMMAAAA(Resposta);
-       12: Validado := ValidarHHMM(Resposta);
-       13: Validado := (Resposta = '0') or (Resposta = '1');
+        TM_DDMMAA: Validado := ValidarDDMMAA(Resposta);
+        TM_DDMM: Validado := ValidarDDMM(Resposta);
+        TM_MMAA: Validado := ValidarMMAA(Resposta);
+        TM_HHMMSS: Validado := ValidarHHMMSS(Resposta);
+        TM_DDMMAAAA: Validado := ValidarDDMMAAAA(Resposta);
+        TM_MMAAAA: Validado := ValidarMMAAAA(Resposta);
+        TM_HHMM: Validado := ValidarHHMM(Resposta);
+        TM_BOOL: Validado := (Resposta = '0') or (Resposta = '1');
+        TM_NUM_DECIMAL, TM_VALOR_MONETARIO:
+          begin
+            s := Trim(Resposta);
+            s := StringReplace(s, ',', '', [rfReplaceAll]);
+            s := StringReplace(s, '.', '', [rfReplaceAll]);
+            s := StringReplace(s, 'R$', '', [rfReplaceAll]);
+            Validado := StrIsNumber(s);
+          end
       else
         Validado := True;
       end;

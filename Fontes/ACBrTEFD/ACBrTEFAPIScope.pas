@@ -75,6 +75,7 @@ type
     procedure QuandoPerguntarCampoAPI( const TituloCampo: String;
        const Param_Coleta_Ext: TParam_Coleta_Ext;
        var Resposta: String; var AcaoResposta: Byte);
+    procedure QuandoExibirQRCodeAPI(const Dados: String);
 
     procedure SetDiretorioTrabalho(const AValue: String);
     function DadoPinPadToMsg(ADadoPinPad: TACBrTEFAPIDadoPinPad): Word;
@@ -447,7 +448,7 @@ begin
     else if (LinChave = RET_CHEQUE_DATA) then
       DataCheque := Linha.Informacao.AsDate;
 
-    //Ex.: mask1-$00000001:
+    // Ex.: mask1-$00000001:
     P := pos('-', LinChave);
     mask := copy(LinChave, 1, P - 1);
     sIDCampo := copy(LinChave, P + 1, Length(LinChave));
@@ -487,6 +488,7 @@ begin
   fTEFScopeAPI.OnExibeMensagem := QuandoExibirMensagemAPI;
   fTEFScopeAPI.OnExibeMenu := QuandoPerguntarMenuAPI;
   fTEFScopeAPI.OnPerguntaCampo := QuandoPerguntarCampoAPI;
+  fTEFScopeAPI.OnExibeQRCode := QuandoExibirQRCodeAPI;
 end;
 
 destructor TACBrTEFAPIClassScope.Destroy;
@@ -848,6 +850,14 @@ begin
     AcaoResposta := ACAO_PROXIMO_ESTADO;
 end;
 
+procedure TACBrTEFAPIClassScope.QuandoExibirQRCodeAPI(const Dados: String);
+begin
+  if not Assigned(TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirQRCode) then
+    fpACBrTEFAPI.DoException( Format(ACBrStr(sACBrTEFAPIEventoInvalidoException),
+                                     ['QuandoExibirQRCode']));
+
+  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirQRCode(Dados);
+end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
 var

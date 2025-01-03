@@ -899,6 +899,11 @@ const
   RET_CHEQUE_CODAUT  = 'CHEQUE_CODAUT';
   RET_CHEQUE_MUNICIP = 'CHEQUE_MUNICIP';
 
+  {--------------------------------------------------------------------------------------------
+     Outras Constantes coletadas durante a Operação
+  --------------------------------------------------------------------------------------------}
+  RET_BANDEIRA = 'BANDEIRA';
+  RET_QRCODE   = 'QRCODE';
 
   {--------------------------------------------------------------------------------------------
      Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
@@ -974,11 +979,6 @@ const
   SRV_MOEDEIRO = 097;                // Moedeiro
   SRV_CARTAO_DINHEIRO = 098;         // Compra com Cartão Dinheiro
   SRV_ESTORNO_CARTAO_DINHEIRO = 099; // Estorno da compra com Cartão Dinheiro
-
-  {--------------------------------------------------------------------------------------------
-     Constantes retornadas por 'ScopeGetParam'
-  --------------------------------------------------------------------------------------------}
-  CBANDEIRA = 'BANDEIRA';
 
   {--------------------------------------------------------------------------------------------
      Constantes da máscara 1 da função ScopeObtemCampoExt2
@@ -1342,6 +1342,8 @@ type
     var Resposta: String;
     var AcaoResposta: Byte) of object ;
 
+  TACBrTEFScopeExibeQRCode = procedure(const Dados: String) of object;
+
   TACBrTEFScopeEstadoOperacao = ( scoestFluxoAPI,
                                   scoestAguardaUsuario,
                                   scoestPinPad,
@@ -1378,6 +1380,7 @@ type
     fOnGravarLog: TACBrTEFScopeGravarLog;
     fOnPerguntaCampo: TACBrTEFScopePerguntarCampo;
     fOnTransacaoEmAndamento: TACBrTEFScopeTransacaoEmAndamento;
+    fOnExibeQRCode: TACBrTEFScopeExibeQRCode;
     fPathLib: String;
     fPDV: String;
     fPermitirCancelarOperacaoPinPad: Boolean;
@@ -1541,12 +1544,14 @@ type
 
     function ObterScopeStatus: Longint;
     procedure ObterDadosComprovantes;
+    procedure ObterDadosQRCode;
+
     procedure ColetarValoresConsulta;
 
     procedure ObterDadosCheque;
     function ObterHandleScope(TipoHandle: LongInt): LongInt;
     procedure ObterDadosDaTransacao;
-    function ObterCampoMask1(AMask: LongInt): String;
+    function ObterCampoMask(MaskPos:Byte; AMask: LongInt): String;
 
     procedure ExibirErroUltimaMsg;
     procedure LogColeta(AColeta: TParam_Coleta);
@@ -1558,7 +1563,7 @@ type
     procedure PerguntarMenuValorRecargaCel(var rColetaEx: TParam_Coleta_Ext; var Resposta: String; var Acao: Byte);
 
     procedure ColetarParametrosScope(const iStatus: Word; var rColetaEx: TParam_Coleta_Ext);
-    procedure ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext);
+    procedure ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext; TempoEspera: Integer = -1);
     procedure AssignColetaToColetaEx(const rColeta: TParam_Coleta; var rColetaEx: TParam_Coleta_Ext);
 
     function MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
@@ -1609,6 +1614,8 @@ type
       write fOnPerguntaCampo;
     property OnTransacaoEmAndamento: TACBrTEFScopeTransacaoEmAndamento read fOnTransacaoEmAndamento
       write fOnTransacaoEmAndamento;
+    property OnExibeQRCode: TACBrTEFScopeExibeQRCode read fOnExibeQRCode
+      write fOnExibeQRCode;
 
     property OnGravarLog: TACBrTEFScopeGravarLog read fOnGravarLog write fOnGravarLog;
 
@@ -1674,6 +1681,7 @@ begin
   fOnPerguntarMenu := Nil;
   fOnPerguntaCampo := Nil;
   fOnTransacaoEmAndamento := Nil;
+  fOnExibeQRCode := Nil;
   fDadosDaTransacao := TStringList.Create;
   fRespostasPorEstados := TStringList.Create;
 end;
@@ -1706,6 +1714,8 @@ begin
     DoException(Format(sErrEventoNaoAtribuido, ['OnPerguntaCampo']));
   if not Assigned(fOnExibeMensagem) then
     DoException(Format(sErrEventoNaoAtribuido, ['OnExibeMensagem']));
+  if not Assigned(fOnExibeQRCode) then
+    DoException(Format(sErrEventoNaoAtribuido, ['OnExibeQRCode']));
 
   VerificarDiretorioDeTrabalho;
   VerificarEAjustarScopeINI;
@@ -2830,8 +2840,9 @@ begin
         Continue;
       end;
 
-      // Efetuando Leitura do Cartão. Verifica se o operador cancelou a operacao via teclado //
-      if (iStatus = TC_COLETA_CARTAO_EM_ANDAMENTO) then
+      // Verifica se o operador cancelou a operacao via teclado //
+      if (iStatus = TC_COLETA_CARTAO_EM_ANDAMENTO) or   // Efetuando Leitura do Cartão. //
+         (iStatus = TC_COLETA_EM_ANDAMENTO) then        // Outra operação no PinPad //
       begin
         if VerificarSeUsuarioCancelouTransacao(scoestPinPadLerCartao) then
           Acao := ACAO_CANCELAR;
@@ -2869,11 +2880,10 @@ begin
           TC_EXIBE_MENU:                // Já tratado acima por 'PerguntarMenuScope'
             {Nada a fazer};
 
-          TC_INFO_RET_FLUXO,            // apenas mostra informacao e deve retornar ao scope //
-          TC_COLETA_EM_ANDAMENTO:       // transacao em andamento //
+          TC_INFO_RET_FLUXO:            // apenas mostra informacao e deve retornar ao scope //
             Acao := ACAO_PROXIMO_ESTADO;
 
-          TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO, TC_DECIDE_ULTIMO:
+          TC_DECIDE_AVISTA, TC_COLETA_CANCELA_TRANSACAO, TC_DECIDE_ULTIMO, TC_DECISAO_CONT:
             begin
               PerguntarSimNao(rColetaEx, Resposta, Acao);
             end;
@@ -2886,8 +2896,9 @@ begin
                 Acao := ACAO_COLETAR;
             end;
 
-          TC_CARTAO,                    // cartao //
-          TC_COLETA_AUT_OU_CARTAO:
+          TC_CARTAO,                    // Le Cartao //
+          TC_COLETA_AUT_OU_CARTAO:      // Coleta a autorização ou o cartão //
+            // Desabilitados por uso do PinPad (pag 347) //
             Acao := ACAO_COLETAR;
 
           TC_IMPRIME_CHEQUE:            // imprime Cheque //
@@ -2899,16 +2910,16 @@ begin
             ObterDadosComprovantes;
 
           //TC_DISP_LISTA_MEDICAMENTO:; // recupera lista de Medicamentos //
-            //TODO
+            //TODO - Não implementado no momento
 
           //TC_COLETA_REG_MEDICAMENTO:; // se coletou lista de medicamentos, deve tambem atualizar o valor. //
-            //TODO
+            //TODO - Não implementado no momento
 
           TC_DISP_VALOR:                // recupera valor do Vale Gas e da consulta de Cartão Dinheiro //
             ColetarValoresConsulta;
 
           //TC_OBTEM_SERVICOS:;         // recupera os servicos configurados //
-            //TODO:
+            //TODO - Não implementado no momento
 
           TC_COLETA_OPERADORA:          // recupera a lista de operadoras da Recarga de Celular //
             PerguntarMenuOperadora(rColetaEx, Resposta, Acao);
@@ -2927,14 +2938,15 @@ begin
           TC_REDIGITA_DDD_NUMTEL_PP:
             Resposta := ObterDadoPinPad(PP_REDIGITE_DDD_TELEFONE, 10, 11);
 
-          TC_SENHA:;                    // captura da senha do usuario //
-            //TODO:
+          TC_SENHA:                     // captura da senha do usuario //
+            // Desabilitados por uso do PinPad (pag 347) //
+            Acao := ACAO_COLETAR;
 
-          TC_INFO_AGU_CONF_OP:;         // mostra informacao e aguarda confirmacao do usuario //
-            //TODO:
+          TC_INFO_AGU_CONF_OP:          // mostra informacao e aguarda confirmacao do usuario //
+            ExibirMsgColeta(rColetaEx, 0);  // Exibe Msgs e aguarda por OK //
 
-          TC_OBTEM_QRCODE:;
-            //TODO:
+          TC_OBTEM_QRCODE:
+            ObterDadosQRCode;
 
           TC_COLETA_DADOS_ECF:;         // coleta dados do ECF e do cupom fiscal para a transacao de debito voucher com o TICKET CAR //
             //TODO:
@@ -3052,6 +3064,18 @@ begin
     Freemem(pCupomCliente);
     Freemem(pCupomLoja);
     Freemem(pCupomReduzido);
+  end;
+end;
+
+procedure TACBrTEFScopeAPI.ObterDadosQRCode;
+var
+  s: String;
+begin
+  s := ObterCampoMask(4, MASK4_String_QRCode);
+  if (s <> '') then
+  begin
+    fDadosDaTransacao.Values[RET_QRCODE] := s;
+    fOnExibeQRCode(s);
   end;
 end;
 
@@ -3191,13 +3215,13 @@ begin
   end;
 end;
 
-function TACBrTEFScopeAPI.ObterCampoMask1(AMask: LongInt): String;
+function TACBrTEFScopeAPI.ObterCampoMask(MaskPos: Byte; AMask: LongInt): String;
 var
   pBuffer: PAnsiChar;
   hmask: String;
   ret, h: LongInt;
 const
-  BUFFER_SIZE = 40960;
+  BUFFER_SIZE = 4096;    //4K
 begin
   Result := '';
   h := ObterHandleScope(HDL_TRANSACAO_EM_ANDAMENTO);
@@ -3205,8 +3229,27 @@ begin
   try
     pBuffer^ := #0;
     hmask := '$'+IntToHex(AMask, 8);
-    GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', '+hmask+', 0, 0, 0 )');
-    ret := xScopeObtemCampoExt3(h, AMask, 0, 0, 0, 0, pBuffer);
+    case MaskPos of
+      2:
+        begin
+          GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', 0, '+hmask+', 0, 0 )');
+          ret := xScopeObtemCampoExt3(h, 0, AMask, 0, 0, 0, pBuffer);
+        end;
+      3:
+        begin
+          GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', 0, 0, '+hmask+', 0 )');
+          ret := xScopeObtemCampoExt3(h, 0, 0, AMask, 0, 0, pBuffer);
+        end;
+      4:
+        begin
+          GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', 0, 0, 0, '+hmask+' )');
+          ret := xScopeObtemCampoExt3(h, 0, 0, 0, AMask, 0, pBuffer);
+        end;
+    else        // 1
+      GravarLog('ScopeObtemCampoExt3( '+IntToStr(h)+', '+hmask+', 0, 0, 0 )');
+      ret := xScopeObtemCampoExt3(h, AMask, 0, 0, 0, 0, pBuffer);
+    end;
+
     Result := PAnsiCharToString(pBuffer);
     GravarLog('  ret: '+IntToStr(ret)+', Buffer: '+Result);
   finally
@@ -3508,9 +3551,9 @@ begin
   Acao := ACAO_CANCELAR;
 
   tab := REC_CEL_VALORES_MODELO_2;
-  s := ObterCampoMask1(MASK1_Cod_Rede);
-  if (StrToIntDef(s, 0) = R_GWCEL) then
-    tab := REC_CEL_VALORES_MODELO_3;
+  //s := ObterCampoMask(1, MASK1_Cod_Rede);
+  //if (StrToIntDef(s, 0) = R_GWCEL) then
+  //  tab := REC_CEL_VALORES_MODELO_3;
 
   FillChar(rCelValores, SizeOf(TRec_Cel_Valores), #0);
   GravarLog('ScopeRecuperaValoresRecCel( '+IntToStr(tab)+' )');
@@ -3600,21 +3643,22 @@ begin
 
   // Salva em DadosDaTransacao as informaçoes retornadas na Coleta //;
   if (Trim(rColetaEx.CodBandeira) <> '') then
-    fDadosDaTransacao.Values[CBANDEIRA] := rColetaEx.CodBandeira;
+    fDadosDaTransacao.Values[RET_BANDEIRA] := rColetaEx.CodBandeira;
 end;
 
-procedure TACBrTEFScopeAPI.ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext);
+procedure TACBrTEFScopeAPI.ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext;
+  TempoEspera: Integer);
 var
   s: String;
 begin
   // Exibe as mensagens do cliente e operador //
-  s := MsgOperador(rColetaEx);
-  if (s <> '') then
-    ExibirMensagem(s, tmOperador);
-
   s := MsgCliente(rColetaEx);
   if (s <> '') then
     ExibirMensagem(s, tmCliente);
+
+  s := MsgOperador(rColetaEx);
+  if (s <> '') then
+    ExibirMensagem(s, tmOperador, TempoEspera);
 end;
 
 procedure TACBrTEFScopeAPI.AssignColetaToColetaEx(const rColeta: TParam_Coleta;

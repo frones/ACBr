@@ -902,6 +902,7 @@ const
   {--------------------------------------------------------------------------------------------
      Outras Constantes coletadas durante a Operação
   --------------------------------------------------------------------------------------------}
+  RET_STATUS   = 'STATUS';
   RET_BANDEIRA = 'BANDEIRA';
   RET_QRCODE   = 'QRCODE';
 
@@ -981,7 +982,7 @@ const
   SRV_ESTORNO_CARTAO_DINHEIRO = 099; // Estorno da compra com Cartão Dinheiro
 
   {--------------------------------------------------------------------------------------------
-     Constantes da máscara 1 da função ScopeObtemCampoExt2
+     Constantes da máscara 1 da função ScopeObtemCampoExt3 - Pag.336
   --------------------------------------------------------------------------------------------}
   MASK1_Numero_Conta_PAN                   = $00000001;  { Personal Account Number (Card number) }
   MASK1_Valor_transacao                    = $00000002;  { Amount }
@@ -995,7 +996,7 @@ const
   MASK1_Codigo_resposta                    = $00000200;  { Action code }
   MASK1_Identificacao_terminal             = $00000400;  { POS Id }
   MASK1_Codigo_Origem_Mensagem             = $00000800;  { Store Id assigned by the acquirer at agreement time }
-  MASK1_Plano_Pagamento                    = $00001000;  { Number of parcels }
+  MASK1_Num_Parcelas                       = $00001000;  { Number of parcels }
   MASK1_Valor_Taxa_Servico                 = $00002000;  { Tip value }
   MASK1_NSU_Host                           = $00004000;  { Transaction Id assigned by Acquirer }
   MASK1_Cod_Banco                          = $00008000;  { Bank code }
@@ -1017,7 +1018,7 @@ const
   MASK1_Saldo_Disponivel                   = $80000000;  { Available Cache }
 
   {--------------------------------------------------------------------------------------------
-     Constantes da máscara 2 da função ScopeObtemCampoExt2
+     Constantes da máscara 2 da função ScopeObtemCampoExt3 - Pag.336
   --------------------------------------------------------------------------------------------}
   MASK2_NSU_transacao_Original             = $00000001;  { Cancel Transaction Id assigned by Scope }
   MASK2_Cliente_Com_Seguro                 = $00000002;  { Ensured Client } {(IBICred)}
@@ -1054,7 +1055,7 @@ const
   MASK2_Numero_PDV                         = $80000000;  { Número do PDV - HSBC }
 
   {--------------------------------------------------------------------------------------------
-     Constantes da máscara 3 da função ScopeObtemCampoExt2
+     Constantes da máscara 3 da função ScopeObtemCampoExt3 - Pag.336
   --------------------------------------------------------------------------------------------}
   MASK3_DadosQtdeECupons                   = $00000001;  { Informações sobre a quantidade e os e-cupons disponíveis ao cliente }
   MASK3_DescResgateMonetario               = $00000002;  { Desconto do resgate monetário }
@@ -1063,27 +1064,27 @@ const
   MASK3_Valor_Saque                        = $00000010;  { Valor do Saque }
   MASK3_Resposta_Consulta_Infocards        = $00000020;  { Resposta da consulta Infocards (bit 62 da 0110) }
   MASK3_Dados_Resposta_Consulta_EPAY_INCOMM= $00000040;  { Dados da resposta de Consulta da EPAY. Os dados retornados
-                                                      consistem em 3 valores de concatenados:
-                                                      1. Valor Mínimo ( 12 dígitos )
-                                                      2. Valor Máximo ( 12 dígitos )
-                                                      3. Saldo Disponível ( 12 dígitos )}
+                                                           consistem em 3 valores de concatenados:
+                                                           1. Valor Mínimo ( 12 dígitos )
+                                                           2. Valor Máximo ( 12 dígitos )
+                                                           3. Saldo Disponível ( 12 dígitos )}
   MASK3_Dados_Resposta_Consulta_INCOMM     = $00000040;  { Dados da resposta de Consulta valor Gift Card (INCOMM)
-                                                      Os dados retornados consistem em 3 valores de concatenados:
-                                                      1. Valor Mínimo ( 12 dígitos )
-                                                      2. Valor Máximo ( 12 dígitos )
-                                                      3. Saldo Disponível ( 12 dígitos )}
+                                                           Os dados retornados consistem em 3 valores de concatenados:
+                                                           1. Valor Mínimo ( 12 dígitos )
+                                                           2. Valor Máximo ( 12 dígitos )
+                                                           3. Saldo Disponível ( 12 dígitos )}
   MASK3_Max_Mercadorias_TicketCar          = $00000100;  { Máximo de mercadorias permitidas para uma transação (Cartão TicketCar, Valecard, entre outras)
-                                                     O dado retornado é um campo de 2 dígitos.}
+                                                           O dado retornado é um campo de 2 dígitos.}
   MASK3_Codigo_SAT                         = $00000200;  { Código SAT (ver códigos em Código das redes)}
   MASK3_Versao_Carga_Tabelas_Host          = $00000400;  { Versão corrente de Carga de Tabelas do Host Formato: 10 dígitos
-                                                    (Preenchido com zeros a esquerda, caso necessário). Disponível em
-                                                    transações com as seguintes Redes: SAVS}
+                                                           (Preenchido com zeros a esquerda, caso necessário). Disponível em
+                                                           transações com as seguintes Redes: SAVS}
   MASK3_CNPJ_Rede_Credenciadora_SAT        = $00002000;  { CNPJ da rede credenciadora - SAT }
   MASK3_Dados_Correspondente_Bancario      = $00008000;  { Dados do Correspondente Bancário }
   MASK3_Dados_Adicionais_Gift_Card         = $00010000;  { Dados Adicionais Gift Card:
-                                                      - Para Incomm: código UPC11
-                                                      - Para BlackHawk: código EAN12
-                                                      - Para EPAY: código do produto com 8 dígitos, com brancos à direita se menor }
+                                                           - Para Incomm: código UPC11
+                                                           - Para BlackHawk: código EAN12
+                                                           - Para EPAY: código do produto com 8 dígitos, com brancos à direita se menor }
   MASK3_Dados_Operacao_Fidelidade_SGF      = $00020000;  { Dados retornados da Operação Fidelidade (SGF) }
   MASK3_Valor_Total_Pagamento              = $00040000;  { Valor Total do Pagamento }
   MASK3_Valor_Descontos_Pagamento          = $00080000;  { Valor de Descontos do Pagamento }
@@ -1093,21 +1094,21 @@ const
   MASK3_Dados_Assinatura_Pagamento         = $02000000;  { Dados da Assinatura do Pagamento Recorrente }
   MASK3_Dados_Consulta_BACEN               = $04000000;  { Dados Consulta BACEN – para títulos registrados }
   MASK3_Valor_Documento                    = $08000000;  { Valor Documento }
-  MASK3_Resposta_Consulta_BACEN_Comprovante = $10000000; { Resposta Consulta BACEN – comprovante }
+  MASK3_Resposta_Consulta_BACEN_Comprovante= $10000000; { Resposta Consulta BACEN – comprovante }
   MASK3_Modo_Pagamento                     = $20000000;  { Modo Pagamento:
-                                                      ‘00’ – não informado
-                                                      '01' – cheque (Utilizado para pagamento de contas)
-                                                      '02' – dinheiro (Utilizado para pagamento de contas)
-                                                      '03' – debito em conta (Utilizado para carteiras virtuais/pagamento de contas)
-                                                      '04' – cartao credito (Utilizado para carteiras virtuais)
-                                                      '05' – pix (Utilizado para carteiras virtuais)
-                                                      ‘06’ – cartao de debito (Utilizado para carteiras virtuais)
-                                                      ‘07’ – saldo + cartao (Utilizado para carteiras virtuais) }
+                                                           '00' – não informado
+                                                           '01' – cheque (Utilizado para pagamento de contas)
+                                                           '02' – dinheiro (Utilizado para pagamento de contas)
+                                                           '03' – debito em conta (Utilizado para carteiras virtuais/pagamento de contas)
+                                                           '04' – cartao credito (Utilizado para carteiras virtuais)
+                                                           '05' – pix (Utilizado para carteiras virtuais)
+                                                           '06' – cartao de debito (Utilizado para carteiras virtuais)
+                                                           '07' – saldo + cartao (Utilizado para carteiras virtuais) }
   MASK3_Consulta_Cedente_BACEN_BRADESCO    = $40000000;  { Consulta Cedente - Dados da Consulta BACEN BRADESCO }
   MASK3_Data_Vencimento_CORBAN             = $80000000;  { Data Vencimento CORBAN – do título/conta }
 
   {--------------------------------------------------------------------------------------------
-     Constantes da máscara 4 da função ScopeObtemCampoExt3
+     Constantes da máscara 4 da função ScopeObtemCampoExt3 - Pag.336
   --------------------------------------------------------------------------------------------}
   MASK4_Nome_Portador_Cartao           = $00000001;  { Nome do Portador do Cartão (Informação com até 26 caracteres) }
   MASK4_Data_Validade_Cartao           = $00000002;  { Data de Validade do Cartão (YYMMDD) }
@@ -1125,20 +1126,20 @@ const
   MASK4_Campo_Referencia_Pix           = $00008000;  { campo Referência da tabela Mensagem (do Banco de Dados) - transações pix (end2endId) }
   MASK4_Tamanho_BIN                    = $00010000;  { Tamanho do BIN - PR069279}
   MASK4_Dados_DCC                      = $00020000;  { Estrutura de strings finalizadas com null:
-                                                  Dado Tamanho + null Obs
-                                                  Valor Convertido 12 + 1
-                                                  Cotação de Conversão 8 + 1
-                                                  Taxa Markup 5 + 1 %
-                                                  Sigla da Moeda Estrangeira 3 + 1 ISO 4217
-                                                  Código da Moeda Estrangeira 3 + 1 ISO 4217
-                                                  Pode ser usada a estrutura stDadosDCC definida em scopeapi.h }
+                                                       Dado Tamanho + null Obs
+                                                       Valor Convertido 12 + 1
+                                                       Cotação de Conversão 8 + 1
+                                                       Taxa Markup 5 + 1 %
+                                                       Sigla da Moeda Estrangeira 3 + 1 ISO 4217
+                                                       Código da Moeda Estrangeira 3 + 1 ISO 4217
+                                                       Pode ser usada a estrutura stDadosDCC definida em scopeapi.h }
   MASK4_Status_DCC                      = $00040000;  { Status DCC:
-                                                  ‘0’ = Não Realizado
-                                                  ‘1’ = Cliente Não Aceitou
-                                                  ‘2’ = Cliente Aceitou
-                                                  ‘3’ = Não Elegível
-                                                  ‘4’ = Erro de Comunicação
-                                                  Qualquer outro valor = Desconhecido }
+                                                        '0' = Não Realizado
+                                                        '1' = Cliente Não Aceitou
+                                                        '2' = Cliente Aceitou
+                                                        '3' = Não Elegível
+                                                        '4' = Erro de Comunicação
+                                                        Qualquer outro valor = Desconhecido }
 
   // Identificacao das redes
   R_GWCEL = 90;
@@ -1316,8 +1317,8 @@ type
   EACBrTEFScopeAPI = class(Exception);
 
   TACBrTEFScopeOperacao = ( scoNone, scoMenu,
-                            scoCredito, scoDebito, scoPagto,
-                            scoConsCDC, scoCheque, scoCanc,
+                            scoCredito, scoDebito, scoCarteiraVirtual,
+                            scoPagto, scoConsCDC, scoCheque, scoCanc,
                             scoReimpComp, scoResVenda, scoRecargaCel,
                             scoPreAutCredito );
 
@@ -1447,6 +1448,10 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePagamentoConta: function(_Servico: Word): LongInt;
         {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeCarteiraVirtualEx: function(_CodBandeira, _CodRede: Word): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopeCarteiraVirtualEx2: function(_Valor: PAnsiChar; _CodBandeira, _CodRede, _CodServico: Word): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeRecargaCelular: function(): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopePreAutorizacaoCredito: function(_Valor, _TxServico: PAnsiChar): LongInt;
@@ -1627,7 +1632,8 @@ type
     procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean); overload;
 
     procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
-      const Param1: String = ''; const Param2: String = ''; const Param3: String = '');
+      const Param1: String = ''; const Param2: String = '';
+      const Param3: String = ''; const Param4: String = '');
     procedure ExecutarTransacao;
     function EnviarParametroTransacao(Acao: LongInt; codTipoColeta: LongInt = -1;
       Dados: AnsiString = ''; dadosParam: Word = 0): LongInt;
@@ -2022,6 +2028,8 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopeObtemHandle', @xScopeObtemHandle);
   ScopeFunctionDetect(sLibName, 'ScopePagamento', @xScopePagamento);
   ScopeFunctionDetect(sLibName, 'ScopePagamentoConta', @xScopePagamentoConta);
+  ScopeFunctionDetect(sLibName, 'ScopeCarteiraVirtualEx', @xScopeCarteiraVirtualEx);
+  ScopeFunctionDetect(sLibName, 'ScopeCarteiraVirtualEx2', @xScopeCarteiraVirtualEx2);
   ScopeFunctionDetect(sLibName, 'ScopeRecargaCelular', @xScopeRecargaCelular);
   ScopeFunctionDetect(sLibName, 'ScopePreAutorizacaoCredito', @xScopePreAutorizacaoCredito);
   ScopeFunctionDetect(sLibName, 'ScopeRecuperaOperadorasRecCel', @xScopeRecuperaOperadorasRecCel);
@@ -2090,6 +2098,8 @@ begin
   xScopeObtemHandle := Nil;
   xScopePagamento := Nil;
   xScopePagamentoConta := Nil;
+  xScopeCarteiraVirtualEx := Nil;
+  xScopeCarteiraVirtualEx2 := Nil;
   xScopeRecargaCelular := Nil;
   xScopePreAutorizacaoCredito := Nil;
   xScopeRecuperaOperadorasRecCel := Nil;
@@ -2515,6 +2525,7 @@ begin
     RCS_CANCELADA_PELO_OPERADOR: MsgErro := 'Transação cancelada pelo operador';
     RCS_PP_COMPARTILHADO_NAO_CONFIGURADO: MsgErro := 'PIN-Pad compartilhado não está configurado, mas a rede exige que seja compartilhado.';
     RCS_AREA_RESERVADA_INSUFICIENTE: MsgErro := 'Área reservada para o buffer é insuficiente para o SCOPE Client preencher com os dados solicitados';
+    RCS_ERRO_INTERNO_EXECUCAO_COLETA: MsgErro := 'Erro interno na execução da coleta';
     RCS_NOT_FOUND: MsgErro := 'Não Encontrado';
   else
     MsgErro := Format('Erro: %d', [AErrorCode]);
@@ -2695,10 +2706,10 @@ begin
 end;
 
 procedure TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
-  const Param1: String; const Param2: String; const Param3: String);
+  const Param1: String; const Param2: String; const Param3: String; const Param4: String);
 var
-  p1, p2, p3: PAnsiChar;
-  w1, w2: Word;
+  p1, p2, p3, p4: PAnsiChar;
+  w1, w2, w3, w4: Word;
   ret: LongInt;
 begin
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
@@ -2713,6 +2724,7 @@ begin
   p1 := PAnsiChar(AnsiString(Param1));
   p2 := PAnsiChar(AnsiString(Param2));
   p3 := PAnsiChar(AnsiString(Param3));
+  p4 := PAnsiChar(AnsiString(Param4));
   ret := 0;
 
   case Operacao of
@@ -2734,16 +2746,20 @@ begin
         ret := xScopeCompraCartaoDebito(p1);         // Valor
       end;
 
-    scoReimpComp:
+    scoCarteiraVirtual:
       begin
-        GravarLog('ScopeReimpressaoOffLine');
-        ret := xScopeReimpressaoOffLine();
+        GravarLog('ScopeCarteiraVirtualEx2( '+Param1+', '+Param2+', '+Param3+', '+Param4+' )');
+        w2 := StrToIntDef(Param2, 0);
+        w3 := StrToIntDef(Param3, 0);
+        w4 := StrToIntDef(Param4, 0);
+        ret := xScopeCarteiraVirtualEx2(p1, w2, w3, w4);      // Valor, CodBandeira, CodRede, CodServiço
       end;
 
-    scoCheque:
+    scoPagto:
       begin
-        GravarLog('ScopeConsultaCheque( '+Param1+' )');
-        ret := xScopeConsultaCheque(p1);             // Valor
+        GravarLog('ScopePagamentoConta( '+Param1+' )');
+        w1 := StrToIntDef(Param1, 0);
+        ret := xScopePagamentoConta(w1);              // Serviço
       end;
 
     scoConsCDC:
@@ -2752,10 +2768,22 @@ begin
         ret := xScopeConsultaCDC(p1, p2);            // Valor, Taxa Serviço
       end;
 
+    scoCheque:
+      begin
+        GravarLog('ScopeConsultaCheque( '+Param1+' )');
+        ret := xScopeConsultaCheque(p1);             // Valor
+      end;
+
     scoCanc:
       begin
         GravarLog('ScopeCancelamento( '+Param1+', '+Param2+' )');
         ret := xScopeCancelamento(p1, p2);           // Valor, Taxa Serviço
+      end;
+
+    scoReimpComp:
+      begin
+        GravarLog('ScopeReimpressaoOffLine');
+        ret := xScopeReimpressaoOffLine();
       end;
 
     scoResVenda:
@@ -2768,13 +2796,6 @@ begin
       begin
         GravarLog('ScopeRecargaCelular');
         ret := xScopeRecargaCelular();
-      end;
-
-    scoPagto:
-      begin
-        GravarLog('ScopePagamentoConta( '+Param1+' )');
-        w1 := StrToIntDef(Param1, 0);
-        ret := xScopePagamentoConta(w1);              // Serviço
       end;
 
     scoPreAutCredito:
@@ -2823,6 +2844,9 @@ begin
     begin
       // Le o Status da Operação
       iStatus := ObterScopeStatus;
+
+      if (iStatus = RCS_ERRO_INTERNO_EXECUCAO_COLETA) then
+        TratarErroScope(iStatus);
 
       // Iniciliza as variáveis
       Resposta := '';
@@ -2997,6 +3021,7 @@ begin
         TratarErroScope(iStatus);
     end;
   finally
+    fDadosDaTransacao.Values[RET_STATUS] := IntToStr(iStatus);
     SetEmTransacao(False);
     RespostasPorEstados.Clear;
   end;
@@ -3275,18 +3300,18 @@ begin
   if (ret = RCS_SUCESSO) then
   begin
     s := 'Coleta_Msg.' + sLineBreak +
-         '  Op1: '+String(MsgColetada.Op1) + sLineBreak +
-         '  Op2: '+String(MsgColetada.Op2) + sLineBreak +
-         '  Cl1: '+String(MsgColetada.Cl1) + sLineBreak +
-         '  Cl2: '+String(MsgColetada.Cl2);
+         '  Op1: '+ArrayOfCharToString(MsgColetada.Op1) + sLineBreak +
+         '  Op2: '+ArrayOfCharToString(MsgColetada.Op2) + sLineBreak +
+         '  Cl1: '+ArrayOfCharToString(MsgColetada.Cl1) + sLineBreak +
+         '  Cl2: '+ArrayOfCharToString(MsgColetada.Cl2);
     GravarLog(s);
 
     // Exibe as mensagens do cliente e operador //
-    s := Trim(String(MsgColetada.Cl1)) + sLineBreak + Trim(String(MsgColetada.Cl2));
+    s := Trim(ArrayOfCharToString(MsgColetada.Cl1) + sLineBreak + ArrayOfCharToString(MsgColetada.Cl2));
     if (s <> '') then
       ExibirMensagem(s, tmCliente);
 
-    s := Trim(String(MsgColetada.Op1)) + sLineBreak + Trim(String(MsgColetada.Op2));
+    s := Trim(ArrayOfCharToString(MsgColetada.Op1) + sLineBreak + ArrayOfCharToString(MsgColetada.Op2));
     if (s <> '') then
     begin
       ExibirMensagem(s, tmOperador);
@@ -3654,7 +3679,6 @@ procedure TACBrTEFScopeAPI.ExibirMsgColeta(const rColetaEx: TParam_Coleta_Ext;
 var
   s: String;
 begin
-  // Exibe as mensagens do cliente e operador //
   s := MsgCliente(rColetaEx);
   if (s <> '') then
     ExibirMensagem(s, tmCliente);
@@ -3683,12 +3707,12 @@ end;
 
 function TACBrTEFScopeAPI.MsgOperador(const rColetaEx: TParam_Coleta_Ext): String;
 begin
-  Result := ArrayOfCharToString(rColetaEx.MsgOp1) + sLineBreak + ArrayOfCharToString(rColetaEx.MsgOp2);
+  Result := Trim(ArrayOfCharToString(rColetaEx.MsgOp1) + sLineBreak + ArrayOfCharToString(rColetaEx.MsgOp2));
 end;
 
 function TACBrTEFScopeAPI.MsgCliente(const rColetaEx: TParam_Coleta_Ext): String;
 begin
-  Result := ArrayOfCharToString(rColetaEx.MsgCl1) + sLineBreak + ArrayOfCharToString(rColetaEx.MsgCl2);
+  Result := Trim(ArrayOfCharToString(rColetaEx.MsgCl1) + sLineBreak + ArrayOfCharToString(rColetaEx.MsgCl2));
 end;
 
 function TACBrTEFScopeAPI.FormatarMsgPinPad(const MsgPinPad: String): String;

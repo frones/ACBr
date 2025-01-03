@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2025
+-- ACBrBoletoRet_Cresol/ACBrBoletoW_Cresol --
+[*] TK-6163 Ajustes para o envio do NossoNumero do título e na leitura do retorno.
+  Por: Delcio
+
 02/01/2025
 -- ACBrBancoSafra.pas --
 [*] TK-6429 Ajustado p novo layout. Seg P. 061-061/062-062 qdo LayoutVersaoLote=60

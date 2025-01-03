@@ -211,6 +211,8 @@ begin
          LJson.AddPair('dtVencimento', DateTimeToDateCresol(aTitulo.Vencimento));
          LJson.AddPair('dtDocumento', DateTimeToDateCresol(aTitulo.DataDocumento));
          LJson.AddPair('valorNominal', ATitulo.ValorDocumento);
+         if  ATitulo.NossoNumero <> ''  then
+           LJson.AddPair('nossoNumero', aTitulo.NossoNumero);
          if aTitulo.ValorDesconto > 0 then
             LJson.AddPair('valorDesconto', aTitulo.ValorDesconto);
          GerarJuros(LJson);

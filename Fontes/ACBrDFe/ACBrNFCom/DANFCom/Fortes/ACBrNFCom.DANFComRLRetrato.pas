@@ -337,7 +337,7 @@ begin
 
   if fpDANFCom.Cancelada then
   begin
-    rllXmotivo.Caption := 'NF-e CANCELADA';
+    rllXmotivo.Caption := 'NFCom CANCELADA';
 
     rllDadosVariaveis3_Descricao.Visible := False;
     rllDadosVariaveis3.Visible := False;
@@ -358,7 +358,7 @@ begin
 
         101, 135, 151, 155:
         begin
-          rllXmotivo.Caption := 'NF-e CANCELADA';
+          rllXmotivo.Caption := 'NFCom CANCELADA';
           rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
         end;
       else
@@ -374,11 +374,11 @@ begin
     begin
       if (fpNFCom.Ide.tpEmis = TACBrTipoEmissao.teNormal) then
       begin
-        rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
+        rllXmotivo.Caption := ACBrStr('NFCom NÃO ENVIADA PARA SEFAZ');
         rllDadosVariaveis3_Descricao.Visible := False;
         rllDadosVariaveis3.Visible := False;
         rllHomologacao.Visible := true;
-        rllHomologacao.Caption := ACBrStr('NF-e NÃO PROTOCOLADA NA SEFAZ - SEM VALOR FISCAL')
+        rllHomologacao.Caption := ACBrStr('NFCom NÃO PROTOCOLADA NA SEFAZ - SEM VALOR FISCAL')
       end;
     end;
   end;

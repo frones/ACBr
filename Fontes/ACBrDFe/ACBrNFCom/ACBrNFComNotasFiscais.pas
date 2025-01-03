@@ -1602,7 +1602,7 @@ begin
     if P > 0 then
     begin
       ANFComXML := copy(XMLStr, 1, P + 11);
-      XMLStr := Trim(copy(XMLStr, P + 11, length(XMLStr)));
+      XMLStr := Trim(copy(XMLStr, P + 12, length(XMLStr)));
     end
     else
     begin

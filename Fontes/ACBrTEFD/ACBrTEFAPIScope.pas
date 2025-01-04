@@ -356,7 +356,7 @@ begin
     LinChave := Linha.Chave;
 
     if (LinChave = RET_STATUS) then
-      Sucesso := (Linha.Informacao.AsInteger = RCS_SUCESSO)
+      Sucesso := (StrToIntDef(Trim(Linha.Informacao.AsString), -1) = RCS_SUCESSO)
     else if (LinChave = RET_CUPOM_LOJA) then
       ImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString )
     else if (LinChave = RET_CUPOM_CLIENTE) then
@@ -371,6 +371,10 @@ begin
       Cheque := Linha.Informacao.AsString
     else if (LinChave = RET_CHEQUE_DATA) then
       DataCheque := Linha.Informacao.AsDate
+    else if (LinChave = RET_MSG_OPERADOR) then
+      TextoEspecialOperador := StringToBinaryString( Linha.Informacao.AsString )
+    else if (LinChave = RET_MSG_CLIENTE) then
+      TextoEspecialCliente := StringToBinaryString( Linha.Informacao.AsString )
     else if (LinChave = RET_QRCODE) then
       QRCode := Linha.Informacao.AsString;
 
@@ -469,7 +473,7 @@ var
   i: Integer;
   AChave, AValue: String;
 begin
-  //inherited;
+  fpACBrTEFAPI.UltimaRespostaTEF.Clear;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
 
   for i := 0 to fTEFScopeAPI.DadosDaTransacao.Count-1 do
@@ -905,7 +909,7 @@ begin
   fTEFScopeAPI.IniciarTransacao(op, Param1, Param2);
   fTEFScopeAPI.ExecutarTransacao;
 
-  Result := fpACBrTEFAPI.UltimaRespostaTEF.Sucesso;
+  Result := (StrToIntDef(Trim(fTEFScopeAPI.DadosDaTransacao.Values[RET_STATUS]), -1) = 0);
 end;
 
 procedure TACBrTEFAPIClassScope.FinalizarTransacao(const Rede, NSU,
@@ -1013,12 +1017,15 @@ function TACBrTEFAPIClassScope.ExecutarTransacaoScopeSessaoUnica(
   const Param2: String; const Param3: String): Boolean;
 begin
   Result := False;
+  if fTEFScopeAPI.SessaoAberta then
+    fTEFScopeAPI.FecharSessaoTEF;
+
   fTEFScopeAPI.IniciarTransacao(OperacaoScope, Param1, Param2,Param3);
   try
     fTEFScopeAPI.ExecutarTransacao;
+    Result := (StrToIntDef(Trim(fTEFScopeAPI.DadosDaTransacao.Values[RET_STATUS]), -1) = 0);
   finally
     fTEFScopeAPI.FecharSessaoTEF;
-    Result := True;
   end;
 end;
 

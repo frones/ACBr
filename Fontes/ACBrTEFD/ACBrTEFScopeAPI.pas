@@ -902,9 +902,11 @@ const
   {--------------------------------------------------------------------------------------------
      Outras Constantes coletadas durante a Operação
   --------------------------------------------------------------------------------------------}
-  RET_STATUS   = 'STATUS';
-  RET_BANDEIRA = 'BANDEIRA';
-  RET_QRCODE   = 'QRCODE';
+  RET_STATUS       = 'STATUS';
+  RET_BANDEIRA     = 'BANDEIRA';
+  RET_QRCODE       = 'QRCODE';
+  RET_MSG_OPERADOR = 'MSG_OPERADOR';
+  RET_MSG_CLIENTE  = 'MSG_CLIENTE';
 
   {--------------------------------------------------------------------------------------------
      Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
@@ -1557,8 +1559,10 @@ type
     function ObterHandleScope(TipoHandle: LongInt): LongInt;
     procedure ObterDadosDaTransacao;
     function ObterCampoMask(MaskPos:Byte; AMask: LongInt): String;
+    procedure ExibirMsgUltimaTransacao;
+    procedure ObterMsgUltimaTransacao(out AMsgCliente: String; out
+      AMsgOperador: String);
 
-    procedure ExibirErroUltimaMsg;
     procedure LogColeta(AColeta: TParam_Coleta);
     procedure LogColetaEx(AColetaEx: TParam_Coleta_Ext);
 
@@ -2528,9 +2532,10 @@ begin
     RCS_PP_COMPARTILHADO_NAO_CONFIGURADO: MsgErro := 'PIN-Pad compartilhado não está configurado, mas a rede exige que seja compartilhado.';
     RCS_AREA_RESERVADA_INSUFICIENTE: MsgErro := 'Área reservada para o buffer é insuficiente para o SCOPE Client preencher com os dados solicitados';
     RCS_ERRO_INTERNO_EXECUCAO_COLETA: MsgErro := 'Erro interno na execução da coleta';
+    RCS_NAO_EXISTE_TRN_SUSPENSA: MsgErro := 'Não existe transação suspensa';
     RCS_NOT_FOUND: MsgErro := 'Não Encontrado';
   else
-    MsgErro := Format('Erro: %d', [AErrorCode]);
+    MsgErro := Format('Erro: %d - %s', [AErrorCode, IntToHex(AErrorCode, 4)]);
   end;
 
   if (MsgErro <> '') then
@@ -2831,7 +2836,7 @@ var
   Acao: Byte;
   rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
-  Resposta: String;
+  Resposta, MsgCli, MsgOpe: String;
 
   function VerificarSeUsuarioCancelouTransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
   var
@@ -3018,22 +3023,23 @@ begin
           Break;
         end
         else
-          ExibirErroUltimaMsg;
+          ExibirMsgUltimaTransacao;
       end;
     end;
 
+    // Atribui na Transação, as mensagens do cliente e operador //
+    ObterMsgUltimaTransacao(MsgCli, MsgOpe);
+    if (MsgCli <> '') then
+      fDadosDaTransacao.Values[RET_MSG_CLIENTE] := BinaryStringToString( MsgCli );
+    if (MsgOpe <> '') then
+      fDadosDaTransacao.Values[RET_MSG_OPERADOR] := BinaryStringToString( MsgOpe );
+
     if (iStatus = RCS_SUCESSO) then
-    begin
-      ExibirMensagem(sMsgTransacaoCompleta);
-      ObterDadosDaTransacao;
-    end
-    else
-    begin
-      ExibirErroUltimaMsg;
-      if (iStatus <> RCS_CANCELADA_PELO_OPERADOR) then
-        TratarErroScope(iStatus);
-    end;
+      ObterDadosDaTransacao
+    else if (iStatus <> RCS_CANCELADA_PELO_OPERADOR) then
+      TratarErroScope(iStatus);
   finally
+    GravarLog('ExecutarTransacao: $'+IntToHex(iStatus, 4));
     fDadosDaTransacao.Values[RET_STATUS] := IntToStr(iStatus);
     SetEmTransacao(False);
     RespostasPorEstados.Clear;
@@ -3300,13 +3306,31 @@ begin
   end;
 end;
 
-procedure TACBrTEFScopeAPI.ExibirErroUltimaMsg;
+procedure TACBrTEFScopeAPI.ExibirMsgUltimaTransacao;
+var
+  MsgCli, MsgOpe: String;
+begin
+  ObterMsgUltimaTransacao(MsgCli, MsgOpe);
+
+  if (MsgCli <> '') then
+    ExibirMensagem(MsgCli, tmCliente);
+
+  if (MsgOpe <> '') then
+  begin
+    ExibirMensagem(MsgOpe, tmOperador);
+    ExibirMensagem(MsgOpe, tmOperador, 0);
+  end;
+end;
+
+procedure TACBrTEFScopeAPI.ObterMsgUltimaTransacao(out AMsgCliente: String; out
+  AMsgOperador: String);
 var
   MsgColetada: TColeta_Msg;
   ret: LongInt;
   s: String;
 begin
-  // Coleta dados do Scope para esse passo //
+  AMsgCliente := '';
+  AMsgOperador := '';
   GravarLog('ScopeGetLastMsg');
   FillChar(MsgColetada, SizeOf(TColeta_Msg), #0);
   ret := xScopeGetLastMsg(@MsgColetada);
@@ -3320,18 +3344,8 @@ begin
          '  Cl1: '+ArrayOfCharToString(MsgColetada.Cl1) + sLineBreak +
          '  Cl2: '+ArrayOfCharToString(MsgColetada.Cl2);
     GravarLog(s);
-
-    // Exibe as mensagens do cliente e operador //
-    s := Trim(ArrayOfCharToString(MsgColetada.Cl1) + sLineBreak + ArrayOfCharToString(MsgColetada.Cl2));
-    if (s <> '') then
-      ExibirMensagem(s, tmCliente);
-
-    s := Trim(ArrayOfCharToString(MsgColetada.Op1) + sLineBreak + ArrayOfCharToString(MsgColetada.Op2));
-    if (s <> '') then
-    begin
-      ExibirMensagem(s, tmOperador);
-      ExibirMensagem(s, tmOperador, 0);
-    end;
+    AMsgCliente := Trim(ArrayOfCharToString(MsgColetada.Cl1) + sLineBreak + ArrayOfCharToString(MsgColetada.Cl2));
+    AMsgOperador := Trim(ArrayOfCharToString(MsgColetada.Op1) + sLineBreak + ArrayOfCharToString(MsgColetada.Op2));
   end;
 end;
 

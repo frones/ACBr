@@ -1637,10 +1637,10 @@ type
     procedure FecharSessaoTEF; overload;
     procedure FecharSessaoTEF(Confirmar: Boolean; out TransacaoFoiDesfeita: Boolean); overload;
 
-    procedure IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
+    function IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
       const Param1: String = ''; const Param2: String = '';
-      const Param3: String = ''; const Param4: String = '');
-    procedure ExecutarTransacao;
+      const Param3: String = ''; const Param4: String = ''): LongInt;
+    function ExecutarTransacao: LongInt;
     function EnviarParametroTransacao(Acao: LongInt; codTipoColeta: LongInt;
       Dados: AnsiString = ''; dadosParam: Word = 0): LongInt;
     procedure AbortarTransacao;
@@ -2708,8 +2708,9 @@ begin
   end;
 end;
 
-procedure TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
-  const Param1: String; const Param2: String; const Param3: String; const Param4: String);
+function TACBrTEFScopeAPI.IniciarTransacao(Operacao: TACBrTEFScopeOperacao;
+  const Param1: String; const Param2: String; const Param3: String;
+  const Param4: String): LongInt;
 var
   p1, p2, p3, p4: PAnsiChar;
   w1, w2, w3, w4: Word;
@@ -2717,6 +2718,7 @@ var
   f1: Double;
   s1: String;
 begin
+  Result := -1;
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
             ', '+Param1+', '+Param2+', '+Param3+', '+Param4+' )' );
 
@@ -2824,13 +2826,13 @@ begin
   end;
 
   GravarLog('  ret: '+IntToStr(ret));
-  if (ret <> RCS_SUCESSO) then
-    TratarErroScope(ret)   // Raise exception
-  else
+  Result := ret;
+
+  if (Result = RCS_SUCESSO) then
     SetEmTransacao(True);
 end;
 
-procedure TACBrTEFScopeAPI.ExecutarTransacao;
+function TACBrTEFScopeAPI.ExecutarTransacao: LongInt;
 var
   ret, iStatus: LongInt;
   Acao: Byte;
@@ -2849,6 +2851,7 @@ var
   end;
 
 begin
+  Result := -1;
   GravarLog('ExecutarTransacao');
 
   if not fEmTransacao then
@@ -2864,7 +2867,7 @@ begin
       iStatus := ObterScopeStatus;
 
       if (iStatus = RCS_ERRO_INTERNO_EXECUCAO_COLETA) then
-        TratarErroScope(iStatus);
+        Break;
 
       // Iniciliza as variáveis
       Resposta := '';
@@ -2899,6 +2902,8 @@ begin
 
       // Verifica se já tem resposta para esse estado //
       Resposta := RespostasPorEstados.Values[IntToStr(iStatus)];
+      if (Resposta <> '') then
+        GravarLog('  RespostasPorEstados['+IntToHex(iStatus, 4)+'] = '+Resposta );
 
       if (Resposta = '') and (iStatus = TC_EXIBE_MENU) then
         PerguntarMenuScope(MNU_TAB_TIPO_CIELO, Resposta, Acao);  // Deveria ser MNU_TAB_TIPO_GENERICO
@@ -3035,12 +3040,11 @@ begin
       fDadosDaTransacao.Values[RET_MSG_OPERADOR] := BinaryStringToString( MsgOpe );
 
     if (iStatus = RCS_SUCESSO) then
-      ObterDadosDaTransacao
-    else if (iStatus <> RCS_CANCELADA_PELO_OPERADOR) then
-      TratarErroScope(iStatus);
+      ObterDadosDaTransacao;
   finally
-    GravarLog('ExecutarTransacao: $'+IntToHex(iStatus, 4));
-    fDadosDaTransacao.Values[RET_STATUS] := IntToStr(iStatus);
+    Result := iStatus;
+    GravarLog('ExecutarTransacao: $'+IntToHex(Result, 4));
+    fDadosDaTransacao.Values[RET_STATUS] := IntToStr(Result);
     SetEmTransacao(False);
     RespostasPorEstados.Clear;
   end;
@@ -3052,7 +3056,7 @@ begin
   GravarLog('ScopeResumeParam( '+IntToStr(codTipoColeta)+', "'+Dados+'", '+IntToStr(dadosParam)+', '+IntToStr(Acao)+' )');
   Result := xScopeResumeParam(codTipoColeta, PAnsiChar(Dados), dadosParam, Acao);
   GravarLog('  ret: '+IntToStr(Result));
-  if (Result <> RCS_SUCESSO) then
+  if (Result <> RCS_SUCESSO) and (Result <> RCS_NAO_EXISTE_TRN_SUSPENSA) then
     TratarErroScope(Result);
 end;
 

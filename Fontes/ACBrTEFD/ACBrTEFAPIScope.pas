@@ -81,6 +81,8 @@ type
     function DadoPinPadToMsg(ADadoPinPad: TACBrTEFAPIDadoPinPad): Word;
 
   protected
+    function IniciarTransacao(OperacaoScope: TACBrTEFScopeOperacao;
+       const Param1: String = ''; const Param2: String = ''; const Param3: String = ''): LongInt;
     function ExecutarTransacaoScopeSessaoUnica(OperacaoScope: TACBrTEFScopeOperacao;
        const Param1: String = ''; const Param2: String = ''; const Param3: String = ''): Boolean;
 
@@ -473,7 +475,6 @@ var
   i: Integer;
   AChave, AValue: String;
 begin
-  fpACBrTEFAPI.UltimaRespostaTEF.Clear;
   fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
 
   for i := 0 to fTEFScopeAPI.DadosDaTransacao.Count-1 do
@@ -865,8 +866,7 @@ begin
   if (CodigoFinalizacao <> '') then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_CONTROLE)] := CodigoFinalizacao;
 
-  ExecutarTransacaoScopeSessaoUnica(scoCanc, Param1, Param2);
-  Result := fpACBrTEFAPI.UltimaRespostaTEF.Sucesso;
+  Result := ExecutarTransacaoScopeSessaoUnica(scoCanc, Param1, Param2);
 end;
 
 function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
@@ -876,6 +876,7 @@ function TACBrTEFAPIClassScope.EfetuarPagamento(ValorPagto: Currency;
 var
   Param1, Param2: string;
   op: TACBrTEFScopeOperacao;
+  ret: LongInt;
 begin
   VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
@@ -906,10 +907,11 @@ begin
   else  // Debito, Voucher, Frota
     op := scoDebito;
 
-  fTEFScopeAPI.IniciarTransacao(op, Param1, Param2);
-  fTEFScopeAPI.ExecutarTransacao;
+  ret := IniciarTransacao(op, Param1, Param2);
+  if (ret = RCS_SUCESSO) then
+    ret := fTEFScopeAPI.ExecutarTransacao;
 
-  Result := (StrToIntDef(Trim(fTEFScopeAPI.DadosDaTransacao.Values[RET_STATUS]), -1) = 0);
+  Result := (ret = RCS_SUCESSO);
 end;
 
 procedure TACBrTEFAPIClassScope.FinalizarTransacao(const Rede, NSU,
@@ -993,6 +995,15 @@ begin
   end;
 end;
 
+function TACBrTEFAPIClassScope.IniciarTransacao(
+  OperacaoScope: TACBrTEFScopeOperacao; const Param1: String;
+  const Param2: String; const Param3: String): LongInt;
+begin
+  fpACBrTEFAPI.UltimaRespostaTEF.Clear;
+  fTEFScopeAPI.DadosDaTransacao.Clear;
+  Result := fTEFScopeAPI.IniciarTransacao(OperacaoScope, Param1, Param2, Param3);
+end;
+
 function TACBrTEFAPIClassScope.VerificarPresencaPinPad: Byte;
 var
   s: String;
@@ -1015,18 +1026,24 @@ end;
 function TACBrTEFAPIClassScope.ExecutarTransacaoScopeSessaoUnica(
   OperacaoScope: TACBrTEFScopeOperacao; const Param1: String;
   const Param2: String; const Param3: String): Boolean;
+var
+  ret: LongInt;
 begin
   Result := False;
   if fTEFScopeAPI.SessaoAberta then
     fTEFScopeAPI.FecharSessaoTEF;
 
-  fTEFScopeAPI.IniciarTransacao(OperacaoScope, Param1, Param2,Param3);
-  try
-    fTEFScopeAPI.ExecutarTransacao;
-    Result := (StrToIntDef(Trim(fTEFScopeAPI.DadosDaTransacao.Values[RET_STATUS]), -1) = 0);
-  finally
-    fTEFScopeAPI.FecharSessaoTEF;
+  ret := IniciarTransacao(OperacaoScope, Param1, Param2, Param3);
+  if (ret = RCS_SUCESSO) then
+  begin
+    try
+      ret := fTEFScopeAPI.ExecutarTransacao;
+    finally
+      fTEFScopeAPI.FecharSessaoTEF;
+    end;
   end;
+
+  Result := (ret = RCS_SUCESSO);
 end;
 
 end.

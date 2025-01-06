@@ -66,6 +66,7 @@ resourcestring
   sErrNaoImplementado = 'Não implementado %s';
   sErrEstruturaMenu = 'Erro na estrutura do Menu retornado';
   sErrUltTransDesfeita = 'A transação TEF anterior foi desfeita (cancelada). Reter o cupom TEF';
+  sErrExecutarOperacao = 'Erro %s ao Executar Operação:'+sLineBreak+'%s';
   sErrVersaoAutomacaoInvalido = 'Versão Automação deve ser:'+sLineBreak+
                                 'RRAAAACCCC, onde:'+sLineBreak+
                                 'RR - Release Certificação TEF'+sLineBreak+
@@ -907,6 +908,7 @@ const
   RET_QRCODE       = 'QRCODE';
   RET_MSG_OPERADOR = 'MSG_OPERADOR';
   RET_MSG_CLIENTE  = 'MSG_CLIENTE';
+  RET_SCOPE_OPERACAO = 'SCOPE_OPERACAO';
 
   {--------------------------------------------------------------------------------------------
      Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
@@ -2188,7 +2190,11 @@ begin
         sFilial := copy(SecName,5,4);
 
         if ApagaSessoPrincipal and ((fEmpresa <> sEmpresa) or (fFilial <> sFilial)) then
-          ini.EraseSection(SecName)
+        begin
+          ini.EraseSection(SecName);
+          ini.UpdateFile;
+          Continue;
+        end
         else
         begin
           SemSessaoPrincipal := False;
@@ -2214,6 +2220,10 @@ begin
         AjustarParamSeNaoExistir(SecName, 'VersaoAutomacao', sName);
         AjustarParamSeNaoExistir(SecName, 'CupomReduzido', IfThen(fCupomReduzido, 's', 'n'));
         AjustarParamSeNaoExistir(SecName, 'WKPAN', IfThen(fPinPadSeguro, 's', 'n'));
+        if (fEnderecoIP = '127.0.0.1') or (LowerCase(fEnderecoIP) = 'localhost') then
+          AjustarParamSeNaoExistir(SecName, 'ThinClient', 's');
+        AjustarParamSeNaoExistir(SecName, 'CRTYPE', '1');
+        AjustarParamSeNaoExistir(SecName, 'ExibeQRcode', 's');
         Break;
       end;
     end;
@@ -2245,6 +2255,10 @@ begin
       ini.WriteString(SecName, 'VersaoAutomacao', fVersaoAutomacao);
       ini.WriteString(SecName, 'CupomReduzido', IfThen(fCupomReduzido, 's', 'n'));
       ini.WriteString(SecName, 'WKPAN', IfThen(fPinPadSeguro, 's', 'n'));
+      if (fEnderecoIP = '127.0.0.1') or (LowerCase(fEnderecoIP) = 'localhost') then
+        ini.WriteString(SecName, 'ThinClient', 's');
+      ini.WriteString(SecName, 'CRTYPE', '1');
+      ini.WriteString(SecName, 'ExibeQRcode', 's');
     end;
 
     AjustarParamSeNaoExistir('PINDPAD', 'TamMinDados', '4');
@@ -2516,6 +2530,7 @@ begin
   case AErrorCode of
     RCS_SUCESSO: MsgErro := '';
     RCS_TRN_EM_ANDAMENTO: MsgErro := ''; //'Transação em andamento';
+    RCS_SERVER_OFF: MsgErro := 'ScopeSrv off-line ou IP configurado errado';
     RCS_ERRO_PARM_1: MsgErro := 'Parâmetro 1 inválido';
     RCS_ERRO_PARM_2: MsgErro := 'Parâmetro 2 inválido';
     RCS_ERRO_PARM_3: MsgErro := 'Parâmetro 3 inválido';
@@ -2534,6 +2549,7 @@ begin
     RCS_ERRO_INTERNO_EXECUCAO_COLETA: MsgErro := 'Erro interno na execução da coleta';
     RCS_NAO_EXISTE_TRN_SUSPENSA: MsgErro := 'Não existe transação suspensa';
     RCS_NOT_FOUND: MsgErro := 'Não Encontrado';
+    RCS_SCOPE_NAO_CONFIGURADO_PP_COMPARTILHADO: MsgErro := 'O PDV '+fPDV+' não está configurado para uso de PIN-Pad compartilhado';
   else
     MsgErro := Format('Erro: %d - %s', [AErrorCode, IntToHex(AErrorCode, 4)]);
   end;
@@ -2716,7 +2732,7 @@ var
   w1, w2, w3, w4: Word;
   ret: LongInt;
   f1: Double;
-  s1: String;
+  s1, sOp: String;
 begin
   Result := -1;
   GravarLog('IniciarTransacao( '+GetEnumName(TypeInfo(TACBrTEFScopeOperacao), integer(Operacao))+
@@ -2728,6 +2744,7 @@ begin
   if not fSessaoAberta then
     AbrirSessaoTEF;
 
+  fDadosDaTransacao.Clear;
   p1 := PAnsiChar(AnsiString(Param1));
   p2 := PAnsiChar(AnsiString(Param2));
   p3 := PAnsiChar(AnsiString(Param3));
@@ -2737,25 +2754,29 @@ begin
   case Operacao of
     scoMenu:
       begin
-        GravarLog('ScopeMenu( 0 )');
+        sOp := 'ScopeMenu( 0 )';
+        GravarLog(sOp);
         ret := xScopeMenu(0);
       end;
 
     scoCredito:
       begin
-        GravarLog('ScopeCompraCartaoCredito( '+Param1+', '+Param2+' )');
+        sOp := 'ScopeCompraCartaoCredito( '+Param1+', '+Param2+' )';
+        GravarLog(sOp);
         ret := xScopeCompraCartaoCredito(p1, p2);    // Valor, Taxa Serviço
       end;
 
     scoDebito:
       begin
-        GravarLog('ScopeCompraCartaoDebito( '+Param1+' )');
+        sOp := 'ScopeCompraCartaoDebito( '+Param1+' )';
+        GravarLog(sOp);
         ret := xScopeCompraCartaoDebito(p1);         // Valor
       end;
 
     scoCarteiraVirtual:
       begin
-        GravarLog('ScopeCarteiraVirtualEx2( '+Param1+', '+Param2+', '+Param3+', '+Param4+' )');
+        sOp := 'ScopeCarteiraVirtualEx2( '+Param1+', '+Param2+', '+Param3+', '+Param4+' )';
+        GravarLog(sOp);
         w2 := StrToIntDef(Param2, 0);
         w3 := StrToIntDef(Param3, 0);
         w4 := StrToIntDef(Param4, 0);
@@ -2764,20 +2785,23 @@ begin
 
     scoPagto:
       begin
-        GravarLog('ScopePagamentoConta( '+Param1+' )');
+        sOp := 'ScopePagamentoConta( '+Param1+' )';
+        GravarLog(sOp);
         w1 := StrToIntDef(Param1, 0);
         ret := xScopePagamentoConta(w1);              // Serviço
       end;
 
     scoConsCDC:
       begin
-        GravarLog('ScopeConsultaCDC( '+Param1+', '+Param2+' )');
+        sOp := 'ScopeConsultaCDC( '+Param1+', '+Param2+' )';
+        GravarLog(sOp);
         ret := xScopeConsultaCDC(p1, p2);            // Valor, Taxa Serviço
       end;
 
     scoCheque:
       begin
-        GravarLog('ScopeConsultaCheque( '+Param1+' )');
+        sOp := 'ScopeConsultaCheque( '+Param1+' )';
+        GravarLog(sOp);
         ret := xScopeConsultaCheque(p1);             // Valor
       end;
 
@@ -2796,31 +2820,36 @@ begin
         else
           s1 := Param1;
 
-        GravarLog('ScopeCancelamento( '+s1+', '+Param2+' )');
+        sOp := 'ScopeCancelamento( '+s1+', '+Param2+' )';
+        GravarLog(sOp);
         ret := xScopeCancelamento(p1, p2);           // Valor, Taxa Serviço
       end;
 
     scoReimpComp:
       begin
-        GravarLog('ScopeReimpressaoOffLine');
+        sOp := 'ScopeReimpressaoOffLine';
+        GravarLog(sOp);
         ret := xScopeReimpressaoOffLine();
       end;
 
     scoResVenda:
       begin
-        GravarLog('ScopeResumoVendas()');
+        sOp := 'ScopeResumoVendas()';
+        GravarLog(sOp);
         ret := xScopeResumoVendas();
       end;
 
     scoRecargaCel:
       begin
-        GravarLog('ScopeRecargaCelular');
+        sOp := 'ScopeRecargaCelular';
+        GravarLog(sOp);
         ret := xScopeRecargaCelular();
       end;
 
     scoPreAutCredito:
       begin
-        GravarLog('ScopePreAutorizacaoCredito( '+Param1+', '+Param2+' )');
+        sOp := 'ScopePreAutorizacaoCredito( '+Param1+', '+Param2+' )';
+        GravarLog(sOp);
         ret := xScopePreAutorizacaoCredito(p1, p2);   // Valor, Taxa Serviço
       end;
   end;
@@ -2829,7 +2858,10 @@ begin
   Result := ret;
 
   if (Result = RCS_SUCESSO) then
+  begin
+    fDadosDaTransacao.Values[RET_SCOPE_OPERACAO] := sOp;
     SetEmTransacao(True);
+  end;
 end;
 
 function TACBrTEFScopeAPI.ExecutarTransacao: LongInt;
@@ -2858,7 +2890,6 @@ begin
     DoException(sErrTransacaoNaoIniciada);
 
   try
-    fDadosDaTransacao.Clear;
     ExibirMensagem(sMsgTransacaoEmAndamento);
 
     while True do
@@ -3034,6 +3065,10 @@ begin
 
     // Atribui na Transação, as mensagens do cliente e operador //
     ObterMsgUltimaTransacao(MsgCli, MsgOpe);
+    if (MsgOpe = '') and (iStatus <> RCS_SUCESSO) then
+      MsgOpe := Format(ACBrStr(sErrExecutarOperacao), [ IntToHex(iStatus, 4),
+                       fDadosDaTransacao.Values[RET_SCOPE_OPERACAO] ]);
+
     if (MsgCli <> '') then
       fDadosDaTransacao.Values[RET_MSG_CLIENTE] := BinaryStringToString( MsgCli );
     if (MsgOpe <> '') then
@@ -3892,6 +3927,15 @@ begin
   GravarLog('  ret: '+IntToStr(ret));
   Result := (ret = RCS_SUCESSO);
 end;
+
+{
+--- TODO VERIFICAR ---
+- A.V. quando chama ScopenOpen, na segunda vez
+  ocorre quando ControleConexao = True
+- Cancelar uma transação pelo Teclado está retornando o erro RCS_NAO_EXISTE_TRN_SUSPENSA
+- Como fazer Transação de Crédito parcelado pela Administradora ou Lojista
+  - Como usar os Serviços Scope, da Pag 340 ?
+}
 
 end.
 

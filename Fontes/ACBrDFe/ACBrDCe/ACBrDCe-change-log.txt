@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/01/2025
+-- ACBrDCe.XmlWriter --
+[*] Acrescentado a função para gerar o grupo <protDCe> no XML.
+   Por: Italo Giurizzato Junior
+
 30/10/2024
 -- Diversos --
 [*] Ajustes necessários para deixar em conformidade com a NT 2024/001.

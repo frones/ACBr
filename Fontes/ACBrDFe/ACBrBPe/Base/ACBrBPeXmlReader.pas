@@ -171,17 +171,16 @@ var
 begin
   if not Assigned(ANode) then Exit;
 
-  BPe.procBPe.tpAmb    := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
-
+  BPe.procBPe.tpAmb := StrToTipoAmbiente(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   BPe.procBPe.verAplic := ObterConteudo(ANode.Childrens.Find('verAplic'), tcStr);
-  BPe.procBPe.chDFe    := ObterConteudo(ANode.Childrens.Find('chBPe'), tcStr);
+  BPe.procBPe.chDFe := ObterConteudo(ANode.Childrens.Find('chBPe'), tcStr);
   BPe.procBPe.dhRecbto := ObterConteudo(ANode.Childrens.Find('dhRecbto'), tcDatHor);
-  BPe.procBPe.nProt    := ObterConteudo(ANode.Childrens.Find('nProt'), tcStr);
-  BPe.procBPe.digVal   := ObterConteudo(ANode.Childrens.Find('digVal'), tcStr);
-  BPe.procBPe.cStat    := ObterConteudo(ANode.Childrens.Find('cStat'), tcInt);
-  BPe.procBPe.xMotivo  := ObterConteudo(ANode.Childrens.Find('xMotivo'), tcStr);
-  BPe.procBPe.cMsg     := ObterConteudo(ANode.Childrens.Find('cMsg'), tcInt);
-  BPe.procBPe.xMsg     := ObterConteudo(ANode.Childrens.Find('xMsg'), tcStr);
+  BPe.procBPe.nProt := ObterConteudo(ANode.Childrens.Find('nProt'), tcStr);
+  BPe.procBPe.digVal := ObterConteudo(ANode.Childrens.Find('digVal'), tcStr);
+  BPe.procBPe.cStat := ObterConteudo(ANode.Childrens.Find('cStat'), tcInt);
+  BPe.procBPe.xMotivo := ObterConteudo(ANode.Childrens.Find('xMotivo'), tcStr);
+  BPe.procBPe.cMsg := ObterConteudo(ANode.Childrens.Find('cMsg'), tcInt);
+  BPe.procBPe.xMsg := ObterConteudo(ANode.Childrens.Find('xMsg'), tcStr);
 end;
 
 procedure TBPeXmlReader.Ler_InfBPe(const ANode: TACBrXmlNode);

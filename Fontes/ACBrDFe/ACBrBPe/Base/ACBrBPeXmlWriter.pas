@@ -63,7 +63,6 @@ type
     property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
     property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
     property CamposFatObrigatorios: boolean read FCamposFatObrigatorios write FCamposFatObrigatorios;
-
   end;
 
   TBPeXmlWriter = class(TACBrXmlWriter)

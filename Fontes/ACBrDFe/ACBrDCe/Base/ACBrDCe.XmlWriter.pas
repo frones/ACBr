@@ -95,9 +95,9 @@ type
     function Gerar_ObsMarketplace: TACBrXmlNodeArray;
     function Gerar_ObsECT: TACBrXmlNodeArray;
     function Gerar_InfDec: TACBrXmlNode;
-    {
+
     function GerarProtDCe: TACBrXmlNode;
-    }
+
     function GetOpcoes: TDCeXmlWriterOptions;
     procedure SetOpcoes(AValue: TDCeXmlWriterOptions);
 
@@ -808,6 +808,35 @@ begin
   Result.AppendChild(AddNode(tcStr, 'ZA03', 'xObs2', 1, 2000, 1, xObs2, ''));
 end;
 
+function TDCeXmlWriter.GerarProtDCe: TACBrXmlNode;
+var
+  xmlNode: TACBrXmlNode;
+begin
+  Result := FDocument.CreateElement('protDCe');
+
+  Result.SetAttribute('versao', FloatToString(DCe.infDCe.Versao, '.', '#0.00'));
+
+  xmlNode := Result.AddChild('infProt');
+
+  xmlNode.AddChild('tpAmb').Content := TipoAmbienteToStr(DCe.procDCe.tpAmb);
+
+  xmlNode.AddChild('verAplic').Content := DCe.procDCe.verAplic;
+
+  xmlNode.AddChild('chBPe').Content := DCe.procDCe.chDFe;
+
+  xmlNode.AddChild('dhRecbto').Content :=
+    FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', DCe.procDCe.dhRecbto) +
+    GetUTC(CodigoUFparaUF(DCe.Ide.cUF), DCe.procDCe.dhRecbto);
+
+  xmlNode.AddChild('nProt').Content := DCe.procDCe.nProt;
+
+  xmlNode.AddChild('digVal').Content := DCe.procDCe.digVal;
+
+  xmlNode.AddChild('cStat').Content := IntToStr(DCe.procDCe.cStat);
+
+  xmlNode.AddChild('xMotivo').Content := DCe.procDCe.xMotivo;
+end;
+
 function TDCeXmlWriter.GerarXml: boolean;
 var
   Gerar: boolean;
@@ -903,7 +932,7 @@ begin
 
   if DCe.procDCe.nProt <> '' then
   begin
-//    xmlNode := GerarProtDCe;
+    xmlNode := GerarProtDCe;
     FDocument.Root.AppendChild(xmlNode);
   end;
 end;

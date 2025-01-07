@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrXmlDocument, ACBrXmlReader,
-  pcteCTe, pcnConversao, pcteProcCTe, pcnSignature;
+  ACBrCTe.Classes, pcnConversao, pcteProcCTe, pcnSignature;
 
 type
   TprotCTeHandler = class
@@ -367,8 +367,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure LerInfUnidTransp(const ANode: TACBrXmlNode; const InfUnidTransp: TinfUnidTranspNFCollection); overload;
-    procedure LerInfUnidTransp(const ANode: TACBrXmlNode; const InfUnidTransp: TinfUnidTranspOutrosCollection); overload;
+    procedure LerInfUnidTransp(const ANode: TACBrXmlNode; const InfUnidTransp: TinfUnidTranspCollection);
   end;
 
   TInfNFHandler = class
@@ -885,7 +884,7 @@ type
     constructor Create(AOwner: TCTe); reintroduce;
     destructor Destroy; override;
 
-    function LerXML: Boolean; override;
+    function LerXml: Boolean; override;
     property CTe: TCTe read FCTe;
   end;
 
@@ -2158,7 +2157,6 @@ procedure TInfNFHandler.LerinfNF(const ANode: TACBrXmlNode; const infNF: TInfNFC
 var
   AuxNodeArray: TACBrXmlNodeArray;
   i: Integer;
-  Ok: boolean;
 begin
   if not Assigned(ANode) then exit;
 
@@ -2169,7 +2167,7 @@ begin
     infNF.New;
     InfNF[i].nRoma := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('nRoma'), tcStr);
     InfNF[i].nPed  := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('nPed'), tcStr);
-    InfNF[i].Modelo := StrToModeloNF(Ok, ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('mod'), tcStr));
+    InfNF[i].Modelo := StrToModeloNFEX(ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('mod'), tcStr));
     InfNF[i].serie := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('serie'), tcStr);
     InfNF[i].nDoc  := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('nDoc'), tcEsp);
     InfNF[i].dEmi  := ObterConteudoTag(AuxNodeArray[i].Childrens.FindAnyNs('dEmi'), tcDat);
@@ -2205,28 +2203,10 @@ begin
   inherited;
 end;
 
-procedure TInfUnidTranspHandler.LerInfUnidTransp(const ANode: TACBrXmlNode; const InfUnidTransp: TinfUnidTranspOutrosCollection);
+procedure TInfUnidTranspHandler.LerInfUnidTransp(const ANode: TACBrXmlNode; const InfUnidTransp: TinfUnidTranspCollection);
 var
   AuxNodeArray: TACBrXmlNodeArray;
   i: Integer;
-//  Ok: Boolean;
-begin
-  if not Assigned(ANode) then exit;
-
-  infUnidTransp.Clear;
-  AuxNodeArray := ANode.Childrens.FindAllAnyNs('infUnidTransp');
-  for i:=0 to Length(AuxNodeArray)-1 do
-  begin
-    infUnidTransp.New;
-    LerInfUnidTranspItem(AuxNodeArray[i], infUnidTransp[i]);
-  end;
-end;
-
-procedure TInfUnidTranspHandler.LerInfUnidTransp(const ANode: TACBrXmlNode; const InfUnidTransp: TinfUnidTranspNFCollection);
-var
-  AuxNodeArray: TACBrXmlNodeArray;
-  i: Integer;
-//  Ok: Boolean;
 begin
   if not Assigned(ANode) then exit;
 
@@ -3694,6 +3674,7 @@ var
 begin
   trafMut.respFat := StrToTrafegoMutuo(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('respFat'), tcStr));
   trafMut.ferrEmi := StrToTrafegoMutuo(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('ferrEmi'), tcStr));
+  TrafMut.vFrete := ObterConteudoTag(ANode.Childrens.FindANyNs('vFrete'), tcDe2);
   trafMut.chCTeFerroOrigem := ObterConteudoTag(ANode.Childrens.FindAnyNs('chCTeFerroOrigem'), tcStr);
 end;
 

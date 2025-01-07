@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                              Mark dos Santos Gonçalves                       }
 {                              Juliomar Marchetti                              }
 {                                                                              }
@@ -51,7 +51,7 @@ uses
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts, RLBarcode,
   ACBrCTe, ACBrCTeDACTeRLClass,
-  pcteCTe, pcnConversao;
+  ACBrCTe.Classes, pcnConversao;
 
 type
 

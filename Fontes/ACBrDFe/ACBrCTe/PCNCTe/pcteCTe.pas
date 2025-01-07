@@ -1713,10 +1713,12 @@ type
   private
     FrespFat: TpcteTrafegoMutuo;
     FferrEmi: TpcteTrafegoMutuo;
+    FvFrete: Currency;
     FchCTeFerroOrigem: string;
   public
     property respFat: TpcteTrafegoMutuo read FrespFat          write FrespFat;
     property ferrEmi: TpcteTrafegoMutuo read FferrEmi          write FferrEmi;
+    property vFrete: Currency           read FvFrete           write FvFrete;
     property chCTeFerroOrigem: string   read FchCTeFerroOrigem write FchCTeFerroOrigem;
   end;
 

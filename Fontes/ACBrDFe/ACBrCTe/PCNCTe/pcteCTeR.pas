@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcteConversaoCTe, pcnLeitor, pcteCTe;
+  pcnConversao, pcteConversaoCTe, pcnLeitor, ACBrCTe.Classes;
 
 type
 
@@ -1641,7 +1641,7 @@ begin
       begin
         ferrov.trafMut.respFat := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'respFat'));
         ferrov.trafMut.ferrEmi := StrToTrafegoMutuo(ok, Leitor.rCampo(tcStr, 'ferrEmi'));
-        ferrov.vFrete          := Leitor.rCampo(tcDe2,'vFrete');
+        ferrov.trafMut.vFrete  := Leitor.rCampo(tcDe2,'vFrete');
 
         ferrov.trafMut.chCTeFerroOrigem := Leitor.rCampo(tcStr,'chCTeFerroOrigem');
 

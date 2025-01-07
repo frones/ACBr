@@ -937,7 +937,7 @@ type
     property qtdRat: Double                          read FqtdRat        write FqtdRat;
   end;
 
-  TinfUnidTranspNFCollection = class(TACBrObjectList)
+  TinfUnidTranspCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
@@ -967,7 +967,7 @@ type
     FnPeso: Currency;
     FPIN: string;
     FdPrev: TDateTime;
-    FinfUnidTransp: TinfUnidTranspNFCollection;
+    FinfUnidTransp: TinfUnidTranspCollection;
     FinfUnidCarga: TinfUnidCargaNFCollection;
   public
     constructor Create; reintroduce;
@@ -989,7 +989,7 @@ type
     property nPeso: Currency                           read FnPeso         write FnPeso;
     property PIN: string                               read FPIN           write FPIN;
     property dPrev: TDateTime                          read FdPrev         write FdPrev;
-    property infUnidTransp: TinfUnidTranspNFCollection read FinfUnidTransp write FinfUnidTransp;
+    property infUnidTransp: TinfUnidTranspCollection read FinfUnidTransp write FinfUnidTransp;
     property infUnidCarga: TinfUnidCargaNFCollection   read FinfUnidCarga  write FinfUnidCarga;
   end;
 
@@ -1003,17 +1003,13 @@ type
     property Items[Index: Integer]: TInfNFCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfUnidTranspNFeCollection = TinfUnidTranspNFCollection;
-
-  TinfUnidCargaNFeCollection = TinfUnidCargaCollection;
-
   TInfNFeCollectionItem = class(TObject)
   private
     Fchave: string;
     FPIN: string;
     FdPrev: TDateTime;
-    FinfUnidTransp: TinfUnidTranspNFeCollection;
-    FinfUnidCarga: TinfUnidCargaNFeCollection;
+    FinfUnidTransp: TinfUnidTranspCollection;
+    FinfUnidCarga: TinfUnidCargaCollection;
 
   public
     constructor Create;
@@ -1022,8 +1018,8 @@ type
     property chave: string                              read Fchave         write Fchave;
     property PIN: string                                read FPIN           write FPIN;
     property dPrev: TDateTime                           read FdPrev         write FdPrev;
-    property infUnidTransp: TinfUnidTranspNFeCollection read FinfUnidTransp write FinfUnidTransp;
-    property infUnidCarga: TinfUnidCargaNFeCollection   read FinfUnidCarga  write FinfUnidCarga;
+    property infUnidTransp: TinfUnidTranspCollection read FinfUnidTransp write FinfUnidTransp;
+    property infUnidCarga: TinfUnidCargaCollection   read FinfUnidCarga  write FinfUnidCarga;
   end;
 
   TInfNFeCollection = class(TACBrObjectList)
@@ -1035,7 +1031,7 @@ type
     function New: TInfNFeCollectionItem;
     property Items[Index: Integer]: TInfNFeCollectionItem read GetItem write SetItem; default;
   end;
-
+(*
   TinfUnidTranspOutrosCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
@@ -1047,7 +1043,7 @@ type
   end;
 
   TinfUnidCargaOutrosCollection = TinfUnidCargaCollection;
-
+*)
   TInfOutrosCollectionItem = class(TObject)
   private
     FtpDoc: TpcteTipoDocumento;
@@ -1056,8 +1052,8 @@ type
     FdEmi: TdateTime;
     FvDocFisc: Currency;
     FdPrev: TDateTime;
-    FinfUnidTransp: TinfUnidTranspOutrosCollection;
-    FinfUnidCarga: TinfUnidCargaOutrosCollection;
+    FinfUnidTransp: TinfUnidTranspCollection;
+    FinfUnidCarga: TinfUnidCargaCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1068,8 +1064,8 @@ type
     property dEmi: TdateTime                               read FdEmi          write FdEmi;
     property vDocFisc: Currency                            read FvDocFisc      write FvDocFisc;
     property dPrev: TDateTime                              read FdPrev         write FdPrev;
-    property infUnidTransp: TinfUnidTranspOutrosCollection read FinfUnidTransp write FinfUnidTransp;
-    property infUnidCarga: TinfUnidCargaOutrosCollection   read FinfUnidCarga  write FinfUnidCarga;
+    property infUnidTransp: TinfUnidTranspCollection read FinfUnidTransp write FinfUnidTransp;
+    property infUnidCarga: TinfUnidCargaCollection   read FinfUnidCarga  write FinfUnidCarga;
   end;
 
   TInfOutrosCollection = class(TACBrObjectList)
@@ -1713,10 +1709,12 @@ type
   private
     FrespFat: TpcteTrafegoMutuo;
     FferrEmi: TpcteTrafegoMutuo;
+    FvFrete: Currency;
     FchCTeFerroOrigem: string;
   public
     property respFat: TpcteTrafegoMutuo read FrespFat          write FrespFat;
     property ferrEmi: TpcteTrafegoMutuo read FferrEmi          write FferrEmi;
+    property vFrete: Currency           read FvFrete           write FvFrete;
     property chCTeFerroOrigem: string   read FchCTeFerroOrigem write FchCTeFerroOrigem;
   end;
 
@@ -3181,7 +3179,7 @@ constructor TInfNFCollectionItem.Create;
 begin
   inherited Create;
 
-  FinfUnidTransp := TInfUnidTranspNFCollection.Create;
+  FinfUnidTransp := TInfUnidTranspCollection.Create;
   FinfUnidCarga := TInfUnidCargaNFCollection.Create;
 end;
 
@@ -3193,26 +3191,26 @@ begin
   inherited;
 end;
 
-{ TinfUnidTranspNFCollection }
+{ TinfUnidTranspCollection }
 
-function TinfUnidTranspNFCollection.Add: TinfUnidTranspCollectionItem;
+function TinfUnidTranspCollection.Add: TinfUnidTranspCollectionItem;
 begin
   Result := Self.New;
 end;
 
-function TinfUnidTranspNFCollection.GetItem(
+function TinfUnidTranspCollection.GetItem(
   Index: Integer): TinfUnidTranspCollectionItem;
 begin
   Result := TinfUnidTranspCollectionItem(inherited Items[Index]);
 end;
 
-procedure TinfUnidTranspNFCollection.SetItem(Index: Integer;
+procedure TinfUnidTranspCollection.SetItem(Index: Integer;
   Value: TinfUnidTranspCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-function TinfUnidTranspNFCollection.New: TinfUnidTranspCollectionItem;
+function TinfUnidTranspCollection.New: TinfUnidTranspCollectionItem;
 begin
   Result := TinfUnidTranspCollectionItem.Create;
   Self.Add(Result);
@@ -3307,8 +3305,8 @@ constructor TInfNFeCollectionItem.Create;
 begin
   inherited Create;
 
-  FinfUnidTransp := TInfUnidTranspNFeCollection.Create;
-  FinfUnidCarga := TInfUnidCargaNFeCollection.Create;
+  FinfUnidTransp := TInfUnidTranspCollection.Create;
+  FinfUnidCarga := TInfUnidCargaCollection.Create;
 end;
 
 destructor TInfNFeCollectionItem.Destroy;
@@ -3350,8 +3348,8 @@ constructor TInfOutrosCollectionItem.Create;
 begin
   inherited Create;
 
-  FinfUnidTransp := TInfUnidTranspOutrosCollection.Create;
-  FinfUnidCarga := TInfUnidCargaOutrosCollection.Create;
+  FinfUnidTransp := TInfUnidTranspCollection.Create;
+  FinfUnidCarga := TInfUnidCargaCollection.Create;
 end;
 
 destructor TInfOutrosCollectionItem.Destroy;
@@ -3363,7 +3361,7 @@ begin
 end;
 
 { TinfUnidTranspOutrosCollection }
-
+(*
 function TinfUnidTranspOutrosCollection.Add: TinfUnidTranspCollectionItem;
 begin
   Result := Self.New;
@@ -3386,7 +3384,7 @@ begin
   Result := TinfUnidTranspCollectionItem.Create;
   Self.Add(Result);
 end;
-
+*)
 { TDocAnt }
 
 constructor TDocAnt.Create;

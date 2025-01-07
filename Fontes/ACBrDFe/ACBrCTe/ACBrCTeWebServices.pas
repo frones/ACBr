@@ -41,7 +41,7 @@ uses
   ACBrDFe, ACBrDFeWebService,
   ACBrDFeConsts,
   ACBrDFeUtil,
-  pcteCTe,
+  ACBrCTe.Classes,
   pcnRetConsReciDFe,
   ACBrDFeComum.RetConsCad,
   ACBrDFeComum.RetEnvio,

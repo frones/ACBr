@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                              Wemerson Souto                                  }
 {                              André Ferreira de Moraes                        }
 {                              Jeickson Gobeti                                 }
@@ -41,7 +41,7 @@ interface
 
 uses
   SysUtils, Classes, ACBrCTeDACTEClass, ACBrBase,
-  pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
+  ACBrCTe.Classes, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
   ACBrCTe.EnvEvento, pcteInutCTe, pcteRetInutCTe, ACBrCTe,
   ACBrUtil.Base,
   ACBrUtil.Strings,

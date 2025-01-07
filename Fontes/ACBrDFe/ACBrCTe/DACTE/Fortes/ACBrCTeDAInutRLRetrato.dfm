@@ -7,7 +7,6 @@ inherited frmCTeDAInutRLRetrato: TfrmCTeDAInutRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTeInut: TRLReport
     Left = 1

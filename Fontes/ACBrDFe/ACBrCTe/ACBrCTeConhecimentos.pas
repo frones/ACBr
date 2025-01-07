@@ -40,12 +40,14 @@ interface
 uses
   Classes, Sysutils, StrUtils,
   ACBrCTeConfiguracoes,
-  pcteCTe,
-  pcteCTeW,
+  ACBrCTe.Classes,
   {$IfDef USE_ACBr_XMLDOCUMENT}
+//  ACBrCTe.XmlReader,
   ACBrCTe.XmlHandler,
+  ACBrCTe.XmlWriter,
   {$Else}
   pcteCTeR,
+  pcteCTeW,
   {$EndIf}
   pcnConversao, pcnLeitor;
 
@@ -56,11 +58,12 @@ type
   Conhecimento = class(TCollectionItem)
   private
     FCTe: TCTe;
-    FCTeW: TCTeW;
     {$IfDef USE_ACBr_XMLDOCUMENT}
     FCTeR: TCTeXmlReader;
+    FCTeW: TCTeXmlWriter;
     {$Else}
     FCTeR: TCTeR;
+    FCTeW: TCTeW;
     {$EndIf}
 
     FXMLAssinado: String;
@@ -201,11 +204,12 @@ begin
   inherited Create(Collection2);
 
   FCTe := TCTe.Create;
-  FCTeW := TCTeW.Create(FCTe);
   {$IfDef USE_ACBr_XMLDOCUMENT}
   FCTeR := TCTeXmlReader.Create(FCTe);
+  FCTeW := TCTeXmlWriter.Create(FCTe);
   {$Else}
   FCTeR := TCTeR.Create(FCTe);
+  FCTeW := TCTeW.Create(FCTe);
   {$EndIf}
 
   FConfiguracoes := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes;
@@ -1065,7 +1069,7 @@ var
       begin
         INIRec.WriteString(sSecao, 'nRoma', nRoma);
         INIRec.WriteString(sSecao, 'nPed', nPed);
-        INIRec.WriteString(sSecao, 'mod', ModeloNFToStr(modelo));
+        INIRec.WriteString(sSecao, 'mod', ModeloNFToStrEX(modelo));
         INIRec.WriteString(sSecao, 'serie', serie);
         INIRec.WriteString(sSecao, 'nDoc', nDoc);
         INIRec.WriteString(sSecao, 'dEmi', DateToStr(dEmi));
@@ -1716,6 +1720,15 @@ begin
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     IdAnterior := CTe.infCTe.ID;
+{$IfDef USE_ACBr_XMLDOCUMENT}
+    FCTeW.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
+    FCTeW.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    FCTeW.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FCTeW.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FCTeW.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
+    FCTeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
+    FCTeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
+{$Else}
     FCTeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FCTeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FCTeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
@@ -1723,6 +1736,7 @@ begin
     FCTeW.Gerador.Opcoes.QuebraLinha    := Configuracoes.WebServices.QuebradeLinha;
     FCTeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FCTeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
+{$EndIf}
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
@@ -1741,14 +1755,22 @@ begin
 
   FCTeW.GerarXml;
 
-  XMLOriginal := FCTeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
+{$IfDef USE_ACBr_XMLDOCUMENT}
+  XMLOriginal := FCTeW.Document.Xml;
+{$Else}
+  XMLOriginal := FCTeW.Gerador.ArquivoFormatoXML;
+{$EndIf}
 
   { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
     nome do arquivo, mantendo o PATH do arquivo carregado }
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FCTe.infCTe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
+{$IfDef USE_ACBr_XMLDOCUMENT}
+  FAlertas := ACBrStr( FCTeW.ListaDeAlertas.Text );
+{$Else}
   FAlertas := FCTeW.Gerador.ListaDeAlertas.Text;
+{$EndIf}
   Result := FXMLOriginal;
 end;
 
@@ -2751,7 +2773,7 @@ begin
         begin
           nRoma  := INIRec.ReadString(sSecao,'nRoma','');
           nPed   := INIRec.ReadString(sSecao,'nPed','');
-          modelo := StrToModeloNF(OK,INIRec.ReadString(sSecao,'mod','01'));
+          modelo := StrToModeloNFEX(INIRec.ReadString(sSecao,'mod','01'));
           serie  := INIRec.ReadString(sSecao,'serie','');
           nDoc   := INIRec.ReadString(sSecao,'nDoc','');
           dEmi   := StringToDateTime(INIRec.ReadString( sSecao,'dEmi','0'));

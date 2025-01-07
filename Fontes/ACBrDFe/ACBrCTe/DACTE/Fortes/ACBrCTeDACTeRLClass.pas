@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                              Mark dos Santos Gonçalves                       }
 {                              Juliomar Marchetti                              }
 {                                                                              }
@@ -45,7 +45,7 @@ uses
   Classes, 
   ACBrBase,
   pcnConversao, 
-  pcteCTe, 
+  ACBrCTe.Classes,
   ACBrCTeDACTEClass, 
   RLTypes;
 

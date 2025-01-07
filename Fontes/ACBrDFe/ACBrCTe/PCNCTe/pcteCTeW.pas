@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcteCTe,
+  pcnConversao, pcnGerador, ACBrCTe.Classes,
   pcteConversaoCTe,
   ACBrCTe.Consts,
   ACBrDFeUtil, ACBrDFeConsts;
@@ -2567,7 +2567,7 @@ begin
       Gerador.wGrupo('trafMut', '#03');
       Gerador.wCampo(tcStr, '#04', 'respFat', 01, 01, 1, TrafegoMutuoToStr(ferrov.trafMut.respFat), DSC_RESPFAT);
       Gerador.wCampo(tcStr, '#05', 'ferrEmi', 01, 01, 1, TrafegoMutuoToStr(ferrov.trafMut.ferrEmi), DSC_FERREMI);
-      Gerador.wCampo(tcDe2, '#06', 'vFrete ', 01, 15, 1, ferrov.vFrete, DSC_VFRETE);
+      Gerador.wCampo(tcDe2, '#06', 'vFrete ', 01, 15, 1, ferrov.trafMut.vFrete, DSC_VFRETE);
 
       Gerador.wCampo(tcStr, '#07', 'chCTeFerroOrigem', 44, 44, 0, ferrov.trafMut.chCTeFerroOrigem, DSC_CHAVE);
 

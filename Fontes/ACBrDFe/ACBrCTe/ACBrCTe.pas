@@ -43,7 +43,7 @@ uses
   ACBrDFe, ACBrDFeConfiguracoes, ACBrBase,
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTEClass, ACBrDFeException,
-  pcteCTe, pcnConversao, pcteConversaoCTe,
+  ACBrCTe.Classes, pcnConversao, pcteConversaoCTe,
   ACBrCTe.EnvEvento, pcteInutCTe,
   ACBrDFeUtil;
 

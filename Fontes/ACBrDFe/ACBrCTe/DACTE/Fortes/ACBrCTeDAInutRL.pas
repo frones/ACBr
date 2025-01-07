@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                              Juliomar Marchetti                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
@@ -44,7 +44,7 @@ uses
   {$ELSE}Graphics, Controls, Forms, Dialogs, ExtCtrls,{$ENDIF}
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
   Printers, RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  pcteCTe, pcnConversao, pcteInutCTe,
+  ACBrCTe.Classes, pcnConversao, pcteInutCTe,
   ACBrCTe, ACBrCTeDACTeRLClass;
 
 type

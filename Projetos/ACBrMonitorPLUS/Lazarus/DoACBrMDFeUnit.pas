@@ -348,7 +348,7 @@ uses IniFiles, DateUtils, Forms, strutils,
   ACBrDFeConfiguracoes, ACBrLibConfig,
   ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
   pcnConversao, pmdfeConversaoMDFe,
-  pcnAuxiliar, pmdfeMDFeR, DoACBrUnit, pmdfeMDFe;
+  pcnAuxiliar, pmdfeMDFeR, DoACBrUnit, ACBrMDFe.Classes;
 
 { TMetodoGetPathEvento }
 

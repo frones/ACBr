@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/01/2025
+-- DoACBrNFeUnit --
+[*] #TK-6415: Realizado a substituição da unit de classes de: pcnNFe
+    por: ACBrNFe.Classes 
+   Por: Italo Giurizzato Junior
 -- DoACBrMDFeUnit --
 [*] #TK-6409: Realizado a substituição da unit de classes de: pmdfeMDFe
     por: ACBrMDFe.Classes 

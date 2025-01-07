@@ -444,7 +444,7 @@ uses
   ACBrDFeConfiguracoes, ACBrNFeDANFEClass,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   pcnConversao, pcnConversaoNFe,
-  pcnAuxiliar, pcnNFeRTXT, pcnNFe, DoACBrUnit, ACBrDFeSSL;
+  pcnAuxiliar, pcnNFeRTXT, ACBrNFe.Classes, DoACBrUnit, ACBrDFeSSL;
 
 { TACBrObjetoNFe }
 

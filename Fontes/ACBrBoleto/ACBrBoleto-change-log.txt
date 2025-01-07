@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2025
+-- ACBrBoletoW_Safra.pas --
+[*] TK-6163 Ajustado Assigned para não acontecer o AV na consulta.
+  https://www.projetoacbr.com.br/forum/topic/81079-consulta-e-consulta-detalhe-banco-safra/
+  Por: Daniel Morais Infocotidiano
+
 03/01/2025
 -- ACBrBoletoW_C6.pas --
 [-] Ajustado quando jurosmora = cjTaxaDiaria, enviar o valormora com "P" no json

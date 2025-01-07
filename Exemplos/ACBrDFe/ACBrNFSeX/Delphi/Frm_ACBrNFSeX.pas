@@ -834,6 +834,9 @@ begin
       begin
         Servico.Valores.ValorServicos := 0;
 
+        // Provedor Infisc
+        Servico.Valores.totalAproxTrib := 0;
+
         with Servico.ItemServico.New do
         begin
           Descricao := 'Desc. do Serv. 1';
@@ -922,6 +925,9 @@ begin
           DadosProfissionalParceiro.IdentificacaoParceiro.InscricaoMunicipal := '123';
           DadosProfissionalParceiro.RazaoSocial := 'Nome do Parceiro';
           DadosProfissionalParceiro.PercentualProfissionalParceiro := 5;
+
+          // Provedor Infisc
+          totalAproxTribServ := 0;
         end;
       end
       else
@@ -1640,7 +1646,7 @@ begin
       Tomador.Endereco.CodigoPais := 0;
       Tomador.Endereco.CEP := '14800000';
       Tomador.Endereco.xPais := 'BRASIL';
-      Tomador.Contato.Telefone := '22223333';
+      Tomador.Contato.Telefone := '1622223333';
       Tomador.Contato.Email := 'nome@provedor.com.br';
 
       {=========================================================================

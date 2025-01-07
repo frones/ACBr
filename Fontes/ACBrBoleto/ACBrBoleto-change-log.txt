@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/01/2025
+-- ACBrBancoSantander --
+[*] TK-6376 Acrescentado a geração das mensagens 4 e 5.
+  Por: P Junior
+
 -- ACBrBoletoW_Safra.pas --
 [*] TK-6163 Ajustado Assigned para não acontecer o AV na consulta.
   https://www.projetoacbr.com.br/forum/topic/81079-consulta-e-consulta-detalhe-banco-safra/

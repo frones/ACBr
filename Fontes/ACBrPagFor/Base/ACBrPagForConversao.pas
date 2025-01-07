@@ -252,6 +252,7 @@ function StrToTpArquivo(var ok: boolean; const s: String): TTipoArquivo;
 function TpServicoToStr(const t: TTipoServico): String;
 function StrToTpServico(var ok: boolean; const s: String): TTipoServico;
 
+function FmLancamentoToDesc(const t: TFormaLancamento): String;
 function FmLancamentoToStr(const t: TFormaLancamento): String;
 function StrToFmLancamento(var ok: boolean; const s: String): TFormaLancamento;
 
@@ -780,6 +781,53 @@ begin
                            '16', '17', '18', '19', '20', '21', '22', '23', '24', '25',
                            '26', '27', '30', '31', '32', '33', '35', '40', '41', '43',
                            '44', '50', '60', '70', '71', '72', '73', '91', '45', '47', '  '],
+                         [flCreditoContaCorrente, flChequePagamento, flDocTed,
+                          flCartaoSalario, flCreditoContaPoupanca,
+                          flCreditoContaCorrenteMesmaTitularidade,
+                          flDocMesmaTitularidade, flOPDisposicao,
+                          flPagamentoContas, flPagamentoConcessionarias,
+                          flTributoDARFNormal, flTributoGPS,
+                          flTributoDARFSimples, flTributoIPTU,
+                          flPagamentoAutenticacao, flTributoDARJ,
+                          flTributoGARESPICMS, flTributoGARESPDR,
+                          flTributoGARESPITCMD, flTributoIPVA,
+                          flTributoLicenciamento, flTributoDPVAT,
+                          flLiquidacaoTitulosProprioBanco,
+                          flLiquidacaoTitulosOutrosBancos,
+                          flLiberacaoTitulosNotaFiscalEletronica,
+                          flLiquidacaoParcelasNaoRegistrada, flFGTSGFIP,
+                          flExtratoContaCorrente, flTEDOutraTitularidade,
+                          flTEDMesmaTitularidade, flTEDTransferencia,
+                          flDebitoContaCorrente, flCartaoSalarioItau,
+                          flExtratoGestaoCaixa, flDepositoJudicialContaCorrente,
+                          flDepositoJudicialPoupanca, flExtratoContaInvestimento,
+                          flTributoGNRe, flPIXTransferencia, flPIXQRCode, flNenhum]);
+end;
+
+function FmLancamentoToDesc(const t: TFormaLancamento): String;
+begin
+ result := EnumeradoToStr(t,
+                          ['Crédito em Conta Corrente', 'Cheque de Pagamento', 'DOC/TED',
+                          'Cartão Salário', 'Crédito em Conta Poupança',
+                          'Crédito em Conta Corrente Mesma Titularidade',
+                          'DOC Mesma Titularidade', 'Ordem de Pagamento à Disposição',
+                          'Pagamento de Contas', 'Pagamento de Concessionárias',
+                          'Tributo DARF Normal', 'Tributo GPS',
+                          'Tributo DARF Simples', 'Tributo IPTU',
+                          'Pagamento com Autenticação', 'Tributo DARJ',
+                          'Tributo GARE/SP ICMS', 'Tributo GARE/SP DR',
+                          'Tributo GARE/SP ITCMD', 'Tributo IPVA',
+                          'Tributo Licenciamento', 'Tributo DPVAT',
+                          'Liquidação de Títulos do Próprio Banco',
+                          'Liquidação de Títulos de Outros Bancos',
+                          'Liberação de Títulos Nota Fiscal Eletrônica',
+                          'Liquidação de Parcelas Não Registradas', 'FGTS/GFIP',
+                          'Extrato de Conta Corrente', 'TED Outra Titularidade',
+                          'TED Mesma Titularidade', 'TED Transferência',
+                          'Débito em Conta Corrente', 'Cartão Salário Itaú',
+                          'Extrato de Gestão de Caixa', 'Depósito Judicial em Conta Corrente',
+                          'Depósito Judicial em Poupança', 'Extrato de Conta Investimento',
+                          'Tributo GNRe', 'PIX Transferência', 'PIX QR Code', 'Nenhum'],
                          [flCreditoContaCorrente, flChequePagamento, flDocTed,
                           flCartaoSalario, flCreditoContaPoupanca,
                           flCreditoContaCorrenteMesmaTitularidade,

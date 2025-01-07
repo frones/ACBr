@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -41,7 +41,7 @@ uses
   SysUtils, 
   StrUtils,
   ACBrMDFeConfiguracoes,
-  pmdfeMDFe, 
+  ACBrMDFe.Classes,
   {$IfDef USE_ACBr_XMLDOCUMENT}
   ACBrMDFe.XmlReader,
   ACBrMDFe.XmlWriter,

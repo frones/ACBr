@@ -45,7 +45,7 @@ uses
   {$IfEnd}
   pcnConversao,
   ACBrBase,
-  pmdfeMDFe;
+  ACBrMDFe.Classes;
 
 type
   EventoException = class(EACBrException);

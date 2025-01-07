@@ -40,7 +40,7 @@ uses
   Classes, SysUtils,
   pcnConversao,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
-  pmdfeMDFe,
+  ACBrMDFe.Classes,
   pmdfeConversaoMDFe;
 
 type

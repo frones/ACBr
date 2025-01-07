@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, synacode,
   ACBrDFe, ACBrDFeWebService,
-  pmdfeMDFe,
+  ACBrMDFe.Classes,
   pcnConversao, pmdfeConversaoMDFe,
   pcnRetConsReciDFe,
   ACBrMDFe.ProcInfraSA,
@@ -638,7 +638,7 @@ begin
 
   MDFeRetorno := TRetConsStatServ.Create('MDFe');
   try
-    MDFeRetorno.XmlRetorno := ParseText(FPRetWS);
+    MDFeRetorno.XmlRetorno := FPRetWS; //ParseText(FPRetWS);
     MDFeRetorno.LerXml;
 
     Fversao := MDFeRetorno.versao;
@@ -881,7 +881,7 @@ begin
     else
       AXML := FPRetWS;
 
-    FMDFeRetornoSincrono.XmlRetorno := ParseText(AXML);
+    FMDFeRetornoSincrono.XmlRetorno := AXML; //ParseText(AXML);
     FMDFeRetornoSincrono.LerXml;
 
     Fversao := FMDFeRetornoSincrono.versao;
@@ -978,7 +978,7 @@ begin
   end
   else
   begin
-    FMDFeRetorno.XmlRetorno := ParseText(FPRetWS);
+    FMDFeRetorno.XmlRetorno := FPRetWS; //ParseText(FPRetWS);
     FMDFeRetorno.LerXml;
 
     Fversao := FMDFeRetorno.versao;

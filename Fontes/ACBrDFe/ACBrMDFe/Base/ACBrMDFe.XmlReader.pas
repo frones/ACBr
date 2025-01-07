@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrXmlDocument, ACBrXmlReader,
-  pmdfeMDFe,
+  ACBrMDFe.Classes,
   pcnConversao;
 
 type

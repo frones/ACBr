@@ -82,7 +82,7 @@ type
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
     Fsignature: Tsignature;
-    FXML: AnsiString;
+    FXML: string;
     FXmlRetorno: string;
 
   protected
@@ -113,7 +113,7 @@ type
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
     property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
-    property XML: AnsiString                    read FXML       write FXML;
+    property XML: string                        read FXML       write FXML;
 
     property XmlRetorno: string read FXmlRetorno write FXmlRetorno;
   end;
@@ -123,7 +123,7 @@ implementation
 
 uses
   pmdfeConversaoMDFe,
-  pmdfeMDFe,
+  ACBrMDFe.Classes,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML;
 
@@ -442,6 +442,8 @@ var
   i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
+
+  Result := False;
 
   try
     try

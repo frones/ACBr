@@ -42,7 +42,7 @@ uses
   Variants,
 {$ENDIF}
   pcnConversao, pcnLeitor,
-  pmdfeConversaoMDFe, pmdfeMDFe,
+  pmdfeConversaoMDFe, ACBrMDFe.Classes,
   ACBrUtil.Strings,
   ACBrUtil.Base;
 

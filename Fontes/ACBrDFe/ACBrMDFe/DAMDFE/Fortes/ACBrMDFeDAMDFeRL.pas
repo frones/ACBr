@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -49,7 +49,7 @@ uses
   RLPrinters, 
   RLPDFFilter, 
   RLConsts,
-  pmdfeMDFe, 
+  ACBrMDFe.Classes,
   ACBrMDFe, 
   ACBrMDFeDAMDFeRLClass, 
   ACBrDFeReportFortes;
@@ -124,6 +124,8 @@ var
 begin
   if (Length(AMDFes) < 1) then
     Exit;
+
+  DAMDFeReport := nil;
 
   try
     SetLength(ReportArray, Length(AMDFes));

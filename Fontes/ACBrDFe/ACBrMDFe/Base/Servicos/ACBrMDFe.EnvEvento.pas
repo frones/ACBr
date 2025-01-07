@@ -142,7 +142,7 @@ uses
   ACBrDFeUtil,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrMDFe.RetEnvEvento,
-  pmdfeMDFe,
+  ACBrMDFe.Classes,
   pmdfeConversaoMDFe;
 
 { TEventoMDFe }

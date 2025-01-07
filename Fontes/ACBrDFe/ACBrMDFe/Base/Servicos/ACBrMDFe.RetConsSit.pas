@@ -146,6 +146,8 @@ var
 begin
   Document := TACBrXmlDocument.Create;
 
+  Result := False;
+
   try
     try
       if XmlRetorno = '' then Exit;
@@ -233,8 +235,6 @@ begin
           Result := True;
         end;
       end;
-
-      Result := True;
     except
       Result := False;
     end;

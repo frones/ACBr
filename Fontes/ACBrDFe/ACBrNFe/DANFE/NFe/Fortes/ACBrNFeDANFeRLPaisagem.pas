@@ -645,7 +645,7 @@ implementation
 
 uses
   DateUtils, StrUtils, Math,
-  ACBrNFe, pcnNFe, pcnConversao, pcnConversaoNFe,
+  ACBrNFe, ACBrNFe.Classes, pcnConversao, pcnConversaoNFe,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador,
   ACBrDFeDANFeReport, ACBrDFeReportFortes,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;

@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils,
-  pcnNFe, pcnGerador, pcnConversao,
+  ACBrNFe.Classes, pcnGerador, pcnConversao,
   ACBrNFe.Consts,
   pcnConversaoNFe,
   ACBrXmlDocument, ACBrXmlWriter, ACBrXmlBase;

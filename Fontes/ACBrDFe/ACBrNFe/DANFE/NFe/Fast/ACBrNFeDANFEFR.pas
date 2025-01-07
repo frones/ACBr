@@ -41,7 +41,7 @@ interface
 uses
   SysUtils, Classes, Forms,
   ACBrBase, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
-  pcnNFe, pcnConversao, frxClass;
+  ACBrNFe.Classes, pcnConversao, frxClass;
 
 type
   EACBrNFeDANFEFR = class(Exception);

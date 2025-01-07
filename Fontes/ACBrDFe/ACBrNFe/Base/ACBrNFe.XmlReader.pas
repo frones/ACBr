@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrXmlDocument, ACBrXmlReader,
-  pcnNFe;
+  ACBrNFe.Classes;
 
 type
   { TNFeXmlReader }

@@ -53,7 +53,7 @@ uses
   DB,
   Dialogs,
   LResources,
-  pcnNFe, 
+  ACBrNFe.Classes,
   pcnConversao, 
   pcnConversaoNFe, 
   ACBrNFe.EnvEvento,

@@ -47,7 +47,7 @@ uses
   Controls, Forms, ExtCtrls,
   {$ENDIF}
   ACBrNFe.EnvEvento,
-  pcnNFe,
+  ACBrNFe.Classes,
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
   RLReport, RLPDFFilter, RLFilters;
 

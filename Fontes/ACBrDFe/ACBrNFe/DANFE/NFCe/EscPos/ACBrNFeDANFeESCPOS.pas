@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
   ACBrBase, ACBrNFeDANFEClass, ACBrPosPrinter,
-  pcnNFe,
+  ACBrNFe.Classes,
   ACBrNFe.EnvEvento,
   ACBrNFe.Inut,
   ACBrDFeDANFeReport;

@@ -46,7 +46,7 @@ uses
   Graphics, Controls, Forms, synautil,
   {$ENDIF}
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
-  pcnNFe, RLReport, RLPDFFilter, RLFilters;
+  ACBrNFe.Classes, RLReport, RLPDFFilter, RLFilters;
 
 type
 

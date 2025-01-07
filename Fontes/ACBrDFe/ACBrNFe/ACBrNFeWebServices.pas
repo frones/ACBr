@@ -42,7 +42,7 @@ uses
   ACBrDFe, ACBrDFeWebService,
   ACBrDFeUtil,
   blcksock, synacode,
-  pcnNFe, pcnRetConsReciDFe,
+  ACBrNFe.Classes, pcnRetConsReciDFe,
   ACBrDFeComum.RetConsCad,
   ACBrDFeConsts,
   pcnConversao,

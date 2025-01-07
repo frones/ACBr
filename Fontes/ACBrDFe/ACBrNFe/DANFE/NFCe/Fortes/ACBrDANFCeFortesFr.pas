@@ -45,7 +45,7 @@ uses
    Forms, Graphics,
   {$EndIf}
   ACBrNFeDANFEClass, ACBrBase,
-  pcnNFe, pcnConversao, ACBrDFeUtil,
+  ACBrNFe.Classes, pcnConversao, ACBrDFeUtil,
   RLConsts, RLUtils, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
   RLFilters, RLPrinters, RLTypes, Controls;
 

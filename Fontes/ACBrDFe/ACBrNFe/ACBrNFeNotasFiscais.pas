@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils,
-  ACBrNFeConfiguracoes, pcnNFe,
+  ACBrNFeConfiguracoes, ACBrNFe.Classes,
   {$IfDef USE_ACBr_XMLDOCUMENT}
     ACBrNFe.XmlReader, ACBrNFe.XmlWriter,
   {$Else}

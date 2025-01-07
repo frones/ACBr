@@ -7,7 +7,6 @@ inherited frlDANFeRLEtiqueta: TfrlDANFeRLEtiqueta
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
   TextHeight = 10
   inherited RLNFe: TRLReport
     Tag = 1

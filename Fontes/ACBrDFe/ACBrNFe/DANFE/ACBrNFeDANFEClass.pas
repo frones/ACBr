@@ -42,7 +42,7 @@ uses
   Classes,
   ACBrBase, 
   ACBrDFeDANFeReport,
-  pcnNFe, 
+  ACBrNFe.Classes,
   pcnConversao, 
   pcnConversaoNFe, 
   StrUtilsEx, 

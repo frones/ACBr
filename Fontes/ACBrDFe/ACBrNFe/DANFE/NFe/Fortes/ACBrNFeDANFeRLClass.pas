@@ -40,7 +40,7 @@ interface
 
 uses
   SysUtils, Classes, Graphics,
-  ACBrBase, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
+  ACBrBase, ACBrNFe.Classes, ACBrNFeDANFEClass, pcnConversao;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);

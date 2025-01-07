@@ -48,7 +48,7 @@ uses
 	  Graphics, Controls, Forms, Dialogs, ExtCtrls,
 	{$ENDIF}
   {$ENDIF}
-  pcnNFe,
+  ACBrNFe.Classes,
   ACBrNFe.Inut,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,

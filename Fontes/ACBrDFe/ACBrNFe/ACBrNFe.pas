@@ -42,7 +42,7 @@ uses
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
-  pcnNFe, pcnConversao, pcnConversaoNFe,
+  ACBrNFe.Classes, pcnConversao, pcnConversaoNFe,
   ACBrNFe.EnvEvento,
   ACBrNFe.Inut,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;

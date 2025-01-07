@@ -48,7 +48,7 @@ uses
   Forms, 
   ACBrBase, 
   ACBrNFeDANFEClass, 
-  pcnNFe, 
+  ACBrNFe.Classes,
   ACBrNFe,
   RLReport, 
   RLHTMLFilter, 

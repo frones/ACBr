@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrBase, ACBrDFeReport,
-  pcnConversao, pcnNFe, pcnConversaoNFe;
+  pcnConversao, ACBrNFe.Classes, pcnConversaoNFe;
 
 type
   TpcnTributos = (trbNenhum, trbNormal, trbSeparadamente);

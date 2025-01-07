@@ -41,7 +41,7 @@ interface
 uses
   SysUtils,
   StrUtils,
-  pcnNFe,
+  ACBrNFe.Classes,
   pcnConversao,
   pcnConversaoNFe,
   ACBrNFe,

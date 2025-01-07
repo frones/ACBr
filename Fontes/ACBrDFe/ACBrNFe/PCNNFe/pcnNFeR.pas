@@ -58,7 +58,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnLeitor, pcnNFe;
+  pcnConversao, pcnLeitor, ACBrNFe.Classes;
 
 type
 

@@ -178,7 +178,7 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TNFe);
-    procedure SetXMLString(const AValue : AnsiString);
+//    procedure SetXMLString(const AValue : AnsiString);
     property infNFe: TinfNFe read FinfNFe write FinfNFe;
     property Ide: TIde read FIde write FIde;
     property Emit: TEmit read FEmit write FEmit;
@@ -2203,12 +2203,11 @@ begin
   procNFe.Assign(Source.procNFe);
   infRespTec.Assign(Source.infRespTec);
 end;
-
+{
 procedure TNFe.SetXMLString(const AValue: AnsiString);
 var
  LocNFeR : TNFeR;
 begin
-  {
   LocNFeR := TNFeR.Create(Self);
   try
     LocNFeR.Leitor.Arquivo := AValue;
@@ -2216,9 +2215,8 @@ begin
   finally
     LocNFeR.Free
   end;
-  }
 end;
-
+}
 constructor TNFe.Create;
 begin
   inherited Create;

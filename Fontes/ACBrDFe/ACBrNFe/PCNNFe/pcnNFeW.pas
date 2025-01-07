@@ -60,7 +60,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnGerador, pcnNFe, pcnConversao, pcnConversaoNFe,
+  pcnGerador, ACBrNFe.Classes, pcnConversao, pcnConversaoNFe,
   ACBrNFe.Consts,
   ACBrValidador;
 

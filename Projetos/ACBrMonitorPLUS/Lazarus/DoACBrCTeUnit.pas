@@ -411,7 +411,7 @@ uses
   IniFiles, DateUtils, Forms, strutils,
   ACBrDFeConfiguracoes, ACBrLibConfig,
   pcnConversao, pcteConversaoCTe,
-  pcnAuxiliar, pcteCTeR, DoACBrUnit, pcteCTe;
+  pcnAuxiliar, pcteCTeR, DoACBrUnit, ACBrCTe.Classes;
 
 { TACBrObjetoCTe }
 

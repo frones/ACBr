@@ -43,6 +43,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+07/01/2025
+-- DoACBrCTeUnit --
+[*] #TK-6403: Realizado a substituição da unit de classes de: pcteCTe
+    por: ACBrCTe.Classes 
+   Por: Italo Giurizzato Junior
+
 30/12/2024
 -- ACBrMonitorConfig.pas, DoBoletoUnit.pas, ACBrMonitor1.pas, ACBrMonitor1.lfm, ACBrMonitorConsts.pas  --
 [*] #TK-6431 Criado a propriedade KeySoftwareHouse para uso parceria BB API

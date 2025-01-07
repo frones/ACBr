@@ -318,7 +318,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
-  pcnAuxiliar, pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
+  pcnAuxiliar, ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;

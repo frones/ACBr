@@ -314,7 +314,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  pcnAuxiliar, pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe, pcnRetConsReciDFe,
+  pcnAuxiliar, ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;

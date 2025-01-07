@@ -40,7 +40,7 @@ uses
   ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles,
   ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass, ACBrSATExtratoFortesFr,
   ACBrSATExtratoESCPOS, pcnCFe, ACBrECFVirtualNFCe, ACBrNFe, ACBrNFeDANFeESCPOS,
-  ACBrDANFCeFortesFr, pcnNFe, ACBrECFVirtual, ACBrPosPrinter;
+  ACBrDANFCeFortesFr, ACBrNFe.Classes, ACBrECFVirtual, ACBrPosPrinter;
 
 type
   TSimpleIpHtml = class(TIpHtml)

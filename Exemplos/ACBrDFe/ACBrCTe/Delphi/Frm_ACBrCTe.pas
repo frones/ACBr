@@ -349,7 +349,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,
-  pcnAuxiliar, pcteCTe, pcnConversao, pcteConversaoCTe, pcnRetConsReciDFe,
+  pcnAuxiliar, ACBrCTe.Classes, pcnConversao, pcteConversaoCTe, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
@@ -1487,7 +1487,7 @@ begin
       {Informações dos Documentos - NF-e}
       with infDoc.infNFe.New do
         // chave da NFe emitida pelo remente da carga
-        chave := '33190100127817000125650080000000581000384589';
+        chave := '33190100127817000125550080000000581000384589';
 
       (*
          Usado para informar os dados do documento que não seja uma NF-e
@@ -2842,7 +2842,7 @@ end;
 
 procedure TfrmACBrCTe.btnGerarXMLClick(Sender: TObject);
 var
-  vAux: String;
+  vAux, Inicio, Fim: String;
 begin
   if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux)) then
     exit;
@@ -2851,7 +2851,10 @@ begin
 
   AlimentarComponente(vAux);
 
+  Inicio := TimeToStr(Now);
   ACBrCTe1.Conhecimentos.Assinar;
+  Fim := TimeToStr(Now);
+  ShowMessage('Inicio: ' + Inicio + #13 + 'Fim: ' + Fim);
   ACBrCTe1.Conhecimentos.GravarXML();
 
   memoLog.Lines.Add('Arquivo gerado em: ' + ACBrCTe1.Conhecimentos[0].NomeArq);
@@ -3338,6 +3341,8 @@ begin
 end;
 
 procedure TfrmACBrCTe.btnValidarXMLClick(Sender: TObject);
+var
+  Inicio, Fim: string;
 begin
   OpenDialog1.Title := 'Selecione a CTe';
   OpenDialog1.DefaultExt := '*-CTe.XML';
@@ -3352,7 +3357,10 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrCTe1.Conhecimentos.Clear;
+    Inicio := TimeToStr(Now);
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+    Fim := TimeToStr(Now);
+    ShowMessage('Inicio: ' + Inicio + #13 + 'Fim: ' + Fim);
 
     try
       ACBrCTe1.Conhecimentos.Validar;

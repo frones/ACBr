@@ -44,7 +44,7 @@ uses ACBrECF, ACBrRFD, ACBrBase, ACBrDevice, ACBrECFClass, ACBrConsts, FileCtrl,
   ACBrSATExtratoFortesFr, ACBrSATExtratoClass, ACBrSATExtratoESCPOS,
   ACBrSAT, ACBrSATclass, ACBrDFe, ACBrNFe, ACBrECFVirtualNFCe, ACBrNFeDANFeESCPOS,
   ACBrNFeDANFEClass, ACBrDANFCeFortesFr, Mask, DBCtrls, Grids,
-  DBGrids, pcnNFe, pcnCFe, pcnConversao, ACBrDFeReport, ACBrDFeDANFeReport;
+  DBGrids, ACBrNFe.Classes, pcnCFe, pcnConversao, ACBrDFeReport, ACBrDFeDANFeReport;
 
 type
   TForm1 = class(TForm)

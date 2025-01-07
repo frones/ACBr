@@ -41,7 +41,7 @@ uses
   ACBrSAT, synachar, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
   ACBrSATClass, pcnCFe, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrPOSPGWebPrinter, ACBrTEFComum,
-  pcnConversao, pcnNFe, ACBrSocket, ACBrDFe, ImgList, ACBrBase, jpeg;
+  pcnConversao, ACBrNFe.Classes, ACBrSocket, ACBrDFe, ImgList, ACBrBase, jpeg;
 
 const
   CACBR_URL = 'https://projetoacbr.com.br/tef/';

@@ -381,7 +381,7 @@ uses
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.DateTime, ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
-  pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT, pcnRetConsReciDFe,
+  ACBrNFe.Classes, pcnConversao, pcnConversaoNFe, pcnNFeRTXT, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
@@ -1967,6 +1967,8 @@ begin
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
 
   LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
+
+//  ArqXML := ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento[0].RetInfEvento.XML;
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Retorno do Evento');
@@ -3991,6 +3993,8 @@ begin
   LoadXML(ACBrNFe1.WebServices.Inutilizacao.RetornoWS, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
+
+//  ArqXML := ACBrNFe1.WebServices.Inutilizacao.XML_ProcInutNFe;
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Inutilização');

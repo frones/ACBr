@@ -428,7 +428,7 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, pcnNFe,
+  strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, ACBrNFe.Classes,
   pcnConversaoNFe, ACBrDFeConfiguracoes, pcnAuxiliar, ACBrDFeSSL, pcnNFeRTXT,
   FileCtrl, Unit4, Unit5;
 

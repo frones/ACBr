@@ -43,7 +43,7 @@ uses
   ACBrSAT, synachar, ACBrNFe, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
   ACBrSATClass, pcnCFe, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrPOSPGWebPrinter, ACBrTEFComum,
-  pcnConversao, pcnNFe;
+  pcnConversao, ACBrNFe.Classes;
 
 const
   CACBR_URL = 'https://projetoacbr.com.br/tef/';

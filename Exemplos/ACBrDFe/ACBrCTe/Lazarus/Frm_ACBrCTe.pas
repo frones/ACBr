@@ -344,7 +344,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
-  pcnAuxiliar, pcteCTe, pcnConversao, pcteConversaoCTe,
+  pcnAuxiliar, ACBrCTe.Classes, pcnConversao, pcteConversaoCTe,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;

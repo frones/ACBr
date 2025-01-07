@@ -535,6 +535,9 @@ procedure TACBrNFeDANFeESCPOS.GerarMensagemInteresseContribuinte;
 var
   TextoObservacao: string;
   i: Integer;
+  LinhaCmd: String;
+  DadosEntrega: TStringList;
+  Colunas: Integer;
 begin
   if ImprimeInfContr then
   begin
@@ -552,6 +555,36 @@ begin
   begin
     TextoObservacao := StringReplace(FpNFe.InfAdic.infCpl, CaractereQuebraDeLinha, sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add(TagLigaCondensado + TextoObservacao);
+  end;
+
+  // Informações sobre a Entrega
+
+  if FpNFe.Entrega.xLgr <> '' then
+  begin
+    Colunas := ColunasCondensado;
+
+    DadosEntrega := TStringList.Create;
+    try
+      DadosEntrega.Add(ACBrStr(TagLigaCondensado + 'INFORMAÇÕES SOBRE A ENTREGA'));
+
+      if FpNFe.Entrega.xNome <> '' then
+        DadosEntrega.Add(QuebraLinhas(Trim(FpNFe.Entrega.xNome), Colunas));
+
+      LinhaCmd := Trim(
+        Trim(FpNFe.Entrega.xLgr) + ' ' +
+        IfThen(Trim(FpNFe.Entrega.xLgr) = '','',Trim(FpNFe.Entrega.nro)) + ' ' +
+        Trim(FpNFe.Entrega.xCpl) + ' ' +
+        Trim(FpNFe.Entrega.xBairro) + ' ' +
+        Trim(FpNFe.Entrega.xMun) + ' ' +
+        Trim(FpNFe.Entrega.UF)
+      );
+
+      if LinhaCmd <> '' then
+        DadosEntrega.Add(TagLigaCondensado + QuebraLinhas(LinhaCmd, Colunas));
+    finally
+      FPosPrinter.Buffer.Add(DadosEntrega.Text);
+      DadosEntrega.Free;
+    end;
   end;
 end;
 

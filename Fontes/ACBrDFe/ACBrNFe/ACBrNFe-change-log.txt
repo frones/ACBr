@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/01/2025
+-- ACBrNFeDANFeESCPOS/ACBrDANFCeFortesFr/ACBrDANFCeFortesFrA4 --
+[+] #TK-6435: Incluído no DANFE a impressão do endereço de entrega caso este esteja
+    no XML da NFC-e.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFe.Classes/pcnNFe/pcnNFeR/pcnNFeW --
 [-] Ajustes para corrigir erro de compilação/instalação se o uso do ACBrXmlDocument.
    Por: Italo Giurizzato Junior

@@ -813,6 +813,7 @@ procedure TfrmACBrDANFCeFortesFrA4.RLMemo2BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 var
   I:integer;
+  LinhaCmd: String;
 begin
   with self.FACBrNFeDANFCeFortesA4.FpNFe do
   begin
@@ -824,6 +825,28 @@ begin
     end;
 
     Text := Text + StringReplace(InfAdic.infCpl, FACBrNFeDANFCeFortesA4.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) + #13;
+
+    // Informações sobre a Entrega
+
+    if Entrega.xLgr <> '' then
+    begin
+      Text := Text + #13 + ACBrStr('INFORMAÇÕES SOBRE A ENTREGA');
+
+      if Entrega.xNome <> '' then
+        Text := Text + #13 + Entrega.xNome;
+
+      LinhaCmd := Trim(
+        Trim(Entrega.xLgr) + ' ' +
+        IfThen(Trim(Entrega.xLgr) = '','',Trim(Entrega.nro)) + ' ' +
+        Trim(Entrega.xCpl) + ' ' +
+        Trim(Entrega.xBairro) + ' ' +
+        Trim(Entrega.xMun) + ' ' +
+        Trim(Entrega.UF)
+      );
+
+      if LinhaCmd <> '' then
+        Text := Text + #13 + LinhaCmd;
+    end;
   end;
 end;
 

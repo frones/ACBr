@@ -507,6 +507,7 @@ procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject;
 var
   i:integer;
   MsgTributos: String;
+  LinhaCmd: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -548,6 +549,28 @@ begin
 
     if InfAdic.infCpl <> '' then
       lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, fACBrNFeDANFCeFortes.CaractereQuebraDeLinha, #13, [rfReplaceAll] ) );
+
+    // Informações sobre a Entrega
+
+    if Entrega.xLgr <> '' then
+    begin
+      lObservacoes.Lines.Add(ACBrStr('INFORMAÇÕES SOBRE A ENTREGA'));
+
+      if Entrega.xNome <> '' then
+        lObservacoes.Lines.Add(Entrega.xNome);
+
+      LinhaCmd := Trim(
+        Trim(Entrega.xLgr) + ' ' +
+        IfThen(Trim(Entrega.xLgr) = '','',Trim(Entrega.nro)) + ' ' +
+        Trim(Entrega.xCpl) + ' ' +
+        Trim(Entrega.xBairro) + ' ' +
+        Trim(Entrega.xMun) + ' ' +
+        Trim(Entrega.UF)
+      );
+
+      if LinhaCmd <> '' then
+        lObservacoes.Lines.Add(LinhaCmd);
+    end;
 
     lObservacoes.Visible := ( lObservacoes.Lines.Count > 0 );
   end;

@@ -633,7 +633,10 @@ begin
     begin
       DestaxaClient.Requisicao.retorno := retorno;
       DestaxaClient.Requisicao.sequencial := TACBrTEFRespDestaxa(fpACBrTEFAPI.RespostasTEF[i]).DestaxaResposta.sequencial;
-      DestaxaClient.ExecutarTransacaoAnterior(CDESTAXA_CARTAO_VENDER);
+      if (TACBrTEFRespDestaxa(fpACBrTEFAPI.RespostasTEF[i]).DestaxaResposta.transacao = CDESTAXA_DIGITAL_PAGAR) then
+        DestaxaClient.ExecutarTransacaoAnterior(CDESTAXA_DIGITAL_PAGAR)
+      else
+        DestaxaClient.ExecutarTransacaoAnterior(CDESTAXA_CARTAO_VENDER);
     end;
 
     if (fpACBrTEFAPI.UltimaRespostaTEF.NSU = NSU) then

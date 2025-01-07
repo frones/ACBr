@@ -384,6 +384,7 @@ type
     FTipoDeducao: TTipoDeducao;
     FRetencoesFederais: Double;
     FValorTotalNotaFiscal: Double;
+    FtotalAproxTrib: Double;
 
     procedure SetDocDeducao(const Value: TDocDeducaoCollection);
   public
@@ -455,6 +456,8 @@ type
 
     property RetencoesFederais: Double read FRetencoesFederais write FRetencoesFederais;
     property ValorTotalNotaFiscal: Double read FValorTotalNotaFiscal write FValorTotalNotaFiscal;
+    //Provedor Infisc
+    property totalAproxTrib: Double read FtotalAproxTrib write FtotalAproxTrib;
   end;
 
   TDadosDeducao = class(TObject)
@@ -560,6 +563,7 @@ type
 
     FDadosProfissionalParceiro: TDadosProfissionalParceiro;
     FidCnae: string;
+    FtotalAproxTribServ: Double;
   public
     constructor Create;
     destructor Destroy; override;
@@ -639,6 +643,8 @@ type
 
     // Provedor SoftPlan
     property idCnae: string read FidCnae write FidCnae;
+    // Provedor Infisc
+    property totalAproxTribServ: Double read FtotalAproxTribServ write FtotalAproxTribServ;
   end;
 
   TItemServicoCollection = class(TACBrObjectList)

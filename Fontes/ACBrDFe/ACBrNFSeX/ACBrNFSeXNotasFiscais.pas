@@ -880,6 +880,9 @@ begin
 
         Item.idCnae := INIRec.ReadString(sSecao, 'idCnae', '');
 
+        // Provedor Infisc
+        Item.totalAproxTribServ := StringToFloatDef(INIRec.ReadString(sSecao, 'totalAproxTribServ', ''), 0);
+
         sSecao := 'DadosDeducao' + IntToStrZero(I + 1, 3);
         Item.DadosDeducao.TipoDeducao := FProvider.StrToTipoDeducao(Ok, INIRec.ReadString(sSecao, 'TipoDeducao', ''));
         Item.DadosDeducao.CpfCnpj := INIRec.ReadString(sSecao, 'CpfCnpj', '');
@@ -1025,6 +1028,9 @@ begin
 
         //Padrão Nacional
         Servico.Valores.ValorRecebido := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorRecebido', ''), 0);
+
+        // Provedor Infisc
+        Servico.Valores.totalAproxTrib := StringToFloatDef(INIRec.ReadString(sSecao, 'totalAproxTrib', ''), 0);
       end;
 
       sSecao := 'ValoresNFSe';
@@ -1675,6 +1681,9 @@ begin
         INIRec.WriteString(sSecao, 'InscricaoMunicipal', Servico.ItemServico.Items[I].DadosProfissionalParceiro.IdentificacaoParceiro.InscricaoMunicipal);
         INIRec.WriteString(sSecao, 'RazaoSocial', Servico.ItemServico.Items[I].DadosProfissionalParceiro.RazaoSocial);
         INIRec.WriteFloat(sSecao, 'PercentualProfissionalParceiro', Servico.ItemServico.Items[I].DadosProfissionalParceiro.PercentualProfissionalParceiro);
+
+        // Provedor Infisc
+        INIRec.WriteFloat(sSecao, 'totalAproxTribServ', Servico.ItemServico[I].totalAproxTribServ);
       end;
 
       //Padrão Nacional
@@ -1780,8 +1789,11 @@ begin
       INIRec.WriteFloat(sSecao, 'ValorTotalNotaFiscal', Servico.Valores.ValorTotalNotaFiscal);
       INIRec.WriteFloat(sSecao, 'ValorTotalTributos', Servico.Valores.ValorTotalTributos);
       INIRec.WriteFloat(sSecao, 'ValorRecebido', Servico.Valores.ValorRecebido);
-      INIRec.WriteFloat(sSecao, 'IrrfIn0denizacao', Servico.Valores.IrrfIndenizacao);
+      INIRec.WriteFloat(sSecao, 'IrrfIndenizacao', Servico.Valores.IrrfIndenizacao);
       INIRec.WriteFloat(sSecao, 'RetencoesFederais', Servico.Valores.RetencoesFederais);
+
+      // Provedor Infisc
+      INIRec.WriteFloat(sSecao, 'totalAproxTrib', Servico.Valores.totalAproxTrib);
 
       sSecao := 'ValoresNFSe';
       INIRec.WriteFloat(sSecao, 'BaseCalculo', ValoresNfse.BaseCalculo);

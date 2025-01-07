@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/01/2025
+-- Diversos --
+[*] #TK-6440: Acrescentado os campos: totalAproxTribServ e totalAproxTrib.
+  Por: Italo Giurizzato Junior
+
 03/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6432: Alterado as URLs da cidade de Cajati/SP o provedor continua o mesmo.

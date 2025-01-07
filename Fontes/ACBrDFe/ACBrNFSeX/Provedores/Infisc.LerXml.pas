@@ -547,6 +547,8 @@ begin
           ValorISSST := ObterConteudo(AuxNodeItem.Childrens.FindAnyNs('vISSST'), tcDe2);
           BaseCalculo := ObterConteudo(AuxNodeItem.Childrens.FindAnyNs('vBCST'), tcDe2);
         end;
+
+        totalAproxTribServ := ObterConteudo(AuxNode.Childrens.FindAnyNs('totalAproxTribServ'), tcDe2);
       end;
 
       // versão 1.1
@@ -595,6 +597,8 @@ begin
 
     // versão 1.1
     NFSe.Servico.Valores.ValorDespesasNaoTributaveis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vtDespesas'), tcDe2);
+
+    NFSe.Servico.Valores.totalAproxTrib := ObterConteudo(AuxNode.Childrens.FindAnyNs('totalAproxTrib'), tcDe2);
 
     LerFatura(AuxNode);
     LerISS(AuxNode);

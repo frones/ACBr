@@ -468,6 +468,7 @@ type
     chECFSinalGavetaInvertido: TCheckBox;
     cbNCMForcarDownload: TCheckBox;
     cbxImprimeInscSuframa: TCheckBox;
+    ChkBoletoUseCertificadoHTTP: TCheckBox;
     ckbExibirMunicipioDescarregamento: TCheckBox;
     ChkPix: TCheckBox;
     chgDescricaoPagamento: TCheckGroup;
@@ -5895,6 +5896,7 @@ begin
        cbSSLTypeBoleto.ItemIndex := SSLType;
        edtBolArquivoKey.Text := ArquivoKEY;
        edtBolArquivoCRT.Text := ArquivoCRT;
+       ChkBoletoUseCertificadoHTTP.Checked := CertificadoHTTP;
      end;
 
   end;
@@ -6811,6 +6813,8 @@ begin
     Configuracoes.WebService.SSLType := TSSLType( cbSSLTypeBoleto.ItemIndex );
     Configuracoes.WebService.ArquivoKEY:=edtBolArquivoKey.Text;
     Configuracoes.WebService.ArquivoCRT:=edtBolArquivoCRT.Text;
+    Configuracoes.WebService.UseCertificateHTTP:=ChkBoletoUseCertificadoHTTP.Checked;
+
 
   end;
 
@@ -7824,6 +7828,7 @@ begin
        SSLType := cbSSLTypeBoleto.ItemIndex;
        ArquivoKEY:=edtBolArquivoKey.Text;
        ArquivoCRT:=edtBolArquivoCRT.Text;
+       CertificadoHTTP:=ChkBoletoUseCertificadoHTTP.Checked;
      end;
 
    end;

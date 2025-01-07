@@ -21486,11 +21486,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 519
             Top = 0
             Width = 1121
-            ActivePage = tsBeneficiario
+            ActivePage = tsWebBoleto
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 6
             TabOrder = 0
             OnChange = pgBoletoChange
             object tsBeneficiario: TTabSheet
@@ -23499,6 +23499,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ImageIndex = 17
                   OnClick = sbArquivoCRTClick
                 end
+                object ChkBoletoUseCertificadoHTTP: TCheckBox
+                  Left = 755
+                  Height = 21
+                  Top = 128
+                  Width = 146
+                  Anchors = [akRight]
+                  Caption = 'Usar Certificado HTTP'
+                  TabOrder = 7
+                end
               end
               object grbWsConfig: TGroupBox
                 Left = 8
@@ -23618,7 +23627,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object lblPathLogBoleto: TLabel
                   Left = 478
                   Height = 17
-                  Top = 56
+                  Top = 50
                   Width = 51
                   Caption = 'Path Log'
                   Font.Height = -13

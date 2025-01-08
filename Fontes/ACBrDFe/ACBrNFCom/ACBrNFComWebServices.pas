@@ -1912,7 +1912,8 @@ begin
     EventoNFCom.Versao := FPVersaoServico;
     EventoNFCom.GerarXML;
 
-    AssinarXML(EventoNFCom.Xml, 'eventoNFCom', 'infEvento', 'Falha ao assinar o Envio de Evento ');
+    AssinarXML(EventoNFCom.XmlEnvio, 'eventoNFCom', 'infEvento',
+                                         'Falha ao assinar o Envio de Evento ');
 
     // Separa o XML especifico do Evento para ser Validado.
     AXMLEvento := SeparaDados(FPDadosMsg, 'detEvento');

@@ -43,12 +43,15 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
+  ACBrDFeConsts,
   ACBrBase,
-//  ACBrDFeConversao,
   pcnConversao,
-  ACBrDFeComum.SignatureClass,
+  pcnSignature,
   ACBrNFComEventoClass,
-  ACBrNFComConsts;
+  ACBrNFComConsts,
+  ACBrXmlBase,
+  ACBrXmlWriter,
+  ACBrXmlDocument;
 
 type
   EventoException = class(Exception);
@@ -58,6 +61,7 @@ type
     FInfEvento: TInfEvento;
     Fsignature: Tsignature;
     FRetInfEvento: TRetInfEvento;
+    FXML: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -65,6 +69,7 @@ type
     property InfEvento: TInfEvento read FInfEvento write FInfEvento;
     property signature: Tsignature read Fsignature write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
+    property XML: string read FXML write FXML;
   end;
 
   TInfEventoCollection = class(TACBrObjectList)
@@ -72,46 +77,212 @@ type
     function GetItem(Index: Integer): TInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfEventoCollectionItem);
   public
+    function Add: TInfEventoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
     function New: TInfEventoCollectionItem;
     property Items[Index: Integer]: TInfEventoCollectionItem read GetItem write SetItem; default;
   end;
 
   { TEventoNFCom }
 
-  TEventoNFCom = class(TObject)
+  TEventoNFCom = class(TACBrXmlWriter)
   private
     FidLote: Int64;
     FEvento: TInfEventoCollection;
     FVersao: string;
-    FXml: string;
+    FXmlEnvio: string;
 
-    procedure SetEvento(const Value: TInfEventoCollection);
+    procedure SetEvento(const AValue: TInfEventoCollection);
+
+    function GetOpcoes: TACBrXmlWriterOptions;
+    procedure SetOpcoes(const AValue: TACBrXmlWriterOptions);
+  protected
+    function CreateOptions: TACBrXmlWriterOptions; override;
+
+    function Gerar_InfEvento(AIdx: Integer): TACBrXmlNode;
+    function Gerar_DetEvento(AIdx: Integer): TACBrXmlNode;
+    function Gerar_Evento_Cancelamento(AIdx: Integer): TACBrXmlNode;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function GerarXML: string;
-    function LerXML(const CaminhoArquivo: string): Boolean;
+    function GerarXml: Boolean; override;
+
+    function LerXML(const ACaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: string): Boolean;
 
     property idLote: Int64 read FidLote write FidLote;
     property Evento: TInfEventoCollection read FEvento write SetEvento;
-    property Versao: string read FVersao  write FVersao;
-    property Xml: string read FXml write FXml;
+    property Versao: string read FVersao write FVersao;
+    property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
+    property XmlEnvio: string read FXmlEnvio write FXmlEnvio;
   end;
 
 implementation
 
 uses
   IniFiles,
-  ACBrDFeUtil, ACBrXmlBase,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.DateTime,
+  ACBrDFeUtil,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
   ACBrNFComRetEnvEvento,
   ACBrNFComConversao;
 
+{ TEventoNFCom }
+
+constructor TEventoNFCom.Create;
+begin
+  inherited Create;
+
+  FEvento := TInfEventoCollection.Create();
+end;
+
+destructor TEventoNFCom.Destroy;
+begin
+  FEvento.Free;
+
+  inherited;
+end;
+
+function TEventoNFCom.CreateOptions: TACBrXmlWriterOptions;
+begin
+  Result := TACBrXmlWriterOptions.Create();
+end;
+
+function TEventoNFCom.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+begin
+  case tpEvento of
+    teCancelamento: Result := IntToStr(Self.idLote) + '-can-eve.xml';
+  else
+    raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
+  end;
+end;
+
+function TEventoNFCom.GerarXml: Boolean;
+var
+  EventoNode: TACBrXmlNode;
+begin
+  ListaDeAlertas.Clear;
+
+  FDocument.Clear();
+  EventoNode := CreateElement('eventoNFCom');
+  EventoNode.SetNamespace('http://www.portalfiscal.inf.br/nfcom');
+  EventoNode.SetAttribute('versao', Versao);
+
+  FDocument.Root := EventoNode;
+
+  EventoNode.AppendChild(Gerar_InfEvento(0));
+
+  if Trim(Evento[0].signature.URI) <> '' then
+    EventoNode.AppendChild(GerarSignature(Evento[0].signature));
+
+  XmlEnvio := ChangeLineBreak(Document.Xml, '');
+  Result := True;
+end;
+
+function TEventoNFCom.Gerar_InfEvento(AIdx: Integer): TACBrXmlNode;
+var
+  sDoc: string;
+begin
+  Evento[AIdx].InfEvento.id := 'ID'+
+                               Evento[AIdx].InfEvento.TipoEvento +
+                               OnlyNumber(Evento[AIdx].InfEvento.chNFCom) +
+                               Format('%.3d', [Evento[AIdx].InfEvento.nSeqEvento]);
+
+  Result := CreateElement('infEvento');
+  Result.SetAttribute('Id', Evento[AIdx].InfEvento.id);
+
+  Result.AppendChild(AddNode(tcInt, 'P05', 'cOrgao', 1, 2, 1,
+                                               Evento[AIdx].FInfEvento.cOrgao));
+
+  Result.AppendChild(AddNode(tcStr, 'P06', 'tpAmb', 1, 1, 1,
+                   TipoAmbienteToStr(Evento[AIdx].InfEvento.tpAmb), DSC_TPAMB));
+
+  sDoc := OnlyNumber(Evento[AIdx].InfEvento.CNPJ);
+
+  if EstaVazio(sDoc) then
+    sDoc := ExtrairCNPJCPFChaveAcesso(Evento[AIdx].InfEvento.chNFCom);
+
+  Result.AppendChild(AddNode(tcStr, 'HP10', 'CNPJ', 14, 14, 1,
+                                                              sDoc , DSC_CNPJ));
+
+  if not ValidarCNPJ(sDoc) then
+    wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+
+  Result.AppendChild(AddNode(tcStr, 'HP12', 'chNFCom', 44, 44, 1,
+                                    Evento[AIdx].FInfEvento.chNFCom, DSC_CHAVE));
+
+  if not ValidarChave(Evento[AIdx].InfEvento.chNFCom) then
+    wAlerta('HP12', 'chNFCom', '', 'Chave de NFCom inválida');
+
+  Result.AppendChild(AddNode(tcStr, 'HP13', 'dhEvento', 1, 50, 1,
+    FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento[AIdx].InfEvento.dhEvento) +
+    GetUTC(CodigoUFparaUF(Evento[AIdx].InfEvento.cOrgao),
+    Evento[AIdx].InfEvento.dhEvento)));
+
+  Result.AppendChild(AddNode(tcInt, 'HP14', 'tpEvento', 6, 6, 1,
+                                           Evento[AIdx].FInfEvento.TipoEvento));
+
+  Result.AppendChild(AddNode(tcInt, 'HP15', 'nSeqEvento', 1, 3, 1,
+                                           Evento[AIdx].FInfEvento.nSeqEvento));
+
+  Result.AppendChild(Gerar_DetEvento(AIdx));
+end;
+
+function TEventoNFCom.Gerar_DetEvento(AIdx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('detEvento');
+  Result.SetAttribute('versaoEvento', Versao);
+
+  case Evento[AIdx].InfEvento.tpEvento of
+    teCancelamento:
+      Result.AppendChild(Gerar_Evento_Cancelamento(AIdx));
+  end;
+end;
+
+function TEventoNFCom.Gerar_Evento_Cancelamento(AIdx: Integer): TACBrXmlNode;
+begin
+  Result := CreateElement('evCancNFCom');
+
+  Result.AppendChild(AddNode(tcStr, 'EP02', 'descEvento', 4, 60, 1,
+                                           Evento[AIdx].FInfEvento.DescEvento));
+
+  Result.AppendChild(AddNode(tcStr, 'EP03', 'nProt', 15, 15, 1,
+                                      Evento[AIdx].FInfEvento.detEvento.nProt));
+
+  Result.AppendChild(AddNode(tcStr, 'EP04', 'xJust', 15, 255, 1,
+                                      Evento[AIdx].FInfEvento.detEvento.xJust));
+end;
+
+{ TInfEventoCollectionItem }
+
+constructor TInfEventoCollectionItem.Create;
+begin
+  inherited Create;
+
+  FInfEvento := TInfEvento.Create;
+  Fsignature := TSignature.Create;
+  FRetInfEvento := TRetInfEvento.Create;
+end;
+
+destructor TInfEventoCollectionItem.Destroy;
+begin
+  FInfEvento.Free;
+  fsignature.Free;
+  FRetInfEvento.Free;
+
+  inherited;
+end;
+
 { TInfEventoCollection }
+
+function TInfEventoCollection.Add: TInfEventoCollectionItem;
+begin
+  Result := Self.New;
+end;
 
 function TInfEventoCollection.GetItem(
   Index: Integer): TInfEventoCollectionItem;
@@ -131,160 +302,37 @@ begin
   Self.Add(Result);
 end;
 
-{ TInfEventoCollectionItem }
-
-constructor TInfEventoCollectionItem.Create;
+function TEventoNFCom.GetOpcoes: TACBrXmlWriterOptions;
 begin
-  inherited Create;
-
-  FInfEvento := TInfEvento.Create;
-  Fsignature := Tsignature.Create;
-  FRetInfEvento := TRetInfEvento.Create;
+  Result := TACBrXmlWriterOptions(FOpcoes);
 end;
 
-destructor TInfEventoCollectionItem.Destroy;
+procedure TEventoNFCom.SetEvento(const AValue: TInfEventoCollection);
 begin
-  FInfEvento.Free;
-  fsignature.Free;
-  FRetInfEvento.Free;
-
-  inherited;
+  FEvento.Assign(AValue);
 end;
 
-{ TEventoNFCom }
-
-constructor TEventoNFCom.Create;
+procedure TEventoNFCom.SetOpcoes(const AValue: TACBrXmlWriterOptions);
 begin
-  inherited Create;
-
-  FEvento  := TInfEventoCollection.Create();
+  FOpcoes := AValue;
 end;
 
-destructor TEventoNFCom.Destroy;
-begin
-  FEvento.Free;
-
-  inherited;
-end;
-
-function TEventoNFCom.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
-begin
-  case tpEvento of
-    teCancelamento: Result := IntToStr(Self.idLote) + '-can-eve.xml';
-  else
-    raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
-  end;
-end;
-
-function TEventoNFCom.GerarXML: string;
+function TEventoNFCom.LerXML(const ACaminhoArquivo: string): Boolean;
 var
-  i: Integer;
-  sDoc, sModelo, CNPJCPF, xEvento: string;
-begin
-  sModelo := Copy(OnlyNumber(Evento.Items[i].InfEvento.chNFCom), 21, 2);
-
-  Evento.Items[i].InfEvento.id := 'ID'+
-                                  Evento.Items[i].InfEvento.TipoEvento +
-                                  OnlyNumber(Evento.Items[i].InfEvento.chNFCom) +
-                                  Format('%.3d', [Evento.Items[i].InfEvento.nSeqEvento]);
-
-//  if Length(Evento.Items[i].InfEvento.id) < 54 then
-//    wAlerta('FP04', 'ID', '', 'ID de Evento inválido');
-
-  sDoc := OnlyNumber(Evento.Items[i].InfEvento.CNPJ);
-
-  if EstaVazio(sDoc) then
-    sDoc := ExtrairCNPJCPFChaveAcesso(Evento.Items[i].InfEvento.chNFCom);
-
-  case Length( sDoc ) of
-    14: begin
-          CNPJCPF := '<CNPJ>' + sDoc + '</CNPJ>';
-
-//          if not ValidarCNPJ( sDoc ) then
-//            Gerador.wAlerta('FP07', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-        end;
-    11: begin
-          CNPJCPF := '<CPF>' + sDoc + '</CPF>';
-
-//          if not ValidarCPF( sDoc ) then
-//            Gerador.wAlerta('FP07', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-        end;
-  end;
-
-//    if not ValidarChave(Evento.Items[i].InfEvento.chNFCom) then
-//      Gerador.wAlerta('FP08', 'chNFCom', '', 'Chave de NFCom inválida');
-
-  case Evento.Items[i].InfEvento.tpEvento of
-    teCancelamento:
-      begin
-        xEvento := '<evCancNFCom>' +
-                     '<descEvento>' +
-                       Evento.Items[i].InfEvento.DescEvento +
-                     '</descEvento>' +
-                     '<nProt>' +
-                       Evento.Items[i].InfEvento.detEvento.nProt +
-                     '</nProt>' +
-                     '<xJust>' +
-                       Evento.Items[i].InfEvento.detEvento.xJust +
-                     '</xJust>' +
-                   '</evCancNFCom>';
-      end;
-  else
-    xEvento := '';
-  end;
-
-  Xml := '<eventoNFCom ' + NAME_SPACE_NFCom + ' versao="' + versao + '">' +
-           '<infEvento Id="' + Evento.Items[i].InfEvento.id + '">' +
-             '<cOrgao>' + IntToStr(FEvento.Items[i].FInfEvento.cOrgao) + '</cOrgao>' +
-             '<tpAmb>' + TipoAmbienteToStr(Evento.Items[i].InfEvento.tpAmb) + '</tpAmb>' +
-             CNPJCPF +
-             '<chNFCom>' + Evento.Items[i].InfEvento.chNFCom + '</chNFCom>' +
-             '<dhEvento>' +
-                FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',
-                               Evento.Items[i].InfEvento.dhEvento) +
-                            GetUTC(CodigoUFparaUF(Evento.Items[i].InfEvento.cOrgao),
-                                   Evento.Items[i].InfEvento.dhEvento) +
-             '</dhEvento>' +
-             '<tpEvento>' + Evento.Items[i].InfEvento.TipoEvento + '</tpEvento>' +
-             '<nSeqEvento>' + IntToStr(Evento.Items[i].InfEvento.nSeqEvento) + '</nSeqEvento>' +
-
-             '<detEvento versaoEvento="' + Versao + '">' +
-               xEvento +
-             '</detEvento>' +
-           '</infEvento>' +
-         '</eventoNFCom>';
-
-
-  if Evento.Items[i].signature.URI <> '' then
-  begin
-    Xml := Xml + Evento.Items[i].signature.GerarXML;
-//    Xml := Xml + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
-  end;
-
-  Result := Xml;
-end;
-
-procedure TEventoNFCom.SetEvento(const Value: TInfEventoCollection);
-begin
-  FEvento.Assign(Value);
-end;
-
-function TEventoNFCom.LerXML(const CaminhoArquivo: string): Boolean;
-var
-  ArqEvento    : TStringList;
+  ArqEvento: TStringList;
 begin
   ArqEvento := TStringList.Create;
   try
-     ArqEvento.LoadFromFile(CaminhoArquivo);
-     Result := LerXMLFromString(ArqEvento.Text);
+    ArqEvento.LoadFromFile(ACaminhoArquivo);
+    Result := LerXMLFromString(ArqEvento.Text);
   finally
-     ArqEvento.Free;
+    ArqEvento.Free;
   end;
 end;
 
 function TEventoNFCom.LerXMLFromString(const AXML: string): Boolean;
 var
-  RetEventoNFCom : TRetEventoNFCom;
+  RetEventoNFCom: TRetEventoNFCom;
 begin
   RetEventoNFCom := TRetEventoNFCom.Create;
   try
@@ -293,22 +341,24 @@ begin
 
     with FEvento.New do
     begin
-      infEvento.ID            := RetEventoNFCom.RetInfEvento.id;
-      infEvento.cOrgao        := RetEventoNFCom.RetInfEvento.cOrgao;
-      infEvento.tpAmb         := RetEventoNFCom.RetInfEvento.tpAmb;
-//      infEvento.CNPJ          := RetEventoNFCom.RetInfEvento.CNPJ;
-      infEvento.chNFCom         := RetEventoNFCom.RetInfEvento.chNFCom;
-//      infEvento.dhEvento      := RetEventoNFCom.RetInfEvento.dhEvento;
-      infEvento.tpEvento      := RetEventoNFCom.RetInfEvento.tpEvento;
-      infEvento.nSeqEvento    := RetEventoNFCom.RetInfEvento.nSeqEvento;
+      XML := AXML;
 
-//      infEvento.DetEvento.descEvento := RetEventoNFCom.RetInfEvento.DetEvento.descEvento;
-//      infEvento.DetEvento.nProt      := RetEventoNFCom.RetInfEvento.DetEvento.nProt;
-//      infEvento.DetEvento.xJust      := RetEventoNFCom.RetInfEvento.DetEvento.xJust;
+      infEvento.ID := RetEventoNFCom.RetInfEvento.id;
+      infEvento.cOrgao := RetEventoNFCom.RetInfEvento.cOrgao;
+      infEvento.tpAmb := RetEventoNFCom.RetInfEvento.tpAmb;
+//      infEvento.CNPJ := RetEventoNFCom.RetInfEvento.CNPJ;
+      infEvento.chNFCom := RetEventoNFCom.RetInfEvento.chNFCom;
+//      infEvento.dhEvento := RetEventoNFCom.RetInfEvento.dhEvento;
+      infEvento.tpEvento := RetEventoNFCom.RetInfEvento.tpEvento;
+      infEvento.nSeqEvento := RetEventoNFCom.RetInfEvento.nSeqEvento;
 
-      signature.URI             := RetEventoNFCom.signature.URI;
-      signature.DigestValue     := RetEventoNFCom.signature.DigestValue;
-      signature.SignatureValue  := RetEventoNFCom.signature.SignatureValue;
+      infEvento.DetEvento.descEvento := RetEventoNFCom.RetInfEvento.xEvento;
+      infEvento.DetEvento.nProt := RetEventoNFCom.RetInfEvento.nProt;
+//      infEvento.DetEvento.xJust := RetEventoNFCom.RetInfEvento.xJust;
+
+      signature.URI := RetEventoNFCom.signature.URI;
+      signature.DigestValue := RetEventoNFCom.signature.DigestValue;
+      signature.SignatureValue := RetEventoNFCom.signature.SignatureValue;
       signature.X509Certificate := RetEventoNFCom.signature.X509Certificate;
 
       FRetInfEvento.Id := RetEventoNFCom.RetInfEvento.Id;
@@ -354,23 +404,21 @@ begin
     while true do
     begin
       sSecao := 'EVENTO' + IntToStrZero(I, 3) ;
-      sFim   := INIRec.ReadString(sSecao,'chNFCom', 'FIM');
+      sFim := INIRec.ReadString(sSecao,'chNFCom', 'FIM');
 
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break ;
 
       with Self.Evento.New do
       begin
-        infEvento.cOrgao   := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
-        infEvento.CNPJ     := INIRec.ReadString( sSecao, 'CNPJ'  , '');
-        infEvento.chNFCom   := sFim;
-        infEvento.dhEvento := StringToDateTime(INIRec.ReadString(    sSecao, 'dhEvento', ''));
-        infEvento.tpEvento := StrToTpEventoNFCom(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
-
+        infEvento.chNFCom := sFim;
+        infEvento.cOrgao := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
+        infEvento.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
+        infEvento.dhEvento := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
+        infEvento.tpEvento := StrToTpEventoNFCom(ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
-
-        infEvento.detEvento.nProt := INIRec.ReadString( sSecao, 'nProt', '');
-        infEvento.detEvento.xJust := INIRec.ReadString( sSecao, 'xJust', '');
+        infEvento.detEvento.xJust := INIRec.ReadString(sSecao, 'xJust', '');
+        infEvento.detEvento.nProt := INIRec.ReadString(sSecao, 'nProt', '');
       end;
 
       Inc(I);

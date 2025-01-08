@@ -1450,7 +1450,7 @@ begin
 
     EventoBPe.Versao := FPVersaoServico;
 
-    Eventos := NativeStringToUTF8( EventoBPe.GerarXML );
+    Eventos := NativeStringToUTF8(EventoBPe.XmlEnvio);
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento

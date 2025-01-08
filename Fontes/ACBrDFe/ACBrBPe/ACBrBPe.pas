@@ -414,11 +414,11 @@ end;
 
 function TACBrBPe.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoBPe.Xml) then
+  if EstaVazio(FEventoBPe.XmlEnvio) then
     FEventoBPe.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoBPe.Xml));
+  WriteStrToStream(AStream, AnsiString(FEventoBPe.XmlEnvio));
   Result := True;
 end;
 

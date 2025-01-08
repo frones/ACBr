@@ -975,7 +975,7 @@ end;
 function TBilhete.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
-  sSecao, versao, sFim: String;
+  sSecao, sFim: String;
   OK: Boolean;
   I: Integer;
   ItemPag: TpagCollectionItem;
@@ -991,9 +991,6 @@ begin
     with FBPe do
     begin
       infBPe.versao := StringToFloatDef(INIRec.ReadString('infBPe', 'versao', VersaoBPeToStr(FConfiguracoes.Geral.VersaoDF)),0);
-
-//      versao := FloatToString(infBPe.versao, '.', '#0.00');
-//      FConfiguracoes.Geral.VersaoDF := StrToVersaoBPe(OK, versao);
 
       Ide.tpAmb   := StrToTipoAmbiente(OK, INIRec.ReadString(sSecao, 'tpAmb', IntToStr(Integer(FConfiguracoes.WebServices.Ambiente))));
       Ide.modelo  := INIRec.ReadInteger('ide', 'mod', 63);

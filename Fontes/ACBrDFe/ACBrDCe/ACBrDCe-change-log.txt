@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/01/2025
+-- ACBrDCeServicos --
+[+] Incluída as URLs de Produção.
+   Por: Italo Giurizzato Junior
 -- ACBrDCe.EnvEvento --
 [*] Melhorias no código.
    Por: Italo Giurizzato Junior

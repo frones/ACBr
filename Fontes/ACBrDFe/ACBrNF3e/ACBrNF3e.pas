@@ -438,11 +438,11 @@ end;
 
 function TACBrNF3e.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoNF3e.Xml) then
+  if EstaVazio(FEventoNF3e.XmlEnvio) then
     FEventoNF3e.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoNF3e.Xml));
+  WriteStrToStream(AStream, AnsiString(FEventoNF3e.XmlEnvio));
   Result := True;
 end;
 

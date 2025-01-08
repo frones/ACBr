@@ -64,10 +64,10 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
-    property signature: Tsignature       read Fsignature    write Fsignature;
+    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property signature: Tsignature read Fsignature write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
-    property XML: string                 read FXML          write FXML;
+    property XML: string read FXML write FXML;
   end;
 
   TInfEventoCollection = class(TACBrObjectList)
@@ -126,12 +126,10 @@ type
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: string): Boolean;
 
-    property idLote: Int64                read FidLote  write FidLote;
-    property Evento: TInfEventoCollection read FEvento  write SetEvento;
-    property Versao: string               read FVersao  write FVersao;
-
+    property idLote: Int64 read FidLote write FidLote;
+    property Evento: TInfEventoCollection read FEvento write SetEvento;
+    property Versao: string read FVersao write FVersao;
     property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
-
     property XmlEnvio: string read FXmlEnvio write FXmlEnvio;
   end;
 
@@ -140,7 +138,10 @@ implementation
 uses
   IniFiles,
   ACBrDFeUtil,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
   ACBrMDFe.RetEnvEvento,
   ACBrMDFe.Classes,
   pmdfeConversaoMDFe;
@@ -217,8 +218,8 @@ begin
   if Evento[0].signature.URI <> '' then
     EventoNode.AppendChild(GerarSignature(Evento[0].signature));
 
-  Result := True;
   XmlEnvio := ChangeLineBreak(Document.Xml, '');
+  Result := True;
 end;
 
 function TEventoMDFe.Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
@@ -272,14 +273,14 @@ begin
   end;
 
   Result.AppendChild(AddNode(tcStr, 'HP12', 'chMDFe', 44, 44, 1,
-                                      Evento[Idx].FInfEvento.chMDFe, DSC_CHAVE));
+                                     Evento[Idx].FInfEvento.chMDFe, DSC_CHAVE));
 
   if not ValidarChave(Evento[Idx].InfEvento.chMDFe) then
-    wAlerta('HP12', 'chMDFe', '', 'Chave de MDFe inválida');
+    wAlerta('HP12', 'chMDFe', '', 'Chave de MDF-e inválida');
 
   if Versao = '3.00' then
     Result.AppendChild(AddNode(tcStr, 'HP13', 'dhEvento', 1, 50, 1,
-      FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento[Idx].InfEvento.dhEvento)+
+      FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento[Idx].InfEvento.dhEvento) +
       GetUTC(CodigoUFparaUF(Evento[Idx].InfEvento.cOrgao),
       Evento[Idx].InfEvento.dhEvento)))
   else
@@ -541,7 +542,7 @@ var
 begin
   Result := nil;
 
-  Item :=  Evento[Idx1].FInfEvento.detEvento.infPag[Idx2].Comp;
+  Item := Evento[Idx1].FInfEvento.detEvento.infPag[Idx2].Comp;
   SetLength(Result, Item.Count);
 
   for i := 0 to Item.Count - 1 do
@@ -569,7 +570,7 @@ var
 begin
   Result := nil;
 
-  Item :=  Evento[Idx1].FInfEvento.detEvento.infPag[Idx2].infPrazo;
+  Item := Evento[Idx1].FInfEvento.detEvento.infPag[Idx2].infPrazo;
   SetLength(Result, Item.Count);
 
   for i := 0 to Item.Count - 1 do
@@ -693,56 +694,55 @@ begin
 
     with FEvento.New do
     begin
-      XML                  := AXML;
-      infEvento.Id         := RetEventoMDFe.InfEvento.Id;
-      InfEvento.cOrgao     := RetEventoMDFe.InfEvento.cOrgao;
-      infEvento.tpAmb      := RetEventoMDFe.InfEvento.tpAmb;
-      infEvento.CNPJCPF    := RetEventoMDFe.InfEvento.CNPJCPF;
-      infEvento.chMDFe     := RetEventoMDFe.InfEvento.chMDFe;
-      infEvento.dhEvento   := RetEventoMDFe.InfEvento.dhEvento;
-      infEvento.tpEvento   := RetEventoMDFe.InfEvento.tpEvento;
+      XML := AXML;
+
+      infEvento.Id := RetEventoMDFe.InfEvento.Id;
+      InfEvento.cOrgao := RetEventoMDFe.InfEvento.cOrgao;
+      infEvento.tpAmb := RetEventoMDFe.InfEvento.tpAmb;
+      infEvento.CNPJCPF := RetEventoMDFe.InfEvento.CNPJCPF;
+      infEvento.chMDFe := RetEventoMDFe.InfEvento.chMDFe;
+      infEvento.dhEvento := RetEventoMDFe.InfEvento.dhEvento;
+      infEvento.tpEvento := RetEventoMDFe.InfEvento.tpEvento;
       infEvento.nSeqEvento := RetEventoMDFe.InfEvento.nSeqEvento;
+      infEvento.VersaoEvento := RetEventoMDFe.InfEvento.VersaoEvento;
 
-      infEvento.VersaoEvento         := RetEventoMDFe.InfEvento.VersaoEvento;
       infEvento.detEvento.descEvento := RetEventoMDFe.InfEvento.detEvento.descEvento;
-      infEvento.detEvento.nProt      := RetEventoMDFe.InfEvento.detEvento.nProt;
-      infEvento.detEvento.dtEnc      := RetEventoMDFe.InfEvento.detEvento.dtEnc;
-      infEvento.detEvento.cUF        := RetEventoMDFe.InfEvento.detEvento.cUF;
-      infEvento.detEvento.cMun       := RetEventoMDFe.InfEvento.detEvento.cMun;
-      infEvento.detEvento.xJust      := RetEventoMDFe.InfEvento.detEvento.xJust;
-      infEvento.detEvento.xNome      := RetEventoMDFe.InfEvento.detEvento.xNome;
-      infEvento.detEvento.CPF        := RetEventoMDFe.InfEvento.detEvento.CPF;
-
+      infEvento.detEvento.nProt := RetEventoMDFe.InfEvento.detEvento.nProt;
+      infEvento.detEvento.dtEnc := RetEventoMDFe.InfEvento.detEvento.dtEnc;
+      infEvento.detEvento.cUF := RetEventoMDFe.InfEvento.detEvento.cUF;
+      infEvento.detEvento.cMun := RetEventoMDFe.InfEvento.detEvento.cMun;
+      infEvento.detEvento.xJust := RetEventoMDFe.InfEvento.detEvento.xJust;
+      infEvento.detEvento.xNome := RetEventoMDFe.InfEvento.detEvento.xNome;
+      infEvento.detEvento.CPF := RetEventoMDFe.InfEvento.detEvento.CPF;
       infEvento.detEvento.indEncPorTerceiro := RetEventoMDFe.InfEvento.detEvento.indEncPorTerceiro;
-
       infEvento.detEvento.cMunCarrega := RetEventoMDFe.InfEvento.detEvento.cMunCarrega;
       infEvento.detEvento.xMunCarrega := RetEventoMDFe.InfEvento.detEvento.xMunCarrega;
 
       InfEvento.detEvento.infViagens.qtdViagens := RetEventoMDFe.InfEvento.detEvento.infViagens.qtdViagens;
       InfEvento.detEvento.infViagens.nroViagem := RetEventoMDFe.InfEvento.detEvento.infViagens.nroViagem;
 
-      signature.URI             := RetEventoMDFe.signature.URI;
-      signature.DigestValue     := RetEventoMDFe.signature.DigestValue;
-      signature.SignatureValue  := RetEventoMDFe.signature.SignatureValue;
+      signature.URI := RetEventoMDFe.signature.URI;
+      signature.DigestValue := RetEventoMDFe.signature.DigestValue;
+      signature.SignatureValue := RetEventoMDFe.signature.SignatureValue;
       signature.X509Certificate := RetEventoMDFe.signature.X509Certificate;
 
       if RetEventoMDFe.retEvento.Count > 0 then
       begin
-        FRetInfEvento.Id          := RetEventoMDFe.retEvento.Items[0].RetInfEvento.Id;
-        FRetInfEvento.tpAmb       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpAmb;
-        FRetInfEvento.verAplic    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.verAplic;
-        FRetInfEvento.cOrgao      := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cOrgao;
-        FRetInfEvento.cStat       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cStat;
-        FRetInfEvento.xMotivo     := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xMotivo;
-        FRetInfEvento.chMDFe      := RetEventoMDFe.retEvento.Items[0].RetInfEvento.chMDFe;
-        FRetInfEvento.tpEvento    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpEvento;
-        FRetInfEvento.xEvento     := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xEvento;
-        FRetInfEvento.nSeqEvento  := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nSeqEvento;
-        FRetInfEvento.CNPJDest    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.CNPJDest;
-        FRetInfEvento.emailDest   := RetEventoMDFe.retEvento.Items[0].RetInfEvento.emailDest;
+        FRetInfEvento.Id := RetEventoMDFe.retEvento.Items[0].RetInfEvento.Id;
+        FRetInfEvento.tpAmb := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpAmb;
+        FRetInfEvento.verAplic := RetEventoMDFe.retEvento.Items[0].RetInfEvento.verAplic;
+        FRetInfEvento.cOrgao := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cOrgao;
+        FRetInfEvento.cStat := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cStat;
+        FRetInfEvento.xMotivo := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xMotivo;
+        FRetInfEvento.chMDFe := RetEventoMDFe.retEvento.Items[0].RetInfEvento.chMDFe;
+        FRetInfEvento.tpEvento := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpEvento;
+        FRetInfEvento.xEvento := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xEvento;
+        FRetInfEvento.nSeqEvento := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nSeqEvento;
+        FRetInfEvento.CNPJDest := RetEventoMDFe.retEvento.Items[0].RetInfEvento.CNPJDest;
+        FRetInfEvento.emailDest := RetEventoMDFe.retEvento.Items[0].RetInfEvento.emailDest;
         FRetInfEvento.dhRegEvento := RetEventoMDFe.retEvento.Items[0].RetInfEvento.dhRegEvento;
-        FRetInfEvento.nProt       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nProt;
-        FRetInfEvento.XML         := RetEventoMDFe.retEvento.Items[0].RetInfEvento.XML;
+        FRetInfEvento.nProt := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nProt;
+        FRetInfEvento.XML := RetEventoMDFe.retEvento.Items[0].RetInfEvento.XML;
       end;
 
       for i := 0 to RetEventoMDFe.InfEvento.detEvento.infDoc.Count -1 do
@@ -751,29 +751,29 @@ begin
 
         infEvento.detEvento.infDoc[i].cMunDescarga := RetEventoMDFe.InfEvento.detEvento.infDoc[i].cMunDescarga;
         infEvento.detEvento.infDoc[i].xMunDescarga := RetEventoMDFe.InfEvento.detEvento.infDoc[i].xMunDescarga;
-        infEvento.detEvento.infDoc[i].chNFe        := RetEventoMDFe.InfEvento.detEvento.infDoc[i].chNFe;
+        infEvento.detEvento.infDoc[i].chNFe := RetEventoMDFe.InfEvento.detEvento.infDoc[i].chNFe;
       end;
 
       for i := 0 to RetEventoMDFe.InfEvento.detEvento.infPag.Count - 1 do
       begin
         infEvento.detEvento.infPag.New;
 
-        InfEvento.detEvento.infPag[i].xNome         := RetEventoMDFe.InfEvento.detEvento.infPag[i].xNome;
+        InfEvento.detEvento.infPag[i].xNome := RetEventoMDFe.InfEvento.detEvento.infPag[i].xNome;
         InfEvento.detEvento.infPag[i].idEstrangeiro := RetEventoMDFe.InfEvento.detEvento.infPag[i].idEstrangeiro;
-        InfEvento.detEvento.infPag[i].CNPJCPF       := RetEventoMDFe.InfEvento.detEvento.infPag[i].CNPJCPF;
+        InfEvento.detEvento.infPag[i].CNPJCPF := RetEventoMDFe.InfEvento.detEvento.infPag[i].CNPJCPF;
 
         for j := 0 to RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp.Count - 1 do
         begin
           InfEvento.detEvento.infPag[i].Comp.New;
 
           InfEvento.detEvento.infPag[i].Comp[j].tpComp := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].tpComp;
-          InfEvento.detEvento.infPag[i].Comp[j].vComp  := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].vComp;
-          InfEvento.detEvento.infPag[i].Comp[j].xComp  := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].xComp;
+          InfEvento.detEvento.infPag[i].Comp[j].vComp := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].vComp;
+          InfEvento.detEvento.infPag[i].Comp[j].xComp := RetEventoMDFe.InfEvento.detEvento.infPag[i].Comp[j].xComp;
         end;
 
         InfEvento.detEvento.infPag[i].vContrato := RetEventoMDFe.InfEvento.detEvento.infPag[i].vContrato;
-        InfEvento.detEvento.infPag[i].indPag    := RetEventoMDFe.InfEvento.detEvento.infPag[i].indPag;
-        InfEvento.detEvento.infPag[i].vAdiant   := RetEventoMDFe.InfEvento.detEvento.infPag[i].vAdiant;
+        InfEvento.detEvento.infPag[i].indPag := RetEventoMDFe.InfEvento.detEvento.infPag[i].indPag;
+        InfEvento.detEvento.infPag[i].vAdiant := RetEventoMDFe.InfEvento.detEvento.infPag[i].vAdiant;
 
         InfEvento.detEvento.infPag[i].indAntecipaAdiant := RetEventoMDFe.InfEvento.detEvento.infPag[i].indAntecipaAdiant;
         InfEvento.detEvento.infPag[i].tpAntecip := RetEventoMDFe.InfEvento.detEvento.infPag[i].tpAntecip;
@@ -785,14 +785,14 @@ begin
             InfEvento.detEvento.infPag[i].infPrazo.New;
 
             InfEvento.detEvento.infPag[i].infPrazo[j].nParcela := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].nParcela;
-            InfEvento.detEvento.infPag[i].infPrazo[j].dVenc    := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].dVenc;
+            InfEvento.detEvento.infPag[i].infPrazo[j].dVenc := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].dVenc;
             InfEvento.detEvento.infPag[i].infPrazo[j].vParcela := RetEventoMDFe.InfEvento.detEvento.infPag[i].infPrazo[j].vParcela;
           end;
         end;
 
-        InfEvento.detEvento.infPag[i].infBanc.PIX        := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.PIX;
-        InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF   := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF;
-        InfEvento.detEvento.infPag[i].infBanc.codBanco   := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codBanco;
+        InfEvento.detEvento.infPag[i].infBanc.PIX := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.PIX;
+        InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.CNPJIPEF;
+        InfEvento.detEvento.infPag[i].infBanc.codBanco := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codBanco;
         InfEvento.detEvento.infPag[i].infBanc.codAgencia := RetEventoMDFe.InfEvento.detEvento.infPag[i].infBanc.codAgencia;
       end;
     end;
@@ -824,31 +824,29 @@ begin
     while true do
     begin
       sSecao := 'EVENTO'+IntToStrZero(I,3);
-      sFim   := INIRec.ReadString(sSecao, 'chMDFe', 'FIM');
+      sFim := INIRec.ReadString(sSecao, 'chMDFe', 'FIM');
 
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break;
 
       with Self.Evento.New do
       begin
-        infEvento.chMDFe     := INIRec.ReadString(sSecao, 'chMDFe', '');
-        infEvento.cOrgao     := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
-        infEvento.CNPJCPF    := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-        infEvento.dhEvento   := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
-        infEvento.tpEvento   := StrToTpEventoMDFe(Ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.chMDFe := sFim;
+        infEvento.cOrgao := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
+        infEvento.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+        infEvento.dhEvento := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
+        infEvento.tpEvento := StrToTpEventoMDFe(Ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
 
         // Usado no detalhamento do evento
         infEvento.detEvento.xJust := INIRec.ReadString(sSecao, 'xJust', '');
         infEvento.detEvento.nProt := INIRec.ReadString(sSecao, 'nProt', '');
         InfEvento.detEvento.dtEnc := StringToDateTime(INIRec.ReadString(sSecao, 'dtEnc', ''));
-        InfEvento.detEvento.cUF   := INIRec.ReadInteger(sSecao, 'cUF', 0);
-        InfEvento.detEvento.cMun  := INIRec.ReadInteger(sSecao, 'cMun', 0);
+        InfEvento.detEvento.cUF := INIRec.ReadInteger(sSecao, 'cUF', 0);
+        InfEvento.detEvento.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
         infEvento.detEvento.xNome := INIRec.ReadString(sSecao, 'xNome', '');
-        infEvento.detEvento.CPF   := INIRec.ReadString(sSecao, 'CPF', '');
-
+        infEvento.detEvento.CPF := INIRec.ReadString(sSecao, 'CPF', '');
         infEvento.detEvento.indEncPorTerceiro := StrToTIndicador(Ok, INIRec.ReadString(sSecao, 'indEncPorTerceiro', '0'));
-
         infEvento.detEvento.cMunCarrega := INIRec.ReadInteger(sSecao, 'cMunCarrega', 0);
         infEvento.detEvento.xMunCarrega := INIRec.ReadString(sSecao, 'xMunCarrega', '');
 
@@ -859,7 +857,8 @@ begin
         begin
           // J varia de 0000 até 2000
           sSecao := 'infDoc' + IntToStrZero(J, 4);
-          sFim   := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+          sFim := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
@@ -867,7 +866,7 @@ begin
 
           ItemInfDoc.cMunDescarga := INIRec.ReadInteger(sSecao, 'cMunDescarga', 0);
           ItemInfDoc.xMunDescarga := INIRec.ReadString(sSecao, 'xMunDescarga', '');
-          ItemInfDoc.chNFe        := sFim;
+          ItemInfDoc.chNFe := sFim;
 
           Inc(J);
         end;
@@ -877,7 +876,7 @@ begin
         if INIRec.SectionExists(sSecao) then
         begin
           Self.Evento.Items[I-1].InfEvento.detEvento.infViagens.qtdViagens := INIRec.ReadInteger(sSecao, 'qtdViagens', 0);
-          Self.Evento.Items[I-1].InfEvento.detEvento.infViagens.nroViagem  := INIRec.ReadInteger(sSecao, 'nroViagem', 0);
+          Self.Evento.Items[I-1].InfEvento.detEvento.infViagens.nroViagem := INIRec.ReadInteger(sSecao, 'nroViagem', 0);
         end;
 
         sSecao := 'infPag001';
@@ -890,22 +889,22 @@ begin
           while true do
           begin
             sSecao := 'infPag' + IntToStrZero(J, 3);
-            sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', INIRec.ReadString(sSecao, 'idEstrangeiro', 'FIM'));
+            sFim := INIRec.ReadString(sSecao, 'CNPJCPF', INIRec.ReadString(sSecao, 'idEstrangeiro', 'FIM'));
 
             if sFim = 'FIM' then
               break;
 
             ItemInfPag := Self.Evento.Items[I-1].InfEvento.detEvento.infPag.New;
 
-            ItemInfPag.xNome         := INIRec.ReadString(sSecao, 'xNome', '');
+            ItemInfPag.xNome := INIRec.ReadString(sSecao, 'xNome', '');
             ItemInfPag.idEstrangeiro := INIRec.ReadString(sSecao, 'idEstrangeiro', '');
 
             if ItemInfPag.idEstrangeiro = '' then
               ItemInfPag.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
 
             ItemInfPag.vContrato := StringToFloatDef(INIRec.ReadString(sSecao, 'vContrato', ''), 0 );
-            ItemInfPag.indPag    := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
-            ItemInfPag.vAdiant   := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
+            ItemInfPag.indPag := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
+            ItemInfPag.vAdiant := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
 
             ItemInfPag.indAntecipaAdiant := StrToTIndicador(ok, INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
             ItemInfPag.tpAntecip := StrTotpAntecip(ok, INIRec.ReadString(sSecao, 'tpAntecip', ''));
@@ -914,7 +913,7 @@ begin
             while true do
             begin
               sSecao := 'Comp' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
-              sFim   := INIRec.ReadString(sSecao, 'vComp', 'FIM');
+              sFim := INIRec.ReadString(sSecao, 'vComp', 'FIM');
 
               if sFim = 'FIM' then
                 break;
@@ -922,8 +921,8 @@ begin
               ItemComp := ItemInfPag.Comp.New;
 
               ItemComp.tpComp := StrToTComp(ok, INIRec.ReadString(sSecao, 'tpComp', '01'));
-              ItemComp.vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0 );
-              ItemComp.xComp  := INIRec.ReadString(sSecao, 'xComp', '');
+              ItemComp.vComp := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0 );
+              ItemComp.xComp := INIRec.ReadString(sSecao, 'xComp', '');
 
               Inc(K);
             end;
@@ -934,7 +933,7 @@ begin
               while true do
               begin
                 sSecao := 'infPrazo' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                sFim   := INIRec.ReadString(sSecao, 'vParcela', 'FIM');
+                sFim := INIRec.ReadString(sSecao, 'vParcela', 'FIM');
 
                 if sFim = 'FIM' then
                   break;
@@ -942,7 +941,7 @@ begin
                 ItemInfPrazo := ItemInfPag.infPrazo.New;
 
                 ItemInfPrazo.nParcela := INIRec.ReadInteger(sSecao, 'nParcela', 1);
-                ItemInfPrazo.dVenc    := StringToDateTime(INIRec.ReadString(sSecao, 'dVenc', '0'));
+                ItemInfPrazo.dVenc := StringToDateTime(INIRec.ReadString(sSecao, 'dVenc', '0'));
                 ItemInfPrazo.vParcela := StringToFloatDef(INIRec.ReadString(sSecao, 'vParcela', ''), 0 );
 
                 Inc(K);
@@ -961,7 +960,7 @@ begin
 
                 if ItemInfPag.infBanc.CNPJIPEF = '' then
                 begin
-                  ItemInfPag.infBanc.codBanco   := INIRec.ReadString(sSecao, 'codBanco', '');
+                  ItemInfPag.infBanc.codBanco := INIRec.ReadString(sSecao, 'codBanco', '');
                   ItemInfPag.infBanc.codAgencia := INIRec.ReadString(sSecao, 'codAgencia', '');
                 end;
               end;

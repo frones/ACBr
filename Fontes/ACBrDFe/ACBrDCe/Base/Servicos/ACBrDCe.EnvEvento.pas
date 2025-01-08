@@ -64,10 +64,10 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
-    property signature: Tsignature       read Fsignature    write Fsignature;
+    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property signature: Tsignature read Fsignature write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
-    property XML: string                 read FXML          write FXML;
+    property XML: string read FXML write FXML;
   end;
 
   TInfEventoCollection = class(TACBrObjectList)
@@ -99,7 +99,6 @@ type
     function Gerar_InfEvento(Idx: Integer): TACBrXmlNode;
     function Gerar_DetEvento(Idx: Integer): TACBrXmlNode;
     function Gerar_Evento_Cancelamento(Idx: Integer): TACBrXmlNode;
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -111,12 +110,10 @@ type
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: string): Boolean;
 
-    property idLote: Int64                read FidLote  write FidLote;
-    property Evento: TInfEventoCollection read FEvento  write SetEvento;
-    property Versao: string               read FVersao  write FVersao;
-
+    property idLote: Int64 read FidLote write FidLote;
+    property Evento: TInfEventoCollection read FEvento write SetEvento;
+    property Versao: string read FVersao write FVersao;
     property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
-
     property XmlEnvio: string read FXmlEnvio write FXmlEnvio;
   end;
 
@@ -125,7 +122,10 @@ implementation
 uses
   IniFiles,
   ACBrDFeUtil,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
   ACBrDCe.RetEnvEvento,
   ACBrDCe.Conversao;
 
@@ -180,8 +180,8 @@ begin
   if Evento[0].signature.URI <> '' then
     EventoNode.AppendChild(GerarSignature(Evento[0].signature));
 
-  Result := True;
   XmlEnvio := ChangeLineBreak(Document.Xml, '');
+  Result := True;
 end;
 
 function TEventoDCe.Gerar_Evento_Cancelamento(Idx: Integer): TACBrXmlNode;
@@ -275,7 +275,7 @@ begin
                                       Evento[Idx].FInfEvento.chDCe, DSC_CHAVE));
 
   if not ValidarChave(Evento[Idx].InfEvento.chDCe) then
-    wAlerta('HP12', 'chDCe', '', 'Chave de DCe inválida');
+    wAlerta('HP12', 'chDCe', '', 'Chave de DC-e inválida');
 
   Result.AppendChild(AddNode(tcStr, 'HP13', 'dhEvento', 1, 50, 1,
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento[Idx].InfEvento.dhEvento)+
@@ -382,6 +382,7 @@ var
   I: Integer;
   sSecao, sFim: string;
   INIRec: TMemIniFile;
+  ok: Boolean;
 begin
 {$IFNDEF COMPILER23_UP}
   Result := False;
@@ -398,30 +399,23 @@ begin
     begin
       sSecao := 'EVENTO' + IntToStrZero(I, 3);
       sFim := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break ;
 
       with Self.Evento.New do
       begin
+        infEvento.chDCe := sFim;
         infEvento.cOrgao := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
-        {
-        infEvento.CNPJ   := INIRec.ReadString(sSecao, 'CNPJ', '');
-        infEvento.chNFe  := sFim;
+        infEvento.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+        infEvento.CNPJCPFEmit := INIRec.ReadString(sSecao, 'CNPJCPFEmit', '');
+        infEvento.IdOutrosEmit := INIRec.ReadString(sSecao, 'IdOutrosEmit', '');
         infEvento.dhEvento := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
-        infEvento.tpEvento := StrToTpEventoNFe(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
-
+        infEvento.tpEvento := StrToTpEventoDCe(ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
-        infEvento.versaoEvento := INIRec.ReadString(sSecao, 'versaoEvento', '1.00');
-        infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
-        infEvento.detEvento.verAplic := INIRec.ReadString(sSecao, 'verAplic', '1.0');
 
-        infEvento.detEvento.xCorrecao := INIRec.ReadString(sSecao, 'xCorrecao', '');
-        infEvento.detEvento.xCondUso := INIRec.ReadString(sSecao, 'xCondUso', '');
         infEvento.detEvento.nProt := INIRec.ReadString(sSecao, 'nProt', '');
         infEvento.detEvento.xJust := INIRec.ReadString(sSecao, 'xJust', '');
-        infEvento.detEvento.chNFeRef := INIRec.ReadString(sSecao, 'chNFeRef', '');
-        infEvento.detEvento.nProtEvento := INIRec.ReadString(sSecao, 'nProtEvento', '');
-        }
       end;
 
       Inc(I);

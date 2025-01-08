@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2025
+-- ACBrNFe.EnvEvento --
+[*] Melhorias no código.
+   Por: Italo Giurizzato Junior
+
 07/01/2025
 -- ACBrNFeDANFeESCPOS/ACBrDANFCeFortesFr/ACBrDANFCeFortesFrA4 --
 [+] #TK-6435: Incluído no DANFE a impressão do endereço de entrega caso este esteja

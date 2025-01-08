@@ -64,10 +64,10 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
-    property signature: Tsignature       read Fsignature    write Fsignature;
+    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property signature: Tsignature read Fsignature write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
-    property XML: string                 read FXML          write FXML;
+    property XML: string read FXML write FXML;
   end;
 
   TInfEventoCollection = class(TACBrObjectList)
@@ -120,7 +120,6 @@ type
     function Gerar_Evento_ConciliacaoFinanceira(Idx: Integer): TACBrXmlNode;
     function Gerar_DetalhePagamento(Idx: Integer): TACBrXmlNodeArray;
     function Gerar_Evento_CancConciliacaoFinanceira(Idx: Integer): TACBrXmlNode;
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -132,12 +131,10 @@ type
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string; overload;
     function LerFromIni(const AIniString: string; CCe: Boolean = True): Boolean;
 
-    property idLote: Int64                read FidLote write FidLote;
+    property idLote: Int64 read FidLote write FidLote;
     property Evento: TInfEventoCollection read FEvento write SetEvento;
-    property Versao: string               read FVersao write FVersao;
-
+    property Versao: string read FVersao write FVersao;
     property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
-
     property XmlEnvio: string read FXmlEnvio write FXmlEnvio;
   end;
 
@@ -146,7 +143,10 @@ implementation
 uses
   IniFiles,
   ACBrDFeUtil,
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
   ACBrNFe.RetEnvEvento,
   pcnConversaoNFe;
 
@@ -230,8 +230,8 @@ begin
     end;
   end;
 
-  Result := True;
   XmlEnvio := ChangeLineBreak(Document.Xml, '');
+  Result := True;
 end;
 
 function TEventoNFe.Gerar_Evento: TACBrXmlNodeArray;
@@ -501,7 +501,7 @@ begin
                          Evento[Idx].FInfEvento.detEvento.chNFeRef, DSC_CHAVE));
 
   if not ValidarChave(Evento[Idx].InfEvento.detEvento.chNFeRef) then
-    wAlerta('HP31', 'chNFeRef', '', 'Chave de NFe Refenciada inválida');
+    wAlerta('HP31', 'chNFeRef', '', 'Chave de NF-e Refenciada inválida');
 end;
 
 function TEventoNFe.Gerar_Evento_CCe(Idx: Integer): TACBrXmlNode;
@@ -890,7 +890,7 @@ begin
                                       Evento[Idx].FInfEvento.chNFe, DSC_CHAVE));
 
   if not ValidarChave(Evento[Idx].InfEvento.chNFe) then
-    wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
+    wAlerta('HP12', 'chNFe', '', 'Chave de NF-e inválida');
 
   Result.AppendChild(AddNode(tcStr, 'HP13', 'dhEvento', 1, 50, 1,
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento[Idx].InfEvento.dhEvento)+
@@ -1011,39 +1011,39 @@ begin
 
     with FEvento.New do
     begin
-      XML                    := AXML;
-      infEvento.ID           := RetEventoNFe.InfEvento.id;
-      infEvento.cOrgao       := RetEventoNFe.InfEvento.cOrgao;
-      infEvento.tpAmb        := RetEventoNFe.InfEvento.tpAmb;
-      infEvento.CNPJ         := RetEventoNFe.InfEvento.CNPJ;
-      infEvento.chNFe        := RetEventoNFe.InfEvento.chNFe;
-      infEvento.dhEvento     := RetEventoNFe.InfEvento.dhEvento;
-      infEvento.tpEvento     := RetEventoNFe.InfEvento.tpEvento;
-      infEvento.nSeqEvento   := RetEventoNFe.InfEvento.nSeqEvento;
+      XML := AXML;
+
+      infEvento.ID := RetEventoNFe.InfEvento.id;
+      infEvento.cOrgao := RetEventoNFe.InfEvento.cOrgao;
+      infEvento.tpAmb := RetEventoNFe.InfEvento.tpAmb;
+      infEvento.CNPJ := RetEventoNFe.InfEvento.CNPJ;
+      infEvento.chNFe := RetEventoNFe.InfEvento.chNFe;
+      infEvento.dhEvento := RetEventoNFe.InfEvento.dhEvento;
+      infEvento.tpEvento := RetEventoNFe.InfEvento.tpEvento;
+      infEvento.nSeqEvento := RetEventoNFe.InfEvento.nSeqEvento;
       infEvento.VersaoEvento := RetEventoNFe.InfEvento.VersaoEvento;
 
       infEvento.DetEvento.descEvento := RetEventoNFe.InfEvento.DetEvento.descEvento;
-      infEvento.DetEvento.xCorrecao  := RetEventoNFe.InfEvento.DetEvento.xCorrecao;
-      infEvento.DetEvento.xCondUso   := RetEventoNFe.InfEvento.DetEvento.xCondUso;
-      infEvento.DetEvento.nProt      := RetEventoNFe.InfEvento.DetEvento.nProt;
-      infEvento.DetEvento.xJust      := RetEventoNFe.InfEvento.DetEvento.xJust;
-      infEvento.DetEvento.chNFeRef   := RetEventoNFe.InfEvento.DetEvento.chNFeRef;
-
+      infEvento.DetEvento.xCorrecao := RetEventoNFe.InfEvento.DetEvento.xCorrecao;
+      infEvento.DetEvento.xCondUso := RetEventoNFe.InfEvento.DetEvento.xCondUso;
+      infEvento.DetEvento.nProt := RetEventoNFe.InfEvento.DetEvento.nProt;
+      infEvento.DetEvento.xJust := RetEventoNFe.InfEvento.DetEvento.xJust;
+      infEvento.DetEvento.chNFeRef := RetEventoNFe.InfEvento.DetEvento.chNFeRef;
       infEvento.detEvento.cOrgaoAutor := RetEventoNFe.InfEvento.detEvento.cOrgaoAutor;
-      infEvento.detEvento.tpAutor     := RetEventoNFe.InfEvento.detEvento.tpAutor;
-      infEvento.detEvento.verAplic    := RetEventoNFe.InfEvento.detEvento.verAplic;
-      infEvento.detEvento.dhEmi       := RetEventoNFe.InfEvento.detEvento.dhEmi;
-      infEvento.detEvento.tpNF        := RetEventoNFe.InfEvento.detEvento.tpNF;
-      infEvento.detEvento.IE          := RetEventoNFe.InfEvento.detEvento.IE;
+      infEvento.detEvento.tpAutor := RetEventoNFe.InfEvento.detEvento.tpAutor;
+      infEvento.detEvento.verAplic := RetEventoNFe.InfEvento.detEvento.verAplic;
+      infEvento.detEvento.dhEmi := RetEventoNFe.InfEvento.detEvento.dhEmi;
+      infEvento.detEvento.tpNF := RetEventoNFe.InfEvento.detEvento.tpNF;
+      infEvento.detEvento.IE := RetEventoNFe.InfEvento.detEvento.IE;
 
-      infEvento.detEvento.dest.UF            := RetEventoNFe.InfEvento.detEvento.dest.UF;
-      infEvento.detEvento.dest.CNPJCPF       := RetEventoNFe.InfEvento.detEvento.dest.CNPJCPF;
+      infEvento.detEvento.dest.UF := RetEventoNFe.InfEvento.detEvento.dest.UF;
+      infEvento.detEvento.dest.CNPJCPF := RetEventoNFe.InfEvento.detEvento.dest.CNPJCPF;
       infEvento.detEvento.dest.idEstrangeiro := RetEventoNFe.InfEvento.detEvento.dest.idEstrangeiro;
-      infEvento.detEvento.dest.IE            := RetEventoNFe.InfEvento.detEvento.dest.IE;
+      infEvento.detEvento.dest.IE := RetEventoNFe.InfEvento.detEvento.dest.IE;
 
-      infEvento.detEvento.vNF   := RetEventoNFe.InfEvento.detEvento.vNF;
+      infEvento.detEvento.vNF := RetEventoNFe.InfEvento.detEvento.vNF;
       infEvento.detEvento.vICMS := RetEventoNFe.InfEvento.detEvento.vICMS;
-      infEvento.detEvento.vST   := RetEventoNFe.InfEvento.detEvento.vST;
+      infEvento.detEvento.vST := RetEventoNFe.InfEvento.detEvento.vST;
 
       for i := 0 to RetEventoNFe.InfEvento.detEvento.itemPedido.Count -1 do
       begin
@@ -1054,12 +1054,12 @@ begin
       infEvento.detEvento.idPedidoCancelado := RetEventoNFe.InfEvento.detEvento.idPedidoCancelado;
 
       infEvento.detEvento.dhEntrega := RetEventoNFe.InfEvento.detEvento.dhEntrega;
-      infEvento.detEvento.nDoc      := RetEventoNFe.InfEvento.detEvento.nDoc;
-      infEvento.detEvento.xNome     := RetEventoNFe.InfEvento.detEvento.xNome;
-      infEvento.detEvento.latGPS    := RetEventoNFe.InfEvento.detEvento.latGPS;
-      infEvento.detEvento.longGPS   := RetEventoNFe.InfEvento.detEvento.longGPS;
+      infEvento.detEvento.nDoc := RetEventoNFe.InfEvento.detEvento.nDoc;
+      infEvento.detEvento.xNome := RetEventoNFe.InfEvento.detEvento.xNome;
+      infEvento.detEvento.latGPS := RetEventoNFe.InfEvento.detEvento.latGPS;
+      infEvento.detEvento.longGPS := RetEventoNFe.InfEvento.detEvento.longGPS;
 
-      infEvento.detEvento.hashComprovante   := RetEventoNFe.InfEvento.detEvento.hashComprovante;
+      infEvento.detEvento.hashComprovante := RetEventoNFe.InfEvento.detEvento.hashComprovante;
       infEvento.detEvento.dhHashComprovante := RetEventoNFe.InfEvento.detEvento.dhHashComprovante;
 
       infEvento.detEvento.nProtEvento := RetEventoNFe.InfEvento.detEvento.nProtEvento;
@@ -1096,9 +1096,9 @@ begin
         InfEvento.detEvento.detPag[i].UFReceb := RetEventoNFe.InfEvento.detEvento.detPag[i].UFReceb;
       end;
 
-      signature.URI             := RetEventoNFe.signature.URI;
-      signature.DigestValue     := RetEventoNFe.signature.DigestValue;
-      signature.SignatureValue  := RetEventoNFe.signature.SignatureValue;
+      signature.URI := RetEventoNFe.signature.URI;
+      signature.DigestValue := RetEventoNFe.signature.DigestValue;
+      signature.SignatureValue := RetEventoNFe.signature.SignatureValue;
       signature.X509Certificate := RetEventoNFe.signature.X509Certificate;
 
       if RetEventoNFe.retEvento.Count > 0 then
@@ -1153,14 +1153,15 @@ begin
     begin
       sSecao := 'EVENTO' + IntToStrZero(I, 3);
       sFim := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break ;
 
       with Self.Evento.New do
       begin
         infEvento.cOrgao := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
-        infEvento.CNPJ   := INIRec.ReadString(sSecao, 'CNPJ', '');
-        infEvento.chNFe  := sFim;
+        infEvento.CNPJ := INIRec.ReadString(sSecao, 'CNPJ', '');
+        infEvento.chNFe := sFim;
         infEvento.dhEvento := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
 
         if CCe then

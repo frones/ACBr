@@ -33,56 +33,99 @@
 */
 header('Content-Type: application/json; charset=UTF-8');
 
-include 'ACBrConsultaCNPJ.php';
+function Inicializar($ffi, $iniPath)
+{
+    $retorno = $ffi->CNPJ_Inicializar($iniPath, "");
+    $sMensagem = FFI::new("char[535]");
 
-if (ValidaFFI() != 0)
-    exit; 
-
-$dllPath = CarregaDll();
-
-if ($dllPath == -10)
-    exit; 
-
-$importsPath = CarregaImports();
-
-if ($importsPath == -10)
-    exit; 
-
-$iniPath = CarregaIniPath();
-
-try {
-    $processo = "file_get_contents";
-    $ffi = CarregaContents($importsPath, $dllPath);
-
-    $prov = intval($_POST['prov']);
-    $usuario = $_POST['usuario'];
-    $senha = $_POST['senha'];
-    
-    $processo = "CNPJ_Inicializar";
-    if (Inicializar($ffi, $iniPath) != 0) 
-        exit;
-
-    $processo = "CNPJ_ConfigGravarValor";
-    if (ConfigGravarValor($ffi, "ConsultaCNPJ", "Provedor", (string)$prov) != 0) exit;
-    if (ConfigGravarValor($ffi, "ConsultaCNPJ", "Usuario", (string)$usuario) != 0) exit;
-    if (ConfigGravarValor($ffi, "ConsultaCNPJ", "Senha", (string)$senha) != 0) exit;
-} catch (Exception $e) {
-    $erro = $e->getMessage();
-    echo json_encode(["mensagem" => "Exceção[$processo]: $erro"]);
-    exit;
-}
-
-try {
-    if ($processo != "CNPJ_Inicializar") {
-        $processo = "CNPJ_Finalizar";
-        if (Finalizar($ffi) != 0) 
-            exit;
+    if ($retorno !== 0) {
+        echo json_encode(["mensagem" => "Falha ao inicializar a biblioteca ACBr. Código de erro: $retorno"]);
+        return -10;
     }
-} catch (Exception $e) {
-    $erro = $e->getMessage();
-    echo json_encode(["mensagem" => "Exceção[$processo]: $erro"]);
-    exit;
+
+    return 0;
 }
 
-echo json_encode(["mensagem" => "Configurações salvas com sucesso."]);
-?>
+function Finalizar($ffi)
+{
+    $retorno = $ffi->CNPJ_Finalizar();
+
+    if ($retorno !== 0) {
+        echo json_encode(["mensagem" => "Falha ao finalizar a biblioteca ACBr. Código de erro: $retorno"]);
+        return -10;
+    }
+
+    return 0;
+}
+
+function ConfigLerValor($ffi, $eSessao, $eChave, &$sValor)
+{
+    $sResposta = FFI::new("char[9048]");
+    $esTamanho = FFI::new("long");
+    $esTamanho->cdata = 9048;
+    $retorno = $ffi->CNPJ_ConfigLerValor($eSessao, $eChave, $sResposta, FFI::addr($esTamanho));
+
+    $sMensagem = FFI::new("char[535]");
+
+    if ($retorno !== 0) {
+        if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao ler valor na secao[$eSessao] e chave[$eChave]. ", 1) != 0)
+            return -10;
+    }
+
+    $sValor = FFI::string($sResposta);
+    return 0;
+}
+
+function ConfigGravarValor($ffi, $eSessao, $eChave, $value)
+{
+    $retorno = $ffi->CNPJ_ConfigGravarValor($eSessao, $eChave, $value);
+    $sMensagem = FFI::new("char[535]");
+
+    if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao gravar valores [$value] na secao[$eSessao] e chave[$eChave]. ") != 0)
+        return -10;
+
+    return 0;
+}
+
+function UltimoRetorno($ffi, $retornolib, &$sMensagem, $msgErro, $retMensagem = 0)
+{
+    if (($retornolib !== 0) || ($retMensagem == 1)) {
+        $esTamanho = FFI::new("long");
+        $esTamanho->cdata = 9048;
+        $resposta = $ffi->CNPJ_UltimoRetorno($sMensagem, FFI::addr($esTamanho));
+
+        if ($retornolib !== 0) {
+            $ultimoRetorno = FFI::string($sMensagem);
+            $retorno = "$msgErro Código de erro: $retornolib. ";
+
+            $retorno = $retorno;
+
+            if ($ultimoRetorno != "") {
+                $retorno = $retorno . "Último retorno: " . $ultimoRetorno;
+            }
+
+            echo json_encode(["mensagem" => $retorno]);
+            return -10;
+        }
+    }
+
+    return 0;
+}
+
+function Consultar($ffi, $cnpj_valor, &$iniContent)
+{
+    $sResposta = FFI::new("char[9048]");
+    $esTamanho = FFI::new("long");
+    $esTamanho->cdata = 9048;
+    $retorno = $ffi->CNPJ_Consultar($cnpj_valor, $sResposta, FFI::addr($esTamanho));
+
+    $sMensagem = FFI::new("char[535]");
+
+    if ($retorno !== 0) {
+        if (UltimoRetorno($ffi, $retorno, $sMensagem, "Erro ao consultar o cnpj.", 1) != 0)
+            return -10;
+    }
+
+    $iniContent = FFI::string($sResposta);
+    return 0;
+}

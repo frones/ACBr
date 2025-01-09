@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2025
+--- Diversos ---
+[+] TK-6388 Refatorado o programa de exemplo em PHP com a ACBrComum.php, métodos centralizados e página principal unificada entre MT e ST
+    Por: Renato Rubinho
+
 30/12/2024
 --- ACBrLibConsultaCNPJBase ---
 [-] Correção no retorno do método Consultar

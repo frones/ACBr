@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 09/01/2025
+-- ACBrNFSeX/ACBrNFSeXProviderBase --
+[*] #TK-6461: Implementado um overload do método: SubstituirNFSe que se utiliza da classe
+    de informações para o cancelamento, pois a Substituição de NFS-e requer o cancelamento
+    de uma nota pré existente e os provedores não seguem um padrão para os dados para o
+    cancelamento. 
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6462: A cidade de Santa Rosa/RS trocou para versão 1.01 e URLs, o provedor continua
     o mesmo.

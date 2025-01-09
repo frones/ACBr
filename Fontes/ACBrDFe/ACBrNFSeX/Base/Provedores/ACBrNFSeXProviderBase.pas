@@ -2715,7 +2715,7 @@ procedure TACBrNFSeXProvider.CancelaNFSe;
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
-  aConfig: TConfiguracoesNFSe;
+//  aConfig: TConfiguracoesNFSe;
 begin
   CancelaNFSeResponse.Sucesso := False;
   CancelaNFSeResponse.Erros.Clear;
@@ -2758,7 +2758,7 @@ begin
       else
         AService.Prefixo := CancelaNFSeResponse.InfCancelamento.ChaveNFSe;
 
-      aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+//      aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
 
 //      AService.Path := aConfig.Arquivos.GetPathCan(0, aConfig.Geral.Emitente.CNPJ,
 //                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
@@ -2827,6 +2827,8 @@ begin
       MotCancelamento := SubstituiNFSeResponse.InfCancelamento.MotCancelamento;
       NumeroLote := SubstituiNFSeResponse.InfCancelamento.NumeroLote;
       CodVerificacao := SubstituiNFSeResponse.InfCancelamento.CodVerificacao;
+      NumeroNFSeSubst := SubstituiNFSeResponse.InfCancelamento.NumeroNFSeSubst;
+      CodMunicipio := SubstituiNFSeResponse.InfCancelamento.CodMunicipio;
     end;
 
     PrepararCancelaNFSe(Cancelamento);

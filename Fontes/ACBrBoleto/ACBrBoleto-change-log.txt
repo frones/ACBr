@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2025
+-- ACBrBancoSulcredi --
+[+] TK-6068 - Implementação do banco Sulcredi.
+  Por: christian@adminfo.com.br
+
 07/01/2025
 -- ACBrBancoSantander --
 [*] TK-6376 Acrescentado a geração das mensagens 4 e 5.

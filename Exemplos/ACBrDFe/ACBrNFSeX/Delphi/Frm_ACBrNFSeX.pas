@@ -832,6 +832,7 @@ begin
            proSimple, proSmarAPD, proWebFisco, proBauhaus, proeISS, proISSCampinas,
            proSoftPlan, proXTRTecnologia] then
       begin
+        Servico.Valores.Aliquota := 4.54;
         Servico.Valores.ValorServicos := 0;
 
         // Provedor Infisc
@@ -969,7 +970,7 @@ begin
         Servico.Valores.BaseCalculo := Servico.Valores.ValorServicos -
         Servico.Valores.ValorDeducoes - Servico.Valores.DescontoIncondicionado;
 
-        Servico.Valores.Aliquota := 2;
+        Servico.Valores.Aliquota := 4.54;
 
         Servico.Valores.tribMun.cPaisResult := 0;
         // TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao, tiNaoIncidencia);
@@ -3870,16 +3871,23 @@ end;
 
 procedure TfrmACBrNFSe.btnSubsNFSeClick(Sender: TObject);
 var
-  vNumRPS, Codigo, Motivo, sNumNFSe, sSerieNFSe, NumLote, CodVerif,
-  sNumNFSeSub: String;
+  Titulo, vNumRPS, Codigo, Motivo, sNumNFSe, sSerieNFSe, NumLote, CodVerif,
+  sNumNFSeSub, sCodMun: string;
   CodCanc: Integer;
+  InfCancelamento: TInfCancelamento;
 begin
+  Titulo := 'Substituir NFS-e';
+
   vNumRPS := '';
-  if not(InputQuery('Substituir NFS-e', 'Numero do novo RPS', vNumRPS)) then
+  if not(InputQuery(Titulo, 'Numero do novo RPS', vNumRPS)) then
     exit;
 
   ACBrNFSeX1.NotasFiscais.Clear;
   Alimentar_Componente(vNumRPS, '1');
+
+  sNumNFSe := vNumRPS;
+  if not(InputQuery(Titulo, 'Numero da NFS-e', sNumNFSe)) then
+    exit;
 
   // Codigo de Cancelamento
   // 1 - Erro de emissão
@@ -3887,7 +3895,7 @@ begin
   // 3 - RPS Cancelado na Emissão
 
   Codigo := '1';
-  if not(InputQuery('Substituir NFSe', 'Código de Cancelamento', Codigo)) then
+  if not(InputQuery(Titulo, 'Código de Cancelamento', Codigo)) then
     exit;
 
   // Provedor SigEp o código de cancelamento é diferente
@@ -3909,45 +3917,76 @@ begin
     proBauhaus, proISSCampinas] then
   begin
     Motivo := 'Teste de Cancelamento';
-    if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
+    if not (InputQuery(Titulo, 'Motivo de Cancelamento', Motivo)) then
       exit;
   end;
-
-  sNumNFSe := vNumRPS;
-  if not(InputQuery('Substituir NFS-e', 'Numero da NFS-e', sNumNFSe)) then
-    exit;
 
   sSerieNFSe := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor = proiiBrasil then
   begin
-    if not(InputQuery('Substituir NFS-e', 'Série da NFS-e', sSerieNFSe)) then
+    if not(InputQuery(Titulo, 'Série da NFS-e', sSerieNFSe)) then
       exit;
   end;
 
+  NumLote := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor = proAssessorPublico then
   begin
     NumLote := '1';
-    if not (InputQuery('Cancelar NFSe', 'Numero do Lote', NumLote)) then
+    if not (InputQuery(Titulo, 'Numero do Lote', NumLote)) then
       exit;
   end;
 
+  CodVerif := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSLencois, proGoverna,
        proSiat, proSigep, proElotech] then
   begin
     CodVerif := '12345678';
-    if not (InputQuery('Cancelar NFSe', 'Código de Verificação', CodVerif)) then
+    if not (InputQuery(Titulo, 'Código de Verificação', CodVerif)) then
       exit;
   end;
 
+  sNumNFSeSub := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proBauhaus] then
   begin
     sNumNFSeSub := '1';
-    if not(InputQuery('Substituir NFSe', 'Numero da NFSe Substituta', sNumNFSeSub)) then
+    if not(InputQuery(Titulo, 'Numero da NFSe Substituta', sNumNFSeSub)) then
       exit;
   end;
 
-  ACBrNFSeX1.SubstituirNFSe(sNumNFSe, sSerieNFSe, Codigo,
-                                        Motivo, NumLote, CodVerif, sNumNFSeSub);
+  sCodMun := '';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proFiorilli then
+  begin
+    sCodMun := '';
+    if not (InputQuery(Titulo, 'Código IBGE do municipio de incidencia', sCodMun)) then
+      exit;
+  end;
+
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico, proBauhaus,
+       proElotech, proFiorilli, proGoverna, proiiBrasil, proISSLencois, proSiat,
+       proSigep] then
+  begin
+    InfCancelamento := TInfCancelamento.Create;
+
+    try
+      with InfCancelamento do
+      begin
+        NumeroNFSe      := sNumNFSe;
+        SerieNFSe       := sSerieNFSe;
+        CodCancelamento := Codigo;
+        MotCancelamento := Motivo;
+        NumeroLote      := NumLote;
+        CodVerificacao  := CodVerif;
+        CodMunicipio    := StrToIntDef(sCodMun, 0);
+      end;
+
+      ACBrNFSeX1.SubstituirNFSe(InfCancelamento);
+    finally
+      InfCancelamento.Free;
+    end;
+  end
+  else
+    ACBrNFSeX1.SubstituirNFSe(sNumNFSe, sSerieNFSe, Codigo, Motivo, NumLote,
+                                CodVerif, sNumNFSeSub);
 
   ChecarResposta(tmSubstituirNFSe);
 end;

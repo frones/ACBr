@@ -878,7 +878,6 @@ begin
     infCarga.xOutCat     := 'Pacotes';
     infCarga.vCargaAverb := 5000;
 
-    // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
     // tpMed usar os valores abaixo
     {
       00-Cubagem da NF-e

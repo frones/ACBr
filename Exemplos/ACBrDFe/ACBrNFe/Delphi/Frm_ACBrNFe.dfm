@@ -2221,12 +2221,6 @@ object frmACBrNFe: TfrmACBrNFe
     Left = 427
     Top = 351
   end
-  object ACBrIntegrador1: TACBrIntegrador
-    PastaInput = 'C:\Integrador\Input\'
-    PastaOutput = 'C:\Integrador\Output\'
-    Left = 334
-    Top = 350
-  end
   object ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 8.000000000000000000

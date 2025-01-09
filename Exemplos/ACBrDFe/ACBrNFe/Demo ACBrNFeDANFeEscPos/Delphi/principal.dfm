@@ -10,11 +10,9 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 171
@@ -270,6 +268,10 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 16
   end
   object ACBrNFe: TACBrNFe
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve200
@@ -278,9 +280,10 @@ object frmPrincipal: TfrmPrincipal
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeESCPOS
-    Left = 140
-    Top = 405
+    Left = 164
+    Top = 285
   end
   object ACBrNFeDANFeESCPOS: TACBrNFeDANFeESCPOS
     PathPDF = '.\pdf\'
@@ -290,25 +293,33 @@ object frmPrincipal: TfrmPrincipal
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFe = ACBrNFe
     TipoDANFE = tiNFCe
     ImprimeDescAcrescItem = False
     PosPrinter = ACBrPosPrinter1
-    Left = 235
-    Top = 405
+    Left = 275
+    Top = 285
   end
   object OpenDialog: TOpenDialog
     DefaultExt = '.xml'
     Filter = 'Arquivos XML|*.xml'
     Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
     Title = 'Abrir XML'
-    Left = 335
-    Top = 405
+    Left = 303
+    Top = 341
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False
@@ -321,7 +332,7 @@ object frmPrincipal: TfrmPrincipal
     LinhasEntreCupons = 0
     CortaPapel = False
     ControlePorta = True
-    Left = 235
-    Top = 455
+    Left = 411
+    Top = 287
   end
 end

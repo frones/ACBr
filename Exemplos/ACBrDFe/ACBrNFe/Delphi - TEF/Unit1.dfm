@@ -10,10 +10,8 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
@@ -2011,7 +2009,7 @@ object Form1: TForm1
                   object labelDescricaoTotalRecebido: TLabel
                     Left = 14
                     Top = 17
-                    Width = 99
+                    Width = 83
                     Height = 16
                     Caption = 'Total Recebido:'
                     Font.Charset = ANSI_CHARSET
@@ -2024,7 +2022,7 @@ object Form1: TForm1
                   object Label51: TLabel
                     Left = 13
                     Top = 51
-                    Width = 96
+                    Width = 82
                     Height = 16
                     Caption = 'SaldoRestante:'
                     Font.Charset = ANSI_CHARSET
@@ -2065,8 +2063,8 @@ object Form1: TForm1
                   object Label55: TLabel
                     Left = 7
                     Top = 15
-                    Width = 165
-                    Height = 22
+                    Width = 134
+                    Height = 23
                     Caption = 'Valor Pagamento:'
                     Font.Charset = ANSI_CHARSET
                     Font.Color = clBlue
@@ -2372,16 +2370,16 @@ object Form1: TForm1
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 688
-    Top = 376
+    Left = 584
+    Top = 360
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicom
-    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLLib = libCustom
+    Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpWinINet
-    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
@@ -2391,23 +2389,33 @@ object Form1: TForm1
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
-    Left = 445
-    Top = 369
+    Left = 413
+    Top = 361
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     TipoDANFE = tiSemGeracao
-    Left = 556
-    Top = 458
+    Left = 484
+    Top = 426
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2417,8 +2425,8 @@ object Form1: TForm1
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 555
-    Top = 380
+    Left = 499
+    Top = 364
   end
   object ACBrTEFD1: TACBrTEFD
     Identificacao.NomeAplicacao = 'TEFDDemo'
@@ -2430,6 +2438,14 @@ object Form1: TForm1
     AutoFinalizarCupom = False
     EsperaSTS = 7
     CHQEmGerencial = True
+    TEFPayGo.ArqTemp = 'C:\PAYGO\REQ\intpos.tmp'
+    TEFPayGo.ArqReq = 'C:\PAYGO\REQ\intpos.001'
+    TEFPayGo.ArqSTS = 'C:\PAYGO\RESP\intpos.sts'
+    TEFPayGo.ArqResp = 'C:\PAYGO\RESP\intpos.001'
+    TEFPayGoWeb.SuportaViasDiferenciadas = True
+    TEFPayGoWeb.UtilizaSaldoTotalVoucher = False
+    TEFPayGoWeb.ConfirmarTransacoesPendentes = True
+    TEFPayGoWeb.PerguntarCartaoDigitadoAposCancelarLeitura = False
     TEFDial.ArqLOG = 'TEF_DIAL.log'
     TEFDial.Habilitado = True
     TEFDial.ArqTemp = 'C:\TEF_DIAL\req\intpos.tmp'
@@ -2517,6 +2533,21 @@ object Form1: TForm1
     TEFConvCard.ArqSTS = 'C:\ger_convenio\rx\crtsol.ok'
     TEFConvCard.ArqResp = 'C:\ger_convenio\rx\crtsol.001'
     TEFConvCard.GPExeName = 'C:\ger_convcard\convcard.exe'
+    TEFCliSiTefModular.ArqTemp = 'C:\Client\req\intpos.tmp'
+    TEFCliSiTefModular.ArqReq = 'C:\Client\req\intpos.001'
+    TEFCliSiTefModular.ArqSTS = 'C:\Client\resp\intpos.sts'
+    TEFCliSiTefModular.ArqResp = 'C:\Client\resp\intpos.001'
+    TEFCliSiTefModular.GPExeName = 'C:\Client\ClientSiTef.exe'
+    TEFDirecao.ArqTemp = 'C:\TEF_DIAL\req\intpos.tmp'
+    TEFDirecao.ArqReq = 'C:\TEF_DIAL\req\intpos.001'
+    TEFDirecao.ArqSTS = 'C:\TEF_DIAL\resp\intpos.sts'
+    TEFDirecao.ArqResp = 'C:\TEF_DIAL\resp\intpos.001'
+    TEFDirecao.GPExeName = 'C:\DPOS8\Bin\GPDirecao.exe'
+    TEFElgin.ArqTemp = 'C:\Cliente\req\intpos.tmp'
+    TEFElgin.ArqReq = 'C:\Cliente\req\intpos.001'
+    TEFElgin.ArqSTS = 'C:\Cliente\resp\intpos.sts'
+    TEFElgin.ArqResp = 'C:\Cliente\resp\intpos.001'
+    TEFElgin.GPExeName = 'C:\ELGIN\TEFPassivo\E1_TEFPay_Passivo.exe'
     OnExibeMsg = ACBrTEFD1ExibeMsg
     OnComandaECF = ACBrTEFD1ComandaECF
     OnComandaECFSubtotaliza = ACBrTEFD1ComandaECFSubtotaliza
@@ -2527,32 +2558,55 @@ object Form1: TForm1
     Top = 360
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     TipoDANFE = tiSemGeracao
-    Left = 686
-    Top = 453
+    FonteLinhaItem.Charset = DEFAULT_CHARSET
+    FonteLinhaItem.Color = clWindowText
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
+    FonteLinhaItem.Style = []
+    Left = 366
+    Top = 485
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.700000000000000000
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000
     MargemDireita = 0.700000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrNFe = ACBrNFe1
     ExibeCampoFatura = False
-    Left = 420
-    Top = 468
+    Left = 348
+    Top = 428
   end
 end

@@ -40,7 +40,7 @@ uses
   SynEdit, SynHighlighterXML,
   ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrNFeDANFEClass, ACBrDANFCeFortesFr,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFeRLClass, ACBrBase, ACBrDFe,
-  ACBrNFe, ACBrUtil, ACBrMail, ACBrIntegrador, ACBrDANFCeFortesFrA4;
+  ACBrNFe, ACBrUtil, ACBrMail, ACBrDANFCeFortesFrA4;
 
 type
 
@@ -277,7 +277,6 @@ type
     btnImprimirDANFCEOffline: TButton;
     rgDANFCE: TRadioGroup;
     btnStatusServ: TButton;
-    ACBrIntegrador1: TACBrIntegrador;
     btVersao: TButton;
     ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4;
     Label51: TLabel;
@@ -2240,19 +2239,6 @@ begin
     MemoDados.Lines.Add('xMotivo: ' + ACBrNFe1.WebServices.Enviar.xMotivo);
     MemoDados.Lines.Add('Recibo: '+ ACBrNFe1.WebServices.Enviar.Recibo);
 
-    if (ACBrNFe1.Integrador= ACBrIntegrador1) then
-    begin
-      if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
-      begin
-        MemoResp.Lines.Add('[Integrador]');
-        MemoResp.Lines.Add('Codigo=' + ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo);
-        MemoResp.Lines.Add('Valor=' + ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor);
-
-        ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo := '';
-        ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor := '';
-      end;
-    end;
-  end;
   (*
   ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[0].tpAmb
   ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[0].verAplic
@@ -3605,19 +3591,6 @@ begin
   MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrNFe1.WebServices.StatusServico.TMed));
   MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRetorno));
   MemoDados.Lines.Add('xObs: '     +ACBrNFe1.WebServices.StatusServico.xObs);
-
-  if (ACBrNFe1.Integrador= ACBrIntegrador1) then
-  begin
-    if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
-    begin
-      MemoDados.Lines.Add('[Integrador]');
-      MemoDados.Lines.Add('Codigo=' + ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo);
-      MemoDados.Lines.Add('Valor=' + ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor);
-
-      ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo := '';
-      ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor := '';
-    end;
-  end;
 end;
 
 procedure TfrmACBrNFe.btnSubNameClick(Sender: TObject);

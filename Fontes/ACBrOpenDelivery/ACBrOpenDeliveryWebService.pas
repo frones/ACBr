@@ -123,7 +123,7 @@ type
     procedure SetLogEnvio(ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio);
     procedure SetLogResposta(ALogResposta: TACBrOpenDeliveryHTTPLogResposta);
 
-    procedure InicializarServico;
+    procedure InicializarServico; virtual;
     procedure FinalizarServico;
     procedure DefinirDadosMsg; virtual;
     procedure DefinirRecurso; virtual;
@@ -174,6 +174,7 @@ type
 
     function GetBody: TACBrJSONObject;
   protected
+    procedure InicializarServico; override;
     procedure DefinirDadosMsg; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
@@ -199,6 +200,7 @@ type
     procedure InvokeOrderPlaced(AEvent: TACBrOpenDeliverySchemaEvent; var AAck: Boolean);
     procedure Acknowledgment(AEvents: array of TACBrOpenDeliverySchemaEvent);
   protected
+    procedure InicializarServico; override;
     procedure DefinirDadosMsg; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
@@ -220,6 +222,7 @@ type
   private
     FEvents: TACBrOpenDeliverySchemaAcknowledgmentCollection;
   protected
+    procedure InicializarServico; override;
     procedure DefinirDadosMsg; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
@@ -241,6 +244,7 @@ type
 
     function GetOrder: TACBrOpenDeliverySchemaOrder;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
   public
@@ -260,6 +264,7 @@ type
     FCreatedAt: TDateTime;
     FOrderExternalCode: string;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -278,6 +283,7 @@ type
   private
     FOrderId: string;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
   public
@@ -292,6 +298,7 @@ type
   private
     FOrderId: string;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
   public
@@ -306,6 +313,7 @@ type
   private
     FOrderId: string;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
   public
@@ -325,6 +333,7 @@ type
     FOutOfStockItems: TSplitResult;
     FInvalidItems: TSplitResult;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -348,6 +357,7 @@ type
   private
     FOrderId: string;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     function TratarResposta: Boolean; override;
   public
@@ -364,6 +374,7 @@ type
     FReason: string;
     FCode: TACBrODDenyCancelCode;
   protected
+    procedure InicializarServico; override;
     procedure DefinirRecurso; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -401,6 +412,15 @@ begin
   LResource := LComponent.MarketPlace.Resources
     .GetOrderDelivered(FOrderId, '');
   FRequest.POST.Resource(LResource);
+end;
+
+procedure TACBrOpenDeliveryOrderDelivered.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryOrderDelivered.TratarResposta: Boolean;
@@ -443,6 +463,15 @@ begin
   if not Assigned(FOrder) then
     FOrder := TACBrOpenDeliverySchemaOrder.Create;
   Result := FOrder;
+end;
+
+procedure TACBrOpenDeliveryOrderDetails.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryOrderDetails.TratarResposta: Boolean;
@@ -655,9 +684,9 @@ begin
   LComponent := GetACBrOpenDelivery(FOwner);
   FIssuedAt := Now;
   FRequest
-    .AddOrSetUrlEncoded('grant_type', 'client_credentials')
     .AddOrSetUrlEncoded('client_id', LComponent.MarketPlace.Credenciais.ClientId)
-    .AddOrSetUrlEncoded('client_secret', LComponent.MarketPlace.Credenciais.ClientSecret);
+    .AddOrSetUrlEncoded('client_secret', LComponent.MarketPlace.Credenciais.ClientSecret)
+    .AddOrSetUrlEncoded('grant_type', 'client_credentials');
 end;
 
 procedure TACBrOpenDeliveryAuth.DefinirRecurso;
@@ -900,6 +929,15 @@ begin
   inherited;
 end;
 
+procedure TACBrOpenDeliveryPolling.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
+end;
+
 procedure TACBrOpenDeliveryPolling.InvokeEvents;
 var
   I: Integer;
@@ -1036,6 +1074,15 @@ begin
   inherited;
 end;
 
+procedure TACBrOpenDeliveryAcknowledgment.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
+end;
+
 function TACBrOpenDeliveryAcknowledgment.TratarResposta: Boolean;
 begin
   Result := True;
@@ -1079,6 +1126,15 @@ begin
   FRequest.POST.Resource(LResource);
 end;
 
+procedure TACBrOpenDeliveryOrderConfirm.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
+end;
+
 function TACBrOpenDeliveryOrderConfirm.TratarResposta: Boolean;
 begin
   Result := True;
@@ -1100,6 +1156,15 @@ begin
   LComponent := GetACBrOpenDelivery(FOwner);
   LResource := LComponent.MarketPlace.Resources.GetOrderReadyForPickup(FOrderId, '');
   FRequest.POST.Resource(LResource);
+end;
+
+procedure TACBrOpenDeliveryOrderReadyForPickup.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryOrderReadyForPickup.TratarResposta: Boolean;
@@ -1124,6 +1189,15 @@ begin
   LResource := LComponent.MarketPlace.Resources
     .GetOrderDispatch(FOrderId, '');
   FRequest.POST.Resource(LResource);
+end;
+
+procedure TACBrOpenDeliveryOrderDispatch.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryOrderDispatch.TratarResposta: Boolean;
@@ -1188,6 +1262,15 @@ begin
   FRequest.POST.Resource(LResource);
 end;
 
+procedure TACBrOpenDeliveryOrderRequestCancellation.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
+end;
+
 function TACBrOpenDeliveryOrderRequestCancellation.TratarResposta: Boolean;
 begin
   Result := True;
@@ -1210,6 +1293,15 @@ begin
   LResource := LComponent.MarketPlace.Resources
     .GetOrderAcceptCancellation(FOrderId, '');
   FRequest.POST.Resource(LResource);
+end;
+
+procedure TACBrOpenDeliveryOrderAcceptCancellation.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryOrderAcceptCancellation.TratarResposta: Boolean;
@@ -1252,6 +1344,15 @@ begin
   LResource := LComponent.MarketPlace.Resources
     .GetOrderDenyCancellation(FOrderId, '');
   FRequest.POST.Resource(LResource);
+end;
+
+procedure TACBrOpenDeliveryOrderDenyCancellation.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryOrderDenyCancellation.TratarResposta: Boolean;
@@ -1334,6 +1435,15 @@ begin
     Result.Free;
     raise;
   end;
+end;
+
+procedure TACBrOpenDeliveryMerchantUpdate.InicializarServico;
+var
+  LComponent: TACBrOpenDelivery;
+begin
+  inherited;
+  LComponent := GetACBrOpenDelivery(FOwner);
+  FRequest.APIVersion(LComponent.MarketPlace.APIVersion);
 end;
 
 function TACBrOpenDeliveryMerchantUpdate.TratarResposta: Boolean;

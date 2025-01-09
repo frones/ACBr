@@ -55,9 +55,11 @@ type
     FName: TACBrODMarketPlace;
     FDescription: string;
     FBaseUrl: string;
+    FAPIVersion: string;
     FCredenciais: TACBrOpenDeliveryCredential;
     FResources: TACBrOpenDeliveryResources;
     procedure SetName(const Value: TACBrODMarketPlace);
+    procedure ConfigMarketPlace;
   public
     constructor Create(AOwner: TACBrComponent);
     destructor Destroy; override;
@@ -67,6 +69,7 @@ type
     property Name: TACBrODMarketPlace read FName write SetName;
     property Description: string read FDescription write FDescription;
     property BaseUrl: string read FBaseUrl write FBaseUrl;
+    property APIVersion: string read FAPIVersion write FAPIVersion;
     property Credenciais: TACBrOpenDeliveryCredential read FCredenciais write FCredenciais;
     property Resources: TACBrOpenDeliveryResources read FResources write FResources;
   end;
@@ -148,6 +151,8 @@ uses
 const
 // 'OPENDELIVERY'
   CMarketPlaceDescription = 'Open Delivery';
+  CMarketBaseUrl = 'https://api.opendelivery.com.br/od';
+  CMarketAPIVersion = 'sb/v1';
   CEndPointAuthentication = 'oauth/token';
   CEndPointMerchantUpdate = 'merchantUpdate';
   CEndPointMerchantStatus = 'merchantStatus';
@@ -198,7 +203,8 @@ end;
 procedure ConfigOpenDelivery(AMarketPlace: TACBrOpenDeliveryMarketPlace);
 begin
   AMarketPlace.Description := CMarketPlaceDescription;
-  AMarketPlace.BaseUrl := '';
+  AMarketPlace.BaseUrl := CMarketBaseUrl;
+  AMarketPlace.APIVersion := CMarketAPIVersion;
   AMarketPlace.Resources.Authentication := CEndPointAuthentication;
   AMarketPlace.Resources.MerchantUpdate := CEndPointMerchantUpdate;
   AMarketPlace.Resources.MerchantStatus := CEndPointMerchantStatus;
@@ -218,6 +224,7 @@ procedure ConfigHubDelivery(AMarketPlace: TACBrOpenDeliveryMarketPlace);
 begin
   AMarketPlace.Description := CHubDeliveryMarketPlaceDescription;
   AMarketPlace.BaseUrl := CHubDeliveryMarketBaseUrl;
+  AMarketPlace.APIVersion := '';
   AMarketPlace.Resources.Authentication := CHubDeliveryEndPointAuthentication;
   AMarketPlace.Resources.MerchantUpdate := CHubDeliveryEndPointMerchantUpdate;
   AMarketPlace.Resources.MerchantStatus := CHubDeliveryEndPointMerchantStatus;
@@ -253,6 +260,14 @@ begin
   FResources.Clear;
 end;
 
+procedure TACBrOpenDeliveryMarketPlace.ConfigMarketPlace;
+begin
+  case FName of
+    mpOutro: ConfigOpenDelivery(Self);
+    mpHubDelivery: ConfigHubDelivery(Self);
+  end;
+end;
+
 constructor TACBrOpenDeliveryMarketPlace.Create(AOwner: TACBrComponent);
 begin
   inherited Create;
@@ -260,6 +275,8 @@ begin
   FName := mpOutro;
   FCredenciais := TACBrOpenDeliveryCredential.Create(FOwner);
   FResources := TACBrOpenDeliveryResources.Create(FOwner);
+  //Deve ser chamada por último
+  ConfigMarketPlace;
 end;
 
 destructor TACBrOpenDeliveryMarketPlace.Destroy;
@@ -274,10 +291,7 @@ begin
   if FName <> Value then
   begin
     FName := Value;
-    case FName of
-      mpOutro: ConfigOpenDelivery(Self);
-      mpHubDelivery: ConfigHubDelivery(Self);
-    end;
+    ConfigMarketPlace;
   end;
 end;
 

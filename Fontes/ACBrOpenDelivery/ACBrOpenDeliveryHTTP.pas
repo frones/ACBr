@@ -108,6 +108,7 @@ type
     FAccept: string;
     FContentType: string;
     FBaseURL: string;
+    FAPIVersion: string;
     FResource: string;
     FBody: string;
     FProxyHost: string;
@@ -135,6 +136,7 @@ type
     function ProxyPass(const AValue: string): TACBrOpenDeliveryHTTPRequest;
 
     function BaseURL(const AValue: string): TACBrOpenDeliveryHTTPRequest;
+    function APIVersion(const AValue: string): TACBrOpenDeliveryHTTPRequest;
     function Resource(const AValue: string): TACBrOpenDeliveryHTTPRequest;
     function TimeOut(const AValue: Integer): TACBrOpenDeliveryHTTPRequest;
 
@@ -244,6 +246,12 @@ function TACBrOpenDeliveryHTTPRequest.AddOrSetUrlEncoded(const AName: string; co
 begin
   Result := Self;
   AddOrSetUrlEncoded(AName, FloatToStr(AValue));
+end;
+
+function TACBrOpenDeliveryHTTPRequest.APIVersion(const AValue: string): TACBrOpenDeliveryHTTPRequest;
+begin
+  Result := Self;
+  FAPIVersion := AValue;
 end;
 
 function TACBrOpenDeliveryHTTPRequest.BaseURL(const AValue: string): TACBrOpenDeliveryHTTPRequest;

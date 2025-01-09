@@ -1,0 +1,83 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{******************************************************************************
+|* ACBrOpenDelivery
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+09/01/2025
+-- Diversos --
+[*] #TK-6459: Ajustes visando corrigir retorno "426 Upgrade Required"- https://www.projetoacbr.com.br/forum/topic/81265-erro-ao-utilizar-componente-acbropendelivery-demo/
+  Por: Diego Folieni
+
+09/02/2023
+ -- Diversos --
+[*] Alterações referentes a versão 1.1.0 do OpenDelivery API.
+  Por: EliasCesar
+
+12/01/2023
+-- ACBrOpenDeliverySchemaClasses, pcnConversaoOD --
+[*] Altera tipo do campo OrderTiming para enumerado e adiciona novas propriedades
+  Por: gabrielbaltazar
+
+30/12/2022
+-- pcnConversaoOD --
+[+] Adição do enumerado stIndoor para o tipo de serviço
+  Por: gabrielbaltazar
+
+16/11/2022
+-- Diversos --
+[*] Tratamento da resposta do WebService verificando se o conteúdo é um JSONObject ou JSONArray
+  Por: gabrielbaltazar
+
+03/09/2022
+-- ACBrOpenDeliveryHTTP, ACBrOpenDeliverySchemaClasses, ACBrOpenDeliveryWebService --
+[*] Correção na tratativa da resposta do polling quando não retorna eventos
+  Por: gabrielbaltazar
+
+01/09/2022
+-- Diversos --
+[*] Adicionado cabeçalho LGPL e ACBr.inc nas Units do OpenDelivery
+ (Por: DSA)
+
+29/08/2022
+------------
+[+] Commit Inicial do ACBrOpenDelivery
+  Por: gabrielbaltazar

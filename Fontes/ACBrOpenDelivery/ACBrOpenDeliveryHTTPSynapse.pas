@@ -104,6 +104,7 @@ constructor TACBrOpenDeliveryHTTPRequestSynapse.Create(const ARequestId: string)
 begin
   inherited Create(ARequestId);
   FHTTPSend := THTTPSend.Create;
+  FHTTPSend.Protocol := '1.1';
   FIsUTF8 := False;
 end;
 
@@ -122,6 +123,13 @@ begin
 
   if Copy(FBaseUrl, Length(FBaseUrl), 1) <> '/' then
     Result := Result + '/';
+
+  if Trim(FAPIVersion) <> '' then
+  begin
+    Result := Result + FAPIVersion;
+    if Copy(Result, Length(Result), 1) <> '/' then
+      Result := Result + '/';
+  end;
 
   LResource := FResource;
   if Copy(LResource, 1, 1) = '/' then

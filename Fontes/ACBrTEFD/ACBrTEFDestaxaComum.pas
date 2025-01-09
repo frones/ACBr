@@ -1767,32 +1767,11 @@ begin
 end;
 
 procedure TACBrTEFDestaxaClient.TratarErro;
-var
-  Cancelar: Boolean;
-  wSequencial: Integer;
 begin
   GravarLog('TACBrTEFDestaxaSocket.TratarErro: ' +
     IntToStr(Socket.LastError) + ' - ' + Socket.GetErrorDesc(Socket.LastError));
 
-  if (Socket.LastError = 10060) then  // TimeOut
-  begin
-    Cancelar := False;
-    if Assigned(OnAguardarResposta) then
-      OnAguardarResposta(opapiFluxoAPI, Cancelar);
-
-    if Cancelar then
-    begin
-      GravarLog(' - Transação Cancelada pelo Usuário');
-
-      wSequencial := Requisicao.sequencial;
-      Requisicao.Clear;
-      Requisicao.sequencial := wSequencial + 1;
-      Requisicao.retorno := drqCancelarTransacao;
-
-      Socket.ExecutarTransacao;
-    end;
-  end
-  else
+  if (Socket.LastError <> 10060) then
     raise EACBrTEFDestaxaErro.Create(
       ACBrStr('Erro ao Receber resposta do V&SPague' + sLineBreak +
       'Endereço: ' + EnderecoIP + sLineBreak +

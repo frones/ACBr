@@ -993,8 +993,6 @@ begin
 
     AuxNode.AppendChild(AddNode(tcStr, 'ZF03a', 'CPFRespTec', 01, 11, 1,
                                 NFe.agropecuario.defensivo.CPFRespTec));
-
-    Result := AuxNode;
   end
   else
   if NFe.agropecuario.guiaTransito.tpGuia <> tpgNenhum then
@@ -1014,8 +1012,6 @@ begin
 
     AuxNode.AppendChild(AddNode(tcInt, 'ZF08', 'nGuia', 01, 09, 1,
                                 NFe.agropecuario.guiaTransito.nGuia));
-
-    Result := AuxNode;
   end;
 end;
 

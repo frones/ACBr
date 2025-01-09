@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2025
+-- ACBrNFe.XmlWriter --
+[*] Corrige problema na geração do grupo agropecuário.
+  Por: Diego Folieni
+
 08/01/2025
 -- ACBrNFe.EnvEvento --
 [*] Melhorias no código.

@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="96">
+    <Files Count="97">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -407,6 +407,10 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoKobana.Classes.pas"/>
         <UnitName Value="ACBrBoletoKobana.Classes"/>
       </Item96>
+      <Item97>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoSulcredi.pas"/>
+        <UnitName Value="ACBrBancoSulcredi"/>
+      </Item97>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

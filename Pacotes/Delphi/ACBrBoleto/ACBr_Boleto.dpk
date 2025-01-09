@@ -138,6 +138,7 @@ contains
   ACBrBancoCora in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCora.pas',
   ACBrBoletoW_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Cora.pas',
   ACBrBoletoRet_Cora in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Cora.pas',
+  ACBrBancoSulcredi in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSulcredi.pas',
   ACBrBoletoW_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Kobana.pas',
   ACBrBoletoKobana.Classes in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoKobana.Classes.pas',
   ACBrBoletoRet_Kobana in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Kobana.pas';

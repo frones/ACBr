@@ -38,7 +38,7 @@ uses
   ACBrBoletoRet_Itau_API, ACBrBoletoW_Itau_API, ACBrBancoBocomBBM, 
   ACBrBoletoRet_Cresol, ACBrBoletoW_Cresol, ACBrBancoCora, ACBrBoletoW_Cora, 
   ACBrBoletoRet_Cora, ACBrBoletoW_Kobana, ACBrBoletoRet_Kobana, 
-  ACBrBoletoKobana.Classes, LazarusPackageIntf;
+  ACBrBoletoKobana.Classes, ACBrBancoSulcredi, LazarusPackageIntf;
 
 implementation
 

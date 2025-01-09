@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6462: A cidade de Santa Rosa/RS trocou para versão 1.01 e URLs, o provedor continua
+    o mesmo.
+  Por: Maico Smaniotto
+[*] #TK-6460: A cidade de Carmo do Cajuru/MG trocou de provedor, agora é IPM versão 1.00
+  Por: João Antônio
+
 07/01/2025
 -- Diversos --
 [*] #TK-6440: Acrescentado os campos: totalAproxTribServ e totalAproxTrib.

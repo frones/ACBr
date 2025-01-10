@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6467: A cidade de Santa Helena de Goias/GO trocou de provedor, agora é Centi.
+  Por: rafmattos
+[*] #TK-6464: A cidade de Santa Vitoria do Palmar/RS trocou as URLs o provedor continua
+    o mesmo.
+  Por: Gabriel Bobello
+
 09/01/2025
 -- ACBrNFSeX/ACBrNFSeXProviderBase --
 [*] #TK-6461: Implementado um overload do método: SubstituirNFSe que se utiliza da classe

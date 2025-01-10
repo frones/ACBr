@@ -95,6 +95,7 @@ function TACBrBancoSicoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitul
 var
   Num, Res :String;
   i, base, digito : Integer;
+  LNossoNumero : string;
 const
   indice = '319731973197319731973';
 begin
@@ -104,9 +105,17 @@ begin
      Result := '';
      Exit;
    end;
+
+   if fpLayoutVersaoArquivo =-81 then
+      LNossoNumero := PadLeft(trim(ACBrTitulo.NossoNumero), 7, '0')
+   else
+      LNossoNumero := PadLeft(trim(ACBrUtil.Strings.RemoveZerosEsquerda(ACBrTitulo.NossoNumero)), 7, '0') ;
+
    Num :=  PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4, '0') +
            PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 10, '0') +
-           PadLeft(trim(ACBrTitulo.NossoNumero), 7, '0');
+           LNossoNumero;
+
+         //  PadLeft(trim(ACBrTitulo.NossoNumero), 7, '0'); alterado pq estava cortando ultimo digito do nosso numero.
 
 
    base := 0;
@@ -170,7 +179,8 @@ var
 begin
 
     FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
-    ANossoNumero := ACBrTitulo.NossoNumero+CalcularDigitoVerificador(ACBrTitulo);
+    ANossoNumero := RightStr(ACBrTitulo.NossoNumero+CalcularDigitoVerificador(ACBrTitulo), fpTamanhoMaximoNossonum);
+    //ACBrTitulo.NossoNumero + CalcularDigitoVerificador(ACBrTitulo);
 
     if (ACBrTitulo.Carteira = '1') or (ACBrTitulo.Carteira = '3') or (ACBrTitulo.Carteira = '9')then
        ACarteira := ACBrTitulo.Carteira
@@ -730,7 +740,7 @@ var
 begin
   FNumeroSequencialRegistroNoLote := 0;
 
-  if fpLayoutVersaoArquivo = 810 then
+  if (fpLayoutVersaoArquivo = 810) or (fpLayoutVersaoArquivo = -81)then
     LLayoutVersaoArquivo := 81
   else
     LLayoutVersaoArquivo := fpLayoutVersaoArquivo;

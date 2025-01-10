@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2025
+-- ACBrBancoSicoob.pas --
+[*] TK-6456 - Ajustado para ser possivel imprimir boletos que estão com problemas linha digitavel e consultar boletos que não está sendo devolvido nas consultas. 
+  Por: Daniel de Morais InfoCotidiano
+
 09/01/2025
 -- ACBrBancoSulcredi --
 [+] TK-6068 - Implementação do banco Sulcredi.

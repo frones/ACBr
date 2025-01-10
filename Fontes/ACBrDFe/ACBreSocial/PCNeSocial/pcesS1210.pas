@@ -49,7 +49,7 @@ unit pcesS1210;
 interface
 
 uses
-  SysUtils, Classes, Controls,
+  SysUtils, Classes, Controls, Math,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -1621,10 +1621,10 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpPrev',        1,  1, 1, eStpTpPrevToStr(obj[i].tpPrev));
     Gerador.wCampo(tcStr, '', 'cnpjEntidPC',  11, 11, 1, obj[i].cnpjEntidPC);
-    Gerador.wCampo(tcDe2, '', 'vlrDedPC',      1, 14, 1, obj[i].vlrDedPC);
+    Gerador.wCampo(tcDe2, '', 'vlrDedPC',      1, 14, IfThen(obj[i].vlrDedPC13 = 0, 1, 0), obj[i].vlrDedPC);
 
     if VersaoDF > veS01_02_00 then
-      Gerador.wCampo(tcDe2, '', 'vlrDedPC13',      1, 14, 1, obj[i].vlrDedPC13);
+      Gerador.wCampo(tcDe2, '', 'vlrDedPC13',      1, 14, IfThen(obj[i].vlrDedPC = 0, 1, 0), obj[i].vlrDedPC13);
 
     Gerador.wCampo(tcDe2, '', 'vlrPatrocFunp', 0, 14, 0, obj[i].vlrPatrocFunp);
 

@@ -52,6 +52,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2025
+-- pcesS1210 --
+[*] #TK-6468 - Ajuste das ocorrências do vlrDedPC e vlrDedPC13 conforme leiaute.
+https://www.projetoacbr.com.br/forum/topic/81289-esocial-s-1210-erro-the-value-000-must-be-greater-than-0-vlrdedpc13/
+Por: Diego Folieni 
+
 31/12/2024
 -- Diversos --
 [*] #TK-6368 - Ajustes visando sanar discordâncias relatadas - https://www.projetoacbr.com.br/forum/topic/80885-evento-s-2200-valida%C3%A7%C3%B5es/?&_rid=124795#findComment-524965

@@ -5,7 +5,7 @@ unit ACBrCTeXmlReaderReadingTests_GTVe_Ver400;
 interface
 
 uses
-  Classes, SysUtils, ACBrCTeXmlHandler, ACBrTests.Util, pcteCTe;
+  Classes, SysUtils, ACBrCTeXmlHandler, ACBrTests.Util, ACBrCTe.Classes;
 
 type
 

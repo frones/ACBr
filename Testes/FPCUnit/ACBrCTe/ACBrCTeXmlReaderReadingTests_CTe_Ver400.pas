@@ -1,11 +1,11 @@
-unit ACBrCTeXmlReaderReadingTests_CTe_Ver400;
+﻿unit ACBrCTeXmlReaderReadingTests_CTe_Ver400;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, ACBrCTeXmlHandler, ACBrTests.Util, pcteCTe;
+  Classes, SysUtils, ACBrCTeXmlHandler, ACBrTests.Util, ACBrCTe.Classes;
 
 type
 

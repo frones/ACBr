@@ -481,11 +481,12 @@ begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110110', '110111', '110113', '110160', '110170',
              '110180', '110181', '610110', '310610', '310611', '610111',
-             '110190', '110191'],
+             '110190', '110191', '310620', '510630'],
             [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
              teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo,
              teMDFeAutorizado2, teMDFeCancelado2, teCancPrestDesacordo,
-             teInsucessoEntregaCTe, teCancInsucessoEntregaCTe]);
+             teInsucessoEntregaCTe, teCancInsucessoEntregaCTe, teRegistroPassagem,
+             teRegistroPassagemMDFe]);
 end;
 
 function LayOutToServico(const t: TLayOutCTe): String;

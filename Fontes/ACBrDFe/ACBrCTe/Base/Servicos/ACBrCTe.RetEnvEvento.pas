@@ -94,6 +94,8 @@ type
     procedure Ler_InfEspecie(const ANode: TACBrXmlNode; Idx: Integer);
     procedure Ler_Remetente(const ANode: TACBrXmlNode; Idx: Integer);
     procedure Ler_Destinatario(const ANode: TACBrXmlNode; Idx: Integer);
+    procedure Ler_MDFe(const ANode: TACBrXmlNode);
+    procedure Ler_Emitente(const ANode: TACBrXmlNode);
     procedure Ler_InfEntrega(const ANode: TACBrXmlNode);
   public
     constructor Create;
@@ -318,6 +320,12 @@ begin
     teInsucessoEntregaCTe: AuxNode := ANode.Childrens.FindAnyNs('evIECTe');
 
     teCancInsucessoEntregaCTe: AuxNode := ANode.Childrens.FindAnyNs('evCancIECTe');
+
+    teMDFeAutorizado2: AuxNode := ANode.Childrens.FindAnyNs('evCTeAutorizadoMDFe');
+
+    teRegistroPassagem: AuxNode := ANode.Childrens.FindAnyNs('evCTeRegPassagem');
+
+    teRegistroPassagemMDFe: AuxNode := ANode.Childrens.FindAnyNs('evCTeRegPassagemAutoMDFe');
   else
     AuxNode := nil;
   end;
@@ -339,6 +347,10 @@ begin
     infEvento.DetEvento.UFIni := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('UFIni'), tcStr);
     infEvento.DetEvento.UFFim := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('UFFim'), tcStr);
     infEvento.DetEvento.xOBS := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xOBS'), tcStr);
+
+    if infEvento.DetEvento.xOBS = '' then
+      infEvento.DetEvento.xOBS := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xObs'), tcStr);
+
     // Comprovante de Entrega da CT-e e o Cancelamento do Comprovante
     infEvento.detEvento.dhEntrega := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhEntrega'), tcDatHor);
     infEvento.detEvento.nDoc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nDoc'), tcStr);
@@ -375,7 +387,56 @@ begin
     begin
       Ler_InfEntrega(ANodes[i]);
     end;
+
+    // evCTeAutorizadoMDFe
+    Ler_MDFe(AuxNode.Childrens.FindAnyNs('MDFe'));
+    Ler_Emitente(AuxNode.Childrens.FindAnyNs('emit'));
+
+    // teRegistroPassagem
+    infEvento.detEvento.cUFTransito := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUFTransito'), tcInt);
+    infEvento.detEvento.cUnidFiscal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cUnidFiscal'), tcInt);
+    infEvento.detEvento.xUnidFiscal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xUnidFiscal'), tcStr);
+    infEvento.detEvento.dhPass := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhPass'), tcDatHor);
+    infEvento.detEvento.CPFFunc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPFFunc'), tcStr);
+    infEvento.detEvento.xFunc := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xFunc'), tcStr);
+    infEvento.detEvento.tpTransm := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpTransm'), tcStr);
+    infEvento.detEvento.tpSentido := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpSentido'), tcStr);
+    infEvento.detEvento.placa := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('placa'), tcStr);
+    infEvento.detEvento.SegCodBarras := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('SegCodBarras'), tcStr);
+
+    // teRegistroPassagem e teRegistroPassagemMDFe
+    infEvento.detEvento.chMDFe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chMDFe'), tcStr);
   end;
+end;
+
+procedure TRetEventoCTe.Ler_MDFe(const ANode: TACBrXmlNode);
+var
+  Item: TMDFe;
+  Ok: Boolean;
+begin
+  if not Assigned(ANode) then Exit;
+
+  Item := InfEvento.detEvento.MDFe;
+
+  Item.chMDFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chMDFe'), tcStr);
+  Item.modal := StrToTpModal(Ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('modal'), tcStr));
+  Item.dhEmi := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEmi'), tcDatHor);
+  Item.nProt := ObterConteudoTag(ANode.Childrens.FindAnyNs('nProt'), tcStr);
+  Item.dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+end;
+
+procedure TRetEventoCTe.Ler_Emitente(const ANode: TACBrXmlNode);
+var
+  Item: TInfRemDest;
+begin
+  if not Assigned(ANode) then Exit;
+
+  Item := InfEvento.detEvento.emit;
+
+  Item.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
+  Item.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
+  Item.UF := ObterConteudoTag(ANode.Childrens.FindAnyNs('UF'), tcStr);
+  Item.xNome := ObterConteudoTag(ANode.Childrens.FindAnyNs('xNome'), tcStr);
 end;
 
 procedure TRetEventoCTe.Ler_InfEvento(const ANode: TACBrXmlNode);

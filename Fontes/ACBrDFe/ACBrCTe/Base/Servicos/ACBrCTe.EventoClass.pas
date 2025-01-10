@@ -166,6 +166,21 @@ type
     property Items[Index: Integer]: TInfEntregaCollectionItem read GetItem write SetItem; default;
   end;
 
+  TMDFe = class(TObject)
+  private
+    FchMDFe: string;
+    Fmodal: TpcteModal;
+    FdhEmi: TDateTime;
+    FnProt: string;
+    FdhRecbto: TDateTime;
+  public
+    property chMDFe: string read FchMDFe write FchMDFe;
+    property modal: TpcteModal read Fmodal write Fmodal;
+    property dhEmi: TDateTime read FdhEmi write FdhEmi;
+    property nProt: string read FnProt write FnProt;
+    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
+  end;
+
   TDetEvento = class(TObject)
   private
     FdescEvento: string;
@@ -214,6 +229,19 @@ type
     FdhHashTentativaEntrega: TDateTime;
     // Cancelamento do Insucesso na Entrega
     FnProtIE: string;
+    FMDFe: TMDFe;
+    Femit: TInfRemDest;
+    FcUFTransito: Integer;
+    FcUnidFiscal: Integer;
+    FxUnidFiscal: string;
+    FdhPass: TDateTime;
+    FCPFFunc: string;
+    FxFunc: string;
+    FtpTransm: string;
+    FtpSentido: string;
+    Fplaca: string;
+    FchMDFe: string;
+    FSegCodBarras: string;
 
     procedure SetinfCorrecao(const Value: TInfCorrecaoCollection);
     procedure SetxCondUso(const Value: string);
@@ -264,6 +292,21 @@ type
     property dhHashTentativaEntrega: TDateTime read FdhHashTentativaEntrega write FdhHashTentativaEntrega;
 
     property nProtIE: string read FnProtIE write FnProtIE;
+
+    property MDFe: TMDFe read FMDFe write FMDFe;
+    property emit: TInfRemDest read Femit write Femit;
+
+    property cUFTransito: Integer read FcUFTransito write FcUFTransito;
+    property cUnidFiscal: Integer read FcUnidFiscal write FcUnidFiscal;
+    property xUnidFiscal: string read FxUnidFiscal write FxUnidFiscal;
+    property dhPass: TDateTime read FdhPass write FdhPass;
+    property CPFFunc: string read FCPFFunc write FCPFFunc;
+    property xFunc: string read FxFunc write FxFunc;
+    property tpTransm: string read FtpTransm write FtpTransm;
+    property tpSentido: string read FtpSentido write FtpSentido;
+    property placa: string read Fplaca write Fplaca;
+    property chMDFe: string read FchMDFe write FchMDFe;
+    property SegCodBarras: string read FSegCodBarras write FSegCodBarras;
   end;
 
   TInfEvento = class
@@ -549,8 +592,10 @@ begin
   inherited Create;
 
   FinfCorrecao := TInfCorrecaoCollection.Create;
-  FinfGTV      := TInfGTVCollection.Create;
-  FinfEntrega  := TInfEntregaCollection.Create;
+  FinfGTV := TInfGTVCollection.Create;
+  FinfEntrega := TInfEntregaCollection.Create;
+  FMDFe := TMDFe.Create;
+  Femit := TInfRemDest.Create;
 end;
 
 destructor TDetEvento.Destroy;
@@ -558,6 +603,8 @@ begin
   FInfCorrecao.Free;
   FinfGTV.Free;
   FinfEntrega.Free;
+  FMDFe.Free;
+  Femit.Free;
 
   inherited;
 end;

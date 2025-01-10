@@ -45,6 +45,8 @@ Símbolo : Significado
 
 10/01/2025
 -- ACBrNFSeXServicos --
+[*] #TK-6469: A cidade de Ipora/GO trocou de provedor, agora é Centi.
+  Por: Márcio Baroni
 [*] #TK-6467: A cidade de Santa Helena de Goias/GO trocou de provedor, agora é Centi.
   Por: rafmattos
 [*] #TK-6464: A cidade de Santa Vitoria do Palmar/RS trocou as URLs o provedor continua

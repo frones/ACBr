@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6473: A cidade de Mateus Leme/MG trocou as URLs o provedor continua
+    o mesmo.
+  Por: João Antônio
+[+] Incluída a cidade de Pianco/PB, o provedor é PublicSoft
+  Por: Arimateia Jr
+
 10/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6469: A cidade de Ipora/GO trocou de provedor, agora é Centi.

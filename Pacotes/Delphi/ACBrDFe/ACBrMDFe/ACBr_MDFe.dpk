@@ -75,11 +75,12 @@ contains
   ACBrMDFeManifestos in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeManifestos.pas',
   ACBrMDFeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeWebServices.pas',
 
-  pmdfeMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFe.pas',
   pmdfeConversaoMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeConversaoMDFe.pas',
+  pmdfeProcMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcMDFe.pas',
 
   ACBrMDFe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Consts.pas',
   ACBrMDFe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Classes.pas',
+  ACBrMDFe.ProcInfraSA in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.ProcInfraSA.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrMDFe.XmlReader in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas',
@@ -89,9 +90,6 @@ contains
   pmdfeMDFeW in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeW.pas',
   {$ENDIF}
 
-  pmdfeProcMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcMDFe.pas',
-  
-  ACBrMDFe.ProcInfraSA in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.ProcInfraSA.pas',
   ACBrMDFe.ConsNaoEnc in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsNaoEnc.pas',
   ACBrMDFe.RetConsNaoEnc in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetConsNaoEnc.pas',
   ACBrMDFe.ConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsSit.pas',

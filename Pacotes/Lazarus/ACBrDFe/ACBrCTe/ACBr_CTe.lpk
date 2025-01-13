@@ -46,8 +46,8 @@
         <UnitName Value="ACBrCTeWebServices"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas"/>
-        <UnitName Value="pcteCTe"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlWriter.pas"/>
+        <UnitName Value="ACBrCTe.XmlWriter"/>
       </Item8>
       <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeR.pas"/>

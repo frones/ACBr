@@ -87,21 +87,20 @@ contains
   ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
 
   pcteConversaoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConversaoCTe.pas',
-  pcteCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas',
-  pcteCTeW in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas',
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
+  pcteInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteInutCTe.pas',
+  pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
 
   ACBrCTe.Consts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Consts.pas',
   ACBrCTe.Classes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.Classes.pas',
 
   {$IFDEF USE_ACBr_XMLDOCUMENT}
   ACBrCTe.XmlHandler in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlHandler.pas',
+  ACBrCTe.XmlWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\ACBrCTe.XmlWriter.pas',
   {$ELSE}
   pcteCTeR in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeR.pas',
+  pcteCTeW in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas',
   {$ENDIF}
-
-  pcteInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteInutCTe.pas',
-  pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
 
   ACBrCTe.ConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.ConsSit.pas',
   ACBrCTe.RetConsSit in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\Base\Servicos\ACBrCTe.RetConsSit.pas',

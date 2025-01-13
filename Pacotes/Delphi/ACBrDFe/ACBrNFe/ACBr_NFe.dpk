@@ -86,7 +86,6 @@ contains
 
   pcnConversaoNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConversaoNFe.pas',
   pcnLayoutTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnLayoutTXT.pas',
-  pcnNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFe.pas',
   pcnNFeRTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeRTXT.pas',
   pcnProcNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnProcNFe.pas',
   

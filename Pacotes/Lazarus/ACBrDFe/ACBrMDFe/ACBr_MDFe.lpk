@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="23">
+    <Files Count="22">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas"/>
         <UnitName Value="ACBrMDFe"/>
@@ -42,73 +42,69 @@
         <UnitName Value="pmdfeConversaoMDFe"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFe.pas"/>
-        <UnitName Value="pmdfeMDFe"/>
-      </Item7>
-      <Item8>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeR.pas"/>
         <UnitName Value="pmdfeMDFeR"/>
-      </Item8>
-      <Item9>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeMDFeW.pas"/>
         <UnitName Value="pmdfeMDFeW"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeProcMDFe.pas"/>
         <UnitName Value="pmdfeProcMDFe"/>
-      </Item10>
-      <Item11>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFeClass.pas"/>
         <UnitName Value="ACBrMDFeDAMDFeClass"/>
-      </Item11>
-      <Item12>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Classes.pas"/>
         <UnitName Value="ACBrMDFe.Classes"/>
-      </Item12>
-      <Item13>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.ProcInfraSA.pas"/>
         <UnitName Value="ACBrMDFe.ProcInfraSA"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlReader.pas"/>
         <UnitName Value="ACBrMDFe.XmlReader"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.XmlWriter.pas"/>
         <UnitName Value="ACBrMDFe.XmlWriter"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsNaoEnc.pas"/>
         <UnitName Value="ACBrMDFe.ConsNaoEnc"/>
-      </Item16>
-      <Item17>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetConsNaoEnc.pas"/>
         <UnitName Value="ACBrMDFe.RetConsNaoEnc"/>
-      </Item17>
-      <Item18>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.ConsSit.pas"/>
         <UnitName Value="ACBrMDFe.ConsSit"/>
-      </Item18>
-      <Item19>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetConsSit.pas"/>
         <UnitName Value="ACBrMDFe.RetConsSit"/>
-      </Item19>
-      <Item20>
+      </Item18>
+      <Item19>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.EventoClass.pas"/>
         <UnitName Value="ACBrMDFe.EventoClass"/>
-      </Item20>
-      <Item21>
+      </Item19>
+      <Item20>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.EnvEvento.pas"/>
         <UnitName Value="ACBrMDFe.EnvEvento"/>
-      </Item21>
-      <Item22>
+      </Item20>
+      <Item21>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\Servicos\ACBrMDFe.RetEnvEvento.pas"/>
         <UnitName Value="ACBrMDFe.RetEnvEvento"/>
-      </Item22>
-      <Item23>
+      </Item21>
+      <Item22>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\Base\ACBrMDFe.Consts.pas"/>
         <UnitName Value="ACBrMDFe.Consts"/>
-      </Item23>
+      </Item22>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

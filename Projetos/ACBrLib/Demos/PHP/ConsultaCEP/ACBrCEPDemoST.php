@@ -18,7 +18,7 @@
 // {                                                                              }
 // {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 // { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-// { ADEQUAÇÃO A UMA FINALIDADE ESPECÝFICA. Consulte a Licença Pública Geral Menor}
+// { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 // { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
 // {                                                                              }
 // {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
@@ -31,93 +31,9 @@
 // {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 // {******************************************************************************}
 */
-header('Content-Type: application/json; charset=UTF-8');
 
-include 'ACBrCEP.php';
+// Redireciona para ACBrCEPBase.php no modo=MT
+$_GET['modo'] = 'ST';
 
-if (ValidaFFI() != 0)
-    exit; 
-
-$dllPath = CarregaDll();
-
-if ($dllPath == -10)
-    exit; 
-
-$importsPath = CarregaImports();
-
-if ($importsPath == -10)
-    exit; 
-
-$iniPath = CarregaIniPath();
-
-$handle = FFI::new("uintptr_t");
-$sResposta = FFI::new("char[9048]");
-$esTamanho = FFI::new("long");
-$esTamanho->cdata = 9048;
-
-try {
-    $processo = "file_get_contents";
-    $ffi = CarregaContents($importsPath, $dllPath);
-
-    $processo = "CEP_Inicializar";
-    if (Inicializar($handle, $ffi, $iniPath) != 0) 
-        exit;
-       
-    $usuario = "";
-    $processo = "CEP_ConfigLerValor";
-    $resultado = ConfigLerValor($handle, $ffi, "CEP", "Usuario", $usuario);
-
-    if ($resultado != 0)
-        exit;
-
-    $senha = "";
-    $processo = "CEP_ConfigLerValor";
-    $resultado = ConfigLerValor($handle, $ffi, "CEP", "Senha", $senha);
-    
-    if ($resultado != 0)
-        exit;
-
-    $chaveacesso = "";
-    $processo = "CEP_ConfigLerValor";
-    $resultado = ConfigLerValor($handle, $ffi, "CEP", "ChaveAcesso", $chaveacesso);
-        
-    if ($resultado != 0)
-        exit;
-         
-    $webservice = "";
-    $processo = "CEP_ConfigLerValor";
-    $resultado = ConfigLerValor($handle, $ffi, "CEP", "WebService", $webservice);
-    
-    if ($resultado != 0)
-        exit;
-
-    $processo = "responseData";
-    $responseData = [
-        'retorno' => $resultado,
-        'dados' => [
-            'usuario' => $usuario ?? '',
-            'senha' => $senha?? '',
-            'chaveacesso' => $chaveacesso?? '',
-            'webservice' => $webservice?? '0'
-        ]
-    ];   
-} catch (Exception $e) {
-    $erro = $e->getMessage();
-    echo json_encode(["mensagem" => "Exceção[$processo]: $erro"]);
-    exit;
-}
-
-try {
-    if ($processo != "CEP_Inicializar") {
-        $processo = "CEP_Finalizar";
-        if (Finalizar($handle, $ffi) != 0) 
-            exit;
-    }
-} catch (Exception $e) {
-    $erro = $e->getMessage();
-    echo json_encode(["mensagem" => "Exceção[$processo]: $erro"]);
-    exit;
-}
-
-echo json_encode($responseData);
+include 'ACBrCEPBase.php';
 ?>

@@ -4061,7 +4061,7 @@ begin
         if ( wNumeroCorrespondente > 0 ) then
           Banco.NumeroCorrespondente:= wNumeroCorrespondente;
 
-        if ( wVersaoArquivo > 0 ) then
+        if ( wVersaoArquivo <> 0 ) then
           Banco.LayoutVersaoArquivo:= wVersaoArquivo;
 
         if ( wVersaoLote > 0 ) then

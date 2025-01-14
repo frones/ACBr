@@ -43,7 +43,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-07/12/2025
+14/01/2025
+-- ACBrMonitor1.pas, DoBoletoUnit.pas, ACBrMonitorConfig.pas  --
+[*] #TK-6479 Ajustado para Ler o INI VersaoArquivo utilizado no Boleto.
+    Por: Daniel de Morais InfoCotidiano
+
+07/01/2025
 -- ACBrMonitor1.lfm, ACBrMonitor1.pas, DoBoletoUnit.pas  --
 [-] #TK-6452-1 Adicionado a propriedade para config. UseCertificateHTTP para autenticação nas APIs de Boleto.
     Por: Daniel de Morais InfoCotidiano

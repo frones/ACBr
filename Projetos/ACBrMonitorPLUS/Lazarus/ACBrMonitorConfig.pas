@@ -3133,6 +3133,7 @@ begin
     RemoveAcentos          :=  False;
     PrefixArqRemessa       := '';
     KeySoftwareHouse       := '';
+    VersaoArquivo          := '';
   end;
 
   with BOLETO.Relatorio do

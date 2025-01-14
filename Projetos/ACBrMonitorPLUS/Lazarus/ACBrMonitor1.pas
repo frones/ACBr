@@ -6783,7 +6783,7 @@ begin
       LayoutRemessa := c240
     else
       LayoutRemessa := c400;
-
+    Banco.LayoutVersaoArquivo := StrToIntDef(edtVersaoArquivo.text,0);
     KeySoftwareHouse:= edtBoletoKeySoftwareHouse.text;
     DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);

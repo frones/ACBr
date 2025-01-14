@@ -1374,6 +1374,8 @@ begin
     CNAB := Integer(fACBrBoleto.LayoutRemessa);
   with MonitorConfig.BOLETO.RemessaRetorno do
     KeySoftwareHouse := fACBrBoleto.KeySoftwareHouse;
+  with MonitorConfig.BOLETO.RemessaRetorno do
+    VersaoArquivo := inttostr(fACBrBoleto.banco.LayoutVersaoArquivo);
 
   {Parametros da Conta}
   with MonitorConfig.BOLETO.Conta do

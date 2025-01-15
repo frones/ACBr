@@ -543,11 +543,11 @@ begin
   else
     Result.AppendChild(AddNodeCNPJCPF('#47', '#48', BPe.Comp.CNPJCPF));
 
-  if BPe.Emit.IE = 'ISENTO' then
-    Result.AppendChild(AddNode(tcStr, '#50', 'IE', 2, 14, 1, BPe.Emit.IE, DSC_IE))
+  if BPe.Comp.IE = 'ISENTO' then
+    Result.AppendChild(AddNode(tcStr, '#50', 'IE', 2, 14, 1, BPe.Comp.IE, DSC_IE))
   else
     Result.AppendChild(AddNode(tcStr, '#50', 'IE', 2, 14, 1,
-                                              OnlyNumber(BPe.Emit.IE), DSC_IE));
+                                              OnlyNumber(BPe.Comp.IE), DSC_IE));
 
   Result.AppendChild(Gerar_EnderComp);
 end;

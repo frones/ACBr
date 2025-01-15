@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/01/2025
+-- ACBrSchemasPagamentosAPI --
+[+] Inclusão dos arquivos de schemas da API de Pagamentos do Banco do Brasil.
+    por: Elias César
+
 26/09/2024
 -- ACBrExtratoAPI --
 [+] Inclusão da propriedade NumeroDocumento na classe TACBrExtratoLancamento

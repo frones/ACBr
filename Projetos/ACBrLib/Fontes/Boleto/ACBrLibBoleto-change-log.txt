@@ -41,6 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+15/01/2025
+-- ACBrLibBoletoRespostas.pas --
+[*] TK-6141 - Retorno INI devolver o banco que foi liquidado, propriedade LiquidadoBanco
+  https://www.projetoacbr.com.br/forum/topic/80275-mapear-campo-banco-cobrador-237-bradesco-carteira-09/
+  Por: Daniel de Morais InfoCotidiano
 
 30/12/2024
 --- ACBrLibBoletoConfig.pas,ACBrLibBoletoRespostas.pas, ACBrLibBoletoDataModule.pas, ACBrLibBoletoConsts.pas ---

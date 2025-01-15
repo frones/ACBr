@@ -176,7 +176,7 @@ type
     FRejeicoes: TObjectList;
     FHoraBaixa: String;
     FEstadoTituloCobranca : String;
-
+    FLiquidadoBanco:integer;
 
 
   public
@@ -215,10 +215,7 @@ type
     property Rejeicoes: TObjectList read FRejeicoes write FRejeicoes;
     property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
     property HoraBaixa: String read FHoraBaixa write FHoraBaixa;
-   
-
-
-
+    property LiquidadoBanco: integer read FLiquidadoBanco write FLiquidadoBanco;
   end;
 
   { TRetornoBoleto }
@@ -372,6 +369,7 @@ type
     FCodigoCanalTituloCobranca: String;
     FCodigoEstadoTituloCobranca: string;
     FEstadoTituloCobranca: String;
+    FLiquidadoBanco : integer;
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -449,9 +447,7 @@ type
     property CodigoCanalTituloCobranca: String read FCodigoCanalTituloCobranca write FCodigoCanalTituloCobranca;
     property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
     property CodigoEstadoTituloCobranca: String read FCodigoEstadoTituloCobranca write FCodigoEstadoTituloCobranca;
-
-
-
+    property LiquidadoBanco: integer read FLiquidadoBanco write FLiquidadoBanco;
   end;
 
   { TRetornoRejeicoesWeb }
@@ -734,6 +730,7 @@ begin
     CodigoCanalTituloCobranca:=DadosRet.TituloRet.CodigoCanalTituloCobranca;
     EstadoTituloCobranca:=DadosRet.TituloRet.EstadoTituloCobranca;;
     CodigoEstadoTituloCobranca:=DadosRet.TituloRet.CodigoEstadoTituloCobranca;
+    LiquidadoBanco:=DadosRet.TituloRet.Liquidacao.Banco;
 
 
     if (NaoEstaVazio(DadosRet.TituloRet.EMV)) then
@@ -940,6 +937,7 @@ begin
     SeuNumero := ACBrBoleto.ListadeBoletos[FID].SeuNumero;
     CodTipoOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia),
                                              Integer(ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Tipo));
+    LiquidadoBanco := ACBrBoleto.ListadeBoletos[FID].Liquidacao.Banco;
     DescricaoTipoOcorrencia := ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Descricao;
 
     for I:= 0 to  ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando.Count-1 do

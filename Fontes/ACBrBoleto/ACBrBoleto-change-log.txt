@@ -48,8 +48,15 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
 15/01/2025
--- ACBrBoleto.pas --
+-- ACBrBoletoW_Inter_API.pas --
+[*] TK-6095 - Correção de paginação retorno titulos.
+  https://www.projetoacbr.com.br/forum/topic/80132-queryparams-de-pagina%C3%A7%C3%A3o-do-banco-inter-boleto-com-pix-incorretos/
+  Por: Caio Cinel
+
+15/01/2025
+-- ACBrBoletoRetorno.pas --
 [*] TK-6141 - Retorno INI devolver o banco que foi liquidado, propriedade LiquidadoBanco
   https://www.projetoacbr.com.br/forum/topic/80275-mapear-campo-banco-cobrador-237-bradesco-carteira-09/
   Por: Daniel de Morais InfoCotidiano

@@ -266,6 +266,7 @@ var
   LDocumento, LSituacaoAbertos, LSituacaoBaixados, LSituacaoVencidos, LSituacaoCancelados: String;
   LFiltroDataVencimento,LFiltroDataEmissao, LFiltroDataPagamento : string;
   LOrdenarDataEmissao, LOrdenarDataVencimento, LOrdenarDataSituacao : string;
+  LPaginacaoQuantidade, LPaginacaoAtual: string;
 begin
   if Assigned(Boleto.Configuracoes.WebService.Filtro) then
   begin
@@ -281,6 +282,8 @@ begin
       LOrdenarDataEmissao   := 'DATA_EMISSAO';
       LOrdenarDataVencimento:= 'DATA_VENCIMENTO';
       LOrdenarDataSituacao  := 'DATA_VENCIMENTO';
+      LPaginacaoQuantidade  := 'paginacao.itensPorPagina';
+      LPaginacaoAtual       := 'paginacao.paginaAtual';
     end
     else
     begin
@@ -294,6 +297,8 @@ begin
       LOrdenarDataEmissao   := 'DATASITUACAO';
       LOrdenarDataVencimento:= 'DATAVENCIMENTO';
       LOrdenarDataSituacao  := 'DATASITUACAO';
+      LPaginacaoQuantidade  := 'itensPorPagina';
+      LPaginacaoAtual       := 'paginaAtual';
     end;
 
     LDocumento := OnlyNumber
@@ -303,10 +308,10 @@ begin
     LConsulta.Delimiter := '&';
     try
 
-      LConsulta.Add( 'itensPorPagina=1000' );
+      LConsulta.Add( LPaginacaoQuantidade+'=1000' );
 
       if Boleto.Configuracoes.WebService.Filtro.indiceContinuidade > 0 then
-        LConsulta.Add('paginaAtual='+ FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade));
+        LConsulta.Add(LPaginacaoAtual+'='+ FloatToStr(Boleto.Configuracoes.WebService.Filtro.indiceContinuidade));
 
       case Boleto.Configuracoes.WebService.Filtro.indicadorSituacao of
         isbBaixado:
@@ -343,10 +348,11 @@ begin
             if Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio > 0 then
             {por data de registro, devolve qq status, pois o boleto pode ter sido pago ou baixado}
             begin
-              LConsulta.Add('filtrarDataPor='+'EMISSAO' );
+              LConsulta.Add( 'filtrarDataPor='+LFiltroDataEmissao );
+              LConsulta.Add('situacao='+LSituacaoAbertos);
               LConsulta.Add('dataInicial=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataInicio));
-              LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.dataRegistro.DataFinal));
-              LConsulta.Add( 'ordenarPor='+'STATUS' );
+              LConsulta.Add('dataFinal=' +DateTimeToDateInter(Boleto.Configuracoes.WebService.Filtro.DataRegistro.DataFinal));
+              LConsulta.Add( 'ordenarPor='+LOrdenarDataSituacao);
             end;
           end;
       end;
@@ -649,7 +655,7 @@ begin
             if Boleto.Cedente.CedenteWS.IndicadorPix then
               begin
                 LJsonDesconto.AddPair('codigo','VALORFIXODATAINFORMADA');
-                LJsonDesconto.AddPair('valor',ATitulo.ValorDesconto);
+                LJsonDesconto.AddPair('taxa',ATitulo.ValorDesconto);
                 LJsonDesconto.AddPair('quantidadeDias',(ATitulo.Vencimento - ATitulo.DataDesconto));
               end
             else

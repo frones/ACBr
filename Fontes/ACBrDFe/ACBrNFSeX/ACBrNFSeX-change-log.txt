@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/01/2025
+-- AssessorPublico.Provider --
+[*] #TK-6483: Incluído na configuração a QuebradeLinha.
+  Por: NetStar
 -- Diversos --
 [*] #TK-6483: Liberado a propriedade de Configuração QuebradeLinha e realizados
     ajustes para utilizar o caracter definido nela em vez do ";". 

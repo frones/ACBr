@@ -111,6 +111,7 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
     DetalharServico := True;
+    QuebradeLinha := sLineBreak;
 
     Autenticacao.RequerCertificado := False;
     Autenticacao.RequerLogin := True;

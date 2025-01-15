@@ -163,7 +163,7 @@ begin
         ItemServico[i].ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unidade_valor_unitario'), tcDe2);
         ItemServico[i].Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('descritivo'), tcStr);
         ItemServico[i].Descricao := StringReplace(ItemServico[i].Descricao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         ItemServico[i].Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('aliquota_item_lista_servico'), tcDe2);
 
         ItemServico[i].SituacaoTributaria := ObterConteudo(ANodes[i].Childrens.FindAnyNs('situacao_tributaria'), tcInt);
@@ -279,7 +279,7 @@ begin
 
       OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('observacao'), tcStr);
       OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       Servico.Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_total'), tcDe2);
       Servico.Valores.ValorIr       := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_ir'), tcDe2);

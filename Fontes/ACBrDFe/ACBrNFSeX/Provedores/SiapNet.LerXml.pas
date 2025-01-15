@@ -175,7 +175,7 @@ begin
       CodigoNBS                 := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoNbs'), tcStr);
       Discriminacao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Discriminacao);
 

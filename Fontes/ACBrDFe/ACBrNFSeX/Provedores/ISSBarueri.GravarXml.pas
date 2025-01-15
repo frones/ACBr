@@ -102,7 +102,8 @@ begin
     MotCancelamento := NFSe.MotivoCancelamento;
   end;
 
-  Discriminacao := StringReplace(NFSe.Servico.Discriminacao, ';', Opcoes.QuebraLinha, [rfReplaceAll, rfIgnoreCase]);
+  Discriminacao := StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
+                            FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]);
 
   if (Assigned(NFSe.Servico.ItemServico)) and
      (Pred(NFSe.Servico.ItemServico.Count) > 0) then
@@ -231,8 +232,6 @@ end;
 function TNFSeW_ISSBarueri.GerarXml: Boolean;
 begin
   Configuracao;
-
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 

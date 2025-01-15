@@ -246,7 +246,7 @@ begin
 
     Servico.Discriminacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('DiscrSrv'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 
@@ -345,7 +345,7 @@ begin
     Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodSrv'), tcStr);
     Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DiscrSrv'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 

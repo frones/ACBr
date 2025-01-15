@@ -81,8 +81,6 @@ function TNFSeW_XTRTecnologia.GerarXml: Boolean;
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   ListaDeAlertas.Clear;
 
   FDocument.Clear();

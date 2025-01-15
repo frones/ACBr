@@ -90,7 +90,6 @@ begin
   Configuracao;
 
   Opcoes.DecimalChar := ',';
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -126,8 +125,8 @@ begin
                                             NFSe.Servico.ItemListaServico, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DiscrSrv', 1, 4000, 1,
-   StringReplace(NFSe.Servico.Discriminacao, ';',
-        FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase]), ''));
+   StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
+                      FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'VlNFS', 1, 16, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
@@ -136,8 +135,8 @@ begin
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DiscrDed', 1, 4000, 1,
-   StringReplace(NFSe.Servico.Valores.JustificativaDeducao, ';',
-        FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase]), ''));
+   StringReplace(NFSe.Servico.Valores.JustificativaDeducao, Opcoes.QuebraLinha,
+                      FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'VlBasCalc', 1, 16, 1,
                                          NFSe.Servico.Valores.BaseCalculo, ''));

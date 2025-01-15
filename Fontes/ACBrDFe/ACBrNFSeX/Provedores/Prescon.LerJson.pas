@@ -233,7 +233,7 @@ begin
     Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('codigo'), tcStr);
     Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 
@@ -265,7 +265,7 @@ begin
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('obs'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
   end;
 end;
 

@@ -126,7 +126,7 @@ begin
 
   NFSe.Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('servicoDiscriminacao'), tcStr);
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
 
@@ -174,7 +174,7 @@ begin
   NFSe.Servico.MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('municipioIncidencia'), tcStr);
   NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('outrasInformacoes'), tcStr);
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   NFSe.SituacaoTrib := FpAOwner.StrToSituacaoTrib(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ISSDevido'), tcStr));
 

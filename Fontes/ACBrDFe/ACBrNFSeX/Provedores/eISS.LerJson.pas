@@ -197,7 +197,7 @@ begin
 
       OutrasInformacoes := aJson.AsString['Observacoes'];
       OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       jsAux := aJson.AsJSONObject['Valores'];
 
@@ -393,7 +393,7 @@ begin
         Unidade := jsAux.AsString['Unidade'];
         Descricao := jsAux.AsString['Descricao'];
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         Quantidade := jsAux.AsFloat['Quantidade'];
         ValorUnitario := jsAux.AsCurrency['ValorUnitario'];
         ValorTotal := ValorUnitario * Quantidade;

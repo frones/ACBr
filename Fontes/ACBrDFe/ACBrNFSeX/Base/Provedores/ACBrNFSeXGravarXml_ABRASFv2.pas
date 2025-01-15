@@ -432,8 +432,6 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   case VersaoNFSe of
     ve203:
       begin
@@ -553,12 +551,12 @@ begin
                                         NFSe.ValorCargaTributariaEstadual, ''));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'OutrasInformacoes', 0, 255, NrOcorrOutrasInformacoes,
-    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                 [rfReplaceAll, rfIgnoreCase]), DSC_OUTRASINF));
+    StringReplace(NFSe.OutrasInformacoes, Opcoes.QuebraLinha,
+           FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_OUTRASINF));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'InformacoesComplementares', 0, 2000, NrOcorrInformacoesComplemetares,
-    StringReplace(NFSe.InformacoesComplementares, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                            [rfReplaceAll, rfIgnoreCase]), ''));
+    StringReplace(NFSe.InformacoesComplementares, Opcoes.QuebraLinha,
+                      FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), ''));
 
   Result.AppendChild(AddNode(tcInt, '#9', 'TipoNota', 1, 3, NrOcorrTipoNota,
                                                             NFSe.TipoNota, ''));
@@ -679,8 +677,8 @@ begin
                      NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
 
     Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, NrOcorrDiscriminacao_1,
-      StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                     [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
+      StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
+               FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_DISCR));
 
     Result.AppendChild(AddNode(tcStr, '#33', 'CodigoMunicipio', 1, 7, NrOcorrCodigoMunic_1,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
@@ -692,8 +690,8 @@ begin
                                  OnlyNumber(NFSe.Servico.CodigoNBS), DSC_CMUN));
 
     Result.AppendChild(AddNode(tcStr, '#33', 'Discriminacao', 1, 2000, NrOcorrDiscriminacao_2,
-      StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                     [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
+      StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
+               FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_DISCR));
 
     Result.AppendChild(AddNode(tcStr, '#34', 'CodigoMunicipio', 1, 7, NrOcorrCodigoMunic_2,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));

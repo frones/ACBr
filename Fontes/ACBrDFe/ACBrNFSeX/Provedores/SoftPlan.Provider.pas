@@ -105,6 +105,7 @@ implementation
 uses
   synacode,
   ACBrDFeException, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   SoftPlan.GravarXml, SoftPlan.LerXml;
 
@@ -269,8 +270,8 @@ begin
 
     Nota.GerarXML;
 
-    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
-    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
 
     if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
@@ -840,8 +841,8 @@ begin
 
       Nota.GerarXML;
 
-      Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
-      Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+      Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+      Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
 
       Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
                                          ConfigMsgDados.SubstituirNFSe.DocElemento,

@@ -309,7 +309,7 @@ begin
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
 
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 end;
 
 procedure TNFSeR_EL.LerServicos(const ANode: TACBrXmlNode);
@@ -347,7 +347,7 @@ begin
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorServico'), tcDe2);
         Descricao     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Descricao'), tcStr);
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         Aliquota      := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Aliquota'), tcDe4);
         ValorISS      := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorIssqn'), tcDe4);
 
@@ -478,7 +478,7 @@ begin
       DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
       OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
       OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
       SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 
       Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
@@ -505,7 +505,7 @@ begin
     DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('Observacao'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Status'), tcStr));
 
     Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('IssRetido'), tcStr));

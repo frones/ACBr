@@ -87,7 +87,7 @@ begin
       ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nValorServico'), tcDe2);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('sDescricao'), tcStr);
       Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
       Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nAliquota'), tcDe2);
       ValorISS := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nValorIss'), tcDe2);
       ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nValorTotal'), tcDe2);
@@ -232,12 +232,11 @@ begin
 
   for i := 1 to 10 do
     aValor := aValor +
-      ObterConteudo(ANode.Childrens.FindAnyNs('sObservacao' + IntToStr(i)), tcStr){ +
-      ';'};
+      ObterConteudo(ANode.Childrens.FindAnyNs('sObservacao' + IntToStr(i)), tcStr);
 
   NFSe.OutrasInformacoes := aValor;
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   LerCampoLink;
 end;

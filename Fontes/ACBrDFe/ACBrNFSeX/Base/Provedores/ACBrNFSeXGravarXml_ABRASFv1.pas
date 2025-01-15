@@ -225,8 +225,6 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   FDocument.Clear();
 
   NFSeNode := CreateElement('Rps');
@@ -277,8 +275,8 @@ begin
                        FpAOwner.StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS));
 
   Result.AppendChild(AddNode(tcStr, '#11', 'OutrasInformacoes', 1, 255, NrOcorrOutrasInformacoes,
-    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                 [rfReplaceAll, rfIgnoreCase]), DSC_OUTRASINF));
+    StringReplace(NFSe.OutrasInformacoes, Opcoes.QuebraLinha,
+           FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_OUTRASINF));
 
   Result.AppendChild(GerarRPSSubstituido);
   Result.AppendChild(GerarServico);
@@ -347,12 +345,12 @@ begin
                      NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
 
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
-    StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                     [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
+    StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
+               FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_DISCR));
 
   Result.AppendChild(AddNode(tcStr, '#', 'InformacoesComplementares', 1, 255, NrOcorrInformacoesComplemetares,
-    StringReplace(NFSe.InformacoesComplementares, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                            [rfReplaceAll, rfIgnoreCase]), ''));
+    StringReplace(NFSe.InformacoesComplementares, Opcoes.QuebraLinha,
+                      FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), ''));
 
   Result.AppendChild(GerarServicoCodigoMunicipio);
 

@@ -129,7 +129,7 @@ begin
 
       Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricaoNF'), tcStr);
       Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Servico.Discriminacao);
 
@@ -276,7 +276,7 @@ begin
     Servico.ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('servico'), tcStr);
     Servico.Discriminacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 
@@ -404,7 +404,7 @@ begin
 
     Servico.Discriminacao    := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 
@@ -452,7 +452,7 @@ begin
 
     OutrasInformacoes := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('Observacoes'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     aValor := ObterConteudo(DadosNfseNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr);
 

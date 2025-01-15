@@ -221,7 +221,7 @@ begin
       xItemListaServico := ObterDescricaoServico(ItemListaServico);
       Discriminacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('descricao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Discriminacao);
 

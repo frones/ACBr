@@ -153,7 +153,7 @@ begin
       begin
         Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DiscriminacaoServico'), tcStr);
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe2);
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorUnitario'), tcDe2);
         ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorTotal'), tcDe2);
@@ -358,7 +358,7 @@ begin
     NFSe.OutrasInformacoes := aValor;
 
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('MotCancelamento'), tcStr);
   if aValor <> '' then
@@ -518,7 +518,7 @@ begin
 
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('DescricaoRPS'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     MotivoCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('MotCancelamento'), tcStr);
     Intermediario.Identificacao.CpfCnpj := ObterConteudo(ANode.Childrens.FindAnyNs('CPFCNPJIntermediario'), tcStr);

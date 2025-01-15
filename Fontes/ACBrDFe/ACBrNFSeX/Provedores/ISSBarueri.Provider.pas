@@ -101,9 +101,6 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    function AplicarXMLtoUTF8(const AXMLRps: String): String; override;
-    function AplicarLineBreak(const AXMLRps: String; const ABreak: String): String; override;
-
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -638,8 +635,7 @@ begin
   Nota.NFSe.CodigoCancelamento := Response.InfCancelamento.CodCancelamento;
   Nota.GerarXML;
 
-  Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
-  Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+  Nota.XmlRps := string(NativeStringToUTF8(Nota.XmlRps));
 
   SalvarXmlRps(Nota);
 
@@ -1030,17 +1026,6 @@ begin
         <Correcao>Informe um certificado válido padrão ICP-Brasil</Correcao>
     </ListaMensagemRetorno>
   }
-end;
-
-function TACBrNFSeProviderISSBarueri.AplicarXMLtoUTF8(const AXMLRps: String): String;
-begin
-  Result := string(NativeStringToUTF8(AXMLRps));
-end;
-
-function TACBrNFSeProviderISSBarueri.AplicarLineBreak(const AXMLRps: String;
-  const ABreak: String): String;
-begin
-  Result := AXMLRps;
 end;
 
 function TACBrNFSeProviderISSBarueri.SituacaoLoteRpsToStr(const t: TSituacaoLoteRps): string;

@@ -154,12 +154,12 @@ begin
                                 OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));
 
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
-    StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                                   [rfReplaceAll]), DSC_DISCR));
+    StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
+               FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_DISCR));
 
   Result.AppendChild(AddNode(tcStr, '#33', 'Observacoes', 1, 2000, 0,
-    StringReplace(NFSe.OutrasInformacoes, ';', FpAOwner.ConfigGeral.QuebradeLinha,
-                                                   [rfReplaceAll]), DSC_DISCR));
+    StringReplace(NFSe.OutrasInformacoes, Opcoes.QuebraLinha,
+               FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_DISCR));
 
   Result.AppendChild(GerarServicoCodigoMunicipio);
 end;
@@ -205,8 +205,6 @@ var
   NFSeNode, xmlNode: TACBrXmlNode;
 begin
   ListaDeAlertas.Clear;
-
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   FDocument.Clear();
 

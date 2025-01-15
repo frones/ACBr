@@ -185,7 +185,7 @@ begin
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cTribMun'), tcStr);
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('xDescServ'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Discriminacao);
 
@@ -1352,7 +1352,7 @@ begin
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('xOutInf'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                            sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     NFSe.Servico.Valores.Aliquota := NFSe.infNFSe.valores.Aliquota;
     NFSe.Servico.Valores.ValorIss := NFSe.infNFSe.valores.ValorIss;
   end;

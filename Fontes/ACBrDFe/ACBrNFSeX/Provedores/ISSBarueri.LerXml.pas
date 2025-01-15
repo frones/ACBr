@@ -218,10 +218,10 @@ begin
   NFSe.Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoServico'), tcStr);
   NFSe.Servico.Descricao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescricaoServico'), tcStr);
   NFSe.Servico.Descricao := StringReplace(NFSe.Servico.Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
   NFSe.Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('ObservacaoLocalTributado'), tcStr);
 
@@ -425,7 +425,7 @@ begin
   Item.Quantidade := StrToFloatDef(Trim(Copy(ALinha, 2, 6)), 1.00);
   Item.Descricao := Trim(Copy(ALinha, 8, 60));
   Item.Descricao := StringReplace(Item.Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
   Item.CodServ := Trim(Copy(ALinha, 68, 9));
   Item.ValorUnitario := StrToFloatDef(Trim(Copy(ALinha, 77, 15)), 0.00) / 100;
   //Item.ValorISS := StrToFloatDef(Trim(Copy(ALinha, 77, 15)), 0.00) / 100;

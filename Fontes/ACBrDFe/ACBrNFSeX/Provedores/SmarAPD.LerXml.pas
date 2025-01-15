@@ -144,10 +144,10 @@ begin
       xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Servico'), tcStr);
       Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       if NFSe.Servico.Discriminacao <> '' then
-        NFSe.Servico.Discriminacao := NFSe.Servico.Discriminacao + ';';
+        NFSe.Servico.Discriminacao := NFSe.Servico.Discriminacao + FpQuebradeLinha;
 
       NFSe.Servico.Discriminacao := NFSe.Servico.Discriminacao + Descricao;
 
@@ -172,7 +172,7 @@ begin
                                                                   ValorTotal);
 
       NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao,
-                     FpQuebradeLinha, sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                   FpQuebradeLinha, sLineBreak, [rfReplaceAll]);
     end;
   end;
 end;
@@ -207,7 +207,7 @@ begin
       Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('quantidade'), tcDe2);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('descricao'), tcStr);
       Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
       CodServ := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codatividade'), tcStr);
       ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valorunitario'), tcDe2);
       Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('aliquota'), tcDe2);
@@ -297,7 +297,7 @@ begin
 
     OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     MotivoCancelamento := '';
     Intermediario.Identificacao.CpfCnpj := '';
@@ -454,7 +454,7 @@ begin
 
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('observacao'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     LerFatura(ANode);
     LerServico(ANode);

@@ -332,8 +332,8 @@ begin
 
     Nota.GerarXML;
 
-    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
-    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
 
     if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
@@ -712,8 +712,8 @@ begin
                  '</infPedReg>' +
                '</pedRegEvento>';
 
-    xEvento := AplicarXMLtoUTF8(xEvento);
-    xEvento := AplicarLineBreak(xEvento, '');
+    xEvento := ConverteXMLtoUTF8(xEvento);
+    xEvento := ChangeLineBreak(xEvento, '');
 
     Response.ArquivoEnvio := xEvento;
     FpChave := chNFSe;
@@ -1314,7 +1314,7 @@ begin
   begin
     inherited ValidarSchema(Response, aMetodo);
 
-    Response.ArquivoEnvio := AplicarLineBreak(Response.ArquivoEnvio, '');
+    Response.ArquivoEnvio := ChangeLineBreak(Response.ArquivoEnvio, '');
     Response.ArquivoEnvio := EncodeBase64(GZipCompress(Response.ArquivoEnvio));
 
     case aMetodo of

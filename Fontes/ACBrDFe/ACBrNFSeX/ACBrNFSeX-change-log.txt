@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/01/2025
+-- Diversos --
+[*] #TK-6483: Liberado a propriedade de Configuração QuebradeLinha e realizados
+    ajustes para utilizar o caracter definido nela em vez do ";". 
+  Por: Italo Giurizzato Junior
+
 13/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6473: A cidade de Mateus Leme/MG trocou as URLs o provedor continua

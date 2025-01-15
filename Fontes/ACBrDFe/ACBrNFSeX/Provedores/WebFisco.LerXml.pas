@@ -232,7 +232,7 @@ begin
         begin
           Servico.ItemServico[i-1].Descricao := ObterConteudo(ANode.Childrens.FindAnyNs('nfedescricaoservicos'), tcStr);
           Servico.ItemServico[i-1].Descricao := StringReplace(Servico.ItemServico[i-1].Descricao, FpQuebradeLinha,
-                                  sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         end;
 
         Servico.ItemServico[i-1].Quantidade := 1;
@@ -312,7 +312,7 @@ begin
         begin
           Servico.ItemServico[i-1].Descricao := ObterConteudo(ANode.Childrens.FindAnyNs('txt'), tcStr);
           Servico.ItemServico[i-1].Descricao := StringReplace(Servico.ItemServico[i-1].Descricao, FpQuebradeLinha,
-                                sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         end;
       end;
     until aValor = '';

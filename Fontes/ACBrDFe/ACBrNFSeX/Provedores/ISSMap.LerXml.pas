@@ -179,7 +179,7 @@ begin
 
   NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSSERVICO'), tcStr);
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   with NFSe.Servico do
   begin
@@ -289,7 +289,7 @@ begin
         CodServ       := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CODIGO'), tcStr);
         Descricao     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DESCRICAO'), tcStr);
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         Quantidade    := ObterConteudo(ANodes[i].Childrens.FindAnyNs('QUANTIDADE'), tcDe2);
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('VALOR'), tcDe2);
 
@@ -341,7 +341,7 @@ begin
 
     Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('OBSERVACAO'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     aValor := ObterConteudo(ANode.Childrens.FindAnyNs('RETIDO'), tcStr);
 
@@ -408,7 +408,7 @@ begin
 
         NFSe.Servico.ItemServico[i].Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DESCRICAO'), tcStr);
         NFSe.Servico.ItemServico[i].Descricao := StringReplace(NFSe.Servico.ItemServico[i].Descricao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
         NFSe.Servico.ItemServico[i].ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('VALORUNIT'), tcDe2);
 

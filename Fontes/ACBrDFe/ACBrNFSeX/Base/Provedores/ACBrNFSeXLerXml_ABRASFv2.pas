@@ -570,17 +570,19 @@ begin
     if NFSe.InformacoesComplementares = '' then
     begin
       NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
-      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, '&lt;br&gt;', ';', [rfReplaceAll]);
-      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares,
+                                 '&lt;br&gt;', FpQuebradeLinha, [rfReplaceAll]);
+      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares,
+                                   FpQuebradeLinha, sLineBreak, [rfReplaceAll]);
     end;
 
     if NFSe.OutrasInformacoes = '' then
     begin
       NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
-      NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, '&lt;br&gt;', ';', [rfReplaceAll]);
+      NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, '&lt;br&gt;',
+                                               FpQuebradeLinha, [rfReplaceAll]);
       NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     end;
   end;
 end;
@@ -607,10 +609,10 @@ begin
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
     NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     NFSe.Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('UrlNfse'), tcStr);
     NFSe.Competencia := LerCompetencia(AuxNode);
 
@@ -898,7 +900,7 @@ begin
       CodigoCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CodigoCnae'), tcStr);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Discriminacao'), tcStr);
       Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     end;
 
     with NFSe.Servico do
@@ -986,7 +988,7 @@ begin
       CodigoNBS                 := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoNbs'), tcStr);
       Discriminacao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Discriminacao);
 

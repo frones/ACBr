@@ -94,8 +94,6 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   ListaDeAlertas.Clear;
 
   FDocument.Clear();

@@ -132,8 +132,6 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   ListaDeAlertas.Clear;
 
   FDocument.Clear();
@@ -220,8 +218,8 @@ begin
     Result[i] := CreateElement('DadosServico');
 
     Result[i].AppendChild(AddNode(tcStr, '#1', 'Discriminacao', 1, 2000, 1,
-      StringReplace( NFSe.Servico.ItemServico[i].Descricao, ';',
-        FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), ''));
+      StringReplace( NFSe.Servico.ItemServico[i].Descricao, Opcoes.QuebraLinha,
+                     FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll] ), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#1', 'CodigoCnae', 1, 7, FpNrOcorrCodigoCnae,
                      FormatarCnae(NFSe.Servico.ItemServico[i].CodigoCnae), ''));

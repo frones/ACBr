@@ -292,7 +292,6 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
   Opcoes.DecimalChar := ',';
 
   ListaDeAlertas.Clear;
@@ -488,7 +487,6 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
   Opcoes.DecimalChar := ',';
 
   ListaDeAlertas.Clear;

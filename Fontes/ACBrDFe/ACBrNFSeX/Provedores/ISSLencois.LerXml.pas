@@ -213,7 +213,7 @@ begin
 
   NFSe.InformacoesComplementares := Trim(AMensagemInformacao);
   NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 end;
 
 function TNFSeR_ISSLencois.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
@@ -301,7 +301,7 @@ begin
 
   NFSe.Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('Descricao'), tcStr);
   NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   VerificarSeConteudoEhLista(NFSe.Servico.Discriminacao);
 

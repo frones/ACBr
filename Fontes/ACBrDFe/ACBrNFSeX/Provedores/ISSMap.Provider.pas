@@ -321,8 +321,8 @@ begin
 
     Nota.GerarXML;
 
-    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
-    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
 
     if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then

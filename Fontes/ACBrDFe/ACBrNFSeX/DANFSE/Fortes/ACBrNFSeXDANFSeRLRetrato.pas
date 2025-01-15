@@ -299,16 +299,20 @@ begin
       fpNFSe.Servico.xMunicipioIncidencia);
 
   if fpDANFSe.OutrasInformacaoesImp <> '' then
-    rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, ';', #13#10, [rfReplaceAll]))
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp,
+                                        FQuebradeLinha, #13#10, [rfReplaceAll]))
   else
     if fpNFSe.OutrasInformacoes <> '' then
-      rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes, FQuebradeLinha, #13#10, [rfReplaceAll]));
+      rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes,
+                                       FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.InformacoesComplementares <> '' then
-    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll]));
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares,
+                                       FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.Servico.infoCompl.xInfComp <> '' then
-    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.Servico.infoCompl.xInfComp, FQuebradeLinha, #13#10, [rfReplaceAll]));
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.Servico.infoCompl.xInfComp,
+                                       FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   if fpNFSe.Link <> '' then
   begin
@@ -372,7 +376,8 @@ begin
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
   rlmPrefeitura.Lines.Clear;
-  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura, ';', #13#10, [rfReplaceAll]));
+  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura,
+                                       FQuebradeLinha, #13#10, [rfReplaceAll]));
 
   With fpNFSe do
   begin

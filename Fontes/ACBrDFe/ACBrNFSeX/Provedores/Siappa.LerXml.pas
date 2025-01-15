@@ -172,7 +172,7 @@ begin
   begin
     Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('NFS_E_DES_DET'), tcStr);
     Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Discriminacao);
 
@@ -188,7 +188,7 @@ begin
 
   NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('NFS_E_DES_RES'), tcStr);
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
   LerCampoLink;
 end;

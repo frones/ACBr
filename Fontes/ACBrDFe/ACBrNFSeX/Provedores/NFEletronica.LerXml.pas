@@ -261,7 +261,7 @@ begin
       Unidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('unid'), tcStr);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('descricao'), tcStr);
       Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
       ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_unit'), tcDe6);
       ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor'), tcDe10);
     end;

@@ -205,7 +205,7 @@ begin
 
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('InformacoesAdicionais'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     Servico.CodigoTributacaoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('Atividade'), tcStr);
 

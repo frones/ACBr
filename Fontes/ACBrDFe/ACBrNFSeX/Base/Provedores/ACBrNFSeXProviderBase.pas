@@ -1411,6 +1411,7 @@ begin
       AWriter.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
       AWriter.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
       AWriter.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+      AWriter.Opcoes.QuebraLinha := Configuracoes.WebServices.QuebradeLinha;
     end;
 
     Result := AWriter.GerarXml;

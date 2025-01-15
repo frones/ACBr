@@ -175,7 +175,7 @@ begin
     Servico.xFormaPagamento := ObterConteudo(ANode.Childrens.FindAnyNs('forma_de_pagamento'), tcStr);
     Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     VerificarSeConteudoEhLista(Servico.Discriminacao);
 
@@ -299,7 +299,7 @@ begin
 
     Servico.Discriminacao := ObterConteudo(ANode.Childrens.FindAnyNs('descricao'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     Servico.ItemListaServico := ObterConteudo(ANode.Childrens.FindAnyNs('id_codigo_servico'), tcStr);
 
     Servico.Valores.ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('valor_nf'), tcDe2);

@@ -413,7 +413,10 @@ begin
     if NFSe.InformacoesComplementares = '' then
     begin
       NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
-      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares, '&lt;br&gt;', ';', [rfReplaceAll]);
+      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares,
+                                 '&lt;br&gt;', FpQuebradeLinha, [rfReplaceAll]);
+      NFSe.InformacoesComplementares := StringReplace(NFSe.InformacoesComplementares,
+                                   FpQuebradeLinha, sLineBreak, [rfReplaceAll]);
     end;
   end;
 end;
@@ -441,7 +444,7 @@ begin
     NFSe.OptanteSimplesNacional := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     NFSe.StatusRps := FpAOwner.StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
     NFSe.InformacoesComplementares := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
     NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
@@ -589,7 +592,7 @@ begin
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr);
       Discriminacao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Discriminacao);
 

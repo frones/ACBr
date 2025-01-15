@@ -111,7 +111,6 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
   Opcoes.DecimalChar := ',';
   {
     Se no arquivo ACBrNFSeXServicos.ini existe o campo: NaoGerarGrupoRps na

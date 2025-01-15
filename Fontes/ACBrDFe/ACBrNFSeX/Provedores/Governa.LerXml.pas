@@ -89,7 +89,7 @@ begin
       begin
         Descricao     := ObterConteudo(ANodes[i].Childrens.FindAnyNs('tsDesSvc'), tcStr);
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
         ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('tsVlrUnt'), tcDe2);
         Quantidade    := 1;
         ValorTotal    := Quantidade * ValorUnitario;
@@ -169,7 +169,7 @@ begin
     TipoRecolhimento  := ObterConteudo(AuxNode.Childrens.FindAnyNs('TipRec'), tcStr);
     OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Obs'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumRps'), tcStr);
 
@@ -203,11 +203,11 @@ begin
     Servico.CodigoCnae := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodAti'), tcStr);
     Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DesSvc'), tcStr);
     Servico.Discriminacao := StringReplace(Servico.Discriminacao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     Servico.Descricao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescricaoServ'), tcStr);
     Servico.Descricao := StringReplace(Servico.Descricao, FpQuebradeLinha,
-                                    sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     Servico.Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('VlrUnt'), tcDe2);
     Servico.Valores.ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('VlrPIS'), tcDe2);
@@ -232,7 +232,7 @@ begin
 
       Servico.ItemServico[i].Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DesSvc'), tcStr);
       Servico.ItemServico[i].Descricao := StringReplace(Servico.ItemServico[i].Descricao, FpQuebradeLinha,
-                                sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
       Servico.ItemServico[i].Quantidade    := ObterConteudo(ANodes[i].Childrens.FindAnyNs('QdeSvc'), tcDe2);
       Servico.ItemServico[i].ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('VlrUnt'), tcDe2);
       Servico.ItemServico[i].ValorTotal    := Servico.ItemServico[i].Quantidade *
@@ -310,7 +310,7 @@ begin
     TipoRecolhimento := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsTipRec'), tcStr);
     OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('tsObs'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
     LerItensRps(AuxNode);
 

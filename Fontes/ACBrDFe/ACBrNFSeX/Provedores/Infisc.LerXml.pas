@@ -391,7 +391,7 @@ begin
   end;
 
   NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 end;
 
 procedure TNFSeR_Infisc.LerISS(const ANode: TACBrXmlNode);

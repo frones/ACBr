@@ -210,7 +210,6 @@ begin
 
   Opcoes.SuprimirDecimais := True;
   Opcoes.DecimalChar := '.';
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 

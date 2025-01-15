@@ -94,7 +94,7 @@ begin
           ObterConteudo(ANodes[i].Childrens.FindAnyNs('descricaoServico'), tcStr);
 
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
         idCnae := ObterConteudo(ANodes[i].Childrens.FindAnyNs('idCNAE'), tcStr);
         Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('quantidade'), tcDe2);
@@ -205,7 +205,7 @@ begin
   	// <baseCalculoSubstituicao>0</baseCalculoSubstituicao>
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('dadosAdicionais'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
   	// <valorISSQNSubstituicao>0</valorISSQNSubstituicao>
 
     if NFSe.Servico.Valores.ValorIss <> 0 then
@@ -241,7 +241,7 @@ begin
     Tomador.Endereco.Complemento := ObterConteudo(ANode.Childrens.FindAnyNs('complementoEnderecoTomador'), tcStr);
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('dadosAdicionais'), tcStr);
     OutrasInformacoes := StringReplace(OutrasInformacoes, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
     DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('dataEmissao'), tcDat);
     Tomador.Contato.Email := ObterConteudo(ANode.Childrens.FindAnyNs('emailTomador'), tcStr);
     IdentificacaoRps.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('identificacao'), tcStr);

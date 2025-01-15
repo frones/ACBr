@@ -78,8 +78,6 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
-
   cSimples := (NFSe.OptanteSimplesNacional = snSim);
   xAtrib   := 'xsi:type="xsd:string"';
 

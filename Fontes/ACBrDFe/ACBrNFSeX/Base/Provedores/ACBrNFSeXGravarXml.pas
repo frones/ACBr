@@ -318,7 +318,8 @@ begin
                                     ItemServico[i].Aliquota);
             end;
         else
-          xDiscriminacao := xDiscriminacao + ';' + ItemServico[i].Descricao;
+          xDiscriminacao := xDiscriminacao +
+                  FpAOwner.ConfigGeral.QuebradeLinha + ItemServico[i].Descricao;
         end;
       end;
     end;

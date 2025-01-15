@@ -111,7 +111,7 @@ begin
     begin
       Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
       Discriminacao := StringReplace(Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
       VerificarSeConteudoEhLista(Discriminacao);
 
@@ -262,7 +262,7 @@ begin
         ValorISS := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlIssServico'), tcDe2);
         Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
         Descricao := StringReplace(Descricao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
 
         ValorTotal := Quantidade * ValorUnitario;
       end;
@@ -294,7 +294,7 @@ begin
     end;
 
     NFSe.Servico.Discriminacao := StringReplace(NFSe.Servico.Discriminacao, FpQuebradeLinha,
-                                      sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+                                                    sLineBreak, [rfReplaceAll]);
   end;
 end;
 

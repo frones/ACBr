@@ -77,7 +77,6 @@ begin
   ListaDeAlertas.Clear;
 
   Opcoes.DecimalChar := ',';
-  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   FDocument.Clear();
 

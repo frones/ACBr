@@ -82,7 +82,7 @@ type
     procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
     procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
 
-    function AplicarLineBreak(const AXMLRps: String; const ABreak: String): String; override;
+    function AplicarLineBreak(const AXMLRps: String; const ABreak: String): String;
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;

@@ -268,8 +268,8 @@ var
 begin
   Json := '[' + Copy(Params.Xml, 1, Length(Params.Xml) -1) + ']';
   Json := '{"Notas":' + Json + '}';
-  Json := AplicarLineBreak(Json, '');
 
+  Json := ChangeLineBreak(Json, '');
   Json := EncodeBase64(Json);
 //  Json := EncodeBase64(GZipCompress(Json));
 

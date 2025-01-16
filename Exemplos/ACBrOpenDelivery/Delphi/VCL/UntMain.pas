@@ -10,6 +10,7 @@ uses
   pcnConversaoOD,
   Classes,
   SysUtils,
+  DateUtils,
   Variants,
   ComCtrls,
   Controls,
@@ -257,6 +258,29 @@ procedure TFMain.btnOrderDispatchClick(Sender: TObject);
 begin
   ConfigurarComponente;
   ACBrOpenDelivery1.WebServices.OrderDispatch.OrderId := edtOrderOrderId.Text;
+
+  //Posso enviar vazio ou adicionando as informações
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.deliveryPerson.id := '001';
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.deliveryPerson.name := 'Teste';
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.deliveryPerson.pictureURL := 'https:\\minhaurl.com';
+
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.eta.deliveryEtaDatetime := Now;
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.eta.deliveryEtaInMinutes := 30;
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.eta.maxDeliveryTime := IncMinute(Now, 30);
+
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.event.datetime := Now;
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.event._message := 'Teste Msg Event';
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.event._type := detDeliveryOngoing;
+
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.externalTrackingURL := 'https:\\externaltrackingulr.com';
+
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.problem.datetime := Now;
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.problem._message := 'Teste Msg Problema';
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.problem.reason := prNobodyToReceive;
+
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.vehiclhe.licencePlate := 'ABC1234';
+  ACBrOpenDelivery1.WebServices.OrderDispatch.deliveryTrackingInfo.vehiclhe._type := vtMotorBikeBag;
+
   ACBrOpenDelivery1.WebServices.OrderDispatch.Executar;
 end;
 

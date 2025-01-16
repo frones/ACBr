@@ -38,13 +38,17 @@ interface
 
 uses
   SysUtils, Classes,
+  ACBrBase,
   ACBrXmlBase,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase,
+  ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceElmar202 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceElmar202 = class(TACBrNFSeXWebserviceRest)
+  protected
+    procedure SetHeaders(aHeaderReq: THTTPHeader); override;
   public
     function Recepcionar(const ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(const ACabecalho, AMSG: String): string; override;
@@ -61,12 +65,19 @@ type
   end;
 
   TACBrNFSeProviderElmar202 = class (TACBrNFSeProviderABRASFv2)
+  private
+    FpPath: string;
+    FpMethod: string;
+    FpMimeType: string;
   protected
     procedure Configuracao; override;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
   end;
 
@@ -75,6 +86,11 @@ implementation
 uses
   ACBrUtil.XMLHTML,
   ACBrDFeException,
+  ACBrNFSeX,
+  ACBrNFSeXNotasFiscais,
+  ACBrNFSeXConfiguracoes,
+  ACBrNFSeXConsts,
+  ACBrUtil.Strings,
   Elmar.GravarXml, Elmar.LerXml;
 
 { TACBrNFSeProviderElmar202 }
@@ -89,6 +105,8 @@ begin
     VersaoAtrib := '2.02';
     AtribVerLote := 'versao';
   end;
+
+  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProviderElmar202.CriarGeradorXml(
@@ -113,7 +131,11 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceElmar202.Create(FAOwner, AMetodo, URL)
+  begin
+    URL := URL + FpPath;
+    Result := TACBrNFSeXWebserviceElmar202.Create(FAOwner, AMetodo, URL,
+              FpMethod, FpMimeType);
+  end
   else
   begin
     if ConfigGeral.Ambiente = taProducao then
@@ -123,13 +145,112 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderElmar202.PrepararEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Nota: TNotaFiscal;
+  IdAttr, ListaRps, xRps: string;
+  I: Integer;
+begin
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod002;
+    AErro.Descricao := ACBrStr(Desc002);
+  end;
+
+  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod003;
+    AErro.Descricao := ACBrStr('Conjunto de RPS transmitidos (máximo de ' +
+                       IntToStr(Response.MaxRps) + ' RPS)' +
+                       ' excedido. Quantidade atual: ' +
+                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count));
+  end;
+
+  if Response.Erros.Count > 0 then Exit;
+
+  ListaRps := '';
+
+  if ConfigAssinar.IncluirURI then
+    IdAttr := ConfigGeral.Identificador
+  else
+    IdAttr := 'ID';
+
+  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
+  begin
+    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
+
+    Nota.GerarXML;
+
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+
+    if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
+       (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
+    begin
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
+
+      Response.ArquivoEnvio := Nota.XmlRps;
+    end;
+
+    SalvarXmlRps(Nota);
+
+    xRps := RemoverDeclaracaoXML(Nota.XmlRps);
+    xRps := PrepararRpsParaLote(xRps);
+
+    ListaRps := ListaRps + xRps;
+  end;
+
+  Response.ArquivoEnvio := '<LoteRps>' + ListaRps + '</LoteRps>';
+
+  FpPath := '/' + TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSUser +
+            '/api/Rps/Xml/' +
+            TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ;
+
+  FpMethod := 'POST';
+  FpMimeType := 'application/xml';
+end;
+
+procedure TACBrNFSeProviderElmar202.TratarRetornoEmitir(
+  Response: TNFSeEmiteResponse);
+begin
+//  inherited;
+
+end;
+
 { TACBrNFSeXWebserviceElmar202 }
+
+procedure TACBrNFSeXWebserviceElmar202.SetHeaders(aHeaderReq: THTTPHeader);
+var
+  Auth: string;
+begin
+//  if (FpMetodo <> tmGerarToken) then
+//  begin
+    Auth := 'Bearer ' +
+            TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso;
+
+    aHeaderReq.AddHeader('Authorization', Auth);
+//    aHeaderReq.AddHeader('Connection', 'keep-alive');
+//    aHeaderReq.AddHeader('Accept', '*/*');
+//  end;
+end;
 
 function TACBrNFSeXWebserviceElmar202.Recepcionar(const ACabecalho,
   AMSG: String): string;
 var
   Request: string;
 begin
+  FPMsgOrig := AMSG;
+
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+  {
   FPMsgOrig := AMSG;
 
   Request := '<nfse:RecepcionarLoteRpsRequest>';
@@ -140,6 +261,7 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
                      ['outputXML', 'EnviarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  }
 end;
 
 function TACBrNFSeXWebserviceElmar202.RecepcionarSincrono(const ACabecalho,
@@ -166,6 +288,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+  {
+  FPMsgOrig := AMSG;
+
   Request := '<nfse:GerarNfseRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
@@ -174,6 +302,7 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
                      ['outputXML', 'GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  }
 end;
 
 function TACBrNFSeXWebserviceElmar202.ConsultarLote(const ACabecalho,

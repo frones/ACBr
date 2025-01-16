@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 16/01/2025
+-- Elmar.Provider --
+[+] #TK-6485: Implementado o Envio em modo Assíncrono do RPS para a API do provedor.
+    Se faz necessário realizar testes para que possamos implementar o tratamento do
+    retorno.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6485: Incluída as URLs do provedor Elmar.
   Por: Italo Giurizzato Junior

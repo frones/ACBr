@@ -139,6 +139,67 @@ type
 
   TACBrODUnit = (unUnit, unKilogram, unLiter, unOunce, unPound, unGallon);
 
+  TACBrODDispatchedEventType = (detDeliveryOngoing, detDeliveryArrivedAtCustomer,
+                                 detOrderDelivered, detCancelled, detUndefined);
+
+  const
+  TACBrODDispatchedEventTypeArrayStrings: array[TACBrODDispatchedEventType] of string =
+    ('DELIVERY_ONGOING',
+    'ARRIVED_AT_CUSTOMER',
+    'ORDER_DELIVERED',
+    'CANCELLED',
+    '');
+  type
+  TACBrODProblemReason = (
+    prDeliveryPersonOccurrence,
+    prPaymentProblems,
+    prWrongProductOrItem,
+    prOrderDelayed,
+    prOrderDamagedOrViolated,
+    prCustomerDidNotPlaceOrder,
+    prCustomerAddressUnknown,
+    prOrderMissingItems,
+    prNobodyToReceive,
+    prDeliveryPersonWaitingPaymentForAlreadyPaidOrder,
+    prOrderDeliveredWithoutPayment,
+    prFraudOrTheft,
+    prUndefined);
+
+  const
+   TACBrODProblemReasonArray: array[TACBrODProblemReason] of string =
+   ('DELIVERYPERSON_OCCURRENCE',
+    'PAYMENT_PROBLEMS',
+    'WRONG_PRODUCT_OR_ITEM',
+    'ORDER_DELAYED',
+    'ORDER_DAMAGED_OR_VIOLATED',
+    'CUSTOMER_DID_NOT_PLACE_ORDER',
+    'CUSTOMER_ADDRESS_UNKNOWN',
+    'ORDER_MISSING_ITEMS',
+    'NOBODY_TO_RECEIVE',
+    'DELIVERYPERSON_WAITING_PAYMENT_FOR_ALREADY_PAID_ORDER',
+    'ORDER_DELIVERED_WITHOUT_PAYMENT',
+    'FRAUD_OR_THEFT',
+    '');
+
+  type
+  TACBrODVehicleType = (
+    vtMotorBikeBag,
+    vtMotorBikeBox,
+    vtCar,
+    vtBicycle,
+    vtScooter,
+    vtVuc,
+    vtUndefined);
+  const
+  TACBrODVehicleTypeArrayStrings: array[TACBrODVehicleType] of string =
+  ('MOTORBIKE_BAG',
+   'MOTORBIKE_BOX',
+   'CAR',
+   'BICYCLE',
+   'SCOOTER',
+   'VUC',
+   '');
+
 function AllergenToStr(AValue: TACBrODAllergen): string;
 function AllergensToArray(AValue: TACBrODAllergenArray): TSplitResult;
 function StrToAllergen(const AValue: string): TACBrODAllergen;
@@ -210,6 +271,15 @@ function StrToTakeoutMode(AValue: string): TACBrODTakeoutMode;
 
 function UnitToStr(aValue: TACBrODUnit): String;
 function StrToUnit(aValue: String): TACBrODUnit;
+
+function DispatchedEventTypeToStr(const AValue: TACBrODDispatchedEventType): String;
+function StrToDispatchedEventType(const AValue: String): TACBrODDispatchedEventType;
+
+function ProblemReasonToStr(const AValue: TACBrODProblemReason): String;
+function StrToProblemReason(const AValue: String): TACBrODProblemReason;
+
+function VehicleTypeToStr(const AValue: TACBrODVehicleType): String;
+function StrToVehicleType(const AValue: String): TACBrODVehicleType;
 
 implementation
 
@@ -1238,6 +1308,63 @@ begin
     Result := unPound
   else if (wUpStr = 'GAL') then
     Result := unGallon;
+end;
+
+function DispatchedEventTypeToStr(const AValue: TACBrODDispatchedEventType): String;
+begin
+  Result := TACBrODDispatchedEventTypeArrayStrings[AValue];
+end;
+
+function StrToDispatchedEventType(const AValue: String): TACBrODDispatchedEventType;
+var
+  LIdx: TACBrODDispatchedEventType;
+begin
+  for LIdx := Low(TACBrODDispatchedEventTypeArrayStrings) to High(TACBrODDispatchedEventTypeArrayStrings) do
+  begin
+    if (TACBrODDispatchedEventTypeArrayStrings[LIdx] = AValue) then
+    begin
+      Result := LIdx;
+      exit;
+    end;
+  end;
+end;
+
+function ProblemReasonToStr(const AValue: TACBrODProblemReason): String;
+begin
+  Result := TACBrODProblemReasonArray[AValue];
+end;
+
+function StrToProblemReason(const AValue: String): TACBrODProblemReason;
+var
+  LIdx: TACBrODProblemReason;
+begin
+  for LIdx := Low(TACBrODProblemReasonArray) to High(TACBrODProblemReasonArray) do
+  begin
+    if (TACBrODProblemReasonArray[LIdx] = AValue) then
+    begin
+      Result := LIdx;
+      exit;
+    end;
+  end;
+end;
+
+function VehicleTypeToStr(const AValue: TACBrODVehicleType): String;
+begin
+  Result := TACBrODVehicleTypeArrayStrings[AValue];
+end;
+
+function StrToVehicleType(const AValue: String): TACBrODVehicleType;
+var
+  LIdx: TACBrODVehicleType;
+begin
+  for LIdx := Low(TACBrODVehicleTypeArrayStrings) to High(TACBrODVehicleTypeArrayStrings) do
+  begin
+    if (TACBrODVehicleTypeArrayStrings[LIdx] = AValue) then
+    begin
+      Result := LIdx;
+      exit;
+    end;
+  end;
 end;
 
 end.

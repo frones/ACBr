@@ -84,6 +84,7 @@ type
   TACBrOpenDeliverySchemaOrderDiscountCollection = class;
   TACBrOpenDeliverySchemaOrderDiscountSponsor = class;
   TACBrOpenDeliverySchemaOrderDiscountSponsorCollection = class;
+  TACBrOpenDeliverySchemaOrderDispatched = class;
   TACBrOpenDeliverySchemaOrderFee = class;
   TACBrOpenDeliverySchemaOrderFeeCollection = class;
   TACBrOpenDeliverySchemaOrderIndoor = class;
@@ -987,6 +988,124 @@ type
   public
     function New: TACBrOpenDeliverySchemaOrderDiscountSponsor;
     property Items[Index: Integer]: TACBrOpenDeliverySchemaOrderDiscountSponsor read GetItem write SetItem; default;
+  end;
+
+  TACBrOpenDeliverySchemaDeliveryPerson = class(TACBrOpenDeliverySchema)
+  private
+    Fid: string;
+    Fname: string;
+    FpictureURL: string;
+  protected
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const AObjectName: string = ''); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+
+    property id: string read Fid write Fid;
+    property name: string read Fname write Fname;
+    property pictureURL: string read FpictureURL write FpictureURL;
+  end;
+
+  TACBrOpenDeliverySchemaEta = class(TACBrOpenDeliverySchema)
+  private
+    FdeliveryEtaDateTime: TDateTime;
+    FdeliveryEtaInMinutes: Integer;
+    FmaxDeliveryTime: TDateTime;
+  protected
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const AObjectName: string = ''); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+
+    property deliveryEtaDatetime: TDateTime read FdeliveryEtaDateTime write FdeliveryEtaDateTime;
+    property deliveryEtaInMinutes: Integer read FdeliveryEtaInMinutes write FdeliveryEtaInMinutes;
+    property maxDeliveryTime: TDateTime read FmaxDeliveryTime write FmaxDeliveryTime;
+  end;
+
+  TACBrOpenDeliverySchemaOrderDispatchedEvent = class(TACBrOpenDeliverySchema)
+  private
+    Fdatetime: TDateTime;
+    F_message: string;
+    F_type: TACBrODDispatchedEventType;
+  protected
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const AObjectName: string = ''); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+
+    property datetime: TDatetime read Fdatetime write Fdatetime;
+    property _message: string read F_message write F_message;
+    property _type: TACBrODDispatchedEventType read F_type write F_type;
+  end;
+
+  TACBrOpenDeliverySchemaProblem = class(TACBrOpenDeliverySchema)
+  private
+    Fdatetime: TDateTime;
+    F_message: String;
+    Freason: TACBrODProblemReason;
+  protected
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const AObjectName: string = ''); override;
+    destructor Destroy; override;
+    procedure Clear;
+    function  IsEmpty: Boolean; override;
+
+    property datetime: TDateTime read Fdatetime write Fdatetime;
+    property _message: String read F_message write F_message;
+    property reason: TACBrODProblemReason read Freason write Freason;
+  end;
+
+  TACBrOpenDeliverySchemaVehicle = class(TACBrOpenDeliverySchema)
+  private
+    FlicencePlate: String;
+    F_type: TACBrODVehicleType;
+  protected
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
+  public
+    constructor Create(const AObjectName: string = ''); override;
+    destructor Destroy; override;
+    procedure Clear;
+    function  IsEmpty: Boolean; override;
+
+    property licencePlate: String read FlicencePlate write FlicencePlate;
+    property _type: TACBrODVehicleType read F_type write F_type;
+  end;
+
+  TACBrOpenDeliverySchemaOrderDispatched = class(TACBrOpenDeliverySchema)
+  private
+    FdeliveryPerson: TACBrOpenDeliverySchemaDeliveryPerson;
+    Feta: TACBrOpenDeliverySchemaEta;
+    Fevent: TACBrOpenDeliverySchemaOrderDispatchedEvent;
+    FexternalTrackingURL: string;
+    Fproblem: TACBrOpenDeliverySchemaProblem;
+    Fvehicle: TACBrOpenDeliverySchemaVehicle;
+  protected
+    procedure DoWriteToJson(AJson: TACBrJsonObject); override;
+    procedure DoReadFromJson(AJson: TACBrJsonObject); override;
+  public
+    constructor Create(const AObjectName: string = ''); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+
+    property deliveryPerson: TACBrOpenDeliverySchemaDeliveryPerson read FdeliveryPerson write FdeliveryPerson;
+    property eta: TACBrOpenDeliverySchemaEta read Feta write Feta;
+    property event: TACBrOpenDeliverySchemaOrderDispatchedEvent read Fevent write Fevent;
+    property externalTrackingURL: string read FexternalTrackingURL write FexternalTrackingURL;
+    property problem: TACBrOpenDeliverySchemaProblem read Fproblem write Fproblem;
+    property vehiclhe: TACBrOpenDeliverySchemaVehicle read Fvehicle write Fvehicle;
   end;
 
   TACBrOpenDeliverySchemaOrderFee = class(TACBrOpenDeliverySchema)
@@ -4651,6 +4770,287 @@ end;
 function TACBrOpenDeliverySchemaServiceTiming.IsEmpty: Boolean;
 begin
   Result := (Length(Ftiming) = 0) and (Fschedule.IsEmpty);
+end;
+
+{ TACBrOpenDeliverySchemaDeliveryPerson }
+
+procedure TACBrOpenDeliverySchemaDeliveryPerson.Clear;
+begin
+  Fid := '';
+  Fname := '';
+  FpictureURL := '';
+end;
+
+constructor TACBrOpenDeliverySchemaDeliveryPerson.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+end;
+
+destructor TACBrOpenDeliverySchemaDeliveryPerson.Destroy;
+begin
+  inherited;
+end;
+
+procedure TACBrOpenDeliverySchemaDeliveryPerson.DoReadFromJSon(AJSon: TACBrJSONObject);
+begin
+  AJSon
+    .Value('id', Fid)
+    .Value('name', Fname)
+    .Value('pictureURL', FpictureURL);
+end;
+
+procedure TACBrOpenDeliverySchemaDeliveryPerson.DoWriteToJSon(AJSon: TACBrJSONObject);
+begin
+  AJSON
+    .AddPair('id', Fid)
+    .AddPair('name', Fname)
+    .AddPair('pictureURL', FpictureURL);
+end;
+
+function TACBrOpenDeliverySchemaDeliveryPerson.IsEmpty: Boolean;
+begin
+  Result := (Fid = '') and (Fname = '') and (FpictureURL = '');
+end;
+
+{ TACBrOpenDeliverySchemaEta }
+
+procedure TACBrOpenDeliverySchemaEta.Clear;
+begin
+  FdeliveryEtaDateTime := 0;
+  FdeliveryEtaInMinutes := 0;
+  FmaxDeliveryTime := 0;
+end;
+
+constructor TACBrOpenDeliverySchemaEta.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+end;
+
+destructor TACBrOpenDeliverySchemaEta.Destroy;
+begin
+  inherited;
+end;
+
+procedure TACBrOpenDeliverySchemaEta.DoReadFromJSon(AJSon: TACBrJSONObject);
+begin
+  AJson
+    .ValueISODateTime('deliveryEtaDateTime', FdeliveryEtaDateTime)
+    .Value('deliveryEtaInMinutes', FdeliveryEtaInMinutes)
+    .ValueISODateTime('maxDeliveryTime', FmaxDeliveryTime);
+end;
+
+procedure TACBrOpenDeliverySchemaEta.DoWriteToJSon(AJSon: TACBrJSONObject);
+begin
+  AJson
+    .AddPairISODateTime('deliveryEtaDateTime', FdeliveryEtaDateTime)
+    .AddPair('deliveryEtaInMinutes', FdeliveryEtaInMinutes)
+    .AddPairISODateTime('maxDeliveryTime', FmaxDeliveryTime);
+end;
+
+function TACBrOpenDeliverySchemaEta.IsEmpty: Boolean;
+begin
+  Result := (FdeliveryEtaDateTime = 0) and (FdeliveryEtaInMinutes = 0) and (FmaxDeliveryTime = 0);
+end;
+
+{ TACBrOpenDeliverySchemaOrderDispatchedEvent }
+
+procedure TACBrOpenDeliverySchemaOrderDispatchedEvent.Clear;
+begin
+  Fdatetime := 0;
+  F_message := '';
+  F_type := detUndefined;
+end;
+
+constructor TACBrOpenDeliverySchemaOrderDispatchedEvent.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+end;
+
+destructor TACBrOpenDeliverySchemaOrderDispatchedEvent.Destroy;
+begin
+  inherited;
+end;
+
+procedure TACBrOpenDeliverySchemaOrderDispatchedEvent.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  LStr: String;
+begin
+  AJson
+    .ValueISODateTime('datetime', Fdatetime)
+    .Value('message', F_message)
+    .Value('type', LStr);
+
+  F_type := StrToDispatchedEventType(LStr);
+end;
+
+procedure TACBrOpenDeliverySchemaOrderDispatchedEvent.DoWriteToJSon(AJSon: TACBrJSONObject);
+var
+  LStr: String;
+begin
+  LStr := DispatchedEventTypeToStr(F_type);
+  AJSON
+    .AddPairISODateTime('datetime', Fdatetime)
+    .AddPair('message', F_message)
+    .AddPair('type', LStr);
+end;
+
+function TACBrOpenDeliverySchemaOrderDispatchedEvent.IsEmpty: Boolean;
+begin
+  Result := (Fdatetime = 0) and (F_message = '') and (F_type = detUndefined);
+end;
+
+{ TACBrOpenDeliverySchemaProblem }
+
+procedure TACBrOpenDeliverySchemaProblem.Clear;
+begin
+  Fdatetime := 0;
+  F_message := '';
+  Freason := prUndefined;
+end;
+
+constructor TACBrOpenDeliverySchemaProblem.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+end;
+
+destructor TACBrOpenDeliverySchemaProblem.Destroy;
+begin
+  inherited;
+end;
+
+procedure TACBrOpenDeliverySchemaProblem.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  LStr: String;
+begin
+  AJson
+    .ValueISODateTime('datetime', Fdatetime)
+    .Value('message', F_message)
+    .Value('reason', LStr);
+
+  Freason := StrToProblemReason(LStr);
+end;
+
+procedure TACBrOpenDeliverySchemaProblem.DoWriteToJSon(AJSon: TACBrJSONObject);
+var
+  LStr: String;
+begin
+  LStr := ProblemReasonToStr(Freason);
+  AJson
+    .AddPairISODateTime('datetime', Fdatetime)
+    .AddPair('message', F_message)
+    .AddPair('reason', LStr);
+end;
+
+function TACBrOpenDeliverySchemaProblem.IsEmpty: Boolean;
+begin
+  Result := (Fdatetime = 0) and (F_message = '') and (Freason = prUndefined);
+end;
+
+{ TACBrOpenDeliverySchemaVehicle }
+
+procedure TACBrOpenDeliverySchemaVehicle.Clear;
+begin
+  FlicencePlate := '';
+  F_type := vtUndefined;
+end;
+
+constructor TACBrOpenDeliverySchemaVehicle.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+end;
+
+destructor TACBrOpenDeliverySchemaVehicle.Destroy;
+begin
+  inherited;
+end;
+
+procedure TACBrOpenDeliverySchemaVehicle.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  LStr: String;
+begin
+  AJson
+    .Value('licencePlate', FlicencePlate)
+    .Value('type', LStr);
+
+  F_type := StrToVehicleType(LStr);
+end;
+
+procedure TACBrOpenDeliverySchemaVehicle.DoWriteToJSon(AJSon: TACBrJSONObject);
+var
+  LStr: String;
+begin
+  LStr := VehicleTypeToStr(F_type);
+
+  AJson
+    .AddPair('licencePlate', FlicencePlate)
+    .AddPair('type', TACBrJSONArray.Create.AddElement(LStr));
+end;
+
+function TACBrOpenDeliverySchemaVehicle.IsEmpty: Boolean;
+begin
+  Result := (FlicencePlate = '') and (F_type = vtUndefined);
+end;
+
+{ TACBrOpenDeliverySchemaOrderDispatched }
+
+procedure TACBrOpenDeliverySchemaOrderDispatched.Clear;
+begin
+  FdeliveryPerson.Clear;
+  Feta.Clear;
+  Fevent.Clear;
+  FexternalTrackingURL := '';
+  Fproblem.Clear;
+  Fvehicle.Clear;
+end;
+
+constructor TACBrOpenDeliverySchemaOrderDispatched.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+  FdeliveryPerson := TACBrOpenDeliverySchemaDeliveryPerson.Create('deliveryPerson');
+  Feta := TACBrOpenDeliverySchemaEta.Create('eta');
+  Fevent := TACBrOpenDeliverySchemaOrderDispatchedEvent.Create('event');
+  Fproblem := TACBrOpenDeliverySchemaProblem.Create('problem');
+  Fvehicle := TACBrOpenDeliverySchemaVehicle.Create('vehicle');
+end;
+
+destructor TACBrOpenDeliverySchemaOrderDispatched.Destroy;
+begin
+  FdeliveryPerson.Free;
+  Feta.Free;
+  Fevent.Free;
+  Fproblem.Free;
+  Fvehicle.Free;
+  inherited;
+end;
+
+procedure TACBrOpenDeliverySchemaOrderDispatched.DoReadFromJson(AJson: TACBrJsonObject);
+begin
+  FdeliveryPerson.ReadFromJSon(AJson);
+  Feta.ReadFromJSON(AJSon);
+  Fevent.ReadFromJSON(AJson);
+  AJson.Value('externalTrackingURL', FexternalTrackingURL);
+  Fproblem.ReadFromJSon(AJson);
+  Fvehicle.ReadFromJSon(AJSon);
+end;
+
+procedure TACBrOpenDeliverySchemaOrderDispatched.DoWriteToJson(AJson: TACBrJsonObject);
+begin
+  FdeliveryPerson.WriteToJSon(AJson);
+  Feta.WriteToJson(AJson);
+  Fevent.WriteToJSon(AJson);
+  AJson.AddPair('externalTrackingURL', FexternalTrackingURL);
+  Fproblem.WriteToJSon(AJson);
+  Fvehicle.WriteToJSon(AJson);
+end;
+
+function TACBrOpenDeliverySchemaOrderDispatched.IsEmpty: Boolean;
+begin
+  Result := (FdeliveryPerson.IsEmpty) and
+            (Feta.IsEmpty) and
+            (Fevent.IsEmpty) and
+            (FexternalTrackingURL = '') and
+            (Fproblem.IsEmpty) and
+            (Fvehicle.IsEmpty);
 end;
 
 end.

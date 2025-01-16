@@ -282,14 +282,19 @@ type
   TACBrOpenDeliveryOrderDispatch = class(TACBrOpenDeliveryWebService)
   private
     FOrderId: string;
+    FdeliveryTrackingInfo: TACBrOpenDeliverySchemaOrderDispatched;
   protected
     procedure InicializarServico; override;
     procedure DefinirRecurso; override;
+    procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
   public
+    constructor Create(AOwner: TACBrComponent); override;
+    destructor Destroy; override;
     procedure Clear; override;
 
     property OrderId: string read FOrderId write FOrderId;
+    property deliveryTrackingInfo: TACBrOpenDeliverySchemaOrderDispatched read FdeliveryTrackingInfo;
   end;
 
   { TACBrOpenDeliveryOrderDelivered }
@@ -1178,6 +1183,25 @@ procedure TACBrOpenDeliveryOrderDispatch.Clear;
 begin
   inherited;
   FOrderId := '';
+  FdeliveryTrackingInfo.Clear;
+end;
+
+constructor TACBrOpenDeliveryOrderDispatch.Create(AOwner: TACBrComponent);
+begin
+  inherited Create(AOwner);
+  FdeliveryTrackingInfo := TACBrOpenDeliverySchemaOrderDispatched.Create('deliveryTrackingInfo');
+
+  Clear;
+end;
+
+procedure TACBrOpenDeliveryOrderDispatch.DefinirDadosMsg;
+begin
+  //Se não for enviado o body, precisa enviar um elemento vazio.
+  //https://github.com/Abrasel-Nacional/docs/issues/176
+  if not FdeliveryTrackingInfo.IsEmpty then
+    FRequest.Body(FdeliveryTrackingInfo.AsJSON)
+  else
+    FRequest.Body('{}');
 end;
 
 procedure TACBrOpenDeliveryOrderDispatch.DefinirRecurso;
@@ -1189,6 +1213,12 @@ begin
   LResource := LComponent.MarketPlace.Resources
     .GetOrderDispatch(FOrderId, '');
   FRequest.POST.Resource(LResource);
+end;
+
+destructor TACBrOpenDeliveryOrderDispatch.Destroy;
+begin
+  FdeliveryTrackingInfo.Free;
+  inherited;
 end;
 
 procedure TACBrOpenDeliveryOrderDispatch.InicializarServico;

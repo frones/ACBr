@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/01/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6485: Incluída as URLs do provedor Elmar.
+  Por: Italo Giurizzato Junior
+[*] #TK-6486: A cidade de Santa Luzia/MG trocou de provedor, agora é SigCorp.
+  Por: PrimeSoftware
+[*] #TK-6491: A cidade de Dourado/SP trocou as URLs o provedor continua
+    o mesmo.
+  Por: Jeferson S Lima
+
 15/01/2025
 -- AssessorPublico.Provider --
 [*] #TK-6483: Incluído na configuração a QuebradeLinha.

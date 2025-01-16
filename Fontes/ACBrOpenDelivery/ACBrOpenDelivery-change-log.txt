@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/01/2025
+-- ACBrOpenDeliveryHTTP --
+[*] #TK-6477: Ajustes visando corrigir problema com os caracteres acentuados nas respostas - https://www.projetoacbr.com.br/forum/topic/81265-erro-ao-utilizar-componente-acbropendelivery-demo/?&_rid=124795#findComment-526931
+  Por: Diego Folieni  
 -- ACBrOpenDeliverySchemaClasses, ACBrOpenDeliveryWebServices, pcnConversaoOD --
 [*] #TK-6476: Ajustes visando corrigir retorno "415 unsupported media type" para o endpoint Dispatch- https://www.projetoacbr.com.br/forum/topic/81265-erro-ao-utilizar-componente-acbropendelivery-demo/?&_rid=124795#findComment-526943
   Por: Diego Folieni 

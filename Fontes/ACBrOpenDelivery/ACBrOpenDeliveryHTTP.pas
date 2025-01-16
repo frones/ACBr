@@ -41,6 +41,7 @@ uses
   ACBrOpenDeliverySchemaClasses,
   ACBrOpenDeliveryException,
   Classes,
+  ACBrUtil.Strings,
   SysUtils;
 
 type
@@ -420,7 +421,7 @@ end;
 
 function TACBrOpenDeliveryHTTPResponse.GetContent: string;
 begin
-  Result := FBodyText;
+  Result := UTF8ToNativeString(FBodyText);
 end;
 
 function TACBrOpenDeliveryHTTPResponse.GetJSONArray: TACBrJSONArray;

@@ -647,6 +647,7 @@ begin
   FRegistro0140.Free;
   FRegistro0500.Free;
   FRegistro0600.Free;
+  FRegistro0900.Free;	
   inherited;
 end;
 

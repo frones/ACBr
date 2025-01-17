@@ -66,7 +66,6 @@ procedure TNFSeW_Ginfes.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrAliquota := 0;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
   NrOcorrValorInss := 1;

@@ -71,7 +71,6 @@ begin
   if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then
     DivAliq100 := False;
 
-  NrOcorrAliquota := 0;
   NrOcorrValorIss := 1;
 end;
 

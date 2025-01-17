@@ -72,7 +72,6 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
-  NrOcorrAliquota := 0;
   NrOcorrValorTotalRecebido := 1;
 end;
 

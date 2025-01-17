@@ -93,8 +93,6 @@ procedure TNFSeW_Pronim202.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrAliquota := 0;
-
   Opcoes.SuprimirDecimais := True;
 
   if FpAOwner.ConfigGeral.Params.TemParametro('NaoSuprimirDecimais') then

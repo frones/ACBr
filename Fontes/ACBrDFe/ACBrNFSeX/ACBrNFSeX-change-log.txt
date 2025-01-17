@@ -43,7 +43,24 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6499: Incluída o Parâmetro para dividir a aliquota por 100 
+    para cidade de Maceio/AL.
+  Por: Élviro Cavalcanti
+[+] #TK-6497: Incluída a cidade de Vila Flores/RS, o provedor é Tecnos.
+  Por: DatawebDev - Guilherme Costa
+[+] #TK-6498: Incluída a cidade de Pocrane/MG, o provedor é NFSeBrasil.
+  Por: Gabriel Bobello
+[+] #TK-6492: Incluída a cidade de Mutum/MG, o provedor é NFSeBrasil.
+  Por: Gabriel Bobello
+[*] #TK-6501: A cidade de Bento Goncalves/RS trocou de provedor, agora é EloTech.
+  Por: frankimiotto
+
 16/01/2025
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Augusto de Lima/MG, o provedor é Sintese.
+  Por: Hendrik
 -- Elmar.Provider --
 [+] #TK-6485: Implementado o Envio em modo Assíncrono do RPS para a API do provedor.
     Se faz necessário realizar testes para que possamos implementar o tratamento do

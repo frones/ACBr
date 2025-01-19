@@ -1,0 +1,1726 @@
+object frmPagamentos: TfrmPagamentos
+  Left = 632
+  Height = 437
+  Top = 242
+  Width = 900
+  Caption = 'Pagamentos'
+  ClientHeight = 437
+  ClientWidth = 900
+  OnCreate = FormCreate
+  LCLVersion = '2.2.4.0'
+  object pgPagamentos: TPageControl
+    Left = 0
+    Height = 437
+    Top = 0
+    Width = 900
+    ActivePage = tsGuias
+    Align = alClient
+    Images = frPagamentosAPITeste.ImageList1
+    TabHeight = 25
+    TabIndex = 1
+    TabOrder = 0
+    TabWidth = 200
+    object tsLotePagamento: TTabSheet
+      Caption = 'Lote de Pagamento'
+      ClientHeight = 404
+      ClientWidth = 892
+      ImageIndex = 33
+      object pnLote: TPanel
+        Left = 0
+        Height = 404
+        Top = 0
+        Width = 892
+        Align = alClient
+        BevelOuter = bvNone
+        ClientHeight = 404
+        ClientWidth = 892
+        TabOrder = 0
+        object pnLoteDados: TPanel
+          Left = 0
+          Height = 353
+          Top = 0
+          Width = 892
+          Align = alClient
+          BevelOuter = bvNone
+          ClientHeight = 353
+          ClientWidth = 892
+          TabOrder = 0
+          object edNumRequisicao: TEdit
+            Left = 30
+            Height = 23
+            Hint = 'Número controlado pelo cliente, de 1 a 9999999, para identificar cada acionamento da API e os lançamentos de cada chamada. Não precisa ser sequencial. De uso único (por contrato de pagamento)'
+            Top = 71
+            Width = 180
+            MaxLength = 7
+            NumbersOnly = True
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+          end
+          object lbNumRequisicao: TLabel
+            Left = 30
+            Height = 15
+            Hint = 'Número controlado pelo cliente, de 1 a 9999999, para identificar cada acionamento da API e os lançamentos de cada chamada. Não precisa ser sequencial. De uso único (por contrato de pagamento)'
+            Top = 58
+            Width = 109
+            Caption = 'Número Requisição*'
+            ParentColor = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object edCodigoContrato: TEdit
+            Left = 224
+            Height = 23
+            Hint = 'Contrato (ou convênio) de pagamento entre o terceiro e o Banco do Brasil'
+            Top = 71
+            Width = 180
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+          end
+          object lbCodigoContrato: TLabel
+            Left = 224
+            Height = 15
+            Hint = 'Contrato (ou convênio) de pagamento entre o terceiro e o Banco do Brasil'
+            Top = 56
+            Width = 94
+            Caption = 'Código Contrato*'
+            ParentColor = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object edNumeroAgenciaDebito: TEdit
+            Left = 419
+            Height = 23
+            Top = 71
+            Width = 180
+            NumbersOnly = True
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+          end
+          object lbNumeroAgenciaDebito: TLabel
+            Left = 419
+            Height = 15
+            Hint = 'Número da agência da Conta Corrente onde deverá ser efetuado o débito do valor total de cada requisição. (4 algarismos sem o dígito verificador)'
+            Top = 56
+            Width = 153
+            Caption = 'Agência da Conta de Débito*'
+            ParentColor = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object edNumeroContaCorrenteDebito: TEdit
+            Left = 614
+            Height = 23
+            Top = 71
+            Width = 180
+            NumbersOnly = True
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 4
+          end
+          object lbNumeroContaCorrenteDebito: TLabel
+            Left = 614
+            Height = 15
+            Hint = 'Número da Conta Corrente onde deverá ser efetuado o débito do valor total de cada requisição'
+            Top = 56
+            Width = 143
+            Caption = 'Conta Corrente de  Débito*'
+            ParentColor = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object edDigitoCCDebito: TEdit
+            Left = 798
+            Height = 23
+            Top = 71
+            Width = 52
+            MaxLength = 1
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 5
+          end
+          object lbDigitoCCDebito: TLabel
+            Left = 798
+            Height = 15
+            Hint = 'Digito verificador da Conta corrente onde deverá ser efetuado o débito do valor total de cada requisição'
+            Top = 56
+            Width = 56
+            Caption = 'Dígito CC*'
+            ParentColor = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object btPreencher: TBitBtn
+            Left = 30
+            Height = 28
+            Top = 298
+            Width = 180
+            Caption = 'Preencher Dados Fictícios'
+            Images = frPagamentosAPITeste.ImageList1
+            ImageIndex = 21
+            OnClick = btPreencherClick
+            TabOrder = 6
+          end
+          object btLimparLancamentos: TBitBtn
+            Left = 419
+            Height = 28
+            Top = 298
+            Width = 180
+            Caption = 'Limpar Lançamentos'
+            Images = frPagamentosAPITeste.ImageList1
+            ImageIndex = 32
+            OnClick = btLimparLancamentosClick
+            TabOrder = 8
+          end
+          object btIncluirLancamento: TBitBtn
+            Left = 224
+            Height = 28
+            Top = 298
+            Width = 180
+            Caption = 'Incluir Lançamento'
+            Images = frPagamentosAPITeste.ImageList1
+            ImageIndex = 31
+            OnClick = btIncluirLancamentoClick
+            TabOrder = 7
+          end
+          object lbLancamentos: TLabel
+            Left = 720
+            Height = 21
+            Top = 298
+            Width = 99
+            Caption = 'Lançamentos: '
+            Font.Height = -16
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbLancamentosQtd: TLabel
+            Left = 819
+            Height = 21
+            Top = 298
+            Width = 31
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = '00'
+            Font.Color = clBlue
+            Font.Height = -16
+            Font.Style = [fsBold]
+            ParentColor = False
+            ParentFont = False
+          end
+          object cbLoteTipo: TComboBox
+            Left = 30
+            Height = 23
+            Top = 25
+            Width = 180
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Boletos'
+              'Guias com Código de Barras'
+              'GRU'
+              'DARF (Normal/Preto)'
+              'GPS'
+            )
+            OnSelect = cbLoteTipoSelect
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Boletos'
+          end
+          object lbLoteTipo: TLabel
+            Left = 30
+            Height = 15
+            Top = 10
+            Width = 23
+            Caption = 'Tipo'
+            ParentColor = False
+          end
+          object pnLancamentos: TPanel
+            Left = 30
+            Height = 184
+            Top = 103
+            Width = 820
+            BevelOuter = bvNone
+            ClientHeight = 184
+            ClientWidth = 820
+            TabOrder = 9
+            object pgLancamentos: TPageControl
+              Left = 0
+              Height = 184
+              Top = 0
+              Width = 820
+              ActivePage = tsGPS
+              Align = alClient
+              TabIndex = 3
+              TabOrder = 0
+              object tsBoletoLancamento: TTabSheet
+                Caption = 'Boleto'
+                ClientHeight = 156
+                ClientWidth = 812
+                object gbBoletosLacamento: TGroupBox
+                  Left = 0
+                  Height = 184
+                  Top = 0
+                  Width = 820
+                  Caption = 'Lançamento'
+                  ClientHeight = 164
+                  ClientWidth = 816
+                  TabOrder = 0
+                  object pnBoletosLancamento: TPanel
+                    Left = 0
+                    Height = 164
+                    Top = 0
+                    Width = 816
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 164
+                    ClientWidth = 816
+                    TabOrder = 0
+                    object edBoletosDocumentoDebito: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 23
+                      Width = 145
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 0
+                    end
+                    object lbBoletosDocumentoDebito: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 8
+                      Width = 134
+                      Caption = 'Num. Documento Débito'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosCodigoBarras: TEdit
+                      Left = 176
+                      Height = 23
+                      Hint = 'Código de barras do boleto a ser pago, 44 dígitos. Não é aceito o número da linha digitável. Informar como string'
+                      Top = 23
+                      Width = 274
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 1
+                    end
+                    object lbBoletosCodigoBarras: TLabel
+                      Left = 176
+                      Height = 15
+                      Hint = 'Código de barras do boleto a ser pago, 44 dígitos. Não é aceito o número da linha digitável. Informar como string'
+                      Top = 8
+                      Width = 128
+                      Caption = 'Num. Código de Barras*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosValorPagamento: TEdit
+                      Left = 583
+                      Height = 23
+                      Hint = 'Valor do pagamento total do boleto em reais'
+                      Top = 23
+                      Width = 101
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 3
+                    end
+                    object lbBoletosValorPagamento: TLabel
+                      Left = 583
+                      Height = 15
+                      Hint = 'Valor do pagamento total do boleto em reais'
+                      Top = 8
+                      Width = 95
+                      Caption = 'Valor Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object lbBoletosDataPagamento: TLabel
+                      Left = 467
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver. Exemplo: 9012022'
+                      Top = 8
+                      Width = 93
+                      Caption = 'Data Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtBoletosDataPagamento: TDateTimePicker
+                      Left = 466
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver. Exemplo: 9012022'
+                      Top = 23
+                      Width = 101
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 2
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45664
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object edBoletosSeuDocumento: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Seu número na solicitação de pagamento, equivalente ao Seu Número do boleto. Não validado pelo BB. Informar como string'
+                      Top = 71
+                      Width = 145
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 5
+                    end
+                    object lbBoletosSeuDocumento: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Seu número na solicitação de pagamento, equivalente ao Seu Número do boleto. Não validado pelo BB. Informar como string'
+                      Top = 56
+                      Width = 63
+                      Caption = 'SeuNumero'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosDescricaoPagamento: TEdit
+                      Left = 176
+                      Height = 23
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 71
+                      Width = 274
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 6
+                    end
+                    object lbBoletosDescricaoPagamento: TLabel
+                      Left = 176
+                      Height = 15
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 56
+                      Width = 115
+                      Caption = 'Descrição Pagamento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosNossoNumero: TEdit
+                      Left = 467
+                      Height = 23
+                      Hint = 'Numero do boleto, equivalente ao Nosso Número. Não validado pelo BB. Informar como string'
+                      Top = 71
+                      Width = 100
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 7
+                    end
+                    object lbBoletosNossoNumero: TLabel
+                      Left = 470
+                      Height = 15
+                      Hint = 'Numero do boleto, equivalente ao Nosso Número. Não validado pelo BB. Informar como string'
+                      Top = 56
+                      Width = 77
+                      Caption = 'NossoNumero'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosValorNominal: TEdit
+                      Left = 700
+                      Height = 23
+                      Hint = 'Valor original registrado pelo beneficiário do boleto'
+                      Top = 23
+                      Width = 101
+                      TabOrder = 4
+                    end
+                    object lbBoletosValorNominal: TLabel
+                      Left = 700
+                      Height = 15
+                      Hint = 'Valor original registrado pelo beneficiário do boleto'
+                      Top = 8
+                      Width = 80
+                      Caption = 'Valor Nominal*'
+                      ParentColor = False
+                    end
+                    object edBoletosValorDesconto: TEdit
+                      Left = 583
+                      Height = 23
+                      Hint = 'Valor do desconto e/ou abatimento registrados pelo beneficiário do boleto'
+                      Top = 71
+                      Width = 101
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 8
+                    end
+                    object lbBoletosValorDesconto: TLabel
+                      Left = 583
+                      Height = 15
+                      Hint = 'Valor do desconto e/ou abatimento registrados pelo beneficiário do boleto'
+                      Top = 56
+                      Width = 79
+                      Caption = 'Valor Desconto'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object cbBoletosTipoPagador: TComboBox
+                      Left = 15
+                      Height = 23
+                      Hint = 'Indica se o documento do pagador é um CPF ou um CNPJ'
+                      Top = 119
+                      Width = 70
+                      ItemHeight = 15
+                      Items.Strings = (
+                        'CPF'
+                        'CNPJ'
+                      )
+                      ParentShowHint = False
+                      ShowHint = True
+                      Style = csDropDownList
+                      TabOrder = 10
+                    end
+                    object edBoletosDocumentoPagador: TEdit
+                      Left = 100
+                      Height = 23
+                      Hint = 'CPF ou CNPJ do pagador do boleto'
+                      Top = 119
+                      Width = 167
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 11
+                    end
+                    object lbBoletosDocumentoPagador: TLabel
+                      Left = 100
+                      Height = 15
+                      Hint = 'CPF ou CNPJ do pagador do boleto'
+                      Top = 104
+                      Width = 110
+                      Caption = 'Documento Pagador'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosDocumentoBeneficiario: TEdit
+                      Left = 367
+                      Height = 23
+                      Hint = 'CPF ou CNPJ do beneficiário do boleto'
+                      Top = 119
+                      Width = 167
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 13
+                    end
+                    object lbBoletosDocumentoBeneficiario: TLabel
+                      Left = 367
+                      Height = 15
+                      Hint = 'CPF ou CNPJ do beneficiário do boleto'
+                      Top = 104
+                      Width = 133
+                      Caption = 'Documento Baneficiário*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosDocumentoAvalista: TEdit
+                      Left = 634
+                      Height = 23
+                      Hint = 'CPF ou CNPJ do avalista do boleto'
+                      Top = 119
+                      Width = 167
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 15
+                    end
+                    object lbBoletosDocumentoAvalista: TLabel
+                      Left = 634
+                      Height = 15
+                      Hint = 'CPF ou CNPJ do avalista do boleto'
+                      Top = 104
+                      Width = 107
+                      Caption = 'Documento Avalista'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object lbBoletosTipoPagador: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Indica se o documento do pagador é um CPF ou um CNPJ'
+                      Top = 104
+                      Width = 70
+                      Caption = 'Tipo Pagador'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object cbBoletosTipoBeneficiario: TComboBox
+                      Left = 282
+                      Height = 23
+                      Hint = 'Indica se o documento do beneficiário é um CPF ou um CNPJ'
+                      Top = 119
+                      Width = 70
+                      ItemHeight = 15
+                      Items.Strings = (
+                        'CPF'
+                        'CNPJ'
+                      )
+                      ParentShowHint = False
+                      ShowHint = True
+                      Style = csDropDownList
+                      TabOrder = 12
+                    end
+                    object lbBoletosTipoBeneficiario: TLabel
+                      Left = 282
+                      Height = 15
+                      Hint = 'Indica se o documento do beneficiário é um CPF ou um CNPJ'
+                      Top = 104
+                      Width = 73
+                      Caption = 'Tipo Benefic.*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object cbBoletosTipoAvalista: TComboBox
+                      Left = 549
+                      Height = 23
+                      Hint = 'Indica se o documento do avalista é um CPF ou um CNPJ'
+                      Top = 119
+                      Width = 70
+                      ItemHeight = 15
+                      Items.Strings = (
+                        'CPF'
+                        'CNPJ'
+                      )
+                      ParentShowHint = False
+                      ShowHint = True
+                      Style = csDropDownList
+                      TabOrder = 14
+                    end
+                    object lbBoletosTipoAvalista: TLabel
+                      Left = 549
+                      Height = 15
+                      Hint = 'Indica se o documento do avalista é um CPF ou um CNPJ'
+                      Top = 104
+                      Width = 67
+                      Caption = 'Tipo Avalista'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edBoletosValorMoraMulta: TEdit
+                      Left = 700
+                      Height = 23
+                      Hint = 'Valor dos juros de mora e/ou multa registrados pelo beneficiário do boleto'
+                      Top = 71
+                      Width = 101
+                      TabOrder = 9
+                    end
+                    object lbBoletosValorMoraMulta: TLabel
+                      Left = 700
+                      Height = 15
+                      Hint = 'Valor dos juros de mora e/ou multa registrados pelo beneficiário do boleto'
+                      Top = 56
+                      Width = 92
+                      Caption = 'Valor Juros/Multa'
+                      ParentColor = False
+                    end
+                  end
+                end
+              end
+              object tsGuiaCodBarras: TTabSheet
+                Caption = 'Guia Cod.Barras'
+                ClientHeight = 156
+                ClientWidth = 812
+                object gbGuiaLacamento: TGroupBox
+                  Left = 0
+                  Height = 184
+                  Top = 0
+                  Width = 820
+                  Caption = 'Lançamento'
+                  ClientHeight = 164
+                  ClientWidth = 816
+                  TabOrder = 0
+                  object pnGuiaLancamento: TPanel
+                    Left = 0
+                    Height = 164
+                    Top = 0
+                    Width = 816
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 164
+                    ClientWidth = 816
+                    TabOrder = 0
+                    object edGuiaDocumentoDebito: TEdit
+                      Left = 462
+                      Height = 23
+                      Hint = 'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 71
+                      Width = 160
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 4
+                    end
+                    object lbGuiaDocumentoDebito: TLabel
+                      Left = 462
+                      Height = 15
+                      Hint = 'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 56
+                      Width = 134
+                      Caption = 'Num. Documento Débito'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGuiaCodigoBarras: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Código de barras ou linha digitável da guia a ser paga, 44 dígitos (excluir os dígitos verificadores)'
+                      Top = 23
+                      Width = 431
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 0
+                    end
+                    object lbGuiaCodigoBarras: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Código de barras ou linha digitável da guia a ser paga, 44 dígitos (excluir os dígitos verificadores)'
+                      Top = 8
+                      Width = 128
+                      Caption = 'Num. Código de Barras*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGuiaValorPagamento: TEdit
+                      Left = 638
+                      Height = 23
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 23
+                      Width = 160
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 2
+                    end
+                    object lbGuiaValorPagamento: TLabel
+                      Left = 638
+                      Height = 15
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 8
+                      Width = 95
+                      Caption = 'Valor Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object lbGuiaDataPagamento: TLabel
+                      Left = 463
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 8
+                      Width = 93
+                      Caption = 'Data Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtGuiaDataPagamento: TDateTimePicker
+                      Left = 462
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 23
+                      Width = 160
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 1
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45664
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object edGuiaSeuDocumento: TEdit
+                      Left = 638
+                      Height = 23
+                      Hint = 'Número de uso livre pelo cliente conveniado, não validado pelo BB. Informar como string (até 20 caracteres)'
+                      Top = 71
+                      Width = 160
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 5
+                    end
+                    object lbGuiaSeuDocumento: TLabel
+                      Left = 638
+                      Height = 15
+                      Hint = 'Número de uso livre pelo cliente conveniado, não validado pelo BB. Informar como string (até 20 caracteres)'
+                      Top = 56
+                      Width = 63
+                      Caption = 'SeuNumero'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGuiaDescricaoPagamento: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 71
+                      Width = 431
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 3
+                    end
+                    object lbGuiaDescricaoPagamento: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 56
+                      Width = 115
+                      Caption = 'Descrição Pagamento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                  end
+                end
+              end
+              object tsGRU: TTabSheet
+                Caption = 'GRU'
+                ClientHeight = 156
+                ClientWidth = 812
+                object gbGRURequisicao: TGroupBox
+                  Left = 0
+                  Height = 156
+                  Top = 0
+                  Width = 812
+                  Align = alClient
+                  Caption = 'Requisição'
+                  ClientHeight = 136
+                  ClientWidth = 808
+                  TabOrder = 0
+                  object pnGRULancamento: TPanel
+                    Left = 0
+                    Height = 136
+                    Top = 0
+                    Width = 808
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 136
+                    ClientWidth = 808
+                    TabOrder = 0
+                    object lbGRUCodigoBarras: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Código de barras ou linha digitável da guia a ser paga, 44 dígitos (excluir os dígitos verificadores)'
+                      Top = 8
+                      Width = 95
+                      Caption = 'Código de Barras*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUCodigoBarras: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Código de barras ou linha digitável da guia a ser paga, 44 dígitos (excluir os dígitos verificadores)'
+                      Top = 23
+                      Width = 403
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 0
+                    end
+                    object edGRUValorPagamento: TEdit
+                      Left = 688
+                      Height = 23
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 23
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 3
+                    end
+                    object lbGRUValorPagamento: TLabel
+                      Left = 688
+                      Height = 15
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 8
+                      Width = 95
+                      Caption = 'Valor Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object lbGRUDataPagamento: TLabel
+                      Left = 433
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 8
+                      Width = 93
+                      Caption = 'Data Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtGRUDataPagamento: TDateTimePicker
+                      Left = 432
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 23
+                      Width = 113
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 1
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45664
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbGRUValorAcrescimo: TLabel
+                      Left = 688
+                      Height = 15
+                      Hint = 'Valor de outros acréscimos'
+                      Top = 56
+                      Width = 119
+                      Caption = 'Valor Outro Acréscimo'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUValorAcrescimo: TEdit
+                      Left = 688
+                      Height = 23
+                      Hint = 'Valor de outros acréscimos'
+                      Top = 71
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 9
+                    end
+                    object lbGRUValorPrincipal: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Valor do principal'
+                      Top = 56
+                      Width = 80
+                      Caption = 'Valor Principal*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUValorPrincipal: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Valor do principal'
+                      Top = 71
+                      Width = 130
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 4
+                    end
+                    object lbGRUValorDesconto: TLabel
+                      Left = 160
+                      Height = 15
+                      Hint = 'Valor do desconto ou abatimento'
+                      Top = 56
+                      Width = 79
+                      Caption = 'Valor Desconto'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUValorDesconto: TEdit
+                      Left = 160
+                      Height = 23
+                      Hint = 'Valor do desconto ou abatimento'
+                      Top = 71
+                      Width = 130
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 5
+                    end
+                    object lbGRUValorOutraDeducao: TLabel
+                      Left = 305
+                      Height = 15
+                      Hint = 'Valor de outras deduções'
+                      Top = 56
+                      Width = 109
+                      Caption = 'Valor Outra Dedução'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUValorOutraDeducao: TEdit
+                      Left = 305
+                      Height = 23
+                      Hint = 'Valor de outras deduções'
+                      Top = 71
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 6
+                    end
+                    object lbGRUValorMulta: TLabel
+                      Left = 432
+                      Height = 15
+                      Hint = 'Valor da mora/multa'
+                      Top = 56
+                      Width = 60
+                      Caption = 'Valor Multa'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUValorMulta: TEdit
+                      Left = 432
+                      Height = 23
+                      Hint = 'Valor da mora/multa'
+                      Top = 71
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 7
+                    end
+                    object lbGRUValorJuros: TLabel
+                      Left = 560
+                      Height = 15
+                      Hint = 'Valor de juros/encargos'
+                      Top = 56
+                      Width = 104
+                      Caption = 'Valor Juros/Encargo'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUValorJuros: TEdit
+                      Left = 560
+                      Height = 23
+                      Hint = 'Valor de juros/encargos'
+                      Top = 71
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 8
+                    end
+                    object edGRUDescricaoPagamento: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'String. Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 119
+                      Width = 227
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 10
+                    end
+                    object lbGRUDescricaoPagamento: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'String. Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 104
+                      Width = 115
+                      Caption = 'Descrição Pagamento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtGRUDataVencimento: TDateTimePicker
+                      Left = 560
+                      Height = 23
+                      Hint = 'Data de vencimento da GRU, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 23
+                      Width = 113
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 2
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 1.7E308
+                      Time = 1.7E308
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbGRUDataVencimento: TLabel
+                      Left = 561
+                      Height = 15
+                      Hint = 'Data de vencimento da GRU, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 8
+                      Width = 90
+                      Caption = 'Data Vencimento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUDocumentoDebito: TEdit
+                      Left = 258
+                      Height = 23
+                      Hint = 'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 119
+                      Width = 160
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 11
+                    end
+                    object lbGRUDocumentoDebito: TLabel
+                      Left = 258
+                      Height = 15
+                      Hint = 'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 104
+                      Width = 134
+                      Caption = 'Num. Documento Débito'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUNumeroReferencia: TEdit
+                      Left = 433
+                      Height = 23
+                      Hint = 'Número de referência da GRU. Informar como string'
+                      Top = 119
+                      Width = 112
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 12
+                    end
+                    object lbGRUNumeroReferencia: TLabel
+                      Left = 433
+                      Height = 15
+                      Hint = 'Número de referência da GRU. Informar como string'
+                      Top = 104
+                      Width = 102
+                      Caption = 'Número Referência'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUMesAnoCompetencia: TEdit
+                      Left = 560
+                      Height = 23
+                      Hint = 'Mês e ano da competência da GRU, formato mmaaaa. Omitir o zero à esquerda do mês, se houver'
+                      Top = 119
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 13
+                    end
+                    object lbGRUMesAnoCompetencia: TLabel
+                      Left = 560
+                      Height = 15
+                      Hint = 'Mês e ano da competência da GRU, formato mmaaaa. Omitir o zero à esquerda do mês, se houver'
+                      Top = 104
+                      Width = 118
+                      Caption = 'MesAno Competência'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGRUidContribuinte: TEdit
+                      Left = 688
+                      Height = 23
+                      Hint = 'CPF ou CNPJ do contribuinte responsável pela GRU'
+                      Top = 119
+                      Width = 113
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 14
+                    end
+                    object lbGRUidContribuinte: TLabel
+                      Left = 688
+                      Height = 15
+                      Hint = 'CPF ou CNPJ do contribuinte responsável pela GRU'
+                      Top = 104
+                      Width = 85
+                      Caption = 'id Contribuinte*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                  end
+                end
+              end
+              object tsGPS: TTabSheet
+                Caption = 'GPS'
+                ClientHeight = 156
+                ClientWidth = 812
+                object gbGPSLancamento: TGroupBox
+                  Left = 0
+                  Height = 156
+                  Top = 0
+                  Width = 812
+                  Align = alClient
+                  Caption = 'Lançamento'
+                  ClientHeight = 136
+                  ClientWidth = 808
+                  TabOrder = 0
+                  object pnGPSLancamento: TPanel
+                    Left = 0
+                    Height = 136
+                    Top = 0
+                    Width = 808
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 136
+                    ClientWidth = 808
+                    TabOrder = 0
+                    object edGPSValorPagamento: TEdit
+                      Left = 177
+                      Height = 23
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 1
+                    end
+                    object lbGPSValorPagamento: TLabel
+                      Left = 177
+                      Height = 15
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 8
+                      Width = 95
+                      Caption = 'Valor Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object lbGPSDataPagamento: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 8
+                      Width = 93
+                      Caption = 'Data Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtGPSDataPagamento: TDateTimePicker
+                      Left = 15
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 23
+                      Width = 146
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 0
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45664
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbGPSIDContribuinte: TLabel
+                      Left = 614
+                      Height = 15
+                      Hint = 'Número de identificação do contribuinte'
+                      Top = 56
+                      Width = 167
+                      Caption = 'Identificação Contribuinte GPS*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSIDContribuinte: TEdit
+                      Left = 614
+                      Height = 23
+                      Hint = 'Número de identificação do contribuinte'
+                      Top = 71
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 8
+                    end
+                    object lbGPSCodReceita: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Código da Receita do Tributo Guia Da Previdência Social - GPS'
+                      Top = 56
+                      Width = 149
+                      Caption = 'Código Receita Tributo GPS*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSCodReceita: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Código da Receita do Tributo Guia Da Previdência Social - GPS'
+                      Top = 71
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 5
+                    end
+                    object lbGPSMesAnoCompetencia: TLabel
+                      Left = 215
+                      Height = 15
+                      Hint = 'Mês e ano da competência da GPS, formato mmaaaa. Omitir o zero à esquerda do mês, se houver'
+                      Top = 56
+                      Width = 142
+                      Caption = 'MesAno Competência GPS'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSMesAnoCompetencia: TEdit
+                      Left = 215
+                      Height = 23
+                      Hint = 'Mês e ano da competência da GPS, formato mmaaaa. Omitir o zero à esquerda do mês, se houver'
+                      Top = 71
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 6
+                    end
+                    object lbGPSTipoContribuinte: TLabel
+                      Left = 414
+                      Height = 15
+                      Hint = 'Código do tipo de contribuinte na Guia da Previdência Social'
+                      Top = 56
+                      Width = 142
+                      Caption = 'Cod.Tipo Contribuinte GPS'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSDescricaoPagamento: TEdit
+                      Left = 655
+                      Height = 23
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 4
+                    end
+                    object lbGPSDescricaoPagamento: TLabel
+                      Left = 655
+                      Height = 15
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 8
+                      Width = 115
+                      Caption = 'Descrição Pagamento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSDocumentoDebito: TEdit
+                      Left = 337
+                      Height = 23
+                      Hint = #9'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 2
+                    end
+                    object lbGPSDocumentoDebito: TLabel
+                      Left = 337
+                      Height = 15
+                      Hint = #9'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 8
+                      Width = 134
+                      Caption = 'Num. Documento Débito'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSIdTributo: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Número de identificação na Previdência. Informar como string'
+                      Top = 119
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 9
+                    end
+                    object lbGPSIdTributo: TLabel
+                      Left = 16
+                      Height = 15
+                      Hint = 'Número de identificação na Previdência. Informar como string'
+                      Top = 104
+                      Width = 178
+                      Caption = 'Código Identificador Tributo GPS*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSValorDevido: TEdit
+                      Left = 215
+                      Height = 23
+                      Hint = 'Valor devido ao INSS pelo contribuinte'
+                      Top = 119
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 10
+                    end
+                    object lbGPSValorDevido: TLabel
+                      Left = 215
+                      Height = 15
+                      Hint = 'Valor devido ao INSS pelo contribuinte'
+                      Top = 104
+                      Width = 71
+                      Caption = 'Valor Devido*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSOutrasEntradas: TEdit
+                      Left = 414
+                      Height = 23
+                      Hint = 'Valor outras entradas'
+                      Top = 119
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 11
+                    end
+                    object lbGPSOutrasEntradas: TLabel
+                      Left = 414
+                      Height = 15
+                      Hint = 'Valor outras entradas'
+                      Top = 104
+                      Width = 117
+                      Caption = 'Valor Outras Entradas*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edGPSSeuDocumento: TEdit
+                      Left = 496
+                      Height = 23
+                      Hint = 'Número de uso livre pelo cliente conveniado, não validado pelo BB. Informar como string (até 20 caracteres)'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 3
+                    end
+                    object lbGPSSeuDocumento: TLabel
+                      Left = 496
+                      Height = 15
+                      Hint = 'Número de uso livre pelo cliente conveniado, não validado pelo BB. Informar como string (até 20 caracteres)'
+                      Top = 8
+                      Width = 85
+                      Caption = 'Seu Documento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object cbGPSTipoContribuinte: TComboBox
+                      Left = 414
+                      Height = 23
+                      Hint = 'Código do tipo de contribuinte na Guia da Previdência Social'
+                      Top = 71
+                      Width = 187
+                      ItemHeight = 15
+                      Items.Strings = (
+                        'Nenhum'
+                        'CNPJ'
+                        'CPF'
+                        'NIT / PIS / PASEP'
+                        'CEI'
+                        'NB'
+                        'Num Título'
+                        'DEBCAD'
+                        'Referência'
+                      )
+                      Style = csDropDownList
+                      TabOrder = 7
+                    end
+                    object edGPSValorAtualizacao: TEdit
+                      Left = 614
+                      Height = 23
+                      Hint = 'Valor da atualização monetária'
+                      Top = 119
+                      Width = 187
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 12
+                    end
+                    object lbGPSValorAtualizacao: TLabel
+                      Left = 614
+                      Height = 15
+                      Hint = 'Valor da atualização monetária'
+                      Top = 104
+                      Width = 147
+                      Caption = 'Valor Atualização Monetária'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+        object pnLoteRodape: TPanel
+          Left = 0
+          Height = 51
+          Top = 353
+          Width = 892
+          Align = alBottom
+          BevelOuter = bvNone
+          ClientHeight = 51
+          ClientWidth = 892
+          TabOrder = 1
+          object btLoteEnviar: TBitBtn
+            Left = 19
+            Height = 28
+            Top = 9
+            Width = 139
+            Caption = 'Enviar Lote'
+            Images = frPagamentosAPITeste.ImageList1
+            ImageIndex = 11
+            OnClick = btLoteEnviarClick
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object tsGuias: TTabSheet
+      Caption = 'Consultas'
+      ClientHeight = 404
+      ClientWidth = 892
+      ImageIndex = 8
+      object PageControl1: TPageControl
+        Left = 0
+        Height = 404
+        Top = 0
+        Width = 892
+        ActivePage = tsLoteConsultar
+        Align = alClient
+        TabHeight = 25
+        TabIndex = 0
+        TabOrder = 0
+        TabWidth = 200
+        object tsLoteConsultar: TTabSheet
+          Caption = 'Consultar Lote'
+          ClientHeight = 371
+          ClientWidth = 884
+          object pnLoteConsultar: TPanel
+            Left = 0
+            Height = 371
+            Top = 0
+            Width = 884
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 371
+            ClientWidth = 884
+            TabOrder = 0
+            object cbConsultaLoteTipo: TComboBox
+              Left = 30
+              Height = 23
+              Top = 25
+              Width = 180
+              ItemHeight = 15
+              ItemIndex = 0
+              Items.Strings = (
+                'Boletos'
+                'Guias com Código de Barras'
+                'GRU'
+                'DARF (Normal/Preto)'
+                'GPS'
+              )
+              OnSelect = cbLoteTipoSelect
+              Style = csDropDownList
+              TabOrder = 0
+              Text = 'Boletos'
+            end
+            object lbConsultaLoteTipo: TLabel
+              Left = 30
+              Height = 15
+              Top = 10
+              Width = 23
+              Caption = 'Tipo'
+              ParentColor = False
+            end
+            object edConsultaIdLote: TEdit
+              Left = 224
+              Height = 23
+              Top = 25
+              Width = 180
+              MaxLength = 7
+              NumbersOnly = True
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 1
+            end
+            object lbConsultaIdLote: TLabel
+              Left = 224
+              Height = 15
+              Top = 12
+              Width = 36
+              Caption = 'Id Lote'
+              ParentColor = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            object btConsultarCobrancaImediata: TBitBtn
+              Left = 416
+              Height = 25
+              Top = 23
+              Width = 120
+              Anchors = [akTop, akRight]
+              Caption = 'Consultar'
+              ImageIndex = 4
+              OnClick = btConsultarCobrancaImediataClick
+              TabOrder = 2
+            end
+            object mmConsultaLog: TMemo
+              Left = 30
+              Height = 280
+              Top = 72
+              Width = 826
+              ScrollBars = ssAutoBoth
+              TabOrder = 3
+            end
+          end
+        end
+        object tsPagamentoConsultar: TTabSheet
+          Caption = 'Pagamento Específico'
+          ClientHeight = 371
+          ClientWidth = 884
+          object pnLoteConsultar1: TPanel
+            Left = 0
+            Height = 371
+            Top = 0
+            Width = 884
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 371
+            ClientWidth = 884
+            TabOrder = 0
+            object cbConsultaLoteTipo1: TComboBox
+              Left = 30
+              Height = 23
+              Top = 25
+              Width = 180
+              ItemHeight = 15
+              ItemIndex = 0
+              Items.Strings = (
+                'Boletos'
+                'Guias com Código de Barras'
+                'GRU'
+                'DARF (Normal/Preto)'
+                'GPS'
+              )
+              OnSelect = cbLoteTipoSelect
+              Style = csDropDownList
+              TabOrder = 0
+              Text = 'Boletos'
+            end
+            object lbConsultaLoteTipo1: TLabel
+              Left = 30
+              Height = 15
+              Top = 10
+              Width = 23
+              Caption = 'Tipo'
+              ParentColor = False
+            end
+            object edConsultaIdLote1: TEdit
+              Left = 224
+              Height = 23
+              Top = 25
+              Width = 180
+              MaxLength = 7
+              NumbersOnly = True
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 1
+            end
+            object lbConsultaIdLote1: TLabel
+              Left = 224
+              Height = 15
+              Top = 12
+              Width = 36
+              Caption = 'Id Lote'
+              ParentColor = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            object btConsultarCobrancaImediata1: TBitBtn
+              Left = 416
+              Height = 25
+              Top = 23
+              Width = 120
+              Anchors = [akTop, akRight]
+              Caption = 'Consultar'
+              ImageIndex = 4
+              OnClick = btConsultarCobrancaImediataClick
+              TabOrder = 2
+            end
+            object mmConsultaLog1: TMemo
+              Left = 30
+              Height = 280
+              Top = 72
+              Width = 826
+              ScrollBars = ssAutoBoth
+              TabOrder = 3
+            end
+          end
+        end
+      end
+    end
+  end
+end

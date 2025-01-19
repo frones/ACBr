@@ -39,6 +39,11 @@ Símbolo : Significado
 
 14/01/2025
 -- ACBrSchemasPagamentosAPI --
+[+] Implementação dos métodos para Pagamento em Lote.
+    por: Elias César
+
+14/01/2025
+-- ACBrSchemasPagamentosAPI --
 [+] Inclusão dos arquivos de schemas da API de Pagamentos do Banco do Brasil.
     por: Elias César
 

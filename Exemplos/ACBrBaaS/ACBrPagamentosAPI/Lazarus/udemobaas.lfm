@@ -1,0 +1,875 @@
+object frPagamentosAPITeste: TfrPagamentosAPITeste
+  Left = 500
+  Height = 547
+  Top = 223
+  Width = 904
+  Caption = 'ACBrBaaS - Pagamento em Lote'
+  ClientHeight = 547
+  ClientWidth = 904
+  OnCreate = FormCreate
+  LCLVersion = '2.2.4.0'
+  object pgPrincipal: TPageControl
+    Left = 0
+    Height = 547
+    Top = 0
+    Width = 904
+    ActivePage = tsTestes
+    Align = alClient
+    Images = ImageList1
+    TabHeight = 25
+    TabIndex = 1
+    TabOrder = 0
+    TabWidth = 250
+    object tsConfig: TTabSheet
+      Caption = 'Configuração'
+      ClientHeight = 514
+      ClientWidth = 896
+      ImageIndex = 2
+      object pgConfig: TPageControl
+        Left = 0
+        Height = 467
+        Top = 0
+        Width = 896
+        ActivePage = tsPagamentosAPI
+        Align = alClient
+        Images = ImageList1
+        TabHeight = 25
+        TabIndex = 0
+        TabOrder = 0
+        TabWidth = 246
+        object tsPagamentosAPI: TTabSheet
+          Caption = 'PagamentosAPI'
+          ClientHeight = 434
+          ClientWidth = 888
+          ImageIndex = 2
+          object gbProxy: TGroupBox
+            Left = 128
+            Height = 117
+            Top = 178
+            Width = 280
+            BorderSpacing.Around = 4
+            Caption = 'Proxy'
+            ClientHeight = 97
+            ClientWidth = 276
+            TabOrder = 0
+            object pnProxy: TPanel
+              Left = 0
+              Height = 97
+              Top = 0
+              Width = 276
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 97
+              ClientWidth = 276
+              TabOrder = 0
+              object lbProxyHost: TLabel
+                Left = 16
+                Height = 15
+                Top = 0
+                Width = 25
+                Caption = 'Host'
+                ParentColor = False
+              end
+              object lbProxyPorta: TLabel
+                Left = 168
+                Height = 15
+                Top = 0
+                Width = 28
+                Anchors = [akTop, akRight]
+                Caption = 'Porta'
+                ParentColor = False
+              end
+              object lbProxyUsuario: TLabel
+                Left = 16
+                Height = 15
+                Top = 44
+                Width = 40
+                Caption = 'Usuário'
+                ParentColor = False
+              end
+              object edProxyHost: TEdit
+                Left = 16
+                Height = 23
+                Top = 16
+                Width = 138
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 0
+              end
+              object lbProxySenha: TLabel
+                Left = 168
+                Height = 15
+                Top = 44
+                Width = 32
+                Anchors = [akTop, akRight]
+                Caption = 'Senha'
+                ParentColor = False
+              end
+              object edProxyUsuario: TEdit
+                Left = 16
+                Height = 23
+                Top = 60
+                Width = 138
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 1
+              end
+              object edProxySenha: TEdit
+                Left = 168
+                Height = 23
+                Top = 60
+                Width = 74
+                Anchors = [akTop, akRight]
+                EchoMode = emPassword
+                PasswordChar = '*'
+                TabOrder = 2
+              end
+              object seProxyPorta: TSpinEdit
+                Left = 168
+                Height = 23
+                Top = 16
+                Width = 74
+                Anchors = [akTop, akRight]
+                MaxValue = 999999
+                TabOrder = 3
+              end
+              object sbVerSenhaProxy: TSpeedButton
+                Left = 244
+                Height = 23
+                Top = 60
+                Width = 23
+                AllowAllUp = True
+                Anchors = [akTop, akRight]
+                Flat = True
+                GroupIndex = 1
+                ImageIndex = 7
+              end
+            end
+          end
+          object gbLog: TGroupBox
+            Left = 423
+            Height = 117
+            Top = 178
+            Width = 265
+            BorderSpacing.Around = 4
+            Caption = 'Log'
+            ClientHeight = 97
+            ClientWidth = 261
+            TabOrder = 1
+            object pnLog: TPanel
+              Left = 0
+              Height = 97
+              Top = 0
+              Width = 261
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 97
+              ClientWidth = 261
+              TabOrder = 0
+              object lbLogArquivo: TLabel
+                Left = 16
+                Height = 15
+                Top = 0
+                Width = 42
+                Caption = 'Arquivo'
+                ParentColor = False
+              end
+              object lbLogNivel: TLabel
+                Left = 16
+                Height = 15
+                Top = 44
+                Width = 27
+                Caption = 'Nível'
+                ParentColor = False
+              end
+              object edArqLog: TEdit
+                Left = 16
+                Height = 23
+                Top = 16
+                Width = 208
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 0
+              end
+              object sbArqLog: TSpeedButton
+                Left = 225
+                Height = 23
+                Hint = 'Abrir Arquivo de Log'
+                Top = 16
+                Width = 24
+                ImageIndex = 9
+                ShowHint = True
+                ParentFont = False
+                ParentShowHint = False
+              end
+              object cbNivelLog: TComboBox
+                Left = 16
+                Height = 23
+                Top = 60
+                Width = 208
+                ItemHeight = 15
+                ItemIndex = 2
+                Items.Strings = (
+                  'Nenhum'
+                  'Baixo'
+                  'Normal'
+                  'Alto'
+                  'Muito Alto'
+                )
+                Style = csDropDownList
+                TabOrder = 1
+                Text = 'Normal'
+              end
+            end
+          end
+          object gbBanco: TGroupBox
+            Left = 128
+            Height = 74
+            Top = 96
+            Width = 560
+            Caption = 'Banco'
+            ClientHeight = 54
+            ClientWidth = 556
+            TabOrder = 2
+            object pnBanco: TPanel
+              Left = 0
+              Height = 54
+              Top = 0
+              Width = 556
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 54
+              ClientWidth = 556
+              TabOrder = 0
+              object Label13: TLabel
+                Left = 16
+                Height = 15
+                Top = 3
+                Width = 64
+                Caption = 'Banco Atual'
+                ParentColor = False
+              end
+              object cbBancoAtual: TComboBox
+                Left = 16
+                Height = 23
+                Top = 19
+                Width = 174
+                ItemHeight = 15
+                OnChange = cbBancoAtualChange
+                Style = csDropDownList
+                TabOrder = 0
+              end
+              object lbAmbiente: TLabel
+                Left = 224
+                Height = 15
+                Top = 3
+                Width = 52
+                Caption = 'Ambiente'
+                ParentColor = False
+              end
+              object cbAmbiente: TComboBox
+                Left = 216
+                Height = 23
+                Top = 19
+                Width = 178
+                ItemHeight = 15
+                Style = csDropDownList
+                TabOrder = 1
+              end
+              object lbTimeout: TLabel
+                Left = 416
+                Height = 15
+                Top = 3
+                Width = 44
+                Caption = 'Timeout'
+                ParentColor = False
+              end
+              object seTimeout: TSpinEdit
+                Left = 416
+                Height = 23
+                Top = 19
+                Width = 113
+                Increment = 10
+                MaxValue = 999999
+                TabOrder = 2
+              end
+              object imErroBanco: TImage
+                Left = 190
+                Height = 16
+                Top = 23
+                Width = 16
+                Anchors = [akTop, akRight]
+                Visible = False
+              end
+            end
+          end
+        end
+        object tsBancos: TTabSheet
+          Caption = 'Bancos'
+          ClientHeight = 434
+          ClientWidth = 888
+          ImageIndex = 3
+          object pgBancos: TPageControl
+            Left = 0
+            Height = 434
+            Top = 0
+            Width = 888
+            ActivePage = tsBB
+            Align = alClient
+            TabHeight = 25
+            TabIndex = 0
+            TabOrder = 0
+            TabWidth = 120
+            object tsBB: TTabSheet
+              Caption = 'Banco do Brasil'
+              ClientHeight = 401
+              ClientWidth = 880
+              object pConfPSPBB: TPanel
+                Left = 24
+                Height = 353
+                Top = 21
+                Width = 792
+                BevelOuter = bvNone
+                ClientHeight = 353
+                ClientWidth = 792
+                TabOrder = 0
+                object lbBBClientID: TLabel
+                  Left = 28
+                  Height = 15
+                  Top = 14
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object edBBClientID: TEdit
+                  Left = 28
+                  Height = 23
+                  Top = 31
+                  Width = 748
+                  TabOrder = 0
+                end
+                object lbBBClientSecret: TLabel
+                  Left = 28
+                  Height = 15
+                  Top = 69
+                  Width = 66
+                  Caption = 'Client Secret'
+                  ParentColor = False
+                end
+                object edBBClientSecret: TEdit
+                  Left = 28
+                  Height = 23
+                  Top = 87
+                  Width = 748
+                  TabOrder = 1
+                end
+                object lbBBDevAppKey: TLabel
+                  Left = 28
+                  Height = 15
+                  Top = 125
+                  Width = 139
+                  Caption = 'Developer Application Key'
+                  ParentColor = False
+                end
+                object edBBDevAppKey: TEdit
+                  Left = 28
+                  Height = 23
+                  Top = 143
+                  Width = 516
+                  TabOrder = 2
+                end
+                object rgBBTipoCertificado: TRadioGroup
+                  Left = 564
+                  Height = 42
+                  Top = 124
+                  Width = 212
+                  AutoFill = True
+                  Caption = 'Tipo Certificado'
+                  ChildSizing.LeftRightSpacing = 6
+                  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                  ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                  ChildSizing.ShrinkHorizontal = crsScaleChilds
+                  ChildSizing.ShrinkVertical = crsScaleChilds
+                  ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                  ChildSizing.ControlsPerLine = 2
+                  ClientHeight = 22
+                  ClientWidth = 208
+                  Columns = 2
+                  ItemIndex = 0
+                  Items.Strings = (
+                    'PFX'
+                    'Chave/Certificado'
+                  )
+                  OnSelectionChanged = rgBBTipoCertificadoSelectionChanged
+                  TabOrder = 3
+                end
+                object pnBBCertificados: TPanel
+                  Left = 0
+                  Height = 170
+                  Top = 183
+                  Width = 792
+                  Align = alBottom
+                  BevelOuter = bvNone
+                  ClientHeight = 170
+                  ClientWidth = 792
+                  TabOrder = 4
+                  object pgBBCertificados: TPageControl
+                    Left = 0
+                    Height = 170
+                    Top = 0
+                    Width = 792
+                    ActivePage = tsBBChaveECertificado
+                    Align = alClient
+                    TabIndex = 1
+                    TabOrder = 0
+                    Visible = False
+                    object tsBBPFX: TTabSheet
+                      Caption = 'PFX'
+                      ClientHeight = 142
+                      ClientWidth = 784
+                      object pnBBPFX: TPanel
+                        Left = 0
+                        Height = 142
+                        Top = 0
+                        Width = 784
+                        Align = alClient
+                        BevelOuter = bvNone
+                        ClientHeight = 142
+                        ClientWidth = 784
+                        TabOrder = 0
+                        object imBBErroPFX: TImage
+                          Left = 11
+                          Height = 16
+                          Top = 35
+                          Width = 16
+                          Visible = False
+                        end
+                        object lbBBArqPFX: TLabel
+                          Left = 27
+                          Height = 15
+                          Top = 15
+                          Width = 65
+                          Caption = 'Arquivo PFX'
+                          ParentColor = False
+                        end
+                        object edBBArqPFX: TEdit
+                          Left = 27
+                          Height = 23
+                          Top = 32
+                          Width = 481
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = False
+                          OnExit = edBBArqPFXExit
+                          TabOrder = 0
+                        end
+                        object lbBBErroPFX: TLabel
+                          Left = 27
+                          Height = 15
+                          Top = 56
+                          Width = 117
+                          Caption = 'lbBBErroChavePrivada'
+                          ParentColor = False
+                        end
+                        object sbBBAcharPFX: TSpeedButton
+                          Left = 473
+                          Height = 23
+                          Top = 32
+                          Width = 24
+                          Flat = True
+                          Font.Color = clWindowText
+                          Font.Height = -11
+                          Font.Name = 'MS Sans Serif'
+                          ImageIndex = 9
+                          OnClick = sbBBAcharPFXClick
+                          ShowHint = True
+                          ParentFont = False
+                          ParentShowHint = False
+                        end
+                        object edBBSenhaPFX: TEdit
+                          Left = 520
+                          Height = 23
+                          Top = 32
+                          Width = 184
+                          EchoMode = emPassword
+                          PasswordChar = '*'
+                          TabOrder = 1
+                        end
+                        object lbBBSenhaPFX: TLabel
+                          Left = 520
+                          Height = 15
+                          Top = 15
+                          Width = 93
+                          Caption = 'Senha Certificado'
+                          ParentColor = False
+                        end
+                        object btBBVerSenhaPFX: TSpeedButton
+                          Left = 744
+                          Height = 23
+                          Top = 32
+                          Width = 23
+                          AllowAllUp = True
+                          Anchors = [akTop, akRight]
+                          Flat = True
+                          GroupIndex = 1
+                          ImageIndex = 7
+                        end
+                      end
+                    end
+                    object tsBBChaveECertificado: TTabSheet
+                      Caption = 'Chave Privada/Certificado'
+                      ClientHeight = 142
+                      ClientWidth = 784
+                      object pnBBChaveECert: TPanel
+                        Left = 0
+                        Height = 142
+                        Top = 0
+                        Width = 784
+                        Align = alClient
+                        BevelOuter = bvNone
+                        ClientHeight = 142
+                        ClientWidth = 784
+                        TabOrder = 0
+                        Visible = False
+                        object imBBErroChavePrivada: TImage
+                          Left = 8
+                          Height = 16
+                          Top = 35
+                          Width = 16
+                          Visible = False
+                        end
+                        object lbBBArqChavePrivada: TLabel
+                          Left = 24
+                          Height = 15
+                          Top = 15
+                          Width = 120
+                          Caption = 'Arquivo Chave Privada'
+                          ParentColor = False
+                        end
+                        object edBBArqChavePrivada: TEdit
+                          Left = 24
+                          Height = 23
+                          Top = 32
+                          Width = 724
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = False
+                          OnExit = edBBArqChavePrivadaExit
+                          TabOrder = 0
+                        end
+                        object lbBBErroChavePrivada: TLabel
+                          Left = 24
+                          Height = 15
+                          Top = 56
+                          Width = 117
+                          Caption = 'lbBBErroChavePrivada'
+                          ParentColor = False
+                        end
+                        object sbBBAcharChavePrivada: TSpeedButton
+                          Left = 753
+                          Height = 23
+                          Top = 32
+                          Width = 24
+                          Anchors = [akTop, akRight]
+                          Flat = True
+                          Font.Color = clWindowText
+                          Font.Height = -11
+                          Font.Name = 'MS Sans Serif'
+                          ImageIndex = 9
+                          OnClick = sbBBAcharChavePrivadaClick
+                          ShowHint = True
+                          ParentFont = False
+                          ParentShowHint = False
+                        end
+                        object sbBBAcharArqCertificado: TSpeedButton
+                          Left = 753
+                          Height = 23
+                          Top = 96
+                          Width = 24
+                          Anchors = [akTop, akRight]
+                          Flat = True
+                          Font.Color = clWindowText
+                          Font.Height = -11
+                          Font.Name = 'MS Sans Serif'
+                          ImageIndex = 9
+                          OnClick = sbBBAcharArqCertificadoClick
+                          ShowHint = True
+                          ParentFont = False
+                          ParentShowHint = False
+                        end
+                        object edBBArqCertificado: TEdit
+                          Left = 24
+                          Height = 23
+                          Top = 96
+                          Width = 724
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = False
+                          OnExit = edBBArqCertificadoExit
+                          TabOrder = 1
+                        end
+                        object lbBBArqCertificado: TLabel
+                          Left = 24
+                          Height = 15
+                          Top = 80
+                          Width = 103
+                          Caption = 'Arquivo Certificado'
+                          ParentColor = False
+                        end
+                        object imBBErroCertificado: TImage
+                          Left = 8
+                          Height = 16
+                          Top = 98
+                          Width = 16
+                          Visible = False
+                        end
+                        object lbBBErroCertificado: TLabel
+                          Left = 24
+                          Height = 15
+                          Top = 118
+                          Width = 103
+                          Caption = 'lbBBErroCertificado'
+                          ParentColor = False
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+      object pnConfigRodape: TPanel
+        Left = 0
+        Height = 47
+        Top = 467
+        Width = 896
+        Align = alBottom
+        BevelOuter = bvNone
+        ClientHeight = 47
+        ClientWidth = 896
+        TabOrder = 1
+        object btSalvarParametros: TBitBtn
+          Left = 19
+          Height = 28
+          Top = 9
+          Width = 139
+          Caption = 'Salvar Parâmetros'
+          ImageIndex = 10
+          OnClick = btSalvarParametrosClick
+          TabOrder = 0
+        end
+        object btLerParametros: TBitBtn
+          Left = 171
+          Height = 28
+          Top = 9
+          Width = 139
+          Caption = 'Ler Parâmetros'
+          ImageIndex = 11
+          TabOrder = 1
+        end
+      end
+    end
+    object tsTestes: TTabSheet
+      Caption = 'Testes'
+      ClientHeight = 514
+      ClientWidth = 896
+      ImageIndex = 14
+      object pgTestes: TPageControl
+        Left = 0
+        Height = 514
+        Top = 0
+        Width = 896
+        ActivePage = tsPagamentos
+        Align = alClient
+        Images = ImageList1
+        TabHeight = 25
+        TabIndex = 0
+        TabOrder = 0
+        TabWidth = 170
+        object tsPagamentos: TTabSheet
+          Caption = 'Pagamentos'
+          ImageIndex = 29
+        end
+        object tsTransferencias: TTabSheet
+          Caption = 'Transferencias'
+          ImageIndex = 30
+        end
+      end
+    end
+  end
+  object ACBrPagamentosAPI1: TACBrPagamentosAPI
+    Ambiente = eamHomologacao
+    TimeOut = 0
+    ArqLOG = '_log.txt'
+    NivelLog = 0
+    Left = 496
+  end
+  object ACBrPagamentosAPIBB1: TACBrPagamentosAPIBB
+    ProxyPort = '8080'
+    ContentsEncodingCompress = []
+    NivelLog = 0
+    Scopes = [pscLotesRequisicao, pscTransferenciasInfo, pscTransferenciasRequisicao, pscCancelarRequisicao, pscDevolvidosInfo, pscLotesInfo, pscGuiasSemCodigoBarrasInfo, pscPagamentosInfo, pscGuiasSemCodigoBarrasRequisicao, pscCodigoBarrasInfo, pscBoletosRequisicao, pscGuiasCodigoBarrasInfo, pscGuiasCodigoBarrasRequisicao, pscTransferenciasPixInfo, pscTransferenciasPixRequisicao, pscPixInfo, pscBoletosInfo, pscLancamentosInfo]
+    Left = 552
+  end
+  object ImageList1: TImageList
+    Left = 624
+    Bitmap = {
+      4C7A220000001000000010000000241300000000000078DAED5D0974164512EE
+      5C600804088246022A0AAEC0EE2A2A042FF0001510050DB0BA202A475CAE8445
+      0545413C5725200828AEAB44105E5C04050F445C94C31BD4082AE2EA02822091
+      4B3943D8A9C7D7EFAF54BA677AFE040D31FD5EBDCC3F335F4F1F55D555D53513
+      A58E5839C6A33E1EDDE95162486C5D8F56787408F4A9477F72C4D6F1E81386D5
+      B4D7A3560EF82B3D5A63C0138DF2C11DE7D13B1E7DE6D1308F723D3A08DC628F
+      2EF2E86DDCD34C6013D147FE2C1AB7911E2DF4A89F4705A22FA7337C3F435BF7
+      7874BB476778F4A3E1FA530C7F87A5BFCF7BD417CF93D7E68AB95EE9D37EE283
+      ADECDA3E8F9A8A31688A36D3F5673C1ACE9E3BD5A3738123BACA876F7A7934D3
+      A303A23D5F625EEA39F05EBE653CCF76E4C1A662CC087B594819F803FA3DDBA3
+      D354C52F8B3C5ACB2819E7897F7A421FF0EB0D059ECE75F02803F2DB0932D807
+      32B00DBCD101F3718A017F8347D9C00FC41C5EE0D109C067E31E1BFE3B8FBE05
+      EF0D643C3010F80DB8A7C880EF89769E80FB6FC6DF6B3DAAEA514DF489A8B647
+      B102BFDAA36EC0EF65F42ABB671AC624CE30FE2741272CF7A8B1473B3C7A00E3
+      F915A82FC6F30BC3F827A36DD4EE5A1E75F7E85E8FC67BF457103DA387478586
+      FEAFC01869A2FE8EF5E84D719F0DBF16CF1E8C39A8C5F0B550A7D669A6FE13FE
+      7A8FFA7BF40D30D4E60998036AFB1C8F9679749D47D50D783DE645C0C7787429
+      741FFD9E816BD4FE4602DF107DD214CBD68693F1BB1EBB1E7F046490F8EA2CAC
+      B5B5A3C00F666B1E8DE100CB58DB0ADDFB20ABA31075F895061EDD88B1A65245
+      D4F13DD6665B213EDD0FD9A6E72760DD2A646DB8C207DF8DAD694381E56BCF41
+      D814B642B2F633EEDDCF9EAB69B747E7058CD978CBFAADE97D8FD27CEA201ECB
+      F1E827DC5F84FEF03A687D3F31602E689DFA0BC684FAFC5F431D6921F8E14CCC
+      9FECCB8921EA38DB5247D87698FA726CC876F03A361B7498EB786CF1E8F22865
+      BC91C1FE34952A58FB8E8FE219C9D0756477AE02FFC638E04E83BE255DFD21D6
+      DAC9D0A99F42F79BEA21DDF93878760B6CC71331C76990DF172097A4BF6F42FF
+      7419079ED7B635ADD3EB056D62F7ECC37AC0E73623242519FA41B2D384D9D4D7
+      085EEF8CB5C056B6C31750582BD661EDD2E5733CC356C8AEB985F9333F403FEA
+      B2066B6279C577873ED5E3D755D8299DC4BCE9D212BC1586F8FA3F157A3B0C35
+      123EC72921E948ACFFE5A99C0C9FA99DC1D60CF2FF9F81BF7C006B2AE9A149CC
+      A7B0951A1E7DECB38E2E065FC9521D323D4FACDB5A77EC66E787186CAE970DEB
+      FE7CA6BFE6B3F3F95807F4FC3F64696B1E7B469EB8B60BFAB026648C5F23DDFB
+      22EC215DB2716E9BB87722B3B30E311BE60ED851BA24E0DC7E71EF46E82453AC
+      E60EF4311EC7A618C426E8F222C3357AD608D07ECB183D85FA6FC3BA7130C08E
+      E2ED5B005EE3FE536707BD7F2DD6D5AA155876E3D057F2FF1EC5B14B0C3005FC
+      FC13E66309FCFF2D90E559B8C786FD08BE562FA11FE9B82D64E72383EFA5E568
+      2BEED336464D61E335C43DF9C2FF8E83BEE925EC1393FFDA0BB27E263B97011D
+      9560B0CBA59F9900FFFB6176EE3EC41565217ECC349C9FE2D16BECF723186759
+      4CED57F015DE7268BF096F6A7F22E6B78D03BE0DE459DE3B0BF3D2809D6BE1D1
+      C5E2D9F9B093AA9531FF68DB3A1FF34BF19827D187D568F3761FAC2EB1E08D87
+      11BB790BC76D0C6D2EEFA549C8B55BEA90D98859C54481EF043DFD0B62EF61E3
+      207CFF61196C0397426DBD55AC4907995DEB62F76C026E0DDB8BA0B8617D07FC
+      3FD9737340FAF7B800ECB9A2DD125FE8B30F93087DCDD7C999207E6E81F0BD74
+      E96B88D91FB2ACEBD2874945FC4DDE3B1524CFE733BD1E2BFAE84A6330D7A463
+      7646812FC01E0EF9D7E95152DD0AEE03548DC24E6A0A9DBB12F6E5F7D0D90F31
+      DFD066FBFF83D9E10558539732BB97786FB4410F27C39ED6B2B310BAAF3AFCFC
+      664C368AA0D39218FFDDC7B05BB0465C051D447190F6A8631B93C3E1E0BFD304
+      FFBD8A5833DFC3FA10CF5BCACE6D456CA1198B3F6ABF2305711B7D6E05FAF2B6
+      F0134E819E1ECBDAFF03D6E0EB50473EFAD24445F630491FDEC36C28D2B7AFB0
+      BA5F461D29E84B238CA91EBF170CFAB836EC9A43AC1DF3311E5BD87373027479
+      4BF8056B10A3DB0C7B6532F667C2AC5F2968579CFA7D9524F846092171F5C04B
+      9F62FC97808F5C621DC781CFB7408E3321677BE087C406E01F47BC2C559CEF0F
+      7FF9BC007BE14BF89126BD423EEEFD3EF813F0EC9E866BD4F7D7B18ED94A35E8
+      BB4916BF88E2CEB707F47F10E29A9DA073633187D3A04383EC568A8B3C015D42
+      719297B007B4196DEBE72007C42F1D216BB3A0239A605C77899844985205FA9F
+      7861409475C4808F768B986AD83AFA86DC37F83D9478C44464AC24D511FF67F0
+      87B4B156AAE07C0F055BCA66A7AD6676B0A64C11074C0F69FB911D7196013FD3
+      C1E6D3F674BA019FE3D0D79C0A8C5F0C1DE1478B0DF833458C368876093F88F4
+      D625CA7DEFA76D058CDFC7435ED37C28C927E631163EEE7A1FD2B6AD32F87FDF
+      A10ED37867AA48FED9EB863AD2507F86A57DFA3AB7B1930CD7332DFD3E07BE88
+      C6AF57C5F79F357EABA5DF1BC5FE800DEFCABF2EF87DF09B561AE2E741F88388
+      81C4812F468BB842107EB3B0374E47ECCC152F7326DA893E487C7DD85FBC8F64
+      330D84CED860B876BCB02F2639F0EF7A3CE711434C2BCE417ED2D0D60455597E
+      EB52CBE77C07F8F4E4474E403CB9A188619B627194D3F10964BD087CAC63621B
+      E0F35F8CE33C81BD017100DA3B1985F52915F144CAD9FB0A72A97DFD3C11F7DB
+      817B6CF905D7A8E27B70796CED7B09CF4EB7602F673EB8C413DF775187F7454D
+      FEC1B1F0CDF2046557B2606529A352BD94788A37B4623E1EC910ED4B4F840E20
+      3FF6329FB813F133E5AC9E8FB572135B47B55D4A7AE003D88E26BCB64B8B1073
+      EB8D76A4C2BE7D0032BADD60E7E489B5D3965B763AD6B802557CFF52E6176C50
+      25F7E774B9187EF8F3CC06CE36C8F7388B8E257D330C7182B84AD62D9342E348
+      7BC5D70790ADF4C0BAB23F806C8564E40D159CF3642BB4E73507C7946F9D0BFE
+      32D1738885C519F0B510B32E000F9BE827C8657D033EC88FD06325F3D72BF1A5
+      C3B742FC285ABCAB1F78A4F1498815D3DEC55A0BE97CADE37D62E8DD7D64B887
+      727B0FEE682E17F9C41A5C4A1EF440FB28D7983CB666935FD8204ABCA63598BB
+      F828F13AE63857B9E5BD9BF0D417CAC5691205FE7F888D540DD97ED2B3B4FF70
+      6A14E347F654D728E36C1D7DFCBBCA52F6A51A6234AEF1D3F3450C6498B2E778
+      9A680F309C5FF242F297CCAF5D6FB0616DB45EF9E7E7BA5059E34BDBFFA319FF
+      A072CB3DE279508305FFB60FC1BF1D4AB93E95775F82F224B2B0F651EC86F696
+      9BABE03D78DAAB7E5699F3A9C86FA5FD655B0E3FC589963BCCDD22431DD4E6E9
+      01385A8B282F651BDAC1FBD25215CFA131619F429C21177D69CEF0773A609311
+      FFD3FB0083183E5745F27C86085DF82F3C97B0FC9DBEC719FE399CA37CA7DA88
+      5DEC0496D66CFE3EA4A6C90C3F4A15CFEFA35C8C0BF1DC9116D9CA62F8D6AAF8
+      FEDB6BB06F871B9E7B086D3B43C404FE2DEEF946957C8751D3B306BB8E9EB7C2
+      817F962B7B0EFAF16887692FF167F058D0DE7F02C66314E62517FCD1F2288977
+      68F9CF66F23FD851FEEB04C83FE553D7F491FF771DE6EF2D431D6423CE5091FC
+      B275AAF8BB208558B3F51ED6933EF2FFB53AFC2EC893A883B039B061D7B3BE70
+      F91F29ECEC7B617F4E05B616FE7259186C907F5EC718AC314906AC4DFE797F73
+      187EAA2AF96E8C4DFE0B459BC7E0F8495147B645FED7C047D16DD6E371928AEC
+      D1F9C97F11EA2814E3F1359B3F93FC539C74A5A3FCD7B1F0606A80FCCF8852FE
+      4782C72AFA3B7FB5988DD42E447F75FC7885F0775FC5F97447BC8D82F0B41E4C
+      B160B32DD7B30D71239B9D5E5A7C5009C2CBEB61F20F089F089F5ACF6D4755FC
+      7DB030F8F452B6DF341EB41EBCA74ABE477850D8597E85E2C15D849D7FA5AAD8
+      EFF955C412A4FF2BF1151B5F598EBEF8DFDFA388FF0D15F1A005B0397FF1C191
+      DD791FFC53197FA27D1BCA43A67DEF2506FF81DE5F69053B6EB5257EB7153E6F
+      1ADA473933947B7F0BF610EE519177806CF13F7AEE0768C7A9B09B29F7E053B1
+      BE05C50F0F20EE305D99DF8B2F6FF1CBD2E0EFFF0DE27FE5F55DDE54C8627B41
+      6D1CF744DEF719B7A5A5D4DF458EF81CC398E784583F4CFBB719957867BC290F
+      3A3304DE9407BDD511BFD7877FBE77C05F0D3F5DFA71F43E526747194A31F43F
+      25840C4E31F47F4A087CBA81FFD37F035D9212B2DFA67108D3EF34111792FB3C
+      74AD9E4FECE123C407E30CF8AAF011DF51E6BD1BDA4FFC4915DFAB363D9FE240
+      FD0556D72DDFDF33ED6BCD126DA442EF0FD21EFBF50EF841888FD511716BDA2F
+      EF69888BC83CDBBFA9C379C22986F64F7498A369D88391F137B27B0A947FAE44
+      63D860032CB163B2719659EAA07C9B8FD14EDB1ED2C9A8A3007DA1F1A0DCED27
+      10B3FD40057F83A10EFAF21EC6F45BB4295B85CB29A88A7921AA7214D8F031E8
+      7BDD004A5125DF7D88459C98F86A6D007DA522EFBEEB4236EE46D4413244EF8F
+      F441AC763978966493BE45341E73C2DF2DBC027249FAE34EF04035263FFAFD5E
+      929DD354E4BBC0BADC0BDDA163E56F0AF98B033F3C8A58D317AA78FEC1F3F03F
+      E2E13BBC82FE2DC2711C3B7F0C8E1F63F801F069DE866DBA1B3CB70FE7F5F17E
+      DC43E77A18E267EF80E7FB404EE99D827E38EEAD0E7F5F77894FFC2FC3814F32
+      CA215EBFFF33D6C176A77B2ADFFF0957687C8E55E1731EAAC2CF9A0739A2FDF7
+      8795DB777014F87804FCADA1581FE9DBB4E342EC2D503EF16CF8E0E4433C1485
+      5EAC82B94D8C72EE52B1F6748C72FC5DE42355D9BF5FA7DF9F1C8BB194EB18F5
+      6B7108FF79A188FFD717F1793A7E1744C7F355F13DB5758207787C5FEB5DDD76
+      97FD0BD3FB7F7E5429FFFE25016BA5693FAC9FF2DF13F1FBDEA3FEF6621B1FFC
+      888058602178D8F4DC118EB11F13BE9D630CD286CF08117BF2C32F17F23A16C7
+      99B81684E7F2A2F15A5EF21CF0A4ABF5FBCE5B411B716E9E037EB78ABCEF9C09
+      2AC4B9DD21FBAF754098FE473B7E9D94DBF743F7207E2D4B0DF07D50EEE83DEA
+      D7D9538C83CF74920ACEDB916BF605B01977205EFDB43AFC8E6942C01EC035B0
+      7977C266EDCDC6ED17D8C89D55C96FF0D681ED4A362EE5B85FC2E2ABA63CF8C5
+      C2FFD5FC7E93633C328CFD591EF1E4FFF0FF89A0FD1B97FDB2DBE01F25091B67
+      BE239EBEBF30D370FE668BFCF0723A7440774BFC66B50F9E788FF24156F8D8A1
+      6D55E47F10713CC9E664F0E53901FCDF5B15FF4EF2A52AF20D5B17FF2406EDF8
+      0FF3E588EF5BAB70DFC124FBAA05F6A48EF915D77E9EFF47631626FF57E7FF91
+      DEA0FCCD373076DFAA48DEAD5FFEAFB617BB81A7134029F06B7F806F6ECBFF5D
+      276247E9226EDA187598F27F8937BA38C4DF7AA22F32FF7795A15D267C0AC643
+      E6FFBE64185F133E01632AF3FFE61AF8CB14FF4BC0BCC8FCBFCF54C9F79B4DF1
+      DFDA985B99FFBBCBB0AE9AE2BFDDC01FA6FCBFB522BE2BE7AF01F8E35965CFFF
+      D3FF47AA06C62316F3D205FCB1CC27A6ADF3FF76613CE6625E56813FA62B7BEE
+      20EF8BCEFF9BAE8EBEFCDFDFAA906CDE0D5EA6D86DFB103E7E5FCCCF77982FD2
+      2307203B41BAB32DEC8E07985D16031B64BB88D399CA0216E37B0CEBC472F0EA
+      4D581377F8D04EB4BF356C9BE1F04FC7630DB0C5B1F47E68187C67F8BAE90CEF
+      DAFEDDB0A35330AE0770FE128CDF18D4918479231FEF47C87F32E2F01C3F87E9
+      4BDBFCBDC0E62F83D987EB0D7A31887FD255E5F74782ECFE644792FECBD5E09B
+      1D8E54008C2E3331E7AEF917EF0A1B94E7F9BAEC97DADE3FE379287951E013D9
+      1899FE5FC268F8882F58F0D906FEBC09727B37F8BF7F48FC1415C9C3EF1345FB
+      13606BF477E8FF3436C7D3C4FE90CBF8453B7FA5E59FAECAFEAE91ED9DAEAE65
+      283F15A5D8BEF74936E3B56CFCD32C58D20BC30C762CFDBE8B8DBFCD0F1B8679
+      347DC777A8035E7FFBFFA0B06FB32043F4DD917B55F0F763872066128FFA789B
+      E819351DC6321E32BC1F7584FD1F0AB7AAC8FF458C0F891F8238EDADC03E8D63
+      97F6EBB1D26D8EC1D81FC0DFBB1027F29BBF5B2D6D2AF299BFB2E09F069671AA
+      8936FBF16F7929CD61FB513EEBCFA0CF71AEB90F4EEF81D0B7AB46C23FD3EF8F
+      9D89739B605B5531601729F377DD7921DD371B3E3CAF6312B02E3C1A8B3A26B0
+      FE6EB43C779032BFFF51137D698671196979D66890A9DC0D1B7A15623461F134
+      A6F9F035F9F7CB6E819EB91D7EFE42F63B53C49B77826A089FFF21D05290FE9D
+      2DE66207DA7F4614ED6F81F68F836C85C58F426CBE19E62239E4FC511C47FF0F
+      F289E0895847FE998379E7FCFB26EAF0D36D74ED45CC4982410626A05D77637C
+      AA636E5AE0DC0F78AE5F1CBD19F84AF3C62E1C8F5525FFE77AA5FCFBCBBFDF3C
+      BAC8BF5F71917FBFE222FF92C2CABFA4B0F2EF575CE4DFAFB8C8BFDFFC55CA3F
+      1933870E152375F8FB4EA473E7412E36E298CE3591F7335C0C6C378AF3AC41DC
+      320B948B73BBF13BC6807D053623D95FB1384F31A9D6388EC5B5BDB83786E1B3
+      70BE85A89774C25C71AE05EECD62FDA5760D13F7F5579177C827896BC380D163
+      B546B719D71B0277838AE4BDFF915D8F056614C63657D4DF1818DDF759FA98DD
+      93CBE628CB309E53D14FBAAFB661BEB2D8FC6659E6F346C837E51E55B3E04DED
+      BF06ED4F646371AAA5FDA6F1AB87B19F817ED0DE6F5DCBF8D9E6EF5A15F9DEE9
+      85B6F90BE01F1AF7597EFC5316FC5B5AF9298DFCFE1F259A2C49
+    }
+  end
+  object ACBrOpenSSLUtils1: TACBrOpenSSLUtils
+    Left = 664
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 704
+  end
+end

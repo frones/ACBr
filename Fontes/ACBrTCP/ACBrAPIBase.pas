@@ -41,6 +41,7 @@ uses
 
 resourcestring
   sErroMetodoNaoImplementado = 'Método %s não implementado para Classe %s';
+  sErroObjetoNaoPrenchido = 'Objeto %s não preenchido';
 
 type
 

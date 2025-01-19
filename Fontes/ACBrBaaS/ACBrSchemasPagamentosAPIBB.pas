@@ -48,6 +48,29 @@ uses
 
 type
 
+  TACBrPagamentosBBScope = (
+    pscLotesRequisicao,                // pagamentos-lote.lotes-requisicao: Permite Registrar liberação dos lotes de pagamentos.
+    pscTransferenciasInfo,             // pagamentos-lote.transferencias-info: Permite Consultar Lote de Pagamentos realizados via Transferência
+    pscTransferenciasRequisicao,       // pagamentos-lote.transferencias-requisicao: Permite Efetuar Lote de Pagamentos realizados via Transferência
+    pscCancelarRequisicao,             // pagamentos-lote.cancelar-requisicao: Permite Cancelar Lotes de Pagamentos.
+    pscDevolvidosInfo,                 // pagamentos-lote.devolvidos-info: Permite Consultar pagamentos Devolvidos em um Lote de Pagamentos
+    pscLotesInfo,                      // pagamentos-lote.lotes-info: Permite Consultar informações de um Lote de Pagamentos
+    pscGuiasSemCodigoBarrasInfo,       // pagamentos-lote.pagamentos-guias-sem-codigo-barras-info: Permite Consultar informações de pagamentos de guias sem código de barras (GPS, GRU e Darf Preto).
+    pscPagamentosInfo,                 // pagamentos-lote.pagamentos-info: Permite Consultar informações sobre um Pagamento específico em um Lote de Pagamentos
+    pscGuiasSemCodigoBarrasRequisicao, // pagamentos-lote.pagamentos-guias-sem-codigo-barras-requisicao: Permite Efetuar pagamentos de guias sem código de barras (GPS, GRU e Darf Preto) em lote.
+    pscCodigoBarrasInfo,               // pagamentos-lote.pagamentos-codigo-barras-info: Permite Consultar Pagamentos Vinculados a um Código de Barras em um Lote de Pagamentos
+    pscBoletosRequisicao,              // pagamentos-lote.boletos-requisicao: Permite efetuar pagamentos em lote de Boletos
+    pscGuiasCodigoBarrasInfo,          // pagamentos-lote.guias-codigo-barras-info: Permite consultar a solicitação de um lote de pagamentos via guias com código de barras
+    pscGuiasCodigoBarrasRequisicao,    // pagamentos-lote.guias-codigo-barras-requisicao: Permite pagamento em lote de guias de recolhimento com código de barras.
+    pscTransferenciasPixInfo,          // pagamentos-lote.transferencias-pix-info: Permite consultar solicitação de transferências Pix.
+    pscTransferenciasPixRequisicao,    // pagamentos-lote.transferencias-pix-requisicao: Permite efetuar pagamentos em lote via transferência PIX.
+    pscPixInfo,                        // pagamentos-lote.pix-info: Permite consultar um pagamento específico de um lote de PIX
+    pscBoletosInfo,                    // pagamentos-lote.boletos-info: Permite consultar a solicitação de um lote de pagamentos via boletos
+    pscLancamentosInfo                 // pagamentos-lote.lancamentos-info: Permite Consultar pagamentos em um determinado período
+  );
+
+  TACBrPagamentosBBScopes = set of TACBrPagamentosBBScope;
+
   TACBrPagamentosBBEstado = (
     pgeNenhum,
     pgeAgendado,       // Agendado - Pagamento aguardando a data para efetivação do crédito
@@ -613,44 +636,6 @@ type
     pctReferencia     // 9 - Referência
   );
 
-  { TACBrPagamentosBBErro }
-
-  TACBrPagamentosBBErro = class(TACBrAPISchema)
-  private
-    fcodigo: String;
-    fmensagem: String;
-    focorrencia: String;
-    fversao: String;
-  protected
-    procedure AssignSchema(aSource: TACBrAPISchema); override;
-    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  public
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TACBrPagamentosBBErro);
-
-    property codigo: String read fcodigo write fcodigo;
-    property versao: String read fversao write fversao;
-    property mensagem: String read fmensagem write fmensagem;
-    property ocorrencia: String read focorrencia write focorrencia;
-  end;
-
-  { TACBrPagamentosBBErros }
-
-  TACBrPagamentosBBErros = class(TACBrAPISchemaArray)
-  private
-    function GetItem(aIndex: Integer): TACBrPagamentosBBErro;
-    procedure SetItem(aIndex: Integer; aValue: TACBrPagamentosBBErro);
-  protected
-    function NewSchema: TACBrAPISchema; override;
-  public
-    function Add(aItem: TACBrPagamentosBBErro): Integer;
-    procedure Insert(aIndex: Integer; aItem: TACBrPagamentosBBErro);
-    function New: TACBrPagamentosBBErro;
-    property Items[aIndex: Integer]: TACBrPagamentosBBErro read GetItem write SetItem; default;
-  end;
-
   { TACBrPagamentosBBLancamentoErroObject }
 
   TACBrPagamentosBBLancamentoErroObject = class(TACBrAPISchema)
@@ -697,63 +682,6 @@ type
     procedure Insert(aIndex: Integer; aItem: TACBrPagamenosBBTransferenciaErroObject);
     function New: TACBrPagamenosBBTransferenciaErroObject;
     property Items[aIndex: Integer]: TACBrPagamenosBBTransferenciaErroObject read GetItem write SetItem; default;
-  end;
-
-  { TACBrPagamentosBBErroOAuthAttribute }
-
-  TACBrPagamentosBBErroOAuthAttribute = class(TACBrAPISchema)
-  private
-    ferror: String;
-  protected
-    procedure AssignSchema(aSource: TACBrAPISchema); override;
-    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  public
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TACBrPagamentosBBErroOAuthAttribute);
-    property error: String read ferror write ferror;
-  end;
-
-  { TACBrPagamentosBBErroOAuthAttributes }
-
-  TACBrPagamentosBBErroOAuthAttributes = class(TACBrAPISchemaArray)
-  private
-    function GetItem(aIndex: Integer): TACBrPagamentosBBErroOAuthAttribute;
-    procedure SetItem(aIndex: Integer; aValue: TACBrPagamentosBBErroOAuthAttribute);
-  protected
-    function NewSchema: TACBrAPISchema; override;
-  public
-    function Add(aItem: TACBrPagamentosBBErroOAuthAttribute): Integer;
-    procedure Insert(aIndex: Integer; aItem: TACBrPagamentosBBErroOAuthAttribute);
-    function New: TACBrPagamentosBBErroOAuthAttribute;
-    property Items[aIndex: Integer]: TACBrPagamentosBBErroOAuthAttribute read GetItem write SetItem; default;
-  end;
-
-  { TACBrPagamentosBBErroOAuth }
-
-  TACBrPagamentosBBErroOAuth = class(TACBrAPISchema)
-  private
-    fattributes: TACBrPagamentosBBErroOAuthAttributes;
-    ferror: String;
-    fmessage: String;
-    fstatusCode: Integer;
-    function Getattributes: TACBrPagamentosBBErroOAuthAttributes;
-  protected
-    procedure AssignSchema(aSource: TACBrAPISchema); override;
-    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
-    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
-  public
-    destructor Destroy; override;
-    constructor Create(const ObjectName: String = ''); override;
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(aSource: TACBrPagamentosBBErroOAuth);
-
-    property statusCode: Integer read fstatusCode write fstatusCode;
-    property error: String read ferror write ferror;
-    property message: String read fmessage write fmessage;
-    property attributes: TACBrPagamentosBBErroOAuthAttributes read Getattributes write fattributes;
   end;
 
   { TACBrPagamentosBBDevolucaoBase }
@@ -3533,40 +3461,6 @@ begin
   Self.Add(Result);
 end;
 
-{ TACBrPagamentosBBErroOAuthAttributes }
-
-function TACBrPagamentosBBErroOAuthAttributes.GetItem(aIndex: Integer): TACBrPagamentosBBErroOAuthAttribute;
-begin
-  Result := TACBrPagamentosBBErroOAuthAttribute(inherited Items[aIndex]);
-end;
-
-procedure TACBrPagamentosBBErroOAuthAttributes.SetItem(aIndex: Integer; aValue: TACBrPagamentosBBErroOAuthAttribute);
-begin
-  inherited Items[aIndex] := aValue;
-end;
-
-function TACBrPagamentosBBErroOAuthAttributes.NewSchema: TACBrAPISchema;
-begin
-  Result := New;
-end;
-
-function TACBrPagamentosBBErroOAuthAttributes.Add(aItem: TACBrPagamentosBBErroOAuthAttribute): Integer;
-begin
-  Result := inherited Add(aItem);
-end;
-
-procedure TACBrPagamentosBBErroOAuthAttributes.Insert(aIndex: Integer;
-  aItem: TACBrPagamentosBBErroOAuthAttribute);
-begin
-  inherited Insert(aIndex, aItem);
-end;
-
-function TACBrPagamentosBBErroOAuthAttributes.New: TACBrPagamentosBBErroOAuthAttribute;
-begin
-  Result := TACBrPagamentosBBErroOAuthAttribute.Create;
-  Self.Add(Result);
-end;
-
 { TACBrPagamenosBBTransferenciaErros }
 
 function TACBrPagamenosBBTransferenciaErros.GetItem(aIndex: Integer): TACBrPagamenosBBTransferenciaErroObject;
@@ -3632,39 +3526,6 @@ end;
 function TACBrPagamentosBBLancamentoErros.New: TACBrPagamentosBBLancamentoErroObject;
 begin
   Result := TACBrPagamentosBBLancamentoErroObject.Create;
-  Self.Add(Result);
-end;
-
-{ TACBrPagamentosBBErros }
-
-function TACBrPagamentosBBErros.GetItem(aIndex: Integer): TACBrPagamentosBBErro;
-begin
-  Result := TACBrPagamentosBBErro(inherited Items[aIndex]);
-end;
-
-procedure TACBrPagamentosBBErros.SetItem(aIndex: Integer; aValue: TACBrPagamentosBBErro);
-begin
-  inherited Items[aIndex] := aValue;
-end;
-
-function TACBrPagamentosBBErros.NewSchema: TACBrAPISchema;
-begin
-  Result := New;
-end;
-
-function TACBrPagamentosBBErros.Add(aItem: TACBrPagamentosBBErro): Integer;
-begin
-  Result := inherited Add(aItem);
-end;
-
-procedure TACBrPagamentosBBErros.Insert(aIndex: Integer; aItem: TACBrPagamentosBBErro);
-begin  
-  inherited Insert(aIndex, aItem);
-end;
-
-function TACBrPagamentosBBErros.New: TACBrPagamentosBBErro;
-begin
-  Result := TACBrPagamentosBBErro.Create;
   Self.Add(Result);
 end;
 
@@ -6079,166 +5940,6 @@ end;
 procedure TACBrPagamentosBBDevolucaoBase.Assign(aSource: TACBrPagamentosBBDevolucaoBase);
 begin
   fcodigoMotivo := aSource.codigoMotivo;
-end;
-
-{ TACBrPagamentosBBErroOAuth }
-
-function TACBrPagamentosBBErroOAuth.Getattributes: TACBrPagamentosBBErroOAuthAttributes;
-begin
-  if (not Assigned(fattributes)) then
-    fattributes := TACBrPagamentosBBErroOAuthAttributes.Create('attributes');
-  Result := fattributes;
-end;
-
-procedure TACBrPagamentosBBErroOAuth.AssignSchema(aSource: TACBrAPISchema);
-begin
-  if (aSource is TACBrPagamentosBBErroOAuth) then
-    Assign(TACBrPagamentosBBErroOAuth(ASource));
-end;
-
-procedure TACBrPagamentosBBErroOAuth.DoWriteToJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .AddPair('statusCode', fstatusCode)
-    .AddPair('error', ferror)
-    .AddPair('message', fmessage);
-
-  if Assigned(fattributes) then
-    fattributes.WriteToJSon(aJSon);
-end;
-
-procedure TACBrPagamentosBBErroOAuth.DoReadFromJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .Value('statusCode', fstatusCode)
-    .Value('error', ferror)
-    .Value('message', fmessage);
-
-  if Assigned(fattributes) then
-    fattributes.ReadFromJSon(aJSon);
-end;
-
-constructor TACBrPagamentosBBErroOAuth.Create(const ObjectName: String);
-begin
-  inherited Create(ObjectName);
-end;
-
-destructor TACBrPagamentosBBErroOAuth.Destroy;
-begin
-  if Assigned(fattributes) then
-    fattributes.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrPagamentosBBErroOAuth.Clear;
-begin
-  fstatusCode := 0;
-  ferror := '';
-  fmessage := '';
-
-  if Assigned(fattributes) then
-    fattributes.Clear;
-end;
-
-function TACBrPagamentosBBErroOAuth.IsEmpty: Boolean;
-begin
-  Result :=
-    EstaZerado(fstatusCode) and
-    EstaVazio(ferror) and
-    EstaVazio(fmessage) and
-    fattributes.IsEmpty;
-end;
-
-procedure TACBrPagamentosBBErroOAuth.Assign(aSource: TACBrPagamentosBBErroOAuth);
-begin
-  fstatusCode := ASource.statusCode;
-  ferror := ASource.error;
-  fmessage := ASource.message;
-  attributes.Assign(ASource.attributes);
-end;
-
-{ TACBrPagamentosBBErroOAuthAttribute }
-
-procedure TACBrPagamentosBBErroOAuthAttribute.AssignSchema(aSource: TACBrAPISchema);
-begin
-  if (aSource is TACBrPagamentosBBErroOAuthAttribute) then
-    Assign(TACBrPagamentosBBErroOAuthAttribute(ASource));
-end;
-
-procedure TACBrPagamentosBBErroOAuthAttribute.DoWriteToJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon.AddPair('error', ferror);
-end;
-
-procedure TACBrPagamentosBBErroOAuthAttribute.DoReadFromJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon.Value('error', ferror);
-end;
-
-procedure TACBrPagamentosBBErroOAuthAttribute.Clear;
-begin
-  ferror := EmptyStr;
-end;
-
-function TACBrPagamentosBBErroOAuthAttribute.IsEmpty: Boolean;
-begin
-  Result := EstaVazio(ferror);
-end;
-
-procedure TACBrPagamentosBBErroOAuthAttribute.Assign(aSource: TACBrPagamentosBBErroOAuthAttribute);
-begin
-  ferror := aSource.error;
-end;
-
-{ TACBrPagamentosBBErro }
-
-procedure TACBrPagamentosBBErro.AssignSchema(aSource: TACBrAPISchema);
-begin
-  if (aSource is TACBrPagamentosBBErro) then
-    Assign(TACBrPagamentosBBErro(ASource));
-end;
-
-procedure TACBrPagamentosBBErro.DoWriteToJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .AddPair('codigo', fcodigo)
-    .AddPair('versao', fversao)
-    .AddPair('mensagem', fmensagem)
-    .AddPair('ocorrencia', focorrencia);
-end;
-
-procedure TACBrPagamentosBBErro.DoReadFromJSon(aJSon: TACBrJSONObject);
-begin
-  aJSon
-    .Value('codigo', fcodigo)
-    .Value('versao', fversao)
-    .Value('mensagem', fmensagem)
-    .Value('ocorrencia', focorrencia);
-end;
-
-procedure TACBrPagamentosBBErro.Clear;
-begin
-  fcodigo := '';
-  fversao := '';
-  fmensagem := '';
-  focorrencia := '';
-end;
-
-function TACBrPagamentosBBErro.IsEmpty: Boolean;
-begin
-  Result :=
-    EstaVazio(fcodigo) and
-    EstaVazio(fversao) and
-    EstaVazio(fmensagem) and
-    EstaVazio(focorrencia);
-end;
-
-procedure TACBrPagamentosBBErro.Assign(aSource: TACBrPagamentosBBErro);
-begin
-  fcodigo := ASource.codigo;
-  fversao := ASource.versao;
-  fmensagem := ASource.mensagem;
-  focorrencia := ASource.ocorrencia;
 end;
 
 end.

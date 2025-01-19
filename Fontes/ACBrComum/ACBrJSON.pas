@@ -163,6 +163,7 @@ type
     property ItemAsJSONObject[const AIndex: Integer]: TACBrJSONObject read GetItemAsJSONObject;
 
     function AddElement(const AValue: string): TACBrJSONArray; overload;
+    function AddElement(const AValue: Integer): TACBrJSONArray; overload;
     function AddElementJSON(AValue: TACBrJSONObject): TACBrJSONArray; overload;
     function AddElementJSONString(const AValue: string): TACBrJSONArray; overload;
 
@@ -786,6 +787,18 @@ begin
 end;
 
 function TACBrJSONArray.AddElement(const AValue: string): TACBrJSONArray;
+begin
+  Result := Self;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  FJSON.Add(AValue);
+  {$Else}{$IfDef FPC}
+  FJSON.Add(AValue);
+  {$Else}
+  FJSON.Put(AValue);
+  {$EndIf}{$EndIf}
+end;
+
+function TACBrJSONArray.AddElement(const AValue: Integer): TACBrJSONArray;
 begin
   Result := Self;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}

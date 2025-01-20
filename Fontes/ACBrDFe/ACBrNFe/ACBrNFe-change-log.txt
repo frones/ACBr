@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2025
+-- pcnNFe --
+[*] Remoção de unit por estar em desuso.
+   Por: Italo Giurizzato Junior
+
 09/01/2025
 -- ACBrNFe.XmlWriter --
 [*] Corrige problema na geração do grupo agropecuário.

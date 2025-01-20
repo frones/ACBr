@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6506: A cidade de Pirajuba/MG trocou de provedor, agora é IPM versão 2.04
+  Por: Diego Reckziegel
+
 17/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6499: Incluída o Parâmetro para dividir a aliquota por 100 

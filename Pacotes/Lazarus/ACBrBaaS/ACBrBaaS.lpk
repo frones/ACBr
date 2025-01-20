@@ -31,6 +31,22 @@
         <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIInter.pas"/>
         <UnitName Value="ACBrExtratoAPIInter"/>
       </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrPagamentosAPI.pas"/>
+        <UnitName Value="ACBrPagamentosAPI"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrPagamentosAPIBB.pas"/>
+        <UnitName Value="ACBrPagamentosAPIBB"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrSchemasPagamentosAPI.pas"/>
+        <UnitName Value="ACBrSchemasPagamentosAPI"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrBaaS\ACBrSchemasPagamentosAPIBB.pas"/>
+        <UnitName Value="ACBrSchemasPagamentosAPIBB"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

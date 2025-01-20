@@ -1,7 +1,7 @@
 object frmPagamentos: TfrmPagamentos
-  Left = 632
+  Left = 2231
   Height = 437
-  Top = 242
+  Top = 173
   Width = 900
   Caption = 'Pagamentos'
   ClientHeight = 437
@@ -13,11 +13,11 @@ object frmPagamentos: TfrmPagamentos
     Height = 437
     Top = 0
     Width = 900
-    ActivePage = tsGuias
+    ActivePage = tsLotePagamento
     Align = alClient
     Images = frPagamentosAPITeste.ImageList1
     TabHeight = 25
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabWidth = 200
     object tsLotePagamento: TTabSheet
@@ -250,9 +250,9 @@ object frmPagamentos: TfrmPagamentos
               Height = 184
               Top = 0
               Width = 820
-              ActivePage = tsGPS
+              ActivePage = tsBoletoLancamento
               Align = alClient
-              TabIndex = 3
+              TabIndex = 0
               TabOrder = 0
               object tsBoletoLancamento: TTabSheet
                 Caption = 'Boleto'
@@ -1511,6 +1511,409 @@ object frmPagamentos: TfrmPagamentos
                   end
                 end
               end
+              object tsDARF: TTabSheet
+                Caption = 'DARF'
+                ClientHeight = 156
+                ClientWidth = 812
+                object gbDARFLancamento: TGroupBox
+                  Left = 0
+                  Height = 156
+                  Top = 0
+                  Width = 812
+                  Align = alClient
+                  Caption = 'Lançamento'
+                  ClientHeight = 136
+                  ClientWidth = 808
+                  TabOrder = 0
+                  object pnDARFLancamento: TPanel
+                    Left = 0
+                    Height = 136
+                    Top = 0
+                    Width = 808
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 136
+                    ClientWidth = 808
+                    TabOrder = 0
+                    object edDARFValorPagamento: TEdit
+                      Left = 177
+                      Height = 23
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 1
+                    end
+                    object lbDARFValorPagamento: TLabel
+                      Left = 177
+                      Height = 15
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 8
+                      Width = 95
+                      Caption = 'Valor Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object lbDARFDataPagamento: TLabel
+                      Left = 15
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 8
+                      Width = 93
+                      Caption = 'Data Pagamento*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtDARFDataPagamento: TDateTimePicker
+                      Left = 15
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 23
+                      Width = 146
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 0
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 45664
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbDARFIDContribuinte: TLabel
+                      Left = 655
+                      Height = 15
+                      Hint = 'Número de identificação do contribuinte'
+                      Top = 56
+                      Width = 143
+                      Caption = 'Identificação Contribuinte*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFIDContribuinte: TEdit
+                      Left = 655
+                      Height = 23
+                      Hint = 'Número de identificação do contribuinte'
+                      Top = 71
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 7
+                    end
+                    object lbDARFCodReceita: TLabel
+                      Left = 337
+                      Height = 15
+                      Hint = 'Código da Receita do Tributo Guia Da Previdência Social - GPS'
+                      Top = 56
+                      Width = 125
+                      Caption = 'Código Receita Tributo*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFCodReceita: TEdit
+                      Left = 337
+                      Height = 23
+                      Hint = 'Código da Receita do Tributo Guia Da Previdência Social - GPS'
+                      Top = 71
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 5
+                    end
+                    object lbDARFTipoContribuinte: TLabel
+                      Left = 496
+                      Height = 15
+                      Hint = 'Código do tipo de contribuinte na Guia da Previdência Social'
+                      Top = 56
+                      Width = 123
+                      Caption = 'Cod.Tipo Contribuinte*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFDescricaoPagamento: TEdit
+                      Left = 655
+                      Height = 23
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 4
+                    end
+                    object lbDARFDescricaoPagamento: TLabel
+                      Left = 655
+                      Height = 15
+                      Hint = 'Campo de uso livre pelo cliente conveniado - sem tratamento pelo Banco'
+                      Top = 8
+                      Width = 115
+                      Caption = 'Descrição Pagamento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFDocumentoDebito: TEdit
+                      Left = 337
+                      Height = 23
+                      Hint = #9'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 2
+                    end
+                    object lbDARFDocumentoDebito: TLabel
+                      Left = 337
+                      Height = 15
+                      Hint = #9'Número que será mostrado no extrato da conta do pagador. Por ser um campo opcional, se não inserido, a conta de débito terá um único lançamento no valor total de todos os lançamentos de créditos validados. De igual modo será se o mesmo número for informado para todos os lançamentos de crédito. Quando números diferentes forem informados para cada lançamento, os lançamentos de débitos serão individualizados'
+                      Top = 8
+                      Width = 134
+                      Caption = 'Num. Documento Débito'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFIdTributo: TEdit
+                      Left = 15
+                      Height = 23
+                      Hint = 'Número de identificação na Previdência. Informar como string'
+                      Top = 119
+                      Width = 147
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 8
+                    end
+                    object lbDARFIdTributo: TLabel
+                      Left = 16
+                      Height = 15
+                      Hint = 'Número de identificação na Previdência. Informar como string'
+                      Top = 104
+                      Width = 154
+                      Caption = 'Código Identificador Tributo*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFValorPrincipal: TEdit
+                      Left = 177
+                      Height = 23
+                      Hint = 'Valor devido ao INSS pelo contribuinte'
+                      Top = 119
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 9
+                    end
+                    object lbDARFValorPrincipal: TLabel
+                      Left = 177
+                      Height = 15
+                      Hint = 'Valor devido ao INSS pelo contribuinte'
+                      Top = 104
+                      Width = 80
+                      Caption = 'Valor Principal*'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFValorMulta: TEdit
+                      Left = 337
+                      Height = 23
+                      Hint = 'Valor outras entradas'
+                      Top = 119
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 10
+                    end
+                    object lbDARFValorMulta: TLabel
+                      Left = 337
+                      Height = 15
+                      Hint = 'Valor outras entradas'
+                      Top = 104
+                      Width = 60
+                      Caption = 'Valor Multa'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFSeuDocumento: TEdit
+                      Left = 496
+                      Height = 23
+                      Hint = 'Número de uso livre pelo cliente conveniado, não validado pelo BB. Informar como string (até 20 caracteres)'
+                      Top = 23
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 3
+                    end
+                    object lbDARFSeuDocumento: TLabel
+                      Left = 496
+                      Height = 15
+                      Hint = 'Número de uso livre pelo cliente conveniado, não validado pelo BB. Informar como string (até 20 caracteres)'
+                      Top = 8
+                      Width = 85
+                      Caption = 'Seu Documento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object cbDARFTipoContribuinte: TComboBox
+                      Left = 496
+                      Height = 23
+                      Hint = 'Código do tipo de contribuinte na Guia da Previdência Social'
+                      Top = 71
+                      Width = 146
+                      ItemHeight = 15
+                      Items.Strings = (
+                        'Nenhum'
+                        'CNPJ'
+                        'CPF'
+                        'NIT / PIS / PASEP'
+                        'CEI'
+                        'NB'
+                        'Num Título'
+                        'DEBCAD'
+                        'Referência'
+                      )
+                      Style = csDropDownList
+                      TabOrder = 6
+                    end
+                    object edDARFValorJuros: TEdit
+                      Left = 496
+                      Height = 23
+                      Hint = 'Valor da atualização monetária'
+                      Top = 119
+                      Width = 146
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 11
+                    end
+                    object lbDARFValorJuros: TLabel
+                      Left = 496
+                      Height = 15
+                      Hint = 'Valor da atualização monetária'
+                      Top = 104
+                      Width = 104
+                      Caption = 'Valor Juros/Encargo'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtDARFDataApuracao: TDateTimePicker
+                      Left = 16
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 71
+                      Width = 146
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 12
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 1.7E308
+                      Time = 1.7E308
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbDARFDataApuracao: TLabel
+                      Left = 16
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 56
+                      Width = 78
+                      Caption = 'Data Apuração'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object dtDARFDataVencimento: TDateTimePicker
+                      Left = 177
+                      Height = 23
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 71
+                      Width = 146
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 13
+                      TrailingSeparator = False
+                      TextForNullDate = ' '
+                      LeadingZeros = True
+                      ShowHint = True
+                      ParentShowHint = False
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 1.7E308
+                      Time = 1.7E308
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lbDARFDataVencimento: TLabel
+                      Left = 177
+                      Height = 15
+                      Hint = 'Data do pagamento, em formato ddmmaaaa. Omitir o zero à esquerda do dia, se houver'
+                      Top = 56
+                      Width = 90
+                      Caption = 'Data Vencimento'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                    object edDARFNumReferencia: TEdit
+                      Left = 655
+                      Height = 23
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 119
+                      Width = 146
+                      DoubleBuffered = False
+                      ParentDoubleBuffered = False
+                      ParentShowHint = False
+                      ShowHint = True
+                      TabOrder = 14
+                    end
+                    object lbDARFNumReferencia: TLabel
+                      Left = 655
+                      Height = 15
+                      Hint = 'Valor do pagamento em reais'
+                      Top = 104
+                      Width = 102
+                      Caption = 'Número Referência'
+                      ParentColor = False
+                      ParentShowHint = False
+                      ShowHint = True
+                    end
+                  end
+                end
+              end
             end
           end
         end
@@ -1595,12 +1998,11 @@ object frmPagamentos: TfrmPagamentos
               Caption = 'Tipo'
               ParentColor = False
             end
-            object edConsultaIdLote: TEdit
+            object edConsultarIdLote: TEdit
               Left = 224
               Height = 23
               Top = 25
               Width = 180
-              MaxLength = 7
               NumbersOnly = True
               ParentShowHint = False
               ShowHint = True
@@ -1616,7 +2018,7 @@ object frmPagamentos: TfrmPagamentos
               ParentShowHint = False
               ShowHint = True
             end
-            object btConsultarCobrancaImediata: TBitBtn
+            object btConsultarLote: TBitBtn
               Left = 416
               Height = 25
               Top = 23
@@ -1624,7 +2026,7 @@ object frmPagamentos: TfrmPagamentos
               Anchors = [akTop, akRight]
               Caption = 'Consultar'
               ImageIndex = 4
-              OnClick = btConsultarCobrancaImediataClick
+              OnClick = btConsultarLoteClick
               TabOrder = 2
             end
             object mmConsultaLog: TMemo
@@ -1641,7 +2043,7 @@ object frmPagamentos: TfrmPagamentos
           Caption = 'Pagamento Específico'
           ClientHeight = 371
           ClientWidth = 884
-          object pnLoteConsultar1: TPanel
+          object pnPagamentoConsultar: TPanel
             Left = 0
             Height = 371
             Top = 0
@@ -1651,7 +2053,7 @@ object frmPagamentos: TfrmPagamentos
             ClientHeight = 371
             ClientWidth = 884
             TabOrder = 0
-            object cbConsultaLoteTipo1: TComboBox
+            object cbConsultarIdPagamentoTipo: TComboBox
               Left = 30
               Height = 23
               Top = 25
@@ -1670,7 +2072,7 @@ object frmPagamentos: TfrmPagamentos
               TabOrder = 0
               Text = 'Boletos'
             end
-            object lbConsultaLoteTipo1: TLabel
+            object lbConsultarIdPagamentoTipo: TLabel
               Left = 30
               Height = 15
               Top = 10
@@ -1678,28 +2080,27 @@ object frmPagamentos: TfrmPagamentos
               Caption = 'Tipo'
               ParentColor = False
             end
-            object edConsultaIdLote1: TEdit
+            object edConsultarIdPagamento: TEdit
               Left = 224
               Height = 23
               Top = 25
               Width = 180
-              MaxLength = 7
               NumbersOnly = True
               ParentShowHint = False
               ShowHint = True
               TabOrder = 1
             end
-            object lbConsultaIdLote1: TLabel
+            object lbConsultarIdPagamento: TLabel
               Left = 224
               Height = 15
               Top = 12
-              Width = 36
-              Caption = 'Id Lote'
+              Width = 74
+              Caption = 'Id Pagamento'
               ParentColor = False
               ParentShowHint = False
               ShowHint = True
             end
-            object btConsultarCobrancaImediata1: TBitBtn
+            object btConsultarIdPagamento: TBitBtn
               Left = 416
               Height = 25
               Top = 23
@@ -1707,10 +2108,10 @@ object frmPagamentos: TfrmPagamentos
               Anchors = [akTop, akRight]
               Caption = 'Consultar'
               ImageIndex = 4
-              OnClick = btConsultarCobrancaImediataClick
+              OnClick = btConsultarIdPagamentoClick
               TabOrder = 2
             end
-            object mmConsultaLog1: TMemo
+            object mmConsultarPagamentoLog: TMemo
               Left = 30
               Height = 280
               Top = 72

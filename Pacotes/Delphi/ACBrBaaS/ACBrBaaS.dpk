@@ -37,7 +37,10 @@ requires
 contains
   ACBrExtratoAPI in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPI.pas',
   ACBrExtratoAPIBB in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIBB.pas',
-  ACBrExtratoAPIInter in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIInter.pas';  
+  ACBrExtratoAPIInter in '..\..\..\Fontes\ACBrBaaS\ACBrExtratoAPIInter.pas',
+  ACBrPagamentosAPI in '..\..\..\Fontes\ACBrBaaS\ACBrPagamentosAPI.pas',
+  ACBrPagamentosAPIBB in '..\..\..\Fontes\ACBrBaaS\ACBrPagamentosAPIBB.pas',
+  ACBrSchemasPagamentosAPI in '..\..\..\Fontes\ACBrBaaS\ACBrSchemasPagamentosAPI.pas';
 
 end.
 

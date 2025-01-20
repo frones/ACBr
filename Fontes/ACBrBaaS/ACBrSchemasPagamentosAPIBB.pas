@@ -3642,7 +3642,7 @@ begin
     .Value('estadoPagamento', festadoPagamento)
     .Value('tipoPagamento', ftipoPagamento)
     .Value('tipoCredito',  i1)
-    .Value('dataTransferencia', fdataTransferencia)
+    //.Value('dataTransferencia', fdataTransferencia)
     .Value('valorTransferencia', fvalorTransferencia)
     .Value('documentoDebito', fdocumentoDebito)
     .Value('numeroCOMPE', fnumeroCOMPE)
@@ -3841,9 +3841,9 @@ begin
     .Value('numeroAgenciaDebito', fnumeroAgenciaDebito)
     .Value('numeroContaCorrenteDebito', fnumeroContaCorrenteDebito)
     .Value('digitoVerificadorContaCorrenteDebito', fdigitoVerificadorContaCorrenteDebito)
-    .Value('codigoProduto', fcodigoProduto)
-    .Value('dataOriginalPagamento', fdataOriginalPagamento)
-    .Value('dataNovoPagamento', fdataNovoPagamento);
+    .Value('codigoProduto', fcodigoProduto);
+    //.Value('dataOriginalPagamento', fdataOriginalPagamento)
+    //.Value('dataNovoPagamento', fdataNovoPagamento);
 end;
 
 procedure TACBrPagamentosBBAlteracaoData.Clear;
@@ -4021,7 +4021,7 @@ begin
     .Value('contaPagamentoCredito', fcontaPagamentoCredito)
     .Value('cpfBeneficiario', fcpfBeneficiario)
     .Value('cnpjBeneficiario', fcnpjBeneficiario)
-    .Value('dataPagamento', fdataPagamento)
+    //.Value('dataPagamento', fdataPagamento)
     .Value('valorPagamento', fvalorPagamento)
     .Value('documentoDebito', fdocumentoDebito)
     .Value('documentoCredito', fdocumentoCredito)
@@ -4618,7 +4618,7 @@ begin
     .Value('contaPagamentoCredito', fcontaPagamentoCredito)
     .Value('cpfBeneficiario', fcpfBeneficiario)
     .Value('cnpjBeneficiario', fcnpjBeneficiario)
-    .Value('dataTransferencia', fdataTransferencia)
+    //.Value('dataTransferencia', fdataTransferencia)
     .Value('valorTransferencia', fvalorTransferencia)
     .Value('documentoDebito', fdocumentoDebito)
     .Value('documentoCredito', fdocumentoCredito)
@@ -4784,7 +4784,7 @@ begin
     .Value('agenciaDebito', fagenciaDebito)
     .Value('contaCorrenteDebito', fcontaCorrenteDebito)
     .Value('digitoVerificadorContaCorrente', fdigitoVerificadorContaCorrente)
-    .Value('dataRequisicao', fdataRequisicao)
+    //.Value('dataRequisicao', fdataRequisicao)
     .Value('tipoPagamento', i2)
     .Value('identificacaoRequisitante', fidentificacaoRequisitante)
     .Value('quantidadeTransferencias', fquantidadeTransferencias)
@@ -4959,13 +4959,13 @@ begin
     .Value('nomeDoFavorecido', fnomeDoFavorecido)
     .Value('codigoDoTipoDePessoa', i1)
     .Value('numeroCPFouCNPJ', fnumeroCPFouCNPJ)
-    .Value('dataPagamento', fdataPagamento)
+    //.Value('dataPagamento', fdataPagamento)
     .Value('valorPagamento', fvalorPagamento)
     .Value('numeroDocumentoDebito', fnumeroDocumentoDebito)
     .Value('numeroDocumentoCredito', fnumeroDocumentoCredito)
     .Value('codigoFormaCredito', fcodigoFormaCredito)
     .Value('codigoAutenticacaoPagamento', fcodigoAutenticacaoPagamento)
-    .Value('dataDebito', fdataDebito)
+    //.Value('dataDebito', fdataDebito)
     .Value('codigoTipoPagamento', i2);
 
   if NaoEstaZerado(i1) then
@@ -5067,7 +5067,7 @@ begin
     .Value('indice', findice)
     .Value('estadoRequisicao', i)
     .Value('tipoPagamento', ftipoPagamento)
-    .Value('dataRequisicao', fdataRequisicao)
+    //.Value('dataRequisicao', fdataRequisicao)
     .Value('quantidadePagamentos', fquantidadePagamentos)
     .Value('valorPagamentos', fvalorPagamentos);
 
@@ -5572,7 +5572,7 @@ begin
     .Value('identificadorPagamento', fidentificadorPagamento)
     .Value('tipoPagamento', i1)
     .Value('tipoCredito', i2)
-    .Value('dataPagamento', fdataPagamento)
+    //.Value('dataPagamento', fdataPagamento)
     .Value('compeCredito', fcompeCredito)
     .Value('ispbCredito', fispbCredito)
     .Value('agenciaCredito', fagenciaCredito)
@@ -5775,7 +5775,7 @@ begin
     .Value('digitoVerificadorContaCorrenteDebito', fdigitoVerificadorContaCorrenteDebito)
     .Value('inicioCartaoCredito', finicioCartaoCredito)
     .Value('fimCartaoCredito', ffimCartaoCredito)
-    .Value('dataPagamento', fdataPagamento)
+    //.Value('dataPagamento', fdataPagamento)
     .Value('valorPagamento', fvalorPagamento)
     .Value('documentoDebito', fdocumentoDebito)
     .Value('codigoAutenticacaoPagamento', fcodigoAutenticacaoPagamento);
@@ -5883,7 +5883,7 @@ procedure TACBrPagamentosBBDevolucao.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin 
   aJSon
     .Value('codigoMotivo', fcodigoMotivo)
-    .Value('dataDevolucao', fdataDevolucao)
+    //.Value('dataDevolucao', fdataDevolucao)
     .Value('valorDevolucao', fvalorDevolucao);
 end;
 

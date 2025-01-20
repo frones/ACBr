@@ -44,7 +44,7 @@ procedure Register;
 implementation
 
 uses
-  ACBrExtratoAPI;
+  ACBrExtratoAPI, ACBrPagamentosAPI, ACBrPagamentosAPIBB;
 
 {$IFNDEF FPC}
    {$R ACBrBaaS.dcr}
@@ -52,7 +52,8 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBrBaaS', [TACBrExtratoAPI]);
+  RegisterComponents('ACBrBaaS', [TACBrExtratoAPI, TACBrPagamentosAPI,
+    TACBrPagamentosAPIBB]);
 end;
 
 {$IFDEF FPC}

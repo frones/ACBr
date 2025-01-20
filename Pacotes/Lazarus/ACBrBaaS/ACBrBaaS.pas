@@ -9,7 +9,8 @@ interface
 
 uses
   ACBrBaaSReg, ACBrExtratoAPI, ACBrExtratoAPIBB, ACBrExtratoAPIInter, 
-  LazarusPackageIntf;
+  ACBrPagamentosAPI, ACBrPagamentosAPIBB, ACBrSchemasPagamentosAPI, 
+  ACBrSchemasPagamentosAPIBB, LazarusPackageIntf;
 
 implementation
 

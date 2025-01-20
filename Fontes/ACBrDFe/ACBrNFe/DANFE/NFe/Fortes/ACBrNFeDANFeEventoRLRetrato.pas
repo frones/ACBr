@@ -458,12 +458,27 @@ begin
 
       teConcFinanceira:
       begin
-        // Evento ainda não disponível
+        rllTitulo.Caption := ACBrStr('ECONF');
+
+        RLDraw50.Visible := False;
+        RLLabel21.Visible := False;
+        rlmCondUso.Visible := False;
+
+        rlbCorrecao.Visible := False;
+        RLLabel6.Visible := False;
+        rlmCorrecao.Visible := False;
       end;
 
       teCancConcFinanceira:
       begin
-        // Evento ainda não disponível
+        rllTitulo.Caption := ACBrStr('CANCELAMENTO DE ECONF');
+        RLDraw50.Visible := False;
+        RLLabel21.Visible := False;
+        rlmCondUso.Visible := False;
+
+        rlbCorrecao.Visible := False;
+        RLLabel6.Visible := False;
+        rlmCorrecao.Visible := False;
       end;
     end; // case InfEvento.tpEvento
 

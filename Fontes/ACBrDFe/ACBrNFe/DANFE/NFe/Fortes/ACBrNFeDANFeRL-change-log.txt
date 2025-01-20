@@ -47,6 +47,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/01/2025
+-- ACBrNFeDANFeEventoRLRetrato --
+[*] #TK-6502: Ajuste visando a impressão dos nomes do eventos: ECONF e Cancelamento do ECONF.
+   por: Diogo Weitz
+
 19/12/2024
 -- ACBrNFeDANFeRLRetrato --
 [*] TK-6359 Ajustes para que os dados do Emitente obedeçam uma nova margem.

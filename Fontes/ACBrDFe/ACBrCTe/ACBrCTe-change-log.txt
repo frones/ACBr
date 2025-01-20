@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/01/2025
+-- pcteCTe --
+[*] Remoção de unit por estar em desuso.
+   Por: Italo Giurizzato Junior
+
 10/01/2025
 -- ACBrCTe.Conversao/ACBrCTe.EventoClass/ACBrCTe.RetEnvEvento --
 [*] Ajustes para a leitura de Eventos do Fisco.

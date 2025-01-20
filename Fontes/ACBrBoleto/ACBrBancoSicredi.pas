@@ -114,10 +114,17 @@ begin
 end;
 
 function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+var 
+   LAgenciaDigito :string;
 begin
    Modulo.CalculoPadrao;
+
+   LAgenciaDigito := ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito;
+   if OnlyAlpha(LAgenciaDigito) <> EmptyStr then
+      LAgenciaDigito :='00';
+
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-                       PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito), 2, '0') +
+                       PadLeft(OnlyNumber(LAgenciaDigito), 2, '0') +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 5, '0');
 
   if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (Length(ACBrTitulo.CodigoGeracao) = 3)) then

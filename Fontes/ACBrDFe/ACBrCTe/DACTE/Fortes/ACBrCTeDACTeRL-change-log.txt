@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2025
+-- ACBrCTeDACTeRLRetrato --
+[*] #TK-6505: Alterado a posição dos campos: CNPJ/CPF, Inscrição Estadual e Fone, pois estava 
+    imprimindo acima do título dos campos.
+  Por: Italo Giurizzato Junior
+
 14/06/2023
 -- ACBrCTeDACTeRLRetrato --
 [*] Adiciona flags visando viabilizar impressão dos quadros "Componentes do Valor da Prestação de Serviço" e "Documentos Originários" 

@@ -7687,7 +7687,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 0
         Top = 0
         Width = 741
-        Height = 68
+        Height = 66
         Brush.Style = bsClear
         Visible = False
       end
@@ -7970,7 +7970,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllFoneToma1: TRLLabel
         Left = 402
-        Top = 50
+        Top = 52
         Width = 85
         Height = 13
         AutoSize = False
@@ -8001,7 +8001,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllInscEstToma1: TRLLabel
         Left = 260
-        Top = 50
+        Top = 52
         Width = 111
         Height = 13
         AutoSize = False
@@ -8032,7 +8032,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllCnpjToma1: TRLLabel
         Left = 40
-        Top = 50
+        Top = 52
         Width = 130
         Height = 13
         AutoSize = False

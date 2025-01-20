@@ -1,14 +1,14 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 256
-  Height = 317
+  Height = 557
   Top = 88
   Caption = 'DACTe - Retrato'
-  ClientHeight = 317
+  ClientHeight = 557
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 8
+    Left = 0
     Top = 0
     Background.Height = 96
     Background.Width = 175
@@ -6996,7 +6996,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       BeforePrint = rlb_03_DadosDACTe_OSBeforePrint
       object rlsQuadro3: TRLDraw
         Left = 0
-        Height = 68
+        Height = 66
         Top = 0
         Width = 741
         Brush.Style = bsClear
@@ -7250,7 +7250,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllFoneToma1: TRLLabel
         Left = 402
         Height = 13
-        Top = 50
+        Top = 52
         Width = 85
         AutoSize = False
         Color = clWhite
@@ -7277,7 +7277,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllInscEstToma1: TRLLabel
         Left = 260
         Height = 13
-        Top = 50
+        Top = 52
         Width = 111
         AutoSize = False
         Color = clWhite
@@ -7304,7 +7304,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllCnpjToma1: TRLLabel
         Left = 40
         Height = 13
-        Top = 50
+        Top = 52
         Width = 130
         AutoSize = False
         Color = clWhite
@@ -7860,7 +7860,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     Top = 16
   end
   inherited Datasource1: TDataSource
-    Left = 336
+    Left = 320
     Top = 16
   end
 end

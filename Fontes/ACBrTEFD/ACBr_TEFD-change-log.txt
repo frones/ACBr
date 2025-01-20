@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2025
+-- ACBrTEFAPIElginComum
+[-] Correção de vazamento de memória - TK-6471
+    por: Clayton Alves
+
 16/01/2025
 -- ACBrTEFDDestaxaComum -- 
 [-] Correção de problema no fluxo ao ocorrer Timeout após a transação ser iniciada.

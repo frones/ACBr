@@ -39,7 +39,9 @@ unit ACBrPagamentosAPIBB;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes,
+  SysUtils,
+  ACBrBase,
   ACBrAPIBase,
   ACBrPagamentosAPI,
   ACBrSchemasPagamentosAPI,

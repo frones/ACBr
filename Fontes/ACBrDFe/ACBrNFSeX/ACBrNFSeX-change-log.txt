@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6511: A cidade de Ribeirao das Neves/MG trocou a URL o provedor continua
+    o mesmo.
+  Por: hugosecret
+
 20/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6506: A cidade de Pirajuba/MG trocou de provedor, agora é IPM versão 2.04

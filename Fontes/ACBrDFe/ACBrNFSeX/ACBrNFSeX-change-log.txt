@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 21/01/2025
+-- ACBrNFSeXLerXml --
+[-] #TK-6514: Correção para quando na lista de itens dentro da tag Discriminacao
+    não tenha a informação do ItemListaServico. 
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6511: A cidade de Ribeirao das Neves/MG trocou a URL o provedor continua
     o mesmo.

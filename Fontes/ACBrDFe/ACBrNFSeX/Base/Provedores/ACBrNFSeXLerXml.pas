@@ -261,7 +261,7 @@ end;
 
 procedure TNFSeRClass.LerListaJson(const aDiscriminacao: string);
 var
-  xDiscriminacao: string;
+  xItemServico, xDiscriminacao: string;
   json, jsonItem: TACBrJsonObject;
   i: Integer;
 begin
@@ -274,7 +274,12 @@ begin
 
     with NFSe.Servico.ItemServico.New do
     begin
-      ItemListaServico := NormatizarItemListaServico(jsonItem.AsString['ItemServico']);
+      xItemServico := jsonItem.AsString['ItemServico'];
+
+      if xItemServico = '' then
+        xItemServico := NFSe.Servico.ItemListaServico;
+
+      ItemListaServico := NormatizarItemListaServico(xItemServico);
       xItemListaServico := ItemListaServicoDescricao(ItemListaServico);
       Descricao := jsonItem.AsString['Descricao'];
       ValorUnitario := jsonItem.AsCurrency['ValorUnitario'];
@@ -332,6 +337,10 @@ begin
       Break;
 
     xItemServico := ExtraiValorCampo('ItemServico', False);
+
+    if xItemServico = '' then
+      xItemServico := NFSe.Servico.ItemListaServico;
+
     fQuantidade := StrToFloatDef(ExtraiValorCampo('Quantidade', True), 0);
     fValorUnitario := StrToFloatDef(ExtraiValorCampo('ValorUnitario', True), 0);
     fValorServico := StrToFloatDef(ExtraiValorCampo('ValorServico', True), 0);

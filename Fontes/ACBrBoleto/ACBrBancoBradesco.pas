@@ -534,7 +534,7 @@ begin
        PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '   +
          Sacado.Complemento + ' ' + Sacado.Bairro, 40)          +  // 275 a 314 - Endereço completo do pagador
        PadRight( Sacado.Mensagem, 12, ' ')                      +  // 315 a 326 - 1ª Mensagem
-       PadRight( Sacado.CEP, 8 )                                +  // 327 a 334 - CEP
+       PadRight( OnlyNumber, 8 )                                +  // 327 a 334 - CEP
        PadRight( MensagemCedente, 60 )                          +  // 335 a 394 - Beneficiário final ou 2ª Mensagem
        IntToStrZero(aRemessa.Count + 1, 6)                      +  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
        LChaveNFe;                                                 // 401 a 444 Chave NFe

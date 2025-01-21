@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 21/01/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6515: Incluída a cidade de Cocalinho/MT, o provedor é Fiorilli.
+[+] #TK-6515: Incluída a cidade de Nortelandia/MT, o provedor é Coplan.
+  Por: Diego Reckziegel
+[*] #TK-6512: A cidade de Alto Feliz/RS trocou a URL o provedor continua
+    o mesmo.
+  Por: Daniel Ostoic programador DNA
 -- ACBrNFSeXLerXml --
 [-] #TK-6514: Correção para quando na lista de itens dentro da tag Discriminacao
     não tenha a informação do ItemListaServico. 

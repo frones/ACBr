@@ -73,6 +73,7 @@ const
   CChaveDetMedicamentos = 'DetMedicamentos';
   CChaveDetArmamentos = 'DetArmamentos';
   CChaveDetCombustiveis = 'DetCombustiveis';
+  CChaveDetRastros = 'DetRastros';
   CChaveTributosPercentual = 'TributosPercentual';
   CChaveTributosPercentualPersonalizado = 'TributosPercentualPersonalizado';
   CChaveMarcadAgua = 'MarcadAgua';

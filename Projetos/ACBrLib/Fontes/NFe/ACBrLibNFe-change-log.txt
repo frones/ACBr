@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/01/2025
+-- ACBrLibNFeConsts, ACBrLibNFeConfig --
+[+] #TK-6504: Adiciona propriedade DetRastros na seção [DANFeNFe] - https://www.projetoacbr.com.br/forum/topic/81399-propriedade-detmedicamentos-acbrnfe/
+  Por: Diego Folieni 
+
 20/12/2024
 -- ACBrLibNFeConsoleMT.lpi, ACBrLibNFeConsoleMTDemo.lpi --
 [*] Adicionado path \Fontes\ACBrDFe\ACBrNFe\Base para uso da unit ACBrNFe.Consts

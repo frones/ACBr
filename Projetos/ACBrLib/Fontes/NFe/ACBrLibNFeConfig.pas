@@ -70,6 +70,7 @@ type
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
+    FDetRastros: TDetRastros;
     FDetCombustiveis: TDetCombustiveis;
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: Double;
@@ -124,6 +125,7 @@ type
     property DetMedicamentos: TDetMedicamentos read FDetMedicamentos write FDetMedicamentos;
     property DetArmamentos: TDetArmamentos read FDetArmamentos write FDetArmamentos;
     property DetCombustiveis: TDetCombustiveis read FDetCombustiveis write FDetCombustiveis;
+    property DetRastros: TDetRastros read FDetRastros write FDetRastros;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
     property TributosPercentualPersonalizado: Double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
     property MarcadAgua: String read FMarcadagua write FMarcadagua;
@@ -335,6 +337,7 @@ begin
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
+  FDetRastros := [dr_nLote, dr_qLote, dr_dFab, dr_dVal, dr_cAgreg];
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
   FLarguraCodProd := 54;
@@ -383,6 +386,7 @@ begin
   SetSetProp(self, 'DetMedicamentos', AIni.ReadString(CSessaoDANFENFE, CChaveDetMedicamentos, GetSetProp(self, 'DetMedicamentos', True)));
   SetSetProp(self, 'DetArmamentos', AIni.ReadString(CSessaoDANFENFE, CChaveDetArmamentos, GetSetProp(self, 'DetArmamentos', True)));
   SetSetProp(self, 'DetCombustiveis', AIni.ReadString(CSessaoDANFENFE, CChaveDetCombustiveis, GetSetProp(self, 'DetCombustiveis', True)));
+  SetSetProp(self, 'DetRastros', AIni.ReadString(CSessaoDANFENFe, CChaveDetRastros, GetSetProp(self, 'DetRastros', True)));
 
   TributosPercentual := TpcnPercentualTributos(AIni.ReadInteger(CSessaoDANFENFE, CChaveTributosPercentual, Integer(TributosPercentual)));
   TributosPercentualPersonalizado := AIni.ReadFloat(CSessaoDANFENFE, CChaveTributosPercentualPersonalizado, TributosPercentualPersonalizado);
@@ -439,6 +443,7 @@ begin
   AIni.WriteString(CSessaoDANFENFE, CChaveDetMedicamentos, GetSetProp(self, 'DetMedicamentos', True));
   AIni.WriteString(CSessaoDANFENFE, CChaveDetArmamentos, GetSetProp(self, 'DetArmamentos', True));
   AIni.WriteString(CSessaoDANFENFE, CChaveDetCombustiveis, GetSetProp(self, 'DetCombustiveis', True));
+  AIni.WriteString(CSessaoDANFENFe, CChaveDetRastros, GetSetProp(self, 'DetRastros', True));
 
   AIni.WriteInteger(CSessaoDANFENFE, CChaveTributosPercentual, Integer(TributosPercentual));
   AIni.WriteFloat(CSessaoDANFENFE, CChaveTributosPercentualPersonalizado, TributosPercentualPersonalizado);
@@ -499,6 +504,7 @@ begin
     DetMedicamentos := FDetMedicamentos;
     DetArmamentos := FDetArmamentos;
     DetCombustiveis := FDetCombustiveis;
+    DetRastros := FDetRastros;
     TributosPercentual := FTributosPercentual;
     TributosPercentualPersonalizado := FTributosPercentualPersonalizado;
     MarcadAgua := FMarcadAgua;

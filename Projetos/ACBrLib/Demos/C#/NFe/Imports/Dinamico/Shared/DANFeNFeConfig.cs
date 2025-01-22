@@ -102,6 +102,12 @@ namespace ACBrLib.NFe
             set => SetProperty(value);
         }
 
+        public DetRastros DetRastros
+        {
+            get => GetProperty<DetRastros>();
+            set => SetProperty(value);
+        }
+
         public TributosPercentual TributosPercentual
         {
             get => GetProperty<TributosPercentual>();

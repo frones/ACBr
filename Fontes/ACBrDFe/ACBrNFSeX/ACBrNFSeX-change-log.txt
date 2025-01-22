@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6518: A cidade de Barra de Sao Francisco/ES, mudou a versão para 2.04 e
+    a URL, o provedor continua o mesmo: EL.
+  Por: C4Dev
+
 21/01/2025
 -- ACBrNFSeXServicos --
 [+] #TK-6515: Incluída a cidade de Cocalinho/MT, o provedor é Fiorilli.

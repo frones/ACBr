@@ -264,11 +264,10 @@ end;
 
 procedure TBoletoW_Sicoob.DefinirParamOAuth;
 begin
-  if Boleto.Cedente.CedenteWS.ClientSecret = '' then
-    Boleto.Cedente.CedenteWS.ClientSecret:= Boleto.Cedente.CedenteWS.ClientID;
   FParamsOAuth := Format( 'client_id=%s&scope=%s&grant_type=client_credentials',
                    [Boleto.Cedente.CedenteWS.ClientID,
                     Boleto.Cedente.CedenteWS.Scope] );
+  OAuth.ExigirClientSecret := False;
 end;
 
 function TBoletoW_Sicoob.DateBancoobtoDateTime(const AValue: String): TDateTime;

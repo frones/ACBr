@@ -360,6 +360,7 @@ begin
   FParamsOAuth := Format( 'client_id=%s&scope=%s&grant_type=client_credentials',
                    [Boleto.Cedente.CedenteWS.ClientID,
                     Boleto.Cedente.CedenteWS.Scope] );
+  OAuth.ExigirClientSecret := False;
 end;
 
 function TBoletoW_Sicoob_V3.DateBancoobtoDateTime(const AValue: String): TDateTime;

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/01/2025
+[*] #TK-6523: A cidade de Martinopolis/SP, trocou a URL de produção, o provedor 
+    continua o mesmo.
+  Por: Automacao Samos
+[*] #TK-6525: Na cidade de Alto Feliz/RS feita a correção de https para http
+    na URL de produção.
+  Por: Daniel Ostoic programador DNA
+
 22/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6518: A cidade de Barra de Sao Francisco/ES, mudou a versão para 2.04 e

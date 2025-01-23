@@ -41,6 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+23/01/2025
+-- ACBrLibBoletoRespostas.pas --
+[-] TK-6141-2 - Ajustado para evitar AV
+  Por: Daniel Morais InfoCotidiano 
+  
 15/01/2025
 -- ACBrLibBoletoRespostas.pas --
 [*] TK-6141 - Retorno INI devolver o banco que foi liquidado, propriedade LiquidadoBanco

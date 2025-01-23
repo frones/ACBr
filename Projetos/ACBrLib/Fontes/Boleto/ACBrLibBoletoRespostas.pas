@@ -730,9 +730,8 @@ begin
     CodigoCanalTituloCobranca:=DadosRet.TituloRet.CodigoCanalTituloCobranca;
     EstadoTituloCobranca:=DadosRet.TituloRet.EstadoTituloCobranca;;
     CodigoEstadoTituloCobranca:=DadosRet.TituloRet.CodigoEstadoTituloCobranca;
-    LiquidadoBanco:=DadosRet.TituloRet.Liquidacao.Banco;
-
-
+    if DadosRet.TituloRet.LiquidadoBanco > 0 then
+       LiquidadoBanco :=DadosRet.TituloRet.LiquidadoBanco;
     if (NaoEstaVazio(DadosRet.TituloRet.EMV)) then
     begin
       emv:= DadosRet.TituloRet.EMV;
@@ -937,7 +936,8 @@ begin
     SeuNumero := ACBrBoleto.ListadeBoletos[FID].SeuNumero;
     CodTipoOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia),
                                              Integer(ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Tipo));
-    LiquidadoBanco := ACBrBoleto.ListadeBoletos[FID].Liquidacao.Banco;
+    if ACBrBoleto.ListadeBoletos[FID].Liquidacao.Banco > 0 then
+       LiquidadoBanco := ACBrBoleto.ListadeBoletos[FID].Liquidacao.Banco;
     DescricaoTipoOcorrencia := ACBrBoleto.ListadeBoletos[FID].OcorrenciaOriginal.Descricao;
 
     for I:= 0 to  ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando.Count-1 do

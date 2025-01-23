@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2025
+-- ACBrBoletoRetorno.pas --
+[-] TK-6141-2 - Estava tentando acessar uma classe q nao estava instanciada.
+  Por: Daniel Morais InfoCotidiano / Pandaaaa
+
 15/01/2025
 -- ACBrBoletoW_Inter_API.pas --
 [*] TK-6095 - Correção de paginação retorno titulos.

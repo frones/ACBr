@@ -128,20 +128,6 @@ type
   end;
 
 
-  { TACBrTituloLiquidacaoRet }
-  TACBrTituloLiquidacaoRet = class
-  private
-    fBanco: Integer;
-    fAgencia: String;
-    fOrigem: String;
-    fFormaPagto: String;
-  public
-    property Banco     : Integer read fBanco      write fBanco;
-    property Agencia   : String  read fAgencia    write fAgencia;
-    property Origem    : String  read fOrigem     write fOrigem;
-    property FormaPagto: String  read fFormaPagto write fFormaPagto;
-  end;
-
     { TACBrBoletoSacadoAvalistaRet}
 
   TACBrBoletoSacadoAvalistaRet = class
@@ -278,7 +264,6 @@ type
     FCodigoCanalTituloCobranca : String;
     FNossoNumeroCorrespondente : string;
     FResponsavelPelaEmissao    : TACBrResponEmissao;
-    FLiquidacao                : TACBrTituloLiquidacaoRet;
     FLiquidadoBanco            : integer;
   public
     constructor Create;
@@ -368,7 +353,6 @@ type
     property TxId: String read FtxId write FtxId;
     property ValorTarifa: Extended read FValorTarifa write FValorTarifa;
     property ResponsavelPelaEmissao: TACBrResponEmissao read FResponsavelPelaEmissao write FResponsavelPelaEmissao;
-    property Liquidacao: TACBrTituloLiquidacaoRet read fLiquidacao write fLiquidacao;
     property LiquidadoBanco : integer read FLiquidadoBanco write FLiquidadoBanco;
   end;
 
@@ -691,9 +675,7 @@ begin
   Sacado.Assign(DeACBrBoletoTituloRet.Sacado);
   SacadoAvalista.Assign(DeACBrBoletoTituloRet.SacadoAvalista);
   NossoNumeroCorrespondente  := DeACBrBoletoTituloRet.NossoNumeroCorrespondente;
-  LiquidadoBanco             := DeACBrBoletoTituloRet.Liquidacao.Banco;
-
-
+  LiquidadoBanco             := DeACBrBoletoTituloRet.LiquidadoBanco;
 end;
 
   { TListaACBrBoletoRetEnvio }

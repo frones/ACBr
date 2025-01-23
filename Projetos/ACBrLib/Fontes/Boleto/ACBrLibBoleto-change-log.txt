@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 23/01/2025
 -- ACBrLibBoletoRespostas.pas --
+[-] TK-6508 - Ajustado para validar o conteudo antes de MotivoRejeicaoComando 
+  https://www.projetoacbr.com.br/forum/topic/81409-boleto-banco-inter-arquivo-retorno-fora-de-padr%C3%B5es-quando-tem-erro/
+  Por: Daniel Morais InfoCotidiano / Panda
+
+23/01/2025
+-- ACBrLibBoletoRespostas.pas --
 [-] TK-6141-2 - Ajustado para evitar AV
   Por: Daniel Morais InfoCotidiano 
   

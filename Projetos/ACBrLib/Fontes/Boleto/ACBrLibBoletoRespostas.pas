@@ -835,7 +835,11 @@ end;
 procedure TRetornoRejeicoesTitulo.Processar(const ACBrBoleto: TACBrBoleto);
 begin
   MotivoRejeicao := ACBrBoleto.ListadeBoletos[FID].DescricaoMotivoRejeicaoComando[FIDRej];
-  MotivoRejeicaoComando := ACBrBoleto.ListadeBoletos[FID].MotivoRejeicaoComando[FIDRej];
+  if ACBrBoleto.ListadeBoletos[FID].MotivoRejeicaoComando.Count > 0 then
+  begin
+    ACBrBoleto.ListadeBoletos[FID].MotivoRejeicaoComando.Delimiter:='|';
+    MotivoRejeicaoComando := ACBrBoleto.ListadeBoletos[FID].MotivoRejeicaoComando.CommaText;
+  end;
 end;
 
 { TRetornoBoleto }

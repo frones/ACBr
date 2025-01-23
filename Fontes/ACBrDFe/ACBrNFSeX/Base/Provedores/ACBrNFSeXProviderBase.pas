@@ -2804,6 +2804,7 @@ var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
   Cancelamento: TNFSeCancelaNFSeResponse;
+  i: Integer;
 begin
   SubstituiNFSeResponse.Sucesso := False;
   SubstituiNFSeResponse.Erros.Clear;
@@ -2835,6 +2836,13 @@ begin
     PrepararCancelaNFSe(Cancelamento);
     if (Cancelamento.Erros.Count > 0) then
     begin
+      for i := 0 to Cancelamento.Erros.Count -1 do
+      begin
+        AErro := SubstituiNFSeResponse.Erros.New;
+        AErro.Codigo := Cancelamento.Erros[i].Codigo;
+        AErro.Descricao := Cancelamento.Erros[i].Descricao;
+      end;
+
       TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
       Exit;
     end;
@@ -2842,6 +2850,13 @@ begin
     AssinarCancelaNFSe(Cancelamento);
     if (Cancelamento.Erros.Count > 0) then
     begin
+      for i := 0 to Cancelamento.Erros.Count -1 do
+      begin
+        AErro := SubstituiNFSeResponse.Erros.New;
+        AErro.Codigo := Cancelamento.Erros[i].Codigo;
+        AErro.Descricao := Cancelamento.Erros[i].Descricao;
+      end;
+
       TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
       Exit;
     end;

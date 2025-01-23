@@ -118,6 +118,14 @@ begin
 
     IncluirURI := False;
   end;
+
+  with ConfigSchemas do
+  begin
+    ConsultarNFSePorFaixa := '***';
+    ConsultarNFSeServicoPrestado := '***';
+    ConsultarNFSeServicoTomado := '***';
+    SubstituirNFSe := '***';
+  end;
 end;
 
 function TACBrNFSeProviderSigep200.CriarGeradorXml(

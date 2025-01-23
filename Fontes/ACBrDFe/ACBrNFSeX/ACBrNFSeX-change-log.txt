@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/01/2025
+-- ACBrNFSeXProviderBase/Sigep.Provider --
+[*] Ajustes para mostrar as mensagens de erro do cancelamento que consta na 
+    substituição de uma NFS-e.
+  Por: Italo Giurizzato Junior
 [*] #TK-6523: A cidade de Martinopolis/SP, trocou a URL de produção, o provedor 
     continua o mesmo.
   Por: Automacao Samos

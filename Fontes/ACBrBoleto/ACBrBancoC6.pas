@@ -301,7 +301,7 @@ begin
            FormatDateTime('ddmmyy', LTitulo.DataDocumento)                                                               +  // 151 a 156 - Data Emissão Título
            LProtesto                                                                                                     +  // 157 a 160 - Intrução 1 e 2
            IntToStrZero(Round(LValorMoraJuros * 100), 13)                                                                +  // 161 a 173 - Juros ao Dia
-           IfThen(LTitulo.DataDesconto < EncodeDate(2000,01,01),
+           IfThen((LTitulo.DataDesconto < EncodeDate(2000,01,01)) or (LTitulo.ValorDesconto = 0),
                   '000000',
                   FormatDateTime('ddmmyy', LTitulo.DataDesconto))                                                        +  // 174 a 179 - Data Desconto
            IntToStrZero(Round(LTitulo.ValorDesconto * 100 ), 13)                                                         +  // 180 a 192 - Valor Desconto

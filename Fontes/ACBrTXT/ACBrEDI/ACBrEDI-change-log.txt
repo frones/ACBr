@@ -40,6 +40,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2025
+-- pediConversao --
+[-] #TK-6524: Correção nas funções de conversão: MeioTransporteToStr e StrToMeioTransporte,
+    constava duas vezes o valor "BR08".
+   Por: Delcio
+
 -- ACBrEDIOcorrencia --
 [*] Ajuste para que a o Código da Ocorrência na GerarMercadorias possua 2 caracteres em versões inferiores a 5.0
    Por: Cleonir 

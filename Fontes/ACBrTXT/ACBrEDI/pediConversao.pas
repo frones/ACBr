@@ -226,7 +226,7 @@ function MeioTransporteToStr(const t: tmTransporte ): string;
 begin
   result := EnumeradoToStr(t, ['12', '21', '23', '25', '31', '32', '34', '41',
                                '43', '51', '52', '55', '101', 'BR01', 'BR02', 'BR03',
-                               'BR04', 'BR05', 'BR06', 'BR07', 'BR08', 'BR08', 'BR10', 'BR11',
+                               'BR04', 'BR05', 'BR06', 'BR07', 'BR08', 'BR10', 'BR11',
                                'BR12', 'BR13', 'BR50', 'BR51', 'BR60', 'BR80', 'CTB', 'C20',
                                'C40', 'C4H', 'C2R', 'C4R'],
                               [tmNavioTanque        , tmVagaoFerroviarioTanque, tmVagaoFerroviarioGraneleiro,
@@ -247,7 +247,7 @@ function StrToMeioTransporte(out ok: boolean; const s: string): tmTransporte;
 begin
   result := StrToEnumerado(ok, s, ['12', '21', '23', '25', '31', '32', '34', '41',
                                    '43', '51', '52', '55', '101', 'BR01', 'BR02', 'BR03',
-                                   'BR04', 'BR05', 'BR06', 'BR07', 'BR08', 'BR08', 'BR10', 'BR11',
+                                   'BR04', 'BR05', 'BR06', 'BR07', 'BR08', 'BR10', 'BR11',
                                    'BR12', 'BR13', 'BR50', 'BR51', 'BR60', 'BR80', 'CTB', 'C20',
                                    'C40', 'C4H', 'C2R', 'C4R'],
                               [tmNavioTanque        , tmVagaoFerroviarioTanque, tmVagaoFerroviarioGraneleiro,

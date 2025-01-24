@@ -85,6 +85,8 @@ const
   Key_OTP           = 'Otp';
   Key_AcessibilidadeVisual = 'acessibilidadeVisual';
   Key_TipoPinpad = 'tipoPinpad';
+  Key_TimeoutColeta = 'timeoutColeta';
+  Key_TokenRegistroTls = 'tokenRegistroTls';
 type
   EACBrTEFSIWebAndroid = class(EACBrTEFErro);
 
@@ -464,6 +466,18 @@ begin
 
   GravarLog('  '+Key_ISDoubleValidation+': '+ParametrosAdicionaisTransacao.ValueInfo[PWOPER_DOUBLEVALIDATION]);
   intent.putExtra( StringToJString(Key_ISDoubleValidation), StringToJString(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_DOUBLEVALIDATION]));
+
+  GravarLog('  '+Key_TimeoutColeta+': '+ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA]);
+  if (ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA] <> '') and (StrToIntDef(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA], 0) > 0) then
+    intent.putExtra( StringToJString(Key_TimeoutColeta), StringToJString(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TIMEOUT_COLETA]));
+
+  GravarLog('  '+Key_TokenRegistroTls+': '+ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TOKEN_TLS]);
+  if ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TOKEN_TLS] <> '' then
+  Begin
+    intent.putExtra( StringToJString(Key_TokenRegistroTls), StringToJString(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_TOKEN_TLS]));
+    GravarLog('  '+Key_ComExterna+': '+ParametrosAdicionaisTransacao.ValueInfo[PWOPER_COMEXTERNA]);
+    intent.putExtra( StringToJString(Key_ComExterna), StringToJString(ParametrosAdicionaisTransacao.ValueInfo[PWOPER_COMEXTERNA]));
+  End;
 
   //Disparando o Intent
   IniciarIntent(intent);

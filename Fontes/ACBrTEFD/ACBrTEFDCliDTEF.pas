@@ -1300,7 +1300,7 @@ function TACBrTEFDCliDTEF.ColetaPinPad(
   function Coletar(TamMinimo, TamMaximo, ATipo: integer): string;
   var
     CodigoTransacao: Integer;
-    Dados, Retorno: PChar;
+    Dados, Retorno: PAnsiChar;
     Resultado: Integer;
     Buffer: string;
   begin

@@ -794,6 +794,15 @@ var
     INIRec.WriteString('compl', 'xCaracSer', compl.xCaracSer);
     INIRec.WriteString('compl', 'xEmi', compl.xEmi);
 
+    INIRec.WriteString('compl', 'xOrig', compl.fluxo.xOrig);
+    INIRec.WriteString('compl', 'xDest', compl.fluxo.xDest);
+    INIRec.WriteString('compl', 'xRota', compl.fluxo.xRota);
+
+    for I := 0 to compl.fluxo.pass.Count - 1 do
+    begin
+      INIRec.WriteString('PASS'+IntToStrZero(I+1,3), 'xPass', compl.fluxo.pass[I].xPass);
+    end;
+
     INIRec.WriteString('compl', 'TipoData', TpDataPeriodoToStr(compl.Entrega.TipoData));
     case compl.Entrega.TipoData of
       tdSemData:

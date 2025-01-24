@@ -77,6 +77,8 @@ type
 
   TACBrTEFDCliDTEFObtemInformacao = procedure( var ItemSelecionado : Integer ) of object ;
 
+  TACBrTEFDCliDTEFTipoColetaPinPad = (tpColDigCPF, tpColDigCNPJ);
+
   { TACBrTEFDCliDTEF }
 
    TACBrTEFDCliDTEF = class( TACBrTEFDClass )
@@ -198,6 +200,9 @@ type
       xFinalizaDPOS : function : Integer;
               {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
+      xTransacaoEspecial : function (
+              pCodigoTransacao: Integer; pDados: PAnsiChar): Integer;
+              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
      procedure FinalizarTransacao(Operacao : AnsiString; Confirma : Boolean;
         NSU : AnsiString; DocumentoVinculado : AnsiString);
@@ -244,6 +249,7 @@ type
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
         Valor : Double; CodigoAutorizacaoTransacao: String = '') : Boolean; overload; override;
+     function ColetaPinPad(TipoColeta: TACBrTEFDCliDTEFTipoColetaPinPad): string;
    published
      property NumVias ;
      property ArqResp  : String read fArqResp   write SetArqResp ;
@@ -413,6 +419,7 @@ begin
   xObtemLogUltimaTransacao := nil;
   xInicializaDPOS := nil;
   xFinalizaDPOS := nil;
+  xTransacaoEspecial := nil;
   xTransacaoResgatePremio := nil;
   xTransacaoRecargaCelular := nil;
   xTransacaoCancelamentoPagamentoCompleta := nil;
@@ -469,6 +476,7 @@ begin
    CliDTEFFunctionDetect('ObtemLogUltimaTransacao',@xObtemLogUltimaTransacao);
    CliDTEFFunctionDetect('InicializaDPOS',@xInicializaDPOS);
    CliDTEFFunctionDetect('FinalizaDPOS',@xFinalizaDPOS);
+   CliDTEFFunctionDetect('TransacaoEspecial',@xTransacaoEspecial);
    CliDTEFFunctionDetect('TransacaoCancelamentoPagamentoCompleta',@xTransacaoCancelamentoPagamentoCompleta);
 end ;
 
@@ -1284,6 +1292,38 @@ begin
 //      BloquearMouseTeclado( False );
       //SL.Free; //Não pode destruir está lista, pois a origem da chamada desta função ainda irá utliza-la.
     end;
+  end;
+end;
+
+function TACBrTEFDCliDTEF.ColetaPinPad(
+  TipoColeta: TACBrTEFDCliDTEFTipoColetaPinPad): string;
+  function Coletar(TamMinimo, TamMaximo, ATipo: integer): string;
+  var
+    CodigoTransacao: Integer;
+    Dados, Retorno: PChar;
+    Resultado: Integer;
+    Buffer: string;
+  begin
+    CodigoTransacao := 121;//Código da operação Capturar Informações do PinPad.
+    Buffer := Format('%2.2d%2.2d%2.2d%-32s', [TamMinimo, TamMaximo, ATipo, '']);
+    GetMem(Dados, Length(Buffer) + 1);
+    try
+      StrPCopy(Dados, Buffer);
+      Resultado := xTransacaoEspecial(CodigoTransacao, Dados);
+      if Resultado = 0 then
+      begin
+        Retorno := Dados + 6; // Ignorar os primeiros 6 bytes do retorno
+        Result := Trim(String(Retorno));
+      end;
+    finally
+      FreeMem(Dados); // Liberar memória alocada
+    end;
+  end;
+
+begin
+  case TipoColeta of
+    tpColDigCPF: Result := Coletar(11,11,1);
+    tpColDigCNPJ: Result := Coletar(14,14,13);
   end;
 end;
 

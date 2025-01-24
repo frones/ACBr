@@ -3914,7 +3914,7 @@ begin
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proConam, proEquiplano,
     proGoverna, proIPM, proISSDSF, proISSLencois, proModernizacaoPublica,
     proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco, proSudoeste,
-    proBauhaus, proISSCampinas] then
+    proBauhaus, proISSCampinas, proSigep] then
   begin
     Motivo := 'Teste de Cancelamento';
     if not (InputQuery(Titulo, 'Motivo de Cancelamento', Motivo)) then
@@ -5302,6 +5302,9 @@ begin
 
   with ACBrNFSeX1.Configuracoes.WebServices do
   begin
+    // Redefini a quebra de linha que por padrão é "|'
+    QuebradeLinha := ';';
+
     Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := chkSalvarSOAP.Checked;

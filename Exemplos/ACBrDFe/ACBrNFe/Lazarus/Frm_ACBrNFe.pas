@@ -2239,6 +2239,8 @@ begin
     MemoDados.Lines.Add('xMotivo: ' + ACBrNFe1.WebServices.Enviar.xMotivo);
     MemoDados.Lines.Add('Recibo: '+ ACBrNFe1.WebServices.Enviar.Recibo);
 
+  end;
+
   (*
   ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[0].tpAmb
   ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[0].verAplic

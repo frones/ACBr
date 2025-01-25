@@ -908,7 +908,8 @@ const
   RET_QRCODE       = 'QRCODE';
   RET_MSG_OPERADOR = 'MSG_OPERADOR';
   RET_MSG_CLIENTE  = 'MSG_CLIENTE';
-  RET_SCOPE_OPERACAO = 'SCOPE_OPERACAO';
+  RET_SCOPE_COD_OPERACAO = 'SCOPE_COD_OPERACAO';
+  RET_SCOPE_DESC_OPERACAO = 'SCOPE_DESC_OPERACAO';
 
   {--------------------------------------------------------------------------------------------
      Constantes de Serviços usadas em 'ScopePagamento' e 'ScopePagamentoConta'
@@ -2265,15 +2266,16 @@ begin
     AjustarParamSeNaoExistir('PPCOMP', 'NaoAbrirDigitado', IfThen(fPermitirCartaoDigitado, 'n', 's'));
 
     SecName := 'SCOPEAPI';
+    ini.WriteString(SecName, 'ArqControlPath', fDiretorioTrabalho + PathDelim + 'control');
+    ini.WriteString(SecName, 'ArqTracePath', fDiretorioTrabalho + PathDelim + 'logs');
     AjustarParamSeNaoExistir(SecName, 'TraceApi', 's');
     AjustarParamSeNaoExistir(SecName, 'TraceSrl', 's');
     AjustarParamSeNaoExistir(SecName, 'TracePin', 's');
     AjustarParamSeNaoExistir(SecName, 'RedecardBit47Tag6', '1');
-    ini.WriteString(SecName, 'ArqControlPath', fDiretorioTrabalho + PathDelim + 'control');
-    ini.WriteString(SecName, 'ArqTracePath', fDiretorioTrabalho + PathDelim + 'trace');
 
-    AjusarSessaoLogAPI('SCOPELOGAPI');
-    AjusarSessaoLogAPI('SCOPELOGPRF');
+    //AjusarSessaoLogAPI('SCOPELOGAPI');
+    //AjusarSessaoLogAPI('SCOPELOGPRF');
+    //AjusarSessaoLogAPI('SCOPELOGSRL');
 
     ini.UpdateFile;
   finally
@@ -2859,7 +2861,8 @@ begin
 
   if (Result = RCS_SUCESSO) then
   begin
-    fDadosDaTransacao.Values[RET_SCOPE_OPERACAO] := sOp;
+    fDadosDaTransacao.Values[RET_SCOPE_COD_OPERACAO] := IntToStr(Integer(Operacao));
+    fDadosDaTransacao.Values[RET_SCOPE_DESC_OPERACAO] := sOp;
     SetEmTransacao(True);
   end;
 end;
@@ -2871,6 +2874,7 @@ var
   rColetaEx: TParam_Coleta_Ext;
   TipoCaptura: Word;
   Resposta, MsgCli, MsgOpe: String;
+  Fluxo: TACBrTEFScopeEstadoOperacao;
 
   function VerificarSeUsuarioCancelouTransacao(Fluxo: TACBrTEFScopeEstadoOperacao): Boolean;
   var
@@ -2908,7 +2912,12 @@ begin
       // Enquanto a transacao estiver em andamento, aguarda, mas verifica se o usuário Cancelou //
       if (iStatus = RCS_TRN_EM_ANDAMENTO) then
       begin
-        if VerificarSeUsuarioCancelouTransacao(scoestFluxoAPI) then
+        if (fDadosDaTransacao.Values[RET_QRCODE] <> '') then
+          Fluxo := scoestLeituraQRCode
+        else
+          Fluxo := scoestFluxoAPI;
+
+        if VerificarSeUsuarioCancelouTransacao(Fluxo) then
           EnviarParametroTransacao(ACAO_CANCELAR, iStatus)
         else
           Sleep(fIntervaloColeta);
@@ -3063,11 +3072,14 @@ begin
       end;
     end;
 
+    if (fDadosDaTransacao.Values[RET_QRCODE] <> '') then // Remove QRCode da tela, Se houver...
+      fOnExibeQRCode('');
+
     // Atribui na Transação, as mensagens do cliente e operador //
     ObterMsgUltimaTransacao(MsgCli, MsgOpe);
     if (MsgOpe = '') and (iStatus <> RCS_SUCESSO) then
       MsgOpe := Format(ACBrStr(sErrExecutarOperacao), [ IntToHex(iStatus, 4),
-                       fDadosDaTransacao.Values[RET_SCOPE_OPERACAO] ]);
+                       fDadosDaTransacao.Values[RET_SCOPE_DESC_OPERACAO] ]);
 
     if (MsgCli <> '') then
       fDadosDaTransacao.Values[RET_MSG_CLIENTE] := BinaryStringToString( MsgCli );
@@ -3105,10 +3117,13 @@ begin
 end;
 
 function TACBrTEFScopeAPI.ObterScopeStatus: Longint;
+var
+  ret: LongInt;
 begin
   GravarLog('ScopeStatus');
-  Result := xScopeStatus;
-  GravarLog('  ret: '+IntToStr(Result) + ' - $'+IntToHex(Result, 4));
+  ret := xScopeStatus;
+  GravarLog('  ret: '+IntToStr(ret) + ' - $'+IntToHex(ret, 4));
+  Result := ret;
 end;
 
 procedure TACBrTEFScopeAPI.ObterDadosComprovantes;

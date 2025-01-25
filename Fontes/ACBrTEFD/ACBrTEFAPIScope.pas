@@ -899,6 +899,7 @@ begin
   begin
     op := scoCarteiraVirtual;
     Param2 := '432';  // 432=PIX
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_COLETA_VALOR)] := Param1;
   end
   else if (Financiamento = tefmfPredatado) then
     op := scoPreAutCredito

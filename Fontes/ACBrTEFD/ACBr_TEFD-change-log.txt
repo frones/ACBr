@@ -46,6 +46,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2025
+-- ACBrTEFScopeAPI, ACBrTEFAPIScope --
+[*] Ajustes para funcionamento de transações PIX
+
+-- ACBrTEFAPIScope --
+[*] Ajuste em 'EfetuarPagamento', para adicionar resposta em TC_DECIDE_P_ADM_EST
+    conformer valor do parâmetro 'Financiamento'
+    (por: DSA)
+
 24/01/2025
 -- ACBrTEFMSitefAndroidAPI --
 [*] Ajuste na 'IniciarTransacao', para considerar parâmetros de TLS 'tokenRegistroTls'

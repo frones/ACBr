@@ -890,6 +890,12 @@ begin
   else if (Financiamento > tefmfAVista) then   // Parcelado
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_AVISTA)] := '0';
 
+  // NAO TESTADO
+  if (Financiamento = tefmfParceladoEmissor) then
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_P_ADM_EST)] := '1'
+  else if (Financiamento = tefmfParceladoEstabelecimento) then
+    fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_DECIDE_P_ADM_EST)] := '0';
+
   if (Parcelas > 0) then
     fTEFScopeAPI.RespostasPorEstados.Values[IntToStr(TC_QTDE_PARCELAS)] := IntToStr(Parcelas);
 

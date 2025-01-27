@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/01/2025
+-- ACBrCTe.XmlHandler --
+[*] Correção na procedure LerToma4, não estava lendo o CNPJ/CPF do nó correto.
+   Por: devFortes
+
 24/01/2025
 -- ACBrCTeConhecimentos --
 [*] Alteração visando os campos do grupo <fluxo>

@@ -1159,7 +1159,7 @@ begin
 
   toma4.toma := StrToTpTomador(OK, ObterConteudoTag(tomaNode.Childrens.FindAnyNs('toma'), tcStr));
 
-  toma4.CNPJCPF := ObterConteudoTagCNPJCPF(ANode);
+  toma4.CNPJCPF := ObterConteudoTagCNPJCPF(tomaNode);
 
   toma4.IE := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('IE'), tcStr);
   toma4.xNome := ObterConteudoTag(tomaNode.Childrens.FindAnyNs('xNome'), tcStr);

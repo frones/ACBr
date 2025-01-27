@@ -145,6 +145,8 @@ type
     procedure GerarMsgDadosConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
     procedure TratarRetornoConsultarSeqRps(Response: TNFSeConsultarSeqRpsResponse); override;
 
+    function AplicarLineBreak(const AXMLRps: string; const ABreak: string): string; virtual;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -321,10 +323,9 @@ begin
     Nota.GerarXML;
 
     Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
-    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
 
 //    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
-//    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
 
     if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono, meTeste])) or
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
@@ -478,6 +479,12 @@ procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+end;
+
+function TACBrNFSeProviderProprio.AplicarLineBreak(const AXMLRps,
+  ABreak: string): string;
+begin
+  Result := ChangeLineBreak(AXMLRps, ABreak);
 end;
 
 procedure TACBrNFSeProviderProprio.AssinarConsultaNFSe(

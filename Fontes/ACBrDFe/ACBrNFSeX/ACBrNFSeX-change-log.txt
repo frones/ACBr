@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 27/01/2025
+-- ACBrNFSeXProviderProprio/ISSBarueri.Provider/Prescon.Provider/Siappa.Provider --
+[-] Correção na geração do arquivo do RPS a ser enviado para o webservice.
+    Para o provedor ISSBarueri não se deve remover as quebras de linhas.
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] #TK-6529: A cidade de Arenapolis/MT, trocou as URLs, o provedor continua o mesmo.
   Por: Diego Reckziegel

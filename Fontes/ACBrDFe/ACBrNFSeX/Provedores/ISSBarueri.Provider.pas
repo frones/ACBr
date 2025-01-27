@@ -101,6 +101,8 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
+    function AplicarLineBreak(const AXMLRps: string; const ABreak: string): string; override;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -344,6 +346,12 @@ begin
     (ALinha[1] = '2') or
     (ALinha[1] = '3') or
     (ALinha[1] = '9'));
+end;
+
+function TACBrNFSeProviderISSBarueri.AplicarLineBreak(const AXMLRps,
+  ABreak: string): string;
+begin
+  Result := AXMLRps;
 end;
 
 procedure TACBrNFSeProviderISSBarueri.Configuracao;

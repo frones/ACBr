@@ -78,6 +78,7 @@ type
     procedure RequisicaoBaixa;
     procedure RequisicaoConsulta;
     procedure RequisicaoConsultaDetalhe;
+    procedure RequisicaoConcederAbatimento;
     procedure GerarPagador(AJson: TACBrJSONObject);
     procedure GerarBenificiarioFinal(AJson: TACBrJSONObject);
     procedure GerarInfomativo(AJson: TACBrJSONObject);
@@ -135,8 +136,9 @@ begin
     tpAltera                :
     begin
       case ATitulo.OcorrenciaOriginal.Tipo of
-        toRemessaAlterarVencimento : FPURL := FPURL + '/boletos/'+ LId + '/data-vencimento';
-        toRemessaAlterarOutrosDados:
+        toRemessaAlterarVencimento  : FPURL := FPURL + '/boletos/'+ LId + '/data-vencimento';
+        toRemessaConcederAbatimento : FPURL := FPURL + '/boletos/'+ LId + '/conceder-abatimento';
+        toRemessaAlterarOutrosDados :
         begin
           case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
             TCompDesconto : FPURL := FPURL + '/boletos/'+ LId + '/desconto';
@@ -409,6 +411,7 @@ begin
   begin
     case ATitulo.OcorrenciaOriginal.Tipo of
       toRemessaAlterarVencimento  : RequisicaoAlteraVencimento;
+      toRemessaConcederAbatimento : RequisicaoConcederAbatimento;
       toRemessaAlterarOutrosDados :
           Begin
             case ATitulo.OcorrenciaOriginal.ComplementoOutrosDados of
@@ -557,6 +560,22 @@ begin
   if Assigned(ATitulo) then
   begin
     FPDadosMsg := '{}';
+  end;
+end;
+
+procedure TBoletoW_Sicredi_APIV2.RequisicaoConcederAbatimento;
+var
+  LJsonObject: TACBrJSONObject;
+begin
+  if Assigned(ATitulo) then
+  begin
+    LJsonObject := TACBrJSONObject.Create;
+    try
+      LJsonObject.AddPair('valorAbatimento', ATitulo.ValorAbatimento);
+      FPDadosMsg := LJsonObject.ToJSON;
+    finally
+      LJsonObject.Free;
+    end;
   end;
 end;
 

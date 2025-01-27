@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 27/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6532: A cidade de Brasnorte/MT, trocou de provedor, agora é Fiorilli.
+  Por: Diego Reckziegel
+[*] #TK-6536: A cidade de Salto de Pirapora/SP, trocou a URL, o provedor continua o mesmo.
+  Por: Danny
 -- ACBrNFSeXProviderProprio/ISSBarueri.Provider/Prescon.Provider/Siappa.Provider --
 [-] Correção na geração do arquivo do RPS a ser enviado para o webservice.
     Para o provedor ISSBarueri não se deve remover as quebras de linhas.

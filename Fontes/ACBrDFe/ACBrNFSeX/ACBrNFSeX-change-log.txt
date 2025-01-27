@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6529: A cidade de Arenapolis/MT, trocou as URLs, o provedor continua o mesmo.
+  Por: Diego Reckziegel
+[*] #TK-6423: A cidade de Pinhalzinho/SC, trocou as URLs e a versão, o provedor continua o mesmo.
+  Por: christian@adminfo.com.br
+
 24/01/2025
 -- ACBrNFSeXServicos --
 [+] #TK-6527: Incluída a cidade de Turmalina/MG, o provedor é Sintese.

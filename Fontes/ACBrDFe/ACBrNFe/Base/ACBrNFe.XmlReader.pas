@@ -594,7 +594,7 @@ begin
   for i := 0 to Length(ANodes) - 1 do
   begin
     Item.Prod.NVE.New;
-    Item.Prod.NVE.Items[i].NVE := ObterConteudo(ANodes[i].Childrens.Find('NVE'), tcStr);
+    Item.Prod.NVE.Items[i].NVE := ObterConteudo(ANodes[i], tcStr);
   end;
 
   Item.Prod.DI.Clear;

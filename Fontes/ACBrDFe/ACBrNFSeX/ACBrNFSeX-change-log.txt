@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/01/2025
+-- ACBrNFSeXProviderProprio --
+[-] Correção na geração do arquivo de envio dos métodos Emitir e Substituir a ser 
+    enviado para o webservice.
+  Por: Italo Giurizzato Junior
+
 27/01/2025
 -- ACBrNFSeXServicos --
 [*] #TK-6532: A cidade de Brasnorte/MT, trocou de provedor, agora é Fiorilli.

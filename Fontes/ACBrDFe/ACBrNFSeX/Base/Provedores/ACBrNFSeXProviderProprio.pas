@@ -360,7 +360,7 @@ begin
 
   IdAttr := DefinirIDLote(Response.NumeroLote);
 
-  ListaRps := ChangeLineBreak(ListaRps, '');
+  ListaRps := AplicarLineBreak(ListaRps, '');
 
   aParams := TNFSeParamsResponse.Create;
   try
@@ -778,7 +778,7 @@ begin
   Nota.GerarXML;
 
   Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
-  Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+  Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
 
   if ConfigAssinar.RpsSubstituirNFSe then
   begin

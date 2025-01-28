@@ -29,9 +29,14 @@ package ACBr_TEFD;
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
+{$I ACBr.inc}  
+
 requires
   rtl,
   vcl,
+  {$IFDEF HAS_PNG}
+  vclimg,
+  {$ENDIF}
   ACBr_Comum,
   soaprtl,
   ACBr_Diversos,

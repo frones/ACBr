@@ -29,8 +29,13 @@ package DCLACBr_TEFD;
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
+{$I ACBr.inc}  
+
 requires
   rtl,
+  {$IFDEF HAS_PNG}
+  vclimg,
+  {$ENDIF}
   ACBr_TEFD,
   designide,
   ACBr_TCP;

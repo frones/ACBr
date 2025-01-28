@@ -44,8 +44,11 @@ Símbolo : Significado
 
 
 28/01/2025
+-- SoftPlan.GravarXml --
+[*] Alteração visando deixar a tag: codigoMunicipioTomador opcional.  
+  Por: C4Dev
 -- SigISS.GravarXml --
-[*] Alteração visando deixar as tags:outro_municipio e cod_outro_municipio opcionais.  
+[*] Alteração visando deixar as tags: outro_municipio e cod_outro_municipio opcionais.  
   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6540: Incluída a cidade de Ibia/MG, o provedor é NFSeBrasil.

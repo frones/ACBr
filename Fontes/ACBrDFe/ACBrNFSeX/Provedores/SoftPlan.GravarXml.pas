@@ -172,7 +172,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'cfps', 4, 4, 1,
                                                   NFSe.Servico.CFPS, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoMunicipioTomador', 7, 7, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoMunicipioTomador', 7, 7, 0,
                                     NFSe.Tomador.Endereco.CodigoMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'codigoPostalTomador', 8, 8, 1,

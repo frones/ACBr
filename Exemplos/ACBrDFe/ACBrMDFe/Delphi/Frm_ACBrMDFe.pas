@@ -314,6 +314,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
+  ACBrXmlBase,
   pcnAuxiliar, ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
@@ -928,10 +929,10 @@ begin
     MemoDados.Lines.Add('-----------------------------------------');
     MemoDados.Lines.Add('Retorno do Envio do MDFe em modo Síncrono');
     MemoDados.Lines.Add('');
-    MemoDados.Lines.Add('Chave    : ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chMDFe);
+    MemoDados.Lines.Add('Chave    : ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chDFe);
     MemoDados.Lines.Add('Protocolo: ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.nProt);
     MemoDados.Lines.Add('');
-    MemoDados.Lines.Add('tpAmb   : ' + TpAmbToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
+    MemoDados.Lines.Add('tpAmb   : ' + TipoAmbienteToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
     MemoDados.Lines.Add('verAplic: ' + ACBrMDFe1.WebServices.Enviar.verAplic);
     MemoDados.Lines.Add('cStat   : ' + IntToStr(ACBrMDFe1.WebServices.Enviar.cStat));
     MemoDados.Lines.Add('xMotivo : ' + ACBrMDFe1.WebServices.Enviar.xMotivo);
@@ -1107,10 +1108,10 @@ begin
     Lines.Add('-----------------------------------------');
     Lines.Add('Retorno do Envio do MDFe em modo Síncrono');
     Lines.Add('');
-    Lines.Add('Chave    : ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chMDFe);
+    Lines.Add('Chave    : ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.chDFe);
     Lines.Add('Protocolo: ' + ACBrMDFe1.Manifestos[0].MDFe.procMDFe.nProt);
     Lines.Add('');
-    Lines.Add('tpAmb   : ' + TpAmbToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
+    Lines.Add('tpAmb   : ' + TipoAmbienteToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
     Lines.Add('verAplic: ' + ACBrMDFe1.WebServices.Enviar.verAplic);
     Lines.Add('cStat   : ' + IntToStr(ACBrMDFe1.WebServices.Enviar.cStat));
     Lines.Add('xMotivo : ' + ACBrMDFe1.WebServices.Enviar.xMotivo);

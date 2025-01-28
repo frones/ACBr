@@ -12,7 +12,7 @@ object frmACBrMDFe: TfrmACBrMDFe
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 651
@@ -1862,15 +1862,15 @@ object frmACBrMDFe: TfrmACBrMDFe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    left = 330
-    top = 287
+    Left = 330
+    Top = 287
   end
   object OpenDialog1: TOpenDialog
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 467
-    top = 287
+    Left = 467
+    Top = 287
   end
   object ACBrMDFe1: TACBrMDFe
     MAIL = ACBrMail1
@@ -1887,8 +1887,8 @@ object frmACBrMDFe: TfrmACBrMDFe
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
-    left = 334
-    top = 238
+    Left = 334
+    Top = 238
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -1896,26 +1896,36 @@ object frmACBrMDFe: TfrmACBrMDFe
     MargemSuperior = 8
     MargemEsquerda = 6
     MargemDireita = 5.1
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    CasasDecimais.Aliquota = 2
+    CasasDecimais.MaskAliquota = ',0.00'
     ACBrMDFe = ACBrMDFe1
     ImprimeHoraSaida = False
     TipoDAMDFe = tiSemGeracao
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
+    ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
+    ExibirMunicipioDescarregamento = False
     PrintDialog = True
-    left = 462
-    top = 238
+    Left = 462
+    Top = 238
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'Documento XML (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 584
-    top = 288
+    Left = 584
+    Top = 288
   end
 end

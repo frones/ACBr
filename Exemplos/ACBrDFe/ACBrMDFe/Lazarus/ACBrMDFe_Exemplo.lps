@@ -18,9 +18,10 @@
         <ComponentName Value="frmACBrMDFe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="298"/>
-        <CursorPos X="19" Y="304"/>
+        <TopLine Value="1031"/>
+        <CursorPos X="43" Y="1039"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -57,7 +58,6 @@
         <ComponentName Value="frmMDFeDAEventoRLRetrato"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="29"/>
         <CursorPos X="31" Y="42"/>
@@ -126,7 +126,7 @@
         <UsageCount Value="10"/>
       </Unit12>
     </Units>
-    <JumpHistory Count="10" HistoryIndex="9">
+    <JumpHistory Count="14" HistoryIndex="13">
       <Position1>
         <Filename Value="Frm_ACBrMDFe.pas"/>
         <Caret Line="1138" Column="14" TopLine="1125"/>
@@ -167,6 +167,21 @@
         <Filename Value="Frm_ACBrMDFe.pas"/>
         <Caret Line="304" Column="19" TopLine="299"/>
       </Position10>
+      <Position11>
+        <Filename Value="ACBrMDFe_Exemplo.lpr"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="321" Column="15" TopLine="311"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="804" Column="48" TopLine="798"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="978" Column="43" TopLine="973"/>
+      </Position14>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

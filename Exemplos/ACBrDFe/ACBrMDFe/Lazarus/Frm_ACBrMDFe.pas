@@ -318,6 +318,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
+  ACBrXmlBase,
   pcnAuxiliar, ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
@@ -800,7 +801,7 @@ begin
 
     MemoDados.Lines.Add('');
     MemoDados.Lines.Add('Envio MDFe');
-    MemoDados.Lines.Add('tpAmb: '+ TpAmbToStr(ACBrMDFe1.WebServices.Retorno.TpAmb));
+    MemoDados.Lines.Add('tpAmb: '+ TipoAmbienteToStr(ACBrMDFe1.WebServices.Retorno.TpAmb));
     MemoDados.Lines.Add('verAplic: '+ ACBrMDFe1.WebServices.Retorno.verAplic);
     MemoDados.Lines.Add('cStat: '+ IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
     MemoDados.Lines.Add('cUF: '+ IntToStr(ACBrMDFe1.WebServices.Retorno.cUF));
@@ -974,7 +975,7 @@ begin
   begin
     Lines.Add('');
     Lines.Add('Envio MDFe');
-    Lines.Add('tpAmb: '     + TpAmbToStr(ACBrMDFe1.WebServices.Retorno.tpAmb));
+    Lines.Add('tpAmb: '     + TipoAmbienteToStr(ACBrMDFe1.WebServices.Retorno.tpAmb));
     Lines.Add('verAplic: '  + ACBrMDFe1.WebServices.Retorno.verAplic);
     Lines.Add('cStat: '     + IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
     Lines.Add('xMotivo: '   + ACBrMDFe1.WebServices.Retorno.xMotivo);
@@ -1035,7 +1036,7 @@ begin
   begin
     Lines.Add('');
     Lines.Add('Envio MDFe');
-    Lines.Add('tpAmb: '     + TpAmbToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
+    Lines.Add('tpAmb: '     + TipoAmbienteToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
     Lines.Add('verAplic: '  + ACBrMDFe1.WebServices.Enviar.verAplic);
     Lines.Add('cStat: '     + IntToStr(ACBrMDFe1.WebServices.Enviar.cStat));
     Lines.Add('xMotivo: '   + ACBrMDFe1.WebServices.Enviar.xMotivo);

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/01/2025
+-- SigISS.GravarXml --
+[*] Alteração visando deixar as tags:outro_municipio e cod_outro_municipio opcionais.  
+  Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] #TK-6540: Incluída a cidade de Ibia/MG, o provedor é NFSeBrasil.
   Por: Joao Pedro Pereira

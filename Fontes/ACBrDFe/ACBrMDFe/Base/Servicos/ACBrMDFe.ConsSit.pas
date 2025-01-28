@@ -38,13 +38,14 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao;
+  pcnConversao,
+  ACBrXmlBase;
 
 type
 
   TConsSitMDFe = class
   private
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FchMDFe: string;
     FVersao: string;
   public
@@ -54,7 +55,7 @@ type
     function GerarXML: string;
     function ObterNomeArquivo: string;
 
-    property tpAmb: TpcnTipoAmbiente read FtpAmb  write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb  write FtpAmb;
     property chMDFe: string          read FchMDFe write FchMDFe;
     property Versao: string          read FVersao write FVersao;
   end;
@@ -87,7 +88,7 @@ end;
 function TConsSitMDFe.GerarXML: string;
 begin
   Result := '<consSitMDFe ' + NAME_SPACE_MDFe + ' versao="' + versao + '">' +
-              '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
               '<xServ>CONSULTAR</xServ>' +
               '<chMDFe>' + chMDFe + '</chMDFe>' +
             '</consSitMDFe>';

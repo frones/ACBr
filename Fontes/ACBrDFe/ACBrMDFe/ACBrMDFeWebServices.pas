@@ -51,6 +51,7 @@ uses
   ACBrDFeComum.RetEnvio,
   pcnDistDFeInt,
   pcnRetDistDFeInt,
+  ACBrXmlBase,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes;
 
 type
@@ -122,7 +123,7 @@ type
     FRecibo: String;
     FManifestos: TManifestos;
     Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FcUF: Integer;
@@ -156,7 +157,7 @@ type
 
     property Recibo: String read GetRecibo;
     property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
     property cStat: Integer read FcStat;
     property cUF: Integer read FcUF;
@@ -179,7 +180,7 @@ type
     FChaveMDFe: String;
     FManifestos: TManifestos;
     Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FcUF: Integer;
@@ -211,7 +212,7 @@ type
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
     property cStat: Integer read FcStat;
     property cUF: Integer read FcUF;
@@ -281,7 +282,7 @@ type
     FDhRecbto: TDateTime;
     FXMotivo: String;
     Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FcUF: Integer;
@@ -313,7 +314,7 @@ type
     property DhRecbto: TDateTime read FDhRecbto;
     property XMotivo: String read FXMotivo;
     property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
     property cStat: Integer read FcStat;
     property cUF: Integer read FcUF;
@@ -504,7 +505,6 @@ uses
   StrUtils, Math,
   ACBrDFeConsts,
   ACBrDFeUtil,
-  ACBrXmlBase,
   ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.Strings,
@@ -726,7 +726,7 @@ begin
 
   if Assigned(FPConfiguracoesMDFe) then
   begin
-    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
@@ -791,14 +791,14 @@ begin
 
   VerServ := VersaoMDFeToDbl(FVersaoDF);
   Modelo := 'MDFe';
-  FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+  FTpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
   FPVersaoServico := '';
   FPURL := '';
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     CUFtoUF(FcUF),
-    FTpAmb,
+    TpcnTipoAmbiente(FTpAmb),
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -934,7 +934,7 @@ begin
             MDFe.procMDFe.cStat := FMDFeRetornoSincrono.protMDFe.cStat;
             MDFe.procMDFe.tpAmb := FMDFeRetornoSincrono.tpAmb;
             MDFe.procMDFe.verAplic := FMDFeRetornoSincrono.verAplic;
-            MDFe.procMDFe.chMDFe := FMDFeRetornoSincrono.protMDFe.chDFe;
+            MDFe.procMDFe.chDFe := FMDFeRetornoSincrono.protMDFe.chDFe;
             MDFe.procMDFe.dhRecbto := FMDFeRetornoSincrono.protMDFe.dhRecbto;
             MDFe.procMDFe.nProt := FMDFeRetornoSincrono.protMDFe.nProt;
             MDFe.procMDFe.digVal := FMDFeRetornoSincrono.protMDFe.digVal;
@@ -982,7 +982,7 @@ begin
     FMDFeRetorno.LerXml;
 
     Fversao := FMDFeRetorno.versao;
-    FTpAmb := TpcnTipoAmbiente(FMDFeRetorno.TpAmb);
+    FTpAmb := FMDFeRetorno.TpAmb;
     FverAplic := FMDFeRetorno.verAplic;
     FcStat := FMDFeRetorno.cStat;
     FxMotivo := FMDFeRetorno.xMotivo;
@@ -1009,7 +1009,7 @@ begin
                            'dhRecbto: %s ' + sLineBreak +
                            'chMDFe: %s ' + LineBreak),
                      [FMDFeRetornoSincrono.versao,
-                      TpAmbToStr(FMDFeRetornoSincrono.TpAmb),
+                      TipoAmbienteToStr(FMDFeRetornoSincrono.TpAmb),
                       FMDFeRetornoSincrono.verAplic,
                       IntToStr(FMDFeRetornoSincrono.cStat),
                       FMDFeRetornoSincrono.xMotivo,
@@ -1108,7 +1108,7 @@ begin
 
   if Assigned(FPConfiguracoesMDFe) then
   begin
-    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
@@ -1122,7 +1122,7 @@ begin
         if OnlyNumber(FMDFeRetorno.ProtDFe.Items[i].chDFe) = FManifestos.Items[J].NumID then
         begin
           FManifestos.Items[j].MDFe.procMDFe.verAplic := '';
-          FManifestos.Items[j].MDFe.procMDFe.chMDFe   := '';
+          FManifestos.Items[j].MDFe.procMDFe.chDFe   := '';
           FManifestos.Items[j].MDFe.procMDFe.dhRecbto := 0;
           FManifestos.Items[j].MDFe.procMDFe.nProt    := '';
           FManifestos.Items[j].MDFe.procMDFe.digVal   := '';
@@ -1191,14 +1191,14 @@ begin
 
   VerServ := VersaoMDFeToDbl(FVersaoDF);
   Modelo := 'MDFe';
-  FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+  FTpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
   FPVersaoServico := '';
   FPURL := '';
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     CUFtoUF(FcUF),
-    FTpAmb,
+    TpcnTipoAmbiente(FTpAmb),
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -1234,6 +1234,8 @@ end;
 
 function TMDFeRetRecepcao.TratarResposta: Boolean;
 begin
+  Result := False;
+  {
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
 
   //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
@@ -1251,6 +1253,7 @@ begin
   FxMsg := FMDFeRetorno.xMsg;
 
   Result := (FMDFeRetorno.CStat = 105); // Lote em Processamento
+  }
 end;
 
 function TMDFeRetRecepcao.TratarRespostaFinal: Boolean;
@@ -1288,9 +1291,9 @@ begin
 
         with FManifestos.Items[J] do
         begin
-          MDFe.procMDFe.tpAmb := AInfProt.Items[I].tpAmb;
+          MDFe.procMDFe.tpAmb := TACBrTipoAmbiente(AInfProt.Items[I].tpAmb);
           MDFe.procMDFe.verAplic := AInfProt.Items[I].verAplic;
-          MDFe.procMDFe.chMDFe := AInfProt.Items[I].chDFe;
+          MDFe.procMDFe.chDFe := AInfProt.Items[I].chDFe;
           MDFe.procMDFe.dhRecbto := AInfProt.Items[I].dhRecbto;
           MDFe.procMDFe.nProt := AInfProt.Items[I].nProt;
           MDFe.procMDFe.digVal := AInfProt.Items[I].digVal;
@@ -1598,7 +1601,7 @@ begin
 
   if Assigned(FPConfiguracoesMDFe) then
   begin
-    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FtpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
@@ -1642,14 +1645,14 @@ begin
   VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
 
   if FManifestos.Count > 0 then
-    FTpAmb := FManifestos.Items[0].MDFe.Ide.tpAmb
+    FTpAmb := TACBrTipoAmbiente(FManifestos.Items[0].MDFe.Ide.tpAmb)
   else
-    FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FTpAmb := TACBrTipoAmbiente(FPConfiguracoesMDFe.WebServices.Ambiente);
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     CUFtoUF(FcUF),
-    FTpAmb,
+    TpcnTipoAmbiente(FTpAmb),
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -1927,7 +1930,7 @@ begin
               begin
                 MDFe.procMDFe.tpAmb := MDFeRetorno.tpAmb;
                 MDFe.procMDFe.verAplic := MDFeRetorno.verAplic;
-                MDFe.procMDFe.chMDFe := MDFeRetorno.chMDFe;
+                MDFe.procMDFe.chDFe := MDFeRetorno.chMDFe;
                 MDFe.procMDFe.dhRecbto := FDhRecbto;
                 MDFe.procMDFe.nProt := FProtocolo;
                 MDFe.procMDFe.digVal := MDFeRetorno.protMDFe.digVal;
@@ -2036,7 +2039,7 @@ begin
                            'Recebimento: %s ' + LineBreak +
                            'Protocolo: %s ' + LineBreak +
                            'Digest Value: %s ' + LineBreak),
-                   [Fversao, FMDFeChave, TpAmbToStr(FTpAmb), FverAplic,
+                   [Fversao, FMDFeChave, TipoAmbienteToStr(FTpAmb), FverAplic,
                     IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FMDFeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotMDFe.digVal]);
 end;

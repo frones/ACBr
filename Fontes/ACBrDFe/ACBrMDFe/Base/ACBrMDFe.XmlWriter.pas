@@ -2817,11 +2817,11 @@ begin
 
   xmlNode := Result.AddChild('infProt');
 
-  xmlNode.AddChild('tpAmb').Content := TpAmbToStr(MDFe.procMDFe.tpAmb);
+  xmlNode.AddChild('tpAmb').Content := TipoAmbienteToStr(MDFe.procMDFe.tpAmb);
 
   xmlNode.AddChild('verAplic').Content := MDFe.procMDFe.verAplic;
 
-  xmlNode.AddChild('chMDFe').Content := MDFe.procMDFe.chMDFe;
+  xmlNode.AddChild('chMDFe').Content := MDFe.procMDFe.chDFe;
 
   xmlNode.AddChild('dhRecbto').Content :=
     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.procMDFe.dhRecbto) +

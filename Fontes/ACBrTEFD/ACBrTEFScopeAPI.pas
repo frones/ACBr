@@ -73,6 +73,7 @@ resourcestring
                                 'AAAA - Nome da Automação'+sLineBreak+
                                 'CCCC - Código do Memorando'+sLineBreak+
                                 'Exemplo: "01HOTK0000"';
+  sErrArquivoNaoExistente = 'Arquivo: %s não encontrado';
 
   sMsgTituloMenu = 'Escolha uma opção';
   sMsgTituloAVista = 'A Vista ?';
@@ -85,6 +86,7 @@ resourcestring
   sMsgTransacaoEmAndamento = 'Transação em Andamento';
   sMsgTransacaoCompleta = 'Transação Completa';
   sMsgTransacaoDesfeita = 'A TRANSAÇÃO TEF ANTERIOR FOI DESFEITA.'+sLineBreak+'RETER O CUPOM TEF.';
+
 
 const
   CINTERVALO_COLETA = 300;
@@ -1318,6 +1320,15 @@ type
     TabFaixaValores:array [1..NUM_VLRS_RC] of TRec_Cel_Faixa_Valores;
   end;
 
+  PABECS_PPFILE_INFO = ^stABECS_PPFILE_INFO;
+  stABECS_PPFILE_INFO = packed record
+    Version: LongInt;
+    szFileNamePP: array [1..9] of AnsiChar;
+    cFileType: AnsiChar;
+    szFileName: array [1..257] of AnsiChar;
+    szFilePath: array [1..321] of AnsiChar;
+  end;
+
 type
   EACBrTEFScopeAPI = class(Exception);
 
@@ -1397,6 +1408,7 @@ type
     fPortaTCP: String;
     fSessaoAberta: Boolean;
     fVersaoAutomacao: String;
+    fInformacoesPinPad: String;
 
     // Funcoes originais do SCOPE
     xScopeOpen: function(Modo, Empresa, Filial, Pdv: PAnsiChar): LongInt;
@@ -1499,6 +1511,16 @@ type
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
     xScopeObtemConsultaValeGas: function(_Valor: PAnsiChar): LongInt;
       {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPMMFileList: function(_ptFileList: PAnsiChar; var _ptTamanho: LongInt): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPMMFileLoad: function(_ptInfoFile: PABECS_PPFILE_INFO): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPMMDisplayImage: function(_ptFileNamePP: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPMMFileDelete: function(_ptFileNamePP: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+    xScopePPGetInfoEx: function(IdSaida, DadosLen: Word; Dados: PAnsiChar): LongInt;
+      {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     function PAnsiCharToString(APAnsiChar: PAnsiChar): String;
     function ArrayOfCharToString(Arr: array of AnsiChar): String;
@@ -1583,6 +1605,7 @@ type
     function FormatarMsgPinPad(const MsgPinPad: String): String;
 
     function PerguntarValorTransacao: Double;
+    function TratarNomeImagemPinPad(const NomeImagem: String): String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1656,6 +1679,14 @@ type
     function MenuPinPad(const Titulo: String; Opcoes: TStrings;
       TimeOutMiliSec: Integer = 30000): Integer;
 
+    procedure ObterListaImagensPinPad(ALista: TStrings);
+    procedure CarregarImagemPinPad(const NomeImagem: String; const Arquivo: String);
+    procedure ExibirImagemPinPad(const NomeImagem: String);
+    procedure ApagarImagemPinPad(const NomeImagem: String);
+
+    function ObterInformacoesPinPad: String;
+    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word);
+
     procedure GravarLog(const AString: AnsiString; Traduz: Boolean = False);
   end;
 
@@ -1685,6 +1716,7 @@ begin
   fVersaoAutomacao := '';
   fPinPadSeguro := True;
   fPortaPinPad := '';
+  fInformacoesPinPad := '';
   fCupomReduzido := False;
   fPermitirCartaoDigitado := False;
   fPermitirCancelarOperacaoPinPad := True;
@@ -1719,6 +1751,7 @@ begin
 
   fConectado := False;
   fSessaoAberta := False;
+  fInformacoesPinPad := '';
   GravarLog('TACBrTEFScopeAPI.Inicializar');
 
   if not Assigned(fOnTransacaoEmAndamento) then
@@ -2060,6 +2093,11 @@ begin
   ScopeFunctionDetect(sLibName, 'ScopePPDisplay', @xScopePPDisplay);
   ScopeFunctionDetect(sLibName, 'ScopeMenu', @xScopeMenu);
   ScopeFunctionDetect(sLibName, 'ScopeObtemConsultaValeGas', @xScopeObtemConsultaValeGas);
+  ScopeFunctionDetect(sLibName, 'ScopePPMMFileList', @xScopePPMMFileList);
+  ScopeFunctionDetect(sLibName, 'ScopePPMMFileLoad', @xScopePPMMFileLoad);
+  ScopeFunctionDetect(sLibName, 'ScopePPMMDisplayImage', @xScopePPMMDisplayImage);
+  ScopeFunctionDetect(sLibName, 'ScopePPMMFileDelete', @xScopePPMMFileDelete);
+  ScopeFunctionDetect(sLibName, 'ScopePPGetInfoEx', @xScopePPGetInfoEx);
 
   fCarregada := True;
 end;
@@ -2129,6 +2167,11 @@ begin
   xScopePPOptionMenu := Nil;
   xScopePPDisplay := Nil;
   xScopeObtemConsultaValeGas := Nil;
+  xScopePPMMFileList := Nil;
+  xScopePPMMFileLoad := Nil;
+  xScopePPMMDisplayImage := Nil;
+  xScopePPMMFileDelete := Nil;
+  xScopePPGetInfoEx := Nil;
 end;
 
 procedure TACBrTEFScopeAPI.DoException(const AErrorMsg: String);
@@ -2523,6 +2566,139 @@ begin
   finally
     Freemem(pBuffer);
   end;
+end;
+
+procedure TACBrTEFScopeAPI.ObterListaImagensPinPad(ALista: TStrings);
+var
+  ret, tam: LongInt;
+  pLista: PAnsiChar;
+  sLista, s: String;
+  p, l: Integer;
+begin
+  sLista := '';
+  pLista := AllocMem(2048);
+  try
+    GravarLog('ScopePPMMFileList');
+    ret := xScopePPMMFileList(pLista, tam);
+    GravarLog('  ret: '+IntToStr(ret)+', tam: '+IntToStr(tam));
+    if (ret <> PC_OK) then
+      TratarErroScope(ret);
+
+    sLista := PAnsiCharToString(pLista);
+  finally
+    Freemem(pLista);
+  end;
+
+  GravarLog('  lista: ' + sLista);
+  ALista.Clear;
+  l := Length(sLista);
+  p := 1;
+  while (p < l) do
+  begin
+    s := copy(sLista, p, 8);
+    ALista.Add(s);
+    Inc(p, 8);
+  end;
+end;
+
+procedure TACBrTEFScopeAPI.CarregarImagemPinPad(const NomeImagem: String;
+  const Arquivo: String);
+var
+  ret: LongInt;
+  warq, wimg, sfile, spath, sext: AnsiString;
+  ct: AnsiChar;
+  ptInfoFile: stABECS_PPFILE_INFO;
+begin
+  warq := Trim(Arquivo);
+  if (warq = '') then
+    Exit;
+
+  if not FileExists(warq) then
+    DoException(Format(sErrArquivoNaoExistente, [warq]));
+
+  sfile := ExtractFileName(warq);
+  spath := ExtractFilePath(warq);
+  sext := LowerCase(ExtractFileExt(warq));
+  wimg := TratarNomeImagemPinPad(NomeImagem);
+  if (sext = '.png') then
+    ct := '1'
+  else
+    ct := '2';
+
+  FillChar(ptInfoFile, SizeOf(stABECS_PPFILE_INFO), #0);
+  ptInfoFile.Version := 1;
+  move( wimg[1], ptInfoFile.szFileNamePP, SizeOf(ptInfoFile.szFileNamePP) );
+  ptInfoFile.cFileType := ct;
+  move( sfile[1], ptInfoFile.szFileName, SizeOf(ptInfoFile.szFileName) );
+  move( spath[1], ptInfoFile.szFilePath, SizeOf(ptInfoFile.szFilePath) );
+
+  GravarLog('ScopePPMMFileLoad( '+NomeImagem+', '+warq+' )');
+  ret := xScopePPMMFileLoad(@ptInfoFile);
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> PC_OK) then
+    TratarErroScope(ret);
+end;
+
+procedure TACBrTEFScopeAPI.ExibirImagemPinPad(const NomeImagem: String);
+var
+  ret: LongInt;
+  s: String;
+begin
+  s := TratarNomeImagemPinPad(NomeImagem);
+  GravarLog('ScopePPMMDisplayImage( '+s+' )');
+  ret := xScopePPMMDisplayImage(PAnsiChar(s));
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> PC_OK) then
+    TratarErroScope(ret);
+end;
+
+procedure TACBrTEFScopeAPI.ApagarImagemPinPad(const NomeImagem: String);
+var
+  ret: LongInt;
+  s: String;
+begin
+  s := TratarNomeImagemPinPad(NomeImagem);
+  GravarLog('ScopePPMMFileDelete( '+s+' )');
+  ret := xScopePPMMFileDelete(PAnsiChar(s));
+  GravarLog('  ret: '+IntToStr(ret));
+  if (ret <> PC_OK) then
+    TratarErroScope(ret);
+end;
+
+function TACBrTEFScopeAPI.ObterInformacoesPinPad: String;
+var
+  Dados: PAnsiChar;
+  ret: LongInt;
+begin
+  if (fInformacoesPinPad = '') then
+  begin
+    Result := '';
+    Dados := AllocMem(2048);
+    try
+      GravarLog('ScopePPGetInfoEx');
+      ret := xScopePPGetInfoEx(0, 2048, Dados);
+      GravarLog('  ret: '+IntToStr(ret));
+      if (ret <> PC_OK) then
+        TratarErroScope(ret);
+
+      fInformacoesPinPad := PAnsiCharToString(Dados);
+    finally
+      Freemem(Dados);
+    end;
+
+    GravarLog('  dados: ' + Result);
+  end;
+
+  Result := fInformacoesPinPad;
+end;
+
+procedure TACBrTEFScopeAPI.ObterDimensoesVisorPinPad(out Width: Word; out Height: Word);
+var
+  s: String;
+begin
+  s := ObterInformacoesPinPad;
+  Height := StrToIntDef(copy(s, 115, 4), 0);
+  Width  := StrToIntDef(copy(s, 119, 4), 0);
 end;
 
 procedure TACBrTEFScopeAPI.TratarErroScope(AErrorCode: LongInt);
@@ -3833,6 +4009,11 @@ begin
     Result := -2
   else
     Result := -1;
+end;
+
+function TACBrTEFScopeAPI.TratarNomeImagemPinPad(const NomeImagem: String): String;
+begin
+  Result := UpperCase(PadRight(OnlyAlphaNum(NomeImagem), 8, '0'));
 end;
 
 procedure TACBrTEFScopeAPI.AbrirPinPad;

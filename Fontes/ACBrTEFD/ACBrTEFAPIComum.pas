@@ -68,6 +68,8 @@ resourcestring
   sACBrTEFAPITransacaoPendente = 'Transação Pendente.' + sLineBreak +
                                  'Rede: %s' + sLineBreak +
                                  'NSU: %s';
+  sACBrTEFAPIPNGNaoSuportado = 'PNG não suportado nesse compilador';
+
 
 const
   CPREFIXO_ARQUIVO_TEF = 'ACBr_';
@@ -1554,7 +1556,6 @@ begin
     end;
   end;
 end;
-
 
 //function TACBrTEFAPIComum.VerificarTEF: Boolean;
 //begin

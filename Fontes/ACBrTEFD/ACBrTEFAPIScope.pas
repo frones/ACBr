@@ -134,6 +134,14 @@ type
     function MenuPinPad(const Titulo: String; Opcoes: TStrings; TimeOut: Integer = 30000): Integer; override;
     function VerificarPresencaPinPad: Byte; override;
 
+    procedure ObterListaImagensPinPad(ALista: TStrings); override;
+    procedure ObterDimensoesVisorPinPad(out Width: Word; out Height: Word); override;
+
+    procedure ExibirImagemPinPad(const NomeImagem: String); override;
+    procedure ApagarImagemPinPad(const NomeImagem: String); override;
+    procedure CarregarImagemPinPad(const NomeImagem: String; AStream: TStream;
+      TipoImagem: TACBrTEFAPIImagemPinPad); override;
+
     property TEFScopeAPI: TACBrTEFScopeAPI read fTEFScopeAPI;
     property DiretorioTrabalho: String read fDiretorioTrabalho write SetDiretorioTrabalho;
   end;
@@ -791,7 +799,15 @@ begin
     fpACBrTEFAPI.DoException( Format(ACBrStr(sACBrTEFAPIEventoInvalidoException),
                                      ['QuandoExibirQRCode']));
 
-  TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirQRCode(Dados);
+  with TACBrTEFAPI(fpACBrTEFAPI) do
+  begin
+    {$IfNDef NOGUI}
+    if ExibicaoQRCode in [qrapiAuto, qrapiExibirPinPad] then
+      ExibirQRCodePinPad(Dados, fTEFScopeAPI.Empresa + fTEFScopeAPI.PDV );
+    {$EndIf}
+
+    QuandoExibirQRCode(Dados);
+  end;
 end;
 
 function TACBrTEFAPIClassScope.EfetuarAdministrativa(CodOperacaoAdm: TACBrTEFOperacao): Boolean;
@@ -1017,6 +1033,55 @@ var
 begin
   s := fTEFScopeAPI.AcharPortaPinPad;
   Result := StrToIntDef(s, 0);
+end;
+
+procedure TACBrTEFAPIClassScope.ObterListaImagensPinPad(ALista: TStrings);
+begin
+  fTEFScopeAPI.ObterListaImagensPinPad(ALista);
+end;
+
+procedure TACBrTEFAPIClassScope.ObterDimensoesVisorPinPad(out Width: Word; out
+  Height: Word);
+begin
+  fTEFScopeAPI.ObterDimensoesVisorPinPad(Width, Height);
+end;
+
+procedure TACBrTEFAPIClassScope.ExibirImagemPinPad(const NomeImagem: String);
+begin
+  fTEFScopeAPI.ExibirImagemPinPad(NomeImagem);
+end;
+
+procedure TACBrTEFAPIClassScope.ApagarImagemPinPad(const NomeImagem: String);
+begin
+  fTEFScopeAPI.ApagarImagemPinPad(NomeImagem);
+end;
+
+procedure TACBrTEFAPIClassScope.CarregarImagemPinPad(const NomeImagem: String;
+  AStream: TStream; TipoImagem: TACBrTEFAPIImagemPinPad);
+var
+  tmpFile, ext: String;
+  ms: TMemoryStream;
+begin
+  ext := IfThen(TipoImagem=imgPNG, '.png', '.jpg');
+  tmpFile := PathWithDelim(fTEFScopeAPI.DiretorioTrabalho) + NomeImagem + ext;
+  ms := TMemoryStream.Create;
+  try
+    AStream.Position := 0;
+    ms.LoadFromStream(AStream);
+    ms.Position := 0;
+    ms.SaveToFile(tmpFile);
+  finally
+    ms.Free;
+  end;
+
+  if FileExists(tmpFile) then
+  begin
+    try
+      fTEFScopeAPI.CarregarImagemPinPad(NomeImagem, tmpFile);
+    finally
+      DeleteFile(tmpFile);
+    end;
+  end;
 end;
 
 procedure TACBrTEFAPIClassScope.SetDiretorioTrabalho(const AValue: String);

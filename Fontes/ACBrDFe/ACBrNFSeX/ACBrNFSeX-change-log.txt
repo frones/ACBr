@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 28/01/2025
+-- ACBrNFSeXServicos --
+[+] #TK-6540: Incluída a cidade de Ibia/MG, o provedor é NFSeBrasil.
+  Por: Joao Pedro Pereira
+[*] #TK-6554: A cidade de Umuarama/PR, trocou de provedor, agora é Giss.
+  Por: Jefferson Junglaus
 -- ACBrNFSeXProviderProprio --
 [-] Correção na geração do arquivo de envio dos métodos Emitir e Substituir a ser 
     enviado para o webservice.

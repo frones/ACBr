@@ -59,13 +59,14 @@ type
     property GTINDM: TLibGTINDM read FGTINDM;
 
     function Consultar (aGTIN: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+    function ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
 
   end;
 
 implementation
 
 Uses
-  ACBrLibConsts, ACBrLibConfig,
+  ACBrLibConsts, ACBrLibConfig, ACBrLibCertUtils,
   ACBrLibGTINConfig, ACBrLibGTINRespostas;
 
 { TACBrLibGTIN }
@@ -135,6 +136,33 @@ begin
 
     on E: Exception do
      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
+  end;
+end;
+
+function TACBrLibGTIN.ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+var
+  AResposta: Ansistring;
+begin
+  try
+    GravarLog('GTIN_ObterCertificados', logNormal);
+
+    GTINDM.Travar;
+
+    try
+      AResposta := '';
+      AResposta := ObterCerticados(GTINDM.ACBrGTIN1.SSL);
+      AResposta := ConverterStringSaida(AResposta);
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, AResposta);
+    finally
+      GTINDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, ConverterStringSaida(E.Message));
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, ConverterStringSaida(E.Message));
   end;
 end;
 

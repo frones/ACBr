@@ -69,7 +69,8 @@ exports
   GTIN_ConfigGravarValor,
 
   // GTIN
-  GTIN_Consultar;
+  GTIN_Consultar,
+  GTIN_ObterCertificados;
 
 begin
   {$IFDEF DEBUG}

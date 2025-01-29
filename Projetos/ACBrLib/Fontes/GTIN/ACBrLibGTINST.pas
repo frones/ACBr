@@ -80,6 +80,9 @@ function GTIN_ConfigGravarValor (const eSessao, eChave, eValor: PAnsiChar): Inte
 function GTIN_Consultar (aGTIN: PAnsiChar; const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
+function GTIN_ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 implementation
 
 Uses
@@ -172,6 +175,21 @@ begin
 
      on E: Exception do
      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function GTIN_ObterCertificados(const sResposta: PAnsiChar; var esTamanho: Integer): Integer;
+ {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibGTIN(pLib^.Lib).ObterCertificados(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+     Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
   end;
 end;
 

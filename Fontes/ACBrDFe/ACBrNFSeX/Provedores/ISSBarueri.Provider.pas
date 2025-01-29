@@ -743,7 +743,7 @@ var
   Erros: TStringList;
   ANota: TNotaFiscal;
   I, X: Integer;
-  XML: string;
+  XML, wDataString: string;
   Ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -827,13 +827,18 @@ begin
         Response.SerieRps := Trim(Copy(Dados[1], 51, 4));
         Response.SerieNota := Trim(Copy(Dados[1], 2, 5));
 
+        wDataString := Trim(Copy(Dados[1], 19, 2) + '/' + Copy(Dados[1], 17, 2) +
+                       '/' + Copy(Dados[1], 13, 4));
+
         if NaoEstaVazio(Trim(Copy(Dados[1], 22, 6))) then
         begin
-          Response.Data := StringToDateTime(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
-          Response.Data := Response.Data + StrToTime(Format('%S:%S:%S', [Trim(Copy(Dados[1], 21, 2)), Trim(Copy(Dados[1], 23, 2)), Trim(Copy(Dados[1], 25, 2))]));
+          Response.Data := StrToDateTime(wDataString);
+          Response.Data := Response.Data +
+                      StrToTime(Format('%S:%S:%S', [Trim(Copy(Dados[1], 21, 2)),
+                      Trim(Copy(Dados[1], 23, 2)), Trim(Copy(Dados[1], 25, 2))]));
         end
         else
-          Response.Data := StringToDateTime(Trim(Copy(Dados[1], 13, 8)), 'YYYYMMDD');
+          Response.Data := StrToDateTime(wDataString);
 
         if (FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1) then
           Response.Link := 'https://www.barueri.sp.gov.br/nfe/xmlNFe.ashx'

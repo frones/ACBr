@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/01/2025
+-- ISSBarueri.Provider --
+[-] Correção na leitura da data.
+  Por: samdella
 -- ACBrNFSeXNotasFiscais --
 [-] A função LerArqIni estava atribuindo duas vezes o campo CondicaoPagamento.QtdParcela,
     de campos diferentes lidos do arquivo INI.

@@ -35,7 +35,6 @@
             this.tbpConfiguracoes = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tbpGeral = new System.Windows.Forms.TabPage();
-            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.txtServicosIni = new System.Windows.Forms.TextBox();
             this.label54 = new System.Windows.Forms.Label();
             this.btnServicosIni = new System.Windows.Forms.Button();
@@ -97,6 +96,7 @@
             this.cmbUfDestino = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbpCertificados = new System.Windows.Forms.TabPage();
+            this.btnOpenSSLInfo = new System.Windows.Forms.Button();
             this.btnObterCertificados = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -304,7 +304,7 @@
             this.tbpConfiguracoes.Controls.Add(this.tabControl2);
             this.tbpConfiguracoes.Location = new System.Drawing.Point(4, 22);
             this.tbpConfiguracoes.Name = "tbpConfiguracoes";
-            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(3);
             this.tbpConfiguracoes.Size = new System.Drawing.Size(303, 504);
             this.tbpConfiguracoes.TabIndex = 2;
             this.tbpConfiguracoes.Text = "Configurações";
@@ -350,21 +350,11 @@
             this.tbpGeral.Controls.Add(this.btnSelectLog);
             this.tbpGeral.Location = new System.Drawing.Point(4, 22);
             this.tbpGeral.Name = "tbpGeral";
-            this.tbpGeral.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpGeral.Padding = new System.Windows.Forms.Padding(3);
             this.tbpGeral.Size = new System.Drawing.Size(289, 472);
             this.tbpGeral.TabIndex = 0;
             this.tbpGeral.Text = "Geral";
             this.tbpGeral.UseVisualStyleBackColor = true;
-            // 
-            // btnOpenSSLInfo
-            // 
-            this.btnOpenSSLInfo.Location = new System.Drawing.Point(13, 344);
-            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
-            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
-            this.btnOpenSSLInfo.TabIndex = 22;
-            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
-            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
-            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
             // 
             // txtServicosIni
             // 
@@ -588,8 +578,8 @@
             this.tbpWebServices.Controls.Add(this.label1);
             this.tbpWebServices.Location = new System.Drawing.Point(4, 22);
             this.tbpWebServices.Name = "tbpWebServices";
-            this.tbpWebServices.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tbpWebServices.Size = new System.Drawing.Size(291, 474);
+            this.tbpWebServices.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpWebServices.Size = new System.Drawing.Size(289, 472);
             this.tbpWebServices.TabIndex = 1;
             this.tbpWebServices.Text = "Webservices";
             this.tbpWebServices.UseVisualStyleBackColor = true;
@@ -1051,6 +1041,16 @@
             this.tbpCertificados.Text = "Certificados";
             this.tbpCertificados.UseVisualStyleBackColor = true;
             // 
+            // btnOpenSSLInfo
+            // 
+            this.btnOpenSSLInfo.Location = new System.Drawing.Point(13, 344);
+            this.btnOpenSSLInfo.Name = "btnOpenSSLInfo";
+            this.btnOpenSSLInfo.Size = new System.Drawing.Size(118, 23);
+            this.btnOpenSSLInfo.TabIndex = 22;
+            this.btnOpenSSLInfo.Text = "OpenSSLInfo";
+            this.btnOpenSSLInfo.UseVisualStyleBackColor = true;
+            this.btnOpenSSLInfo.Click += new System.EventHandler(this.btnOpenSSLInfo_Click);
+            // 
             // btnObterCertificados
             // 
             this.btnObterCertificados.Location = new System.Drawing.Point(12, 315);
@@ -1262,8 +1262,8 @@
             this.tbpEmitente.Controls.Add(this.label12);
             this.tbpEmitente.Location = new System.Drawing.Point(4, 22);
             this.tbpEmitente.Name = "tbpEmitente";
-            this.tbpEmitente.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tbpEmitente.Size = new System.Drawing.Size(291, 474);
+            this.tbpEmitente.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpEmitente.Size = new System.Drawing.Size(289, 472);
             this.tbpEmitente.TabIndex = 4;
             this.tbpEmitente.Text = "Emitente";
             this.tbpEmitente.UseVisualStyleBackColor = true;
@@ -1515,7 +1515,7 @@
             this.tbpArquivos.Controls.Add(this.ckbSalvarArqs);
             this.tbpArquivos.Location = new System.Drawing.Point(4, 22);
             this.tbpArquivos.Name = "tbpArquivos";
-            this.tbpArquivos.Size = new System.Drawing.Size(291, 474);
+            this.tbpArquivos.Size = new System.Drawing.Size(289, 472);
             this.tbpArquivos.TabIndex = 3;
             this.tbpArquivos.Text = "Arquivos";
             this.tbpArquivos.UseVisualStyleBackColor = true;
@@ -1613,7 +1613,7 @@
             this.tbpDocAuxiliar.Controls.Add(this.label39);
             this.tbpDocAuxiliar.Location = new System.Drawing.Point(4, 22);
             this.tbpDocAuxiliar.Name = "tbpDocAuxiliar";
-            this.tbpDocAuxiliar.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpDocAuxiliar.Padding = new System.Windows.Forms.Padding(3);
             this.tbpDocAuxiliar.Size = new System.Drawing.Size(303, 504);
             this.tbpDocAuxiliar.TabIndex = 3;
             this.tbpDocAuxiliar.Text = "Documento Auxiliar";
@@ -1723,7 +1723,7 @@
             this.tbpEmail.Controls.Add(this.groupBox6);
             this.tbpEmail.Location = new System.Drawing.Point(4, 22);
             this.tbpEmail.Name = "tbpEmail";
-            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
             this.tbpEmail.Size = new System.Drawing.Size(303, 504);
             this.tbpEmail.TabIndex = 4;
             this.tbpEmail.Text = "Email";
@@ -1953,7 +1953,7 @@
             this.tabPage1.Controls.Add(this.tabControl3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(431, 276);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Demais Provedores";
@@ -1992,7 +1992,7 @@
             this.tbpEnvios.Controls.Add(this.btnEmitirNota);
             this.tbpEnvios.Location = new System.Drawing.Point(4, 22);
             this.tbpEnvios.Name = "tbpEnvios";
-            this.tbpEnvios.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpEnvios.Padding = new System.Windows.Forms.Padding(3);
             this.tbpEnvios.Size = new System.Drawing.Size(412, 241);
             this.tbpEnvios.TabIndex = 0;
             this.tbpEnvios.Text = "Envios";
@@ -2403,7 +2403,7 @@
             this.tabPage2.Controls.Add(this.btnEnviarEvento);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(431, 276);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Provedor Padrão Nacional";
@@ -2481,10 +2481,10 @@
             // 
             // btnInformacoesProvedor
             // 
-            this.btnInformacoesProvedor.Location = new System.Drawing.Point(38, 512);
+            this.btnInformacoesProvedor.Location = new System.Drawing.Point(32, 415);
             this.btnInformacoesProvedor.Name = "btnInformacoesProvedor";
             this.btnInformacoesProvedor.Size = new System.Drawing.Size(238, 37);
-            this.btnInformacoesProvedor.TabIndex = 49;
+            this.btnInformacoesProvedor.TabIndex = 50;
             this.btnInformacoesProvedor.Text = "Informações sobre o Provedor";
             this.btnInformacoesProvedor.UseVisualStyleBackColor = true;
             this.btnInformacoesProvedor.Click += new System.EventHandler(this.btnInformacoesProvedor_Click);
@@ -2761,8 +2761,8 @@
         private System.Windows.Forms.Button btnServicosIni;
         private System.Windows.Forms.Button btnSalvarPDFStream;
         private System.Windows.Forms.Button btnConsultarLinkNFSe;
-        private System.Windows.Forms.Button btnInformacoesProvedor;
         private System.Windows.Forms.Button btnOpenSSLInfo;
+        private System.Windows.Forms.Button btnInformacoesProvedor;
     }
 }
 

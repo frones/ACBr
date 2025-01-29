@@ -1149,13 +1149,13 @@ begin
       if INIRec.SectionExists(sSecao) then
       begin
         CondicaoPagamento.QtdParcela := INIRec.ReadInteger(sSecao, 'QtdParcela', 0);
+        // Provedor Publica/IPM/Betha
         CondicaoPagamento.Condicao := FProvider.StrToCondicaoPag(Ok, INIRec.ReadString(sSecao, 'Condicao', 'A_VISTA'));
 
         // Provedor NFEletronica
         CondicaoPagamento.DataVencimento := INIRec.ReadDate(sSecao, 'DataVencimento', Now);
         CondicaoPagamento.InstrucaoPagamento := INIRec.ReadString(sSecao, 'InstrucaoPagamento', '');
-        CondicaoPagamento.QtdParcela := INIRec.ReadInteger(sSecao, 'CodigoVencimento', 0);
-        CondicaoPagamento.DataCriacao := INIRec.ReadDateTime(sSecao, 'DataCriacao', 0);
+        CondicaoPagamento.CodigoVencimento := INIRec.ReadInteger(sSecao, 'CodigoVencimento', 0);
       end;
 
       //GeisWeb, ISSCambe, ISSLencois

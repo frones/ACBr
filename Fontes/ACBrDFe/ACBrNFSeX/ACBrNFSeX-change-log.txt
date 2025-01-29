@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/01/2025
+-- ACBrNFSeXNotasFiscais --
+[-] A função LerArqIni estava atribuindo duas vezes o campo CondicaoPagamento.QtdParcela,
+    de campos diferentes lidos do arquivo INI.
+  Por: CONCEPT AUTOMACAO/Italo Giurizzato Junior
+
 28/01/2025
 -- SoftPlan.GravarXml --
 [*] Alteração visando deixar a tag: codigoMunicipioTomador opcional.  

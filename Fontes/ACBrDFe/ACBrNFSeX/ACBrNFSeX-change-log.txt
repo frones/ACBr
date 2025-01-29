@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 29/01/2025
+-- ACBrNFSeXServicos --
+[*] #TK-6550: A cidade de Santa Barbara/MG, trocou de provedor, agora é GestaoISS.
+  Por: Facil Sistemas Ltda
+[+] #TK-6549: Incluída a cidade de Santa Fe do Sul/SP, o provedor é Betha versão 1.00
+  Por: JOSE CARLOS ALVES JUNIOR
+[*] Incluído o Params Dividir100 para a cidade de Matao/SP.
+  Por: Marcelo - DeSoft7
 -- ISSBarueri.Provider --
 [-] Correção na leitura da data.
   Por: samdella

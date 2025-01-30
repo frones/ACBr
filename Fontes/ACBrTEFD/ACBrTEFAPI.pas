@@ -522,7 +522,10 @@ begin
   ms := TMemoryStream.Create;
   try
     PintarQRCode(DadosQRCode, bmp, qrUTF8BOM);
-    r.Top := 0; r.Left := 0; r.Height := Tamanho; r.Width := Tamanho;
+    r.Top := 0;
+    r.Left := 0;
+    r.Bottom := r.Top + Tamanho;// r.Height := Tamanho; //Delphi 2010 não tem TRect.Height
+    r.Right := r.Left + Tamanho;// r.Width := Tamanho; //Delphi 2010 não tem TRect.Width
     png.Assign(bmp);
     {$IfDef FPC}
      png.SetSize(Tamanho, Tamanho);

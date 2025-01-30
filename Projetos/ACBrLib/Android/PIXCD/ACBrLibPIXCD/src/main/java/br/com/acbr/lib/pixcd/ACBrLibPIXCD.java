@@ -161,7 +161,7 @@ public class ACBrLibPIXCD extends ACBrLibBase {
      * @param ItensPorPagina -> Itens por página.
      * @return
      */
-    public String ConsultarPixRecebidos(Date ADataInicio, Date ADataFim, String ATxId, String ACpfCnpj, int PagAtual, int ItensPorPagina) throws Exception{
+    public String ConsultarPixRecebidos(double ADataInicio, double ADataFim, String ATxId, String ACpfCnpj, int PagAtual, int ItensPorPagina) throws Exception{
         ACBrLibBuffer buffer =  new ACBrLibBuffer();
         Log.i(this.getLibName(), "PIXCD_ConsultarPixRecebidos, ADataInicio = " + ADataInicio + " ADataFim = " + ADataFim + " ATxId = " + ATxId + " ACpfCnpj = " + ACpfCnpj + " PagAtual = " + PagAtual + " ItensPorPagina = " + ItensPorPagina);
         int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarPixRecebidos(this.getHandle(), ADataInicio, ADataFim, ATxId, ACpfCnpj, PagAtual, ItensPorPagina, buffer.bufferData, buffer.bufferSizeNeeded);
@@ -219,6 +219,19 @@ public class ACBrLibPIXCD extends ACBrLibBase {
     }
 
     /**
+     * @param ATxId -> Identificador da cobrança.
+     * @param ARevisao -> Revisão da cobrança.
+     */
+    public String ConsultarCobrancaImediata(String ATxId, int ARevisao) throws Exception{
+        ACBrLibBuffer buffer = new ACBrLibBuffer();
+        Log.i(getLibName(), "PIXCD_ConsultarCobrancaImediata, ATxId = " + ATxId + " ARevisao = " + ARevisao);
+        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarCobrancaImediata(this.getHandle(), ATxId, ARevisao, buffer.bufferData, buffer.bufferSizeNeeded);
+        Log.i(getLibName(), "PIXCD_ConsultarCobrancaImediata, status = " + status);
+        checkResult(status);
+        return  checkBuffer(buffer);
+    }
+
+    /**
      * @param ADataInicio -> Data de início.
      * @param ADataFim -> Data de fim.
      * @param ACpfCnpj -> CPF/CNPJ.
@@ -228,7 +241,7 @@ public class ACBrLibPIXCD extends ACBrLibBase {
      * @param ItensPorPagina -> Itens por página.
      * @return
      */
-    public String ConsultarCobrancasCob(Date ADataInicio, Date ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina) throws Exception{
+    public String ConsultarCobrancasCob(double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina) throws Exception{
         ACBrLibBuffer buffer =  new ACBrLibBuffer();
         Log.i(getLibName(), "PIXCD_ConsultarCobrancasCob, ADataInicio = " + ADataInicio + " ADataFim = " + ADataFim + " ACpfCnpj = " + ACpfCnpj + " ALocationPresente = " + ALocationPresente + " AStatus = " + AStatus + " PagAtual = " + PagAtual + " ItensPorPagina = " + ItensPorPagina);
         int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarCobrancasCob(this.getHandle(), ADataInicio, ADataFim, ACpfCnpj, ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer.bufferData, buffer.bufferSizeNeeded);
@@ -277,7 +290,7 @@ public class ACBrLibPIXCD extends ACBrLibBase {
     public String CriarCobranca(String AInfCobVSolicitada, String ATxId) throws Exception{
         ACBrLibBuffer buffer = new ACBrLibBuffer();
         Log.i(getLibName(), "PIXCD_CriarCobranca, AInfCobVSolicitada = " + AInfCobVSolicitada + " ATxId = " + ATxId);
-        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_CriarCobranca(AInfCobVSolicitada, ATxId, buffer.bufferData, buffer.bufferSizeNeeded);
+        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_CriarCobranca(this.getHandle(), AInfCobVSolicitada, ATxId, buffer.bufferData, buffer.bufferSizeNeeded);
         Log.i(getLibName(), "PIXCD_CriarCobranca, status = " + status);
         checkResult(status);
         return checkBuffer(buffer);
@@ -291,7 +304,7 @@ public class ACBrLibPIXCD extends ACBrLibBase {
     public String ConsultarCobranca(String ATxId, int ARevisao) throws Exception{
         ACBrLibBuffer buffer = new ACBrLibBuffer();
         Log.i(getLibName(), "PIXCD_ConsultarCobranca, ATxId = " + ATxId + " ARevisao = " + ARevisao);
-        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarCobranca(ATxId, ARevisao, buffer.bufferData, buffer.bufferSizeNeeded);
+        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarCobranca(this.getHandle(), ATxId, ARevisao, buffer.bufferData, buffer.bufferSizeNeeded);
         Log.i(getLibName(), "PIXCD_ConsultarCobranca, status = " + status);
         checkResult(status);
         return checkBuffer(buffer);
@@ -308,10 +321,10 @@ public class ACBrLibPIXCD extends ACBrLibBase {
      * @param ItensPorPagina -> Itens por página.
      * @return
      */
-    public String ConsultarCobrancasCobV(Date ADataInicio, Date ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina) throws Exception{
+    public String ConsultarCobrancasCobV(double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus, int PagAtual, int ItensPorPagina) throws Exception{
         ACBrLibBuffer buffer = new ACBrLibBuffer();
         Log.i(getLibName(), "PIXCD_ConsultarCobrancasCobV, ADataInicio = " + ADataInicio + " ADataFim = " + ADataFim + " ACpfCnpj = " + ACpfCnpj + " ALocationPresente = " + ALocationPresente + " AStatus = " + AStatus + " PagAtual = " + PagAtual + " ItensPorPagina = " + ItensPorPagina);
-        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarCobrancasCobV(ADataInicio, ADataFim, ACpfCnpj, ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer.bufferData, buffer.bufferSizeNeeded);
+        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_ConsultarCobrancasCobV(this.getHandle(), ADataInicio, ADataFim, ACpfCnpj, ALocationPresente, AStatus, PagAtual, ItensPorPagina, buffer.bufferData, buffer.bufferSizeNeeded);
         Log.i(getLibName(), "PIXCD_ConsultarCobrancasCobV, status = " + status);
         checkResult(status);
         return checkBuffer(buffer);
@@ -325,7 +338,7 @@ public class ACBrLibPIXCD extends ACBrLibBase {
     public String RevisarCobranca(String AInfCobVRevisada, String ATxId) throws Exception{
         ACBrLibBuffer buffer = new ACBrLibBuffer();
         Log.i(getLibName(), "PIXCD_RevisarCobranca, AInfCobVRevisada = " + AInfCobVRevisada + " ATxId = " + ATxId);
-        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_RevisarCobranca(AInfCobVRevisada, ATxId, buffer.bufferData, buffer.bufferSizeNeeded);
+        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_RevisarCobranca(this.getHandle(), AInfCobVRevisada, ATxId, buffer.bufferData, buffer.bufferSizeNeeded);
         Log.i(getLibName(), "PIXCD_RevisarCobranca, status = " + status);
         checkResult(status);
         return checkBuffer(buffer);
@@ -338,7 +351,7 @@ public class ACBrLibPIXCD extends ACBrLibBase {
     public String CancelarCobranca(String ATxId) throws Exception{
         ACBrLibBuffer buffer = new ACBrLibBuffer();
         Log.i(getLibName(), "PIXCD_CancelarCobranca, ATxId = " + ATxId);
-        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_CancelarCobranca(ATxId, buffer.bufferData, buffer.bufferSizeNeeded);
+        int status = ((ACBrPIXCDBridge) this.getInstance()).PIXCD_CancelarCobranca(this.getHandle(), ATxId, buffer.bufferData, buffer.bufferSizeNeeded);
         Log.i(getLibName(), "PIXCD_CancelarCobranca, status = " + status);
         checkResult(status);
         return checkBuffer(buffer);

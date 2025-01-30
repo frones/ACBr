@@ -8,6 +8,7 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 
 import java.nio.ByteBuffer;
+import java.util.Date;
 
 /**
  * ACBrLibBase é uma classe de alto nível para ACBrLib para Android
@@ -50,6 +51,14 @@ public abstract class ACBrLibBase {
 
     protected String getConfigFile(){
         return this.configFile;
+    }
+
+    public double convertDateToTDateTime(Date date) {
+        // Obtém o timestamp Unix em milissegundos
+        long unixMillis = date.getTime();
+        // Converte o timestamp para TDateTime
+        double pascalDateTime = unixMillis / 86400000.0 + 25569.0;
+        return pascalDateTime;
     }
 
     public int inicializar() throws Exception {

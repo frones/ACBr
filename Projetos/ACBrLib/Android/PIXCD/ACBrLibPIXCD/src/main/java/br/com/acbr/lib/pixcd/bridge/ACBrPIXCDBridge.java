@@ -40,7 +40,7 @@ public interface ACBrPIXCDBridge extends Library {
 
     public int PIXCD_ConsultarPix(Pointer libHandle, String Ae2eid, ByteBuffer sResposta, IntByReference esTamanho);
 
-    public int PIXCD_ConsultarPixRecebidos(Pointer libHandle, Date ADataInicio, Date ADataFim, String ATxId, String ACpfCnpj, int PagAtual,
+    public int PIXCD_ConsultarPixRecebidos(Pointer libHandle, double ADataInicio, double ADataFim, String ATxId, String ACpfCnpj, int PagAtual,
                                            int ItensPorPagina, ByteBuffer sResposta, IntByReference esTamanho);
 
     public int PIXCD_SolicitarDevolucaoPix(Pointer libHandle, String AInfDevolucao, String Ae2eid, String AidDevolucao, ByteBuffer sResposta, IntByReference esTamanho);
@@ -51,21 +51,21 @@ public interface ACBrPIXCDBridge extends Library {
 
     public int PIXCD_ConsultarCobrancaImediata(Pointer libHandle, String ATxId, int ARevisao, ByteBuffer sResposata, IntByReference esTamanho);
 
-    public int PIXCD_ConsultarCobrancasCob(Pointer libHandle, Date ADataInicio, Date ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus,
+    public int PIXCD_ConsultarCobrancasCob(Pointer libHandle, double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus,
                                            int PagAtual, int ItensPorPagina, ByteBuffer sResposta, IntByReference esTamanho);
 
     public int PIXCD_RevisarCobrancaImediata(Pointer libHandle, String AInfCobRevisada, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
 
     public int PIXCD_CancelarCobrancaImediata(Pointer libHandle, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
 
-    public int PIXCD_CriarCobranca(String AInfCobVSolicitada, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
+    public int PIXCD_CriarCobranca(Pointer libHandle, String AInfCobVSolicitada, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
 
-    public int PIXCD_ConsultarCobranca(String ATxId, int ARevisao, ByteBuffer sResposta, IntByReference esTamanho);
+    public int PIXCD_ConsultarCobranca(Pointer libHandle, String ATxId, int ARevisao, ByteBuffer sResposta, IntByReference esTamanho);
 
-    public int PIXCD_ConsultarCobrancasCobV(Date ADataInicio, Date ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus, int PagAtual,
+    public int PIXCD_ConsultarCobrancasCobV(Pointer libHandle, double ADataInicio, double ADataFim, String ACpfCnpj, boolean ALocationPresente, int AStatus, int PagAtual,
                                             int ItensPorPagina, ByteBuffer sResposta, IntByReference esTamanho);
 
-    public int PIXCD_RevisarCobranca(String AInfCobVRevisada, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
+    public int PIXCD_RevisarCobranca(Pointer libHandle, String AInfCobVRevisada, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
 
-    public int PIXCD_CancelarCobranca(String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
+    public int PIXCD_CancelarCobranca(Pointer libHandle, String ATxId, ByteBuffer sResposta, IntByReference esTamanho);
 }
